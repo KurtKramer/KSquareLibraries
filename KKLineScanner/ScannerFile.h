@@ -1,0 +1,489 @@
+#if  !defined(_SCANNERFILE_)
+#define  _SCANNERFILE_
+
+#include <vector>
+using namespace std;
+
+//**************************************************************************
+//*                              ScannerFile                               *
+//*                                                                        *
+//*                                                                        *
+//* Base class to be used by different ScanLine buffer formats.            *
+//*                                                                        *
+//* <p>Copyright:   Copyright (c) 2011</p>                                 *
+//* <p>Author:      Kurt Kramer</p>                                        * 
+//*                                                                        *
+//*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *
+//*                                                                        *
+//*                                                                        *
+//**************************************************************************
+
+#include "GoalKeeper.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
+#include "RunLog.h"
+using namespace KKB;
+
+#define  MAXLINELEN  4096
+
+#include "StartStopPoint.h"
+#include "ScannerHeaderFields.h"
+
+
+namespace  KKLSC
+{
+
+#if  !defined(_SCANNERFILEENTRY_)
+  class  ScannerFileEntry;
+  typedef  class  ScannerFileEntry*  ScannerFileEntryPtr;
+#endif
+
+
+  /** 
+   * @class  ScannerFile  ScannerFile.h  base class to be used for all the different Scanner File Formats.
+   */
+  class  ScannerFile
+  {
+  public:
+    typedef  ScannerFile*  ScannerFilePtr;
+
+    typedef  enum  {sfSimple,
+                    sf2BitEncoded,
+                    sf3BitEncoded,
+                    sf4BitEncoded,
+                    sfZlib3BitEncoded,
+                    sfUnKnown
+                   }  ScannerFileFormat;
+
+    typedef  enum  {ioRead,  ioWrite}  IOMode;
+
+    typedef  KKB::int32   int32;
+    typedef  KKB::uint32  uint32;
+    typedef  KKB::int64   int64;
+    typedef  KKB::uint64  uint64;
+
+
+    /**  Constructor for opening file for reading */
+    ScannerFile (const KKStr&  _fileName,
+                 RunLog&       _log
+                );
+
+    /**  Constructor for opening file for Writing */
+    ScannerFile (const KKStr&  _fileName,
+                 uint32        _pixelsPerScanLine,
+                 uint32        _frameHeight,
+                 RunLog&       _log
+                );
+
+    virtual  ~ScannerFile ();
+
+    virtual  int32  MemoryConsumedEstimated ()  const;
+
+    virtual  ScannerFileFormat  FileFormat ()  const  {return sfUnKnown;}
+
+    KKStr   FileFormatStr      ()  const;
+
+    virtual  void  Close ();
+
+    virtual  void  Flush ();
+
+    static
+      const  uchar*  ConpensationTable (ScannerFileFormat  format);
+  
+    bool                    BuildFrameOffsetsRunning  ()  const {return  frameOffsetsBuildRunning;}
+    int64                   ByteOffsetScanLineZero    ()  const {return  byteOffsetScanLineZero;}  /**< Byte offset of 1st scan line after header field.                */
+    bool                    Eof                       ()  const {return  eof;}
+    const KKStr&            FileName                  ()  const {return  fileName;}
+    int64                   FileSizeInBytes           ()  const {return  fileSizeInBytes;}         /**<  When opening a existing file represents size of file in Bytes. */
+    bool                    FlatFieldEnabled          ()  const {return  flatFieldEnabled;}
+    uint32                  FlowMeterCounter          ()  const {return  flowMeterCounter;}
+    uint32                  FlowMeterCounterScanLine  ()  const {return  flowMeterCounterScanLine;}
+    int32                   FrameHeight               ()  const {return  frameHeight;}
+    uchar*                  FrameBuffer               ()  const {return  frameBuffer;}
+    bool                    FrameOffsetsLoaded        ()  const {return  frameOffsetsLoaded;}
+    int64                   FrameBufferFileOffsetLast ()  const {return  frameBufferFileOffsetLast;}
+    int64                   FrameBufferFileOffsetNext ()  const {return  frameBufferFileOffsetNext;}
+    ScannerHeaderFieldsPtr  HeaderFields              ()  const {return  headerFields;}
+    int32                   LargestKnowmFrameNum      ()  const {return  ((int32)frameOffsets.size () - 1);}
+    int32                   LargestKnownScanLine      ()  const {return  largestKnownScanLine;}
+    int32                   LastScanLine              ()  const {return  lastScanLine;}            /**<  Last Scan-line read or written.                               */
+    int32                   NextScanLine              ()  const {return  nextScanLine;}            /**<  Next scan-line to be read.                                    */
+    bool                    Opened                    ()  const {return  opened;}
+    uint32                  PixelsPerScanLine         ()  const {return  pixelsPerScanLine;}
+    float                   ScanRate                  ()  const {return  scanRate;}
+
+    virtual
+    void  ScanRate          (float  _scanRate);
+ 
+  
+
+    /********************************************************************/
+    /*  next several methods support Start-Stop-Point maintenance.      */
+    /********************************************************************/
+
+    /**@brief  Adds a Start-Point to the 'StartStopPoints'  list.  */
+    void  AddStartPoint (int32  _scanLineNum);
+
+    /**@brief  Adds a Stop-Point to the 'StartStopPoints'  list.  */
+    void  AddStopPoint (int32  _scanLineNum);
+
+    void  StartStopPointDelete (int32 _scanLineNum);
+
+    StartStopPointPtr  StartStopPointNearestEntry (int32 _scanLineNum);
+
+    StartStopPointPtr  StartStopPointPrevEntry (int32 _scanLineNum);
+
+    StartStopPointPtr  StartStopPointSuccEntry (int32 _scanLineNum);
+
+    const StartStopPointList&   StartStopPoints ()  const  {return startStopPoints;}
+
+
+
+    /**
+     *@brief  Returns an array indication the record rate in bytes/sec for specified time-intervals.
+     *@details  Each element in the returned array will give the average number of bytes recorded for the time
+     * the corresponding time interval.  Array element 0 starts at the beginning of the Scanner file and covers
+     * the number of scan lines required to account for 'intervalSecs' seconds.
+     */
+    VectorFloatPtr  RecordRateByTimeIntervals (int intervalSecs);
+
+
+    void  AddHeaderField (const KKStr&  _fieldName,
+                          const KKStr&  _fieldValue
+                         );
+
+    void  AddHeaderFields (const ScannerHeaderFieldsPtr  _headerFields);
+
+    const KKStr&  GetValue (const KKStr&  fieldName);
+
+    float  GetValueFloat (const KKStr&  fieldName);
+
+
+
+
+    /**
+     *@brief  Will update the 'frameOffsets' table by scanning the file from the last known entry until the end of file.
+     *@details  It would be best to call this method using a separate thread.  The method will utilize synchronization code
+     *  to prevent interference with the other access methods such as 'GetNextLine', 'FrameRead', etc.  The idea is that
+     *  it will not interfere with file positioning.
+     *@param[in]  cancelFlag  This boolean variable will be monitored by the method; if it turns true it will terminate 
+     *                        and return immediately.
+     */
+    void  BuildFrameOffsets (const volatile bool&  cancelFlag);
+
+    /**
+     *@brief  Call this method to Load the FrameOffsets and StartStop points from the index file.
+     *@details  This method is also called from 'BuildFrameOffsets',
+     */
+    void  LoadIndexFile (bool&  successful);
+
+
+    /**
+     *@brief Read into frame buffer 'frameNum' and reposition so that next scan-line will be the 1st line in the frame.
+     *@details  The purpose of this method is to allow you to get whole frames at a time. Use the access method 'FrameBuffer' 
+     * to get a pointer to the contents of the frame retrieved.  The next call to 'GetNextLine' will return the first scan
+     * line in frame 'frameNum'.
+     */
+    void  FrameRead (uint32  frameNum,
+                     bool&   found
+                    );
+
+
+    virtual 
+    void  GetNextLine (uchar*   lineBuff,
+                       uint32   lineBuffSize,
+                       uint32&  lineSize,
+                       uint32   colCount[],
+                       uint32&  pixelsInRow
+                      );
+  
+    void  InitiateWritting ();
+
+    void  Reset ();
+  
+    void  SkipNextLine ();
+
+
+    /**
+     *@brief  Repositions the file such that the next call to 'GetNextLine' returns the 'scanLine' scan-line.
+     *@details This method depends on the table'frameOffsets'; it will compute the frame number from the scan line
+     * and use the appropriate entry in 'frameOffsets' to start reading from the beginning of the frame that contains
+     * 'scanLine'.  If you select a 'scanLine' that is beyond the known number of scan lines in the scanner file
+     * (see largestKnownScanLine) the eof flag will be set to 'true'.
+     *@param[in]  scanLine  Scan line to skip to so that the next call to 'GetNextLine' retrieves it.
+     */
+    void  SkipToScanLine (int32  scanLine);
+  
+
+    virtual
+    void   WriteScanLine (const uchar*  buffer,
+                          uint32        bufferLen
+                         );
+
+    virtual
+    void   WriteTextBlock (const uchar*  txtBlock,
+                           uint32        txtBlockLen
+                          ) = 0;
+
+ 
+    /**
+     *@brief  Writes a 32 bit number into the Scanner File Stream at current location.  
+     *@param[in]  idNum  nNumber that identifies Instrument data,  ex: 0 is reserved for Flow Meter Count.
+     *@param[in]  scanLineNum  Scan-line that 'dataWord' occured at.
+     *@param[in]  dataWord 32 bit number being written.
+     */
+    virtual
+    void   WriteInstrumentDataWord (uchar             idNum,
+                                    uint32            scanLineNum,
+                                    WordFormat32Bits  dataWord
+                                   );
+
+
+    static
+    ScannerFileFormat  GuessFormatOfFile (const KKStr&  _fileName,
+                                          RunLog&       _log
+                                         );
+  
+    static
+    ScannerFilePtr  CreateScannerFile (KKStr    _fileName,
+                                       RunLog&  _log
+                                      );
+
+    static  
+    ScannerFilePtr  CreateScannerFileForOutput (const KKStr&       _fileName,
+                                                ScannerFileFormat  _format,
+                                                uint32             _pixelsPerScanLine,
+                                                uint32             _frameHeight,
+                                                RunLog&            _log
+                                               );
+  
+    static  
+    ScannerFilePtr  CreateScannerFileForOutput (const KKStr&   _fileName,
+                                                const KKStr&   _formatStr,
+                                                uint32         _pixelsPerScanLine,
+                                                uint32         _frameHeight,
+                                                RunLog&        _log
+                                               );
+  
+
+    static
+    const KKStr&  ScannerFileFormatToStr (ScannerFileFormat  fileFormat);
+    
+    static
+    ScannerFileFormat  ScannerFileFormatFromStr (const KKStr&  fileFormatStr);
+
+
+    /**
+     *@brief Retrieves statistics for a specified Scanner File.
+     *@details Will read the header information for the specified scanner file to retrieve
+     *         parameters.
+     *@param[in]   _scannerFileName    Name of scanner file that you want to retrieve parameters for.
+     *@param[out]  _headerFields       Copy of header fields from Scanner File;  caller will own them and 
+     *                                 be responsible for deleting them;  if != NULL upon call previous 
+     *                                 instance will be deleted.
+     *@param[out]  _scannerFileFormat  Format of scanner file;  ex: sf3BitEncoded.
+     *@param[out]  _frameHeight        Frame height of source camera.
+     *@param[out]  _frameWidth         Width in pixels of scanner file.
+     *@param[out]  _scanRate           Scan lines/sec that imagery was acquired at.
+     *@param[out]  _successful         Indicates if successful in retrieving parameters.
+     *@param[in,out]  _log             Log file.
+     */
+    static
+    void   GetScannerFileParameters (const KKStr&             _scannerFileName,
+                                     ScannerHeaderFieldsPtr&  _headerFields,
+                                     ScannerFileFormat&       _scannerFileFormat,
+                                     int32&                   _frameHeight,
+                                     int32&                   _frameWidth,
+                                     float&                   _scanRate,
+                                     bool&                    _successful,
+                                     RunLog&                  _log
+                                    );
+                                     
+
+
+  protected:
+    void  AllocateFrameBuffer ();
+
+    void  ExtractHeaderField (const KKStr&  fieldName,
+                              const KKStr&  fieldValue
+                             );
+    void  Open (const KKStr&  _fileName);
+
+
+    /**  
+     *@brief  Read in one Scanner File Frame return number of actual scan-lines read. 
+     *@details  Unless end of file is reached this method will read in 'framHeight' scan-lines.
+     */
+    virtual
+      uint32  ReadBufferFrame () = 0;
+
+  
+    void   ReadHeader ();
+
+
+    /**
+     *@brief  Text messages that are embedded in a scanner file can be reported here.
+     *@details  If a derived class/format of 'ScannerFile' contains Text messages, that class
+     * would call this method with the embedded text message.  Possible uses of this would be
+     * instrumentation data such as that produced by CTD.
+     */
+    void  ReportTextMsg (const char*  textBuff, 
+                         int32        numTextBytes
+                        );
+
+    void  ReportInstrumentDataWord (uchar             idNum,
+                                    uint32            scanLineNum,
+                                    WordFormat32Bits  dataWord
+                                   );
+
+
+    int32  FSeek (int64  filePos);
+
+    /**  
+     *@brief Write the contents of 'frameBuffer' to he end of the scanner file.
+     *@details  Will write the entire contents of 'frameBuffer' to the end of the scanner file.
+     */
+    virtual
+      void  WriteBufferFrame () = 0;
+
+
+    /**
+     *@brief  This method is called before any scanner data is added to the file.  It will
+     *        write the header information for the file
+     */
+    void  WriteHeader ();
+
+
+    static
+    void  ReadHeaderOneLine (FILE*   f,
+                             bool&   endOfText,
+                             KKStr&  line
+                            );
+
+    void  SkipBytesForward (uint32  numBytes);
+
+    static
+    const KKStr  fileFormatOptions[];
+
+    void   CreateGoalie ();
+    int64  GetFrameOffset (uint32  frameNum);
+    void   DetermineFrameOffsetForFrame (uint32  frameNum);
+    void   UpdateFrameOffset (uint32  frameNum,
+                              uint32  scanLineNum,
+                              int64   byteOffset
+                             );
+
+    void  SaveIndexFile (std::vector<int64>&  frameOffsets);
+
+    void  AddStartStopEntryToIndexFile (int32                          scanLineNum,
+                                        StartStopPoint::StartStopType  type,
+                                        bool                           deleteEntry
+                                       );
+
+
+    /**
+     *@brief Skip to start of next frame returning back byte offset of that frame.
+     *@details  This will be called by the 'UpdateFrameOffset' and 'DetermineFrameOffsetForFrame'  methods used 
+     *  to build the 'frameOffsets' table.  It is important that the implementation of this method NOT update
+     *  the frameBuffer fields; such as 'frameBuffer', 'frameBufferNextLine', etc .....
+     */
+    virtual
+      int64   SkipToNextFrame () = 0;
+
+    
+    int64                   byteOffsetScanLineZero;  /**< Byte offset of 1st scan line after the header fields. */
+    bool                    eof;
+    FILE*                   file;
+    KKStr                   fileName;
+    int64                   fileSizeInBytes;
+    bool                    flatFieldEnabled;        /**< Indicates if Flat-Field-Correction was enabled when file recorded.  */
+    uint32                  frameHeight;             /**< Represents the number of scam lines per frame; as stored in the Scanner File. */
+    bool                    headerDataWritten;       /**< Sets to true after all Header data has been written.                */
+    ScannerHeaderFieldsPtr  headerFields;
+    IOMode                  ioMode;
+    int32                   largestKnownScanLine;
+    int32                   lastScanLine;            /**< The last scan-line read.                              */
+    RunLog&                 log;
+    int32                   nextScanLine;            /**< The next scan-line that will be returned by 'GetNextLine'. */
+    bool                    opened;
+    uint32                  pixelsPerScanLine;
+    float                   scanRate;                /**< Scan-Lines Per Second.  */
+
+
+    
+    uint32    flowMeterCounter;          /**< Updated when readung Scanner Files; whenever InstrumentID == 0 is read
+                                          * this field will be updated along with 'flowMeterCounterScanLineNum'.
+                                          */
+
+    uint32    flowMeterCounterScanLine;  /**< Represents the scan line that 'flowMeterCounter' was last updated for
+                                          * while reading a Scanner File.
+                                          */
+ 
+    // 'frameBuffer' fields:  The following fields are to be used for buffering ScnnerFile frames, both reading and writing.
+
+    uchar*    frameBuffer;               /**< Raw scanner data will be stored here;  for both reading and writing on scanner  *
+                                          * file frame data. The frame of the scanner file is not the same as a frame from    *
+                                          * the camera.                                                                       *
+                                          */
+
+    int64     frameBufferFileOffsetLast; /**< The byte-offset that the last frameBuffer read or written to starts at.         */
+
+    int64     frameBufferFileOffsetNext; /**< The byte-offset of the next frameBuffer to be read or written                   */
+
+    bool      frameBufferLastReadEof;    /**< Indicates that the last call to 'ReadBufferFrame' encountered    *
+                                          *   feof (file) which means the next call to 'ReadBufferFrame' should return eof.   *
+                                          */
+
+    uint32    frameBufferLen;            /**< Represents the number of bytes being used in 'frameBuffer';  when data is being *
+                                          * read from a Scanner file you would start reading from this point in the buffer and *
+                                          * while data is be written it will be added to 'frameBuffer' and this variable will *
+                                          * be incremented to reflect the new amount occupied.                                *
+                                          */
+ 
+    uint32    frameBufferNextLine;       /**< Next scanline in 'frameBuffer' to either read or write; used to compute the     *
+                                          *   byte offset into the buffer.                                                    *
+                                          */
+
+    uint32    frameBufferNumScanLines;   /**< The Number of scan-lines that the last call to 'ReadBufferFrame' read.          */
+
+    uint32    frameBufferSize;           /**< The number of bytes that were allocated to 'frameBuffer';  'frameBufferLen'     *
+                                          * should never exceed this value.                                                   *
+                                          */
+
+    uint32    frameNumCurLoaded;         /**< Indicates the frame that is currently loaded in 'frameBuffer'.                  */
+
+
+    vector<int64>  frameOffsets;         /**<  Will maintain a list of byte offsets;  each entry will be the byte offset for  *
+                                          * its corresponding frame                                                           *
+                                          */
+    bool      frameOffsetsBuildRunning;
+
+    bool      frameOffsetsLoaded;        /**< Indicates if the entire scannerFile has been scanned and all entries in         *
+                                          * frameOffsets are updated.   Can only be set to 'true' upon successful completion  *
+                                          * of 'BuildFrameOffsets'.                                                           *
+                                          */
+
+    GoalKeeperPtr  goalie;               /**<  Used to control access to the buildFrameIndex table.                           */
+
+    ofstream*      indexFile;            /**< When writing a Scanner file will also write out a ByteOffset index file to aid
+                                          * future access to this file.
+                                          */
+    KKStr          indexFileName;
+
+    ScannerFileEntryPtr  scannerFileEntry;
+
+
+    StartStopPointList  startStopPoints;    /**< Points where he user does or does-not want to process(Count) are tacked in this
+                                             * data structure.  Each entry is flagged as a Start or Stop point.  These entries
+                                             * are saved in the IndexFile along with the frame offsets table.
+                                             */
+
+  };  /* ScannerFile */
+
+  typedef ScannerFile::ScannerFilePtr  ScannerFilePtr;
+
+
+}  /* KKLSC */
+
+
+#endif

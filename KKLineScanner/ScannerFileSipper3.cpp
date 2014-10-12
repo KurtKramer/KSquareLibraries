@@ -1,0 +1,58 @@
+#include  "FirstIncludes.h"
+
+#include  <stdlib.h>
+#include  <memory.h>
+#include  <math.h>
+
+#include  <map>
+#include  <string>
+#include  <iostream>
+#include  <fstream>
+#include  <vector>
+using namespace std;
+
+#include  "MemoryDebug.h"
+
+#include  "KKBaseTypes.h"
+using namespace  KKB;
+
+#include "ScannerFileSipper3.h"
+using namespace KKLSC;
+
+
+
+ScannerFileSipper3::ScannerFileSipper3 ():
+      bytesWritten      (0),
+      bytesLastScanLine (0),
+      scanLinesWritten  (0)
+{
+}
+
+      
+      
+      
+ScannerFileSipper3::~ScannerFileSipper3 ()
+{
+
+}
+
+
+
+void  ScannerFileSipper3::WriteWholeScanLine (ostream& o,
+                                              uchar*   line,
+                                              int32    len
+                                            )
+{
+  bytesLastScanLine = 0;
+  uint32 lenUint = (uint32)len;
+  o.write ((char*)&lenUint, sizeof (lenUint));
+  bytesWritten += sizeof (lenUint);
+  bytesLastScanLine +=  sizeof (lenUint);
+  o.write ((char*)line, lenUint);
+  bytesWritten +=  lenUint;
+  bytesLastScanLine +=   lenUint;
+  scanLinesWritten++;
+}  /* CompressWholeLine */
+
+
+
