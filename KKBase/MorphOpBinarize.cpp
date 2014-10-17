@@ -19,8 +19,8 @@ using namespace KKB;
 
 
 
-MorphOpBinarize::MorphOpBinarize (uint16  _pixelValueMin,
-                                  uint16  _pixelValueMax
+MorphOpBinarize::MorphOpBinarize (kkuint16  _pixelValueMin,
+                                  kkuint16  _pixelValueMax
                                  ):
   MorphOp (),
   pixelValueMin (_pixelValueMin),

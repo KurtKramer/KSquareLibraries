@@ -368,7 +368,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
 
     bool  eof = false;
     KKStr  nextLine = osReadRestOfLine (i, eof);
-    if  (eof  ||  (nextLine[(int16)0] != 'P')  ||  (nextLine[(int16)1] != '5'))
+    if  (eof  ||  (nextLine[(kkint16)0] != 'P')  ||  (nextLine[(kkint16)1] != '5'))
     {
       fclose (i);
       return NULL;
@@ -378,7 +378,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
     nextLine = osReadRestOfLine (i, eof);
     while  (!eof)
     {
-      if  (nextLine[(int16)0] != '#')
+      if  (nextLine[(kkint16)0] != '#')
       {
         if  (headerFieldsRead == 0)
         {
@@ -663,7 +663,7 @@ void  KKB::SaveImagePGM (const Raster&  image,
     headerStr << "P5"            << endl
               << image.Width ()  << endl
               << image.Height () << endl
-              << (int16)255     << endl;
+              << (kkint16)255    << endl;
 
     const char* h = headerStr.Str ();
     fwrite (h, 1, headerStr.Len (), o);
@@ -706,7 +706,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
     headerStr << "P6"            << endl
               << image.Width ()  << endl
               << image.Height () << endl
-              << (int16)255      << endl;
+              << (kkint16)255    << endl;
 
     const char* h = headerStr.Str ();
     fwrite (h, 1, headerStr.Len (), o);
@@ -768,7 +768,7 @@ void  KKB::SaveImagePPM (const Raster&  image,
     headerStr << "P6"            << endl
               << image.Width ()  << endl
               << image.Height () << endl
-              << (int16)255      << endl;
+              << (kkint16)255    << endl;
 
     const char* h = headerStr.Str ();
     fwrite (h, 1, headerStr.Len (), o);

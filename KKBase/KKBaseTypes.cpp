@@ -29,16 +29,16 @@ float  KKB::FloatAbs (float f)
 
 
 // Constant
-KKB::int64         _lrand48_sequence = 0x1234ABCD330ELL;
+kkint64         _lrand48_sequence = 0x1234ABCD330ELL;
 //static KKB::int64  _lrand48_seed     = 305441741LL;
 
 // lrand48 function
 int32  KKB::LRand48 ()
 {
-  static const int64 a = 0x5DEECE66DLL;
-  static const int64 c = 0xBLL;
-  static const int64 m = 281474976710656LL;
-  int64 mask = 281474976710655LL;
+  static const kkint64 a = 0x5DEECE66DLL;
+  static const kkint64 c = 0xBLL;
+  static const kkint64 m = 281474976710656LL;
+  kkint64 mask = 281474976710655LL;
 
   _lrand48_sequence = ( ((a * _lrand48_sequence) & mask) + c ) % m;
   return (int32)(_lrand48_sequence >> 17);
@@ -46,11 +46,11 @@ int32  KKB::LRand48 ()
 
 
 // srand48 function
-void  KKB::SRand48 (int32 _seed)
+void  KKB::SRand48 (kkint64 _seed)
 {
-  int64 seedMask = 65535;
+  kkint64 seedMask = 65535;
   _lrand48_sequence &= seedMask;
-  int64 upperBits = _seed;
+  kkint64 upperBits = _seed;
   upperBits <<= 16;
   _lrand48_sequence |= upperBits;
 }

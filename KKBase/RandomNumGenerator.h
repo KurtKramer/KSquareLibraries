@@ -29,12 +29,12 @@ namespace  KKB
   
   
   private:
-    int64 _lrand48_sequence;
+    kkint64 _lrand48_sequence;
   
-    static const int64 a; 
-    static const int64 c; 
-    static const int64 m;
-    static const int64 mask;
+    static const kkint64 a; 
+    static const kkint64 c; 
+    static const kkint64 m;
+    static const kkint64 mask;
   };  /* RandomNumGenerator */
 }
 

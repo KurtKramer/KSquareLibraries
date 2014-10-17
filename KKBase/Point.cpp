@@ -31,8 +31,8 @@ Point::Point (const Point&  point):
 
 
 
-Point::Point  (int16  _row,
-               int16  _col
+Point::Point  (kkint16  _row,
+               kkint16  _col
               ):
   row (_row),
   col (_col)

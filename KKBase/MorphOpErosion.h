@@ -25,7 +25,7 @@ namespace  KKB
   {
   public:
     MorphOpErosion (StructureType  _structure,
-                    uint16         _structureSize
+                    kkuint16       _structureSize
                    );
     
     virtual ~MorphOpErosion ();
@@ -42,7 +42,7 @@ namespace  KKB
               )  const;
 
     StructureType  structure;
-    uint16         structureSize;
+    kkuint16       structureSize;
   };  /* MorphOpErosion */
 
   typedef  MorphOpErosion*  MorphOpErosionPtr;

@@ -122,12 +122,12 @@ void  Application::ProcessCmdLineParameters (KKB::int32  argc,
     KKStr  parmSwitch     = "";
     char   parmSwitchCode = 0;
 
-    if  (nextField[(int16)0] == '-')
+    if  (nextField[(kkint16)0] == '-')
     {
       parmSwitch = nextField;
       KKStr  parmSwitchUpper = parmSwitch.ToUpper ();
 
-      parmSwitchCode = nextField[(int16)1];
+      parmSwitchCode = nextField[(kkint16)1];
 
       if  (x < expandedParameters.size ())
       {
@@ -162,7 +162,7 @@ bool  Application::ParameterIsASwitch (const KKStr&  parm)
   if  (parm.Len () < 1)
     return false;
 
-  if  (parm[(int16)0] != '-')
+  if  (parm[(kkint16)0] != '-')
     return false;
 
   if  (parm.Len () == 1)

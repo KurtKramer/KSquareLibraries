@@ -103,7 +103,7 @@ namespace  KKLSC
     /**  @brief  Read on one Scanner File Frame. */
     uint32   ReadBufferFrame ();
 
-    virtual  int64  SkipToNextFrame ();
+    virtual  kkint64  SkipToNextFrame ();
 
     /**  @brief Write the contents of 'frameBuffer' to he end of the scanner file. */
     virtual  void  WriteBufferFrame ();

@@ -71,9 +71,9 @@ public:
     }
   }
 
-  uint16   destCellCount;
-  uint32*  destCellIdxs;
-  float*   destCellFracts; 
+  kkuint16  destCellCount;
+  uint32*   destCellIdxs;
+  float*    destCellFracts; 
 };  /* UpdateForSourceCellIdx */
 
 

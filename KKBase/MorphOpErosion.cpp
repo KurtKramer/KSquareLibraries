@@ -20,7 +20,7 @@ using namespace KKB;
 
 
 MorphOpErosion::MorphOpErosion (StructureType  _structure,
-                                uint16         _structureSize
+                                kkuint16       _structureSize
                                ):
   MorphOp (),
   structure      (_structure),

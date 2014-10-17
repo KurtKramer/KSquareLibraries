@@ -25,9 +25,9 @@ namespace  KKLSC
 
     ~ScannerFileSipper3 ();
 
-    int64   BytesWritten      ()  const  {return bytesWritten;}
-    int32   BytesLastScanLine ()  const  {return bytesLastScanLine;}
-    int32   ScanLinesWritten  ()  const  {return scanLinesWritten;}
+    kkint64  BytesWritten      ()  const  {return bytesWritten;}
+    int32    BytesLastScanLine ()  const  {return bytesLastScanLine;}
+    int32    ScanLinesWritten  ()  const  {return scanLinesWritten;}
 
     void  WriteWholeScanLine (ostream&  o,
                               uchar*    line,
@@ -37,9 +37,9 @@ namespace  KKLSC
   private:
     //  The two variables 'rawPixelsBuffUsed' and 'zerosInARow' specify whether Back Ground Run Length data or
     //  raw data is currently be added.  Only one of them can be greater than 0.
-    int64    bytesWritten;
-    int32    bytesLastScanLine;
-    int32    scanLinesWritten;
+    kkint64   bytesWritten;
+    int32     bytesLastScanLine;
+    int32     scanLinesWritten;
   };  /* ScannerFileSipper3 */
 
   typedef  ScannerFileSipper3*  ScannerFileSipper3Ptr;

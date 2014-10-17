@@ -1,7 +1,7 @@
 /* KKStr.h -- String Management Class
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
- */
+ */   
 #ifndef  _KKSTR_
 #define  _KKSTR_
 //************************************************************************************
@@ -52,15 +52,17 @@ namespace  KKB
   class  KKStr 
   {
   public:
-    typedef  KKB::int16          int16;
-    typedef  KKB::uint16         uint16;
-    typedef  KKB::int32          int32;
-    typedef  KKB::uint32         uint32;
-    typedef  KKB::int64          int64;
-    typedef  KKB::uint64         uint64;
-    typedef  KKB::uint16         KKStrInt;
-    typedef  KKStr*              KKStrPtr;
-    typedef  const KKStr*        KKStrConstPtr;
+    /*
+    typedef  KKB::int16    int16;
+    typedef  KKB::uint16   uint16;
+    typedef  KKB::int32    int32;
+    typedef  KKB::uint32   uint32;
+    typedef  KKB::int64    int64;
+    typedef  KKB::uint64   uint64;
+    typedef  KKB::uint16   KKStrInt;
+    */
+    typedef  KKStr*        KKStrPtr;
+    typedef  const KKStr*  KKStrConstPtr;
     //typedef  std::vector<KKStr>  VectorKKStr;
 
     class  LessCaseInsensitiveOperator;  /**< To be used by templates as the Pred operator. */
@@ -68,8 +70,8 @@ namespace  KKB
   private:
     static  const  uint32  StrIntMax;
 
-    KKStrInt  allocatedSize;
-    KKStrInt  len;
+    kkuint16  allocatedSize;
+    kkuint16  len;
     char*     val;
 
   public:
@@ -142,7 +144,7 @@ namespace  KKB
     void     Append (const char* buff);
 
     void     Append (const char* buff,
-                           uint32  buffLen
+                     uint32      buffLen
                     );
 
     void     Append (char ch);
@@ -156,6 +158,8 @@ namespace  KKB
     void     AppendUInt32 (uint32  i);
 
     bool     CharInStr (char  ch);  /**<  Determines if 'ch' occurs anywhere in the string. */
+
+    void     ChopFirstChar ();      /**<  Removes the first character from the string. */
 
     void     ChopLastChar ();       /**<  Removes the last character from the string. */
 
@@ -194,8 +198,8 @@ namespace  KKB
      *@brief Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater.
      */
     static  int32  CompareStrings (const KKStr&  s1, 
-                                 const KKStr&  s2
-                                );
+                                   const KKStr&  s2
+                                  );
 
     /**
      *@brief Concatenates the list of char* strings,  stops at first one that is NULL   
@@ -336,7 +340,7 @@ namespace  KKB
 
     uint32   ExtractTokenUint (const char* delStr);
 
-    uint64   ExtractTokenUint64 (const char* delStr);
+    kkuint64 ExtractTokenUint64 (const char* delStr);
 
     /**
      *@brief Extract the next token from the string assuming that it is a logical True/False value.
@@ -430,7 +434,7 @@ namespace  KKB
       void  MemCpy (void* dest,  void*  src,  uint32  size);
 
     static
-      void  MemSet (void* dest,  uint8  byte, uint32  size);
+      void  MemSet (void* dest,  kkuint8  byte, uint32  size);
 
     static
       const char*  Str (const char*  s);
@@ -528,14 +532,14 @@ namespace  KKB
     float     ToFloat      () const;
     int32     ToInt        () const;
     int32     ToInt32      () const;
-    int64     ToInt64      () const;
+    kkint64   ToInt64      () const;
     double    ToLatitude   () const;   /**< @brief Processes string as if a standard latitude; ex: "15:32.2S" = -15.53833. */
     double    ToLongitude  () const;   /**< @brief Processes string as if a standard longitude; ex: "95:32.2E" = 95.53833. */
     long      ToLong       () const;
     float     ToPercentage () const;
     uint32    ToUint       () const;
     ulong     ToUlong      () const;
-    uint64    ToUint64     () const;
+    kkuint64  ToUint64     () const;
 
     wchar_t*  ToWchar_t    () const;
 
@@ -637,45 +641,46 @@ namespace  KKB
                 )  const; 
                                       
 
-    char    operator[] (int16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (uint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (int32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (uint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (int32    i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (uint32   i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
 
 
     KKStr  operator+ (const char*   right) const;
     KKStr  operator+ (const KKStr&  right) const;
-    KKStr  operator+ (int16   right) const;    KKStr&  operator+= (int32   right)        {return  *this << right;}
+    KKStr  operator+ (kkint16       right) const;    
+    KKStr& operator+= (int32        right)        {return  *this << right;}
 
-    KKStr  operator+ (uint16  right) const;
-    KKStr  operator+ (int32   right) const;
-    KKStr  operator+ (uint32  right) const;
-    KKStr  operator+ (int64   right) const;
-    KKStr  operator+ (uint64  right) const;
-    KKStr  operator+ (float   right) const;
-    KKStr  operator+ (double  right) const;
+    KKStr  operator+ (kkuint16  right) const;
+    KKStr  operator+ (int32     right) const;
+    KKStr  operator+ (uint32    right) const;
+    KKStr  operator+ (kkint64   right) const;
+    KKStr  operator+ (kkuint64  right) const;
+    KKStr  operator+ (float     right) const;
+    KKStr  operator+ (double    right) const;
 
     KKStr&  operator<< (const char*   right);
     KKStr&  operator<< (const KKStr&  right);
-    KKStr&  operator<< (int16   right);
-    KKStr&  operator<< (uint16  right);
-    KKStr&  operator<< (int32   right);
-    KKStr&  operator<< (uint32  right);
-    KKStr&  operator<< (int64   right);
-    KKStr&  operator<< (uint64  right);
-    KKStr&  operator<< (float   right);
-    KKStr&  operator<< (double  right);
+    KKStr&  operator<< (kkint16   right);
+    KKStr&  operator<< (kkuint16  right);
+    KKStr&  operator<< (int32     right);
+    KKStr&  operator<< (uint32    right);
+    KKStr&  operator<< (kkint64   right);
+    KKStr&  operator<< (kkuint64  right);
+    KKStr&  operator<< (float     right);
+    KKStr&  operator<< (double    right);
 
     KKStr&  operator+= (const char*   right)  {return  *this << right;}
     KKStr&  operator+= (const KKStr&  right)  {return  *this << right;}
-    //KKStr&  operator+= (int16   right)        {return  *this << right;}
-    KKStr&  operator+= (uint16  right)        {return  *this << right;}
-    //KKStr&  operator+= (int32   right)        {return  *this << right;}
-    KKStr&  operator+= (uint32  right)        {return  *this << right;}
-    KKStr&  operator+= (int64   right)        {return  *this << right;}
-    KKStr&  operator+= (uint64  right)        {return  *this << right;}
-    KKStr&  operator+= (float   right)        {return  *this << right;}
-    KKStr&  operator+= (double  right)        {return  *this << right;}
+    //KKStr&  operator+= (int16   right)      {return  *this << right;}
+    KKStr&  operator+= (kkuint16  right)      {return  *this << right;}
+    //KKStr&  operator+= (int32   right)      {return  *this << right;}
+    KKStr&  operator+= (uint32    right)      {return  *this << right;}
+    KKStr&  operator+= (kkint64   right)      {return  *this << right;}
+    KKStr&  operator+= (kkuint64  right)      {return  *this << right;}
+    KKStr&  operator+= (float     right)      {return  *this << right;}
+    KKStr&  operator+= (double    right)      {return  *this << right;}
 
 
     //friend  KKB::KKStr& endl (KKStr& _s);
@@ -755,7 +760,7 @@ namespace  KKB
                  );
 
   char*  STRCOPY (char*        dest,
-                  uint16       destSize,
+                  kkuint16     destSize,
                   const char*  src
                  );
 
@@ -769,13 +774,13 @@ namespace  KKB
   int32  SPRINTF (char*        buff,
                   int32        buffSize,
                   const char*  formatSpec,
-                  int16        right
+                  kkint16      right
                  );
 
   int32  SPRINTF (char*        buff,
                   int32        buffSize,
                   const char*  formatSpec,
-                  uint16       right
+                  kkuint16     right
                  );
 
   int32  SPRINTF (char*        buff,
@@ -793,13 +798,13 @@ namespace  KKB
   int32  SPRINTF (char*        buff,
                   int32        buffSize,
                   const char*  formatSpec,
-                  int64        right
+                  kkint64      right
                  );
 
   int32  SPRINTF (char*        buff,
                   int32        buffSize,
                   const char*  formatSpec,
-                  uint64       right
+                  kkuint64     right
                  );
 
   int32  SPRINTF (char*        buff,
@@ -857,7 +862,7 @@ namespace  KKB
 
     static
     KKStrListPtr   ParseDelimitedString (const KKStr&  str,
-                                         const char*    delChars = ",\t\n\r"
+                                         const char*   delChars = ",\t\n\r"
                                         );
 
   private:
@@ -878,17 +883,17 @@ namespace  KKB
                        const char*  mask
                       );
 
-  KKStr  StrFormatInt64 (int64        val,
+  KKStr  StrFormatInt64 (kkint64      val,
                          const char*  mask
                         );
 
 
-  KKStr StrFromInt16  (int16  i);
-  KKStr StrFromUint16 (uint16 ui);
-  KKStr StrFromInt32  (int32  i);
-  KKStr StrFromUint32 (uint32 ui);
-  KKStr StrFromInt64  (int64  i);
-  KKStr StrFromUint64 (uint64 ui);
+  KKStr StrFromInt16  (kkint16  i);
+  KKStr StrFromUint16 (kkuint16 ui);
+  KKStr StrFromInt32  (int32    i);
+  KKStr StrFromUint32 (uint32   ui);
+  KKStr StrFromInt64  (kkint64  i);
+  KKStr StrFromUint64 (kkuint64 ui);
 }  /* namespace KKB; */
 
 #endif

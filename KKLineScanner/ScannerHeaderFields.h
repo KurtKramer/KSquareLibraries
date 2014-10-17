@@ -42,7 +42,7 @@ namespace  KKLSC
               );
 
     void  Add (const KKStr&  fieldName,
-               int64         fieldValue
+               kkint64       fieldValue
               );
 
     void  Add (const KKStr&  fieldName,

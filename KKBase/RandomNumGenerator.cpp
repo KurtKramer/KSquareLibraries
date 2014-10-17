@@ -34,9 +34,9 @@ RandomNumGenerator::RandomNumGenerator ()
 
 RandomNumGenerator::RandomNumGenerator (long  _seed)
 {
-  int64 seedMask = 65535;
+  kkint64 seedMask = 65535;
   _lrand48_sequence &= seedMask;
-  int64 upperBits = _seed;
+  kkint64 upperBits = _seed;
   upperBits <<= 16;
   _lrand48_sequence |= upperBits;
 }
@@ -47,15 +47,15 @@ RandomNumGenerator::~RandomNumGenerator ()
 }
 
 
-const  int64 RandomNumGenerator::c     = 0xB; 
+const  kkint64 RandomNumGenerator::c     = 0xB; 
 #if  defined(WIN32)
-const  int64 RandomNumGenerator::a     = 0x5DEECE66D; 
-const  int64 RandomNumGenerator::m     = 281474976710656;
-const  int64 RandomNumGenerator::mask  = 281474976710655;
+const  kkint64 RandomNumGenerator::a     = 0x5DEECE66D; 
+const  kkint64 RandomNumGenerator::m     = 281474976710656;
+const  kkint64 RandomNumGenerator::mask  = 281474976710655;
 #else
-const  int64 RandomNumGenerator::a     = 0x5DEECE66DLLU; 
-const  int64 RandomNumGenerator::m     = 281474976710656LLU;
-const  int64 RandomNumGenerator::mask  = 281474976710655LLU;
+const  kkint64 RandomNumGenerator::a     = 0x5DEECE66DLLU; 
+const  kkint64 RandomNumGenerator::m     = 281474976710656LLU;
+const  kkint64 RandomNumGenerator::mask  = 281474976710655LLU;
 #endif
 
 

@@ -3826,9 +3826,9 @@ uchar  Raster::Hit  (MaskTypes  mask,
     //return 0;
   }
 
-  uchar  pixVal = 0;
-  int32  totPixVal = 0;
-  int16  numOfHits = 0;
+  uchar    pixVal    = 0;
+  int32    totPixVal = 0;
+  kkint16  numOfHits = 0;
 
   int32  startRow = Max (row - biases[mask], (int32)0);
   int32  endRow   = Min (row + biases[mask], height - 1);
@@ -8871,9 +8871,9 @@ PointListPtr  Raster::DeriveImageLength () const
     a2PixCount = Max ((int32)1, a2PixCount);
     a3PixCount = Max ((int32)1, a3PixCount);
 
-    Point p1 ((int16)(0.5f + a1RowTot / a1PixCount), (int16)(0.5f + a1ColTot / a1PixCount));
-    Point p2 ((int16)(0.5f + a2RowTot / a2PixCount), (int16)(0.5f + a2ColTot / a2PixCount));
-    Point p3 ((int16)(0.5f + a3RowTot / a3PixCount), (int16)(0.5f + a3ColTot / a3PixCount));
+    Point p1 ((kkint16)(0.5f + a1RowTot / a1PixCount), (kkint16)(0.5f + a1ColTot / a1PixCount));
+    Point p2 ((kkint16)(0.5f + a2RowTot / a2PixCount), (kkint16)(0.5f + a2ColTot / a2PixCount));
+    Point p3 ((kkint16)(0.5f + a3RowTot / a3PixCount), (kkint16)(0.5f + a3ColTot / a3PixCount));
 
    
     Point p1Orig = DerivePreRotatedPoint (height, width, p1, orientationAngle);

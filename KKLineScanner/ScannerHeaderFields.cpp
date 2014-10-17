@@ -118,7 +118,7 @@ void  ScannerHeaderFields::Add (const KKStr&  fieldName,
 
 
 void  ScannerHeaderFields::Add (const KKStr&  fieldName,
-                                int64         fieldValue
+                                kkint64       fieldValue
                                )
 {
   KKStr fieldValueStr = StrFromInt64 (fieldValue);

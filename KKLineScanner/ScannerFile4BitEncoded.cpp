@@ -306,12 +306,12 @@ void  ScannerFile4BitEncoded::AllocateRawPixelRecBuffer (uint32 size)
 
 
 
-void  ScannerFile4BitEncoded::AllocateRawStr (uint16  size)
+void  ScannerFile4BitEncoded::AllocateRawStr (kkuint16  size)
 {
   if  (rawStr)
   {
-    uchar*  newRawStr = new uchar[size];
-    uint16  bytesToCopy = Min (rawStrLen, size);
+    uchar*    newRawStr = new uchar[size];
+    kkuint16  bytesToCopy = Min (rawStrLen, size);
     memcpy (newRawStr, rawStr, bytesToCopy);
     delete rawStr;
     rawStr = NULL;
@@ -384,7 +384,7 @@ void  ScannerFile4BitEncoded::BuildConversionTables ()
     }
 
     compensationTable = new uchar[256];
-    for  (int16 pv = 0;  pv < 256;  ++pv)
+    for  (kkint16 pv = 0;  pv < 256;  ++pv)
     {
       uchar encodedValue = convTable8BitTo4Bit[pv];
       compensationTable[pv] = convTable4BitTo8Bit[encodedValue];
@@ -462,7 +462,7 @@ uint32  ScannerFile4BitEncoded::ReadBufferFrame ()
  
 
 
-int64  ScannerFile4BitEncoded::SkipToNextFrame ()
+kkint64  ScannerFile4BitEncoded::SkipToNextFrame ()
 {
   uchar*  scanLine = new uchar[pixelsPerScanLine];
 
@@ -536,10 +536,10 @@ void  ScannerFile4BitEncoded::ProcessInstrumentDataWord (const OpRec&  rec)
 
 
 
-void  ScannerFile4BitEncoded::ProcessRawPixelRecs (uint16  numRawPixelRecs,
-                                                   uchar*  lineBuff,
-                                                   uint32  lineBuffSize,
-                                                   uint32& bufferLineLen
+void  ScannerFile4BitEncoded::ProcessRawPixelRecs (kkuint16  numRawPixelRecs,
+                                                   uchar*    lineBuff,
+                                                   uint32    lineBuffSize,
+                                                   uint32&   bufferLineLen
                                                   )
 {
   if  (numRawPixelRecs > rawPixelRecBufferSize)
@@ -660,9 +660,9 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
 
     else if  (opCode == 12)
     {
-      uint16  numRawRecs = rec.raw32Pixels.len + 1;   // We add 1 to 'numRawRecs' because '1' was subtracted out when written to Scanner File.
-      uint16  numRawPixels = numRawRecs * 2;
-      uint16  newBufferLineLen = bufferLineLen + numRawPixels;
+      kkuint16  numRawRecs = rec.raw32Pixels.len + 1;   // We add 1 to 'numRawRecs' because '1' was subtracted out when written to Scanner File.
+      kkuint16  numRawPixels = numRawRecs * 2;
+      kkuint16  newBufferLineLen = bufferLineLen + numRawPixels;
       if  (newBufferLineLen > lineBuffSize)
       {
         cerr << "ScannerFile4BitEncoded::GetNextScanLine   ***ERROR***  Exceeding 'bufferLineLen';  ScanLine[" << nextScanLine << "]." << endl;
@@ -680,9 +680,9 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
       else
       {
-        uint16  numRawRecs = 1 + 16 * (uint16)(rec.raw513Pixels1.lenHigh) + (uint16)(rec2.raw513Pixels2.lenLow);
-        uint16  numRawPixels = 1 + 2 * numRawRecs;
-        uint16  newBufferLineLen = bufferLineLen + numRawPixels;
+        kkuint16  numRawRecs = 1 + 16 * (kkuint16)(rec.raw513Pixels1.lenHigh) + (kkuint16)(rec2.raw513Pixels2.lenLow);
+        kkuint16  numRawPixels = 1 + 2 * numRawRecs;
+        kkuint16  newBufferLineLen = bufferLineLen + numRawPixels;
         if  (newBufferLineLen > lineBuffSize)
         {
           cerr << "ScannerFile4BitEncoded::GetNextScanLine   ***ERROR***  Exceeding 'bufferLineLen';  ScanLine[" << nextScanLine << "]." << endl;
@@ -788,8 +788,8 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 {
   OpRec  rec;
 
-  uint16  nextCp = 0;
-  uint16  len = rawStrLen;
+  kkuint16  nextCp = 0;
+  kkuint16  len = rawStrLen;
 
   while  (len > 0)
   {
@@ -823,17 +823,17 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 
     else
     {
-      uint16  lenToProcess = Min ((uint16)513, len);
+      kkuint16  lenToProcess = Min ((kkuint16)513, len);
       if  ((lenToProcess % 2) > 0)
       {
         // Can only handle odd number of pixels.
         --lenToProcess;
       }
 
-      uint16  numRawRecsNeeded = (lenToProcess - 1) / 2;
-      uint16  numRawRecsNeededEnc = numRawRecsNeeded - 1;  // When reading back and decoding file will add back 1.
-      uint16  lenHigh = numRawRecsNeededEnc / 16;
-      uint16  lenLow  = numRawRecsNeededEnc % 16;
+      kkuint16  numRawRecsNeeded = (lenToProcess - 1) / 2;
+      kkuint16  numRawRecsNeededEnc = numRawRecsNeeded - 1;  // When reading back and decoding file will add back 1.
+      kkuint16  lenHigh = numRawRecsNeededEnc / 16;
+      kkuint16  lenLow  = numRawRecsNeededEnc % 16;
 
       rec.raw513Pixels1.opCode  = 13;
       rec.raw513Pixels1.lenHigh = lenHigh;
@@ -880,7 +880,7 @@ void  ScannerFile4BitEncoded::WriteNextScanLine (const uchar*  buffer,
 
   curCompStatus = csNull;
 
-  for  (uint16 x = 0;  x < bufferLen;  ++x)
+  for  (kkuint16 x = 0;  x < bufferLen;  ++x)
   {
     uchar   nextCh = convTable8BitTo4Bit[buffer[x]];
 

@@ -166,7 +166,7 @@ void  ScannerFile3BitEncoded::BuildConversionTables ()
     }
 
     compensationTable = new uchar[256];
-    for  (int16 pv = 0;  pv < 256;  ++pv)
+    for  (kkint16 pv = 0;  pv < 256;  ++pv)
     {
       uchar encodedValue = convTable8BitTo3Bit[pv];
       compensationTable[pv] = convTable3BitTo8Bit[encodedValue];
@@ -260,7 +260,7 @@ uint32  ScannerFile3BitEncoded::ReadBufferFrame ()
  
 
 
-int64  ScannerFile3BitEncoded::SkipToNextFrame ()
+kkint64  ScannerFile3BitEncoded::SkipToNextFrame ()
 {
   uchar*  scanLine = new uchar[pixelsPerScanLine];
 

@@ -23,8 +23,8 @@ namespace KKB
 
     Point  (const Point&  point);
 
-    Point  (int16  _row,
-            int16  _col
+    Point  (kkint16  _row,
+            kkint16  _col
            );
 
     Point  (int32  _row,

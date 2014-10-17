@@ -48,7 +48,7 @@ KKStrParser::KKStrParser (const KKStr&  _str):
 
 
 KKStrParser::KKStrParser (const char*  _str):
-    len            ((KKStr::KKStrInt)strlen (_str)),
+    len            ((kkuint16)strlen (_str)),
     nextPos        (0),
     str            (_str),
     trimWhiteSpace (false),

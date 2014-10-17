@@ -314,7 +314,7 @@ RunLog&  RunLog::operator<< (bool  right)
 
 
 
-RunLog&  RunLog::operator<< (int16  right)
+RunLog&  RunLog::operator<< (kkint16  right)
 {
   KKStr  s (30);
   s = StrFormatInt (right, "0");
@@ -324,7 +324,7 @@ RunLog&  RunLog::operator<< (int16  right)
 
 
 
-RunLog&  RunLog::operator<< (uint16 right)
+RunLog&  RunLog::operator<< (kkuint16 right)
 {
   KKStr  s (30);
   s = StrFormatInt (right, "0");
@@ -354,7 +354,7 @@ RunLog&  RunLog::operator<< (uint32  right)
 
 
 
-RunLog&  RunLog::operator<< (int64  right)
+RunLog&  RunLog::operator<< (kkint64  right)
 {
   KKStr  s (30);
   s = StrFormatInt64 (right, "0");
@@ -364,7 +364,7 @@ RunLog&  RunLog::operator<< (int64  right)
 
 
 
-RunLog&  RunLog::operator<< (uint64  right)
+RunLog&  RunLog::operator<< (kkuint64  right)
 {
   KKStr  s (30);
   s = StrFormatInt64 (right, "0");

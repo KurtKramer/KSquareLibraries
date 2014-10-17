@@ -238,14 +238,14 @@ void  KKThread::WaitForThreadToStop (uint32  maxTimeToWait)
     return;
   }
 
-  uint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
+  kkuint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
   uint32  timeWaitedSoFar = 0;
   while  ((status == tsRunning)  ||  (status == tsStopping))
   {
 	osSleepMiliSecs (50);
     if  (maxTimeToWait > 0)
     {
-      uint64 now = osGetLocalDateTime ().Seconds ();
+      kkuint64 now = osGetLocalDateTime ().Seconds ();
       timeWaitedSoFar = (uint32)(now - startTime);
       if  (timeWaitedSoFar > maxTimeToWait)
         break;

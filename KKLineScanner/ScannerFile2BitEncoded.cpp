@@ -233,12 +233,12 @@ void  ScannerFile2BitEncoded::AllocateRawPixelRecBuffer (uint32 size)
 
 
 
-void  ScannerFile2BitEncoded::AllocateRawStr (uint16  size)
+void  ScannerFile2BitEncoded::AllocateRawStr (kkuint16  size)
 {
   if  (rawStr)
   {
-    uchar*  newRawStr = new uchar[size];
-    uint16  bytesToCopy = Min (rawStrLen, size);
+    uchar*    newRawStr = new uchar[size];
+    kkuint16  bytesToCopy = Min (rawStrLen, size);
     memcpy (newRawStr, rawStr, bytesToCopy);
     delete rawStr;
     rawStr = newRawStr;
@@ -393,7 +393,7 @@ uint32  ScannerFile2BitEncoded::ReadBufferFrame ()
  
 
 
-int64  ScannerFile2BitEncoded::SkipToNextFrame ()
+kkint64  ScannerFile2BitEncoded::SkipToNextFrame ()
 {
   uchar*  scanLine = new uchar[pixelsPerScanLine];
 
@@ -438,10 +438,10 @@ void  ScannerFile2BitEncoded::ProcessTextBlock (const OpRec&  rec)
 
 
 
-void  ScannerFile2BitEncoded::ProcessRawPixelRecs (uint16  numRawPixels,
-                                                   uchar*  lineBuff,
-                                                   uint32  lineBuffSize,
-                                                   uint32& bufferLineLen
+void  ScannerFile2BitEncoded::ProcessRawPixelRecs (kkuint16  numRawPixels,
+                                                   uchar*    lineBuff,
+                                                   uint32    lineBuffSize,
+                                                   uint32&   bufferLineLen
                                                   )
 {
   uint32  numRawPixelRecsToRead  = numRawPixels / 4;
@@ -537,9 +537,9 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
     else if  ((opCode >= 4)  &&  (opCode <= 7))
     {
       // OpCode determines PixelValue OpCode(4)=PV(0), OpCode(5)=PV(1), OpCode(6)=PV(2), OpCode(7)=PV(3),
-      uint16  encodedChar = opCode - 4;
+      kkuint16  encodedChar = opCode - 4;
       runLenChar = convTable2BitTo8Bit [encodedChar];
-      runLen = rec.runLenPVx.len + 3;
+      runLen     = rec.runLenPVx.len + 3;
       uint32  newLineSize = bufferLineLen + runLen;
 
       if  (newLineSize > lineBuffSize)
@@ -718,8 +718,8 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
 
 
 
-void  ScannerFile2BitEncoded::AddRawStrPixelsToEncodedBuffer (uint16&  nextCp, 
-                                                              uint16   len
+void  ScannerFile2BitEncoded::AddRawStrPixelsToEncodedBuffer (kkuint16&  nextCp, 
+                                                              kkuint16   len
                                                              )
 {
   OpRec  rec;
@@ -755,8 +755,8 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
 {
   OpRec  rec;
 
-  uint16  nextCp = 0;
-  uint16  len = rawStrLen;
+  kkuint16  nextCp = 0;
+  kkuint16  len = rawStrLen;
 
   while  (len > 0)
   {
@@ -793,9 +793,9 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
 
     else
     {
-      uint16  rawPixelsThisLoop = Min (len, (uint16)4095);
-      uint16  lenHigh = rawPixelsThisLoop / 256;
-      uint16  lenLow  = rawPixelsThisLoop % 256;
+      kkuint16  rawPixelsThisLoop = Min (len, (kkuint16)4095);
+      kkuint16  lenHigh = rawPixelsThisLoop / 256;
+      kkuint16  lenLow  = rawPixelsThisLoop % 256;
 
       rec.rawPixelsVarLen12Bit.opCode = 13;
       rec.rawPixelsVarLen12Bit.lenHigh = (uchar)lenHigh;
@@ -831,7 +831,7 @@ void  ScannerFile2BitEncoded::WriteNextScanLine (const uchar*  buffer,
 
   curCompStatus = csNull;
 
-  for  (uint16 x = 0;  x < bufferLen;  ++x)
+  for  (kkuint16 x = 0;  x < bufferLen;  ++x)
   {
     uchar   nextCh = convTable8BitTo2Bit[buffer[x]];
 

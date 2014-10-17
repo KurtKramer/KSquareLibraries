@@ -1,13 +1,13 @@
 /* XmlStream.h -- Class to XML Objects;  still in development.
- * Copyright (C) 1994-2014 Kurt Kramer
- * For conditions of distribution and use, see copyright notice in KKB.h
+ * Copyright (C) 1994-2011 Kurt Kramer
+ * For conditions of distribution and use, see copyright notice in KKU.h
  */
 #ifndef  _XMLSTREAM_
 #define  _XMLSTREAM_
 #include  <map>
 
-#include  "KKStr.h"
-#include  "Tokenizer.h"
+#include "KKStr.h"
+#include "Tokenizer.h"
 using namespace KKB;
 
 namespace  KKB
@@ -28,6 +28,9 @@ namespace  KKB
         value (_value)
     {}
 
+    const KKStr&  Name  ()  const  {return name;}
+    const KKStr&  Value ()  const  {return value;}
+
   private:
     KKStr  name;
     KKStr  value;
@@ -45,10 +48,20 @@ namespace  KKB
 
     XmlTag (TokenizerPtr  _tokenStream);
 
+    /**
+     *@brief Will construct a generix XML tag from the following characters in the stream.
+     *@details It sis assumed that the next chracter read from the input strem "i" will be '<'; if not then it is assumed that the next 
+     * chracter is the one imediately following the '<'.
+     */
+    XmlTag (istream&  i);
+
     const KKStr&  Name ()           const  {return  name;}
+    TagTypes      TagType ()        const  {return  tagType;}
     int32         AttributeCount () const  {return  (int32)attributes.size ();}
     const KKStr&  AttributeName  (int32 _attributeNum)  const;
     const KKStr&  AttributeValue (int32 _attributeNum)  const;
+    const KKStr&  AttributeValue (const KKStr& attributeName)  const;
+    const KKStr&  AttributeValue (const char*  attributeName)  const;
 
   private:
     KKStr             name;
@@ -57,6 +70,7 @@ namespace  KKB
   };  /* XmlTag */
 
   typedef  XmlTag::XmlTagPtr  XmlTagPtr;
+
 
 
 
@@ -69,7 +83,6 @@ namespace  KKB
     XmlToken (TokenTypes  _tokenType);
 
     TokenTypes  TokenType ()  {return tokenType;}
-
 
   private:
     TokenTypes  tokenType;
@@ -109,28 +122,6 @@ namespace  KKB
   };  /* XmlContent */
 
 
-  class  XmlOperator
-  {
-  public:  
-    XmlOperator (const KKStr&  _name);
-    ~XmlOperator ();
-
-
-  virtual void  Write (ostream& o,
-                       void*    element
-                      ) = 0;
-
-  virtual void*  Read (Tokenizer&  i) = 0;
-
-  /**
-   * @brief  Will register itself plus any XmlOperator's that it needs to process a Read or Write request.
-   */
-  virtual void  Register ();
-
-  private:
-    KKStr   name;
-  };  /* XmlOperator */
-
 
 
   class  XmlStream
@@ -143,7 +134,7 @@ namespace  KKB
     XmlStream ();
     ~XmlStream ();
 
-    XmlTokenPtr  GetNextToken ();  /*!< Will return either a XmlElement or a XmlContent */
+    XmlTokenPtr  GetNextToken ();  /**< Will return either a XmlElement or a XmlContent */
 
     typedef  XmlElementPtr  (*XmlElementCreator) (XmlTagPtr  tag, XmlStream& i);
 
@@ -160,52 +151,11 @@ namespace  KKB
     static  map<KKStr, XmlElementCreator>  xmlElementCreators;
     static  XmlElementCreator  LookUpXmlElementCreator (const KKStr&  _name);
   };  /* XmlStream */
-
-
-  class  XmlObject
-  {
-  public:
-    const KKStr&  Name  () const  {return  name;}
-    const KKStr&  Type  () const  {return  type;}
-    void*         Value () const  {return  value;}
-
-  private:
-    KKStr  name;
-    KKStr  type;
-    void*  value;
-  };
-
-/*
-
-  XmlObjectPtr   GetNextObject (XmlStream s)
-  {
-    // 1) element = GetNextElement ();
-    // 2) XmlStream = NewStreamEndingWith (element-Name());
-    // 3) return CreateXmlObject (element, XmlStream);
-    return NULL;
-  }
-
-
-
-  XmlObjectPtr   XmlStream::CreateXmlObject (XmlElement  e, XmlStream s)
-  {
-    XmlOperator op = GetOperator (e);
-
-    XmlObjectList  objs = new XmlObjectList ();
-
-    XmlObject  nextObj = GetNextObject (s);
-
-    while  (nextObj)
-    {
-      objs.Add (nextObj);
-      nextObj = GetNextObject (s);
-    }
-
-    op->CreatFommXmlObjs (e, objs);
-  }  //  / * CreateXmlObject * /
-*/
-
 }
+
+
+
+
 
 
 #endif

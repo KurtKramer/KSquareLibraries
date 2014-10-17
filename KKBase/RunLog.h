@@ -138,12 +138,12 @@ namespace KKB
 
 
     RunLog&  operator<< (bool            right);
-    RunLog&  operator<< (int16           right);
-    RunLog&  operator<< (uint16          right);
+    RunLog&  operator<< (kkint16         right);
+    RunLog&  operator<< (kkuint16        right);
     RunLog&  operator<< (int32           right);
     RunLog&  operator<< (uint32          right);
-    RunLog&  operator<< (int64           right);
-    RunLog&  operator<< (uint64          right);
+    RunLog&  operator<< (kkint64         right);
+    RunLog&  operator<< (kkuint64        right);
     RunLog&  operator<< (double          right);
 
     RunLog&  operator<< (char            right);

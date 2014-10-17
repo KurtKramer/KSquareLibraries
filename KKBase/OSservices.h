@@ -74,11 +74,11 @@ namespace KKB
   /**
    *@brief Calls the appropriate 64 bit function for operating system.
    */
-  int64          osFTELL (FILE* f);
+  kkint64        osFTELL (FILE* f);
 
-  int            osFSEEK (FILE*  f,
-                          int64  offset,
-                          int    origin
+  int            osFSEEK (FILE*    f,
+                          kkint64  offset,
+                          int      origin
                          );
 
   //***************************************************************************
@@ -137,7 +137,7 @@ namespace KKB
 
   KKB::DateTime  osGetFileDateTime (const KKStr& fileName);
 
-  int64          osGetFileSize (const KKStr&  fileName);
+  kkint64        osGetFileSize (const KKStr&  fileName);
 
   double         osGetKernalTimeUsed ();
 
@@ -163,7 +163,7 @@ namespace KKB
   /**
    *@brief Returns milisecs that system (Windows = has been started,  Linux time in epoch).
    */
-  uint64  osGetSystemTimeInMiliSecs ();
+  kkuint64  osGetSystemTimeInMiliSecs ();
 
 
   /**

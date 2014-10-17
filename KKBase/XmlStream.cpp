@@ -1,11 +1,12 @@
 /* XmlStream.cpp -- Class to XML Objects;  still in development.
  * Copyright (C) 1994-2011 Kurt Kramer
- * For conditions of distribution and use, see copyright notice in KKB.h
+ * For conditions of distribution and use, see copyright notice in KKU.h
  */
 #include "FirstIncludes.h"
 
 #include <stdio.h>
 #include <fstream>
+#include <string.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -15,6 +16,7 @@
 using namespace std;
 
 
+#include "BitString.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "Tokenizer.h"
@@ -36,42 +38,151 @@ XmlStream::~XmlStream ()
 }
 
 
-/*!  
- \brief  Will return either a XmlElement or a XmlContent
- */
-XmlTokenPtr  XmlStream::GetNextToken ()  /*!< Will return either a XmlElement or a XmlContent */
+
+void  ReadWholeTag (istream&  i,
+                    KKStr&    tagStr
+                   )
 {
-  if  (tokenStream->EndOfFile ())
-    return NULL;
+  tagStr = "";
+  while  (!i.eof ())
+  {
+    char nextCh = i.get ();
+    if  (nextCh != 0)
+      tagStr.Append (nextCh);
+    if  (nextCh == '>')
+      break;
+  }
 
-  KKStrPtr  tokenStr = tokenStream->Peek (0);
-  if  (tokenStr == NULL)
-    return NULL;
-
-  if  ((*tokenStr) == "<")
-    return  ProcessElement ();
-  else
-    return new XmlContent (tokenStream);
-}  /* GetNextToken */
-
-
+  return;
+}  /* ReadWholeTag */
 
 
-XmlElementPtr  XmlStream::ProcessElement ()
+
+void  ExtractAttribute (KKStr&  tagStr, 
+                        KKStr&  attributeName,
+                        KKStr&  attributeValue
+                       )
 {
-  // We are assuming that we are at the very beginning of a new element.  In this case
-  // the very next thing we get should be a tag field.
+  int32  startIdx = 0;
+  int32  len = tagStr.Len ();
+  attributeName  = "";
+  attributeValue = "";
 
-  XmlTagPtr tag = new XmlTag (tokenStream);
-  if  (!tag)
-    return  NULL;
+  // Skip over lading spaces
+  while  (startIdx < len)
+  {
+    if  (strchr ("\n\t\r ", tagStr[startIdx]) == NULL)
+      break;
+    startIdx++;
+  }
 
-  XmlElementCreator creator = LookUpXmlElementCreator (tag->Name ());
-  if  (creator)
-    return  creator (tag, *this);
+  if  (startIdx >= len)
+  {
+    tagStr = "";
+    return;
+  }
+
+  int32 idx = startIdx;
+
+  // Skip until we find the '=' character.
+  while  (idx < len)
+  {
+    if  (tagStr[idx] == '=')
+      break;
+    ++idx;
+  }
+
+  if  (idx >= len)
+  {
+    tagStr = "";
+    return;
+  }
+
+  attributeName = tagStr.SubStrPart (startIdx, idx - 1);
+
+  ++idx;  // Skip past '=' character.
+  
+  // Skip over leading spaces
+  while  (idx < len)
+  {
+    if  (strchr ("\n\t\r ", tagStr[idx]) == NULL)
+      break;
+    ++idx;
+  }
+
+  if  (idx >= len)
+  {
+    tagStr = "";
+    return;
+  }
+
+  int  valueStartIdx = idx;
+
+  while  (idx < len)
+  {
+    if  (strchr ("\n\t\r ", tagStr[idx]) != NULL)
+      break;
+    ++idx;
+  }
+
+  attributeValue = tagStr.SubStrPart (valueStartIdx, idx - 1);
+
+  tagStr = tagStr.SubStrPart (idx + 1);
+
+  return;
+}  /* ExtractAttribute */
+
+
+
+XmlTag::XmlTag (istream&  i)
+{
+  tagType = tagNULL;
+
+  if  (i.peek () == '<')
+    i.get ();
+
+  KKStr tagStr (100);
+  ReadWholeTag (i, tagStr);
+
+  if  (tagStr.FirstChar () == '/')
+  {
+    tagStr.ChopFirstChar ();
+    tagType = tagEnd;
+  }
+
+  if  (tagStr.EndsWith ("/>"))
+  {
+    tagType = tagEmpty;
+    tagStr.ChopLastChar ();
+    tagStr.ChopLastChar ();
+  }
+
+  else if  (tagStr.LastChar () != '>')
+  {
+    tagType = tagStart;
+  }
+
   else
-    return NULL;
-}  /* ProcessElement */
+  {
+    if  (tagType == tagNULL)
+      tagType = tagStart;
+    tagStr.ChopLastChar ();
+  }
+
+  name.TrimLeft ();
+  name.TrimRight ();
+
+  name = tagStr.ExtractToken2 (" \n\r\t");
+  KKStr attributeName (20);
+  KKStr attributeValue (20);
+
+  while  (!tagStr.Empty ())
+  {
+    ExtractAttribute (tagStr, attributeName, attributeValue);
+    if  (!attributeName.Empty ())
+      attributes.push_back (XmlAttribute (attributeName, attributeValue));
+  }
+}
 
 
 
@@ -179,6 +290,77 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
 
 
 
+const KKStr&  XmlTag::AttributeValue (const KKStr& attributeName)  const
+{
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  {
+    if  (idx->Name ().EqualIgnoreCase (attributeName))
+      return idx->Value ();
+  }
+
+  return KKStr::EmptyStr ();
+} /* AttributeValue */
+
+
+
+
+const KKStr&  XmlTag::AttributeValue (const char* attributeName)  const
+{
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  {
+    if  (idx->Name ().EqualIgnoreCase (attributeName))
+      return idx->Value ();
+  }
+
+  return KKStr::EmptyStr ();
+} /* AttributeValue */
+
+
+
+
+/**  
+ *@brief  Will return either a XmlElement or a XmlContent
+ */
+XmlTokenPtr  XmlStream::GetNextToken ()  /*!< Will return either a XmlElement or a XmlContent */
+{
+  if  (tokenStream->EndOfFile ())
+    return NULL;
+
+  KKStrConstPtr  tokenStr = tokenStream->Peek (0);
+  if  (tokenStr == NULL)
+    return NULL;
+
+  if  ((*tokenStr) == "<")
+    return  ProcessElement ();
+  else
+    return new XmlContent (tokenStream);
+}  /* GetNextToken */
+
+
+
+
+XmlElementPtr  XmlStream::ProcessElement ()
+{
+  // We are assuming that we are at the very beginning of a new element.  In this case
+  // the very next thing we get should be a tag field.
+
+  XmlTagPtr tag = new XmlTag (tokenStream);
+  if  (!tag)
+    return  NULL;
+
+  XmlElementCreator creator = LookUpXmlElementCreator (tag->Name ());
+  if  (creator)
+    return  creator (tag, *this);
+  else
+    return NULL;
+}  /* ProcessElement */
+
+
+
+
+
 
 XmlToken::XmlToken (TokenTypes  _tokenType):
   tokenType (_tokenType)
@@ -218,7 +400,7 @@ map<KKStr, XmlStream::XmlElementCreator>  XmlStream::xmlElementCreators;
 
 /**
  @brief Register a 'XmlElementCreator' function with its associated name.
- @details  if you try to register the same function with the same name will generate a warning to
+ @details  if you try to register the same function with the same name will generate a warnming to 
            cerr.  If you try and register two different functions with the same name will throw 
            an exception.
  */
@@ -233,7 +415,7 @@ void   XmlStream::RegisterXmlElementCreator  (const KKStr&       elementName,
     // A 'XmlElementCreator'  creator already exists with name 'elementName'.
     if  (idx->second == creator)
     {
-      // Trying to register the same function,  No harm done.
+      // Trying to regisetr the same function,  No harm done.
       cerr << std::endl
            << "XmlStream::RegisterXmlElementCreator   ***WARNING***   trying to register[" << elementName << "] Creator more than once." << std::endl
            << std::endl;

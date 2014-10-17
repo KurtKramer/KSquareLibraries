@@ -89,7 +89,7 @@ FILE*  KKB::osFOPEN (const char* fileName,
 
 
 
-int64  KKB::osFTELL (FILE* f)
+kkint64  KKB::osFTELL (FILE* f)
 {
 #if  defined(OS_WINDOWS)
   return  _ftelli64 (f);
@@ -100,9 +100,9 @@ int64  KKB::osFTELL (FILE* f)
 
 
 
-int  KKB::osFSEEK (FILE*  f,
-                   int64  offset,
-                   int    origin
+int  KKB::osFSEEK (FILE*    f,
+                   kkint64  offset,
+                   int      origin
                   )
 {
 #if  defined(OS_WINDOWS)
@@ -300,8 +300,8 @@ char  KKB::osGetDriveLetter (const KKStr&  pathName)
   if  (pathName.Len () < 3)
     return 0;
 
-  if  (pathName[(int16)1] == ':')
-    return  pathName[(int16)0];
+  if  (pathName[(kkint16)1] == ':')
+    return  pathName[(kkint16)0];
 
   return 0;
 #endif
@@ -973,14 +973,14 @@ int  osLocateEnvStrStart (const KKStr&  str,
 
 KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 {
-  int16  x = osLocateEnvStrStart (src, 0);
+  kkint16  x = osLocateEnvStrStart (src, 0);
   if  (x < 0)  return  src;
 
   KKStr  str (src);
 
   while  (x >= 0)
   {
-    char  startChar = src[(int16)(x + 1)];
+    char  startChar = src[(kkint16)(x + 1)];
     char  endChar = ')';
 
     if       (startChar == '(')   endChar = ')';
@@ -1870,7 +1870,7 @@ double  KKB::osGetKernalTimeUsed ()
 
 
 #ifdef  WIN32
-uint64  KKB::osGetSystemTimeInMiliSecs ()
+kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 {
   return timeGetTime();
 }  /* osGetSystemTimeInMiliSecs */
@@ -1990,7 +1990,7 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
 
 
 #ifdef  WIN32
-KKB::int64  KKB::osGetFileSize (const KKStr&  fileName)
+kkint64  KKB::osGetFileSize (const KKStr&  fileName)
 {
   WIN32_FIND_DATA   wfd;
 
@@ -2000,7 +2000,7 @@ KKB::int64  KKB::osGetFileSize (const KKStr&  fileName)
     return  -1;
   }
 
-  return  (int64)(wfd.nFileSizeHigh) * (int64)MAXDWORD + (int64)(wfd.nFileSizeLow);
+  return  (kkint64)(wfd.nFileSizeHigh) * (kkint64)MAXDWORD + (kkint64)(wfd.nFileSizeLow);
 }
 
 
@@ -2701,7 +2701,7 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
 
   int32  zed = 0;
 
-  if  (path[(uint16)1] == ':')
+  if  (path[(kkuint16)1] == ':')
   {
     parts.push_back (path.SubStrPart (0, 1));
     zed += 2;

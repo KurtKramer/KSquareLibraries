@@ -88,9 +88,9 @@ BitString::BitString (const BitString&  b):
 }
 
 
-BitString::BitString (uint32   _bitLen,
-                      uint16*  bitNums,
-                      uint32   bitNumsLen
+BitString::BitString (uint32     _bitLen,
+                      kkuint16*  bitNums,
+                      kkuint32   bitNumsLen
                      ):
     bitLen  (_bitLen),
     byteLen (0),
@@ -304,7 +304,7 @@ void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const
       {
         if  ((br % 2) == 1)
         {
-          setBits.push_back ((uint16)bitNum);
+          setBits.push_back ((kkuint16)bitNum);
         }
 
         br = br / 2;

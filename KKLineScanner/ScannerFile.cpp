@@ -178,7 +178,7 @@ int32  ScannerFile::MemoryConsumedEstimated ()  const
 {
   int32  mem = sizeof (*this) + 
                fileName.MemoryConsumedEstimated ()       +
-               frameOffsets.size () * sizeof(int64)      +
+               frameOffsets.size () * sizeof(kkint64)    +
                indexFileName.MemoryConsumedEstimated ()  +
                startStopPoints.MemoryConsumedEstimated ();
 
@@ -413,11 +413,11 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
   VectorFloatPtr  recordRates = new VectorFloat (totalNumIntervals, 0.0f);
   int  idx = 0;
 
-  uint32  frameOffsetsIdx = 0;
-  int64  bytesThisFrame = frameOffsets[frameOffsetsIdx];
-  float frameOffsetsStartTime = 0;
-  float frameOffsetsEndTime   = secsPerFrame;
-  float frameOffsetsRecRate = (float)bytesThisFrame / secsPerFrame;
+  uint32   frameOffsetsIdx = 0;
+  kkint64  bytesThisFrame = frameOffsets[frameOffsetsIdx];
+  float    frameOffsetsStartTime = 0;
+  float    frameOffsetsEndTime   = secsPerFrame;
+  float    frameOffsetsRecRate = (float)bytesThisFrame / secsPerFrame;
 
   while  (idx <  totalNumIntervals)
   {
@@ -453,9 +453,9 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
 
 
 
-void  ScannerFile::UpdateFrameOffset (uint32  frameNum,
-                                      uint32  scanLineNum,
-                                      int64   byteOffset
+void  ScannerFile::UpdateFrameOffset (uint32   frameNum,
+                                      uint32   scanLineNum,
+                                      kkint64  byteOffset
                                      )
 {
   CreateGoalie ();
@@ -484,9 +484,9 @@ void  ScannerFile::UpdateFrameOffset (uint32  frameNum,
 
 
 
-int64  ScannerFile::GetFrameOffset (uint32  frameNum)
+kkint64  ScannerFile::GetFrameOffset (uint32  frameNum)
 {
-  int64  offset = -1;
+  kkint64  offset = -1;
   goalie->StartBlock ();
   if  (frameNum < frameOffsets.size ())
     offset = frameOffsets[frameNum];
@@ -1197,7 +1197,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
   CreateGoalie ();
   goalie->StartBlock ();
 
-  int64  origFilePos = osFTELL (file);
+  kkint64  origFilePos = osFTELL (file);
 
   frameOffsetsBuildRunning = true;
 
@@ -1255,7 +1255,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
       // Reposition to beginning of last frame that is recorded in frameOfsets.
       FSeek (frameOffsets[lastFrameNum]);
       
-      int64  nextFrameByteOffset = SkipToNextFrame ();
+      kkint64  nextFrameByteOffset = SkipToNextFrame ();
       while  ((nextFrameByteOffset >= 0)  &&  (goalie->NumBlockedThreads () < 1))
       {
         int32 fileSizeInScanLines = (lastFrameNum + 1) * frameHeight;
@@ -1289,7 +1289,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
 
 
 
-void  ScannerFile::SaveIndexFile (vector<int64>&  frameOffsets)
+void  ScannerFile::SaveIndexFile (vector<kkint64>&  frameOffsets)
 {
   indexFileName = osRemoveExtension (fileName) + ".idx";
   ofstream f (indexFileName.Str ());
@@ -1347,9 +1347,9 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
     if  (lineName.EqualIgnoreCase ("IndexEntry"))
     {
-      uint32 frameNum    = ln.ExtractTokenUint   ("\t\n\r");
-      int32  scanLineNum = ln.ExtractTokenInt    ("\t\n\r");
-      uint64 byteOffset  = ln.ExtractTokenUint64 ("\t\n\r");
+      uint32   frameNum    = ln.ExtractTokenUint   ("\t\n\r");
+      int32    scanLineNum = ln.ExtractTokenInt    ("\t\n\r");
+      kkuint64 byteOffset  = ln.ExtractTokenUint64 ("\t\n\r");
       UpdateFrameOffset (frameNum, scanLineNum, byteOffset);
       if  (scanLineNum > largestKnownScanLine)
         largestKnownScanLine = scanLineNum;
@@ -1401,7 +1401,7 @@ void  ScannerFile::SkipBytesForward (uint32  numBytes)
 
 
 
-int32  ScannerFile::FSeek (int64  filePos)
+int32  ScannerFile::FSeek (kkint64  filePos)
 {
   int32  returnCd = 0;
   returnCd = osFSEEK (file, filePos, SEEK_SET);

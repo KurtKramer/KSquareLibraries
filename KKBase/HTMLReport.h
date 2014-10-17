@@ -36,8 +36,8 @@ namespace KKB
 
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  int32           right);
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  uint32          right);
-    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  int64           right);
-    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  uint64          right);
+    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  kkint64         right);
+    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  kkuint64        right);
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  double          right);
 
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  char            right);
@@ -91,11 +91,11 @@ namespace KKB
                           );
 
   HTMLReport&  operator<< (HTMLReport&  htmlReport,
-                           KKB::int64   right
+                           kkint64      right
                           );
 
   HTMLReport&  operator<< (HTMLReport&  htmlReport,
-                           KKB::uint64  right
+                           kkuint64     right
                           );
 
   HTMLReport&  operator<< (HTMLReport&  htmlReport,

@@ -159,7 +159,7 @@ namespace  KKB
       EntryPtr  PopFromBack    ();                              /**< @brief  Removes the last element in the container and returns its pointer. If the container is empty will return NULL.    */
       int32     PtrToIdx       (EntryPtr _entry)        const;  /**< @brief  returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
       void      RandomizeOrder ();
-      void      RandomizeOrder (int64     seed);
+      void      RandomizeOrder (kkint64   seed);
       int32     QueueSize      ()                       const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
       //void      Sort           (QueueComparison<Entry>*  comparison);
 
@@ -465,9 +465,9 @@ namespace  KKB
 
 
   template <class Entry>
-  void  KKQueue<Entry>::RandomizeOrder (int64  seed)
+  void  KKQueue<Entry>::RandomizeOrder (kkint64  seed)
   {
-    SRand48 ( seed );
+    SRand48 (seed);
     RandomizeOrder ();
   }  /* RandomizeOrder */
 

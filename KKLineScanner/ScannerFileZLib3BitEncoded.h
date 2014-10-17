@@ -80,7 +80,7 @@ namespace  KKLSC
                              );
 
     virtual
-      int64  SkipToNextFrame ();
+      kkint64  SkipToNextFrame ();
     
     virtual
       uint32  ReadBufferFrame ();

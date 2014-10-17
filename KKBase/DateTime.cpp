@@ -502,10 +502,10 @@ int32  DateType::Days ()  const
 
 
 
-KKB::uint64   DateType::Seconds ()  const
+kkuint64   DateType::Seconds ()  const
 {
-  uint64  numDays = (uint64)Days ();
-  uint64  numSecs = numDays * (uint64)86400;
+  kkuint64  numDays = (kkuint64)Days ();
+  kkuint64  numSecs = numDays * (kkuint64)86400;
   return  numSecs;
 }
 
@@ -1071,10 +1071,10 @@ int32 DateTime::Compare (const DateTime&  right)  const
 
 
 
-KKB::uint64  DateTime::Seconds () const
+kkuint64  DateTime::Seconds () const
 {
-  uint64  secsInDate = (uint64)date.Seconds ();
-  uint64  secsInTime = (uint64)time.Seconds ();
+  kkuint64  secsInDate = (kkuint64)date.Seconds ();
+  kkuint64  secsInTime = (kkuint64)time.Seconds ();
   return  secsInDate + secsInTime;
 }
 

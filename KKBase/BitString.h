@@ -48,9 +48,9 @@ namespace  KKB
      *@param[in]  _bitNums     List if bit positions to set to '1'.
      *@param[in]  _bitNumsLen  Size of '_bitNums' array.
      */
-    BitString (uint32   _bitLen,
-               uint16*  _bitNums,
-               uint32   _bitNumsLen
+    BitString (uint32     _bitLen,
+               kkuint16*  _bitNums,
+               uint32     _bitNumsLen
               );
 
 

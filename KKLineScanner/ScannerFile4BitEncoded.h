@@ -171,7 +171,7 @@ namespace  KKLSC
     /**  @brief  Read in one Scanner File Frame. */
     uint32   ReadBufferFrame ();
 
-    virtual  int64  SkipToNextFrame ();
+    virtual  kkint64  SkipToNextFrame ();
 
     /**  @brief Write the contents of 'frameBuffer' to he end of the scanner file. */
     virtual  void  WriteBufferFrame ();
@@ -233,10 +233,10 @@ namespace  KKLSC
     void  ProcessTextBlock (const OpRec&  rec);
     void  ProcessInstrumentDataWord (const OpRec&  rec);
     void  AllocateRawPixelRecBuffer (uint32 size);
-    void  ProcessRawPixelRecs (uint16  numRawPixelRecs,
-                               uchar*  lineBuff,
-                               uint32  lineBuffSize,
-                               uint32& bufferLineLen
+    void  ProcessRawPixelRecs (kkuint16   numRawPixelRecs,
+                               uchar*     lineBuff,
+                               uint32     lineBuffSize,
+                               uint32&    bufferLineLen
                               );
 
     RawPixelRec*  rawPixelRecBuffer;
@@ -247,7 +247,7 @@ namespace  KKLSC
 
     void  AddCurRunLenToOutputBuffer ();
     void  AddCurRawStrToOutputBuffer ();
-    void  AllocateRawStr (uint16  size);
+    void  AllocateRawStr (kkuint16  size);
     void  ReSizeEncodedBuff (uint32  newSize);
 
     typedef  enum  {csNull, csRunLen, csRaw}  CompStatus;
@@ -258,8 +258,8 @@ namespace  KKLSC
     uint32    encodedBuffSize;       /**< Size of 'encodedBuff' allocated.                                              */
 
     uchar*    rawStr;
-    uint16    rawStrLen;
-    uint16    rawStrSize;
+    kkuint16    rawStrLen;
+    kkuint16    rawStrSize;
     //uint16    rawStrNumSameInARow;
 
     int32  runLen;

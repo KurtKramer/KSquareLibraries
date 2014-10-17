@@ -78,7 +78,7 @@ namespace  KKLSC
     uint32   ReadBufferFrame ();
 
     virtual
-      int64  SkipToNextFrame ();
+      kkint64  SkipToNextFrame ();
 
         /**  @brief Write the contents of 'frameBuffer' to he end of the scanner file. */
     virtual  void  WriteBufferFrame ();
@@ -127,10 +127,10 @@ namespace  KKLSC
     /** Methods and variables that are required for reading a scanner file. */
     void  ProcessTextBlock (const OpRec&  rec);
     void  AllocateRawPixelRecBuffer (uint32 size);
-    void  ProcessRawPixelRecs (uint16  numRawPixels,
-                               uchar*  lineBuff,
-                               uint32  lineBuffSize,
-                               uint32& bufferLineLen
+    void  ProcessRawPixelRecs (kkuint16  numRawPixels,
+                               uchar*    lineBuff,
+                               uint32    lineBuffSize,
+                               uint32&   bufferLineLen
                               );
 
     RawPixelRec*  rawPixelRecBuffer;
@@ -143,11 +143,11 @@ namespace  KKLSC
     
     void  AddCurRawStrToOutputBuffer ();
 
-    void  AddRawStrPixelsToEncodedBuffer (uint16&  nextCp, 
-                                          uint16   len
+    void  AddRawStrPixelsToEncodedBuffer (kkuint16&  nextCp, 
+                                          kkuint16   len
                                          );
 
-    void  AllocateRawStr (uint16  size);
+    void  AllocateRawStr (kkuint16  size);
 
     void  ReSizeEncodedBuff (uint32  newSize);
 
@@ -159,8 +159,8 @@ namespace  KKLSC
     uint32    encodedBuffSize;       /**< Size of 'encodedBuff' allocated.                                              */
 
     uchar*    rawStr;
-    uint16    rawStrLen;
-    uint16    rawStrSize;
+    kkuint16  rawStrLen;
+    kkuint16  rawStrSize;
 
 
     int32  runLen;

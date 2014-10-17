@@ -73,48 +73,62 @@ namespace KKB
   typedef  unsigned  long   ulong;    /**< @brief  Unsigned long       */
 
   #if  defined(WIN32)  ||  defined(WIN64)
-    typedef  __int8            int8;
+    //typedef  __int8            int8;
+    //typedef  unsigned __int8   uint8;
     typedef  __int8            kkint8;
-    typedef  unsigned __int8   uint8;
     typedef  unsigned __int8   kkuint8;
-    typedef  __int16           int16;    /**<@brief  16 bit signed integer. */
-    typedef  unsigned __int16  uint16;   /**<@brief  16 bit unsigned integer. */
+    //typedef  __int16           int16;    /**<@brief  16 bit signed integer. */
+    //typedef  unsigned __int16  uint16;   /**<@brief  16 bit unsigned integer. */
+    typedef  __int16           kkint16;  /**<@brief  16 bit signed integer. */
+    typedef  unsigned __int16  kkuint16; /**<@brief  16 bit unsigned integer. */
     //typedef  wchar_t          WCHAR;
     typedef  __int32           int32;
     typedef  __int32           kkint32;
     typedef  unsigned __int32  uint32;
     typedef  unsigned __int32  kkuint32;
+    /*
     typedef  __int64           int64;
     typedef  unsigned __int64  uint64;
+    */
+    typedef  __int64           kkint64;
+    typedef  unsigned __int64  kkuint64;
   #else
   #if  defined(__GNUG__)
-    typedef  __INT8_TYPE__     int8;
+    //typedef  __INT8_TYPE__     int8;
+    //typedef  __UINT8_TYPE__    uint8;
     typedef  __INT8_TYPE__     kkint8;
-    typedef  __UINT8_TYPE__    uint8;
     typedef  __UINT8_TYPE__    kkuint8;
-    typedef  __INT16_TYPE__    int16;    /**<@brief  16 bit signed integer. */
-    typedef  __UINT16_TYPE__   uint16;   /**<@brief  16 bit unsigned integer. */
+    //typedef  __INT16_TYPE__    int16;    /**<@brief  16 bit signed integer. */
+    //typedef  __UINT16_TYPE__   uint16;   /**<@brief  16 bit unsigned integer. */
+    typedef  __INT16_TYPE__    kkint16;  /**<@brief  16 bit signed integer. */
+    typedef  __UINT16_TYPE__   kkuint16; /**<@brief  16 bit unsigned integer. */
     typedef  unsigned short    WCHAR;
     typedef  __INT32_TYPE__    int32;
     typedef  __INT32_TYPE__    kkint32;
     typedef  __UINT32_TYPE__   uint32;
     typedef  __UINT32_TYPE__   kkuint32;
-    typedef  __INT64_TYPE__    int64;
-    typedef  __UINT64_TYPE__   uint64;
+    //typedef  __INT64_TYPE__    int64;
+    //typedef  __UINT64_TYPE__   uint64;
+    typedef  __INT64_TYPE__    kkint64;
+    typedef  __UINT64_TYPE__   kkuint64;
   #else
-    typedef  int8_t            int8;     /**<@brief  8  bit signed integer.   */
+    //typedef  int8_t            int8;     /**<@brief  8  bit signed integer.   */
+    //typedef  uint8_t           uint8;    /**<@brief  8  bit unsigned integer. */
     typedef  int8_t            kkint8;   /**<@brief  8  bit signed integer.   */
-    typedef  uint8_t           uint8;    /**<@brief  8  bit unsigned integer. */
     typedef  uint8_t           kkuint8;  /**<@brief  8  bit unsigned integer. */
-    typedef  int16_t           int16;    /**<@brief 16 bit signed integer.    */
-    typedef  uint16_t          uint16;   /**<@brief 16 bit unsigned integer.  */
+    //typedef  int16_t           int16;    /**<@brief 16 bit signed integer.    */
+    //typedef  uint16_t          uint16;   /**<@brief 16 bit unsigned integer.  */
+    typedef  int16_t           kkint16;  /**<@brief 16 bit signed integer.    */
+    typedef  uint16_t          kkuint16; /**<@brief 16 bit unsigned integer.  */
     typedef  unsigned short    WCHAR;
     typedef  int32_t           int32;
     typedef  int32_t           kkInt32;
     typedef  uint32_t          uint32;
     typedef  uint32_t          kkUint32;
-    typedef  int64_t           int64;
-    typedef  uint64_t          uint64;
+    //typedef  int64_t           int64;
+    //typedef  uint64_t          uint64;
+    typedef  int64_t           kkint64;
+    typedef  uint64_t          kkuint64;
   #endif
   #endif
 
@@ -134,31 +148,31 @@ namespace KKB
   float  FloatAbs (float f);
 
 
-  typedef  std::vector<bool>   VectorBool;
-  typedef  std::vector<char>   VectorChar;
-  typedef  std::vector<uchar>  VectorUchar;
-  typedef  std::vector<int>    VectorInt;
-  typedef  std::vector<uint>   VectorUint;
-  typedef  std::vector<int16>  VectorInt16;   /**< @brief  Vector of signed 16 bit integers.   */
-  typedef  std::vector<uint16> VectorUint16;  /**< @brief  Vector of unsigned 16 bit integers. */
-  typedef  std::vector<short>  VectorShort;
-  typedef  std::vector<ulong>  VectorUlong;
-  typedef  std::vector<int32>  VectorInt32;   /**< @brief  Vector of signed 32 bit integers.   */
-  typedef  std::vector<uint32> VectorUint32;  /**< @brief  Vector of unsigned 32 bit integers. */
-  typedef  std::vector<int64>  VectorInt64;
-  typedef  std::vector<uint64> VectorUint64;
-  typedef  std::vector<double> VectorDouble;  /**< @brief  Vector of doubles.                 */
-  typedef  std::vector<float>  VectorFloat;
+  typedef  std::vector<bool>     VectorBool;
+  typedef  std::vector<char>     VectorChar;
+  typedef  std::vector<uchar>    VectorUchar;
+  typedef  std::vector<int>      VectorInt;
+  typedef  std::vector<uint>     VectorUint;
+  typedef  std::vector<kkint16>  VectorInt16;   /**< @brief  Vector of signed 16 bit integers.   */
+  typedef  std::vector<kkuint16> VectorUint16;  /**< @brief  Vector of unsigned 16 bit integers. */
+  typedef  std::vector<short>    VectorShort;
+  typedef  std::vector<ulong>    VectorUlong;
+  typedef  std::vector<kkint32>  VectorInt32;   /**< @brief  Vector of signed 32 bit integers.   */
+  typedef  std::vector<kkuint32> VectorUint32;  /**< @brief  Vector of unsigned 32 bit integers. */
+  typedef  std::vector<kkint64>  VectorInt64;
+  typedef  std::vector<kkuint64> VectorUint64;
+  typedef  std::vector<double>   VectorDouble;  /**< @brief  Vector of doubles.                 */
+  typedef  std::vector<float>    VectorFloat;
 
-  typedef  VectorChar*         VectorCharPtr;
-  typedef  VectorUchar*        VectorUcharPtr;
-  typedef  VectorInt*          VectorIntPtr;
-  typedef  VectorInt32*        VectorInt32Ptr;
-  typedef  VectorInt64*        VectorInt64Ptr;
-  typedef  VectorUlong*        VectorUlongPtr;
-  typedef  VectorFloat*        VectorFloatPtr;
-  typedef  VectorDouble*       VectorDoubletPtr;
-  typedef  VectorShort*        VectorShortPtr;
+  typedef  VectorChar*           VectorCharPtr;
+  typedef  VectorUchar*          VectorUcharPtr;
+  typedef  VectorInt*            VectorIntPtr;
+  typedef  VectorInt32*          VectorInt32Ptr;
+  typedef  VectorInt64*          VectorInt64Ptr;
+  typedef  VectorUlong*          VectorUlongPtr;
+  typedef  VectorFloat*          VectorFloatPtr;
+  typedef  VectorDouble*         VectorDoubletPtr;
+  typedef  VectorShort*          VectorShortPtr;
 
   /** @brief Generic Min function,  Both parameters must be of the same type.  */
   template <class T> T  Min (T  a, 
@@ -240,7 +254,7 @@ namespace KKB
   int32  LRand48 ();
 
   /** @brief Seeds the Lrand48 functions with the parameters passed to it. */
-  void  SRand48 (int32 _seed);
+  void  SRand48 (kkint64 _seed);
 
   bool  IsNaN (const float&  f);
   bool  IsNaN (const double&  d);

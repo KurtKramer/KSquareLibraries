@@ -86,7 +86,7 @@ namespace  KKB
      */
     int32  Days ()  const;
 
-    uint64   Seconds () const;
+    kkuint64   Seconds () const;
 
     KKStr   MM_DD_YY    () const;
     KKStr   MMM_DD_YYYY () const;    /**< @brief Convert into displayable string; ex: May/02/2010.  */
@@ -238,7 +238,7 @@ namespace  KKB
 
     const TimeType&       Time () const  {return  time;}
 
-    uint64                Seconds () const;
+    kkuint64              Seconds () const;
     
     short                 Year  () const  {return  date.Year  ();}
     uchar                 Month () const  {return  date.Month ();}

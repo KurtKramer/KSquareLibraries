@@ -24,8 +24,8 @@ namespace  KKB
   class  MorphOpBinarize :  public MorphOp
   {
   public:
-    MorphOpBinarize (uint16  _pixelValueMin,
-                     uint16  _pixelValueMax
+    MorphOpBinarize (kkuint16  _pixelValueMin,
+                     kkuint16  _pixelValueMax
                     );
     
     virtual ~MorphOpBinarize ();
@@ -41,8 +41,8 @@ namespace  KKB
                int32  col
               )  const;
 
-    uint16  pixelValueMin;
-    uint16  pixelValueMax;
+    kkuint16  pixelValueMin;
+    kkuint16  pixelValueMax;
   };
 
   typedef  MorphOpBinarize*  MorphOpBinarizePtr;

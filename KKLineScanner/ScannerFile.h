@@ -57,11 +57,6 @@ namespace  KKLSC
 
     typedef  enum  {ioRead,  ioWrite}  IOMode;
 
-    typedef  KKB::int32   int32;
-    typedef  KKB::uint32  uint32;
-    typedef  KKB::int64   int64;
-    typedef  KKB::uint64  uint64;
-
 
     /**  Constructor for opening file for reading */
     ScannerFile (const KKStr&  _fileName,
@@ -91,18 +86,18 @@ namespace  KKLSC
       const  uchar*  ConpensationTable (ScannerFileFormat  format);
   
     bool                    BuildFrameOffsetsRunning  ()  const {return  frameOffsetsBuildRunning;}
-    int64                   ByteOffsetScanLineZero    ()  const {return  byteOffsetScanLineZero;}  /**< Byte offset of 1st scan line after header field.                */
+    kkint64                 ByteOffsetScanLineZero    ()  const {return  byteOffsetScanLineZero;}  /**< Byte offset of 1st scan line after header field.                */
     bool                    Eof                       ()  const {return  eof;}
     const KKStr&            FileName                  ()  const {return  fileName;}
-    int64                   FileSizeInBytes           ()  const {return  fileSizeInBytes;}         /**<  When opening a existing file represents size of file in Bytes. */
+    kkint64                 FileSizeInBytes           ()  const {return  fileSizeInBytes;}         /**<  When opening a existing file represents size of file in Bytes. */
     bool                    FlatFieldEnabled          ()  const {return  flatFieldEnabled;}
     uint32                  FlowMeterCounter          ()  const {return  flowMeterCounter;}
     uint32                  FlowMeterCounterScanLine  ()  const {return  flowMeterCounterScanLine;}
     int32                   FrameHeight               ()  const {return  frameHeight;}
     uchar*                  FrameBuffer               ()  const {return  frameBuffer;}
     bool                    FrameOffsetsLoaded        ()  const {return  frameOffsetsLoaded;}
-    int64                   FrameBufferFileOffsetLast ()  const {return  frameBufferFileOffsetLast;}
-    int64                   FrameBufferFileOffsetNext ()  const {return  frameBufferFileOffsetNext;}
+    kkint64                 FrameBufferFileOffsetLast ()  const {return  frameBufferFileOffsetLast;}
+    kkint64                 FrameBufferFileOffsetNext ()  const {return  frameBufferFileOffsetNext;}
     ScannerHeaderFieldsPtr  HeaderFields              ()  const {return  headerFields;}
     int32                   LargestKnowmFrameNum      ()  const {return  ((int32)frameOffsets.size () - 1);}
     int32                   LargestKnownScanLine      ()  const {return  largestKnownScanLine;}
@@ -337,7 +332,7 @@ namespace  KKLSC
                                    );
 
 
-    int32  FSeek (int64  filePos);
+    int32  FSeek (kkint64  filePos);
 
     /**  
      *@brief Write the contents of 'frameBuffer' to he end of the scanner file.
@@ -365,15 +360,16 @@ namespace  KKLSC
     static
     const KKStr  fileFormatOptions[];
 
-    void   CreateGoalie ();
-    int64  GetFrameOffset (uint32  frameNum);
-    void   DetermineFrameOffsetForFrame (uint32  frameNum);
-    void   UpdateFrameOffset (uint32  frameNum,
-                              uint32  scanLineNum,
-                              int64   byteOffset
-                             );
+    void     CreateGoalie ();
+    kkint64  GetFrameOffset (uint32  frameNum);
+    void     DetermineFrameOffsetForFrame (uint32  frameNum);
 
-    void  SaveIndexFile (std::vector<int64>&  frameOffsets);
+    void     UpdateFrameOffset (uint32   frameNum,
+                                uint32   scanLineNum,
+                                kkint64  byteOffset
+                               );
+
+    void  SaveIndexFile (std::vector<kkint64>&  frameOffsets);
 
     void  AddStartStopEntryToIndexFile (int32                          scanLineNum,
                                         StartStopPoint::StartStopType  type,
@@ -388,14 +384,14 @@ namespace  KKLSC
      *  the frameBuffer fields; such as 'frameBuffer', 'frameBufferNextLine', etc .....
      */
     virtual
-      int64   SkipToNextFrame () = 0;
+      kkint64   SkipToNextFrame () = 0;
 
     
-    int64                   byteOffsetScanLineZero;  /**< Byte offset of 1st scan line after the header fields. */
+    kkint64                 byteOffsetScanLineZero;  /**< Byte offset of 1st scan line after the header fields. */
     bool                    eof;
     FILE*                   file;
     KKStr                   fileName;
-    int64                   fileSizeInBytes;
+    kkint64                 fileSizeInBytes;
     bool                    flatFieldEnabled;        /**< Indicates if Flat-Field-Correction was enabled when file recorded.  */
     uint32                  frameHeight;             /**< Represents the number of scam lines per frame; as stored in the Scanner File. */
     bool                    headerDataWritten;       /**< Sets to true after all Header data has been written.                */
@@ -426,9 +422,9 @@ namespace  KKLSC
                                           * the camera.                                                                       *
                                           */
 
-    int64     frameBufferFileOffsetLast; /**< The byte-offset that the last frameBuffer read or written to starts at.         */
+    kkint64   frameBufferFileOffsetLast; /**< The byte-offset that the last frameBuffer read or written to starts at.         */
 
-    int64     frameBufferFileOffsetNext; /**< The byte-offset of the next frameBuffer to be read or written                   */
+    kkint64   frameBufferFileOffsetNext; /**< The byte-offset of the next frameBuffer to be read or written                   */
 
     bool      frameBufferLastReadEof;    /**< Indicates that the last call to 'ReadBufferFrame' encountered    *
                                           *   feof (file) which means the next call to 'ReadBufferFrame' should return eof.   *
@@ -453,7 +449,7 @@ namespace  KKLSC
     uint32    frameNumCurLoaded;         /**< Indicates the frame that is currently loaded in 'frameBuffer'.                  */
 
 
-    vector<int64>  frameOffsets;         /**<  Will maintain a list of byte offsets;  each entry will be the byte offset for  *
+    vector<kkint64>  frameOffsets;       /**<  Will maintain a list of byte offsets;  each entry will be the byte offset for  *
                                           * its corresponding frame                                                           *
                                           */
     bool      frameOffsetsBuildRunning;

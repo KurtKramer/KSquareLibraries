@@ -79,12 +79,12 @@ uint32  ScannerFileSimple::ReadBufferFrame ()
 
 
 
-int64  ScannerFileSimple::SkipToNextFrame ()
+kkint64  ScannerFileSimple::SkipToNextFrame ()
 {
   //int64  byteOffset = osFTELL (file);
-  int64  byteOffset = osFTELL (file);
+  kkint64  byteOffset = osFTELL (file);
 
-  int64  nextFrameByteOffset = byteOffset + frameBufferSize;
+  kkint64  nextFrameByteOffset = byteOffset + frameBufferSize;
   int32  returnCd = osFSEEK (file, nextFrameByteOffset - 1, SEEK_SET);
 
   char buff[10];

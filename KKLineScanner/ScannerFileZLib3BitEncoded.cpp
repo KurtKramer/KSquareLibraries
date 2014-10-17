@@ -293,7 +293,7 @@ void  ScannerFileZLib3BitEncoded::ExpandBufferNoCopy (uchar*&  buffer,
 
 
 
-int64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
+kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
 {
   bool  bufferFrameRead = false;
 

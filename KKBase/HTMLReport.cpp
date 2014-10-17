@@ -128,7 +128,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
 
 
 HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
-                              KKB::int64   right
+                              kkint64      right
                              )
 {
   KKStr  s (30);
@@ -140,7 +140,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
 
 
 HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
-                              KKB::uint64  right
+                              kkuint64     right
                              )
 {
   KKStr  s (30);
