@@ -9,6 +9,16 @@
 
 using namespace KKMachineLearning;
 
+/**
+ *@namespace  SVM289_BFS
+ *@brief   This is a vesion 2.89 of "Chih-Chung Chang" and "Chih-Jen Lin"  libSVM (Support Vector Machine) that selects different features per pair of classes.
+ *@details 
+ *@code
+ *   Downloaded from "http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
+ *@endcode
+ *@details For each pair of classes a 'FeatureNumList" instance specifies which features are to be used during kernal computations.
+ */
+
 namespace  SVM289_BFS
 {
   //#ifdef __cplusplus

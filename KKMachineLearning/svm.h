@@ -11,6 +11,17 @@
 #include  "KKStr.h"
 #include  "RunLog.h"
 
+
+/**
+ *@namespace  SVM233
+ *@brief   This is version 2.33 of "Chih-Chung Chang" and "Chih-Jen Lin"  Support vector Machine; the class "ModelOldSVM" calls ths version.
+ *@details 
+ *@code
+ *   Downloaded from "http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
+ *@endcode
+ */
+
+
 namespace  SVM233
 {
   const int32 SCALE = 100;

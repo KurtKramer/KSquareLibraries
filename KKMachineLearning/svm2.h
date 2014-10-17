@@ -3,11 +3,22 @@
 
 #define LIBSVM_VERSION 289
 
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
-#include "KKStr.h"
+#include  "FeatureNumList.h"
+#include  "FeatureVector.h"
+#include  "KKStr.h"
 
 using namespace KKMachineLearning;
+
+
+/**
+ *@namespace  SVM289_MFS
+ *@brief   This is a vesion 2.89 of "Chih-Chung Chang" and "Chih-Jen Lin"  libSVM (Support Vector Machine) that selects different features per pair of classes.
+ *@details 
+ *@code
+ *   Downloaded from "http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
+ *@endcode
+ *@details For each pair of classes a 'FeatureNumList" instance specifies which features are to be used during kernal computations.
+ */
 
 namespace  SVM289_MFS
 {
@@ -281,9 +292,7 @@ namespace  SVM289_MFS
   template <class S, class T> inline void clone(T*& dst, S* src, int32 n)
   {
     dst = new T[n];
-
-    int32  sizeOfT = sizeof(T);
-    KKStr::MemCpy ((void *)dst, (void *)src, sizeOfT * n);
+    memcpy((void *)dst,(void *)src,sizeof(T)*n);
   }
 
   inline double powi (double base, int32 times);
