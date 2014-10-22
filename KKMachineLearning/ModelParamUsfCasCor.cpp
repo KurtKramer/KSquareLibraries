@@ -1,16 +1,12 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
-
-
 #include "MemoryDebug.h"
 using namespace std;
+
 
 #include "KKBaseTypes.h"
 #include "OSservices.h"
@@ -21,14 +17,8 @@ using namespace KKB;
 
 #include "ModelParamUsfCasCor.h"
 
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "MLLTypes.h"
-using namespace MLL;
-
 #include "FileDesc.h"
 #include "MLClass.h"
-//#include "MLLTypes.h"
 using namespace  KKMachineLearning;
 
 

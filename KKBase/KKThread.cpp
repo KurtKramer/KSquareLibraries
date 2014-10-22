@@ -112,9 +112,9 @@ KKThread::~KKThread ()
 
 
 
-int32  KKThread::MemoryConsumedEstimated ()
+kkint32  KKThread::MemoryConsumedEstimated ()
 {
-  int32  estMem = sizeof (crashed)                + 
+  kkint32  estMem = sizeof (crashed)                + 
                   sizeof (msgQueue)               + 
                   sizeof (shutdownFlag)           +
                   sizeof (startPrerequisites)     +
@@ -227,7 +227,7 @@ void  KKThread::ShutdownThread ()
 
 
 
-void  KKThread::WaitForThreadToStop (uint32  maxTimeToWait)
+void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
 {
   if  ((status == tsNotStarted)  || 
        (status == tsStopped)     ||
@@ -239,14 +239,14 @@ void  KKThread::WaitForThreadToStop (uint32  maxTimeToWait)
   }
 
   kkuint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
-  uint32  timeWaitedSoFar = 0;
+  kkuint32  timeWaitedSoFar = 0;
   while  ((status == tsRunning)  ||  (status == tsStopping))
   {
 	osSleepMiliSecs (50);
     if  (maxTimeToWait > 0)
     {
       kkuint64 now = osGetLocalDateTime ().Seconds ();
-      timeWaitedSoFar = (uint32)(now - startTime);
+      timeWaitedSoFar = (kkuint32)(now - startTime);
       if  (timeWaitedSoFar > maxTimeToWait)
         break;
     }
@@ -317,7 +317,7 @@ void  KKThread::Start (ThreadPriority  _priority,
   }
   else
   {
-    threadId = (int32)windowsThreadId;
+    threadId = (kkint32)windowsThreadId;
 
     switch  (priority)
     {
@@ -357,7 +357,7 @@ void  KKThread::Start (ThreadPriority  _priority,
   }
   else 
   {
-    threadId = (int32)linuxThreadId;
+    threadId = (kkint32)linuxThreadId;
     SetThreadName ();
     successful = true;
   }
@@ -520,9 +520,9 @@ KKThreadList::~KKThreadList ()
 
 
 
-int32  KKThreadList::MemoryConsumedEstimated ()  const
+kkint32  KKThreadList::MemoryConsumedEstimated ()  const
 {
-  int32  memEst = sizeof (KKThreadList);
+  kkint32  memEst = sizeof (KKThreadList);
 
   KKThreadList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

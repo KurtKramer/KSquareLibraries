@@ -63,8 +63,8 @@ void  ExtractAttribute (KKStr&  tagStr,
                         KKStr&  attributeValue
                        )
 {
-  int32  startIdx = 0;
-  int32  len = tagStr.Len ();
+  kkint32  startIdx = 0;
+  kkint32  len = tagStr.Len ();
   attributeName  = "";
   attributeValue = "";
 
@@ -82,7 +82,7 @@ void  ExtractAttribute (KKStr&  tagStr,
     return;
   }
 
-  int32 idx = startIdx;
+  kkint32 idx = startIdx;
 
   // Skip until we find the '=' character.
   while  (idx < len)
@@ -251,7 +251,7 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
 
 
   // At this point the only thing in tokens should be Attribute Pairs.
-  int32  idx = 0;
+  kkint32  idx = 0;
   name = (*tokens)[idx];
   idx++;
 

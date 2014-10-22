@@ -36,7 +36,7 @@ namespace  KKB
      */
     CmdLineExpander (const KKStr&  _applicationName,
                      RunLog&       _log,
-                     int32         argc,
+                     kkint32       argc,
                      char**        argv
                     );
 
@@ -51,7 +51,7 @@ namespace  KKB
 
     ~CmdLineExpander ();
 
-    void   ExpandCmdLine (int32   argc, 
+    void   ExpandCmdLine (kkint32 argc, 
                           char**  argv
                          );
 

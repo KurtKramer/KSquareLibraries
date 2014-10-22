@@ -84,11 +84,11 @@ public:
    *@param[in]  _log A logfile stream. All important events will be ouput to this stream
    *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
    */
-  SVMModel (const KKStr&          _rootFileName,   
-            bool&                 _successful,
-            FileDescPtr           _fileDesc,
-            RunLog&               _log,
-            volatile const bool&  _cancelFlag
+  SVMModel (const KKStr&   _rootFileName,   
+            bool&          _successful,
+            FileDescPtr    _fileDesc,
+            RunLog&        _log,
+            VolConstBool&  _cancelFlag
            );
   
 
@@ -104,11 +104,11 @@ public:
    *@param[in]  _log A logfile stream. All important events will be ouput to this stream
    *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
    */
-  SVMModel (istream&              _in,   // Create from existing Model on Disk.
-            bool&                 _successful,
-            FileDescPtr           _fileDesc,
-            RunLog&               _log,
-            volatile const bool&  _cancelFlag
+  SVMModel (istream&       _in,   // Create from existing Model on Disk.
+            bool&          _successful,
+            FileDescPtr    _fileDesc,
+            RunLog&        _log,
+            VolConstBool&  _cancelFlag
            );
 
 
@@ -130,12 +130,12 @@ public:
    *@param[in]  _cancelFlag  The training process will monitor this flag; if it goes true it
    *            return to caller.
    */
-  SVMModel (SVMparam&             _svmParam,
-            FeatureVectorList&    _examples,
-            ClassAssignments&     _assignments,
-            FileDescPtr           _fileDesc,
-            RunLog&               _log,
-            volatile const bool&  _cancelFlag
+  SVMModel (SVMparam&           _svmParam,
+            FeatureVectorList&  _examples,
+            ClassAssignments&   _assignments,
+            FileDescPtr         _fileDesc,
+            RunLog&             _log,
+            VolConstBool&       _cancelFlag
            );
 
 
@@ -153,20 +153,20 @@ public:
   //MLClassList&  ImageClasses ()  {return mlClasses;}  
   const ClassAssignments&  Assignments () const  {return assignments;}
 
-  //int32                DuplicateDataCount () const {return duplicateDataCount;}
+  //kkint32              DuplicateDataCount () const {return duplicateDataCount;}
 
-  int32              MemoryConsumedEstimated ()  const;
+  kkint32            MemoryConsumedEstimated ()  const;
 
   virtual
   bool               NormalizeNominalAttributes ();  // Return tru, if nominal fields
                                                      // need to be normalized.
 
-  int32              NumOfClasses ()  const  {return numOfClasses;}
+  kkint32            NumOfClasses ()  const  {return numOfClasses;}
 
-  int32              NumOfSupportVectors () const;
+  kkint32            NumOfSupportVectors () const;
 
-  void               SupportVectorStatistics (int32&   numSVs,
-                                              int32&   totalNumSVs
+  void               SupportVectorStatistics (kkint32& numSVs,
+                                              kkint32& totalNumSVs
                                              );
 
   const SVMparam&    SVMParameters           () const {return svmParam;}
@@ -207,12 +207,12 @@ public:
                   MLClassPtr     knownClass,
                   MLClassPtr&    predClass1,
                   MLClassPtr&    predClass2,
-                  int32&            predClass1Votes,
-                  int32&            predClass2Votes,
+                  kkint32&          predClass1Votes,
+                  kkint32&          predClass2Votes,
                   double&           probOfKnownClass,
                   double&           probOfPredClass,
                   double&           probOfPredClass2,
-                  int32&            numOfWinners,
+                  kkint32&          numOfWinners,
                   bool&             knownClassOneOfTheWinners,
                   double&           breakTie
                  );
@@ -231,7 +231,7 @@ public:
    */
   void  ProbabilitiesByClass (FeatureVectorPtr       example,
                               const MLClassList&  _mlClasses,
-                              int32*                 _votes,
+                              kkint32*                 _votes,
                               double*                _probabilities
                              );
 
@@ -249,7 +249,7 @@ public:
    *@param[in]  c2  Class that it was classified as.
    */
   vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                 int32             numToFind,
+                                                 kkint32           numToFind,
                                                  MLClassPtr     c1,
                                                  MLClassPtr     c2
                                                 );
@@ -265,7 +265,7 @@ public:
    *@param[in]  c2  Class that it was classified as.
    */
   vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                  int32             numToFind,
+                                                  kkint32           numToFind,
                                                   MLClassPtr     c1,
                                                   MLClassPtr     c2
                                                  );
@@ -376,7 +376,7 @@ private:
 
   void  PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       example,  
                                             const MLClassList&  _mlClasses,
-                                            int32*                 _votes,
+                                            kkint32*                 _votes,
                                             double*                _probabilities
                                            );
 
@@ -423,27 +423,27 @@ private:
    *@param[in] example That we're converting
    *@param[in] row      The svm_problem structue that the converted data will be stored
    */
-  int32  EncodeExample (FeatureVectorPtr  example,
+  kkint32  EncodeExample (FeatureVectorPtr  example,
                         svm_node*         row
                        );
 
 
   static
-  bool  GreaterThan (int32   leftVotes,
+  bool  GreaterThan (kkint32 leftVotes,
                      double  leftProb,
-                     int32   rightVotes,
+                     kkint32 rightVotes,
                      double  rightProb
                     );
 
 
   static
   void  GreaterVotes (bool     useProbability,
-                      int32    numClasses,
-                      int32*   votes,
-                      int32&   numOfWinners,
+                      kkint32  numClasses,
+                      kkint32*   votes,
+                      kkint32& numOfWinners,
                       double*  probabilities,
-                      int32&   pred1Idx,
-                      int32&   pred2Idx
+                      kkint32& pred1Idx,
+                      kkint32& pred2Idx
                      );
 
 
@@ -458,7 +458,7 @@ private:
                          double&         probOfKnownClass,
                          double&         probOfPredClass,
                          double&         probOfPredClass2,
-                         int32&          numOfWinners,
+                         kkint32&        numOfWinners,
                          bool&           knownClassOneOfTheWinners,
                          double&         breakTie
                         );
@@ -469,13 +469,13 @@ private:
                                MLClassPtr     knownClass,
                                MLClassPtr&    predClass,
                                MLClassPtr&    predClass2,
-                               int32&            predClass1Votes,
-                               int32&            predClass2Votes,
+                               kkint32&          predClass1Votes,
+                               kkint32&          predClass2Votes,
                                double&           probOfKnownClass,
                                double&           probOfPredClass,
                                double&           probOfPredClass2,
                                double&           breakTie,
-                               int32&            numOfWinners,
+                               kkint32&          numOfWinners,
                                bool&             knownClassOneOfTheWinners
                               );
 
@@ -485,7 +485,7 @@ private:
   void  ReadOneVsOne (istream& i);
   void  ReadOneVsAll (istream& i);
   void  ReadOneVsAllEntry (istream& i,
-                           int32    modelIDX
+                           kkint32  modelIDX
                           );
  
   void  ReadBinaryCombos (istream& i);
@@ -504,17 +504,17 @@ private:
   BinaryClassParmsPtr*   binaryParameters;      /**< only used when doing Classification with diff Feature 
                                                  * Selection by 2 class combo's
                                                  */
-  volatile const bool&   cancelFlag;
+  VolConstBool&          cancelFlag;
 
   VectorInt32            cardinality_table;
 
-  MLClassPtr*         classIdxTable;         /**< Supports reverse class lookUp,  indexed by ClassAssignments num,
+  MLClassPtr*            classIdxTable;         /**< Supports reverse class lookUp,  indexed by ClassAssignments num,
                                                  * works with assignments.
                                                  */
 
   double**               crossClassProbTable;   /**< Probabilities  between Binary Classes From last Prediction */
 
-  int32                  crossClassProbTableSize;   // Dimension of of each side of 'crossClassProbTable'  
+  kkint32                crossClassProbTableSize;   // Dimension of of each side of 'crossClassProbTable'  
 
   FeatureEncoderPtr      featureEncoder;        /**< used when doing OneVsOne or OnevsAll processing
                                                  * When doing binary feature selection will use 
@@ -526,13 +526,13 @@ private:
 
   ModelPtr*              models;
 
-  int32                  numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
-  int32                  numOfModels;
+  kkint32                numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
+  kkint32                numOfModels;
 
   VectorShort            oneVsAllAssignment;
   ClassAssignmentsPtr*   oneVsAllClassAssignments;
 
-  uint32                 predictXSpaceWorstCase;
+  kkuint32               predictXSpaceWorstCase;
 
   XSpacePtr              predictXSpace;  /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
 
@@ -557,14 +557,14 @@ private:
 
   bool                   validModel;
 
-  int32*                 votes;
+  kkint32*                 votes;
 
   XSpacePtr*             xSpaces;    /**< There will be one xSpace structure for each libSVM classifier that has 
                                       *   to be built; for a ttal of 'numOfModels'.   This will be the input to 
                                       *   the trainer for each one.
                                       */
 
-  int32                  xSpacesTotalAllocated;
+  kkint32                xSpacesTotalAllocated;
 };
 
 

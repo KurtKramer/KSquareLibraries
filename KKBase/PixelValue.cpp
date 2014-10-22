@@ -142,7 +142,7 @@ PixelValue  PixelValue::FromHSI (float  hue,
   if  (sat == 0.0f) 
   {
     // grayscale image
-    int32  greyValue = (int32)(0.5f + intensity * 255.0f);
+    kkint32  greyValue = (kkint32)(0.5f + intensity * 255.0f);
     uchar  gv = (uchar)greyValue;
     return  PixelValue (gv, gv, gv);
   }
@@ -236,8 +236,8 @@ PixelValue  PixelValue::FromHSI (float  hue,
 
 KKStr  PixelValue::ToStr ()  const
 {
-  KKStr  s = "(" + KKB::StrFormatInt ((int32)r, "ZZ0") + ","
-		         + KKB::StrFormatInt ((int32)g, "ZZ0") + ","
-		         + KKB::StrFormatInt ((int32)b, "ZZ0") + ")";
+  KKStr  s = "(" + KKB::StrFormatInt ((kkint32)r, "ZZ0") + ","
+		         + KKB::StrFormatInt ((kkint32)g, "ZZ0") + ","
+		         + KKB::StrFormatInt ((kkint32)b, "ZZ0") + ")";
   return s;
 }

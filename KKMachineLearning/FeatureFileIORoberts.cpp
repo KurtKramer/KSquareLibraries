@@ -44,12 +44,12 @@ FeatureFileIORoberts::~FeatureFileIORoberts(void)
 
 
 
-FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&       _fileName,
-                                                istream&           _in,
+FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
+                                                istream&        _in,
                                                 MLClassListPtr  _classes,
-                                                int32&             _estSize,
-                                                KKStr&             _errorMessage,
-                                                RunLog&            _log
+                                                kkint32&        _estSize,
+                                                KKStr&          _errorMessage,
+                                                RunLog&         _log
                                                )
 {
   _log.Level (10) << endl << endl 
@@ -64,15 +64,15 @@ FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&       _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&          _fileName,
-                                                      const FileDescPtr     _fileDesc,
+FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileName,
+                                                      const FileDescPtr  _fileDesc,
                                                       MLClassList&       _classes, 
-                                                      istream&              _in,
-                                                      int32                 _maxCount,    // Maximum # images to load.
-                                                      volatile const bool&  _cancelFlag,
-                                                      bool&                 _changesMade,
-                                                      KKStr&                _errorMessage,
-                                                      RunLog&               _log
+                                                      istream&           _in,
+                                                      kkint32            _maxCount,    // Maximum # images to load.
+                                                      VolConstBool&      _cancelFlag,
+                                                      bool&              _changesMade,
+                                                      KKStr&             _errorMessage,
+                                                      RunLog&            _log
                                                      )
 {
   _log.Level (10) << endl << endl 
@@ -89,8 +89,8 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
                                        const KKStr&           _fileName,
                                        const FeatureNumList&  _selFeatures,
                                        ostream&               _out,
-                                       uint32&                _numExamplesWritten,
-                                       volatile const bool&   _cancelFlag,
+                                       kkuint32&              _numExamplesWritten,
+                                       VolConstBool&          _cancelFlag,
                                        bool&                  _successful,
                                        KKStr&                 _errorMessage,
                                        RunLog&                _log
@@ -104,7 +104,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
 
   const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
 
-  int32  x;
+  kkint32  x;
   {
     KKStr  namesFileName = _fileName + ".names";
     // Write _out names file
@@ -122,11 +122,11 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
 
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
       AttributePtr  attr = attrTable[featureNum];
       if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
       {
-        int32 y;
+        kkint32 y;
         nf << "discrete"; 
         for  (y = 0;  y < attr->Cardinality ();  y++)
           nf << " " << attr->GetNominalValue (y);
@@ -143,18 +143,18 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
 
   FeatureVectorPtr   example = NULL;
 
-  int32 idx;
+  kkint32 idx;
   for  (idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
   {
     example = _data.IdxToPtr (idx);
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
 
       if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
-        _out << attr->GetNominalValue ((int32)(example->FeatureData (featureNum)));
+        _out << attr->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else
         _out << example->FeatureData (featureNum);
       _out << " ";

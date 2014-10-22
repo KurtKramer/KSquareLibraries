@@ -102,8 +102,8 @@ ScannerFile::ScannerFile (const KKStr&  _fileName,
   
 /**  Constructor for opening file for Writing */
 ScannerFile::ScannerFile (const KKStr&  _fileName,
-                          uint32        _pixelsPerScanLine,
-                          uint32        _frameHeight,
+                          kkuint32      _pixelsPerScanLine,
+                          kkuint32      _frameHeight,
                           RunLog&       _log
                           ):
 
@@ -174,9 +174,9 @@ ScannerFile::~ScannerFile ()
 
 
 
-int32  ScannerFile::MemoryConsumedEstimated ()  const
+kkint32  ScannerFile::MemoryConsumedEstimated ()  const
 {
-  int32  mem = sizeof (*this) + 
+  kkint32  mem = sizeof (*this) + 
                fileName.MemoryConsumedEstimated ()       +
                frameOffsets.size () * sizeof(kkint64)    +
                indexFileName.MemoryConsumedEstimated ()  +
@@ -311,7 +311,7 @@ void  ScannerFile::CreateGoalie ()
 
 
 
-void  ScannerFile::AddStartStopEntryToIndexFile (int32                          scanLineNum,
+void  ScannerFile::AddStartStopEntryToIndexFile (kkint32                        scanLineNum,
                                                  StartStopPoint::StartStopType  type,
                                                  bool                           deleteEntry
                                                 )
@@ -352,7 +352,7 @@ void  ScannerFile::AddStartStopEntryToIndexFile (int32                          
 
 
 
-void  ScannerFile::AddStartPoint (int32  _scanLineNum)
+void  ScannerFile::AddStartPoint (kkint32  _scanLineNum)
 {
   startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStartPoint);
   AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStartPoint, false);
@@ -360,7 +360,7 @@ void  ScannerFile::AddStartPoint (int32  _scanLineNum)
 
 
 
-void  ScannerFile::AddStopPoint (int32  _scanLineNum)
+void  ScannerFile::AddStopPoint (kkint32  _scanLineNum)
 {
   startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStopPoint);
   AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, false);
@@ -368,7 +368,7 @@ void  ScannerFile::AddStopPoint (int32  _scanLineNum)
 
 
 
-void  ScannerFile::StartStopPointDelete (int32 _scanLineNum)
+void  ScannerFile::StartStopPointDelete (kkint32 _scanLineNum)
 {
   startStopPoints.DeleteEntry (_scanLineNum);
   AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, true);
@@ -377,21 +377,21 @@ void  ScannerFile::StartStopPointDelete (int32 _scanLineNum)
 
 
 
-StartStopPointPtr  ScannerFile::StartStopPointNearestEntry (int32 _scanLineNum)
+StartStopPointPtr  ScannerFile::StartStopPointNearestEntry (kkint32 _scanLineNum)
 {
   return  startStopPoints.NearestEntry (_scanLineNum);
 }
 
 
 
-StartStopPointPtr  ScannerFile::StartStopPointPrevEntry (int32 _scanLineNum)
+StartStopPointPtr  ScannerFile::StartStopPointPrevEntry (kkint32 _scanLineNum)
 {
   return  startStopPoints.PrevEntry (_scanLineNum);
 }
 
 
 
-StartStopPointPtr  ScannerFile::StartStopPointSuccEntry (int32 _scanLineNum)
+StartStopPointPtr  ScannerFile::StartStopPointSuccEntry (kkint32 _scanLineNum)
 {
   return  startStopPoints.SuccEntry (_scanLineNum);
 }
@@ -413,7 +413,7 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
   VectorFloatPtr  recordRates = new VectorFloat (totalNumIntervals, 0.0f);
   int  idx = 0;
 
-  uint32   frameOffsetsIdx = 0;
+  kkuint32 frameOffsetsIdx = 0;
   kkint64  bytesThisFrame = frameOffsets[frameOffsetsIdx];
   float    frameOffsetsStartTime = 0;
   float    frameOffsetsEndTime   = secsPerFrame;
@@ -453,8 +453,8 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
 
 
 
-void  ScannerFile::UpdateFrameOffset (uint32   frameNum,
-                                      uint32   scanLineNum,
+void  ScannerFile::UpdateFrameOffset (kkuint32 frameNum,
+                                      kkuint32 scanLineNum,
                                       kkint64  byteOffset
                                      )
 {
@@ -484,7 +484,7 @@ void  ScannerFile::UpdateFrameOffset (uint32   frameNum,
 
 
 
-kkint64  ScannerFile::GetFrameOffset (uint32  frameNum)
+kkint64  ScannerFile::GetFrameOffset (kkuint32  frameNum)
 {
   kkint64  offset = -1;
   goalie->StartBlock ();
@@ -497,7 +497,7 @@ kkint64  ScannerFile::GetFrameOffset (uint32  frameNum)
 
 
 
-void  ScannerFile::FrameRead (uint32  frameNum,
+void  ScannerFile::FrameRead (kkuint32  frameNum,
                               bool&   found
                              )
 {
@@ -521,7 +521,7 @@ void  ScannerFile::FrameRead (uint32  frameNum,
     found = true;
     nextScanLine = frameNum * frameHeight;
     lastScanLine = nextScanLine - 1;
-    int32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
+    kkint32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
     if  (lastScanLineInFrame > largestKnownScanLine)
       largestKnownScanLine = lastScanLineInFrame;
     UpdateFrameOffset (frameNum + 1, (nextScanLine + frameHeight), frameBufferFileOffsetNext);
@@ -540,10 +540,10 @@ void  ScannerFile::FrameRead (uint32  frameNum,
 
 
 void  ScannerFile::GetNextLine (uchar*   lineBuff,
-                                uint32   lineBuffSize,
-                                uint32&  lineSize,
-                                uint32   colCount[],
-                                uint32&  pixelsInRow
+                                kkuint32 lineBuffSize,
+                                kkuint32&  lineSize,
+                                kkuint32 colCount[],
+                                kkuint32&  pixelsInRow
                                )
 {
   if  (eof)
@@ -574,7 +574,7 @@ void  ScannerFile::GetNextLine (uchar*   lineBuff,
     if  (frameBufferNumScanLines > 0)
     {
       frameNumCurLoaded = nextScanLine / frameHeight;
-      int32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
+      kkint32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
       if  (lastScanLineInFrame > largestKnownScanLine)
         largestKnownScanLine = lastScanLineInFrame;
       UpdateFrameOffset (frameNumCurLoaded, nextScanLine, frameBufferFileOffsetNext);
@@ -587,11 +587,11 @@ void  ScannerFile::GetNextLine (uchar*   lineBuff,
     goalie->EndBlock ();
   }
 
-  uint32  frameBufferOffset = frameBufferNextLine * pixelsPerScanLine;
+  kkuint32  frameBufferOffset = frameBufferNextLine * pixelsPerScanLine;
 
   lineSize= 0;
-  uint32  bytesToCopy = Min (lineBuffSize, pixelsPerScanLine);
-  for  (uint32 x = 0;  x < bytesToCopy;  ++x)
+  kkuint32  bytesToCopy = Min (lineBuffSize, pixelsPerScanLine);
+  for  (kkuint32 x = 0;  x < bytesToCopy;  ++x)
   {
     uchar  pixel = frameBuffer[frameBufferOffset];
     lineBuff[x] = pixel;
@@ -635,7 +635,7 @@ void  ScannerFile::SkipNextLine ()
     if  (frameBufferNumScanLines > 0)
     {
       frameNumCurLoaded = nextScanLine / frameHeight;
-      int32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
+      kkint32  lastScanLineInFrame = nextScanLine + frameBufferNumScanLines - 1;
       if  (lastScanLineInFrame > largestKnownScanLine)
         largestKnownScanLine = lastScanLineInFrame;
       UpdateFrameOffset (frameNumCurLoaded, nextScanLine, frameBufferFileOffsetNext);
@@ -655,7 +655,7 @@ void  ScannerFile::SkipNextLine ()
 
 
 void   ScannerFile::WriteScanLine (const uchar*  buffer,
-                                   uint32        bufferLen
+                                   kkuint32      bufferLen
                                   )
 {
   lastScanLine = nextScanLine;
@@ -668,8 +668,8 @@ void   ScannerFile::WriteScanLine (const uchar*  buffer,
     UpdateFrameOffset (frameNumCurLoaded, nextScanLine, frameBufferFileOffsetNext);
   }
 
-  uint32  byteOffset = (frameBufferNextLine * pixelsPerScanLine);
-  uint32  bytesToCopy = Min (bufferLen, pixelsPerScanLine);
+  kkuint32  byteOffset = (frameBufferNextLine * pixelsPerScanLine);
+  kkuint32  bytesToCopy = Min (bufferLen, pixelsPerScanLine);
   memcpy (frameBuffer + byteOffset, buffer, bytesToCopy);
   
   ++nextScanLine;
@@ -679,9 +679,9 @@ void   ScannerFile::WriteScanLine (const uchar*  buffer,
 
 
 
-void  ScannerFile::SkipToScanLine (int32  scanLine)
+void  ScannerFile::SkipToScanLine (kkint32  scanLine)
 {
-  uint32  frameNum = scanLine / frameHeight;
+  kkuint32  frameNum = scanLine / frameHeight;
   if  (frameNum >= frameOffsets.size ())
     frameNum = frameOffsets.size () - 1;
 
@@ -713,7 +713,7 @@ void  ScannerFile::SkipToScanLine (int32  scanLine)
  *@brief   Adds Instrument data to the underlying Scanner files as text.
  */
 void   ScannerFile::WriteInstrumentDataWord (uchar             idNum,
-                                             uint32            scanLineNum,
+                                             kkuint32          scanLineNum,
                                              WordFormat32Bits  dataWord
                                             )
 {
@@ -754,8 +754,8 @@ ScannerFile::ScannerFileFormat  ScannerFile::GuessFormatOfFile (const KKStr&  _f
 void   ScannerFile::GetScannerFileParameters (const KKStr&             _scannerFileName,
                                               ScannerHeaderFieldsPtr&  _headerFields,
                                               ScannerFileFormat&       _scannerFileFormat,
-                                              int32&                   _frameHeight,
-                                              int32&                   _frameWidth,
+                                              kkint32&                 _frameHeight,
+                                              kkint32&                 _frameWidth,
                                               float&                   _scanRate,
                                               bool&                    _successful,
                                               RunLog&                  _log
@@ -847,8 +847,8 @@ const uchar*  ScannerFile::ConpensationTable (ScannerFileFormat  format)
 
 ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&       _fileName,
                                                          ScannerFileFormat  _format,
-                                                         uint32             _pixelsPerScanLine,
-                                                         uint32             _frameHeight,
+                                                         kkuint32           _pixelsPerScanLine,
+                                                         kkuint32           _frameHeight,
                                                          RunLog&            _log
                                                         )
 {
@@ -905,8 +905,8 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&       _fil
   
 ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileName,
                                                          const KKStr&   _formatStr,
-                                                         uint32         _pixelsPerScanLine,
-                                                         uint32         _frameHeight,
+                                                         kkuint32       _pixelsPerScanLine,
+                                                         kkuint32       _frameHeight,
                                                          RunLog&        _log
                                                         )
 {
@@ -960,8 +960,8 @@ KKStr  ScannerFile::FileFormatStr ()  const
 
 ScannerFile::ScannerFileFormat  ScannerFile::ScannerFileFormatFromStr (const KKStr&  fileFormatStr)
 {
-  int32  x = 0;
-  while  (x < (int32)sfUnKnown)
+  kkint32  x = 0;
+  while  (x < (kkint32)sfUnKnown)
   {
     if  (fileFormatStr.EqualIgnoreCase (fileFormatOptions[x]))
       return (ScannerFileFormat)x;
@@ -1021,7 +1021,7 @@ void  ScannerFile::ReadHeaderOneLine (FILE*   f,
   line = "";
   endOfText = false;
 
-  int32  bytesReturned = fread (&ch, 1, 1, f);
+  kkint32  bytesReturned = fread (&ch, 1, 1, f);
   while  ((ch != 0)  &&  (ch != '\n')  &&  (bytesReturned > 0))
   {
     line.Append (ch);
@@ -1061,7 +1061,7 @@ void  ScannerFile::ExtractHeaderField (const KKStr&  fieldName,
 {
   if  (fieldName.EqualIgnoreCase ("FrameHeight"))
   {
-    uint32 fieldValueUint = fieldValue.ToInt32 ();
+    kkuint32 fieldValueUint = fieldValue.ToInt32 ();
     if  ((fieldValueUint > 0)  &&  (fieldValueUint < (1024 * 1024)))
       frameHeight = fieldValue.ToInt32 ();
   }
@@ -1124,16 +1124,16 @@ float  ScannerFile::GetValueFloat (const KKStr&  fieldName)
 
 
 void  ScannerFile::ReportTextMsg (const char*  textBuff, 
-                                  int32        numTextBytes
+                                  kkint32      numTextBytes
                                  )
 {
   KKStr  s (textBuff, 0, numTextBytes - 1);
   if  (s.StartsWith ("InstrumentDataWord\t", true))
   {
     s.ExtractToken2 ("\t");
-    int32  idNum = s.ExtractTokenInt ("\t");
-    uint32 scanLineNum = s.ExtractTokenUint ("\t");
-    uint32 dataWord = s.ExtractTokenUint ("\t");
+    kkint32  idNum = s.ExtractTokenInt ("\t");
+    kkuint32 scanLineNum = s.ExtractTokenUint ("\t");
+    kkuint32 dataWord = s.ExtractTokenUint ("\t");
     WordFormat32Bits  w (dataWord);
     ReportInstrumentDataWord (idNum, scanLineNum, w);
   }
@@ -1150,7 +1150,7 @@ void  ScannerFile::ReportTextMsg (const char*  textBuff,
 
 
 void  ScannerFile::ReportInstrumentDataWord (uchar             idNum,
-                                             uint32            scanLineNum,
+                                             kkuint32          scanLineNum,
                                              WordFormat32Bits  dataWord
                                             )
 {
@@ -1175,7 +1175,7 @@ void  ScannerFile::ReportInstrumentDataWord (uchar             idNum,
  * for frameNum == 0;  this is okay since frameNum == 0 is updated when the scanner file is first opened.
  * It is also assumed that the entry in frameOfsets just before 'frameNum' is already properly updated.
  */
-void  ScannerFile::DetermineFrameOffsetForFrame (uint32  frameNum)
+void  ScannerFile::DetermineFrameOffsetForFrame (kkuint32  frameNum)
 {
   if  ((frameNum < 1)  ||  (frameNum >= frameOffsets.size ()))
     return;
@@ -1212,7 +1212,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
       frameOffsets.push_back (byteOffsetScanLineZero);
 
     // Update any entries that are pointing to -1.
-    for  (uint32 frameNum = 0;  frameNum < frameOffsets.size ();  ++frameNum)
+    for  (kkuint32 frameNum = 0;  frameNum < frameOffsets.size ();  ++frameNum)
     {
       if  (frameOffsets[frameNum] < 0)
       {
@@ -1234,7 +1234,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
     bool  readToEOF = false;
     while  ((!readToEOF)  &&  (!cancelFlag))
     {
-      uint32  loopCount = 0;
+      kkuint32  loopCount = 0;
 
       if  (goalie->NumBlockedThreads () > 0)
       {
@@ -1250,7 +1250,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
         origFilePos = osFTELL (file);
       }
 
-      uint32  lastFrameNum = frameOffsets.size () - 1;
+      kkuint32  lastFrameNum = frameOffsets.size () - 1;
 
       // Reposition to beginning of last frame that is recorded in frameOfsets.
       FSeek (frameOffsets[lastFrameNum]);
@@ -1258,7 +1258,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
       kkint64  nextFrameByteOffset = SkipToNextFrame ();
       while  ((nextFrameByteOffset >= 0)  &&  (goalie->NumBlockedThreads () < 1))
       {
-        int32 fileSizeInScanLines = (lastFrameNum + 1) * frameHeight;
+        kkint32 fileSizeInScanLines = (lastFrameNum + 1) * frameHeight;
         if  (fileSizeInScanLines > largestKnownScanLine)
           largestKnownScanLine = fileSizeInScanLines;
         frameOffsets.push_back (nextFrameByteOffset);
@@ -1302,7 +1302,7 @@ void  ScannerFile::SaveIndexFile (vector<kkint64>&  frameOffsets)
                           << "\t" << "ByteOffset"
                           << endl;
 
-  for  (uint32 frameNum = 0;  frameNum < frameOffsets.size ();  ++frameNum)
+  for  (kkuint32 frameNum = 0;  frameNum < frameOffsets.size ();  ++frameNum)
   {
     f << "IndexEntry" << "\t" << frameNum << "\t" << (frameNum * frameHeight) << "\t" << frameOffsets[frameNum] << endl;
   }
@@ -1347,8 +1347,8 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
     if  (lineName.EqualIgnoreCase ("IndexEntry"))
     {
-      uint32   frameNum    = ln.ExtractTokenUint   ("\t\n\r");
-      int32    scanLineNum = ln.ExtractTokenInt    ("\t\n\r");
+      kkuint32 frameNum    = ln.ExtractTokenUint   ("\t\n\r");
+      kkint32  scanLineNum = ln.ExtractTokenInt    ("\t\n\r");
       kkuint64 byteOffset  = ln.ExtractTokenUint64 ("\t\n\r");
       UpdateFrameOffset (frameNum, scanLineNum, byteOffset);
       if  (scanLineNum > largestKnownScanLine)
@@ -1376,7 +1376,7 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
     else if  (lineName.EqualIgnoreCase ("DeleteStartStopPoint"))
     {
-      int32  scanLineNum = ln.ExtractTokenInt ("\n\t\r");
+      kkint32  scanLineNum = ln.ExtractTokenInt ("\n\t\r");
       startStopPoints.DeleteEntry (scanLineNum);
     }
   }
@@ -1388,9 +1388,9 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
 
 
-void  ScannerFile::SkipBytesForward (uint32  numBytes)
+void  ScannerFile::SkipBytesForward (kkuint32  numBytes)
 {
-  int32  returnCd = osFSEEK (file, numBytes, SEEK_CUR);
+  kkint32  returnCd = osFSEEK (file, numBytes, SEEK_CUR);
   if  (returnCd != 0)
   {
 	log.Level (-1) << "ScannerFile::SkipBytesForward   ReturnCd = " << returnCd << endl;
@@ -1401,9 +1401,9 @@ void  ScannerFile::SkipBytesForward (uint32  numBytes)
 
 
 
-int32  ScannerFile::FSeek (kkint64  filePos)
+kkint32  ScannerFile::FSeek (kkint64  filePos)
 {
-  int32  returnCd = 0;
+  kkint32  returnCd = 0;
   returnCd = osFSEEK (file, filePos, SEEK_SET);
   return  returnCd;
 }  /* FSeek */

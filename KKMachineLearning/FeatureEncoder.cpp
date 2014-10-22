@@ -81,18 +81,18 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
   encodingMethod    = svmParam.EncodingMethod ();
 
   xSpaceNeededPerImage = 0;
-  srcFeatureNums   = new int32[numOfFeatures];
-  cardinalityDest  = new int32[numOfFeatures];
-  destFeatureNums  = new int32[numOfFeatures];
+  srcFeatureNums   = new kkint32[numOfFeatures];
+  cardinalityDest  = new kkint32[numOfFeatures];
+  destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
 
   VectorKKStr   destFieldNames;
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    int32  srcFeatureNum = selectedFeatures[x];
+    kkint32  srcFeatureNum = selectedFeatures[x];
     srcFeatureNums    [x] = srcFeatureNum;
     destFeatureNums   [x] = xSpaceNeededPerImage;
     cardinalityDest   [x] = 1;
@@ -109,7 +109,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
           cardinalityDest [x] = cardinalityTable[srcFeatureNums [x]];
           xSpaceNeededPerImage += cardinalityDest[x];
           numEncodedFeatures   += cardinalityDest[x];
-          for  (int32 zed = 0;  zed < cardinalityDest[x];  zed++)
+          for  (kkint32 zed = 0;  zed < cardinalityDest[x];  zed++)
           {
             KKStr  fieldName = srcAttribute.Name () + "_" + srcAttribute.GetNominalValue (zed);
             destFieldNames.push_back (fieldName);
@@ -173,15 +173,15 @@ FeatureEncoder::~FeatureEncoder ()
 
 
 
-int32  FeatureEncoder::MemoryConsumedEstimated ()  const
+kkint32  FeatureEncoder::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (FeatureEncoder) 
+  kkint32  memoryConsumedEstimated = sizeof (FeatureEncoder) 
     + attributeTypes.size () * sizeof (AttributeType)
     + selectedFeatures.MemoryConsumedEstimated ()
-    + numOfFeatures * sizeof (int32);
+    + numOfFeatures * sizeof (kkint32);
 
   if  (cardinalityDest)
-    memoryConsumedEstimated += 3 * sizeof (int32) * numOfFeatures;    // cardinalityDest + destFeatureNums + srcFeatureNums
+    memoryConsumedEstimated += 3 * sizeof (kkint32) * numOfFeatures;    // cardinalityDest + destFeatureNums + srcFeatureNums
 
   //  We do not own 'destFileDesc'  and  'fileDesc'
   if  (destWhatToDo)
@@ -205,14 +205,14 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
     *o << "FieldNum" << "\t" << "FieldName" << "\t" << "Type"  << "\t" << "FieldNum" << "\t" << "FieldName" << endl;
   }
 
-  int32  x;
+  kkint32  x;
 
   bool  alreadyExist;
   
   for  (x = 0;  x < numOfFeatures; x++)
   {
-    int32  srcFeatureNum = srcFeatureNums[x];
-    int32  y = destFeatureNums[x];
+    kkint32  srcFeatureNum = srcFeatureNums[x];
+    kkint32  y = destFeatureNums[x];
 
     if  (y >= numEncodedFeatures)
     {
@@ -249,7 +249,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     case  FeBinary:
       {
-        for  (int32 z = 0;  z < cardinalityDest[x];  z++)
+        for  (kkint32 z = 0;  z < cardinalityDest[x];  z++)
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
@@ -300,7 +300,7 @@ XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
 {
   // XSpacePtr  xSpace  = (struct svm_node*)malloc (xSpaceNeededPerImage * sizeof (struct svm_node));
   XSpacePtr  xSpace  = new svm_node[xSpaceNeededPerImage];
-  int32  xSpaceUsed = 0;
+  kkint32  xSpaceUsed = 0;
   EncodeAExample (example, xSpace, xSpaceUsed);
   return  xSpace;
 }  /* EncodeAExample */
@@ -319,12 +319,12 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
   encodedImage->TrainWeight    (src->TrainWeight    ());
 
   const float*  featureData = src->FeatureData ();
-  int32  x;
+  kkint32  x;
 
   for  (x = 0;  x < numOfFeatures; x++)
   {
     float  featureVal = featureData [srcFeatureNums[x]];
-    int32  y = destFeatureNums[x];
+    kkint32  y = destFeatureNums[x];
 
     switch (destWhatToDo[x])
     {
@@ -336,9 +336,9 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
 
     case  FeBinary:
       {
-        for  (int32 z = 0; z < cardinalityDest[x]; z++)
+        for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
-          float  bVal = ((int32)featureVal == z);
+          float  bVal = ((kkint32)featureVal == z);
           encodedImage->AddFeatureData (y, bVal);
           y++;
         }
@@ -389,22 +389,22 @@ FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorList
  * @brief Converts a single image into the svm_problem format, using the method specified 
  * by the EncodingMethod() value returned by svmParam
  * @param[in] The image That we're converting
- * @param[in] The row int32 he svm_problem structue that the converted data will be stored
+ * @param[in] The row kkint32 he svm_problem structue that the converted data will be stored
  */
 void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
                                     svm_node*         xSpace,
-                                    int32&            xSpaceUsed
+                                    kkint32&          xSpaceUsed
                                    )
 {
   const float*  featureData = image->FeatureData ();
-  int32  x;
+  kkint32  x;
 
   xSpaceUsed = 0;
 
   for  (x = 0;  x < numOfFeatures; x++)
   {
     float  featureVal = featureData [srcFeatureNums[x]];
-    int32  y = destFeatureNums[x];
+    kkint32  y = destFeatureNums[x];
 
     if  (y >= xSpaceNeededPerImage)
     {
@@ -432,9 +432,9 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
 
     case  FeBinary:
       {
-        for  (int32 z = 0; z < cardinalityDest[x]; z++)
+        for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
-          float  bVal = ((int32)featureVal == z);
+          float  bVal = ((kkint32)featureVal == z);
           if  (bVal != 0.0)
           {
             xSpace[xSpaceUsed].index = y;
@@ -467,19 +467,19 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
 
 
 
-int32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr   src)  const
+kkint32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr   src)  const
 {
-  int32  xSpaceNodesNeeded = 0;
+  kkint32  xSpaceNodesNeeded = 0;
   FeatureVectorList::const_iterator  idx;
   for  (idx = src->begin ();  idx != src->end ();  ++idx)
   {
     FeatureVectorPtr fv = *idx;
     const float*  featureData = fv->FeatureData ();
 
-    for  (int32 x = 0;  x < numOfFeatures; x++)
+    for  (kkint32 x = 0;  x < numOfFeatures; x++)
     {
       float  featureVal = featureData [srcFeatureNums[x]];
-      int32  y = destFeatureNums[x];
+      kkint32  y = destFeatureNums[x];
   
       switch (destWhatToDo[x])
       {
@@ -489,9 +489,9 @@ int32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr 
         break;
 
       case  FeBinary:
-        for  (int32 z = 0; z < cardinalityDest[x]; z++)
+        for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
-          float  bVal = ((int32)featureVal == z);
+          float  bVal = ((kkint32)featureVal == z);
           if  (bVal != 0.0)
             xSpaceNodesNeeded++;
           y++;
@@ -516,31 +516,31 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
                                (FeatureVectorListPtr   src,
                                 ClassAssignments&      assignments,
                                 XSpacePtr&             xSpace,          
-                                int32&                 totalxSpaceUsed,
+                                kkint32&               totalxSpaceUsed,
                                 struct svm_problem&    prob
                                )
 
 {
   FeatureVectorListPtr  compressedExamples    = NULL;
   FeatureVectorListPtr  imagesToUseFoXSpace = NULL;
-  int32                 xSpaceUsed = 0;
+  kkint32               xSpaceUsed = 0;
 
   totalxSpaceUsed = 0;
 
   imagesToUseFoXSpace = src;
 
-  int32  numOfExamples = imagesToUseFoXSpace->QueueSize ();
-  //int32  elements      = numOfExamples * xSpaceNeededPerImage;
+  kkint32  numOfExamples = imagesToUseFoXSpace->QueueSize ();
+  //kkint32  elements      = numOfExamples * xSpaceNeededPerImage;
 
   prob.l     = numOfExamples;
   prob.y     = (double*)malloc  (prob.l * sizeof (double));
   prob.x     = (struct svm_node **) malloc (prob.l * sizeof (struct svm_node*));
-  prob.index = new int32[prob.l];
+  prob.index = new kkint32[prob.l];
   prob.exampleNames.clear ();
 
-  int32  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (imagesToUseFoXSpace);
+  kkint32  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (imagesToUseFoXSpace);
 
-  int32  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * sizeof (struct svm_node);  // I added '10' to elements because I am paranoid
+  kkint32  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * sizeof (struct svm_node);  // I added '10' to elements because I am paranoid
 
   xSpace = (struct svm_node*) malloc (totalBytesForxSpaceNeeded);
   if  (xSpace == NULL)
@@ -558,13 +558,13 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
   prob.W = NULL;
 
-  int32 i = 0;
+  kkint32 i = 0;
 
   FeatureVectorPtr    image          = NULL;
   MLClassPtr       lastImageClass = NULL;
   short               lastClassNum   = -1;
 
-  int32  bytesOfxSpacePerImage = xSpaceNeededPerImage * sizeof (struct svm_node);
+  kkint32  bytesOfxSpacePerImage = xSpaceNeededPerImage * sizeof (struct svm_node);
 
   for (i = 0;  i < prob.l;  i++)
   {
@@ -594,7 +594,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
       EncodeAExample (image, prob.x[i], xSpaceUsed);
       if  (xSpaceUsed < xSpaceNeededPerImage)
       {
-        int32  bytesNeededForThisExample = xSpaceUsed * sizeof (struct svm_node);
+        kkint32  bytesNeededForThisExample = xSpaceUsed * sizeof (struct svm_node);
         struct svm_node*  smallerXSpaceThisImage = (struct svm_node*) malloc (bytesNeededForThisExample);
         memcpy (smallerXSpaceThisImage, xSpaceThisImage, bytesNeededForThisExample);
         free  (xSpaceThisImage);
@@ -629,7 +629,7 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
     FeatureVectorPtr  srcExample = *idx;
     XSpacePtr  encodedData = EncodeAExample (srcExample);
 
-    int32  zed = 0;
+    kkint32  zed = 0;
     FeatureVectorPtr  encodedFeatureVector = new FeatureVector (codedNumOfFeatures);
     while  (encodedData[zed].index != -1)
     {

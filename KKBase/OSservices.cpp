@@ -41,7 +41,7 @@ using namespace KKB;
 
 
 
-KKStr  KKB::osGetErrorNoDesc (int32  errorNo)
+KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 {
   KKStr  desc;
 
@@ -203,10 +203,10 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
   bool  lastFieldAStar = false;
 
   const char*  cp = fileName.Str ();
-  int32        lenLeftToCheck = fileName.Len ();
+  kkint32      lenLeftToCheck = fileName.Len ();
 
 
-  int32  fieldNum;
+  kkint32  fieldNum;
 
   for  (fieldNum = 0;  fieldNum < searchFields->QueueSize ();  fieldNum++)
   {
@@ -472,7 +472,7 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
   else
   {
     // Check for invalid names.
-    int32  x = 0;
+    kkint32  x = 0;
     while  (invalidNames[x] != NULL)
     {
       if  (_name.EqualIgnoreCase (invalidNames[x]))
@@ -545,7 +545,7 @@ bool  KKB::osDeleteFile (KKStr  _fileName)
 
 
   #else
-  int32  returnCd;
+  kkint32  returnCd;
 
   // We are in Unix Environment.
   returnCd = unlink (_fileName.Str ());
@@ -587,7 +587,7 @@ bool  KKB::osFileExists (const KKStr&  _fileName)
 bool  KKB::osFileExists (const KKStr&  _fileName)
 {
   struct  stat  buff;
-  int32         result;
+  kkint32       result;
 
   result  = stat (_fileName.Str (), &buff);
   if  (result == 0)
@@ -767,12 +767,12 @@ bool  KKB::osRenameFile (const KKStr&  oldName,
                         )
 {
   
-  int32  returnCd = rename (oldName.Str (), newName.Str ());
+  kkint32  returnCd = rename (oldName.Str (), newName.Str ());
 
   if  (returnCd == 0)
     return true;
 
-  int32  errorCode = errno;
+  kkint32  errorCode = errno;
 
   cerr << std::endl
        << "osRenameFile   *** ERROR ***,   Rename Failed"                          << std::endl
@@ -801,7 +801,7 @@ void  KKB::osChangeDir (const KKStr&  dirName,
     successful = false;
 
 #else
-  int32 errorCd = chdir (dirName.Str ());
+  kkint32 errorCd = chdir (dirName.Str ());
   successful = (errorCd == 0);
 
   if  (!successful)
@@ -876,7 +876,7 @@ bool  KKB::osCreateDirectory (const KKStr&  _dirName)
   
   #else  
       
-    int32  result;
+    kkint32  result;
 
     mode_t mode  = S_IRWXU + S_IRWXG;
 
@@ -943,7 +943,7 @@ KKStrPtr  KKB::osGetEnvVariable (KKStr  _varName)
  * @returns  Index of 1st character of a Environment String specifier or -1 if none was found.
  */
 int  osLocateEnvStrStart (const KKStr&  str,
-                          int32         startIdx  /**<  Index in 'str' to start search from. */
+                          kkint32       startIdx  /**<  Index in 'str' to start search from. */
                          )
 {
   int  x = startIdx;
@@ -999,7 +999,7 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
     if  (envStrValue == NULL)
       envStrValue = new KKStr ("${" + envStrName + "}");
 
-    uint32  idxToStartAtNextTime = beforeEnvStr.Len () + envStrValue->Len ();
+    kkuint32  idxToStartAtNextTime = beforeEnvStr.Len () + envStrValue->Len ();
     str = beforeEnvStr + (*envStrValue)  + afterStrName;
     delete  envStrValue;
     x = osLocateEnvStrStart (str, idxToStartAtNextTime);
@@ -1011,20 +1011,20 @@ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 
 
 
-int32  KKB::osLocateLastSlashChar (const KKStr&  fileSpec)
+kkint32  KKB::osLocateLastSlashChar (const KKStr&  fileSpec)
 {
-  int32  lastLeftSlash  = fileSpec.LocateLastOccurrence ('\\');
-  int32  lastRightSlash = fileSpec.LocateLastOccurrence ('/');
+  kkint32  lastLeftSlash  = fileSpec.LocateLastOccurrence ('\\');
+  kkint32  lastRightSlash = fileSpec.LocateLastOccurrence ('/');
 
   return  Max (lastLeftSlash, lastRightSlash);
 }  /* LastSlashChar */
 
 
 
-int32  KKB::osLocateFirstSlashChar (const KKStr&  fileSpec)
+kkint32  KKB::osLocateFirstSlashChar (const KKStr&  fileSpec)
 {
-  int32  firstForewardSlash  = fileSpec.LocateCharacter ('/');
-  int32  firstBackSlash = fileSpec.LocateCharacter ('\\');
+  kkint32  firstForewardSlash  = fileSpec.LocateCharacter ('/');
+  kkint32  firstBackSlash = fileSpec.LocateCharacter ('\\');
 
   if  (firstForewardSlash < 0)
     return firstBackSlash;
@@ -1097,7 +1097,7 @@ void   KKB::osParseFileName (KKStr   _fileName,
                              KKStr&  _extension
                             )
 {
-  int32  x;
+  kkint32  x;
   
   x = osLocateLastSlashChar (_fileName);
 
@@ -1132,9 +1132,9 @@ void   KKB::osParseFileName (KKStr   _fileName,
 
 KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
 {
-  int32  lastSlashChar = osLocateLastSlashChar (_fullFileName);
+  kkint32  lastSlashChar = osLocateLastSlashChar (_fullFileName);
     
-  int32  lastPeriodChar = _fullFileName.LocateLastOccurrence ('.');
+  kkint32  lastPeriodChar = _fullFileName.LocateLastOccurrence ('.');
 
   if  (lastPeriodChar < lastSlashChar)
     return KKStr (_fullFileName);
@@ -1150,10 +1150,10 @@ KKStr  KKB::osRemoveExtension (const KKStr&  _fullFileName)
 
 KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
 {
-  int32  lastSlashChar = osLocateLastSlashChar (fullFileName);
-  int32  lastColon     = fullFileName.LocateLastOccurrence (':');
+  kkint32  lastSlashChar = osLocateLastSlashChar (fullFileName);
+  kkint32  lastColon     = fullFileName.LocateLastOccurrence (':');
 
-  int32  lastSlashOrColon = Max (lastSlashChar, lastColon);
+  kkint32  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
   if  (lastSlashOrColon < 0)
@@ -1165,7 +1165,7 @@ KKStr  KKB::osGetRootName (const KKStr&  fullFileName)
     lastPart = fullFileName.SubStrPart (lastSlashOrColon + 1);
   }
 
-  int32  period = lastPart.LocateLastOccurrence ('.');
+  kkint32  period = lastPart.LocateLastOccurrence ('.');
 
   if  (period < 0)
     return  lastPart;
@@ -1180,10 +1180,10 @@ KKStr  KKB::osGetRootNameOfDirectory (KKStr  fullDirName)
   if  (fullDirName.LastChar () == DSchar)
     fullDirName.ChopLastChar ();
 
-  int32  lastSlashChar = osLocateLastSlashChar (fullDirName);
-  int32  lastColon     = fullDirName.LocateLastOccurrence (':');
+  kkint32  lastSlashChar = osLocateLastSlashChar (fullDirName);
+  kkint32  lastColon     = fullDirName.LocateLastOccurrence (':');
 
-  int32  lastSlashOrColon = Max (lastSlashChar, lastColon);
+  kkint32  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
   if  (lastSlashOrColon < 0)
@@ -1201,10 +1201,10 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
   if  (path.LastChar () == DSchar) 
     path.ChopLastChar ();
 
-  int32  x1 = path.LocateLastOccurrence (DSchar);
-  int32  x2 = path.LocateLastOccurrence (':');
+  kkint32  x1 = path.LocateLastOccurrence (DSchar);
+  kkint32  x2 = path.LocateLastOccurrence (':');
 
-  int32  x = Max (x1, x2);
+  kkint32  x = Max (x1, x2);
   if  (x < 1)
     return KKStr::EmptyStr ();
 
@@ -1215,10 +1215,10 @@ KKStr  KKB::osGetParentDirectoryOfDirPath (KKStr  path)
 
 KKStr  KKB::osGetRootNameWithExtension (const KKStr&  fullFileName)
 {
-  int32  lastSlashChar = osLocateLastSlashChar (fullFileName);
-  int32  lastColon     = fullFileName.LocateLastOccurrence (':');
+  kkint32  lastSlashChar = osLocateLastSlashChar (fullFileName);
+  kkint32  lastColon     = fullFileName.LocateLastOccurrence (':');
 
-  int32  lastSlashOrColon = Max (lastSlashChar, lastColon);
+  kkint32  lastSlashOrColon = Max (lastSlashChar, lastColon);
  
   KKStr  lastPart;
   if  (lastSlashOrColon < 0)
@@ -1250,7 +1250,7 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
   driveLetter = "";
 
   // Look for Drive Letter
-  int32  driveLetterPos = fullFileName.LocateCharacter (':');
+  kkint32  driveLetterPos = fullFileName.LocateCharacter (':');
   if  (driveLetterPos >= 0)
   {
     driveLetter  = fullFileName.SubStrPart (0, driveLetterPos - 1);
@@ -1268,7 +1268,7 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
     return;
   }
 
-  int32  lastSlash =  osLocateLastSlashChar (fullFileName);
+  kkint32  lastSlash =  osLocateLastSlashChar (fullFileName);
   if  (lastSlash < 0)
   {
     path = "";
@@ -1280,7 +1280,7 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
     fileName = fullFileName.SubStrPart (lastSlash + 1);
   }
 
-  int32  period = fileName.LocateLastOccurrence ('.');
+  kkint32  period = fileName.LocateLastOccurrence ('.');
   if  (period <= 0)
   {
     root = fileName;
@@ -1301,14 +1301,14 @@ void  KKB::osParseFileSpec (KKStr   fullFileName,
 
 KKStr  KKB::osGetPathPartOfFile (KKStr  fullFileName)
 {
-  int32  lastSlash =  osLocateLastSlashChar (fullFileName);
+  kkint32  lastSlash =  osLocateLastSlashChar (fullFileName);
 
   if  (lastSlash >= 0)
   {
     return  fullFileName.SubStrPart (0, lastSlash - 1);
   }
 
-  int32  lastColon = fullFileName.LocateLastOccurrence (':');
+  kkint32  lastColon = fullFileName.LocateLastOccurrence (':');
   if  (lastColon >= 0)
     return  fullFileName.SubStrPart (0, lastColon);
   else
@@ -1361,7 +1361,7 @@ KKStr   KKB::osGetHostName ()
 
   char  buff[1024];
   memset (buff, 0, sizeof (buff));
-  int32  returnCd = gethostname (buff, sizeof (buff) - 2);
+  kkint32  returnCd = gethostname (buff, sizeof (buff) - 2);
   if  (returnCd != 0)
     return "";
   else
@@ -1378,10 +1378,10 @@ KKStr  KKB::osGetFileNamePartOfFile (KKStr  fullFileName)
   if  (fullFileName.LastChar () == DSchar)
     return  KKStr ("");
 
-  int32  lastSlash =  osLocateLastSlashChar (fullFileName);
+  kkint32  lastSlash =  osLocateLastSlashChar (fullFileName);
   if  (lastSlash < 0)
   {
-   int32  colon = fullFileName.LocateCharacter (':');
+   kkint32  colon = fullFileName.LocateCharacter (':');
    if  (colon < 0)
      return fullFileName;
    else
@@ -1517,7 +1517,7 @@ KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
   KKStr  beforeStar;
   KKStr  dirPath;
 
-  int32 lastSlash = osLocateLastSlashChar (fileSpec);
+  kkint32 lastSlash = osLocateLastSlashChar (fileSpec);
     
   if  (lastSlash < 0)
   {
@@ -1698,7 +1698,7 @@ KKStrListPtr  KKB::osGetListOfDirectories (KKStr  fileSpec)
 {
 
   KKStr  rootDirName;
-  int32  x = fileSpec.LocateCharacter ('*');
+  kkint32  x = fileSpec.LocateCharacter ('*');
   if  (x > 0)
     rootDirName = fileSpec.SubStrPart (0, x - 1);
   else
@@ -1967,7 +1967,7 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
 {
   struct  stat  buf;
 
-  int32  returnCd = stat (fileName.Str (), &buf);
+  kkint32  returnCd = stat (fileName.Str (), &buf);
 
   if  (returnCd != 0)
   {
@@ -2010,7 +2010,7 @@ KKB::int64   KKB::osGetFileSize (const KKStr&  fileName)
 {
   struct  stat  buf;
 
-  int32  returnCd = stat (fileName.Str (), &buf);
+  kkint32  returnCd = stat (fileName.Str (), &buf);
 
   if  (returnCd != 0)
   {
@@ -2129,7 +2129,7 @@ KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
 
   osParseFileName (fileName, dirPath, rootName, extension);
 
-  int32  seqNum = 0;
+  kkint32  seqNum = 0;
   bool  fileNameExists = osFileExists (fileName);
   while  (fileNameExists)
   {
@@ -2163,7 +2163,7 @@ char*  KKB::osReadNextLine (FILE*  in)
   /** @todo  This function has never be properly tested.  Next time we use it we should debug through it to make sure that all is copacetic. */
   char  buff[1024];
   buff[0] = 0;
-  int32  buffLen = sizeof (buff);
+  kkint32  buffLen = sizeof (buff);
 
   if  (fgets (buff, buffLen, in) == NULL)
     return NULL;
@@ -2175,14 +2175,14 @@ char*  KKB::osReadNextLine (FILE*  in)
   line = strdup (buff);
 #endif
 
-  int32  lineLen = (int32)strlen (line);
+  kkint32  lineLen = (kkint32)strlen (line);
   while  (line[lineLen - 1] != '\n')
   {
     if  (fgets (buff, buffLen, in) == NULL)
       return  line;
 
-    int32  additionalCharsRead = (int32)strlen (buff);
-    int32  newLineLen = lineLen + additionalCharsRead;
+    kkint32  additionalCharsRead = (kkint32)strlen (buff);
+    kkint32  newLineLen = lineLen + additionalCharsRead;
     line = osGrowAllocation (line, lineLen, newLineLen);
     memcpy (line + lineLen, buff, additionalCharsRead);
     lineLen = newLineLen;
@@ -2206,10 +2206,10 @@ KKStr  KKB::osReadNextToken (std::istream&  in,
   eol = false;
 
   char  token[1024];
-  int32  maxTokenLen = sizeof (token) - 1;
+  kkint32  maxTokenLen = sizeof (token) - 1;
 
-  //int32  ch = fgetc (in);  eof = (feof (in) != 0);
-  int32  ch = in.get ();  
+  //kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
+  kkint32  ch = in.get ();  
   eof = in.eof ();
   if  (eof)
   {
@@ -2230,7 +2230,7 @@ KKStr  KKB::osReadNextToken (std::istream&  in,
     return "";
   }
 
-  int32 tokenLen = 0;
+  kkint32 tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
@@ -2279,9 +2279,9 @@ KKStr  KKB::osReadNextToken (FILE*       in,
   eol = false;
 
   char  token[1024];
-  int32  maxTokenLen = sizeof (token) - 1;
+  kkint32  maxTokenLen = sizeof (token) - 1;
 
-  int32  ch = fgetc (in);  eof = (feof (in) != 0);
+  kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
 
   if  (eof)
   {
@@ -2299,7 +2299,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
     return "";
   }
 
-  int32 tokenLen = 0;
+  kkint32 tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
@@ -2346,9 +2346,9 @@ KKStr  KKB::osReadNextToken (FILE*       in,
 {
   eof = false;
   char  token[1024];
-  int32  maxTokenLen = sizeof (token) - 1;
+  kkint32  maxTokenLen = sizeof (token) - 1;
 
-  int32  ch = fgetc (in);  eof = (feof (in) != 0);
+  kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
 
   if  (eof)
     return "";
@@ -2357,7 +2357,7 @@ KKStr  KKB::osReadNextToken (FILE*       in,
   while  ((!eof)  &&  ((ch == ' ') || (ch == '\r'))  &&  (ch != '\n'))
     {ch = fgetc (in); eof = (feof (in)!= 0);}
 
-  int32 tokenLen = 0;
+  kkint32 tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
@@ -2397,15 +2397,15 @@ KKStr   KKB::osReadRestOfLine (std::istream&  in,
   eof = false;
 
   char  line[20480];
-  int32  maxLineLen = sizeof (line) - 1;
+  kkint32  maxLineLen = sizeof (line) - 1;
 
-  int32  ch = in.get ();  
+  kkint32  ch = in.get ();  
   eof = in.eof ();
 
   if  (eof)
     return "";
 
-  int32 lineLen = 0;
+  kkint32 lineLen = 0;
 
   // Read till first delimiter or eof
   while  (!eof)
@@ -2451,13 +2451,13 @@ KKStr  KKB::osReadRestOfLine (FILE*  in,
   eof = false;
 
   char  line[20480];
-  int32  maxLineLen = sizeof (line) - 1;
+  kkint32  maxLineLen = sizeof (line) - 1;
 
-  int32  ch = fgetc (in);  
+  kkint32  ch = fgetc (in);  
   eof = (feof (in) != 0);
   if  (eof)  return "";
 
-  int32 lineLen = 0;
+  kkint32 lineLen = 0;
 
   // Read till first delimiter or eof
   while  (!eof)
@@ -2507,7 +2507,7 @@ KKStr  KKB::osReadNextQuotedStr (FILE*        in,
   }
 
   // Skip leading white space and find first character in Token
-  int32  ch = fgetc (in);
+  kkint32  ch = fgetc (in);
 
   while  ((!feof (in))  &&  (strchr (whiteSpaceCharacters, ch) != NULL))
   {
@@ -2607,7 +2607,7 @@ void  KKB::osSkipRestOfLine (FILE*  in,
                             )
 {
   eof = false;
-  int32  ch = fgetc (in);  eof = (feof (in) != 0);
+  kkint32  ch = fgetc (in);  eof = (feof (in) != 0);
   while  ((ch != '\n')  &&  (!eof))
   {
     ch = fgetc (in);  eof = (feof (in) != 0);
@@ -2621,7 +2621,7 @@ void  KKB::osSkipRestOfLine (std::istream&  in,
                              bool&          eof
                             )
 {
-  int32  ch = in.get ();  
+  kkint32  ch = in.get ();  
   eof = in.eof ();
 
   while  ((ch != '\n')  &&  (!eof))
@@ -2633,7 +2633,7 @@ void  KKB::osSkipRestOfLine (std::istream&  in,
 
 
 
-int32  KKB::osGetProcessId ()
+kkint32  KKB::osGetProcessId ()
 {
 #ifdef  WIN32
   DWORD WINAPI  processId = GetCurrentProcessId ();
@@ -2648,7 +2648,7 @@ int32  KKB::osGetProcessId ()
 
 
 
-int32  KKB::osGetThreadId ()
+kkint32  KKB::osGetThreadId ()
 {
 #ifdef  WIN32
   DWORD WINAPI threadId = GetCurrentThreadId ();
@@ -2662,10 +2662,10 @@ int32  KKB::osGetThreadId ()
 void  KKB::osSleep (float secsToSleep)
 {
   #ifdef  WIN32
-  int32  miliSecsToSleep = (int32)(1000.0f * secsToSleep + 0.5f);
+  kkint32  miliSecsToSleep = (kkint32)(1000.0f * secsToSleep + 0.5f);
   Sleep (miliSecsToSleep);
   #else
-  int32  secsToSleepInt = (int32)(0.5f + secsToSleep);
+  kkint32  secsToSleepInt = (kkint32)(0.5f + secsToSleep);
 
   if  (secsToSleepInt < 1)
     secsToSleepInt = 1;
@@ -2680,7 +2680,7 @@ void  KKB::osSleep (float secsToSleep)
 
 
 
-void  KKB::osSleepMiliSecs (uint32  numMiliSecs)
+void  KKB::osSleepMiliSecs (kkuint32  numMiliSecs)
 {
   #ifdef  WIN32
     Sleep (numMiliSecs);
@@ -2699,7 +2699,7 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
   if  (path.Len () == 0)
     return parts;
 
-  int32  zed = 0;
+  kkint32  zed = 0;
 
   if  (path[(kkuint16)1] == ':')
   {
@@ -2722,7 +2722,7 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
     else
     {
       // Scan until we come up to another separator or end of string
-      int32  startPos = zed;
+      kkint32  startPos = zed;
       while  (zed < path.Len ())
       {
         if  ((path[zed] == '\\')  ||  (path[zed] == '/'))

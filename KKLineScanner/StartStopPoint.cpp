@@ -40,14 +40,14 @@ const KKStr&  StartStopPoint::StartStopTypeToStr (StartStopType  t)
 
 StartStopPoint::StartStopType  StartStopPoint::StartStopTypeFromStr (const KKStr&   s)
 {
-  for  (int32 x = 0;  x < sspInvalid;  ++x)
+  for  (kkint32 x = 0;  x < sspInvalid;  ++x)
     if  (s.EqualIgnoreCase (startStopPointStrs[x]))
       return  (StartStopType)x;
   return  sspNULL;
 }
 
 
-StartStopPoint::StartStopPoint (int32          _scanLineNum,
+StartStopPoint::StartStopPoint (kkint32        _scanLineNum,
                                 StartStopType  _type
                                 ):
    scanLineNum (_scanLineNum),
@@ -79,7 +79,7 @@ StartStopPoint::~StartStopPoint ()
 }
 
 
-int32  StartStopPoint::MemoryConsumedEstimated ()  const
+kkint32  StartStopPoint::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
@@ -131,11 +131,11 @@ void  StartStopPointList::Clear ()
 
 
 
-int32  StartStopPointList::MemoryConsumedEstimated ()  const
+kkint32  StartStopPointList::MemoryConsumedEstimated ()  const
 {
   const_iterator  idx2;
 
-  int32 mem = sizeof (*this);
+  kkint32 mem = sizeof (*this);
 
   for  (idx2 = begin ();  idx2 != end ();  ++idx2)
   {
@@ -149,7 +149,7 @@ int32  StartStopPointList::MemoryConsumedEstimated ()  const
 
 
 
-StartStopPointPtr  StartStopPointList::AddEntry (int32                          _scanLineNum,
+StartStopPointPtr  StartStopPointList::AddEntry (kkint32                        _scanLineNum,
                                                  StartStopPoint::StartStopType  _type
                                                 )
 {
@@ -169,7 +169,7 @@ StartStopPointPtr  StartStopPointList::AddEntry (StartStopPointPtr&  _entry)
 
   StartStopPointPtr  entryAdded = _entry;
 
-  int32 m = FindGreaterOrEqual (_entry->ScanLineNum ());
+  kkint32 m = FindGreaterOrEqual (_entry->ScanLineNum ());
   if  (m < 0)
     push_back (_entry);
 
@@ -196,9 +196,9 @@ StartStopPointPtr  StartStopPointList::AddEntry (StartStopPointPtr&  _entry)
 
 
 
-void  StartStopPointList::DeleteEntry (int32  _scanLineNum)
+void  StartStopPointList::DeleteEntry (kkint32  _scanLineNum)
 {
-  int32  m = FindEqual (_scanLineNum);
+  kkint32  m = FindEqual (_scanLineNum);
   if  (m < 0)
     return;
 
@@ -208,16 +208,16 @@ void  StartStopPointList::DeleteEntry (int32  _scanLineNum)
 }
 
 
-int32  StartStopPointList::FindEqual (int32 _scanLineNum)  const
+kkint32  StartStopPointList::FindEqual (kkint32 _scanLineNum)  const
 {
   if  (size () < 1)
     return -1;
 
-  uint32 b = 0;
-  uint32 e = size () - 1;
-  uint32 m = 0;
+  kkuint32 b = 0;
+  kkuint32 e = size () - 1;
+  kkuint32 m = 0;
 
-  int32  entryScanLineNum = 0;
+  kkint32  entryScanLineNum = 0;
 
   do
   {
@@ -241,7 +241,7 @@ int32  StartStopPointList::FindEqual (int32 _scanLineNum)  const
 
 
 
-int32  StartStopPointList::FindGreaterOrEqual (int32 _scanLineNum)  const
+kkint32  StartStopPointList::FindGreaterOrEqual (kkint32 _scanLineNum)  const
 {
   if  (size () < 1)
     return -1;
@@ -249,11 +249,11 @@ int32  StartStopPointList::FindGreaterOrEqual (int32 _scanLineNum)  const
   if  ((*this)[size () - 1]->ScanLineNum () < _scanLineNum)
     return -1;
 
-  int32 b = 0;
-  int32 e = (int32)size () - 1;
-  int32 m = 0;
+  kkint32 b = 0;
+  kkint32 e = (kkint32)size () - 1;
+  kkint32 m = 0;
 
-  int32  entryScanLineNum = 0;
+  kkint32  entryScanLineNum = 0;
 
   do
   {
@@ -275,7 +275,7 @@ int32  StartStopPointList::FindGreaterOrEqual (int32 _scanLineNum)  const
   if  (entryScanLineNum > _scanLineNum)
     return  m;
 
-  if  (m < ((int32)size () - 1))
+  if  (m < ((kkint32)size () - 1))
     return m + 1;
   else
     return  -1;
@@ -283,7 +283,7 @@ int32  StartStopPointList::FindGreaterOrEqual (int32 _scanLineNum)  const
 
 
 
-int32  StartStopPointList::FindLessOrEqual (int32 _scanLineNum)  const
+kkint32  StartStopPointList::FindLessOrEqual (kkint32 _scanLineNum)  const
 {
   if  (size () < 1)
     return -1;
@@ -291,11 +291,11 @@ int32  StartStopPointList::FindLessOrEqual (int32 _scanLineNum)  const
   if  ((*this)[0]->ScanLineNum () > _scanLineNum)
     return -1;
 
-  int32 b = 0;
-  int32 e = (int32)size () - 1;
-  int32 m = 0;
+  kkint32 b = 0;
+  kkint32 e = (kkint32)size () - 1;
+  kkint32 m = 0;
 
-  int32  entryScanLineNum = 0;
+  kkint32  entryScanLineNum = 0;
 
   do
   {
@@ -325,9 +325,9 @@ int32  StartStopPointList::FindLessOrEqual (int32 _scanLineNum)  const
 
 
 
-StartStopPointPtr  StartStopPointList::PrevEntry (int32  _scanLineNum)  const
+StartStopPointPtr  StartStopPointList::PrevEntry (kkint32  _scanLineNum)  const
 {
-  int32  m = FindLessOrEqual (_scanLineNum);
+  kkint32  m = FindLessOrEqual (_scanLineNum);
   if  (m >= 0)
     return  (*this)[m];
   else
@@ -336,9 +336,9 @@ StartStopPointPtr  StartStopPointList::PrevEntry (int32  _scanLineNum)  const
 
 
 
-StartStopPointPtr  StartStopPointList::SuccEntry (int32  _scanLineNum)  const
+StartStopPointPtr  StartStopPointList::SuccEntry (kkint32  _scanLineNum)  const
 {
-  int32  m = FindGreaterOrEqual (_scanLineNum);
+  kkint32  m = FindGreaterOrEqual (_scanLineNum);
   if  (m >= 0)
     return  (*this)[m];
   else
@@ -347,7 +347,7 @@ StartStopPointPtr  StartStopPointList::SuccEntry (int32  _scanLineNum)  const
 
 
 
-StartStopPointPtr  StartStopPointList::NearestEntry (int32  _scanLineNum)  const
+StartStopPointPtr  StartStopPointList::NearestEntry (kkint32  _scanLineNum)  const
 {
   if  (size () < 1)
     return NULL;
@@ -355,15 +355,15 @@ StartStopPointPtr  StartStopPointList::NearestEntry (int32  _scanLineNum)  const
   else if  (size () == 1)
     return  (*this)[0];
 
-  int32  m = FindLessOrEqual (_scanLineNum);
+  kkint32  m = FindLessOrEqual (_scanLineNum);
   if  (m < 0)
     return  (*this)[0];
 
-  if  (m >= ((int32)size () - 1))
+  if  (m >= ((kkint32)size () - 1))
     return  (*this)[m];
 
-  int32  deltaBefore = (_scanLineNum - (*this)[m]->ScanLineNum ());
-  int32  deltaAfter  = (*this)[m + 1]->ScanLineNum () - _scanLineNum;
+  kkint32  deltaBefore = (_scanLineNum - (*this)[m]->ScanLineNum ());
+  kkint32  deltaAfter  = (*this)[m + 1]->ScanLineNum () - _scanLineNum;
   if  (deltaBefore <= deltaAfter)
     return (*this)[m];
   else
@@ -373,8 +373,8 @@ StartStopPointPtr  StartStopPointList::NearestEntry (int32  _scanLineNum)  const
 
 
 
-StartStopRegion::StartStopRegion (int32  _start,  
-                                  int32  _end
+StartStopRegion::StartStopRegion (kkint32  _start,  
+                                  kkint32  _end
                                  ):
     start (_start),
     end   (_end)
@@ -399,13 +399,13 @@ StartStopRegionList::StartStopRegionList (const StartStopPointList&  startStopPo
   }
   else
   {
-    int32  prevLineNum = 0;
+    kkint32  prevLineNum = 0;
     StartStopPoint::StartStopType  prevType = StartStopPoint::sspStartPoint;
 
     StartStopPointList::const_iterator  idx = startStopPoints.begin ();
     while  (idx != startStopPoints.end ())
     {
-      int32  nextLineNum = (*idx)->ScanLineNum ();
+      kkint32  nextLineNum = (*idx)->ScanLineNum ();
       StartStopPoint::StartStopType  nextType = (*idx)->Type ();
 
       if  (prevType == StartStopPoint::sspStartPoint)

@@ -1,8 +1,8 @@
 #ifndef  _FEATUREENCODER2_
 #define  _FEATUREENCODER2_
-/*!
- \class  KKMachineLearning::FeatureEncoder2
- \code
+/**
+ *@class  KKMachineLearning::FeatureEncoder2
+ *@code
  ***********************************************************************
  *                       FeatureEncoder2                               *
  *                                                                     *
@@ -10,15 +10,15 @@
  *  to the new paradigm where all Machine Learning Algorithms will be  *
  *  derived from 'Model'.                                              *
  ***********************************************************************
- \endcode
+ *@endcode
  */
-#include  "RunLog.h"
+#include "RunLog.h"
 
-#include  "Attribute.h"
-#include  "FeatureVector.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "ModelParam.h"
+#include "Attribute.h"
+#include "FeatureVector.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "ModelParam.h"
 
 
 
@@ -41,9 +41,9 @@ namespace KKMachineLearning
      * @param[in] _cardinalityTable caller keeps ownership,  but encoder will continue to reference it.
      * @param[in] _log A logfile stream. All important events will be output to this stream
      */
-    FeatureEncoder2 (const ModelParam&       _param,
-                     FileDescPtr             _fileDesc,
-                     RunLog&                 _log
+    FeatureEncoder2 (const ModelParam& _param,
+                     FileDescPtr       _fileDesc,
+                     RunLog&           _log
                    );
   
     FeatureEncoder2 (const FeatureEncoder2&  _encoder);
@@ -55,7 +55,7 @@ namespace KKMachineLearning
     ~FeatureEncoder2 ();
 
 
-    int32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
+    kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
 
     FileDescPtr       CreateEncodedFileDesc (ostream*  o)  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
 
@@ -65,9 +65,9 @@ namespace KKMachineLearning
 
     FeatureVectorPtr  EncodeAExample (FeatureVectorPtr  src)  const;
 
-    int32             MemoryConsumedEstimated ()  const;
+    kkint32           MemoryConsumedEstimated ()  const;
 
-    int32             NumEncodedFeatures ()  const;
+    kkint32           NumEncodedFeatures ()  const;
 
     void              ReadXML (istream&  i);
 
@@ -76,17 +76,17 @@ namespace KKMachineLearning
 
   private:
     const AttributeTypeVector&        attributeVector;
-    int32*                            cardinalityDest;
+    kkint32*                          cardinalityDest;
     const VectorInt32&                cardinalityVector;   /**< Will not own, passed in by creator. */
-    int32                             codedNumOfFeatures;
-    int32*                            destFeatureNums;
+    kkint32                           codedNumOfFeatures;
+    kkint32*                          destFeatureNums;
     FeWhatToDoPtr                     destWhatToDo;
     FileDescPtr                       encodedFileDesc;
     ModelParam::EncodingMethodType    encodingMethod;
     FileDescPtr                       fileDesc;
     RunLog&                           log;
-    int32                             numOfFeatures;
-    int32*                            srcFeatureNums;
+    kkint32                           numOfFeatures;
+    kkint32*                          srcFeatureNums;
     const ModelParam&                 param;
 
     struct  FeatureVar2;

@@ -37,7 +37,7 @@ using namespace  KKMachineLearning;
 CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
                                   FeatureVectorListPtr      _examples,
                                   MLClassListPtr         _mlClasses,
-                                  int32                       _numOfFolds,
+                                  kkint32                     _numOfFolds,
                                   bool                      _featuresAreAlreadyNormalized,
                                   FileDescPtr               _fileDesc,
                                   RunLog&                   _log,
@@ -112,11 +112,11 @@ void  CrossValidation::AllocateMemory ()
   weOwnConfusionMatrix = true;
   cmByNumOfConflicts = new ConfusionMatrix2Ptr[maxNumOfConflicts];
 
-  numOfWinnersCounts          = new int32[maxNumOfConflicts];
-  numOfWinnersCorrects        = new int32[maxNumOfConflicts];
-  numOfWinnersOneOfTheWinners = new int32[maxNumOfConflicts];
+  numOfWinnersCounts          = new kkint32[maxNumOfConflicts];
+  numOfWinnersCorrects        = new kkint32[maxNumOfConflicts];
+  numOfWinnersOneOfTheWinners = new kkint32[maxNumOfConflicts];
 
-  int32  conflictIDX;
+  kkint32  conflictIDX;
 
   for  (conflictIDX = 0;  conflictIDX < maxNumOfConflicts;  conflictIDX++)
   {
@@ -127,7 +127,7 @@ void  CrossValidation::AllocateMemory ()
   }
 
   //foldAccuracies  = new float[numOfFolds];  // Changed to vector<float>  aka  VectorFloat
-  //foldCounts      = new int32[numOfFolds];    // Changed to vector<int32>    aka  VectorInt
+  //foldCounts      = new kkint32[numOfFolds];    // Changed to vector<kkint32>    aka  VectorInt
 }  /* AllocateMemory */
 
 
@@ -141,7 +141,7 @@ void  CrossValidation::DeleteAllocatedMemory ()
     confusionMatrix = NULL;
   }
 
-  int32  conflictIDX;
+  kkint32  conflictIDX;
 
   if  (cmByNumOfConflicts)
   {
@@ -184,18 +184,18 @@ void  CrossValidation::RunCrossValidation ()
   DeleteAllocatedMemory ();
   AllocateMemory ();
 
-  int32  imageCount       = examples->QueueSize ();
-  int32  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
-  int32  firstInGroup     = 0;
+  kkint32  imageCount       = examples->QueueSize ();
+  kkint32  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
+  kkint32  firstInGroup     = 0;
 
   totalPredProb = 0.0;
 
 
-  int32  foldNum;
+  kkint32  foldNum;
 
   for  (foldNum = 0;  foldNum < numOfFolds;  foldNum++)
   {
-    int32  lastInGroup;
+    kkint32  lastInGroup;
 
     // If We are doing the last Fold Make sure that we are including all the examples 
     // that have not been tested.
@@ -216,7 +216,7 @@ void  CrossValidation::RunCrossValidation ()
                    << "LastInGroup["     << lastInGroup    << "]."
                    << endl;
 
-    for  (int32  x = 0; (x < imageCount)  &&  (!cancelFlag); x++)
+    for  (kkint32  x = 0; (x < imageCount)  &&  (!cancelFlag); x++)
     {
       FeatureVectorPtr  newImage = new FeatureVector (*(examples->IdxToPtr (x)));
 
@@ -298,7 +298,7 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
 
 void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages, 
                                       FeatureVectorListPtr   trainingImages,
-                                      int32                    foldNum,
+                                      kkint32                  foldNum,
                                       bool*                  classedCorrectly
                                      )
 {
@@ -343,8 +343,8 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   duplicateTrainDataCount += trainer.DuplicateDataCount ();
   trainingTime            += trainer.TrainingTime ();
 
-  int32  foldNumSVs = 0;
-  int32  foldTotalNumSVs = 0;
+  kkint32  foldNumSVs = 0;
+  kkint32  foldTotalNumSVs = 0;
   trainer.SupportVectorStatistics (foldNumSVs, foldTotalNumSVs);
   numSVs      += foldNumSVs;
   totalNumSVs += foldTotalNumSVs;
@@ -363,19 +363,19 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   FeatureVectorPtr  example                    = NULL;
   MLClassPtr     knownClass                 = NULL;
   bool              knownClassOneOfTheWinners  = false;
-  int32             numOfWinners               = 0;
+  kkint32           numOfWinners               = 0;
   MLClassPtr     predictedClass             = NULL;
   double            probability                = 0.0f;
 
-  int32  numTestExamples = testImages->QueueSize ();
+  kkint32  numTestExamples = testImages->QueueSize ();
 
-  int32  foldCorrect = 0;
-  int32  foldCount   = 0;
+  kkint32  foldCorrect = 0;
+  kkint32  foldCount   = 0;
 
   vector<FeatureVectorPtr>  exampleHist                   (numTestExamples);
   vector<MLClassPtr>     knownClassHist                (numTestExamples);
   vector<bool>              knownClassOneOfTheWinnersHist (numTestExamples, false);
-  vector<int32>             numOfWinersHist               (numTestExamples, 0);
+  vector<kkint32>             numOfWinersHist               (numTestExamples, 0);
   vector<MLClassPtr>     predictedClassHist            (numTestExamples);
   vector<double>            probabilityHist               (numTestExamples, 0.0f);
 
@@ -428,13 +428,13 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
 
     confusionMatrix->Increment (knownClass, 
                                 predictedClass, 
-                                (int32)(example->OrigSize ()),
+                                (kkint32)(example->OrigSize ()),
                                 probability
                                );
 
     cmByNumOfConflicts[numOfWinners]->Increment (knownClass, 
                                                  predictedClass, 
-                                                 (int32)(example->OrigSize ()), 
+                                                 (kkint32)(example->OrigSize ()), 
                                                  probability
                                                 );
 
@@ -496,7 +496,7 @@ float  CrossValidation::AccuracyNorm ()
 
 KKStr  CrossValidation::FoldAccuracysToStr ()  const
 {
-  if  (int32 (foldAccuracies.size ()) != numOfFolds)
+  if  (kkint32 (foldAccuracies.size ()) != numOfFolds)
   {
     log.Level (-1) << endl
                    << endl
@@ -511,7 +511,7 @@ KKStr  CrossValidation::FoldAccuracysToStr ()  const
 
   KKStr  foldAccuracyStr (9 * numOfFolds);  // Pre Reserving enough space for all Accuracies.
 
-  for  (uint32 foldNum = 0;  foldNum < foldAccuracies.size ();  foldNum++)
+  for  (kkuint32 foldNum = 0;  foldNum < foldAccuracies.size ();  foldNum++)
   {
     if  (foldNum > 0)
       foldAccuracyStr << "\t";
@@ -525,9 +525,9 @@ KKStr  CrossValidation::FoldAccuracysToStr ()  const
 
 
 
-float  CrossValidation::FoldAccuracy (int32 foldNum)  const
+float  CrossValidation::FoldAccuracy (kkint32 foldNum)  const
 {
-  if  ((foldNum < 0)  ||  (foldNum >= (int32)foldAccuracies.size ()))
+  if  ((foldNum < 0)  ||  (foldNum >= (kkint32)foldAccuracies.size ()))
   {
     log.Level (-1) << endl
                    << endl

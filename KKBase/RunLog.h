@@ -76,9 +76,9 @@ namespace KKB
      *
      *   log.Level (20) << "ClassName::MethodName  Message" << endl;
      */
-    RunLog&  Level (int32 _level);
+    RunLog&  Level (kkint32 _level);
 
-    int32    Level () const  {return curLevel;}
+    kkint32  Level () const  {return curLevel;}
 
 
     /** @brief  Appends string to log; generally used by other Log methods but can be called by public. */
@@ -119,9 +119,9 @@ namespace KKB
     /** @brief  Returns the last line of text written to the log file. */
     const KKStr&  LastLine ()  {return lastLine;}
 
-    int32   LineCount ()  const  {return  lineCount;}
+    kkint32 LineCount ()  const  {return  lineCount;}
 
-    void    SetLoggingLevel (int32 _loggingLevel);
+    void    SetLoggingLevel (kkint32 _loggingLevel);
 
 
     /**
@@ -140,8 +140,8 @@ namespace KKB
     RunLog&  operator<< (bool            right);
     RunLog&  operator<< (kkint16         right);
     RunLog&  operator<< (kkuint16        right);
-    RunLog&  operator<< (int32           right);
-    RunLog&  operator<< (uint32          right);
+    RunLog&  operator<< (kkint32         right);
+    RunLog&  operator<< (kkuint32        right);
     RunLog&  operator<< (kkint64         right);
     RunLog&  operator<< (kkuint64        right);
     RunLog&  operator<< (double          right);
@@ -157,9 +157,9 @@ namespace KKB
 
     void    Flush ();
 
-    void    SetLevel (int32 _level)  {loggingLevel = _level;}
+    void    SetLevel (kkint32 _level)  {loggingLevel = _level;}
 
-    int32   MemoryConsumedEstimated ()  const;
+    kkint32 MemoryConsumedEstimated ()  const;
 
 
   private:
@@ -169,7 +169,7 @@ namespace KKB
 
     bool            callDisplayTimeStamp;
 
-    int32           curLevel;     // Current level of Message being written.
+    kkint32         curLevel;     // Current level of Message being written.
 
     KKStr           curLine;
 
@@ -177,7 +177,7 @@ namespace KKB
 
     KKStr           lastLine;
 
-    int32           lineCount;
+    kkint32         lineCount;
 
     bool            lineEmpty;
 
@@ -185,7 +185,7 @@ namespace KKB
                                     * specified then 'logFile = ourLogFile'.
                                     */
 
-    int32           loggingLevel; /**< Logging level that we are to be writing messages for any messages written
+    kkint32         loggingLevel; /**< Logging level that we are to be writing messages for any messages written
                                     * while 'curLevel' <= 'loggingLevel' will be written to '*logFile'.
                                     */
     
@@ -194,7 +194,7 @@ namespace KKB
 
     std::ofstream*  ourLogFile;   // Will be NULL if we are writing to the console.
 
-    int32           procId;       // Processor Id assigned by OS
+    kkint32         procId;       // Processor Id assigned by OS
   };
 
 

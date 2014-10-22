@@ -36,7 +36,7 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes,
     multimap<short, MLClassPtr> (),
     log (_log)
 {
-  int32  x = 0;
+  kkint32  x = 0;
   for  (MLClassList::const_iterator idx = classes.begin ();  idx != classes.end ();  idx++)
   {
    insert (pair<short, MLClassPtr> (x, *idx));
@@ -46,9 +46,9 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes,
 }
 
 
-int32  ClassAssignments::MemoryConsumedEstimated ()  const
+kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (ClassAssignments) 
+  kkint32  memoryConsumedEstimated = sizeof (ClassAssignments) 
     +  (classLookUp.size () * (sizeof (MLClassPtr) + sizeof (short)));
   return  memoryConsumedEstimated;
 }
@@ -213,7 +213,7 @@ void  ClassAssignments::Load (const KKStr&  fileName,
     short   classNum  = (short)dataRow.ExtractTokenInt ("\n\r\t,");
 
     MLClassPtr mlClass = MLClass::CreateNewMLClass (className);
-    int32  existingAssignmentNum = GetNumForClass (mlClass);
+    kkint32  existingAssignmentNum = GetNumForClass (mlClass);
     if  (existingAssignmentNum >= 0)
     {
       // We already have this class Loaded,  for now i am obly going to
@@ -259,9 +259,9 @@ void  ClassAssignments::Save (const KKStr&  fileName,
 
 KKStr  ClassAssignments::ToString ()  const
 {
-  KKStr  result ((int32)(size () * 20));
+  KKStr  result ((kkint32)(size () * 20));
 
-  result << int32 (size ());
+  result << kkint32 (size ());
 
   ClassAssignments::const_iterator idx;
   for (idx = begin ();  idx != end ();  idx++)
@@ -292,7 +292,7 @@ void   ClassAssignments::ParseToString (const KKStr&  _toString)
 
   while  (!toString.Empty ())
   {
-    int32 assignmentNum = toString.ExtractTokenInt ("\t\n\r");
+    kkint32 assignmentNum = toString.ExtractTokenInt ("\t\n\r");
     KKStr  className = toString.ExtractToken ("\t\n\r");
 
     if  (!className.Empty ())

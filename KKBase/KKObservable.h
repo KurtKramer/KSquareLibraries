@@ -31,7 +31,7 @@ namespace KKB
 
     virtual ~KKObservable ();
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
     virtual  void  RegisterObserver (KKObserverPtr observer);
     

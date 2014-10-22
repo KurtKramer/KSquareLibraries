@@ -77,7 +77,7 @@ namespace  SVM233
       double r;	// for Solver_NU
     };
   
-    void Solve(int32          l, 
+    void Solve(kkint32        l, 
                const Kernel&  Q, 
                const double*  b_, 
                const schar*   y_,
@@ -86,10 +86,10 @@ namespace  SVM233
                double         Cn, 
                double         eps,
                SolutionInfo*  si, 
-               int32          shrinking
+               kkint32        shrinking
               );
   
-      void Solve (int32          l, 
+      void Solve (kkint32        l, 
                   const Kernel&  Q, 
                   const double*  b_, 
                   const schar*   y_,
@@ -97,11 +97,11 @@ namespace  SVM233
                   double*        C_, 
                   double         eps,
                   SolutionInfo*  si, 
-                  int32          shrinking
+                  kkint32        shrinking
                  );
 
   protected:
-    int32          active_size;
+    kkint32        active_size;
     schar*         y;
     double*        G;              // gradient of objective function
     enum  {LOWER_BOUND, UPPER_BOUND, FREE};
@@ -111,16 +111,16 @@ namespace  SVM233
     double         eps;
     double*        C;
     double*        b;
-    int32*         active_set;
+    kkint32*         active_set;
     double*        G_bar;          // gradient, if we treat free variables as 0
-    int32          l;
+    kkint32        l;
     bool           unshrinked;     // XXX
   
-    double get_C(int32 i)
+    double get_C(kkint32 i)
     {
       return C[i];
     }
-    void update_alpha_status(int32 i)
+    void update_alpha_status(kkint32 i)
     {
       if  (alpha[i] >= get_C (i))
         alpha_status[i] = UPPER_BOUND;
@@ -132,12 +132,12 @@ namespace  SVM233
         alpha_status[i] = FREE;
     }
   
-    bool is_upper_bound(int32 i) { return alpha_status[i] == UPPER_BOUND; }
-    bool is_lower_bound(int32 i) { return alpha_status[i] == LOWER_BOUND; }
-    bool is_free(int32 i) { return alpha_status[i] == FREE; }
-    void swap_index(int32 i, int32 j);
+    bool is_upper_bound(kkint32 i) { return alpha_status[i] == UPPER_BOUND; }
+    bool is_lower_bound(kkint32 i) { return alpha_status[i] == LOWER_BOUND; }
+    bool is_free(kkint32 i) { return alpha_status[i] == FREE; }
+    void swap_index(kkint32 i, kkint32 j);
     void reconstruct_gradient();
-    virtual int32 select_working_set(int32 &i, int32 &j);
+    virtual kkint32 select_working_set(kkint32 &i, kkint32 &j);
     virtual double calculate_rho();
     virtual void do_shrinking();
   };
@@ -200,7 +200,7 @@ namespace  SVM233
                                     const svm_parameter*  param,
                                     double                Cp, 
                                     double                Cn, 
-                                    std::set<int32>&      BSVIndex
+                                    std::set<kkint32>&      BSVIndex
                                    );
 
 
@@ -221,7 +221,7 @@ namespace  SVM233
 template <class T> inline void  Swap(T& x, T& y) { T t=x; x=y; y=t; }
 
 
-template <class S, class T> inline void  clone(T*& dst, S* src, int32 n)
+template <class S, class T> inline void  clone(T*& dst, S* src, kkint32 n)
 {
   dst = new T[n];
   KKStr::MemCpy((void *)dst, (void *)src, sizeof(T)*n);
@@ -335,22 +335,22 @@ svm_parameter::svm_parameter (const svm_parameter&  _param)
   {
   if  (_param.weight_label)
   {
-    weight_label = new int32[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    weight_label = new kkint32[nr_weight];
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight_label[x] = _param.weight_label[x];
   }
 
   if  (_param.weight)
   {
     weight = new double[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight[x] = _param.weight[x];
   }
 
   if  (_param.featureWeight)
   {
     featureWeight = new double[dim];
-    for  (int32 x = 0;  x < dim;  x++)
+    for  (kkint32 x = 0;  x < dim;  x++)
       featureWeight[x] = _param.featureWeight[x];
   }
 }  
@@ -393,22 +393,22 @@ svm_parameter&  svm_parameter::operator= (const svm_parameter&  right)
 
   if  (right.weight_label)
   {
-    weight_label = new int32[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    weight_label = new kkint32[nr_weight];
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight_label[x] = right.weight_label[x];
   }
 
   if  (right.weight)
   {
     weight = new double[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight[x] = right.weight[x];
   }
 
   if  (right.featureWeight)
   {
     featureWeight = new double[dim];
-    for  (int32 x = 0;  x < dim;  x++)
+    for  (kkint32 x = 0;  x < dim;  x++)
       featureWeight[x] = right.featureWeight[x];
   }
 
@@ -417,11 +417,11 @@ svm_parameter&  svm_parameter::operator= (const svm_parameter&  right)
 
 
 
-int32   svm_parameter::MemoryConsumedEstimated ()  const
+kkint32 svm_parameter::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (svm_parameter);
+  kkint32  memoryConsumedEstimated = sizeof (svm_parameter);
   if  (weight)
-    memoryConsumedEstimated += ((sizeof (double) + sizeof(int32)) * nr_weight);
+    memoryConsumedEstimated += ((sizeof (double) + sizeof(kkint32)) * nr_weight);
 
   if  (featureWeight)
     memoryConsumedEstimated += (sizeof (double) * dim);
@@ -442,7 +442,7 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
   cmd.Upper ();
 
   if  (cmd == "-A")
-    numSVM  = (int32)valueNum;
+    numSVM  = (kkint32)valueNum;
 
   else if  (cmd == "-C")
     C       = valueNum;
@@ -457,16 +457,16 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
     gamma = valueNum;
 
   else if  (cmd == "-H")
-    shrinking = (int32)valueNum;
+    shrinking = (kkint32)valueNum;
 
   else if  (cmd == "-I")
     threshold = (float)valueNum;
 
   else if  (cmd == "-J")
-    hist  = (int32)valueNum;
+    hist  = (kkint32)valueNum;
 
   else if  (cmd == "-K")
-    boosting = (int32)valueNum;
+    boosting = (kkint32)valueNum;
 
   else if  (cmd == "-L")
     cBoost = (float)valueNum;
@@ -478,7 +478,7 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
     nu          = valueNum;
     
   else if  (cmd == "-O")
-    dimSelect   = (int32)valueNum;
+    dimSelect   = (kkint32)valueNum;
     
   else if  (cmd == "-P")
     p           = valueNum;
@@ -490,10 +490,10 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
     coef0       = valueNum;
     
   else if  (cmd == "-S")
-    svm_type    = (int32)valueNum;
+    svm_type    = (kkint32)valueNum;
 
   else if  (cmd == "-T")
-    kernel_type = (int32)valueNum;
+    kernel_type = (kkint32)valueNum;
     
   else if  (cmd == "-U")
     A           = (float)valueNum;
@@ -501,7 +501,7 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
   else if  (cmd == "-W")
   {
     ++nr_weight;
-    weight_label = (int32 *) realloc (weight_label, sizeof (int32) * nr_weight);
+    weight_label = (kkint32 *) realloc (weight_label, sizeof (kkint32) * nr_weight);
     weight = (double *) realloc (weight, sizeof (double) * nr_weight);
     weight_label[nr_weight - 1] = atoi (cmd.SubStrPart (2).Str ());
     weight[nr_weight - 1]       = valueNum;
@@ -636,7 +636,7 @@ KKStr  svm_parameter::ToCmdLineStr ()  const
 
 KKStr  svm_parameter::ToTabDelStr  ()  const
 {
-  int32  x;
+  kkint32  x;
 
   KKStr  result (300);
 
@@ -682,7 +682,7 @@ KKStr  svm_parameter::ToTabDelStr  ()  const
   if  (featureWeight)
   {
     result << "featureWeight" << "\t";
-    for  (int32 x = 0;  x < dim;  x++)
+    for  (kkint32 x = 0;  x < dim;  x++)
     {
       if  (x > 0)
         result << ",";
@@ -710,7 +710,7 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
 {
   KKStr  str = _str;
 
-  int32  x;
+  kkint32  x;
 
 
 /*
@@ -719,7 +719,7 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
   if  (featureWeight)
   {
     result << "featureWeight" << "\t";
-    for  (int32 x = 0;  x < dim;  x++)
+    for  (kkint32 x = 0;  x < dim;  x++)
     {
       if  (x > 0)
         result << ",";
@@ -736,7 +736,7 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
   {
     KKStr   field = str.ExtractToken2 ("\t");
     KKStr   value = str.ExtractToken2 ("\t");
-    int32   valueI = value.ToInt    ();
+    kkint32 valueI = value.ToInt    ();
     double  valueD = value.ToDouble ();
     float   valueF = value.ToFloat  ();
 
@@ -770,7 +770,7 @@ void  svm_parameter::ParseTabDelStr (const KKStr&  _str)
       if  (nr_weight > 0)
       {
         delete[]  weight_label;
-        weight_label = new int32[nr_weight];
+        weight_label = new kkint32[nr_weight];
 
         // value = weight label.
         for  (x = 0;  x < nr_weight;  x++)
@@ -869,7 +869,7 @@ svm_problem::~svm_problem ()
   if  (!weOwnContents)
     return;
 
-  for  (int32 zed = 0;  zed < l;  zed++)
+  for  (kkint32 zed = 0;  zed < l;  zed++)
   {
     delete  x[zed];
     x[zed] = NULL;
@@ -894,32 +894,32 @@ svm_problem::~svm_problem ()
 class SVM233::Cache
 {
 public:
-  Cache (int32 l,  
-         int32 size
+  Cache (kkint32 l,  
+         kkint32 size
         );
   ~Cache();
 
   // request data [0,len)
   // return some position p where [p,len) need to be filled
   // (p >= len if nothing needs to be filled)
-  int32 get_data (const int32  index, 
+  kkint32 get_data (const kkint32  index, 
                   Qfloat**     data, 
-                  int32        len
+                  kkint32      len
                  );
 
-  void swap_index (int32 i, 
-                   int32 j
+  void swap_index (kkint32 i, 
+                   kkint32 j
                   );  // future_option
 
 private:
-  int32 l;
-  int32 size;
+  kkint32 l;
+  kkint32 size;
 
   struct head_t
   {
     head_t *prev, *next;  // a cicular list
     Qfloat *data;
-    int32 len;              // data[0,len) is cached in this entry
+    kkint32 len;              // data[0,len) is cached in this entry
   };
 
   head_t* head;
@@ -930,8 +930,8 @@ private:
 
 
 
-SVM233::Cache::Cache (int32 l_,
-                      int32 size_
+SVM233::Cache::Cache (kkint32 l_,
+                      kkint32 size_
                      ):
 
 l    (l_),
@@ -975,9 +975,9 @@ void SVM233::Cache::lru_insert(head_t *h)
 
 
 
-int32  SVM233::Cache::get_data (const int32 index, 
+kkint32  SVM233::Cache::get_data (const kkint32 index, 
                               Qfloat**  data, 
-                              int32       len
+                              kkint32     len
                              )
 {
   head_t *h = &head[index];
@@ -985,7 +985,7 @@ int32  SVM233::Cache::get_data (const int32 index,
   if  (h->len) 
     lru_delete(h);
 
-  int32 more = len - h->len;
+  kkint32 more = len - h->len;
 
   if  (more > 0)
   {
@@ -1013,8 +1013,8 @@ int32  SVM233::Cache::get_data (const int32 index,
 
 
 
-void SVM233::Cache::swap_index (int32 i, 
-                                int32 j
+void SVM233::Cache::swap_index (kkint32 i, 
+                                kkint32 j
                                )
 {
   if(i==j) return;
@@ -1057,7 +1057,7 @@ void SVM233::Cache::swap_index (int32 i,
 //
 class  SVM233::Kernel {
 public:
-  Kernel (int32                   l, 
+  Kernel (kkint32                 l, 
           svm_node * const *    x, 
           const svm_parameter&  param
          );
@@ -1075,9 +1075,9 @@ public:
                                      const double*         featureWeight
                                     );
 
-  virtual Qfloat *get_Q (int32 column, int32 len) const = 0;
+  virtual Qfloat *get_Q (kkint32 column, kkint32 len) const = 0;
 
-  virtual void swap_index(int32 i, int32 j) const  // no so const...
+  virtual void swap_index(kkint32 i, kkint32 j) const  // no so const...
   {
     Swap (x[i],x[j]);
     if(x_square) Swap(x_square[i],x_square[j]);
@@ -1085,53 +1085,53 @@ public:
 
 protected:
 
-  double (Kernel::*kernel_function)(int32 i, int32 j) const;
+  double (Kernel::*kernel_function)(kkint32 i, kkint32 j) const;
 
 private:
   const svm_node **x;
   double*        x_square;
 
   // svm_parameter
-  const int32 kernel_type;
+  const kkint32 kernel_type;
   const double degree;
   const double gamma;
   const double coef0;
   //luo add
-  int32 dim;
+  kkint32 dim;
   double *featureWeight;
 
   static double dot(const svm_node *px, const svm_node *py);
   static double dotSubspace(const svm_node *px, const svm_node *py, const double *featureWeight);
 
-  double kernel_linear (int32 i, int32 j) const
+  double kernel_linear (kkint32 i, kkint32 j) const
   {
     return dot(x[i],x[j]);
   }
-  double kernel_linear_subspace(int32 i, int32 j) const
+  double kernel_linear_subspace(kkint32 i, kkint32 j) const
   {
     return dotSubspace(x[i],x[j], featureWeight);
   }
-  double kernel_poly (int32 i, int32 j) const
+  double kernel_poly (kkint32 i, kkint32 j) const
   {
     return pow(gamma*dot(x[i],x[j])+coef0,degree);
   }
-  double kernel_poly_subspace(int32 i, int32 j) const
+  double kernel_poly_subspace(kkint32 i, kkint32 j) const
   {
     return pow(gamma*dotSubspace(x[i],x[j], featureWeight)+coef0,degree);
   }
-  double kernel_rbf (int32 i, int32 j) const
+  double kernel_rbf (kkint32 i, kkint32 j) const
   {
     return exp(-gamma*(x_square[i]+x_square[j]-2*dot(x[i],x[j])));
   }
-  double kernel_rbf_subspace(int32 i, int32 j) const
+  double kernel_rbf_subspace(kkint32 i, kkint32 j) const
   {
     return exp(-gamma*(x_square[i]+x_square[j]-2*dotSubspace(x[i],x[j],featureWeight)));
   }
-  double kernel_sigmoid(int32 i, int32 j) const
+  double kernel_sigmoid(kkint32 i, kkint32 j) const
   {
     return tanh(gamma*dot(x[i],x[j])+coef0);
   }
-  double kernel_sigmoid_subspace(int32 i, int32 j) const
+  double kernel_sigmoid_subspace(kkint32 i, kkint32 j) const
   {
     return tanh(gamma*dotSubspace(x[i],x[j],featureWeight)+coef0);
   }
@@ -1139,7 +1139,7 @@ private:
 
 
 
-SVM233::Kernel::Kernel  (int32                   l,
+SVM233::Kernel::Kernel  (kkint32                 l,
                          svm_node * const *    x_, 
                          const svm_parameter&  param
                         )
@@ -1194,7 +1194,7 @@ SVM233::Kernel::Kernel  (int32                   l,
   if  (kernel_type == RBF)
   {
     x_square = new double[l];
-    for(int32 i=0;i<l;i++)
+    for(kkint32 i=0;i<l;i++)
     {
       if(param.dimSelect > 0)
         x_square[i] = dotSubspace(x[i],x[i],featureWeight);
@@ -1411,7 +1411,7 @@ double  SVM233::Kernel::k_function_subspace (const svm_node*       x,
 
 
 
-void SVM233::Solver::swap_index(int32 i, int32 j)
+void SVM233::Solver::swap_index(kkint32 i, kkint32 j)
 {
   Q->swap_index(i,j);
   Swap(y[i],y[j]);
@@ -1434,7 +1434,7 @@ void SVM233::Solver::reconstruct_gradient()
   if  (active_size == l) 
     return;
 
-  int32 i;
+  kkint32 i;
   for(i=active_size;i<l;i++)
     G[i] = G_bar[i] + b[i];
 
@@ -1443,14 +1443,14 @@ void SVM233::Solver::reconstruct_gradient()
     {
       const Qfloat *Q_i = Q->get_Q(i,l);
       double alpha_i = alpha[i];
-      for(int32 j=active_size;j<l;j++)
+      for(kkint32 j=active_size;j<l;j++)
         G[j] += alpha_i * Q_i[j];
     }
 }
 
 
 
-void  SVM233::Solver::Solve(int32            l,
+void  SVM233::Solver::Solve(kkint32          l,
                             const Kernel&  Q, 
                             const double*  b_, 
                             const schar*   y_,
@@ -1458,7 +1458,7 @@ void  SVM233::Solver::Solve(int32            l,
                             double*        C_, 
                             double         eps,
                             SolutionInfo*  si, 
-                            int32            shrinking
+                            kkint32          shrinking
                            )
 {
   this->l = l;
@@ -1473,15 +1473,15 @@ void  SVM233::Solver::Solve(int32            l,
   // initialize alpha_status
   {
     alpha_status = new char[l];
-    for (int32 i=0;i<l;i++){
+    for (kkint32 i=0;i<l;i++){
       update_alpha_status(i);
     }
   }
 
   // initialize active set (for shrinking)
   {
-    active_set = new int32[l];
-    for(int32 i=0;i<l;i++)
+    active_set = new kkint32[l];
+    for(kkint32 i=0;i<l;i++)
       active_set[i] = i;
     active_size = l;
   }
@@ -1490,7 +1490,7 @@ void  SVM233::Solver::Solve(int32            l,
   {
     G = new double[l];
     G_bar = new double[l];
-    int32 i;
+    kkint32 i;
     for(i=0;i<l;i++)
     {
       G[i] = b[i];
@@ -1501,7 +1501,7 @@ void  SVM233::Solver::Solve(int32            l,
       {
         Qfloat *Q_i = Q.get_Q(i,l);
         double alpha_i = alpha[i];
-        int32 j;
+        kkint32 j;
         for(j=0;j<l;j++)
           G[j] += alpha_i*Q_i[j];
         if(is_upper_bound(i))
@@ -1512,8 +1512,8 @@ void  SVM233::Solver::Solve(int32            l,
 
   // optimization step
 
-  int32 iter = 0;
-  int32 counter = min ((int32)l, (int32)1000) + 1;
+  kkint32 iter = 0;
+  kkint32 counter = min ((kkint32)l, (kkint32)1000) + 1;
 
   while(1)
   {
@@ -1526,7 +1526,7 @@ void  SVM233::Solver::Solve(int32            l,
       info("."); info_flush();
     }
 
-    int32 i,j;
+    kkint32 i,j;
     if(select_working_set(i,j)!=0)
     {
       // reconstruct the whole gradient
@@ -1638,7 +1638,7 @@ void  SVM233::Solver::Solve(int32            l,
     double delta_alpha_i = alpha[i] - old_alpha_i;
     double delta_alpha_j = alpha[j] - old_alpha_j;
 
-    for(int32 k=0;k<active_size;k++)
+    for(kkint32 k=0;k<active_size;k++)
     {
       G[k] += Q_i[k]*delta_alpha_i + Q_j[k]*delta_alpha_j;
     }
@@ -1650,7 +1650,7 @@ void  SVM233::Solver::Solve(int32            l,
       bool uj = is_upper_bound(j);
       update_alpha_status(i);
       update_alpha_status(j);
-      int32 k;
+      kkint32 k;
       if(ui != is_upper_bound(i))
       {
         Q_i = Q.get_Q(i,l);
@@ -1682,7 +1682,7 @@ void  SVM233::Solver::Solve(int32            l,
   // calculate objective value
   {
     double v = 0;
-    int32 i;
+    kkint32 i;
     for(i=0;i<l;i++)
       v += alpha[i] * (G[i] + b[i]);
 
@@ -1691,13 +1691,13 @@ void  SVM233::Solver::Solve(int32            l,
 
   // put back the solution
   {
-    for(int32 i=0;i<l;i++)
+    for(kkint32 i=0;i<l;i++)
       alpha_[active_set[i]] = alpha[i];
   }
 
   // juggle everything back
   /*{
-  for(int32 i=0;i<l;i++)
+  for(kkint32 i=0;i<l;i++)
   while(active_set[i] != i)
   swap_index(i,active_set[i]);
   // or Q.swap_index(i,active_set[i]);
@@ -1716,7 +1716,7 @@ void  SVM233::Solver::Solve(int32            l,
 }
 
 
-void SVM233::Solver::Solve(int32            l,
+void SVM233::Solver::Solve(kkint32          l,
                            const Kernel&  Q,
                            const double*  b_,
                            const schar*   y_,
@@ -1725,11 +1725,11 @@ void SVM233::Solver::Solve(int32            l,
                            double         Cn,
                            double         eps,
                            SolutionInfo*  si, 
-                           int32            shrinking
+                           kkint32          shrinking
                           )
 {
   double* C_ = new double[l];
-  for(int32 i=0;i<l;i++)
+  for(kkint32 i=0;i<l;i++)
     C_[i] = (y_[i] > 0 ? Cp : Cn);
 
   Solve (l, Q, b_, y_, alpha_, C_, eps, si, shrinking);
@@ -1742,19 +1742,19 @@ void SVM233::Solver::Solve(int32            l,
 
 
 // return 1 if already optimal, return 0 otherwise
-int32  SVM233::Solver::select_working_set(int32 &out_i, int32 &out_j)
+kkint32  SVM233::Solver::select_working_set(kkint32 &out_i, kkint32 &out_j)
 {
   // return i,j which maximize -grad(f)^T d , under constraint
   // if alpha_i == C, d != +1
   // if alpha_i == 0, d != -1
 
   double Gmax1 = -INF;  // max { -grad(f)_i * d | y_i*d = +1 }
-  int32 Gmax1_idx = -1;
+  kkint32 Gmax1_idx = -1;
 
   double Gmax2 = -INF;  // max { -grad(f)_i * d | y_i*d = -1 }
-  int32 Gmax2_idx = -1;
+  kkint32 Gmax2_idx = -1;
 
-  for(int32 i=0;i<active_size;i++)
+  for(kkint32 i=0;i<active_size;i++)
   {
     if(y[i]==+1)  // y = +1
     {
@@ -1808,7 +1808,7 @@ int32  SVM233::Solver::select_working_set(int32 &out_i, int32 &out_j)
 
 void  SVM233::Solver::do_shrinking()
 {
-  int32 i,j,k;
+  kkint32 i,j,k;
   if  (select_working_set (i,j) != 0) 
     return;
 
@@ -1881,9 +1881,9 @@ void  SVM233::Solver::do_shrinking()
 double  SVM233::Solver::calculate_rho()
 {
   double r;
-  int32 nr_free = 0;
+  kkint32 nr_free = 0;
   double ub = INF, lb = -INF, sum_free = 0;
-  for  (int32 i = 0;  i < active_size;  i++)
+  for  (kkint32 i = 0;  i < active_size;  i++)
   {
     double yG = y[i]*G[i];
 
@@ -1928,7 +1928,7 @@ class  SVM233::Solver_NU : public Solver
 {
 public:
   Solver_NU() {}
-  void Solve (int32 l, 
+  void Solve (kkint32 l, 
               const Kernel& Q, 
               const double *b, 
               const schar *y,
@@ -1937,7 +1937,7 @@ public:
               double Cn, 
               double eps,
               SolutionInfo* si, 
-              int32 shrinking
+              kkint32 shrinking
              )
   {
     this->si = si;
@@ -1946,7 +1946,7 @@ public:
 
 private:
   SolutionInfo *si;
-  int32 select_working_set(int32 &i, int32 &j);
+  kkint32 select_working_set(kkint32 &i, kkint32 &j);
   double calculate_rho();
   void do_shrinking();
 };
@@ -1954,25 +1954,25 @@ private:
 
 
 
-int32 SVM233::Solver_NU::select_working_set(int32 &out_i, int32 &out_j)
+kkint32 SVM233::Solver_NU::select_working_set(kkint32 &out_i, kkint32 &out_j)
 {
   // return i,j which maximize -grad(f)^T d , under constraint
   // if alpha_i == C, d != +1
   // if alpha_i == 0, d != -1
 
   double Gmax1 = -INF;  // max { -grad(f)_i * d | y_i = +1, d = +1 }
-  int32 Gmax1_idx = -1;
+  kkint32 Gmax1_idx = -1;
 
   double Gmax2 = -INF;  // max { -grad(f)_i * d | y_i = +1, d = -1 }
-  int32 Gmax2_idx = -1;
+  kkint32 Gmax2_idx = -1;
 
   double Gmax3 = -INF;  // max { -grad(f)_i * d | y_i = -1, d = +1 }
-  int32 Gmax3_idx = -1;
+  kkint32 Gmax3_idx = -1;
 
   double Gmax4 = -INF;  // max { -grad(f)_i * d | y_i = -1, d = -1 }
-  int32 Gmax4_idx = -1;
+  kkint32 Gmax4_idx = -1;
 
-  for(int32 i=0;i<active_size;i++)
+  for(kkint32 i=0;i<active_size;i++)
   {
     if(y[i]==+1)  // y == +1
     {
@@ -2040,7 +2040,7 @@ void SVM233::Solver_NU::do_shrinking()
   double Gmax3 = -INF;  // max { -grad(f)_i * d | y_i = -1, d = +1 }
   double Gmax4 = -INF;  // max { -grad(f)_i * d | y_i = -1, d = -1 }
 
-  int32 k;
+  kkint32 k;
   for  (k = 0;  k < active_size;  k++)
   {
     if(!is_upper_bound(k))
@@ -2129,12 +2129,12 @@ void SVM233::Solver_NU::do_shrinking()
 
 double SVM233::Solver_NU::calculate_rho ()
 {
-  int32 nr_free1 = 0,nr_free2 = 0;
+  kkint32 nr_free1 = 0,nr_free2 = 0;
   double ub1 = INF, ub2 = INF;
   double lb1 = -INF, lb2 = -INF;
   double sum_free1 = 0, sum_free2 = 0;
 
-  for(int32 i=0;i<active_size;i++)
+  for(kkint32 i=0;i<active_size;i++)
   {
     if(y[i]==+1)
     {
@@ -2190,23 +2190,23 @@ public:
     :Kernel (prob.l, prob.x, param)
   {
     clone(y,y_,prob.l);
-    cache = new Cache(prob.l,(int32)(param.cache_size*(1<<20)));
+    cache = new Cache(prob.l,(kkint32)(param.cache_size*(1<<20)));
   }
 
-  Qfloat *get_Q(int32 i, int32 len) const
+  Qfloat *get_Q(kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 start;
+    kkint32 start;
     if  ((start = cache->get_data (i, &data, len)) < len)
     {
-      for  (int32 j = start;  j < len;  j++)
+      for  (kkint32 j = start;  j < len;  j++)
         data[j] = (Qfloat)(y[i] * y[j] * (this->*kernel_function)(i,j));
       //luo add data[j] = (Qfloat)(w[i]*w[j]*y[i]*y[j]*(this->*kernel_function)(i,j));
     }
     return data;
   }
 
-  void swap_index(int32 i, int32 j) const
+  void swap_index(kkint32 i, kkint32 j) const
   {
     cache->swap_index(i,j);
     Kernel::swap_index(i,j);
@@ -2235,22 +2235,22 @@ public:
               )
     :Kernel (prob.l, prob.x, param)
   {
-    cache = new Cache(prob.l,(int32)(param.cache_size*(1<<20)));
+    cache = new Cache(prob.l,(kkint32)(param.cache_size*(1<<20)));
   }
 
-  Qfloat *get_Q(int32 i, int32 len) const
+  Qfloat *get_Q(kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 start;
+    kkint32 start;
     if((start = cache->get_data(i,&data,len)) < len)
     {
-      for(int32 j=start;j<len;j++)
+      for(kkint32 j=start;j<len;j++)
         data[j] = (Qfloat)(this->*kernel_function)(i,j);
     }
     return data;
   }
 
-  void swap_index(int32 i, int32 j) const
+  void swap_index(kkint32 i, kkint32 j) const
   {
     cache->swap_index(i,j);
     Kernel::swap_index(i,j);
@@ -2277,10 +2277,10 @@ public:
     :Kernel (prob.l, prob.x, param)
   {
     l = prob.l;
-    cache = new Cache(l,(int32)(param.cache_size*(1<<20)));
+    cache = new Cache(l,(kkint32)(param.cache_size*(1<<20)));
     sign = new schar[2*l];
-    index = new int32[2*l];
-    for(int32 k=0;k<l;k++)
+    index = new kkint32[2*l];
+    for(kkint32 k=0;k<l;k++)
     {
       sign[k] = 1;
       sign[k+l] = -1;
@@ -2292,20 +2292,20 @@ public:
     next_buffer = 0;
   }
 
-  void swap_index(int32 i, int32 j) const
+  void swap_index(kkint32 i, kkint32 j) const
   {
     Swap(sign[i],sign[j]);
     Swap(index[i],index[j]);
   }
 
 
-  Qfloat *get_Q(int32 i, int32 len) const
+  Qfloat *get_Q(kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 real_i = index[i];
+    kkint32 real_i = index[i];
     if(cache->get_data(real_i,&data,l) < l)
     {
-      for(int32 j=0;j<l;j++)
+      for(kkint32 j=0;j<l;j++)
         data[j] = (Qfloat)(this->*kernel_function)(real_i,j);
     }
 
@@ -2313,7 +2313,7 @@ public:
     Qfloat *buf = buffer[next_buffer];
     next_buffer = 1 - next_buffer;
     schar si = sign[i];
-    for(int32 j=0;j<len;j++)
+    for(kkint32 j=0;j<len;j++)
       buf[j] = si * sign[j] * data[index[j]];
     return buf;
   }
@@ -2327,11 +2327,11 @@ public:
     delete[] buffer[1];
   }
 private:
-  int32 l;
+  kkint32 l;
   Cache *cache;
   schar *sign;
-  int32 *index;
-  mutable int32 next_buffer;
+  kkint32 *index;
+  mutable kkint32 next_buffer;
   Qfloat* buffer[2];
 };
 
@@ -2349,11 +2349,11 @@ static void  SVM233::solve_c_svc (const svm_problem*     prob,
                                   double                 Cn
                                  )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double *minus_ones = new double[l];
   schar *y = new schar[l];
 
-  int32 i;
+  kkint32 i;
 
   for(i=0;i<l;i++)
   {
@@ -2401,11 +2401,11 @@ static void  SVM233::solve_c_svc (const svm_problem*     prob,
                                   double*                C_
                                  )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double *minus_ones = new double[l];
   schar *y = new schar[l];
 
-  int32 i;
+  kkint32 i;
 
   for  (i = 0;  i < l;  i++)
   {
@@ -2450,8 +2450,8 @@ static void  SVM233::solve_nu_svc (const svm_problem*    prob,
                                    Solver::SolutionInfo* si
                                   )
 {
-  int32 i;
-  int32 l = prob->l;
+  kkint32 i;
+  kkint32 l = prob->l;
   double nu = param->nu;
 
   schar *y = new schar[l];
@@ -2509,12 +2509,12 @@ static void  SVM233::solve_one_class (const svm_problem*     prob,
                                       Solver::SolutionInfo*  si
                                      )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double *zeros = new double[l];
   schar *ones = new schar[l];
-  int32 i;
+  kkint32 i;
 
-  int32 n = (int32)(param->nu*prob->l);  // # of alpha's at upper bound
+  kkint32 n = (kkint32)(param->nu*prob->l);  // # of alpha's at upper bound
 
   for(i=0;i<n;i++)
     alpha[i] = 1;
@@ -2544,11 +2544,11 @@ static void  SVM233::solve_epsilon_svr (const svm_problem*     prob,
                                         Solver::SolutionInfo*  si
                                        )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double *alpha2 = new double[2*l];
   double *linear_term = new double[2*l];
   schar *y = new schar[2*l];
-  int32 i;
+  kkint32 i;
 
   for(i=0;i<l;i++)
   {
@@ -2595,12 +2595,12 @@ static void  SVM233::solve_nu_svr (const svm_problem*     prob,
                                    Solver::SolutionInfo*  si
                                   )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double C = param->C;
   double *alpha2 = new double[2*l];
   double *linear_term = new double[2*l];
   schar *y = new schar[2*l];
-  int32 i;
+  kkint32 i;
 
   double sum = C * param->nu * l / 2;
   for(i=0;i<l;i++)
@@ -2654,9 +2654,9 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
 
   // output SVs
 
-  int32 nSV = 0;
-  int32 nBSV = 0;
-  for (int32 i = 0;  i < prob->l;  i++)
+  kkint32 nSV = 0;
+  kkint32 nBSV = 0;
+  for (kkint32 i = 0;  i < prob->l;  i++)
   {
     if  (fabs (alpha[i]) > 0)
     {
@@ -2688,7 +2688,7 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
                                           const svm_parameter*  param,
                                           double                Cp, 
                                           double                Cn, 
-                                          std::set<int32>&        BSVIndex
+                                          std::set<kkint32>&        BSVIndex
                                          )
 {
   double *alpha = Malloc (double, prob->l);
@@ -2720,12 +2720,12 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
 
   // output SVs
 
-  std::vector<int32> SVIndex;
+  std::vector<kkint32> SVIndex;
 
-  int32 nSV = 0;
-  int32 nBSV = 0;
+  kkint32 nSV = 0;
+  kkint32 nBSV = 0;
 
-  for  (int32 i = 0;  i < prob->l;  i++)
+  for  (kkint32 i = 0;  i < prob->l;  i++)
   {
     if  (fabs(alpha[i]) > 0)
     {
@@ -2753,14 +2753,14 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
   info("nSV = %d, nBSV = %d\n",nSV,nBSV);
 
   double sum=0.0;
-  std::vector<int32>::iterator it,it2;
+  std::vector<kkint32>::iterator it,it2;
 
   for (it = SVIndex.begin();  it < SVIndex.end();  it++)
   {
     for  (it2 = SVIndex.begin(); it2 < SVIndex.end();  it2++)
     {
-      int32 k  = *it;
-      int32 kk = *it2;
+      kkint32 k  = *it;
+      kkint32 kk = *it2;
 
       double kvalue;
 
@@ -2841,8 +2841,8 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
     model->rho = Malloc(double, 1);
     model->rho[0] = f.rho;
 
-    int32 nSV = 0;
-    int32 i;
+    kkint32 nSV = 0;
+    kkint32 i;
 
     for  (i = 0;  i < prob->l;  i++)
       if  (fabs (f.alpha[i]) > 0) ++nSV;
@@ -2852,13 +2852,13 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     //luo add
     model->numNonSV = prob->l - nSV;
-    model->nonSVIndex = Malloc(int32, model->numNonSV);
-    model->SVIndex=Malloc(int32, nSV);
+    model->nonSVIndex = Malloc(kkint32, model->numNonSV);
+    model->SVIndex=Malloc(kkint32, nSV);
     //model->rest=Malloc(svm_node *,model->numRest);
     //luo
     model->sv_coef[0] = Malloc (double, nSV);
-    int32 j = 0;
-    int32 jj=0;
+    kkint32 j = 0;
+    kkint32 jj=0;
     for  (i = 0;  i < prob->l;  i++)
     {
       if  (fabs (f.alpha[i]) > 0)
@@ -2880,20 +2880,20 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
   {
     // classification
     // find out the number of classes
-    int32 l = prob->l;
-    int32 max_nr_class = 16;
-    int32 nr_class = 0;
-    int32 *label = Malloc(int32,max_nr_class);
-    int32 *count = Malloc(int32,max_nr_class);
-    int32 *index = Malloc(int32, l);
+    kkint32 l = prob->l;
+    kkint32 max_nr_class = 16;
+    kkint32 nr_class = 0;
+    kkint32 *label = Malloc(kkint32,max_nr_class);
+    kkint32 *count = Malloc(kkint32,max_nr_class);
+    kkint32 *index = Malloc(kkint32, l);
 
-    bool  weHaveExampleNames = ((int32)prob->exampleNames.size () >= prob->l);
+    bool  weHaveExampleNames = ((kkint32)prob->exampleNames.size () >= prob->l);
 
-    int32 i;
+    kkint32 i;
     for  (i = 0;  i < l;  i++)
     {
-      int32 this_label = (int32)prob->y[i];
-      int32 j;
+      kkint32 this_label = (kkint32)prob->y[i];
+      kkint32 j;
       for  (j = 0;  j < nr_class;  j++)
       {
         if  (this_label == label[j])
@@ -2909,8 +2909,8 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
         if  (nr_class == max_nr_class)
         {
           max_nr_class *= 2;
-          label = (int32 *)realloc(label,max_nr_class*sizeof(int32));
-          count = (int32 *)realloc(count,max_nr_class*sizeof(int32));
+          label = (kkint32 *)realloc(label,max_nr_class*sizeof(kkint32));
+          count = (kkint32 *)realloc(count,max_nr_class*sizeof(kkint32));
         }
         label[nr_class] = this_label;
         count[nr_class] = 1;
@@ -2920,7 +2920,7 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     // group training data of the same class
 
-    int32 *start = Malloc (int32, nr_class);
+    kkint32 *start = Malloc (kkint32, nr_class);
     start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + count[i-1];
@@ -2930,7 +2930,7 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
     double *W = NULL;
     if (prob->W != NULL)
       W = Malloc(double, l);
-    std::vector<int32> reindex(l);
+    std::vector<kkint32> reindex(l);
 
     for  (i = 0;  i < l;  i++)
     {
@@ -2953,7 +2953,7 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     for(i = 0;  i < param->nr_weight;  i++)
     {
-      int32 j;
+      kkint32 j;
 
       for  (j = 0;  j < nr_class;  j++)
         if  (param->weight_label[i] == label[j])
@@ -2973,24 +2973,24 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     decision_function *f = Malloc(decision_function,nr_class*(nr_class-1)/2);
 
-    int32 p = 0;
+    kkint32 p = 0;
     for(i=0;i<nr_class;i++)
     {
-      for(int32 j=i+1;j<nr_class;j++)
+      for(kkint32 j=i+1;j<nr_class;j++)
       {
         svm_problem   sub_prob;
         //memset(&sub_prob, 0, sizeof(sub_prob));   // kak
 
-        int32 si = start[i], sj = start[j];
-        int32 ci = count[i], cj = count[j];
+        kkint32 si = start[i], sj = start[j];
+        kkint32 ci = count[i], cj = count[j];
         sub_prob.l = ci+cj;
         sub_prob.x = Malloc(svm_node *,sub_prob.l);
         sub_prob.y = Malloc(double, sub_prob.l);
         if (W != NULL)
           sub_prob.W = Malloc(double, sub_prob.l);
-        sub_prob.index = Malloc(int32, sub_prob.l);
+        sub_prob.index = Malloc(kkint32, sub_prob.l);
 
-        int32 k;
+        kkint32 k;
         for(k=0;k<ci;k++)
         {
           sub_prob.x[k] = x[si+k];
@@ -3048,7 +3048,7 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     model->nr_class = nr_class;
 
-    model->label = Malloc (int32, nr_class);
+    model->label = Malloc (kkint32, nr_class);
     for (i = 0;  i < nr_class;  i++)
       model->label[i] = label[i];
 
@@ -3056,13 +3056,13 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
     for  (i = 0;  i < nr_class * (nr_class - 1) / 2;  i++)
       model->rho[i] = f[i].rho;
 
-    int32 total_sv = 0;
-    int32 *nz_count = Malloc (int32,nr_class);
-    model->nSV    = Malloc (int32,nr_class);
+    kkint32 total_sv = 0;
+    kkint32 *nz_count = Malloc (kkint32,nr_class);
+    model->nSV    = Malloc (kkint32,nr_class);
     for  (i=0;  i < nr_class;  i++)
     {
-      int32 nSV = 0;
-      for  (int32 j = 0;  j < count[i];  j++)
+      kkint32 nSV = 0;
+      for  (kkint32 j = 0;  j < count[i];  j++)
       {
         if  (nonzero[start[i]+j])
         {  
@@ -3082,16 +3082,16 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
     if  (weHaveExampleNames)
     {
-      for  (int32 zed = 0;  zed < total_sv;  zed++)
+      for  (kkint32 zed = 0;  zed < total_sv;  zed++)
         model->exampleNames.push_back ("");
     }
     
     
     //luo add
-    int32 pp=0;
+    kkint32 pp=0;
     model->numNonSV   = l - total_sv;
-    model->SVIndex    = Malloc(int32, total_sv);
-    model->nonSVIndex = Malloc(int32, model->numNonSV);
+    model->SVIndex    = Malloc(kkint32, total_sv);
+    model->nonSVIndex = Malloc(kkint32, model->numNonSV);
 
     //model->numRest = l - total_sv;
     //model->rest=Malloc(svm_node *, model->numRest);
@@ -3116,7 +3116,7 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
       }
     }
 
-    int32 *nz_start = Malloc (int32,nr_class);
+    kkint32 *nz_start = Malloc (kkint32,nr_class);
     nz_start[0] = 0;
     for(i=1;i<nr_class;i++)
       nz_start[i] = nz_start[i-1]+nz_count[i-1];
@@ -3125,25 +3125,25 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
     for(i=0;i<nr_class-1;i++)
     {
       model->sv_coef[i] = Malloc(double,total_sv);
-      for  (int32 zed = 0;  zed < total_sv;  zed++)
+      for  (kkint32 zed = 0;  zed < total_sv;  zed++)
         model->sv_coef[i][zed] = 0.0;
     }
 
     p = 0;
     for  (i = 0;  i < nr_class;  i++)
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         // classifier (i,j): coefficients with
         // i are in sv_coef[j-1][nz_start[i]...],
         // j are in sv_coef[i][nz_start[j]...]
 
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = count[i];
-        int32 cj = count[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = count[i];
+        kkint32 cj = count[j];
 
-        int32 q = nz_start[i];
-        int32 k;
+        kkint32 q = nz_start[i];
+        kkint32 k;
         for (k = 0;  k < ci;  k++)
           if  (nonzero[si + k])
           {
@@ -3202,16 +3202,16 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
 
 
-int32 svm_get_nr_class(const svm_model *model)
+kkint32 svm_get_nr_class(const svm_model *model)
 {
   return model->nr_class;
 }
 
 
 
-void svm_get_labels(const svm_model *model, int32* label)
+void svm_get_labels(const svm_model *model, kkint32* label)
 {
-  for  (int32 i = 0;  i < model->nr_class;  i++)
+  for  (kkint32 i = 0;  i < model->nr_class;  i++)
     label[i] = model->label[i];
 }
 
@@ -3236,7 +3236,7 @@ const char *kernel_type_table[]=
 
 
 
-int32   SVM233::svm_save_model (const char *model_file_name, const svm_model *model)
+kkint32 SVM233::svm_save_model (const char *model_file_name, const svm_model *model)
 {
   FILE *fp = fopen (model_file_name, "w");
   if  (fp==NULL) return -1;
@@ -3257,14 +3257,14 @@ int32   SVM233::svm_save_model (const char *model_file_name, const svm_model *mo
   if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
     fprintf(fp,"coef0 %g\n", param.coef0);
 
-  int32 nr_class = model->nr_class;
-  int32 l = model->l;
+  kkint32 nr_class = model->nr_class;
+  kkint32 l = model->l;
   fprintf  (fp, "nr_class %d\n", nr_class);
   fprintf  (fp, "total_sv %d\n",l);
 
   {
     fprintf(fp, "rho");
-    for(int32 i=0;i<nr_class*(nr_class-1)/2;i++)
+    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
       fprintf(fp," %g",model->rho[i]);
     fprintf(fp, "\n");
   }
@@ -3272,7 +3272,7 @@ int32   SVM233::svm_save_model (const char *model_file_name, const svm_model *mo
   if (model->label)
   {
     fprintf(fp, "label");
-    for(int32 i=0;i<nr_class;i++)
+    for(kkint32 i=0;i<nr_class;i++)
       fprintf(fp," %d",model->label[i]);
     fprintf(fp, "\n");
   }
@@ -3280,7 +3280,7 @@ int32   SVM233::svm_save_model (const char *model_file_name, const svm_model *mo
   if  (model->nSV)
   {
     fprintf(fp, "nr_sv");
-    for(int32 i=0;i<nr_class;i++)
+    for(kkint32 i=0;i<nr_class;i++)
       fprintf(fp," %d",  model->nSV[i]);
     fprintf(fp, "\n");
   }
@@ -3289,9 +3289,9 @@ int32   SVM233::svm_save_model (const char *model_file_name, const svm_model *mo
   const double * const *sv_coef = model->sv_coef;
   const svm_node * const *SV = model->SV;
 
-  for (int32 i = 0;  i < l;  i++)
+  for (kkint32 i = 0;  i < l;  i++)
   {
-    for  (int32 j = 0;  j < nr_class - 1;  j++)
+    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
       fprintf(fp, "%.16g ",sv_coef[j][i]);
 
     const svm_node *p = SV[i];
@@ -3316,10 +3316,10 @@ void  SVM233::Svm_Save_Model (ostream&         o,
 {
   const svm_parameter&  param = model->param;
 
-  int32 nr_class = model->nr_class;
-  int32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
+  kkint32 nr_class = model->nr_class;
+  kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
 
-  int32  origPrecision = o.precision ();
+  kkint32  origPrecision = o.precision ();
   o.precision (14);
 
   o << "<Svm233>"   << endl;
@@ -3327,22 +3327,22 @@ void  SVM233::Svm_Save_Model (ostream&         o,
   o << "Parameters"    << "\t" << param.ToTabDelStr () << endl;
   o << "NumOfClasses"  << "\t" << nr_class  << endl;
 
-  int32 totalNumSVs = model->l;
+  kkint32 totalNumSVs = model->l;
   o << "TotalNumOfSupportVectors" << "\t" << totalNumSVs    << endl;
 
   {
     o << "rho";
-    for  (int32 i = 0;  i < numberOfBinaryClassifiers;  i++)
+    for  (kkint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
       o << "\t" << model->rho[i];
     o << endl;
   }
 
   if  (model->margin)
   {
-    int32  oldPrecision = o.precision ();
+    kkint32  oldPrecision = o.precision ();
     o.precision (9);
     o << "Margins";
-    for  (int32 i = 0;  i < numberOfBinaryClassifiers;  i++)
+    for  (kkint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
       o << "\t" << model->margin[i];
     o << endl;
     o.precision (oldPrecision);
@@ -3351,7 +3351,7 @@ void  SVM233::Svm_Save_Model (ostream&         o,
   if (model->label)
   {
     o << "label";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << model->label[i];
     o << endl;
   }
@@ -3359,7 +3359,7 @@ void  SVM233::Svm_Save_Model (ostream&         o,
   if  (model->nSV)
   {
     o << "nr_sv";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << model->nSV[i];
     o << endl;
   }
@@ -3369,8 +3369,8 @@ void  SVM233::Svm_Save_Model (ostream&         o,
 
   {
     // Determine total number of elememts
-    int32  totalNumOfElements = 0;
-    for  (int32 i = 0;  i < totalNumSVs;  i++)
+    kkint32  totalNumOfElements = 0;
+    for  (kkint32 i = 0;  i < totalNumSVs;  i++)
     {
       const svm_node *p = SV[i];
       while  (p->index != -1)
@@ -3384,15 +3384,15 @@ void  SVM233::Svm_Save_Model (ostream&         o,
     o << "TOTALNUMOFELEMENTS" << "\t" << totalNumOfElements << endl;
   }
 
-  for  (int32 i = 0;  i < totalNumSVs;  i++)
+  for  (kkint32 i = 0;  i < totalNumSVs;  i++)
   {
-    if  ((int32)model->exampleNames.size () > i)
+    if  ((kkint32)model->exampleNames.size () > i)
       o << "SuportVectorNamed"  << "\t" << model->exampleNames[i];
     else
       o << "SuportVector";
 
     o.precision (16);
-    for (int32 j = 0;  j < nr_class - 1;  j++)
+    for (kkint32 j = 0;  j < nr_class - 1;  j++)
       o << "\t" << sv_coef[j][i];
 
     const svm_node *p = SV[i];
@@ -3422,17 +3422,17 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
   char  buff[100000];
 
-  int32  numOfClasses       = -1;
-  int32  numSVsLoaded       = 0;
-  int32  numElementsLoaded  = 0;
-  int32  totalNumSVs        = -1;
-  int32  totalNumOfElements = -1;
+  kkint32  numOfClasses       = -1;
+  kkint32  numSVsLoaded       = 0;
+  kkint32  numElementsLoaded  = 0;
+  kkint32  totalNumSVs        = -1;
+  kkint32  totalNumOfElements = -1;
   svm_node*  x_space = NULL;
 
 
   bool  validFormat = true;
 
-  KKStr  line (1024);  // Preallocating to at least 1024 chracters int32.
+  KKStr  line (1024);  // Preallocating to at least 1024 chracters kkint32.
 
   // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
   // an invalid Training Model.
@@ -3500,34 +3500,34 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
     else if  (lineName == "RHO")
     {
-      int32 n = numOfClasses * (numOfClasses - 1) / 2;
+      kkint32 n = numOfClasses * (numOfClasses - 1) / 2;
       model->rho = Malloc (double, n);
-      for (int32 i = 0;  i < n;  i++)
+      for (kkint32 i = 0;  i < n;  i++)
         model->rho[i] = line.ExtractTokenDouble ("\t");
     }
 
     else if  (lineName == "LABEL")
     {
-      model->label = Malloc (int32, numOfClasses);
-      for  (int32 i=0;  i < numOfClasses;  i++)
+      model->label = Malloc (kkint32, numOfClasses);
+      for  (kkint32 i=0;  i < numOfClasses;  i++)
         model->label[i] = line.ExtractTokenInt ("\t");
     }
   
 
     else if  (lineName == "NR_SV")
     {
-      model->nSV = Malloc(int32, numOfClasses);
-      for  (int32 i = 0;  i < numOfClasses;  i++)
+      model->nSV = Malloc(kkint32, numOfClasses);
+      for  (kkint32 i = 0;  i < numOfClasses;  i++)
         model->nSV[i] = line.ExtractTokenInt ("\t");
     }
 
 
     else if  (lineName.EqualIgnoreCase ("Margins"))
     {
-      int32 n = numOfClasses * (numOfClasses - 1) / 2;
+      kkint32 n = numOfClasses * (numOfClasses - 1) / 2;
       delete  model->margin;
       model->margin = new double[n];
-      for (int32 i = 0;  i < n;  i++)
+      for (kkint32 i = 0;  i < n;  i++)
         model->margin[i] = line.ExtractTokenDouble ("\t");
     }
 
@@ -3535,11 +3535,11 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
     {
       totalNumOfElements = line.ExtractTokenInt ("\t");
 
-      int32 m = model->nr_class - 1;
-      int32 l = model->l;
+      kkint32 m = model->nr_class - 1;
+      kkint32 l = model->l;
       model->sv_coef = Malloc (double*, m);
 
-      for (int32 i = 0;  i < m;  i++)
+      for (kkint32 i = 0;  i < m;  i++)
         model->sv_coef[i] = Malloc (double, l);
       
       model->SV = Malloc (svm_node*, l);
@@ -3574,7 +3574,7 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
         model->exampleNames.push_back (line.ExtractToken2 ("\t"));
       }
 
-      for (int32 j = 0;  j < numOfClasses - 1;  j++)
+      for (kkint32 j = 0;  j < numOfClasses - 1;  j++)
         model->sv_coef[j][numSVsLoaded] = line.ExtractTokenDouble ("\t");
 
       model->SV[numSVsLoaded] = &(x_space[numElementsLoaded]);
@@ -3671,7 +3671,7 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
     if  (KKStr::StrEqualNoCase (cmd, "svm_type"))
     {
       fscanf(fp,"%80s",cmd);
-      int32 i;
+      kkint32 i;
       for (i=0;svm_type_table[i];i++)
       {
         if  (KKStr::StrEqualNoCase (svm_type_table[i], cmd))
@@ -3695,7 +3695,7 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
     else if  (KKStr::StrEqualNoCase (cmd, "kernel_type"))
     {
       fscanf(fp,"%80s",cmd);
-      int32 i;
+      kkint32 i;
       for  (i = 0;  kernel_type_table[i];  i++)
       {
         if  (KKStr::StrEqualNoCase (kernel_type_table[i], cmd))
@@ -3736,25 +3736,25 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
 
     else if  (KKStr::StrEqualNoCase (cmd, "rho"))
     {
-      int32 n = model->nr_class * (model->nr_class - 1) / 2;
+      kkint32 n = model->nr_class * (model->nr_class - 1) / 2;
       model->rho = Malloc (double, n);
-      for  (int32 i=0; i < n;  i++)
+      for  (kkint32 i=0; i < n;  i++)
         fscanf(fp,"%lf",&model->rho[i]);
     }
 
     else if  (KKStr::StrEqualNoCase (cmd, "label"))
     {
-      int32 n = model->nr_class;
-      model->label = Malloc(int32,n);
-      for(int32 i=0;i<n;i++)
+      kkint32 n = model->nr_class;
+      model->label = Malloc(kkint32,n);
+      for(kkint32 i=0;i<n;i++)
         fscanf(fp,"%d",&model->label[i]);
     }
 
     else if  (KKStr::StrEqualNoCase (cmd, "nr_sv"))
     {
-      int32 n = model->nr_class;
-      model->nSV = Malloc(int32,n);
-      for  (int32 i = 0;  i < n;  i++)
+      kkint32 n = model->nr_class;
+      model->nSV = Malloc(kkint32,n);
+      for  (kkint32 i = 0;  i < n;  i++)
         fscanf(fp, "%d", &model->nSV[i]);
     }
 
@@ -3762,7 +3762,7 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
     {
       while(1)
       {
-        int32 c = getc (fp);
+        kkint32 c = getc (fp);
         if  (c == EOF || c == '\n') break;
       }
       break;
@@ -3781,12 +3781,12 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
 
   // read sv_coef and SV
 
-  int32 elements = 0;
-  int32 pos = ftell(fp);
+  kkint32 elements = 0;
+  kkint32 pos = ftell(fp);
 
   while(1)
   {
-    int32 c = fgetc(fp);
+    kkint32 c = fgetc(fp);
     switch(c)
     {
     case '\n':
@@ -3804,25 +3804,25 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
 out:
   fseek(fp, pos, SEEK_SET);
 
-  int32 m = model->nr_class - 1;
-  int32 l = model->l;
+  kkint32 m = model->nr_class - 1;
+  kkint32 l = model->l;
   model->sv_coef = Malloc(double *,m);
-  int32 i;
+  kkint32 i;
   for  (i = 0;  i < m;  i++)
     model->sv_coef[i] = Malloc(double,l);
 
   model->SV = Malloc(svm_node*,l);
   svm_node *x_space = Malloc(svm_node,elements);
 
-  int32 j=0;
+  kkint32 j=0;
   for  (i = 0;  i < l;  i++)
   {
     model->SV[i] = &x_space[j];
-    for (int32 k = 0;  k < m;  k++)
+    for (kkint32 k = 0;  k < m;  k++)
       fscanf (fp, "%lf", &model->sv_coef[k][i]);
     while  (1)
     {
-      int32 c;
+      kkint32 c;
       do {
         c = getc(fp);
         if(c=='\n') goto out2;
@@ -3852,11 +3852,11 @@ out2:
 double  SVM233::svm_predict (const svm_model*      model,
                              const svm_node*       x,
                              std::vector<double>&  dist,
-                             std::vector<int32>&   winners,
-                             int32                 excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+                             std::vector<kkint32>&   winners,
+                             kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
                             )
 {
-  int32 dimSelect = model->param.dimSelect;
+  kkint32 dimSelect = model->param.dimSelect;
 
   winners.erase (winners.begin (), winners.end ());
 
@@ -3868,7 +3868,7 @@ double  SVM233::svm_predict (const svm_model*      model,
     double*  sv_coef = model->sv_coef[0];
     double   sum = 0;
 
-    for  (int32 i=0; i < model->l; i++)
+    for  (kkint32 i=0; i < model->l; i++)
     {
       if  (i == excludeSupportVectorIDX)
         continue;
@@ -3888,16 +3888,16 @@ double  SVM233::svm_predict (const svm_model*      model,
     else
       returnVal = sum;
 
-    winners.push_back ((int32)returnVal);
+    winners.push_back ((kkint32)returnVal);
     return  returnVal;
   }
   else
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
 
-    std::vector<int32>   voteTable (nr_class * nr_class, 0);
-    int32 l = model->l;
+    std::vector<kkint32>   voteTable (nr_class * nr_class, 0);
+    kkint32 l = model->l;
 
 
     double*  kvalue = model->kValueTable;
@@ -3920,31 +3920,31 @@ double  SVM233::svm_predict (const svm_model*      model,
 
 
     // 'start'  will be built to point to the beginning of the list of S'V's for each class.
-    int32 *start = Malloc (int32, nr_class);
+    kkint32 *start = Malloc (kkint32, nr_class);
     start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + model->nSV[i-1];
 
-    int32 *vote = Malloc (int32, nr_class);
+    kkint32 *vote = Malloc (kkint32, nr_class);
 
     for  (i = 0;  i < nr_class;  i++)
       vote[i] = 0;
 
-    int32 p = 0;
+    kkint32 p = 0;
 
     std::vector<double>  distTable (nr_class * nr_class, 0);
 
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0;
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = model->nSV[i];
-        int32 cj = model->nSV[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = model->nSV[i];
+        kkint32 cj = model->nSV[j];
 
-        int32 k;
+        kkint32 k;
         double *coef1 = model->sv_coef[j-1];
         double *coef2 = model->sv_coef[i];
 
@@ -3967,8 +3967,8 @@ double  SVM233::svm_predict (const svm_model*      model,
           ++vote[j];
         }
 
-        int32 row = model->label[i];
-        int32 col = model->label[j];
+        kkint32 row = model->label[i];
+        kkint32 col = model->label[j];
 
         distTable[row * nr_class + col] = sum;
         distTable[col * nr_class + row] = (-1.0 * sum);
@@ -3982,9 +3982,9 @@ double  SVM233::svm_predict (const svm_model*      model,
 
     {  // kk:  jun-06-2003
 
-      for (int32 i = 0;  i < nr_class - 1; i++)
+      for (kkint32 i = 0;  i < nr_class - 1; i++)
       {
-        for (int32 j=i+1; j< nr_class; j++)
+        for (kkint32 j=i+1; j< nr_class; j++)
         {
           dist[p++] = distTable[i * nr_class + j];
         }
@@ -3993,8 +3993,8 @@ double  SVM233::svm_predict (const svm_model*      model,
     }  // kk:  jun-06-2003
 
     winners.erase (winners.begin (), winners.end ());
-    int32 vote_max_idx = 0;
-    int32 winningAmt   = vote[0];
+    kkint32 vote_max_idx = 0;
+    kkint32 winningAmt   = vote[0];
     winners.push_back (model->label[0]);
 
     for  (i = 1;  i < nr_class;  i++)
@@ -4015,7 +4015,7 @@ double  SVM233::svm_predict (const svm_model*      model,
     free (start);
     free (vote);
 
-    int32  winningLabel = model->label[vote_max_idx];
+    kkint32  winningLabel = model->label[vote_max_idx];
 
     return  winningLabel;
   }
@@ -4028,12 +4028,12 @@ double  SVM233::svm_predict (const svm_model*      model,
 double  SVM233::svm_predictTwoClasses (const svm_model*    model,
                                        const svm_node*     x,
                                        double&             dist,
-                                       int32                 excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+                                       kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
                                       )
 {
-  int32  winner = 0;
+  kkint32  winner = 0;
 
-  int32 dimSelect = model->param.dimSelect;
+  kkint32 dimSelect = model->param.dimSelect;
 
   if  (model->param.svm_type == ONE_CLASS   ||
        model->param.svm_type == EPSILON_SVR ||
@@ -4043,7 +4043,7 @@ double  SVM233::svm_predictTwoClasses (const svm_model*    model,
     double*  sv_coef = model->sv_coef[0];
     double   sum = 0;
 
-    for  (int32 i=0; i < model->l; i++)
+    for  (kkint32 i=0; i < model->l; i++)
     {
       if  (i == excludeSupportVectorIDX)
         continue;
@@ -4067,9 +4067,9 @@ double  SVM233::svm_predictTwoClasses (const svm_model*    model,
   }
   else
   {
-    int32 i;
+    kkint32 i;
 
-    int32 nr_class = model->nr_class;
+    kkint32 nr_class = model->nr_class;
     if  (nr_class != 2)
     {
       cerr << std::endl
@@ -4078,7 +4078,7 @@ double  SVM233::svm_predictTwoClasses (const svm_model*    model,
       exit (-1);
     }
 
-    int32 l = model->l;
+    kkint32 l = model->l;
     //double *kvalue = Malloc (double, l);
 
     double* kvalue = model->kValueTable;
@@ -4104,23 +4104,23 @@ double  SVM233::svm_predictTwoClasses (const svm_model*    model,
       }
     }
 
-    int32 start[2];
+    kkint32 start[2];
     start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + model->nSV[i-1];
 
-    int32 p = 0;
+    kkint32 p = 0;
 
     i = 0;
-    int32 j = 1;
+    kkint32 j = 1;
     {
       double sum = 0;
-      int32 si = start[i];
-      int32 sj = start[j];
-      int32 ci = model->nSV[i];
-      int32 cj = model->nSV[j];
+      kkint32 si = start[i];
+      kkint32 sj = start[j];
+      kkint32 ci = model->nSV[i];
+      kkint32 cj = model->nSV[j];
 
-      int32 k;
+      kkint32 k;
       double *coef1 = model->sv_coef[j-1];
       double *coef2 = model->sv_coef[i];
 
@@ -4164,7 +4164,7 @@ double  SVM233::svm_predictTwoClasses (const svm_model*    model,
 
 /****************************************************************************************/
 svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model,
-                                                       int32                 excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+                                                       kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
                                                       )
 {
   if  (model->param.svm_type == ONE_CLASS   ||
@@ -4175,7 +4175,7 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
     return NULL;
   }
 
-  int32 nr_class = model->nr_class;
+  kkint32 nr_class = model->nr_class;
   if  (nr_class != 2)
   {
     printf ("\n\n\n svm_predictTwoClasses  *** ERROR ***  NumOf Classes != 2\n\n");
@@ -4191,8 +4191,8 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
   }
 
 
-  int32 l = model->l;
-  int32  numSVsFirstClass = model->nSV[0];
+  kkint32 l = model->l;
+  kkint32  numSVsFirstClass = model->nSV[0];
 
   svm_problem*  newProb = new svm_problem ();
   newProb->weOwnContents = true;
@@ -4202,10 +4202,10 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
 
   newProb->y     = new double[newProb->l];
   newProb->x     = new svm_node*[newProb->l];
-  newProb->index = new int32[newProb->l];
+  newProb->index = new kkint32[newProb->l];
 
-  int32  newIDX = 0;
-  for (int32 svIDX = 0;  svIDX < l;  svIDX++)
+  kkint32  newIDX = 0;
+  for (kkint32 svIDX = 0;  svIDX < l;  svIDX++)
   {
     if  (svIDX == excludeSupportVectorIDX)
       continue;
@@ -4219,7 +4219,7 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
     newProb->exampleNames.push_back (model->exampleNames[svIDX]);
 
     {
-      int32  numElements = 0;
+      kkint32  numElements = 0;
       svm_node* nextNode = model->SV[svIDX];
       while  (nextNode->index != -1)
       {
@@ -4230,7 +4230,7 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
 
       newProb->x[newIDX] = new svm_node[numElements];
 
-      for  (int32  fnIDX = 0;  fnIDX < numElements;  fnIDX++)
+      for  (kkint32  fnIDX = 0;  fnIDX < numElements;  fnIDX++)
       {
         newProb->x[newIDX][fnIDX].index = model->SV[svIDX][fnIDX].index;
         newProb->x[newIDX][fnIDX].value = model->SV[svIDX][fnIDX].value;
@@ -4261,7 +4261,7 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
 {
   // svm_type
 
-  int32 svm_type = param->svm_type;
+  kkint32 svm_type = param->svm_type;
   if  (svm_type != C_SVC &&
        svm_type != NU_SVC &&
        svm_type != ONE_CLASS &&
@@ -4272,7 +4272,7 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
 
   // kernel_type
 
-  int32 kernel_type = param->kernel_type;
+  kkint32 kernel_type = param->kernel_type;
   if  (kernel_type != LINEAR &&
        kernel_type != POLY &&
        kernel_type != RBF &&
@@ -4313,17 +4313,17 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
 
   if(svm_type == NU_SVC)
   {
-    int32 l = prob->l;
-    int32 max_nr_class = 16;
-    int32 nr_class = 0;
-    int32 *label = Malloc(int32,max_nr_class);
-    int32 *count = Malloc(int32,max_nr_class);
+    kkint32 l = prob->l;
+    kkint32 max_nr_class = 16;
+    kkint32 nr_class = 0;
+    kkint32 *label = Malloc(kkint32,max_nr_class);
+    kkint32 *count = Malloc(kkint32,max_nr_class);
 
-    int32 i;
+    kkint32 i;
     for(i=0;i<l;i++)
     {
-      int32 this_label = (int32)prob->y[i];
-      int32 j;
+      kkint32 this_label = (kkint32)prob->y[i];
+      kkint32 j;
       for(j=0;j<nr_class;j++)
         if(this_label == label[j])
         {
@@ -4335,8 +4335,8 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
           if(nr_class == max_nr_class)
           {
             max_nr_class *= 2;
-            label = (int32 *)realloc(label,max_nr_class*sizeof(int32));
-            count = (int32 *)realloc(count,max_nr_class*sizeof(int32));
+            label = (kkint32 *)realloc(label,max_nr_class*sizeof(kkint32));
+            count = (kkint32 *)realloc(count,max_nr_class*sizeof(kkint32));
           }
           label[nr_class] = this_label;
           count[nr_class] = 1;
@@ -4346,10 +4346,10 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
 
     for(i=0;i<nr_class;i++)
     {
-      int32 n1 = count[i];
-      for(int32 j=i+1;j<nr_class;j++)
+      kkint32 n1 = count[i];
+      for(kkint32 j=i+1;j<nr_class;j++)
       {
-        int32 n2 = count[j];
+        kkint32 n2 = count[j];
         if(param->nu*(n1+n2)/2 > min(n1,n2))
         {
           free(label);
@@ -4379,7 +4379,7 @@ double SVM233::svm_dist (const svm_model*  model,
   {
     double *sv_coef = model->sv_coef[0];
     double sum = 0;
-    for(int32 i=0;i<model->l;i++)
+    for(kkint32 i=0;i<model->l;i++)
       sum += sv_coef[i] * Kernel::k_function(x,model->SV[i],model->param);
     sum -= model->rho[0];
     if(model->param.svm_type == ONE_CLASS)
@@ -4389,38 +4389,38 @@ double SVM233::svm_dist (const svm_model*  model,
   }
   else
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
-    int32 l = model->l;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
+    kkint32 l = model->l;
 
     double *kvalue = Malloc(double,l);
     for(i=0;i<l;i++)
       kvalue[i] = Kernel::k_function(x,model->SV[i],model->param);
 
-    int32 *start = Malloc(int32,nr_class);
+    kkint32 *start = Malloc(kkint32,nr_class);
     start[0] = 0;
     for(i=1;i<nr_class;i++)
       start[i] = start[i-1]+model->nSV[i-1];
 
-    int32 *vote = Malloc(int32,nr_class);
+    kkint32 *vote = Malloc(kkint32,nr_class);
     for(i=0;i<nr_class;i++)
       vote[i] = 0;
-    int32 p=0;
+    kkint32 p=0;
 
     //luo add
     double distance=9999;
 
     for(i=0;i<nr_class;i++)
     {
-      for(int32 j=i+1;j<nr_class;j++)
+      for(kkint32 j=i+1;j<nr_class;j++)
       {
         double sum = 0;
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = model->nSV[i];
-        int32 cj = model->nSV[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = model->nSV[i];
+        kkint32 cj = model->nSV[j];
 
-        int32 k;
+        kkint32 k;
         double *coef1 = model->sv_coef[j-1];
         double *coef2 = model->sv_coef[i];
         for(k=0;k<ci;k++)
@@ -4462,7 +4462,7 @@ void  SVM233::svm_margin (svm_model *model)
 //effects: if classification, model->margin[nr_class*(nr_class-1)/2] is computed
 //      else if regression, doing nothing
 {
-  //int32 numClass=model->param.numClass;
+  //kkint32 numClass=model->param.numClass;
 
   assert (model);
 
@@ -4473,7 +4473,7 @@ void  SVM233::svm_margin (svm_model *model)
     /*
     double *sv_coef = model->sv_coef[0];
     double sum = 0;
-    for(int32 i=0;i<model->l;i++)
+    for(kkint32 i=0;i<model->l;i++)
     sum += sv_coef[i] * Kernel::k_function(x,model->SV[i],model->param);
     sum -= model->rho[0];
     if(model->param.svm_type == ONE_CLASS)
@@ -4484,29 +4484,29 @@ void  SVM233::svm_margin (svm_model *model)
   }
   else
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
 
     model->margin = new double[nr_class * (nr_class - 1) / 2];
 
-    std::vector<int32> start(nr_class,0);
+    std::vector<kkint32> start(nr_class,0);
     start[0] = 0;
     for(i=1;i<nr_class;i++)
       start[i] = start[i-1]+model->nSV[i-1];
 
-    int32 p=0;
+    kkint32 p=0;
     for  (i = 0;  i < nr_class;  i++)
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0; // computer the L of the K since it is symetric
         double trace=0; // compute the trace
 
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = model->nSV[i];
-        int32 cj = model->nSV[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = model->nSV[i];
+        kkint32 cj = model->nSV[j];
 
-        int32 k;
+        kkint32 k;
         double *coef1 = model->sv_coef[j-1];
         double *coef2 = model->sv_coef[i];
 
@@ -4516,7 +4516,7 @@ void  SVM233::svm_margin (svm_model *model)
           double kvalue = Kernel::k_function(model->SV[si+k],model->SV[si+k],model->param);
           trace += coef1[si+k]*coef1[si+k]*kvalue;
 
-          for(int32 kk=k+1; kk<ci; kk++)
+          for(kkint32 kk=k+1; kk<ci; kk++)
             //y[kk]=+1 and y[k]*y[kk]=+1;
           {
             kvalue = Kernel::k_function(model->SV[si+k],model->SV[si+kk],model->param);
@@ -4525,7 +4525,7 @@ void  SVM233::svm_margin (svm_model *model)
           //sum += coef1[si+k] * kvalue[si+k];
 
           {  // kk:  jun-06-2003
-            for(int32 kk=0; kk<cj; kk++)
+            for(kkint32 kk=0; kk<cj; kk++)
               //y[kk]=-1 and y[k]*y[kk]=-1
             {
               kvalue = Kernel::k_function(model->SV[si+k],model->SV[sj+kk],model->param);
@@ -4545,7 +4545,7 @@ void  SVM233::svm_margin (svm_model *model)
           double kvalue = Kernel::k_function(model->SV[sj+k],model->SV[sj+k],model->param);
           trace += coef2[sj + k] * coef2[sj + k] * kvalue;
 
-          for(int32 kk=k+1; kk<cj; kk++)
+          for(kkint32 kk=k+1; kk<cj; kk++)
             //y[kk]=-1 and y[k]*y[kk]=+1
           {
             kvalue = Kernel::k_function(model->SV[sj+k],model->SV[sj+kk],model->param);
@@ -4584,8 +4584,8 @@ void  SVM233::svm_margin (svm_model *model)
  *@param[out]  totalNumSVs   Total number of SVs used by all the binary classifiers.
  */
 void  SVM233::svm_GetSupportVectorStatistics (const struct svm_model*  model,
-                                              int32&                     numSVs,         // The number of training examp
-                                              int32&                     totalNumSVs
+                                              kkint32&                   numSVs,         // The number of training examp
+                                              kkint32&                   totalNumSVs
                                              )
 {
   numSVs      = 0;
@@ -4612,14 +4612,14 @@ void  SVM233::svm_GetSupportVectorStatistics (const struct svm_model*  model,
   numSVs = model->l;
 
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
 
-    int32 l = model->l;
+    kkint32 l = model->l;
 
 
     // 'start'  will be built to point to the beginning of the list of S'V's for each class.
-    int32*  start = new int32[nr_class];
+    kkint32*  start = new kkint32[nr_class];
     start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       start[i] = start[i-1] + model->nSV[i-1];
@@ -4627,15 +4627,15 @@ void  SVM233::svm_GetSupportVectorStatistics (const struct svm_model*  model,
 
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0;
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = model->nSV[i];
-        int32 cj = model->nSV[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = model->nSV[i];
+        kkint32 cj = model->nSV[j];
 
-        int32 k;
+        kkint32 k;
         double *coef1 = model->sv_coef[j-1];
         double *coef2 = model->sv_coef[i];
 

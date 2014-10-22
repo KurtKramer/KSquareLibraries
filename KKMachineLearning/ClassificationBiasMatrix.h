@@ -1,13 +1,12 @@
 #pragma once
 
-#include  "DateTime.h"
-#include  "KKStr.h"
-#include  "Matrix.h"
-#include  "RunLog.h"
+#include "DateTime.h"
+#include "KKStr.h"
+#include "Matrix.h"
+#include "RunLog.h"
 
-
-#include  "ConfusionMatrix2.h"
-#include  "MLClass.h"
+#include "ConfusionMatrix2.h"
+#include "MLClass.h"
 
 
 
@@ -126,23 +125,23 @@ namespace KKMachineLearning
     void  BuildTestMatrix ();
     void  DeclareMatrix ();
     void  ReadXML (istream&   r);
-    void  ReadSimpleConfusionMatrix (istream&           sr,
+    void  ReadSimpleConfusionMatrix (istream&        sr,
                                      MLClassListPtr  fileClasses
                                     );
    
 
-    KKStr              biasFileName;
+    KKStr           biasFileName;
     MLClassListPtr  classes;
-    KKStr              configFileName;
-    KKStr              configFileNameFromMatrixBiasFile;
-    DateTime           configDateTime;       /**< TimeStamp of config file when this BiasMatrix was written. */
-    MatrixPtr          counts;
-    DateTime           dateTimeFileWritten;
-    VectorKKStr        errMsgs;
-    int32              numClasses;
-    MatrixPtr          probabilities;
-    RunLog&            runLog;
-    bool               valid;
+    KKStr           configFileName;
+    KKStr           configFileNameFromMatrixBiasFile;
+    DateTime        configDateTime;       /**< TimeStamp of config file when this BiasMatrix was written. */
+    MatrixPtr       counts;
+    DateTime        dateTimeFileWritten;
+    VectorKKStr     errMsgs;
+    kkint32         numClasses;
+    MatrixPtr       probabilities;
+    RunLog&         runLog;
+    bool            valid;
   };
 
   typedef  ClassificationBiasMatrix::ClassificationBiasMatrixPtr  ClassificationBiasMatrixPtr;

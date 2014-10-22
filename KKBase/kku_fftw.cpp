@@ -25,9 +25,9 @@ using namespace KKB;
 
 
 
-fftw_plan_class::fftw_plan_class (int32           _n,
+fftw_plan_class::fftw_plan_class (kkint32         _n,
                                   fftw_direction  _dir,
-                                  int32           _flags
+                                  kkint32         _flags
                                  ):
    n     (_n),
    dir   (_dir),
@@ -37,10 +37,10 @@ fftw_plan_class::fftw_plan_class (int32           _n,
 
 
 
-fftwnd_plan_class::fftwnd_plan_class (int32           _nx,
-                                      int32           _ny, 
+fftwnd_plan_class::fftwnd_plan_class (kkint32         _nx,
+                                      kkint32         _ny, 
                                       fftw_direction  _dir,
-		                              int32           _flags
+		                              kkint32         _flags
                                      ):
    nx    (_nx),
    ny    (_ny),
@@ -51,9 +51,9 @@ fftwnd_plan_class::fftwnd_plan_class (int32           _nx,
 
 
 
-fftw_plan  KKB::fftw_create_plan (int32           n, 
+fftw_plan  KKB::fftw_create_plan (kkint32         n, 
                                   fftw_direction  dir, 
-                                  int32           flags
+                                  kkint32         flags
                                  )
 {
   return  new fftw_plan_class (n, dir, flags);
@@ -69,10 +69,10 @@ void  KKB::fftw_destroy_plan (fftw_plan  plan)
 
 
 
-fftwnd_plan  KKB::fftw2d_create_plan (int32           nx, 
-                                      int32           ny, 
+fftwnd_plan  KKB::fftw2d_create_plan (kkint32         nx, 
+                                      kkint32         ny, 
                                       fftw_direction  dir,
-				                      int32           flags
+				                      kkint32         flags
                                      )
 {
   return new fftwnd_plan_class (nx, ny, dir, flags);
@@ -96,7 +96,7 @@ void  KKB::fftw_one (fftw_plan      plan,
     << "fftw_one    ****ERROR***    This function is not implemented."  << endl
     << endl;
 
-  for  (int32  x = 0;  x < plan->N ();  ++x)
+  for  (kkint32  x = 0;  x < plan->N ();  ++x)
   {
     out[x].im = 0.0;
     out[x].re = 0.0;
@@ -115,9 +115,9 @@ void  KKB::fftwnd_one (fftwnd_plan    p,
     << "fftw_one    ****ERROR***    This function is not implemented."  << endl
     << endl;
 
-  int32  totCells = p->NX () * p->NY ();
+  kkint32  totCells = p->NX () * p->NY ();
 
-  for  (int32  x = 0;  x < totCells;  ++x)
+  for  (kkint32  x = 0;  x < totCells;  ++x)
   {
     out[x].im = 0.0;
     out[x].re = 0.0;

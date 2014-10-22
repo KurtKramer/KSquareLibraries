@@ -38,7 +38,7 @@ namespace  KKB
   {
   public:
     KKThreadManager (const KKStr&  _managerName,
-                     uint32        _maxNumThreads,
+                     kkuint32      _maxNumThreads,
                      MsgQueuePtr   _msgQueue
                     );
 
@@ -65,7 +65,7 @@ namespace  KKB
     virtual  void  Run ();
 
     /** @brief Shutdown all threads in a orderly way; observing prerequisite ordering. */
-    void  ShutdownProcessing (int32 miliSecsToWait);
+    void  ShutdownProcessing (kkint32 miliSecsToWait);
 
     void  TerminateProcessing ();    /**< Flag all All running threads to Terminate ASAP and release all allocated resources. */
 
@@ -74,7 +74,7 @@ namespace  KKB
 
     bool            crashed;            /**< Indicates if any one of the threads crashed.                                           */
     bool            doneExecuting;      /**< The last thing this instance will do in 'ManageTheExtraction'is set this flag to true. */
-    uint32          maxNumThreads;
+    kkuint32        maxNumThreads;
     bool            shutdownFlag;
     bool            shutdownRequested;
     bool            terminateFlag;

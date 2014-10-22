@@ -52,8 +52,8 @@ namespace  KKLSC
                            );
 
     ScannerFile2BitEncoded (const KKStr&  _fileName,
-                            uint32        _pixelsPerScanLine,
-                            uint32        _frameHeight,
+                            kkuint32      _pixelsPerScanLine,
+                            kkuint32      _frameHeight,
                             RunLog&       _log
                            );
 
@@ -70,12 +70,12 @@ namespace  KKLSC
 
     virtual
     void   WriteTextBlock (const uchar*  txtBlock,
-                           uint32        txtBlockLen
+                           kkuint32      txtBlockLen
                           );
 
   protected:
     /**  @brief  Read on one Scanner File Frame. */
-    uint32   ReadBufferFrame ();
+    kkuint32 ReadBufferFrame ();
 
     virtual
       kkint64  SkipToNextFrame ();
@@ -91,11 +91,11 @@ namespace  KKLSC
     static  void  ExitCleanUp ();
 
     void  GetNextScanLine (uchar* lineBuff,
-                           uint32 lineBuffSize
+                           kkuint32 lineBuffSize
                           );
 
     void   WriteNextScanLine (const uchar*  buffer,
-                              uint32        bufferLen
+                              kkuint32      bufferLen
                              );
 
     /*  Methods and variables needed for both reading and writing scanner files. */
@@ -126,16 +126,16 @@ namespace  KKLSC
 
     /** Methods and variables that are required for reading a scanner file. */
     void  ProcessTextBlock (const OpRec&  rec);
-    void  AllocateRawPixelRecBuffer (uint32 size);
+    void  AllocateRawPixelRecBuffer (kkuint32 size);
     void  ProcessRawPixelRecs (kkuint16  numRawPixels,
                                uchar*    lineBuff,
-                               uint32    lineBuffSize,
-                               uint32&   bufferLineLen
+                               kkuint32  lineBuffSize,
+                               kkuint32& bufferLineLen
                               );
 
     RawPixelRec*  rawPixelRecBuffer;
-    uint32        rawPixelRecBufferLen;
-    uint32        rawPixelRecBufferSize;
+    kkuint32      rawPixelRecBufferLen;
+    kkuint32      rawPixelRecBufferSize;
 
     /** Methods and variables that are required for writing a scanner file. */
 
@@ -149,22 +149,22 @@ namespace  KKLSC
 
     void  AllocateRawStr (kkuint16  size);
 
-    void  ReSizeEncodedBuff (uint32  newSize);
+    void  ReSizeEncodedBuff (kkuint32  newSize);
 
     typedef  enum  {csNull, csRunLen, csRaw}  CompStatus;
 
-    OpRecPtr  encodedBuff;           /**< This is where compressed data will be stored before writing to scanner file.  */
-    uint32    encodedBuffLen;        /**< Number of bytes used so far.                                                  */
-    OpRecPtr  encodedBuffNext;       /**< Pointer to next position in encodedBuff to write to.                          */
-    uint32    encodedBuffSize;       /**< Size of 'encodedBuff' allocated.                                              */
+    OpRecPtr    encodedBuff;           /**< This is where compressed data will be stored before writing to scanner file.  */
+    kkuint32    encodedBuffLen;        /**< Number of bytes used so far.                                                  */
+    OpRecPtr    encodedBuffNext;       /**< Pointer to next position in encodedBuff to write to.                          */
+    kkuint32    encodedBuffSize;       /**< Size of 'encodedBuff' allocated.                                              */
 
-    uchar*    rawStr;
-    kkuint16  rawStrLen;
-    kkuint16  rawStrSize;
+    uchar*      rawStr;
+    kkuint16    rawStrLen;
+    kkuint16    rawStrSize;
 
 
-    int32  runLen;
-    uchar  runLenChar;
+    kkint32     runLen;
+    uchar       runLenChar;
     CompStatus  curCompStatus;
   };  /* ScannerFile2BitEncoded */
 }

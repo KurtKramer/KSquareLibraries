@@ -46,8 +46,8 @@ public:
   typedef  ClassTotals*  ClassTotalsPtr;
 
   ClassTotals (KKStr  _name,
-               int32  _bucketCount,
-               int32  _bucketSize
+               kkint32  _bucketCount,
+               kkint32  _bucketSize
               ):
       bucketCount        (_bucketCount),
       bucketSize         (_bucketSize),
@@ -59,8 +59,8 @@ public:
   {
     nameUpper.Upper ();
 
-    sizeBuckets = new int32[bucketCount];
-    for  (int32 x = 0; x < bucketCount; x++)
+    sizeBuckets = new kkint32[bucketCount];
+    for  (kkint32 x = 0; x < bucketCount; x++)
        sizeBuckets[x] = 0;
 
     count = 0;
@@ -75,9 +75,9 @@ public:
 
 
 
-  void  Increment (int32  size)
+  void  Increment (kkint32  size)
   {
-    int32  bucket = (int32)(size / bucketSize);
+    kkint32  bucket = (kkint32)(size / bucketSize);
     if  (bucket >= bucketCount)
       bucket = bucketCount - 1;
 
@@ -90,7 +90,7 @@ public:
   void  AddIn (ClassTotalsPtr  classTotals);
 
 
-  int32   BucketCount (int32 idx)
+  kkint32 BucketCount (kkint32 idx)
   {
     if  ((idx < 0)  &&  (idx >= bucketCount))
       return 0;
@@ -105,12 +105,12 @@ public:
   void  PrintTabDelLine   (ostream&  _outFile);
 
 
-  int32    bucketCount;
-  int32    bucketSize;
-  int32    count;
+  kkint32  bucketCount;
+  kkint32  bucketSize;
+  kkint32  count;
   KKStr    name;
   KKStr    nameUpper;
-  int32*   sizeBuckets;
+  kkint32*   sizeBuckets;
 
 };  /* ClassTotals */
 
@@ -135,7 +135,7 @@ public:
   {
     _name.Upper ();
 
-    int32  idx;
+    kkint32  idx;
     ClassTotals::ClassTotalsPtr  classTotals = NULL;
     ClassTotals::ClassTotalsPtr  temp;
 
@@ -165,7 +165,7 @@ void  SizeDistribution::ClassTotals::PrintFormatedLine (ostream&  o)
   s.LeftPad (9);
   o << s;
 
-  int32  bucket;
+  kkint32  bucket;
 
   for (bucket = 0;  bucket < bucketCount; bucket++)
   {
@@ -186,7 +186,7 @@ void  SizeDistribution::ClassTotals::PrintCSVLine (ostream&  o)
 {
   o << "\"" << name << "\"," << count;
 
-  int32  bucket;
+  kkint32  bucket;
 
   for (bucket = 0;  bucket <  bucketCount; bucket++)
   {
@@ -202,7 +202,7 @@ void  SizeDistribution::ClassTotals::PrintTabDelLine (ostream&  o)
 {
   o << "\"" << name << "\"" << "\t" << count;
 
-  int32  bucket;
+  kkint32  bucket;
 
   for (bucket = 0;  bucket <  bucketCount; bucket++)
   {
@@ -218,7 +218,7 @@ void  SizeDistribution::ClassTotals::PrintTabDelLine (ostream&  o)
 
 void   SizeDistribution::ClassTotals::AddIn (ClassTotalsPtr  classTotals)
 {
-  int32  idx;
+  kkint32  idx;
 
   count = count + classTotals->count;
 
@@ -232,8 +232,8 @@ void   SizeDistribution::ClassTotals::AddIn (ClassTotalsPtr  classTotals)
 
 
 
-SizeDistribution::SizeDistribution (int32    _bucketCount,
-                                    int32    _bucketSize,
+SizeDistribution::SizeDistribution (kkint32  _bucketCount,
+                                    kkint32  _bucketSize,
                                     RunLog&  _log
                                    ):
   bucketCount  (_bucketCount),
@@ -278,7 +278,7 @@ MLClassListPtr   SizeDistribution::BuildImageClassList ()  const
 
 
 void   SizeDistribution::Increment (MLClassPtr   mlClass,
-                                    int32           size
+                                    kkint32         size
                                    )
 {
   if  (mlClass == NULL)
@@ -306,7 +306,7 @@ void   SizeDistribution::PrintFormatedDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  int32  idx;
+  kkint32  idx;
 
   for  (idx = 0;  idx < totals->QueueSize (); idx++)
   {
@@ -332,7 +332,7 @@ void   SizeDistribution::PrintCSVDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  int32  idx;
+  kkint32  idx;
 
   for  (idx = 0;  idx < totals->QueueSize (); idx++)
   {
@@ -356,7 +356,7 @@ void   SizeDistribution::PrintTabDelDistributionMatrix (ostream&  o)  const
 
   ClassTotals  grandTotals ("Grand Totals", bucketCount, bucketSize);
 
-  int32  idx;
+  kkint32  idx;
 
   for  (idx = 0;  idx < totals->QueueSize (); idx++)
   {
@@ -378,8 +378,8 @@ void   SizeDistribution::PrintTabDelDistributionMatrix (ostream&  o)  const
 void  SizeDistribution::PrintFormatedHeader (ostream&  o)  const
 {
    o << "Class Name              TOTAL";
-   int32  imageSize = 0;
-   int32  bucket;
+   kkint32  imageSize = 0;
+   kkint32  bucket;
 
    for (bucket = 0;  bucket <  (bucketCount - 1); bucket++)
    {
@@ -413,8 +413,8 @@ void  SizeDistribution::PrintCSVHeader (ostream&  o)  const
 {
    o << "\"Class Name\",Sum,";
 
-   int32  imageSize = 0;
-   int32  bucket;
+   kkint32  imageSize = 0;
+   kkint32  bucket;
 
    for (bucket = 0;  bucket <  (bucketCount - 1); bucket++)
    {
@@ -434,8 +434,8 @@ void  SizeDistribution::PrintTabDelHeader (ostream&  o)  const
 {
    o << "\"Class Name\"" << "\t" << "Sum";
 
-   int32  imageSize = 0;
-   int32  bucket;
+   kkint32  imageSize = 0;
+   kkint32  bucket;
 
    for (bucket = 0;  bucket <  (bucketCount - 1); bucket++)
    {
@@ -465,12 +465,12 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
 
   // Find the first and last buckets with activity
   
-  int32  firstBucket = -1;
-  int32  lastBucket = 0;
+  kkint32  firstBucket = -1;
+  kkint32  lastBucket = 0;
   
-  for  (int32 bucketIDX = 0;  bucketIDX < bucketCount;  bucketIDX++)
+  for  (kkint32 bucketIDX = 0;  bucketIDX < bucketCount;  bucketIDX++)
   {
-    int32  bucketTotal = 0;
+    kkint32  bucketTotal = 0;
     for  (cIDX = classes->begin ();  cIDX != classes->end ();  cIDX++)
     {
       MLClassPtr  mlClass = *cIDX;
@@ -496,7 +496,7 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
 
 
   VectorInt  finaleTotals (classes->size (), 0);
-  int32      grandTotal = 0;
+  kkint32    grandTotal = 0;
 
   classes->ExtractThreeTitleLines (hd1, hd2, hd3);
 
@@ -504,31 +504,31 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
     << ""      << "\t" << "Scan"  << "\t" << hd2 << "\t" << "Bucket" << endl
     << "Depth" << "\t" << "Lines" << "\t" << hd3 << "\t" << "Total"  << endl;
 
-  uint32 totalScanLines = 0;
-  int32  imageSize = firstBucket * bucketSize;
+  kkuint32 totalScanLines = 0;
+  kkint32  imageSize = firstBucket * bucketSize;
 
-  for  (int32 bucketIDX = firstBucket;  bucketIDX <= lastBucket;  bucketIDX++)
+  for  (kkint32 bucketIDX = firstBucket;  bucketIDX <= lastBucket;  bucketIDX++)
   {
-    int32  nextImageSize = imageSize + bucketSize;
-    uint32 scanLinesDepthForThisBucket = 0;
+    kkint32  nextImageSize = imageSize + bucketSize;
+    kkuint32 scanLinesDepthForThisBucket = 0;
     if  (scanLinesPerMeterDepth != NULL)
     {
-      for  (int32 x = imageSize;  x < Min (nextImageSize, (int32)scanLinesPerMeterDepth->size ());  x++)
+      for  (kkint32 x = imageSize;  x < Min (nextImageSize, (kkint32)scanLinesPerMeterDepth->size ());  x++)
         scanLinesDepthForThisBucket += (*scanLinesPerMeterDepth)[x];
     }
 
     o <<  imageSize << "\t" << scanLinesDepthForThisBucket;
     totalScanLines += scanLinesDepthForThisBucket;
 
-    int32  bucketTotal = 0;
+    kkint32  bucketTotal = 0;
 
-    int32  intIDX = 0;
+    kkint32  intIDX = 0;
     for  (cIDX = classes->begin ();  cIDX != classes->end ();  cIDX++)
     {
       MLClassPtr  mlClass = *cIDX;
       ClassTotals::ClassTotalsPtr  classTotals = totals->LookUp (mlClass->Name ());
 
-      int32  qtyThisBucket = classTotals->BucketCount (bucketIDX);
+      kkint32  qtyThisBucket = classTotals->BucketCount (bucketIDX);
 
       o << "\t" << qtyThisBucket;
 
@@ -546,7 +546,7 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
   {
     o << endl
       << "FinaleTotals"  << "\t"  << totalScanLines;
-    for  (uint32 x = 0;  x < classes->size ();  x++)
+    for  (kkuint32 x = 0;  x < classes->size ();  x++)
     {
       o << "\t" << finaleTotals[x];
     }

@@ -50,8 +50,8 @@ namespace  KKB
 
     Matrix ();
 
-    Matrix (int32  _numOfRows,
-            int32  _numOfCols
+    Matrix (kkint32  _numOfRows,
+            kkint32  _numOfCols
            );
 
     Matrix (const Matrix&  _matrix);
@@ -61,8 +61,8 @@ namespace  KKB
     ~Matrix ();
 
     template<typename T>
-    static  MatrixPtr  BuildFromArray (int32 numOfRows,
-                                       int32 numOfCols,
+    static  MatrixPtr  BuildFromArray (kkint32 numOfRows,
+                                       kkint32 numOfCols,
                                        T**   data
                                       );
 
@@ -88,7 +88,7 @@ namespace  KKB
 
     Matrix   operator*  (double right);
 
-    Row&     operator[] (int32  rowIDX) const;
+    Row&     operator[] (kkint32  rowIDX) const;
 
     friend  Matrix  operator- (double left, const Matrix& right);
 
@@ -115,20 +115,20 @@ namespace  KKB
 
     /** @brief  Locates the maximum value in a matrix along with the row and column that is is located. */
     void            FindMaxValue (double&  maxVal, 
-                                  int32&     row, 
-                                  int32&     col
+                                  kkint32&   row, 
+                                  kkint32&   col
                                  );
 
-    VectorDouble    GetCol (int32 col)  const;
+    VectorDouble    GetCol (kkint32 col)  const;
 
     Matrix          Inverse ();
 
-    int32           NumOfCols () const  {return numOfCols;}
+    kkint32         NumOfCols () const  {return numOfCols;}
 
-    int32           NumOfRows () const  {return numOfRows;}
+    kkint32         NumOfRows () const  {return numOfRows;}
 
-    void            ReSize (int32 _numOfRows,
-                            int32 _numOfCols
+    void            ReSize (kkint32 _numOfRows,
+                            kkint32 _numOfCols
                            );
 
     bool            Symmetric ()  const;  /**< Returns true is the matrix is Symmetric */
@@ -148,33 +148,33 @@ namespace  KKB
                             unsigned short  offset
                            );
 
-    double  CalcDeterminent (int32*  rowMap,
-                             int32*  colMap,
-                             int32 size
+    double  CalcDeterminent (kkint32*  rowMap,
+                             kkint32*  colMap,
+                             kkint32 size
                             );
 
     double  Pythag (const double a,
                     const double b
                    )  const;
 
-    int32  Tqli (double*  d, 
+    kkint32  Tqli (double*  d, 
                  double*  e,
-                 int32    n,
+                 kkint32  n,
                  double** z
                 )  const;
 
     void  Tred2 (double** a, 
-                 int32    n, 
+                 kkint32  n, 
                  double*  d, 
                  double*  e
                 )  const;
 
     double**  data;       /**< A two dimensional array that will index into 'dataArea'.       */
     double*   dataArea;   /**< one dimensional array that will contain all the matrixes data. */
-    int32     numOfCols;
-    int32     numOfRows;
+    kkint32   numOfCols;
+    kkint32   numOfRows;
     RowPtr    rows;
-    int32     totNumCells; /**<  Total number of cells allocated  = (numOfRows x nmumOfCols). */
+    kkint32   totNumCells; /**<  Total number of cells allocated  = (numOfRows x nmumOfCols). */
   };  /* matrix */
 
 
@@ -185,7 +185,7 @@ namespace  KKB
   public:
      Row  ();
  
-     Row (int32    _numOfCols,
+     Row (kkint32  _numOfCols,
           double*  _cells
          );
 
@@ -196,15 +196,15 @@ namespace  KKB
 
      double*  Cols ()  {return cells;}
 
-     double&  operator[] (int32  idx);
+     double&  operator[] (kkint32  idx);
 
-     void  Define (int32    _numOfCols,
+     void  Define (kkint32  _numOfCols,
                    double*  _cells
                   );
 
   private:
     double*  cells;
-    int32    numOfCols;
+    kkint32  numOfCols;
   };  /* Row */
 
   Matrix  operator- (double left, const Matrix& right);

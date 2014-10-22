@@ -57,7 +57,7 @@ FlowMeterTracker::FlowMeterTracker (const FlowMeterTracker&  entry):
     ticsPerMeter         (entry.ticsPerMeter)
 {
   history = new Entry[historyTableSize];
-  for  (int32 x = 0;  x < historyTableSize;  ++x)
+  for  (kkint32 x = 0;  x < historyTableSize;  ++x)
     history[x] = entry.history[x];
 }
 
@@ -98,9 +98,9 @@ void  FlowMeterTracker::Initialize (bool     _flowMeterPresent,
 
 
 
-int32  FlowMeterTracker::MemoryConsumedEstimated ()
+kkint32  FlowMeterTracker::MemoryConsumedEstimated ()
 {
-  int32  mem = sizeof (*this);
+  kkint32  mem = sizeof (*this);
   if  (historyTableSize > 0)
     mem += sizeof (Entry) * historyTableSize;
   return  mem;
@@ -125,8 +125,8 @@ void  FlowMeterTracker::ScanRateChanged (float _newScanRate)
 
 
 
-void  FlowMeterTracker::AddEntry (uint32 _scanLineNum,
-                                  uint32 _counterValue
+void  FlowMeterTracker::AddEntry (kkuint32 _scanLineNum,
+                                  kkuint32 _counterValue
                                  )
 {
   if  (historyLastIdxAdded < 0)
@@ -165,15 +165,15 @@ float  FlowMeterTracker::FlowRateInstantaneous ()
   if  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))
     return flowRateDefault;
 
-  int32 prevIdx = historyLastIdxAdded - 1;
+  kkint32 prevIdx = historyLastIdxAdded - 1;
   if  (prevIdx < 0)
     prevIdx = historyTableSize - 1;
 
   EntryPtr  lastPtr = history + historyLastIdxAdded;
   EntryPtr  prevPtr = history + prevIdx;
  
-  int32 tics      = lastPtr->counterValue - prevPtr->counterValue;
-  int32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+  kkint32 tics      = lastPtr->counterValue - prevPtr->counterValue;
+  kkint32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
 
   float meters = tics / ticsPerMeter;
   float secs   = scanLines / scanRate;
@@ -192,8 +192,8 @@ float  FlowMeterTracker::FlowRateTrend ()
   EntryPtr  lastPtr = history + historyLastIdxAdded;
   EntryPtr  prevPtr = history + historyOldestIdx;
  
-  int32 tics      = lastPtr->counterValue - prevPtr->counterValue;
-  int32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+  kkint32 tics      = lastPtr->counterValue - prevPtr->counterValue;
+  kkint32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
 
   if  ((tics == 0)  ||  (scanLines == 0))
     return 0.0f;

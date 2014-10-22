@@ -51,7 +51,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
                                     ostream*             _report,
                                     bool                 _forceRebuild,
                                     bool                 _checkForDuplicates,
-                                    volatile const bool& _cancelFlag,
+                                    VolConstBool&        _cancelFlag,
                                     KKStr&               _statusMessage
                                    ):
   abort                     (false),
@@ -161,7 +161,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   {
     useExistingSavedModel = false;
 
-    int32  origSizeOfExamples = trainingExamples->QueueSize ();
+    kkint32  origSizeOfExamples = trainingExamples->QueueSize ();
     RemoveExcludeListFromTrainingData ();
     if  (origSizeOfExamples != trainingExamples->QueueSize ())
        useExistingSavedModel = false;
@@ -259,7 +259,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
   if  (false)
   {
-    uint32  numExamplesWritten = 0;
+    kkuint32  numExamplesWritten = 0;
     bool  successful = false;
     KKStr  fn = "C:\\Larcos\\Classifier\\TrainingModels\\TrainingData\\" + KKB::osGetRootName (configFileName) + ".data";
     FeatureFileIOKK::Driver ()->SaveFeatureFile (fn, trainingExamples->AllFeatures (), *trainingExamples, numExamplesWritten, cancelFlag, successful, log);
@@ -281,8 +281,8 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
                                     FeatureVectorListPtr _excludeList,
                                     FileDescPtr          _fileDesc,
                                     RunLog&              _log,
-                                    uint32               _level,
-                                    volatile const bool& _cancelFlag,
+                                    kkuint32             _level,
+                                    VolConstBool&        _cancelFlag,
                                     KKStr&               _statusMessage
                                    ):
 
@@ -383,12 +383,12 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
 
 
-TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
-                                    FileDescPtr           _fileDesc,
-                                    RunLog&               _log,
-                                    bool                  _featuresAlreadyNormalized,
-                                    volatile const bool&  _cancelFlag,
-                                    KKStr&                _statusMessage
+TrainingProcess2::TrainingProcess2 (const KKStr&   _configFileName,
+                                    FileDescPtr    _fileDesc,
+                                    RunLog&        _log,
+                                    bool           _featuresAlreadyNormalized,
+                                    VolConstBool&  _cancelFlag,
+                                    KKStr&         _statusMessage
                                    ):
 
   abort                     (false),
@@ -461,12 +461,12 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
 
 TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config, 
                                     FeatureVectorListPtr      _trainingExamples,
-                                    MLClassListPtr         _mlClasses,
+                                    MLClassListPtr            _mlClasses,
                                     ostream*                  _report,
                                     FileDescPtr               _fileDesc,
                                     RunLog&                   _log,
                                     bool                      _featuresAlreadyNormalized,
-                                    volatile const bool&       _cancelFlag,
+                                    VolConstBool&             _cancelFlag,
                                     KKStr&                    _statusMessage
                                    )
 :
@@ -540,9 +540,9 @@ TrainingProcess2::~TrainingProcess2 ()
 
 
 
-int32  TrainingProcess2::MemoryConsumedEstimated ()  const
+kkint32  TrainingProcess2::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (TrainingProcess2)
+  kkint32  memoryConsumedEstimated = sizeof (TrainingProcess2)
     +  configFileName.MemoryConsumedEstimated ()
     +  configFileNameSpecified.MemoryConsumedEstimated ()
     +  savedModelName.MemoryConsumedEstimated ();
@@ -916,9 +916,9 @@ void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingI
                                                    FeatureVectorList&  imagesToAdd
                                                   )
 {
-  int32   idx        = 0;
+  kkint32 idx        = 0;
 
-  int32  numOfImages = imagesToAdd.QueueSize ();
+  kkint32  numOfImages = imagesToAdd.QueueSize ();
 
   FeatureVectorPtr  example = NULL;
 
@@ -1077,7 +1077,7 @@ ModelParamPtr  TrainingProcess2::Parameters () const
 
 
 
-int32  TrainingProcess2::NumOfSupportVectors ()  const
+kkint32  TrainingProcess2::NumOfSupportVectors ()  const
 {
   ModelOldSVMPtr  oldSvmModel = OldSVMModel ();
   if  (oldSvmModel)
@@ -1088,8 +1088,8 @@ int32  TrainingProcess2::NumOfSupportVectors ()  const
 
 
 
-void  TrainingProcess2::SupportVectorStatistics (int32&  numSVs,
-                                                 int32&  totalNumSVs
+void  TrainingProcess2::SupportVectorStatistics (kkint32&  numSVs,
+                                                 kkint32&  totalNumSVs
                                                 )
 {
   numSVs = 0;
@@ -1110,7 +1110,7 @@ double   TrainingProcess2::TrainingTime ()  const
 
 
 
-int32  TrainingProcess2::DuplicateDataCount () const
+kkint32  TrainingProcess2::DuplicateDataCount () const
 {
   return  duplicateDataCount;
 }

@@ -29,14 +29,13 @@ namespace  KKLSC
   {
   public:
     typedef  StartStopPoint*  StartStopPointPtr;
-    typedef  KKB::uint32  uint32;
 
     typedef  enum  {sspNULL,  sspStartPoint, sspStopPoint, sspInvalid}  StartStopType;
     static  const KKStr&   StartStopTypeToStr   (StartStopType  t);
 
     static  StartStopType  StartStopTypeFromStr (const KKStr&   s);
 
-    StartStopPoint (int32          _scanLineNum,
+    StartStopPoint (kkint32        _scanLineNum,
                     StartStopType  _type
                    );
 
@@ -46,15 +45,15 @@ namespace  KKLSC
 
     ~StartStopPoint ();
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
   
     // Access Methods
-    int32             ScanLineNum  () const  {return  scanLineNum;}
+    kkint32           ScanLineNum  () const  {return  scanLineNum;}
     StartStopType     Type         () const  {return  type;}
     const KKStr&      TypeStr      () const  {return  StartStopTypeToStr (type);}
   
-    void  ScanLineNum  (const int32    _scanLineNum)  {scanLineNum = _scanLineNum;}
-    void  Type         (StartStopType  _type)     {type        = _type;}
+    void  ScanLineNum  (const kkint32  _scanLineNum)  {scanLineNum = _scanLineNum;}
+    void  Type         (StartStopType  _type)         {type        = _type;}
   
     KKStr   ToTabDelStr ()  const;
     void    ParseTabDelStr (KKStr  parser);
@@ -63,7 +62,7 @@ namespace  KKLSC
     static  KKStr           startStopPointStrs [];
     static  StartStopType   startStopPointTypes[];
 
-    int32          scanLineNum;
+    kkint32        scanLineNum;
     StartStopType  type;
   };  /* StartStopPoint */
 
@@ -80,9 +79,9 @@ namespace  KKLSC
     StartStopPointList ();
     ~StartStopPointList ();
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
-    StartStopPointPtr  AddEntry (int32                          _scanLineNum,
+    StartStopPointPtr  AddEntry (kkint32                        _scanLineNum,
                                  StartStopPoint::StartStopType  _type
                                );
 
@@ -90,18 +89,18 @@ namespace  KKLSC
 
     void  Clear ();  /**< Clears all existing entries. */
 
-    void  DeleteEntry (int32  _scanLineNum);
+    void  DeleteEntry (kkint32  _scanLineNum);
 
-    StartStopPointPtr  NearestEntry (int32  _scanLineNum)  const;
+    StartStopPointPtr  NearestEntry (kkint32  _scanLineNum)  const;
 
-    StartStopPointPtr  PrevEntry (int32  _scanLineNum)  const;
+    StartStopPointPtr  PrevEntry (kkint32  _scanLineNum)  const;
 
-    StartStopPointPtr  SuccEntry (int32  _scanLineNum)  const;
+    StartStopPointPtr  SuccEntry (kkint32  _scanLineNum)  const;
 
   private:
-    int32  FindEqual          (int32 _scanLineNum)  const;
-    int32  FindGreaterOrEqual (int32 _scanLineNum)  const;
-    int32  FindLessOrEqual    (int32 _scanLineNum)  const;
+    kkint32  FindEqual          (kkint32 _scanLineNum)  const;
+    kkint32  FindGreaterOrEqual (kkint32 _scanLineNum)  const;
+    kkint32  FindLessOrEqual    (kkint32 _scanLineNum)  const;
 
     iterator  idx;
   };  /* StartStopPointList */
@@ -116,16 +115,16 @@ namespace  KKLSC
   class  StartStopRegion
   {
   public:
-    StartStopRegion (int32  _start,  
-                     int32  _end
+    StartStopRegion (kkint32  _start,  
+                     kkint32  _end
                     );
 
-    int32  Start ()  const  {return  start;}
-    int32  End   ()  const  {return  end;}
+    kkint32  Start ()  const  {return  start;}
+    kkint32  End   ()  const  {return  end;}
 
   private:
-    int32  start;
-    int32  end;
+    kkint32  start;
+    kkint32  end;
   };
 
   typedef  StartStopRegion*  StartStopRegionPtr;

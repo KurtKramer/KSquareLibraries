@@ -36,42 +36,39 @@ namespace KKMachineLearning
   public:
     typedef  FeatureFileIOKK*  FeatureFileIOKKPtr;
 
-    typedef  KKB::uint32  uint32;
-
-
     FeatureFileIOKK ();
     virtual ~FeatureFileIOKK ();
 
-    virtual  FileDescPtr  GetFileDesc (const KKStr&       _fileName,
-                                       std::istream&      _in,
+    virtual  FileDescPtr  GetFileDesc (const KKStr&    _fileName,
+                                       std::istream&   _in,
                                        MLClassListPtr  _classes,
-                                       int32&             _estSize,
-                                       KKStr&             _errorMessage,
-                                       RunLog&            _runLog
+                                       kkint32&        _estSize,
+                                       KKStr&          _errorMessage,
+                                       RunLog&         _runLog
                                       );
 
 
-    virtual  PostLarvaeFVListPtr  LoadFile (const KKStr&          _fileName,
-                                            const FileDescPtr     _fileDesc,
+    virtual  PostLarvaeFVListPtr  LoadFile (const KKStr&       _fileName,
+                                            const FileDescPtr  _fileDesc,
                                             MLClassList&       _classes, 
-                                            std::istream&         _in,
-                                            int32                 _maxCount,    // Maximum # images to load.
-                                            volatile const bool&  _cancelFlag,
-                                            bool&                 _changesMade,
-                                            KKStr&                _errorMessage,
-                                            RunLog&               _log
+                                            std::istream&      _in,
+                                            kkint32            _maxCount,    // Maximum # images to load.
+                                            VolConstBool&      _cancelFlag,
+                                            bool&              _changesMade,
+                                            KKStr&             _errorMessage,
+                                            RunLog&            _log
                                            );
 
 
-    virtual  void   SaveFile (FeatureVectorList&      _data,
-                              const KKStr&            _fileName,
-                              const FeatureNumList&   _selFeatures,
-                              std::ostream&           _out,
-                              uint32&                 _numExamplesWritten,
-                              volatile const bool&    _cancelFlag,
-                              bool&                   _successful,
-                              KKStr&                  _errorMessage,
-                              RunLog&                 _log
+    virtual  void   SaveFile (FeatureVectorList&     _data,
+                              const KKStr&           _fileName,
+                              const FeatureNumList&  _selFeatures,
+                              std::ostream&          _out,
+                              kkuint32&              _numExamplesWritten,
+                              VolConstBool&          _cancelFlag,
+                              bool&                  _successful,
+                              KKStr&                 _errorMessage,
+                              RunLog&                _log
                              );
 
 
@@ -101,16 +98,16 @@ namespace KKMachineLearning
      * the feature file computation routine.
      */
     static
-    PostLarvaeFVListPtr  FeatureDataReSink (KKStr                  _dirName, 
-                                             const KKStr&          _fileName, 
-                                             MLClassPtr         _unknownClass,
-                                             bool                  _useDirectoryNameForClassName,
-                                             MLClassList&       _mlClasses,
-                                             volatile const bool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
-                                             bool&                 _changesMade,
-                                             KKB::DateTime&        _timeStamp,
-                                             RunLog&               _log
-                                            );
+    PostLarvaeFVListPtr  FeatureDataReSink (KKStr           _dirName, 
+                                            const KKStr&    _fileName, 
+                                            MLClassPtr      _unknownClass,
+                                            bool            _useDirectoryNameForClassName,
+                                            MLClassList&    _mlClasses,
+                                            VolConstBool&   _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
+                                            bool&           _changesMade,
+                                            KKB::DateTime&  _timeStamp,
+                                            RunLog&         _log
+                                           );
 
 
 
@@ -134,12 +131,12 @@ namespace KKMachineLearning
      * @return - A PostLarvaeFVList container object.  This object will own all the examples loaded.
      */
     static
-      PostLarvaeFVListPtr  LoadInSubDirectoryTree (KKStr                 _rootDir,
-                                                   MLClassList&       _mlClasses,
-                                                   bool                  _useDirectoryNameForClassName,
-                                                   volatile const bool&  _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
-                                                   bool                  _rewiteRootFeatureFile,
-                                                   RunLog&               _log
+      PostLarvaeFVListPtr  LoadInSubDirectoryTree (KKStr          _rootDir,
+                                                   MLClassList&   _mlClasses,
+                                                   bool           _useDirectoryNameForClassName,
+                                                   VolConstBool&  _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
+                                                   bool           _rewiteRootFeatureFile,
+                                                   RunLog&        _log
                                                   );
 
 
@@ -166,15 +163,15 @@ namespace KKMachineLearning
 
 
 
-    void  Parse_FEATURE_DATA_FILE_Line (KKStr&  line,
-                                        int32&  version,
-                                        int32&  numOfFields,
-                                        int32&  numOfExamples
+    void  Parse_FEATURE_DATA_FILE_Line (KKStr&    line,
+                                        kkint32&  version,
+                                        kkint32&  numOfFields,
+                                        kkint32&  numOfExamples
                                        );
 
 
     VectorInt  CreateIndirectionTable (const VectorKKStr&  fields,
-                                       int32               numOfFeatures
+                                       kkint32             numOfFeatures
                                       );
 
   };

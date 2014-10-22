@@ -19,13 +19,13 @@
 //*                           class                                         *
 //***************************************************************************
 
-#include  "Application.h"
-#include  "Model.h"
-#include  "ModelOldSVM.h"
-#include  "ModelParamOldSVM.h"
-#include  "ModelParam.h"
-#include  "RunLog.h"
-#include  "SVMModel.h"
+#include "Application.h"
+#include "Model.h"
+#include "ModelOldSVM.h"
+#include "ModelParamOldSVM.h"
+#include "ModelParam.h"
+#include "RunLog.h"
+#include "SVMModel.h"
 
 
 namespace  KKMachineLearning
@@ -77,31 +77,31 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
     bool                 Abort ()  {return abort;}
 
-    MLClassPtr        ClassifyAImage    (FeatureVector&  example);
+    MLClassPtr           ClassifyAImage    (FeatureVector&  example);
 
     void  ClassifyAImage (FeatureVector&  example,
-                          MLClassPtr&  predClass1,
-                          MLClassPtr&  predClass2,
-                          int32&          predClass1Votes,
-                          int32&          predClass2Votes,
+                          MLClassPtr&     predClass1,
+                          MLClassPtr&     predClass2,
+                          kkint32&        predClass1Votes,
+                          kkint32&        predClass2Votes,
                           double&         knownClassProb,
                           double&         predClass1Prob,
                           double&         predClass2Prob,
-                          int32&          numOfWinners,
+                          kkint32&        numOfWinners,
                           double&         breakTie
                          );
  
-    MLClassPtr        ClassifyAImage (FeatureVector&  example,
-                                         int32&          numOfWinners,
-                                         bool&           knownClassOneOfTheWinners
-                                        );
+    MLClassPtr  ClassifyAImage (FeatureVector&  example,
+                                kkint32&        numOfWinners,
+                                bool&           knownClassOneOfTheWinners
+                               );
 
-    MLClassPtr        ClassifyAImage (FeatureVector&  example,
-                                         double&         probability,
-                                         int32&          numOfWinners,
-                                         bool&           knownClassOneOfTheWinners,
-                                         double&         breakTie
-                                        );
+    MLClassPtr  ClassifyAImage (FeatureVector&  example,
+                                double&         probability,
+                                kkint32&        numOfWinners,
+                                bool&           knownClassOneOfTheWinners,
+                                double&         breakTie
+                               );
 
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
@@ -115,9 +115,9 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   int32             numToFind,
-                                                   MLClassPtr     c1,
-                                                   MLClassPtr     c2
+                                                   kkint32           numToFind,
+                                                   MLClassPtr        c1,
+                                                   MLClassPtr        c2
                                                   );
 
 
@@ -132,14 +132,14 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    int32             numToFind,
-                                                    MLClassPtr     c1,
-                                                    MLClassPtr     c2
+                                                    kkint32           numToFind,
+                                                    MLClassPtr        c1,
+                                                    MLClassPtr        c2
                                                    );
 
 
     virtual
-    int32   MemoryConsumedEstimated ()  const;
+    kkint32 MemoryConsumedEstimated ()  const;
 
     /**
      *@brief  For a given feature vector return back the probabilities and votes for each class.
@@ -150,37 +150,37 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@param probabilities [out] Pointer to list of double's,  must be as large as 'classes'  The priobability for each coresponding class will be stored hear.
      */
     void                 ProbabilitiesByClass (const MLClassList&  classes,
-                                               FeatureVectorPtr       example,
-                                               int32*                 votes,
-                                               double*                probabilities
+                                               FeatureVectorPtr    example,
+                                               kkint32*            votes,
+                                               double*             probabilities
                                               );
 
     void                 RetrieveCrossProbTable (MLClassList&  classes,
-                                                 double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                                 double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                                 );
 
 
-    vector<KKStr>        SupportVectorNames (MLClassPtr     c1,
-                                             MLClassPtr     c2
+    vector<KKStr>        SupportVectorNames (MLClassPtr  c1,
+                                             MLClassPtr  c2
                                             );
 
 
 
   private:
-    MLClassPtr  ClassifyAImageOneLevel   (FeatureVector&  example);
+    MLClassPtr  ClassifyAImageOneLevel (FeatureVector&  example);
  
     MLClassPtr  ClassifyAImageOneLevel (FeatureVector&  example,
-                                           int32&          numOfWinners,
-                                           bool&           knownClassOneOfTheWinners
-                                          );
+                                        kkint32&        numOfWinners,
+                                        bool&           knownClassOneOfTheWinners
+                                       );
 
 
     MLClassPtr  ClassifyAImageOneLevel (FeatureVector&  example,
-                                           double&         probability,
-                                           int32&          numOfWinners, 
-                                           bool&           knownClassOneOfTheWinners,
-                                           double&         breakTie
-                                          );
+                                        double&         probability,
+                                        kkint32&        numOfWinners, 
+                                        bool&           knownClassOneOfTheWinners,
+                                        double&         breakTie
+                                       );
 
 
     //************************************************************
@@ -191,13 +191,13 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
     bool                   featuresAlreadyNormalized;
 
-    MLClassListPtr      mlClasses;       /**< We will own the MLClass objects in this
+    MLClassListPtr         mlClasses;          /**< We will own the MLClass objects in this
                                                 *   list.  Will be originally populated by
                                                 *   TrainingConfiguration2 construction.
                                                 */
     RunLog&                log;
   
-    MLClassPtr          noiseImageClass;    /**< Point to class that represents Noise Images
+    MLClassPtr             noiseImageClass;    /**< Point to class that represents Noise Images
                                                 *  The object pointed to will also be included 
                                                 *  in mlClasses.
                                                 */
@@ -209,9 +209,9 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
     TrainingProcess2Ptr    trainingProcess;
 
-    MLClassPtr          unKnownImageClass;
+    MLClassPtr             unKnownImageClass;
   };
-  typedef  Classifier2*  Classifier2Ptr;
+  typedef  Classifier2*   Classifier2Ptr;
 }  /* namespace  KKMachineLearning */
 
 

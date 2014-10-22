@@ -141,15 +141,15 @@ KKStrListPtr  Tokenizer::GetNextTokens (const KKStr& delToken)
 
 
 
-const KKStrPtr  Tokenizer::Peek (uint32 idx)
+const KKStrPtr  Tokenizer::Peek (kkuint32 idx)
 {
-  while  ((tokenList.QueueSize () < (int32)(idx + 1))  &&  !atEndOfFile)
+  while  ((tokenList.QueueSize () < (kkint32)(idx + 1))  &&  !atEndOfFile)
     ReadInNextLogicalToken ();
 
   if  (idx >= tokenList.size ())
     return NULL;
 
-  return  tokenList.IdxToPtr ((int32)idx);
+  return  tokenList.IdxToPtr ((kkint32)idx);
 }  /* Peek */
 
 
@@ -354,7 +354,7 @@ KKStrPtr  Tokenizer::ProcessFieldToken ()
 
 
 
-const KKStrPtr  Tokenizer::operator[](uint32 idx)
+const KKStrPtr  Tokenizer::operator[](kkuint32 idx)
 {
   return Peek (idx);
 }  /* operator[] */

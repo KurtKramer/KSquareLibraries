@@ -75,9 +75,9 @@ namespace KKMachineLearning
 
     DuplicateImageListPtr  DupImages          ()  const {return dupExamples;}
 
-    int32                  DuplicateCount     ()  const {return duplicateCount;}
-    int32                  DuplicateDataCount ()  const {return duplicateDataCount;}
-    int32                  DuplicateNameCount ()  const {return duplicateNameCount;}
+    kkint32                DuplicateCount     ()  const {return duplicateCount;}
+    kkint32                DuplicateDataCount ()  const {return duplicateDataCount;}
+    kkint32                DuplicateNameCount ()  const {return duplicateNameCount;}
 
     bool                   DuplicatesFound ()  const;
 
@@ -96,9 +96,9 @@ namespace KKMachineLearning
     void  FindDuplicates ();  // Used to build duplicate list from current contents
                               // of examples.
 
-    int32                        duplicateCount;
-    int32                        duplicateDataCount;
-    int32                        duplicateNameCount;
+    kkint32                      duplicateCount;
+    kkint32                      duplicateDataCount;
+    kkint32                      duplicateNameCount;
     DuplicateImageListPtr        dupExamples;
     ImageFeaturesDataIndexedPtr  featureDataTree;
     FeatureVectorListPtr         examples;

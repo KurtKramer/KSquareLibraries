@@ -32,7 +32,7 @@ namespace KKB
      *@details This will help managed objects keep track of how much memory they are using in the 
      * unmanaged world.
      */
-    int32  MemoryConsumedEstimated ();  
+    kkint32  MemoryConsumedEstimated ();  
 
     /**
      *@brief  Take ownership of 'msg' and add to end of the queue.
@@ -80,7 +80,7 @@ namespace KKB
 
   private:
     GoalKeeperSimplePtr    gateKeeper;       /**< Used to manage synchronization amongst different threads to this queue. */
-    int32                  memoryConsumed;
+    kkint32                memoryConsumed;
     KKStr                  name;             /**< Name of msgQueue. */
     std::queue<KKStrPtr>   queue;
   };  /* MsgQueue */

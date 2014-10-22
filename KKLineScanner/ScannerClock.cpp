@@ -16,16 +16,16 @@ ScannerClock::ScannerClock ():
 }
 
 
-int32  ScannerClock::Time ()
+kkint32  ScannerClock::Time ()
 {
-  int32 x = time;
+  kkint32 x = time;
   time++;
   return  x;
 }
 
 
 
-void   ScannerClock::Time (int32 _time)
+void   ScannerClock::Time (kkint32 _time)
 {
   time = _time;
 }

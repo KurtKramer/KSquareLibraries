@@ -144,9 +144,9 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
 
 
 
-int32  BinaryClassParms::MemoryConsumedEstimated ()  const
+kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated =
+  kkint32  memoryConsumedEstimated =
     sizeof (MLClassPtr) * 2                  + 
     param.MemoryConsumedEstimated ()            +
     selectedFeatures.MemoryConsumedEstimated () +
@@ -157,7 +157,7 @@ int32  BinaryClassParms::MemoryConsumedEstimated ()  const
 
 
 BinaryClassParmsList::BinaryClassParmsList (bool   _owner,
-                                            int32  _size
+                                            kkint32  _size
                                            ):
         KKQueue<BinaryClassParms> (_owner)
 {
@@ -190,9 +190,9 @@ BinaryClassParmsList::~BinaryClassParmsList ()
 }
 
 
-int32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
+kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
+  kkint32  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
   BinaryClassParmsList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
     memoryConsumedEstimated  += (*idx)->MemoryConsumedEstimated ();
@@ -233,7 +233,7 @@ float  BinaryClassParmsList::FeatureCountNet ()  const
 
   const_iterator  idx;
 
-  int32  featureCountTotal = 0;
+  kkint32  featureCountTotal = 0;
 
   for  (idx = begin ();  idx != end ();  idx++)
   {

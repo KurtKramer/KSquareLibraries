@@ -40,8 +40,8 @@ Point::Point  (kkint16  _row,
 
 
 
-Point::Point  (int32  _row,
-               int32  _col
+Point::Point  (kkint32  _row,
+               kkint32  _col
               ):
   row (_row),
   col (_col)
@@ -52,8 +52,8 @@ Point::Point  (int32  _row,
 Point::Point  (float  _row,
                float  _col
               ):
-   row ((int32)(_row + 0.5)),
-   col ((int32)(_col + 0.5))
+   row ((kkint32)(_row + 0.5)),
+   col ((kkint32)(_col + 0.5))
 {}
 
 
@@ -108,10 +108,10 @@ PointList::PointList (bool _owner):
 }
 
 
-void  PointList::BoxCoordinites (int32&  minRow,
-                                 int32&  minCol,
-                                 int32&  maxRow,
-                                 int32&  maxCol
+void  PointList::BoxCoordinites (kkint32&  minRow,
+                                 kkint32&  minCol,
+                                 kkint32&  maxRow,
+                                 kkint32&  maxCol
                                 )
 {
   minRow = minCol = 999999;
@@ -137,8 +137,8 @@ void  PointList::BoxCoordinites (int32&  minRow,
 
 Point  PointList::CalculateCenterPoint ()
 {
-  int32  totalRow = 0;
-  int32  totalCol = 0;
+  kkint32  totalRow = 0;
+  kkint32  totalCol = 0;
   for  (iterator x = begin ();  x != end ();  x++)
   {
     PointPtr p = *x;
@@ -146,8 +146,8 @@ Point  PointList::CalculateCenterPoint ()
     totalCol += p->Col ();
   }
 
-  int32 centerRow = (int32)((double)totalRow / (double)size () + 0.5);
-  int32 centerCol = (int32)((double)totalCol / (double)size () + 0.5);
+  kkint32 centerRow = (kkint32)((double)totalRow / (double)size () + 0.5);
+  kkint32 centerCol = (kkint32)((double)totalCol / (double)size () + 0.5);
   return  Point (centerRow, centerCol);
 }
 

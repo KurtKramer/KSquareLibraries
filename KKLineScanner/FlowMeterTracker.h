@@ -45,8 +45,6 @@ namespace  KKLSC
   {
   public:
     typedef  FlowMeterTracker*  FlowMeterTrackerPtr;
-    typedef  KKB::uint32  uint32;
-    typedef  KKB::int32   int32;
 
     FlowMeterTracker ();
 
@@ -72,23 +70,23 @@ namespace  KKLSC
                       float    _ticsPerMeter
                      );
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
   
     // Access Methods
     bool    FlowMeterPresent     ()  const  {return flowMeterPresent;}
     float   FlowRateDefault      ()  const  {return flowRateDefault;}
     float   FlowRateRatioDefault ()  const  {return flowRateRatioDefault;}
-    int32   HistoryTableSize     ()  const  {return historyTableSize;}
+    kkint32 HistoryTableSize     ()  const  {return historyTableSize;}
     float   ImagingWidthMeters   ()  const  {return imagingWidthMeters;}
-    int32   ImagingWidthPixels   ()  const  {return imagingWidthPixels;}
+    kkint32 ImagingWidthPixels   ()  const  {return imagingWidthPixels;}
     float   TicsPerMeter         ()  const  {return ticsPerMeter;}
     
     float  ComputeFlowRateFromFlowRateRatio (float _flowRateRatio);
     float  ComputeFlowRateRatioFromFlowRate (float _flowRate);
 
 
-    void  AddEntry (uint32 _scanLineNum,
-                    uint32 _counterValue
+    void  AddEntry (kkuint32 _scanLineNum,
+                    kkuint32 _counterValue
                    );
 
 
@@ -118,8 +116,8 @@ namespace  KKLSC
     struct  Entry
     {
       Entry ();
-      uint32  scanLineNum;
-      uint32  counterValue;
+      kkuint32  scanLineNum;
+      kkuint32  counterValue;
     };
     typedef  Entry*  EntryPtr;
 
@@ -127,11 +125,11 @@ namespace  KKLSC
     float     flowRateDefault;       /**< Default value to be used if Flow-Meter not present. */
     float     flowRateRatioDefault;  /**< Default value to be used if Flow-Meter not present. */
     EntryPtr  history;
-    int32     historyTableSize;
-    int32     historyLastIdxAdded;
-    int32     historyOldestIdx;
+    kkint32   historyTableSize;
+    kkint32   historyLastIdxAdded;
+    kkint32   historyOldestIdx;
     float     imagingWidthMeters;
-    int32     imagingWidthPixels;    /**< Should represent the width of the imaging chamber in pixels. */
+    kkint32   imagingWidthPixels;    /**< Should represent the width of the imaging chamber in pixels. */
     float     scanRate;
     float     ticsPerMeter;          /**< Assuming that flow-rate(m/s) is a linear function of Flow-Meter-Count. */
   };  /* FlowMeterTracker */

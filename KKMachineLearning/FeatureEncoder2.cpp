@@ -54,18 +54,18 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
   encodingMethod   = param.EncodingMethod ();
 
-  srcFeatureNums   = new int32[numOfFeatures];
-  cardinalityDest  = new int32[numOfFeatures];
-  destFeatureNums  = new int32[numOfFeatures];
+  srcFeatureNums   = new kkint32[numOfFeatures];
+  cardinalityDest  = new kkint32[numOfFeatures];
+  destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
 
   VectorKKStr   destFieldNames;
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    int32  srcFeatureNum = param.SelectedFeatures ()[x];
+    kkint32  srcFeatureNum = param.SelectedFeatures ()[x];
     srcFeatureNums   [x] = srcFeatureNum;
     destFeatureNums  [x] = codedNumOfFeatures;
     cardinalityDest  [x] = 1;
@@ -81,7 +81,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
           destWhatToDo    [x] = FeBinary;
           cardinalityDest [x] = cardinalityVector[srcFeatureNums [x]];
           codedNumOfFeatures   += cardinalityDest[x];
-          for  (int32 zed = 0;  zed < cardinalityDest[x];  zed++)
+          for  (kkint32 zed = 0;  zed < cardinalityDest[x];  zed++)
           {
             KKStr  fieldName = srcAttribute.Name () + "_" + srcAttribute.GetNominalValue (zed);
             destFieldNames.push_back (fieldName);
@@ -140,15 +140,15 @@ FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
 {
   log.Level (30) << "FeatureEncoder2::FeatureEncoder2" << endl;
 
-  cardinalityDest  = new int32[numOfFeatures];
-  destFeatureNums  = new int32[numOfFeatures];
+  cardinalityDest  = new kkint32[numOfFeatures];
+  destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
-  srcFeatureNums   = new int32[numOfFeatures];
+  srcFeatureNums   = new kkint32[numOfFeatures];
 
-  int32  x;
+  kkint32  x;
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    //int32  srcFeatureNum = param.SelectedFeatures () [x];
+    //kkint32  srcFeatureNum = param.SelectedFeatures () [x];
     srcFeatureNums   [x] = _encoder.srcFeatureNums [x];
     destFeatureNums  [x] = _encoder.destFeatureNums[x];
     cardinalityDest  [x] = _encoder.cardinalityDest[x];
@@ -168,14 +168,14 @@ FeatureEncoder2::~FeatureEncoder2 ()
 }
 
 
-int32  FeatureEncoder2::MemoryConsumedEstimated ()  const
+kkint32  FeatureEncoder2::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (FeatureEncoder2)
+  kkint32  memoryConsumedEstimated = sizeof (FeatureEncoder2)
     +  attributeVector.size ()   * sizeof (AttributeType)
-    +  cardinalityVector.size () * sizeof (int32);
+    +  cardinalityVector.size () * sizeof (kkint32);
 
-  if  (cardinalityDest)   memoryConsumedEstimated += 3 * numOfFeatures * sizeof (int32);  // For 'cardinalityDest', 'destFeatureNums', and 'srcFeatureNums'
-  if  (destFeatureNums)   memoryConsumedEstimated += numOfFeatures * sizeof (int32);
+  if  (cardinalityDest)   memoryConsumedEstimated += 3 * numOfFeatures * sizeof (kkint32);  // For 'cardinalityDest', 'destFeatureNums', and 'srcFeatureNums'
+  if  (destFeatureNums)   memoryConsumedEstimated += numOfFeatures * sizeof (kkint32);
   if  (destWhatToDo)      memoryConsumedEstimated += numOfFeatures * sizeof (FeWhatToDo);
   
   return  memoryConsumedEstimated;
@@ -183,7 +183,7 @@ int32  FeatureEncoder2::MemoryConsumedEstimated ()  const
 
 
 
-int32  FeatureEncoder2::NumEncodedFeatures ()  const
+kkint32  FeatureEncoder2::NumEncodedFeatures ()  const
 {
   return  encodedFileDesc->NumOfFields ();
 }
@@ -203,14 +203,14 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
     *o << "FieldNum" << "\t" << "FieldName" << "\t" << "Type"  << "\t" << "FieldNum" << "\t" << "FieldName" << endl;
   }
 
-  int32  x;
+  kkint32  x;
 
   bool  alreadyExist;
   
   for  (x = 0;  x < numOfFeatures; x++)
   {
-    int32  srcFeatureNum = srcFeatureNums[x];
-    int32  y = destFeatureNums[x];
+    kkint32  srcFeatureNum = srcFeatureNums[x];
+    kkint32  y = destFeatureNums[x];
 
     if  (y >= codedNumOfFeatures)
     {
@@ -248,7 +248,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
 
     case  FeBinary:
       {
-        for  (int32 z = 0;  z < cardinalityDest[x];  z++)
+        for  (kkint32 z = 0;  z < cardinalityDest[x];  z++)
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
@@ -299,12 +299,12 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
   encodedImage->TrainWeight    (src->TrainWeight    ());
 
   const float*  featureData = src->FeatureData ();
-  int32  x;
+  kkint32  x;
 
   for  (x = 0;  x < numOfFeatures; x++)
   {
     float  featureVal = featureData [srcFeatureNums[x]];
-    int32  y = destFeatureNums[x];
+    kkint32  y = destFeatureNums[x];
 
     switch (destWhatToDo[x])
     {
@@ -316,9 +316,9 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
 
     case  FeBinary:
       {
-        for  (int32 z = 0; z < cardinalityDest[x]; z++)
+        for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
-          float  bVal = ((int32)featureVal == z);
+          float  bVal = ((kkint32)featureVal == z);
           encodedImage->AddFeatureData (y, bVal);
           y++;
         }
@@ -386,9 +386,9 @@ FeatureVectorListPtr  FeatureEncoder2::EncodedFeatureVectorList (const FeatureVe
 
 struct  FeatureEncoder2::FeatureVar2
 {
-  FeatureVar2 (int32          _featureNum,  
+  FeatureVar2 (kkint32        _featureNum,  
                AttributeType  _attributeType,
-               int32          _idx,  
+               kkint32        _idx,  
                double         _var
               ):
           attributeType (_attributeType),
@@ -398,8 +398,8 @@ struct  FeatureEncoder2::FeatureVar2
         {}
 
     KKMachineLearning::AttributeType  attributeType;
-    int32    featureNum;
-    int32    idx;
+    kkint32  featureNum;
+    kkint32  idx;
     double   var;
 };
 

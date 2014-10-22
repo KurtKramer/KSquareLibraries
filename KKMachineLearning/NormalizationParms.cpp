@@ -54,7 +54,7 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
   // numOfExamples   = _examples.QueueSize ();
  
   numOfExamples   = 0;
-  int32 numOfNoise  = 0;
+  kkint32 numOfNoise  = 0;
 
   mean  = new float[numOfFeatures];
   sigma = new float[numOfFeatures];
@@ -62,7 +62,7 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
   double*  total    = new double [numOfFeatures];
   double*  sigmaTot = new double [numOfFeatures];
  
-  int32  i;
+  kkint32  i;
 
   for  (i = 0; i < numOfFeatures; i++)
   {
@@ -150,7 +150,7 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr  _config,
   // numOfExamples   = _examples.QueueSize ();
  
   numOfExamples   = 0;
-  int32 numOfNoise    = 0;
+  kkint32 numOfNoise    = 0;
 
   mean  = new float[numOfFeatures];
   sigma = new float[numOfFeatures];
@@ -158,7 +158,7 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr  _config,
   double*  total    = new double [numOfFeatures];
   double*  sigmaTot = new double [numOfFeatures];
  
-  int32  i;
+  kkint32  i;
 
   for  (i = 0; i < numOfFeatures; i++)
   {
@@ -325,9 +325,9 @@ NormalizationParms::~NormalizationParms ()
 }
 
 
-int32  NormalizationParms::MemoryConsumedEstimated ()  const
+kkint32  NormalizationParms::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (NormalizationParms)
+  kkint32  memoryConsumedEstimated = sizeof (NormalizationParms)
     + attriuteTypes.size () * sizeof (AttributeType)
     + fileName.MemoryConsumedEstimated ()
     + numOfFeatures * (sizeof (bool) + sizeof (float) + sizeof (float));  //  mean + sigma
@@ -368,9 +368,9 @@ void  NormalizationParms::Save (const KKStr&  _fileName,
 
 void  NormalizationParms::Write (ostream&  o)
 {
-  int32  i = 0;
+  kkint32  i = 0;
 
-  int32  origPrecision = o.precision ();
+  kkint32  origPrecision = o.precision ();
   o.precision (12);
 
   o << "<NormalizationParms>"      << endl;
@@ -447,7 +447,7 @@ void  NormalizationParms::Read (FILE*  i,
       mean  = new float[numOfFeatures];
       sigma = new float[numOfFeatures];
 
-      int32 x;
+      kkint32 x;
       for  (x = 0;  x < numOfFeatures;  x++)
       {
         mean [x] = float (0);
@@ -474,7 +474,7 @@ void  NormalizationParms::Read (FILE*  i,
         continue;
       }
 
-      int32  x = 0;
+      kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
         mean[x] = float (ln.ExtractTokenDouble ("\t"));
@@ -494,7 +494,7 @@ void  NormalizationParms::Read (FILE*  i,
         continue;
       }
 
-      int32  x = 0;
+      kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
         sigma[x] = float (ln.ExtractTokenDouble ("\t\n\r"));
@@ -559,7 +559,7 @@ void  NormalizationParms::Read (istream&  i,
       mean  = new float[numOfFeatures];
       sigma = new float[numOfFeatures];
 
-      int32 x;
+      kkint32 x;
       for  (x = 0;  x < numOfFeatures;  x++)
       {
         mean [x] = float (0);
@@ -586,7 +586,7 @@ void  NormalizationParms::Read (istream&  i,
         continue;
       }
 
-      int32  x = 0;
+      kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
         mean[x] = float (ln.ExtractTokenDouble ("\t"));
@@ -606,7 +606,7 @@ void  NormalizationParms::Read (istream&  i,
         continue;
       }
 
-      int32  x = 0;
+      kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
         sigma[x] = float (ln.ExtractTokenDouble ("\t\n\r"));
@@ -622,7 +622,7 @@ void  NormalizationParms::Read (istream&  i,
 
 
 
-float  NormalizationParms::Mean (int32 i)
+float  NormalizationParms::Mean (kkint32 i)
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
@@ -639,7 +639,7 @@ float  NormalizationParms::Mean (int32 i)
 
 
 
-float  NormalizationParms::Sigma (int32 i)
+float  NormalizationParms::Sigma (kkint32 i)
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
@@ -660,7 +660,7 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
   delete  normalizeFeature;
   normalizeFeature = new bool [numOfFeatures];
 
-  int32  i;
+  kkint32  i;
   for  (i = 0;  i < numOfFeatures;  i++)
   {
     if  (normalizeNominalFeatures)
@@ -689,7 +689,7 @@ void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
 {
   float*  featureData = example->FeatureDataAlter ();
 
-  for  (int32 i = 0; i < numOfFeatures; i++)
+  for  (kkint32 i = 0; i < numOfFeatures; i++)
   {
     if  (normalizeFeature[i])
     {
@@ -734,7 +734,7 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
 {
   FeatureVectorPtr  result = new FeatureVector (*example);
   float*  featureData = result->FeatureDataAlter ();
-  for  (int32 i = 0; i < numOfFeatures; i++)
+  for  (kkint32 i = 0; i < numOfFeatures; i++)
   {
     if  (normalizeFeature[i])
     {

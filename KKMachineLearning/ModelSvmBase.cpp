@@ -35,9 +35,9 @@ using namespace  KKMachineLearning;
 
 
 
-ModelSvmBase::ModelSvmBase (FileDescPtr           _fileDesc,
-                            volatile const bool&  _cancelFlag,
-                            RunLog&               _log
+ModelSvmBase::ModelSvmBase (FileDescPtr    _fileDesc,
+                            VolConstBool&  _cancelFlag,
+                            RunLog&        _log
                            ):
   Model (_fileDesc, _cancelFlag, _log),
   param                (NULL),
@@ -51,7 +51,7 @@ ModelSvmBase::ModelSvmBase (FileDescPtr           _fileDesc,
 ModelSvmBase::ModelSvmBase (const KKStr&             _name,
                             const ModelParamSvmBase& _param,         // Create new model from
                             FileDescPtr              _fileDesc,
-                            volatile const bool&     _cancelFlag,
+                            VolConstBool&            _cancelFlag,
                             RunLog&                  _log
                            ):
   Model (_name, _param, _fileDesc, _cancelFlag, _log),
@@ -97,9 +97,9 @@ ModelSvmBase::~ModelSvmBase ()
 
 
 
-int32  ModelSvmBase::MemoryConsumedEstimated ()  const
+kkint32  ModelSvmBase::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                  sizeof (SVM289_MFS::svm_model*)   + 
                                  sizeof (ModelParamSvmBasePtr);
 
@@ -180,7 +180,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   // Build the Label array that libSVM expects.
   float*  y = new float[trainExamples->QueueSize ()];
   {
-    for  (int32 labelIndex = 0;  labelIndex < trainExamples->QueueSize ();  labelIndex++)
+    for  (kkint32 labelIndex = 0;  labelIndex < trainExamples->QueueSize ();  labelIndex++)
       y[labelIndex] = (float)(classesIndex->GetClassIndex (trainExamples->IdxToPtr (labelIndex)->MLClass ()));
   }
 
@@ -236,7 +236,7 @@ MLClassPtr  ModelSvmBase::Predict (FeatureVectorPtr  example)
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  double  y = (int32)SVM289_MFS::svm_predict  (svmModel, *encodedExample);
+  double  y = (kkint32)SVM289_MFS::svm_predict  (svmModel, *encodedExample);
   if  (newExampleCreated)
   {
     delete encodedExample;
@@ -259,12 +259,12 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
                              MLClassPtr     knownClass,
                              MLClassPtr&    predClass1,
                              MLClassPtr&    predClass2,
-                             int32&            predClass1Votes,
-                             int32&            predClass2Votes,
+                             kkint32&          predClass1Votes,
+                             kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
                              double&           probOfPredClass1,
                              double&           probOfPredClass2,
-                             int32&            numOfWinners,
+                             kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
                              double&           breakTie
                             )
@@ -283,7 +283,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
     throw KKException (errMsg);
   }
 
-  int32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
+  kkint32  knownClassIdx = classesIndex->GetClassIndex (knownClass);
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
@@ -296,16 +296,16 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
     encodedExample = NULL;
   }
 
-  int32  maxIndex1 = 0;
-  int32  maxIndex2 = 0;
+  kkint32  maxIndex1 = 0;
+  kkint32  maxIndex2 = 0;
 
   double  maxProb1 = -1.0;
   double  maxProb2 = -1.0;
 
   numOfWinners = 0;
-  int32  winnerNumVotes = 0;
+  kkint32  winnerNumVotes = 0;
 
-  for  (uint32 idx = 0;  idx < numOfClasses;  idx++)
+  for  (kkuint32 idx = 0;  idx < numOfClasses;  idx++)
   {
     if  (classProbs[idx] > maxProb1)
     {
@@ -392,7 +392,7 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example)
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  uint32  idx;
+  kkuint32  idx;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);
@@ -405,10 +405,10 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 
 
-void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       example,
+void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
                                           const MLClassList&  _mlClasses,
-                                          int32*                 _votes,
-                                          double*                _probabilities
+                                          kkint32*            _votes,
+                                          double*             _probabilities
                                          )
 {
   if  (!svmModel)
@@ -436,12 +436,12 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       example,
     encodedExample = NULL;
   }
 
-  uint32  idx;
+  kkuint32  idx;
   for  (idx = 0;  idx < _mlClasses.size ();  idx++)
   {
     MLClassPtr  ic = _mlClasses.IdxToPtr (idx);
-    int32 classIndex = classesIndex->GetClassIndex (ic);
-    if  ((classIndex < 0)  ||  (classIndex >= (int32)numOfClasses))
+    kkint32 classIndex = classesIndex->GetClassIndex (ic);
+    if  ((classIndex < 0)  ||  (classIndex >= (kkint32)numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -460,9 +460,9 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       example,
 
 
 
-void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       _example,
+void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                            const MLClassList&  _mlClasses,
-                                           double*                _probabilities
+                                           double*             _probabilities
                                           )
 {
   if  (!svmModel)
@@ -490,12 +490,12 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       _example,
     encodedExample = NULL;
   }
 
-  uint32  idx;
+  kkuint32  idx;
   for  (idx = 0;  idx < _mlClasses.size ();  idx++)
   {
     MLClassPtr  ic = _mlClasses.IdxToPtr (idx);
-    int32 classIndex = classesIndex->GetClassIndex (ic);
-    if  ((classIndex < 0)  ||  (classIndex >= (int32)numOfClasses))
+    kkint32 classIndex = classesIndex->GetClassIndex (ic);
+    if  ((classIndex < 0)  ||  (classIndex >= (kkint32)numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -513,16 +513,16 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr       _example,
 
 
 void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
-                                            double**         _crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                            double**      _crossProbTable  /**< Two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                            )
 {
-  uint32  idx1, idx2;
+  kkuint32  idx1, idx2;
   VectorInt  pairWiseIndexes (_classes.size (), 0);
   for  (idx1 = 0;  idx1 < _classes.size ();  idx1++)
   {
     MLClassPtr  ic = _classes.IdxToPtr (idx1);
-    int32 pairWiseIndex = classesIndex->GetClassIndex (ic);
-    if  ((pairWiseIndex < 0)  ||  (pairWiseIndex >= (int32)numOfClasses))
+    kkint32 pairWiseIndex = classesIndex->GetClassIndex (ic);
+    if  ((pairWiseIndex < 0)  ||  (pairWiseIndex >= (kkint32)numOfClasses))
     {
       KKStr  errMsg = "ModelSvmBase::RetrieveCrossProbTable  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
@@ -541,10 +541,10 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
 
   for  (idx1 = 0;  idx1 < (_classes.size () - 1);  idx1++)
   {
-    int32 pairWiseIndex1 = pairWiseIndexes [idx1];
+    kkint32 pairWiseIndex1 = pairWiseIndexes [idx1];
     for  (idx2 = idx1 + 1;  idx2 < _classes.size ();  idx2++)
     {
-      int32 pairWiseIndex2 = pairWiseIndexes [idx2];
+      kkint32 pairWiseIndex2 = pairWiseIndexes [idx2];
       _crossProbTable[idx1][idx2] = pairWiseProb[pairWiseIndex1][pairWiseIndex2];
       _crossProbTable[idx2][idx1] = pairWiseProb[pairWiseIndex2][pairWiseIndex1];
     }
@@ -562,7 +562,7 @@ void  ModelSvmBase::ReadSpecificImplementationXML (istream&  i,
 
   KKStr  modelFileName;
 
-  int32  numOfModels = 0;
+  kkint32  numOfModels = 0;
 
 
   while  (i.getline (buff, sizeof (buff)))
@@ -626,9 +626,9 @@ void  ModelSvmBase::WriteSpecificImplementationXML (ostream&  o)
 
 
 
-int32  ModelSvmBase::NumOfSupportVectors ()  const
+kkint32  ModelSvmBase::NumOfSupportVectors ()  const
 {
-  int32  numOfSupportVectors = 0;
+  kkint32  numOfSupportVectors = 0;
   if  (svmModel)
     return  0;
 

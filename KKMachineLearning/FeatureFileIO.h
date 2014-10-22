@@ -44,9 +44,6 @@ namespace KKMachineLearning
   public:
     typedef  FeatureFileIO*  FeatureFileIOPtr;
 
-    typedef  KKB::int32  int32;
-    typedef  KKB::uint32 uint32;
-
     FeatureFileIO (const KKStr&  _driverName,
                    bool          _canRead,
                    bool          _canWrite
@@ -61,8 +58,8 @@ namespace KKMachineLearning
     void   AppendToFile (const KKStr&           _fileName,
                          const FeatureNumList&  _selFeatures,
                          FeatureVectorList&     _examples,
-                         uint32&                _numExamplesWritten,
-                         volatile const bool&   _cancelFlag,
+                         kkuint32&              _numExamplesWritten,
+                         VolConstBool&          _cancelFlag,
                          bool&                  _successful,
                          RunLog&                log
                         );
@@ -81,13 +78,13 @@ namespace KKMachineLearning
      *@return  A ImageFeaturesList container object; this object will own all the examples loaded.
      */
     virtual  
-      FeatureVectorListPtr  LoadFeatureFile (const KKStr&          _fileName,
-                                             MLClassList&       _mlClasses,
-                                             int32                 _maxCount,
-                                             volatile const bool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
-                                             bool&                 _successful,
-                                             bool&                 _changesMade,
-                                             RunLog&               _log
+      FeatureVectorListPtr  LoadFeatureFile (const KKStr&   _fileName,
+                                             MLClassList&   _mlClasses,
+                                             kkint32        _maxCount,
+                                             VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
+                                             bool&          _successful,
+                                             bool&          _changesMade,
+                                             RunLog&        _log
                                             );
 
       
@@ -105,8 +102,8 @@ namespace KKMachineLearning
       void  SaveFeatureFile (const KKStr&           _fileName, 
                              const FeatureNumList&  _selFeatures,
                              FeatureVectorList&     _examples,
-                             uint32&                 _numExamplesWritten,  // caller will be able to manitor this variable.
-                             volatile const bool&   _cancelFlag,
+                             kkuint32&              _numExamplesWritten,  // caller will be able to manitor this variable.
+                             VolConstBool&          _cancelFlag,
                              bool&                  _successful,
                              RunLog&                _log
                             );
@@ -129,7 +126,7 @@ namespace KKMachineLearning
     void  SaveFeatureFileMultipleParts (const KKStr&           _fileName, 
                                         const FeatureNumList&  _selFeatures,
                                         FeatureVectorList&     _examples,
-                                        volatile const bool&   _cancelFlag,
+                                        VolConstBool&          _cancelFlag,
                                         bool&                  _successful,
                                         RunLog&                _log
                                        );
@@ -153,12 +150,12 @@ namespace KKMachineLearning
      *@param[out] _errorMessage  If a error in processing occurs; place a description of the error in this parameter.
      *@param      _log
      */
-    virtual  FileDescPtr  GetFileDesc (const KKStr&       _fileName,
-                                       std::istream&      _in,
+    virtual  FileDescPtr  GetFileDesc (const KKStr&    _fileName,
+                                       std::istream&   _in,
                                        MLClassListPtr  _classes,
-                                       int32&               _estSize,
-                                       KKStr&             _errorMessage,
-                                       RunLog&            _log
+                                       kkint32&        _estSize,
+                                       KKStr&          _errorMessage,
+                                       RunLog&         _log
                                       ) = 0;
 
 
@@ -176,15 +173,15 @@ namespace KKMachineLearning
      *@param[in]  _log Where to send diagnostic messages to.
      *@return  A ImageFeaturesList container object; this object will own all the examples loaded;  if an error occurs NULL will be returned.
      */
-    virtual  FeatureVectorListPtr  LoadFile (const KKStr&          _fileName,
-                                             const FileDescPtr     _fileDesc,
+    virtual  FeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
+                                             const FileDescPtr  _fileDesc,
                                              MLClassList&       _classes, 
-                                             std::istream&         _in,
-                                             int32                 _maxCount,    /**< Maximum # images to load. */
-                                             volatile const bool&  _cancelFlag,
-                                             bool&                 _changesMade,
-                                             KKStr&                _errorMessage,
-                                             RunLog&               _log
+                                             std::istream&      _in,
+                                             kkint32            _maxCount,    /**< Maximum # images to load. */
+                                             VolConstBool&      _cancelFlag,
+                                             bool&              _changesMade,
+                                             KKStr&             _errorMessage,
+                                             RunLog&            _log
                                             ) = 0;
 
 
@@ -204,8 +201,8 @@ namespace KKMachineLearning
                               const KKStr&            _fileName,
                               const FeatureNumList&   _selFeatures,
                               std::ostream&           _out,
-                              uint32&                 _numExamplesWritten,
-                              volatile const bool&    _cancelFlag,
+                              kkuint32&               _numExamplesWritten,
+                              VolConstBool&           _cancelFlag,
                               bool&                   _successful,
                               KKStr&                  _errorMessage,
                               RunLog&                 _log

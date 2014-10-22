@@ -28,12 +28,12 @@ namespace KKLSC
     ScannerClock ();
 
     /** @brief  Returns the current value of 'time' them increments by 1. */
-    int32  Time ();
+    kkint32  Time ();
 
-    void  Time (int32 _time);
+    void  Time (kkint32 _time);
 
   private:
-    int32  time;
+    kkint32  time;
   };  /* ScannerClock */
 
   typedef  ScannerClock::ScannerClockPtr  ScannerClockPtr;

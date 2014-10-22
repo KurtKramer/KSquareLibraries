@@ -47,18 +47,18 @@ namespace KKB
 
     virtual ~KKThread ();
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
     static  const KKStr&     ThreadStatusToStr (ThreadStatus);
 
-    volatile const bool&     CancelFlag    ()  const  {return terminateFlag;}
+    VolConstBool&            CancelFlag    ()  const  {return terminateFlag;}
     bool                     Crashed       ()  const  {return crashed;}
     KKB::MsgQueuePtr         MsgQueue      ()         {return msgQueue;}
     ThreadStatus             Status        ()  const  {return status;}
     const KKStr&             StatusStr     ()  const  {return ThreadStatusToStr (status);}
-    volatile const bool&     ShutdownFlag  ()  const  {return shutdownFlag;}
-    volatile const bool&     TerminateFlag ()  const  {return terminateFlag;}
-    int32                    ThreadId      ()  const  {return threadId;}
+    VolConstBool&            ShutdownFlag  ()  const  {return shutdownFlag;}
+    VolConstBool&            TerminateFlag ()  const  {return terminateFlag;}
+    kkint32                  ThreadId      ()  const  {return threadId;}
     const KKStr&             ThreadName    ()  const  {return threadName;}
 
     void    Crashed (bool         _crashed)  {crashed = _crashed;}
@@ -105,7 +105,7 @@ namespace KKB
      *@details  Does not call the 'ShutdownThread' or  'TerminateThread'  methods.
      *@param[in]  maxTimeToWait  Will wait 'maxTimeToWait' seconds before giving up on waiting at which point will try to kill thread.
      */
-    void  WaitForThreadToStop (uint32  maxTimeToWait);
+    void  WaitForThreadToStop (kkuint32  maxTimeToWait);
 
 
   protected:
@@ -148,7 +148,7 @@ namespace KKB
                                                 * to terminate as quick as possible releasing all allocated resources.
                                                 */
 
-    int32                  threadId;
+    kkint32                threadId;
 
     KKStr                  threadName;
 
@@ -173,7 +173,7 @@ namespace KKB
     KKThreadList (const KKThreadList&  list);
     ~KKThreadList ();
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
   };
 
   typedef  KKThreadList*    KKThreadListPtr;

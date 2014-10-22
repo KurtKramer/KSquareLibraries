@@ -48,9 +48,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
   public:
     typedef  ModelOldSVM*  ModelOldSVMPtr;
 
-    ModelOldSVM (FileDescPtr           _fileDesc,
-                 volatile const bool&  _cancelFlag,
-                 RunLog&               _log
+    ModelOldSVM (FileDescPtr    _fileDesc,
+                 VolConstBool&  _cancelFlag,
+                 RunLog&        _log
                 );
 
     /**
@@ -64,7 +64,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     ModelOldSVM (const KKStr&             _name,
                  const ModelParamOldSVM&  _param,
                  FileDescPtr              _fileDesc,
-                 volatile const bool&     _cancelFlag,
+                 VolConstBool&            _cancelFlag,
                  RunLog&                  _log
                 );
   
@@ -86,15 +86,15 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
                                             );
 
     virtual
-    int32                    MemoryConsumedEstimated ()  const;
+    kkint32                  MemoryConsumedEstimated ()  const;
 
     virtual
     bool                     NormalizeNominalAttributes ()  const;
 
-    int32                    NumOfSupportVectors  () const;
+    kkint32                  NumOfSupportVectors  () const;
 
-    void                     SupportVectorStatistics (int32&   numSVs,
-                                                      int32&   totalNumSVs
+    void                     SupportVectorStatistics (kkint32& numSVs,
+                                                      kkint32& totalNumSVs
                                                      );
 
     ModelParamOldSVMPtr      Param                () const;
@@ -112,12 +112,12 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
                                 MLClassPtr     knownClass,
                                 MLClassPtr&    predClass1,
                                 MLClassPtr&    predClass2,
-                                int32&            predClass1Votes,
-                                int32&            predClass2Votes,
+                                kkint32&          predClass1Votes,
+                                kkint32&          predClass2Votes,
                                 double&           probOfKnownClass,
                                 double&           probOfPredClass1,
                                 double&           probOfPredClass2,
-                                int32&            numOfWinners,
+                                kkint32&          numOfWinners,
                                 bool&             knownClassOneOfTheWinners,
                                 double&           breakTie
                                );
@@ -147,7 +147,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr       example,
                                 const MLClassList&  _mlClasses,
-                                int32*                 _votes,
+                                kkint32*                 _votes,
                                 double*                _probabilities
                                );
 
@@ -183,7 +183,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   int32               numToFind,
+                                                   kkint32             numToFind,
                                                    MLClassPtr     c1,
                                                    MLClassPtr     c2
                                                   );
@@ -199,7 +199,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    int32               numToFind,
+                                                    kkint32             numToFind,
                                                     MLClassPtr     c1,
                                                     MLClassPtr     c2
                                                    );

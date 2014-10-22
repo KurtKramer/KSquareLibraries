@@ -31,9 +31,9 @@ using namespace  KKMachineLearning;
 
 
 
-ClassificationBiasMatrix::ClassificationBiasMatrix (const KKStr&     _configFileName,
+ClassificationBiasMatrix::ClassificationBiasMatrix (const KKStr&  _configFileName,
                                                     MLClassList&  _classes,
-                                                    RunLog&          _runLog
+                                                    RunLog&       _runLog
                                                    ):
    biasFileName        (),
    classes             (new MLClassList (_classes)),
@@ -211,9 +211,9 @@ void  ClassificationBiasMatrix::DeclareMatrix ()
   numClasses = classes->QueueSize ();
   probabilities = new Matrix (numClasses, numClasses);
   counts        = new Matrix (numClasses, numClasses);
-  for  (int32 r = 0;  r < numClasses;  r++)
+  for  (kkint32 r = 0;  r < numClasses;  r++)
   {
-    for  (int32 c = 0;  c < numClasses;  c++)
+    for  (kkint32 c = 0;  c < numClasses;  c++)
     {
       (*probabilities)[r][c] = 0.0;
       (*counts)[r][c] = 0.0;
@@ -280,7 +280,7 @@ void  ClassificationBiasMatrix::TestPaperResults (ostream&   sw)
 
   PerformAdjustmnts (classCounts, adjCounts, stdErrors);
 
-  int32  x = 0;
+  kkint32  x = 0;
 
   sw << endl << endl;
 
@@ -409,7 +409,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
     throw KKException (errMsg);
   }
 
-  int32  classesColIdx = 0;
+  kkint32  classesColIdx = 0;
 
   char  buff[10240];
   KKStr  l;
@@ -439,8 +439,8 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
       KKStr  data      = l.ExtractToken2 ("\t");
 
       MLClassPtr  pc = MLClass::CreateNewMLClass (className);
-      int32  classesIdx     = classes->PtrToIdx (pc);
-      int32  fileClassesIdx = fileClasses->PtrToIdx (pc);
+      kkint32  classesIdx     = classes->PtrToIdx (pc);
+      kkint32  fileClassesIdx = fileClasses->PtrToIdx (pc);
 
       if  (classesIdx < 0)
       {
@@ -458,18 +458,18 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         throw errMsg;
       }
 
-      int32  classesRowIdx = classesIdx;
+      kkint32  classesRowIdx = classesIdx;
 
       VectorKKStr  dataFields = data.Split (',');
-      if  (dataFields.size () != (uint32)numClasses)
+      if  (dataFields.size () != (kkuint32)numClasses)
       {
-        KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow Class[" + className + "]  number[" + StrFormatInt ((int32)dataFields.size (), "ZZZ0") + "] of values provided does not match number of Classes.";
+        KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow Class[" + className + "]  number[" + StrFormatInt ((kkint32)dataFields.size (), "ZZZ0") + "] of values provided does not match number of Classes.";
         runLog.Level (-1) << errMsg << endl;
         valid = false;
         throw errMsg;
       }
 
-      for  (int32 c = 0;  c < numClasses;  c++)
+      for  (kkint32 c = 0;  c < numClasses;  c++)
       {
         pc = fileClasses->IdxToPtr (c);
         classesColIdx = classes->PtrToIdx (pc);
@@ -516,12 +516,12 @@ void  ClassificationBiasMatrix::WriteXML (ostream&  o)
   o << "DateTimeFileWritten" << "\t" << dateTimeFileWritten             << endl;
 
   o << "<SimpleConfusionMatrix>" << endl;
-  for  (int32 rowIdx = 0;  rowIdx < numClasses;  rowIdx++)
+  for  (kkint32 rowIdx = 0;  rowIdx < numClasses;  rowIdx++)
   {
     o << "DataRow"                  << "\t" 
       << (*classes)[rowIdx].Name () << "\t";
 
-    for  (int32 colIdx = 0;  colIdx < numClasses;  colIdx++)
+    for  (kkint32 colIdx = 0;  colIdx < numClasses;  colIdx++)
     {
       if  (colIdx > 0)
         o << ",";
@@ -543,8 +543,8 @@ void  ClassificationBiasMatrix::WriteXML (ostream&  o)
 
 void  ClassificationBiasMatrix::BuildFromConfusionMatrix (const ConfusionMatrix2&  cm)
 {
-  int32  classesRowIdx = 0;
-  int32  classesColIdx = 0;
+  kkint32  classesRowIdx = 0;
+  kkint32  classesColIdx = 0;
 
   for  (classesRowIdx = 0;  classesRowIdx < numClasses;  classesRowIdx++)
   {
@@ -578,18 +578,18 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   //     Marine Ecology Progresss Series
   //     published 2006-july-06;  vol 216:309-311
 
-  if  (classifiedCounts.size () != (uint32)numClasses)
+  if  (classifiedCounts.size () != (kkuint32)numClasses)
   {
     KKStr errMsg = "ClassificationBiasMatrix::PerformAdjustmnts  ***ERROR***   Disagreement in length of classifiedCounts[" + 
-                   StrFormatInt ((int32)classifiedCounts.size (), "ZZZ0") + 
+                   StrFormatInt ((kkint32)classifiedCounts.size (), "ZZZ0") + 
                    "]  and Prev Defined ClassList[" + StrFormatInt (numClasses, "ZZZ0") + "].";
     runLog.Level (-1) << errMsg << endl;
     valid = false;
     throw errMsg;
   }
 
-  int32 x = 0;
-  int32  i, j, k;
+  kkint32 x = 0;
+  kkint32  i, j, k;
 
 
   // We need to deal with the special case when one entry in the probability diagonal is zero.
@@ -700,8 +700,8 @@ void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
     sw << "Name"  << "\t" << "Count" << "\t" << tl3 << endl;
   }
 
-  int32  row = 0;
-  int32  col = 0;
+  kkint32  row = 0;
+  kkint32  col = 0;
   
   double  total = 0.0;
 
@@ -752,7 +752,7 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
                                                       const VectorDouble&  classifiedCounts
                                                      )
 {
-  if  (classifiedCounts.size () != (uint32)numClasses)
+  if  (classifiedCounts.size () != (kkuint32)numClasses)
   {
     KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults  ***ERROR***    Number of entries in 'classifiedCounts' not equal the number of classes";
     cerr << "ClassificationBiasMatrix::PrintAdjustedResults  ***ERROR***  " << errMsg << endl;
@@ -773,7 +773,7 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
     sw << ""             << "\t" << "\t" << tl2 << endl;
     sw << "Description"  << "\t" << "\t" << tl3 << endl;
    
-    int32  col = 0;
+    kkint32  col = 0;
 
     sw << "Classified Results" << "\t";
     for  (col = 0;  col < numClasses;  col++)

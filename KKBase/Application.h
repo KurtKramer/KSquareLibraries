@@ -37,8 +37,6 @@ namespace KKB
   class  Application
   {
   public:
-    typedef  KKB::int32  int32;
-
     /** 
      *@brief  Copy Constructor for Application class.
      *@param[in]  _application  Application instance to copy.
@@ -65,8 +63,8 @@ namespace KKB
      *@param[in]  argc  Number of arguments in argv.
      *@param[in]  argv  List of ascii-z strings; one string for each argument.
      */
-    Application (KKB::int32  argc,
-                 char**      argv
+    Application (kkint32  argc,
+                 char**   argv
                 );
 
     virtual
@@ -105,8 +103,8 @@ namespace KKB
      *@param[in] argc   Number of parameters.
      *@param[in] argv   The actual parameters.
      */
-    void         ProcessCmdLineParameters (KKB::int32  argc,
-                                           char**      argv
+    void         ProcessCmdLineParameters (kkint32  argc,
+                                           char**   argv
                                           );
 
     /**
@@ -135,7 +133,7 @@ namespace KKB
   
     void        ExtractParametersFromFile (const KKStr&  cmdFileName, 
                                            VectorKKStr&  cmdFileParameters,
-                                           bool&          validFile
+                                           bool&         validFile
                                           );
 
 

@@ -147,8 +147,8 @@ namespace KKMachineLearning
     // Access Methods.
     const kkuint16*  FeatureNums    () const  {return featureNums;}
     FileDescPtr      FileDesc       () const  {return fileDesc;}
-    int32            NumOfFeatures  () const  {return numOfFeatures;}
-    int32            NumSelFeatures () const  {return numOfFeatures;}
+    kkint32          NumOfFeatures  () const  {return numOfFeatures;}
+    kkint32          NumSelFeatures () const  {return numOfFeatures;}
 
 
 
@@ -162,7 +162,7 @@ namespace KKMachineLearning
     bool    AllFeaturesSelected ()  const;
 
 
-    KKMachineLearning::AttributeType  FeatureAttributeType (int32 idx)  const;
+    KKMachineLearning::AttributeType  FeatureAttributeType (kkint32 idx)  const;
 
 
     /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
@@ -170,7 +170,7 @@ namespace KKMachineLearning
 
 
     /** @brief Compare with another featureNumList returning -1, 0, and 1 indicating less_than, equal, or greater_than. */
-    int32   Compare (const FeatureNumList&  _features)  const;
+    kkint32 Compare (const FeatureNumList&  _features)  const;
 
 
     /** @brief Perform a comkplement of selected features.  That is if a feature is selected turn it off and if it is not selected then turn it on. */
@@ -178,7 +178,7 @@ namespace KKMachineLearning
 
 
     /**
-     * @brief Allocates a array of int32's that is a copy  of FeatureNums; The caller will own the array and is responsible for deleting it.
+     * @brief Allocates a array of kkint32's that is a copy  of FeatureNums; The caller will own the array and is responsible for deleting it.
      * @return A dynamically allocated array if short its that will consists of a list of selected features.
      */
     kkuint16*  CreateFeatureNumArray ()  const;
@@ -213,7 +213,7 @@ namespace KKMachineLearning
                  RunLog&       _log
                 );
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
 
     /**
@@ -221,7 +221,7 @@ namespace KKMachineLearning
      * @param[in] numToKeep Number of features to select randomly from existing instance.
      * @return Dynamically allocated instance of a ImageFeaturesList with randomly selected features.
      */
-    FeatureNumListPtr  RandomlySelectFeatures (int32  numToKeep)  const;
+    FeatureNumListPtr  RandomlySelectFeatures (kkint32  numToKeep)  const;
 
     void  Save (const KKStr&  _fileName,
                 bool&         _successful,
@@ -269,7 +269,7 @@ namespace KKMachineLearning
      *  void  PrintSelectedFeatures (const FeatureNumList&  goodFeatures)
      *  {
      *    cout << "Selected Features: ";
-     *    for  (int32 x = 0;  x < goodFeatures.NumOfFeatures ();
+     *    for  (kkint32 x = 0;  x < goodFeatures.NumOfFeatures ();
      *    {
      *      if  (x > 0)  cout << ",";
      *      cout << goodFeatures[x];
@@ -280,7 +280,7 @@ namespace KKMachineLearning
      * @param[in]  _idx  The position in this instance that you want to return.
      * @return  Selected feature at position '_idx'.
      */
-    kkuint16      operator[] (int32  idx)  const;
+    kkuint16      operator[] (kkint32  idx)  const;
 
 
 
@@ -307,16 +307,16 @@ namespace KKMachineLearning
     FeatureNumList ();
 
 
-    void   AllocateArraySize (int32 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
+    void   AllocateArraySize (kkint32 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
 
     kkuint16*    featureNums;              /**< @brief The feature nums in this array are always kept in ascending order.  
                                             * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
                                             * indicates the size allocated, if more space is needed you need to call 
                                             * 'AllocateArraySize' to increase it.
                                             */
-    int32        featureNumsAllocatedSize;
+    kkint32      featureNumsAllocatedSize;
     FileDescPtr  fileDesc;
-    int32        numOfFeatures;
+    kkint32      numOfFeatures;
   };  /* FeatureNumList */
 
 

@@ -47,12 +47,12 @@ FeatureFileIOArff::~FeatureFileIOArff(void)
 
 
 
-FileDescPtr  FeatureFileIOArff::GetFileDesc (const KKStr&       _fileName,
-                                             istream&           _in,
+FileDescPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
+                                             istream&        _in,
                                              MLClassListPtr  _classes,
-                                             int32&             _estSize,
-                                             KKStr&             _errorMessage,
-                                             RunLog&            _log
+                                             kkint32&        _estSize,
+                                             KKStr&          _errorMessage,
+                                             RunLog&          _log
                                             )
 {
   _log.Level (10) << endl << endl 
@@ -67,15 +67,15 @@ FileDescPtr  FeatureFileIOArff::GetFileDesc (const KKStr&       _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&          _fileName,
-                                                   const FileDescPtr     _fileDesc,
+FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&       _fileName,
+                                                   const FileDescPtr  _fileDesc,
                                                    MLClassList&       _classes, 
-                                                   istream&              _in,
-                                                   int32                 _maxCount,    // Maximum # images to load.
-                                                   volatile const bool&  _cancelFlag,
-                                                   bool&                 _changesMade,
-                                                   KKStr&                _errorMessage,
-                                                   RunLog&               _log
+                                                   istream&           _in,
+                                                   kkint32            _maxCount,    // Maximum # images to load.
+                                                   VolConstBool&      _cancelFlag,
+                                                   bool&              _changesMade,
+                                                   KKStr&             _errorMessage,
+                                                   RunLog&            _log
                                                   )
 {
   _log.Level (10) << endl << endl 
@@ -89,15 +89,15 @@ FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&          _fileNa
 
 
 
-void   FeatureFileIOArff::SaveFile (FeatureVectorList&      _data,
-                                    const KKStr&            _fileName,
-                                    const FeatureNumList&   _selFeatures,
-                                    ostream&                _out,
-                                    uint32&                 _numExamplesWritten,
-                                    volatile const bool&    _cancelFlag,
-                                    bool&                   _successful,
-                                    KKStr&                  _errorMessage,
-                                    RunLog&                 _log
+void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
+                                    const KKStr&          _fileName,
+                                    const FeatureNumList& _selFeatures,
+                                    ostream&              _out,
+                                    kkuint32&             _numExamplesWritten,
+                                    VolConstBool&         _cancelFlag,
+                                    bool&                 _successful,
+                                    KKStr&                _errorMessage,
+                                    RunLog&               _log
                                    )
 {
   _log.Level (20) << "FeatureFileIOArff::SaveFile    FileName[" << _fileName << "]" << endl;
@@ -107,7 +107,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&      _data,
   FileDescPtr  fileDesc = _data.FileDesc ();
   const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
 
-  int32  x;
+  kkint32  x;
   {
     _out << "% ARFF Format Definition: http://www.cs.waikato.ac.nz/~ml/weka/arff.html"  << endl
          << "%"                                                             << endl
@@ -138,9 +138,9 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&      _data,
          << "%"                                << endl;
 
     
-    for  (int32 fnIDX = 0;  fnIDX < _selFeatures.NumOfFeatures ();  fnIDX++)
+    for  (kkint32 fnIDX = 0;  fnIDX < _selFeatures.NumOfFeatures ();  fnIDX++)
     {
-      int32  featureNum = _selFeatures[fnIDX];
+      kkint32  featureNum = _selFeatures[fnIDX];
       AttributePtr attr = attrTable[featureNum];
       _out << "@attribute " 
            << attr->Name ()
@@ -179,24 +179,24 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&      _data,
   }
 
 
-  int32  numOfDigistsNeededInRowMask = Min (1, int32 (log10 (float (_data.QueueSize ()))) + 1);
+  kkint32  numOfDigistsNeededInRowMask = Min (1, kkint32 (log10 (float (_data.QueueSize ()))) + 1);
 
   KKStr rowMask = "0";
   rowMask.RightPad (numOfDigistsNeededInRowMask, '0');
 
   FeatureVectorPtr   example = NULL;
 
-  int32 idx;
+  kkint32 idx;
   for  (idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
 
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
 
       if  ((attrTable[featureNum]->Type () == NominalAttribute)  ||  (attrTable[featureNum]->Type () == SymbolicAttribute))
-        _out << attrTable[featureNum]->GetNominalValue ((int32)(example->FeatureData (featureNum)));
+        _out << attrTable[featureNum]->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else
         _out << example->FeatureData (featureNum);
       _out << ",";

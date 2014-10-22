@@ -81,7 +81,7 @@ KKStr   TrainingClass::ExpandedDirectory (const KKStr&  rootDir)
 
 TrainingClassList::TrainingClassList (const KKStr&  _rootDirExpanded,
                                       bool          owner,
-                                      int32         initSize
+                                      kkint32       initSize
                                      ):
     KKQueue<TrainingClass> (owner),
     rootDirExpanded        (_rootDirExpanded)
@@ -135,9 +135,9 @@ TrainingClassPtr  TrainingClassList::LocateByImageClass (const MLClassPtr  _mlCl
 
 TrainingClassPtr  TrainingClassList::LocateByImageClassName (const KKStr&  className)
 {
-  int32  size = QueueSize ();
+  kkint32  size = QueueSize ();
 
-  int32  idx;
+  kkint32  idx;
 
   TrainingClassPtr  traningClass = NULL;
 

@@ -47,14 +47,14 @@ Sobel::Sobel (const RasterPtr  _raster):
   uchar*  thisRow = NULL;
   uchar*  nextRow = NULL;
 
-  int32  magnitude;
+  kkint32  magnitude;
   
-  int32  r, c;
-  int32  v, h;
+  kkint32  r, c;
+  kkint32  v, h;
 
   maxMagnitude = 0;
 
-  edgeMagnitudes = new int32*[height];
+  edgeMagnitudes = new kkint32*[height];
 
   for  (r = 1;  r < (height - 1);  r++)
   {
@@ -62,7 +62,7 @@ Sobel::Sobel (const RasterPtr  _raster):
     thisRow = raster->Green ()[r];
     nextRow = raster->Green ()[r + 1];
 
-    edgeMagnitudes[r] = new int32[width];
+    edgeMagnitudes[r] = new kkint32[width];
 
     for  (c = 1;  c < (width - 1);  c++)
     {
@@ -93,7 +93,7 @@ Sobel::~Sobel(void)
 {
   if  (edgeMagnitudes)
   {
-    for  (int32  r = 1;  r < (height - 1);  r++)
+    for  (kkint32  r = 1;  r < (height - 1);  r++)
     {
       delete  edgeMagnitudes[r];
     }
@@ -102,7 +102,7 @@ Sobel::~Sobel(void)
 
   if  (edgeAngles)
   {
-    for  (int32  r = 1;  r < (height - 1);  r++)
+    for  (kkint32  r = 1;  r < (height - 1);  r++)
     {
       delete  edgeAngles    [r];
     }
@@ -119,8 +119,8 @@ void  Sobel::BuildAngleTable ()
 
   float  angle;
 
-  int32  r, c;
-  int32  v, h;
+  kkint32  r, c;
+  kkint32  v, h;
 
   edgeAngles = new float*[height];
 
@@ -175,7 +175,7 @@ void  Sobel::BuildAngleTable ()
 
 RasterPtr  Sobel::MagnitudeImage () const
 {
-  int32  r, c;
+  kkint32  r, c;
 
   RasterPtr  magImage = new Raster (height, width, false);
 
@@ -224,7 +224,7 @@ RasterPtr  Sobel::MagnitudeImage () const
 
 RasterPtr  Sobel::AngleImage () const
 {
-  int32  r, c;
+  kkint32  r, c;
 
   RasterPtr  angImage = new Raster (height, width, true);
 

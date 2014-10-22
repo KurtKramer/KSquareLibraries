@@ -164,8 +164,8 @@ struct  BmpImage::CodePair
 class  BmpImage::CodedPixels 
 {
 public:
-  CodedPixels (int32  _height,
-               int32  _width
+  CodedPixels (kkint32  _height,
+               kkint32  _width
               );
   ~CodedPixels ();
 
@@ -173,24 +173,24 @@ public:
                                               
   void  EOL ();                   /*!< This is called once at the end of each row of pixels.      */
 
-  uchar*  CreatePixelDataStructure4Bit (int32&  len);  /**< Creates the appropriate compressed data structure for the BMP 4-bit
+  uchar*  CreatePixelDataStructure4Bit (kkint32&  len);  /**< Creates the appropriate compressed data structure for the BMP 4-bit
                                                         * compressed file format.  The length of the structure created will be
                                                         * returned in the 'len' parameter.   The caller will be responsible for
                                                         * deleting the returned data structure.
                                                         */
 
-  uchar*  CreatePixelDataStructure8Bit (int32&  len);  /**< Creates the appropriate compressed data structure for the BMP 8-bit
+  uchar*  CreatePixelDataStructure8Bit (kkint32&  len);  /**< Creates the appropriate compressed data structure for the BMP 8-bit
                                                         * compressed file format.  The length of the structure created will be
                                                         * returned in the 'len' parameter.     The caller will be responsible for
                                                         * deleting the returned data structure.
                                                         */
 
 private:
-  int32  height;
-  int32  width;
+  kkint32  height;
+  kkint32  width;
   
-  int32  codesAllocated;
-  int32  used;
+  kkint32  codesAllocated;
+  kkint32  used;
 
   CodePairPtr codes;
   CodePairPtr top;
@@ -198,8 +198,8 @@ private:
 
 
 
-BmpImage::CodedPixels::CodedPixels (int32 _height,
-                                    int32 _width
+BmpImage::CodedPixels::CodedPixels (kkint32 _height,
+                                    kkint32 _width
                                    ):
   height (_height),
   width  (_width),
@@ -275,24 +275,24 @@ void  BmpImage::CodedPixels::EOL ()
 
 
 
-uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (int32&  len)
+uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (kkint32&  len)
 {
-  int32  buffSize = codesAllocated;
+  kkint32  buffSize = codesAllocated;
 
   uchar* buff = new uchar [buffSize + 4];  // + 4 For Safety
   memset (buff, 0, codesAllocated);
 
 
-  int32  curPair = 0;
+  kkint32  curPair = 0;
   top = &(codes[0]);
 
-  int32  bp = 0;
+  kkint32  bp = 0;
 
   while  (curPair < used)
   {
     if  (bp >= buffSize)
     {
-      int32  newBuffSize = buffSize * 2;
+      kkint32  newBuffSize = buffSize * 2;
       uchar* newBuff = new uchar[newBuffSize];
       memset (newBuff, 0, newBuffSize);
       memcpy (newBuff, buff, buffSize);
@@ -356,23 +356,23 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (int32&  len)
 
 
 
-uchar*  BmpImage::CodedPixels::CreatePixelDataStructure8Bit (int32&  len)
+uchar*  BmpImage::CodedPixels::CreatePixelDataStructure8Bit (kkint32&  len)
 {
-  int32  buffSize = codesAllocated;
+  kkint32  buffSize = codesAllocated;
 
   uchar* buff = new uchar [buffSize + 4];  // + 4 For Safty
   memset (buff, 0, codesAllocated);
 
-  int32  curPair = 0;
+  kkint32  curPair = 0;
   top = &(codes[0]);
 
-  int32  bp = 0;
+  kkint32  bp = 0;
 
   while  (curPair < used)
   {
     if  (bp >= (buffSize - 1))
     {
-      int32  newBuffSize = buffSize * 2;
+      kkint32  newBuffSize = buffSize * 2;
       uchar* newBuff = new uchar[newBuffSize + 2];
       if  (newBuff == NULL)
       {
@@ -471,7 +471,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   successfull = true;
 
   size_t   x;
-  int32    y;
+  kkint32  y;
 
   x = fread (&hdr, sizeof (hdr), 1, inFile);
   if  (x <= 0)
@@ -573,7 +573,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
 
   if  (numOfColors == 16)
   {
-    for  (int32 palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
+    for  (kkint32 palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
     {
       if  (imageIsRevGrayscale)
         y = 255 - palette[palletIdx].rgbGreen;
@@ -585,7 +585,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   }
   else
   {
-    for  (int32 palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
+    for  (kkint32 palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
     {
       if  (imageIsRevGrayscale)
         y = 255 - palette[palletIdx].rgbGreen;
@@ -601,7 +601,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   palette = new RGBQUAD[paletteEntries];
   SetUp256BitPalette (palette);
 
-  int32  row;
+  kkint32  row;
 
   image = new uchar*[bmh.biHeight];
   for  (row = 0; row < bmh.biHeight; row++)
@@ -685,9 +685,9 @@ BmpImage::BmpImage (const KKStr&  _fileName,
 
 
 
-BmpImage::BmpImage (int32  _height,
-                    int32  _width,
-                    int32  _numOfColors
+BmpImage::BmpImage (kkint32  _height,
+                    kkint32  _width,
+                    kkint32  _numOfColors
                    ):
    
    color       (false),
@@ -718,8 +718,8 @@ BmpImage::BmpImage (const Raster&  raster):
   InitializeFields (raster.Height (), raster.Width ());
   fileName = "";
 
-  int32  row;
-  int32  col;
+  kkint32  row;
+  kkint32  col;
 
   uchar** rasterData = raster.Rows ();
   uchar** rasterRed  = raster.Red ();
@@ -751,10 +751,10 @@ BmpImage::~BmpImage ()
 /**  @brief  Returns true if BMP file is a a reversed GrayScale Image. */
 bool  BmpImage::ReversedGrayscaleImage ()
 {
-  int32 x = 0;
+  kkint32 x = 0;
   bool  allChannelsSameValue = true;
   bool  alwaysDecending      = true;   // Reversed images pixel values will always be descending.
-  //int32  firstUnbalancedChannel = (int32)0;
+  //kkint32  firstUnbalancedChannel = (kkint32)0;
 
   for  (x = 0;  (x < paletteEntries)  &&  allChannelsSameValue;  ++x)
   {
@@ -776,7 +776,7 @@ bool  BmpImage::ReversedGrayscaleImage ()
 
 
 
-int32  BmpImage::BMIcolorArraySize (BITMAPINFOHEADER&  _bmh)
+kkint32  BmpImage::BMIcolorArraySize (BITMAPINFOHEADER&  _bmh)
 
 {
   if  (_bmh.biBitCount == 0)
@@ -826,7 +826,7 @@ void  BmpImage::SetUp4BitPallet ()
   palette = new RGBQUAD[paletteEntries];
 
   uchar  pixelVal = 255;
-  for  (int32 x = 0;  x < 16;  x++)
+  for  (kkint32 x = 0;  x < 16;  x++)
   {
     palette[x].rgbBlue   = pixelVal;
     palette[x].rgbGreen  = pixelVal;
@@ -846,7 +846,7 @@ void  BmpImage::SetUp8BitPallet ()
   palette = new RGBQUAD[paletteEntries];
 
   uchar  pixelVal = 255;
-  for  (int32 x = 0;  x < 256;  x++)
+  for  (kkint32 x = 0;  x < 256;  x++)
   {
     palette[x].rgbBlue  = pixelVal;
     palette[x].rgbGreen = pixelVal;
@@ -929,7 +929,7 @@ void  BmpImage::SetUp16BitPallet (RGBQUAD*  palette)
 
 
 
-void  BmpImage::SetPaletteEntry (int32              palletIndex,
+void  BmpImage::SetPaletteEntry (kkint32            palletIndex,
                                  const PixelValue&  pixValue
                                 )
 {
@@ -965,7 +965,7 @@ void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
 {
   uchar  pixVal;
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0; x < 256; x++)
   {
@@ -981,14 +981,14 @@ void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
 
 /**  @brief  Returns true if palette is for a grayscale image.*/
 bool  GrayScaleImage (RGBQUAD*  palette,
-                      int32     palletSize
+                      kkint32   palletSize
                      )
 {
   bool  isGrayScaleImage = true;
 
-  for  (int32 x = 0;  ((x < palletSize)  &&  isGrayScaleImage);  x++)
+  for  (kkint32 x = 0;  ((x < palletSize)  &&  isGrayScaleImage);  x++)
   {
-    int32  expectedColor = 255 - x;
+    kkint32  expectedColor = 255 - x;
     if  ((palette[x].rgbBlue  != expectedColor)  ||
          (palette[x].rgbGreen != expectedColor)  ||
          (palette[x].rgbRed   != expectedColor)
@@ -1003,8 +1003,8 @@ bool  GrayScaleImage (RGBQUAD*  palette,
 
 
 
-void  BmpImage::InitializeFields (int32  _height,
-                                  int32  _width
+void  BmpImage::InitializeFields (kkint32  _height,
+                                  kkint32  _width
                                  )
 {
   hdr.bfType            = 19778;
@@ -1085,10 +1085,10 @@ public:
   }
 
 
-  int32  NumOfColors ()  const  {return (int32)colorsUsed.size ();}
+  kkint32  NumOfColors ()  const  {return (kkint32)colorsUsed.size ();}
 
 
-  int32  PalletIndex (uchar red,
+  kkint32  PalletIndex (uchar red,
                       uchar green,
                       uchar blue
                      )
@@ -1121,8 +1121,8 @@ public:
     idx = colorsUsed.find (key);
     if  (idx == colorsUsed.end ())
     {
-      int32  numEntries = (int32)colorsUsed.size ();
-      colorsUsed.insert (pair<RGBQUAD,int32> (key, numEntries));
+      kkint32  numEntries = (kkint32)colorsUsed.size ();
+      colorsUsed.insert (pair<RGBQUAD,kkint32> (key, numEntries));
     }
 
     lastRed = red;   lastGreen = green;  lastBlue = blue;
@@ -1131,10 +1131,10 @@ public:
 
 
   void  BuildPallet (RGBQUAD*&  palette,
-                     int32&     size
+                     kkint32&   size
                     )
   {
-    size = (int32)colorsUsed.size ();
+    size = (kkint32)colorsUsed.size ();
     delete  palette;  palette = NULL;
     if  (size < 1)
       return;
@@ -1147,8 +1147,8 @@ public:
   }
 
 private:
-  map<RGBQUAD, int32, RGBQUAD_Pred>            colorsUsed;
-  map<RGBQUAD, int32, RGBQUAD_Pred>::iterator  idx;
+  map<RGBQUAD, kkint32, RGBQUAD_Pred>            colorsUsed;
+  map<RGBQUAD, kkint32, RGBQUAD_Pred>::iterator  idx;
 
   bool   lastColorsSet;
   uchar  lastRed;
@@ -1165,7 +1165,7 @@ BmpImage::PalletBuilderPtr  BmpImage::BuildPalletFromRasterData ()
 {
   PalletBuilderPtr  palletBuilder = new PalletBuilder ();
 
-  int32  row, col;
+  kkint32  row, col;
   uchar*  rowRed   = NULL;
   uchar*  rowGreen = NULL;
   uchar*  rowBlue  = NULL;
@@ -1253,7 +1253,7 @@ void  BmpImage::Load1BitColor (FILE*  inFile,
 {
   successfull = true;
 
-  uint32  bmpRowWidthInBytes = bmh.biWidth / 8;
+  kkuint32  bmpRowWidthInBytes = bmh.biWidth / 8;
 
   while  ((bmpRowWidthInBytes % 2) > 0)
   {
@@ -1264,9 +1264,9 @@ void  BmpImage::Load1BitColor (FILE*  inFile,
   uchar*       rowData       = new uchar [bmpRowWidthInBytes * 8];
 
   Bmp1BitRec  b;
-  uint32      byteNum;
-  int32       col;
-  int32       row;
+  kkuint32    byteNum;
+  kkint32     col;
+  kkint32     row;
   size_t      x;
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
@@ -1315,12 +1315,12 @@ void  BmpImage::Load1BitColor (FILE*  inFile,
 
 void  BmpImage::ReAllocateForBiggerScreen ()
 {
-  int32  oldRow;
+  kkint32  oldRow;
 
-  int32  newRow;
+  kkint32  newRow;
 
-  int32  newHeight = bmh.biHeight + 6;
-  int32  newWidth  = bmh.biWidth  + 6;
+  kkint32  newHeight = bmh.biHeight + 6;
+  kkint32  newWidth  = bmh.biWidth  + 6;
 
 
   uchar**  newImage = new uchar*[newHeight];
@@ -1380,9 +1380,9 @@ void  BmpImage::Load4BitColor (FILE*  inFile,
                               )
 {
   successfull = true;
-  uint32  bmpRowWidthInBytes = (bmh.biWidth + 1) / 2;
+  kkuint32  bmpRowWidthInBytes = (bmh.biWidth + 1) / 2;
 
-  int32  paddingBytes = bmpRowWidthInBytes % 4;
+  kkint32  paddingBytes = bmpRowWidthInBytes % 4;
   if  (paddingBytes != 0)
     paddingBytes = 4 - paddingBytes;
 
@@ -1392,7 +1392,7 @@ void  BmpImage::Load4BitColor (FILE*  inFile,
 
   Bmp4BitRecs*  rowData = new Bmp4BitRecs [bmpRowWidthInBytes];
 
-  int32  row;
+  kkint32  row;
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
@@ -1405,11 +1405,11 @@ void  BmpImage::Load4BitColor (FILE*  inFile,
       return;
     }
 
-    int32  col;
+    kkint32  col;
 
     for  (col = 0; col < bmh.biWidth; col++)
     {
-      int32  offset = col / 2;
+      kkint32  offset = col / 2;
 
       uchar  nextPixel;
 
@@ -1452,15 +1452,15 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 /*
   cout << std::endl;
   for  (x = 0;  x < paletteEntries;  x++)
-    cout << x << "\t" << (uint32)palette[x].rgbRed
-              << "\t" << (uint32)palette[x].rgbGreen
-              << "\t" << (uint32)palette[x].rgbBlue
+    cout << x << "\t" << (kkuint32)palette[x].rgbRed
+              << "\t" << (kkuint32)palette[x].rgbGreen
+              << "\t" << (kkuint32)palette[x].rgbBlue
               << std::endl;
   osWaitForEnter ();
 */
 
-  uint32  bmpRowWidthInBytes = bmh.biWidth;
-  uint32  paddingBytes = bmpRowWidthInBytes % 4;
+  kkuint32  bmpRowWidthInBytes = bmh.biWidth;
+  kkuint32  paddingBytes = bmpRowWidthInBytes % 4;
   if  (paddingBytes != 0)
     paddingBytes = 4 - paddingBytes;
 
@@ -1470,7 +1470,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
-  int32  row;
+  kkint32  row;
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
@@ -1486,13 +1486,13 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
       return;
     }
 
-    int32  col;
+    kkint32  col;
 
     for  (col = 0;  col < bmh.biWidth;  col++)
     {
-      int32  palletIdx = rowData[col];
+      kkint32  palletIdx = rowData[col];
 
-      //cout << "RowData" << "\t" << col << "\t" << palletIdx << "\t" << (uint32)(palette[palletIdx].rgbGreen) << std::endl;
+      //cout << "RowData" << "\t" << col << "\t" << palletIdx << "\t" << (kkuint32)(palette[palletIdx].rgbGreen) << std::endl;
       blue  [row][col] = palette[palletIdx].rgbBlue;
       image [row][col] = palette[palletIdx].rgbGreen;
       red   [row][col] = palette[palletIdx].rgbRed;
@@ -1513,7 +1513,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
                                         )
 {
   successfull = true;
-  int32  x;
+  kkint32  x;
 
   size_t  imageBuffSize = bmh.biSizeImage;
 
@@ -1528,8 +1528,8 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
     return;
   }
 
-  int32  col = 0;
-  int32  row = bmh.biHeight - 1;
+  kkint32  col = 0;
+  kkint32  row = bmh.biHeight - 1;
 
   size_t  ifIDX = 0;
 
@@ -1569,7 +1569,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
       else
       {
         // We have Absolute Mode
-        int32  len = imageBuff[ifIDX];
+        kkint32  len = imageBuff[ifIDX];
         ifIDX++;
 
         for  (x = 0; x < len;)
@@ -1598,7 +1598,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
     else
     {
       // We have a RLE
-      int32  len = imageBuff[ifIDX];
+      kkint32  len = imageBuff[ifIDX];
       ifIDX++;
 
       uchar  pix1 = imageBuff[ifIDX] / 16;
@@ -1633,11 +1633,11 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
                                          bool&  successfull
                                         )
 {
-  int32  x;
+  kkint32  x;
 
   successfull = true;
 
-  uint32  imageBuffSize = bmh.biSizeImage;
+  kkuint32  imageBuffSize = bmh.biSizeImage;
 
   uchar*  imageBuff = new uchar[imageBuffSize];
 
@@ -1650,10 +1650,10 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
     return;
   }
 
-  int32  col = 0;
-  int32  row = bmh.biHeight - 1;
+  kkint32  col = 0;
+  kkint32  row = bmh.biHeight - 1;
 
-  uint32  ifIDX = 0;
+  kkuint32  ifIDX = 0;
 
   while  (ifIDX < imageBuffSize)
   {
@@ -1692,7 +1692,7 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
       else
       {
         // We have Absolute Mode
-        int32  len = imageBuff[ifIDX];
+        kkint32  len = imageBuff[ifIDX];
         ifIDX++;
 
         for  (x = 0; x < len;)
@@ -1711,10 +1711,10 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
     else
     {
       // We have a RLE
-      int32  len = imageBuff[ifIDX];
+      kkint32  len = imageBuff[ifIDX];
       ifIDX++;
 
-      int32  pixelVal = paletteMap[imageBuff[ifIDX]];
+      kkint32  pixelVal = paletteMap[imageBuff[ifIDX]];
 
       if  (pixelVal == 0)
       {
@@ -1759,8 +1759,8 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
   color = true;
   AllocateRaster ();
 
-  uint32  bmpRowWidthInBytes = bmh.biWidth * 3;
-  uint32  paddingBytes = bmpRowWidthInBytes % 4;
+  kkuint32  bmpRowWidthInBytes = bmh.biWidth * 3;
+  kkuint32  paddingBytes = bmpRowWidthInBytes % 4;
   if  (paddingBytes != 0)
     paddingBytes = 4 - paddingBytes;
 
@@ -1770,7 +1770,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
-  int32  row;
+  kkint32  row;
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
@@ -1786,11 +1786,11 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
       return;
     }
 
-    int32  col;
+    kkint32  col;
 
     for  (col = 0;  col < bmh.biWidth;  col++)
     {
-      int32  offset = col * 3;
+      kkint32  offset = col * 3;
       blue  [row][col] = rowData[offset];
       image [row][col] = rowData[offset + 1];
       red   [row][col] = rowData[offset + 2];
@@ -1820,7 +1820,7 @@ void  BmpImage::AllocateRaster ()
   if  (paletteEntries > 0)
     palette = new RGBQUAD[paletteEntries];
 
-  int32  row;
+  kkint32  row;
 
   image = new uchar*[bmh.biHeight];
   if  (color)
@@ -1848,7 +1848,7 @@ void  BmpImage::AllocateRaster ()
 
 void  BmpImage::CleanUpMemory ()
 {
-  int32  x = 0;
+  kkint32  x = 0;
   if  (image)
   {
     for  (x = bmh.biHeight - 1; x >= 0; x--)
@@ -1882,13 +1882,13 @@ void  BmpImage::CleanUpMemory ()
 
 void  BmpImage::DownSize ()
 {
-  int32  newCol;
-  int32  newHeight = bmh.biHeight / 2;
-  int32  newWidth  = bmh.biWidth  / 2;
-  int32  newRow;
+  kkint32  newCol;
+  kkint32  newHeight = bmh.biHeight / 2;
+  kkint32  newWidth  = bmh.biWidth  / 2;
+  kkint32  newRow;
 
-  int32  oldCol;
-  int32  oldRow;
+  kkint32  oldCol;
+  kkint32  oldRow;
 
   uchar**  newImage = new uchar*[newHeight];
   for  (newRow = 0; newRow < newHeight; newRow++)
@@ -1921,8 +1921,8 @@ void  BmpImage::DownSize ()
 
 
 
-uchar&  BmpImage::Pixel (int32  row, 
-                         int32  col)
+uchar&  BmpImage::Pixel (kkint32  row, 
+                         kkint32  col)
 {
   return  image[row][col];
 }
@@ -1930,9 +1930,9 @@ uchar&  BmpImage::Pixel (int32  row,
 
 
 
-void  BmpImage::SetPixelValue (int32  row, 
-                               int32  col, 
-                               int32  pixel
+void  BmpImage::SetPixelValue (kkint32  row, 
+                               kkint32  col, 
+                               kkint32  pixel
                               )
 {
   if  (pixel < 0)
@@ -1969,11 +1969,11 @@ void  BmpImage::SetPixelValue (int32  row,
 
 bool  BmpImage::AreThereEdgePixels ()
 {
-  int32  row;
-  int32  col;
+  kkint32  row;
+  kkint32  col;
 
-  int32  height = Height ();
-  int32  width  = Width ();
+  kkint32  height = Height ();
+  kkint32  width  = Width ();
 
   if  (height < 6)
     return true;
@@ -2003,11 +2003,11 @@ bool  BmpImage::AreThereEdgePixels ()
       return  true;
   }
 
-  int32  lastCol0 = width - 3;
-  int32  lastCol1 = width - 2;
-  int32  lastCol2 = width - 1;
+  kkint32  lastCol0 = width - 3;
+  kkint32  lastCol1 = width - 2;
+  kkint32  lastCol2 = width - 1;
 
-  int32  lastRowToCheck = height - 3;
+  kkint32  lastRowToCheck = height - 3;
 
   for  (row = 3;  row < lastRowToCheck;  row++)
   {
@@ -2028,9 +2028,9 @@ bool  BmpImage::AreThereEdgePixels ()
 
 void  BmpImage::EliminateVerticalLines ()
 {
-  int32  col = 0;
-  int32  row = 0;
-  int32  x;
+  kkint32  col = 0;
+  kkint32  row = 0;
+  kkint32  x;
 
 
   bool* potVertLine = new bool[bmh.biWidth];
@@ -2055,8 +2055,8 @@ void  BmpImage::EliminateVerticalLines ()
   {
     if  (potVertLine[col])  
     {
-      int32  firstCol = col;
-      int32  lastCol  = col;
+      kkint32  firstCol = col;
+      kkint32  lastCol  = col;
 
       if  (col < (bmh.biWidth - 1))
       {
@@ -2134,8 +2134,8 @@ void  BmpImage::EliminateVerticalLines ()
 
 void  BmpImage::Print ()
 {
-  int32  x;
-  int32  y;
+  kkint32  x;
+  kkint32  y;
 
   for  (x = 0; x < bmh.biHeight; x++)
   {
@@ -2155,8 +2155,8 @@ void  BmpImage::Print ()
 
 void  BmpImage::Binarize ()
 {
-  int32  row;
-  int32  col;
+  kkint32  row;
+  kkint32  col;
 
   for  (row = 0; row < bmh.biHeight; row++)
   {
@@ -2182,18 +2182,18 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
     throw KKException (errMsg);
   }
 
-  int32  x = 0;
-  int32  y = 0;
+  kkint32  x = 0;
+  kkint32  y = 0;
 
   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
 
-  for  (x = (int32)bmh.biHeight - 1; x >= 0; x--)
+  for  (x = (kkint32)bmh.biHeight - 1; x >= 0; x--)
   {
     for  (y = 0; y < bmh.biWidth; y++)
     {
       if  (color)
       {
-        int32  gsVal = (int32)((float)(0.5f + red[x][y]) * 0.30f + (float)(image[x][y]) * 0.59f + (float)(blue[x][y]) * 0.11f);
+        kkint32  gsVal = (kkint32)((float)(0.5f + red[x][y]) * 0.30f + (float)(image[x][y]) * 0.59f + (float)(blue[x][y]) * 0.11f);
         pixelData.AddPixel ((uchar)(gsVal >> 4));
       }
       else
@@ -2205,7 +2205,7 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
     pixelData.EOL ();
   }
 
-  int32   imageBuffLen  = 0;
+  kkint32 imageBuffLen  = 0;
   uchar*  imageBuff     = NULL;
 
   numOfColors = 16;
@@ -2221,10 +2221,10 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
 
-  x = (int32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
-  x = (int32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
-  x = (int32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
-  x = (int32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
 
   delete  imageBuff;
   fclose (outFile);
@@ -2243,18 +2243,18 @@ void  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)
     throw KKException (errMsg);
   }
 
-  int32  x = 0;
-  int32  y = 0;
+  kkint32  x = 0;
+  kkint32  y = 0;
 
   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
 
-  for  (x = (int32)bmh.biHeight - 1; x >= 0; x--)
+  for  (x = (kkint32)bmh.biHeight - 1; x >= 0; x--)
   {
     for  (y = 0; y < bmh.biWidth; y++)
     {
       if  (color)
       {
-        int32  gsVal = (int32)((float)(0.5f + red[x][y]) * 0.30f + (float)(image[x][y]) * 0.59f + (float)(blue[x][y]) * 0.11f);
+        kkint32  gsVal = (kkint32)((float)(0.5f + red[x][y]) * 0.30f + (float)(image[x][y]) * 0.59f + (float)(blue[x][y]) * 0.11f);
         pixelData.AddPixel ((uchar)(gsVal));
       }
       else
@@ -2266,7 +2266,7 @@ void  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)
     pixelData.EOL ();
   }
 
-  int32   imageBuffLen = 0;
+  kkint32 imageBuffLen = 0;
   uchar*  imageBuff    = NULL;
 
   numOfColors = 256;
@@ -2282,10 +2282,10 @@ void  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)
   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
 
-  x = (int32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
-  x = (int32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
-  x = (int32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
-  x = (int32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
 
   delete  imageBuff;
   fclose (outFile);
@@ -2323,12 +2323,12 @@ void  BmpImage::Save (const KKStr&  _fileName)
 
 void  BmpImage::SaveGrayScale (FILE*  outFile)
 {
-  int32   x;
-  int32   y;
+  kkint32 x;
+  kkint32 y;
 
   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
 
-  for  (x = (int32)bmh.biHeight - 1; x >= 0; x--)
+  for  (x = (kkint32)bmh.biHeight - 1; x >= 0; x--)
   {
     for  (y = 0; y < bmh.biWidth; y++)
     {
@@ -2338,7 +2338,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
     pixelData.EOL ();
   }
 
-  int32   imageBuffLen;
+  kkint32 imageBuffLen;
   uchar*  imageBuff;
 
   numOfColors = 256;
@@ -2362,7 +2362,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
   WriteDWORD (outFile, hdr.bfOffBits);
   #else
 
-  x = (int32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
   #endif
 
 
@@ -2380,7 +2380,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
   WriteDWORD (outFile, bmh.biClrImportant);
   #else
 
-  x = (int32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
   #endif
 
 
@@ -2393,10 +2393,10 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
     WriteBYTE (outFile, palette[x].rgbReserved);
   }
   #else
-  x = (int32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
   #endif
 
-  x = (int32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
   delete  imageBuff;
 }  /* SaveGrayScale */
 
@@ -2424,18 +2424,18 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
                                         FILE*             outFile
                                        )
 {
-  int32   x;
-  int32   y;
+  kkint32 x;
+  kkint32 y;
 
   uchar*  redRow   = NULL;
   uchar*  greenRow = NULL;
   uchar*  blueRow  = NULL;
 
-  int32  palletIdx = 0;
+  kkint32  palletIdx = 0;
 
   CodedPixels  pixelData (bmh.biHeight, bmh.biWidth);
 
-  for  (x = (int32)bmh.biHeight - 1; x >= 0; x--)
+  for  (x = (kkint32)bmh.biHeight - 1; x >= 0; x--)
   {
     redRow   = red[x];
     greenRow = image[x];
@@ -2456,7 +2456,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
     pixelData.EOL ();
   }
 
-  int32   imageBuffLen;
+  kkint32 imageBuffLen;
   uchar*  imageBuff;
 
   numOfColors = paletteEntries;
@@ -2479,7 +2479,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
   WriteDWORD (outFile, hdr.bfOffBits);
   #else
 
-  x = (int32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
   #endif
 
 
@@ -2497,7 +2497,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
   WriteDWORD (outFile, bmh.biClrImportant);
   #else
 
-  x = (int32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
   #endif
 
 
@@ -2510,11 +2510,11 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
     WriteBYTE (outFile, palette[x].rgbReserved);
   }
   #else
-  x = (int32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
   #endif
 
 
-  x = (int32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
   delete  imageBuff;
 }  /* SaveColorCompressed256 */
 
@@ -2522,9 +2522,9 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
 
 void  BmpImage::SaveColor24BPP (FILE*  outFile)
 {
-  int32 x = 0;
-  int32  bytesPerRow = Width () * 3;
-  int32  bufferPerRow = 0;
+  kkint32 x = 0;
+  kkint32  bytesPerRow = Width () * 3;
+  kkint32  bufferPerRow = 0;
   while  ((bytesPerRow % 4) != 0)
   {
     bufferPerRow++;
@@ -2553,7 +2553,7 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
   WriteWORD  (outFile, hdr.bfReserved2);
   WriteDWORD (outFile, hdr.bfOffBits);
   #else
-  x = (int32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
   #endif
 
 
@@ -2571,14 +2571,14 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
   WriteDWORD (outFile, bmh.biClrImportant);
   #else
 
-  x = (int32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
   #endif
 
 
-  int32  row, col;
-  for  (row = (int32)Height () - 1;  row >= 0;  row--)
+  kkint32  row, col;
+  for  (row = (kkint32)Height () - 1;  row >= 0;  row--)
   {
-    for  (col = 0;  col < (int32)Width ();  col++)
+    for  (col = 0;  col < (kkint32)Width ();  col++)
     {
       fwrite (&(blue [row][col]), 1, 1, outFile);
       fwrite (&(image[row][col]), 1, 1, outFile);
@@ -2594,8 +2594,8 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
 
 
 
-void  BmpImage::AddPixel (uint32 row, 
-                          uint32 col, 
+void  BmpImage::AddPixel (kkuint32 row, 
+                          kkuint32 col, 
                           uchar  pixValue
                          )
 {
@@ -2606,7 +2606,7 @@ void  BmpImage::AddPixel (uint32 row,
 
 void BmpImage::ClearImage()
 {
-	int32 row;
+	kkint32 row;
 	for  (row = 0; row < bmh.biHeight; row++)
 	{
 		memset (image[row], 0, bmh.biWidth );
@@ -2616,9 +2616,9 @@ void BmpImage::ClearImage()
 
 
 const   
-uchar* BmpImage::BlueRow (int32 row)  const
+uchar* BmpImage::BlueRow (kkint32 row)  const
 {
-  if  ((blue == NULL)  ||  (row < 0)  ||  (row >= (int32)Height ()))
+  if  ((blue == NULL)  ||  (row < 0)  ||  (row >= (kkint32)Height ()))
   {
     cerr << std::endl
          << std::endl
@@ -2633,9 +2633,9 @@ uchar* BmpImage::BlueRow (int32 row)  const
 
 
 const   
-uchar* BmpImage::ImageRow (int32 row)  const
+uchar* BmpImage::ImageRow (kkint32 row)  const
 {
-  if  ((row < 0)  ||  (row >= (int32)Height ()))
+  if  ((row < 0)  ||  (row >= (kkint32)Height ()))
   {
     cerr << std::endl
          << std::endl
@@ -2649,9 +2649,9 @@ uchar* BmpImage::ImageRow (int32 row)  const
 
 
 const   
-uchar* BmpImage::RedRow (int32 row)  const
+uchar* BmpImage::RedRow (kkint32 row)  const
 {
-  if  ((red == NULL)  ||  (row < 0)  ||  (row >= (int32)Height ()))
+  if  ((red == NULL)  ||  (row < 0)  ||  (row >= (kkint32)Height ()))
   {
     cerr << std::endl
          << std::endl

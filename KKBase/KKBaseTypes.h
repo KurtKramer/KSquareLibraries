@@ -73,68 +73,42 @@ namespace KKB
   typedef  unsigned  long   ulong;    /**< @brief  Unsigned long       */
 
   #if  defined(WIN32)  ||  defined(WIN64)
-    //typedef  __int8            int8;
-    //typedef  unsigned __int8   uint8;
     typedef  __int8            kkint8;
     typedef  unsigned __int8   kkuint8;
-    //typedef  __int16           int16;    /**<@brief  16 bit signed integer. */
-    //typedef  unsigned __int16  uint16;   /**<@brief  16 bit unsigned integer. */
     typedef  __int16           kkint16;  /**<@brief  16 bit signed integer. */
     typedef  unsigned __int16  kkuint16; /**<@brief  16 bit unsigned integer. */
     //typedef  wchar_t          WCHAR;
-    typedef  __int32           int32;
     typedef  __int32           kkint32;
-    typedef  unsigned __int32  uint32;
     typedef  unsigned __int32  kkuint32;
-    /*
-    typedef  __int64           int64;
-    typedef  unsigned __int64  uint64;
-    */
     typedef  __int64           kkint64;
     typedef  unsigned __int64  kkuint64;
   #else
   #if  defined(__GNUG__)
-    //typedef  __INT8_TYPE__     int8;
-    //typedef  __UINT8_TYPE__    uint8;
     typedef  __INT8_TYPE__     kkint8;
     typedef  __UINT8_TYPE__    kkuint8;
-    //typedef  __INT16_TYPE__    int16;    /**<@brief  16 bit signed integer. */
-    //typedef  __UINT16_TYPE__   uint16;   /**<@brief  16 bit unsigned integer. */
     typedef  __INT16_TYPE__    kkint16;  /**<@brief  16 bit signed integer. */
     typedef  __UINT16_TYPE__   kkuint16; /**<@brief  16 bit unsigned integer. */
     typedef  unsigned short    WCHAR;
-    typedef  __INT32_TYPE__    int32;
     typedef  __INT32_TYPE__    kkint32;
-    typedef  __UINT32_TYPE__   uint32;
     typedef  __UINT32_TYPE__   kkuint32;
-    //typedef  __INT64_TYPE__    int64;
-    //typedef  __UINT64_TYPE__   uint64;
     typedef  __INT64_TYPE__    kkint64;
     typedef  __UINT64_TYPE__   kkuint64;
   #else
-    //typedef  int8_t            int8;     /**<@brief  8  bit signed integer.   */
-    //typedef  uint8_t           uint8;    /**<@brief  8  bit unsigned integer. */
     typedef  int8_t            kkint8;   /**<@brief  8  bit signed integer.   */
     typedef  uint8_t           kkuint8;  /**<@brief  8  bit unsigned integer. */
-    //typedef  int16_t           int16;    /**<@brief 16 bit signed integer.    */
-    //typedef  uint16_t          uint16;   /**<@brief 16 bit unsigned integer.  */
     typedef  int16_t           kkint16;  /**<@brief 16 bit signed integer.    */
     typedef  uint16_t          kkuint16; /**<@brief 16 bit unsigned integer.  */
     typedef  unsigned short    WCHAR;
-    typedef  int32_t           int32;
-    typedef  int32_t           kkInt32;
-    typedef  uint32_t          uint32;
-    typedef  uint32_t          kkUint32;
-    //typedef  int64_t           int64;
-    //typedef  uint64_t          uint64;
+    typedef  int32_t           kkint32;
+    typedef  uint32_t          kkuint32;
     typedef  int64_t           kkint64;
     typedef  uint64_t          kkuint64;
   #endif
   #endif
 
-  #define int32_max    (int32)2147483647
-  #define int32_min    (int32)-214748367
-  #define uint32_max   (uint32)4294967295
+  #define int32_max    (kkint32)2147483647
+  #define int32_min    (kkint32)-214748367
+  #define uint32_max   (kkuint32)4294967295
   #define int64_max    (int64)9223372036854775807
   #define int64_min    (int64)-9223372036854775807
   #define uint64_max   (uint64)18446744073709551615
@@ -173,6 +147,11 @@ namespace KKB
   typedef  VectorFloat*          VectorFloatPtr;
   typedef  VectorDouble*         VectorDoubletPtr;
   typedef  VectorShort*          VectorShortPtr;
+
+
+  typedef  volatile const bool  VolConstBool;  /**< Commonly used for passing Cancel Flag in multi threaded environment.  */
+
+
 
   /** @brief Generic Min function,  Both parameters must be of the same type.  */
   template <class T> T  Min (T  a, 
@@ -251,7 +230,7 @@ namespace KKB
 
 
   /** @brief  A implementations of the Unix version of rand48 returning a 32 bit integer. */
-  int32  LRand48 ();
+  kkint32  LRand48 ();
 
   /** @brief Seeds the Lrand48 functions with the parameters passed to it. */
   void  SRand48 (kkint64 _seed);
@@ -270,8 +249,8 @@ namespace KKB
   union  WordFormat32Bits
   {
     WordFormat32Bits ();
-    WordFormat32Bits (uint32  d);
-    WordFormat32Bits (int32   d);
+    WordFormat32Bits (kkuint32  d);
+    WordFormat32Bits (kkint32 d);
     WordFormat32Bits (uchar b0, uchar b1,  uchar b2,  uchar b3);
 
     struct
@@ -282,8 +261,8 @@ namespace KKB
       uchar   byte3;
     }  fourBytes;
 
-    uint32  unsigned32BitInt;
-    uint32  signed32BitInt;
+    kkuint32  unsigned32BitInt;
+    kkuint32  signed32BitInt;
   };
   #pragma pack(pop)
 

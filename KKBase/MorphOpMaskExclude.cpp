@@ -33,9 +33,9 @@ MorphOpMaskExclude::~MorphOpMaskExclude ()
 
 
 
-int32  MorphOpMaskExclude::MemoryConsumedEstimated ()
+kkint32  MorphOpMaskExclude::MemoryConsumedEstimated ()
 {
-  int32  result = sizeof (*this);
+  kkint32  result = sizeof (*this);
   return  result;
 }
 
@@ -45,7 +45,7 @@ RasterPtr   MorphOpMaskExclude::PerformOperation (RasterConstPtr  _image)
 {
   SetSrcRaster (_image);
 
-  int32  totalPixels = srcHeight * srcWidth;
+  kkint32  totalPixels = srcHeight * srcWidth;
 
   RasterPtr  maskImage = new Raster (*_image);
 
@@ -64,7 +64,7 @@ RasterPtr   MorphOpMaskExclude::PerformOperation (RasterConstPtr  _image)
   uchar*  resultBluePtr  = result->BlueArea ();
 
   uchar*  maskPtr = maskImage->GreenArea ();
-  for  (int32 x = 0;  x < totalPixels;  ++x)
+  for  (kkint32 x = 0;  x < totalPixels;  ++x)
   {
     if  (*maskPtr == 0)
     {

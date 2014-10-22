@@ -91,8 +91,6 @@ namespace KKMachineLearning
 
     typedef  FileDesc*  const   FileDescConstPtr;
 
-    typedef  KKB::uint32 uint32;
-
     /**
      @brief  Clean up function,  call just vefore exiting the application.
      @details
@@ -141,10 +139,10 @@ namespace KKMachineLearning
     const MLClassList&                     Classes             ()  const  {return classes;}
     const KKStr&                              ClassNameAttribute  ()  const  {return classNameAttribute;}   /**< ClassNameAttribute added to support dstWeb  data files. */
     const KKStr&                              FileName            ()  const  {return  fileName;}
-    int32                                     SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
+    kkint32                                   SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
     short                                     Version             ()  const  {return version;}
 
-    void   SparseMinFeatureNum (int32  _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
+    void   SparseMinFeatureNum (kkint32  _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
     void   Version             (short  _version)              {version             = _version;}
 
 
@@ -161,7 +159,7 @@ namespace KKMachineLearning
     bool                      AllFieldsAreNumeric ()  const;
 
 
-    int32                     Cardinality (int32    fieldNum,
+    kkint32                   Cardinality (kkint32  fieldNum,
                                            RunLog&  log
                                           )  const;
 
@@ -172,40 +170,41 @@ namespace KKMachineLearning
     
     VectorInt32               CreateCardinalityTable ()  const;
 
-    const KKStr&              FieldName (int32  fieldNum)  const;
+    const KKStr&              FieldName (kkint32  fieldNum)  const;
 
-    const KKMachineLearning::Attribute&     GetAAttribute (int32 fieldNum) const;
+    const KKMachineLearning::Attribute&     GetAAttribute (kkint32 fieldNum) const;
 
     const  
-    KKStr&                    GetNominalValue (int32  fieldNum, 
-                                               int32  code
+    KKStr&                    GetNominalValue (kkint32  fieldNum, 
+                                               kkint32  code
                                               ) const;
 
-    MLClassPtr             GetMLClassPtr       (const KKStr&  className);
+    MLClassPtr                GetMLClassPtr       (const KKStr&  className);
 
-    int32                     GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
+    kkint32                   GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
 
     //RunLog&                   Log () const {return log;}
 
-    int32                     LookUpNominalCode (int32         fieldNum, 
+    kkint32                   LookUpNominalCode (kkint32       fieldNum, 
                                                  const KKStr&  nominalValue
                                                 )  const;
 
-    MLClassPtr             LookUpImageClassByName (const KKStr&  className);
+    MLClassPtr                LookUpImageClassByName (const KKStr&  className);
 
-    MLClassPtr             LookUpUnKnownImageClass ();
+    MLClassPtr                LookUpUnKnownImageClass ();
     
-    int32                     MemoryConsumedEstimated ()  const;
+    kkint32                   MemoryConsumedEstimated ()  const;
 
-    uint32                    NumOfFields () const  {return attributes.size ();}
+    kkuint32                  NumOfFields () const  {return attributes.size ();}
 
     bool                      SameExceptForSymbolicData (const FileDesc&  otherFd,
                                                          RunLog&          log
                                                         )  const;
 
-    KKMachineLearning::AttributeType        Type (int32 fieldNum)  const;
+    KKMachineLearning::AttributeType        
+                              Type (kkint32 fieldNum)  const;
 
-    KKStr                     TypeStr (int32 fieldNum)  const;
+    KKStr                     TypeStr (kkint32 fieldNum)  const;
 
 
     /**
@@ -266,7 +265,7 @@ namespace KKMachineLearning
                                              RunLog&          log
                                             );
   public:
-    void  AddANominalValue (int32         fieldNum,
+    void  AddANominalValue (kkint32       fieldNum,
                             const KKStr&  nominalValue,
                             bool&         alreadyExist,
                             RunLog&       log
@@ -288,22 +287,22 @@ namespace KKMachineLearning
   private:
     static void  CreateBlocker ();
 
-    int32   NumOfAttributes ()  {return attributes.QueueSize ();}
+    kkint32 NumOfAttributes ()  {return attributes.QueueSize ();}
 
 
-    void  ValidateFieldNum (int32        fieldNum,
+    void  ValidateFieldNum (kkint32      fieldNum,
                             const char*  funcName
                            )  const;
 
     KKMachineLearning::AttributeList    attributes;
     AttributeTypeVector                 attributeVector;
     VectorInt32                         cardinalityVector;
-    MLClassList                      classes;
+    MLClassList                         classes;
     KKStr                               classNameAttribute;   /**< Added to support DstWeb files.  The name of the attribute that specifies the className */
     KKMachineLearning::AttributePtr     curAttribute;
     KKStr                               fileName;
     //RunLog&                           log;
-    int32                               sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
+    kkint32                             sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
     short                               version;
 
     static

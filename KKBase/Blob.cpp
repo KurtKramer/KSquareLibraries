@@ -91,8 +91,8 @@ BlobList::~BlobList ()
 
 
 
-BlobPtr  BlobList::NewBlob (uint32  rowTop,
-                            uint32  colLeft
+BlobPtr  BlobList::NewBlob (kkuint32  rowTop,
+                            kkuint32  colLeft
                            )
 {
   BlobPtr blob = NULL;

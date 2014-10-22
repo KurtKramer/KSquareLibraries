@@ -47,7 +47,7 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
   double  xTotal = 0.0f;
   double yTotal = 0.0f;
 
-  int32  foldNum = 0;
+  kkint32  foldNum = 0;
 
 
   //out << "X";
@@ -106,17 +106,17 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
 
 
 
-float  KKB::McNemarsTest (int32        size,
+float  KKB::McNemarsTest (kkint32      size,
                           const bool*  classedCorrectly1,
                           const bool*  classedCorrectly2
                          )
 {
-  int32  n00 = 0;
-  int32  n01 = 0;
-  int32  n10 = 0;
-  int32  n11 = 0;
+  kkint32  n00 = 0;
+  kkint32  n01 = 0;
+  kkint32  n10 = 0;
+  kkint32  n11 = 0;
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0;  x < size;  x++)
   {
@@ -171,7 +171,7 @@ float   KKB::LLoydsIndexOfPatchiness (const VectorInt& bins)
   if  (bins.size () < 1)
     return  0.0f;
 
-  KKB::uint32  x;
+  kkuint32  x;
   double  total = 0.0;
   double  mean  = 0.0;
 

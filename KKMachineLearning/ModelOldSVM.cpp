@@ -36,9 +36,9 @@ using namespace KKMachineLearning;
 
 
 
-ModelOldSVM::ModelOldSVM (FileDescPtr           _fileDesc,
-                          volatile const bool&  _cancelFlag,
-                          RunLog&               _log
+ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
+                          VolConstBool&  _cancelFlag,
+                          RunLog&        _log
                          ):
   Model (_fileDesc, _cancelFlag, _log),
   assignments (NULL),
@@ -52,7 +52,7 @@ ModelOldSVM::ModelOldSVM (FileDescPtr           _fileDesc,
 ModelOldSVM::ModelOldSVM (const KKStr&            _name,
                           const ModelParamOldSVM& _param,         // Create new model from
                           FileDescPtr             _fileDesc,
-                          volatile const bool&    _cancelFlag,
+                          VolConstBool&           _cancelFlag,
                           RunLog&                 _log
                          )
 :
@@ -89,9 +89,9 @@ ModelOldSVM::~ModelOldSVM ()
 }
 
 
-int32  ModelOldSVM::MemoryConsumedEstimated ()  const
+kkint32  ModelOldSVM::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                  sizeof (ClassAssignmentsPtr) + 
                                  sizeof (SVMModelPtr);
 
@@ -131,15 +131,15 @@ const FeatureNumList&   ModelOldSVM::GetFeatureNums ()  const
 
 
 
-int32  ModelOldSVM::NumOfSupportVectors () const
+kkint32  ModelOldSVM::NumOfSupportVectors () const
 {
   return svmModel->NumOfSupportVectors ();
 }
 
 
 
-void  ModelOldSVM::SupportVectorStatistics (int32&   numSVs,
-                                            int32&   totalNumSVs
+void  ModelOldSVM::SupportVectorStatistics (kkint32& numSVs,
+                                            kkint32& totalNumSVs
                                            )
 {
   return  svmModel->SupportVectorStatistics (numSVs, totalNumSVs);
@@ -261,12 +261,12 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
                              MLClassPtr     knownClass,
                              MLClassPtr&    predClass,
                              MLClassPtr&    predClass2,
-                             int32&            predClass1Votes,
-                             int32&            predClass2Votes,
+                             kkint32&          predClass1Votes,
+                             kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
                              double&           probOfPredClass,
                              double&           probOfPredClass2,
-                             int32&            numOfWinners,
+                             kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
                              double&           breakTie
                             )
@@ -333,7 +333,7 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
   
 
   ClassProbListPtr  results = new ClassProbList ();
-  uint32  idx;
+  kkuint32  idx;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classes->IdxToPtr (idx);
@@ -371,7 +371,7 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr       _example,
 
 void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr        example,
                                          const MLClassList&  _mlClasses,
-                                         int32*                 _votes,
+                                         kkint32*                 _votes,
                                          double*                _probabilities
                                         )
 {
@@ -418,7 +418,7 @@ vector<KKStr>  ModelOldSVM::SupportVectorNames () const
 
 
 vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                            int32             numToFind,
+                                                            kkint32           numToFind,
                                                             MLClassPtr     c1,
                                                             MLClassPtr     c2
                                                            )
@@ -432,7 +432,7 @@ vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors (FeatureVectorPtr  ex
 
 
 vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                             int32             numToFind,
+                                                             kkint32           numToFind,
                                                              MLClassPtr     c1,
                                                              MLClassPtr     c2
                                                             )

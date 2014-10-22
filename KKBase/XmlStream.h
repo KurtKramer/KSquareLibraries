@@ -57,9 +57,9 @@ namespace  KKB
 
     const KKStr&  Name ()           const  {return  name;}
     TagTypes      TagType ()        const  {return  tagType;}
-    int32         AttributeCount () const  {return  (int32)attributes.size ();}
-    const KKStr&  AttributeName  (int32 _attributeNum)  const;
-    const KKStr&  AttributeValue (int32 _attributeNum)  const;
+    kkint32       AttributeCount () const  {return  (kkint32)attributes.size ();}
+    const KKStr&  AttributeName  (kkint32 _attributeNum)  const;
+    const KKStr&  AttributeValue (kkint32 _attributeNum)  const;
     const KKStr&  AttributeValue (const KKStr& attributeName)  const;
     const KKStr&  AttributeValue (const char*  attributeName)  const;
 

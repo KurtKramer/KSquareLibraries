@@ -38,7 +38,7 @@ KKObservable::~KKObservable ()
 
 
 
-int32  KKObservable::MemoryConsumedEstimated ()
+kkint32  KKObservable::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }

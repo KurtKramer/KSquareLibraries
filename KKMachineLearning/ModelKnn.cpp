@@ -37,9 +37,9 @@ using namespace  KKMachineLearning;
 
 
 
-ModelKnn::ModelKnn (FileDescPtr           _fileDesc,
-                    volatile const bool&  _cancelFlag,
-                    RunLog&               _log
+ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
+                    VolConstBool&  _cancelFlag,
+                    RunLog&        _log
                    ):
   Model (_fileDesc, _cancelFlag, _log),
   param (NULL)
@@ -52,7 +52,7 @@ ModelKnn::ModelKnn (FileDescPtr           _fileDesc,
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
                     FileDescPtr           _fileDesc,
-                    volatile const bool&  _cancelFlag,
+                    VolConstBool&         _cancelFlag,
                     RunLog&               _log
                    ):
   Model (_name, _param, _fileDesc, _cancelFlag, _log),
@@ -102,12 +102,12 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
                          MLClassPtr        knownClass,
                          MLClassPtr&       predClass1,
                          MLClassPtr&       predClass2,
-                         int32&            predClass1Votes,
-                         int32&            predClass2Votes,
+                         kkint32&          predClass1Votes,
+                         kkint32&          predClass2Votes,
                          double&           probOfKnownClass,
                          double&           probOfPredClass1,
                          double&           probOfPredClass2,
-                         int32&            numOfWinners,
+                         kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
                          double&           breakTie
                         )
@@ -138,7 +138,7 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  uint32  idx;
+  kkuint32  idx;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);
@@ -153,7 +153,7 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr       example,
                                       const MLClassList&  _mlClasses,
-                                      int32*                 _votes,
+                                      kkint32*                 _votes,
                                       double*                _probabilities
                                      )
 {
@@ -179,7 +179,7 @@ void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
 
   KKStr  modelFileName;
 
-  int32  numOfModels = 0;
+  kkint32  numOfModels = 0;
 
   while  (i.getline (buff, sizeof (buff)))
   {

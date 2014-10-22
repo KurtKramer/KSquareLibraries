@@ -13,14 +13,14 @@
 //*                           code from FeatureEncoder                  *
 //*                                                                     *
 //***********************************************************************
-#include  "RunLog.h"
+#include "RunLog.h"
 
-#include  "Attribute.h"
-#include  "FeatureVector.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "svm.h"
-#include  "SVMparam.h"
+#include "Attribute.h"
+#include "FeatureVector.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "svm.h"
+#include "SVMparam.h"
 
 
 
@@ -43,20 +43,20 @@ namespace KKMachineLearning
   class  FeatureEncoder
   {
   public:
-    FeatureEncoder (const SVMparam&            _svmParam,
-                    FileDescPtr                _fileDesc,
-                    KKMachineLearning::AttributeTypeVector&  _attributeTypes,   
-                    VectorInt32&               _cardinalityTable,
-                    MLClassPtr              _class1,
-                    MLClassPtr              _class2,
-                    RunLog&                    _log
+    FeatureEncoder (const SVMparam&       _svmParam,
+                    FileDescPtr           _fileDesc,
+                    AttributeTypeVector&  _attributeTypes,   
+                    VectorInt32&          _cardinalityTable,
+                    MLClassPtr            _class1,
+                    MLClassPtr            _class2,
+                    RunLog&               _log
                    );
     
     
     ~FeatureEncoder ();
 
 
-    int32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
+    kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
 
 
     MLClassPtr  Class1 () const  {return class1;}
@@ -73,7 +73,7 @@ namespace KKMachineLearning
     void  EncodeIntoSparseMatrix (FeatureVectorListPtr  src,
                                   ClassAssignments&     assignments,
                                   XSpacePtr&            xSpace,
-                                  int32&                totalxSpaceUsed,
+                                  kkint32&              totalxSpaceUsed,
                                   struct svm_problem&   prob
                                  );
 
@@ -84,20 +84,20 @@ namespace KKMachineLearning
     XSpacePtr         EncodeAExample (FeatureVectorPtr  example);
 
     void              EncodeAExample (FeatureVectorPtr  example,
-                                    svm_node*         xSpace,
-                                    int32&            xSpaceUsed
-                                   );
+                                      svm_node*         xSpace,
+                                      kkint32&          xSpaceUsed
+                                     );
 
     FeatureVectorListPtr  EncodeAllExamples (const FeatureVectorListPtr  srcData);
 
 
     FeatureVectorPtr  EncodeAExample (FileDescPtr       encodedFileDesc,
-                                    FeatureVectorPtr  src
-                                   );
+                                      FeatureVectorPtr  src
+                                     );
 
-    int32             MemoryConsumedEstimated ()  const;
+    kkint32           MemoryConsumedEstimated ()  const;
 
-    int32             XSpaceNeededPerImage ()  {return xSpaceNeededPerImage;}
+    kkint32           XSpaceNeededPerImage ()  {return xSpaceNeededPerImage;}
 
 
 
@@ -107,29 +107,29 @@ namespace KKMachineLearning
      * account for features that have a value of 0;  that is features that have a value of '0' do not need a xSpace node allocated for
      * them.
      */
-    int32  DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr   src)  const;
+    kkint32  DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr   src)  const;
 
 
 
-    KKMachineLearning::AttributeTypeVector&    attributeTypes;     /**< Will not own, passed in by creator. */
-    int32*                       cardinalityDest;
-    VectorInt32&                 cardinalityTable;                 /**< Will not own, passed in by creator. */
-    MLClassPtr                class1;
-    MLClassPtr                class2;
-    int32                        codedNumOfFeatures;
+    AttributeTypeVector&         attributeTypes;     /**< Will not own, passed in by creator. */
+    kkint32*                     cardinalityDest;
+    VectorInt32&                 cardinalityTable;   /**< Will not own, passed in by creator. */
+    MLClassPtr                   class1;
+    MLClassPtr                   class2;
+    kkint32                      codedNumOfFeatures;
     SVM_CompressionMethod        compressionMethod;
-    int32*                       destFeatureNums;
+    kkint32*                     destFeatureNums;
     FileDescPtr                  destFileDesc;
     FeWhatToDoPtr                destWhatToDo;
     SVM_EncodingMethod           encodingMethod;
     FileDescPtr                  fileDesc;
     RunLog&                      log;
-    int32                        numEncodedFeatures;
-    int32                        numOfFeatures;
+    kkint32                      numEncodedFeatures;
+    kkint32                      numOfFeatures;
     FeatureNumList               selectedFeatures;
-    int32*                       srcFeatureNums;
+    kkint32*                     srcFeatureNums;
     const SVMparam&              svmParam;
-    int32                        xSpaceNeededPerImage;
+    kkint32                      xSpaceNeededPerImage;
   };  /* FeatureEncoder */
 
 

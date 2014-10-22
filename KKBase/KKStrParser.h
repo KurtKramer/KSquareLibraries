@@ -27,7 +27,7 @@ namespace KKB
 
     KKB::DateTime  GetNextTokenDateTime (const char* delStr = "\n\t\r ");
 
-    int32    GetNextTokenInt    (const char* delStr = "\n\t\r ");
+    kkint32  GetNextTokenInt    (const char* delStr = "\n\t\r ");
 
     long     GetNextTokenLong   (const char* delStr = "\n\t\r ");
 
@@ -35,7 +35,7 @@ namespace KKB
 
     float    GetNextTokenFloat  (const char* delStr = "\n\t\r ");
 
-    uint32   GetNextTokenUint   (const char* delStr = "\n\t\r ");
+    kkuint32 GetNextTokenUint   (const char* delStr = "\n\t\r ");
 
     bool     GetNextTokenBool   (const char* delStr = "\n\t\r ");
 
@@ -53,15 +53,15 @@ namespace KKB
 
     const char*  Str ()  const  {return str;}
 
-    KKStr    SubStrPart (uint32  firstChar,
-                         uint32  lastChar
+    KKStr    SubStrPart (kkuint32  firstChar,
+                         kkuint32  lastChar
                         )  const;
 
     void     TrimWhiteSpace     (const char*  _whiteSpace = " ");  /**< @brief After this call all leading and trailing whitespace will be trimmed from tokens.  */
 
   private:
-    uint32       len;
-    uint32       nextPos;
+    kkuint32     len;
+    kkuint32     nextPos;
     const char*  str;
     bool         trimWhiteSpace;
     char*        whiteSpace;

@@ -19,9 +19,9 @@
 //* 
 
 
-#include  "MLClass.h"
-#include  "RunLog.h"
-#include  "KKStr.h"
+#include "MLClass.h"
+#include "RunLog.h"
+#include "KKStr.h"
 
 
 
@@ -38,7 +38,7 @@ namespace  KKMachineLearning
     typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
 
     ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
-                      RunLog&                _log
+                      RunLog&             _log
                      );
     
     
@@ -48,12 +48,12 @@ namespace  KKMachineLearning
     //  Will construct an instance of 'ConfusionMatrix2'  from the contents of the 
     //  provided  'istream' object. 
     ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
-                      istream&               f,
-                      int32                  _bucketSize,
-                      int32                  _numOfBuckets,
-                      int32                  _numOfProbBuckets,
-                      int32                  _probBucketSize,
-                      RunLog&                _log
+                      istream&            f,
+                      kkint32             _bucketSize,
+                      kkint32             _numOfBuckets,
+                      kkint32             _numOfProbBuckets,
+                      kkint32             _probBucketSize,
+                      RunLog&             _log
                      );
                                            
     
@@ -75,11 +75,11 @@ namespace  KKMachineLearning
 
     double   AvgPredProb ()  const;
 
-    int32    ClassCount ()  const {return  classCount;}
+    kkint32  ClassCount ()  const {return  classCount;}
 
     double   Count (MLClassPtr  mlClass);
 
-    double   CountsByKnownClass (int32 knownClassIdx)  const;
+    double   CountsByKnownClass (kkint32 knownClassIdx)  const;
 
     VectorDouble   CountsByKnownClass ()  const;
 
@@ -92,13 +92,13 @@ namespace  KKMachineLearning
 
     void     Increment (MLClassPtr  _knownClass,
                         MLClassPtr  _predClass,
-                        int32          _size,
-                        double         _probability
+                        kkint32     _size,
+                        double      _probability
                        );
 
     VectorDouble   PredictedCounts ()  const;
 
-    double   PredictedCountsCM (int32 knownClassIdx, int32  predClassIdx)  const;
+    double   PredictedCountsCM (kkint32 knownClassIdx, kkint32  predClassIdx)  const;
 
     void     PrintAccuracyByProbByClassHTML (ostream&  o);
 
@@ -173,25 +173,25 @@ namespace  KKMachineLearning
                                        double        _splits[]
                                       );
 
-    void  PrintSingleLineHTML (ostream&       _outFile,
-                               const KKStr&   _name,
-                               double         _lineTotal,
-                               int32          _knownClassNum,
-                               double         _splits[]
+    void  PrintSingleLineHTML (ostream&     _outFile,
+                               const KKStr& _name,
+                               double       _lineTotal,
+                               kkint32      _knownClassNum,
+                               double       _splits[]
                               );
 
     void  PrintSingleLineLatexTable (ostream&      _outFile,
-                                     int32         _knownClassNum, 
+                                     kkint32       _knownClassNum, 
                                      const KKStr&  _name,
                                      double        _lineTotal,
                                      double        _splits[]
                                     );
 
 
-    void  PrintSingleLineShort (ostream&        _outFile,
-                                const KKStr&   _name,
-                                double          _lineTotal,
-                                double          _splits[]
+    void  PrintSingleLineShort (ostream&     _outFile,
+                                const KKStr& _name,
+                                double       _lineTotal,
+                                double       _splits[]
                                );
 
 
@@ -202,18 +202,18 @@ namespace  KKMachineLearning
                            );
 
 
-    void  PrintPercentLineLatexTable (ostream&        _outFile,
-                                      int32           _rowNum,
-                                      const KKStr&   _name,
-                                      double          _lineTotal,
-                                      double          _splits[]
+    void  PrintPercentLineLatexTable (ostream&     _outFile,
+                                      kkint32      _rowNum,
+                                      const KKStr& _name,
+                                      double       _lineTotal,
+                                      double       _splits[]
                                      );
 
 
-    void  PrintPercentLineTabDelimited (ostream&        _outFile,
-                                        const KKStr&   _name,
-                                        double          _lineTotal,
-                                        double          _splits[]
+    void  PrintPercentLineTabDelimited (ostream&     _outFile,
+                                        const KKStr& _name,
+                                        double        _lineTotal,
+                                        double        _splits[]
                                        );
 
 
@@ -221,7 +221,7 @@ namespace  KKMachineLearning
                                     const KKStr&  _name,
                                     double        _totalAvgPredProbThisLine,
                                     double        _totalCountThisLine,
-                                    int32         _knownClassNum,
+                                    kkint32       _knownClassNum,
                                     double        _avgPredProbs[],
                                     double        _numPredByClass[]
                                    );
@@ -230,7 +230,7 @@ namespace  KKMachineLearning
     void  PrintPercentLineHTML (ostream&      _outFile,
                                 const KKStr&  _name,
                                 double        _lineTotal,
-                                int32         _knownClassNum,
+                                kkint32       _knownClassNum,
                                 double        _splits[]
                                );
 
@@ -243,15 +243,15 @@ namespace  KKMachineLearning
 
 
     void  PrintErrorBySizeRowReduced (ostream&  outFile,
-                                      int32     classNum
+                                      kkint32   classNum
                                      );
 
 
     void  Read (istream& f);
 
 
-    int32            bucketSize;
-    int32            classCount;
+    kkint32          bucketSize;
+    kkint32          classCount;
     double**         correctByKnownClassByProb;
     double**         correctByKnownClassBySize;
     double           correctCount;
@@ -264,10 +264,10 @@ namespace  KKMachineLearning
                                  */
     RunLog&          log;
     double           numInvalidClassesPredicted;
-    int32            numOfBuckets;
-    int32            numOfProbBuckets;
+    kkint32          numOfBuckets;
+    kkint32          numOfProbBuckets;
     double**         predictedCountsCM;
-    int32            probBucketSize;
+    kkint32          probBucketSize;
     double           totalCount;
     double           totalPredProb;
     double*          totalPredProbsByKnownClass;   /**< Total Predicted Probabilities by Known Class. */

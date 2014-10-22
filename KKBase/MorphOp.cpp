@@ -21,7 +21,7 @@ using namespace KKB;
 
 
 
-int32  MorphOp::biases[] = {1,  // CROSS3 
+kkint32  MorphOp::biases[] = {1,  // CROSS3 
                             2,  // CROSS5
                             1,  // SQUARE3
                             2,  // SQUARE5
@@ -31,7 +31,7 @@ int32  MorphOp::biases[] = {1,  // CROSS3
                            };
 
 
-int32  MorphOp::maskShapes[] = {stCross,   // CROSS3 
+kkint32  MorphOp::maskShapes[] = {stCross,   // CROSS3 
                                 stCross,   // CROSS5
                                 stSquare,  // SQUARE3
                                 stSquare,  // SQUARE5
@@ -140,8 +140,8 @@ bool  MorphOp::BackgroundPixel (uchar  pixel)  const
 
 
 
-bool  MorphOp::BackgroundPixel (int32  row,
-                                int32  col
+bool  MorphOp::BackgroundPixel (kkint32  row,
+                                kkint32  col
                                )  const
 {
   if  ((row < 0)           ||  
@@ -164,8 +164,8 @@ bool  MorphOp::ForegroundPixel (uchar  pixel)  const
 
 
 
-bool  MorphOp::ForegroundPixel (int32  row,
-                                int32  col
+bool  MorphOp::ForegroundPixel (kkint32  row,
+                                kkint32  col
                                )  const
 {
   if  ((row < 0)           ||  
@@ -189,16 +189,16 @@ bool  MorphOp::ForegroundPixel (int32  row,
  *@see  Erosion, Dialation, Closing, Opening, MaskType
  */
 bool  MorphOp::Fit (MaskTypes  mask,
-                    int32      row, 
-                    int32      col
+                    kkint32    row, 
+                    kkint32    col
                    )  const
 {
-  int32  bias = biases[mask];
-  int32  r, c;
-  int32  rStart = row - bias;
-  int32  rEnd   = row + bias;
-  int32  cStart = col - bias;
-  int32  cEnd   = col + bias;
+  kkint32  bias = biases[mask];
+  kkint32  r, c;
+  kkint32  rStart = row - bias;
+  kkint32  rEnd   = row + bias;
+  kkint32  cStart = col - bias;
+  kkint32  cEnd   = col + bias;
 
   if  (rStart  < 0)           rStart = 0;
   if  (rEnd    >= srcHeight)  rEnd = srcHeight - 1;

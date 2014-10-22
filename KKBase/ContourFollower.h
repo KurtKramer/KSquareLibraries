@@ -44,58 +44,58 @@ namespace KKB
 
     PointListPtr  GenerateContourList ();
 
-    int32  FollowContour (float*  countourFreq,
+    kkint32  FollowContour (float*  countourFreq,
                           float   fourierDescriptors[15],
-                          int32   totalPixels,
+                          kkint32 totalPixels,
                           bool&   successful
                          );
 
-    int32  FollowContour2 (float*  countourFreq,
+    kkint32  FollowContour2 (float*  countourFreq,
                            bool&   successful
                           );
 
-    int32  CreateFourierDescriptorBySampling (int32   numOfBuckets,
+    kkint32  CreateFourierDescriptorBySampling (kkint32 numOfBuckets,
                                               float*  countourFreq,
                                               bool&   successful
                                              );
 
     void  HistogramDistanceFromAPointOfEdge (float     pointRow,
                                              float     pointCol,
-                                             int32     numOfBuckets,
-                                             int32*    buckets,
+                                             kkint32   numOfBuckets,
+                                             kkint32*    buckets,
                                              float&    minDistance,
                                              float&    maxDistance,
-                                             int32&    numOfEdgePixels
+                                             kkint32&  numOfEdgePixels
                                             );
 
 
   private:
 
-    void  GetFirstPixel (int32&  row,
-                         int32&  col
+    void  GetFirstPixel (kkint32&  row,
+                         kkint32&  col
                         );
 
-    void  GetNextPixel (int32&  row,
-                        int32&  col
+    void  GetNextPixel (kkint32&  row,
+                        kkint32&  col
                        );
 
-    int32  PixelCountIn9PixelNeighborhood (int32  row, 
-                                           int32  col
+    kkint32  PixelCountIn9PixelNeighborhood (kkint32  row, 
+                                           kkint32  col
                                           );
 
-    uchar  PixelValue (int32 row,
-                       int32 col
+    uchar  PixelValue (kkint32 row,
+                       kkint32 col
                       );
 
-    int32    curCol;
-    int32    curRow;
-    int32    fromDir;
-    int32    height;
-    int32    lastDir;
+    kkint32  curCol;
+    kkint32  curRow;
+    kkint32  fromDir;
+    kkint32  height;
+    kkint32  lastDir;
     RunLog&  log;
     Raster&  raster;
     uchar**  rows;
-    int32    width;
+    kkint32  width;
   }; /* ContourFollower*/
 
 
@@ -105,20 +105,20 @@ namespace KKB
   class  PixelAddr
   {
   public:  
-    PixelAddr (int32  _row,
-               int32  _col
+    PixelAddr (kkint32  _row,
+               kkint32  _col
               ):
           row (_row),
           col (_col)
       {}
 
-    int32  Row ()  {return row;}
-    int32  Col ()  {return col;}
+    kkint32  Row ()  {return row;}
+    kkint32  Col ()  {return col;}
 
 
   private:
-    int32  row;
-    int32  col;
+    kkint32  row;
+    kkint32  col;
   };
 
   */

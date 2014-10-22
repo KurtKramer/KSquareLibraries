@@ -33,7 +33,7 @@ ImageDirTree::ImageDirTree (KKStr  _subDir):
 
 ImageDirTree::~ImageDirTree ()
 {
-  uint32  x;
+  kkuint32  x;
   for  (x = 0;  x < directories.size ();  x++)
     delete  directories[x];
 }
@@ -69,7 +69,7 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
       {
         dupIdx = duplicates.find (fileName);
         if  (dupIdx == duplicates.end ())
-          duplicates.insert (pair<KKStr, int32> (*fileName, 2));
+          duplicates.insert (pair<KKStr, kkint32> (*fileName, 2));
         else
           (dupIdx->second)++;
       }

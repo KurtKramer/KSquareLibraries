@@ -33,9 +33,9 @@ using namespace  KKB;
 using namespace  KKMachineLearning;
 
 
-ModelUsfCasCor::ModelUsfCasCor (FileDescPtr           _fileDesc,
-                                volatile const bool&  _cancelFlag,
-                                RunLog&               _log
+ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,
+                                VolConstBool&  _cancelFlag,
+                                RunLog&        _log
                                ):
   Model (_fileDesc, _cancelFlag, _log),
   param               (NULL),
@@ -47,7 +47,7 @@ ModelUsfCasCor::ModelUsfCasCor (FileDescPtr           _fileDesc,
 ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 const ModelParamUsfCasCor& _param,         // Create new model from
                                 FileDescPtr                _fileDesc,
-                                volatile const bool&       _cancelFlag,
+                                VolConstBool&              _cancelFlag,
                                 RunLog&                    _log
                                ):
   Model (_name, _param, _fileDesc, _cancelFlag, _log),
@@ -88,9 +88,9 @@ ModelUsfCasCor::~ModelUsfCasCor ()
 }
 
 
-int32  ModelUsfCasCor::MemoryConsumedEstimated ()  const
+kkint32  ModelUsfCasCor::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                    sizeof (usfCasCorClassifier);
 
   if  (usfCasCorClassifier)
@@ -216,12 +216,12 @@ void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
                                MLClassPtr    knownClass,
                                MLClassPtr&   predClass1,
                                MLClassPtr&   predClass2,
-                               int32&           predClass1Votes,
-                               int32&           predClass2Votes,
+                               kkint32&         predClass1Votes,
+                               kkint32&         predClass2Votes,
                                double&          probOfKnownClass,
                                double&          predClass1Prob,
                                double&          predClass2Prob,
-                               int32&           numOfWinners,
+                               kkint32&         numOfWinners,
                                bool&            knownClassOneOfTheWinners,
                                double&          breakTie
                               )
@@ -303,7 +303,7 @@ ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  exampl
 
 void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            example,
                                             const MLClassList&  _mlClasses,
-                                            int32*                      _votes,
+                                            kkint32*                      _votes,
                                             double*                     _probabilities
                                            )
 {
@@ -355,7 +355,7 @@ void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            example,
   {
     float  highProb = -9999.99f;
     int   highProbIdx = -1;
-    for  (uint32 x = 0;  x < probabilities.size ();  ++x)
+    for  (kkuint32 x = 0;  x < probabilities.size ();  ++x)
     {
       float  p = probabilities[x];
       _votes[x] = 0;
@@ -427,7 +427,7 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _exampl
   }
   else
   {
-    for  (uint32 x = 0;  x < probabilities.size ();  ++x)
+    for  (kkuint32 x = 0;  x < probabilities.size ();  ++x)
       _probabilities[x] = probabilities[x];
   }
 
@@ -457,7 +457,7 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
 
   KKStr  modelFileName;
 
-  int32  numOfModels = 0;
+  kkint32  numOfModels = 0;
 
   while  (i.getline (buff, sizeof (buff)))
   {
@@ -516,7 +516,7 @@ void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o)
 
 
 
-int32  ModelUsfCasCor::NumOfSupportVectors ()  const
+kkint32  ModelUsfCasCor::NumOfSupportVectors ()  const
 {
   return  0;
 }  /* NumOfSupportVectors */

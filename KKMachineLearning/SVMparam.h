@@ -149,9 +149,9 @@ namespace KKMachineLearning
 
     SVM_MachineType          MachineType                () const {return machineType;}
 
-    int32                    MemoryConsumedEstimated    () const;
+    kkint32                  MemoryConsumedEstimated    () const;
 
-    int32                    NumOfFeaturesAfterEncoding () const;
+    kkint32                  NumOfFeaturesAfterEncoding () const;
 
     const svm_parameter&     Param                      () const {return param;}
 

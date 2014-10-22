@@ -39,7 +39,7 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
   private:
     float  rowFactor;
@@ -49,17 +49,17 @@ namespace  KKB
     typedef  CellFactor*  CellFactorPtr;
 
     CellFactorPtr  BuildCellFactors (float   factor,
-                                     uint32  cellFactorsCount
+                                     kkuint32  cellFactorsCount
                                     );
 
-    void  UpdateFactors (uint32  height,
-                         uint32  width
+    void  UpdateFactors (kkuint32  height,
+                         kkuint32  width
                         );
 
-    uint32        rowFactorsCount;
+    kkuint32      rowFactorsCount;
     CellFactor*   rowFactors;
 
-    uint32        colFactorsCount;
+    kkuint32      colFactorsCount;
     CellFactor*   colFactors;
 
   };  /* MorphOpStretcher */

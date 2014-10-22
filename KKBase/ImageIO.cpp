@@ -80,7 +80,7 @@ void  KKB::DefineImageIoAtExit ()
 
 void  KKB::DisplayImage  (const Raster& image)
 {
-  int32  col, row;
+  kkint32  col, row;
 
   for  (row = 0;  row < image.Height (); row++)
   {
@@ -109,7 +109,7 @@ void  KKB::DisplayImage (const Raster&  raster,
 #ifdef  USE_CIMG
 RasterPtr  KKB::ReadImage (const KKStr& imageFileName)
 {
-  int32 row, col;
+  kkint32 row, col;
 
   CImg<short> img = imageFileName.Str ();
 
@@ -122,8 +122,8 @@ RasterPtr  KKB::ReadImage (const KKStr& imageFileName)
   
   RasterPtr  image = new Raster (img.dimy (), img.dimx ());
 
-  int32  grayValue;
-  int32  r, g, b;
+  kkint32  grayValue;
+  kkint32  r, g, b;
 
   for  (row = 0;  row < img.dimy(); row++)
   {
@@ -135,7 +135,7 @@ RasterPtr  KKB::ReadImage (const KKStr& imageFileName)
         g = *img.ptr (col, row, 0, 1);
         b = *img.ptr (col, row, 0, 2);
 
-        grayValue = (int32)((float)r * (float)0.30 + 
+        grayValue = (kkint32)((float)r * (float)0.30 + 
                           (float)g * (float)0.59 + 
                           (float)b * (float)0.11 +
                           (float)(0.50)
@@ -161,7 +161,7 @@ void  KKB::SaveImage  (const Raster&  image,
                        const KKStr&   imageFileName
                       )
 {
-  int32 row, col;
+  kkint32 row, col;
 
   CImg<short> img (image.Width (), image.Height (), 1, 1);
 
@@ -254,8 +254,8 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
   }
   else
   {
-    uint32  height = bm->GetHeight ();
-    uint32  width  = bm->GetWidth ();
+    kkuint32  height = bm->GetHeight ();
+    kkuint32  width  = bm->GetWidth ();
 
     BitmapData* bitmapData = new BitmapData ();
     Gdiplus::Rect rect (0, 0, width, height);
@@ -263,21 +263,21 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
     bm->LockBits(&rect, Gdiplus::ImageLockModeRead, bm->GetPixelFormat (), bitmapData);
 
     Gdiplus::PixelFormat  pixFormat = bitmapData->PixelFormat;
-    int32  stride = bitmapData->Stride;
+    kkint32  stride = bitmapData->Stride;
     void*  scan0 = bitmapData->Scan0;
 
     if  (pixFormat == PixelFormat24bppRGB)
     {
       r = new Raster (height, width, true);
 
-      int32  nOffset = stride - width * 3;
-      int32  bytesPerRow = width * 3 + nOffset;
+      kkint32  nOffset = stride - width * 3;
+      kkint32  bytesPerRow = width * 3 + nOffset;
 
       uchar  red   = 255;
       uchar  green = 255;
       uchar  blue  = 255;
       
-      uint32  row, col;
+      kkuint32  row, col;
 
       uchar*  ptr = (uchar*)(void*)scan0;
 
@@ -298,7 +298,7 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
 
     else if  (pixFormat == PixelFormat8bppIndexed)
     {
-      int32  paletteSize = bm->GetPaletteSize ();
+      kkint32  paletteSize = bm->GetPaletteSize ();
 
       ColorPalette* palette = (ColorPalette*)malloc (paletteSize);
       bm->GetPalette (palette, paletteSize);
@@ -308,12 +308,12 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
       INT  paletteHasHalftone  = palette->Flags & PaletteFlagsHalftone;
 
       r = new Raster (height, width, false);
-      int32  nOffset = stride - width;
-      int32  bytesPerRow = width + nOffset;
+      kkint32  nOffset = stride - width;
+      kkint32  bytesPerRow = width + nOffset;
 
       uchar  index = 255;
       
-      uint32  row, col;
+      kkuint32  row, col;
 
       uchar*  ptr = (uchar*)(void*)scan0;
 
@@ -325,7 +325,7 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
 
           ARGB argb = palette->Entries[index];
 
-          int32  grayScaleValue = argb % 256;
+          kkint32  grayScaleValue = argb % 256;
 
           r->SetPixelValue (row, col, (uchar)grayScaleValue);
         }
@@ -359,9 +359,9 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
   if  (!i)
     return NULL;
 
-  int32  height    = -1;
-  int32  pixelSize = -1;
-  int32  width     = -1;
+  kkint32  height    = -1;
+  kkint32  pixelSize = -1;
+  kkint32  width     = -1;
 
   {
     // We are going to read in header part of file.
@@ -374,7 +374,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
       return NULL;
     }
 
-    int32  headerFieldsRead = 0;
+    kkint32  headerFieldsRead = 0;
     nextLine = osReadRestOfLine (i, eof);
     while  (!eof)
     {
@@ -406,7 +406,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
 
   RasterPtr  image = new Raster (height, width, false);
 
-  int32  row, col;
+  kkint32  row, col;
 
   uchar* colBuff = new uchar[width + 10];
 
@@ -434,9 +434,9 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
 {
   eof = false;
   char  token[2048];
-  int32  maxTokenLen = sizeof (token) - 1;
+  kkint32  maxTokenLen = sizeof (token) - 1;
 
-  int32  ch = 0;
+  kkint32  ch = 0;
 
   bool  startOfTokenFound = false;
   while  (!startOfTokenFound)
@@ -462,7 +462,7 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
     }
   }
 
-  int32 tokenLen = 0;
+  kkint32 tokenLen = 0;
 
   // Read till first delimiter or eof or eol
   while  ((!eof)  &&  (strchr (" #\t\n\r", ch) == 0))
@@ -498,14 +498,14 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
   if  (!i)
     return NULL;
 
-  int32  height     = -1;
-  int32  pixelDepth = -1;
-  int32  width      = -1;
+  kkint32  height     = -1;
+  kkint32  pixelDepth = -1;
+  kkint32  width      = -1;
 
   bool  eof = false;
   
   char  buff[10];
-  int32  bytesRead = (int32)fread (buff, 1, 2, i);
+  kkint32  bytesRead = (kkint32)fread (buff, 1, 2, i);
   if  (bytesRead < 2)
   {
     fclose (i);
@@ -521,7 +521,7 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
     return NULL;
   }
 
-  int32  fieldNum = 0;
+  kkint32  fieldNum = 0;
   KKStr  field =  ReadImagePpmField (i, eof);
   while  ((fieldNum  < 3)  &&  (!eof))
   {
@@ -549,7 +549,7 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
   RasterPtr  image = new Raster (height, width, true);
   int  totalPixels = height * width;
 
-  int32  pixelsRead = 0;
+  kkint32  pixelsRead = 0;
 
   uchar*  red   = image->RedArea ();
   uchar*  green = image->RedArea ();
@@ -562,9 +562,9 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
       KKStr  greenField = osReadNextToken (i, "\n\r\t ", eof);
       KKStr  blueField  = osReadNextToken (i, "\n\r\t ", eof);
 
-      int32  redValue    = Min (redField.ToInt32   (), pixelDepth);
-      int32  greenValue  = Min (greenField.ToInt32 (), pixelDepth);
-      int32  blueValue   = Min (blueField.ToInt32  (), pixelDepth);
+      kkint32  redValue    = Min (redField.ToInt32   (), pixelDepth);
+      kkint32  greenValue  = Min (greenField.ToInt32 (), pixelDepth);
+      kkint32  blueValue   = Min (blueField.ToInt32  (), pixelDepth);
 
       *red   = ((255 *  redValue)   / pixelDepth);   ++red;
       *green = ((255 *  greenValue) / pixelDepth);   ++green;
@@ -669,7 +669,7 @@ void  KKB::SaveImagePGM (const Raster&  image,
     fwrite (h, 1, headerStr.Len (), o);
   }
 
-  int32  totalPixels = image.Height () * image.Width ();
+  kkint32  totalPixels = image.Height () * image.Width ();
 
   if  (image.Color ())
   {
@@ -712,7 +712,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
     fwrite (h, 1, headerStr.Len (), o);
   }
 
-  int32  totalPixels = image.Height () * image.Width ();
+  kkint32  totalPixels = image.Height () * image.Width ();
 
   if  (image.Color ())
   {
@@ -720,7 +720,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
     const uchar*  green = image.GreenArea ();
     const uchar*  blue  = image.BlueArea  ();
 
-    for  (int32 x = 0;  x < totalPixels;  x++)
+    for  (kkint32 x = 0;  x < totalPixels;  x++)
     {
       fwrite (red,   1, 1, o);  ++red;
       fwrite (green, 1, 1, o);  ++green;
@@ -732,7 +732,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
     uchar*  green = image.GreenArea ();
     uchar  buff3[3];
 
-    for  (int32 x = 0;  x < totalPixels;  x++)
+    for  (kkint32 x = 0;  x < totalPixels;  x++)
     {
       uchar  intensity = 255 - (*green);
       buff3[0] = intensity;
@@ -774,7 +774,7 @@ void  KKB::SaveImagePPM (const Raster&  image,
     fwrite (h, 1, headerStr.Len (), o);
   }
 
-  int32  totalPixels = image.Height () * image.Width ();
+  kkint32  totalPixels = image.Height () * image.Width ();
 
   if  (image.Color ())
   {
@@ -782,7 +782,7 @@ void  KKB::SaveImagePPM (const Raster&  image,
     const uchar*  green = image.GreenArea ();
     const uchar*  blue  = image.BlueArea  ();
 
-    for  (int32 x = 0;  x < totalPixels;  x++)
+    for  (kkint32 x = 0;  x < totalPixels;  x++)
     {
       fwrite (red,   1, 1, o);  ++red;
       fwrite (green, 1, 1, o);  ++green;
@@ -794,7 +794,7 @@ void  KKB::SaveImagePPM (const Raster&  image,
     uchar*  green = image.GreenArea ();
     uchar  buff3[3];
 
-    for  (int32 x = 0;  x < totalPixels;  x++)
+    for  (kkint32 x = 0;  x < totalPixels;  x++)
     {
       uchar  intensity = *green;
       buff3[0] = intensity;
@@ -824,7 +824,7 @@ void  KKB::SaveImageInverted (Raster&       raster,
 {
   RasterPtr  invertedImage = new Raster (raster);
 
-  int32  r, c;
+  kkint32  r, c;
 
   uchar**  g    = invertedImage->Green ();
   uchar**  red  = invertedImage->Red   ();

@@ -107,9 +107,9 @@ Classifier2::~Classifier2 ()
 }
 
 
-int32  Classifier2::MemoryConsumedEstimated ()  const
+kkint32  Classifier2::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (*this);
+  kkint32  memoryConsumedEstimated = sizeof (*this);
   if  (mlClasses)  memoryConsumedEstimated += mlClasses->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
@@ -129,11 +129,11 @@ SVM_SelectionMethod   Classifier2::SelectionMethod ()  const
 
 
 MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
-                                                    double&         probability,
-                                                    int32&          numOfWinners, 
-                                                    bool&           knownClassOneOfTheWinners,
-                                                    double&         breakTie
-                                                   )
+                                                 double&         probability,
+                                                 kkint32&        numOfWinners, 
+                                                 bool&           knownClassOneOfTheWinners,
+                                                 double&         breakTie
+                                                )
 
 {
   probability       = 0.0;
@@ -144,8 +144,8 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
   MLClassPtr  predictedClass  = NULL;
   MLClassPtr  predictedClass2 = NULL;
 
-  int32          class1Votes = -1;
-  int32          class2Votes = -1;
+  kkint32        class1Votes = -1;
+  kkint32        class2Votes = -1;
 
   double         predictedClass2Prob = 0.0f;
 
@@ -192,7 +192,7 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example)
 {
   double  probability;
   bool    knownClassOneOfTheWinners;
-  int32   numOfWinners;
+  kkint32 numOfWinners;
   double  breakTie;
 
   return  ClassifyAImageOneLevel (example, 
@@ -207,9 +207,9 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example)
 
 
 MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
-                                                    int32&          numOfWinners,
-                                                    bool&           knownClassOneOfTheWinners
-                                                   )
+                                                 kkint32&        numOfWinners,
+                                                 bool&           knownClassOneOfTheWinners
+                                                )
 {
   double   probability;
   double   breakTie;
@@ -229,14 +229,14 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
 
 
 void  Classifier2::ClassifyAImage (FeatureVector&  example,
-                                   MLClassPtr&  predClass1,
-                                   MLClassPtr&  predClass2,
-                                   int32&          predClass1Votes,
-                                   int32&          predClass2Votes,
+                                   MLClassPtr&     predClass1,
+                                   MLClassPtr&     predClass2,
+                                   kkint32&        predClass1Votes,
+                                   kkint32&        predClass2Votes,
                                    double&         knownClassProb,
                                    double&         predClass1Prob,
                                    double&         predClass2Prob,
-                                   int32&          numOfWinners,
+                                   kkint32&        numOfWinners,
                                    double&         breakTie
                                   )
 {
@@ -252,18 +252,18 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
 
 
   trainedModel->Predict (&example,
-                   origClass,
-                   predClass1,
-                   predClass2,
-                   predClass1Votes,
-                   predClass2Votes,
-                   knownClassProb,
-                   predClass1Prob,
-                   predClass2Prob,
-                   numOfWinners,
-                   knownClassOneOfTheWiners,
-                   breakTie
-                  );
+                         origClass,
+                         predClass1,
+                         predClass2,
+                         predClass1Votes,
+                         predClass2Votes,
+                         knownClassProb,
+                         predClass1Prob,
+                         predClass2Prob,
+                         numOfWinners,
+                         knownClassOneOfTheWiners,
+                         breakTie
+                        );
 
   if  (!predClass1)
   {
@@ -283,11 +283,11 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
 
 
 MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
-                                            double&         probability,
-                                            int32&          numOfWinners,
-                                            bool&           knownClassOneOfTheWinners,
-                                            double&         breakTie
-                                           )
+                                         double&         probability,
+                                         kkint32&        numOfWinners,
+                                         bool&           knownClassOneOfTheWinners,
+                                         double&         breakTie
+                                        )
 {
   MLClassPtr predictedClass;
 
@@ -306,9 +306,9 @@ MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
 
 
 MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
-                                            int32&          numOfWinners,
-                                            bool&           knownClassOneOfTheWinners
-                                           )
+                                         kkint32&        numOfWinners,
+                                         bool&           knownClassOneOfTheWinners
+                                        )
 {
   MLClassPtr predictedClass;
 
@@ -324,7 +324,7 @@ MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
 
 MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example)
 {
-  int32   numOfWinners;
+  kkint32 numOfWinners;
   bool  knownClassOneOfTheWinners;
   return  ClassifyAImage (example, numOfWinners, knownClassOneOfTheWinners);
 }
@@ -352,9 +352,9 @@ vector<KKStr>  Classifier2::SupportVectorNames (MLClassPtr  c1,
 
 
 vector<ProbNamePair>  Classifier2::FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                            int32             numToFind,
-                                                            MLClassPtr     c1,
-                                                            MLClassPtr     c2
+                                                            kkint32           numToFind,
+                                                            MLClassPtr        c1,
+                                                            MLClassPtr        c2
                                                            )
 {
   if  (!trainedModelSVMModel)
@@ -370,9 +370,9 @@ vector<ProbNamePair>  Classifier2::FindWorstSupportVectors (FeatureVectorPtr  ex
 
 
 vector<ProbNamePair>  Classifier2::FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                             int32             numToFind,
-                                                             MLClassPtr     c1,
-                                                             MLClassPtr     c2
+                                                             kkint32           numToFind,
+                                                             MLClassPtr        c1,
+                                                             MLClassPtr        c2
                                                             )
 {
   if  (!trainedModelSVMModel)
@@ -391,9 +391,9 @@ vector<ProbNamePair>  Classifier2::FindWorstSupportVectors2 (FeatureVectorPtr  e
 
 
 void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
-                                         FeatureVectorPtr      example,
-                                         int32*                votes,
-                                         double*               probabilities
+                                         FeatureVectorPtr   example,
+                                         kkint32*           votes,
+                                         double*            probabilities
                                         )
 {
   if  (trainedModel)
@@ -407,7 +407,7 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
 
 
 void  Classifier2::RetrieveCrossProbTable (MLClassList&  classes,
-                                           double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                           double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                           )
 {
   if  (trainedModel)

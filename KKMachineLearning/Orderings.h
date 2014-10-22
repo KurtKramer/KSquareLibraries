@@ -71,8 +71,8 @@ public:
    *@param[in] _numOfFolds  Used to help stratify data in each fold.
    */
   Orderings (const FeatureVectorListPtr _data,
-             uint32                     _numOfOrderings,
-             uint32                     _numOfFolds
+             kkuint32                   _numOfOrderings,
+             kkuint32                   _numOfFolds
             );
 
 
@@ -112,8 +112,8 @@ public:
    */
   Orderings (const FeatureVectorListPtr  _data,
              const KKStr&                _indexFileName,
-             int32                         _numOfOrderings,
-             int32                         _numOfFolds
+             kkint32                       _numOfOrderings,
+             kkint32                       _numOfFolds
             );
 
 
@@ -144,8 +144,8 @@ public:
    */
   static
   OrderingsPtr  CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,
-                                                       uint32                      _numOfOrderings,
-                                                       uint32                      _numOfFolds
+                                                       kkuint32                    _numOfOrderings,
+                                                       kkuint32                    _numOfFolds
                                                       );
 
 
@@ -155,19 +155,19 @@ public:
   FeatureVectorListPtr     Data            ()  const  {return data;}
   const KKStr&             FeatureFileName ()  const  {return featureFileName;}
   const FileDescPtr        FileDesc        ()  const  {return fileDesc;}
-  const MLClassListPtr  ImageClasses    ()  const  {return mlClasses;}
+  const MLClassListPtr     ImageClasses    ()  const  {return mlClasses;}
   const KKStr&             IndexFileName   ()  const  {return indexFileName;}
   RunLog&                  Log             ()         {return log;}
-  uint32                   NumOfFolds      ()  const  {return numOfFolds;}
-  uint32                   NumOfOrderings  ()  const  {return numOfOrderings;}
-  uint32                   Size            ()  const  {return (uint32)orderings.size ();}
+  kkuint32                 NumOfFolds      ()  const  {return numOfFolds;}
+  kkuint32                 NumOfOrderings  ()  const  {return numOfOrderings;}
+  kkuint32                 Size            ()  const  {return (kkuint32)orderings.size ();}
   bool                     Valid           ()  const  {return valid;}
 
 
 
 
   const
-  FeatureVectorListPtr  Ordering (uint32  orderingIdx)  const;
+  FeatureVectorListPtr  Ordering (kkuint32  orderingIdx)  const;
 
 
 
@@ -190,11 +190,11 @@ private:
   FeatureVectorListPtr           data;
   KKStr                          featureFileName;
   FileDescPtr                    fileDesc;
-  MLClassListPtr              mlClasses;
+  MLClassListPtr                 mlClasses;
   KKStr                          indexFileName;
   RunLog&                        log;
-  uint32                         numOfFolds;
-  uint32                         numOfOrderings;
+  kkuint32                       numOfFolds;
+  kkuint32                       numOfOrderings;
   vector<FeatureVectorListPtr>   orderings;
   bool                           valid;
 };

@@ -22,9 +22,9 @@ using namespace KKB;
 
 
 
-KKStrList&  KKStrMatrix::operator[] (uint32 row)
+KKStrList&  KKStrMatrix::operator[] (kkuint32 row)
 {
-  if  (row >= (uint32)data.QueueSize ())
+  if  (row >= (kkuint32)data.QueueSize ())
   {
     KKStr  errMsg = "KKStrMatrix::operator[]    Row dimension[" + StrFormatInt (row, "0") + "] invalid;  Rows Available[" 
       + StrFormatInt (data.QueueSize (), "0") + "]";
@@ -37,9 +37,9 @@ KKStrList&  KKStrMatrix::operator[] (uint32 row)
 
 
 
-KKStrList&  KKStrMatrix::operator() (uint32 row)
+KKStrList&  KKStrMatrix::operator() (kkuint32 row)
 {
-  if  (row >= (uint32)data.QueueSize ())
+  if  (row >= (kkuint32)data.QueueSize ())
   {
     KKStr  errMsg = "KKStrMatrix::operator[]    Row dimension[" + StrFormatInt (row, "0") + "] invalid;  Rows Available[" 
       + StrFormatInt (data.QueueSize (), "0") + "]";
@@ -51,11 +51,11 @@ KKStrList&  KKStrMatrix::operator() (uint32 row)
 
 
 
-KKStr&  KKStrMatrix::operator() (uint32  row,
-                                 uint32  col
+KKStr&  KKStrMatrix::operator() (kkuint32  row,
+                                 kkuint32  col
                                 )
 {
-  if  (row >= (uint32)data.QueueSize ())
+  if  (row >= (kkuint32)data.QueueSize ())
   {
     KKStr  errMsg = "KKStrMatrix::operator[]    Row dimension[" + StrFormatInt (row, "0") + "] invalid;  Rows Available[" 
                   + StrFormatInt (data.QueueSize (), "0") + "]";
@@ -64,7 +64,7 @@ KKStr&  KKStrMatrix::operator() (uint32  row,
   }
 
   KKStrList&  rowOfData = data[row];
-  if  (col >= (uint32)rowOfData.QueueSize ())
+  if  (col >= (kkuint32)rowOfData.QueueSize ())
   {
     KKStr  errMsg = "KKStrMatrix::operator[]    Col dimension[" + StrFormatInt (col, "0") + "] invalid;  Rows Available["
                   + StrFormatInt (rowOfData.QueueSize (), "0") + "]";
@@ -80,7 +80,7 @@ KKStr&  KKStrMatrix::operator() (uint32  row,
 
 void  KKStrMatrix::AddRow (KKStrListPtr  newRowData)
 {
-  while  ((uint32)newRowData->QueueSize () < numCols)
+  while  ((kkuint32)newRowData->QueueSize () < numCols)
     newRowData->PushOnBack (new KKStr ());
   data.PushOnBack (newRowData);
 }
@@ -90,7 +90,7 @@ void  KKStrMatrix::AddRow (KKStrListPtr  newRowData)
 void  KKStrMatrix::AddRow ()  // Will add one row of empty Strings
 {
   KKStrListPtr  newRowData = new KKStrList (true);
-  while  ((uint32)newRowData->QueueSize () < numCols)
+  while  ((kkuint32)newRowData->QueueSize () < numCols)
     newRowData->PushOnBack (new KKStr ());
   data.PushOnBack (newRowData);
 }

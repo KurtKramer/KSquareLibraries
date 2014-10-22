@@ -43,7 +43,7 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
   private:
     MaskTypes  mask;

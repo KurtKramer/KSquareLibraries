@@ -19,19 +19,19 @@ using namespace KKB;
 
 
 void*  Compressor::CreateCompressedBuffer (void*    source,
-                                           uint32   sourceLen,
-                                           uint32&  compressedBuffLen
+                                           kkuint32 sourceLen,
+                                           kkuint32&  compressedBuffLen
                                           )
 {
 #ifdef ZLIB_H
 
   // following code was lifted from example provided by zlib  "zpipe.c"
-  int32     ret;
+  kkint32   ret;
   z_stream  strm;
 
 
   Bytef*  outputBuffer = NULL;
-  uint32  outputBufferSize = sourceLen * 2;
+  kkuint32  outputBufferSize = sourceLen * 2;
 
   outputBuffer = new Bytef[outputBufferSize];
 
@@ -121,7 +121,7 @@ void*  Compressor::CreateCompressedBuffer (void*    source,
       // was provided before the call, and how much output space is still available after the call. Then that data, if any,
       // is written to the output file. We can then reuse the output buffer for the next call of deflate(). Again if there
       // is a file i/o error, we call deflateEnd() before returning to avoid a memory leak.
-      int32 have = outputBufferSize - strm.avail_out;
+      kkint32 have = outputBufferSize - strm.avail_out;
       {
         if  (compressedBuff == NULL)
         {
@@ -131,7 +131,7 @@ void*  Compressor::CreateCompressedBuffer (void*    source,
         }
         else
         {
-          uint32  newCompressedBuffLen = compressedBuffLen + have;
+          kkuint32  newCompressedBuffLen = compressedBuffLen + have;
           uchar*  newCompressedBuff = new uchar[newCompressedBuffLen];
           memcpy (newCompressedBuff, compressedBuff, compressedBuffLen);
           memcpy (newCompressedBuff + compressedBuffLen, outputBuffer, have);
@@ -174,21 +174,21 @@ void*  Compressor::CreateCompressedBuffer (void*    source,
 
 
 void*   Compressor::Decompress (const void*  compressedBuff,
-                                uint32       compressedBuffLen,
-                                uint32&      unCompressedLen
+                                kkuint32     compressedBuffLen,
+                                kkuint32&    unCompressedLen
                                )
 {
 #ifdef ZLIB_H
   if  (compressedBuff == NULL)
     return  NULL;
 
-  uint32     have      = 0;
+  kkuint32   have      = 0;
   uchar*     unCompressedBuff    = NULL;
 
   Bytef*     outBuffer = NULL;
-  int32      outBufferLen = 0;
+  kkint32    outBufferLen = 0;
 
-  int32      ret;
+  kkint32    ret;
   z_stream   strm;
 
   /* allocate inflate state */
@@ -254,7 +254,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     }
     else
     {
-      int32  newUnCompressedLen   = unCompressedLen + have;
+      kkint32  newUnCompressedLen   = unCompressedLen + have;
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);
@@ -283,10 +283,10 @@ void*   Compressor::Decompress (const void*  compressedBuff,
 
 
 void   Compressor::Decompress (const void*  compressedBuff,
-                               uint32       compressedBuffLen,
+                               kkuint32     compressedBuffLen,
                                uchar*&      unCompressedBuff,
-                               uint32&      unCompressedBuffSize,
-                               uint32&      unCompressedBuffLen
+                               kkuint32&    unCompressedBuffSize,
+                               kkuint32&    unCompressedBuffLen
                               )
 {
 #ifdef ZLIB_H
@@ -295,9 +295,9 @@ void   Compressor::Decompress (const void*  compressedBuff,
 
   unCompressedBuffLen = 0;
 
-  //uint32     have      = 0;
+  //kkuint32   have      = 0;
 
-  int32      ret;
+  kkint32    ret;
   z_stream   strm;
 
   /* allocate inflate state */
@@ -329,13 +329,13 @@ void   Compressor::Decompress (const void*  compressedBuff,
   /* run inflate() on input until output buffer not full */
   do 
   {
-    uint32  unCompressedBuffLeft = unCompressedBuffSize - unCompressedBuffLen;
+    kkuint32  unCompressedBuffLeft = unCompressedBuffSize - unCompressedBuffLen;
     if  ((strm.avail_in * 1.2) > unCompressedBuffLeft)
     {
-      uint32  increaseBy = (uint32)((strm.avail_in * 1.2) - unCompressedBuffLeft);
-      increaseBy = Max (increaseBy, (uint32)10240);
+      kkuint32  increaseBy = (kkuint32)((strm.avail_in * 1.2) - unCompressedBuffLeft);
+      increaseBy = Max (increaseBy, (kkuint32)10240);
 
-      uint32  newUncompressedBuffSize = unCompressedBuffSize + increaseBy;
+      kkuint32  newUncompressedBuffSize = unCompressedBuffSize + increaseBy;
       uchar*  newUnCompressedBuff = new uchar[newUncompressedBuffSize];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedBuffSize);
       delete  unCompressedBuff;

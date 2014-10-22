@@ -11,18 +11,16 @@ namespace KKMachineLearning
   class  ClassStatistic 
   {
   public:
-    typedef  KKB::uint32  uint32;
-
     ClassStatistic (const ClassStatistic&  right);
 
     ClassStatistic (MLClassPtr  _mlClass,
-                    uint32         _count
+                    kkuint32    _count
                    );
 
-    uint32           Count      ()  const {return  count;}
-    MLClassPtr    MLClass ()  const {return  mlClass;}
+    kkuint32         Count      ()  const {return  count;}
+    MLClassPtr       MLClass    ()  const {return  mlClass;}
 
-    void             Increment  ()         {count++;}
+    void             Increment  ()        {count++;}
 
     const KKStr&     Name       ()  const;
 
@@ -32,7 +30,7 @@ namespace KKMachineLearning
 
   private:
     MLClassPtr  mlClass;   /**< Does not own the mlClass object. */
-    uint32         count;        /**< represents the number of PostLarvaeFV instances in a FeatureVectorList that point to mageClass */
+    kkuint32    count;        /**< represents the number of PostLarvaeFV instances in a FeatureVectorList that point to mageClass */
   };
 
 
@@ -56,7 +54,7 @@ namespace KKMachineLearning
 
     void  PrintReport (ostream& r);
 
-    int32 operator[]  (MLClassPtr  mlClass);
+    kkint32 operator[]  (MLClassPtr  mlClass);
     const  ClassStatisticList&  operator+= (const ClassStatisticList&  right);
 
 

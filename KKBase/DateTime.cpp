@@ -114,7 +114,7 @@ uchar  DateType::MonthFromStr (const KKStr&  monthStr)
 
 
 
-uchar  DateType::DaysInTheMonth (int32 year, 
+uchar  DateType::DaysInTheMonth (kkint32 year, 
                                  uchar month
                                 )
 {
@@ -132,7 +132,7 @@ uchar  DateType::DaysInTheMonth (int32 year,
 
 
 
-int32  DateType::DaysYTDforMonth (int32 year,
+kkint32  DateType::DaysYTDforMonth (kkint32 year,
                                 uchar month
                                )
 {
@@ -221,8 +221,8 @@ DateType::DateType (KKStr  s):
   if  ((m > 0)  && (m < 13))
   {
     // Second field is a month field, assuming  yyyy/mmm/dd
-    int32 f3 = atoi (field3.Str ());
-    int32 f1 = atoi (field1.Str ());
+    kkint32 f3 = atoi (field3.Str ());
+    kkint32 f1 = atoi (field1.Str ());
     
     if  (f3 > 1900)
     {
@@ -249,9 +249,9 @@ DateType::DateType (KKStr  s):
     return;
   }
 
-  int32 f1 = atoi (field1.Str ());
-  int32 f2 = atoi (field2.Str ());
-  int32 f3 = atoi (field3.Str ());
+  kkint32 f1 = atoi (field1.Str ());
+  kkint32 f2 = atoi (field2.Str ());
+  kkint32 f3 = atoi (field3.Str ());
 
   if  (((f1 >= 1)  &&  (f1 <= 12))  &&
        ((f2 >= 1)  &&  (f2 <= 31))  &&
@@ -301,7 +301,7 @@ DateType::DateType (KKStr  s):
 
 
 
-int32  DaysInYear (int32 year)
+kkint32  DaysInYear (kkint32 year)
 {
   if  ((year % 4) == 0)
     return 366;
@@ -311,7 +311,7 @@ int32  DaysInYear (int32 year)
 
 
 
-DateType::DateType (int32  days)
+DateType::DateType (kkint32  days)
 {
   SetFromNumOfDaysInTime (days);
 }
@@ -323,9 +323,9 @@ uchar  DateType::DaysThisMonth ()  const
 }
 
 
-void  DateType::SetFromNumOfDaysInTime (int32  days)
+void  DateType::SetFromNumOfDaysInTime (kkint32  days)
 {
-  int32  numOf4Years = days / 1461;
+  kkint32  numOf4Years = days / 1461;
 
   if  (days < 0)
     days--;
@@ -345,7 +345,7 @@ void  DateType::SetFromNumOfDaysInTime (int32  days)
     days = DaysInYear (year);
   }
 
-  int32  daysInYear = DaysInYear (year);
+  kkint32  daysInYear = DaysInYear (year);
   while  (days > daysInYear)
   {
     year++;
@@ -354,7 +354,7 @@ void  DateType::SetFromNumOfDaysInTime (int32  days)
   }
 
   month = 1;
-  int32  daysInMonth = DaysInTheMonth (year, month);
+  kkint32  daysInMonth = DaysInTheMonth (year, month);
   while  (days > daysInMonth)
   {
     month++;
@@ -381,7 +381,7 @@ void  DateType::AdjustYear ()
 
 
 
-void   DateType::AddDays (int32  _days)
+void   DateType::AddDays (kkint32  _days)
 {
   if  (_days < 0)
   {
@@ -391,12 +391,12 @@ void   DateType::AddDays (int32  _days)
 
   if  (_days > 365)
   {
-    int32  numDays = Days () + _days;
+    kkint32  numDays = Days () + _days;
     SetFromNumOfDaysInTime (numDays);
     return;
   }
 
-  int32  newDay = day + _days;
+  kkint32  newDay = day + _days;
   while  (newDay > DaysThisMonth ())
   {
     newDay = newDay - DaysThisMonth ();
@@ -414,7 +414,7 @@ void   DateType::AddDays (int32  _days)
 
 
 
-void   DateType::SubtractDays (int32  _days)
+void   DateType::SubtractDays (kkint32  _days)
 {
   if  (_days < 0)
   {
@@ -424,12 +424,12 @@ void   DateType::SubtractDays (int32  _days)
 
   if  (_days > 365)
   {
-    int32  numDays = Days () - _days;
+    kkint32  numDays = Days () - _days;
     SetFromNumOfDaysInTime (numDays);
     return;
   }
 
-  int32  newDay = day - _days;
+  kkint32  newDay = day - _days;
   while  (newDay < 1)
   {
     month--;
@@ -446,9 +446,9 @@ void   DateType::SubtractDays (int32  _days)
 
 
 
-void  DateType::AddMonths (int32 _months)
+void  DateType::AddMonths (kkint32 _months)
 {
-  int32  newMonth = month + _months;
+  kkint32  newMonth = month + _months;
   year = year + (short)(newMonth / 12);
   newMonth = newMonth % 12;
   if  (newMonth == 0)
@@ -475,17 +475,17 @@ DateType&  DateType::operator= (const DateType&  right)
 
 
 
-int32  DateType::Days ()  const
+kkint32  DateType::Days ()  const
 {
   if  ((month < 1)  ||  (month > 12))
     return 0;
 
   
-  int32  totDays = 0;
+  kkint32  totDays = 0;
 
   if  (year < 0)
   {
-    int32  x = 0 - year;
+    kkint32  x = 0 - year;
     totDays = totDays - ((x * 365) + (x / 4));
   }
 
@@ -511,7 +511,7 @@ kkuint64   DateType::Seconds ()  const
 
 
 
-int32  DateType::Compare (const DateType&  right)  const
+kkint32  DateType::Compare (const DateType&  right)  const
 {
   if  (year > right.year)
     return  1;
@@ -578,15 +578,15 @@ bool  DateType::operator<= (const DateType&  right)  const
 
 
 
-void  DateType::AdjustDateFields (int32&  years,
-                                  int32&  months,
-                                  int32&  days
+void  DateType::AdjustDateFields (kkint32&  years,
+                                  kkint32&  months,
+                                  kkint32&  days
                                  )
 {
   years  += (months / 12);
   months =  (months % 12);
 
-  int32  daysInTheMonth = DaysInTheMonth (years, (uchar)months);
+  kkint32  daysInTheMonth = DaysInTheMonth (years, (uchar)months);
 
   while  ((days < 1)  &&  (days > daysInTheMonth))
   {
@@ -622,13 +622,13 @@ DateType  DateType::operator+  (const DateType&  right)  const
 
 
 
-DateType  DateType::operator+  (int32  right)  const
+DateType  DateType::operator+  (kkint32  right)  const
 {
   return  DateType (Days () + right);
 }
 
 
-DateType  DateType::operator-  (int32  right)  const
+DateType  DateType::operator-  (kkint32  right)  const
 {
   return  DateType (Days () - right);
 }
@@ -779,12 +779,12 @@ TimeType::TimeType (uchar  _hour,
 
 
 
-TimeType::TimeType (int32  seconds)
+TimeType::TimeType (kkint32  seconds)
 {
-  int32 hours   = seconds / 3600;
+  kkint32 hours   = seconds / 3600;
       seconds = seconds % 3600;
 
-  int32 minutes = seconds / 60;
+  kkint32 minutes = seconds / 60;
       seconds = seconds % 60;
 
   hour   = (uchar)hours;
@@ -817,9 +817,9 @@ TimeType::TimeType (KKStr  s):
     field3 = s.ExtractToken ("\n\r\t: ");
   }
 
-  int32  f1 = atoi (field1.Str ());
-  int32  f2 = atoi (field2.Str ());
-  int32  f3 = atoi (field3.Str ());
+  kkint32  f1 = atoi (field1.Str ());
+  kkint32  f2 = atoi (field2.Str ());
+  kkint32  f3 = atoi (field3.Str ());
  
 
   if  (((f1 >= 0)  &&  (f1 <= 24))  &&
@@ -847,7 +847,7 @@ KKStr  TimeType::HHMMSS   ()  const
 }
 
 
-int32  TimeType::Compare (const TimeType&  right)  const
+kkint32  TimeType::Compare (const TimeType&  right)  const
 {
   if  (hour > right.hour)
     return  1;
@@ -919,7 +919,7 @@ bool  TimeType::operator<  (const TimeType&  right)  const
 }
 
 
-KKB::uint32  TimeType::Seconds ()  const
+kkuint32  TimeType::Seconds ()  const
 {
   return  hour * 3600 + minute * 60 + second;
 }
@@ -927,14 +927,14 @@ KKB::uint32  TimeType::Seconds ()  const
 
 TimeType  TimeType::operator+ (const TimeType&  right)  const
 {
-  int32  totSeconds = Seconds () + right.Seconds ();
+  kkint32  totSeconds = Seconds () + right.Seconds ();
   return  TimeType (totSeconds);
 }
 
 
 TimeType  TimeType::operator- (const TimeType&  right)  const
 {
-  int32  totSeconds = Seconds () - right.Seconds ();
+  kkint32  totSeconds = Seconds () - right.Seconds ();
   return  TimeType (totSeconds);
 }
 
@@ -1058,7 +1058,7 @@ DateTime::DateTime (const KKStr&  s):
 
 
 
-int32 DateTime::Compare (const DateTime&  right)  const
+kkint32 DateTime::Compare (const DateTime&  right)  const
 {
   if  (date < right.date)
     return -1;
@@ -1081,17 +1081,17 @@ kkuint64  DateTime::Seconds () const
 
 
 
-void  DateTime::AddDays (int32  _days)
+void  DateTime::AddDays (kkint32  _days)
 {
   date.AddDays (_days);
 }
 
 
-void  DateTime::AddHours (int32  _hours)
+void  DateTime::AddHours (kkint32  _hours)
 {
   if  (_hours < 0)
   {
-    int32  newHour = time.Hour () + _hours;
+    kkint32  newHour = time.Hour () + _hours;
     while  (newHour < 0)
     {
       date = date - 1;
@@ -1101,7 +1101,7 @@ void  DateTime::AddHours (int32  _hours)
   }
   else
   {
-    int32  newHour = time.Hour () + _hours;
+    kkint32  newHour = time.Hour () + _hours;
     while  (newHour > 23)
     {
       date = date + 1;
@@ -1112,9 +1112,9 @@ void  DateTime::AddHours (int32  _hours)
 }  /* AddHours */
 
 
-void  DateTime::AddMinutes  (int32  _mins)
+void  DateTime::AddMinutes  (kkint32  _mins)
 {
-  int32  newMins = time.Minute () + _mins;
+  kkint32  newMins = time.Minute () + _mins;
 
   while  (newMins < 0)
   {
@@ -1159,7 +1159,7 @@ void  DateTime::AddSeconds  (long _secs)
 
 
 
-void  DateTime::HoursAdd (int32  _hours)
+void  DateTime::HoursAdd (kkint32  _hours)
 {
   AddHours (_hours);
 }  /* HoursAdd */
@@ -1167,7 +1167,7 @@ void  DateTime::HoursAdd (int32  _hours)
 
 
 
-void  DateTime::MinutesAdd  (int32 _mins)
+void  DateTime::MinutesAdd  (kkint32 _mins)
 {
   AddMinutes (_mins);
 }  /* MinutesAdd */
@@ -1241,8 +1241,8 @@ bool  DateTime::operator<= (const DateTime&  right)  const
 
 DateTime   DateTime::operator+ (const DateTime& right)  const
 {
-  int32 netDays = date.Days ()    + right.date.Days ();
-  int32 netSecs = time.Seconds () + right.time.Seconds (); 
+  kkint32 netDays = date.Days ()    + right.date.Days ();
+  kkint32 netSecs = time.Seconds () + right.time.Seconds (); 
   netSecs = netSecs % 86400;
 
   return  DateTime (DateType (netDays), TimeType (netSecs));
@@ -1253,10 +1253,10 @@ DateTime   DateTime::operator+ (const DateTime& right)  const
 
 DateTime   DateTime::operator- (const DateTime& right)  const
 {
-  int32 netDays = date.Days () - right.date.Days ();
+  kkint32 netDays = date.Days () - right.date.Days ();
 
-  int32 leftSecs  = time.Seconds ();
-  int32 rightSecs = right.time.Seconds ();
+  kkint32 leftSecs  = time.Seconds ();
+  kkint32 rightSecs = right.time.Seconds ();
 
   while  (rightSecs > leftSecs)
   {
@@ -1264,9 +1264,9 @@ DateTime   DateTime::operator- (const DateTime& right)  const
     leftSecs = leftSecs + 86400; 
   }
 
-  int32 netSecs = leftSecs - rightSecs;
+  kkint32 netSecs = leftSecs - rightSecs;
 
-  int32 numOfDaysInSecs = netSecs / 86400;
+  kkint32 numOfDaysInSecs = netSecs / 86400;
   netSecs = netSecs % 86400;
 
   return  DateTime (DateType (netDays + numOfDaysInSecs), TimeType (netSecs));

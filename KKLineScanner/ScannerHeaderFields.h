@@ -25,7 +25,7 @@ namespace  KKLSC
 
     ~ScannerHeaderFields ();
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
     void  Add (ScannerHeaderFieldsPtr  fields);
 
@@ -38,7 +38,7 @@ namespace  KKLSC
               );
 
     void  Add (const KKStr&  fieldName,
-               int32         fieldValue
+               kkint32       fieldValue
               );
 
     void  Add (const KKStr&  fieldName,
@@ -61,7 +61,7 @@ namespace  KKLSC
 
     float  GetValueFloat (const KKStr&  fieldName)  const;
 
-    int32  GetValueInt32 (const KKStr&  fieldName)  const;
+    kkint32  GetValueInt32 (const KKStr&  fieldName)  const;
 
     void  StartBlock ();
     void  EndBlock ();

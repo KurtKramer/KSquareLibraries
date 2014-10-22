@@ -48,7 +48,7 @@ namespace KKB
      *@return  Labeled grayscale image where pixels will be labels into their respective class; between '1' and 'numClasses'.
      */
     RasterPtr  SegmentImage (RasterPtr  srcImage,
-                             int32      numClasses,
+                             kkint32    numClasses,
                              double&    sep
                             );
 
@@ -66,7 +66,7 @@ namespace KKB
      */
     RasterPtr  SegmentMaskedImage (RasterPtr  srcImage,
                                    RasterPtr  mask,
-                                   int32      numClasses,
+                                   kkint32    numClasses,
                                    double&    sep
                                   );
 
@@ -111,9 +111,9 @@ namespace KKB
                        );
 
     double  sig_func (VectorDouble          k,
-                      int32                 nbins,
+                      kkint32               nbins,
                       const VectorDouble&   P,
-                      int32                 numClasses
+                      kkint32               numClasses
                      );
 
    template<typename T>
@@ -154,7 +154,7 @@ namespace KKB
 
    VectorDouble  LinSpace (double  start,
                            double  end,
-                           int32   numPoints
+                           kkint32 numPoints
                           );
 
    void  MakeNanWhenLesOrEqualZero (Matrix&  m);
@@ -190,8 +190,8 @@ namespace KKB
 
    template<typename T>
    vector<T>  SubSet (const vector<T>&  P, 
-                      int32             start,
-                      int32             end
+                      kkint32           start,
+                      kkint32           end
                      );
 
    template<typename T>
@@ -199,8 +199,8 @@ namespace KKB
 
    template<typename T>
    T  SumSubSet (const vector<T>&  P, 
-                 int32             start,
-                 int32             end
+                 kkint32           start,
+                 kkint32           end
                 );
 
    template<typename T>

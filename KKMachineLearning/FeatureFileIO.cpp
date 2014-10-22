@@ -50,7 +50,7 @@ using namespace KKMachineLearning;
 void  ReportError (RunLog&        log,
                    const KKStr&  fileName,
                    const KKStr&  funcName,
-                   int32            lineCount,
+                   kkint32          lineCount,
                    const KKStr&  errorDesc
                   )
 {
@@ -332,7 +332,7 @@ void  FeatureFileIO::GetLine (istream&  _in,
     return;
   }
 
-  int32  ch = _in.peek ();
+  kkint32  ch = _in.peek ();
   while  ((ch != '\n')  &&  (ch != '\r')  &&  (!_in.eof ()))
   {
     ch = _in.get ();
@@ -382,7 +382,7 @@ void  FeatureFileIO::GetToken (istream&     _in,
     return;
   }
 
-  int32  ch;
+  kkint32  ch;
 
   // Skip past any leading white space.
   ch = _in.peek ();
@@ -442,20 +442,20 @@ void  FeatureFileIO::GetToken (istream&     _in,
 
 
 FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile 
-                                      (const KKStr&          _fileName,
-                                       MLClassList&       _mlClasses,
-                                       int32                 _maxCount,
-                                       volatile const bool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
-                                       bool&                 _successful,
-                                       bool&                 _changesMade,
-                                       RunLog&               _log
+                                      (const KKStr&   _fileName,
+                                       MLClassList&   _mlClasses,
+                                       kkint32        _maxCount,
+                                       VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
+                                       bool&          _successful,
+                                       bool&          _changesMade,
+                                       RunLog&        _log
                                       )
 {
   _log.Level (10) << "LoadFeatureFile  File[" << _fileName << "]  FileFormat[" << driverName << "]" << endl;
   
   _changesMade = false;
 
-  int32  estimatedNumOfDataItems = -1;
+  kkint32  estimatedNumOfDataItems = -1;
   
   _successful = true;
 
@@ -506,8 +506,8 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
 void   FeatureFileIO::AppendToFile (const KKStr&           _fileName,
                                     const FeatureNumList&  _selFeatures,
                                     FeatureVectorList&     _examples,
-                                    uint32&                _numExamplesWritten,
-                                    volatile const bool&   _cancelFlag,
+                                    kkuint32&              _numExamplesWritten,
+                                    VolConstBool&          _cancelFlag,
                                     bool&                  _successful,
                                     RunLog&                _log
                                    )
@@ -548,8 +548,8 @@ void   FeatureFileIO::AppendToFile (const KKStr&           _fileName,
 void  FeatureFileIO::SaveFeatureFile (const KKStr&           _fileName, 
                                       const FeatureNumList&  _selFeatures,
                                       FeatureVectorList&     _examples,
-                                      uint32&                _numExamplesWritten,
-                                      volatile const bool&   _cancelFlag,
+                                      kkuint32&              _numExamplesWritten,
+                                      VolConstBool&          _cancelFlag,
                                       bool&                  _successful,
                                       RunLog&                _log
                                      )
@@ -580,12 +580,12 @@ void  FeatureFileIO::SaveFeatureFile (const KKStr&           _fileName,
 void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileName, 
                                                    const FeatureNumList&  _selFeatures,
                                                    FeatureVectorList&     _examples,
-                                                   volatile const bool&   _cancelFlag,
+                                                   VolConstBool&          _cancelFlag,
                                                    bool&                  _successful,
                                                    RunLog&                _log
                                                   )
 {
-  uint32  numExamplesWritten = 0;
+  kkuint32  numExamplesWritten = 0;
   SaveFeatureFile (_fileName, _selFeatures, _examples, numExamplesWritten, _cancelFlag, _successful, _log);
 
   if  (_cancelFlag  ||  (!_successful))
@@ -593,13 +593,13 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
 
   if  (_examples.QueueSize () > 64000)
   {
-    int32  numPartsNeeded = (_examples.QueueSize () / 64000);
+    kkint32  numPartsNeeded = (_examples.QueueSize () / 64000);
     if  ((_examples.QueueSize () % 64000) > 0)
       numPartsNeeded++;
 
-    int32  maxPartSize = (_examples.QueueSize () / numPartsNeeded) + 1;
+    kkint32  maxPartSize = (_examples.QueueSize () / numPartsNeeded) + 1;
 
-    int32  partNum = 0;
+    kkint32  partNum = 0;
     FeatureVectorList::const_iterator idx = _examples.begin ();
 
     while  ((idx != _examples.end ())  &&  (_successful)  &&  (!_cancelFlag))

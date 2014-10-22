@@ -35,14 +35,15 @@ namespace KKMachineLearning
 {
   typedef  enum 
   {
+    NULLAttribute,
     IgnoreAttribute,
     NumericAttribute,
     NominalAttribute,
     OrdinalAttribute,
-    SymbolicAttribute,   // Same as NominalAttribute, except the names file does not
-                         // list all possible values.  They have to be determined from
-                         // the data file.
-    NULLAttribute
+    SymbolicAttribute    /**< Same as NominalAttribute, except the names file does not
+                          * list all possible values.  They have to be determined from
+                          * the data file.
+                          */
   } 
   AttributeType;
 
@@ -50,12 +51,13 @@ namespace KKMachineLearning
 
   typedef  AttributeTypeVector*        AttributeTypeVectorPtr;
 
+
   class  Attribute
   {
   public:
     Attribute (const KKStr&   _name,
                AttributeType  _type,
-               int32          _fieldNum
+               kkint32        _fieldNum
               );
 
     Attribute (const Attribute&  a);
@@ -66,16 +68,16 @@ namespace KKMachineLearning
                                      bool&         alreadyExists
                                     );
 
-    int32          Cardinality (); 
+    kkint32        Cardinality (); 
 
-    int32          FieldNum ()  const  {return  fieldNum;}
+    kkint32        FieldNum ()  const  {return  fieldNum;}
 
-    int32          GetNominalCode  (const KKStr&  nominalValue)  const;  // -1 means not found.
+    kkint32        GetNominalCode  (const KKStr&  nominalValue)  const;  // -1 means not found.
 
     const  
-    KKStr&         GetNominalValue (int32 code) const;
+    KKStr&         GetNominalValue (kkint32 code) const;
 
-    int32          MemoryConsumedEstimated ()  const;
+    kkint32        MemoryConsumedEstimated ()  const;
 
     const
     KKStr&         Name () const {return name;}
@@ -95,7 +97,7 @@ namespace KKMachineLearning
   private:
     void    ValidateNominalType (const KKStr&  funcName)  const;
 
-    int32          fieldNum;
+    kkint32        fieldNum;
     KKStr          name;
     KKStr          nameUpper;
     KKStrListPtr   nominalValues;
@@ -118,7 +120,7 @@ namespace KKMachineLearning
     const
     AttributePtr  LookUpByName (const KKStr&  attributeName)  const;
 
-    int32 MemoryConsumedEstimated ()  const;
+    kkint32 MemoryConsumedEstimated ()  const;
 
     void  PushOnBack   (AttributePtr  attribute);
 

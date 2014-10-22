@@ -91,7 +91,7 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
     virtual double                   Gamma                      () const;
     virtual SVM_KernalType           KernalType                 () const;
     virtual SVM_MachineType          MachineType                () const;
-    virtual int32                    NumOfFeaturesAfterEncoding () const;
+    virtual kkint32                  NumOfFeaturesAfterEncoding () const;
     virtual const svm_parameter&     Param                      () const;
     virtual float                    SamplingRate               () const;
     virtual const FeatureNumList&    SelectedFeatures           () const;

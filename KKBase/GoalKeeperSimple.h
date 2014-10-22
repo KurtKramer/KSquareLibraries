@@ -107,7 +107,7 @@ namespace  KKB
     bool   BlockedByAnotherThread ();
   
 
-    int32  BlockerThreadId ();  /**< @brief  ThreadId of thread that currently holds the Block  -1 indicates no Block */
+    kkint32  BlockerThreadId ();  /**< @brief  ThreadId of thread that currently holds the Block  -1 indicates no Block */
 
     /**
      *@brief Ends the block and allows other threads to pass through StatBlock.
@@ -117,7 +117,7 @@ namespace  KKB
      */
     void   EndBlock ();
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
     const  KKStr&  Name ()  const  {return  name;}
 
@@ -145,9 +145,9 @@ namespace  KKB
 
     volatile bool   blocked;    /**< @brief 'true' = Currently Blocked.  */
 
-    volatile int32  blockerThreadId;  /**< @brief ThreadId of thread that currently holds the Block  -1 indicates no Block */
+    volatile kkint32  blockerThreadId;  /**< @brief ThreadId of thread that currently holds the Block  -1 indicates no Block */
 
-    volatile uint32 levels;  /**< Number of levels deep that a thread blocked; this is the number of times "EndBlock" must be called 
+    volatile kkuint32 levels;  /**< Number of levels deep that a thread blocked; this is the number of times "EndBlock" must be called 
                               * to release this block.
                               */
 

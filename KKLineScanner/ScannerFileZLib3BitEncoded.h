@@ -47,8 +47,8 @@ namespace  KKLSC
 
     /**  Constructor for opening file for Writing */
     ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
-                                uint32        _pixelsPerScanLine,
-                                uint32        _frameHeight,
+                                kkuint32      _pixelsPerScanLine,
+                                kkuint32      _frameHeight,
                                 RunLog&       _log
                                );
 
@@ -63,27 +63,27 @@ namespace  KKLSC
 
     virtual
     void   WriteTextBlock (const uchar*  txtBlock,
-                           uint32        txtBlockLen
+                           kkuint32      txtBlockLen
                           );
 
   private:
     void  AllocateBuffers ();
 
     void  ExpandBuffer (uchar*&  buffer,
-                        uint32&  bufferSize,
-                        uint32   bufferNewSize
+                        kkuint32&  bufferSize,
+                        kkuint32 bufferNewSize
                        );
 
     void  ExpandBufferNoCopy (uchar*&  buffer,
-                              uint32&  bufferSize,
-                              uint32   bufferNewSize
+                              kkuint32&  bufferSize,
+                              kkuint32 bufferNewSize
                              );
 
     virtual
       kkint64  SkipToNextFrame ();
     
     virtual
-      uint32  ReadBufferFrame ();
+      kkuint32  ReadBufferFrame ();
     
     virtual
       void  WriteBufferFrame ();
@@ -101,8 +101,8 @@ namespace  KKLSC
     struct  FourByteRec;
 
     uchar*  compBuffer;
-    uint32  compBufferLen;
-    uint32  compBufferSize;
+    kkuint32  compBufferLen;
+    kkuint32  compBufferSize;
     
   };  /* ScannerFileZLib3BitEncoded */
 }

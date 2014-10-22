@@ -25,51 +25,51 @@ namespace KKB
   {
   public:
     Histogram (float  _minValue,
-               int32  _numOfBuckets,
+               kkint32  _numOfBuckets,
                float  _bucketSize,
                bool   _wrapArround
               );
 
     ~Histogram ();
 
-    int32         AreaInRange (int32  minBucket,
-                               int32  maxBucket
+    kkint32       AreaInRange (kkint32  minBucket,
+                               kkint32  maxBucket
                               )  const;
 
-    float         AreaInRangePercent (int32  minBucket,
-                                      int32  maxBucket
+    float         AreaInRangePercent (kkint32  minBucket,
+                                      kkint32  maxBucket
                                      )  const;
 
     float         AverageOfMaxBucket ()  const;
 
-    float         AverageOfMaxBucketInRange (int32  firstBucket,
-                                             int32  lastBucket
+    float         AverageOfMaxBucketInRange (kkint32  firstBucket,
+                                             kkint32  lastBucket
                                             )  const;
 
 
-    float         AverageOfMaxBucketExcludingRange (int32  minBucket,
-                                                    int32  maxBucket
+    float         AverageOfMaxBucketExcludingRange (kkint32  minBucket,
+                                                    kkint32  maxBucket
                                                    )  const;
 
-    float         AverageOfMinBucketInRange (int32  minBucket,
-                                             int32  maxBucket
+    float         AverageOfMinBucketInRange (kkint32  minBucket,
+                                             kkint32  maxBucket
                                             )  const;
 
-    float         Bucket (int32  bucket)  const;
+    float         Bucket (kkint32  bucket)  const;
 
     float         BucketSize ()  const  {return bucketSize;}
 
-    void          CalculatePeaks (int32  threshold);
+    void          CalculatePeaks (kkint32  threshold);
 
     float         CountOfMaxBucket ()  const;
 
     RasterPtr     CreateGraph ()  const;
 
-    RasterPtr     CreateGraph (int32  barSize)  const;
+    RasterPtr     CreateGraph (kkint32  barSize)  const;
 
     Histogram*    Equalized ();
 
-    int32*        EqualizedMapTable ()  {return  equalizedMapTable;}
+    kkint32*        EqualizedMapTable ()  {return  equalizedMapTable;}
 
     void          GetStats (float&   min,
                             float&   max,
@@ -77,23 +77,23 @@ namespace KKB
                             float&   variance
                            );
 
-    int32         GetPeakBucket (int32 peakNum);
+    kkint32       GetPeakBucket (kkint32 peakNum);
 
-    int32         GetPeakByHighestOrder (int32 peakNum);
+    kkint32       GetPeakByHighestOrder (kkint32 peakNum);
 
-    float         GetPeakAvgByHighestOrder (int32 peakNum);
+    float         GetPeakAvgByHighestOrder (kkint32 peakNum);
 
     void          Increment (float  val);
 
-    bool          IsBucketAPeak (int32  bucket,
-                                 int32  tolerance
+    bool          IsBucketAPeak (kkint32  bucket,
+                                 kkint32  tolerance
                                 )  const;
 
-    int32         MaxBucketIdx ()  const;
+    kkint32       MaxBucketIdx ()  const;
 
     float         MinValue () const  {return minValue;}
 
-    int32         NumOfBuckets ()  const  {return  numOfBuckets;}
+    kkint32       NumOfBuckets ()  const  {return  numOfBuckets;}
 
     void          PrintTable (ostream&  o);
 
@@ -102,10 +102,10 @@ namespace KKB
     void          SaveGraphImage (const KKStr&  fileName)  const;
 
     void          SaveGraphImage (const KKStr&  fileName,
-                                  int32         barSize
+                                  kkint32       barSize
                                  )  const;
 
-    Histogram*    Smooth (int32 smoothWidth);
+    Histogram*    Smooth (kkint32 smoothWidth);
 
     float         TotalCount () const {return  totalCount;}
 
@@ -114,13 +114,13 @@ namespace KKB
     float*      buckets;
     float*      bucketTotals;
 
-    int32*      equalizedMapTable;
+    kkint32*      equalizedMapTable;
 
     float       minValue;
 
-    int32       numOfBuckets;
+    kkint32     numOfBuckets;
 
-    vector<int32> peaks; 
+    vector<kkint32> peaks; 
 
     float       range;
 

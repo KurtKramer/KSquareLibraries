@@ -184,7 +184,7 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-int32   ModelParamOldSVM::NumOfFeaturesAfterEncoding () const
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding () const
 {
   return  svmParameters->NumOfFeaturesAfterEncoding ();
 }

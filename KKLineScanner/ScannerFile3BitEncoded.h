@@ -77,8 +77,8 @@ namespace  KKLSC
                            );
 
     ScannerFile3BitEncoded (const KKStr&  _fileName,
-                            uint32        _pixelsPerScanLine,
-                            uint32        _frameHeight,
+                            kkuint32      _pixelsPerScanLine,
+                            kkuint32      _frameHeight,
                             RunLog&       _log
                            );
 
@@ -96,12 +96,12 @@ namespace  KKLSC
 
     virtual
     void   WriteTextBlock (const uchar*  txtBlock,
-                           uint32        txtBlockLen
+                           kkuint32      txtBlockLen
                           );
 
   protected:
     /**  @brief  Read on one Scanner File Frame. */
-    uint32   ReadBufferFrame ();
+    kkuint32 ReadBufferFrame ();
 
     virtual  kkint64  SkipToNextFrame ();
 
@@ -120,15 +120,15 @@ namespace  KKLSC
       void  ExitCleanUp ();
 
     void  GetNextScanLine (uchar* lineBuff,
-                           uint32 lineBuffSize
+                           kkuint32 lineBuffSize
                           );
 
     void   WriteNextScanLine (const uchar*  buffer,
-                              uint32        bufferLen
+                              kkuint32      bufferLen
                              );
 
     void   WriteNextScanLine2 (const uchar*  buffer,
-                               uint32        bufferLen
+                               kkuint32      bufferLen
                               );
 
     struct  OpRecTextBlock;
@@ -142,15 +142,15 @@ namespace  KKLSC
 
     inline
     void  Write4Spaces (OpRecPtr&  outputBuffPtr,
-                        int32&     outputBuffUsed,
-                        int32&     num4SpacesInARow,
+                        kkint32&   outputBuffUsed,
+                        kkint32&   num4SpacesInARow,
                         ushort     eol
                        );
 
     inline
     void  Write4BlackOuts (OpRecPtr&  outputBuffPtr,
-                           int32&     outputBuffUsed,
-                           int32&     num4BlackOutsInARow,
+                           kkint32&   outputBuffUsed,
+                           kkint32&   num4BlackOutsInARow,
                            ushort     eol
                           );
 
@@ -167,9 +167,9 @@ namespace  KKLSC
     uchar     fourSpaces[4];          /**< Used to quickly check for 4 blanks in a row.                                  */
     uchar     fourBlackOuts[4];
     OpRecPtr  outputBuff;             /**< This is where compressed data will be stored before writing to scanner file.  */
-    uint32    outputBuffLen;          /**< Size of 'outputBuff' allocated.                                               */
+    kkuint32  outputBuffLen;          /**< Size of 'outputBuff' allocated.                                               */
     uchar*    workLine;               /**< Where 4bit translated characters will be stored before compression.           */
-    uint32    workLineLen;            /**< length of the current 'workLine' buffer.                                      */
+    kkuint32  workLineLen;            /**< length of the current 'workLine' buffer.                                      */
 
     typedef  enum  {csNull, csRunLen, csRaw}  CompStatus;
     CompStatus  curCompStatus;

@@ -53,8 +53,8 @@ namespace  KKMachineLearning
   public:
     CrossValidation (TrainingConfiguration2Ptr _config,
                      FeatureVectorListPtr      _examples,
-                     MLClassListPtr         _mlClasses,
-                     int32                     _numOfFolds,
+                     MLClassListPtr            _mlClasses,
+                     kkint32                   _numOfFolds,
                      bool                      _featuresAreAlreadyNormalized,
                      FileDescPtr               _fileDesc,
                      RunLog&                   _log,
@@ -74,10 +74,10 @@ namespace  KKMachineLearning
 
     float         Accuracy     ();
     float         AccuracyNorm ();
-    int32         DuplicateTrainDataCount () const {return  duplicateTrainDataCount;}
-    float         FoldAccuracy (int32 foldNum) const;
+    kkint32       DuplicateTrainDataCount () const {return  duplicateTrainDataCount;}
+    float         FoldAccuracy (kkint32 foldNum) const;
 
-    void          NumOfFolds (int32 _numOfFolds)  {numOfFolds = _numOfFolds;}
+    void          NumOfFolds (kkint32 _numOfFolds)  {numOfFolds = _numOfFolds;}
 
     const
     VectorFloat&  FoldAccuracies          () const {return  foldAccuracies;}
@@ -86,10 +86,10 @@ namespace  KKMachineLearning
 
     ConfusionMatrix2Ptr  GiveMeOwnershipOfConfusionMatrix ();
 
-    int32         NumOfSupportVectors        () const {return  numSVs;}
-    int32         NumSVs                     () const {return  numSVs;}
-    int32         TotalNumSVs                () const {return  totalNumSVs;}
-    int32         SupportPointsTotal         () const {return  numSVs;}
+    kkint32       NumOfSupportVectors        () const {return  numSVs;}
+    kkint32       NumSVs                     () const {return  numSVs;}
+    kkint32       TotalNumSVs                () const {return  totalNumSVs;}
+    kkint32       SupportPointsTotal         () const {return  numSVs;}
     
     const VectorFloat&   Accuracies          () const {return foldAccuracies;}
     float                AccuracyMean        () const {return accuracyMean;}
@@ -119,7 +119,7 @@ namespace  KKMachineLearning
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
                          FeatureVectorListPtr   trainingImages,
-                         int32                  foldNum,
+                         kkint32                foldNum,
                          bool*                  classedCorrectly = NULL
                         );
 
@@ -130,7 +130,7 @@ namespace  KKMachineLearning
 
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
-    int32                     duplicateTrainDataCount;
+    kkint32                   duplicateTrainDataCount;
     bool                      featuresAreAlreadyNormalized;
     FileDescPtr               fileDesc;
     VectorFloat               foldAccuracies;
@@ -138,22 +138,22 @@ namespace  KKMachineLearning
     ConfusionMatrix2Ptr       confusionMatrix;
     ConfusionMatrix2Ptr*      cmByNumOfConflicts;
     FeatureVectorListPtr      examples;
-    MLClassListPtr         mlClasses;
-    int32                     imagesPerClass;
+    MLClassListPtr            mlClasses;
+    kkint32                   imagesPerClass;
     RunLog&                   log;
-    int32                     maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
-    int32                     numOfFolds;
+    kkint32                   maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
+    kkint32                   numOfFolds;
 
-    int32                     numSVs;             /**< Total Support Vectors Detected. */
+    kkint32                   numSVs;             /**< Total Support Vectors Detected. */
 
-    int32                     totalNumSVs;        /**< This is different from 'numOfSupportVectors' it will reflect all the Support Vectors
+    kkint32                   totalNumSVs;        /**< This is different from 'numOfSupportVectors' it will reflect all the Support Vectors
                                                    * that are created in a Multi Class SVM.  That is if a given example is used in three
                                                    * different binary classifiers it will be counted three times.
                                                    */
 
-    int32*                    numOfWinnersCounts;
-    int32*                    numOfWinnersCorrects;
-    int32*                    numOfWinnersOneOfTheWinners;
+    kkint32*                  numOfWinnersCounts;
+    kkint32*                  numOfWinnersCorrects;
+    kkint32*                  numOfWinnersOneOfTheWinners;
 
     double                    testTime;
     double                    trainingTime;

@@ -51,11 +51,11 @@ ScannerHeaderFields::~ScannerHeaderFields ()
 
 
 
-int32  ScannerHeaderFields::MemoryConsumedEstimated ()
+kkint32  ScannerHeaderFields::MemoryConsumedEstimated ()
 {
   goalie->StartBlock ();
 
-  int32  mem = sizeof (*this);
+  kkint32  mem = sizeof (*this);
 
   if  (goalie)   mem += goalie->MemoryConsumedEstimated ();
   
@@ -108,7 +108,7 @@ void  ScannerHeaderFields::Add (const KKB::KKStr&  fieldName,
 
 
 void  ScannerHeaderFields::Add (const KKStr&  fieldName,
-                                int32         fieldValue
+                                kkint32       fieldValue
                                )
 {
   KKStr fieldValueStr = StrFromInt64 (fieldValue);
@@ -197,7 +197,7 @@ float  ScannerHeaderFields::GetValueFloat (const KKStr&  fieldName)  const
 
 
 
-int32  ScannerHeaderFields::GetValueInt32 (const KKStr&  fieldName)  const
+kkint32  ScannerHeaderFields::GetValueInt32 (const KKStr&  fieldName)  const
 {
   KKStr  s = GetValue (fieldName);
   return s.ToInt32 ();

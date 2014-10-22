@@ -34,14 +34,14 @@ using  namespace  SVM289_BFS;
 
 #pragma warning(disable : 4996)
 
-//int32 libsvm_version = LIBSVM_VERSION;
+//kkint32 libsvm_version = LIBSVM_VERSION;
 
 
 
 
 namespace  SVM289_BFS
 {
-  void  sigmoid_train (int32          l, 
+  void  sigmoid_train (kkint32        l, 
                        const double*  dec_values, 
                        const double*  labels, 
                        double&        A,
@@ -60,14 +60,14 @@ namespace  SVM289_BFS
                            double  B
                           );
 
-  void  multiclass_probability (int32     k, /**< Number of Classes.      */
+  void  multiclass_probability (kkint32   k, /**< Number of Classes.      */
                                 double**  r, /**< Pairwise Probabilites.  */
                                 double*   p  /**< Class Probability       */
                                );
 
   void  readline (FILE*    input,
                   char*&   buff,
-                  int32&   buffLen,
+                  kkint32& buffLen,
                   bool&    eof
                  );
 
@@ -81,7 +81,7 @@ namespace  SVM289_BFS
   // Stratified cross validation
   void  svm_cross_validation (const svm_problem&    prob, 
                               const svm_parameter&  param, 
-                              int32                 nr_fold, 
+                              kkint32               nr_fold, 
                               double*               target,
                               RunLog&               log
                              );
@@ -89,11 +89,11 @@ namespace  SVM289_BFS
 
   template<class T> 
       inline T* GrowAllocation (T*     src, 
-                                int32  origSize,
-                                int32  newSize
+                                kkint32  origSize,
+                                kkint32  newSize
                                )
   {
-    int32  zed = 0;
+    kkint32  zed = 0;
     T*  dest = new T[newSize];
     while  (zed < origSize)    {dest[zed] = src[zed];  zed++;}
     while  (zed < newSize)     {dest[zed] = (T)0;      zed++;}
@@ -103,20 +103,20 @@ namespace  SVM289_BFS
 
 
   double Min (double  x,  double   y) {return (x < y) ? x : y;}
-  int32  Min (int32   x,  int32    y) {return (x < y) ? x : y;}
+  kkint32  Min (kkint32 x,  kkint32  y) {return (x < y) ? x : y;}
   float  Min (float   x,  float    y) {return (x < y) ? x : y;}
-  uint32 Min (uint32  x,  uint32   y) {return (x < y) ? x : y;}
+  kkuint32 Min (kkuint32  x,  kkuint32 y) {return (x < y) ? x : y;}
 
-  int32  Max (int32   x,  int32    y) {return (x > y) ? x : y;}
+  kkint32  Max (kkint32 x,  kkint32  y) {return (x > y) ? x : y;}
   double Max (double  x,  double   y) {return (x > y) ? x : y;}
   float  Max (float   x,  float    y) {return (x > y) ? x : y;}
-  uint32 Max (uint32  x,  uint32   y) {return (x > y) ? x : y;}
+  kkuint32 Max (kkuint32  x,  kkuint32 y) {return (x > y) ? x : y;}
 
-  inline double  powi (double base, int32 times)
+  inline double  powi (double base, kkint32 times)
   {
     double tmp = base, ret = 1.0;
 
-    for  (int32 t = times;  t > 0;  t /= 2)
+    for  (kkint32 t = times;  t > 0;  t /= 2)
     {
       if  ((t % 2) == 1) 
        ret *= tmp;
@@ -159,7 +159,7 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
   l = _x.QueueSize ();
 
   y = new double[l];
-  int32  idx = 0;
+  kkint32  idx = 0;
   for  (idx = 0;  idx < l;  idx++)
     y[idx] = _y[idx];
 }
@@ -174,7 +174,7 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
   x           (_selFeatures.FileDesc (), false, _log),
   y           (NULL)
 {
-  int32  zed = 87989;
+  kkint32  zed = 87989;
 }
 
 
@@ -241,15 +241,15 @@ SVM289_BFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
 {
   if  (_param.weight_label)
   {
-    weight_label = new int32[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    weight_label = new kkint32[nr_weight];
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight_label[x] = _param.weight_label[x];
   }
 
   if  (_param.weight)
   {
     weight = new double[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight[x] = _param.weight[x];
   }
 }
@@ -308,15 +308,15 @@ svm_parameter&  SVM289_BFS::svm_parameter::operator= (const svm_parameter& right
   
   if  (right.weight_label)
   {
-    weight_label = new int32[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    weight_label = new kkint32[nr_weight];
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight_label[x] = right.weight_label[x];
   }
 
   if  (right.weight)
   {
     weight = new double[nr_weight];
-    for  (int32 x = 0;  x < nr_weight;  x++)
+    for  (kkint32 x = 0;  x < nr_weight;  x++)
       weight[x] = right.weight[x];
   }
 
@@ -343,8 +343,8 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
     cmdStr << "-ProbParam " << probParam << "  ";
          
   cmdStr << "-r " << coef0                 << "  "
-         << "-s " << (int32)svm_type       << "  "
-         << "-t " << (int32)kernel_type    << "  ";
+         << "-s " << (kkint32)svm_type       << "  "
+         << "-t " << (kkint32)kernel_type    << "  ";
 
   return  cmdStr;
 }
@@ -378,7 +378,7 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
     C  = valueNum;
 
   else if  (cmd.EqualIgnoreCase ("-D"))
-    degree = (int32)valueNum;
+    degree = (kkint32)valueNum;
 
   else if  (cmd.EqualIgnoreCase ("-E"))
     eps  = valueNum;
@@ -387,7 +387,7 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
     gamma = valueNum;
 
   else if  (cmd.EqualIgnoreCase ("-H"))
-    shrinking = (int32)valueNum;
+    shrinking = (kkint32)valueNum;
 
   else if  (cmd.EqualIgnoreCase ("-M"))
     cache_size = valueNum;
@@ -413,7 +413,7 @@ void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
   else if  (cmd.EqualIgnoreCase ("-W"))
   {
     ++nr_weight;
-    weight_label = (int32 *) realloc (weight_label, sizeof (int32) * nr_weight);
+    weight_label = (kkint32 *) realloc (weight_label, sizeof (kkint32) * nr_weight);
     weight = (double *) realloc (weight, sizeof (double) * nr_weight);
     weight_label[nr_weight - 1] = atoi (cmd.SubStrPart (2).Str ());
     weight[nr_weight - 1]       = valueNum;
@@ -433,7 +433,7 @@ KKStr   SVM289_BFS::svm_parameter::ToTabDelStr ()  const
 {
   KKStr  result (256);
 
-  int32  x = 0;
+  kkint32  x = 0;
 
   result << "svm_type"    << "\t"  << SVM_Type_ToStr    (svm_type)    << "\t"
          << "kernel_type" << "\t"  << Kernel_Type_ToStr (kernel_type) << "\t"
@@ -478,13 +478,13 @@ KKStr   SVM289_BFS::svm_parameter::ToTabDelStr ()  const
 void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
 {
   KKStr  str = _str;
-  int32  x;
+  kkint32  x;
 
   while  (!str.Empty ())
   {
     KKStr  field = str.ExtractToken2 ("\t");
     KKStr  value = str.ExtractToken2 ("\t");
-    int32   valueI = value.ToInt    ();
+    kkint32 valueI = value.ToInt    ();
     double  valueD = value.ToDouble ();
     float   valueF = value.ToFloat  ();
 
@@ -517,7 +517,7 @@ void    SVM289_BFS::svm_parameter::ParseTabDelStr (const KKStr&  _str)
       if  (nr_weight > 0)
       {
         delete[]  weight_label;
-        weight_label = new int32[nr_weight];
+        weight_label = new kkint32[nr_weight];
 
         // value = weight label.
         for  (x = 0;  x < nr_weight;  x++)
@@ -677,8 +677,8 @@ static void info(const char *fmt,...) {}
 class  SVM289_BFS::Cache
 {
 public:
-  Cache (int32  l,
-         int32  size
+  Cache (kkint32  l,
+         kkint32  size
         );
 
   ~Cache();
@@ -687,22 +687,22 @@ public:
   // request data [0,len)
   // return some position p where [p,len) need to be filled
   // (p >= len if nothing needs to be filled)
-  int32  get_data(const int32  index, 
+  kkint32  get_data(const kkint32  index, 
                   Qfloat**     data, 
-                  int32        len
+                  kkint32      len
                  );
 
-  void swap_index (int32 i, int32 j);  
+  void swap_index (kkint32 i, kkint32 j);  
 
 private:
-  int32  l;
-  int32  size;
+  kkint32  l;
+  kkint32  size;
 
   struct  head_t
   {
     head_t *prev, *next;  // a circular list
     Qfloat *data;
-    int32  len;           // data[0,len) is cached in this entry
+    kkint32  len;           // data[0,len) is cached in this entry
   };
 
   head_t*     head;
@@ -714,8 +714,8 @@ private:
 
 
 
-SVM289_BFS::Cache::Cache (int32  l_,
-                          int32  size_
+SVM289_BFS::Cache::Cache (kkint32  l_,
+                          kkint32  size_
                          ):
       l    (l_),
       size (size_)
@@ -723,7 +723,7 @@ SVM289_BFS::Cache::Cache (int32  l_,
   head = (head_t *)calloc (l, sizeof (head_t));  // initialized to 0
   size /= sizeof (Qfloat);
   size -= l * sizeof (head_t) / sizeof (Qfloat);
-  size = Max (size, 2 * (int32) l);  // cache must be large enough for two columns
+  size = Max (size, 2 * (kkint32) l);  // cache must be large enough for two columns
   lru_head.next = lru_head.prev = &lru_head;
 }
 
@@ -758,16 +758,16 @@ void Cache::lru_insert (head_t *h)
 
 
 
-int32  Cache::get_data (const int32  index, 
+kkint32  Cache::get_data (const kkint32  index, 
                         Qfloat**     data, 
-                        int32        len
+                        kkint32      len
                        )
 {
   head_t*  h = &head[index];
   if  (h->len) 
     lru_delete (h);
 
-  int32  more = len - h->len;
+  kkint32  more = len - h->len;
 
   if  (more > 0)
   {
@@ -795,7 +795,7 @@ int32  Cache::get_data (const int32  index,
 
 
 
-void Cache::swap_index (int32 i, int32 j)
+void Cache::swap_index (kkint32 i, kkint32 j)
 {
   if  ( i == j) 
     return;
@@ -859,9 +859,9 @@ void Cache::swap_index (int32 i, int32 j)
 class  SVM289_BFS::QMatrix 
 {
 public:
-  virtual Qfloat*  get_Q  (int32 column, int32 len) const = 0;
+  virtual Qfloat*  get_Q  (kkint32 column, kkint32 len) const = 0;
   virtual Qfloat*  get_QD () const = 0;
-  virtual void swap_index (int32 i, int32 j)  = 0;
+  virtual void swap_index (kkint32 i, kkint32 j)  = 0;
   virtual ~QMatrix() {}
 };
 
@@ -891,9 +891,9 @@ public:
                             const FeatureNumList&  selFeatures
                            );
 
-  virtual Qfloat*  get_Q      (int32 column, int32 len) const = 0;
+  virtual Qfloat*  get_Q      (kkint32 column, kkint32 len) const = 0;
   virtual Qfloat*  get_QD     () const = 0;
-  virtual void     swap_index (int32 i, int32 j)   // no so const...
+  virtual void     swap_index (kkint32 i, kkint32 j)   // no so const...
   {
     //swap (x[i], x[j]);
     x->SwapIndexes (i, j);
@@ -902,20 +902,20 @@ public:
   }
 
 protected:
-  double (Kernel::*kernel_function) (int32 i, int32 j) const;
+  double (Kernel::*kernel_function) (kkint32 i, kkint32 j) const;
 
 private:
-  int32                 l;
-  int32                 numSelFeatures;
-  int32*                selFeatures;
+  kkint32               l;
+  kkint32               numSelFeatures;
+  kkint32*                selFeatures;
   FeatureVectorListPtr  x;
   double*               x_square;
 
   float**               preComputed;
 
   // svm_parameter
-  const int32          kernel_type;
-  const int32          degree;
+  const kkint32        kernel_type;
+  const kkint32        degree;
   const double         gamma;
   const double         coef0;
 
@@ -924,31 +924,31 @@ private:
               )  const;
 
 
-  double kernel_linear (int32 i, int32 j) const
+  double kernel_linear (kkint32 i, kkint32 j) const
   {
     return dot ((*x)[i], (*x)[j]);
   }
 
 
-  double  kernel_poly (int32 i, int32 j) const
+  double  kernel_poly (kkint32 i, kkint32 j) const
   {
     return  powi (gamma * dot((*x)[i], (*x)[j]) + coef0, degree);
   }
 
 
-  double  kernel_rbf (int32 i, int32 j) const
+  double  kernel_rbf (kkint32 i, kkint32 j) const
   {
     return exp (-gamma * (x_square[i] + x_square[j] - 2 * dot ((*x)[i], (*x)[j])));
   }
 
 
-  double kernel_sigmoid (int32 i, int32 j) const
+  double kernel_sigmoid (kkint32 i, kkint32 j) const
   {
     return tanh (gamma * dot ((*x)[i], (*x)[j]) + coef0);
   }
 
 
-  double kernel_precomputed (int32 i, int32 j) const
+  double kernel_precomputed (kkint32 i, kkint32 j) const
   {
     if  (preComputed)
       return  preComputed[i][j];
@@ -980,8 +980,8 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
   x = new FeatureVectorList (_x, false);
 
   numSelFeatures = _selFeatures.NumSelFeatures ();
-  selFeatures = new int32[numSelFeatures];
-  for  (int32 zed = 0;  zed < numSelFeatures;  zed++)
+  selFeatures = new kkint32[numSelFeatures];
+  for  (kkint32 zed = 0;  zed < numSelFeatures;  zed++)
     selFeatures[zed] = _selFeatures[zed];
 
   switch  (kernel_type)
@@ -1004,8 +1004,8 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
     case PRECOMPUTED:
       {
-        int32  z1 = 0;
-        int32  z2 = 0;
+        kkint32  z1 = 0;
+        kkint32  z2 = 0;
         kernel_function = &Kernel::kernel_precomputed;
         preComputed = new float*[l];
         for  (z1 = 0;  z1 < l;  z1++)
@@ -1021,7 +1021,7 @@ SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
   if  (kernel_type == RBF)
   {
     x_square = new double[l];
-    for  (int32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  i++)
       x_square[i] = dot ((*x)[i], (*x)[i]);
   }
 
@@ -1041,8 +1041,8 @@ SVM289_BFS::Kernel::~Kernel()
 
   if  (preComputed)
   {
-    int32  n = x->QueueSize ();
-    int32 z1 = 0;
+    kkint32  n = x->QueueSize ();
+    kkint32 z1 = 0;
     for  (z1 = 0;  z1 < l;  z1++)
       delete  preComputed[z1];
     delete  preComputed;
@@ -1061,8 +1061,8 @@ double  SVM289_BFS::Kernel::dot (const FeatureVector&  px,
                             )  const
 {
   double  sum = 0;
-  int32  fn = 0;
-  int32  idx = 0;
+  kkint32  fn = 0;
+  kkint32  idx = 0;
 
   const float*  fvX  = px.FeatureData ();
   const float*  fvY  = py.FeatureData ();
@@ -1083,11 +1083,11 @@ double  SVM289_BFS::Kernel::DotStatic (const FeatureVector&   px,
                                    const FeatureNumList&  selFeatures
                                   ) 
 {
-  int32  numFeatures = selFeatures.NumSelFeatures ();
+  kkint32  numFeatures = selFeatures.NumSelFeatures ();
 
   double  sum = 0;
-  int32  fn = 0;
-  int32  idx = 0;
+  kkint32  fn = 0;
+  kkint32  idx = 0;
 
   const float*  fvX  = px.FeatureData ();
   const float*  fvY  = py.FeatureData ();
@@ -1123,9 +1123,9 @@ double  SVM289_BFS::Kernel::k_function  (const FeatureVector&   x,
 
     case RBF:
     {
-      int32  numSelFeatures = selFeatures.NumSelFeatures ();
-      int32  fn  = 0;
-      int32  idx = 0;
+      kkint32  numSelFeatures = selFeatures.NumSelFeatures ();
+      kkint32  fn  = 0;
+      kkint32  idx = 0;
       const float*  fvX = x.FeatureData ();
       const float*  fvY = y.FeatureData ();
 
@@ -1191,7 +1191,7 @@ public:
     double r;  // for Solver_NU
   };
 
-  void  Solve (int32          l, 
+  void  Solve (kkint32        l, 
                QMatrix&       Q, 
                const double*  p_, 
                const schar*   y_,
@@ -1200,11 +1200,11 @@ public:
                double         Cn, 
                double         eps,
                SolutionInfo*  si, 
-               int32          shrinking
+               kkint32        shrinking
               );
 
 protected:
-  int32           active_size;
+  kkint32         active_size;
   schar*          y;
   double*         G;   // gradient of objective function
   enum  {LOWER_BOUND, UPPER_BOUND, FREE};
@@ -1216,19 +1216,19 @@ protected:
   double          Cp;
   double          Cn;
   double*         p;
-  int32*          active_set;
+  kkint32*          active_set;
   double*         G_bar;     // gradient, if we treat free variables as 0
-  int32           l;
+  kkint32         l;
   bool            unshrink;  // XXX
 
 
-  double get_C (int32 i)
+  double get_C (kkint32 i)
   {
     return (y[i] > 0) ? Cp : Cn;
   }
 
 
-  void  update_alpha_status (int32 i)
+  void  update_alpha_status (kkint32 i)
   {
     if  (alpha[i] >= get_C(i))
       alpha_status[i] = UPPER_BOUND;
@@ -1240,15 +1240,15 @@ protected:
   }
 
 
-  bool is_upper_bound (int32 i) {return alpha_status[i] == UPPER_BOUND;}
-  bool is_lower_bound (int32 i) {return alpha_status[i] == LOWER_BOUND;}
-  bool is_free        (int32 i) {return alpha_status[i] == FREE;}
+  bool is_upper_bound (kkint32 i) {return alpha_status[i] == UPPER_BOUND;}
+  bool is_lower_bound (kkint32 i) {return alpha_status[i] == LOWER_BOUND;}
+  bool is_free        (kkint32 i) {return alpha_status[i] == FREE;}
 
-  void swap_index (int32 i, int32 j);
+  void swap_index (kkint32 i, kkint32 j);
 
   void reconstruct_gradient ();
 
-  virtual int32  select_working_set (int32&  i, int32&  j);
+  virtual kkint32  select_working_set (kkint32&  i, kkint32&  j);
 
   virtual double calculate_rho ();
 
@@ -1256,7 +1256,7 @@ protected:
 
 
 private:
-  bool  be_shrunk (int32    i, 
+  bool  be_shrunk (kkint32  i, 
                    double Gmax1, 
                    double Gmax2
                   );  
@@ -1265,7 +1265,7 @@ private:
 
 
 
-void  SVM289_BFS::Solver::swap_index  (int32 i, int32 j)
+void  SVM289_BFS::Solver::swap_index  (kkint32 i, kkint32 j)
 {
   Q->swap_index (i, j);
   SVM289_BFS::swap (y[i], y[j]);
@@ -1286,8 +1286,8 @@ void  SVM289_BFS::Solver::reconstruct_gradient ()
   if  (active_size == l) 
     return;
 
-  int32 i,j;
-  int32 nr_free = 0;
+  kkint32 i,j;
+  kkint32 nr_free = 0;
 
   for  (j = active_size;  j < l;  j++)
     G[j] = G_bar[j] + p[j];
@@ -1332,7 +1332,7 @@ void  SVM289_BFS::Solver::reconstruct_gradient ()
 
 
 
-void  SVM289_BFS::Solver::Solve (int32            l, 
+void  SVM289_BFS::Solver::Solve (kkint32          l, 
                                  QMatrix&         Q, 
                                  const double*    p_, 
                                  const schar*     y_,
@@ -1341,7 +1341,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
                                  double           Cn, 
                                  double           eps,
                                  SolutionInfo*    si, 
-                                 int32            shrinking
+                                 kkint32          shrinking
                                 )
 {
   this->l = l;
@@ -1358,14 +1358,14 @@ void  SVM289_BFS::Solver::Solve (int32            l,
   // initialize alpha_status
   {
     alpha_status = new char[l];
-    for  (int32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  i++)
       update_alpha_status (i);
   }
 
   // initialize active set (for shrinking)
   {
-    active_set = new int32[l];
-    for  (int32 i = 0;  i < l;  i++)
+    active_set = new kkint32[l];
+    for  (kkint32 i = 0;  i < l;  i++)
       active_set[i] = i;
     active_size = l;
   }
@@ -1374,7 +1374,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
   {
     G     = new double[l];
     G_bar = new double[l];
-    int32  i;
+    kkint32  i;
     for  (i = 0;  i < l;  i++)
     {
       G[i]     = p[i];
@@ -1387,7 +1387,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
       {
         Qfloat *Q_i = Q.get_Q(i,l);
         double alpha_i = alpha[i];
-        int32  j;
+        kkint32  j;
         for  (j = 0;  j < l;  j++)
           G[j] += alpha_i*Q_i[j];
 
@@ -1402,8 +1402,8 @@ void  SVM289_BFS::Solver::Solve (int32            l,
 
   // optimization step
 
-  int32 iter = 0;
-  int32 counter = Min (l, 1000) + 1;
+  kkint32 iter = 0;
+  kkint32 counter = Min (l, 1000) + 1;
 
   while(1)
   {
@@ -1417,7 +1417,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
       info(".");
     }
 
-    int32 i, j;
+    kkint32 i, j;
     if  (select_working_set (i, j) != 0)   // 'select_working_set' == 1 if already optimal otherwise 0.
     {
       // reconstruct the whole gradient
@@ -1539,7 +1539,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
     double delta_alpha_i = alpha[i] - old_alpha_i;
     double delta_alpha_j = alpha[j] - old_alpha_j;
     
-    for  (int32 k = 0;  k < active_size;  k++)
+    for  (kkint32 k = 0;  k < active_size;  k++)
     {
       G[k] += Q_i[k] * delta_alpha_i + Q_j[k] * delta_alpha_j;
     }
@@ -1551,7 +1551,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
       bool uj = is_upper_bound(j);
       update_alpha_status (i);
       update_alpha_status (j);
-      int32 k;
+      kkint32 k;
       if  (ui != is_upper_bound (i))
       {
         Q_i = Q.get_Q (i,l);
@@ -1590,7 +1590,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
   // calculate objective value
   {
     double v = 0;
-    int32 i;
+    kkint32 i;
     for  (i = 0;  i < l;  i++)
       v += alpha[i] * (G[i] + p[i]);
 
@@ -1599,7 +1599,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
 
   // put back the solution
   {
-    for  (int32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  i++)
     {
       alpha_[active_set[i]] = alpha[i];
     }
@@ -1607,7 +1607,7 @@ void  SVM289_BFS::Solver::Solve (int32            l,
 
   // juggle everything back
   /*{
-    for(int32 i=0;i<l;i++)
+    for(kkint32 i=0;i<l;i++)
       while(active_set[i] != i)
         swap_index(i,active_set[i]);
         // or Q.swap_index(i,active_set[i]);
@@ -1631,8 +1631,8 @@ void  SVM289_BFS::Solver::Solve (int32            l,
 
 
 // return 1 if already optimal, return 0 otherwise
-int32  SVM289_BFS::Solver::select_working_set (int32&  out_i, 
-                                               int32&  out_j
+kkint32  SVM289_BFS::Solver::select_working_set (kkint32&  out_i, 
+                                               kkint32&  out_j
                                               )
 {
   // return i,j such that
@@ -1643,11 +1643,11 @@ int32  SVM289_BFS::Solver::select_working_set (int32&  out_i,
   
   double  Gmax         = -INF;
   double  Gmax2        = -INF;
-  int32   Gmax_idx     = -1;
-  int32   Gmin_idx     = -1;
+  kkint32 Gmax_idx     = -1;
+  kkint32 Gmin_idx     = -1;
   double  obj_diff_min = INF;
 
-  for  (int32 t=0;t<active_size;t++)
+  for  (kkint32 t=0;t<active_size;t++)
   {
     if  (y[t] == +1)
     {
@@ -1674,12 +1674,12 @@ int32  SVM289_BFS::Solver::select_working_set (int32&  out_i,
   }
 
 
-  int32 i = Gmax_idx;
+  kkint32 i = Gmax_idx;
   const Qfloat *Q_i = NULL;
   if  (i != -1) // NULL Q_i not accessed: Gmax=-INF if i=-1
     Q_i = Q->get_Q(i,active_size);
 
-  for(int32 j=0;j<active_size;j++)
+  for(kkint32 j=0;j<active_size;j++)
   {
     if(y[j]==+1)
     {
@@ -1745,7 +1745,7 @@ int32  SVM289_BFS::Solver::select_working_set (int32&  out_i,
 
 
 
-bool  SVM289_BFS::Solver::be_shrunk(int32 i, double Gmax1, double Gmax2)
+bool  SVM289_BFS::Solver::be_shrunk(kkint32 i, double Gmax1, double Gmax2)
 {
   if  (is_upper_bound(i))
   {
@@ -1774,7 +1774,7 @@ bool  SVM289_BFS::Solver::be_shrunk(int32 i, double Gmax1, double Gmax2)
 
 void   Solver::do_shrinking()
 {
-  int32 i;
+  kkint32 i;
   double  Gmax1 = -INF;    // Max { -y_i * grad(f)_i | i in I_up(\alpha) }
   double  Gmax2 = -INF;    // Max { y_i * grad(f)_i | i in I_low(\alpha) }
 
@@ -1843,12 +1843,12 @@ void   Solver::do_shrinking()
 double  SVM289_BFS::Solver::calculate_rho ()
 {
   double  r;
-  int32   nr_free  = 0;
+  kkint32 nr_free  = 0;
   double  ub       = INF;
   double  lb       = -INF;
   double  sum_free = 0;
 
-  for  (int32 i = 0;  i < active_size;  i++)
+  for  (kkint32 i = 0;  i < active_size;  i++)
   {
     double yG = y[i] * G[i];
 
@@ -1896,7 +1896,7 @@ class  SVM289_BFS::Solver_NU : public SVM289_BFS::Solver
 public:
   Solver_NU() {}
 
-  void  Solve (int32           l, 
+  void  Solve (kkint32         l, 
                QMatrix&        Q, 
                const double*   p, 
                const schar*    y,
@@ -1905,7 +1905,7 @@ public:
                double          Cn, 
                double          eps,
                SolutionInfo*   si, 
-               int32           shrinking
+               kkint32         shrinking
               )
   {
     this->si = si;
@@ -1915,11 +1915,11 @@ public:
 private:
   SolutionInfo*  si;
 
-  int32  select_working_set (int32 &i, int32 &j);
+  kkint32  select_working_set (kkint32 &i, kkint32 &j);
 
   double calculate_rho ();
 
-  bool  be_shrunk (int32     i, 
+  bool  be_shrunk (kkint32   i, 
                    double  Gmax1, 
                    double  Gmax2, 
                    double  Gmax3, 
@@ -1932,8 +1932,8 @@ private:
 
 
 // return 1 if already optimal, return 0 otherwise
-int32  SVM289_BFS::Solver_NU::select_working_set (int32&  out_i, 
-                                                  int32&  out_j
+kkint32  SVM289_BFS::Solver_NU::select_working_set (kkint32&  out_i, 
+                                                  kkint32&  out_j
                                                  )
 {
   // return i,j such that y_i = y_j and
@@ -1944,16 +1944,16 @@ int32  SVM289_BFS::Solver_NU::select_working_set (int32&  out_i,
 
   double  Gmaxp     = -INF;
   double  Gmaxp2    = -INF;
-  int32   Gmaxp_idx = -1;
+  kkint32 Gmaxp_idx = -1;
 
   double Gmaxn     = -INF;
   double Gmaxn2    = -INF;
-  int32  Gmaxn_idx = -1;
+  kkint32  Gmaxn_idx = -1;
 
-  int32  Gmin_idx     = -1;
+  kkint32  Gmin_idx     = -1;
   double obj_diff_min = INF;
 
-  for  (int32 t=0;t<active_size;t++)
+  for  (kkint32 t=0;t<active_size;t++)
   {
     if  (y[t] == +1)
     {
@@ -1980,8 +1980,8 @@ int32  SVM289_BFS::Solver_NU::select_working_set (int32&  out_i,
   }
 
 
-  int32 ip = Gmaxp_idx;
-  int32 in = Gmaxn_idx;
+  kkint32 ip = Gmaxp_idx;
+  kkint32 in = Gmaxn_idx;
   const Qfloat *Q_ip = NULL;
   const Qfloat *Q_in = NULL;
   if(ip != -1) // NULL Q_ip not accessed: Gmaxp=-INF if ip=-1
@@ -1989,7 +1989,7 @@ int32  SVM289_BFS::Solver_NU::select_working_set (int32&  out_i,
   if(in != -1)
     Q_in = Q->get_Q(in,active_size);
 
-  for  (int32 j = 0;  j < active_size;  j++)
+  for  (kkint32 j = 0;  j < active_size;  j++)
   {
     if(y[j]==+1)
     {
@@ -2056,7 +2056,7 @@ int32  SVM289_BFS::Solver_NU::select_working_set (int32&  out_i,
 
 
 
-bool Solver_NU::be_shrunk (int32   i, 
+bool Solver_NU::be_shrunk (kkint32 i, 
                            double  Gmax1, 
                            double  Gmax2, 
                            double  Gmax3, 
@@ -2095,7 +2095,7 @@ void  SVM289_BFS::Solver_NU::do_shrinking ()
   double Gmax4 = -INF;  // Max { y_i * grad(f)_i | y_i = -1, i in I_low(\alpha) }
 
   // find maximal violating pair first
-  int32 i;
+  kkint32 i;
   for  (i = 0;  i < active_size;  i++)
   {
     if  (!is_upper_bound (i))
@@ -2150,8 +2150,8 @@ void  SVM289_BFS::Solver_NU::do_shrinking ()
 
 double  SVM289_BFS::Solver_NU::calculate_rho ()
 {
-  int32   nr_free1  = 0;
-  int32   nr_free2  = 0;
+  kkint32 nr_free1  = 0;
+  kkint32 nr_free2  = 0;
   double  ub1       = INF;
   double  ub2       = INF;
   double  lb1       = -INF;
@@ -2159,7 +2159,7 @@ double  SVM289_BFS::Solver_NU::calculate_rho ()
   double  sum_free1 = 0;
   double  sum_free2 = 0;
 
-  for  (int32 i = 0;  i < active_size;  i++)
+  for  (kkint32 i = 0;  i < active_size;  i++)
   {
     if(  y[i]==+1)
     {
@@ -2224,18 +2224,18 @@ public:
 
   {
     clone (y, y_, prob.l);
-    cache = new Cache (prob.l, (int32)(param.cache_size * (1 << 20)));
+    cache = new Cache (prob.l, (kkint32)(param.cache_size * (1 << 20)));
     QD = new Qfloat[prob.l];
 
-    for  (int32 i = 0;  i < prob.l;  i++)
+    for  (kkint32 i = 0;  i < prob.l;  i++)
       QD[i] = (Qfloat)(this->*kernel_function)(i, i);
   }
 
   
-  Qfloat*  get_Q (int32 i, int32 len) const
+  Qfloat*  get_Q (kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 start, j;
+    kkint32 start, j;
     if  ((start = cache->get_data(i,&data,len)) < len)
     {
       for  (j = start;  j < len;  j++)
@@ -2252,7 +2252,7 @@ public:
 
 
 
-  void  swap_index (int32 i, int32 j)
+  void  swap_index (kkint32 i, kkint32 j)
   {
     cache->swap_index(i,j);
     Kernel::swap_index(i,j);
@@ -2287,17 +2287,17 @@ public:
     Kernel (prob.x, prob.selFeatures, param, _log)
 
   {
-    cache = new Cache (prob.l, (int32)(param.cache_size * (1<<20)));
+    cache = new Cache (prob.l, (kkint32)(param.cache_size * (1<<20)));
     QD = new Qfloat[prob.l];
-    for  (int32 i = 0;  i < prob.l;  i++)
+    for  (kkint32 i = 0;  i < prob.l;  i++)
       QD[i]= (Qfloat)(this->*kernel_function)(i, i);
   }
   
 
-  Qfloat *get_Q (int32 i, int32 len) const
+  Qfloat *get_Q (kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 start, j;
+    kkint32 start, j;
     if  ((start = cache->get_data(i,&data,len)) < len)
     {
       for  (j=start;  j < len;  j++)
@@ -2313,7 +2313,7 @@ public:
   }
 
 
-  void swap_index (int32 i, int32 j)
+  void swap_index (kkint32 i, kkint32 j)
   {
     cache->swap_index(i,j);
     Kernel::swap_index(i,j);
@@ -2346,12 +2346,12 @@ public:
     Kernel (prob.x, prob.selFeatures, param, _log)
   {
     l = prob.l;
-    cache = new Cache (l, (int32)(param.cache_size * (1 << 20)));
+    cache = new Cache (l, (kkint32)(param.cache_size * (1 << 20)));
     QD    = new Qfloat[2 * l];
     sign  = new schar [2 * l];
-    index = new int32   [2 * l];
+    index = new kkint32 [2 * l];
 
-    for  (int32 k = 0;  k < l;  k++)
+    for  (kkint32 k = 0;  k < l;  k++)
     {
       sign  [k]      = 1;
       sign  [k + l]  = -1;
@@ -2368,7 +2368,7 @@ public:
   }
 
 
-  void swap_index (int32 i, int32 j)
+  void swap_index (kkint32 i, kkint32 j)
   {
     SVM289_BFS::swap (sign  [i], sign  [j]);
     SVM289_BFS::swap (index [i], index [j]);
@@ -2377,10 +2377,10 @@ public:
   
 
 
-  Qfloat *get_Q (int32 i, int32 len) const
+  Qfloat *get_Q (kkint32 i, kkint32 len) const
   {
     Qfloat *data;
-    int32 j, real_i = index[i];
+    kkint32 j, real_i = index[i];
 
     if  (cache->get_data (real_i, &data, l) < l)
     {
@@ -2417,11 +2417,11 @@ public:
 
 
 private:
-  int32          l;
+  kkint32        l;
   Cache*         cache;
   schar*         sign;
-  int32*         index;
-  mutable int32  next_buffer;
+  kkint32*         index;
+  mutable kkint32  next_buffer;
   Qfloat*        buffer[2];
   Qfloat*        QD;
 };   /* SVR_Q */
@@ -2476,11 +2476,11 @@ void  SVM289_BFS::solve_c_svc (const svm_problem*     prob,
                           )
 {
   
-  int32    l          = prob->l;
+  kkint32  l          = prob->l;
   double*  minus_ones = new double[l];
   schar*   y          = new schar[l];
 
-  int32 i;
+  kkint32 i;
 
   for  (i = 0;  i < l;  i++)
   {
@@ -2535,8 +2535,8 @@ void  SVM289_BFS::solve_nu_svc (const svm_problem*     prob,
                                 RunLog&                _log
                                )
 {
-  int32  i;
-  int32  l  = prob->l;
+  kkint32  i;
+  kkint32  l  = prob->l;
   double nu = param->nu;
 
   schar *y = new schar[l];
@@ -2617,13 +2617,13 @@ void  SVM289_BFS::solve_one_class (const svm_problem*    prob,
                                RunLog&               _log
                               )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
 
   double*   zeros = new double[l];
   schar*    ones  = new schar[l];
-  int32 i;
+  kkint32 i;
 
-  int32 n = (int32)(param->nu * prob->l);  // # of alpha's at upper bound
+  kkint32 n = (kkint32)(param->nu * prob->l);  // # of alpha's at upper bound
 
   for  (i = 0;  i < n;  i++)
     alpha[i] = 1;
@@ -2672,11 +2672,11 @@ void  SVM289_BFS::solve_epsilon_svr (const svm_problem*    prob,
                                  RunLog&               _log
                                 )
 {
-  int32 l = prob->l;
+  kkint32 l = prob->l;
   double*  alpha2       = new double [2 * l];
   double*  linear_term  = new double [2 * l];
   schar*   y = new schar[2*l];
-  int32 i;
+  kkint32 i;
 
   for  (i = 0;  i < l;  i++)
   {
@@ -2731,13 +2731,13 @@ static void solve_nu_svr (const svm_problem*    prob,
                           RunLog&               _log
                          ) 
 {
-  int32    l = prob->l;
+  kkint32  l = prob->l;
   double   C = param->C;
 
   double*  alpha2      = new double [2 * l];
   double*  linear_term = new double [2 * l];
   schar*   y           = new schar  [2 * l];
-  int32 i;
+  kkint32 i;
 
   double sum = C * param->nu * l / 2;
 
@@ -2841,11 +2841,11 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
   // output SVs
 
-  std::vector<int32> SVIndex;     // Normalize by Margin Width(NMW).
+  std::vector<kkint32> SVIndex;     // Normalize by Margin Width(NMW).
 
-  int32 nSV   = 0;
-  int32 nBSV  = 0;
-  for  (int32 i = 0;  i < prob.l;  i++)
+  kkint32 nSV   = 0;
+  kkint32 nBSV  = 0;
+  for  (kkint32 i = 0;  i < prob.l;  i++)
   {
     if  (fabs (alpha[i]) > 0)
     {
@@ -2876,15 +2876,15 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
   
   double sum=0.0;
-  std::vector<int32>::iterator it,it2;
+  std::vector<kkint32>::iterator it,it2;
   double kvalue = 0.0;
 
   for (it = SVIndex.begin();  it < SVIndex.end();  it++)
   {
     for  (it2 = SVIndex.begin(); it2 < SVIndex.end();  it2++)
     {
-      int32 k  = *it;
-      int32 kk = *it2;
+      kkint32 k  = *it;
+      kkint32 kk = *it2;
 
       kvalue = Kernel::k_function (prob.x[k], prob.x[kk], param, prob.SelFeatures ());
 
@@ -2914,7 +2914,7 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
 
 // Platt's binary SVM Probablistic Output: an improvement from Lin et al.
-void  SVM289_BFS::sigmoid_train (int32          l, 
+void  SVM289_BFS::sigmoid_train (kkint32        l, 
                                  const double*  dec_values, 
                                  const double*  labels, 
                                  double&        A,
@@ -2923,7 +2923,7 @@ void  SVM289_BFS::sigmoid_train (int32          l,
 {
   double  prior1 = 0;
   double  prior0 = 0;
-  int32 i;
+  kkint32 i;
 
   for (i=0;i<l;i++)
   {
@@ -2933,7 +2933,7 @@ void  SVM289_BFS::sigmoid_train (int32          l,
       prior0 += 1;
   }
 
-  int32   max_iter  = 100;    // Maximal number of iterations
+  kkint32 max_iter  = 100;    // Maximal number of iterations
   double  min_step  = 1e-10;  // Minimal step taken in line search
   double  sigma     = 1e-12;  // For numerically strict PD of Hessian
   double  eps       = 1e-5;
@@ -2942,7 +2942,7 @@ void  SVM289_BFS::sigmoid_train (int32          l,
   double* t = new double[l];
   double  fApB, p, q, h11, h22, h21, g1, g2, det, dA, dB, gd, stepsize;
   double  newA, newB, newf, d1, d2;
-  int32   iter; 
+  kkint32 iter; 
   
   // Initial Point and Initial Fun Value
   A = 0.0; 
@@ -3066,14 +3066,14 @@ double  SVM289_BFS::sigmoid_predict (double  decision_value,
 
 
 // Method 2 from the multiclass_prob paper by Wu, Lin, and Weng
-void  SVM289_BFS::multiclass_probability (int32     k, /**< Number of Classes.      */
+void  SVM289_BFS::multiclass_probability (kkint32   k, /**< Number of Classes.      */
                                           double**  r, /**< Pairwise Probabilites.  */
                                           double*   p  /**< Class Probability       */
                                          )
 {
-  int32 t,j;
-  int32  iter     = 0;
-  int32  max_iter = Max (100, k);
+  kkint32 t,j;
+  kkint32  iter     = 0;
+  kkint32  max_iter = Max (100, k);
 
   double**  Q  = new double*[k];
   double*   Qp = new double[k];
@@ -3155,9 +3155,9 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
                                   RunLog&              log
                                  )
 {
-  int32 i;
-  int32  nr_fold = 5;
-  int32 *perm = new int32[prob->l];
+  kkint32 i;
+  kkint32  nr_fold = 5;
+  kkint32 *perm = new kkint32[prob->l];
 
   FeatureVectorPtr*  subX    = NULL;
   svm_problem*       subProb = NULL;
@@ -3170,17 +3170,17 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
   
   for  (i = 0;  i < prob->l;  i++)
   {
-    int32 j = i + rand() % (prob->l-i);
+    kkint32 j = i + rand() % (prob->l-i);
     SVM289_BFS::swap (perm[i], perm[j]);
   }
     
   for  (i = 0;  i < nr_fold;  i++)
   {
-    int32 begin = i * prob->l / nr_fold;
-    int32 end   = (i + 1) * prob->l / nr_fold;
-    int32 j, k;
+    kkint32 begin = i * prob->l / nr_fold;
+    kkint32 end   = (i + 1) * prob->l / nr_fold;
+    kkint32 j, k;
 
-    int32  subL = prob->l - (end - begin);
+    kkint32  subL = prob->l - (end - begin);
     subX = new FeatureVectorPtr[subL];
     for  (j = 0;  j < subL;  j++)
       subX[j] = NULL;
@@ -3209,7 +3209,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
       delete  subXX;
     }
 
-    int32  p_count=0, n_count = 0;
+    kkint32  p_count=0, n_count = 0;
 
     for  (j = 0;  j < k;  j++)
     {
@@ -3244,7 +3244,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
       subparam.probability=0;
       subparam.C=1.0;
       subparam.nr_weight=2;
-      subparam.weight_label = new int32[2];
+      subparam.weight_label = new kkint32[2];
       subparam.weight = new double[2];
       subparam.weight_label[0]=+1;
       subparam.weight_label[1]=-1;
@@ -3285,8 +3285,8 @@ double  svm_svr_probability (const svm_problem&   prob,
                              RunLog&              log
                             )
 {
-  int32 i;
-  int32 nr_fold = 5;
+  kkint32 i;
+  kkint32 nr_fold = 5;
   double *ymv = new double[prob.l];
   double mae = 0;
 
@@ -3302,7 +3302,7 @@ double  svm_svr_probability (const svm_problem&   prob,
 
   mae /= prob.l;
   double  std = sqrt (2 * mae * mae);
-  int32 count = 0;
+  kkint32 count = 0;
   mae = 0;
   for  (i = 0;  i < prob.l;  i++)
   {
@@ -3326,26 +3326,26 @@ double  svm_svr_probability (const svm_problem&   prob,
 // label: label name, start: begin of each class, count: #data of classes, perm: indices to the original data
 // perm, length l, must be allocated before calling this subroutine
 void  svm_group_classes (const svm_problem*  prob, 
-                         int32*              nr_class_ret, 
-                         int32**             label_ret, 
-                         int32**             start_ret, 
-                         int32**             count_ret, 
-                         int32*              perm
+                         kkint32*              nr_class_ret, 
+                         kkint32**             label_ret, 
+                         kkint32**             start_ret, 
+                         kkint32**             count_ret, 
+                         kkint32*              perm
                         )
 {
-  int32 l = prob->l;
-  int32 max_nr_class = 16;
-  int32 nr_class = 0;
-  int32 *label      = new int32[max_nr_class];
-  int32 *count      = new int32[max_nr_class];
-  int32 *data_label = new int32[l];
-  int32 i;
+  kkint32 l = prob->l;
+  kkint32 max_nr_class = 16;
+  kkint32 nr_class = 0;
+  kkint32 *label      = new kkint32[max_nr_class];
+  kkint32 *count      = new kkint32[max_nr_class];
+  kkint32 *data_label = new kkint32[l];
+  kkint32 i;
 
   // Count number of examples in each class
   for  (i = 0;  i < l;  i++)
   {
-    int32 this_label = (int32)prob->y[i];
-    int32 j;
+    kkint32 this_label = (kkint32)prob->y[i];
+    kkint32 j;
     for  (j = 0;  j < nr_class;  j++)
     {
       if  (this_label == label[j])
@@ -3361,7 +3361,7 @@ void  svm_group_classes (const svm_problem*  prob,
       // We have a new class
       if  (nr_class == max_nr_class)
       {
-        int32  newMaxNumClass = max_nr_class * 2;
+        kkint32  newMaxNumClass = max_nr_class * 2;
         label = GrowAllocation (label, max_nr_class, newMaxNumClass);
         count = GrowAllocation (count, max_nr_class, newMaxNumClass);
         max_nr_class = newMaxNumClass;
@@ -3372,7 +3372,7 @@ void  svm_group_classes (const svm_problem*  prob,
     }
   }
 
-  int32 *start = new int32[nr_class];
+  kkint32 *start = new kkint32[nr_class];
   start[0] = 0;
   for  (i = 1;  i < nr_class;  i++)
     start[i] = start[i - 1] + count[i - 1];
@@ -3432,8 +3432,8 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     model->rho = new double[1];
     model->rho[0] = f.rho;
 
-    int32 nSV = 0;
-    int32 i;
+    kkint32 nSV = 0;
+    kkint32 i;
     for  (i = 0;  i < prob.l;  i++)
     {
       if  (fabs(f.alpha[i]) > 0) 
@@ -3445,7 +3445,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     // model->SV is now a FeatureVectorList object that was initialized to empty and not owner in the consructor
     model->SV.Owner (true);
     model->sv_coef[0] = new double[nSV];
-    int32 j = 0;
+    kkint32 j = 0;
     for  (i = 0;  i < prob.l;  i++)
     {
       if  (fabs (f.alpha[i]) > 0)
@@ -3462,12 +3462,12 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
   else
   {
     // Classification
-    int32 l = prob.l;
-    int32 nr_class;
-    int32 *label = NULL;
-    int32 *start = NULL;
-    int32 *count = NULL;
-    int32 *perm = new int32[l];
+    kkint32 l = prob.l;
+    kkint32 nr_class;
+    kkint32 *label = NULL;
+    kkint32 *start = NULL;
+    kkint32 *count = NULL;
+    kkint32 *perm = new kkint32[l];
 
     // group training data of the same class
     svm_group_classes (&prob, 
@@ -3478,12 +3478,12 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
                        perm
                       );
 
-    int32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+    kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
     //svm_node **x = Malloc(svm_node *,l);
     FeatureVectorList x (prob.FileDesc (), false, log);
 
-    int32 i;
+    kkint32 i;
     for  (i = 0;  i < l;  i++)
     {
       //x[i] = prob->x[perm[i]];
@@ -3497,7 +3497,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
 
     for  (i = 0;  i < param.nr_weight;  i++)
     {  
-      int32 j;
+      kkint32 j;
       for  (j = 0;  j < nr_class;  j++)
       {
         if  (param.weight_label[i] == label[j])
@@ -3528,18 +3528,18 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
       probB = new double[numBinaryCombos];
     }
 
-    int32 p = 0;
+    kkint32 p = 0;
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         svm_problem  sub_prob (prob.SelFeatures (), log);
-        int32 si = start[i], sj = start[j];
-        int32 ci = count[i], cj = count[j];
+        kkint32 si = start[i], sj = start[j];
+        kkint32 ci = count[i], cj = count[j];
         sub_prob.l = ci + cj;
         //sub_prob.x = Malloc (svm_node *,sub_prob.l);
         sub_prob.y = new double[sub_prob.l];
-        int32 k;
+        kkint32 k;
         for  (k = 0;  k < ci;  k++)
         {
           //sub_prob.x[k] = x[si+k];
@@ -3585,7 +3585,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     // build output
     model->nr_class = nr_class;
     
-    model->label = new int32[nr_class];
+    model->label = new kkint32[nr_class];
     for  (i = 0;  i < nr_class;  i++)
       model->label[i] = label[i];
     
@@ -3609,14 +3609,14 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
       model->probB = NULL;
     }
 
-    int32 total_sv = 0;
-    int32*  nz_count = new int32[nr_class];
+    kkint32 total_sv = 0;
+    kkint32*  nz_count = new kkint32[nr_class];
 
-    model->nSV = new int32[nr_class];
+    model->nSV = new kkint32[nr_class];
     for  (i = 0;  i < nr_class;  i++)
     {
-      int32 nSV = 0;
-      for  (int32 j = 0;  j < count[i];  j++)
+      kkint32 nSV = 0;
+      for  (kkint32 j = 0;  j < count[i];  j++)
       {
         if  (nonzero[start[i] + j])
         {  
@@ -3647,7 +3647,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
       }
     }
 
-    int32 *nz_start = new int32[nr_class];
+    kkint32 *nz_start = new kkint32[nr_class];
     nz_start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       nz_start[i] = nz_start[i - 1] + nz_count[i - 1];
@@ -3659,19 +3659,19 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     p = 0;
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         // classifier (i,j): coefficients with
         // i are in sv_coef[j-1][nz_start[i]...],
         // j are in sv_coef[i][nz_start[j]...]
 
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = count[i];
-        int32 cj = count[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = count[i];
+        kkint32 cj = count[j];
         
-        int32 q = nz_start[i];
-        int32 k;
+        kkint32 q = nz_start[i];
+        kkint32 k;
     
         for  (k = 0;  k < ci;  k++)
         {
@@ -3718,16 +3718,16 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
 // Stratified cross validation
 void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob, 
                                     const svm_parameter&  param, 
-                                    int32                   nr_fold, 
+                                    kkint32                 nr_fold, 
                                     double*               target,
                                     RunLog&               log
                                    )
 {
-  int32 i;
-  int32 *fold_start = new int32[nr_fold + 1];
-  int32 l = prob.l;
-  int32 *perm = new int32[l];
-  int32 nr_class;
+  kkint32 i;
+  kkint32 *fold_start = new kkint32[nr_fold + 1];
+  kkint32 l = prob.l;
+  kkint32 *perm = new kkint32[l];
+  kkint32 nr_class;
 
   // stratified cv may not give leave-one-out rate
   // Each class to l folds -> some folds may have zero elements
@@ -3735,15 +3735,15 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
        (nr_fold < l)
       )
   {
-    int32 *start = NULL;
-    int32 *label = NULL;
-    int32 *count = NULL;
+    kkint32 *start = NULL;
+    kkint32 *label = NULL;
+    kkint32 *count = NULL;
     svm_group_classes (&prob, &nr_class, &label, &start, &count, perm);
 
     // random shuffle and then data grouped by fold using the array perm
-    int32 *fold_count = new int32[nr_fold];
-    int32 c;
-    int32 *index = new int32[l];
+    kkint32 *fold_count = new kkint32[nr_fold];
+    kkint32 c;
+    kkint32 *index = new kkint32[l];
     for  (i = 0;  i < l;  i++)
       index[i]=perm[i];
 
@@ -3751,7 +3751,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     {
       for  (i = 0;  i < count[c];  i++)
       {
-        int32 j = i + rand() % (count[c]-i);
+        kkint32 j = i + rand() % (count[c]-i);
         SVM289_BFS::swap (index[start[c]+j], index[start[c]+i]);
       }
     }
@@ -3771,9 +3771,9 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     {
       for(i=0;i<nr_fold;i++)
       {
-        int32 begin = start[c]+i*count[c]/nr_fold;
-        int32 end = start[c]+(i+1)*count[c]/nr_fold;
-        for(int32 j=begin;j<end;j++)
+        kkint32 begin = start[c]+i*count[c]/nr_fold;
+        kkint32 end = start[c]+(i+1)*count[c]/nr_fold;
+        for(kkint32 j=begin;j<end;j++)
         {
           perm[fold_start[i]] = index[j];
           fold_start[i]++;
@@ -3798,7 +3798,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
     for (i = 0;  i < l;  i++)
     {
-      int32 j = i + rand() % (l - i);
+      kkint32 j = i + rand() % (l - i);
       SVM289_BFS::swap (perm[i], perm[j]);
     }
     for  (i = 0;  i <=  nr_fold; i++)
@@ -3807,9 +3807,9 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
   for  (i = 0;  i < nr_fold;  i++)
   {
-    int32 begin = fold_start[i];
-    int32 end = fold_start[i+1];
-    int32 j,k;
+    kkint32 begin = fold_start[i];
+    kkint32 end = fold_start[i+1];
+    kkint32 j,k;
 
     svm_problem  subprob (prob.SelFeatures (), log);
 
@@ -3840,7 +3840,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
        (param.svm_type == C_SVC || param.svm_type == NU_SVC))
     {
       double *prob_estimates = new double[svm_get_nr_class (submodel)];
-      int32    *votes          = new int32   [svm_get_nr_class (submodel)];
+      kkint32  *votes          = new kkint32 [svm_get_nr_class (submodel)];
       for  (j = begin;  j < end;  j++)
         target[perm[j]] = svm_predict_probability (submodel, prob.x[perm[j]], prob_estimates, votes);
       delete  prob_estimates;
@@ -3872,14 +3872,14 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
 
 
-int32 svm_get_svm_type(const svm_model *model)
+kkint32 svm_get_svm_type(const svm_model *model)
 {
   return model->param.svm_type;
 }
 
 
 
-int32  SVM289_BFS::svm_get_nr_class(const svm_model *model)
+kkint32  SVM289_BFS::svm_get_nr_class(const svm_model*  model)
 {
   return model->nr_class;
 }
@@ -3887,10 +3887,12 @@ int32  SVM289_BFS::svm_get_nr_class(const svm_model *model)
 
 
 
-void svm_get_labels(const svm_model *model, int32* label)
+void svm_get_labels(const svm_model*  model, 
+                    kkint32*          label
+                   )
 {
   if (model->label != NULL)
-    for(int32 i=0;i<model->nr_class;i++)
+    for(kkint32 i=0;i<model->nr_class;i++)
       label[i] = model->label[i];
 }
 
@@ -3923,7 +3925,7 @@ void  SVM289_BFS::svm_predict_values (const svm_model*      model,
   {
     double *sv_coef = model->sv_coef[0];
     double sum = 0;
-    for  (int32 i = 0;  i < model->l;  i++)
+    for  (kkint32 i = 0;  i < model->l;  i++)
       sum += sv_coef[i] * Kernel::k_function (x, 
                                               model->SV[i], 
                                               model->param, 
@@ -3934,31 +3936,31 @@ void  SVM289_BFS::svm_predict_values (const svm_model*      model,
   }
   else
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
-    int32 l = model->l;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
+    kkint32 l = model->l;
     
     double *kvalue = new double[l];
     for  (i = 0;  i < l;  i++)
       kvalue[i] = Kernel::k_function (x, model->SV[i], model->param, model->selFeatures);
 
-    int32 *start = new int32[nr_class];
+    kkint32 *start = new kkint32[nr_class];
     start[0] = 0;
     for  (i = 1;  i < nr_class;  i++)
       start[i] = start[i-1]+model->nSV[i-1];
 
-    int32  p=0;
+    kkint32  p=0;
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         double sum = 0;
-        int32 si = start[i];
-        int32 sj = start[j];
-        int32 ci = model->nSV[i];
-        int32 cj = model->nSV[j];
+        kkint32 si = start[i];
+        kkint32 sj = start[j];
+        kkint32 ci = model->nSV[i];
+        kkint32 cj = model->nSV[j];
         
-        int32 k;
+        kkint32 k;
         double *coef1 = model->sv_coef[j - 1];
         double *coef2 = model->sv_coef[i];
         for  (k = 0;  k < ci;  k++)
@@ -4004,19 +4006,19 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
   }
   else
   {
-    int32 i;
-    int32 nr_class = model->nr_class;
+    kkint32 i;
+    kkint32 nr_class = model->nr_class;
     double *dec_values = new double[nr_class * (nr_class - 1) / 2];
     svm_predict_values (model, x, dec_values);
 
-    int32 *vote = new int32[nr_class];
+    kkint32 *vote = new kkint32[nr_class];
     for  (i = 0;  i < nr_class;  i++)
       vote[i] = 0;
 
-    int32 pos = 0;
+    kkint32 pos = 0;
     for  (i = 0;  i < nr_class;  i++)
     {
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         if  (dec_values[pos++] > 0)
           ++vote[i];
@@ -4025,7 +4027,7 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
       }
     }
 
-    int32 vote_max_idx = 0;
+    kkint32 vote_max_idx = 0;
     for(i = 1;  i < nr_class;  i++)
     {
       if  (vote[i] > vote[vote_max_idx])
@@ -4043,10 +4045,10 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
 
 
 
-double  SVM289_BFS::svm_predict_probability (svm_model*             model, 
-                                             const FeatureVector&   x, 
-                                             double*                classProbabilities,
-                                             int32*                   votes
+double  SVM289_BFS::svm_predict_probability (svm_model*            model, 
+                                             const FeatureVector&  x, 
+                                             double*               classProbabilities,
+                                             kkint32*              votes
                                             )
 {
   double  probParam = model->param.probParam;
@@ -4055,8 +4057,8 @@ double  SVM289_BFS::svm_predict_probability (svm_model*             model,
        ((model->probA != NULL  &&  model->probB != NULL)  ||  (probParam > 0.0))
       )
   {
-    int32     i;
-    int32     nr_class = model->nr_class;
+    kkint32   i;
+    kkint32   nr_class = model->nr_class;
 
     double*  prob_estimates = model->ProbEstimates ();
     double*  dec_values     = model->DecValues     ();
@@ -4069,10 +4071,10 @@ double  SVM289_BFS::svm_predict_probability (svm_model*             model,
 
     double min_prob = 1e-7;
 
-    int32 k=0;
+    kkint32 k=0;
     for (i = 0;  i < nr_class;  i++)
     {
-      for (int32 j = i + 1;  j < nr_class;  j++)
+      for (kkint32 j = i + 1;  j < nr_class;  j++)
       {
         if  (probParam > 0.0)
         {
@@ -4102,7 +4104,7 @@ double  SVM289_BFS::svm_predict_probability (svm_model*             model,
 
     //multiclass_probability (nr_class, pairwise_prob, prob_estimates);
 
-    int32 prob_max_idx = 0;
+    kkint32 prob_max_idx = 0;
     for (i = 1;  i < nr_class;  i++)
     {
       if  (prob_estimates[i] > prob_estimates[prob_max_idx])
@@ -4127,9 +4129,9 @@ double  SVM289_BFS::svm_predict_probability (svm_model*             model,
 
 
 
-int32  SVM289_BFS::svm_save_model (const char*      model_file_name, 
-                             const svm_model* model
-                            )
+kkint32  SVM289_BFS::svm_save_model (const char*      model_file_name, 
+                                     const svm_model* model
+                                    )
 {
   FILE *fp = osFOPEN (model_file_name,"w");
   if  (fp == NULL) 
@@ -4149,14 +4151,14 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
   if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
     fprintf(fp,"coef0 %g\n", param.coef0);
 
-  int32 nr_class = model->nr_class;
-  int32 l = model->l;
+  kkint32 nr_class = model->nr_class;
+  kkint32 l = model->l;
   fprintf (fp, "nr_class %d\n", nr_class);
   fprintf (fp, "total_sv %d\n", l);
   
   {
     fprintf(fp, "rho");
-    for  (int32 i = 0;  i < nr_class * (nr_class - 1) / 2;  i++)
+    for  (kkint32 i = 0;  i < nr_class * (nr_class - 1) / 2;  i++)
       fprintf(fp," %g",model->rho[i]);
     fprintf(fp, "\n");
   }
@@ -4164,7 +4166,7 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
   if  (model->label)
   {
     fprintf(fp, "label");
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       fprintf (fp," %d",  model->label[i]);
     fprintf (fp, "\n");
   }
@@ -4172,14 +4174,14 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
   if  (model->probA) // regression has probA only
   {
     fprintf(fp, "probA");
-    for(int32 i=0;i<nr_class*(nr_class-1)/2;i++)
+    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
       fprintf(fp," %g",model->probA[i]);
     fprintf(fp, "\n");
   }
   if  (model->probB)
   {
     fprintf(fp, "probB");
-    for(int32 i=0;i<nr_class*(nr_class-1)/2;i++)
+    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
       fprintf(fp," %g",model->probB[i]);
     fprintf(fp, "\n");
   }
@@ -4187,7 +4189,7 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
   if  (model->nSV)
   {
     fprintf (fp, "nr_sv");
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       fprintf(fp," %d", model->nSV[i]);
     fprintf(fp, "\n");
   }
@@ -4200,9 +4202,9 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
   const FeatureVectorList&  SV = model->SV;
   FeatureNumList  selFeatures = model->selFeatures;
 
-  for  (int32 i = 0;  i < l;  i++)
+  for  (kkint32 i = 0;  i < l;  i++)
   {
-    for  (int32 j = 0;  j < nr_class-1;  j++)
+    for  (kkint32 j = 0;  j < nr_class-1;  j++)
       fprintf (fp, "%.16g ", sv_coef[j][i]);
 
     //const svm_node *p = SV[i];
@@ -4210,12 +4212,12 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
 
     if  (param.kernel_type == PRECOMPUTED)
     {
-      //fprintf(fp,"0:%d ",(int32)(p->value));
-      fprintf (fp, "0:%d ", (int32)(p.FeatureData (0)));
+      //fprintf(fp,"0:%d ",(kkint32)(p->value));
+      fprintf (fp, "0:%d ", (kkint32)(p.FeatureData (0)));
     }
     else
     {
-      int32  zed = 0;  
+      kkint32  zed = 0;  
       for  (zed = 0;  zed < p.NumOfFeatures ();  zed++)
         fprintf (fp, "%d:%.8g ", zed, p.FeatureData (zed));
 
@@ -4239,14 +4241,14 @@ int32  SVM289_BFS::svm_save_model (const char*      model_file_name,
 
 
 void  SVM289_BFS::svm_save_model_XML (ostream&          o, 
-                                  const svm_model&  model
-                                 )
+                                      const svm_model&  model
+                                     )
 {
-  int32  origPrecision = o.precision ();
+  kkint32  origPrecision = o.precision ();
 
-  int32 nr_class = model.nr_class;
-  int32 l = model.l;
-  int32  numBinarySVM = nr_class * (nr_class - 1) / 2;
+  kkint32 nr_class = model.nr_class;
+  kkint32 l = model.l;
+  kkint32  numBinarySVM = nr_class * (nr_class - 1) / 2;
 
   o << "<LibSvmModel>" << std::endl;
 
@@ -4259,7 +4261,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
   {
     o.precision (12);
     o << "rho";
-    for  (int32 i = 0;  i < numBinarySVM;  i++)
+    for  (kkint32 i = 0;  i < numBinarySVM;  i++)
       o << "\t" << (model.rho[i]);
     o << std::endl;
     o.precision (origPrecision);
@@ -4268,7 +4270,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
   if  (model.label)
   {
     o << "label";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << (model.label[i]);
     o << std::endl;
   }
@@ -4277,7 +4279,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
   {
     o.precision (12);
     o << "probA";
-    for  (int32 i = 0;  i <  numBinarySVM;  i++)
+    for  (kkint32 i = 0;  i <  numBinarySVM;  i++)
       o << "\t" << (model.probA[i]);
     o << std::endl;
     o.precision (origPrecision);
@@ -4287,7 +4289,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
   {
     o.precision (12);
     o << "probB";
-    for  (int32 i = 0;  i < numBinarySVM;  i++)
+    for  (kkint32 i = 0;  i < numBinarySVM;  i++)
       o << "\t" << (model.probB[i]);
     o << std::endl;
     o.precision (origPrecision);
@@ -4300,7 +4302,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
   if  (model.nSV)
   {
     o << "nr_sv";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << (model.nSV[i]);
     o << std::endl;
   }
@@ -4314,24 +4316,24 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
     const FeatureVectorList&  SV = model.SV;
     FeatureNumList  selFeatures = model.selFeatures;
 
-    for  (int32 i = 0;  i < l;  i++)
+    for  (kkint32 i = 0;  i < l;  i++)
     {
       //const svm_node *p = SV[i];
       const FeatureVector&  p = SV[i];
       o.precision (13);
       o << "SupportVector" << "\t" << p.ImageFileName ()
                            << "\t" << p.ImageClassName ();
-      for  (int32 j = 0;  j < nr_class - 1;  j++)
+      for  (kkint32 j = 0;  j < nr_class - 1;  j++)
         o << "\t" << sv_coef[j][i];
 
       if  (model.param.kernel_type == PRECOMPUTED)
       {
-        o << "\t" << (int32)(p.FeatureData (0));
+        o << "\t" << (kkint32)(p.FeatureData (0));
       }
       else
       {
         o.precision (10);
-        int32  zed = 0;  
+        kkint32  zed = 0;  
         for  (zed = 0;  zed < p.NumOfFeatures ();  zed++)
           o << "\t" << zed << ":" << p.FeatureData (zed);
       }
@@ -4363,10 +4365,10 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
   bool  eof = false;
   bool  eol = false;
 
-  int32 nr_class = model.nr_class;
-  int32 l = model.l;
+  kkint32 nr_class = model.nr_class;
+  kkint32 l = model.l;
 
-  int32  fn = 0;
+  kkint32  fn = 0;
 
   float  featureValue;
 
@@ -4379,7 +4381,7 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
   valid = true;
 
   {
-    int32  x, y;
+    kkint32  x, y;
     model.sv_coef = new double*[nr_class - 1];
     for  (x = 0;  x < nr_class - 1;  x++)
     {
@@ -4392,7 +4394,7 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
   model.SV.DeleteContents ();
   model.SV.Owner (true);
 
-  int32  numSupportVectorsRead = 0;
+  kkint32  numSupportVectorsRead = 0;
   while  (!eof)
   {
     fieldName = osReadNextToken (in, "\t", eof, eol);
@@ -4423,7 +4425,7 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
       fv->ImageFileName (imageFileName);
       fv->MLClass (MLClass::CreateNewMLClass (imageFileName));
 
-      for  (int32 j = 0;  j < nr_class - 1;  j++)
+      for  (kkint32 j = 0;  j < nr_class - 1;  j++)
       {
         svCoefStr = osReadNextToken (in, "\t", eof, eol);
         model.sv_coef[j][numSupportVectorsRead] = svCoefStr.ToDouble ();
@@ -4446,7 +4448,7 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
           fn = fnStr.ToInt ();
           featureValue = (float)fValueStr.ToDouble ();
 
-          if  ((fn < 0)  ||  (fn >= (int32)fileDesc->NumOfFields ()))
+          if  ((fn < 0)  ||  (fn >= (kkint32)fileDesc->NumOfFields ()))
           {
             log.Level (-1) << endl << endl 
               << "SVM289_BFS::svm_load_model_XML_SupportVectorSection   ***ERROR***     Invalid Feature Index[" << fn << "] Specified." << endl
@@ -4492,10 +4494,10 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
   bool  validModel = true;
 
-  int32  version      = -1;
-  int32  nr_class     = -1;
-  int32  l            = -1;
-  int32  numBinarySVM = -1;
+  kkint32  version      = -1;
+  kkint32  nr_class     = -1;
+  kkint32  l            = -1;
+  kkint32  numBinarySVM = -1;
 
   bool  eof  = false;
   bool  eol  = false;
@@ -4547,7 +4549,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("rho"))
     {
-      int32  i = 0;
+      kkint32  i = 0;
       model->rho = new double[numBinarySVM];
       KKStr  rStr = osReadNextToken (in, "\t", eof, eol);
       while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
@@ -4560,8 +4562,8 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("label"))
     {
-      int32  i = 0;
-      model->label = new int32[nr_class];
+      kkint32  i = 0;
+      model->label = new kkint32[nr_class];
       KKStr  lStr = osReadNextToken (in, "\t", eof, eol);
       while  ((!eol)  &&  (!eof)  &&  (i < nr_class))
       {
@@ -4574,7 +4576,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("probA"))
     {
-      int32  i = 0;
+      kkint32  i = 0;
       model->probA = new double[numBinarySVM];
       KKStr  pStr = osReadNextToken (in, "\t", eof, eol);
       while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
@@ -4587,7 +4589,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("probB"))
     {
-      int32  i = 0;
+      kkint32  i = 0;
       model->probB = new double[numBinarySVM];
       KKStr  pStr = osReadNextToken (in, "\t", eof, eol);
       while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
@@ -4607,8 +4609,8 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("nr_sv"))
     {
-      int32  i = 0;
-      model->nSV = new int32[nr_class];
+      kkint32  i = 0;
+      model->nSV = new kkint32[nr_class];
       KKStr  nSvStr = osReadNextToken (in, "\t", eof, eol);
       while  ((!eol)  &&  (!eof)  &&  (i < nr_class))
       {
@@ -4673,8 +4675,8 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   prob_estimates (NULL)
 
 {
-  int32  m = nr_class - 1;
-  int32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+  kkint32  m = nr_class - 1;
+  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
   {
     // Copy over support vectors.
@@ -4693,10 +4695,10 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   if  (_model.sv_coef)
   {
     sv_coef = new double*[m];
-    for  (int32 j = 0;  j < m;  j++)
+    for  (kkint32 j = 0;  j < m;  j++)
     {
       sv_coef[j] = new double[l];
-      for  (int32 i = 0;   i < l;  i++)
+      for  (kkint32 i = 0;   i < l;  i++)
        sv_coef[j][i] = _model.sv_coef[j][i];
     }
   }
@@ -4705,35 +4707,35 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   {
     // Copy over RHO
     rho = new double[numBinaryCombos];
-    for  (int32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       rho[i] = _model.rho[i];
   }
 
   if  (_model.probA)
   {
     probA = new double[numBinaryCombos];
-    for  (int32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       probA[i] = _model.probA[i];
   }
 
   if  (_model.probB)
   {
     probB = new double[numBinaryCombos];
-    for  (int32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       probB[i] = _model.probB[i];
   }
 
   if  (_model.label)
   {
-    label = new int32[nr_class];
-    for  (int32 i = 0;  i < nr_class;  i++)
+    label = new kkint32[nr_class];
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       label[i] = _model.label[i];
   }
 
   if  (_model.nSV)
   {
-    nSV = new int32[nr_class];
-    for (int32 i = 0;  i < nr_class;  i++)
+    nSV = new kkint32[nr_class];
+    for (kkint32 i = 0;  i < nr_class;  i++)
       nSV[i] = _model.nSV[i];
   }
 }
@@ -4790,9 +4792,9 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
 
 
 SVM289_BFS::svm_model::svm_model (const KKStr&  _fileName,
-                              FileDescPtr   _fileDesc,
-                              RunLog&       _log
-                             ):
+                                  FileDescPtr   _fileDesc,
+                                  RunLog&       _log
+                                 ):
    param       (),
    nr_class    (0),
    l           (0),
@@ -4815,9 +4817,9 @@ SVM289_BFS::svm_model::svm_model (const KKStr&  _fileName,
 
 
 SVM289_BFS::svm_model::svm_model (istream&     _in,
-                              FileDescPtr  _fileDesc,
-                              RunLog&      _log
-                             ):
+                                  FileDescPtr  _fileDesc,
+                                  RunLog&      _log
+                                 ):
    param       (),
    nr_class    (0),
    l           (0),
@@ -4847,7 +4849,7 @@ SVM289_BFS::svm_model::~svm_model ()
   else
     SV.Owner (false);
 
-  int32  i;
+  kkint32  i;
 
   if  (sv_coef)
   {
@@ -4902,7 +4904,7 @@ double** SVM289_BFS::svm_model::PairwiseProb  ()
   if  (!pairwise_prob)
   {
     pairwise_prob = new double*[nr_class];
-    for  (int32 x = 0;  x < nr_class;  x++)
+    for  (kkint32 x = 0;  x < nr_class;  x++)
       pairwise_prob[x] = new double[nr_class];
   }
   return  pairwise_prob;
@@ -4910,8 +4912,8 @@ double** SVM289_BFS::svm_model::PairwiseProb  ()
 
 
 void  SVM289_BFS::svm_model::Save (const KKStr&  fileName,
-                               RunLog&       log
-                              )
+                                   RunLog&       log
+                                  )
 {
   ofstream  o (fileName.Str ());
   if  (!o.is_open ())
@@ -4946,13 +4948,13 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   o << "SelFeatures" << "\t" << selFeatures.ToCommaDelStr () << endl;
 
   o << "nr_class" << "\t" << nr_class << endl;
-  int32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
   o << "total_sv" << "\t" << l << endl;
   
   {
     o << "rho";
-    for  (int32 i = 0;  numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  numBinaryCombos;  i++)
       o << "\t" << rho[i];
     o << endl;
   }
@@ -4960,7 +4962,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   if  (label)
   {
     o << "label";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << label[i];
     o << endl;
   }
@@ -4968,7 +4970,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   if  (probA) // regression has probA only
   {
     o << "probA";
-    for  (int32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       o << "\t" << probA[i];
     o << endl;
   }
@@ -4976,7 +4978,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   if  (probB)
   {
     o << "probB";
-    for  (int32 i = 0;  i < numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       o << "\t" << probB[i];
     o << endl;
   }
@@ -4984,19 +4986,19 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   if  (nSV)
   {
     o << "nr_sv";
-    for  (int32 i = 0;  i < nr_class;  i++)
+    for  (kkint32 i = 0;  i < nr_class;  i++)
       o << "\t" << nSV[i];
     o << endl;
   }
 
-  for  (int32 i = 0;  i < l;  i++)
+  for  (kkint32 i = 0;  i < l;  i++)
   {
     const  FeatureVector&  p = SV[i];
     o << "SupportVector" << "\t" << p.ImageFileName ();
 
-    int32  origPrec = o.precision ();
+    kkint32  origPrec = o.precision ();
     o.precision (16);
-    for  (int32 j = 0;  j < nr_class - 1;  j++)
+    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
     {
       //fprintf (fp, "%.16g ", sv_coef[j][i]);
       o << "\t" << sv_coef[j][i];
@@ -5007,12 +5009,12 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
 
     if  (param.kernel_type == PRECOMPUTED)
     {
-      //fprintf(fp,"0:%d ",(int32)(p->value));
+      //fprintf(fp,"0:%d ",(kkint32)(p->value));
       o << "\t" << p.FeatureData (0);
     }
     else
     {
-      for  (int32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
+      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
         o << "\t" << zed << ":" << p.FeatureData (zed);
     }
     o << endl;
@@ -5025,9 +5027,9 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
 
 
 void  SVM289_BFS::svm_model::Load (const KKStr&  fileName,
-                               FileDescPtr   fileDesc,
-                               RunLog&       log
-                              )
+                                   FileDescPtr   fileDesc,
+                                   RunLog&       log
+                                  )
 {
   ifstream  in (fileName.Str ());
   if  (!in.is_open ())
@@ -5045,9 +5047,9 @@ void  SVM289_BFS::svm_model::Load (const KKStr&  fileName,
 
 
 void  SVM289_BFS::svm_model::Read (istream&     in, 
-                               FileDescPtr  fileDesc,
-                               RunLog&      log
-                              )
+                                   FileDescPtr  fileDesc,
+                                   RunLog&      log
+                                 )
 {
   // read parameters
   delete  rho;    rho   = NULL;
@@ -5058,13 +5060,13 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
 
   SV.DeleteContents ();
 
-  int32  buffLen = 80 * 1024;
+  kkint32  buffLen = 80 * 1024;
   char*  buff = new char[buffLen];
 
   bool  eof = false;
   bool  eol = false;
 
-  int32  numBinaryCombos = 0;
+  kkint32  numBinaryCombos = 0;
 
   while  (!in.eof ())
   {
@@ -5125,35 +5127,35 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     else if  (fieldName.EqualIgnoreCase ("rho"))
     {
       rho = new double[numBinaryCombos];
-      for (int32 i = 0;  i < numBinaryCombos;  i++)
+      for (kkint32 i = 0;  i < numBinaryCombos;  i++)
         rho[i] = line.ExtractTokenDouble ("\t\n\r");
     }
 
     else if  (fieldName.EqualIgnoreCase ("label"))
     {
-      label = new int32[nr_class];
-      for (int32 i=0;  i < nr_class;  i++)
+      label = new kkint32[nr_class];
+      for (kkint32 i=0;  i < nr_class;  i++)
         label[i] = line.ExtractTokenInt ("\t\n\r");
     }
 
     else if  (fieldName.EqualIgnoreCase ("probA"))
     {
       probA = new double[numBinaryCombos];
-      for (int32 i = 0;  i < numBinaryCombos;  i++)
+      for (kkint32 i = 0;  i < numBinaryCombos;  i++)
         probA[i] = line.ExtractTokenDouble ("\t\n\r");
     }
 
     else if  (fieldName.EqualIgnoreCase ("probB"))
     {
       probB = new double[numBinaryCombos];
-      for  (int32 i = 0;  i < numBinaryCombos;  i++)
+      for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
         probB[i] = line.ExtractTokenDouble ("\t\n\r");
     }
 
     else if  (fieldName.EqualIgnoreCase ("nr_sv"))
     {
-      nSV = new int32[nr_class];
-      for (int32 i = 0;  i < nr_class;  i++)
+      nSV = new kkint32[nr_class];
+      for (kkint32 i = 0;  i < nr_class;  i++)
         nSV[i] = line.ExtractTokenInt ("\t\n\r");
     }
 
@@ -5168,8 +5170,8 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     {
       // read sv_coef and SV
 
-      int32 m = nr_class - 1;
-      int32 i, j;
+      kkint32 m = nr_class - 1;
+      kkint32 i, j;
 
       if  (!sv_coef)
       {
@@ -5210,10 +5212,10 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
       }
       else
       {
-        for  (uint32 zed = 0;  (zed < fileDesc->NumOfFields ())  &&  (!eol);  zed++)
+        for  (kkuint32 zed = 0;  (zed < fileDesc->NumOfFields ())  &&  (!eol);  zed++)
         {
           KKStr  featureField = line.ExtractToken2 ("\t");
-          int32  featureNum   = featureField.ExtractTokenInt (":");
+          kkint32  featureNum   = featureField.ExtractTokenInt (":");
           float  featureValue = (float)featureField.ExtractTokenDouble ("\t\n\r");
           fv->FeatureData (featureNum, featureValue);
         }
@@ -5239,8 +5241,8 @@ void  SVM289_BFS::svm_model::NormalizeProbability ()
   if  (pairwise_prob == NULL)
     return;
 
-  int32  x = 0;
-  int32  y = 0;
+  kkint32  x = 0;
+  kkint32  y = 0;
   double  totalProb = 0.0;
 
   for  (x = 0;  x < nr_class;  x++)
@@ -5263,7 +5265,7 @@ void  SVM289_BFS::svm_model::NormalizeProbability ()
 
 void  SVM289_BFS::readline (FILE*    input,
                             char*&   buff,
-                            int32&     buffLen,
+                            kkint32&   buffLen,
                             bool&    eof
                            )
 {
@@ -5276,10 +5278,10 @@ void  SVM289_BFS::readline (FILE*    input,
 
   while (strrchr (buff, '\n') == NULL)
   {
-    int32  newBuffLen = buffLen * 2;
+    kkint32  newBuffLen = buffLen * 2;
     buff = GrowAllocation (buff, buffLen, newBuffLen);
     buffLen = newBuffLen;
-    int32  len = (int32)strlen (buff);
+    kkint32  len = (kkint32)strlen (buff);
     if  (fgets(buff + len, buffLen - len, input) == NULL)
       break;
   }
@@ -5304,7 +5306,7 @@ svm_model *svm_load_model (const char*  model_file_name,
     return NULL;
 
   char*  buff    = NULL;
-  int32    buffLen = 0;
+  kkint32  buffLen = 0;
   bool   eof = false;
 
   // read parameters
@@ -5361,41 +5363,41 @@ svm_model *svm_load_model (const char*  model_file_name,
 
     else if  (strcmp(cmd,"rho")==0)
     {
-      int32 n = model->nr_class * (model->nr_class-1)/2;
+      kkint32 n = model->nr_class * (model->nr_class-1)/2;
       model->rho = new double[n];
-      for (int32 i = 0;  i < n;  i++)
+      for (kkint32 i = 0;  i < n;  i++)
         fscanf (fp, "%lf", &model->rho[i]);
     }
 
     else if  (strcmp (cmd, "label") == 0)
     {
-      int32 n = model->nr_class;
-      model->label = new int32[n];
-      for (int32 i=0;  i < n;  i++)
+      kkint32 n = model->nr_class;
+      model->label = new kkint32[n];
+      for (kkint32 i=0;  i < n;  i++)
         fscanf (fp, "%d", &model->label[i]);
     }
 
     else if  (strcmp (cmd, "probA") == 0)
     {
-      int32 n = model->nr_class * (model->nr_class-1) / 2;  // n = Totl num of Binary Combos
+      kkint32 n = model->nr_class * (model->nr_class-1) / 2;  // n = Totl num of Binary Combos
       model->probA = new double[n];
-      for (int32 i = 0;  i < n;  i++)
+      for (kkint32 i = 0;  i < n;  i++)
         fscanf (fp, "%lf", &model->probA[i]);
     }
 
     else if  (strcmp (cmd, "probB") == 0)
     {
-      int32 n = model->nr_class * (model->nr_class-1)/2;
+      kkint32 n = model->nr_class * (model->nr_class-1)/2;
       model->probB = new double[n];
-      for  (int32 i = 0;  i < n;  i++)
+      for  (kkint32 i = 0;  i < n;  i++)
         fscanf(fp,"%lf",&model->probB[i]);
     }
 
     else if  (strcmp (cmd, "nr_sv") == 0)
     {
-      int32 n = model->nr_class;
-      model->nSV = new int32[n];
-      for (int32 i = 0;  i < n;  i++)
+      kkint32 n = model->nr_class;
+      model->nSV = new kkint32[n];
+      for (kkint32 i = 0;  i < n;  i++)
         fscanf(fp, "%d", &model->nSV[i]);
     }
 
@@ -5403,7 +5405,7 @@ svm_model *svm_load_model (const char*  model_file_name,
     {
       while(1)
       {
-        int32 c = getc(fp);
+        kkint32 c = getc(fp);
         if(c==EOF || c=='\n') break;  
       }
       break;
@@ -5419,10 +5421,10 @@ svm_model *svm_load_model (const char*  model_file_name,
 
   // read sv_coef and SV
 
-  int32 elements = 0;
-  int32 pos = ftell(fp);
+  kkint32 elements = 0;
+  kkint32 pos = ftell(fp);
 
-  int32  max_line_len = 1024;
+  kkint32  max_line_len = 1024;
   char*  line = new char[max_line_len];
 
   char  *p, *endptr, *idx, *val;
@@ -5446,10 +5448,10 @@ svm_model *svm_load_model (const char*  model_file_name,
 
   fseek (fp, pos, SEEK_SET);
 
-  int32 m = model->nr_class - 1;
-  int32 l = model->l;
+  kkint32 m = model->nr_class - 1;
+  kkint32 l = model->l;
   model->sv_coef = new double*[m];
-  int32 i;
+  kkint32 i;
   for  (i = 0;  i < m;  i++)
     model->sv_coef[i] = new double[l];
 
@@ -5459,7 +5461,7 @@ svm_model *svm_load_model (const char*  model_file_name,
   //svm_node *x_space = NULL;
   //if  (l > 0) x_space = Malloc(svm_node,elements);
 
-  int32 j=0;
+  kkint32 j=0;
   for  (i = 0;  i < l;  i++)
   {
     readline (fp, line, max_line_len, eof);
@@ -5469,7 +5471,7 @@ svm_model *svm_load_model (const char*  model_file_name,
     
     p = strtok(line, " \t");
     model->sv_coef[0][i] = strtod(p,&endptr);
-    for(int32 k=1;k<m;k++)
+    for(kkint32 k=1;k<m;k++)
     {
       p = strtok(NULL, " \t");
       model->sv_coef[k][i] = strtod(p,&endptr);
@@ -5483,10 +5485,10 @@ svm_model *svm_load_model (const char*  model_file_name,
       if(val == NULL)
         break;
 
-      //x_space[j].index = (int32) strtol(idx,&endptr,10);
+      //x_space[j].index = (kkint32) strtol(idx,&endptr,10);
       //x_space[j].value = strtod(val,&endptr);
 
-      int32     featureNum   = (int32) strtol(idx, &endptr, 10);
+      kkint32   featureNum   = (kkint32) strtol(idx, &endptr, 10);
       float  featureValue = (float)strtod(val, &endptr);
 
       fv->AddFeatureData (featureNum, featureValue);
@@ -5542,7 +5544,7 @@ const char *svm_check_parameter (const svm_problem*    prob,
 {
   // svm_type
 
-  int32  svm_type = param->svm_type;
+  kkint32  svm_type = param->svm_type;
 
   if  (svm_type != C_SVC        &&
        svm_type != NU_SVC       &&
@@ -5554,7 +5556,7 @@ const char *svm_check_parameter (const svm_problem*    prob,
   
   // kernel_type, degree
   
-  int32  kernel_type = param->kernel_type;
+  kkint32  kernel_type = param->kernel_type;
 
   if  (kernel_type != LINEAR       &&
        kernel_type != POLY         &&
@@ -5609,17 +5611,17 @@ const char *svm_check_parameter (const svm_problem*    prob,
   
   if  (svm_type == NU_SVC)
   {
-    int32 l = prob->l;
-    int32 max_nr_class = 16;
-    int32 nr_class = 0;
-    int32*  label = new int32[max_nr_class];
-    int32*  count = new int32[max_nr_class];
+    kkint32 l = prob->l;
+    kkint32 max_nr_class = 16;
+    kkint32 nr_class = 0;
+    kkint32*  label = new kkint32[max_nr_class];
+    kkint32*  count = new kkint32[max_nr_class];
 
-    int32 i;
+    kkint32 i;
     for  (i = 0;  i < l;  i++)
     {
-      int32 this_label = (int32)prob->y[i];
-      int32  j;
+      kkint32 this_label = (kkint32)prob->y[i];
+      kkint32  j;
       for  (j = 0;  j < nr_class;  j++)
       {
         if  (this_label == label[j])
@@ -5633,7 +5635,7 @@ const char *svm_check_parameter (const svm_problem*    prob,
       {
         if  (nr_class == max_nr_class)
         {
-          int32  oldMaxNrClass = max_nr_class;
+          kkint32  oldMaxNrClass = max_nr_class;
           max_nr_class *= 2;
           label = GrowAllocation (label, oldMaxNrClass, max_nr_class);
           count = GrowAllocation (count, oldMaxNrClass, max_nr_class);
@@ -5647,10 +5649,10 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
     for  (i = 0;  i < nr_class;  i++)
     {
-      int32  n1 = count[i];
-      for  (int32 j = i + 1;  j < nr_class;  j++)
+      kkint32  n1 = count[i];
+      for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
-        int32 n2 = count[j];
+        kkint32 n2 = count[j];
         if  ((param->nu * (n1 + n2) / 2) > Min (n1, n2))
         {
           delete  label;  label = NULL;
@@ -5670,7 +5672,7 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 
 
-int32  svm_check_probability_model (const svm_model *model)
+kkint32  svm_check_probability_model (const svm_model *model)
 {
   return ((model->param.svm_type == C_SVC       ||  model->param.svm_type == NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
          ((model->param.svm_type == EPSILON_SVR ||  model->param.svm_type == NU_SVR) &&  model->probA!=NULL);

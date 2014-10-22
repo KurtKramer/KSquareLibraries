@@ -107,7 +107,7 @@ class  TrainingClassList:  public KKQueue<TrainingClass>
 public:
   TrainingClassList (const KKStr&  _rootDirExpanded,
                      bool  owner    = true,
-                     int32 initSize = 5
+                     kkint32 initSize = 5
                     );
 
 private:

@@ -48,8 +48,8 @@ Application::Application (const Application&  _application):
 }
 
 
- Application::Application (KKB::int32  argc,
-                           char**      argv
+ Application::Application (kkint32  argc,
+                           char**   argv
                           ):
   abort       (false),
   log         (*(new RunLog ())),
@@ -92,11 +92,11 @@ void  Application::AssignLog (RunLog&  _log)
 
 
 
-void  Application::ProcessCmdLineParameters (KKB::int32  argc,
-                                             char**      argv
+void  Application::ProcessCmdLineParameters (kkint32  argc,
+                                             char**   argv
                                             )
 {
-  uint32  x;
+  kkuint32  x;
 
   bool  allParmsGood = true;
 

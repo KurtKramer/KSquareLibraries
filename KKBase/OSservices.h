@@ -117,7 +117,7 @@ namespace KKB
    */
   KKStr          osGetDirNameFromPath (KKStr  dirPath);
 
-  KKStr          osGetErrorNoDesc (int32  errorNo);
+  KKStr          osGetErrorNoDesc (kkint32  errorNo);
 
   KKStr          osGetFileExtension (KKStr  fullFileName);
 
@@ -189,7 +189,7 @@ namespace KKB
    */
   KKStr          osGetPathPartOfFile (KKStr  fullFileName);   
 
-  int32          osGetProcessId ();
+  kkint32        osGetProcessId ();
 
   KKStr          osGetRootName (const KKStr&  fullFileName);
 
@@ -204,13 +204,13 @@ namespace KKB
    */
   double         osGetSystemTimeUsed ();
 
-  int32          osGetThreadId ();
+  kkint32        osGetThreadId ();
 
   double         osGetUserTimeUsed   ();
 
-  int32          osLocateFirstSlashChar (const KKStr&  fileSpec);
+  kkint32        osLocateFirstSlashChar (const KKStr&  fileSpec);
 
-  int32          osLocateLastSlashChar (const KKStr&  fileSpec);
+  kkint32        osLocateLastSlashChar (const KKStr&  fileSpec);
 
 
   /** 
@@ -253,7 +253,7 @@ namespace KKB
 
   void          osSleep (float numOfSecs);
 
-  void          osSleepMiliSecs (uint32  numMiliSecs);
+  void          osSleepMiliSecs (kkuint32  numMiliSecs);
 
   VectorKKStr   osSplitDirectoryPathIntoParts (const KKStr&  path);
 
@@ -442,11 +442,11 @@ namespace KKB
   
   template<class T> 
       inline T* osGrowAllocation (T*   src, 
-                                  int32  origSize,
-                                  int32  newSize
+                                  kkint32  origSize,
+                                  kkint32  newSize
                                  )
   {
-    int32  zed = 0;
+    kkint32  zed = 0;
     T*  dest = new T[newSize];
     while  (zed < origSize)    {dest[zed] = src[zed];  zed++;}
     while  (zed < newSize)     {dest[zed] = (T)0;      zed++;}

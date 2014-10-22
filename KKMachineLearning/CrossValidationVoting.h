@@ -78,8 +78,8 @@ namespace  KKMachineLearning
   public:
     CrossValidationVoting (TrainingConfigurationList2Ptr  _configs,
                            FeatureVectorListPtr           _examples,
-                           MLClassListPtr              _mlClasses,
-                           int32                          _numOfFolds,
+                           MLClassListPtr                 _mlClasses,
+                           kkint32                        _numOfFolds,
                            bool                           _featuresAreAlreadyNormalized,
                            FileDescPtr                    _fileDesc,
                            RunLog&                        _log
@@ -97,10 +97,10 @@ namespace  KKMachineLearning
 
     float   Accuracy                  ();
     double  ClassificationTime        ()  const {return  classificationTime;}
-    float   FoldAccuracy (int32 foldNum)  const;
+    float   FoldAccuracy (kkint32 foldNum)  const;
     KKStr   FoldAccuracysToStr        ()  const;
     KKStr   FoldStr                   ()  const;
-    int32   NumOfSupportVectors       ()  const {return  numOfSupportVectors;}
+    kkint32 NumOfSupportVectors       ()  const {return  numOfSupportVectors;}
     double  TrainingTime              ()  const {return  trainingTime;}
 
   private:
@@ -108,7 +108,7 @@ namespace  KKMachineLearning
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
                          FeatureVectorListPtr   trainingImages,
-                         int32                  foldNum,
+                         kkint32                foldNum,
                          bool*                  classedCorrectly = NULL
                         );
 
@@ -119,19 +119,19 @@ namespace  KKMachineLearning
     bool                          featuresAreAlreadyNormalized;
     FileDescPtr                   fileDesc;
     float*                        foldAccuracies;
-    int32*                        foldCounts;
+    kkint32*                      foldCounts;
     ConfusionMatrix2Ptr           confusionMatrix;
     ConfusionMatrix2Ptr*          cmByNumOfConflicts;
     FeatureVectorListPtr          examples;
-    MLClassListPtr             mlClasses;
-    int32                         examplesPerClass;
+    MLClassListPtr                mlClasses;
+    kkint32                       examplesPerClass;
     RunLog&                       log;
-    int32                         maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
-    int32                         numOfFolds;
-    int32                         numOfSupportVectors;
-    int32*                        numOfWinnersCounts;
-    int32*                        numOfWinnersCorrects;
-    int32*                        numOfWinnersOneOfTheWinners;
+    kkint32                       maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
+    kkint32                       numOfFolds;
+    kkint32                       numOfSupportVectors;
+    kkint32*                      numOfWinnersCounts;
+    kkint32*                      numOfWinnersCorrects;
+    kkint32*                      numOfWinnersOneOfTheWinners;
 
     double                        classificationTime;
     double                        trainingTime;

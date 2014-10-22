@@ -65,7 +65,7 @@ public:
                      std::ostream*        _report,
                      bool                 _forceRebuild,
                      bool                 _checkForDuplicates,
-                     volatile const bool& _cancelFlag,
+                     VolConstBool&       _cancelFlag,
                      KKStr&               _statusMessage
                     );
 
@@ -105,8 +105,8 @@ public:
                      FeatureVectorListPtr _excludeList,
                      FileDescPtr          _fileDesc,
                      RunLog&              _log,
-                     uint32               _level,            // Class hierarchy level to train at.
-                     volatile const bool& _cancelFlag, 
+                     kkuint32             _level,            // Class hierarchy level to train at.
+                     VolConstBool&        _cancelFlag, 
                      KKStr&               _statusMessage
                     );
 
@@ -135,12 +135,12 @@ public:
     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
     *                            the user as a way of letting them know what is happening.
     */
-   TrainingProcess2 (const KKStr&          _configFileName,
-                     FileDescPtr           _fileDesc,
-                     RunLog&               _log,
-                     bool                  _featuresAlreadyNormalized,
-                     volatile const bool&  _cancelFlag,
-                     KKStr&                _statusMessage
+   TrainingProcess2 (const KKStr&   _configFileName,
+                     FileDescPtr    _fileDesc,
+                     RunLog&        _log,
+                     bool           _featuresAlreadyNormalized,
+                     VolConstBool&  _cancelFlag,
+                     KKStr&         _statusMessage
                     );
 
 
@@ -161,12 +161,12 @@ public:
     */
    TrainingProcess2 (TrainingConfiguration2Ptr  _config, 
                      FeatureVectorListPtr       _trainingExamples,
-                     MLClassListPtr          _mlClasses,
+                     MLClassListPtr             _mlClasses,
                      std::ostream*              _reportFile,
                      FileDescPtr                _fileDesc,
                      RunLog&                    _log,
                      bool                       _featuresAlreadyNormalized,
-                     volatile const bool&       _cancelFlag,
+                     VolConstBool&              _cancelFlag,
                      KKStr&                     _statusMessage
                     );
 
@@ -197,7 +197,7 @@ public:
 
   VectorKKStr              ConfigFileFormatErrors ()  const;
 
-  int32                    DuplicateDataCount () const;
+  kkint32                  DuplicateDataCount () const;
 
   bool                     FeaturesAlreadyNormalized ()  
                                                  {return  featuresAlreadyNormalized;}
@@ -209,7 +209,7 @@ public:
 
   RunLog&                  Log                       () {return log;}
 
-  int32                    MemoryConsumedEstimated ()  const;
+  kkint32                  MemoryConsumedEstimated ()  const;
 
   SVMModelPtr              Model3 ();
  
@@ -225,10 +225,10 @@ public:
 
   double                   TrainingTime              () const;   // Comes from SVMModel
 
-  int32                    NumOfSupportVectors       () const;
+  kkint32                  NumOfSupportVectors       () const;
 
-  void                     SupportVectorStatistics (int32&  numSVs,
-                                                    int32&  totalNumSVs
+  void                     SupportVectorStatistics (kkint32&  numSVs,
+                                                    kkint32&  totalNumSVs
                                                    );
 
   void                     Abort (bool _abort)  {abort = _abort;}
@@ -259,13 +259,13 @@ private:
   //************************************************************
   //       Routines for validating Configuration File.         *
   //************************************************************
-  FeatureNumListPtr  DeriveFeaturesSelected (int32  sectionNum);
+  FeatureNumListPtr  DeriveFeaturesSelected (kkint32  sectionNum);
 
-  TrainingClassPtr   ValidateClassConfig (int32  sectionNum);
+  TrainingClassPtr   ValidateClassConfig (kkint32  sectionNum);
 
-  void               ValidateTrainingClassConfig (int32  sectionNum);
+  void               ValidateTrainingClassConfig (kkint32  sectionNum);
 
-  void               ValidateModel3Section (int32 sectionNum);
+  void               ValidateModel3Section (kkint32 sectionNum);
  
 
 
@@ -278,7 +278,7 @@ private:
 
   KKB::DateTime                buildDateTime;
 
-  volatile const bool&         cancelFlag;  /**< A calling app can set this to true Training Process will monitor this Flag, if true will terminate. */
+  VolConstBool&                cancelFlag;  /**< A calling app can set this to true Training Process will monitor this Flag, if true will terminate. */
 
 
   TrainingConfiguration2Ptr    config;
@@ -288,7 +288,7 @@ private:
   KKStr                        configFileNameSpecified;  /** This will be the ConfigFileName specified by caller before the directory
                                                           * that is added for actual location of config file. directory */
 
-  int32                        duplicateDataCount;
+  kkint32                      duplicateDataCount;
 
   FeatureVectorListPtr         excludeList;  /**< If != NULL then list of trainingExamples that need to be eliminated from training data.
                                               * This would be used when classifying trainingExamples that might already contain training

@@ -30,7 +30,7 @@ ClassStatistic::ClassStatistic (const ClassStatistic&  right):
 
 
 ClassStatistic::ClassStatistic (MLClassPtr  _mlClass,
-                                uint32         _count
+                                kkuint32       _count
                                ):
    mlClass (_mlClass),
    count      (_count)
@@ -202,7 +202,7 @@ void  ClassStatisticList::PrintReport (ostream& r)
 }
 
 
-int32  ClassStatisticList::operator[]  (MLClassPtr  mlClass)
+kkint32  ClassStatisticList::operator[]  (MLClassPtr  mlClass)
 {
   std::map<MLClassPtr, ClassStatisticPtr>::const_iterator idx;
   idx = imageClassIndex.find (mlClass);

@@ -118,8 +118,8 @@ ScannerFileZLib3BitEncoded::ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
 
 
 ScannerFileZLib3BitEncoded::ScannerFileZLib3BitEncoded (const KKStr&  _fileName,
-                                                        uint32        _pixelsPerScanLine,
-                                                        uint32        _frameHeight,
+                                                        kkuint32      _pixelsPerScanLine,
+                                                        kkuint32      _frameHeight,
                                                         RunLog&       _log
                                                        ):
   ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log),
@@ -148,7 +148,7 @@ void  ScannerFileZLib3BitEncoded::AllocateBuffers ()
 {
   delete  compBuffer;   compBuffer  = NULL;
 
-  compBufferSize = (uint32)(frameBufferSize * 1.2);
+  compBufferSize = (kkuint32)(frameBufferSize * 1.2);
   compBufferLen = 0;
   compBuffer = new uchar[compBufferSize];
 }  /* AllocateBuffers */
@@ -163,10 +163,10 @@ void  ScannerFileZLib3BitEncoded::ScanRate (float  _scanRate)
 
 
 void  ScannerFileZLib3BitEncoded::WriteTextBlock (const uchar*  txtBlock,
-                                                  uint32        txtBlockLen
+                                                  kkuint32      txtBlockLen
                                                  )
 {
-  uint32  charsLeft = txtBlockLen;
+  kkuint32  charsLeft = txtBlockLen;
   const uchar*  txtBlockPtr = txtBlock;
   while  (charsLeft > 0)
   {
@@ -183,7 +183,7 @@ void  ScannerFileZLib3BitEncoded::WriteTextBlock (const uchar*  txtBlock,
 
     else
     {
-      uint32  bytesToWrite = Min ((uint32)65535, charsLeft);
+      kkuint32  bytesToWrite = Min ((kkuint32)65535, charsLeft);
       OpCodeRec2  rec;
       rec.opCode = 2;
       rec.textBlockLenHi = (uint8)(bytesToWrite / 256);
@@ -202,10 +202,10 @@ void  ScannerFileZLib3BitEncoded::WriteTextBlock (const uchar*  txtBlock,
 
 void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
 {
-  uint32  frameBufferSpaceUsed = frameBufferNextLine * pixelsPerScanLine;
-  uint32  compressedBuffLen = 0;
+  kkuint32  frameBufferSpaceUsed = frameBufferNextLine * pixelsPerScanLine;
+  kkuint32  compressedBuffLen = 0;
 
-  for (uint32 x = 0; x < frameBufferSpaceUsed;  ++x)
+  for (kkuint32 x = 0; x < frameBufferSpaceUsed;  ++x)
   {
     frameBuffer[x] = frameBuffer[x] & 0xe0;
   }
@@ -225,7 +225,7 @@ void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
 
   else if  (compressedBuffLen <= 16777215)
   {
-    uint32 buffLen = compressedBuffLen;
+    kkuint32 buffLen = compressedBuffLen;
     OpCodeRec6   rec6;
     rec6.opCode = 6;
     rec6.compBuffLenByte2 = buffLen % 256;  buffLen = buffLen / 256;
@@ -236,7 +236,7 @@ void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
 
   else
   {
-    uint32 buffLen = compressedBuffLen;
+    kkuint32 buffLen = compressedBuffLen;
     OpCodeRec7   rec7;
     rec7.opCode = 7;
     rec7.compBuffLenByte3 = buffLen % 256;  buffLen = buffLen / 256;
@@ -258,8 +258,8 @@ void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
 
 
 void  ScannerFileZLib3BitEncoded::ExpandBuffer (uchar*&  buffer,
-                                                uint32&  bufferSize,
-                                                uint32   bufferNewSize
+                                                kkuint32&  bufferSize,
+                                                kkuint32 bufferNewSize
                                                )
 {
   uchar*  newBuffer = new  uchar[bufferNewSize];
@@ -277,8 +277,8 @@ void  ScannerFileZLib3BitEncoded::ExpandBuffer (uchar*&  buffer,
 
 
 void  ScannerFileZLib3BitEncoded::ExpandBufferNoCopy (uchar*&  buffer,
-                                                      uint32&  bufferSize,
-                                                      uint32   bufferNewSize
+                                                      kkuint32&  bufferSize,
+                                                      kkuint32 bufferNewSize
                                                      )
 {
   uchar*  newBuffer = new uchar[bufferNewSize];
@@ -323,7 +323,7 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) != 0)
           return -1;
-        uint32  len = textBlockLen.intHi * 256 + textBlockLen.intLo;
+        kkuint32  len = textBlockLen.intHi * 256 + textBlockLen.intLo;
         SkipBytesForward (len);
         break;
       }
@@ -334,7 +334,7 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) != 0)
           return -1;
-        uint32  compBufferLen = textBlockLen.intHi * 256 + 
+        kkuint32  compBufferLen = textBlockLen.intHi * 256 + 
                                   textBlockLen.intLo;
         SkipBytesForward (compBufferLen);
         bufferFrameRead = true;
@@ -347,7 +347,7 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) != 0)
           return -1;
-        uint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
+        kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
                                 textBlockLen.intByte1 * 256       +
                                 textBlockLen.intByte2;
         SkipBytesForward (compBufferLen);
@@ -362,7 +362,7 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         if  (feof (file) != 0)
           return -1;
 
-        uint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
+        kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
                                 textBlockLen.intByte1 * 256 * 256       +
                                 textBlockLen.intByte2 * 256             +
                                 textBlockLen.intByte3;
@@ -383,7 +383,7 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
 
 
 /** @brief  Read in the next frame into the Buffer from the file. */
-uint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
+kkuint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
 {
   frameBufferLen = 0;
   frameBufferNextLine = 0;
@@ -431,7 +431,7 @@ uint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) == 0)
         {
-          uint32  len = textBlockLen.intHi * 256 + textBlockLen.intLo;
+          kkuint32  len = textBlockLen.intHi * 256 + textBlockLen.intLo;
           fread (compBuffer, len, 1, file);
           if  (!feof (file))
             ReportTextMsg ((char*)compBuffer, len);
@@ -445,7 +445,7 @@ uint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) == 0)
         {
-          uint32  compBufferLen = textBlockLen.intHi * 256 + 
+          kkuint32  compBufferLen = textBlockLen.intHi * 256 + 
                                   textBlockLen.intLo;
           if  (compBufferLen > compBufferSize)
             ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLen);
@@ -468,7 +468,7 @@ uint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (!feof (file))
         {
-          uint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
+          kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
                                   textBlockLen.intByte1 * 256       +
                                   textBlockLen.intByte2;
           if  (compBufferLen > compBufferSize)
@@ -492,7 +492,7 @@ uint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (!feof (file))
         {
-          uint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
+          kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
                                   textBlockLen.intByte1 * 256 * 256       +
                                   textBlockLen.intByte2 * 256             +
                                   textBlockLen.intByte3;

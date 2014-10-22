@@ -48,7 +48,7 @@ class  DarkSpotStats
 {
 public:
   DarkSpotStats (MLClassPtr  _c,
-                 uint32         _bucketSize
+                 kkuint32       _bucketSize
                 ):
       bucketSize (_bucketSize),
       c          (_c),
@@ -93,7 +93,7 @@ public:
     o.precision (oldPrecision);
   }  /* PrintStatsLine */
 
-  uint32         bucketSize;
+  kkuint32       bucketSize;
   MLClassPtr  c;
   int            count;        /**< number of images processed. */
   vector<int>    sizeHist;     
@@ -104,7 +104,7 @@ public:
 class  DarkSpotsStatsList:  map<MLClassPtr, DarkSpotStats*>
 {
 public:
-  DarkSpotsStatsList (uint32 _bucketSize):
+  DarkSpotsStatsList (kkuint32 _bucketSize):
       bucketSize (_bucketSize)
   {
   }
@@ -201,7 +201,7 @@ public:
 
 
   private:
-    uint32    bucketSize;
+    kkuint32  bucketSize;
     iterator  idx;
 };  /* DarkSpotsStatsList */
 
@@ -277,7 +277,7 @@ void  KKMachineLearning::PostLarvaeFVAddBlobList (MLClassPtr     c,
 
 
 
-const  int32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in num of pixels before we decide to reduce the
+const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in num of pixels before we decide to reduce the
                                                      * example to improve feature calculation.
                                                      */
 
@@ -418,7 +418,7 @@ RunLog  PostLarvaeFV::runLog;
 
 
 
-KKStr  PostLarvaeFV::FeatureName (int32  fieldNum)
+KKStr  PostLarvaeFV::FeatureName (kkint32  fieldNum)
 {
   if  ((fieldNum < 0)  ||  (fieldNum >= MaxNumOfFeatures ()))
   {
@@ -447,7 +447,7 @@ FileDescPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 
   bool  alreadyExists = false;
   postLarvaeFeaturesFileDesc = new FileDesc ();
-  for  (int32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  fieldNum++)
+  for  (kkint32 fieldNum = 0;  fieldNum < MaxNumOfFeatures ();  fieldNum++)
   {
     postLarvaeFeaturesFileDesc->AddAAttribute (FeatureName (fieldNum), NumericAttribute, alreadyExists);
   }
@@ -460,7 +460,7 @@ FileDescPtr  PostLarvaeFV::PostLarvaeFeaturesFileDesc ()
 
 
 
-PostLarvaeFV::PostLarvaeFV (int32  _numOfFeatures):
+PostLarvaeFV::PostLarvaeFV (kkint32  _numOfFeatures):
        FeatureVector (_numOfFeatures),
 
         centroidCol      (-1),
@@ -549,7 +549,7 @@ PostLarvaeFV::PostLarvaeFV (KKStr          _fileName,
   if  (raster == NULL)
   {
     _successfull = false;
-    for  (int32 x = 0; x < MaxNumOfFeatures (); x++)
+    for  (kkint32 x = 0; x < MaxNumOfFeatures (); x++)
       featureData[x] = 0;
     cerr  << "PostLarvaeFV::PostLarvaeFV  ***ERROR***, Opening File[" << _fileName << "]." << endl;
     return;
@@ -623,14 +623,14 @@ void  PostLarvaeFV::SaveIntermediateImage (Raster&        raster,
 
   RasterPtr  newRaster = NULL;
 
-  int32  largestDim = Max (raster.Height (), raster.Width ());
+  kkint32  largestDim = Max (raster.Height (), raster.Width ());
   if  (largestDim < 300)
   {
     newRaster = new Raster (raster);
   }
   else
   {
-    int32  reductionMultiple = 2;
+    kkint32  reductionMultiple = 2;
     while  ((largestDim / reductionMultiple) > 300)
      reductionMultiple++;
     newRaster = raster.ReduceByEvenMultiple (reductionMultiple);
@@ -645,8 +645,8 @@ void  PostLarvaeFV::SaveIntermediateImage (Raster&        raster,
 
 void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName, 
                                         KKStr&        scannerFileName,
-                                        uint32&         scanLineNum,
-                                        uint32&         scanCol
+                                        kkuint32&       scanLineNum,
+                                        kkuint32&       scanCol
                                        )
 {
   scannerFileName = "";
@@ -657,7 +657,7 @@ void  PostLarvaeFV::ParseImageFileName (const KKStr&  fullFileName,
   if  (rootName.Empty ())
     return;
   
-  int32  x = rootName.LocateLastOccurrence ('_');
+  kkint32  x = rootName.LocateLastOccurrence ('_');
   if  (x > 0)
   {
     KKStr  colStr = rootName.SubStrPart (x + 1);
@@ -686,7 +686,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   RunLog  log;
 
   version = CurrentFeatureFileVersionNum;
-  uint32  intensityHistBuckets[8];
+  kkuint32  intensityHistBuckets[8];
 
   bool  weOwnRaster = false;
   RasterPtr  reversedImage = NULL;
@@ -702,7 +702,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
   Raster* raster = (weOwnRaster ? reversedImage : &srcRaster);
 
-  int32 areaBeforeReduction = 0;
+  kkint32 areaBeforeReduction = 0;
   float  weighedSizeBeforeReduction = 0.0f;
  
   raster->CalcAreaAndIntensityFeatures (areaBeforeReduction, 
@@ -710,14 +710,14 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
                                         intensityHistBuckets
                                        );
 
-  int32  reductionFactor = 1;
-  int32  reductionFactorSquared = 1;
+  kkint32  reductionFactor = 1;
+  kkint32  reductionFactorSquared = 1;
 
   if  (areaBeforeReduction > SizeThreshold)
   {
-    int32  reducedMinDim = Min (raster->Height (), raster->Width ());
+    kkint32  reducedMinDim = Min (raster->Height (), raster->Width ());
 
-    int32  reducedSize = areaBeforeReduction;
+    kkint32  reducedSize = areaBeforeReduction;
     reductionFactor = 1;
     while  ((reducedSize > SizeThreshold)  &&  (reducedMinDim > 20))
     {
@@ -744,7 +744,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
 
   if  (areaBeforeReduction < 20)
   {
-    for  (int32 tp = 0; tp < numOfFeatures; tp++)
+    for  (kkint32 tp = 0; tp < numOfFeatures; tp++)
       featureData[tp] = 9999999;
     
     if  (weOwnRaster)
@@ -821,7 +821,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->CentralMoments (edgeMomentf);
   if  (intermediateImages)
   {
-    int32  numEdgePixelsFound = (kkint32)(edgeMomentf[0]);
+    kkint32  numEdgePixelsFound = (kkint32)(edgeMomentf[0]);
     SaveIntermediateImage (*wr2, "Edge_Image_" + StrFormatInt (numEdgePixelsFound, "ZZZZ0"), intermediateImages);
   }
   //{
@@ -833,14 +833,14 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   //  edgeImage->Edge ();
 
   //  #if  defined(_DEBUG)
-  //  int32  numEdgePixelsFound = edgeImage->CalcArea ();
+  //  kkint32  numEdgePixelsFound = edgeImage->CalcArea ();
   //  SaveIntermediateImage (*edgeImage, "Edge_Image_" + StrFormatInt (numEdgePixelsFound, "ZZZZ0"), intermediateImages);
   //  #endif
   //  edgeImage->CentralMoments (edgeMomentf);
   //  delete  edgeImage;  edgeImage = NULL;
   //}
 
-  int32 area = (int32)(momentf[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
+  kkint32 area = (kkint32)(momentf[0] + 0.5f);  // Moment-0 is the same as the number of forground pixels in example.
   {
     ConvexHullPtr  ch = new ConvexHull ();
     ch->Filter (*raster, wr1);
@@ -849,7 +849,7 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
     if  (intermediateImages)
     {
       KKStr convexImageFileName = "ConvexHull_" +
-                                   StrFormatInt ((int32)convexf, "ZZZZZ0");
+                                   StrFormatInt ((kkint32)convexf, "ZZZZZ0");
       SaveIntermediateImage (*wr1, convexImageFileName, intermediateImages);
     }
 
@@ -863,13 +863,13 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Dialation (wr2);
   float  areaOpen3 = (float)(wr2->ForegroundPixelCount());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((int32)areaOpen3, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
 
   //RasterPtr open3Raster = new Raster (*raster);
   //open3Raster->Opening ();
   //float  areaOpen3 = float (open3Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*open3Raster, "Opening3_" + StrFormatInt ((int32)areaOpen3, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*open3Raster, "Opening3_" + StrFormatInt ((kkint32)areaOpen3, "ZZZZZZ0"), intermediateImages);
   //delete  open3Raster;
   //open3Raster = NULL;
   
@@ -878,12 +878,12 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Dialation (wr2, KKB::SQUARE5);
   float  areaOpen5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Opening5_" + StrFormatInt ((int32)areaOpen5, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Opening5_" + StrFormatInt ((kkint32)areaOpen5, "ZZZZZZ0"), intermediateImages);
   //RasterPtr open5Raster = new Raster (*raster);
   //open5Raster->Opening (SQUARE5);
   //float  areaOpen5 = float (open5Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*open5Raster, "Opening5_" + StrFormatInt ((int32)areaOpen5, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*open5Raster, "Opening5_" + StrFormatInt ((kkint32)areaOpen5, "ZZZZZZ0"), intermediateImages);
   //delete  open5Raster;
   //open5Raster = NULL;
 
@@ -891,12 +891,12 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Dialation (wr2, KKB::SQUARE7);
   float  areaOpen7 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Opening7_" + StrFormatInt ((int32)areaOpen7, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Opening7_" + StrFormatInt ((kkint32)areaOpen7, "ZZZZZZ0"), intermediateImages);
   //RasterPtr open7Raster = new Raster (*raster);
   //open7Raster->Opening (SQUARE7);
   //float  areaOpen7 = float (open7Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*open7Raster, "Opening7_" + StrFormatInt ((int32)areaOpen7, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*open7Raster, "Opening7_" + StrFormatInt ((kkint32)areaOpen7, "ZZZZZZ0"), intermediateImages);
   //delete  open7Raster;
   //open7Raster = NULL;
   
@@ -904,12 +904,12 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Dialation (wr2, KKB::SQUARE9);
   float  areaOpen9 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Opening9_" + StrFormatInt ((int32)areaOpen9, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Opening9_" + StrFormatInt ((kkint32)areaOpen9, "ZZZZZZ0"), intermediateImages);
   //RasterPtr open9Raster = new Raster (*raster);
   //open9Raster->Opening (SQUARE9);
   //float  areaOpen9 = (float)open9Raster->ForegroundPixelCount ();
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*open9Raster, "Opening9_" + StrFormatInt ((int32)areaOpen9, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*open9Raster, "Opening9_" + StrFormatInt ((kkint32)areaOpen9, "ZZZZZZ0"), intermediateImages);
   //delete  open9Raster;
   //open9Raster = NULL;
 
@@ -918,22 +918,22 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Erosion (wr2);
   float  areaClose3 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Close3_" + StrFormatInt ((int32)areaClose3, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Close3_" + StrFormatInt ((kkint32)areaClose3, "ZZZZZZ0"), intermediateImages);
   //RasterPtr close3Raster = new Raster (*raster);
   //close3Raster->Closing ();
   //float  areaClose3 = float (close3Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*close3Raster, "Close3_" + StrFormatInt ((int32)areaClose3, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*close3Raster, "Close3_" + StrFormatInt ((kkint32)areaClose3, "ZZZZZZ0"), intermediateImages);
 
   wr2->FillHole (wr1);
   float  tranf = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "FillHole_" + StrFormatInt ((int32)tranf, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "FillHole_" + StrFormatInt ((kkint32)tranf, "ZZZZZZ0"), intermediateImages);
 
   //close3Raster->FillHole ();
   //float  tranf = (float)close3Raster->CalcArea ();
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*close3Raster, "FillHole_" + StrFormatInt ((int32)tranf, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*close3Raster, "FillHole_" + StrFormatInt ((kkint32)tranf, "ZZZZZZ0"), intermediateImages);
   //delete  close3Raster;
   //close3Raster = NULL;
   
@@ -941,12 +941,12 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Erosion (wr2, KKB::SQUARE5);
   float  areaClose5 = (float)(wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Close5_" + StrFormatInt ((int32)areaClose5, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Close5_" + StrFormatInt ((kkint32)areaClose5, "ZZZZZZ0"), intermediateImages);
   //RasterPtr close5Raster = new Raster (*raster);
   //close5Raster->Closing (SQUARE5);
   //float  areaClose5 = float (close5Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*close5Raster, "Close5_" + StrFormatInt ((int32)areaClose5, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*close5Raster, "Close5_" + StrFormatInt ((kkint32)areaClose5, "ZZZZZZ0"), intermediateImages);
   //delete  close5Raster;
   //close5Raster = NULL;
   
@@ -954,12 +954,12 @@ void  PostLarvaeFV::CalcFeatures (Raster&        srcRaster,
   wr1->Erosion   (wr2, KKB::SQUARE7);
   float  areaClose7 = float (wr2->ForegroundPixelCount ());
   if  (intermediateImages)
-    SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((int32)areaClose7, "ZZZZZZ0"), intermediateImages);
+    SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
   //RasterPtr close7Raster = new Raster (*raster);
   //close7Raster->Closing (SQUARE7);
   //float  areaClose7 = float (close7Raster->ForegroundPixelCount ());
   //if  (intermediateImages)
-  //  SaveIntermediateImage (*close7Raster, "Close7_" + StrFormatInt ((int32)areaClose7, "ZZZZZZ0"), intermediateImages);
+  //  SaveIntermediateImage (*close7Raster, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
   //delete  close7Raster;
   //close7Raster = NULL;
 
@@ -1354,7 +1354,7 @@ PostLarvaeFVList::~PostLarvaeFVList ()
 
 
 
-PostLarvaeFVPtr  PostLarvaeFVList::IdxToPtr (int32 idx)  const
+PostLarvaeFVPtr  PostLarvaeFVList::IdxToPtr (kkint32 idx)  const
 {
   return  (PostLarvaeFVPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
@@ -1512,8 +1512,8 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr          _dirName,
 
   KKStrPtr imageFileName = NULL;
 
-  int32  numOfImages = fileNameList->QueueSize ();
-  int32  count = 0;
+  kkint32  numOfImages = fileNameList->QueueSize ();
+  kkint32  count = 0;
 
   for  (fnIDX = fileNameList->begin ();   fnIDX != fileNameList->end ();  ++fnIDX)
   {
@@ -1557,7 +1557,7 @@ void   PostLarvaeFVList::FeatureExtraction (KKStr          _dirName,
 
   Version (CurrentFeatureFileVersionNum);
 
-  uint32  numExamplesWritten = 0;
+  kkuint32  numExamplesWritten = 0;
 
   // WriteImageFeaturesToFile (fullFeatureFileName, RawFormat, FeatureNumList::AllFeatures (fileDesc));
   FeatureFileIOKK::Driver ()->SaveFeatureFile (fullFeatureFileName, 
@@ -1585,7 +1585,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::DuplicateListAndContents ()  const
 {
   PostLarvaeFVListPtr  copyiedList = new PostLarvaeFVList (FileDesc (), true, log);
 
-  for  (int32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     PostLarvaeFVPtr  curImage = (PostLarvaeFVPtr)IdxToPtr (idx);
     copyiedList->AddSingleImageFeatures (new PostLarvaeFV (*curImage));
@@ -1673,7 +1673,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::ExtractDuplicatesByRootImageFileName ()
 
 
 PostLarvaeFVListPtr   PostLarvaeFVList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                                     int32          _maxToExtract,
+                                                                     kkint32        _maxToExtract,
                                                                      float          _minSize
                                                                     )  const
 {
@@ -1689,8 +1689,8 @@ PostLarvaeFVListPtr   PostLarvaeFVList::ExtractImagesForAGivenClass (MLClassPtr 
 
 
 PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                int32              maxImagesPerClass,
-                                                                int32              numOfFolds
+                                                                kkint32            maxImagesPerClass,
+                                                                kkint32            numOfFolds
                                                                )
 {
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds);
@@ -1703,7 +1703,7 @@ PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (MLClassListPtr  
 
 
 
-PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (int32  numOfFolds)
+PostLarvaeFVListPtr  PostLarvaeFVList::StratifyAmoungstClasses (kkint32  numOfFolds)
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 

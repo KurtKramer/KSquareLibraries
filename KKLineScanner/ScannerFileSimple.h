@@ -19,8 +19,8 @@ namespace  KKLSC
 
     /**  Constructor for opening file for Writing */
     ScannerFileSimple (const KKStr&  _fileName,
-                       uint32        _pixelsPerScanLine,
-                       uint32        _frameHeight,
+                       kkuint32      _pixelsPerScanLine,
+                       kkuint32      _frameHeight,
                        RunLog&       _log
                       );
 
@@ -31,7 +31,7 @@ namespace  KKLSC
 
     virtual 
     void   WriteTextBlock (const uchar*  txtBlock,
-                           uint32        txtBlockLen
+                           kkuint32      txtBlockLen
                           );
 
     static
@@ -40,7 +40,7 @@ namespace  KKLSC
 
   protected:
     virtual
-      uint32  ReadBufferFrame ();
+      kkuint32  ReadBufferFrame ();
 
     virtual
       kkint64   SkipToNextFrame ();

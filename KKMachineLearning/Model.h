@@ -86,9 +86,9 @@ namespace KKMachineLearning
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */
-    Model (FileDescPtr           _fileDesc,
-           volatile const bool&  _cancelFlag,
-           RunLog&               _log
+    Model (FileDescPtr    _fileDesc,
+           VolConstBool&  _cancelFlag,
+           RunLog&        _log
           );
 
 
@@ -100,11 +100,11 @@ namespace KKMachineLearning
      *@param[in]  _cancelFlag  Will monitor; if at any point it turns true this instance is to terminate and return to caller.
      *@param[in,out]  _log  Logging file.
      */
-    Model (const KKStr&           _name,
-           const ModelParam&      _param,         // Create new model from
-           FileDescPtr            _fileDesc,
-           volatile const bool&   _cancelFlag,
-           RunLog&                _log
+    Model (const KKStr&       _name,
+           const ModelParam&  _param,         // Create new model from
+           FileDescPtr        _fileDesc,
+           VolConstBool&      _cancelFlag,
+           RunLog&            _log
           );
 
   
@@ -127,12 +127,12 @@ namespace KKMachineLearning
      *@param[in,out]  _log  Logging file.
      */
     static 
-      ModelPtr  CreateAModel (ModelTypes             _modelType,
-                              const KKStr&           _name,
-                              const ModelParam&      _param,      /**< Will make a duplicate copy of */
-                              FileDescPtr            _fileDesc,
-                              volatile const bool&   _cancelFlag,
-                              RunLog&                _log
+      ModelPtr  CreateAModel (ModelTypes         _modelType,
+                              const KKStr&       _name,
+                              const ModelParam&  _param,      /**< Will make a duplicate copy of */
+                              FileDescPtr        _fileDesc,
+                              VolConstBool&      _cancelFlag,
+                              RunLog&            _log
                              );
   
     /**
@@ -145,10 +145,10 @@ namespace KKMachineLearning
      *@param[in,out]  _log  Logging file.
      */
     static
-      ModelPtr  CreateFromStream (istream&              i,
-                                  FileDescPtr           _fileDesc,
-                                  volatile const bool&  _cancelFlag,
-                                  RunLog&               _log
+      ModelPtr  CreateFromStream (istream&       i,
+                                  FileDescPtr    _fileDesc,
+                                  VolConstBool&  _cancelFlag,
+                                  RunLog&        _log
                                  );
     virtual
     ModelPtr                 Duplicate () const = 0;
@@ -158,7 +158,7 @@ namespace KKMachineLearning
     bool                              AlreadyNormalized          () const {return alreadyNormalized;}
     const FeatureEncoder2&            Encoder                    () const;
     virtual const FeatureNumList&     GetFeatureNums             () const;
-    virtual int32                     MemoryConsumedEstimated    () const;
+    virtual kkint32                   MemoryConsumedEstimated    () const;
     virtual ModelTypes                ModelType                  () const = 0;
     virtual KKStr                     ModelTypeStr               () const  {return ModelTypeToStr (ModelType ());}
     const KKStr&                      Name                       () const  {return name;}
@@ -249,12 +249,12 @@ namespace KKMachineLearning
                                 MLClassPtr     knownClass,
                                 MLClassPtr&    predClass1,
                                 MLClassPtr&    predClass2,
-                                int32&            predClass1Votes,
-                                int32&            predClass2Votes,
+                                kkint32&          predClass1Votes,
+                                kkint32&          predClass2Votes,
                                 double&           probOfKnownClass,
                                 double&           probOfPredClass1,
                                 double&           probOfPredClass2,
-                                int32&            numOfWinners,
+                                kkint32&          numOfWinners,
                                 bool&             knownClassOneOfTheWinners,
                                 double&           breakTie
                                ) = 0;
@@ -267,7 +267,7 @@ namespace KKMachineLearning
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr       example,
                                 const MLClassList&  _mlClasses,
-                                int32*                   _votes,
+                                kkint32*                   _votes,
                                 double*                _probabilities
                                ) = 0;
 
@@ -343,9 +343,9 @@ namespace KKMachineLearning
 
     bool                   alreadyNormalized;
 
-    volatile const bool&   cancelFlag;
+    VolConstBool&          cancelFlag;
 
-    MLClassListPtr      classes;
+    MLClassListPtr         classes;
 
     ClassIndexListPtr      classesIndex;
 
@@ -353,7 +353,7 @@ namespace KKMachineLearning
  
     double**               crossClassProbTable;   /*!< Probabilities  between Binary Classes From last Prediction */
 
-    int32                  crossClassProbTableSize;
+    kkint32                crossClassProbTableSize;
 
     FeatureEncoder2Ptr     encoder;
 
@@ -363,7 +363,7 @@ namespace KKMachineLearning
 
     KKStr                  name;
 
-    uint32                 numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
+    kkuint32               numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
 
     NormalizationParmsPtr  normParms;
 
@@ -380,7 +380,7 @@ namespace KKMachineLearning
 
     bool                   validModel;
 
-    int32*                 votes;
+    kkint32*                 votes;
 
     bool                   weOwnTrainExamples;
 

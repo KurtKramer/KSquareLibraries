@@ -43,10 +43,10 @@ namespace KKMachineLearning
     /**
      *@brief Use this one if you want to create a default Configuration object.
      */
-    TrainingConfiguration2 (FileDescPtr        _fileDesc,
+    TrainingConfiguration2 (FileDescPtr     _fileDesc,
                             MLClassListPtr  _mlClasses,
-                            KKStr              _parameterStr,
-                            RunLog&            _log             
+                            KKStr           _parameterStr,
+                            RunLog&         _log             
                            );
 
     ~TrainingConfiguration2 ();
@@ -82,7 +82,7 @@ namespace KKMachineLearning
     static
     TrainingConfiguration2*  CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
-                                             MLClassListPtr   _mlClasses,
+                                             MLClassListPtr      _mlClasses,
                                              RunLog&             _log
                                             );
 
@@ -123,18 +123,18 @@ namespace KKMachineLearning
     SVM_EncodingMethod     EncodingMethod ()  const;
     void                   EncodingMethod (SVM_EncodingMethod _encodingMethod);
 
-    int32                  ExamplesPerClass ()  const;
-    void                   ExamplesPerClass (int32 _examplesPerClass);
+    kkint32                ExamplesPerClass ()  const;
+    void                   ExamplesPerClass (kkint32 _examplesPerClass);
     
-    MLClassListPtr      ExtractListOfClassesForAGivenHierarchialLevel (uint32 level)   const;
+    MLClassListPtr         ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)   const;
 
     FileDescPtr            FileDesc ()            const {return  fileDesc;}
 
     double                 Gamma () const;
     void                   Gamma (double  _gamma);
 
-    int32                  ImagesPerClass ()  const               {return  ExamplesPerClass ();};
-    void                   ImagesPerClass (int32  _imagesPerClass)  {ExamplesPerClass (_imagesPerClass);}
+    kkint32                ImagesPerClass ()  const               {return  ExamplesPerClass ();};
+    void                   ImagesPerClass (kkint32  _imagesPerClass)  {ExamplesPerClass (_imagesPerClass);}
     
     SVM_KernalType         KernalType ()  const;
     void                   KernalType (SVM_KernalType _kernalType);
@@ -144,12 +144,12 @@ namespace KKMachineLearning
 
     Model::ModelTypes      ModelingMethod ()      const {return  modelingMethod;}
 
-    MLClassPtr          NoiseImageClass ()     const {return  noiseImageClass;}
+    MLClassPtr             NoiseImageClass ()     const {return  noiseImageClass;}
 
     const 
     TrainingClassPtr       NoiseTrainingClass ()  const {return  noiseTrainingClass;}
 
-    int32                  NoiseGuaranteedSize () const {return  noiseGuaranteedSize;}
+    kkint32                NoiseGuaranteedSize () const {return  noiseGuaranteedSize;}
 
     KKStr                  RootDirExpanded () const;
     void                   RootDir (const KKStr& _rootDir);
@@ -165,7 +165,7 @@ namespace KKMachineLearning
 
     void                   ModelParameters (ModelParamPtr  _modelParameters);
 
-    uint32                 NumHierarchialLevels ()  const;  // returns back the number of hierarchail levels there
+    kkuint32               NumHierarchialLevels ()  const;  // returns back the number of hierarchail levels there
                                                             // are in the trainingClass that has the most.
 
     SVM_SelectionMethod    SelectionMethod ()  const;
@@ -194,9 +194,9 @@ namespace KKMachineLearning
 
     void                   EmptyTrainingClasses ();
 
-    MLClassListPtr      ExtractClassList ()  const;
+    MLClassListPtr         ExtractClassList ()  const;
 
-    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (uint32 level);
+    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (kkuint32 level);
 
     FeatureNumList         GetFeatureNums ()  const;
 
@@ -215,7 +215,7 @@ namespace KKMachineLearning
 
     bool                   NormalizeNominalFeatures ();
 
-    int32                  NumOfFeaturesAfterEncoding ()  const;
+    kkint32                NumOfFeaturesAfterEncoding ()  const;
 
     static
       TrainingConfiguration2Ptr
@@ -227,19 +227,19 @@ namespace KKMachineLearning
 
     void                   SetFeatureNums (const  FeatureNumList&  features);
 
-    void                   SetFeatureNums (MLClassPtr          class1,
-                                           MLClassPtr          class2,
+    void                   SetFeatureNums (MLClassPtr             class1,
+                                           MLClassPtr             class2,
                                            const FeatureNumList&  _features,
                                            float                  _weight = -1   //  -1 Indicates - use existing value
                                           );
 
     void                   SetModelParameters (ModelParamPtr  _svmParanters,
-                                               int32          _examplesPerClass
+                                               kkint32        _examplesPerClass
                                               );
 
 
-    void                   SetBinaryClassFields (MLClassPtr                class1,
-                                                 MLClassPtr                class2,
+    void                   SetBinaryClassFields (MLClassPtr                   class1,
+                                                 MLClassPtr                   class2,
                                                  const SVM233::svm_parameter& _param,
                                                  const FeatureNumList&        _features,
                                                  float                        _weight
@@ -261,13 +261,13 @@ namespace KKMachineLearning
 
     void                   CreateModelParameters (const KKStr&           _parameterStr,
                                                   const FeatureNumList&  _selFeatures,
-                                                  int32                  _sectionLineNum,
-                                                  int32                  _parametersLineNum, 
-                                                  int32                  _featuresIncludedLineNum
+                                                  kkint32                _sectionLineNum,
+                                                  kkint32                _parametersLineNum, 
+                                                  kkint32                _featuresIncludedLineNum
                                                  );
 
 
-    FeatureNumListPtr      DeriveFeaturesSelected (int32  sectionNum);
+    FeatureNumListPtr      DeriveFeaturesSelected (kkint32  sectionNum);
 
     void                   DetermineWhatTheRootDirectoryIs ();
 
@@ -282,15 +282,15 @@ namespace KKMachineLearning
 
     void                   SyncronizeImageClassListWithTrainingClassList ();
 
-    TrainingClassPtr       ValidateClassConfig    (int32  sectionNum);
+    TrainingClassPtr       ValidateClassConfig    (kkint32  sectionNum);
 
     void                   ValidateConfiguration ();
     
-    void                   ValidateGlobalSection (int32  sectionNum);
+    void                   ValidateGlobalSection (kkint32  sectionNum);
 
-    void                   ValidateTrainingClassConfig (int32  sectionNum);
+    void                   ValidateTrainingClassConfig (kkint32  sectionNum);
 
-    void                   ValidateTwoClassParameters (int32  sectionNum);
+    void                   ValidateTwoClassParameters (kkint32  sectionNum);
 
 
     ModelParamOldSVMPtr    OldSvmParameters ()  const;
@@ -300,19 +300,19 @@ namespace KKMachineLearning
                                                        * directory path was added by 'GetEffectiveConfigFileName'.
                                                        */
 
-    int32                  examplesPerClass;
+    kkint32                examplesPerClass;
     FileDescPtr            fileDesc;
-    MLClassListPtr      mlClasses;
+    MLClassListPtr         mlClasses;
     bool                   imageClassesWeOwnIt;       /**< If we own it we will delete it in the destructor.  */
     RunLog&                log;
     ModelTypes             modelingMethod;
     ModelParamPtr          modelParameters;
 
-    int32                  noiseGuaranteedSize;  /**< Images smaller than this size will be classified as noise 
+    kkint32                noiseGuaranteedSize;  /**< Images smaller than this size will be classified as noise 
                                                   * and will not be used for training purposes.
                                                   */
 
-    MLClassPtr          noiseImageClass;
+    MLClassPtr             noiseImageClass;
 
     TrainingClassPtr       noiseTrainingClass;   /**< The specific Training Class that is to be 
                                                   * used for noise images. 

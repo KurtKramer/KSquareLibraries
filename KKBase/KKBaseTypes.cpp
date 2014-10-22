@@ -33,7 +33,7 @@ kkint64         _lrand48_sequence = 0x1234ABCD330ELL;
 //static KKB::int64  _lrand48_seed     = 305441741LL;
 
 // lrand48 function
-int32  KKB::LRand48 ()
+kkint32  KKB::LRand48 ()
 {
   static const kkint64 a = 0x5DEECE66DLL;
   static const kkint64 c = 0xBLL;
@@ -41,7 +41,7 @@ int32  KKB::LRand48 ()
   kkint64 mask = 281474976710655LL;
 
   _lrand48_sequence = ( ((a * _lrand48_sequence) & mask) + c ) % m;
-  return (int32)(_lrand48_sequence >> 17);
+  return (kkint32)(_lrand48_sequence >> 17);
 }
 
 
@@ -119,14 +119,14 @@ WordFormat32Bits::WordFormat32Bits ()
 
 
 
-WordFormat32Bits::WordFormat32Bits (uint32  d)
+WordFormat32Bits::WordFormat32Bits (kkuint32  d)
 {
   unsigned32BitInt = d;
 }
 
 
 
-WordFormat32Bits::WordFormat32Bits (int32  d)
+WordFormat32Bits::WordFormat32Bits (kkint32  d)
 {
   signed32BitInt = d;
 }

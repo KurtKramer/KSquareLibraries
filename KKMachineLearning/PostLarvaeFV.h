@@ -57,7 +57,7 @@ namespace KKMachineLearning
 
   void  PostLarvaeFVPrintReport (ostream& o);
 
-  void  PostLarvaeFVAddBlobList (MLClassPtr     c,
+  void  PostLarvaeFVAddBlobList (MLClassPtr        c,
                                  KKB::BlobListPtr  blobs 
                                 );
 
@@ -66,29 +66,28 @@ namespace KKMachineLearning
   {
   public:
     typedef  PostLarvaeFV*  PostLarvaeFVPtr;
-    typedef  KKB::uint32 uint32;
     typedef  KKB::uchar  uchar;
 
     //PostLarvaeFV (MLClassPtr  mlClass);
 
-    PostLarvaeFV (int32  _numOfFeatures);
+    PostLarvaeFV (kkint32  _numOfFeatures);
 
     PostLarvaeFV (const PostLarvaeFV&  _image);
 
 
-    PostLarvaeFV (      Raster&        _raster,
+    PostLarvaeFV (      Raster&     _raster,
                   const MLClassPtr  _mlClass,
-                  RasterListPtr        _intermediateImages
+                  RasterListPtr     _intermediateImages
                  );
 
-    PostLarvaeFV (const BmpImage&      _image,
+    PostLarvaeFV (const BmpImage&   _image,
                   const MLClassPtr  _mlClass,
-                  RasterListPtr        _intermediateImages
+                  RasterListPtr     _intermediateImages
                  );
 
 
     PostLarvaeFV (KKStr          _fileName,
-                  MLClassPtr  _mlClass,
+                  MLClassPtr     _mlClass,
                   bool&          _successfull,
                   RasterListPtr  _intermediateImages
                  );
@@ -117,18 +116,18 @@ namespace KKMachineLearning
     // Access Methods.
     void  CentroidCol      (float    _centroidCol)      {centroidCol      = _centroidCol;}
     void  CentroidRow      (float    _centroidRow)      {centroidRow      = _centroidRow;}
-    void  NumOfEdgePixels  (int32    _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
+    void  NumOfEdgePixels  (kkint32  _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
 
     void  Version          (short    _version)          {version          = _version;}
 
 
     float   CentroidCol        () const  {return  centroidCol;}    // Centroid with respect to image
     float   CentroidRow        () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
-    int32   NumOfEdgePixels    () const  {return  numOfEdgePixels;}
+    kkint32 NumOfEdgePixels    () const  {return  numOfEdgePixels;}
     short   Version            () const  {return  version;}
 
 
-    void  ResetNumOfFeatures (int32  newNumOfFeatures);  // Used to reallocate memory for feature data.
+    void  ResetNumOfFeatures (kkint32  newNumOfFeatures);  // Used to reallocate memory for feature data.
     void  ResetVersion       (short  newVersion);
 
 
@@ -142,8 +141,8 @@ namespace KKMachineLearning
 
     static  void  ParseImageFileName (const KKStr&  fullFileName, 
                                       KKStr&        scannerFileName,
-                                      uint32&         scanLineNum,
-                                      uint32&         scanCol
+                                      kkuint32&     scanLineNum,
+                                      kkuint32&     scanCol
                                      );
 
 
@@ -151,8 +150,8 @@ namespace KKMachineLearning
 
     static  FileDescPtr    PostLarvaeFeaturesFileDesc ();
 
-    static  KKStr   FeatureName (int32  fieldNum);
-    static  int32   MaxNumOfFeatures () {return maxNumOfFeatures;}
+    static  KKStr   FeatureName (kkint32  fieldNum);
+    static  kkint32 MaxNumOfFeatures () {return maxNumOfFeatures;}
 
     
 
@@ -171,7 +170,7 @@ namespace KKMachineLearning
 
     float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
     float     centroidRow;     /**<  cnetroid Row with just respect to image. */
-    int32     numOfEdgePixels;
+    kkint32   numOfEdgePixels;
     short     version;         /**< This is the same versionNumber as in PostLarvaeFVList
                                 * It is related to the Feature calculation routine.  This
                                 * will assist in us changing the feature calcs in the 
@@ -180,7 +179,7 @@ namespace KKMachineLearning
                                 */
 
     static  short  maxNumOfFeatures;
-    static  const  int32  SizeThreshold;
+    static  const  kkint32  SizeThreshold;
 
     static  const  char*  FeatureNames[];
 
@@ -330,10 +329,10 @@ namespace KKMachineLearning
      *@param _dirName[in]     Directory to scan for examples.
      *@param _fileName        Name of file to contain the extracted feature data.  Will be og the Raw format.
      */
-    PostLarvaeFVList (RunLog&        _log,
+    PostLarvaeFVList (RunLog&     _log,
                       MLClassPtr  _mlClass,
-                      KKStr          _dirName,
-                      KKStr          _fileName
+                      KKStr       _dirName,
+                      KKStr       _fileName
                      );
 
 
@@ -412,17 +411,17 @@ namespace KKMachineLearning
 
 
     PostLarvaeFVListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                       int32          _maxToExtract = -1,
-                                                       float          _minSize      = -1.0f
+                                                       kkint32     _maxToExtract = -1,
+                                                       float       _minSize      = -1.0f
                                                       )  const;
 
 
-    void                  FeatureExtraction (KKStr            _dirName, 
-                                             KKStr            _fileName, 
-                                             MLClassPtr    _mlClass
+    void                  FeatureExtraction (KKStr       _dirName, 
+                                             KKStr       _fileName, 
+                                             MLClassPtr  _mlClass
                                             );
 
-    PostLarvaeFVPtr       IdxToPtr (int32 idx) const;
+    PostLarvaeFVPtr       IdxToPtr (kkint32 idx) const;
 
     PostLarvaeFVPtr       LookUpByImageFileName (const KKStr&  _imageFileName)  const;
 
@@ -442,12 +441,12 @@ namespace KKMachineLearning
                                                                    bool&  successful
                                                                   );
 
-    PostLarvaeFVListPtr    StratifyAmoungstClasses (int32  numOfFolds);
+    PostLarvaeFVListPtr    StratifyAmoungstClasses (kkint32  numOfFolds);
 
 
     PostLarvaeFVListPtr    StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                    int32              maxImagesPerClass,
-                                                    int32              numOfFolds
+                                                    kkint32         maxImagesPerClass,
+                                                    kkint32         numOfFolds
                                                    );
 
 

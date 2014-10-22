@@ -87,8 +87,8 @@ RasterPtr  ConvexHull::PerformOperation (RasterConstPtr  _image)
  */
 RasterPtr  ConvexHull::Filter (const Raster&  src)
 {
-  int32 w = src.Width ();
-  int32 h = src.Height ();
+  kkint32 w = src.Width ();
+  kkint32 h = src.Height ();
         
   Store (src);
   
@@ -127,8 +127,8 @@ RasterPtr  ConvexHull::Filter (const Raster&  src,
                                RasterPtr      dest
                               )
 {
-  int32 w = src.Width ();
-  int32 h = src.Height ();
+  kkint32 w = src.Width ();
+  kkint32 h = src.Height ();
 
   if  ((dest->Height () != h)  ||  (dest->Width () != w))
     dest->ReSize (h, w, false);
@@ -180,7 +180,7 @@ double  ConvexHull::Distance (Point& p1,
 
 
 
-int32  ConvexHull::ConvexArea ()
+kkint32  ConvexHull::ConvexArea ()
 {
   return  convexArea;
 }
@@ -239,15 +239,15 @@ void  ConvexHull::CalcConvexArea (RasterPtr   raster)
 {
   convexArea = 0;
 
-  int32 w = raster->Width ();
-  int32 h = raster->Height ();
+  kkint32 w = raster->Width ();
+  kkint32 h = raster->Height ();
 
   uchar**  rows = raster->Rows ();
         
-  for (int32 col = 0; col < w; col++)
+  for (kkint32 col = 0; col < w; col++)
   {
-    int32  topRow;
-    int32  botRow;
+    kkint32  topRow;
+    kkint32  botRow;
 
     for  (topRow = h - 1;  topRow >= 0;  topRow--)
     {
@@ -347,15 +347,15 @@ void  ConvexHull::DrawLine (Raster&  raster,
                             uchar    pixVal
                            )
 {
-  int32  col;
-  int32  row;
+  kkint32  col;
+  kkint32  row;
 
 
 
   if  (p1.Col () == p2.Col ())
   {
-    int32  startRow;
-    int32  endRow;
+    kkint32  startRow;
+    kkint32  endRow;
 
     col = p2.Col ();
 
@@ -387,8 +387,8 @@ void  ConvexHull::DrawLine (Raster&  raster,
 
   if  (fabs (m) < 1)
   {
-    int32  startCol;
-    int32  endCol;
+    kkint32  startCol;
+    kkint32  endCol;
 
     if  (p1.Col () < p2.Col ())
     {
@@ -403,14 +403,14 @@ void  ConvexHull::DrawLine (Raster&  raster,
 
     for  (col = startCol; col <= endCol; col++)
     {
-      row = (int32)(m * (double)col + c + 0.5);  // The Extract 0.5 is for rounding.
+      row = (kkint32)(m * (double)col + c + 0.5);  // The Extract 0.5 is for rounding.
       raster.SetPixelValue (row, col, pixVal);
     }
   }
   else
   {
-    int32  startRow;
-    int32  endRow;
+    kkint32  startRow;
+    kkint32  endRow;
 
     if  (p1.Row () < p2.Row ())
     {
@@ -425,7 +425,7 @@ void  ConvexHull::DrawLine (Raster&  raster,
 
     for  (row = startRow; row <= endRow; row++)
     {
-      col = (int32)((((double)row - c) / m) + 0.5);  // The Extract 0.5 is for rounding.
+      col = (kkint32)((((double)row - c) / m) + 0.5);  // The Extract 0.5 is for rounding.
       raster.SetPixelValue (row, col, pixVal);
     }
   }
@@ -511,7 +511,7 @@ void  ConvexHull::Merge ()
 
 
 
-int32 ConvexHull::RelativeCCW (Point&  sp,
+kkint32 ConvexHull::RelativeCCW (Point&  sp,
                                Point&  ep,
                                Point&  p)
 {
@@ -736,14 +736,14 @@ void   ConvexHull::BuildLowerLink ()
  */
 void  ConvexHull::Store (const Raster&  input)
 {
-  int32 w = input.Width ();
-  int32 h = input.Height ();
+  kkint32 w = input.Width ();
+  kkint32 h = input.Height ();
 
   uchar**  rows = input.Rows ();
         
-  for (int32 col = 0;  col < w;  ++col)
+  for (kkint32 col = 0;  col < w;  ++col)
   {
-    int32 row;
+    kkint32 row;
     for  (row = h - 1;  row >= 0;  --row)
     {
       if  (rows[row][col] > 0)

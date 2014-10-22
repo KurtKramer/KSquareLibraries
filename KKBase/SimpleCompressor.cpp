@@ -21,7 +21,7 @@ using namespace KKB;
 
 
 
-SimpleCompressor::SimpleCompressor (uint32  estimatedMaxBuffSize)
+SimpleCompressor::SimpleCompressor (kkuint32  estimatedMaxBuffSize)
 {
   buffBytes = new uchar[estimatedMaxBuffSize];
   buffLens  = new uchar[estimatedMaxBuffSize];
@@ -42,7 +42,7 @@ SimpleCompressor::~SimpleCompressor ()
 
 
 
-void  SimpleCompressor::Add16BitInt (uint32  i)
+void  SimpleCompressor::Add16BitInt (kkuint32  i)
 {
   AddByte ((uchar)(i / 256));
   AddByte ((uchar)(i % 256));
@@ -54,7 +54,7 @@ void  SimpleCompressor::AddByte (uchar  b)
 {
   if  (buffSpaceUsed >= buffSize)
   {
-    uint32  newBuffSize = buffSize + growthRate;
+    kkuint32  newBuffSize = buffSize + growthRate;
     uchar*  newBuffBytes = new uchar[newBuffSize];
     uchar*  newBuffLens = new uchar[newBuffSize];
 
@@ -105,14 +105,14 @@ void  SimpleCompressor::AddByte (uchar  b)
 
 
 
-KKB::uint32  SimpleCompressor::CalcCompressedBytesNeeded ()
+kkuint32  SimpleCompressor::CalcCompressedBytesNeeded ()
 {
-  uint32  compressedBuffUsed = 0;
+  kkuint32  compressedBuffUsed = 0;
 
   compressedBuffUsed++;  // AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, compressedBytesNeeded / 255);
   compressedBuffUsed++;  // AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, compressedBytesNeeded % 255);
 
-  uint32  idx = 0;
+  kkuint32  idx = 0;
 
   while  (idx < buffSpaceUsed)
   {
@@ -130,8 +130,8 @@ KKB::uint32  SimpleCompressor::CalcCompressedBytesNeeded ()
       // Lets look forward to see how many
 
 
-      uint32  endIdx = idx;
-      uint32  rawBytesInARow = 0;
+      kkuint32  endIdx = idx;
+      kkuint32  rawBytesInARow = 0;
       while  ((endIdx < buffSpaceUsed)  &&  (buffLens[endIdx] <= 1)  &&  (rawBytesInARow < 127))
       {
         endIdx++;
@@ -142,7 +142,7 @@ KKB::uint32  SimpleCompressor::CalcCompressedBytesNeeded ()
 
       
       compressedBuffUsed++;  //AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, 0 + rawBytesInARow);
-      for  (uint32 x = 0;   x < rawBytesInARow;  x++)
+      for  (kkuint32 x = 0;   x < rawBytesInARow;  x++)
       {
         compressedBuffUsed++;  // AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, buffBytes[idx]);
         idx++;
@@ -159,7 +159,7 @@ KKB::uint32  SimpleCompressor::CalcCompressedBytesNeeded ()
 
 
 void    SimpleCompressor::AddByteToCmpressedBuffer (uchar*  compressedBuff, 
-                                                    uint32&   compressedBuffUsed,
+                                                    kkuint32& compressedBuffUsed,
                                                     uchar   b
                                                     )
 {
@@ -169,9 +169,9 @@ void    SimpleCompressor::AddByteToCmpressedBuffer (uchar*  compressedBuff,
 
 
 
-uchar*  SimpleCompressor::CreateCompressedBuffer (uint32&  compressedBuffserSize)
+uchar*  SimpleCompressor::CreateCompressedBuffer (kkuint32&  compressedBuffserSize)
 {
-  uint32  compressedBytesNeeded = CalcCompressedBytesNeeded ();
+  kkuint32  compressedBytesNeeded = CalcCompressedBytesNeeded ();
 
   if  (compressedBytesNeeded > (256 * 256))
   {
@@ -188,12 +188,12 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (uint32&  compressedBuffserSize
 
 
   uchar*  compressedBuff = new uchar[compressedBytesNeeded];
-  uint32  compressedBuffUsed = 0;
+  kkuint32  compressedBuffUsed = 0;
 
   AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, compressedBytesNeeded / 256);
   AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, compressedBytesNeeded % 256);
 
-  uint32  idx = 0;
+  kkuint32  idx = 0;
 
   while  (idx < buffSpaceUsed)
   {
@@ -209,8 +209,8 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (uint32&  compressedBuffserSize
       // We have some raw bytes to add.
       // Lets look forward to see how many
 
-      uint32  endIdx = idx;
-      uint32  rawBytesInARow = 0;
+      kkuint32  endIdx = idx;
+      kkuint32  rawBytesInARow = 0;
       while  ((endIdx < buffSpaceUsed)  &&  (buffLens[endIdx] <= 1)  &&  (rawBytesInARow < 127))
       {
         endIdx++;
@@ -221,7 +221,7 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (uint32&  compressedBuffserSize
 
       
       AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, 0 + rawBytesInARow);
-      for  (uint32 x = 0;   x < rawBytesInARow;  x++)
+      for  (kkuint32 x = 0;   x < rawBytesInARow;  x++)
       {
         AddByteToCmpressedBuffer (compressedBuff, compressedBuffUsed, buffBytes[idx]);
         idx++;
@@ -253,15 +253,15 @@ uchar*  SimpleCompressor::CreateCompressedBuffer (uint32&  compressedBuffserSize
 
 
 uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
-                                       uint32        compressedBuffLen,
-                                       uint32&         unCompressedSize
+                                       kkuint32      compressedBuffLen,
+                                       kkuint32&       unCompressedSize
                                       )
 {
   if  ((compressedBuff == NULL)  ||  ((compressedBuffLen < 2)))
     return  NULL;
 
   // First two bytes specifies the total number of compressed bytes including the first two bytes.
-  uint32  compressedBuffSize = compressedBuff[0] * 256 + compressedBuff[1];
+  kkuint32  compressedBuffSize = compressedBuff[0] * 256 + compressedBuff[1];
 
   if  (compressedBuffSize > compressedBuffLen)
   {
@@ -276,7 +276,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
     compressedBuffSize = compressedBuffLen;
   }
 
-  uint32  nextByte = 2;
+  kkuint32  nextByte = 2;
 
   // Calculate the number of uncompressed bytes needed.  Which is done by decompressing the data.
   unCompressedSize = 0;
@@ -316,7 +316,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
 
   nextByte = 2;
 
-  uint32  unCompressedBuffIDX = 0;
+  kkuint32  unCompressedBuffIDX = 0;
 
   while  (nextByte < (compressedBuffSize - 1))
   {
@@ -326,7 +326,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
       // We have raw data that consists of 'controlByte' bytes.
       nextByte++;  // Step past control byte.
 
-      for  (int32 x = 0;  (x < controlByte)   &&  (nextByte < compressedBuffSize);  x++)
+      for  (kkint32 x = 0;  (x < controlByte)   &&  (nextByte < compressedBuffSize);  x++)
       {
         unCompressedBuff[unCompressedBuffIDX] = compressedBuff[nextByte];
         unCompressedBuffIDX++;
@@ -338,7 +338,7 @@ uchar*   SimpleCompressor::Decompress (const uchar*  compressedBuff,
       // Since the control byte is 128 or greater;  then we are dealing with a repeating value.
       controlByte = controlByte % 128;  // Get the lower 7 bits 
       nextByte++;  // Step past control byte so now we are pointing at byte that is to be repeated.
-      for  (int32 x = 0;  x < controlByte;  x++)
+      for  (kkint32 x = 0;  x < controlByte;  x++)
       {
         unCompressedBuff[unCompressedBuffIDX] = compressedBuff[nextByte];
         unCompressedBuffIDX++;

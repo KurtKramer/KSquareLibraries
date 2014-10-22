@@ -53,7 +53,7 @@ namespace KKMachineLearning {
 
 
     virtual
-    int32     MemoryConsumedEstimated ()  const;
+    kkint32   MemoryConsumedEstimated ()  const;
 
 
     virtual
@@ -102,10 +102,10 @@ namespace KKMachineLearning {
     virtual float                    AvgMumOfFeatures           () const {return (float)selectedFeatures.NumOfFeatures ();}
     virtual EncodingMethodType       EncodingMethod             () const {return encodingMethod;}
     virtual KKStr                    EncodingMethodStr          () const {return EncodingMethodToStr (encodingMethod);}
-    virtual int32                    ExamplesPerClass           () const {return examplesPerClass;}
+    virtual kkint32                  ExamplesPerClass           () const {return examplesPerClass;}
     virtual const KKStr&             FileName                   () const {return fileName;}
     virtual bool                     NormalizeNominalFeatures   () const {return normalizeNominalFeatures;}
-    virtual int32                    NumOfFeaturesAfterEncoding () const;
+    virtual kkint32                  NumOfFeaturesAfterEncoding () const;
     virtual const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
     virtual bool                     ValidParam                 () const {return validParam;}
   
@@ -119,7 +119,7 @@ namespace KKMachineLearning {
 
     // Member update methods
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}
-    virtual void  ExamplesPerClass   (int32                    _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
+    virtual void  ExamplesPerClass   (kkint32                  _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
     virtual void  FileName           (const KKStr&           _fileName)           {fileName           = _fileName;}
     virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
     virtual void  ValidParam         (bool                   _validParam)         {validParam         = _validParam;}
@@ -154,7 +154,7 @@ namespace KKMachineLearning {
 
     EncodingMethodType       encodingMethod;
 
-    int32                    examplesPerClass;
+    kkint32                  examplesPerClass;
 
     KKStr                    fileName;
 

@@ -70,7 +70,7 @@ GoalKeeperSimple::~GoalKeeperSimple ()
 
 
 
-int32  GoalKeeperSimple::MemoryConsumedEstimated ()  const
+kkint32  GoalKeeperSimple::MemoryConsumedEstimated ()  const
 {
   return  (sizeof (GoalKeeperSimple) + name.MemoryConsumedEstimated ());
 }
@@ -89,7 +89,7 @@ bool   GoalKeeperSimple::BlockedByAnotherThread ()
   if  (!blocked)
     return false;
 
-  int32  curThreadId = KKB::osGetThreadId ();
+  kkint32  curThreadId = KKB::osGetThreadId ();
   return  (blocked  &&  (curThreadId != blockerThreadId));
 }
 
@@ -120,7 +120,7 @@ void  GoalKeeperSimple::CriticalSectionEnd ()
 
 void  GoalKeeperSimple::StartBlock ()
 {
-  int32  curThreadId = KKB::osGetThreadId ();
+  kkint32  curThreadId = KKB::osGetThreadId ();
 
   if  (blocked  &&  (curThreadId == blockerThreadId))
   {
@@ -142,7 +142,7 @@ void  GoalKeeperSimple::StartBlock ()
 
 void   GoalKeeperSimple::EndBlock ()
 {
-  int32  curThreadId = KKB::osGetThreadId ();
+  kkint32  curThreadId = KKB::osGetThreadId ();
   if  (!blocked)
     throw KKB::KKException ("GoalKeeperSimple::EndBlock    Name[" + name + "]  Is not currently blocked.");
 
@@ -318,7 +318,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
   }
   else
   {
-    int32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
     if  (existingInstanceIdx < 0)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
@@ -354,7 +354,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
   }
   else
   {
-    int32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
     if  (existingInstanceIdx >= 0)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
@@ -387,9 +387,9 @@ void   GoalKeeperSimple::FinalCleanUp ()
 
 
 
-int32  GoalKeeperSimple::BlockerThreadId ()
+kkint32  GoalKeeperSimple::BlockerThreadId ()
 {
-  int32  x = 0;
+  kkint32  x = 0;
   x =  blockerThreadId;
   return  x;
 }

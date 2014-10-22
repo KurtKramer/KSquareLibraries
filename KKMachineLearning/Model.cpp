@@ -88,9 +88,9 @@ Model::Model (const Model&  _model):
 /**
  @brief  Use this when you are planning on creating a empty model without parameters.
  */
-Model::Model (FileDescPtr           _fileDesc,
-              volatile const bool&  _cancelFlag,
-              RunLog&               _log
+Model::Model (FileDescPtr    _fileDesc,
+              VolConstBool&  _cancelFlag,
+              RunLog&        _log
              ):
     alreadyNormalized        (false),
     cancelFlag               (_cancelFlag),
@@ -127,11 +127,11 @@ Model::Model (FileDescPtr           _fileDesc,
  *           going on will quit and exit back to caller.
  *@param[in] _log A logfile stream. All important events will be output to this stream
  */
-Model::Model (const KKStr&          _name,
-              const ModelParam&     _param,      // Create new model from
-              FileDescPtr           _fileDesc,
-              volatile const bool&  _cancelFlag,
-              RunLog&               _log
+Model::Model (const KKStr&       _name,
+              const ModelParam&  _param,      // Create new model from
+              FileDescPtr        _fileDesc,
+              VolConstBool&      _cancelFlag,
+              RunLog&            _log
              ):
     alreadyNormalized     (false),
     cancelFlag            (_cancelFlag),
@@ -193,9 +193,9 @@ Model::~Model ()
 }
 
 
-int32  Model::MemoryConsumedEstimated ()  const
+kkint32  Model::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (Model) + rootFileName.MemoryConsumedEstimated ();
+  kkint32  memoryConsumedEstimated = sizeof (Model) + rootFileName.MemoryConsumedEstimated ();
   if  (classes)              memoryConsumedEstimated += classes->MemoryConsumedEstimated ();
   if  (classesIndex)         memoryConsumedEstimated += classesIndex->MemoryConsumedEstimated ();
   if  (classProbs)           memoryConsumedEstimated += numOfClasses * sizeof (double);
@@ -203,7 +203,7 @@ int32  Model::MemoryConsumedEstimated ()  const
   if  (encoder)              memoryConsumedEstimated += encoder->MemoryConsumedEstimated ();
   if  (normParms)            memoryConsumedEstimated += normParms->MemoryConsumedEstimated ();
   if  (param)                memoryConsumedEstimated += param->MemoryConsumedEstimated ();
-  if  (votes)                memoryConsumedEstimated += numOfClasses * sizeof (int32);
+  if  (votes)                memoryConsumedEstimated += numOfClasses * sizeof (kkint32);
 
   if  (weOwnTrainExamples  &&  (trainExamples != NULL))
     memoryConsumedEstimated += trainExamples->MemoryConsumedEstimated ();
@@ -213,10 +213,10 @@ int32  Model::MemoryConsumedEstimated ()  const
 
 
 
-ModelPtr  Model::CreateFromStream (istream&              i,
-                                   FileDescPtr           _fileDesc,
-                                   volatile const bool&  _cancelFlag,
-                                   RunLog&               _log
+ModelPtr  Model::CreateFromStream (istream&       i,
+                                   FileDescPtr    _fileDesc,
+                                   VolConstBool&  _cancelFlag,
+                                   RunLog&        _log
                                   )
 {
   istream::pos_type startPos = i.tellg ();
@@ -367,12 +367,12 @@ Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 
 
 
-ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
-                               const KKStr&          _name,
-                               const ModelParam&     _param,  
-                               FileDescPtr           _fileDesc,
-                               volatile const bool&  _cancelFlag,
-                               RunLog&               _log
+ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
+                               const KKStr&      _name,
+                               const ModelParam& _param,  
+                               FileDescPtr       _fileDesc,
+                               VolConstBool&     _cancelFlag,
+                               RunLog&           _log
                               )
 {
   ModelPtr  model = NULL;
@@ -425,7 +425,7 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
 
 void  Model::AllocatePredictionVariables ()
 {
-  uint32  x, y;
+  kkuint32  x, y;
 
   DeAllocateSpace ();
 
@@ -445,7 +445,7 @@ void  Model::AllocatePredictionVariables ()
   {
     crossClassProbTableSize = numOfClasses;
     classProbs    = new double[numOfClasses];
-    votes         = new int32 [numOfClasses];
+    votes         = new kkint32 [numOfClasses];
     crossClassProbTable = new double*[numOfClasses];
     for  (x = 0;  x < numOfClasses;  x++)
     {
@@ -464,7 +464,7 @@ void  Model::AllocatePredictionVariables ()
 
 void  Model::DeAllocateSpace ()
 {
-  uint32  x;
+  kkuint32  x;
   if  (crossClassProbTable)
   {
     for  (x = 0;  x < numOfClasses;  x++)
@@ -943,8 +943,8 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
  */
 void  Model::ReduceTrainExamples ()
 {
-  int32  examplesPerClass = param->ExamplesPerClass ();
-  uint32  zed = 0;
+  kkint32  examplesPerClass = param->ExamplesPerClass ();
+  kkuint32  zed = 0;
 
   if  (examplesPerClass < 0)
     examplesPerClass = int32_max;
@@ -965,7 +965,7 @@ void  Model::ReduceTrainExamples ()
 
     for  (zed = 0;  (zed < stats->size ())  &&  (!reductionNeeded);  zed++)
     {
-      if  (stats->IdxToPtr (zed)->Count () > (uint32)examplesPerClass)
+      if  (stats->IdxToPtr (zed)->Count () > (kkuint32)examplesPerClass)
         reductionNeeded  = true;
     }
 
@@ -994,7 +994,7 @@ void  Model::ReduceTrainExamples ()
       continue;
     }
 
-    if  (examplesThisClass->size () <= (uint32)examplesPerClass)
+    if  (examplesThisClass->size () <= (kkuint32)examplesPerClass)
     {
       reducedSet->AddQueue (*examplesThisClass);
     }
@@ -1002,7 +1002,7 @@ void  Model::ReduceTrainExamples ()
     {
       examplesThisClass->RandomizeOrder ();
       zed = 0;
-      while  (zed < (uint32)examplesPerClass)
+      while  (zed < (kkuint32)examplesPerClass)
       {
         reducedSet->PushOnBack (examplesThisClass->IdxToPtr (zed));
         zed++;
@@ -1058,8 +1058,8 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
     return;
   }
 
-  int32*  indexTable = new int32[classes.QueueSize ()];
-  int32  x, y;
+  kkint32*  indexTable = new kkint32[classes.QueueSize ()];
+  kkint32  x, y;
   for  (x = 0;  x < classes.QueueSize ();  x++)
   {
     for  (y = 0;  y < classes.QueueSize ();  y++)
@@ -1091,18 +1091,18 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
   // xIdx, yIdx  = 'SVMNodel'  Class Indexed.
   for  (x = 0;  x < classes.QueueSize ();  x++)
   {
-    int32 xIdx = indexTable[x];
+    kkint32 xIdx = indexTable[x];
     if  (xIdx >= 0)
     {
       for  (y = 0;  y < classes.QueueSize ();  y++)
       {
-        int32  yIdx = indexTable[y];
+        kkint32  yIdx = indexTable[y];
         if  (yIdx >= 0)
         {
           if  ((x != xIdx)  ||  (y != yIdx))
           {
             //kak  I just added this check to see when this situation actually occurs.
-            int32 zed = 111;
+            kkint32 zed = 111;
           }
 
           crossClassProbTable[x][y] = this->crossClassProbTable[xIdx][yIdx];

@@ -36,15 +36,15 @@ MorphOpBinarize::~MorphOpBinarize ()
 
 
 
-int32  MorphOpBinarize::MemoryConsumedEstimated ()
+kkint32  MorphOpBinarize::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }
 
 
 
-bool  MorphOpBinarize::Fit (int32  row,
-                            int32  col
+bool  MorphOpBinarize::Fit (kkint32  row,
+                            kkint32  col
                            )  const
 {
 
@@ -63,10 +63,10 @@ RasterPtr   MorphOpBinarize::PerformOperation (RasterConstPtr  _image)
 {
   SetSrcRaster (_image);
 
-  int32  r = 0;
-  int32  c = 0;
+  kkint32  r = 0;
+  kkint32  c = 0;
 
-  int32  binarizedForegroundPixelCount = 0;
+  kkint32  binarizedForegroundPixelCount = 0;
 
   RasterPtr   binarizedRaster = new Raster (srcRaster->Height (), srcRaster->Width ());
 

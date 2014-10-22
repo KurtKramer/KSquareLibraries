@@ -64,8 +64,8 @@ ContourFollower::ContourFollower (Raster&  _raster,
 
 
 
-uchar  ContourFollower::PixelValue (int32 row,
-                                    int32 col
+uchar  ContourFollower::PixelValue (kkint32 row,
+                                    kkint32 col
                                    )
 {
   if  ((row < 0)  ||  (row >= height))  return 0;
@@ -74,11 +74,11 @@ uchar  ContourFollower::PixelValue (int32 row,
 }
 
 
-int32  ContourFollower::PixelCountIn9PixelNeighborhood (int32  row, 
-                                                      int32  col
+kkint32  ContourFollower::PixelCountIn9PixelNeighborhood (kkint32  row, 
+                                                      kkint32  col
                                                      )
 {
-  int32  count = 0;
+  kkint32  count = 0;
   if  (PixelValue (row - 1, col - 1) > 0)  ++count;
   if  (PixelValue (row - 1, col    ) > 0)  ++count;
   if  (PixelValue (row - 1, col + 1) > 0)  ++count;
@@ -93,8 +93,8 @@ int32  ContourFollower::PixelCountIn9PixelNeighborhood (int32  row,
 
 
 
-void  ContourFollower::GetFirstPixel (int32&  startRow,
-                                      int32&  startCol
+void  ContourFollower::GetFirstPixel (kkint32&  startRow,
+                                      kkint32&  startCol
                                      )
 {
   lastDir = 1;
@@ -115,8 +115,8 @@ void  ContourFollower::GetFirstPixel (int32&  startRow,
     // pixel.
 
     bool  found = false;
-    int32  row;
-    int32  col;
+    kkint32  row;
+    kkint32  col;
 
     for  (row = 0; ((row < height)  &&  (!found));  row++)
     {
@@ -145,8 +145,8 @@ void  ContourFollower::GetFirstPixel (int32&  startRow,
 
 
 
-void  ContourFollower::GetNextPixel (int32&  nextRow,
-                                     int32&  nextCol
+void  ContourFollower::GetNextPixel (kkint32&  nextRow,
+                                     kkint32&  nextCol
                                     )
 {
   fromDir = lastDir + 4;
@@ -156,7 +156,7 @@ void  ContourFollower::GetNextPixel (int32&  nextRow,
 
   bool  nextPixelFound = false;
 
-  int32  nextDir = fromDir + 2;
+  kkint32  nextDir = fromDir + 2;
 
   while  (!nextPixelFound)
   {
@@ -194,7 +194,7 @@ void  ContourFollower::GetNextPixel (int32&  nextRow,
 
 
 float  CalcMagnitude (fftw_complex*  dest,
-                       int32          index
+                       kkint32        index
                       )
 {
   float  mag = 0.0f;
@@ -211,9 +211,9 @@ float  CalcMagnitude (fftw_complex*  dest,
 
 
 
-int32  ContourFollower::FollowContour (float*  countourFreq,
+kkint32  ContourFollower::FollowContour (float*  countourFreq,
                                        float   fourierDescriptors[15],
-                                       int32   totalPixels,
+                                       kkint32 totalPixels,
                                        bool&   successful
                                       )
 {
@@ -227,31 +227,31 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
   //                       up causing a memory access fault when we access a negative index.
 
 
-  int32  numOfBuckets = 5;
+  kkint32  numOfBuckets = 5;
 
-  int32  startRow;
-  int32  startCol;
+  kkint32  startRow;
+  kkint32  startCol;
 
-  int32  scndRow;
-  int32  scndCol;
+  kkint32  scndRow;
+  kkint32  scndCol;
 
-  int32  lastRow;
-  int32  lastCol;
+  kkint32  lastRow;
+  kkint32  lastCol;
 
-  int32  nextRow;
-  int32  nextCol;
+  kkint32  nextRow;
+  kkint32  nextCol;
 
-  int32  absoluteMaximumEdgePixels = totalPixels * 3;
+  kkint32  absoluteMaximumEdgePixels = totalPixels * 3;
 
-  int32  maxNumOfBorderPoints = 3 * (height + width);
-  int32  numOfBorderPixels = 0;
+  kkint32  maxNumOfBorderPoints = 3 * (height + width);
+  kkint32  numOfBorderPixels = 0;
 
-  int32 x;
+  kkint32 x;
 
   successful = true;
 
-  int32  totalRow = 0;
-  int32  totalCol = 0;
+  kkint32  totalRow = 0;
+  kkint32  totalCol = 0;
 
   #ifdef  FFTW3_H
      fftw_complex*  src = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * maxNumOfBorderPoints);
@@ -313,7 +313,7 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
 
     if  (numOfBorderPixels >= maxNumOfBorderPoints)
     {
-      int32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
+      kkint32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
 
       #ifdef  FFTW3_H
         fftw_complex*  newSrc = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * newMaxNumOfAngles);
@@ -332,7 +332,7 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
         return 0;
       }
 
-      int32  x;
+      kkint32  x;
       for  (x = 0; x < maxNumOfBorderPoints; x++)
       {
         #ifdef  FFTW3_H
@@ -402,7 +402,7 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
 
   fftw_plan       plan;
 
-  int32  numOfedgePixels = numOfBorderPixels;
+  kkint32  numOfedgePixels = numOfBorderPixels;
 
   #ifdef  FFTW3_H
     plan = fftw_plan_dft_1d (numOfBorderPixels, src, dest, FFTW_FORWARD, FFTW_ESTIMATE);
@@ -414,7 +414,7 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
 
   fftw_destroy_plan (plan);  
 
-  int32*  count = new int32 [numOfBuckets];
+  kkint32*  count = new kkint32 [numOfBuckets];
 
   for  (x = 0;  x < numOfBuckets;  x++)
   {
@@ -654,7 +654,7 @@ int32  ContourFollower::FollowContour (float*  countourFreq,
 
 
 
-int32  ContourFollower::FollowContour2 (float*  countourFreq,
+kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
                                         bool&   successful
                                        )
 {
@@ -662,29 +662,29 @@ int32  ContourFollower::FollowContour2 (float*  countourFreq,
 
   // startRow and startCol is assumed to come from the left (6)
 
-  int32  numOfBuckets = 16;
+  kkint32  numOfBuckets = 16;
 
-  int32  startRow;
-  int32  startCol;
+  kkint32  startRow;
+  kkint32  startCol;
 
-  int32  scndRow;
-  int32  scndCol;
+  kkint32  scndRow;
+  kkint32  scndCol;
 
-  int32  lastRow;
-  int32  lastCol;
+  kkint32  lastRow;
+  kkint32  lastCol;
 
-  int32  nextRow;
-  int32  nextCol;
+  kkint32  nextRow;
+  kkint32  nextCol;
 
-  int32  maxNumOfBorderPoints = 3 * (height + width);
-  int32  numOfBorderPixels = 0;
+  kkint32  maxNumOfBorderPoints = 3 * (height + width);
+  kkint32  numOfBorderPixels = 0;
 
-  int32 x;
+  kkint32 x;
 
   successful = true;
 
-  int32  totalRow = 0;
-  int32  totalCol = 0;
+  kkint32  totalRow = 0;
+  kkint32  totalCol = 0;
 
   fftw_complex*  src = new fftw_complex[maxNumOfBorderPoints];
 
@@ -719,10 +719,10 @@ int32  ContourFollower::FollowContour2 (float*  countourFreq,
 
     if  (numOfBorderPixels >= maxNumOfBorderPoints)
     {
-      int32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
+      kkint32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
       fftw_complex*  newSrc = new fftw_complex[newMaxNumOfAngles];
 
-      int32  x;
+      kkint32  x;
       for  (x = 0; x < maxNumOfBorderPoints; x++)
       {
         #ifdef  FFTW3_H
@@ -774,7 +774,7 @@ int32  ContourFollower::FollowContour2 (float*  countourFreq,
     #endif
   }
 
-  int32  numOfedgePixels = numOfBorderPixels;
+  kkint32  numOfedgePixels = numOfBorderPixels;
 
   #ifdef  FFTW3_H
     fftw_complex*   dest = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * maxNumOfBorderPoints);
@@ -797,7 +797,7 @@ int32  ContourFollower::FollowContour2 (float*  countourFreq,
   #endif
 
 
-  int32*  count = new int32 [numOfBuckets];
+  kkint32*  count = new kkint32 [numOfBuckets];
 
   for  (x = 0; x < numOfBuckets; x++)
   {
@@ -848,7 +848,7 @@ int32  ContourFollower::FollowContour2 (float*  countourFreq,
   float  deltaX;
   float  mag;
 
-  int32  region = 0;
+  kkint32  region = 0;
 
   for  (x = 1; x < numOfBorderPixels; x++)
   {
@@ -932,17 +932,17 @@ PointListPtr  ContourFollower::GenerateContourList ()
 {
   // startRow and startCol is assumed to come from the left (6)
 
-  int32  startRow;
-  int32  startCol;
+  kkint32  startRow;
+  kkint32  startCol;
 
-  int32  scndRow;
-  int32  scndCol;
+  kkint32  scndRow;
+  kkint32  scndCol;
 
-  int32  lastRow;
-  int32  lastCol;
+  kkint32  lastRow;
+  kkint32  lastCol;
 
-  int32  nextRow;
-  int32  nextCol;
+  kkint32  nextRow;
+  kkint32  nextCol;
 
   PointListPtr  points = new PointList (true);
 
@@ -987,10 +987,10 @@ PointListPtr  ContourFollower::GenerateContourList ()
 
 
 
-ComplexDouble**  GetFourierOneDimMask (int32  size)
+ComplexDouble**  GetFourierOneDimMask (kkint32  size)
 {
   static  
-  int32  curMaskSize = 0;
+  kkint32  curMaskSize = 0;
 
   static  
   ComplexDouble**  fourierMask = NULL;
@@ -1001,7 +1001,7 @@ ComplexDouble**  GetFourierOneDimMask (int32  size)
   ComplexDouble  N(size, 0);
   ComplexDouble  M(size, 0);
 
-  int32  x;
+  kkint32  x;
 
   if  (fourierMask)
   {
@@ -1031,11 +1031,11 @@ ComplexDouble**  GetFourierOneDimMask (int32  size)
   ComplexDouble  One (1.0, 0);
   ComplexDouble  Two (2.0, 0);
 
-  for  (int32 m = 0;  m < size;  m++)
+  for  (kkint32 m = 0;  m < size;  m++)
   {
     complex<double>  mc (m, 0);
 
-    for  (int32 k = 0; k < size; k++)
+    for  (kkint32 k = 0; k < size; k++)
     {
       complex<double>  kc (k, 0);
 
@@ -1066,10 +1066,10 @@ ComplexDouble**  GetFourierOneDimMask (int32  size)
 
 
 
-ComplexDouble**   GetRevFourierOneDimMask (int32  size)  // For reverse Fourier
+ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourier
 {
   static  
-  int32  curRevMaskSize = 0;
+  kkint32  curRevMaskSize = 0;
 
   static  
   ComplexDouble**  revFourierMask = NULL;
@@ -1081,7 +1081,7 @@ ComplexDouble**   GetRevFourierOneDimMask (int32  size)  // For reverse Fourier
   ComplexDouble  N(size, 0);
   ComplexDouble  M(size, 0);
 
-  int32  x;
+  kkint32  x;
   
 
   if  (revFourierMask)
@@ -1113,11 +1113,11 @@ ComplexDouble**   GetRevFourierOneDimMask (int32  size)  // For reverse Fourier
   ComplexDouble  One (1.0, 0);
   ComplexDouble  Two (2.0, 0);
 
-  for  (int32 m = 0;  m < size;  m++)
+  for  (kkint32 m = 0;  m < size;  m++)
   {
     complex<double>  mc (m, 0);
 
-    for  (int32 k = 0; k < size; k++)
+    for  (kkint32 k = 0; k < size; k++)
     {
       complex<double>  kc (k, 0);
 
@@ -1149,28 +1149,28 @@ ComplexDouble**   GetRevFourierOneDimMask (int32  size)  // For reverse Fourier
 
 
 
-int32  ContourFollower::CreateFourierDescriptorBySampling (int32    numOfBuckets,
+kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBuckets,
                                                            float*  countourFreq,
                                                            bool&    successful
                                                           )
 {
   // startRow and startCol is assumed to come from the left (6)
-  // int32  numOfBuckets = 8;
-  int32  startRow;
-  int32  startCol;
+  // kkint32  numOfBuckets = 8;
+  kkint32  startRow;
+  kkint32  startCol;
 
-  int32  scndRow;
-  int32  scndCol;
+  kkint32  scndRow;
+  kkint32  scndCol;
 
-  int32  lastRow;
-  int32  lastCol;
+  kkint32  lastRow;
+  kkint32  lastCol;
 
-  int32  nextRow;
-  int32  nextCol;
+  kkint32  nextRow;
+  kkint32  nextCol;
 
-  int32  numOfBorderPixels = 0;
+  kkint32  numOfBorderPixels = 0;
 
-  int32 x;
+  kkint32 x;
 
   successful = true;
 
@@ -1214,12 +1214,12 @@ int32  ContourFollower::CreateFourierDescriptorBySampling (int32    numOfBuckets
 
   ComplexDouble*  src = new ComplexDouble[numOfBuckets];
 
-  int32  totalRow = 0;
-  int32  totalCol = 0;
+  kkint32  totalRow = 0;
+  kkint32  totalCol = 0;
 
   for  (x = 0;  x < numOfBuckets;  x++)
   {
-    int32  borderPixelIdx = (int32)(((double)x * (double)numOfBorderPixels) /  (double)numOfBuckets);
+    kkint32  borderPixelIdx = (kkint32)(((double)x * (double)numOfBorderPixels) /  (double)numOfBuckets);
 
     Point&  point = (*points)[borderPixelIdx];
 
@@ -1245,10 +1245,10 @@ int32  ContourFollower::CreateFourierDescriptorBySampling (int32    numOfBuckets
   ComplexDouble**  fourierMask = GetFourierOneDimMask (numOfBuckets);
   ComplexDouble    zero (0, 0);
 
-  for  (int32  l = 0;  l < numOfBuckets;  l++)
+  for  (kkint32  l = 0;  l < numOfBuckets;  l++)
   {
     dest[l] = zero;
-    for  (int32 k = 0;  k < numOfBuckets;  k++)
+    for  (kkint32 k = 0;  k < numOfBuckets;  k++)
     {
       dest[l] = dest[l] + src[k] * fourierMask[l][k];
     }
@@ -1270,18 +1270,18 @@ int32  ContourFollower::CreateFourierDescriptorBySampling (int32    numOfBuckets
 
 void  ContourFollower::HistogramDistanceFromAPointOfEdge (float   pointRow,
                                                           float   pointCol,
-                                                          int32   numOfBuckets,
-                                                          int32*  buckets,
+                                                          kkint32 numOfBuckets,
+                                                          kkint32*  buckets,
                                                           float&  minDistance,
                                                           float&  maxDistance,
-                                                          int32&  numOfEdgePixels
+                                                          kkint32&  numOfEdgePixels
                                                          )
 {
   PointListPtr  points = GenerateContourList ();
 
   numOfEdgePixels = points->QueueSize ();
   
-  int32  x;
+  kkint32  x;
 
   minDistance = FloatMax;
   maxDistance = FloatMin;
@@ -1317,7 +1317,7 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float   pointRow,
   {
     for  (x = 0;  x < points->QueueSize ();  x++)
     {
-      int32 bucketIDX = (int32)((distances[x] - minDistance) / bucketSize);
+      kkint32 bucketIDX = (kkint32)((distances[x] - minDistance) / bucketSize);
 
       buckets[bucketIDX]++;
     }
@@ -1343,10 +1343,10 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
   #endif
 
 
-  int32  totalRow = 0;
-  int32  totalCol = 0;
+  kkint32  totalRow = 0;
+  kkint32  totalCol = 0;
 
-  int32  x = 0;
+  kkint32  x = 0;
 
   for  (x = 0;  x < points.QueueSize ();  x++)
   {
@@ -1394,7 +1394,7 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
   vector<ComplexDouble>  dest;
 
-  for  (int32  l = 0;  l < points.QueueSize ();  l++)
+  for  (kkint32  l = 0;  l < points.QueueSize ();  l++)
   {
     #ifdef  FFTW3_H
     dest.push_back (ComplexDouble (destFFTW[l][0] / (double)(points.QueueSize ()), destFFTW[l][1] / (double)(points.QueueSize ())));
@@ -1416,7 +1416,7 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
                                                            PointList&             origPointList
                                                           )
 {
-  int32  minRow, maxRow, minCol, maxCol;
+  kkint32  minRow, maxRow, minCol, maxCol;
   origPointList.BoxCoordinites (minRow, minCol, maxRow, maxCol);
 
   PointListPtr  points = new PointList (true);
@@ -1429,7 +1429,7 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
      fftw_complex*  src = new fftw_complex[numOfEdgePixels];
   #endif
 
-  for  (int32  l = 0;  l < (int32)fourier.size ();  l++)
+  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
   {
     #ifdef  FFTW3_H
     src[l][0] = fourier[l].real ();
@@ -1453,18 +1453,18 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
     plan = fftw_plan_dft_1d (numOfEdgePixels, src, destFFTW, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute (plan);
   #else
-    plan = fftw_create_plan ((int32)numOfEdgePixels, FFTW_BACKWARD, FFTW_ESTIMATE);
+    plan = fftw_create_plan ((kkint32)numOfEdgePixels, FFTW_BACKWARD, FFTW_ESTIMATE);
     fftw_one (plan, src, destFFTW);
   #endif
   fftw_destroy_plan (plan);  
 
 
-  int32  largestRow  = -1;
-  int32  largestCol  = -1;
-  int32  smallestRow = 999999;
-  int32  smallestCol = 999999;
+  kkint32  largestRow  = -1;
+  kkint32  largestCol  = -1;
+  kkint32  smallestRow = 999999;
+  kkint32  smallestCol = 999999;
 
-  for  (int32  l = 0;  l < (int32)fourier.size ();  l++)
+  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
   {
 
     #ifdef  WIN32
@@ -1486,13 +1486,13 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
     
     //  z = z / (double)(fourier.size ());
 
-    int32  row = (int32)(z.real () + 0.5);
+    kkint32  row = (kkint32)(z.real () + 0.5);
     if  (row > largestRow)
       largestRow = row;
     if  (row < smallestRow)
       smallestRow = row;
 
-    int32  col = (int32)(z.imag () + 0.5);
+    kkint32  col = (kkint32)(z.imag () + 0.5);
     if  (col > largestCol)
       largestCol = col;
     if  (col < smallestCol)

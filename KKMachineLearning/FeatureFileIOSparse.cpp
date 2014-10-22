@@ -44,12 +44,12 @@ FeatureFileIOSparse::~FeatureFileIOSparse ()
 
 
 
-FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&       _fileName,
-                                               istream&           _in,
+FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
+                                               istream&        _in,
                                                MLClassListPtr  _classes,
-                                               int32&             _estSize,
-                                               KKStr&             _errorMessage,
-                                               RunLog&            _log
+                                               kkint32&        _estSize,
+                                               KKStr&          _errorMessage,
+                                               RunLog&         _log
                                               )
 {
   _log.Level (20) << "FeatureFileIOSparse::GetFileDesc     FileName[" << _fileName << "]." << endl;
@@ -58,8 +58,8 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&       _fileName,
 
   _estSize = 0;
 
-  int32  featureNumMin = int32_max;
-  int32  featureNumMax = int32_min;
+  kkint32  featureNumMin = int32_max;
+  kkint32  featureNumMax = int32_min;
 
   while  (!eof)
   {
@@ -90,7 +90,7 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&       _fileName,
     while  (!eol)
     {
       KKStr  featureNumStr = field.ExtractToken (":");
-      int32 featureNum = atoi (featureNumStr.Str ());
+      kkint32 featureNum = atoi (featureNumStr.Str ());
 
       if  (featureNum > featureNumMax)
         featureNumMax = featureNum;
@@ -106,7 +106,7 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&       _fileName,
 
   fileDesc->SparseMinFeatureNum (featureNumMin);
 
-  for  (int32 fieldNum = featureNumMin;  fieldNum <= featureNumMax;  fieldNum++)
+  for  (kkint32 fieldNum = featureNumMin;  fieldNum <= featureNumMax;  fieldNum++)
   {
     bool  alreadyExists = false;
     fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), NumericAttribute, alreadyExists);
@@ -121,10 +121,10 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&       _fileName,
 
 FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName,
                                                      const FileDescPtr _fileDesc,
-                                                     MLClassList&   _classes, 
+                                                     MLClassList&      _classes, 
                                                      istream&          _in,
-                                                     int32             _maxCount,    // Maximum # images to load.
-                                                     volatile const bool&  _cancelFlag,
+                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     VolConstBool&     _cancelFlag,
                                                      bool&             _changesMade,
                                                      KKStr&            _errorMessage,
                                                      RunLog&           _log
@@ -137,19 +137,19 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
 
   KKStr  rootName = osGetRootName (_fileName);
 
-  int32  numOfFeatures = _fileDesc->NumOfFields ();
+  kkint32  numOfFeatures = _fileDesc->NumOfFields ();
 
-  int32  lineCount = 0;
+  kkint32  lineCount = 0;
 
-  int32  minFeatureNum = _fileDesc->SparseMinFeatureNum ();
-  int32  maxFeatureNum = minFeatureNum + numOfFeatures - 1;
+  kkint32  minFeatureNum = _fileDesc->SparseMinFeatureNum ();
+  kkint32  maxFeatureNum = minFeatureNum + numOfFeatures - 1;
 
   if  (_maxCount < 1)
     _maxCount = int32_max;
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
 
-  while  ((!eof)   &&  (!_cancelFlag)  &&  ((int32)examples->size () < _maxCount))
+  while  ((!eof)   &&  (!_cancelFlag)  &&  ((kkint32)examples->size () < _maxCount))
   {
     KKStr  className;
     
@@ -184,7 +184,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
     while  ((!eol)  &&  (!eof))  
     {
       KKStr  featureNumStr = field.ExtractToken (":");
-      int32 featureNum = atoi (featureNumStr.Str ());
+      kkint32 featureNum = atoi (featureNumStr.Str ());
       
       if  ((featureNum < minFeatureNum)  ||  (featureNum > maxFeatureNum))
       {
@@ -220,8 +220,8 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&     _data,
                                       const KKStr&           _fileName,
                                       const FeatureNumList&  _selFeatures,
                                       ostream&               _out,
-                                      uint32&                _numExamplesWritten,
-                                      volatile const bool&   _cancelFlag,
+                                      kkuint32&              _numExamplesWritten,
+                                      VolConstBool&          _cancelFlag,
                                       bool&                  _successful,
                                       KKStr&                 _errorMessage,
                                       RunLog&                _log
@@ -233,10 +233,10 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&     _data,
 
   _numExamplesWritten = 0;
 
-  int32  idx;
-  int32  x;
+  kkint32  idx;
+  kkint32  x;
 
-  int32  minFeatureNum = fileDesc->SparseMinFeatureNum ();
+  kkint32  minFeatureNum = fileDesc->SparseMinFeatureNum ();
 
   for  (idx = 0;  (idx < _data.QueueSize ()) && (!_cancelFlag);  idx++)
   {
@@ -246,7 +246,7 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&     _data,
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
       float value = example->FeatureData (featureNum);
       if  (value != (float)0.0)
         _out << " " << (featureNum + minFeatureNum) << ":" << example->FeatureData (featureNum);

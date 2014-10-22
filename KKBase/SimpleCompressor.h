@@ -10,7 +10,7 @@ namespace  KKB
   class  SimpleCompressor
   {
   public:
-    SimpleCompressor (uint32  estimatedMaxBuffSize);
+    SimpleCompressor (kkuint32  estimatedMaxBuffSize);
 
     SimpleCompressor (uchar*  compressdBuff);
 
@@ -19,36 +19,36 @@ namespace  KKB
     void  AddByte (uchar  b);
 
   
-    void  Add16BitInt (uint32  i);
+    void  Add16BitInt (kkuint32  i);
 
-    uchar*   CreateCompressedBuffer (uint32&  compressedBuffserSize);
+    uchar*   CreateCompressedBuffer (kkuint32&  compressedBuffserSize);
 
 
     static
     uchar*   Decompress (const uchar*  compressedBuff,
-                         uint32        compressedBuffLen,
-                         uint32&       unCompressedSize
+                         kkuint32      compressedBuffLen,
+                         kkuint32&     unCompressedSize
                         );
 
 
   private:
-    void    AddByteToCmpressedBuffer (uchar*   compressedBuff, 
-                                      uint32&  compressedBuffUsed,
-                                      uchar    b
+    void    AddByteToCmpressedBuffer (uchar*    compressedBuff, 
+                                      kkuint32& compressedBuffUsed,
+                                      uchar     b
                                      );
 
 
-    uint32  CalcCompressedBytesNeeded ();
+    kkuint32  CalcCompressedBytesNeeded ();
 
 
     uchar*   buffBytes;
     uchar*   buffLens;
-    uint32   buffSize;
-    uint32   buffSpaceUsed;
+    kkuint32 buffSize;
+    kkuint32 buffSpaceUsed;
 
-    uint32   lastBuffByteUsed;
+    kkuint32 lastBuffByteUsed;
 
-    uint32   growthRate;
+    kkuint32 growthRate;
   };
 }  /* KKB */
 

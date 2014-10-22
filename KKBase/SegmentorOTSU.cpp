@@ -48,8 +48,8 @@ void   SegmentorOTSU::LabelRaster (RasterPtr  result,
 {
   uchar*  resultArea = result->GreenArea ();
   uchar*  srcArea    = srcImage->GreenArea ();
-  int32   totPixels  = srcImage->TotPixels ();
-  for  (int32  x = 0;  x < totPixels;  ++x)
+  kkint32 totPixels  = srcImage->TotPixels ();
+  for  (kkint32  x = 0;  x < totPixels;  ++x)
   {
     if  (srcArea[x] == pixelValue)
     {
@@ -76,8 +76,8 @@ void   SegmentorOTSU::LabelRaster (RasterPtr  result,
 
   uchar*  resultArea = result->GreenArea ();
   uchar*  srcArea    = srcImage->GreenArea ();
-  int32   totPixels  = srcImage->TotPixels ();
-  for  (int32  x = 0;  x < totPixels;  ++x)
+  kkint32 totPixels  = srcImage->TotPixels ();
+  for  (kkint32  x = 0;  x < totPixels;  ++x)
   {
     if  ((srcArea[x] == pixelValue)  &&  (maskArea[x] > maskTh))
     {
@@ -113,7 +113,7 @@ vector<T>   SegmentorOTSU::CumSum (const vector<T>&  v)
   vector<T>  r;
 
   T  total = 0.0;
-  for  (uint32  x = 0;  x < v.size ();  ++x)
+  for  (kkuint32  x = 0;  x < v.size ();  ++x)
   {
     total += v[x];
     r.push_back (total);
@@ -128,11 +128,11 @@ VectorDouble  SegmentorOTSU::DotMult (const VectorDouble&  left,
                                       const VectorDouble&  right
                                      )
 {
-  uint32  lenMax = (uint32)Max (left.size (), right.size ());
-  uint32  lenMin = (uint32)Min (left.size (), right.size ());
+  kkuint32  lenMax = (kkuint32)Max (left.size (), right.size ());
+  kkuint32  lenMin = (kkuint32)Min (left.size (), right.size ());
 
   VectorDouble  r (lenMax, 0.0);
-  for  (uint32 x = 0;  x < lenMin;  ++x)
+  for  (kkuint32 x = 0;  x < lenMin;  ++x)
     r[x] = left[x] * right[x];
 
   return  r;
@@ -144,11 +144,11 @@ Matrix  SegmentorOTSU::DotMult (const Matrix&  left,
                                 const Matrix&  right
                                )
 {
-  int32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
-  int32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
+  kkint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
+  kkint32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
   
-  int32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
-  int32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
+  kkint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
+  kkint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
 
   Matrix  result (maxNumOfRows, maxNumOfCols);
 
@@ -156,7 +156,7 @@ Matrix  SegmentorOTSU::DotMult (const Matrix&  left,
   double** rightData = right.Data ();
   double** resultData = result.Data ();
 
-  int32  r, c;
+  kkint32  r, c;
 
   for  (r = 0;  r < minNumOfRows;  ++r)
   {
@@ -182,9 +182,9 @@ VectorDouble  SegmentorOTSU::DotDiv (const VectorDouble&  left,
                                      const VectorDouble&  right
                                     )
 {
-  uint32 x = 0;
-  uint32  lenMax = (uint32)Max (left.size (), right.size ());
-  uint32  lenMin = (uint32)Min (left.size (), right.size ());
+  kkuint32 x = 0;
+  kkuint32  lenMax = (kkuint32)Max (left.size (), right.size ());
+  kkuint32  lenMin = (kkuint32)Min (left.size (), right.size ());
 
   VectorDouble  r (lenMax, 0.0);
   for  (x = 0;  x < lenMin;  ++x)
@@ -208,11 +208,11 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
                                const Matrix&  right
                               )
 {
-  int32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
-  int32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
+  kkint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
+  kkint32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
   
-  int32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
-  int32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
+  kkint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
+  kkint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
 
   Matrix  result (maxNumOfRows, maxNumOfCols);
 
@@ -220,7 +220,7 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
   double** rightData = right.Data ();
   double** resultData = result.Data ();
 
-  int32  r, c;
+  kkint32  r, c;
 
   for  (r = 0;  r < minNumOfRows;  ++r)
   {
@@ -269,8 +269,8 @@ KKB::VectorDouble  SegmentorOTSU::Add (const VectorDouble&  left,
                                        double               right
                                       )
 {
-  uint32 x = 0;
-  uint32 len = (uint32)left.size ();
+  kkuint32 x = 0;
+  kkuint32 len = (kkuint32)left.size ();
 
   VectorDouble  r (len, 0.0);
   for  (x = 0;  x < len;  ++x)
@@ -290,9 +290,9 @@ KKB::VectorDouble  SegmentorOTSU::Subt (const VectorDouble&  left,
                                         const VectorDouble&  right
                                        )
 {
-  uint32 x = 0;
-  uint32  lenMax = (uint32)Max (left.size (), right.size ());
-  uint32  lenMin = (uint32)Min (left.size (), right.size ());
+  kkuint32 x = 0;
+  kkuint32  lenMax = (kkuint32)Max (left.size (), right.size ());
+  kkuint32  lenMin = (kkuint32)Min (left.size (), right.size ());
 
   VectorDouble  r (lenMax, 0.0);
   for  (x = 0;  x < lenMin;  ++x)
@@ -315,8 +315,8 @@ KKB::VectorDouble  SegmentorOTSU::Subt (const VectorDouble&  left,
                                         double               right
                                        )
 {
-  uint32 x = 0;
-  uint32 len = (uint32)left.size ();
+  kkuint32 x = 0;
+  kkuint32 len = (kkuint32)left.size ();
 
   VectorDouble  r (len, 0.0);
   for  (x = 0;  x < len;  ++x)
@@ -336,8 +336,8 @@ KKB::VectorDouble  SegmentorOTSU::Subt (double               left,
                                         const VectorDouble&  right
                                        )
 {
-  uint32 x = 0;
-  uint32 len = (uint32)right.size ();
+  kkuint32 x = 0;
+  kkuint32 len = (kkuint32)right.size ();
 
   VectorDouble  r (len, 0.0);
   for  (x = 0;  x < len;  ++x)
@@ -356,8 +356,8 @@ VectorDouble  operator- (const VectorDouble&  left,
                          double               right
                         )
 {
-  KKB::uint32 x = 0;
-  KKB::uint32 len = (uint32)left.size ();
+  kkuint32 x = 0;
+  kkuint32 len = (kkuint32)left.size ();
 
   VectorDouble  r (len, 0.0);
   for  (x = 0;  x < len;  ++x)
@@ -379,8 +379,8 @@ vector<T>  operator- (T                 left,
                       const vector<T>&  right
                      )
 {
-  KKB::uint32 x = 0;
-  KKB::uint32 len = right.size ();
+  kkuint32 x = 0;
+  kkuint32 len = right.size ();
 
   vector<T>  r (len, (T)0);
   for  (x = 0;  x < len;  ++x)
@@ -397,7 +397,7 @@ VectorDouble  operator* (const VectorDouble& left,
 {
   VectorDouble  result (left.size (), 0.0);
 
-  for  (KKB::uint32 x = 0;  x < left.size ();  ++x)
+  for  (kkuint32 x = 0;  x < left.size ();  ++x)
     result[x] = left[x] * right;
 
   return  result;
@@ -410,7 +410,7 @@ VectorDouble  operator* (double               left,
 {
   VectorDouble  result (right.size (), 0.0);
 
-  for  (KKB::uint32 x = 0;  x < right.size ();  ++x)
+  for  (kkuint32 x = 0;  x < right.size ();  ++x)
     result[x] = left * right[x];
 
   return  result;
@@ -423,8 +423,8 @@ VectorDouble  SegmentorOTSU::Power (const VectorDouble&  left,
                                     double               right
                                    )
 {
-  uint32 x = 0;
-  uint32 len = (uint32)left.size ();
+  kkuint32 x = 0;
+  kkuint32 len = (kkuint32)left.size ();
   VectorDouble  r (len, 0.0);
   for  (x = 0;  x < len;  ++x)
     r[x] = pow (left[x], right);
@@ -438,14 +438,14 @@ Matrix  SegmentorOTSU::Power (const Matrix&  left,
                               double         right
                              )
 {
-  uint32 numOfRows = left.NumOfRows ();
-  uint32 numOfCols = left.NumOfCols ();
+  kkuint32 numOfRows = left.NumOfRows ();
+  kkuint32 numOfCols = left.NumOfCols ();
 
   Matrix  result (numOfRows, numOfCols);
   double**  leftData = left.Data ();
   double**  resultData = result.Data ();
 
-  uint32  r, c;
+  kkuint32  r, c;
   for  (r = 0;  r < numOfRows;  ++r)
   {
     double*  leftDataRow = leftData[r];
@@ -462,9 +462,9 @@ Matrix  SegmentorOTSU::Power (const Matrix&  left,
 VectorDouble  SegmentorOTSU::Round (const VectorDouble&  v)
 {
   VectorDouble  r (v.size (), 0.0);
-  for  (uint32 x = 0;  x < v.size ();  ++x)
+  for  (kkuint32 x = 0;  x < v.size ();  ++x)
   {
-    r[x] = (int32)(v[x] + 0.5f);
+    r[x] = (kkint32)(v[x] + 0.5f);
   }
 
   return  r;
@@ -477,7 +477,7 @@ template<typename T>
 T  SegmentorOTSU::Sum (const vector<T>&  v)
 {
   T  sum = (T)0;
-  uint32  x = 0;
+  kkuint32  x = 0;
   for  (x = 0;  x < v.size ();  ++x)
     sum += v[x];
   return  sum;
@@ -494,13 +494,13 @@ void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
                              Matrix&              ym
                             )
 {
-  uint32  xLen = (uint32)x.size ();
-  uint32  yLen = (uint32)y.size ();
+  kkuint32  xLen = (kkuint32)x.size ();
+  kkuint32  yLen = (kkuint32)y.size ();
 
   xm.ReSize (xLen, xLen);
   ym.ReSize (yLen, yLen);
 
-  uint32  row, col;
+  kkuint32  row, col;
 
   for  (row = 0;  row < xLen;  ++row)
   {
@@ -519,7 +519,7 @@ void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
 
 void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (Matrix&  m)
 {
-  int32  r, c;
+  kkint32  r, c;
   double**  data = m.Data ();
   for  (r = 0;  r < m.NumOfRows ();  ++r)
   {
@@ -536,12 +536,12 @@ void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (Matrix&  m)
 
 template<typename T>
 vector<T>  SegmentorOTSU::SubSet (const vector<T>&  P, 
-                                  int32             start,
-                                  int32             end
+                                  kkint32           start,
+                                  kkint32           end
                                  )
 {
   vector<T>  subSet;
-  for  (int32 i = start;  i <= end;  ++i)
+  for  (kkint32 i = start;  i <= end;  ++i)
     subSet.push_back (P[i]);
   return  subSet;
 }
@@ -550,12 +550,12 @@ vector<T>  SegmentorOTSU::SubSet (const vector<T>&  P,
 
 template<typename T>
 T  SegmentorOTSU::SumSubSet (const vector<T>&  P, 
-                             int32             start,
-                             int32             end
+                             kkint32           start,
+                             kkint32           end
                             )
 {
   T  sum = (T)0.0;
-  for  (int32 i = start;  i <= end;  ++i)
+  for  (kkint32 i = start;  i <= end;  ++i)
     sum += P[i];
   return  sum;
 }
@@ -564,7 +564,7 @@ T  SegmentorOTSU::SumSubSet (const vector<T>&  P,
 template<typename T>
 void  SegmentorOTSU::ZeroOutNaN (vector<T>&  v)
 {
-  uint32  x = 0;
+  kkuint32  x = 0;
   for  (x = 0;  x < v.size ();  ++x)
   {
     if  (_isnan (v[x]))
@@ -584,10 +584,10 @@ bool  _isnan (double&   d)
 void  SegmentorOTSU::ZeroOutNaN (Matrix&  m)
 {
   double**  data = m.Data ();
-  uint32  numOfRows = m.NumOfRows ();
-  uint32  numOfCols = m.NumOfCols ();
+  kkuint32  numOfRows = m.NumOfRows ();
+  kkuint32  numOfCols = m.NumOfCols ();
 
-  uint32  r, c;
+  kkuint32  r, c;
   for  (r = 0;  r < numOfRows;  ++r)
   {
     double*  dataRow = data[r];
@@ -602,14 +602,14 @@ void  SegmentorOTSU::ZeroOutNaN (Matrix&  m)
 
 VectorDouble  SegmentorOTSU::LinSpace (double  start,
                                        double  end,
-                                       int32   numPoints
+                                       kkint32 numPoints
                                       )
 {
   // The First and last point are known leaving (numPoints - 2) left to distribute between "start" and "end".
   // which means there will be a total of (numPoints - 1) intervals.
   double  inc = (end - start) / (double)(numPoints - 1);
   VectorDouble  result;
-  while  (result.size () < (uint32)numPoints)
+  while  (result.size () < (kkuint32)numPoints)
   {
     result.push_back (start);
     start += inc;
@@ -621,12 +621,12 @@ VectorDouble  SegmentorOTSU::LinSpace (double  start,
 
 
 double  SegmentorOTSU::sig_func (VectorDouble          k,
-                                 int32                 nbins,
+                                 kkint32               nbins,
                                  const VectorDouble&   P,
-                                 int32                 numClasses
+                                 kkint32               numClasses
                                 )
 {
-  int32 x = 0, y = 0;
+  kkint32 x = 0, y = 0;
 
   // muT = sum((1:nbins).*P);
   double  muT = 0.0;
@@ -639,7 +639,7 @@ double  SegmentorOTSU::sig_func (VectorDouble          k,
     sigma2T +=  (pow ((y - muT), 2.0) * P[x]);
 
   //k = round(k*(nbins-1)+1);
-  for  (x = 0;  x < (int32)k.size ();  ++x)
+  for  (x = 0;  x < (kkint32)k.size ();  ++x)
     k[x] = floor (k[x] * (nbins - 1) + 1.0 + 0.5);
 
   //k = sort(k);
@@ -657,20 +657,20 @@ double  SegmentorOTSU::sig_func (VectorDouble          k,
   double  sigma2B = 0.0;
 
   //for j = 1:numClasses
-  for  (int32 j = 0;  j < numClasses;  ++j)
+  for  (kkint32 j = 0;  j < numClasses;  ++j)
   {
     //wj = sum(P(k(j)+1:k(j+1)));
-    double  wj = SumSubSet (P, (int32)(k[j] + 1), (int32)k[j + 1]);
+    double  wj = SumSubSet (P, (kkint32)(k[j] + 1), (kkint32)k[j + 1]);
 
     //if wj==0, y = 1; return, end
     if  (wj == 0.0)
       return 1.0;
 
     //muj = sum((k(j)+1:k(j+1)).*P(k(j)+1:k(j+1)))/wj;
-    int32  idxStart = (int32)(k[j] + 1);
-    int32  idxEnd   = (int32)(k[j + 1]);
+    kkint32  idxStart = (kkint32)(k[j] + 1);
+    kkint32  idxEnd   = (kkint32)(k[j + 1]);
     double  muj = 0.0;
-    for  (int32 i = idxStart;  i <= idxEnd;  ++i)
+    for  (kkint32 i = idxStart;  i <= idxEnd;  ++i)
       muj += (i * P[i] / wj);
 
     //sigma2B = sigma2B + wj*(muj-muT)^2;
@@ -686,7 +686,7 @@ double  SegmentorOTSU::sig_func (VectorDouble          k,
 
 
 RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
-                                        int32      numClasses,
+                                        kkint32    numClasses,
                                         double&    sep
                                        )
 {
@@ -743,8 +743,8 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   %   href="matlab:web('http://www.biomecardio.com/matlab/otsu.html')">website</a> for more details about OTSU
   */
   
-  int32  pixelIdx = 0;
-  int32  x        = 0;
+  kkint32  pixelIdx = 0;
+  kkint32  x        = 0;
   bool  isColorImage = srcImage->Color ();
 
   //  Checking numClasses (number of classes)
@@ -772,7 +772,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     srcImage = new Raster (*srcImage);
   }
 
-  int32  totPixels = srcImage->TotPixels ();
+  kkint32  totPixels = srcImage->TotPixels ();
   VectorInt  unI;
   VectorInt  unICounts;
   
@@ -807,7 +807,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     {
       /*
       double  pixelFraction = (double)((double)(greenArea[pixelIdx]) - pixelMin) / (double)srcRange;
-      uint32  newPixelVal = (uchar)(pixelFraction * 256.0 + 0.5);
+      kkuint32  newPixelVal = (uchar)(pixelFraction * 256.0 + 0.5);
       if  (newPixelVal > 255)
         newPixelVal = 255;
 
@@ -817,7 +817,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
       counts[greenArea[pixelIdx]]++;
     }
 
-    for  (x = 0;  x < (int32)counts.size ();  ++x)
+    for  (x = 0;  x < (kkint32)counts.size ();  ++x)
     {
       if  (counts[x] > 0)
       {
@@ -827,7 +827,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     }
   }
 
-  int32  nbins = (int32)unI.size ();
+  kkint32  nbins = (kkint32)unI.size ();
 
   if  (nbins <= numClasses)
   {
@@ -854,7 +854,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
   //P = histo/sum(histo);
   VectorDouble  P (histo.size (), 0.0);
-  for  (x = 0;  x < (int32)histo.size ();  ++x)
+  for  (x = 0;  x < (kkint32)histo.size ();  ++x)
     P[x] = (double)(histo[x]) / (double)totPixels;
 
   //clear unI
@@ -864,13 +864,13 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   //w = cumsum(P);
   VectorDouble  w (P.size (), 0.0);
   w[0] = P[0];
-  for  (x = 1;  x < (int32)P.size (); ++x)
+  for  (x = 1;  x < (kkint32)P.size (); ++x)
     w[x] = w[x - 1] + P[x];
 
   //mu = cumsum((1:nbins).*P);
   VectorDouble  mu (P.size (), 0.0);
   mu[0] = 1.0 * P[0];
-  for  (x = 1;  x < (int32)P.size ();  ++x)
+  for  (x = 1;  x < (kkint32)P.size ();  ++x)
     mu[x] = mu[x - 1] + ((x + 1) * P[x]);
   double  muEnd = mu[mu.size () - 1];
   
@@ -882,15 +882,15 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     //    ------------------- P1 -----------------      ----------- P2 -----------
     //[maxsig,k] = max(sigma2B);
 
-    VectorDouble  wSubSet  = SubSet (w,  1, (int32)w.size  () - 2);
-    VectorDouble  muSubSet = SubSet (mu, 1, (int32)mu.size () - 2);
+    VectorDouble  wSubSet  = SubSet (w,  1, (kkint32)w.size  () - 2);
+    VectorDouble  muSubSet = SubSet (mu, 1, (kkint32)mu.size () - 2);
    
     VectorDouble P1 = Power (Subt (muEnd * wSubSet, muSubSet), 2.0);
     VectorDouble P2 = DotDiv (wSubSet, Subt (1.0, wSubSet));
     VectorDouble sigma2B = DotDiv (P1, P2);
     double  maxSig = sigma2B[0];
-    int32   maxSigIdx = 0;
-    for  (x = 1;  x < (int32)sigma2B.size ();  ++x)
+    kkint32 maxSigIdx = 0;
+    for  (x = 1;  x < (kkint32)sigma2B.size ();  ++x)
     {
       if  (sigma2B[x] > maxSig)
       {
@@ -900,12 +900,12 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     }
       
     //[maxsig,k] = max(sigma2B);
-    int32  k = maxSigIdx;
+    kkint32  k = maxSigIdx;
     
     //% segmented image
     //IDX = ones(size(srcImage));
     //IDX(srcImage>pixval(k+1)) = 2;
-    int32  threshold = pixval[k + 1];
+    kkint32  threshold = pixval[k + 1];
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     uchar*  resultArea = result->GreenArea ();
     uchar*  srcArea    = srcImage->GreenArea ();
@@ -920,7 +920,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     //% separability criterion
     //sep = maxsig/sum(((1:nbins)-mu(end)).^2.*P);
     double  sum = 0.0;
-    int32  y = 0;
+    kkint32  y = 0;
     muEnd = mu[mu.size () - 1];
     for  (x = 0, y = 1;  x < nbins;  ++x, ++y)
       sum = pow (((double)y - muEnd), 2.0) * P[x];
@@ -940,8 +940,8 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
 
     //[w0,w2] = ndgrid(w0,w2);
-    Matrix w0M ((int32)w0.size (), (int32)w0.size ());
-    Matrix w2M ((int32)w2.size (), (int32)w2.size ());
+    Matrix w0M ((kkint32)w0.size (), (kkint32)w0.size ());
+    Matrix w2M ((kkint32)w2.size (), (kkint32)w2.size ());
     NdGrid (w0, w2, w0M, w2M);
 
     
@@ -957,8 +957,8 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     // TODO  
     //[mu0,mu2] = ndgrid(mu0,mu2);
-    Matrix  mu0M ((int32)mu0.size (), (int32)mu0.size ());
-    Matrix  mu2M ((int32)mu2.size (), (int32)mu2.size ());
+    Matrix  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
+    Matrix  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
     NdGrid (mu0, mu2, mu0M, mu2M);
     
     //w1 = 1-w0-w2;
@@ -980,7 +980,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    int32  k1, k2;
+    kkint32  k1, k2;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    
@@ -1062,12 +1062,12 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
  */
 RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
                                               RasterPtr  mask,
-                                              int32      numClasses,
+                                              kkint32    numClasses,
                                               double&    sep
                                              )
 {
-  int32  pixelIdx = 0;
-  int32  x        = 0;
+  kkint32  pixelIdx = 0;
+  kkint32  x        = 0;
   bool  isColorImage = srcImage->Color ();
 
   uchar*  maskArea = NULL;
@@ -1104,8 +1104,8 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     srcImage = new Raster (*srcImage);
   }
 
-  int32  totPixels = srcImage->TotPixels ();
-  int32  totMaskPixels = totPixels;
+  kkint32  totPixels = srcImage->TotPixels ();
+  kkint32  totMaskPixels = totPixels;
   if  (mask)
     totMaskPixels = mask->TotalBackgroundPixels ();
 
@@ -1130,7 +1130,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
       }
     }
 
-    //int32  srcRange = pixelMax - pixelMin + 1;
+    //kkint32  srcRange = pixelMax - pixelMin + 1;
     VectorInt  counts (256, 0);
 
     for  (pixelIdx = 0;  pixelIdx < totPixels;  ++pixelIdx)
@@ -1139,7 +1139,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
         counts[greenArea[pixelIdx]]++;
     }
 
-    for  (x = 0;  x < (int32)counts.size ();  ++x)
+    for  (x = 0;  x < (kkint32)counts.size ();  ++x)
     {
       if  (counts[x] > 0)
       {
@@ -1149,7 +1149,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     }
   }
 
-  int32  nbins = (int32)unI.size ();
+  kkint32  nbins = (kkint32)unI.size ();
 
   if  (nbins <= numClasses)
   {
@@ -1168,7 +1168,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
   VectorInt  pixval = unI;
 
   VectorDouble  P (histo.size (), 0.0);
-  for  (x = 0;  x < (int32)histo.size ();  ++x)
+  for  (x = 0;  x < (kkint32)histo.size ();  ++x)
     P[x] = (double)(histo[x]) / (double)totMaskPixels;
 
   unI.clear ();
@@ -1177,13 +1177,13 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
   //w = cumsum(P);
   VectorDouble  w (P.size (), 0.0);
   w[0] = P[0];
-  for  (x = 1;  x < (int32)P.size (); ++x)
+  for  (x = 1;  x < (kkint32)P.size (); ++x)
     w[x] = w[x - 1] + P[x];
 
   //mu = cumsum((1:nbins).*P);
   VectorDouble  mu (P.size (), 0.0);
   mu[0] = 1.0 * P[0];
-  for  (x = 1;  x < (int32)P.size ();  ++x)
+  for  (x = 1;  x < (kkint32)P.size ();  ++x)
     mu[x] = mu[x - 1] + ((x + 1) * P[x]);
   double  muEnd = mu[mu.size () - 1];
   
@@ -1195,15 +1195,15 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     //    ------------------- P1 -----------------      ----------- P2 -----------
     //[maxsig,k] = max(sigma2B);
 
-    VectorDouble  wSubSet  = SubSet (w,  1, (int32)w.size  () - 2);
-    VectorDouble  muSubSet = SubSet (mu, 1, (int32)mu.size () - 2);
+    VectorDouble  wSubSet  = SubSet (w,  1, (kkint32)w.size  () - 2);
+    VectorDouble  muSubSet = SubSet (mu, 1, (kkint32)mu.size () - 2);
    
     VectorDouble P1 = Power (Subt (muEnd * wSubSet, muSubSet), 2.0);
     VectorDouble P2 = DotDiv (wSubSet, Subt (1.0, wSubSet));
     VectorDouble sigma2B = DotDiv (P1, P2);
     double  maxSig = sigma2B[0];
-    int32   maxSigIdx = 0;
-    for  (x = 1;  x < (int32)sigma2B.size ();  ++x)
+    kkint32 maxSigIdx = 0;
+    for  (x = 1;  x < (kkint32)sigma2B.size ();  ++x)
     {
       if  (sigma2B[x] > maxSig)
       {
@@ -1213,12 +1213,12 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     }
       
     //[maxsig,k] = max(sigma2B);
-    int32  k = maxSigIdx;
+    kkint32  k = maxSigIdx;
     
     //% segmented image
     //IDX = ones(size(srcImage));
     //IDX(srcImage>pixval(k+1)) = 2;
-    int32  threshold = pixval[k + 1];
+    kkint32  threshold = pixval[k + 1];
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     uchar*  resultArea = result->GreenArea ();
     uchar*  srcArea    = srcImage->GreenArea ();
@@ -1240,7 +1240,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     //% separability criterion
     //sep = maxsig/sum(((1:nbins)-mu(end)).^2.*P);
     double  sum = 0.0;
-    int32  y = 0;
+    kkint32  y = 0;
     muEnd = mu[mu.size () - 1];
     for  (x = 0, y = 1;  x < nbins;  ++x, ++y)
       sum = pow (((double)y - muEnd), 2.0) * P[x];
@@ -1256,8 +1256,8 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     VectorDouble  w0 = w;
     VectorDouble  w2 = FlipLeftRight (CumSum (FlipLeftRight (P)));
 
-    Matrix w0M ((int32)w0.size (), (int32)w0.size ());
-    Matrix w2M ((int32)w2.size (), (int32)w2.size ());
+    Matrix w0M ((kkint32)w0.size (), (kkint32)w0.size ());
+    Matrix w2M ((kkint32)w2.size (), (kkint32)w2.size ());
     NdGrid (w0, w2, w0M, w2M);
     
     VectorDouble  mu0 = DotDiv (mu, w);
@@ -1270,8 +1270,8 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     VectorDouble  mu2 = FlipLeftRight (DotDiv (P1, P2));
 
     //[mu0,mu2] = ndgrid(mu0,mu2);
-    Matrix  mu0M ((int32)mu0.size (), (int32)mu0.size ());
-    Matrix  mu2M ((int32)mu2.size (), (int32)mu2.size ());
+    Matrix  mu0M ((kkint32)mu0.size (), (kkint32)mu0.size ());
+    Matrix  mu2M ((kkint32)mu2.size (), (kkint32)mu2.size ());
     NdGrid (mu0, mu2, mu0M, mu2M);
     
     //w1 = 1-w0-w2;
@@ -1292,7 +1292,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    int32  k1, k2;
+    kkint32  k1, k2;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    
@@ -1343,9 +1343,9 @@ PixelValue SegmentorOTSU::ClassAverageRGB (const RasterPtr  origImage,
                                            uchar            segmentedClass
                                           )
 {
-  uint32  totalRed   = 0;
-  uint32  totalGreen = 0;
-  uint32  totalBlue  = 0;
+  kkuint32  totalRed   = 0;
+  kkuint32  totalGreen = 0;
+  kkuint32  totalBlue  = 0;
 
   const uchar*  origRed   = origImage->RedArea   ();
   const uchar*  origGreen = origImage->GreenArea ();
@@ -1355,9 +1355,9 @@ PixelValue SegmentorOTSU::ClassAverageRGB (const RasterPtr  origImage,
 
   bool  origImageColor = origImage->Color ();
 
-  uint32  totalPixels = (uint32)origImage->TotPixels ();
+  kkuint32  totalPixels = (kkuint32)origImage->TotPixels ();
 
-  for  (uint32 x = 0;  x < totalPixels;  ++x)
+  for  (kkuint32 x = 0;  x < totalPixels;  ++x)
   {
     if  (mask[x] == segmentedClass)
     {
@@ -1402,11 +1402,11 @@ uchar  SegmentorOTSU::GetClassClosestToTargetColor (const RasterPtr    origImage
 
   bool  origImageColor = origImage->Color ();
 
-  uint32  totalPixels = (uint32)origImage->TotPixels ();
+  kkuint32  totalPixels = (kkuint32)origImage->TotPixels ();
 
   uchar  classValue = 0;
 
-  for  (uint32 x = 0;  x < totalPixels;  ++x)
+  for  (kkuint32 x = 0;  x < totalPixels;  ++x)
   {
     classValue = mask[x];
     while (classValue > largestClass)

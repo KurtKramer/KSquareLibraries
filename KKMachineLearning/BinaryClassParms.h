@@ -52,8 +52,8 @@ namespace KKMachineLearning
     typedef  SVM233::svm_parameter  svm_parameter;
 
     /** @brief  Create from existing Model on Disk. */
-    BinaryClassParms (MLClassPtr          _class1,
-                      MLClassPtr          _class2,
+    BinaryClassParms (MLClassPtr             _class1,
+                      MLClassPtr             _class2,
                       const svm_parameter&   _param,
                       const FeatureNumList&  _selectedFeatures,
                       float                  _weight
@@ -71,8 +71,8 @@ namespace KKMachineLearning
 
     //  Member Access Methods
     double                 AParam           () const {return  param.A;}
-    MLClassPtr          Class1           () const {return  class1;}
-    MLClassPtr          Class2           () const {return  class2;}
+    MLClassPtr             Class1           () const {return  class1;}
+    MLClassPtr             Class2           () const {return  class2;}
     double                 C                () const {return  param.C;}
     const svm_parameter&   Param            () const {return  param;}
     const FeatureNumList&  SelectedFeatures () const {return  selectedFeatures;}
@@ -87,7 +87,7 @@ namespace KKMachineLearning
 
     KKStr   Class1Name ()  const;
     KKStr   Class2Name ()  const;
-    int32   MemoryConsumedEstimated ()  const;
+    kkint32 MemoryConsumedEstimated ()  const;
     KKStr   ToTabDelString ()  const;
 
 
@@ -95,9 +95,9 @@ namespace KKMachineLearning
     MLClassPtr      class1;
     MLClassPtr      class2;
 
-    svm_parameter      param;             // From SVMlib
-    FeatureNumList     selectedFeatures;  // Feature Number to use.
-    float              weight;
+    svm_parameter   param;             /**< From SVMlib            */
+    FeatureNumList  selectedFeatures;  /**< Feature Number to use. */
+    float           weight;
   };  /* BinaryClassParms */
 
 
@@ -113,7 +113,7 @@ namespace KKMachineLearning
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
     BinaryClassParmsList (bool   _owner,
-                          int32  _size
+                          kkint32  _size
                          );
     
 
@@ -148,7 +148,7 @@ namespace KKMachineLearning
 
     BinaryClassParmsList*  DuplicateListAndContents ()  const;
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
     void  ReadXML (FILE*        i,
                    FileDescPtr  fileDesc,

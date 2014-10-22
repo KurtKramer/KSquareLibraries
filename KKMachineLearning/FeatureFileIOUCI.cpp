@@ -48,7 +48,7 @@ FeatureFileIOUCI::~FeatureFileIOUCI ()
 FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
                                             istream&           _in,
                                             MLClassListPtr  _classes,
-                                            int32&             _estSize,
+                                            kkint32&           _estSize,
                                             KKStr&             _errorMessage,
                                             RunLog&            _log
                                            )
@@ -58,8 +58,8 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
 
   // We are just going to read the first few lines to determine number of fields, etc
  
-  int32  numOfFields       = 0;
-  int32  numFieldsThisLine = 0;
+  kkint32  numOfFields       = 0;
+  kkint32  numFieldsThisLine = 0;
 
 
   KKStr  ln;
@@ -96,7 +96,7 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
   }
 
   bool  alreadyExists = false;
-  int32  fieldNum = 0;
+  kkint32  fieldNum = 0;
 
   FileDescPtr  fileDesc = new FileDesc ();
 
@@ -113,15 +113,15 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&          _fileName,
-                                                  const FileDescPtr     _fileDesc,
+FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
+                                                  const FileDescPtr  _fileDesc,
                                                   MLClassList&       _classes, 
-                                                  istream&              _in,
-                                                  int32                 _maxCount,    // Maximum # images to load.
-                                                  volatile const bool&  _cancelFlag,
-                                                  bool&                 _changesMade,
-                                                  KKStr&                _errorMessage,
-                                                  RunLog&               _log
+                                                  istream&           _in,
+                                                  kkint32            _maxCount,    // Maximum # images to load.
+                                                  VolConstBool&      _cancelFlag,
+                                                  bool&              _changesMade,
+                                                  KKStr&             _errorMessage,
+                                                  RunLog&            _log
                                                  )
 {
   _log.Level (20) << "FeatureFileIOUCI::LoadFile   FileName[" << _fileName << "]" << endl;
@@ -130,8 +130,8 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&          _fileNam
   KKStr  rootName = osGetRootName (_fileName);
 
 
-  int32  numOfFeatures = _fileDesc->NumOfFields ();
-  int32  lineCount = 0;
+  kkint32  numOfFeatures = _fileDesc->NumOfFields ();
+  kkint32  lineCount = 0;
 
   KKStr  ln (256);
   bool  eof;
@@ -147,7 +147,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&          _fileNam
     if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
     {
 
-      int32  featureNum = 0;
+      kkint32  featureNum = 0;
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
   
       for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
@@ -182,8 +182,8 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
                                    const KKStr&           _fileName,
                                    const FeatureNumList&  _selFeatures,
                                    ostream&               _out,
-                                   uint32&                _numExamplesWritten,
-                                   volatile const bool&   _cancelFlag,
+                                   kkuint32&              _numExamplesWritten,
+                                   VolConstBool&          _cancelFlag,
                                    bool&                  _successful,
                                    KKStr&                 _errorMessage,
                                    RunLog&                _log
@@ -194,8 +194,8 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
 
   _numExamplesWritten = 0;
 
-  int32  idx;
-  int32  x;
+  kkint32  idx;
+  kkint32  x;
 
   for  (idx = 0; idx < _data.QueueSize (); idx++)
   {
@@ -203,7 +203,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
       _out << example->FeatureData (featureNum) << ",";
     }
     _out << example->ClassName ();

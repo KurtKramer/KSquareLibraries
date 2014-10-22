@@ -30,15 +30,15 @@ namespace  KKMachineLearning
     typedef  ModelSvmBase*  ModelSvmBasePtr;
 
 
-    ModelSvmBase (FileDescPtr           _fileDesc,
-                  volatile const bool&  _cancelFlag,
-                  RunLog&               _log
+    ModelSvmBase (FileDescPtr    _fileDesc,
+                  VolConstBool&  _cancelFlag,
+                  RunLog&        _log
                 );
 
     ModelSvmBase (const KKStr&             _name,
                   const ModelParamSvmBase& _param,         // Create new model from
                   FileDescPtr              _fileDesc,
-                  volatile const bool&     _cancelFlag,
+                  VolConstBool&            _cancelFlag,
                   RunLog&                  _log
                  );
   
@@ -48,12 +48,12 @@ namespace  KKMachineLearning
     ~ModelSvmBase ();
 
     virtual
-    int32                   MemoryConsumedEstimated ()  const;
+    kkint32                 MemoryConsumedEstimated ()  const;
 
     virtual ModelTypes    ModelType () const  {return mtSvmBase;}
 
     virtual
-    int32                   NumOfSupportVectors () const;
+    kkint32                 NumOfSupportVectors () const;
 
     virtual
     ModelSvmBasePtr       Duplicate ()  const;
@@ -68,12 +68,12 @@ namespace  KKMachineLearning
                                    MLClassPtr     knownClass,
                                    MLClassPtr&    predClass1,
                                    MLClassPtr&    predClass2,
-                                   int32&            predClass1Votes,
-                                   int32&            predClass2Votes,
+                                   kkint32&          predClass1Votes,
+                                   kkint32&          predClass2Votes,
                                    double&           probOfKnownClass,
                                    double&           probOfPredClass1,
                                    double&           probOfPredClass2,
-                                   int32&            numOfWinners,
+                                   kkint32&          numOfWinners,
                                    bool&             knownClassOneOfTheWinners,
                                    double&           breakTie
                                   );
@@ -87,7 +87,7 @@ namespace  KKMachineLearning
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr       example,
                                 const MLClassList&  _mlClasses,
-                                int32*                 _votes,
+                                kkint32*                 _votes,
                                 double*                _probabilities
                                );
 

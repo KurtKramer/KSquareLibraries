@@ -36,10 +36,10 @@ using namespace  KKB;
 class  GoalKeeper::BlockedStat
 {
 public:
-  BlockedStat (int32   _blockedThreadId,
-               int32   _blockerThreadId,
-               uint32  _milliSecsBlocked,
-               int32   _numBlockedThreads
+  BlockedStat (kkint32 _blockedThreadId,
+               kkint32 _blockerThreadId,
+               kkuint32  _milliSecsBlocked,
+               kkint32 _numBlockedThreads
               ):
     blockedThreadId   (_blockedThreadId),
     blockerThreadId   (_blockerThreadId),
@@ -49,10 +49,10 @@ public:
   {
   }
 
-  int32     blockedThreadId;   /**< Thread Being Blocked. */
-  int32     blockerThreadId;   /**< Thread holding Block. */
-  uint32    milliSecsBlocked;
-  int32     numBlockedThreads;
+  kkint32   blockedThreadId;   /**< Thread Being Blocked. */
+  kkint32   blockerThreadId;   /**< Thread holding Block. */
+  kkuint32  milliSecsBlocked;
+  kkint32   numBlockedThreads;
   DateTime  dateTimeBlocked;
 };
 
@@ -163,7 +163,7 @@ void  GoalKeeper::ReportBlockedStats ()
 
 
 
-int32  GoalKeeper::MemoryConsumedEstimated ()  const
+kkint32  GoalKeeper::MemoryConsumedEstimated ()  const
 {
   return  (sizeof (GoalKeeper) + name.MemoryConsumedEstimated ());
 }
@@ -182,7 +182,7 @@ bool   GoalKeeper::BlockedByAnotherThread ()
   if  (!blocked)
     return false;
 
-  int32  curThreadId = KKB::osGetThreadId ();
+  kkint32  curThreadId = KKB::osGetThreadId ();
   return  (blocked  &&  (curThreadId != blockerThreadId));
 }
 
@@ -213,11 +213,11 @@ void  GoalKeeper::CriticalSectionEnd ()
 
 void  GoalKeeper::StartBlock ()
 {
-  int32  curThreadId = KKB::osGetThreadId ();
+  kkint32  curThreadId = KKB::osGetThreadId ();
   
   bool    firstPassThruLoop = true;
   bool    weAreBlocked      = true;
-  uint32  milliSecsBlocked  = 0;
+  kkuint32  milliSecsBlocked  = 0;
 
   while  (weAreBlocked)
   {
@@ -294,9 +294,9 @@ void  GoalKeeper::StartBlock ()
 
 void   GoalKeeper::EndBlock ()
 {
-  int32  curProcessorId = KKB::osGetThreadId ();
+  kkint32  curProcessorId = KKB::osGetThreadId ();
 
-  int32 errorCode = 0;   // 0=No Error;  
+  kkint32 errorCode = 0;   // 0=No Error;  
                          // 1=There is no Block
                          // 2=Different thread holds the block
                          // 3=Failure to get a lock
@@ -500,7 +500,7 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
   }
   else
   {
-    int32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
     if  (existingInstanceIdx < 0)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
@@ -536,7 +536,7 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
   }
   else
   {
-    int32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
+    kkint32  existingInstanceIdx =  existingGoalKeepers->PtrToIdx (_goalKeeperInstance);
     if  (existingInstanceIdx >= 0)
     {
       // If not in list then a  different thread beat us to destroying this instance or it was never created to start with.
@@ -570,18 +570,18 @@ void   GoalKeeper::FinalCleanUp ()
 
 
 
-int32  GoalKeeper::NumBlockedThreads ()
+kkint32  GoalKeeper::NumBlockedThreads ()
 {
-  int32  x = 0;
+  kkint32  x = 0;
   x =  numBlockedThreads;
   return  x;
 }
 
 
 
-int32  GoalKeeper::BlockerThreadId ()
+kkint32  GoalKeeper::BlockerThreadId ()
 {
-  int32  x = 0;
+  kkint32  x = 0;
   x =  blockerThreadId;
   return  x;
 }

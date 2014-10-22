@@ -48,26 +48,26 @@ using namespace KKMachineLearning;
 
 
 void saveData (svm_problem  ds, 
-               int32        begin, 
-               int32        end, 
+               kkint32      begin, 
+               kkint32      end, 
                std::string  name
               );
 
 
 
 template<class T>
-int32  GetMaxIndex (vector<T>&   vote, 
-                    int32        voteLength,
-                    int32&       maxIndex2  // second highest indx
+kkint32  GetMaxIndex (vector<T>&   vote, 
+                    kkint32      voteLength,
+                    kkint32&     maxIndex2  // second highest indx
                    )
 {
   T max=vote[0];
-  int32 maxIndex=0;
+  kkint32 maxIndex=0;
 
   T  max2 = 0;
   maxIndex2 = -1;
 
-  for  (int32 i = 1;  i < voteLength;  i++)
+  for  (kkint32 i = 1;  i < voteLength;  i++)
   {
     if  (vote[i]> max)
     {
@@ -97,18 +97,18 @@ int32  GetMaxIndex (vector<T>&   vote,
 
 
 template<class T>
-int32  GetMaxIndex (T*      vote, 
-                    int32   voteLength,
-                    int32&  maxIndex2  // second highest indx
+kkint32  GetMaxIndex (T*      vote, 
+                    kkint32 voteLength,
+                    kkint32&  maxIndex2  // second highest indx
                    )
 {
   T max=vote[0];
-  int32 maxIndex=0;
+  kkint32 maxIndex=0;
 
   T  max2 = 0;
   maxIndex2 = -1;
 
-  for  (int32 i = 1;  i < voteLength;  i++)
+  for  (kkint32 i = 1;  i < voteLength;  i++)
   {
     if  (vote[i]> max)
     {
@@ -140,9 +140,9 @@ int32  GetMaxIndex (T*      vote,
 
 
 
-bool  GreaterThan (int32   leftVotes,
+bool  GreaterThan (kkint32 leftVotes,
                    double  leftProb,
-                   int32   rightVotes,
+                   kkint32 rightVotes,
                    double  rightProb
                   )
 {
@@ -165,11 +165,11 @@ bool  GreaterThan (int32   leftVotes,
 
 
 void  GreaterVotes (bool     useProbability,
-                    int32    numClasses,
-                    int32*   votes,
+                    kkint32  numClasses,
+                    kkint32*   votes,
                     double*  probabilities,
-                    int32&   pred1Idx,
-                    int32&   pred2Idx
+                    kkint32& pred1Idx,
+                    kkint32& pred2Idx
                    )
 {
   if  (useProbability)
@@ -178,15 +178,15 @@ void  GreaterVotes (bool     useProbability,
     return;
   }
 
-  int32   max1Votes = votes[0];
+  kkint32 max1Votes = votes[0];
   double  max1Prob  = probabilities[0];
   pred1Idx = 0;
 
-  int32   max2Votes = -1;
+  kkint32 max2Votes = -1;
   double  max2Prob  = -1.0f;
   pred2Idx = -1;
 
-  for  (int32 x = 1;  x < numClasses;  x++)
+  for  (kkint32 x = 1;  x < numClasses;  x++)
   {
     if  (GreaterThan (votes[x], probabilities[x], max1Votes, max1Prob))
     {
@@ -213,8 +213,8 @@ void  GreaterVotes (bool     useProbability,
 
 
 void saveData (svm_problem  ds, 
-               int32        begin, 
-               int32        end, 
+               kkint32      begin, 
+               kkint32      end, 
                string       name
               )
 {
@@ -224,7 +224,7 @@ void saveData (svm_problem  ds,
     cout << " cannot open " << name << endl;
     exit(-1);
   }
-  for(int32 i=begin; i<end; i++)
+  for(kkint32 i=begin; i<end; i++)
   {
     svm_node* temp=ds.x[i];
     while(temp->index!=-1)
@@ -242,23 +242,23 @@ void saveData (svm_problem  ds,
 
 
 
-void  ComputeProb  (int32              numClasses,               // Number of Classes
+void  ComputeProb  (kkint32            numClasses,               // Number of Classes
                     float              A,                      // probability parameter
                     vector<double>&    dist,                   // Distances for each binary classifier from decision boundary.
                     double**           crossClassProbTable,    // A 'numClass' x 'numClass' matrix;  will get the probabilities between classes.
-                    int32*             votes,                  // votes by class
+                    kkint32*             votes,                  // votes by class
                     double*            probabilities,          // Probabilities for Each Class
-                    int32              knownClassNum           // -1 = Don't know the class otherwise the Number of the Class.
+                    kkint32            knownClassNum           // -1 = Don't know the class otherwise the Number of the Class.
                    )
 {
-  int32  i;
+  kkint32  i;
   for  (i = 0;  i < numClasses;  i++)
     votes[i] = 0;
 
-   int32 distIdx = 0;
+   kkint32 distIdx = 0;
    for  (i = 0;  i < (numClasses - 1); i++)
    {
-     for  (int32 j = i + 1;  j < numClasses;  j++)
+     for  (kkint32 j = i + 1;  j < numClasses;  j++)
      {
        if  (dist[distIdx] > 0)
          votes[i]++;
@@ -276,7 +276,7 @@ void  ComputeProb  (int32              numClasses,               // Number of Cl
    for  (i = 0;  i < numClasses;  i++)
    {
      double  probThisClass = 1.0;
-     for  (int32 j = 0;  j < numClasses;  j++)
+     for  (kkint32 j = 0;  j < numClasses;  j++)
      {
        if  (i != j)
          probThisClass *= crossClassProbTable [i][j];
@@ -301,8 +301,8 @@ void  ComputeProb  (int32              numClasses,               // Number of Cl
 
    if  ((knownClassNum >= 0) &&  (knownClassNum < numClasses))
    {
-     int32 maxIndex1 = -1;
-     int32 maxIndex2 = -1;
+     kkint32 maxIndex1 = -1;
+     kkint32 maxIndex2 = -1;
      maxIndex1 = GetMaxIndex (probabilities, numClasses, maxIndex2);
    }
 }  /* ComputeProb */
@@ -318,13 +318,13 @@ struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter
 { 
   struct svm_model **submodel;
 
-  int32 numSVM = param.numSVM;
-  int32 sample = (int32) (param.sample);
+  kkint32 numSVM = param.numSVM;
+  kkint32 sample = (kkint32) (param.sample);
 
-  //int32 numClass=param.numClass;
-  int32    sampleSV   = param.sampleSV;
-  int32    boosting   = param.boosting;
-  int32    dimSelect  = param.dimSelect;
+  //kkint32 numClass=param.numClass;
+  kkint32  sampleSV   = param.sampleSV;
+  kkint32  boosting   = param.boosting;
+  kkint32  dimSelect  = param.dimSelect;
 
   Learn_Type learnType;
 
@@ -359,13 +359,13 @@ struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter
 void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
                                            struct svm_model**      subModel,
                                            const struct svm_node*  unknownClassFeatureData, 
-                                           int32*                  votes,
+                                           kkint32*                  votes,
                                            double*                 probabilities,
-                                           int32                   knownClass,
-                                           int32&                  predClass1,
-                                           int32&                  predClass2,
-                                           int32&                  predClass1Votes,
-                                           int32&                  predClass2Votes,
+                                           kkint32                 knownClass,
+                                           kkint32&                predClass1,
+                                           kkint32&                predClass2,
+                                           kkint32&                predClass1Votes,
+                                           kkint32&                predClass2Votes,
                                            double&                 probOfPredClass1,
                                            double&                 probOfPredClass2,
                                            double&                 probOfKnownClass,
@@ -376,9 +376,9 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
 {
   const struct svm_parameter&  param = svmParam.Param ();
 
-  int32  NUMCLASS = subModel[0][0].nr_class;
+  kkint32  NUMCLASS = subModel[0][0].nr_class;
 
-  int32 numBinary = (NUMCLASS * (NUMCLASS - 1)) / 2;
+  kkint32 numBinary = (NUMCLASS * (NUMCLASS - 1)) / 2;
   Dvector dist (numBinary, 0);
 
 
@@ -423,13 +423,13 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
 
 
 
-int32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   param,
+kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   param,
                                               svm_model**                   submodel, 
                                               const svm_node*               unKnownData, 
-                                              int32                         desired, 
+                                              kkint32                       desired, 
                                               double&                       dist,
                                               double&                       probability,
-                                              int32                         excludeSupportVectorIDX
+                                              kkint32                       excludeSupportVectorIDX
                                              )
 {
   if  (submodel[0]->nr_class != 2)
@@ -445,7 +445,7 @@ int32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   para
   }
 
 
-  int32  v = int32 (svm_predictTwoClasses (submodel[0], unKnownData, dist, excludeSupportVectorIDX));
+  kkint32  v = kkint32 (svm_predictTwoClasses (submodel[0], unKnownData, dist, excludeSupportVectorIDX));
 
   probability = (1.0 / (1.0 + exp (-1.0 * param.A * dist)));
 
@@ -464,7 +464,7 @@ void  KKMachineLearning::SvmSaveModel (struct svm_model**  subModel,
 {
   successfull = true;
 
-  int32 x = svm_save_model (fileName, subModel[0]);
+  kkint32 x = svm_save_model (fileName, subModel[0]);
   successfull = (x == 0);
 }
 

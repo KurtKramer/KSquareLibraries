@@ -23,8 +23,6 @@ namespace  KKB
   class  Tokenizer
   {
   public:
-    typedef  KKB::uint32  uint32;
-
     Tokenizer (TokenBufferPtr _in);
 
     Tokenizer (const KKStr&  _str);
@@ -46,9 +44,9 @@ namespace  KKB
      */
     KKStrListPtr  GetNextTokens (const KKStr& delToken);  
 
-    const KKStrPtr  Peek (uint32 idx);
+    const KKStrPtr  Peek (kkuint32 idx);
 
-    const KKStrPtr  operator[](uint32 idx);
+    const KKStrPtr  operator[](kkuint32 idx);
 
 
   private:
@@ -66,7 +64,7 @@ namespace  KKB
     TokenBufferPtr   in;
     bool             secondCharAtEndOfFile;
 
-    int32            tokenListLen;
+    kkint32          tokenListLen;
     KKStrList        tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
                                       * As end of stream is approached will fill with end of file
                                       * Tokens as a flag.

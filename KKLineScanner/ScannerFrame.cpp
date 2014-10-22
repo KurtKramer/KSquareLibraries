@@ -13,8 +13,8 @@ using namespace  KKLSC;
 
 
 ScannerFrame::ScannerFrame (ScannerClockPtr _clock,
-                            int32           _scanLinesPerFrame,
-                            int32           _pixelsPerScanLine
+                            kkint32         _scanLinesPerFrame,
+                            kkint32         _pixelsPerScanLine
                            ):
   
   clock         (_clock),
@@ -36,7 +36,7 @@ ScannerFrame::~ScannerFrame ()
 {
   if  (scanLines)
   {
-    for  (int32  x = 0;  x < height;  ++x)
+    for  (kkint32  x = 0;  x < height;  ++x)
     {
       delete  scanLines[x];
       scanLines[x] = NULL;
@@ -52,7 +52,7 @@ ScannerFrame::~ScannerFrame ()
 uchar**  ScannerFrame::AllocateFrameArray ()
 {
   uchar** a = new uchar*[height];
-  for  (int32 r = 0;  r < height;  r++)
+  for  (kkint32 r = 0;  r < height;  r++)
     a[r] = new uchar[width];
   return a;
 }

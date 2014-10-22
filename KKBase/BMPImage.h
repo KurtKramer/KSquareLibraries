@@ -85,9 +85,9 @@ namespace KKB
 
 
   public:
-    BmpImage (int32  _height,
-              int32  _width,
-              int32  _numOfColors
+    BmpImage (kkint32  _height,
+              kkint32  _width,
+              kkint32  _numOfColors
              );
 
     /**
@@ -106,8 +106,8 @@ namespace KKB
     BmpImage (const Raster&  raster);
 
 
-    void  InitializeFields (int32  _height,
-                            int32  _width
+    void  InitializeFields (kkint32  _height,
+                            kkint32  _width
                            );
 
     ~BmpImage ();
@@ -119,22 +119,22 @@ namespace KKB
 
     bool     FourBitUncompressed ();
 
-    uint32   Height ()    const  {return  bmh.biHeight;}
+    kkuint32 Height ()    const  {return  bmh.biHeight;}
 
     const   
-    uchar*   BlueRow (int32 row)  const;                    /**< @brief Returns the specified Row from the Blue Channel. */
+    uchar*   BlueRow (kkint32 row)  const;                    /**< @brief Returns the specified Row from the Blue Channel. */
 
     uchar**  Image ()            {return  image;}           /**< @brief Returns back two dimension matrix of image; if color it will be the green channel. */
 
     const   
-    uchar*   ImageRow (int32 row)  const;                   /**< @brief Returns the specified Row from the Green Channel. */
+    uchar*   ImageRow (kkint32 row)  const;                   /**< @brief Returns the specified Row from the Green Channel. */
 
     const   
-    uchar*   RedRow (int32 row)  const;                     /**< @brief Returns the specified Row from the Red Channel. */
+    uchar*   RedRow (kkint32 row)  const;                     /**< @brief Returns the specified Row from the Red Channel. */
 
     uchar    MaxPixVal () const  {return  uchar (maxPixVal);}
 
-    uint32   Width ()     const  {return  bmh.biWidth;}
+    kkuint32 Width ()     const  {return  bmh.biWidth;}
 
 
     bool  AreThereEdgePixels ();
@@ -147,12 +147,12 @@ namespace KKB
 
     void  EliminateVerticalLines ();
 
-    uchar&  Pixel (int32  row, 
-                   int32  col
+    uchar&  Pixel (kkint32  row, 
+                   kkint32  col
                   );
 
-    void  AddPixel (uint32 row, 
-                    uint32 col, 
+    void  AddPixel (kkuint32 row, 
+                    kkuint32 col, 
                     uchar  pixValue
                    );
 
@@ -188,16 +188,16 @@ namespace KKB
     void  Set256Colors ();
 
 
-    void  SetPaletteEntry (int32              palletIndex,
+    void  SetPaletteEntry (kkint32            palletIndex,
                            const PixelValue&  pixValue
                           );
 
     /**
      *@brief  Will set the pixel value of the specified row and col to 'pixel'.
      */
-    void  SetPixelValue (int32  row, 
-                         int32  col, 
-                         int32  pixel
+    void  SetPixelValue (kkint32  row, 
+                         kkint32  col, 
+                         kkint32  pixel
                         );
 
 
@@ -219,7 +219,7 @@ namespace KKB
 
     void  AllocateRaster ();
 
-    int32 BMIcolorArraySize (BITMAPINFOHEADER&  _bmh);
+    kkint32 BMIcolorArraySize (BITMAPINFOHEADER&  _bmh);
 
     PalletBuilderPtr  BuildPalletFromRasterData ();
 
@@ -277,11 +277,11 @@ namespace KKB
     uchar**           red;
     uchar**           image;             /**< Used if grayscale.  */
     uchar**           blue;
-    int32             maxPixVal;         /**< Largest PixelValue  */
-    int32             numOfColors;
+    kkint32           maxPixVal;         /**< Largest PixelValue  */
+    kkint32           numOfColors;
     RGBQUAD*          palette;
-    int32             paletteEntries;
-    int32             paletteMap[256];
+    kkint32           paletteEntries;
+    kkint32           paletteMap[256];
   };
 
   typedef  BmpImage*  BmpImagePtr;

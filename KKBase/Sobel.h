@@ -27,12 +27,12 @@ namespace KKB
 
     float**    edgeAngles;
 
-    int32**    edgeMagnitudes;   /**< Will be stored as square,  to save the time of computing floating point operations. */
+    kkint32**    edgeMagnitudes;   /**< Will be stored as square,  to save the time of computing floating point operations. */
 
-    int32      height;
-    int32      maxMagnitude;     /**< Like edgeMagnitudes will be stored as a Square */
+    kkint32    height;
+    kkint32    maxMagnitude;     /**< Like edgeMagnitudes will be stored as a Square */
     RasterPtr  raster;
-    int32      width;
+    kkint32    width;
   };  /* Sobel */
 
 } /* namespace KKB; */

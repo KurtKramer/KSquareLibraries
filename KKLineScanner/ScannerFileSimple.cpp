@@ -40,8 +40,8 @@ ScannerFileSimple::ScannerFileSimple (const KKStr&  _fileName,
 
 
 ScannerFileSimple::ScannerFileSimple (const KKStr&  _fileName,
-                                      uint32        _pixelsPerScanLine,
-                                      uint32        _frameHeight,
+                                      kkuint32      _pixelsPerScanLine,
+                                      kkuint32      _frameHeight,
                                       RunLog&       _log
                                      ):
              ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log)
@@ -60,7 +60,7 @@ ScannerFileSimple::~ScannerFileSimple ()
 
 
 
-uint32  ScannerFileSimple::ReadBufferFrame ()
+kkuint32  ScannerFileSimple::ReadBufferFrame ()
 {
   frameBufferLen = 0;
   frameBufferNextLine = 0;
@@ -85,7 +85,7 @@ kkint64  ScannerFileSimple::SkipToNextFrame ()
   kkint64  byteOffset = osFTELL (file);
 
   kkint64  nextFrameByteOffset = byteOffset + frameBufferSize;
-  int32  returnCd = osFSEEK (file, nextFrameByteOffset - 1, SEEK_SET);
+  kkint32  returnCd = osFSEEK (file, nextFrameByteOffset - 1, SEEK_SET);
 
   char buff[10];
   returnCd = fread (buff, 1, 1, file);
@@ -101,10 +101,10 @@ void  ScannerFileSimple::WriteBufferFrame ()
 {
   frameBufferFileOffsetLast = osFTELL (file);
 
-  uint32  frameBufferSpaceUsed = frameBufferNextLine * pixelsPerScanLine;
+  kkuint32  frameBufferSpaceUsed = frameBufferNextLine * pixelsPerScanLine;
   fwrite (frameBuffer, 1, frameBufferSpaceUsed, file);
 
-  uint32  paddingNeeded = frameBufferSize - frameBufferSpaceUsed;
+  kkuint32  paddingNeeded = frameBufferSize - frameBufferSpaceUsed;
   if  (paddingNeeded > 0)
   {
     uchar* buff = new uchar[paddingNeeded];
@@ -123,7 +123,7 @@ void  ScannerFileSimple::WriteBufferFrame ()
 
 
 void   ScannerFileSimple::WriteTextBlock (const uchar*  txtBlock,
-                                          uint32        txtBlockLen
+                                          kkuint32      txtBlockLen
                                          )
 {
   log.Level (-1) << endl
@@ -139,7 +139,7 @@ const uchar*  ScannerFileSimple::CompensationTable ()
   GlobalGoalKeeper::StartBlock ();
 
   uchar*  cs = new uchar[256];
-  for  (uint32 x = 0;  x < 256;  ++x)
+  for  (kkuint32 x = 0;  x < 256;  ++x)
     cs[x] = x;
 
   GlobalGoalKeeper::EndBlock ();

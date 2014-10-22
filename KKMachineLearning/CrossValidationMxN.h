@@ -64,8 +64,8 @@ namespace KKMachineLearning
   {
   public:
     CrossValidationMxN (TrainingConfiguration2Ptr _comfig,
-                        uint32                    _numOfOrderings,
-                        uint32                    _numOfFolds,
+                        kkuint32                  _numOfOrderings,
+                        kkuint32                  _numOfFolds,
                         FeatureVectorListPtr      _data,
                         bool&                     _cancelFlag
                        );
@@ -80,14 +80,14 @@ namespace KKMachineLearning
     const
     ConfusionMatrix2Ptr    ConfussionMatrix ()  const;
 
-    void  RunTrainAndTest (int32  numExamplsToUseForTraining);
+    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining);
 
     void  RunValidations ();
 
 
     // Access Methods
-    int32                 NumOfOrderings       () const {return numOfOrderings;}
-    int32                 NumOfFolds           () const {return numOfOrderings;}
+    kkint32               NumOfOrderings       () const {return numOfOrderings;}
+    kkint32               NumOfFolds           () const {return numOfOrderings;}
 
     const  VectorFloat&   Accuracies           () const {return accuracies;}
     float                 AccuracyMean         () const {return accuracyMean;}
@@ -111,7 +111,7 @@ namespace KKMachineLearning
     void  CleanUpMemory ();
 
     void  ValidateOrderingIDX (const char*  desc,  
-                               uint32       idx
+                               kkuint32     idx
                               )  const;
 
 
@@ -120,8 +120,8 @@ namespace KKMachineLearning
     FileDescPtr               fileDesc;
     RunLog&                   log;
     ConfusionMatrix2Ptr       meanConfusionMatrix;
-    uint32                    numOfFolds;
-    uint32                    numOfOrderings;
+    kkuint32                  numOfFolds;
+    kkuint32                  numOfOrderings;
     OrderingsPtr              orderings;
     bool                      weOwnOrderings;
 

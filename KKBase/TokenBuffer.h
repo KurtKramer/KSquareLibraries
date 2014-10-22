@@ -48,7 +48,7 @@ namespace  KKB
   private:
     KKStr  buff;
 
-    int32  nextCharPos;
+    kkint32  nextCharPos;
   };
 
 

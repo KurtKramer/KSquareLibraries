@@ -53,10 +53,10 @@ FeatureFileIOKK::~FeatureFileIOKK ()
 }
 
 
-void  FeatureFileIOKK::Parse_FEATURE_DATA_FILE_Line (KKStr&  line,
-                                                     int32&    version,
-                                                     int32&    numOfFields,
-                                                     int32&    numOfExamples
+void  FeatureFileIOKK::Parse_FEATURE_DATA_FILE_Line (KKStr&   line,
+                                                     kkint32&  version,
+                                                     kkint32&  numOfFields,
+                                                     kkint32&  numOfExamples
                                                     )
 {
   KKStr  field = line.ExtractToken (" ,\t\n\r");  // Skip past FEATURE_DATA_FILE field.
@@ -89,16 +89,16 @@ void  FeatureFileIOKK::Parse_FEATURE_DATA_FILE_Line (KKStr&  line,
 
 
 VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
-                                                    int32               numOfFeatures
+                                                    kkint32             numOfFeatures
                                                    )
 {
   VectorInt   indirectionTable;
-  int32  fieldNum = 0;
+  kkint32  fieldNum = 0;
 
   for  (fieldNum = 0;  fieldNum < numOfFeatures;  fieldNum++)
     indirectionTable.push_back (rfFeatureData);
 
-  for  (fieldNum = numOfFeatures;  fieldNum < (int32)fields.size ();  fieldNum++)
+  for  (fieldNum = numOfFeatures;  fieldNum < (kkint32)fields.size ();  fieldNum++)
   {
     KKStr  fieldName = fields[fieldNum].ToLower ();
     if  (fieldName == "classname")
@@ -150,12 +150,12 @@ VectorInt  FeatureFileIOKK::CreateIndirectionTable (const VectorKKStr&  fields,
 
 
 
-FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&       _fileName,
-                                           istream&           _in,
+FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&    _fileName,
+                                           istream&        _in,
                                            MLClassListPtr  _classes,
-                                           int32&             _estSize,
-                                           KKStr&             _errorMessage,
-                                           RunLog&            _log
+                                           kkint32&        _estSize,
+                                           KKStr&          _errorMessage,
+                                           RunLog&         _log
                                           )
 {
   char  buff[102400];
@@ -179,9 +179,9 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&       _fileName,
   }
 
 
-  int32  version       = -1;
-  int32  numOfFeatures = -1;
-  int32  numOfExamples = -1;
+  kkint32  version       = -1;
+  kkint32  numOfFeatures = -1;
+  kkint32  numOfExamples = -1;
   Parse_FEATURE_DATA_FILE_Line (firstLine, version, numOfFeatures, numOfExamples);
    if  (version < 39)
   {
@@ -198,15 +198,15 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&       _fileName,
   _in.getline (buff, sizeof (buff) - 1);
   KKStr  fieldDescLn (buff);
   VectorKKStr  fields = fieldDescLn.Split ("\n\r\t");
-  if  (fields.size () < (uint32)numOfFeatures)
+  if  (fields.size () < (kkuint32)numOfFeatures)
   {
     _log.Level (-1) << endl << endl << endl
                     << "FeatureFileIOKK::GetFileDesc     **** Error ***"  << endl
                     << endl
-                    << "               Num fields[" << (uint32)fields.size () << "]  is less than the number specified." << endl
+                    << "               Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
                     << endl
                     << endl;
-    _errorMessage << "Num fields[" << (uint32)fields.size () << "]  is less than the number specified." << endl;
+    _errorMessage << "Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
     return NULL;
   }
   
@@ -216,7 +216,7 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&       _fileName,
 
 
   bool  alreadyExists;
-  int32  featureNum = 0;
+  kkint32  featureNum = 0;
   for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
   {
     KKStr&  fieldName = fields[featureNum];
@@ -243,15 +243,15 @@ FileDescPtr  FeatureFileIOKK::GetFileDesc (const KKStr&       _fileName,
 
 
 
-PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
-                                                const FileDescPtr     _fileDesc,
-                                                MLClassList&       _classes, 
-                                                istream&              _in,
-                                                int32                 _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
-                                                volatile const bool&  _cancelFlag,
-                                                bool&                 _changesMade,
-                                                KKStr&                _errorMessage,
-                                                RunLog&               _log
+PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
+                                                const FileDescPtr _fileDesc,
+                                                MLClassList&      _classes, 
+                                                istream&          _in,
+                                                kkint32           _maxCount,    // Maximum # images to load,  less than '0'  indicates all.
+                                                VolConstBool&     _cancelFlag,
+                                                bool&             _changesMade,
+                                                KKStr&            _errorMessage,
+                                                RunLog&           _log
                                                )
 {
   _log.Level (10) << "FeatureFileIOKK::LoadFile   Loading file[" << _fileName << "]." << endl;
@@ -276,9 +276,9 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
     return  NULL;
   }
 
-  int32  version         = -1;
-  int32  numOfFeatures   = -1;
-  int32  numOfExamples   = -1;
+  kkint32  version         = -1;
+  kkint32  numOfFeatures   = -1;
+  kkint32  numOfExamples   = -1;
   Parse_FEATURE_DATA_FILE_Line (firstLine, version, numOfFeatures, numOfExamples);
   if  (version < 38)
   {
@@ -296,15 +296,15 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
   _in.getline (buff, sizeof (buff) - 1);
   KKStr  fieldDescLine (buff);
   VectorKKStr  fields = fieldDescLine.Parse ("\n\r\t");
-  if  ((int32)fields.size () < numOfFeatures)
+  if  ((kkint32)fields.size () < numOfFeatures)
   {
     _log.Level (-1) << endl << endl << endl
                    << "FeatureFileIOKK::LoadFile     **** Error ***"  << endl
                    << endl
-                   << "               Num fields[" << (uint32)fields.size () << "]  is less than the number specified." << endl
+                   << "               Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl
                    << endl
                    << endl;
-    _errorMessage << "Num fields[" << (uint32)fields.size () << "]  is less than the number specified." << endl;
+    _errorMessage << "Num fields[" << (kkuint32)fields.size () << "]  is less than the number specified." << endl;
     return  NULL;
   }
 
@@ -319,18 +319,18 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
 
   examples->Version (version);
 
-  int32  fieldNum = 0;
+  kkint32  fieldNum = 0;
 
   bool  eof = false;
   bool  eol = false;
 
   KKStr  className;
   char   firstChar;
-  int32    lineCount = 0;
+  kkint32  lineCount = 0;
 
   float  value;
 
-  int32  lineNum = 0;
+  kkint32  lineNum = 0;
 
   eof = false;
   eol = false;
@@ -338,7 +338,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
   KKStr field (128);
 
   GetToken (_in, ",\t", field, eof, eol);
-  while  ((!eof)   &&  (!_cancelFlag)   &&  (((int32)examples->size () < _maxCount)  ||  (_maxCount < 0)))
+  while  ((!eof)   &&  (!_cancelFlag)   &&  (((kkint32)examples->size () < _maxCount)  ||  (_maxCount < 0)))
   {
     if  (eol)
     {
@@ -362,7 +362,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
       {
         field.TrimRight ();
 
-        if  (fieldNum >= (int32)indirectionTable.size ())
+        if  (fieldNum >= (kkint32)indirectionTable.size ())
         {
           _log.Level (-1) << endl << endl << endl
                           << "FeatureFileIOKK::LoadFile     **** Error ***"  << endl
@@ -497,7 +497,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
     GetToken (_in, ",\t", field, eof, eol);
   }
 
-  _log.Level (10) << "LoadFile - Loaded [" << (int32)examples->size () << "] images from file[" << _fileName << "]." << endl;
+  _log.Level (10) << "LoadFile - Loaded [" << (kkint32)examples->size () << "] images from file[" << _fileName << "]." << endl;
 
   return  examples;
 }  /* LoadFile */
@@ -511,14 +511,14 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&          _fileName,
  * @param[out] mlClass  Image class that the Index of is needed for.
  * @return[out] Index indicated by 'classIdx' that mlClass is at.
 */
-int32  GetClassIdx (const map<MLClassPtr, int32>& classIdx,
+kkint32  GetClassIdx (const map<MLClassPtr, kkint32>& classIdx,
                     const MLClassPtr              mlClass
                    )
 {
   if  (!mlClass)
     return -1;
 
-  map<MLClassPtr, int32>::const_iterator p;
+  map<MLClassPtr, kkint32>::const_iterator p;
   p = classIdx.find (mlClass);
   if (p == classIdx.end ())
     return -1;
@@ -528,15 +528,15 @@ int32  GetClassIdx (const map<MLClassPtr, int32>& classIdx,
 
 
 
-void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
-                                  const KKStr&            _fileName,
-                                  const FeatureNumList&   _selFeatures,
-                                  ostream&                _out,
-                                  uint32&                 _numExamplesWritten,
-                                  volatile const bool&    _cancelFlag,
-                                  bool&                   _successful,
-                                  KKStr&                  _errorMessage,
-                                  RunLog&                 _log
+void   FeatureFileIOKK::SaveFile (FeatureVectorList&     _data,
+                                  const KKStr&           _fileName,
+                                  const FeatureNumList&  _selFeatures,
+                                  ostream&               _out,
+                                  kkuint32&              _numExamplesWritten,
+                                  VolConstBool&          _cancelFlag,
+                                  bool&                  _successful,
+                                  KKStr&                 _errorMessage,
+                                  RunLog&                _log
                                  )
 {
   PostLarvaeFVListPtr  examples  = NULL;
@@ -560,14 +560,14 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
 
   ClassStatisticListPtr  classStatistics = examples->GetClassStatistics ();
 
-  int32  fileVersionNum = examples->Version ();
+  kkint32  fileVersionNum = examples->Version ();
   if  (fileVersionNum < 1)
   {
     fileVersionNum = CurrentFeatureFileVersionNum;
     examples->Version (fileVersionNum);
   }
 
-  map<MLClassPtr, int32>  classIdx;
+  map<MLClassPtr, kkint32>  classIdx;
 
   _out << "FEATURE_DATA_FILE"                                                << "\t"  
        << "Version"        << "\t" << StrFormatInt (fileVersionNum, "ZZZ0")  << "\t" 
@@ -576,10 +576,10 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
        << endl;
 
   {
-    int32  idx;
+    kkint32  idx;
     for  (idx = 0;  idx < _selFeatures.NumOfFeatures ();  idx++)
     { 
-      int32  featureNum = _selFeatures[idx];
+      kkint32  featureNum = _selFeatures[idx];
       _out << fileDesc->FieldName (featureNum) << "\t";
     }
  
@@ -599,7 +599,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
 
   {
     // Write out Class Statistics
-    int32  seqNum = 0;
+    kkint32  seqNum = 0;
     ClassStatisticList::iterator  idx;
     for  (idx = classStatistics->begin ();  idx != classStatistics->end ();  idx++)
     {
@@ -609,7 +609,7 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
            <<         cs->Count ()
            << endl;
 
-      classIdx.insert (pair<MLClassPtr, int32> (cs->MLClass (), seqNum));
+      classIdx.insert (pair<MLClassPtr, kkint32> (cs->MLClass (), seqNum));
       seqNum++;
     }
   }
@@ -617,21 +617,21 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
   {
     // Write out the actual examples.
     PostLarvaeFVPtr   example = NULL;
-    for  (int32 idx = 0; idx < (int32)examples->size (); idx++)
+    for  (kkint32 idx = 0; idx < (kkint32)examples->size (); idx++)
     {
       example = examples->IdxToPtr (idx);
 
-      int32  x;  
+      kkint32  x;  
       for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
       {
-        int32  featureNum = _selFeatures[x];
+        kkint32  featureNum = _selFeatures[x];
         _out << example->FeatureData (featureNum) << "\t";
       }
 
       {
-        int32  imageClassIdx = GetClassIdx (classIdx, example->MLClass ());
-        int32  predClassIdx  = GetClassIdx (classIdx, example->PredictedClass ());
-        int32  p = _out.precision ();
+        kkint32  imageClassIdx = GetClassIdx (classIdx, example->MLClass ());
+        kkint32  predClassIdx  = GetClassIdx (classIdx, example->PredictedClass ());
+        kkint32  p = _out.precision ();
         _out.precision (11);
         _out << example->ClassName          () << "\t" 
              << imageClassIdx                  << "\t"
@@ -668,12 +668,12 @@ void   FeatureFileIOKK::SaveFile (FeatureVectorList&      _data,
 
 
 PostLarvaeFVListPtr  FeatureFileIOKK::LoadInSubDirectoryTree 
-                                             (KKStr                 _rootDir,
-                                              MLClassList&       _mlClasses,
-                                              bool                  _useDirectoryNameForClassName,
-                                              volatile const bool&  _cancelFlag, 
-                                              bool                  _rewiteRootFeatureFile,
-                                              RunLog&               _log
+                                             (KKStr          _rootDir,
+                                              MLClassList&   _mlClasses,
+                                              bool           _useDirectoryNameForClassName,
+                                              VolConstBool&  _cancelFlag, 
+                                              bool           _rewiteRootFeatureFile,
+                                              RunLog&        _log
                                              )
 {
   _log.Level (10) << "FeatureFileIOKK::LoadInSubDirectoryTree    rootDir[" << _rootDir << "]." << endl;
@@ -735,7 +735,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadInSubDirectoryTree
       if  (changesMade)
       {
         KKStr  fullFileName = osAddSlash (_rootDir) + featureFileName;
-        uint32  numExamplesWritten = 0;
+        kkuint32  numExamplesWritten = 0;
         bool  cancel     = false;
         bool  successful = false;
         driver.SaveFeatureFile (fullFileName, 
@@ -777,12 +777,12 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadInSubDirectoryTree
       KKStr  newDirPath = osAddSlash (_rootDir) + subDirName;
 
       PostLarvaeFVListPtr  subDirImages = LoadInSubDirectoryTree (newDirPath, 
-                                                                   _mlClasses, 
-                                                                   _useDirectoryNameForClassName, 
-                                                                   _cancelFlag,
-                                                                   true,     // true = ReWriteRootFeatureFile
-                                                                   _log
-                                                                  );
+                                                                  _mlClasses, 
+                                                                  _useDirectoryNameForClassName, 
+                                                                  _cancelFlag,
+                                                                  true,     // true = ReWriteRootFeatureFile
+                                                                  _log
+                                                                 );
       PostLarvaeFVPtr  image = NULL;
 
       osAddLastSlash (subDirName);
@@ -815,15 +815,15 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadInSubDirectoryTree
 
 
 PostLarvaeFVListPtr  FeatureFileIOKK::FeatureDataReSink 
-                                        (KKStr                 _dirName, 
-                                         const KKStr&          _fileName, 
-                                         MLClassPtr         _unknownClass,
-                                         bool                  _useDirectoryNameForClassName,
-                                         MLClassList&       _mlClasses,
-                                         volatile const bool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
-                                         bool&                 _changesMade,
-                                         DateTime&             _timeStamp,
-                                         RunLog&               _log
+                                        (KKStr          _dirName, 
+                                         const KKStr&   _fileName, 
+                                         MLClassPtr     _unknownClass,
+                                         bool           _useDirectoryNameForClassName,
+                                         MLClassList&   _mlClasses,
+                                         VolConstBool&  _cancelFlag,    // will be monitored,  if set to True  Load will terminate.
+                                         bool&          _changesMade,
+                                         DateTime&      _timeStamp,
+                                         RunLog&        _log
                                         )
 {
   _changesMade = false;
@@ -936,8 +936,8 @@ PostLarvaeFVListPtr  FeatureFileIOKK::FeatureDataReSink
 
   KKStrPtr  imageFileName;
 
-  int32  numImagesFoundInOrigFeatureData = 0;
-  int32  numOfNewFeatureExtractions = 0;
+  kkint32  numImagesFoundInOrigFeatureData = 0;
+  kkint32  numOfNewFeatureExtractions = 0;
 
   for  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!_cancelFlag);  ++fnIDX)
   {
@@ -1028,7 +1028,7 @@ PostLarvaeFVListPtr  FeatureFileIOKK::FeatureDataReSink
   {
     //extractedFeatures->WriteImageFeaturesToFile (fullFeatureFileName, RawFormat, FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()));
 
-    uint32  numExamplesWritten = 0;
+    kkuint32  numExamplesWritten = 0;
 
     driver.SaveFeatureFile (fullFeatureFileName,  
                             FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()),

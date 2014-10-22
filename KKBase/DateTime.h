@@ -40,7 +40,7 @@ namespace  KKB
              );
 
     /** @brief Constructs a date from an integer that represents the total number of days since 1/1/0000 */
-    DateType (int32  days);
+    DateType (kkint32  days);
 
     /**
      * @brief Constructs a date from a displayable string.
@@ -68,11 +68,11 @@ namespace  KKB
      *              d.AddDays (-25);           //  'd' now contains the date '1962/03/30'.
      *@endcode
      */
-    void   AddDays   (int32 _days);
+    void   AddDays   (kkint32 _days);
 
-    void   AddMonths (int32 _months);
+    void   AddMonths (kkint32 _months);
 
-    void   SubtractDays (int32  _days);
+    void   SubtractDays (kkint32  _days);
 
     short  Year  () const {return  year;}
     uchar  Month () const {return  month;}
@@ -84,7 +84,7 @@ namespace  KKB
      *          you have two instances of 'DateType'  'd1' and 'd2'.  The number of days between the two
      *          dates can be determined by  "int deltaDays = d1.Days () - d2.Days ();".
      */
-    int32  Days ()  const;
+    kkint32  Days ()  const;
 
     kkuint64   Seconds () const;
 
@@ -103,8 +103,8 @@ namespace  KKB
     bool       operator<  (const DateType&  right)  const;
     bool       operator<= (const DateType&  right)  const;
     DateType   operator+  (const DateType&  right)  const;
-    DateType   operator+  (int32  right)  const;
-    DateType   operator-  (int32  right)  const;
+    DateType   operator+  (kkint32  right)  const;
+    DateType   operator-  (kkint32  right)  const;
     DateType   operator-  (const DateType&  right)  const;
     DateType&  operator++ ();
 
@@ -112,25 +112,25 @@ namespace  KKB
     
     static  uchar  MonthFromStr (const KKStr&  monthStr);
 
-    static  uchar  DaysInTheMonth (int32 year, 
+    static  uchar  DaysInTheMonth (kkint32 year, 
                                    uchar month
                                   );
 
-    static  int32  DaysYTDforMonth (int32 year,
+    static  kkint32  DaysYTDforMonth (kkint32 year,
                                     uchar month
                                    );
 
   private:
     void  AdjustYear ();
-    void  SetFromNumOfDaysInTime (int32  days);
+    void  SetFromNumOfDaysInTime (kkint32  days);
 
-    int32  Compare (const DateType&  right)  const;
+    kkint32  Compare (const DateType&  right)  const;
 
 
 
-    static  void  AdjustDateFields (int32&  years,
-                                    int32&  months,
-                                    int32&  days
+    static  void  AdjustDateFields (kkint32&  years,
+                                    kkint32&  months,
+                                    kkint32&  days
                                    );
 
     static const uchar  daysInEachMonth[];
@@ -162,7 +162,7 @@ namespace  KKB
               uchar  _second
              );
 
-    TimeType (int32  seconds);
+    TimeType (kkint32  seconds);
 
     TimeType (KKStr  s);
 
@@ -170,7 +170,7 @@ namespace  KKB
     uchar  Minute () const {return minute;}
     uchar  Second () const {return second;}
 
-    uint32 Seconds ()  const;
+    kkuint32 Seconds ()  const;
 
     void  Hour   (uchar _hour)   {hour   = _hour;}
     void  Minute (uchar _minute) {minute = _minute;}
@@ -193,7 +193,7 @@ namespace  KKB
   private:
     friend class  DateTime;
 
-    int32  Compare (const TimeType&  right)  const;
+    kkint32  Compare (const TimeType&  right)  const;
 
     uchar  hour;
     uchar  minute;
@@ -229,9 +229,9 @@ namespace  KKB
 
     DateTime (const KKStr&  s);
 
-    void                  AddDays     (int32  _days);
-    void                  AddHours    (int32  _hours);
-    void                  AddMinutes  (int32  _mins);
+    void                  AddDays     (kkint32  _days);
+    void                  AddHours    (kkint32  _hours);
+    void                  AddMinutes  (kkint32  _mins);
     void                  AddSeconds  (long _secs);
 
     const KKB::DateType&  Date () const  {return  date;}
@@ -244,9 +244,9 @@ namespace  KKB
     uchar                 Month () const  {return  date.Month ();}
     uchar                 Day   () const  {return  date.Day   ();}
 
-    void                  HoursAdd    (int32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
+    void                  HoursAdd    (kkint32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
  
-    void                  MinutesAdd  (int32 _mins);
+    void                  MinutesAdd  (kkint32 _mins);
 
     void                  SecondsAdd  (long  _secs);
 
@@ -263,7 +263,7 @@ namespace  KKB
     DateTime        operator-  (const DateTime&  right)  const;
 
   private:
-    int32  Compare (const DateTime&  right)  const;
+    kkint32  Compare (const DateTime&  right)  const;
 
     DateType  date;
     TimeType  time;

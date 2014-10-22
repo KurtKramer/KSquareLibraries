@@ -63,7 +63,7 @@ namespace KKB
 
     VectorKKStr          FormatErrorsWithLineNumbers ()  const;
 
-    void  FormatErrorsAdd (int32         lineNum, 
+    void  FormatErrorsAdd (kkint32       lineNum, 
                            const KKStr&  error
                           );
 
@@ -71,13 +71,13 @@ namespace KKB
 
     void  LoadFile ();
 
-    virtual int32 MemoryConsumedEstimated ()  const;
+    virtual kkint32 MemoryConsumedEstimated ()  const;
 
-    int32 NumOfSections ();
+    kkint32 NumOfSections ();
   
-    int32 NumOfSettings (const KKB::KKStr&  sectionName);
+    kkint32 NumOfSettings (const KKB::KKStr&  sectionName);
 
-    int32 NumOfSettings (int32  sectionNum)  const;                 /**< @brief Returns number of settings for the specified section, */
+    kkint32 NumOfSettings (kkint32  sectionNum)  const;                 /**< @brief Returns number of settings for the specified section, */
    
     bool  SectionDefined (const KKB::KKStr&  sectionName)  const;   /**< @brief Returns true if the section is defined. */
 
@@ -85,44 +85,44 @@ namespace KKB
     // Access Methods.
     const KKB::KKStr&  FileName () const  {return  fileName;}
 
-    KKStrConstPtr      SectionName (int32 sectionNum)  const;       /**< @brief Returns the name of the section for specified index, if index not defined will return NULL. */
+    KKStrConstPtr      SectionName (kkint32 sectionNum)  const;       /**< @brief Returns the name of the section for specified index, if index not defined will return NULL. */
 
-    int32              SectionNum (const KKB::KKStr&  sectionName)  const;
+    kkint32            SectionNum (const KKB::KKStr&  sectionName)  const;
 
-    int32              SectionLineNum (int32 sectionNum)  const;
+    kkint32            SectionLineNum (kkint32 sectionNum)  const;
 
     KKStrConstPtr      SettingName (const KKB::KKStr&  sectionName, 
-                                    int32              settingNum
+                                    kkint32            settingNum
                                    )  const;
   
-    KKStrConstPtr      SettingName (int32  sectionNum,
-                                    int32  settingNum
+    KKStrConstPtr      SettingName (kkint32  sectionNum,
+                                    kkint32  settingNum
                                    )  const;
 
 
     KKStrConstPtr      SettingValue (const KKB::KKStr&  sectionName,
                                      const KKB::KKStr&  settingName,
-                                     int32&             lineNum
+                                     kkint32&           lineNum
                                     )  const;
 
 
-    KKStrConstPtr      SettingValue (int32              sectionNum,
+    KKStrConstPtr      SettingValue (kkint32            sectionNum,
                                      const KKB::KKStr&  settingName,
-                                     int32&             lineNum
+                                     kkint32&           lineNum
                                     )  const;
 
 
-    KKStrConstPtr      SettingValue (int32 sectionNum,
-                                     int32 settingNum,
-                                     int32&  lineNum
+    KKStrConstPtr      SettingValue (kkint32 sectionNum,
+                                     kkint32 settingNum,
+                                     kkint32&  lineNum
                                     )  const;
 
 
     void  GetSetting (const char*     sectiopnName,
-                      int32           settingNum,
+                      kkint32         settingNum,
                       KKStrConstPtr&  name,
                       KKStrConstPtr&  value,
-                      int32&          lineNum
+                      kkint32&        lineNum
                      );
 
   private:

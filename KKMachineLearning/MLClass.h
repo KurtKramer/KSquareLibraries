@@ -65,8 +65,6 @@ namespace KKMachineLearning
 
 
   public:
-    typedef  KKB::uint32  uint32;
-
     static  MLClassListIndexPtr  GlobalClassList ();
 
     /**
@@ -88,12 +86,12 @@ namespace KKMachineLearning
      *@return  Pointer to an instance of 'MLClass' that will have the name '_name'.
      */
     static  MLClassPtr  CreateNewMLClass (const KKStr&  _name,
-                                                int32           _classId = -1
-                                               );
+                                          kkint32       _classId = -1
+                                         );
 
     static  MLClassPtr  GetUnKnownClassStatic ();
 
-    static  MLClassPtr  GetByClassId (int32  _classId);
+    static  MLClassPtr  GetByClassId (kkint32  _classId);
 
     /**
      *@brief Will change the name of an existing class verifying that a duplicate does not get created.
@@ -102,9 +100,9 @@ namespace KKMachineLearning
      *@param[in]  newName     New name that you with to give instance of 'MLClass'
      *@param[out] changeSuccessful Will return'True' if change was successful,  a reason it would not work is that the name is already used.
      */
-    static  void  ChangeNameOfClass (MLClassPtr  mlClass, 
-                                     const KKStr&   newName,
-                                     bool&          changeSuccessful
+    static  void  ChangeNameOfClass (MLClassPtr    mlClass, 
+                                     const KKStr&  newName,
+                                     bool&         changeSuccessful
                                     );
 
 
@@ -136,8 +134,8 @@ namespace KKMachineLearning
 
    
 
-    int32           ClassId ()  const  {return classId;}
-    void            ClassId (int32 _classId)  {classId = _classId;}
+    kkint32         ClassId ()  const  {return classId;}
+    void            ClassId (kkint32 _classId)  {classId = _classId;}
 
     float           CountFactor () const  {return countFactor;}
     void            CountFactor (float _countFactor)  {countFactor = _countFactor;}
@@ -146,11 +144,11 @@ namespace KKMachineLearning
 
     const KKStr&    Description ()  const {return description;}
 
-    MLClassPtr      MLClassForGivenHierarchialLevel (uint32 level)  const;
+    MLClassPtr      MLClassForGivenHierarchialLevel (kkuint32 level)  const;
 
     bool            IsAnAncestor (MLClassPtr  c);   // will return true if 'c' is an ancestor
 
-    uint32          NumHierarchialLevels ()  const;
+    kkuint32        NumHierarchialLevels ()  const;
 
     const  KKStr&   Name ()      const {return  name;}
     const  KKStr&   UpperName () const {return  upperName;} // Will return name capitalized..
@@ -176,7 +174,7 @@ namespace KKMachineLearning
     
 
   private:
-    int32          classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
+    kkint32        classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
     float          countFactor;  /**< Specifies number to increment count when this class picked;  ex:  Shrinmp_02 would have 2.0. */
     KKStr          name;         /**< Name of Class.                                                                               */
     KKStr          upperName;    /**< Upper case version of name;  Used by LookUpByName to assist in performance.                  */
@@ -214,8 +212,6 @@ namespace KKMachineLearning
   class  MLClassList:  public KKQueue<MLClass>
   {
   public:
-    typedef  KKB::uint32  uint32;
-
     MLClassList ();
 
 
@@ -259,7 +255,7 @@ namespace KKMachineLearning
     void  ExtractThreeTitleLines (KKStr&  titleLine1,
                                   KKStr&  titleLine2, 
                                   KKStr&  titleLine3,
-                                  int32   fieldWidth
+                                  kkint32 fieldWidth
                                  ) const;
 
     /**
@@ -269,7 +265,7 @@ namespace KKMachineLearning
     KKStr   ExtractHTMLTableHeader () const;
 
 
-    MLClassListPtr  ExtractListOfClassesForAGivenHierarchialLevel (int32 level);
+    MLClassListPtr  ExtractListOfClassesForAGivenHierarchialLevel (kkint32 level);
 
 
     /** @brief  return pointer to instance with '_name';  if none exists, create one and add to list. */
@@ -296,14 +292,14 @@ namespace KKMachineLearning
 
 
     virtual
-    MLClassPtr     LookUpByClassId (int32  _classId);
+    MLClassPtr     LookUpByClassId (kkint32  _classId);
 
 
     void           Load (KKStr  _fileName,
                          bool&  _successfull
                         );
 
-    int32          MemoryConsumedEstimated () const;
+    kkint32        MemoryConsumedEstimated () const;
       
     static
       MLClassListPtr  MergeClassList (const MLClassList&  list1,
@@ -311,7 +307,7 @@ namespace KKMachineLearning
                                      );
 
 
-    uint32          NumHierarchialLevels ()  const;
+    kkuint32        NumHierarchialLevels ()  const;
 
 
     void            Save (KKStr   _fileName,
@@ -478,7 +474,7 @@ namespace KKMachineLearning
      */
     MLClassPtr  GetMLClass (short classIndex);
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
     void  ParseClassIndexList (const KKStr&  s);
 

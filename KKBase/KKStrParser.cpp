@@ -25,7 +25,7 @@ using namespace KKB;
 
 
 KKStrParser::KKStrParser (const KKStrParser&  _strParser):
-    len            ((uint32)strlen (_strParser.str)),
+    len            ((kkuint32)strlen (_strParser.str)),
     nextPos        (_strParser.nextPos),
     str            (_strParser.str),
     trimWhiteSpace (_strParser.trimWhiteSpace),
@@ -123,8 +123,8 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
   if (nextPos >= len)
     return KKStr::EmptyStr ();
 
-  uint32  startPos = nextPos;
-  uint32  endPos   = startPos;
+  kkuint32  startPos = nextPos;
+  kkuint32  endPos   = startPos;
 
   // scan until end of string or next delimiter
   while  ((endPos < len)  &&  (strchr (delStr, str[endPos]) == NULL))
@@ -157,7 +157,7 @@ KKB::DateTime  KKStrParser::GetNextTokenDateTime (const char* delStr)
 
 
 
-int32  KKStrParser::GetNextTokenInt (const char* delStr)
+kkint32  KKStrParser::GetNextTokenInt (const char* delStr)
 {
   return  GetNextToken (delStr).ToInt ();
 }
@@ -184,7 +184,7 @@ float  KKStrParser::GetNextTokenFloat  (const char* delStr)
 
 
 
-KKB::uint32  KKStrParser::GetNextTokenUint (const char* delStr)
+kkuint32  KKStrParser::GetNextTokenUint (const char* delStr)
 {
   return  GetNextToken (delStr).ToUint ();
 }
@@ -281,20 +281,20 @@ void  KKStrParser::Reset ()
 
 
 
-KKStr  KKStrParser::SubStrPart (uint32  firstChar,
-                                uint32  lastChar
+KKStr  KKStrParser::SubStrPart (kkuint32  firstChar,
+                                kkuint32  lastChar
                                )  const
 {
   if  (lastChar < firstChar)
     return KKStr::EmptyStr ();
 
-  uint32  subStrLen = (1 + lastChar - firstChar);
+  kkuint32  subStrLen = (1 + lastChar - firstChar);
   KKStr  result (subStrLen + 1);
 
   if  (lastChar >= len)
     lastChar = len - 1;
 
-  uint32  idx = 0;
+  kkuint32  idx = 0;
   for  (idx = firstChar;  idx <= lastChar;  idx++)
     result.Append (str[idx]);
 

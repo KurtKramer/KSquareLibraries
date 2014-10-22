@@ -27,7 +27,6 @@ namespace  KKLSC
   {
   public:
     typedef  ScannerFileEntry*  ScannerFileEntryPtr;
-    typedef  KKB::uint32  uint32;
 
     ScannerFileEntry (const KKStr&  _rootName);
 
@@ -35,18 +34,18 @@ namespace  KKLSC
   
     ~ScannerFileEntry ();
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
   
     // Access Methods
     const KKStr&      Description       () const  {return  description;}
     const KKStr&      FullName          () const  {return  fullName;}
-    uint32            PixelsPerScanLine () const  {return  pixelsPerScanLine;}
+    kkuint32          PixelsPerScanLine () const  {return  pixelsPerScanLine;}
     const KKStr&      RootName          () const  {return  rootName;}
     float             ScanRate          () const  {return  scanRate;}
   
     void  Description        (const KKStr&  _description)       {description       = _description;}
     void  FullName           (const KKStr&  _fullName)          {fullName          = _fullName;}
-    void  PixelsPerScanLine  (uint32        _pixelsPerScanLine) {pixelsPerScanLine = _pixelsPerScanLine;}
+    void  PixelsPerScanLine  (kkuint32      _pixelsPerScanLine) {pixelsPerScanLine = _pixelsPerScanLine;}
     void  RootName           (const KKStr&  _rootName)          {rootName          = _rootName;}
     void  ScanRate           (float         _scanRate)          {scanRate          = _scanRate;}
   
@@ -66,7 +65,7 @@ namespace  KKLSC
 
      KKStr     description;
      KKStr     fullName;
-     uint32    pixelsPerScanLine;
+     kkuint32  pixelsPerScanLine;
      KKStr     rootName;
      float     scanRate;           //  Camera Scan Rate  Lines/Sec
   };  /* ScannerFileEntry */
@@ -88,7 +87,7 @@ namespace  KKLSC
     ScannerFileEntryList ();
     ~ScannerFileEntryList ();
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
 
     void  AddEntry (ScannerFileEntryPtr  enytry);

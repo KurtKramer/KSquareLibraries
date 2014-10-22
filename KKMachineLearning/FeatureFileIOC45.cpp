@@ -46,13 +46,13 @@ FeatureFileIOC45::~FeatureFileIOC45()
 
 
 FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile 
-                                      (const KKStr&          _fileName,
-                                       MLClassList&       _mlClasses,
-                                       int32                 _maxCount,
-                                       volatile const bool&  _cancelFlag,    /**< will be monitored,  if set to True  Load will terminate. */
-                                       bool&                 _successful,
-                                       bool&                 _changesMade,
-                                       RunLog&               _log
+                                      (const KKStr&   _fileName,
+                                       MLClassList&   _mlClasses,
+                                       kkint32        _maxCount,
+                                       VolConstBool&  _cancelFlag,    /**< will be monitored,  if set to True  Load will terminate. */
+                                       bool&          _successful,
+                                       bool&          _changesMade,
+                                       RunLog&        _log
                                       )
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFeatureFile  File[" << _fileName << "]  FileFormat[" << DriverName () << "]" << endl;
@@ -66,7 +66,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   {
     // First determine the name of the names and data file.
-    int32 lastDotPos = _fileName.LocateLastOccurrence ('.');
+    kkint32 lastDotPos = _fileName.LocateLastOccurrence ('.');
     if  (lastDotPos < 0)
     {
       namesFileName = _fileName + ".names";
@@ -118,7 +118,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   _changesMade = false;
 
-  int32  estimatedNumOfDataItems = -1;
+  kkint32  estimatedNumOfDataItems = -1;
   
   _successful = true;
 
@@ -177,7 +177,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
-  int32  lastBarPos = ln.LocateLastOccurrence ('|');
+  kkint32  lastBarPos = ln.LocateLastOccurrence ('|');
   if  (lastBarPos >= 0)
     ln = ln.SubStrPart (0, lastBarPos - 1);
 
@@ -196,7 +196,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 
   KKStr  newLine (ln.Len ());  
 
-  int32 x = 0;
+  kkint32 x = 0;
   char thisChar;
   char nextChar;
   while  (x < ln.Len ())
@@ -238,11 +238,11 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 /**
  *@brief  Locates first 'ch' in 'txt' that is  not preceeded by an escape character('\\').
  */
-int32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
-                                                 char          ch
-                                                )
+kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
+                                                   char          ch
+                                                  )
 {
-  int32 x = 0;
+  kkint32 x = 0;
   while  (x < txt.Len ())
   {
     if  (txt[x] == ch)
@@ -273,7 +273,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
   if  (attrStr.Empty ())
     return;
 
-  int32  colPos = C45LocateNextCharacter (attrStr, ':');
+  kkint32  colPos = C45LocateNextCharacter (attrStr, ':');
   if  (colPos < 0)
   {
     // Missing Attribute Specification
@@ -348,7 +348,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
     {
       KKStr  nominalValue;
 
-      int32 commaPos = C45LocateNextCharacter (typeStr, ',');
+      kkint32 commaPos = C45LocateNextCharacter (typeStr, ',');
       if  (commaPos < 0)
       {
         nominalValue = typeStr;
@@ -395,12 +395,12 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
 
 
 
-FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&       _fileName,
-                                            istream&           _in,
+FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
+                                            istream&        _in,
                                             MLClassListPtr  _classes,
-                                            int32&             _estSize,
-                                            KKStr&             _errorMessage,
-                                            RunLog&            _log
+                                            kkint32&        _estSize,
+                                            KKStr&          _errorMessage,
+                                            RunLog&         _log
                                            )
 {
   KKStr  namesFileName;
@@ -410,7 +410,7 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&       _fileName,
 
   KKStr  ln (1024);
   bool  eof = false;
-  int32  lineNum = 0;
+  kkint32  lineNum = 0;
   GetLine (_in, ln, eof);  lineNum++;
 
   while  ((!eof)  &&  (!classLineRead))
@@ -427,7 +427,7 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&       _fileName,
         ln.ChopLastChar ();
 
       VectorKKStr  classNames = ln.Split ("\n\r\t,");
-      for  (int32  idx = 0;  idx < (int32)classNames.size ();   idx++)
+      for  (kkint32  idx = 0;  idx < (kkint32)classNames.size ();   idx++)
       {
         KKStr  className = classNames[idx];
         C45StrPreProcessName (className);
@@ -469,7 +469,7 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&       _fileName,
 
       // Locate a period followed by white space, if not followed by 
       // white space, will be part of a name.
-      int32  dotPos = 0;
+      kkint32  dotPos = 0;
       while  (dotPos < ln.Len ())
       {
         if  (ln[dotPos] == '.')
@@ -538,11 +538,11 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
   eof = false;
   eol = false;
 
-  const int32  maxTokenLen = 1024;
+  const kkint32  maxTokenLen = 1024;
   char  token[maxTokenLen];
 
   // lets skip leading white space
-  int32  ch = in.get (); eof = in.eof ();
+  kkint32  ch = in.get (); eof = in.eof ();
   while  ((!eof)  &&  ((ch == ' ') || (ch == '\r') || (ch == '\t'))  &&  (ch != '\n'))
     {ch = in.get (); eof = in.eof ();}
 
@@ -595,7 +595,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
   }
 
 
-  int32 tokenLen = 0;
+  kkint32 tokenLen = 0;
 
   // Read till first delimiter or eof
   while  ((!eof)  &&  (!strchr (delimiters, ch)))
@@ -729,15 +729,15 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
  
 
-FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileName,
-                                                  const FileDescPtr     _fileDesc,
+FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
+                                                  const FileDescPtr  _fileDesc,
                                                   MLClassList&       _classes, 
-                                                  istream&              _in,
-                                                  int32                 _maxCount,    // Maximum # images to load.
-                                                  volatile const bool&  _cancelFlag,
-                                                  bool&                 _changesMade,
-                                                  KKStr&                _errorMessage,
-                                                  RunLog&               _log
+                                                  istream&           _in,
+                                                  kkint32            _maxCount,    // Maximum # images to load.
+                                                  VolConstBool&      _cancelFlag,
+                                                  bool&              _changesMade,
+                                                  KKStr&             _errorMessage,
+                                                  RunLog&            _log
                                                 )
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFile   FileName[" << _fileName << "]" << endl;
@@ -745,11 +745,11 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
   bool  eof = false;
   bool  eol = false;
 
-  int32  numOfFeatures = _fileDesc->NumOfFields ();
+  kkint32  numOfFeatures = _fileDesc->NumOfFields ();
 
   KKStr fileRootName = osGetRootName (_fileName);
 
-  int32  lineCount = 0;
+  kkint32  lineCount = 0;
 
   const
     AttributePtr*  attributeTable = _fileDesc->CreateAAttributeTable ();  // Caller will be responsible for deleting
@@ -773,7 +773,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
     }
 
     FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
-    int32  fieldNum = 0;
+    kkint32  fieldNum = 0;
 
     // Process all fields for this row  'numOfFeatures'
 
@@ -802,7 +802,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
 
       case NominalAttribute: 
       {
-        int32  code = -1;  // Initialize to value for missing data.
+        kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
         {
           // Will flag this entry as having missing data.
@@ -831,7 +831,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
 
       case SymbolicAttribute: 
       {
-        int32  code = -1;  // Initialize to value for missing data.
+        kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
         {
           // Will flag this entry as having missing data.
@@ -914,7 +914,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
     {
       // Consume the rest of the characters in the line so that the next pass starts at
       // the beginning of th enext line.
-      int32  ch = _in.peek ();
+      kkint32  ch = _in.peek ();
       while  ((ch != '\n')  &&  (ch != '\r')  &&  (!_in.eof ()))
       {
         _in.get ();
@@ -934,7 +934,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&          _fileNam
     if  ((lineCount % 1000) == 0)
       cout  << "Records Loaded " << lineCount << endl;
 
-    if  ((int32)examples->size () > _maxCount)
+    if  ((kkint32)examples->size () > _maxCount)
       break;
   }
 
@@ -953,7 +953,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 {
   KKStr  c45Name;
 
-  int32  lastDotPos = fileName.LocateLastOccurrence ('.');
+  kkint32  lastDotPos = fileName.LocateLastOccurrence ('.');
 
   if  (lastDotPos < 0)
   {
@@ -994,7 +994,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 
 KKStr  FeatureFileIOC45::C45AdjName (const  KKStr&  oldName)
 {
-  int32  x;
+  kkint32  x;
   KKStr  newName (oldName.Len () + 3);
   for  (x = 0; x < oldName.Len ();  x++)
   {
@@ -1019,8 +1019,8 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
                                    const KKStr&            _fileName,
                                    const FeatureNumList&   _selFeatures,
                                    ostream&                _out,
-                                   uint32&                 _numExamplesWritten,
-                                   volatile const bool&    _cancelFlag,
+                                   kkuint32&               _numExamplesWritten,
+                                   VolConstBool&           _cancelFlag,
                                    bool&                   _successful,
                                    KKStr&                  _errorMessage,
                                    RunLog&                 _log
@@ -1037,7 +1037,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
 
   const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
 
-  int32  x;
+  kkint32  x;
   {
     // Write out names file
     ofstream  nf (namesFileName.Str ());
@@ -1052,12 +1052,12 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
 
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
       nf << C45AdjName (attr->Name ()) << ": ";
       if  (attr->Type () == NominalAttribute)
       {
-        int32 y;
+        kkint32 y;
         for  (y = 0;  y < attr->Cardinality ();  y++)
         {
           if  (y > 0)  nf << ", ";
@@ -1110,19 +1110,19 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
   }
 
 
-  int32  origPrecision = _out.precision ();
+  kkint32  origPrecision = _out.precision ();
   _out.precision (7);
 
   FeatureVectorPtr   example = NULL;
 
-  int32 idx;
+  kkint32 idx;
   for  (idx = 0;  (idx < _data.QueueSize ())  &&  (!_cancelFlag);  idx++)
   {
     example = _data.IdxToPtr (idx);
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
-      int32  featureNum = _selFeatures[x];
+      kkint32  featureNum = _selFeatures[x];
 
       if  ((attrTable[featureNum]->Type () == NominalAttribute)  ||  (attrTable[featureNum]->Type () == SymbolicAttribute))
       {
@@ -1133,7 +1133,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
         }
         else
         {
-          _out << C45AdjName (attrTable[featureNum]->GetNominalValue ((int32)(example->FeatureData (featureNum))));
+          _out << C45AdjName (attrTable[featureNum]->GetNominalValue ((kkint32)(example->FeatureData (featureNum))));
         }
       }
       else

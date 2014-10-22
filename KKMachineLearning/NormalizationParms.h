@@ -87,7 +87,7 @@ namespace KKMachineLearning
 
     ~NormalizationParms ();
 
-    int32   MemoryConsumedEstimated ()  const;
+    kkint32 MemoryConsumedEstimated ()  const;
 
     void  NormalizeExamples (FeatureVectorListPtr  examples);
 
@@ -95,7 +95,7 @@ namespace KKMachineLearning
 
     FeatureVectorPtr  ToNormalized (FeatureVectorPtr  example)  const;
 
-    int32   NumOfFeatures ()  {return numOfFeatures;}
+    kkint32 NumOfFeatures ()  {return numOfFeatures;}
 
 
     void  Read (FILE*  i,
@@ -114,8 +114,8 @@ namespace KKMachineLearning
 
     void  Write (std::ostream&  o);
 
-    float  Mean (int32 i);
-    float  Sigma (int32 i);
+    float  Mean (kkint32 i);
+    float  Sigma (kkint32 i);
 
     const float*  Mean ()  {return  mean;}
     const float*  Sigma () {return  sigma;}
@@ -131,7 +131,7 @@ namespace KKMachineLearning
     float*                   mean;
     bool*                     normalizeFeature;
     bool                      normalizeNominalFeatures;
-    int32                       numOfFeatures;
+    kkint32                     numOfFeatures;
     float                    numOfExamples;
     float*                   sigma;
   };  /* NormalizationParms */

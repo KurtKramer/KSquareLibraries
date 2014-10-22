@@ -30,22 +30,21 @@ namespace KKB
   {
   public:
     typedef  KKStrMatrix*  KKStrMatrixPtr;
-    typedef  KKB::uint32   uint32;
 
 
-    KKStrMatrix (uint32 _numCols):  
+    KKStrMatrix (kkuint32 _numCols):  
         data    (), 
         numCols (_numCols) 
     {
     }
 
         
-    KKStrMatrix (uint32 _numCols,
-                 uint32 _numRows
+    KKStrMatrix (kkuint32 _numCols,
+                 kkuint32 _numRows
                 ):  
         numCols (_numCols) 
     {
-      while  ((uint32)data.QueueSize () < _numRows)
+      while  ((kkuint32)data.QueueSize () < _numRows)
         AddRow ();
     }
 
@@ -55,16 +54,16 @@ namespace KKB
     }
 
 
-    uint32  NumRows ()  const  {return data.QueueSize ();}
-    uint32  NumCols ()  const  {return numCols;}
+    kkuint32  NumRows ()  const  {return data.QueueSize ();}
+    kkuint32  NumCols ()  const  {return numCols;}
 
 
-    KKStrList&  operator[] (uint32 row);
+    KKStrList&  operator[] (kkuint32 row);
 
-    KKStrList&  operator() (uint32 row);
+    KKStrList&  operator() (kkuint32 row);
 
-    KKStr&  operator() (uint32  row,
-                        uint32  col
+    KKStr&  operator() (kkuint32  row,
+                        kkuint32  col
                        );
 
 
@@ -84,7 +83,7 @@ namespace KKB
 
   private:
     KKQueue<KKStrList>   data;
-    uint32               numCols;
+    kkuint32             numCols;
   };  /* KKStrMatrix */
 
 

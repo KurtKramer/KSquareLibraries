@@ -36,7 +36,7 @@ using namespace KKB;
 
 CmdLineExpander::CmdLineExpander (const KKStr&  _applicationName,
                                   RunLog&        _log,
-                                  int32          argc,
+                                  kkint32        argc,
                                   char**         argv
                                  ):
 
@@ -87,7 +87,7 @@ CmdLineExpander::~CmdLineExpander ()
 
 
 
-void  CmdLineExpander::ExpandCmdLine (int32   argc, 
+void  CmdLineExpander::ExpandCmdLine (kkint32 argc, 
                                       char**  argv
                                      )
 {
@@ -95,7 +95,7 @@ void  CmdLineExpander::ExpandCmdLine (int32   argc,
   
   VectorKKStr  initialParameters;
   {
-    int32 y;
+    kkint32 y;
     for  (y = 1; y < argc;  y++)
       initialParameters.push_back (argv[y]);
   }
@@ -127,7 +127,7 @@ bool  FileInStack (const KKStr&       cmdFileName,
 
 void  CmdLineExpander::BuildCmdLineParameters (const VectorKKStr&  argv)
 {
-  uint32  x = 0;
+  kkuint32  x = 0;
 
   while  (x < argv.size ())
   {

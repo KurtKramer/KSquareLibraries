@@ -103,8 +103,8 @@ namespace  KKB
                                   kkint32**  blobIds
                                  );
 
-    BlobPtr  NewBlob (uint32  rowTop,
-                      uint32  colLeft
+    BlobPtr  NewBlob (kkuint32  rowTop,
+                      kkuint32  colLeft
                      );
 
     void  PushOnBack  (BlobPtr  blob);

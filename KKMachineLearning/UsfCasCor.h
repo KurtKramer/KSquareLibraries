@@ -102,9 +102,9 @@ namespace KKMachineLearning
   class  UsfCasCor
   {
   public:
-    UsfCasCor (FileDescPtr           _fileDesc,
-               volatile const bool&  _cancelFlag,
-               RunLog&               _log
+    UsfCasCor (FileDescPtr    _fileDesc,
+               VolConstBool&  _cancelFlag,
+               RunLog&        _log
               );
 
     ~UsfCasCor ();
@@ -113,7 +113,7 @@ namespace KKMachineLearning
 
     template<typename T>
     void  Delete2DArray (T**     &A,    
-                         uint32  numRows
+                         kkuint32  numRows
                         );
 
 
@@ -139,15 +139,15 @@ namespace KKMachineLearning
 
     typedef parmentry PARMS;
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
 
     FeatureVectorListPtr  FilterOutExtremeExamples (FeatureVectorListPtr  trainExamples);
 
-    void  TrainNewClassifier (int32                  _in_limit,
-                              int32                  _out_limit,
-                              int32                  _number_of_rounds,
-                              int32                  _number_of_trials,
+    void  TrainNewClassifier (kkint32                _in_limit,
+                              kkint32                _out_limit,
+                              kkint32                _number_of_rounds,
+                              kkint32                _number_of_trials,
                               kkint64                _the_random_seed,
                               bool                   _useCache,
                               FeatureVectorListPtr   _trainData,
@@ -592,7 +592,7 @@ namespace KKMachineLearning
 
     RunLog&  log;
 
-    volatile const bool&  cancelFlag;
+    VolConstBool&  cancelFlag;
 
   };  /* UsfCasCor */
 

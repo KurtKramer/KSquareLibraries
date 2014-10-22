@@ -31,7 +31,7 @@ using namespace KKMachineLearning;
 
 Attribute::Attribute (const KKStr&   _name,
                       AttributeType  _type,
-                      int32          _fieldNum
+                      kkint32        _fieldNum
                      ):
     fieldNum           (_fieldNum),
     name               (_name),
@@ -64,7 +64,7 @@ Attribute::Attribute (const Attribute&  a):
     nominalValues      = new KKStrList (true);
     nominalValuesUpper = new KKStrList (true);
 
-    int32  x;
+    kkint32  x;
     for  (x = 0;  x < a.nominalValues->QueueSize ();  x++)
     {
       nominalValues->PushOnBack      (new KKStr (a.nominalValues->IdxToPtr      (x)));
@@ -83,9 +83,9 @@ Attribute::~Attribute ()
 }
 
 
-int32  Attribute::MemoryConsumedEstimated ()  const
+kkint32  Attribute::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (Attribute)  + 
+  kkint32  memoryConsumedEstimated = sizeof (Attribute)  + 
     name.MemoryConsumedEstimated ()                  +
     nameUpper.MemoryConsumedEstimated ();
 
@@ -124,7 +124,7 @@ void  Attribute::AddANominalValue (const KKStr&  nominalValue,
 {
   ValidateNominalType ("AddANominalValue");
 
-  int32  code = GetNominalCode (nominalValue);
+  kkint32  code = GetNominalCode (nominalValue);
   if  (code >= 0)
   {
     alreadyExists = true;
@@ -143,7 +143,7 @@ void  Attribute::AddANominalValue (const KKStr&  nominalValue,
 
 
 const
-KKStr&  Attribute::GetNominalValue (int32 code)  const
+KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 {
   ValidateNominalType ("GetNominalValue");
 
@@ -177,7 +177,7 @@ KKStr&  Attribute::GetNominalValue (int32 code)  const
 
 
 
-int32  Attribute::Cardinality ()
+kkint32  Attribute::Cardinality ()
 {
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
     return  nominalValues->QueueSize ();
@@ -187,13 +187,13 @@ int32  Attribute::Cardinality ()
 
 
 
-int32  Attribute::GetNominalCode  (const KKStr&  nominalValue)  const
+kkint32  Attribute::GetNominalCode  (const KKStr&  nominalValue)  const
 {
   ValidateNominalType ("GetNominalCode");
 
   KKStr  nominalValueUpper = nominalValue.ToUpper ();
   
-  int32  code = 0;
+  kkint32  code = 0;
   while  (code < nominalValuesUpper->QueueSize ())
   {
     if  (nominalValueUpper == *(nominalValuesUpper->IdxToPtr (code)))
@@ -276,9 +276,9 @@ AttributeList::~AttributeList ()
 }
 
 
-int32  AttributeList::MemoryConsumedEstimated ()  const
+kkint32  AttributeList::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (AttributeList) + nameIndex.size ();
+  kkint32  memoryConsumedEstimated = sizeof (AttributeList) + nameIndex.size ();
   
   {
     std::map<KKStr, AttributePtr>::const_iterator  idx;
@@ -313,7 +313,7 @@ AttributePtr  AttributeList::LookUpByName (const KKStr&  name)  const
 /*
 
   AttributePtr  attribute = NULL;
-  int32  idx = 0;
+  kkint32  idx = 0;
 
   KKStr  nameUpper = name.ToUpper ();
 

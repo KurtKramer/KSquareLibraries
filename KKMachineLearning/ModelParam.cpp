@@ -90,9 +90,9 @@ ModelParam::~ModelParam  ()
 }
 
 
-int32  ModelParam::MemoryConsumedEstimated ()  const
+kkint32  ModelParam::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (ModelParam)
+  kkint32  memoryConsumedEstimated = sizeof (ModelParam)
     +  fileName.MemoryConsumedEstimated ()
     +  selectedFeatures.MemoryConsumedEstimated ();
 
@@ -565,18 +565,18 @@ void  ModelParam::ReadXML (KKStr&  _fileName,
 
 
 
-int32  ModelParam::NumOfFeaturesAfterEncoding ()  const
+kkint32  ModelParam::NumOfFeaturesAfterEncoding ()  const
 {
-  int32 z;
-  int32 numFeaturesAfterEncoding = 0;
-  int32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
+  kkint32 z;
+  kkint32 numFeaturesAfterEncoding = 0;
+  kkint32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
 
   switch (EncodingMethod ())
   {
   case BinaryEncoding:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
-      int32  fieldNum = selectedFeatures[z];
+      kkint32  fieldNum = selectedFeatures[z];
       if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
       else

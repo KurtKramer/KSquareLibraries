@@ -14,9 +14,9 @@ namespace KKMachineLearning
 {
   #if  !defined(_MLCLASS_)
   class  MLClass;
-  typedef  MLClass*         MLClassPtr;
+  typedef  MLClass*      MLClassPtr;
   class  MLClassList;
-  typedef  MLClassList*     MLClassListPtr;
+  typedef  MLClassList*  MLClassListPtr;
   #endif
 
 
@@ -24,15 +24,15 @@ namespace KKMachineLearning
   {
   public:
     ClassProb (MLClassPtr _classLabel,
-               double        _probability,
-               float         _votes
+               double     _probability,
+               float      _votes
               );
 
     ClassProb (const ClassProb&  _pair);
 
     MLClassPtr  classLabel;
-    double         probability;
-    float          votes;
+    double      probability;
+    float       votes;
   };
   typedef  ClassProb*  ClassProbPtr;
 

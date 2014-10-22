@@ -19,23 +19,23 @@ namespace  KKB
   public:
     static
     void*   CreateCompressedBuffer (void*  source,
-                                    uint32 sourceLen,
-                                    uint32&  compressedBuffLen
+                                    kkuint32 sourceLen,
+                                    kkuint32&  compressedBuffLen
                                    );
 
 
     static
     void*   Decompress (const void*  compressedBuff,
-                        uint32       compressedBuffLen,
-                        uint32&      unCompressedLen
+                        kkuint32     compressedBuffLen,
+                        kkuint32&    unCompressedLen
                        );
 
     static
     void    Decompress (const void*  compressedBuff,
-                        uint32       compressedBuffLen,
+                        kkuint32     compressedBuffLen,
                         uchar*&      unCompressedBuff,
-                        uint32&      unCompressedBuffSize,
-                        uint32&      unCompressedBuffLen
+                        kkuint32&    unCompressedBuffSize,
+                        kkuint32&    unCompressedBuffLen
                        );
   };
 }

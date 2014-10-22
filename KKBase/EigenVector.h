@@ -11,14 +11,14 @@
 
 namespace  KKB
 {
-  void  Tred2 (int32     n,
+  void  Tred2 (kkint32   n,
                double    a[2][2],
                double*   d,
                double*   e
               );
 
 
-  void  tqli (int32     n,
+  void  tqli (kkint32   n,
               double*   d,
               double*   e,
               double    z[2][2]

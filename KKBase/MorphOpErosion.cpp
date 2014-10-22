@@ -36,22 +36,22 @@ MorphOpErosion::~MorphOpErosion ()
 
 
 
-int32  MorphOpErosion::MemoryConsumedEstimated ()
+kkint32  MorphOpErosion::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }
 
 
 
-bool  MorphOpErosion::Fit (int32  row,
-                           int32  col
+bool  MorphOpErosion::Fit (kkint32  row,
+                           kkint32  col
                           )  const
 {
-  int32  r, c;
-  int32  rStart = row - structureSize;
-  int32  rEnd   = row + structureSize;
-  int32  cStart = col - structureSize;
-  int32  cEnd   = col + structureSize;
+  kkint32  r, c;
+  kkint32  rStart = row - structureSize;
+  kkint32  rEnd   = row + structureSize;
+  kkint32  cStart = col - structureSize;
+  kkint32  cEnd   = col + structureSize;
 
   if  (rStart  < 0)           rStart = 0;
   if  (rEnd    >= srcHeight)  rEnd = srcHeight - 1;
@@ -96,10 +96,10 @@ RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
 {
   this->SetSrcRaster (_image);
 
-  int32  r = 0;
-  int32  c = 0;
+  kkint32  r = 0;
+  kkint32  c = 0;
 
-  int32  erodedForegroundPixelCount = srcRaster->ForegroundPixelCount ();
+  kkint32  erodedForegroundPixelCount = srcRaster->ForegroundPixelCount ();
 
   RasterPtr   erodedRaster = new Raster (*srcRaster);
 

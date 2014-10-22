@@ -34,11 +34,11 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
-    int32  MemoryConsumedEstimated ();
+    kkint32  MemoryConsumedEstimated ();
 
   private:
-    bool  Fit (int32  row, 
-               int32  col
+    bool  Fit (kkint32  row, 
+               kkint32  col
               )  const;
 
     StructureType  structure;

@@ -116,7 +116,7 @@ namespace  KKB
     bool   BlockedByAnotherThread ();
   
 
-    int32  BlockerThreadId ();  /**< @brief  ThreadId of thread that currently holds the Block  -1 indicates no Block */
+    kkint32  BlockerThreadId ();  /**< @brief  ThreadId of thread that currently holds the Block  -1 indicates no Block */
 
     /**
      *@brief Ends the block and allows other threads to pass through StatBlock.
@@ -126,13 +126,13 @@ namespace  KKB
      */
     void   EndBlock ();
 
-    int32  MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
     const  KKStr&  Name ()  const  {return  name;}
 
 
     /** @brief  Returns the number of threads that are waiting to establish a lock on this instance. */
-    int32  NumBlockedThreads ();
+    kkint32  NumBlockedThreads ();
 
 
     /**
@@ -156,17 +156,17 @@ namespace  KKB
 
     volatile bool  blocked;    /**< @brief 'true' = Currently Blocked.  */
 
-    int32    blockerDepth;     /**< @brief Indicates how many times the thread that currently holds the block has
+    kkint32  blockerDepth;     /**< @brief Indicates how many times the thread that currently holds the block has
                                 * called  "StartBlock".  For every time the thread that holds the Block calls 
                                 * "StartBlock"  it will have to call "EndBlock"  before the block is actually
                                 * released.
                                 */
 
-    int32    blockerThreadId;  /**< @brief ThreadId of thread that currently holds the Block  -1 indicates no Block */
+    kkint32  blockerThreadId;  /**< @brief ThreadId of thread that currently holds the Block  -1 indicates no Block */
 
     KKStr    name;
 
-    int32    numBlockedThreads; /**< @brief  The number of threads waiting in 'StartBlock'  for the current block to end */
+    kkint32  numBlockedThreads; /**< @brief  The number of threads waiting in 'StartBlock'  for the current block to end */
 
     static  GoalKeeperListPtr  existingGoalKeepers;
 

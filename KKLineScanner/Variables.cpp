@@ -85,11 +85,11 @@ KKStr  Variables::ScannerFilesDefaultDir ()
 
 
 
-int32  Variables::LocateEnvStrStart (const KKStr&  str)
+kkint32  Variables::LocateEnvStrStart (const KKStr&  str)
 {
-  int32  x = 0;
-  int32  y = 1;
-  int32  len = str.Len ();
+  kkint32  x = 0;
+  kkint32  y = 1;
+  kkint32  len = str.Len ();
   const char*  s = str.Str ();
 
   while  (y < len)
@@ -115,7 +115,7 @@ int32  Variables::LocateEnvStrStart (const KKStr&  str)
 
 KKStr  Variables::SubstituteInEvironmentVariables (const KKStr&  src)
 {
-  int32  x = LocateEnvStrStart (src);
+  kkint32  x = LocateEnvStrStart (src);
   if  (x < 0)
     return  src;
 

@@ -52,7 +52,7 @@ KKObserver::~KKObserver ()
 
 
 
-int32  KKObserver::MemoryConsumedEstimated ()
+kkint32  KKObserver::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }

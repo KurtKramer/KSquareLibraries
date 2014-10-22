@@ -113,8 +113,8 @@ ScannerFile3BitEncoded::ScannerFile3BitEncoded (const KKStr&  _fileName,
 
 
 ScannerFile3BitEncoded::ScannerFile3BitEncoded (const KKStr&  _fileName,
-                                                uint32        _pixelsPerScanLine,
-                                                uint32        _frameHeight,
+                                                kkuint32      _pixelsPerScanLine,
+                                                kkuint32      _frameHeight,
                                                 RunLog&       _log
                                                ):
   ScannerFile (_fileName, _pixelsPerScanLine, _frameHeight, _log),
@@ -148,17 +148,17 @@ void  ScannerFile3BitEncoded::BuildConversionTables ()
 
   if  (!convTable3BitTo8Bit)
   {
-    int32 x = 0;
-    int32 y = 0;
+    kkint32 x = 0;
+    kkint32 y = 0;
     float inc = 255.0f / 8.0f;
     convTable3BitTo8Bit = new uchar[8];
     convTable8BitTo3Bit = new uchar[256];
     for  (x = 0;  x < 8;  ++x)
     {
-      int32  this8Bit = (int32)(0.5f + (float)x * inc);
-      int32  next8Bit = (int32)(0.5f + (float)(x + 1) * inc);
+      kkint32  this8Bit = (kkint32)(0.5f + (float)x * inc);
+      kkint32  next8Bit = (kkint32)(0.5f + (float)(x + 1) * inc);
 
-      int32  threeBitTo8BitNum = (int32)(this8Bit + (x / 7.0f)  * (next8Bit - this8Bit));
+      kkint32  threeBitTo8BitNum = (kkint32)(this8Bit + (x / 7.0f)  * (next8Bit - this8Bit));
 
       convTable3BitTo8Bit[x] = (uchar)threeBitTo8BitNum;
       for  (y = this8Bit; y <= next8Bit;  ++y)
@@ -227,7 +227,7 @@ void  ScannerFile3BitEncoded::ScanRate (float  _scanRate)
 
 
 
-uint32  ScannerFile3BitEncoded::ReadBufferFrame ()
+kkuint32  ScannerFile3BitEncoded::ReadBufferFrame ()
 {
   frameBufferLen = 0;
   frameBufferNextLine = 0;
@@ -238,7 +238,7 @@ uint32  ScannerFile3BitEncoded::ReadBufferFrame ()
   }
 
   frameBufferFileOffsetLast = osFTELL (file);
-  uint32  numScanLinesReadThisFrameBuffer = 0;
+  kkuint32  numScanLinesReadThisFrameBuffer = 0;
   uchar*  buffPtr = frameBuffer;
 
   while  ((feof (file) == 0)  &&  (numScanLinesReadThisFrameBuffer < frameHeight))
@@ -264,7 +264,7 @@ kkint64  ScannerFile3BitEncoded::SkipToNextFrame ()
 {
   uchar*  scanLine = new uchar[pixelsPerScanLine];
 
-  uint32  numScanLinesReadThisFrameBuffer = 0;
+  kkuint32  numScanLinesReadThisFrameBuffer = 0;
   while  ((feof (file) == 0)  &&  (numScanLinesReadThisFrameBuffer < frameHeight))
   {
     GetNextScanLine (scanLine, pixelsPerScanLine);
@@ -283,18 +283,18 @@ kkint64  ScannerFile3BitEncoded::SkipToNextFrame ()
 
 
 void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
-                                               uint32 lineBuffSize
+                                               kkuint32 lineBuffSize
                                               )
 {
   bool   eol = false;
   uchar  opCode = 0;
   OpRec  rec;
-  uint32 recsRead = 0;
+  kkuint32 recsRead = 0;
 
-  uint32  lineSize = 0;
+  kkuint32  lineSize = 0;
 
   char*   textMsg     = NULL;            
-  uint32  textMsgLen  = 0;
+  kkuint32  textMsgLen  = 0;
 
   do
   {
@@ -311,7 +311,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
     case 0:
       {
         // textBlock
-        uint32  numTextBytes = rec.textBlock.length;
+        kkuint32  numTextBytes = rec.textBlock.length;
         bool  endOfTextBlock = rec.textBlock.endOfTextBlock;
 
 
@@ -332,7 +332,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
         }
         else
         {
-          int32   newTextMsgLen = textMsgLen + numTextBytes;
+          kkint32 newTextMsgLen = textMsgLen + numTextBytes;
           char*   newTextMsg = new char[newTextMsgLen];
           memcpy (newTextMsg, textMsg, textMsgLen);
           textMsgPtr = newTextMsg + textMsgLen;
@@ -390,8 +390,8 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
     case 2:
       {
         eol = (rec.spaces.eol == 1);
-        uint32  numSpaces = 4 * rec.spaces.num4Spaces;
-        uint32  newLineSize = lineSize + numSpaces;
+        kkuint32  numSpaces = 4 * rec.spaces.num4Spaces;
+        kkuint32  newLineSize = lineSize + numSpaces;
         if  (newLineSize >= lineBuffSize)
         {
           numSpaces = lineBuffSize - lineSize;
@@ -407,8 +407,8 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
     case 3:
       {
         eol = (rec.blackOuts.eol == 1);
-        uint32  numBlackOuts = 4 * (uint32)(rec.blackOuts.num4BlackOuts);
-        uint32  newLineSize = lineSize + numBlackOuts;
+        kkuint32  numBlackOuts = 4 * (kkuint32)(rec.blackOuts.num4BlackOuts);
+        kkuint32  newLineSize = lineSize + numBlackOuts;
         if  (newLineSize >= lineBuffSize)
         {
           if  (lineSize > lineBuffSize)
@@ -426,10 +426,10 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
     case 4:
       {
         eol = (rec.runLen.eol == 1);
-        uint32  runLen = rec.runLen.runLen;
+        kkuint32  runLen = rec.runLen.runLen;
         uchar   pixelValue = convTable3BitTo8Bit[rec.runLen.pix];
 
-        uint32  newLineSize = lineSize + runLen;
+        kkuint32  newLineSize = lineSize + runLen;
         if  (newLineSize >= lineBuffSize)
         {
           runLen = lineBuffSize - lineSize;
@@ -460,7 +460,7 @@ void  ScannerFile3BitEncoded::WriteBufferFrame ()
   frameBufferFileOffsetLast = osFTELL (file);
   //nextScanLineOffset = osFTELL (file);
 
-  uint32  frameRow = 0;
+  kkuint32  frameRow = 0;
   uchar*  framePtr = frameBuffer;
   while  (frameRow < frameBufferNextLine)
   {
@@ -485,8 +485,8 @@ void  ScannerFile3BitEncoded::WriteBufferFrame ()
 
 
 void  ScannerFile3BitEncoded::Write4Spaces (OpRecPtr&  outputBuffPtr,
-                                            int32&     outputBuffUsed,
-                                            int32&     num4SpacesInARow,
+                                            kkint32&   outputBuffUsed,
+                                            kkint32&   num4SpacesInARow,
                                             ushort     eol
                                            )
 {
@@ -504,8 +504,8 @@ void  ScannerFile3BitEncoded::Write4Spaces (OpRecPtr&  outputBuffPtr,
 
 
 void  ScannerFile3BitEncoded::Write4BlackOuts (OpRecPtr&  outputBuffPtr,
-                                               int32&     outputBuffUsed,
-                                               int32&     num4BlackOutsInARow,
+                                               kkint32&   outputBuffUsed,
+                                               kkint32&   num4BlackOutsInARow,
                                                ushort     eol
                                               )
 {
@@ -523,10 +523,10 @@ void  ScannerFile3BitEncoded::Write4BlackOuts (OpRecPtr&  outputBuffPtr,
 
 
 void  ScannerFile3BitEncoded::WriteNextScanLine (const uchar*  buffer,
-                                                 uint32        bufferLen
+                                                 kkuint32      bufferLen
                                                 )
 {
-  uint32  x = 0;
+  kkuint32  x = 0;
 
   if  (bufferLen > workLineLen)
   {
@@ -539,9 +539,9 @@ void  ScannerFile3BitEncoded::WriteNextScanLine (const uchar*  buffer,
   for  (x = 0;  x < bufferLen;  ++x)
     workLine[x] = convTable8BitTo3Bit[buffer[x]];
 
-  int32  outputBuffUsed      = 0;
-  int32  num4SpacesInARow    = 0;
-  int32  num4BlackOutsInARow = 0;
+  kkint32  outputBuffUsed      = 0;
+  kkint32  num4SpacesInARow    = 0;
+  kkint32  num4BlackOutsInARow = 0;
   x = 0;
   uchar*  workLinePtr = workLine;
   OpRecPtr  outputBuffPtr = outputBuff; 
@@ -600,10 +600,10 @@ void  ScannerFile3BitEncoded::WriteNextScanLine (const uchar*  buffer,
 
 
 void  ScannerFile3BitEncoded::WriteNextScanLine2 (const uchar*  buffer,
-                                                  uint32        bufferLen
+                                                  kkuint32      bufferLen
                                                  )
 {
-  uint32  x = 0;
+  kkuint32  x = 0;
 
   if  (bufferLen > workLineLen)
   {
@@ -618,9 +618,9 @@ void  ScannerFile3BitEncoded::WriteNextScanLine2 (const uchar*  buffer,
 
   curCompStatus = csNull;
 
-  int32  outputBuffUsed      = 0;
-  int32  num4SpacesInARow    = 0;
-  int32  num4BlackOutsInARow = 0;
+  kkint32  outputBuffUsed      = 0;
+  kkint32  num4SpacesInARow    = 0;
+  kkint32  num4BlackOutsInARow = 0;
   x = 0;
   uchar*  workLinePtr = workLine;
   OpRecPtr  outputBuffPtr = outputBuff; 
@@ -681,14 +681,14 @@ void  ScannerFile3BitEncoded::WriteNextScanLine2 (const uchar*  buffer,
 
 
 void  ScannerFile3BitEncoded::WriteTextBlock (const uchar*  txtBlock,
-                                              uint32        txtBlockLen
+                                              kkuint32      txtBlockLen
                                              )
 {
-  int32  charsLeft = txtBlockLen;
+  kkint32  charsLeft = txtBlockLen;
   const uchar*  txtBlockPtr = txtBlock;
   while  (charsLeft > 0)
   {
-    int32  charsToWrite = Min (4096, charsLeft);
+    kkint32  charsToWrite = Min (4096, charsLeft);
     OpRec  rec;
     rec.textBlock.opCode         = 0;
     rec.textBlock.endOfTextBlock = (charsToWrite < charsLeft) ? 0 : 1;

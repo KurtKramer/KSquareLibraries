@@ -56,9 +56,9 @@ ScannerFileEntry::~ScannerFileEntry ()
 
 
 
-int32  ScannerFileEntry::MemoryConsumedEstimated ()
+kkint32  ScannerFileEntry::MemoryConsumedEstimated ()
 {
-  int32  mem = sizeof (*this) + 
+  kkint32  mem = sizeof (*this) + 
                description.MemoryConsumedEstimated () +
                fullName.MemoryConsumedEstimated ()    +
                rootName.MemoryConsumedEstimated ();
@@ -202,9 +202,9 @@ ScannerFileEntryList::~ScannerFileEntryList ()
 }
 
 
-int32  ScannerFileEntryList::MemoryConsumedEstimated ()
+kkint32  ScannerFileEntryList::MemoryConsumedEstimated ()
 {
-  int32 mem = sizeof (*this);
+  kkint32 mem = sizeof (*this);
 
   for  (idx = begin ();  idx != end ();  ++idx)
   {

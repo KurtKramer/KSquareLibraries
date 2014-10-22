@@ -26,37 +26,37 @@ namespace KKLSC
      *@param[in] _pixelsPerScanLine  Width of the frame.
      */
     ScannerFrame (ScannerClockPtr _clock,
-                  int32           _scanLinesPerFrame,
-                  int32           _pixelsPerScanLine
+                  kkint32         _scanLinesPerFrame,
+                  kkint32         _pixelsPerScanLine
                  );
 
     ~ScannerFrame ();
 
-    int32    FrameNum      () const  {return frameNum;}
+    kkint32  FrameNum      () const  {return frameNum;}
     uchar**  ScanLines     ();                                  /**< Will return scan-lines and increment 'time' by one. */
-    int32    ScanLineFirst () const  {return scanLineFirst;}
-    int32    ScanLineLast  () const  {return scanLineLast;}
-    int32    Time          () const  {return time;}             /**< The higher 'time' the more recently this frame has been accessed. */
+    kkint32  ScanLineFirst () const  {return scanLineFirst;}
+    kkint32  ScanLineLast  () const  {return scanLineLast;}
+    kkint32  Time          () const  {return time;}             /**< The higher 'time' the more recently this frame has been accessed. */
 
 
-    void  FrameNum      (int32   _frameNum)      {frameNum      = _frameNum;}
+    void  FrameNum      (kkint32 _frameNum)      {frameNum      = _frameNum;}
     void  ScanLines     (uchar** _scanLines);
-    void  ScanLineFirst (int32   _scanLineFirst) {scanLineFirst = _scanLineFirst;}
-    void  ScanLineLast  (int32   _scanLineLast)  {scanLineLast  = _scanLineLast;}
-    void  Time          (int32   _time)          {time          = _time;}
+    void  ScanLineFirst (kkint32 _scanLineFirst) {scanLineFirst = _scanLineFirst;}
+    void  ScanLineLast  (kkint32 _scanLineLast)  {scanLineLast  = _scanLineLast;}
+    void  Time          (kkint32 _time)          {time          = _time;}
 
 
   private:
     uchar**  AllocateFrameArray ();
 
     ScannerClockPtr   clock;
-    int32             frameNum;
-    int32             height;
+    kkint32           frameNum;
+    kkint32           height;
     uchar**           scanLines;
-    int32             scanLineFirst;
-    int32             scanLineLast;
-    int32             time;
-    int32             width;
+    kkint32           scanLineFirst;
+    kkint32           scanLineLast;
+    kkint32           time;
+    kkint32           width;
   };  /* ScannerFrame */
 
   typedef  ScannerFrame::ScannerFramePtr  ScannerFramePtr;

@@ -62,7 +62,7 @@ namespace KKB
                       );
 
 
-    int32   ConvexArea ();
+    kkint32 ConvexArea ();
 
     void    Draw (Raster& output);
 
@@ -101,7 +101,7 @@ namespace KKB
 
     void    Merge ();
       
-    int32   RelativeCCW (Point&  sp,
+    kkint32 RelativeCCW (Point&  sp,
                          Point&  ep,
                          Point&  p);
 
@@ -111,7 +111,7 @@ namespace KKB
 		                 Point& c);
 
 
-    int32         convexArea;
+    kkint32       convexArea;
 
     PointListPtr  upperPoints;
     PointListPtr  lowerPoints;

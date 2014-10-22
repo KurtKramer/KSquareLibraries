@@ -60,7 +60,7 @@ namespace  KKB
 
 
     /** @brief returns the number of image files found the sub-directory tree. */
-    uint32  Size ()  {return  (uint32)entries.size ();}
+    kkuint32  Size ()  {return  (kkuint32)entries.size ();}
 
 
     /**
@@ -74,7 +74,7 @@ namespace  KKB
     KKStrListPtr  Directories (const KKStr& fileName)  const;
 
   private:
-    typedef  map<KKStr,int32>          DuplicateTable;
+    typedef  map<KKStr,kkint32>          DuplicateTable;
     typedef  multimap<KKStr,KKStrPtr>  EntryTable;
   
     void    Load (const KKStr&  _subDir);

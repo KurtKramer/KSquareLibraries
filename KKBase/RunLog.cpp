@@ -113,7 +113,7 @@ RunLog::~RunLog ()
 
 
 
-int32  RunLog::MemoryConsumedEstimated ()  const
+kkint32  RunLog::MemoryConsumedEstimated ()  const
 {
   return  sizeof (RunLog) + 
           curLine.MemoryConsumedEstimated   () +
@@ -208,7 +208,7 @@ void  RunLog::GetLoggingLevel ()
 
 
 
-void  RunLog::SetLoggingLevel (int32 _loggingLevel)
+void  RunLog::SetLoggingLevel (kkint32 _loggingLevel)
 {
   curLevel     = 0;
   loggingLevel = _loggingLevel;
@@ -217,7 +217,7 @@ void  RunLog::SetLoggingLevel (int32 _loggingLevel)
 
 
 
-RunLog&  RunLog::Level (int32 _level)
+RunLog&  RunLog::Level (kkint32 _level)
 {
   if  (!lineEmpty)
     Append ("\n");
@@ -334,7 +334,7 @@ RunLog&  RunLog::operator<< (kkuint16 right)
 
 
 
-RunLog&  RunLog::operator<< (int32  right)
+RunLog&  RunLog::operator<< (kkint32  right)
 {
   KKStr  s (30);
   s.AppendInt32 (right);
@@ -344,7 +344,7 @@ RunLog&  RunLog::operator<< (int32  right)
 
 
 
-RunLog&  RunLog::operator<< (uint32  right)
+RunLog&  RunLog::operator<< (kkuint32  right)
 {
   KKStr  s (30);
   s.AppendUInt32 (right);

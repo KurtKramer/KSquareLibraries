@@ -104,7 +104,7 @@ void  HTMLReport::Close ()
 
 
 HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
-                              KKB::int32   right
+                              kkint32      right
                              )
 {
   KKStr  s (30);
@@ -116,7 +116,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
 
 
 HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
-                              KKB::uint32  right
+                              kkuint32     right
                              )
 {
   KKStr  s (30);

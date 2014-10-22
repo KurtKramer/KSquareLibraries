@@ -81,8 +81,8 @@ namespace  KKB
     bool  BackgroundPixel (uchar  pixel)  const;
 
 
-    bool  BackgroundPixel (int32  row,
-                           int32  col
+    bool  BackgroundPixel (kkint32  row,
+                           kkint32  col
                          )  const;  
 
     /**
@@ -90,14 +90,14 @@ namespace  KKB
      *@see  Erosion, Dialation, Closing, Opening, MaskType
      */
     bool  Fit (MaskTypes  mask,
-               int32      row, 
-               int32      col
+               kkint32    row, 
+               kkint32    col
               )  const;
 
     bool  ForegroundPixel (uchar  pixel)  const;
 
-    bool  ForegroundPixel (int32  row,
-                           int32  col
+    bool  ForegroundPixel (kkint32  row,
+                           kkint32  col
                           )  const;
 
     void  SetSrcRaster (RasterConstPtr  _srcRaster);
@@ -116,11 +116,11 @@ namespace  KKB
     uchar* const*    srcBlue;
 
     bool             srcColor;
-    int32            srcHeight;
-    int32            srcWidth;
+    kkint32          srcHeight;
+    kkint32          srcWidth;
 
-    static  int32  biases[];
-    static  int32  maskShapes[];
+    static  kkint32  biases[];
+    static  kkint32  maskShapes[];
 
   private:
   };  /* MorphOp */

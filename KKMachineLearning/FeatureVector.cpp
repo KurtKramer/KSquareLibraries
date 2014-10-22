@@ -33,7 +33,7 @@ using namespace  KKMachineLearning;
 
 
 
-FeatureVector::FeatureVector (int32  _numOfFeatures):
+FeatureVector::FeatureVector (kkint32  _numOfFeatures):
         featureData      (NULL),
         numOfFeatures    (_numOfFeatures),
         breakTie         (0.0f),
@@ -72,7 +72,7 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
   if  (_example.featureData)
   {
     AllocateFeatureDataArray ();
-    for  (int32 x = 0; x < numOfFeatures; x++)
+    for  (kkint32 x = 0; x < numOfFeatures; x++)
       featureData[x] = _example.featureData[x];
   }
 }
@@ -86,9 +86,9 @@ FeatureVector::~FeatureVector ()
 
 
 
-int32   FeatureVector::MemoryConsumedEstimated ()  const
+kkint32 FeatureVector::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (FeatureVector)
+  kkint32  memoryConsumedEstimated = sizeof (FeatureVector)
     +  imageFileName.MemoryConsumedEstimated ();
 
   if  (featureData)
@@ -99,7 +99,7 @@ int32   FeatureVector::MemoryConsumedEstimated ()  const
 
 
 
-void  FeatureVector::ResetNumOfFeatures (int32  newNumOfFeatures)
+void  FeatureVector::ResetNumOfFeatures (kkint32  newNumOfFeatures)
 {
   if  (newNumOfFeatures < 1)  
   {
@@ -111,7 +111,7 @@ void  FeatureVector::ResetNumOfFeatures (int32  newNumOfFeatures)
     exit (-1);
   }
 
-  int32  x;
+  kkint32  x;
   float*  newFeatureData = new float[newNumOfFeatures];
   for  (x = 0;  x < newNumOfFeatures;  x++)
   {
@@ -135,7 +135,7 @@ void  FeatureVector::AllocateFeatureDataArray ()
 
   featureData = new float [numOfFeatures];
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0; x < numOfFeatures; x++)
     featureData[x] = 0;
@@ -144,7 +144,7 @@ void  FeatureVector::AllocateFeatureDataArray ()
 
 
 
-float  FeatureVector::FeatureData (int32 featureNum)  const
+float  FeatureVector::FeatureData (kkint32 featureNum)  const
 {
   if  ((featureNum < 0)  ||  (featureNum >= NumOfFeatures ()))
   {
@@ -160,7 +160,7 @@ float  FeatureVector::FeatureData (int32 featureNum)  const
 
 
 
-void  FeatureVector::FeatureData (int32  _featureNum,
+void  FeatureVector::FeatureData (kkint32  _featureNum,
                                   float  _featureValue
                                  )
 {
@@ -215,7 +215,7 @@ KKStr&   FeatureVector::ClassName ()  const
 
 
 
-void  FeatureVector::AddFeatureData (int32  _featureNum,
+void  FeatureVector::AddFeatureData (kkint32  _featureNum,
                                      float  _featureData
                                     )
 {
@@ -239,7 +239,7 @@ void  FeatureVector::AddFeatureData (int32  _featureNum,
 
 bool  FeatureVector::FeatureDataValid ()
 {
-  int32  featureNum;
+  kkint32  featureNum;
 
   for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
   {
@@ -281,7 +281,7 @@ bool FeatureVector::operator== (FeatureVector &other_image)  const
   if (numOfFeatures != other_image.numOfFeatures)
     return false;
 
-  for (int32 i = 0; i < numOfFeatures; i++)
+  for (kkint32 i = 0; i < numOfFeatures; i++)
   {
     if (featureData[i] != other_image.featureData[i])
     {
@@ -389,9 +389,9 @@ FeatureVectorList::~FeatureVectorList ()
 
 
 
-int32  FeatureVectorList::MemoryConsumedEstimated ()  const
+kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
 {
-  int32  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
+  kkint32  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
   {
@@ -424,7 +424,7 @@ void  FeatureVectorList::RemoveEntriesWithMissingFeatures ()
       entriesToBeDeleted.push_back (example);
   }
 
-  for  (int32 x = 0;  x < (int32)entriesToBeDeleted.size ();  x++)
+  for  (kkint32 x = 0;  x < (kkint32)entriesToBeDeleted.size ();  x++)
   {
     FeatureVectorPtr example = entriesToBeDeleted[x];
     DeleteEntry (example);
@@ -436,7 +436,7 @@ void  FeatureVectorList::RemoveEntriesWithMissingFeatures ()
 
 
 
-void  FeatureVectorList::ValidateFileDescAndFieldNum (int32        fieldNum,
+void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
                                                       const char*  funcName
                                                      )  const
 {
@@ -450,7 +450,7 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (int32        fieldNum,
     throw KKException (msg);
   }
 
-  if  ((fieldNum < 0)  ||  (fieldNum >= (int32)fileDesc->NumOfFields ()))
+  if  ((fieldNum < 0)  ||  (fieldNum >= (kkint32)fileDesc->NumOfFields ()))
   {
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "    *** ERROR ***    FeatureNum[" << fieldNum << "] is out of range.";
@@ -468,7 +468,7 @@ bool   FeatureVectorList::AllFieldsAreNumeric ()  const
 
 
 
-const KKStr&  FeatureVectorList::FieldName (int32 featureNum) const
+const KKStr&  FeatureVectorList::FieldName (kkint32 featureNum) const
 {
   ValidateFileDescAndFieldNum (featureNum, "FieldName");
   return  fileDesc->FieldName (featureNum);
@@ -477,7 +477,7 @@ const KKStr&  FeatureVectorList::FieldName (int32 featureNum) const
 
 
 
-AttributeType  FeatureVectorList::FeatureType (int32 featureNum) const
+AttributeType  FeatureVectorList::FeatureType (kkint32 featureNum) const
 {
   ValidateFileDescAndFieldNum (featureNum, "FeatureType");
   return  fileDesc->Type (featureNum);
@@ -486,7 +486,7 @@ AttributeType  FeatureVectorList::FeatureType (int32 featureNum) const
 
 
 
-KKStr  FeatureVectorList::FeatureTypeStr (int32 featureNum) const
+KKStr  FeatureVectorList::FeatureTypeStr (kkint32 featureNum) const
 {
   ValidateFileDescAndFieldNum (featureNum, "FeatureTypeStr");
   return  AttributeTypeToStr (fileDesc->Type (featureNum));
@@ -494,7 +494,7 @@ KKStr  FeatureVectorList::FeatureTypeStr (int32 featureNum) const
 
 
 
-int32   FeatureVectorList::FeatureCardinality (int32 featureNum)  const
+kkint32 FeatureVectorList::FeatureCardinality (kkint32 featureNum)  const
 {
   ValidateFileDescAndFieldNum (featureNum, "FeatureCardinality");
   return  fileDesc->Cardinality (featureNum, log);
@@ -512,7 +512,7 @@ AttributeTypeVector  FeatureVectorList::CreateAttributeTypeTable ()  const
 
 
 
-vector<int32>  FeatureVectorList::CreateCardinalityTable ()  const
+vector<kkint32>  FeatureVectorList::CreateCardinalityTable ()  const
 {
   ValidateFileDescAndFieldNum (0, "CreateCardinalityTable");
   return  fileDesc->CreateCardinalityTable ();
@@ -529,7 +529,7 @@ FeatureNumList  FeatureVectorList::AllFeatures ()
 
 
 
-void  FeatureVectorList::ResetNumOfFeaturs (int32 newNumOfFeatures)
+void  FeatureVectorList::ResetNumOfFeaturs (kkint32 newNumOfFeatures)
 {
   numOfFeatures = newNumOfFeatures;
 
@@ -689,9 +689,9 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
 
 
 
-int32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
+kkint32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
 {
-  int32  count =0;
+  kkint32  count =0;
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
   {
@@ -705,7 +705,7 @@ int32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (uint32 level)
+FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkuint32 level)
 {
   FeatureVectorListPtr  examples = new FeatureVectorList (fileDesc, true, log);
   FeatureVectorList::const_iterator  idx;
@@ -726,14 +726,14 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (uint
 
 
 FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                                       int32          _maxToExtract,
+                                                                       kkint32        _maxToExtract,
                                                                        float          _minSize
                                                                       )  const
 {
-  int32              idx;
-  int32              qSize = QueueSize ();
+  kkint32            idx;
+  kkint32            qSize = QueueSize ();
   FeatureVectorPtr   example;
-  int32              numExtracted = 0;
+  kkint32            numExtracted = 0;
 
   if  (_maxToExtract < 1)
     _maxToExtract = QueueSize ();
@@ -827,9 +827,9 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
     exit (-1);
   }
 
-  int32  low  = 0;
-  int32  high = QueueSize () - 1;
-  int32  mid;
+  kkint32  low  = 0;
+  kkint32  high = QueueSize () - 1;
+  kkint32  mid;
 
   FeatureVectorPtr  example = NULL;
 
@@ -884,9 +884,9 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
   }
   else
   {
-    int32  low  = 0;
-    int32  high = QueueSize () - 1;
-    int32  mid;
+    kkint32  low  = 0;
+    kkint32  high = QueueSize () - 1;
+    kkint32  mid;
 
     while  (low <= high)
     {
@@ -930,8 +930,8 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
 
   else
   {
-    int32              idx;
-    int32              qSize = QueueSize ();
+    kkint32            idx;
+    kkint32            qSize = QueueSize ();
     FeatureVectorPtr   example = NULL;
     FeatureVectorPtr   tempImage;
 
@@ -1055,7 +1055,7 @@ FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
   FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true, log);
 
-  for  (int32 idx = 0;  idx < QueueSize ();  idx++)
+  for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     FeatureVectorPtr  curImage = IdxToPtr (idx);
     copyiedList->AddSingleExample (new FeatureVector (*curImage));
@@ -1194,8 +1194,8 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 
 
 
-void  SplitImagesAmongstFolds (int32                  numOfFolds,
-                               int32                  maxImagesPerClass,
+void  SplitImagesAmongstFolds (kkint32                numOfFolds,
+                               kkint32                maxImagesPerClass,
                                FeatureVectorListPtr*  folds,
                                FeatureVectorListPtr   src
                               )
@@ -1203,11 +1203,11 @@ void  SplitImagesAmongstFolds (int32                  numOfFolds,
   src->RandomizeOrder ();
   src->RandomizeOrder ();
 
-  int32  imagesInThisList = src->QueueSize ();
+  kkint32  imagesInThisList = src->QueueSize ();
   if  (maxImagesPerClass > 0)
     imagesInThisList = Min (imagesInThisList, maxImagesPerClass);
 
-  int32  x;
+  kkint32  x;
 
   for  (x = 0; x < imagesInThisList; x++)
   {
@@ -1218,8 +1218,8 @@ void  SplitImagesAmongstFolds (int32                  numOfFolds,
 
 
 
-void  FeatureVectorList::CalcStatsForFeatureNum (int32   _featureNum,
-                                                 int32&  _count,
+void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
+                                                 kkint32&  _count,
                                                  float&  _total,
                                                  float&  _mean,
                                                  float&  _var,
@@ -1280,7 +1280,7 @@ void  FeatureVectorList::CalcStatsForFeatureNum (int32   _featureNum,
 
 
 
-FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (int32  numOfFolds)
+FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds)
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
@@ -1295,14 +1295,14 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (int32  numOfFo
 
 
 FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                  int32              maxImagesPerClass,
-                                                                  int32              numOfFolds
+                                                                  kkint32            maxImagesPerClass,
+                                                                  kkint32            numOfFolds
                                                                  )
 {
   log.Level (10) << "FeatureVectorList::StratifyAmoungstClasses" << endl;
 
-  int32  foldNum;
-  int32  x;
+  kkint32  foldNum;
+  kkint32  x;
 
   FeatureVectorListPtr*  folds = new FeatureVectorListPtr[numOfFolds];
   for  (x = 0; x < numOfFolds; x++)
@@ -1371,7 +1371,7 @@ float    FeatureVectorList::MajorityClassFraction ()  const
 
 
   ClassStatisticPtr  largestClassStat = NULL;
-  uint32 largestClassSize = 0;
+  kkuint32 largestClassSize = 0;
 
   ClassStatisticList::const_iterator  idx;
   for  (idx = classStats->begin ();  idx != classStats->end ();  idx++)
@@ -1404,7 +1404,7 @@ void  FeatureVectorList::PrintClassStatistics (ostream&  o)  const
   o << endl;
 
   ClassStatisticList::iterator  statsIDX = stats->begin ();
-  int32  index = 0;
+  kkint32  index = 0;
 
   o << "Class_Name" << "\t" << "Index" << "\t" << "Count" << endl;
   for  (statsIDX = stats->begin (); statsIDX != stats->end ();  ++statsIDX)
@@ -1437,7 +1437,7 @@ void  FeatureVectorList::PrintClassStatisticsHTML (ostream&  o)  const
   o << "<tbody>" << endl;
 
   ClassStatisticList::iterator  statsIDX;
-  int32  index = 0;
+  kkint32  index = 0;
   for  (statsIDX = stats->begin (); statsIDX != stats->end ();  statsIDX++)
   {
     ClassStatistic& statistic = **statsIDX;
@@ -1485,17 +1485,17 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
 
   MLClassList::const_iterator cIDX;
 
-  int32  classIdx = 0;
+  kkint32  classIdx = 0;
 
   for  (cIDX = mlClasses->begin ();  cIDX != mlClasses->end ();  cIDX++)
   {
     MLClassPtr  mlClass = *cIDX;
     FeatureVectorListPtr  imagesThisClass = ExtractImagesForAGivenClass (mlClass);
       
-    int32  featureNum;
+    kkint32  featureNum;
     for  (featureNum = 0;  featureNum < imagesThisClass->NumOfFeatures ();  featureNum++)
     {
-      int32    count;
+      kkint32  count;
       float  total, mean, var, stdDev;
       imagesThisClass->CalcStatsForFeatureNum (featureNum, count, total, mean, var, stdDev);
       o << mlClass->Name ()          << "\t"
@@ -1523,7 +1523,7 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
 
 VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 {
-  int32  fn = 0;
+  kkint32  fn = 0;
   FeatureVectorList::const_iterator  idx;
   VectorDouble  totals (this->NumOfFeatures (), 0.0);
   VectorDouble  means (this->NumOfFeatures (), 0.0);
@@ -1547,7 +1547,7 @@ VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 
 
 FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percentage,   // 0.0 -> 100.0
-                                                                 int32  minClassCount
+                                                                 kkint32  minClassCount
                                                                 )
 {
 
@@ -1568,7 +1568,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percenta
     percentage = 1.0f;
   }
 
-  int32  newSize = (int32)(0.5f + (float)QueueSize () * percentage / 100.0f);
+  kkint32  newSize = (kkint32)(0.5f + (float)QueueSize () * percentage / 100.0f);
   FeatureVectorListPtr  randomSampled = new FeatureVectorList (fileDesc, false, log);
 
   MLClassListPtr  classes = ExtractListOfClasses ();
@@ -1580,10 +1580,10 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percenta
     FeatureVectorListPtr  examplesThisClass = ExtractImagesForAGivenClass (ic);
     examplesThisClass->RandomizeOrder ();
 
-    int32  numExamplesThisClass = Max (minClassCount, ((int32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
+    kkint32  numExamplesThisClass = Max (minClassCount, ((kkint32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
     if  (numExamplesThisClass > examplesThisClass->QueueSize ())
       numExamplesThisClass = examplesThisClass->QueueSize ();
-    for  (int32 zed = 0;  zed < numExamplesThisClass;  zed++)
+    for  (kkint32 zed = 0;  zed < numExamplesThisClass;  zed++)
       randomSampled->PushOnBack (examplesThisClass->IdxToPtr (zed));
     delete  examplesThisClass;  examplesThisClass = NULL;
   }
@@ -1620,23 +1620,23 @@ bool  FeatureVectorList::MissingData () const  // Returns true if 1 or more entr
 void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
 {
-  int32  fieldNum;
+  kkint32  fieldNum;
 
   VectorInt  symbolicFields;
   vector<VectorInt>  lookUpTables;
 
-  for  (fieldNum = 0;  fieldNum < (int32)newFileDesc->NumOfFields ();  fieldNum++)
+  for  (fieldNum = 0;  fieldNum < (kkint32)newFileDesc->NumOfFields ();  fieldNum++)
   {
     if  (newFileDesc->Type (fieldNum) == SymbolicAttribute)
     {
       symbolicFields.push_back (fieldNum);
       VectorInt  lookUpTable;
 
-      int32  x;
+      kkint32  x;
       for  (x = 0;  x < fileDesc->Cardinality (fieldNum, log);  x++)
       {
         const KKStr&  nominalValue = fileDesc->GetNominalValue (fieldNum, x);
-        int32  newCd = newFileDesc->LookUpNominalCode (fieldNum, nominalValue);
+        kkint32  newCd = newFileDesc->LookUpNominalCode (fieldNum, nominalValue);
         if  (newCd < 0)
         {
           log.Level (-1) << endl << endl << endl
@@ -1662,13 +1662,13 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
   {
     FeatureVectorPtr i = *idx;
 
-    uint32  x;
+    kkuint32  x;
 
     for  (x = 0;  x < symbolicFields.size ();  x++)
     {
       fieldNum = symbolicFields[x];
-      int32  oldCode = int32 (0.5f + i->FeatureData (fieldNum));
-      int32  newCode = lookUpTables[x][oldCode];
+      kkint32  oldCode = kkint32 (0.5f + i->FeatureData (fieldNum));
+      kkint32  newCode = lookUpTables[x][oldCode];
       i->AddFeatureData (fieldNum, float (newCode));
     }
   }
@@ -1701,10 +1701,10 @@ void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList& otherData)
 
 
 KKStr  GetClassNameByHierarchyLevel (KKStr  className, 
-                                     int32  level
+                                     kkint32  level
                                     )
 {
-  int32  curLevel = 0;
+  kkint32  curLevel = 0;
   KKStr  fullLevelName = "";
   KKStr  nextLevelName = className.ExtractToken ("_");
   while  ((curLevel < level)  &&  (!nextLevelName.Empty ()))
@@ -1720,7 +1720,7 @@ KKStr  GetClassNameByHierarchyLevel (KKStr  className,
 }  /* GetClassNameByHierarchyLevel */
 
 
-FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (int32  level)
+FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  level)
 {
   FeatureVectorListPtr  examplesLabeledForAppropriateLevel = new FeatureVectorList (fileDesc, true, log);
 

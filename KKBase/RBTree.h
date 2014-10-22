@@ -123,9 +123,6 @@ namespace  KKB
       typedef  RBnode<Entry>   Node;
       typedef  Node*           NodePtr;
 
-      typedef  KKB::int32      int32;
-      typedef  KKB::uint32     uint32;
-
       typedef  RBTree<Entry,CompareNodes,KeyType>  Tree;
 
       typedef  Tree*  TreePtr;
@@ -140,7 +137,7 @@ namespace  KKB
 
       ~RBTree ();
 
-      uint32  Size ()  {return  size;}
+      kkuint32  Size ()  {return  size;}
 
       void      WalkTree ()  {WalkTree (root);}
 
@@ -180,12 +177,12 @@ namespace  KKB
 
   private:
       void     CheckNodeStats (NodePtr  n,
-                               int32&   numOfNodes,
-                               int32&   numOfLeafs,
-                               int32*   leafPaths,
-                               int32&   shortestPath,
-                               int32&   longestPath,
-                               int32    curDeapth
+                               kkint32& numOfNodes,
+                               kkint32& numOfLeafs,
+                               kkint32*   leafPaths,
+                               kkint32& shortestPath,
+                               kkint32& longestPath,
+                               kkint32  curDeapth
                               );
 
       NodePtr  CloneSubTree (NodePtr  s,
@@ -199,7 +196,7 @@ namespace  KKB
                                    NodePtr  n2NIL
                                   );
 
-      int32      CountNodesInSubTree (NodePtr  subTree);
+      kkint32    CountNodesInSubTree (NodePtr  subTree);
 
       NodePtr  Delete (NodePtr  node2Delete);
 
@@ -249,11 +246,11 @@ namespace  KKB
 
       NodePtr  Successor (NodePtr  n);
 
-      int32    ValidateSubTree (NodePtr      subTree,
+      kkint32  ValidateSubTree (NodePtr      subTree,
                                 NodePtr      theParent,
                                 const char*  linkDescription,
-                                int32        blackNodeCount,
-                                int32&       blackNodeHeight
+                                kkint32      blackNodeCount,
+                                kkint32&     blackNodeHeight
                                );
 
       void     WalkTree (NodePtr  n);
@@ -268,14 +265,16 @@ namespace  KKB
 
       Node*          root;
 
-      uint32         size;
+      kkuint32       size;
 
 
-      int32          numOfIterators;
+      kkint32        numOfIterators;
       IteratorPtr*   iterators;
   };  /* RBTree */
 }  /* KKB */
 
+
+using namespace  KKB;
 
 
 template <class Entry>
@@ -330,7 +329,7 @@ KKB::RBTree<Entry,CompareNodes,KeyType>::RBTree (RBTree&  tree):
   nil = new RBnode<Entry> (NULL, NULL, NULL, Black, NULL);
   root = CloneSubTree (tree.root, tree.nil, nil);
  
-  int32  x = CountNodesInSubTree (root);
+  kkint32  x = CountNodesInSubTree (root);
 
   curNode = nil;
 }
@@ -374,7 +373,7 @@ KKB::RBTree<Entry,CompareNodes,KeyType>::~RBTree ()
     DeleteSubTree (root);
 
 
-  for  (int32 i = 0;  i < numOfIterators;  i++)
+  for  (kkint32 i = 0;  i < numOfIterators;  i++)
   {
      iterators[i]->TreeHasBeenDeleted ();
   }
@@ -804,7 +803,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Insert (EntryPtr  
     NodePtr  next = root;
     NodePtr  last = root;
 
-    int32  lastBranch = 0;
+    kkint32  lastBranch = 0;
     
     while (next != nil)
     {
@@ -1393,18 +1392,18 @@ void   KKB::RBTree<Entry,CompareNodes,KeyType>::DeleteEntry (Entry*  e)
 template <class Entry,class CompareNodes,typename KeyType>
 void  KKB::RBTree<Entry,CompareNodes,KeyType>::CalcTreeStats ()
 {
-  int32  numOfLeafs = 0;
-  int32  numOfNodes = 0;
-  int32* leafPaths  = new int32[size];
+  kkint32  numOfLeafs = 0;
+  kkint32  numOfNodes = 0;
+  kkint32* leafPaths  = new kkint32[size];
 
-  int32  shortestPath = INT_MAX;
-  int32  longestPath  = INT_MIN;
+  kkint32  shortestPath = INT_MAX;
+  kkint32  longestPath  = INT_MIN;
 
   CheckNodeStats (root, numOfNodes, numOfLeafs, leafPaths, shortestPath, longestPath, 0);
 
-  int32  totalLen = 0;
+  kkint32  totalLen = 0;
 
-  for  (int32 x = 0; x < numOfLeafs; x++)
+  for  (kkint32 x = 0; x < numOfLeafs; x++)
     totalLen += leafPaths[x];
 
   double  avgLen = (double)totalLen / (double)numOfLeafs;
@@ -1422,12 +1421,12 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::CalcTreeStats ()
 
 template <class Entry,class CompareNodes,typename KeyType>
 void  KKB::RBTree<Entry,CompareNodes,KeyType>::CheckNodeStats (NodePtr  n,
-                                                               int32&   numOfNodes,
-                                                               int32&   numOfLeafs,
-                                                               int32*   leafPaths,
-                                                               int32&   shortestPath,
-                                                               int32&   longestPath,
-                                                               int32    curDeapth
+                                                               kkint32& numOfNodes,
+                                                               kkint32& numOfLeafs,
+                                                               kkint32*   leafPaths,
+                                                               kkint32& shortestPath,
+                                                               kkint32& longestPath,
+                                                               kkint32  curDeapth
                                                               )
 
 {
@@ -1483,9 +1482,9 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::CheckNodeStats (NodePtr  n,
 template <class Entry,class CompareNodes,typename KeyType>
 bool  KKB::RBTree<Entry,CompareNodes,KeyType>::Validate ()
 {
-  int32  blackNodeHeight = -1;
+  kkint32  blackNodeHeight = -1;
 
-  int32  numOfNodes = ValidateSubTree (root, nil, "Root", 0, blackNodeHeight);
+  kkint32  numOfNodes = ValidateSubTree (root, nil, "Root", 0, blackNodeHeight);
 
   if  (numOfNodes != size)
   {
@@ -1499,14 +1498,14 @@ bool  KKB::RBTree<Entry,CompareNodes,KeyType>::Validate ()
 
 
 template <class Entry,class CompareNodes,typename KeyType>
-KKB::int32  KKB::RBTree<Entry,CompareNodes,KeyType>::ValidateSubTree (NodePtr      subTree,
-                                                                      NodePtr      theParent,
-                                                                      const char*  linkDescription,
-                                                                      KKB::int32   blackNodeCount,
-                                                                      KKB::int32&  blackNodeHeight
-                                                                     )
+kkint32  KKB::RBTree<Entry,CompareNodes,KeyType>::ValidateSubTree (NodePtr      subTree,
+                                                                   NodePtr      theParent,
+                                                                   const char*  linkDescription,
+                                                                   kkint32      blackNodeCount,
+                                                                   kkint32&     blackNodeHeight
+                                                                  )
 {
-  int32  numOfNodes = 0;
+  kkint32  numOfNodes = 0;
 
 
   if  (subTree->Color () == Black)
@@ -1565,7 +1564,7 @@ KKB::int32  KKB::RBTree<Entry,CompareNodes,KeyType>::ValidateSubTree (NodePtr   
 
 
 template <class Entry,class CompareNodes,typename KeyType>
-KKB::int32  KKB::RBTree<Entry,CompareNodes,KeyType>::CountNodesInSubTree (NodePtr  subTree)
+kkint32  KKB::RBTree<Entry,CompareNodes,KeyType>::CountNodesInSubTree (NodePtr  subTree)
 {
   if  (subTree == nil)
     return 0;
@@ -1597,8 +1596,8 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::IteratorDelete (IteratorPtr  dele
   numOfIterators--;
   IteratorPtr*  newIterators = new IteratorPtr[numOfIterators];
 
-  int32  j = 0;
-  for  (int32 i = 0;  i <= numOfIterators;  i++)
+  kkint32  j = 0;
+  for  (kkint32 i = 0;  i <= numOfIterators;  i++)
   {
     if  (iterators[i] != deletedIterator)
     {
@@ -1620,7 +1619,7 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::IteratorAdd  (IteratorPtr  newIte
 {
   IteratorPtr*  newIterators = new IteratorPtr[numOfIterators + 1];
 
-  for (int32  i = 0;  i < numOfIterators; i++)
+  for (kkint32  i = 0;  i < numOfIterators; i++)
   {
     newIterators[i] = iterators[i];
   }

@@ -44,8 +44,8 @@ namespace  KKLSC
     static  KKStr  SubstituteInEvironmentVariables (const KKStr&  src);
 
   private:
-    static  int32  LocateEnvStrStart (const KKStr&  str);
-    static  KKStr  homeDir;
+    static  kkint32  LocateEnvStrStart (const KKStr&  str);
+    static  KKStr    homeDir;
 
   };  /* Variables */
 }

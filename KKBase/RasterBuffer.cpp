@@ -37,7 +37,7 @@ using  namespace  KKB;
 
 
 RasterBuffer::RasterBuffer (const KKStr&  _name,
-                            KKB::int32    _maxNumOfBuffers
+                            kkint32       _maxNumOfBuffers
                            ):
   
     buffer               (),
@@ -90,15 +90,15 @@ void  RasterBuffer::ThrowOutOldestOccupiedBuffer ()
 
 
 
-int32  RasterBuffer::NumAvailable () const 
+kkint32  RasterBuffer::NumAvailable () const 
 {
-  return  maxNumOfBuffers - (int32)buffer.size ();
+  return  maxNumOfBuffers - (kkint32)buffer.size ();
 }
 
 
-int32  RasterBuffer::NumPopulated () const
+kkint32  RasterBuffer::NumPopulated () const
 {
-  return  (int32)buffer.size ();
+  return  (kkint32)buffer.size ();
 }
 
 
@@ -114,7 +114,7 @@ void  RasterBuffer::AddRaster (RasterPtr  raster)
 
   gateKeeper->StartBlock ();
 
-  while  (buffer.size () >= (uint32)maxNumOfBuffers)
+  while  (buffer.size () >= (kkuint32)maxNumOfBuffers)
     ThrowOutOldestOccupiedBuffer ();
 
   buffer.push (raster);
@@ -144,9 +144,9 @@ RasterPtr  RasterBuffer::GetNextRaster ()
 
 
 
-int32  RasterBuffer::MemoryConsumedEstimated ()
+kkint32  RasterBuffer::MemoryConsumedEstimated ()
 {
-  int32  result = 0;
+  kkint32  result = 0;
   gateKeeper->StartBlock ();
   result = memoryConsumed;
   gateKeeper->EndBlock ();

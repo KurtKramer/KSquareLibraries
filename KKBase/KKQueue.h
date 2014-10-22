@@ -77,11 +77,6 @@ namespace  KKB
     typedef  Entry* EntryPtr;
    //typedef  typename   Entry*  EntryPtr;
 
-  public:
-    typedef  KKB::int32   int32;
-    typedef  KKB::uint32  uint32;
-
-
   private:
       bool       owner;       /**< if True the KKQueue structure owns the objects and is responsible for
                                *   deleting them when the KKQueue structure is deleted.
@@ -142,13 +137,13 @@ namespace  KKB
       void      Compress       ();                              /**< @brief  No longer does anything. */
       void      DeleteContents ();                              /**< @brief  Empties the container,  if 'owner' is set to true will call the destructor on each element.                     */
       void      DeleteEntry    (EntryPtr _entry);               /**< @brief  Removes from KKQueue the entry who's pointer = '_entry'                                                           */
-      void      DeleteEntry    (uint32   _idx);                 /**< @brief  Removes from KKQueue the entry who's index = '_idx'.                                                              */
+      void      DeleteEntry    (kkuint32 _idx);                 /**< @brief  Removes from KKQueue the entry who's index = '_idx'.                                                              */
       EntryPtr  FrontOfQueue   ()                       const;  /**< @brief  Returns a pointer to the element that is at from of the queue with out removing it from the queue.                */
-      uint32    GrowthRate     ()                       const;
-      void      GrowthRate     (uint32   _growthRate);
-      EntryPtr  IdxToPtr       (uint32   idx)           const;  /**< @brief  Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or >= QueueSize()  will return NULL.               */
+      kkuint32  GrowthRate     ()                       const;
+      void      GrowthRate     (kkuint32 _growthRate);
+      EntryPtr  IdxToPtr       (kkuint32 idx)           const;  /**< @brief  Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or >= QueueSize()  will return NULL.               */
 
-      int32     LocateEntry    (EntryPtr _entry)        const;  /**< @brief  Returns the index of the element who's address is '_entry'. If not found in container will return back -1.                             */
+      kkint32   LocateEntry    (EntryPtr _entry)        const;  /**< @brief  Returns the index of the element who's address is '_entry'. If not found in container will return back -1.                             */
       EntryPtr  LookAtBack     ()                       const;  /**< @brief  Returns pointer to element at Back of container with out removing it from the container.  If container is empty will return back NULL  */ 
       EntryPtr  LookAtFront    ()                       const;  /**< @brief  Returns pointer to element at Front of container with out removing it from the container.  If container is empty will return back NULL */ 
       bool      Owner          ()                       const;
@@ -157,19 +152,19 @@ namespace  KKB
       void      PushOnBack     (EntryPtr _entry);               /**< @brief  Adds '_entry' to the End of the container.                                                        */
       EntryPtr  PopFromFront   ();                              /**< @brief  Removes the first element in the container and returns its pointer.  If the container is empty will return NULL.  */
       EntryPtr  PopFromBack    ();                              /**< @brief  Removes the last element in the container and returns its pointer. If the container is empty will return NULL.    */
-      int32     PtrToIdx       (EntryPtr _entry)        const;  /**< @brief  returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
+      kkint32   PtrToIdx       (EntryPtr _entry)        const;  /**< @brief  returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
       void      RandomizeOrder ();
       void      RandomizeOrder (kkint64   seed);
-      int32     QueueSize      ()                       const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
+      kkint32   QueueSize      ()                       const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
       //void      Sort           (QueueComparison<Entry>*  comparison);
 
-      void      SetIdxToPtr    (uint32  _idx,
+      void      SetIdxToPtr    (kkuint32  _idx,
                                 Entry*  _ptr
                                );
 
       void      SwapIndexes    (size_t idx1,  size_t idx2);
 
-      Entry&    operator[] (uint32 i)      const;                 /**< @brief  Returns a reference to element indexed by 'i'  */
+      Entry&    operator[] (kkuint32 i)      const;                 /**< @brief  Returns a reference to element indexed by 'i'  */
 
 
       /** 
@@ -288,9 +283,9 @@ namespace  KKB
 
 
   template <class Entry>
-  int32  KKQueue<Entry>::QueueSize ()  const    
+  kkint32  KKQueue<Entry>::QueueSize ()  const    
   {
-    return  (int32)this->size ();
+    return  (kkint32)this->size ();
   }
 
 
@@ -418,7 +413,7 @@ namespace  KKB
     if  (QueueSize () != rightSide.QueueSize ())
       return false;
 
-    for (int32 x = 0;  x < QueueSize ();  x++)
+    for (kkint32 x = 0;  x < QueueSize ();  x++)
     {
       Entry*  left  = IdxToPtr (x);
       Entry*  right = rightSide.IdxToPtr (x);
@@ -444,8 +439,8 @@ namespace  KKB
   template <class Entry>
   void  KKQueue<Entry>::RandomizeOrder ()
   {
-    int32  i, j;
-    uint32  numEntries = KKQueue<Entry>::size ();
+    kkint32  i, j;
+    kkuint32  numEntries = KKQueue<Entry>::size ();
     if  (numEntries < 2)
       return;
 
@@ -587,11 +582,11 @@ namespace  KKB
 
 
   template <class Entry>
-  void   KKQueue<Entry>::SetIdxToPtr (uint32  _idx,
+  void   KKQueue<Entry>::SetIdxToPtr (kkuint32  _idx,
                                       Entry*  _ptr
                                      )
   {
-    if  ((uint32)_idx >=  KKQueue<Entry>::size ())
+    if  ((kkuint32)_idx >=  KKQueue<Entry>::size ())
       return;
     
     std::vector<Entry*>::operator[] (_idx) = _ptr;
@@ -602,14 +597,14 @@ namespace  KKB
 
 
   template <class Entry>
-  void   KKQueue<Entry>::DeleteEntry (uint32 _idx)
+  void   KKQueue<Entry>::DeleteEntry (kkuint32 _idx)
   {
-    if  ((uint32)_idx >=  KKQueue<Entry>::size ())
+    if  ((kkuint32)_idx >=  KKQueue<Entry>::size ())
       return;
 
     iterator  i =  KKQueue<Entry>::begin ();
 
-    for (uint32 j = 0;  ((j < _idx)  &&  (i !=  KKQueue<Entry>::end ()));  j++)
+    for (kkuint32 j = 0;  ((j < _idx)  &&  (i !=  KKQueue<Entry>::end ()));  j++)
       i++;
 
     EntryPtr  ep = *i;
@@ -619,7 +614,7 @@ namespace  KKB
 
 
   template <class Entry>
-  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (uint32 idx)  const
+  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::IdxToPtr (kkuint32 idx)  const
   {
     if  (idx >= KKQueue<Entry>::size ())
       return NULL;
@@ -632,9 +627,9 @@ namespace  KKB
 
 
   template <class Entry>
-  int32 KKQueue<Entry>::LocateEntry (EntryPtr _entry)  const
+  kkint32 KKQueue<Entry>::LocateEntry (EntryPtr _entry)  const
   {
-    int32  i = 0; 
+    kkint32  i = 0; 
 
     for  (const_iterator j = KKQueue<Entry>::begin ();  j != KKQueue<Entry>::end (); j++)
     {
@@ -648,7 +643,7 @@ namespace  KKB
 
 
   template <class Entry>
-  int32  KKQueue<Entry>::PtrToIdx (EntryPtr _entry)  const
+  kkint32  KKQueue<Entry>::PtrToIdx (EntryPtr _entry)  const
   {
     return  LocateEntry (_entry);
   }
@@ -665,10 +660,10 @@ namespace  KKB
       std::cerr << std::endl;
 
       std::cerr << "  ***  ERROR  ***  (KKQueue::SwapIndexes)  Indexes[" 
-                << (int32)idx1 << ", " << (int32)idx2 << "] Out of Range."
+                << (kkint32)idx1 << ", " << (kkint32)idx2 << "] Out of Range."
                 << std::endl;
 
-      std::cerr << "                   KKQueue Size[" << (int32)KKQueue<Entry>::size () << "]." 
+      std::cerr << "                   KKQueue Size[" << (kkint32)KKQueue<Entry>::size () << "]." 
                 << std::endl
                 << std::endl;
 
@@ -689,7 +684,7 @@ namespace  KKB
 
 
   template <class Entry>
-  Entry&   KKQueue<Entry>::operator[] (uint32 idx)  const
+  Entry&   KKQueue<Entry>::operator[] (kkuint32 idx)  const
   {
     //KKQueue<Entry>::Entry*  entry;
 

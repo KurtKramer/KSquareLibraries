@@ -36,28 +36,28 @@ public:
   }
 
 
-  void  UpdateForSourceCellIdx (uint32  cellIdx,
+  void  UpdateForSourceCellIdx (kkuint32  cellIdx,
                                 float   factor
                                )
   {
     float  cellStart = (float)cellIdx * factor;
     float  cellEnd   = (float)(cellIdx + 1) * factor;
 
-    uint32 cellStartIdx = (uint32)floor (cellStart);
-    uint32 cellEndIdx   = (uint32)floor (cellEnd);
+    kkuint32 cellStartIdx = (kkuint32)floor (cellStart);
+    kkuint32 cellEndIdx   = (kkuint32)floor (cellEnd);
     destCellCount = cellEndIdx - cellStartIdx;
     if  (cellEnd > floor(cellEnd))
       ++destCellCount;
     
     delete  destCellIdxs;
-    destCellIdxs = new uint32[destCellCount];
+    destCellIdxs = new kkuint32[destCellCount];
 
     delete  destCellFracts;
     destCellFracts = new float[destCellCount];
 
     float cellValue     = cellStart;
     float nextCellValue = cellStart;
-    for  (uint32  idx = 0;  idx < destCellCount;  ++idx)
+    for  (kkuint32  idx = 0;  idx < destCellCount;  ++idx)
     {
       if  (cellValue < ceil (cellValue))
         nextCellValue = Min (cellEnd, ceilf (cellValue));
@@ -72,7 +72,7 @@ public:
   }
 
   kkuint16  destCellCount;
-  uint32*   destCellIdxs;
+  kkuint32*   destCellIdxs;
   float*    destCellFracts; 
 };  /* UpdateForSourceCellIdx */
 
@@ -101,11 +101,11 @@ MorphOpStretcher::~MorphOpStretcher ()
 
 
 
-int32  MorphOpStretcher::MemoryConsumedEstimated ()
+kkint32  MorphOpStretcher::MemoryConsumedEstimated ()
 {
-  int32  result = sizeof (*this) +
-         (int32)(rowFactorsCount * sizeof (CellFactor) * rowFactor) + 
-         (int32)(colFactorsCount * sizeof (CellFactor) * colFactor);
+  kkint32  result = sizeof (*this) +
+         (kkint32)(rowFactorsCount * sizeof (CellFactor) * rowFactor) + 
+         (kkint32)(colFactorsCount * sizeof (CellFactor) * colFactor);
   return  result;
 }
 
@@ -115,8 +115,8 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 {
   this->SetSrcRaster (_image);
 
-  uint32  destHeight = (uint32)ceil (0.5f + (float)srcHeight * rowFactor);
-  uint32  destWidth  = (uint32)ceil (0.5f + (float)srcWidth  * colFactor);
+  kkuint32  destHeight = (kkuint32)ceil (0.5f + (float)srcHeight * rowFactor);
+  kkuint32  destWidth  = (kkuint32)ceil (0.5f + (float)srcWidth  * colFactor);
 
   bool  color = _image->Color ();
 
@@ -132,7 +132,7 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
   uchar**  destGreen = result->Green ();
   uchar**  destBlue  = result->Blue  ();
 
-  for  (int32  srcRow = 0;  srcRow < srcHeight;  ++srcRow)
+  for  (kkint32  srcRow = 0;  srcRow < srcHeight;  ++srcRow)
   {
     uchar*  srcRedRow   = NULL;
     uchar*  srcGreenRow = srcGreen[srcRow];
@@ -145,12 +145,12 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 
     CellFactor&  rowFactor = rowFactors[srcRow];
 
-    for  (uint32  rowFactorIdx = 0;  rowFactorIdx < rowFactor.destCellCount;  ++rowFactorIdx)
+    for  (kkuint32  rowFactorIdx = 0;  rowFactorIdx < rowFactor.destCellCount;  ++rowFactorIdx)
     {
-      uint32  destRow      = rowFactor.destCellIdxs  [rowFactorIdx];
+      kkuint32  destRow      = rowFactor.destCellIdxs  [rowFactorIdx];
       float   destRowFract = rowFactor.destCellFracts[rowFactorIdx];
 
-      for  (int32 srcCol = 0;  srcCol < srcWidth;  ++srcCol)
+      for  (kkint32 srcCol = 0;  srcCol < srcWidth;  ++srcCol)
       {
         uchar  srcPixelRed   = 0;
         uchar  srcPixelGreen = srcGreenRow[srcCol];
@@ -163,9 +163,9 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 
         CellFactor&  colFactor = colFactors[srcCol];
 
-        for  (uint32  colFactorIdx = 0;  colFactorIdx < colFactor.destCellCount;  ++colFactorIdx)
+        for  (kkuint32  colFactorIdx = 0;  colFactorIdx < colFactor.destCellCount;  ++colFactorIdx)
         {
-          uint32  destCol      = colFactor.destCellIdxs  [colFactorIdx];
+          kkuint32  destCol      = colFactor.destCellIdxs  [colFactorIdx];
           float   destColFract = colFactor.destCellFracts[colFactorIdx];
 
           destGreen[destRow][destCol] += (uchar)Min (255.0f, srcPixelGreen * destRowFract * destColFract);
@@ -187,12 +187,12 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 
 MorphOpStretcher::CellFactorPtr  
          MorphOpStretcher::BuildCellFactors (float   factor,
-                                                           uint32  cellFactorsCount
+                                                           kkuint32  cellFactorsCount
                                                           )
 {
   CellFactorPtr  cellFactors = new CellFactor[cellFactorsCount];
 
-  for  (uint32 x = 0;  x < cellFactorsCount;  ++x)
+  for  (kkuint32 x = 0;  x < cellFactorsCount;  ++x)
   {
     cellFactors[x].UpdateForSourceCellIdx (x, factor);
   }
@@ -202,8 +202,8 @@ MorphOpStretcher::CellFactorPtr
 
 
 
-void  MorphOpStretcher::UpdateFactors (uint32  height,
-                                       uint32  width
+void  MorphOpStretcher::UpdateFactors (kkuint32  height,
+                                       kkuint32  width
                                       )
 {
   if  ((height + 1) > rowFactorsCount)

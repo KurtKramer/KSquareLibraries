@@ -302,7 +302,7 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
 void   DuplicateImages::ReportDuplicates (ostream&  o)
 {
   o << "Number of Duplicate Groups [" << dupExamples->QueueSize () << "]" << endl;
-  int32  groupNum = 0;
+  kkint32  groupNum = 0;
 
   for  (DuplicateImageList::iterator  idx = dupExamples->begin ();  idx != dupExamples->end ();  idx++)
   {
@@ -312,7 +312,7 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
 
     o << "Group[" << groupNum << "] Contains [" << dupList->QueueSize () << "] Duplicates." << endl;
 
-    int32  numOnLine = 0;
+    kkint32  numOnLine = 0;
     FeatureVectorList::const_iterator  imageIDX;
     for  (imageIDX = dupList->begin ();  imageIDX != dupList->end (); imageIDX++)
     {
@@ -404,7 +404,7 @@ bool  DuplicateImage::AlreadyHaveImage (FeatureVectorPtr image)
 
 FeatureVectorPtr  DuplicateImage::ImageWithSmallestScanLine ()
 {
-  int32  smallestScanLine = 99999999;
+  kkint32  smallestScanLine = 99999999;
   FeatureVectorPtr  imageWithSmallestScanLine = NULL;
 
 
@@ -416,12 +416,12 @@ FeatureVectorPtr  DuplicateImage::ImageWithSmallestScanLine ()
     KKStr  rootName = osGetRootName (i->ImageFileName ());
     rootName.Upper ();
 
-    int32  scanLine = 9999999;
+    kkint32  scanLine = 9999999;
 
     if  (rootName.SubStrPart (0, 4) == "FRAME")
     {
       // Scan line will be last seq number in name.
-      int32 x = rootName.LocateLastOccurrence ('_');
+      kkint32 x = rootName.LocateLastOccurrence ('_');
       if  (x > 0)
       {
         KKStr  scanLineStr = rootName.SubStrPart (x + 1);
@@ -431,11 +431,11 @@ FeatureVectorPtr  DuplicateImage::ImageWithSmallestScanLine ()
     else
     {
       // Scan should be 2nd to last seq number in name.
-      int32 x = rootName.LocateLastOccurrence ('_');
+      kkint32 x = rootName.LocateLastOccurrence ('_');
       if  (x > 0)
       {
         KKStr  workStr = rootName.SubStrPart (0, x - 1);
-        int32 x = workStr.LocateLastOccurrence ('_');
+        kkint32 x = workStr.LocateLastOccurrence ('_');
         KKStr  scanLineStr = workStr.SubStrPart (x + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
