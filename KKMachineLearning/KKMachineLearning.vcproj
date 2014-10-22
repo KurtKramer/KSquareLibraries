@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="KKMachineLearning"
-	ProjectGUID="{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}"
+	ProjectGUID="{24B774A7-5AF4-47F8-8C15-E87AF74627FF}"
 	RootNamespace="KKMachineLearning"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"

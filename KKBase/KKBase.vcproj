@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="KKBase"
-	ProjectGUID="{A478FEC2-F42F-4951-9972-4B76D661ABF3}"
+	ProjectGUID="{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}"
 	RootNamespace="KKBase"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"

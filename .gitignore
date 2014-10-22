@@ -30,3 +30,5 @@ Release
 .*.swp
 .DS_Store
 /KKBase/*.user
+/KKBase/*.user
+*.user
