@@ -46,7 +46,7 @@ namespace  KKB
 
     const KKStrPtr  Peek (kkuint32 idx);
 
-    const KKStrPtr  operator[](kkuint32 idx);
+    const KKStrPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
 
 
   private:
