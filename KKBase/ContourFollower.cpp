@@ -15,11 +15,7 @@
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  if   defined(WIN32)
-#    include  <fftw.h>
-#  else
-#    include  <fftw3.h>
-#  endif
+#  include  <fftw3.h>
 #else
 #  include  "kku_fftw.h"
 #endif
@@ -643,9 +639,9 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
     }
   }
 
-  delete  src;
-  delete  dest;
-  delete  count;
+  delete[]  src;
+  delete[]  dest;
+  delete[]  count;
 
   return  numOfedgePixels;
 }  /* FollowContour */
@@ -734,7 +730,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
         #endif
       }
         
-      delete src;
+      delete[] src;
       src = newSrc;
       maxNumOfBorderPoints = newMaxNumOfAngles;
     }
@@ -1402,8 +1398,8 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
     dest.push_back (ComplexDouble (destFFTW[l].re / (double)(points.QueueSize ()), destFFTW[l].im / (double)(points.QueueSize ())));
     #endif
   }
-  delete  destFFTW;
-  delete  src;
+  delete[]  destFFTW;
+  delete[]  src;
 
   return  dest;
 }  /* CreateFourierFromPointList */
@@ -1467,20 +1463,14 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
   for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
   {
 
-    #ifdef  WIN32
-      ComplexDouble  z;
-      z.real (destFFTW[l].re);
-      z.imag (destFFTW[l].im);
+    #ifdef  FFTW3_H
+       double  realPart = (double)destFFTW[l][0];
+       double  imagPart = (double)destFFTW[l][1];
+       ComplexDouble  z (realPart, imagPart);
     #else
-      #ifdef  FFTW3_H
-         double  realPart = (double)destFFTW[l][0];
-         double  imagPart = (double)destFFTW[l][1];
-         ComplexDouble  z (realPart, imagPart);
-      #else
-         double  realPart = (double)destFFTW[l].re;
-         double  imagPart = (double)destFFTW[l].im;
-         ComplexDouble  z (realPart, imagPart);
-      #endif
+       double  realPart = (double)destFFTW[l].re;
+       double  imagPart = (double)destFFTW[l].im;
+       ComplexDouble  z (realPart, imagPart);
     #endif
 
     
@@ -1502,8 +1492,8 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
     points->PushOnBack (p);
   }
 
-  delete  src;
-  delete  destFFTW;
+  delete[]  src;
+  delete[]  destFFTW;
 
   return  points;
 }  /* CreatePointListFromFourier */

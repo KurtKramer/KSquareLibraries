@@ -19,13 +19,9 @@
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  if   defined(WIN32)
-#    include  <fftw.h>
-#  else
-#    include  <fftw3.h>
-#  endif
+#  include  <fftw3.h>
 #else
-#include  "kku_fftw.h"
+#  include  "kku_fftw.h"
 #endif
 
 #include "Raster.h"
