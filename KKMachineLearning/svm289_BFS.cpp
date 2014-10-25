@@ -274,7 +274,7 @@ SVM289_BFS::svm_parameter::svm_parameter (KKStr&  paramStr):
   probability  (0),
   probParam    (0.0)
 {
-  cerr << endl << "VM289::svm_parameter::svm_parameter   Not Doing anything with 'paramStr'" << endl << endl;
+  cerr << endl << "SVM289_BFS::svm_parameter::svm_parameter   Not Doing anything with 'paramStr'" << endl << endl;
 }
 
 
@@ -669,14 +669,17 @@ static void info(const char *fmt,...) {}
 
 
 //
-// Kernel Cache
-//
-// l is the number of total data items
-// size is the cache size limit in bytes
-//
+
 class  SVM289_BFS::Cache
 {
 public:
+
+
+ /**
+  *@brief Kernel Cache
+  *@param[in]  l    The number of total data items.
+  *@param[in]  size The cache size limit in bytes
+  */
   Cache (kkint32  l,
          kkint32  size
         );
@@ -684,9 +687,10 @@ public:
   ~Cache();
 
 
-  // request data [0,len)
-  // return some position p where [p,len) need to be filled
-  // (p >= len if nothing needs to be filled)
+  /**
+   *@brief  Request data [0,len)
+   *@details Return some position p where [p,len) need to be filled (p >= len if nothing needs to be filled)
+   */
   kkint32  get_data(const kkint32  index, 
                   Qfloat**     data, 
                   kkint32      len
@@ -695,14 +699,15 @@ public:
   void swap_index (kkint32 i, kkint32 j);  
 
 private:
-  kkint32  l;
-  kkint32  size;
+  kkint32  l;     /**< The number of total data items. */
+  kkint32  size;  /**< The cache size limit in bytes.  */
 
   struct  head_t
   {
-    head_t *prev, *next;  // a circular list
-    Qfloat *data;
-    kkint32  len;           // data[0,len) is cached in this entry
+    head_t   *prev; 
+    head_t   *next;  // a circular list
+    Qfloat   *data;
+    kkint32  len;    /**< data[0,len) is cached in this entry. */
   };
 
   head_t*     head;
@@ -849,13 +854,8 @@ void Cache::swap_index (kkint32 i, kkint32 j)
 
 
 
-//
-// Kernel evaluation
-//
-// the static method k_function is for doing single kernel evaluation
-// the constructor of Kernel prepares to calculate the l*l kernel matrix
-// the member function get_Q is for getting one column from the Q Matrix
-//
+
+
 class  SVM289_BFS::QMatrix 
 {
 public:
@@ -880,6 +880,12 @@ public:
 
   virtual ~Kernel();
 
+  /**
+   *@brief Kernel evaluation
+   * @details The static method k_function is for doing single kernel evaluation
+   * the constructor of Kernel prepares to calculate the l*l kernel matrix
+   * the member function get_Q is for getting one column from the Q Matrix
+   */  
   static double k_function (const FeatureVector&   x, 
                             const FeatureVector&   y,
                             const svm_parameter&   param,
@@ -907,17 +913,17 @@ protected:
 private:
   kkint32               l;
   kkint32               numSelFeatures;
-  kkint32*                selFeatures;
+  kkint32               *selFeatures;
   FeatureVectorListPtr  x;
   double*               x_square;
 
-  float**               preComputed;
+  float                 **preComputed;
 
   // svm_parameter
-  const kkint32        kernel_type;
-  const kkint32        degree;
-  const double         gamma;
-  const double         coef0;
+  const kkint32         kernel_type;
+  const kkint32         degree;
+  const double          gamma;
+  const double          coef0;
 
   double  dot (const FeatureVector&  px, 
                const FeatureVector&  py

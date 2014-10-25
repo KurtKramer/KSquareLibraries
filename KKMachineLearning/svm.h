@@ -11,6 +11,16 @@
 #include  "KKStr.h"
 #include  "RunLog.h"
 
+/**
+ *@namespace  SVM233   
+ *@brief Namespce used to wrap implementation of libSVM version 2.33.
+ *@details  There is more than obe version of libSVM implemented in the library.  To prevent
+ * name coflicts between them each one was wrapped in their own namespace.
+ *<br/>
+ * libSVM is a Support Vector Machine implementaton done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
+ * was downloaded from http://www.csie.ntu.edu.tw/~cjlin/libsvm/.  The source code was modified by 
+ * Tong Luo  and  Kurt Kramer.  
+ */
 namespace  SVM233
 {
   const kkint32 SCALE = 100;

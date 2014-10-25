@@ -706,9 +706,9 @@ private:
     head_t (): prev (NULL), next (NULL), data (NULL), len (0) {}
 
     head_t*  prev;
-    head_t*  next;    // a circular list
+    head_t*  next;    /**< a circular list  */
     Qfloat*  data;
-    kkint32  len;     // data[0,len) is cached in this entry
+    kkint32  len;     /**< data[0,len) is cached in this entry */
   };
 
   head_t*     head;

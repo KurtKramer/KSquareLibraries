@@ -33,3 +33,4 @@ Release
 /KKBase/*.user
 *.user
 /OutsidePackages
+/Doxygen/html

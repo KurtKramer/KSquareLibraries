@@ -1048,13 +1048,13 @@ void SVM233::Cache::swap_index (kkint32 i,
 
 
 
-//
-// Kernel evaluation
-//
-// the static method k_function is for doing single kernel evaluation
-// the constructor of Kernel prepares to calculate the l*l kernel matrix
-// the member function get_Q is for getting one column from the Q Matrix
-//
+/**
+ **brief Kernel evaluation
+ *
+ * the static method k_function is for doing single kernel evaluation
+ * the constructor of Kernel prepares to calculate the l*l kernel matrix
+ * the member function get_Q is for getting one column from the Q Matrix
+ */
 class  SVM233::Kernel {
 public:
   Kernel (kkint32                 l, 
