@@ -32,3 +32,4 @@ Release
 /KKBase/*.user
 /KKBase/*.user
 *.user
+/OutsidePackages
