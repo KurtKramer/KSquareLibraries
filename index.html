@@ -32,9 +32,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<a name="welcome-to-ksquareutilities-by-kurt-kramer" class="anchor" href="#welcome-to-ksquareutilities-by-kurt-kramer"><span class="octicon octicon-link"></span></a>Welcome to KSquareUtilities by Kurt Kramer.</h3>
 
 <pre><code>$ cd your_repo_root/repo_name
 $ git fetch origin
@@ -62,6 +60,39 @@ $ git checkout gh-pages
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
 <p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+
+<h1>
+<a name="ksquarelibraries" class="anchor" href="#ksquarelibraries"><span class="octicon octicon-link"></span></a>KSquareLibraries</h1>
+
+<p>The libraries with their included code/classes are the accumulation of work that I have built up over the last several years, mostly during my graduate program.  This has become a useful tool-kit for several projects that I have worked on.  The code is meant to be O/S neutral such that it can be compiled and used in either Windows or Linux.</p>
+
+<h2>
+<a name="kkbase" class="anchor" href="#kkbase"><span class="octicon octicon-link"></span></a>KKBase</h2>
+
+<p>Some example functionality implemented include string management, Matrix operations, Image Processing, Token Parsing, Statistics, Histogramming, and common operating system routines.  Most O/S specific code is implemented in the module "osServices.cpp".</p>
+
+<h2>
+<a name="kklinescanner" class="anchor" href="#kklinescanner"><span class="octicon octicon-link"></span></a>KKLineScanner</h2>
+
+<p>Classes and code that support the processing of data from line-scan cameras.  Support for Dynamic-Flat-Field correction.  Storage and retrieval of imagery data in 2,3,4, and 8 bit-depth gray-scale with support for embedding instrumentation data as well as text. </p>
+
+<h2>
+<a name="kkmachinelearning" class="anchor" href="#kkmachinelearning"><span class="octicon octicon-link"></span></a>KKMachineLearning</h2>
+
+<p>Classes and Code that support Machine-Learning implementations.  </p>
+
+<h2>
+<a name="outsidelibraries" class="anchor" href="#outsidelibraries"><span class="octicon octicon-link"></span></a>OutsideLibraries</h2>
+
+<p>That is libraries and code from other sources.
+ Outside Libraries FFTW and ZLIB To use all the classes in this Library you will need the libraries fftw and lib123.  "fftw" stands for "Fastest Fourier Transform in The West".  It can be downloaded from <a href="http://www.fftw.org/">http://www.fftw.org/</a>.  "zlib123" is a library that is used to compress and un-compress data. can be found at <a href="http://www.zlib.net/">http://www.zlib.net/</a> and is used by the Compressor class.  </p>
+
+<p>Their are two Macros that determine weather the two libraries listed above are utilized or more simple implementations included in KKBase.</p>
+
+<ul>
+<li>'FFTW_AVAILABLE' - Indicates that you want to utilize the FFTW library.  otherwise a simple Fourier transform will be utilized.</li>
+<li>'ZLIB_AVAILABLE' - Indicates that 'zlib' library is available.  If not defined the class Compressor will not do anything.</li>
+</ul>
       </section>
     </div>
 
