@@ -2,9 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKBase", "KKBase\KKBase.vcproj", "{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37} = {7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKLineScanner", "KKLineScanner\KKLineScanner.vcproj", "{65B4E499-F9C5-472A-B5D1-90541F817513}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -17,8 +14,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKMachineLearning", "KKMach
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KKControls", "KKControls\KKControls.csproj", "{3404FEA2-61A5-4102-9280-729AC235A031}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "OutsidePackages\zlib123\projects\visualc6\zlib.vcproj", "{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -372,78 +367,6 @@ Global
 		{3404FEA2-61A5-4102-9280-729AC235A031}.Release|Win32.ActiveCfg = Release|x64
 		{3404FEA2-61A5-4102-9280-729AC235A031}.Release|x64.ActiveCfg = Release|x64
 		{3404FEA2-61A5-4102-9280-729AC235A031}.Release|x64.Build.0 = Release|x64
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|Win32.Build.0 = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Debug|x64.ActiveCfg = Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|Any CPU.ActiveCfg = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|Mixed Platforms.ActiveCfg = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|Mixed Platforms.Build.0 = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|Win32.ActiveCfg = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|Win32.Build.0 = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Debug|x64.ActiveCfg = DLL ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|Any CPU.ActiveCfg = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|Mixed Platforms.ActiveCfg = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|Mixed Platforms.Build.0 = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|Win32.ActiveCfg = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|Win32.Build.0 = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL ASM Release|x64.ActiveCfg = DLL ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|Any CPU.ActiveCfg = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|Mixed Platforms.ActiveCfg = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|Mixed Platforms.Build.0 = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|Win32.ActiveCfg = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|Win32.Build.0 = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Debug|x64.ActiveCfg = DLL Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|Any CPU.ActiveCfg = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|Mixed Platforms.ActiveCfg = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|Mixed Platforms.Build.0 = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|Win32.ActiveCfg = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|Win32.Build.0 = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.DLL Release|x64.ActiveCfg = DLL Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|Any CPU.ActiveCfg = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|Mixed Platforms.ActiveCfg = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|Mixed Platforms.Build.0 = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|Win32.ActiveCfg = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|Win32.Build.0 = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedDebug|x64.ActiveCfg = EmbeddedDebug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|Any CPU.ActiveCfg = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|Mixed Platforms.ActiveCfg = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|Mixed Platforms.Build.0 = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|Win32.ActiveCfg = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|Win32.Build.0 = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.EmbeddedRelease|x64.ActiveCfg = EmbeddedRelease|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|Any CPU.ActiveCfg = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|Mixed Platforms.ActiveCfg = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|Mixed Platforms.Build.0 = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|Win32.ActiveCfg = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|Win32.Build.0 = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Debug|x64.ActiveCfg = LIB ASM Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|Any CPU.ActiveCfg = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|Mixed Platforms.ActiveCfg = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|Mixed Platforms.Build.0 = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|Win32.ActiveCfg = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|Win32.Build.0 = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB ASM Release|x64.ActiveCfg = LIB ASM Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|Any CPU.ActiveCfg = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|Mixed Platforms.ActiveCfg = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|Mixed Platforms.Build.0 = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|Win32.ActiveCfg = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|Win32.Build.0 = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Debug|x64.ActiveCfg = LIB Debug|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|Any CPU.ActiveCfg = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|Mixed Platforms.ActiveCfg = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|Mixed Platforms.Build.0 = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|Win32.ActiveCfg = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|Win32.Build.0 = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.LIB Release|x64.ActiveCfg = LIB Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|Any CPU.ActiveCfg = Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|Win32.ActiveCfg = Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|Win32.Build.0 = Release|Win32
-		{7C37D3E1-52BA-4DC0-9C7B-49375BF46B37}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
