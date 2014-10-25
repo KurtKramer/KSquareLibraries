@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\OutsideLibraries\zlib123&quot;;&quot;$(SolutionDir)\OutsideLibraries\fftw&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OutsideLibraries\zlib123&quot;;&quot;$(SolutionDir)OutsideLibraries\fftw&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;FFTW_AVAILABLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -107,7 +107,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\OutsideLibraries\zlib123&quot;;&quot;$(SolutionDir)\OutsideLibraries\fftw&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)OutsideLibraries\zlib123&quot;;&quot;$(SolutionDir)OutsideLibraries\fftw&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;FFTW_AVAILABLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
