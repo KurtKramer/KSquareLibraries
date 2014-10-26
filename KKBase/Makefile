@@ -2,7 +2,7 @@ EXEC = BaseLibrary
 #CFLAGS = -O3 
 CFLAGS = -g
 LIBS = -lfftw -lrt
-FFTWAPI = ../OutsidePackages/fftw-3.1.2/api 
+FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
 VPATH = ../KKBase
 LIBDIR = ../KKBase
 
@@ -11,8 +11,6 @@ CC = g++
 FIRSTINCLUDES      = FirstIncludes.h
 
 
-#include  "KKStr.h"
-#include  "Tokenizer.h"
 
 RANDOMNUMGENERATOR = RandomNumGenerator.h  KKBaseTypes.h
 KKU_FFTW           = kku_fftw.h            KKBaseTypes.h
@@ -106,12 +104,13 @@ OBJECTS  = Application.o               Atom.o                      BitString.o  
 
 
 all:	$(EXEC)
-	
+
+clean:
+	rm *.o;  rm *.a	
 
 
 $(EXEC): $(OBJECTS) 
-	ar cq libBaseLibrary.a  $(OBJECTS)
-
+	rm *.a; ar cq libBaseLibrary.a  $(OBJECTS)
 
 
 Application.o :        Application.cpp          $(APPLICATION)           $(CMDLINEEXPANDER)       $(DATETIME)              $(OSSERVICES)  \

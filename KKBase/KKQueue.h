@@ -221,7 +221,7 @@ namespace  KKB
   {
     //for  (vector<Entry*>::const_iterator x = q.begin
     //  owner (_owner) ();  x != q.end ();  x++)
-    for  (const_iterator x = q.begin ();  x != q.end ();  x++)
+    for  (const_iterator x = q.begin ();  x != q.end ();  ++x)
     {
       if  (owner)
         PushOnBack (new Entry (*(*x)));
