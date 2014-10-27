@@ -166,8 +166,7 @@ namespace  KKB
       kkuint32  FindTheKthElement (kkuint32  k);
       void      RandomizeOrder ();
       void      RandomizeOrder (kkint64   seed);
-      void      RandomizeOrder (RandomNumGenerator&  randomVariable)
-
+      void      RandomizeOrder (RandomNumGenerator&  randomVariable);
 
       //void      Sort           (QueueComparison<Entry>*  comparison);
 
@@ -191,6 +190,16 @@ namespace  KKB
       
       bool      operator== (const KKQueue<Entry>& rightSide)   const;  /**< @brief  Returns True if every entry in both containers point to the same elements */
       bool      operator!= (const KKQueue<Entry>& rightSide)   const;  /**< @brief  returns False if NOT every entry in both containers point to the same elements */
+
+  private:
+      kkuint32  FindTheKthElement (kkuint32  k,
+                                   kkuint32  left,
+                                   kkuint32  right
+                                  );
+
+      kkint32   Partition (kkuint32  left,
+                           kkuint32  right
+                          );
 
   };  /* KKQueue */
 
@@ -515,7 +524,7 @@ namespace  KKB
   template <class Entry>
   kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k)
   {
-    if  ((k < 0)   ||  (K > = (kkint32)size ())
+    if  ((k < 0)   ||  (K > = (kkint32)size ()))
       return -1;
     return  FindTheKthElement (k, 0, size () - 1);
   }  /* FindTheKthElement */
@@ -557,7 +566,7 @@ namespace  KKB
   {
     kkuint32  width = 1 + right - left;
     kkuint32  pivitIdx = left + (LRand48() % width);
-
+/*
     while  (left < right)
     {
       while  (
@@ -565,6 +574,7 @@ namespace  KKB
 
 
     }
+    */
   }
 
 
