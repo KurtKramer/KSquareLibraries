@@ -3,9 +3,14 @@
 
 /**
  *@class  KKMachineLearning::FeatureVectorComputer
- *@brief  A abstract class that is meant to compute a FeatireVector from a source image.
- *@author  Kurt Kramer
- *@details 
+ *@brief  A abstract class that is meant to compute a FeatureVector from a source image.
+ *@details Applications that want to utilize this library wil need to either use one of the 
+ *provided "FeatureVectorComputer" derived classes a=or supply their own.  This class will 
+ *responsable for computing a FeatureVector from a supplied Image.
+ *
+ *Each FeatureVector computer will need to have a unique name taht will be supplied when 
+ *constructed. This name will be used later when it is required to locate the appropriate 
+ *FeatureVectorComputer to utilize.
  *@see FeatureVectorList
  *@see PostLarvaeFV
  *@see FeatureFileIO
@@ -39,32 +44,28 @@ namespace KKMachineLearning
   class FeatureVectorComputer
   {
   public:
+    typedef  FeatureVectorComputer*  FeatureVectorComputerPtr;
+
     FeatureVectorComputer (const KKStr&  _name,
                            FileDescPtr   _fileDesc
                           );
 
     virtual ~FeatureVectorComputer ();
 
-    virtual  FeatureVectorPtr  ComputefeatureVector (RasterPtr  image,
+    virtual  FeatureVectorPtr  ComputeFeatureVector (RasterPtr  image,
                                                      RunLog&    runLog
                                                     ) = 0;
 
 
-    /**
-     *@brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates.
-     */
+    /**  @brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
 
 
-    /**
-     *@brief  Returns back a "FileDesc" instance that describes the feastures that this instance of 'FeatureVectorComputer' creates.
-     */
+    /**  @brief  Returns back a "FileDesc" instance that describes the feastures that this instance of 'FeatureVectorComputer' creates.  */
     FileDescConstPtr  FileDesc () const {return  fileDesc;}
 
 
-    /**
-     *@brief  Returns a kkint16 description of the FeatureVector which can be used as part/all of a File or Direecttory name.
-     */
+    /**  @brief  Returns a kkint16 description of the FeatureVector which can be used as part/all of a File or Direecttory name.  */
     const KKStr&  Name () const {return name;};
 
 
@@ -78,9 +79,14 @@ namespace KKMachineLearning
   protected:
     void  SetFileDesc (FileDescPtr  _fileDesc);
 
+    static  RegisterAFeatureVectorComputer (FeatureVectorComputerPtr  fvComputer);
+
+
   private:
     FileDescPtr  fileDesc;
     KKStr        name;
+
+    static  map<KKStr,FeatureVectorComputerPtr>  existingInstances;
   };   /* FeatureVectorComputer */
 
 #define  _FeatureVectorComputer_Defined_
