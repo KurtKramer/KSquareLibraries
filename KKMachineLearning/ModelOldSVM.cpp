@@ -258,9 +258,9 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
 
 
 void   ModelOldSVM::Predict (FeatureVectorPtr  example,
-                             MLClassPtr     knownClass,
-                             MLClassPtr&    predClass,
-                             MLClassPtr&    predClass2,
+                             MLClassPtr        knownClass,
+                             MLClassPtr&       predClass,
+                             MLClassPtr&       predClass2,
                              kkint32&          predClass1Votes,
                              kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
@@ -393,8 +393,8 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr        example,
 
 
 
-vector<KKStr>  ModelOldSVM::SupportVectorNames (MLClassPtr     c1,
-                                                MLClassPtr     c2
+vector<KKStr>  ModelOldSVM::SupportVectorNames (MLClassPtr  c1,
+                                                MLClassPtr  c2
                                                )  const
 {
   return  svmModel->SupportVectorNames (c1, c2);
@@ -419,8 +419,8 @@ vector<KKStr>  ModelOldSVM::SupportVectorNames () const
 
 vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors (FeatureVectorPtr  example,
                                                             kkint32           numToFind,
-                                                            MLClassPtr     c1,
-                                                            MLClassPtr     c2
+                                                            MLClassPtr        c1,
+                                                            MLClassPtr        c2
                                                            )
 {
   return  svmModel->FindWorstSupportVectors (example, numToFind, c1, c2);
@@ -433,8 +433,8 @@ vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors (FeatureVectorPtr  ex
 
 vector<ProbNamePair>  ModelOldSVM::FindWorstSupportVectors2 (FeatureVectorPtr  example,
                                                              kkint32           numToFind,
-                                                             MLClassPtr     c1,
-                                                             MLClassPtr     c2
+                                                             MLClassPtr        c1,
+                                                             MLClassPtr        c2
                                                             )
 {
   return  svmModel->FindWorstSupportVectors2 (example, numToFind, c1, c2);

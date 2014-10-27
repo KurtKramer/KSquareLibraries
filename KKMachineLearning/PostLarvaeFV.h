@@ -118,17 +118,17 @@ namespace KKMachineLearning
     void  CentroidRow      (float    _centroidRow)      {centroidRow      = _centroidRow;}
     void  NumOfEdgePixels  (kkint32  _numOfEdgePixels)  {numOfEdgePixels  = _numOfEdgePixels;}
 
-    void  Version          (short    _version)          {version          = _version;}
+    void  Version          (kkint16  _version)          {version          = _version;}
 
 
     float   CentroidCol        () const  {return  centroidCol;}    // Centroid with respect to image
     float   CentroidRow        () const  {return  centroidRow;}    //  ""    ""    ""    ""    ""
     kkint32 NumOfEdgePixels    () const  {return  numOfEdgePixels;}
-    short   Version            () const  {return  version;}
+    kkint16 Version            () const  {return  version;}
 
 
-    void  ResetNumOfFeatures (kkint32  newNumOfFeatures);  // Used to reallocate memory for feature data.
-    void  ResetVersion       (short  newVersion);
+    void  ResetNumOfFeatures (kkint32  newNumOfFeatures);  /**< Used to reallocate memory for feature data. */
+    void  ResetVersion       (kkint16  newVersion);
 
 
     void    CalcFeatures (Raster&        raster,
@@ -147,7 +147,7 @@ namespace KKMachineLearning
 
 
     static  FileDescPtr    postLarvaeFeaturesFileDesc;
-
+    
     static  FileDescPtr    PostLarvaeFeaturesFileDesc ();
 
     static  KKStr   FeatureName (kkint32  fieldNum);
@@ -171,80 +171,80 @@ namespace KKMachineLearning
     float     centroidCol;     /**<  cnetroid Collumn with just respect to image. */
     float     centroidRow;     /**<  cnetroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
-    short     version;         /**< This is the same versionNumber as in PostLarvaeFVList
+    kkint16   version;         /**< This is the same versionNumber as in PostLarvaeFVList
                                 * It is related to the Feature calculation routine.  This
                                 * will assist in us changing the feature calcs in the 
                                 * future and  objects and methods having a meens of 
                                 * knowing if the features are similar.
                                 */
 
-    static  short  maxNumOfFeatures;
-    static  const  kkint32  SizeThreshold;
+    static  kkint16  maxNumOfFeatures;
+    static  const    kkint32  SizeThreshold;
 
-    static  const  char*  FeatureNames[];
+    static  const    char*  FeatureNames[];
 
 
-    static  short  SizeIndex;                   // 0;
-    static  short  Moment1Index;                // 1;
-    static  short  Moment2Index;                // 2;
-    static  short  Moment3Index;                // 3;
-    static  short  Moment4Index;                // 4;
-    static  short  Moment5Index;                // 5;
-    static  short  Moment6Index;                // 6;
-    static  short  Moment7Index;                // 7;
-    static  short  Moment8Index;                // 8;
+    static  kkint16  SizeIndex;                   // 0;
+    static  kkint16  Moment1Index;                // 1;
+    static  kkint16  Moment2Index;                // 2;
+    static  kkint16  Moment3Index;                // 3;
+    static  kkint16  Moment4Index;                // 4;
+    static  kkint16  Moment5Index;                // 5;
+    static  kkint16  Moment6Index;                // 6;
+    static  kkint16  Moment7Index;                // 7;
+    static  kkint16  Moment8Index;                // 8;
 
-    static  short  EdgeSizeIndex;               // 9;
-    static  short  EdgeMoment1Index;            // 10;
-    static  short  EdgeMoment2Index;            // 11;
-    static  short  EdgeMoment3Index;            // 12;
-    static  short  EdgeMoment4Index;            // 13;
-    static  short  EdgeMoment5Index;            // 14;
-    static  short  EdgeMoment6Index;            // 15;
-    static  short  EdgeMoment7Index;            // 16;
-    static  short  EdgeMoment8Index;            // 17;
+    static  kkint16  EdgeSizeIndex;               // 9;
+    static  kkint16  EdgeMoment1Index;            // 10;
+    static  kkint16  EdgeMoment2Index;            // 11;
+    static  kkint16  EdgeMoment3Index;            // 12;
+    static  kkint16  EdgeMoment4Index;            // 13;
+    static  kkint16  EdgeMoment5Index;            // 14;
+    static  kkint16  EdgeMoment6Index;            // 15;
+    static  kkint16  EdgeMoment7Index;            // 16;
+    static  kkint16  EdgeMoment8Index;            // 17;
 
-    static  short  TransparancyConvexHullIndex; // 18;
-    static  short  TransparancyPixelCountIndex; // 19;
-    static  short  TransparancyOpen3Index;      // 20;
-    static  short  TransparancyOpen5Index;      // 21;
-    static  short  TransparancyOpen7Index;      // 22;
-    static  short  TransparancyOpen9Index;      // 23;
-    static  short  TransparancyClose3Index;     // 24;
-    static  short  TransparancyClose5Index;     // 25;
-    static  short  TransparancyClose7Index;     // 26;
+    static  kkint16  TransparancyConvexHullIndex; // 18;
+    static  kkint16  TransparancyPixelCountIndex; // 19;
+    static  kkint16  TransparancyOpen3Index;      // 20;
+    static  kkint16  TransparancyOpen5Index;      // 21;
+    static  kkint16  TransparancyOpen7Index;      // 22;
+    static  kkint16  TransparancyOpen9Index;      // 23;
+    static  kkint16  TransparancyClose3Index;     // 24;
+    static  kkint16  TransparancyClose5Index;     // 25;
+    static  kkint16  TransparancyClose7Index;     // 26;
 
-    static  short  ConvexAreaIndex;             // 27
-    static  short  TransparancySizeIndex;       // 28
-    static  short  TransparancyWtdIndex;        // 29
+    static  kkint16  ConvexAreaIndex;             // 27
+    static  kkint16  TransparancySizeIndex;       // 28
+    static  kkint16  TransparancyWtdIndex;        // 29
 
-    static  short  WeighedMoment0Index;         // 30
-    static  short  WeighedMoment1Index;         // 31
-    static  short  WeighedMoment2Index;         // 32
-    static  short  WeighedMoment3Index;         // 33
-    static  short  WeighedMoment4Index;         // 34
-    static  short  WeighedMoment5Index;         // 35
-    static  short  WeighedMoment6Index;         // 36
-    static  short  WeighedMoment7Index;         // 37
-    static  short  WeighedMoment8Index;         // 38
+    static  kkint16  WeighedMoment0Index;         // 30
+    static  kkint16  WeighedMoment1Index;         // 31
+    static  kkint16  WeighedMoment2Index;         // 32
+    static  kkint16  WeighedMoment3Index;         // 33
+    static  kkint16  WeighedMoment4Index;         // 34
+    static  kkint16  WeighedMoment5Index;         // 35
+    static  kkint16  WeighedMoment6Index;         // 36
+    static  kkint16  WeighedMoment7Index;         // 37
+    static  kkint16  WeighedMoment8Index;         // 38
 
-    static  short  IntensityHist1Index;         // 39
-    static  short  IntensityHist2Index;         // 40
-    static  short  IntensityHist3Index;         // 41
-    static  short  IntensityHist4Index;         // 42
-    static  short  IntensityHist5Index;         // 43
-    static  short  IntensityHist6Index;         // 44
-    static  short  IntensityHist7Index;         // 45
-    static  short  DarkSpotCount0;              // 46
-    static  short  DarkSpotCount1;              // 47
-    static  short  DarkSpotCount2;              // 48
-    static  short  DarkSpotCount3;              // 49
-    static  short  DarkSpotCount4;              // 50
-    static  short  DarkSpotCount5;              // 51
-    static  short  DarkSpotCount6;              // 52
-    static  short  DarkSpotCount7;              // 53
-    static  short  DarkSpotCount8;              // 54
-    static  short  DarkSpotCount9;              // 55
+    static  kkint16  IntensityHist1Index;         // 39
+    static  kkint16  IntensityHist2Index;         // 40
+    static  kkint16  IntensityHist3Index;         // 41
+    static  kkint16  IntensityHist4Index;         // 42
+    static  kkint16  IntensityHist5Index;         // 43
+    static  kkint16  IntensityHist6Index;         // 44
+    static  kkint16  IntensityHist7Index;         // 45
+    static  kkint16  DarkSpotCount0;              // 46
+    static  kkint16  DarkSpotCount1;              // 47
+    static  kkint16  DarkSpotCount2;              // 48
+    static  kkint16  DarkSpotCount3;              // 49
+    static  kkint16  DarkSpotCount4;              // 50
+    static  kkint16  DarkSpotCount5;              // 51
+    static  kkint16  DarkSpotCount6;              // 52
+    static  kkint16  DarkSpotCount7;              // 53
+    static  kkint16  DarkSpotCount8;              // 54
+    static  kkint16  DarkSpotCount9;              // 55
   };
 
 
@@ -450,9 +450,9 @@ namespace KKMachineLearning
                                                    );
 
 
-    short                  Version () const  {return  version;}
+    kkint16                Version () const  {return  version;}
    
-    void                   Version (short  _version)  {version = _version;}
+    void                   Version (kkint16  _version)  {version = _version;}
 
     //virtual  const char*   UnderlyingClass ()  const  {return  "PostLarvaeFVList";}
 
@@ -614,7 +614,7 @@ namespace KKMachineLearning
 
   private:
 
-    short          version;    /**< Represents the version of the Feature data,  when ever I update
+    kkint16        version;    /**< Represents the version of the Feature data,  when ever I update
                                 * the way Feastures are calculated I increment CurrentFeatureFileVersionNum
                                 * by 1.   This way if we load a older FeatureData file we can be aware
                                 * of this.  Methods like FeatureDataReSink will force the recalculation

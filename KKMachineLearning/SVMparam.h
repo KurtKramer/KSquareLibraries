@@ -101,8 +101,8 @@ namespace KKMachineLearning
 
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
-    void    AddBinaryClassParms (MLClassPtr          class1,
-                                 MLClassPtr          class2,
+    void    AddBinaryClassParms (MLClassPtr             class1,
+                                 MLClassPtr             class2,
                                  const svm_parameter&   _param,
                                  const FeatureNumList&  _selectedFeatures,
                                  float                  _weight
@@ -165,12 +165,12 @@ namespace KKMachineLearning
 
 
     // Member update methods
-    void  A_Param            (float          _A);
-    void  C_Param            (double         _CC);
+    void  A_Param            (float       _A);
+    void  C_Param            (double      _CC);
 
     void  C_Param            (MLClassPtr  class1,
                               MLClassPtr  class2,
-                              double         cParam
+                              double      cParam
                              );
     void  EncodingMethod     (SVM_EncodingMethod     _encodingMethod)     {encodingMethod    = _encodingMethod;}
     void  Gamma              (double                 _gamma)              {param.Gamma (_gamma);}
@@ -181,8 +181,8 @@ namespace KKMachineLearning
     void  SamplingRate       (float                  _samplingRate)       {samplingRate       = _samplingRate;}
     void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
 
-    void  SetBinaryClassFields (MLClassPtr          class1,
-                                MLClassPtr          class2,
+    void  SetBinaryClassFields (MLClassPtr             class1,
+                                MLClassPtr             class2,
                                 const svm_parameter&   _param,
                                 const FeatureNumList&  _features,
                                 float                  _weight
@@ -190,8 +190,8 @@ namespace KKMachineLearning
 
     void  SetFeatureNums (const FeatureNumList&  _features);
 
-    void  SetFeatureNums    (MLClassPtr          class1,
-                             MLClassPtr          class2,
+    void  SetFeatureNums    (MLClassPtr             class1,
+                             MLClassPtr             class2,
                              const FeatureNumList&  _features,
                              float                  _weight = -1  // -1 Indicats use existing value, 
                             );

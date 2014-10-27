@@ -59,7 +59,7 @@ namespace  KKLSC
     virtual  ScannerFileFormat  FileFormat ()  const  {return sfZlib3BitEncoded;}
 
     virtual
-    void  ScanRate          (float  _scanRate);
+    void  ScanRate (float  _scanRate);
 
     virtual
     void   WriteTextBlock (const uchar*  txtBlock,
@@ -69,14 +69,14 @@ namespace  KKLSC
   private:
     void  AllocateBuffers ();
 
-    void  ExpandBuffer (uchar*&  buffer,
+    void  ExpandBuffer (uchar*&    buffer,
                         kkuint32&  bufferSize,
-                        kkuint32 bufferNewSize
+                        kkuint32   bufferNewSize
                        );
 
-    void  ExpandBufferNoCopy (uchar*&  buffer,
+    void  ExpandBufferNoCopy (uchar*&    buffer,
                               kkuint32&  bufferSize,
-                              kkuint32 bufferNewSize
+                              kkuint32   bufferNewSize
                              );
 
     virtual

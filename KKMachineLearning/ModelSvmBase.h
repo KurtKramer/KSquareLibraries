@@ -61,13 +61,13 @@ namespace  KKMachineLearning
     ModelParamSvmBasePtr  Param ();
 
     virtual
-    MLClassPtr         Predict (FeatureVectorPtr  image);
+    MLClassPtr            Predict (FeatureVectorPtr  image);
   
     virtual
     void                  Predict (FeatureVectorPtr  example,
-                                   MLClassPtr     knownClass,
-                                   MLClassPtr&    predClass1,
-                                   MLClassPtr&    predClass2,
+                                   MLClassPtr        knownClass,
+                                   MLClassPtr&       predClass1,
+                                   MLClassPtr&       predClass2,
                                    kkint32&          predClass1Votes,
                                    kkint32&          predClass2Votes,
                                    double&           probOfKnownClass,

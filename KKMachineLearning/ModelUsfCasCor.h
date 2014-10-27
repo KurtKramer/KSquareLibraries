@@ -58,7 +58,7 @@ namespace  KKMachineLearning
     ModelParamUsfCasCorPtr  Param ();
 
     virtual
-    MLClassPtr           Predict (FeatureVectorPtr  example);
+    MLClassPtr              Predict (FeatureVectorPtr  example);
   
     virtual
     void                    Predict (FeatureVectorPtr example,
@@ -105,9 +105,9 @@ namespace  KKMachineLearning
      *            in probabilities[x].
     */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities
                                );
   
     virtual  void  ReadSpecificImplementationXML (istream&  i,

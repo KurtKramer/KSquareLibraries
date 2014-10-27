@@ -92,7 +92,7 @@ void  ModelParamOldSVM::C_Param (double  _CC)
 
 void  ModelParamOldSVM::C_Param (MLClassPtr  class1,
                                  MLClassPtr  class2,
-                                 double         cParam
+                                 double      cParam
                                 )
 {
   if  (!this->BinaryParmsList ())
@@ -486,8 +486,8 @@ float   ModelParamOldSVM::AvgMumOfFeatures ()
 
 
 
-void  ModelParamOldSVM::SetFeatureNums (MLClassPtr          class1,
-                                        MLClassPtr          class2,
+void  ModelParamOldSVM::SetFeatureNums (MLClassPtr             class1,
+                                        MLClassPtr             class2,
                                         const FeatureNumList&  _features,
                                         float                  _weight
                                        )
@@ -499,8 +499,8 @@ void  ModelParamOldSVM::SetFeatureNums (MLClassPtr          class1,
 
 
 
-void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr          class1,
-                                              MLClassPtr          class2,
+void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr             class1,
+                                              MLClassPtr             class2,
                                               const svm_parameter&   _param,
                                               const FeatureNumList&  _features,
                                               float                  _weight
@@ -517,8 +517,8 @@ void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr          class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr         class1,
-                                             MLClassPtr         class2,
+void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr            class1,
+                                             MLClassPtr            class2,
                                              const svm_parameter&  _param,
                                              const FeatureNumList& _selectedFeatures,
                                              float                 _weight

@@ -22,9 +22,9 @@ namespace  KKJobManagment
   /*!
   \class  KKJobManager
   \brief  Responsable for keeping track of a list of jobs.
-  \details See the application called RandomSplitsJobManager.  It is the first alplication to use 
-           this library.  any class that is derived from this class are required to implement these
-           methid  "StatusFileProcessLine",  "StatusFileProcessLineJobStatusChange", "ToStatusStr"
+  \details See the application called RandomSplitsJobManager. It is the first alplication to use 
+           this library; any class that is derived from this class are required to implement these
+           method  "StatusFileProcessLine",  "StatusFileProcessLineJobStatusChange", "ToStatusStr"
   */
   class  KKJobManager: public  KKJob
   {

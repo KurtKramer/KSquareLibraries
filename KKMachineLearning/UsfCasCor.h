@@ -160,15 +160,15 @@ namespace KKMachineLearning
 
     MLClassPtr  PredictClass (FeatureVectorPtr  example);
 
-    void  PredictConfidences (FeatureVectorPtr       example,
+    void  PredictConfidences (FeatureVectorPtr    example,
                               MLClassPtr          knownClass,
                               MLClassPtr&         predClass1,
-                              float&                 predClass1Prob,
+                              float&              predClass1Prob,
                               MLClassPtr&         predClass2,
-                              float&                 predClass2Prob,
-                              float&                 knownClassProb,
+                              float&              predClass2Prob,
+                              float&              knownClassProb,
                               const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populatd. */
-                              VectorFloat&           probabilities
+                              VectorFloat&        probabilities
                              );
 
 

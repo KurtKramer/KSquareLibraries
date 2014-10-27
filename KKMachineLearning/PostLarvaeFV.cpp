@@ -283,69 +283,69 @@ const  kkint32  PostLarvaeFV::SizeThreshold = 10000;  /**< Size of example in nu
 
 
 							
-short  PostLarvaeFV::maxNumOfFeatures      = 56;
+kkint16  PostLarvaeFV::maxNumOfFeatures      = 56;
 
-short  PostLarvaeFV::SizeIndex             = 0;
-short  PostLarvaeFV::Moment1Index          = 1;
-short  PostLarvaeFV::Moment2Index          = 2;
-short  PostLarvaeFV::Moment3Index          = 3;
-short  PostLarvaeFV::Moment4Index          = 4;
-short  PostLarvaeFV::Moment5Index          = 5;
-short  PostLarvaeFV::Moment6Index          = 6;
-short  PostLarvaeFV::Moment7Index          = 7;
-short  PostLarvaeFV::Moment8Index          = 8;
+kkint16  PostLarvaeFV::SizeIndex             = 0;
+kkint16  PostLarvaeFV::Moment1Index          = 1;
+kkint16  PostLarvaeFV::Moment2Index          = 2;
+kkint16  PostLarvaeFV::Moment3Index          = 3;
+kkint16  PostLarvaeFV::Moment4Index          = 4;
+kkint16  PostLarvaeFV::Moment5Index          = 5;
+kkint16  PostLarvaeFV::Moment6Index          = 6;
+kkint16  PostLarvaeFV::Moment7Index          = 7;
+kkint16  PostLarvaeFV::Moment8Index          = 8;
 
-short  PostLarvaeFV::EdgeSizeIndex         = 9;
-short  PostLarvaeFV::EdgeMoment1Index      = 10;
-short  PostLarvaeFV::EdgeMoment2Index      = 11;	
-short  PostLarvaeFV::EdgeMoment3Index      = 12;
-short  PostLarvaeFV::EdgeMoment4Index      = 13;
-short  PostLarvaeFV::EdgeMoment5Index      = 14;
-short  PostLarvaeFV::EdgeMoment6Index      = 15;
-short  PostLarvaeFV::EdgeMoment7Index      = 16;
-short  PostLarvaeFV::EdgeMoment8Index      = 17;
+kkint16  PostLarvaeFV::EdgeSizeIndex         = 9;
+kkint16  PostLarvaeFV::EdgeMoment1Index      = 10;
+kkint16  PostLarvaeFV::EdgeMoment2Index      = 11;	
+kkint16  PostLarvaeFV::EdgeMoment3Index      = 12;
+kkint16  PostLarvaeFV::EdgeMoment4Index      = 13;
+kkint16  PostLarvaeFV::EdgeMoment5Index      = 14;
+kkint16  PostLarvaeFV::EdgeMoment6Index      = 15;
+kkint16  PostLarvaeFV::EdgeMoment7Index      = 16;
+kkint16  PostLarvaeFV::EdgeMoment8Index      = 17;
 
-short  PostLarvaeFV::TransparancyConvexHullIndex = 18;
-short  PostLarvaeFV::TransparancyPixelCountIndex = 19;
-short  PostLarvaeFV::TransparancyOpen3Index      = 20;
-short  PostLarvaeFV::TransparancyOpen5Index      = 21;
-short  PostLarvaeFV::TransparancyOpen7Index      = 22;
-short  PostLarvaeFV::TransparancyOpen9Index      = 23;
-short  PostLarvaeFV::TransparancyClose3Index     = 24;
-short  PostLarvaeFV::TransparancyClose5Index     = 25;
-short  PostLarvaeFV::TransparancyClose7Index     = 26;
+kkint16  PostLarvaeFV::TransparancyConvexHullIndex = 18;
+kkint16  PostLarvaeFV::TransparancyPixelCountIndex = 19;
+kkint16  PostLarvaeFV::TransparancyOpen3Index      = 20;
+kkint16  PostLarvaeFV::TransparancyOpen5Index      = 21;
+kkint16  PostLarvaeFV::TransparancyOpen7Index      = 22;
+kkint16  PostLarvaeFV::TransparancyOpen9Index      = 23;
+kkint16  PostLarvaeFV::TransparancyClose3Index     = 24;
+kkint16  PostLarvaeFV::TransparancyClose5Index     = 25;
+kkint16  PostLarvaeFV::TransparancyClose7Index     = 26;
 
-short  PostLarvaeFV::ConvexAreaIndex       = 27;
-short  PostLarvaeFV::TransparancySizeIndex = 28;
-short  PostLarvaeFV::TransparancyWtdIndex  = 29;
-short  PostLarvaeFV::WeighedMoment0Index   = 30;
-short  PostLarvaeFV::WeighedMoment1Index   = 31;
-short  PostLarvaeFV::WeighedMoment2Index   = 32;
-short  PostLarvaeFV::WeighedMoment3Index   = 33;
-short  PostLarvaeFV::WeighedMoment4Index   = 34;
-short  PostLarvaeFV::WeighedMoment5Index   = 35;
-short  PostLarvaeFV::WeighedMoment6Index   = 36;
-short  PostLarvaeFV::WeighedMoment7Index   = 37;
-short  PostLarvaeFV::WeighedMoment8Index   = 38;
+kkint16  PostLarvaeFV::ConvexAreaIndex       = 27;
+kkint16  PostLarvaeFV::TransparancySizeIndex = 28;
+kkint16  PostLarvaeFV::TransparancyWtdIndex  = 29;
+kkint16  PostLarvaeFV::WeighedMoment0Index   = 30;
+kkint16  PostLarvaeFV::WeighedMoment1Index   = 31;
+kkint16  PostLarvaeFV::WeighedMoment2Index   = 32;
+kkint16  PostLarvaeFV::WeighedMoment3Index   = 33;
+kkint16  PostLarvaeFV::WeighedMoment4Index   = 34;
+kkint16  PostLarvaeFV::WeighedMoment5Index   = 35;
+kkint16  PostLarvaeFV::WeighedMoment6Index   = 36;
+kkint16  PostLarvaeFV::WeighedMoment7Index   = 37;
+kkint16  PostLarvaeFV::WeighedMoment8Index   = 38;
 
-short  PostLarvaeFV::IntensityHist1Index   = 39;
-short  PostLarvaeFV::IntensityHist2Index   = 40;
-short  PostLarvaeFV::IntensityHist3Index   = 41;
-short  PostLarvaeFV::IntensityHist4Index   = 42;
-short  PostLarvaeFV::IntensityHist5Index   = 43;
-short  PostLarvaeFV::IntensityHist6Index   = 44;
-short  PostLarvaeFV::IntensityHist7Index   = 45;
+kkint16  PostLarvaeFV::IntensityHist1Index   = 39;
+kkint16  PostLarvaeFV::IntensityHist2Index   = 40;
+kkint16  PostLarvaeFV::IntensityHist3Index   = 41;
+kkint16  PostLarvaeFV::IntensityHist4Index   = 42;
+kkint16  PostLarvaeFV::IntensityHist5Index   = 43;
+kkint16  PostLarvaeFV::IntensityHist6Index   = 44;
+kkint16  PostLarvaeFV::IntensityHist7Index   = 45;
 
-short  PostLarvaeFV::DarkSpotCount0        = 46;
-short  PostLarvaeFV::DarkSpotCount1        = 47;
-short  PostLarvaeFV::DarkSpotCount2        = 48;
-short  PostLarvaeFV::DarkSpotCount3        = 49;
-short  PostLarvaeFV::DarkSpotCount4        = 50;
-short  PostLarvaeFV::DarkSpotCount5        = 51;
-short  PostLarvaeFV::DarkSpotCount6        = 52;
-short  PostLarvaeFV::DarkSpotCount7        = 53;
-short  PostLarvaeFV::DarkSpotCount8        = 54;
-short  PostLarvaeFV::DarkSpotCount9        = 55;
+kkint16  PostLarvaeFV::DarkSpotCount0        = 46;
+kkint16  PostLarvaeFV::DarkSpotCount1        = 47;
+kkint16  PostLarvaeFV::DarkSpotCount2        = 48;
+kkint16  PostLarvaeFV::DarkSpotCount3        = 49;
+kkint16  PostLarvaeFV::DarkSpotCount4        = 50;
+kkint16  PostLarvaeFV::DarkSpotCount5        = 51;
+kkint16  PostLarvaeFV::DarkSpotCount6        = 52;
+kkint16  PostLarvaeFV::DarkSpotCount7        = 53;
+kkint16  PostLarvaeFV::DarkSpotCount8        = 54;
+kkint16  PostLarvaeFV::DarkSpotCount9        = 55;
 
 
 const  char*  PostLarvaeFV::FeatureNames[] =
@@ -602,7 +602,7 @@ PostLarvaeFV::~PostLarvaeFV ()
 
 
 
-void  PostLarvaeFV::ResetVersion (short  newVersion)
+void  PostLarvaeFV::ResetVersion (kkint16  newVersion)
 {
   Version (newVersion);
 }  /* ResetVersionMum */

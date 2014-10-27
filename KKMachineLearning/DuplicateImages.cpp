@@ -1,22 +1,22 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdio.h>
-#include  <vector>
-#include  <iostream>
-#include  <fstream>
+#include <stdio.h>
+#include <vector>
+#include <iostream>
+#include <fstream>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace std;
 
 
 
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
 using namespace KKB;
 
 
-#include  "DuplicateImages.h"
+#include "DuplicateImages.h"
 
                 
 #include "FeatureFileIOKK.h"

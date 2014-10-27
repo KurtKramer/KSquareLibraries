@@ -277,8 +277,8 @@ MLClassListPtr   SizeDistribution::BuildImageClassList ()  const
 
 
 
-void   SizeDistribution::Increment (MLClassPtr   mlClass,
-                                    kkint32         size
+void   SizeDistribution::Increment (MLClassPtr  mlClass,
+                                    kkint32     size
                                    )
 {
   if  (mlClass == NULL)

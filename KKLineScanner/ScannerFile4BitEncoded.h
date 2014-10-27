@@ -183,7 +183,7 @@ namespace  KKLSC
 
     static  void  ExitCleanUp ();
 
-    void  GetNextScanLine (uchar* lineBuff,
+    void  GetNextScanLine (uchar*   lineBuff,
                            kkuint32 lineBuffSize
                           );
 

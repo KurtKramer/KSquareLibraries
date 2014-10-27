@@ -34,7 +34,7 @@ namespace  SVM233
       value = 0.0;
     }
 
-    short index;
+    kkint16 index;
     double value;
   };
 

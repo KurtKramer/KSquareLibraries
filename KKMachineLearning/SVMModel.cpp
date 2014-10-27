@@ -494,7 +494,7 @@ kkint32  SVMModel::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (SVMModel)
        + assignments.MemoryConsumedEstimated ()
-       + sizeof (short) * oneVsAllAssignment.size ()
+       + sizeof (kkint16) * oneVsAllAssignment.size ()
        + sizeof (kkint32) * cardinality_table.size ()
        + rootFileName.MemoryConsumedEstimated ()
        + svmParam.MemoryConsumedEstimated ()
@@ -1567,7 +1567,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
 
   for  (assignmentIDX = 0;  assignmentIDX < oneVsAllAssignment.size ();  assignmentIDX++)
   {
-    short  assignmentNum = oneVsAllAssignment[assignmentIDX];
+    kkint16  assignmentNum = oneVsAllAssignment[assignmentIDX];
 
     kkint32  knownClassNum = -1;
     kkint32  predClassNum  = -1;
@@ -2617,7 +2617,7 @@ void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
   // build the models
   for (assignmentIDX = 0;  assignmentIDX < numOfModels;  assignmentIDX++)
   {
-    short  assignmentNum = assignmentNums[assignmentIDX];
+    kkint16  assignmentNum = assignmentNums[assignmentIDX];
     oneVsAllAssignment.push_back (assignmentNum);
 
     MLClassList  classesThisAssignment = assignments.GetMLClasses (assignmentNum);

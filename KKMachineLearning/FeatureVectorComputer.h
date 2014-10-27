@@ -63,7 +63,7 @@ namespace KKMachineLearning
 
 
     /**
-     *@brief  Returns a short description of the FeatureVector which can be used as part/all of a File or Direecttory name.
+     *@brief  Returns a kkint16 description of the FeatureVector which can be used as part/all of a File or Direecttory name.
      */
     const KKStr&  Name () const {return name;};
 

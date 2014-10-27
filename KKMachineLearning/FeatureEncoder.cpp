@@ -560,9 +560,9 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
   kkint32 i = 0;
 
-  FeatureVectorPtr    image          = NULL;
-  MLClassPtr       lastImageClass = NULL;
-  short               lastClassNum   = -1;
+  FeatureVectorPtr  image          = NULL;
+  MLClassPtr        lastImageClass = NULL;
+  kkint16           lastClassNum   = -1;
 
   kkint32  bytesOfxSpacePerImage = xSpaceNeededPerImage * sizeof (struct svm_node);
 

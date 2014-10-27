@@ -53,13 +53,13 @@ namespace KKMachineLearning
     {
     public:
       ClassPairProb (MLClassPtr _classLabel,
-                     double        _probability
+                     double     _probability
                     );
 
       ClassPairProb (const ClassPairProb&  _pair);
 
       MLClassPtr classLabel;
-      double        probability;
+      double     probability;
     };
     typedef  ClassPairProb*  ClassPairProbPtr;
 
@@ -242,22 +242,22 @@ namespace KKMachineLearning
     //*********************************************************************
 
     virtual
-    MLClassPtr      Predict (FeatureVectorPtr  image) = 0;
+    MLClassPtr  Predict (FeatureVectorPtr  image) = 0;
   
     virtual
-    void               Predict (FeatureVectorPtr  example,
-                                MLClassPtr     knownClass,
-                                MLClassPtr&    predClass1,
-                                MLClassPtr&    predClass2,
-                                kkint32&          predClass1Votes,
-                                kkint32&          predClass2Votes,
-                                double&           probOfKnownClass,
-                                double&           probOfPredClass1,
-                                double&           probOfPredClass2,
-                                kkint32&          numOfWinners,
-                                bool&             knownClassOneOfTheWinners,
-                                double&           breakTie
-                               ) = 0;
+    void        Predict (FeatureVectorPtr  example,
+                         MLClassPtr        knownClass,
+                         MLClassPtr&       predClass1,
+                         MLClassPtr&       predClass2,
+                         kkint32&          predClass1Votes,
+                         kkint32&          predClass2Votes,
+                         double&           probOfKnownClass,
+                         double&           probOfPredClass1,
+                         double&           probOfPredClass2,
+                         kkint32&          numOfWinners,
+                         bool&             knownClassOneOfTheWinners,
+                         double&           breakTie
+                        ) = 0;
 
 
    virtual 
@@ -265,10 +265,10 @@ namespace KKMachineLearning
 
 
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                   _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities
                                ) = 0;
 
     /**

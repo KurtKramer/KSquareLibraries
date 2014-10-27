@@ -105,22 +105,22 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
 
     virtual
-    MLClassPtr      Predict (FeatureVectorPtr  image);
+    MLClassPtr   Predict (FeatureVectorPtr  image);
   
     virtual
-    void               Predict (FeatureVectorPtr  example,
-                                MLClassPtr     knownClass,
-                                MLClassPtr&    predClass1,
-                                MLClassPtr&    predClass2,
-                                kkint32&          predClass1Votes,
-                                kkint32&          predClass2Votes,
-                                double&           probOfKnownClass,
-                                double&           probOfPredClass1,
-                                double&           probOfPredClass2,
-                                kkint32&          numOfWinners,
-                                bool&             knownClassOneOfTheWinners,
-                                double&           breakTie
-                               );
+    void         Predict (FeatureVectorPtr  example,
+                          MLClassPtr        knownClass,
+                          MLClassPtr&       predClass1,
+                          MLClassPtr&       predClass2,
+                          kkint32&          predClass1Votes,
+                          kkint32&          predClass2Votes,
+                          double&           probOfKnownClass,
+                          double&           probOfPredClass1,
+                          double&           probOfPredClass2,
+                          kkint32&          numOfWinners,
+                          bool&             knownClassOneOfTheWinners,
+                          double&           breakTie
+                         );
 
 
 
@@ -132,7 +132,6 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     
     
      /**
-      ******************************************************************************************************************
       *@brief  Will get the probabilities assigned to each class.
       *@param[in]  example         unknown example that we want to get predicted probabilities for. 
       *@param[in]  _ImageClasses   List classes that caller is aware of.  This should be the same list that 
@@ -145,10 +144,10 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
       */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                 _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities
                                );
 
 
@@ -164,9 +163,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
       */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities
                                );
 
 
@@ -183,9 +182,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   kkint32             numToFind,
-                                                   MLClassPtr     c1,
-                                                   MLClassPtr     c2
+                                                   kkint32           numToFind,
+                                                   MLClassPtr        c1,
+                                                   MLClassPtr        c2
                                                   );
 
 
@@ -199,9 +198,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    kkint32             numToFind,
-                                                    MLClassPtr     c1,
-                                                    MLClassPtr     c2
+                                                    kkint32           numToFind,
+                                                    MLClassPtr        c1,
+                                                    MLClassPtr        c2
                                                    );
 
 
@@ -220,8 +219,8 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     vector<KKStr>  SupportVectorNames ()  const;
 
 
-    vector<KKStr>  SupportVectorNames (MLClassPtr     c1,
-                                       MLClassPtr     c2
+    vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
+                                       MLClassPtr  c2
                                       )  const;
 
 

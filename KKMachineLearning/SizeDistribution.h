@@ -36,8 +36,8 @@ namespace  KKMachineLearning
 class  SizeDistribution
 {
   public:
-    SizeDistribution (kkint32    _bucketCount,
-                      kkint32    _bucketSize,
+    SizeDistribution (kkint32  _bucketCount,
+                      kkint32  _bucketSize,
                       RunLog&  _log
                      );
   
@@ -45,7 +45,7 @@ class  SizeDistribution
 
 
     void     Increment (MLClassPtr   mlClass,
-                        kkint32           size
+                        kkint32      size
                        );
 
 

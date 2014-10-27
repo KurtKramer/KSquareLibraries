@@ -143,12 +143,12 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
 
   KKStr  rootName = osGetRootName (_fileName);
 
-  bool           eof           = false;
-  bool           eol           = false;
+  bool        eof           = false;
+  bool        eol           = false;
   MLClassPtr  exampleClass  = NULL;
-  KKStr          field;
-  kkint32          lineCount     = 0;
-  kkint32          numOfFeatures = _fileDesc->NumOfFields ();
+  KKStr       field;
+  kkint32     lineCount     = 0;
+  kkint32     numOfFeatures = _fileDesc->NumOfFields ();
 
   // Each row will represent a specific feature
   // Will initially create empty examples, then populate

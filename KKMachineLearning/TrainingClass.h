@@ -30,115 +30,107 @@
 #include  "KKStr.h"
 #include  "KKQueue.h"
 
-namespace KKMachineLearning {
-
-
-#ifndef  _MLCLASS_
-class  MLClass;
-typedef  MLClass*  MLClassPtr;
-class  MLClassList;
-typedef  MLClassList*  MLClassListPtr;
-#endif
-
-
-
-
-class  TrainingClass
+namespace KKMachineLearning 
 {
-
-public:
-
-  /**
-   *************************************************************************
-   *  Constructor,  Creates a new instance of TrainingClass and populates  *
-   *  fields with respective data from parameters.                         *
-   *                                                                       *
-   *  mlClasses - list of ImageClasses.  Constructor will update this   *
-   *                 set 'mlClass' to the MLClass in this list that  *
-   *                 has the same name  as '_name'.  If one does not exist *
-   *                 it will create a new MLClass object and add it to  *
-   *                 'mlClasses'.                                       *
-   *************************************************************************
-   */
-  TrainingClass (KKStr            _directory,
-                 KKStr            _name,
-                 float            _weight,
-                 float            _countFactor,
-                 MLClassList&  mlClasses
-                );
-
-  TrainingClass (const TrainingClass&  tc);
+  #ifndef  _MLCLASS_
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
+  #endif
 
 
-  float               CountFactor     () const  {return  countFactor;}
-  const KKStr&        Directory       () const  {return  directory;}
-  const KKStr&        FeatureFileName () const  {return  featureFileName;}
-  const MLClassPtr MLClass      () const  {return  mlClass;}
-  const KKStr&        Name            () const;
-  float               Weight          () const  {return  weight;}
+  class  TrainingClass
+  {
+  public:
+    /**
+     *@brief  Constructor,  Creates a new instance of TrainingClass and populates
+     *fields with respective data from parameters.
+     *@param[in] Directory where training examples will be located.
+     *@param[in] _weight 
+     *@param[in] _countFactor
+     *@param[in,out] mlClasses List of classes.
+     */
+    TrainingClass (KKStr         _directory,
+                   KKStr         _name,
+                   float         _weight,
+                   float         _countFactor,
+                   MLClassList&  mlClasses
+                  );
 
-  KKStr               ExpandedDirectory (const KKStr&  rootDir);
-
-  void  CountFactor     (float         _countFactor)      {countFactor     = _countFactor;}
-  void  Directory       (const KKStr&  _directory)        {directory       = _directory;}
-  void  FeatureFileName (const KKStr&  _featureFileName)  {featureFileName = _featureFileName;}
-  void  MLClass      (MLClassPtr _mlClass)       {mlClass      = _mlClass;}
-  void  Weight          (float         _weight)           {weight          = _weight;}
-
-
-private:
-  KKStr          SubstituteInEvironmentVariables (const KKStr&  src);
-
-  KKStr          directory;
-  KKStr          featureFileName;
-  MLClassPtr  mlClass;
-  float          weight;      // Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
-                              // the SVM Cost parameter from examples in this class will be weighted by this value.
-
-  float          countFactor;  /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
-};
+    TrainingClass (const TrainingClass&  tc);
 
 
-typedef  TrainingClass*  TrainingClassPtr;
+    float               CountFactor     () const  {return  countFactor;}
+    const KKStr&        Directory       () const  {return  directory;}
+    const KKStr&        FeatureFileName () const  {return  featureFileName;}
+    const MLClassPtr    MLClass         () const  {return  mlClass;}
+    const KKStr&        Name            () const;
+    float               Weight          () const  {return  weight;}
+
+    KKStr               ExpandedDirectory (const KKStr&  rootDir);
+
+    void  CountFactor     (float         _countFactor)      {countFactor     = _countFactor;}
+    void  Directory       (const KKStr&  _directory)        {directory       = _directory;}
+    void  FeatureFileName (const KKStr&  _featureFileName)  {featureFileName = _featureFileName;}
+    void  MLClass         (MLClassPtr    _mlClass)          {mlClass         = _mlClass;}
+    void  Weight          (float         _weight)           {weight          = _weight;}
 
 
-class  TrainingClassList:  public KKQueue<TrainingClass>
-{
-public:
-  TrainingClassList (const KKStr&  _rootDirExpanded,
-                     bool  owner    = true,
-                     kkint32 initSize = 5
-                    );
+  private:
+    KKStr       SubstituteInEvironmentVariables (const KKStr&  src);
 
-private:
-  TrainingClassList (const TrainingClassList&  tcl);
+    KKStr       directory;
+    KKStr       featureFileName;
+    MLClassPtr  mlClass;
+    float       weight;      /**< Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
+                              * the SVM Cost parameter from examples in this class will be weighted by this value.
+                              */
 
-public:
-  TrainingClassList (const TrainingClassList&  tcl,
-                     bool                      _owner
-                    );
+    float       countFactor;  /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
+  };
 
 
-  const KKStr&      RootDirExpanded ()  {return  rootDirExpanded;}
-  void              RootDir (const KKStr&  _rootDirExpanded)  {rootDirExpanded = _rootDirExpanded;}
-
-  void              AddTrainingClass (TrainingClassPtr  trainingClass);
+  typedef  TrainingClass*  TrainingClassPtr;
 
 
-  TrainingClassList*  DuplicateListAndContents ()  const;
+  class  TrainingClassList:  public KKQueue<TrainingClass>
+  {
+  public:
+    TrainingClassList (const KKStr&  _rootDirExpanded,
+                       bool          owner    = true,
+                       kkint32       initSize = 5
+                      );
 
-  TrainingClassPtr    LocateByImageClass (const MLClassPtr  _mlClass)  const;
+  private:
+    TrainingClassList (const TrainingClassList&  tcl);
 
-  TrainingClassPtr    LocateByImageClassName (const KKStr&  className);
-
-  TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
-
-private: 
-  KKStr   rootDirExpanded;
-};
+  public:
+    TrainingClassList (const TrainingClassList&  tcl,
+                       bool                      _owner
+                      );
 
 
-typedef  TrainingClassList*  TrainingClassListPtr;
+    const KKStr&      RootDirExpanded ()  {return  rootDirExpanded;}
+    void              RootDir (const KKStr&  _rootDirExpanded)  {rootDirExpanded = _rootDirExpanded;}
+
+    void              AddTrainingClass (TrainingClassPtr  trainingClass);
+
+
+    TrainingClassList*  DuplicateListAndContents ()  const;
+
+    TrainingClassPtr    LocateByImageClass (const MLClassPtr  _mlClass)  const;
+
+    TrainingClassPtr    LocateByImageClassName (const KKStr&  className);
+
+    TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
+
+  private: 
+    KKStr   rootDirExpanded;
+  };
+
+
+  typedef  TrainingClassList*  TrainingClassListPtr;
 
 }  /* namespace KKMachineLearning */
 

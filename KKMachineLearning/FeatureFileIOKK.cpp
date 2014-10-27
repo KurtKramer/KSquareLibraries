@@ -511,9 +511,9 @@ PostLarvaeFVListPtr  FeatureFileIOKK::LoadFile (const KKStr&      _fileName,
  * @param[out] mlClass  Image class that the Index of is needed for.
  * @return[out] Index indicated by 'classIdx' that mlClass is at.
 */
-kkint32  GetClassIdx (const map<MLClassPtr, kkint32>& classIdx,
-                    const MLClassPtr              mlClass
-                   )
+kkint32  GetClassIdx (const map<MLClassPtr, kkint32>&  classIdx,
+                      const MLClassPtr                 mlClass
+                     )
 {
   if  (!mlClass)
     return -1;

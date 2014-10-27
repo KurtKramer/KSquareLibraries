@@ -179,7 +179,7 @@ namespace KKMachineLearning
 
     /**
      * @brief Allocates a array of kkint32's that is a copy  of FeatureNums; The caller will own the array and is responsible for deleting it.
-     * @return A dynamically allocated array if short its that will consists of a list of selected features.
+     * @return A dynamically allocated array if kkint16 its that will consists of a list of selected features.
      */
     kkuint16*  CreateFeatureNumArray ()  const;
 

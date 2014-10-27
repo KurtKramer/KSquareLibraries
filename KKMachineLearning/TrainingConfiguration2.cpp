@@ -968,8 +968,8 @@ void  TrainingConfiguration2::SetFeatureNums (const  FeatureNumList&  features)
 
 
 
-void  TrainingConfiguration2::SetFeatureNums (MLClassPtr          class1,
-                                              MLClassPtr          class2,
+void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
+                                              MLClassPtr             class2,
                                               const FeatureNumList&  _features,
                                               float                  _weight
                                              )
@@ -1022,7 +1022,7 @@ double  TrainingConfiguration2::C_Param (MLClassPtr  class1,
 
 void  TrainingConfiguration2::C_Param (MLClassPtr  class1,
                                        MLClassPtr  class2,
-                                       double         cParam
+                                       double      cParam
                                       )
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
@@ -1036,8 +1036,8 @@ void  TrainingConfiguration2::C_Param (MLClassPtr  class1,
 
 
 
-void  TrainingConfiguration2::SetBinaryClassFields (MLClassPtr                  class1,
-                                                    MLClassPtr                  class2,
+void  TrainingConfiguration2::SetBinaryClassFields (MLClassPtr                     class1,
+                                                    MLClassPtr                     class2,
                                                     const SVM233::svm_parameter&   _param,
                                                     const FeatureNumList&          _features,
                                                     float                          _weight
@@ -1169,7 +1169,7 @@ FeatureNumList   TrainingConfiguration2::GetFeatureNums (MLClassPtr  class1,
 
 
 void  TrainingConfiguration2::SetModelParameters (ModelParamPtr  _svmParanters,
-                                                  kkint32          _examplesPerClass
+                                                  kkint32        _examplesPerClass
                                                  )
 {
   delete  modelParameters;

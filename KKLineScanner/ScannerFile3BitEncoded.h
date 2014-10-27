@@ -91,7 +91,7 @@ namespace  KKLSC
     virtual  ScannerFileFormat  FileFormat ()  const  {return sf3BitEncoded;}
 
     virtual
-    void  ScanRate          (float  _scanRate);
+    void  ScanRate (float  _scanRate);
 
 
     virtual

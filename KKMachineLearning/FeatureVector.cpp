@@ -726,8 +726,8 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
 
 
 FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                                       kkint32        _maxToExtract,
-                                                                       float          _minSize
+                                                                       kkint32     _maxToExtract,
+                                                                       float       _minSize
                                                                       )  const
 {
   kkint32            idx;
@@ -1099,8 +1099,8 @@ ClassStatisticListPtr  FeatureVectorList::GetClassStatistics ()  const
 {
   ClassStatisticListPtr  classStatistics = new ClassStatisticList (true);
 
-  MLClassPtr     mlClass = NULL;
-  FeatureVectorPtr  example    = NULL;
+  MLClassPtr        mlClass = NULL;
+  FeatureVectorPtr  example = NULL;
 
   FeatureVectorList::const_iterator  idx  = begin ();
   for  (idx = begin ();  idx != end ();  ++idx)
@@ -1741,7 +1741,7 @@ FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  leve
     }
     else
     {
-      MLClassPtr  curClassForThisLevel = MLClass::CreateNewMLClass (curClassNameForThisLevel);
+      MLClassPtr  curClassForThisLevel  = MLClass::CreateNewMLClass (curClassNameForThisLevel);
       MLClassPtr  nextClassForThisLevel = curClassForThisLevel;
 
       while  ((idx != allClasses->end ())  &&  (nextClassForThisLevel == curClassForThisLevel))

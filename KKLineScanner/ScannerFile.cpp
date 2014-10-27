@@ -539,10 +539,10 @@ void  ScannerFile::FrameRead (kkuint32  frameNum,
 
 
 
-void  ScannerFile::GetNextLine (uchar*   lineBuff,
-                                kkuint32 lineBuffSize,
+void  ScannerFile::GetNextLine (uchar*     lineBuff,
+                                kkuint32   lineBuffSize,
                                 kkuint32&  lineSize,
-                                kkuint32 colCount[],
+                                kkuint32   colCount[],
                                 kkuint32&  pixelsInRow
                                )
 {

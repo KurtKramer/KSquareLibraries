@@ -180,12 +180,12 @@ public:
 
 
   double   DistanceFromDecisionBoundary (FeatureVectorPtr  example,
-                                         MLClassPtr     class1,
-                                         MLClassPtr     class2
+                                         MLClassPtr        class1,
+                                         MLClassPtr        class2
                                         );
 
 
-  MLClassPtr      Predict (FeatureVectorPtr  example);
+  MLClassPtr  Predict (FeatureVectorPtr  example);
 
 
   /**
@@ -204,9 +204,9 @@ public:
    *@param[out] breakTie The difference in probability between the classes with thetwo hiest probabilities.
    */
   void   Predict (FeatureVectorPtr  example,
-                  MLClassPtr     knownClass,
-                  MLClassPtr&    predClass1,
-                  MLClassPtr&    predClass2,
+                  MLClassPtr        knownClass,
+                  MLClassPtr&       predClass1,
+                  MLClassPtr&       predClass2,
                   kkint32&          predClass1Votes,
                   kkint32&          predClass2Votes,
                   double&           probOfKnownClass,
@@ -229,10 +229,10 @@ public:
    *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
    *            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
    */
-  void  ProbabilitiesByClass (FeatureVectorPtr       example,
+  void  ProbabilitiesByClass (FeatureVectorPtr    example,
                               const MLClassList&  _mlClasses,
-                              kkint32*                 _votes,
-                              double*                _probabilities
+                              kkint32*            _votes,
+                              double*             _probabilities
                              );
 
 
@@ -250,8 +250,8 @@ public:
    */
   vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
                                                  kkint32           numToFind,
-                                                 MLClassPtr     c1,
-                                                 MLClassPtr     c2
+                                                 MLClassPtr        c1,
+                                                 MLClassPtr        c2
                                                 );
 
  
@@ -266,16 +266,16 @@ public:
    */
   vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
                                                   kkint32           numToFind,
-                                                  MLClassPtr     c1,
-                                                  MLClassPtr     c2
+                                                  MLClassPtr        c1,
+                                                  MLClassPtr        c2
                                                  );
 
  
   vector<KKStr>  SupportVectorNames ()  const;
 
 
-  vector<KKStr>  SupportVectorNames (MLClassPtr     c1,
-                                     MLClassPtr     c2
+  vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
+                                     MLClassPtr  c2
                                     )  const;
 
 
@@ -335,13 +335,13 @@ private:
    *            while classes that are not in 'classesThisAssignment' will be coded as
    *            '1' or the "All" in "One-Vs-All".
    */ 
-  void  BuildProblemOneVsAll (FeatureVectorList&     examples,
-                              struct svm_problem&    prob,
-                              XSpacePtr&             xSpace,
-                              const MLClassList&  classesThisAssignment,
-                              FeatureEncoderPtr      featureEncoder,
-                              MLClassList&        allClasses,
-                              ClassAssignmentsPtr&   classAssignments
+  void  BuildProblemOneVsAll (FeatureVectorList&    examples,
+                              struct svm_problem&   prob,
+                              XSpacePtr&            xSpace,
+                              const MLClassList&    classesThisAssignment,
+                              FeatureEncoderPtr     featureEncoder,
+                              MLClassList&          allClasses,
+                              ClassAssignmentsPtr&  classAssignments
                              );
 
 
@@ -369,15 +369,15 @@ private:
                                   FeatureEncoderPtr&    _encoder,
                                   struct svm_problem&   prob, 
                                   XSpacePtr&            xSpace, 
-                                  MLClassPtr         class1, 
-                                  MLClassPtr         class2
+                                  MLClassPtr            class1, 
+                                  MLClassPtr            class2
                                  );
 
 
-  void  PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       example,  
+  void  PredictProbabilitiesByBinaryCombos (FeatureVectorPtr    example,  
                                             const MLClassList&  _mlClasses,
-                                            kkint32*                 _votes,
-                                            double*                _probabilities
+                                            kkint32*            _votes,
+                                            double*             _probabilities
                                            );
 
 
@@ -439,7 +439,7 @@ private:
   static
   void  GreaterVotes (bool     useProbability,
                       kkint32  numClasses,
-                      kkint32*   votes,
+                      kkint32* votes,
                       kkint32& numOfWinners,
                       double*  probabilities,
                       kkint32& pred1Idx,
@@ -451,24 +451,24 @@ private:
   void  SetSelectedFeatures (const FeatureNumList& _selectedFeatures);
 
 
-  void  PredictOneVsAll (XSpacePtr       xSpace,
+  void  PredictOneVsAll (XSpacePtr    xSpace,
                          MLClassPtr   knownClass,
                          MLClassPtr&  predClass,
                          MLClassPtr&  predClass2,
-                         double&         probOfKnownClass,
-                         double&         probOfPredClass,
-                         double&         probOfPredClass2,
-                         kkint32&        numOfWinners,
-                         bool&           knownClassOneOfTheWinners,
-                         double&         breakTie
+                         double&      probOfKnownClass,
+                         double&      probOfPredClass,
+                         double&      probOfPredClass2,
+                         kkint32&     numOfWinners,
+                         bool&        knownClassOneOfTheWinners,
+                         double&      breakTie
                         );
 
 
 
   void  PredictByBinaryCombos (FeatureVectorPtr  example,
-                               MLClassPtr     knownClass,
-                               MLClassPtr&    predClass,
-                               MLClassPtr&    predClass2,
+                               MLClassPtr        knownClass,
+                               MLClassPtr&       predClass,
+                               MLClassPtr&       predClass2,
                                kkint32&          predClass1Votes,
                                kkint32&          predClass2Votes,
                                double&           probOfKnownClass,

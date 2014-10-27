@@ -640,13 +640,13 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
     {
       ClassStatisticPtr  class1Stats = stats->IdxToPtr (idx1);
       MLClassPtr  class1    = class1Stats->MLClass ();
-      kkuint32       class1Qty = class1Stats->Count ();
+      kkuint32    class1Qty = class1Stats->Count ();
 
       for  (idx2 = idx1 + 1;  idx2 < (stats->size());  idx2++)
       {
         ClassStatisticPtr  class2Stats = stats->IdxToPtr (idx2);
         MLClassPtr  class2    = class2Stats->MLClass ();
-        kkuint32       class2Qty = class2Stats->Count ();
+        kkuint32    class2Qty = class2Stats->Count ();
 
         kkint32  numFeaturesThisCombo = GetFeatureNums (class1, class2).NumSelFeatures ();
         kkint32  numExamplesThisCombo = class1Qty + class2Qty;
@@ -707,8 +707,8 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding ()  const
 
 
 
-void  SVMparam::SetFeatureNums (MLClassPtr          class1,
-                                MLClassPtr          class2,
+void  SVMparam::SetFeatureNums (MLClassPtr             class1,
+                                MLClassPtr             class2,
                                 const FeatureNumList&  _features,
                                 float                  _weight
                                )
@@ -778,7 +778,7 @@ double  SVMparam::C_Param (MLClassPtr  class1,
 
 void  SVMparam::C_Param (MLClassPtr  class1,
                          MLClassPtr  class2,
-                         double         cParam
+                         double      cParam
                         )
 {
   if  (!binaryParmsList)
@@ -808,8 +808,8 @@ void  SVMparam::C_Param (MLClassPtr  class1,
 
 
 
-void  SVMparam::SetBinaryClassFields (MLClassPtr          class1,
-                                      MLClassPtr          class2,
+void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
+                                      MLClassPtr             class2,
                                       const svm_parameter&   _param,
                                       const FeatureNumList&  _features,
                                       float                  _weight
@@ -843,8 +843,8 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr          class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  SVMparam::AddBinaryClassParms (MLClassPtr         class1,
-                                     MLClassPtr         class2,
+void  SVMparam::AddBinaryClassParms (MLClassPtr            class1,
+                                     MLClassPtr            class2,
                                      const svm_parameter&  _param,
                                      const FeatureNumList& _selectedFeatures,
                                      float                 _weight

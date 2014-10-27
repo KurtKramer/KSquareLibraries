@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 
+
 //**************************************************************************
 //*                              ScannerFile                               *
 //*                                                                        *
@@ -166,6 +167,7 @@ namespace  KKLSC
      */
     void  BuildFrameOffsets (const volatile bool&  cancelFlag);
 
+
     /**
      *@brief  Call this method to Load the FrameOffsets and StartStop points from the index file.
      *@details  This method is also called from 'BuildFrameOffsets',
@@ -180,15 +182,15 @@ namespace  KKLSC
      * line in frame 'frameNum'.
      */
     void  FrameRead (kkuint32  frameNum,
-                     bool&   found
+                     bool&     found
                     );
 
 
     virtual 
-    void  GetNextLine (uchar*   lineBuff,
-                       kkuint32 lineBuffSize,
+    void  GetNextLine (uchar*     lineBuff,
+                       kkuint32   lineBuffSize,
                        kkuint32&  lineSize,
-                       kkuint32 colCount[],
+                       kkuint32   colCount[],
                        kkuint32&  pixelsInRow
                       );
   

@@ -23,8 +23,8 @@ using namespace KKMachineLearning;
 using namespace  SVM233;
 
 
-BinaryClassParms::BinaryClassParms (MLClassPtr          _class1,
-                                    MLClassPtr          _class2,
+BinaryClassParms::BinaryClassParms (MLClassPtr             _class1,
+                                    MLClassPtr             _class2,
                                     const svm_parameter&   _param,
                                     const FeatureNumList&  _selectedFeatures,
                                     float                  _weight

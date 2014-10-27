@@ -443,7 +443,7 @@ namespace KKMachineLearning
    *@see KKMachineLearning::Model
    *@see KKMachineLearning::FeatureEncoder2::compress
    */
-  class  ClassIndexList: public  map<MLClassPtr, short>
+  class  ClassIndexList: public  map<MLClassPtr, kkint16>
   {
   public:
     typedef  ClassIndexList*  ClassIndexListPtr;
@@ -458,21 +458,21 @@ namespace KKMachineLearning
 
 
     void  AddClassIndexAssignment (MLClassPtr _ic,
-                                   short      _classIndex,
+                                   kkint16    _classIndex,
                                    bool&      _dupEntry
                                   );
 
     /**
      @brief  Returns the corresponding index to the class 'c';  if not in list will return -1.
      */
-    short  GetClassIndex (MLClassPtr  c);
+    kkint16  GetClassIndex (MLClassPtr  c);
 
 
     /**
      *@brief  Locates the MLClass that was assigned classIndex.
      *@details If not found then returns NULL.  If more than one class has the same classIndex will return the first one added.
      */
-    MLClassPtr  GetMLClass (short classIndex);
+    MLClassPtr  GetMLClass (kkint16 classIndex);
 
     kkint32  MemoryConsumedEstimated ()  const;
 
@@ -482,8 +482,8 @@ namespace KKMachineLearning
 
 
   private:
-    map<short, MLClassPtr>  shortIdx;
-    short                   largestIndex;   /**< largest index used so far. */
+    map<kkint16, MLClassPtr>  shortIdx;
+    kkint16                   largestIndex;   /**< largest index used so far. */
   };  /* ClassIndexList */
 
   typedef  ClassIndexList::ClassIndexListPtr  ClassIndexListPtr;

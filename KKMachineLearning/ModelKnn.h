@@ -38,23 +38,23 @@ namespace  KKMachineLearning
 
 
     virtual
-    MLClassPtr      Predict (FeatureVectorPtr  example);
+    MLClassPtr  Predict (FeatureVectorPtr  example);
   
 
     virtual
-    void               Predict (FeatureVectorPtr  example,
-                                MLClassPtr     knownClass,
-                                MLClassPtr&    predClass1,
-                                MLClassPtr&    predClass2,
-                                kkint32&          predClass1Votes,
-                                kkint32&          predClass2Votes,
-                                double&           probOfKnownClass,
-                                double&           probOfPredClass1,
-                                double&           probOfPredClass2,
-                                kkint32&          numOfWinners,
-                                bool&             knownClassOneOfTheWinners,
-                                double&           breakTie
-                               );
+    void        Predict (FeatureVectorPtr  example,
+                         MLClassPtr        knownClass,
+                         MLClassPtr&       predClass1,
+                         MLClassPtr&       predClass2,
+                         kkint32&          predClass1Votes,
+                         kkint32&          predClass2Votes,
+                         double&           probOfKnownClass,
+                         double&           probOfPredClass1,
+                         double&           probOfPredClass2,
+                         kkint32&          numOfWinners,
+                         bool&             knownClassOneOfTheWinners,
+                         double&           breakTie
+                        );
 
 
     virtual

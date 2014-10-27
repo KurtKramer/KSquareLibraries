@@ -213,9 +213,9 @@ MLClassPtr  ModelUsfCasCor::Predict (FeatureVectorPtr  example)
 
 
 void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
-                               MLClassPtr    knownClass,
-                               MLClassPtr&   predClass1,
-                               MLClassPtr&   predClass2,
+                               MLClassPtr       knownClass,
+                               MLClassPtr&      predClass1,
+                               MLClassPtr&      predClass2,
                                kkint32&         predClass1Votes,
                                kkint32&         predClass2Votes,
                                double&          probOfKnownClass,
@@ -397,7 +397,7 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _exampl
 
   float  pc1p = 0.0f;
   float  pc2p = 0.0f;
-  float  kcp = 0.0f;
+  float  kcp  = 0.0f;
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (_example, newExampleCreated);

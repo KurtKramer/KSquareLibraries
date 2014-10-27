@@ -12,7 +12,7 @@
 #include <vector>
 
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace  std;
 
@@ -1114,9 +1114,5 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
   delete  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
-
-
-
-
 
 

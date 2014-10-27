@@ -23,7 +23,7 @@ using namespace  KKMachineLearning;
 
 
 ClassAssignments::ClassAssignments (RunLog&  _log):
-    multimap<short, MLClassPtr> (),
+    multimap<kkint16, MLClassPtr> (),
     log (_log)
 {
 }
@@ -31,16 +31,16 @@ ClassAssignments::ClassAssignments (RunLog&  _log):
 
 
 ClassAssignments::ClassAssignments (const MLClassList&  classes,
-                                    RunLog&                _log
+                                    RunLog&             _log
                                    ):
-    multimap<short, MLClassPtr> (),
+    multimap<kkint16, MLClassPtr> (),
     log (_log)
 {
   kkint32  x = 0;
   for  (MLClassList::const_iterator idx = classes.begin ();  idx != classes.end ();  idx++)
   {
-   insert (pair<short, MLClassPtr> (x, *idx));
-   classLookUp.insert (pair<MLClassPtr, short> (*idx, x));
+   insert (pair<kkint16, MLClassPtr> (x, *idx));
+   classLookUp.insert (pair<MLClassPtr, kkint16> (*idx, x));
    x++;
   }
 }
@@ -49,7 +49,7 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes,
 kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (ClassAssignments) 
-    +  (classLookUp.size () * (sizeof (MLClassPtr) + sizeof (short)));
+    +  (classLookUp.size () * (sizeof (MLClassPtr) + sizeof (kkint16)));
   return  memoryConsumedEstimated;
 }
 
@@ -57,8 +57,8 @@ kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
 
 
 void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
-                                       short          num
-                                      )
+                                    kkint16     num
+                                   )
 {
   ClassLookUpIterator  idx;
   idx = classLookUp.find (mlClass);
@@ -72,17 +72,17 @@ void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
     return;
   }
 
-  insert (pair<short, MLClassPtr> (num, mlClass));
-  classLookUp.insert (pair<MLClassPtr, short> (mlClass, num));
+  insert (pair<kkint16, MLClassPtr> (num, mlClass));
+  classLookUp.insert (pair<MLClassPtr, kkint16> (mlClass, num));
 }  /* AddMLClass */
 
 
 
 
 
-MLClassPtr  ClassAssignments::GetMLClass (short num)
+MLClassPtr  ClassAssignments::GetMLClass (kkint16 num)
 {
-  multimap<short, MLClassPtr>::iterator p;
+  multimap<kkint16, MLClassPtr>::iterator p;
   p = find (num);
   if (p == end ())
     return NULL;
@@ -93,7 +93,7 @@ MLClassPtr  ClassAssignments::GetMLClass (short num)
 
 
 
-MLClassList  ClassAssignments::GetMLClasses (short num)  const
+MLClassList  ClassAssignments::GetMLClasses (kkint16 num)  const
 {
   ClassAssignments::const_iterator  idx;
 
@@ -125,7 +125,7 @@ VectorShort   ClassAssignments::GetUniqueListOfAssignments ()  const
 
   VectorShort  results;
 
-  short  lastNum = -999;
+  kkint16  lastNum = -999;
   VectorShort::const_iterator  idx2;
   for  (idx2 = nums.begin (); idx2 != nums.end ();  idx2++)
   {
@@ -167,7 +167,7 @@ MLClassPtr  ClassAssignments::GetMLClassByIndex (size_t idx)
 
 
 
-short  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
+kkint16  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
 {
   ClassLookUp::const_iterator  idx;
   idx = classLookUp.find (mlClass);
@@ -210,7 +210,7 @@ void  ClassAssignments::Load (const KKStr&  fileName,
     dataRow.TrimLeft ();
 
     KKStr  className = dataRow.ExtractToken2 ("\n\r\t,");
-    short   classNum  = (short)dataRow.ExtractTokenInt ("\n\r\t,");
+    kkint16  classNum  = (kkint16)dataRow.ExtractTokenInt ("\n\r\t,");
 
     MLClassPtr mlClass = MLClass::CreateNewMLClass (className);
     kkint32  existingAssignmentNum = GetNumForClass (mlClass);

@@ -12,7 +12,7 @@
  *         and annother number in a different level.  This caused us to have to maintain a separate 
  *         instantiation of these classes on the SvmModel objects. 
  *
- *         It is sub-classed from multimap<short, MLClassPtr>.  This allows for fast lookup by 
+ *         It is sub-classed from multimap<kkint16, MLClassPtr>.  This allows for fast lookup by 
  *         number.  There is also a secondary index by MLClass.  This allows us to do a fast 
  *         lookup by class.
  */
@@ -33,7 +33,7 @@ namespace KKMachineLearning
   #endif
 
 
-  class  ClassAssignments: public  std::multimap<short, MLClassPtr>
+  class  ClassAssignments: public  std::multimap<kkint16, MLClassPtr>
   {
   public:
     ClassAssignments (RunLog&  _log);
@@ -52,16 +52,16 @@ namespace KKMachineLearning
 
 
     void  AddMLClass (MLClassPtr  mlClass,
-                      short       num
+                      kkint16     num
                      );
 
     MLClassPtr      GetMLClassByIndex (size_t idx);
 
-    MLClassPtr      GetMLClass    (short num);
+    MLClassPtr      GetMLClass (kkint16 num);
 
-    MLClassList     GetMLClasses (short num)  const;
+    MLClassList     GetMLClasses (kkint16 num)  const;
 
-    short           GetNumForClass (MLClassPtr  mlClass)  const;
+    kkint16         GetNumForClass (MLClassPtr  mlClass)  const;
 
     VectorShort     GetUniqueListOfAssignments ()  const;
 
@@ -80,14 +80,14 @@ namespace KKMachineLearning
 
 
     void            Save (const KKStr&  fileName,
-                          bool&          successful
+                          bool&         successful
                          );
 
     KKStr           ToString ()  const;
 
   private:
-    typedef  std::map<MLClassPtr, short>  ClassLookUp;
-    typedef  ClassLookUp::iterator        ClassLookUpIterator;
+    typedef  std::map<MLClassPtr, kkint16>  ClassLookUp;
+    typedef  ClassLookUp::iterator          ClassLookUpIterator;
 
     ClassLookUp  classLookUp;
     RunLog&      log;

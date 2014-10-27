@@ -20,10 +20,8 @@ using namespace std;
 #endif
 
 
-
 #include "MemoryDebug.h"
 using namespace  std;
-
 
 #include "KKBaseTypes.h"
 #include "OSservices.h"
@@ -408,7 +406,7 @@ UsfCasCor::~UsfCasCor ()
 
 
 template<typename T>
-void  UsfCasCor::Delete2DArray (T**     &A,    
+void  UsfCasCor::Delete2DArray (T**       &A,    
                                 kkuint32  numRows
                                )
 {
@@ -581,15 +579,15 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
 
 
 
-void  UsfCasCor::PredictConfidences (FeatureVectorPtr            example,
+void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
                                      MLClassPtr          knownClass,
                                      MLClassPtr&         predClass1,
-                                     float&                      predClass1Prob,
+                                     float&              predClass1Prob,
                                      MLClassPtr&         predClass2,
-                                     float&                      predClass2Prob,
-                                     float&                      knownClassProb,
+                                     float&              predClass2Prob,
+                                     float&              knownClassProb,
                                      const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populatd. */
-                                     VectorFloat&                probabilities
+                                     VectorFloat&        probabilities
                                     )
 {
   float  totalFeature = example->TotalOfFeatureData ();
@@ -3892,7 +3890,7 @@ kkint64  GetLocalDateTime ()
   SYSTEMTIME  sysTime;
   GetLocalTime(&sysTime);
 
-  int  year   = (short)sysTime.wYear;
+  int  year   = (kkint16)sysTime.wYear;
   int  month  = sysTime.wMonth;
   int  day    = sysTime.wDay;
   int  hour   = sysTime.wHour;

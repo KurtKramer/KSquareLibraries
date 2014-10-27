@@ -361,10 +361,10 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
 
   double            breakTie                   = 0.0f;
   FeatureVectorPtr  example                    = NULL;
-  MLClassPtr     knownClass                 = NULL;
+  MLClassPtr        knownClass                 = NULL;
   bool              knownClassOneOfTheWinners  = false;
   kkint32           numOfWinners               = 0;
-  MLClassPtr     predictedClass             = NULL;
+  MLClassPtr        predictedClass             = NULL;
   double            probability                = 0.0f;
 
   kkint32  numTestExamples = testImages->QueueSize ();
@@ -373,10 +373,10 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   kkint32  foldCount   = 0;
 
   vector<FeatureVectorPtr>  exampleHist                   (numTestExamples);
-  vector<MLClassPtr>     knownClassHist                (numTestExamples);
+  vector<MLClassPtr>        knownClassHist                (numTestExamples);
   vector<bool>              knownClassOneOfTheWinnersHist (numTestExamples, false);
-  vector<kkint32>             numOfWinersHist               (numTestExamples, 0);
-  vector<MLClassPtr>     predictedClassHist            (numTestExamples);
+  vector<kkint32>           numOfWinersHist               (numTestExamples, 0);
+  vector<MLClassPtr>        predictedClassHist            (numTestExamples);
   vector<double>            probabilityHist               (numTestExamples, 0.0f);
 
   FeatureVectorList::iterator  exampleIDX;

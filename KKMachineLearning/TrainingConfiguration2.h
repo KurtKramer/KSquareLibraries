@@ -114,7 +114,7 @@ namespace KKMachineLearning
 
     void                   C_Param (MLClassPtr  class1,
                                     MLClassPtr  class2,
-                                    double         cParam
+                                    double      cParam
                                    );
 
 
@@ -179,9 +179,9 @@ namespace KKMachineLearning
     void                   AddATrainingClass (TrainingClassPtr  _trainClass);
 
     void                   AddATrainingClass (MLClassPtr  _newClass);  /**< Will assume that images for this class will 
-                                                                           * be saved off the RootDirectory using its own 
-                                                                           * name for the subdirectory name.
-                                                                           */
+                                                                        * be saved off the RootDirectory using its own 
+                                                                        * name for the subdirectory name.
+                                                                        */
 
 
     void                   BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
@@ -200,10 +200,10 @@ namespace KKMachineLearning
 
     FeatureNumList         GetFeatureNums ()  const;
 
-    FeatureNumList         GetFeatureNums (MLClassPtr  class1,   // Will get feature nums that will be
-                                           MLClassPtr  class2    // used by the given class pair.
-                                          );                        // If none were specified for that pair
-                                                                    // will return the genral one specified 
+    /**@brief  Retuns features selected for teh specified class-pair. */
+    FeatureNumList         GetFeatureNums (MLClassPtr  class1,   /**< First of two classes of pair. */
+                                           MLClassPtr  class2    /**< Second of two classes of pair. */
+                                          );
 
 
     FeatureVectorListPtr   LoadFeatureDataFromTrainingLibraries (KKB::DateTime&  latestImageTimeStamp,

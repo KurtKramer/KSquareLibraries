@@ -136,14 +136,14 @@ namespace KKMachineLearning
     const KKMachineLearning::AttributeList&   Attributes          ()  const  {return attributes;};
     const AttributeTypeVector&                AttributeVector     ()  const  {return attributeVector;};
     const VectorInt32&                        CardinalityVector   ()  const  {return cardinalityVector;}
-    const MLClassList&                     Classes             ()  const  {return classes;}
+    const MLClassList&                        Classes             ()  const  {return classes;}
     const KKStr&                              ClassNameAttribute  ()  const  {return classNameAttribute;}   /**< ClassNameAttribute added to support dstWeb  data files. */
     const KKStr&                              FileName            ()  const  {return  fileName;}
     kkint32                                   SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
-    short                                     Version             ()  const  {return version;}
+    kkint16                                   Version             ()  const  {return version;}
 
     void   SparseMinFeatureNum (kkint32  _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
-    void   Version             (short  _version)              {version             = _version;}
+    void   Version             (kkint16  _version)              {version             = _version;}
 
 
 
@@ -303,7 +303,7 @@ namespace KKMachineLearning
     KKStr                               fileName;
     //RunLog&                           log;
     kkint32                             sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
-    short                               version;
+    kkint16                             version;
 
     static
       KKB::GoalKeeperPtr  blocker;

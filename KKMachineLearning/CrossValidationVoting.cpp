@@ -310,10 +310,10 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   {
     MLClassPtr  knownClass = (*imageIDX)->MLClass ();
 
-    kkint32        numOfWinners;
-    bool           knownClassOneOfTheWinners;
+    kkint32     numOfWinners;
+    bool        knownClassOneOfTheWinners;
     MLClassPtr  predictedClass = NULL;
-    double         breakTie;
+    double      breakTie;
 
     Classifier2Ptr  classifier = NULL;
 

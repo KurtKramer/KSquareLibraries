@@ -243,7 +243,7 @@ MLClassPtr  ModelSvmBase::Predict (FeatureVectorPtr  example)
     encodedExample = NULL;
   }
 
-  short  label = (short)y;
+  kkint16  label = (kkint16)y;
 
   MLClassPtr  ic = classesIndex->GetMLClass (label);
   if  (!ic)
