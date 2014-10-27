@@ -47,7 +47,8 @@
 #include <functional>
 #include <iostream>
 
-#include  "KKBaseTypes.h"
+#include "KKBaseTypes.h"
+#include "RandomNumGenerator.h"
 
 
 namespace  KKB
@@ -114,15 +115,17 @@ namespace  KKB
       ~KKQueue ();
 
 
+      EntryPtr  PopFromFront   ();                              /**< @brief  Removes the first element in the container and returns its pointer.  If the container is empty will return NULL.  */
+      EntryPtr  PopFromBack    ();                              /**< @brief  Removes the last element in the container and returns its pointer. If the container is empty will return NULL.    */
+      void      PushOnFront    (EntryPtr _entry);               /**< @brief  Adds '_entry' to the Front of the container.                                                      */
+      void      PushOnBack     (EntryPtr _entry);               /**< @brief  Adds '_entry' to the End of the container.                                                        */
+
       inline  void      Add         (EntryPtr _entry);          /**< @brief  same as PushOnBack   */
       inline  void      AddFirst    (EntryPtr _entry);          /**< @brief  same as PushOnFront  */
-      inline  EntryPtr  GetFirst    ()                  const;
-      inline  EntryPtr  GetLast     ()                  const;
       inline  EntryPtr  RemoveFirst ();                         /**< @brief  same as PopFromFront  */
       inline  EntryPtr  RemoveLast  ();                         /**< @brief  same as PopFromBack   */
-         
 
-      KKQueue*    DuplicateListAndContents ()           const;  /**< @brief  Creates a new container including duplicating the contents, which also makes the new instance the owner of those contents. */
+
 
       /**
        *@fn  void AddQueue (KKQueue& q);
@@ -132,35 +135,41 @@ namespace  KKB
        *          that after you add the contents of 'q' to this container that the caller set the 'owner' flag of 'q'  to false.
        */
       void      AddQueue       (const KKQueue& q);                    
-                                                                   
-      EntryPtr  BackOfQueue    ()                       const;  /**< @brief  Returns pointer of last element in the container without removing it.  If the container is empty will return NULL.  */
-      void      Compress       ();                              /**< @brief  No longer does anything. */
-      void      DeleteContents ();                              /**< @brief  Empties the container,  if 'owner' is set to true will call the destructor on each element.                     */
-      void      DeleteEntry    (EntryPtr _entry);               /**< @brief  Removes from KKQueue the entry who's pointer = '_entry'                                                           */
-      void      DeleteEntry    (kkuint32 _idx);                 /**< @brief  Removes from KKQueue the entry who's index = '_idx'.                                                              */
-      EntryPtr  FrontOfQueue   ()                       const;  /**< @brief  Returns a pointer to the element that is at from of the queue with out removing it from the queue.                */
-      kkuint32  GrowthRate     ()                       const;
-      void      GrowthRate     (kkuint32 _growthRate);
-      EntryPtr  IdxToPtr       (kkuint32 idx)           const;  /**< @brief  Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or >= QueueSize()  will return NULL.               */
 
-      kkint32   LocateEntry    (EntryPtr _entry)        const;  /**< @brief  Returns the index of the element who's address is '_entry'. If not found in container will return back -1.                             */
-      EntryPtr  LookAtBack     ()                       const;  /**< @brief  Returns pointer to element at Back of container with out removing it from the container.  If container is empty will return back NULL  */ 
-      EntryPtr  LookAtFront    ()                       const;  /**< @brief  Returns pointer to element at Front of container with out removing it from the container.  If container is empty will return back NULL */ 
-      bool      Owner          ()                       const;
-      void      Owner          (bool     _owner);               /**< @brief  You can specify who owns the contents of the container.  '_owner' == true means when the container is deleted it will also call the destructor for each element it contains. */
-      void      PushOnFront    (EntryPtr _entry);               /**< @brief  Adds '_entry' to the Front of the container.                                                      */
-      void      PushOnBack     (EntryPtr _entry);               /**< @brief  Adds '_entry' to the End of the container.                                                        */
-      EntryPtr  PopFromFront   ();                              /**< @brief  Removes the first element in the container and returns its pointer.  If the container is empty will return NULL.  */
-      EntryPtr  PopFromBack    ();                              /**< @brief  Removes the last element in the container and returns its pointer. If the container is empty will return NULL.    */
-      kkint32   PtrToIdx       (EntryPtr _entry)        const;  /**< @brief  returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
-      void      RandomizeOrder ();
-      void      RandomizeOrder (kkint64   seed);
-      kkint32   QueueSize      ()                       const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
-      //void      Sort           (QueueComparison<Entry>*  comparison);
+      void      Compress       ();                                  /**< @brief  No longer does anything. */
+      void      DeleteContents ();                                  /**< @brief  Empties the container,  if 'owner' is set to true will call the destructor on each element.                         */
+      void      DeleteEntry    (EntryPtr _entry);                   /**< @brief  Removes from KKQueue the entry who's pointer = '_entry'                                                             */
+      void      DeleteEntry    (kkuint32 _idx);                     /**< @brief  Removes from KKQueue the entry who's index = '_idx'.                                                                */
+      void      Owner          (bool     _owner);                   /**< @brief  You can specify who owns the contents of the container.  '_owner' == true means when the container is deleted it will also call the destructor for each element it contains. */
 
       void      SetIdxToPtr    (kkuint32  _idx,
                                 Entry*  _ptr
                                );
+
+
+      EntryPtr  BackOfQueue              ()                 const;  /**< @brief  Returns pointer of last element in the container without removing it.  If the container is empty will return NULL.  */
+      KKQueue*  DuplicateListAndContents ()                 const;  /**< @brief  Creates a new container including duplicating the contents, which also makes the new instance the owner of those contents. */
+      EntryPtr  FrontOfQueue             ()                 const;  /**< @brief  Returns a pointer to the element that is at from of the queue with out removing it from the queue.                  */
+      EntryPtr  GetFirst                 ()                 const;
+      EntryPtr  GetLast                  ()                 const;
+      kkuint32  GrowthRate               ()                 const;
+      EntryPtr  IdxToPtr                 (kkuint32 idx)     const;  /**< @brief  Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or >= QueueSize()  will return NULL.               */
+      kkint32   LocateEntry              (EntryPtr _entry)  const;  /**< @brief  Returns the index of the element who's address is '_entry'. If not found in container will return back -1.                             */
+      EntryPtr  LookAtBack               ()                 const;  /**< @brief  Returns pointer to element at Back of container with out removing it from the container.  If container is empty will return back NULL  */ 
+      EntryPtr  LookAtFront              ()                 const;  /**< @brief  Returns pointer to element at Front of container with out removing it from the container.  If container is empty will return back NULL */ 
+      bool      Owner                    ()                 const;
+      kkint32   PtrToIdx                 (EntryPtr _entry)  const;  /**< @brief  returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
+      kkint32   QueueSize                ()                 const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
+
+
+
+      kkuint32  FindTheKthElement (kkuint32  k);
+      void      RandomizeOrder ();
+      void      RandomizeOrder (kkint64   seed);
+      void      RandomizeOrder (RandomNumGenerator&  randomVariable)
+
+
+      //void      Sort           (QueueComparison<Entry>*  comparison);
 
       void      SwapIndexes    (size_t idx1,  size_t idx2);
 
@@ -433,9 +442,19 @@ namespace  KKB
   } /* operator!= */
 
 
-        
-  /// 2011-01-27  Sergiy
-  /// Fisher-Yates Uniform Random Sort.
+
+
+
+
+
+
+
+
+
+  /**
+   *@brief  Randomizes the order of the vector.
+   *@details  Implements the "Fisher-Yates Uniform Random Sort"; this implementation was done by Sergiy Fefilatyev (2011-01-27)
+   */
   template <class Entry>
   void  KKQueue<Entry>::RandomizeOrder ()
   {
@@ -457,14 +476,96 @@ namespace  KKB
 
 
 
-
-
   template <class Entry>
   void  KKQueue<Entry>::RandomizeOrder (kkint64  seed)
   {
     SRand48 (seed);
     RandomizeOrder ();
   }  /* RandomizeOrder */
+
+
+
+
+  /**
+   *@brief  Randomizes the order of the vector.
+   *@details  Implements the "Fisher-Yates Uniform Random Sort"; this implementation was done by Sergiy Fefilatyev (2011-01-27)
+   */
+  template <class Entry>
+  void  KKQueue<Entry>::RandomizeOrder (RandomNumGenerator&  randomVariable)
+  {
+    kkint32  i, j;
+    kkuint32  numEntries = KKQueue<Entry>::size ();
+    if  (numEntries < 2)
+      return;
+
+    i = numEntries - 1;
+    while (true)  
+    {
+      j = randomVariable.Next () % (i + 1);
+      SwapIndexes  (i, j );
+      if  (i < 1)
+        break;
+      i--;
+    }
+  }  /* RandomizeOrder */
+
+
+
+
+  template <class Entry>
+  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k)
+  {
+    if  ((k < 0)   ||  (K > = (kkint32)size ())
+      return -1;
+    return  FindTheKthElement (k, 0, size () - 1);
+  }  /* FindTheKthElement */
+
+
+
+
+  template <class Entry>
+  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
+                                                kkuint32  left,
+                                                kkuint32  right
+                                               )
+  {
+    if  (left == right)
+      return  left;
+
+    kkint32 m = Partition (left, right);
+    if  (k <= m)
+      return  Partition (left, m);
+
+    else if  (m < right)
+      return  Partition (m + 1, right);
+
+    else
+    {
+      // This should not be able to happen; but if it does then we have a flaw in teh code or the logoc somewhere,
+      cerr << "KKQueue<Entry>::FindTheKthElement  ***ERROR***  An invalid situation just occured." << endl
+            <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m        << endl;
+      return  m - 1;
+    }
+  }  /* FindTheKthElement */
+
+
+
+  template <class Entry>
+  kkint32   KKQueue<Entry>::Partition (kkuint32  left,
+                                       kkuint32  right
+                                      )
+  {
+    kkuint32  width = 1 + right - left;
+    kkuint32  pivitIdx = left + (LRand48() % width);
+
+    while  (left < right)
+    {
+      while  (
+
+
+
+    }
+  }
 
 
 
