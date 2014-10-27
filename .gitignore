@@ -8,3 +8,5 @@ Release
 *.zip
 
 /OutsidePackages
+*.ncb
+*.suo
