@@ -456,6 +456,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\KKB_Namespace.h"
+				>
+			</File>
+			<File
 				RelativePath=".\KKBaseTypes.h"
 				>
 			</File>
@@ -501,10 +505,6 @@
 			</File>
 			<File
 				RelativePath=".\kku_fftw.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Mainpage.h"
 				>
 			</File>
 			<File

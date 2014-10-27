@@ -7,6 +7,11 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
+/**
+ *@namespace  KKControls
+ *C-Sharp (c#) routines that implement a couple usefull controls.  These controld were originally 
+ *created as part of the SIPPER Interface application.
+ */
 namespace KKControls
 {
   public partial class RadioButtonList : UserControl

@@ -1,14 +1,15 @@
 namespace  KKB
 {
 /**
- *@namespace  KKB  Kurt Kramer Base Classes (KKB)  aka  KKBaseLibrery
- *
+ *@namespace  KKB  
+ *@brief KKB The namespace for KKBaseLibrary supporting general functionality needed by almost any application. 
  *@section  Introduction   Introduction
  * The KKBaseLibrery is my tool box of handy objects that I have been building since 1994.  
  * It contains classes for string management(KKStr), Floating point Matrix operations, 
  * Image Processing Routines, common operating system routines, Statistics, Histogramming,
- * etc.
- * \n\n
+ * etc. These classes are meant to be Operating System(OS) neutral in that from the outside 
+ * of the library they perform identically no matter what OS you are on.
+ * \n
  *
  *@section  PlatformIndependence    Platform Independence
  * All classes are meant to be Platform independent.  That is from the outside there should
@@ -16,7 +17,7 @@ namespace  KKB
  * code will be internal to KKBaseLibrery (KKB) classes.  For the most part all functions that 
  * require O/S specific knowledge are implemented in OSServices.h.  There are a couple of
  * exceptions such as GoalKeeper and ImageIO.h.
- * \n\n
+ * \n
  *
  *@section  OutsideLibraries  Outside Libraries FFTW and ZLIB.
  * To use all the classes in this Library you will need the libraries fftw and zlib123.  
@@ -29,7 +30,7 @@ namespace  KKB
  *                    Fourier transform will be utilized.
  * 'ZLIB_AVAILABLE' - Indicates that 'zlib' library is available.  If not defined the class
  *                     Compressor will not do anything.
- * \n\n
+ * \n
  *
  *@section KKQueue   KKQueue
  * I have a container template called KKQueue that is derived from the std::vector<> template.
@@ -38,7 +39,7 @@ namespace  KKB
  * or it does not.  If it owns them it will call the individual destructors for each item that it
  * contains when its destructor is called. Many classes that I have written use this template so
  * it would be worth reading its documentation.
- * \n\n
+ * \n
  *
  *@section  ImageProcessing   Image Processing
  * There are several classes that aid in Image Processing.  The primary class is Raster which
@@ -46,6 +47,5 @@ namespace  KKB
  * as well as Connected Component Analysis, Fourier transform, etc.  Other classes that work
  * with Raster are Blob, BMPheader, BMPheader.h, ContourFollower, Histogram, ImageIO.h, 
  * PixelValue, Point, and Sobel.
- *
  */
 }

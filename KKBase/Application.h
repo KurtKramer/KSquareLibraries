@@ -10,19 +10,7 @@
 #include "KKStr.h"
 #include "RunLog.h"
 
-/** 
- *@namespace  KKB
- *@brief KKB is a the namespace where all objects that belong to KKBaseLibrary are stored.
- *@details This library is populated with general purpose classes that are meant to perform
- *         functions that are not specific to any particular application.  I have been building
- *         this library since 1986.  Many of the routines started out being written in Turbo
- *         Pascal; I ported them over to c++ around 1994.
- *
- *         These classes are meant to be Operating System(OS) neutral in that from the outside 
- *         of the library they perform identically no matter what OS you are on.
- *
- *@author  Kurt Kramer, 
-*/
+
 
 
 namespace KKB 
