@@ -2,15 +2,15 @@
 #define  _FEATUREVECTORPRODUCER_
 
 /**
- *@class  KKMachineLearning::FeatureVectorPoducer
+ *@class  KKMachineLearning::FeatureVectorProducer
  *@brief  A abstract class that is meant to compute a FeatureVector from a source image.
- *@details Applications that want to utilize this library wil need to either use one of the 
- *provided "FeatureVectorPoducer" derived classes a=or supply their own.  This class will 
- *responsable for computing a FeatureVector from a supplied Image.
+ *@details Applications that want to utilize this library will either use one of the 
+ *provided "FeatureVectorProducer" derived classes or supply their own.  This class will 
+ *be responsable for computing a FeatureVector from a supplied Image.
  *
- *Each FeatureVector computer will need to have a unique name taht will be supplied when 
+ *Each FeatureVectorProducer derived class will need to have a unique name that will be supplied when 
  *constructed. This name will be used later when it is required to locate the appropriate 
- *FeatureVectorPoducer to utilize.
+ *FeatureVectorProducer to utilize.
  *@see FeatureVectorList
  *@see PostLarvaeFV
  *@see FeatureFileIO
@@ -41,16 +41,17 @@ namespace KKMachineLearning
 #endif
 
 
-  class FeatureVectorPoducer
+
+  class FeatureVectorProducer
   {
   public:
-    typedef  FeatureVectorPoducer*  FeatureVectorPoducerPtr;
+    typedef  FeatureVectorProducer*  FeatureVectorProducerPtr;
 
-    FeatureVectorPoducer (const KKStr&  _name,
+    FeatureVectorProducer (const KKStr&  _name,
                           FileDescPtr   _fileDesc
                          );
 
-    virtual ~FeatureVectorPoducer ();
+    virtual ~FeatureVectorProducer ();
 
     virtual  FeatureVectorPtr  ComputeFeatureVector (RasterPtr  image,
                                                      RunLog&    runLog
@@ -61,7 +62,7 @@ namespace KKMachineLearning
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
 
 
-    /**  @brief  Returns back a "FileDesc" instance that describes the feastures that this instance of 'FeatureVectorPoducer' creates.  */
+    /**  @brief  Returns back a "FileDesc" instance that describes the feastures that this instance of 'FeatureVectorProducer' creates.  */
     FileDescConstPtr  FileDesc () const {return  fileDesc;}
 
 
@@ -84,12 +85,12 @@ namespace KKMachineLearning
     FileDescPtr  fileDesc;
     KKStr        name;
 
-    static  atExitDefined;
-  };   /* FeatureVectorPoducer */
+    static  bool  atExitDefined;
+  };   /* FeatureVectorProducer */
 
-  typedef  FeatureVectorPoducer::FeatureVectorPoducerPtr  FeatureVectorPoducerPtr;
+  typedef  FeatureVectorProducer::FeatureVectorProducerPtr  FeatureVectorProducerPtr;
 
-#define  _FeatureVectorPoducer_Defined_
+#define  _FeatureVectorProducer_Defined_
 
 }  /* KKMachineLearning */
 

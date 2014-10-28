@@ -253,7 +253,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FeatureVectorComputer.cpp"
+				RelativePath=".\FeatureVectorProducer.cpp"
 				>
 			</File>
 			<File
@@ -479,7 +479,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FeatureVectorComputer.h"
+				RelativePath=".\FeatureVectorProducer.h"
 				>
 			</File>
 			<File
