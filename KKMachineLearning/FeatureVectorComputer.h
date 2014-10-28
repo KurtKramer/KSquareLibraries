@@ -79,7 +79,7 @@ namespace KKMachineLearning
   protected:
     void  SetFileDesc (FileDescPtr  _fileDesc);
 
-    static  RegisterAFeatureVectorComputer (FeatureVectorComputerPtr  fvComputer);
+    static  void  RegisterAFeatureVectorComputer (FeatureVectorComputerPtr  fvComputer);
 
 
   private:

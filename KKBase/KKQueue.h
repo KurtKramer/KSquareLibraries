@@ -162,8 +162,11 @@ namespace  KKB
       kkint32   QueueSize                ()                 const;  /**< @brief  Same as calling vector<>::size().  Returns the number of elements in KKQueue  */
 
 
+      template<typename Functor>
+      kkuint32  FindTheKthElement (kkuint32  k,
+                                   Functor   pred
+                                  );
 
-      kkuint32  FindTheKthElement (kkuint32  k);
       void      RandomizeOrder ();
       void      RandomizeOrder (kkint64   seed);
       void      RandomizeOrder (RandomNumGenerator&  randomVariable);
@@ -192,13 +195,17 @@ namespace  KKB
       bool      operator!= (const KKQueue<Entry>& rightSide)   const;  /**< @brief  returns False if NOT every entry in both containers point to the same elements */
 
   private:
+      template<typename Functor>
       kkuint32  FindTheKthElement (kkuint32  k,
                                    kkuint32  left,
-                                   kkuint32  right
+                                   kkuint32  right,
+                                   Functor   pred
                                   );
 
+      template<typename Functor>
       kkint32   Partition (kkuint32  left,
-                           kkuint32  right
+                           kkuint32  right,
+                           Functor   pred
                           );
 
   };  /* KKQueue */
@@ -522,26 +529,31 @@ namespace  KKB
 
 
   template <class Entry>
-  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k)
+  template <typename  Functor>
+  kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
+                                                Functor   pred
+                                               )
   {
     if  ((k < 0)   ||  (K > = (kkint32)size ()))
       return -1;
-    return  FindTheKthElement (k, 0, size () - 1);
+    return  FindTheKthElement (k, 0, size () - 1, pred);
   }  /* FindTheKthElement */
 
 
 
 
   template <class Entry>
+  template <typename  Functor>
   kkuint32   KKQueue<Entry>::FindTheKthElement (kkuint32  k,
                                                 kkuint32  left,
-                                                kkuint32  right
+                                                kkuint32  right,
+                                                Functor   pred
                                                )
   {
     if  (left == right)
       return  left;
 
-    kkint32 m = Partition (left, right);
+    kkint32 m = Partition (left, right, pred);
     if  (k <= m)
       return  Partition (left, m);
 
@@ -560,21 +572,27 @@ namespace  KKB
 
 
   template <class Entry>
+  template <typename  Functor>
   kkint32   KKQueue<Entry>::Partition (kkuint32  left,
-                                       kkuint32  right
+                                       kkuint32  right,
+                                       Functor   pred
                                       )
   {
     kkuint32  width = 1 + right - left;
     kkuint32  pivitIdx = left + (LRand48() % width);
-/*
+    EntryPtr  pivitPtr = IdxToPtr (pivitIdx);
+
     while  (left < right)
     {
-      while  (
+      while  ((left < right)  &&  (pred (*IdxToPtr(left), *pivitPtr)))
+        ++left;
 
+      while  ((left < right)  &&  (pred (*pivitPtr, *IdxToPtr(right))))
+        --right;
 
-
+      if  (left < right)
+        SwapIndexes (left, right)
     }
-    */
   }
 
 
