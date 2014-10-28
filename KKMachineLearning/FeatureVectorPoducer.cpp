@@ -19,15 +19,15 @@ using namespace  KKB;
 
 
 
-#include "FeatureVectorComputer.h"
+#include "FeatureVectorPoducer.h"
 #include "FeatureVector.h"
 using namespace  KKMachineLearning;
 
 
 
-FeatureVectorComputer::FeatureVectorComputer (const KKStr&  _name,
-                                              FileDescPtr   _fileDesc
-                                             ):
+FeatureVectorPoducer::FeatureVectorPoducer (const KKStr&  _name,
+                                            FileDescPtr   _fileDesc
+                                           ):
     fileDesc (_fileDesc),
     name     (_name)
 {
@@ -35,20 +35,20 @@ FeatureVectorComputer::FeatureVectorComputer (const KKStr&  _name,
 
 
 
-FeatureVectorComputer::~FeatureVectorComputer ()
+FeatureVectorPoducer::~FeatureVectorPoducer ()
 {
 }
 
 
 
-void  FeatureVectorComputer::SetFileDesc (FileDescPtr  _fileDesc)
+void  FeatureVectorPoducer::SetFileDesc (FileDescPtr  _fileDesc)
 {
   fileDesc = _fileDesc;
 }
 
 
 
-kkuint32  FeatureVectorComputer::FeatureCount ()  const
+kkuint32  FeatureVectorPoducer::FeatureCount ()  const
 {
   if  (!fileDesc)
     return 0;
@@ -58,7 +58,7 @@ kkuint32  FeatureVectorComputer::FeatureCount ()  const
 
 
 
-const KKStr&  FeatureVectorComputer::FeatureName (kkuint32  fieldNum)  const
+const KKStr&  FeatureVectorPoducer::FeatureName (kkuint32  fieldNum)  const
 {
   if  (fileDesc == NULL)
     return KKStr::EmptyStr ();
@@ -68,3 +68,10 @@ const KKStr&  FeatureVectorComputer::FeatureName (kkuint32  fieldNum)  const
   else
     return  fileDesc->FieldName (fieldNum);
 }
+
+
+
+
+
+
+static  FeatureVectorPoducer::atExitDefined = false;
