@@ -325,10 +325,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\PostLarvaeFV.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\SizeDistribution.cpp"
 				>
 			</File>
@@ -548,10 +544,6 @@
 			</File>
 			<File
 				RelativePath=".\Orderings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\PostLarvaeFV.h"
 				>
 			</File>
 			<File
