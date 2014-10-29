@@ -42,7 +42,7 @@ namespace KKMachineLearning
 
 
 
-  class FeatureVectorProducer
+  class  FeatureVectorProducer
   {
   public:
     typedef  FeatureVectorProducer*  FeatureVectorProducerPtr;
@@ -79,7 +79,6 @@ namespace KKMachineLearning
 
   protected:
     void  SetFileDesc (FileDescPtr  _fileDesc);
-
 
   private:
     FileDescPtr  fileDesc;

@@ -26,7 +26,7 @@ using namespace  KKB;
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
 #include "FeatureFileIO.h"
-#include "FeatureFileIOKK.h"
+//#include "FeatureFileIOKK.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "FileDesc.h"
@@ -606,7 +606,11 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
   _successful = true;
 
   if  (_fileDesc == NULL)
-    _fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
+  {
+    KKStr errMsg = "TrainingConfiguration2::CreateFromDirectoryStructure   ***ERROR***   _fileDesc == NULL.";
+    _log.Level (-1) << errMsg << endl;
+    return  NULL;
+  }
 
   KKStr  directoryConfigFileName = osGetRootNameOfDirectory (_subDir);
   if  (directoryConfigFileName.Empty ())
@@ -1707,11 +1711,11 @@ namespace KKMachineLearning
  *                directory from where it was retrieved.  Bewteen that and the 'rootDir' field*
  *                you will be able to get the full path to then original image.               *
  **********************************************************************************************  
- \endcode
- \param[out] latestImageTimeStamp  Timestamp of the most current image loaded.
- \param[out] changesMadeToTrainingLibraries  True if any image needed to have its features recalculated
-                                             or images were removed or added to a training directory.
- \param[in]  cancelFlag  Will monitior this flag.  If it gets set to true will terminate the load and return.
+ *@endcode
+ *@param[out] latestImageTimeStamp  Timestamp of the most current image loaded.
+ *@param[out] changesMadeToTrainingLibraries  True if any image needed to have its features recalculated
+ *                                            or images were removed or added to a training directory.
+ *@param[in]  cancelFlag  Will monitior this flag.  If it gets set to true will terminate the load and return.
  */
 FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&  latestImageTimeStamp,
                                                                                     bool&      changesMadeToTrainingLibraries,
@@ -1719,7 +1723,6 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
                                                                                    )
 {
   log.Level (10) << "TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries - Starting." << endl;
-
 
   bool  errorOccured = false;
 
@@ -1742,7 +1745,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
   TrainingClassList::const_iterator  tcIDX;
 
   DateTime  latestTimeStamp;
-  bool      changesMadeToThisTrainingClass;
+  bool      changesMadeToThisTrainingClass = false;
 
   for  (tcIDX = trainingClasses.begin ();  (tcIDX != trainingClasses.end ()  &&  (!cancelFlag)  &&  (!errorOccured));  tcIDX++)
   {
@@ -1867,26 +1870,24 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
 
 
 
-/*!
- \brief  Determine the correct csonfiguration file name.
- \details
- \code
- *********************************************************************************************************
- *  If no extension then add ".cfg" to end of file name.                                                 *
- *                                                                                                       * 
- *  If  Path Provided                                                                                    *
- *  {                                                                                                    *
- *     Return name as submitted with added extension.                                                    *
- *  }                                                                                                    *
- *  else                                                                                                 *
- *  {                                                                                                    *
- *     a. If file exists if default directory;  then return name with defalt directory path.             *
- *     b. If file exists in Training Model Directory  $(HomeDir) + "\\DataFiles\\TrainingModels"    *
- *        then return with Training Model Directory.                                                     *
- *     c. Since not found then we will return name passed in with extension.                             *
- *  }                                                                                                    *
- *********************************************************************************************************
- \endcode
+/**
+ *@brief  Determine the correct csonfiguration file name.
+ *@details
+ *@code
+ *  If  no extension then add ".cfg" to end of file name.
+ *
+ *  if  Path Provided
+ *  {
+ *     Return name as submitted with added extension.
+ *  }
+ *  else
+ *  {
+ *     a. If file exists in default directory;  then return name with defalt directory path.
+ *     b. If file exists in Training Model Directory  $(HomeDir) + "\\DataFiles\\TrainingModels"
+ *        then return with Training Model Directory.
+ *     c. Since not found then we will return name passed in with extension.
+ *  }
+ *@endcode
  */
 KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (const  KKStr&  configFileName)
 {
@@ -1895,7 +1896,7 @@ KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (const  KKStr&  confi
 
   KKStr  rootNameEithExtension = osGetRootNameWithExtension (configFileName);
   KKStr  extension = osGetFileExtension (configFileName);
-  KKStr  path  = osGetPathPartOfFile (configFileName);
+  KKStr  path = osGetPathPartOfFile (configFileName);
 
   KKStr  configFileNameWithExtension = configFileName;
   if  (extension.Empty ())

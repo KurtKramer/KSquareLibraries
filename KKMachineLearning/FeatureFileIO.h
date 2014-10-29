@@ -230,6 +230,13 @@ namespace KKMachineLearning
     static  VectorKKStr        RegisteredDriverNames ();
 
     static  void               FinalCleanUp ();
+
+    /**
+     *@brief  For each feature file format register the appropriate driver thru this static method.
+     *@details  You will be giving ownership of the driver to this class; it will call the destructor 
+     *when the application shutsdown.
+     */
+    static  void               RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver);
       
 
   protected:
@@ -270,8 +277,6 @@ namespace KKMachineLearning
 
     void  RegisterDriver (FeatureFileIOPtr  driver);
     static void  RegisterAllDrivers ();
-    static GoalKeeperPtr  featureFileIOGoalKeeper;
-
 
 
   static

@@ -21,6 +21,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "GlobalGoalKeeper.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -32,7 +33,7 @@ using namespace KKB;
 #include "FeatureFileIOC45.h"
 #include "FeatureFileIOColumn.h"
 #include "FeatureFileIODstWeb.h"
-#include "FeatureFileIOKK.h"
+//#include "FeatureFileIOKK.h"
 #include "FeatureFileIORoberts.h"
 #include "FeatureFileIOSparse.h"
 #include "FeatureFileIOUCI.h"
@@ -69,8 +70,6 @@ void  ReportError (RunLog&        log,
 
 
 vector<FeatureFileIOPtr>*  FeatureFileIO::registeredDrivers = NULL;
-GoalKeeperPtr  FeatureFileIO::featureFileIOGoalKeeper = NULL;
-
 
 
 std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
@@ -84,13 +83,23 @@ std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
 }
 
 
+void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
+{
+  GlobalGoalKeeper::StartBlock ();
+  if  (!registeredDrivers)
+    registeredDrivers = new std::vector<FeatureFileIOPtr> ();
+
+  registeredDrivers->push_back (_driver);
+
+  GlobalGoalKeeper::EndBlock ();
+} /* RegisterFeatureFileIODriver */
+
+
 
 void  FeatureFileIO::RegisterAllDrivers ()
 {
-  if  (!featureFileIOGoalKeeper)
-    GoalKeeper::Create ("FeatureFileIO", featureFileIOGoalKeeper);
+  GlobalGoalKeeper::StartBlock ();
 
-  featureFileIOGoalKeeper->StartBlock ();
   if  (registeredDrivers == NULL)
   {
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
@@ -98,12 +107,13 @@ void  FeatureFileIO::RegisterAllDrivers ()
     registeredDrivers->push_back (new FeatureFileIOC45     ());
     registeredDrivers->push_back (new FeatureFileIOColumn  ());
     registeredDrivers->push_back (new FeatureFileIODstWeb  ());
-    registeredDrivers->push_back (new FeatureFileIOKK      ());
+    //registeredDrivers->push_back (new FeatureFileIOKK      ());
     registeredDrivers->push_back (new FeatureFileIORoberts ());
     registeredDrivers->push_back (new FeatureFileIOSparse  ());
     registeredDrivers->push_back (new FeatureFileIOUCI     ());
   }
-  featureFileIOGoalKeeper->EndBlock ();
+
+  GlobalGoalKeeper::EndBlock ();
 }  /* RegisterAllDrivers */
 
 
@@ -119,10 +129,8 @@ void  FeatureFileIO::RegisterAllDrivers ()
  */
 void FeatureFileIO::FinalCleanUp ()
 {
-  if  (!featureFileIOGoalKeeper)
-    GoalKeeper::Create ("FeatureFileIO", featureFileIOGoalKeeper);
+  GlobalGoalKeeper::StartBlock ();
 
-  featureFileIOGoalKeeper->StartBlock ();
   if  (registeredDrivers)
   {
     while  (registeredDrivers->size () > 0)
@@ -136,10 +144,7 @@ void FeatureFileIO::FinalCleanUp ()
     registeredDrivers = NULL;
   }
 
-  featureFileIOGoalKeeper->EndBlock ();
-
-  GoalKeeper::Destroy (featureFileIOGoalKeeper);
-  featureFileIOGoalKeeper = NULL;
+  GlobalGoalKeeper::EndBlock ();
 }  /* CleanUpFeatureFileIO */
 
 

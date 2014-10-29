@@ -54,6 +54,7 @@ namespace KKMachineLearning
   {
   public:
     DuplicateImages (FeatureVectorListPtr  _examples,
+                     FileDescPtr           _fileDesc,
                      RunLog&               _log
                     );
 

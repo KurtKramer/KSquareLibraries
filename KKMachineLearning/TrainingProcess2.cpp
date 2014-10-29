@@ -30,7 +30,7 @@ using namespace  KKB;
 #include "ClassAssignments.h"
 #include "DuplicateImages.h"
 #include "FeatureFileIO.h"
-#include "FeatureFileIOKK.h"
+//#include "FeatureFileIOKK.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "MLClass.h"

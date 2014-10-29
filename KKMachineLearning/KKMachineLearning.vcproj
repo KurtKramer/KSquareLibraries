@@ -229,10 +229,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FeatureFileIOKK.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\FeatureFileIORoberts.cpp"
 				>
 			</File>
@@ -448,10 +444,6 @@
 			</File>
 			<File
 				RelativePath=".\FeatureFileIODstWeb.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FeatureFileIOKK.h"
 				>
 			</File>
 			<File

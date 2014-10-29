@@ -654,7 +654,7 @@ void  FeatureVectorList::AddSingleExample (FeatureVectorPtr  _imageFeatures)
 
 void  FeatureVectorList::RemoveDuplicateEntries ()
 {
-  DuplicateImages  dupDetector (this, log);
+  DuplicateImages  dupDetector (this, FileDesc (),  log);
   if  (dupDetector.DuplicatesFound ())
   {
     FeatureVectorListPtr  dupsToDelete = dupDetector.ListOfExamplesToDelete ();

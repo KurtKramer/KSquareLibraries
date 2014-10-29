@@ -19,7 +19,7 @@ using namespace KKB;
 #include "DuplicateImages.h"
 
                 
-#include "FeatureFileIOKK.h"
+//#include "FeatureFileIOKK.h"
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"
@@ -27,6 +27,7 @@ using namespace  KKMachineLearning;
 
 
 DuplicateImages::DuplicateImages (FeatureVectorListPtr  _examples,
+                                  FileDescPtr           _fileDesc,
                                   RunLog&               _log
                                  ):
    duplicateCount     (0),
@@ -48,7 +49,7 @@ DuplicateImages::DuplicateImages (FeatureVectorListPtr  _examples,
   else
   {
     weOwnExamples = false;
-    examples = new FeatureVectorList (PostLarvaeFV::PostLarvaeFeaturesFileDesc (), true, log);
+    examples = new FeatureVectorList (_fileDesc, true, log);
   }
 
   FindDuplicates ();
