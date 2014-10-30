@@ -18,6 +18,7 @@
 
 
 #include "RunLog.h"
+#include "Raster.h"
 
 namespace KKMachineLearning 
 {
@@ -25,12 +26,6 @@ namespace KKMachineLearning
 #if  !defined(_FeatureVector_Defined_)
   class  FeatureVector;
   typedef  FeatureVector*  FeatureVectorPtr;
-#endif
-
-#if  !defined(_Raster_Defined_)
-  class  Raster;
-  typedef  Raster*  RasterPtr;
-  typedef  Raster const*  RasterConstPtr;
 #endif
 
 
