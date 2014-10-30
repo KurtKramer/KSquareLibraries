@@ -298,7 +298,7 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
 
 void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages, 
                                       FeatureVectorListPtr   trainingImages,
-                                      kkint32                  foldNum,
+                                      kkint32                foldNum,
                                       bool*                  classedCorrectly
                                      )
 {
@@ -311,12 +311,12 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
                              mlClasses,
                              NULL,
                              fileDesc,
+                             config->FvFactoryProducer (),
                              log,
                              featuresAreAlreadyNormalized,
                              cancelFlag,
                              statusMessage
                             );
-
   try
   {
     trainer.CreateModelsFromTrainingData ();

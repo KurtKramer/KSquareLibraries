@@ -150,6 +150,8 @@ namespace KKMachineLearning
 
     FileDescPtr            FileDesc ()            const {return  fileDesc;}
 
+    FactoryFVProducerPtr   FvFactoryProducer ()   const {return fvFactoryProducer;}
+
     double                 Gamma () const;
     void                   Gamma (double  _gamma);
 
@@ -354,7 +356,7 @@ namespace KKMachineLearning
     bool                      validateDirectories;
   };  /* TrainingConfiguration2 */
 
-  #define  _TrainingConfiguration2Defined_
+  #define  _TrainingConfiguration2_Defined_
 
   typedef  TrainingConfiguration2::TrainingConfiguration2Ptr  TrainingConfiguration2Ptr;
 
@@ -384,10 +386,9 @@ namespace KKMachineLearning
         {}
 
   };
-
-
   typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
 
+  #define  _TrainingConfiguration2List_Defined_
 }  /* namespace KKMachineLearning */
 
 #endif

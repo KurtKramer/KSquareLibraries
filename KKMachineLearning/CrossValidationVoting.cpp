@@ -19,19 +19,19 @@ using namespace  KKB;
 
 
 
+#include "TrainingConfiguration2.h"
 #include "CrossValidationVoting.h"
 #include "Classifier2.h"
 #include "ConfusionMatrix2.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
-#include "TrainingConfiguration2.h"
 #include "TrainingProcess2.h"
 using namespace  KKMachineLearning;
 
 
 
-CrossValidationVoting::CrossValidationVoting (TrainingConfigurationList2Ptr  _configs,
+CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _configs,
                                               FeatureVectorListPtr           _examples,
                                               MLClassListPtr                 _mlClasses,
                                               kkint32                        _numOfFolds,
@@ -246,7 +246,7 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationD
 
 void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages, 
                                             FeatureVectorListPtr   trainingImages,
-                                            kkint32                  foldNum,
+                                            kkint32                foldNum,
                                             bool*                  classedCorrectly
                                            )
 {
@@ -270,6 +270,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
                                                          mlClasses,
                                                          NULL,
                                                          fileDesc,
+                                                         config->FvFactoryProducer (),
                                                          log,
                                                          featuresAreAlreadyNormalized,
                                                          cancelFlag,

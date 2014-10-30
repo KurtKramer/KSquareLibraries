@@ -53,7 +53,7 @@ namespace KKMachineLearning
   #endif
 
 
-  #ifndef  _TrainingConfiguration2Defined_
+  #ifndef  _TrainingConfiguration2_Defined_
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
   #endif

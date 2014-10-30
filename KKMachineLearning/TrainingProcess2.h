@@ -39,6 +39,8 @@ public:
     *
     *@param[in]  _fileDesc Description of the Feature Data,  how many features, types, etc.
     *
+    *@param[in]  _fvFactoryProducer  
+    *
     *@param[in,out]  _log   Logging file.
     *
     *@param[in] _report  if not set to NULL will write statistics of the training process to stream.
@@ -61,11 +63,12 @@ public:
    TrainingProcess2 (const KKStr&         _configFileName,
                      FeatureVectorListPtr _excludeList,
                      FileDescPtr          _fileDesc,
+                     FactoryFVProducerPtr _fvFactoryProducer,
                      RunLog&              _log,
                      std::ostream*        _report,
                      bool                 _forceRebuild,
                      bool                 _checkForDuplicates,
-                     VolConstBool&       _cancelFlag,
+                     VolConstBool&        _cancelFlag,
                      KKStr&               _statusMessage
                     );
 
@@ -89,6 +92,8 @@ public:
     *
     *@param[in]  _fileDesc Description of the Feature Data,  how many features, types, etc.
     *
+    *@param[in]  _fvFactoryProducer  
+    *
     *@param[in,out]  _log   Logging file.
     *
     *@param[in] _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
@@ -104,8 +109,9 @@ public:
    TrainingProcess2 (const KKStr&         _configFileName,
                      FeatureVectorListPtr _excludeList,
                      FileDescPtr          _fileDesc,
+                     FactoryFVProducerPtr _fvFactoryProducer,
                      RunLog&              _log,
-                     kkuint32             _level,            // Class hierarchy level to train at.
+                     kkuint32             _level,            /**< Class hierarchy level to train at. */
                      VolConstBool&        _cancelFlag, 
                      KKStr&               _statusMessage
                     );
@@ -124,6 +130,8 @@ public:
     *
     *@param[in]  _fileDesc Description of the Feature Data,  how many features, types, etc.
     *
+    *@param[in]  _fvFactoryProducer  
+    *
     *@param[in,out]  _log   Logging file.
     *
     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
@@ -135,12 +143,13 @@ public:
     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
     *                            the user as a way of letting them know what is happening.
     */
-   TrainingProcess2 (const KKStr&   _configFileName,
-                     FileDescPtr    _fileDesc,
-                     RunLog&        _log,
-                     bool           _featuresAlreadyNormalized,
-                     VolConstBool&  _cancelFlag,
-                     KKStr&         _statusMessage
+   TrainingProcess2 (const KKStr&         _configFileName,
+                     FileDescPtr          _fileDesc,
+                     FactoryFVProducerPtr _fvFactoryProducer,
+                     RunLog&              _log,
+                     bool                 _featuresAlreadyNormalized,
+                     VolConstBool&        _cancelFlag,
+                     KKStr&               _statusMessage
                     );
 
 
@@ -151,6 +160,7 @@ public:
     *@param[in]  _mlClasses  Class list.
     *@param[in]  _reportFile  if not set to NULL will write statistics of the training process to stream.
     *@param[in]  _fileDesc Description of the Feature Data,  how many features, types, etc.
+    *@param[in]  _fvFactoryProducer  
     *@param[in,out]  _log   Logging file.
     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
     *                                       training data are normalized.
@@ -164,6 +174,7 @@ public:
                      MLClassListPtr             _mlClasses,
                      std::ostream*              _reportFile,
                      FileDescPtr                _fileDesc,
+                     FactoryFVProducerPtr       _fvFactoryProducer,
                      RunLog&                    _log,
                      bool                       _featuresAlreadyNormalized,
                      VolConstBool&              _cancelFlag,
@@ -191,7 +202,7 @@ public:
 
   const KKB::DateTime&     BuildDateTime      () const  {return  buildDateTime;}
 
-  TrainingConfiguration2Ptr Config             ()        {return  config;}    
+  TrainingConfiguration2Ptr Config            ()        {return  config;}    
 
   const KKStr&             ConfigFileName     () const  {return configFileName;}
 
@@ -205,9 +216,9 @@ public:
 
   FeatureVectorListPtr     Images             () {return  trainingExamples;}
 
-  MLClassListPtr        ImageClasses       () {return  mlClasses;}
+  MLClassListPtr           ImageClasses       () {return  mlClasses;}
 
-  RunLog&                  Log                       () {return log;}
+  RunLog&                  Log                () {return log;}
 
   kkint32                  MemoryConsumedEstimated ()  const;
 
@@ -295,11 +306,13 @@ private:
                                               * data.  If you wish to grade the results it would only be fare to delete these trainingExamples.
                                               */
 
+  FactoryFVProducerPtr         fvFactoryProducer;
+
   bool                         featuresAlreadyNormalized;
 
   FileDescPtr                  fileDesc;
 
-  MLClassListPtr            mlClasses; /**< List of all classes that are to be processed. There will be one entry for each MLClass,
+  MLClassListPtr               mlClasses; /**< List of all classes that are to be processed. There will be one entry for each MLClass,
                                               * Including one for noise trainingExamples(unknown trainingExamples).
                                               */
 

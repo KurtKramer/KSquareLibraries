@@ -29,8 +29,8 @@ using namespace  KKB;
 #include "TrainingProcess2.h"
 #include "ClassAssignments.h"
 #include "DuplicateImages.h"
+#include "FactoryFVProducer.h"
 #include "FeatureFileIO.h"
-//#include "FeatureFileIOKK.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "MLClass.h"
@@ -44,15 +44,16 @@ using namespace  KKMachineLearning;
 
 
 
-TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
-                                    FeatureVectorListPtr _excludeList,
-                                    FileDescPtr          _fileDesc,
-                                    RunLog&              _log,
-                                    ostream*             _report,
-                                    bool                 _forceRebuild,
-                                    bool                 _checkForDuplicates,
-                                    VolConstBool&        _cancelFlag,
-                                    KKStr&               _statusMessage
+TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
+                                    FeatureVectorListPtr  _excludeList,
+                                    FileDescPtr           _fileDesc,
+                                    FactoryFVProducerPtr  _fvFactoryProducer,
+                                    RunLog&               _log,
+                                    ostream*              _report,
+                                    bool                  _forceRebuild,
+                                    bool                  _checkForDuplicates,
+                                    VolConstBool&         _cancelFlag,
+                                    KKStr&                _statusMessage
                                    ):
   abort                     (false),
   buildDateTime             (DateTime (1900, 1, 1, 0, 0, 0)),
@@ -64,7 +65,8 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
   fileDesc                  (_fileDesc),
-  mlClasses              (NULL),
+  fvFactoryProducer         (_fvFactoryProducer),
+  mlClasses                 (NULL),
   log                       (_log),
   model                     (NULL),
   report                    (_report),
@@ -109,7 +111,9 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   }
 
   config = new TrainingConfiguration2 (_fileDesc,
-                                       configFileName, 
+                                       configFileName,
+                                       fvFactoryProducer,
+                                       true,   // true = Validate Directories
                                        log
                                       );
   if  (!config->FormatGood ())
@@ -145,7 +149,6 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   //  PostLarvaeFVPrintReport (o);
   //  o.close ();
   //}
-
 
 
   if  (Abort ())
@@ -208,9 +211,11 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
         trainingExamples = new FeatureVectorList (_fileDesc, true,  log);
 
         config = new  TrainingConfiguration2 (_fileDesc,
-                                             configFileName, 
-                                             log
-                                            );
+                                              configFileName,
+                                              fvFactoryProducer,
+                                              true,   // true = Validate Directories.
+                                              log
+                                             );
 
         if  (!config->FormatGood ())
         {
@@ -262,7 +267,13 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
     kkuint32  numExamplesWritten = 0;
     bool  successful = false;
     KKStr  fn = "C:\\Larcos\\Classifier\\TrainingModels\\TrainingData\\" + KKB::osGetRootName (configFileName) + ".data";
-    FeatureFileIOKK::Driver ()->SaveFeatureFile (fn, trainingExamples->AllFeatures (), *trainingExamples, numExamplesWritten, cancelFlag, successful, log);
+
+    FeatureFileIOPtr  driver = NULL;
+    if  (fvFactoryProducer)
+      driver = fvFactoryProducer->DefaultFeatureFileIO ();
+
+    if  (driver)
+      driver->SaveFeatureFile (fn, trainingExamples->AllFeatures (), *trainingExamples, numExamplesWritten, cancelFlag, successful, log);
   }
 
   //  At this point we should no longer need the training trainingExamples.  
@@ -280,6 +291,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
                                     FeatureVectorListPtr _excludeList,
                                     FileDescPtr          _fileDesc,
+                                    FactoryFVProducerPtr _fvFactoryProducer,
                                     RunLog&              _log,
                                     kkuint32             _level,
                                     VolConstBool&        _cancelFlag,
@@ -295,8 +307,9 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   duplicateDataCount        (0),
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
+  fvFactoryProducer         (_fvFactoryProducer),
   fileDesc                  (_fileDesc),
-  mlClasses              (NULL),
+  mlClasses                 (NULL),
   log                       (_log),
   model                     (NULL),
   report                    (NULL),
@@ -313,7 +326,9 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
 
   config = new  TrainingConfiguration2 (_fileDesc,
-                                        configFileName, 
+                                        configFileName,
+                                        fvFactoryProducer,
+                                        true,   // true = Validate Directories
                                         log
                                        );
   if  (!config->FormatGood ())
@@ -383,12 +398,13 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
 
 
-TrainingProcess2::TrainingProcess2 (const KKStr&   _configFileName,
-                                    FileDescPtr    _fileDesc,
-                                    RunLog&        _log,
-                                    bool           _featuresAlreadyNormalized,
-                                    VolConstBool&  _cancelFlag,
-                                    KKStr&         _statusMessage
+TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
+                                    FileDescPtr          _fileDesc,
+                                    FactoryFVProducerPtr _fvFactoryProducer,
+                                    RunLog&              _log,
+                                    bool                 _featuresAlreadyNormalized,
+                                    VolConstBool&        _cancelFlag,
+                                    KKStr&               _statusMessage
                                    ):
 
   abort                     (false),
@@ -401,7 +417,8 @@ TrainingProcess2::TrainingProcess2 (const KKStr&   _configFileName,
   excludeList               (NULL),
   featuresAlreadyNormalized (_featuresAlreadyNormalized),
   fileDesc                  (_fileDesc),
-  mlClasses              (new MLClassList ()),
+  fvFactoryProducer         (_fvFactoryProducer),
+  mlClasses                 (new MLClassList ()),
   log                       (_log),
   model                     (NULL),
   report                    (NULL),
@@ -464,6 +481,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
                                     MLClassListPtr            _mlClasses,
                                     ostream*                  _report,
                                     FileDescPtr               _fileDesc,
+                                    FactoryFVProducerPtr      _fvFactoryProducer,
                                     RunLog&                   _log,
                                     bool                      _featuresAlreadyNormalized,
                                     VolConstBool&             _cancelFlag,
@@ -481,7 +499,8 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     excludeList               (NULL),
     featuresAlreadyNormalized (_featuresAlreadyNormalized),
     fileDesc                  (_fileDesc),
-    mlClasses              (_mlClasses),
+    fvFactoryProducer         (_fvFactoryProducer),
+    mlClasses                 (_mlClasses),
     log                       (_log),
     model                     (NULL),
     report                    (_report),
@@ -768,7 +787,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
 void  TrainingProcess2::CheckForDuplicates (bool  allowDupsInSameClass)
 {
   // Lets check for duplicate trainingExamples in training data.  Just to get a count, no other reason
-  DuplicateImages  dupDetector (trainingExamples, log);
+  DuplicateImages  dupDetector (trainingExamples, fileDesc, log);
   duplicateDataCount = dupDetector.DuplicateDataCount ();
   if  (duplicateDataCount > 0)
   {
@@ -803,7 +822,11 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
 
   statusMessage = "Extracting features for class[" + trainingClass->MLClass ()->Name () + "].";
 
-  FeatureVectorListPtr  extractedImages = FeatureFileIOKK::FeatureDataReSink 
+  FeatureFileIOPtr  driver = NULL;
+  if  (fvFactoryProducer)
+    driver = fvFactoryProducer->DefaultFeatureFileIO ();
+
+  FeatureVectorListPtr  extractedImages = driver->FeatureDataReSink 
                                 (expDirName,
                                  trainingClass->FeatureFileName (),
                                  trainingClass->MLClass (),

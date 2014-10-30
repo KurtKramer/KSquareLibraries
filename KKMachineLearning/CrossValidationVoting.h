@@ -58,11 +58,14 @@ namespace  KKMachineLearning
   #endif
 
 
-  #ifndef  _TrainingConfiguration2Defined_
+  #ifndef  _TrainingConfiguration2_Defined_
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
+  #endif
+
+  #if  !defined(_TrainingConfiguration2List_Defined_)
   class  TrainingConfiguration2List;
-  typedef  TrainingConfiguration2List*  TrainingConfigurationList2Ptr;
+  typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
   #endif
 
 
@@ -76,7 +79,7 @@ namespace  KKMachineLearning
   class  CrossValidationVoting
   {
   public:
-    CrossValidationVoting (TrainingConfigurationList2Ptr  _configs,
+    CrossValidationVoting (TrainingConfiguration2ListPtr  _configs,
                            FeatureVectorListPtr           _examples,
                            MLClassListPtr                 _mlClasses,
                            kkint32                        _numOfFolds,
@@ -115,7 +118,7 @@ namespace  KKMachineLearning
     void  DeleteAllocatedMemory ();
 
 
-    TrainingConfigurationList2Ptr configs;
+    TrainingConfiguration2ListPtr configs;
     bool                          featuresAreAlreadyNormalized;
     FileDescPtr                   fileDesc;
     float*                        foldAccuracies;
