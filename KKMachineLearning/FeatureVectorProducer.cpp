@@ -25,13 +25,16 @@ using namespace  KKMachineLearning;
 
 
 
-FeatureVectorProducer::FeatureVectorProducer (const KKStr&  _name,
-                                              FileDescPtr   _fileDesc
-                                             ):
+FeatureVectorProducer::FeatureVectorProducer (const KKStr&          _name,
+                                              FactoryFVProducerPtr  _factory,  /**<  Pointer to factory that instatiated this instance. */
+                                              FileDescPtr           _fileDesc
+                                              ):
+    factory  (_factory),
     fileDesc (_fileDesc),
     name     (_name)
 {
 }
+
 
 
 
@@ -45,8 +48,6 @@ void  FeatureVectorProducer::SetFileDesc (FileDescPtr  _fileDesc)
 {
   fileDesc = _fileDesc;
 }
-
-
 
 
 
@@ -70,8 +71,6 @@ const KKStr&  FeatureVectorProducer::FeatureName (kkuint32  fieldNum)  const
   else
     return  fileDesc->FieldName (fieldNum);
 }
-
-
 
 
 

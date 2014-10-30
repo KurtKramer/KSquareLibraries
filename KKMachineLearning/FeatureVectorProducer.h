@@ -38,9 +38,16 @@ namespace KKMachineLearning
   typedef  FileDesc* const  FileDescConstPtr;
 #endif
 
+
 #if  !defined(_MLClass_Defined_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
+#endif
+
+
+#if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer* FactoryFVProducerPtr;
 #endif
 
 
@@ -49,8 +56,9 @@ namespace KKMachineLearning
   public:
     typedef  FeatureVectorProducer*  FeatureVectorProducerPtr;
 
-    FeatureVectorProducer (const KKStr&  _name,
-                           FileDescPtr   _fileDesc
+    FeatureVectorProducer (const KKStr&          _name,
+                           FactoryFVProducerPtr  _factory,  /**<  Pointer to factory that instatiated this instance. */
+                           FileDescPtr           _fileDesc
                          );
 
     virtual ~FeatureVectorProducer ();
@@ -65,6 +73,9 @@ namespace KKMachineLearning
     /**  @brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
 
+
+    /** @brief  Returns pointer to factory that instantiated this instance */
+    FactoryFVProducerPtr  Factory ()  const  {return factory;}
 
     /**  @brief  Returns back a "FileDesc" instance that describes the feastures that this instance of 'FeatureVectorProducer' creates.  */
     FileDescConstPtr  FileDesc () const {return  fileDesc;}
@@ -85,8 +96,9 @@ namespace KKMachineLearning
     void  SetFileDesc (FileDescPtr  _fileDesc);
 
   private:
-    FileDescPtr  fileDesc;
-    KKStr        name;
+    FactoryFVProducerPtr  factory;
+    FileDescPtr           fileDesc;
+    KKStr                 name;
 
     static  bool  atExitDefined;
   };   /* FeatureVectorProducer */

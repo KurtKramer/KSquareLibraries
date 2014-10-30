@@ -29,9 +29,11 @@ using namespace  KKMachineLearning;
 
 
 FactoryFVProducer::FactoryFVProducer (const KKStr&  _name,
+                                      const KKStr&  _fvClassName,
                                       const KKStr&  _description
                                      ):
      description (_description),
+     fvClassName (_fvClassName),
      name        (_name)
 {
 }
@@ -53,13 +55,11 @@ FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     o
 }
 
 
-
-
-FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  _name,
-                                                                 RunLog&       runLog
-                                                                )
+FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  name,
+                                                                  RunLog&       runLog
+                                                                 )
 {
-  FactoryFVProducerPtr  factory = LookUpFactory (_name);
+  FactoryFVProducerPtr  factory = LookUpFactory (name);
   if  (factory)
     return factory->ManufactureInstance (runLog);
   else
