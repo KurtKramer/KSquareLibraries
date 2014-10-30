@@ -34,7 +34,7 @@ namespace KKMachineLearning
 {
 
 
-  #ifndef  _FEATUREFILEIODEFINED_
+  #ifndef  _FeatureFileIO_Defined_
     class  FeatureFileIO;
     typedef  FeatureFileIO*  FeatureFileIOPtr;
   #endif
@@ -100,8 +100,8 @@ namespace KKMachineLearning
 
 
     float          BreakTie           () const  {return breakTie;}        /**< @brief The difference in probability between the two most likely classes. */
-    const KKStr&   ClassName          () const;                           /**< @brief Name of class that this example is assign to.                     */
-    MLClassPtr     MLClass            () const  {return mlClass;}          /**< @brief Class that is example is assigned to.                              */
+    const KKStr&   ClassName          () const;                           /**< @brief Name of class that this example is assign to.                      */
+    MLClassPtr     MLClass            () const  {return mlClass;}         /**< @brief Class that is example is assigned to.                              */
     const KKStr&   ImageClassName     () const;                           /**< @brief Name of class that this example is assigned to.                    */
     const KKStr&   ImageFileName      () const  {return imageFileName;}   /**< @brief Name of file that this FeatureVector was computed from.            */
     bool           MissingData        () const  {return missingData;}     /**< @brief True indicates that one or more features were missing.             */        
@@ -109,7 +109,7 @@ namespace KKMachineLearning
     float          OrigSize           () const  {return origSize;}        /**< @brief The value of Feature[0] before normalization.                      */
     MLClassPtr     PredictedClass     () const  {return predictedClass;}
     const KKStr&   PredictedClassName () const;
-    float          Probability        () const  {return probability;}     /**< @brief The probability assigned by classifier to the predicted class.      */
+    float          Probability        () const  {return probability;}     /**< @brief The probability assigned by classifier to the predicted class.     */
     float          TrainWeight        () const  {return trainWeight;}
     bool           Validated          () const  {return validated;}
 

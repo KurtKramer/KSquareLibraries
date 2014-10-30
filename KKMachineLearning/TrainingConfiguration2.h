@@ -3,12 +3,15 @@
 
 #include "Configuration.h"
 #include "DateTime.h"
+#include "KKStr.h"
+
 #include "FileDesc.h"
+#include "FactoryFVProducer.h"
+#include "FeatureVectorProducer.h"
 #include "FeatureVector.h"
 #include "Model.h"
 #include "ModelParam.h"
 #include "ModelParamOldSVM.h"
-#include "KKStr.h"
 #include "SVMparam.h"
 #include "TrainingClass.h"
 
@@ -20,6 +23,13 @@ namespace KKMachineLearning
   typedef  NormalizationParms*  NormalizationParmsPtr;
   #endif
 
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
+
+
 
   class  TrainingConfiguration2:  public  Configuration
   {
@@ -30,10 +40,11 @@ namespace KKMachineLearning
     typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
 
 
-    TrainingConfiguration2 (FileDescPtr    _fileDesc,
-                            const KKStr&   _configFileName, 
-                            RunLog&        _log,
-                            bool           validateDirectories = true
+    TrainingConfiguration2 (FileDescPtr           _fileDesc,
+                            const KKStr&          _configFileName,
+                            FactoryFVProducerPtr  _fvFactoryProducer,           /**< We will take ownership of this instance and delete it in destructor. */
+                            bool                  _validateDirectories,
+                            RunLog&               _log
                            );
 
 
@@ -42,11 +53,17 @@ namespace KKMachineLearning
 
     /**
      *@brief Use this one if you want to create a default Configuration object.
+     *@param[in]  _fileDesc  Description of features.
+     *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
+     *@param[in]  _parameterStr Sting with Machine Learninig Parameters.
+     *@param[in]  _fvFactoryProducer  Factory for creating FeatureVectorProducer instance.
+     *@param[in]  _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (FileDescPtr     _fileDesc,
-                            MLClassListPtr  _mlClasses,
-                            KKStr           _parameterStr,
-                            RunLog&         _log             
+    TrainingConfiguration2 (FileDescPtr           _fileDesc,
+                            MLClassListPtr        _mlClasses,       
+                            KKStr                 _parameterStr,
+                            FactoryFVProducerPtr  _fvFactoryProducer,      /**< We will take ownership of this instance and delete it in destructor. */
+                            RunLog&               _log             
                            );
 
     ~TrainingConfiguration2 ();
@@ -64,26 +81,29 @@ namespace KKMachineLearning
      *                                     default TraningModel directory.
      *@param[in]  _subDir   The root directory entry to the Sub-Directory structure that is to be used to construct 
      *                      training classs list from.
+     *@param[in]  _fvFactoryProducerr
      *@param[in]  _log
      *@param[out] _successful
      *@param[out] _errorMessage Will contain description of errors encountered. 
      */
     static
     TrainingConfiguration2*  CreateFromDirectoryStructure 
-                                            (FileDescPtr   _fileDesc,
-                                             const KKStr&  _existingConfigFileName,
-                                             const KKStr&  _subDir,
-                                             RunLog&       _log,
-                                             bool&         _successful,
-                                             KKStr&        _errorMessage
+                                            (FileDescPtr           _fileDesc,
+                                             const KKStr&          _existingConfigFileName,
+                                             const KKStr&          _subDir,
+                                             FactoryFVProducerPtr  _fvFactoryProducer,
+                                             RunLog&               _log,
+                                             bool&                 _successful,
+                                             KKStr&                _errorMessage
                                             );
 
 
     static
     TrainingConfiguration2*  CreateFromFeatureVectorList
-                                            (FeatureVectorList&  _examples,
-                                             MLClassListPtr      _mlClasses,
-                                             RunLog&             _log
+                                            (FeatureVectorList&    _examples,
+                                             MLClassListPtr        _mlClasses,
+                                             FactoryFVProducerPtr  _fvFactoryProducer,  /**< Will take ownership and delete in destructor.  */
+                                             RunLog&               _log
                                             );
 
     
@@ -217,10 +237,6 @@ namespace KKMachineLearning
 
     kkint32                NumOfFeaturesAfterEncoding ()  const;
 
-    static
-      TrainingConfiguration2Ptr
-                           PromptForConfigurationFile (RunLog&  log);
-
     virtual void           Save (const KKStr& fileName);
 
     virtual void           Save (ostream&  o);
@@ -300,41 +316,42 @@ namespace KKMachineLearning
                                                        * directory path was added by 'GetEffectiveConfigFileName'.
                                                        */
 
-    kkint32                examplesPerClass;
-    FileDescPtr            fileDesc;
-    MLClassListPtr         mlClasses;
-    bool                   imageClassesWeOwnIt;       /**< If we own it we will delete it in the destructor.  */
-    RunLog&                log;
-    ModelTypes             modelingMethod;
-    ModelParamPtr          modelParameters;
+    kkint32                   examplesPerClass;
+    FactoryFVProducerPtr      fvFactoryProducer;
+    FileDescPtr               fileDesc;
+    MLClassListPtr            mlClasses;
+    bool                      imageClassesWeOwnIt;  /**< If we own it we will delete it in the destructor.  */
+    RunLog&                   log;
+    ModelTypes                modelingMethod;
+    ModelParamPtr             modelParameters;
 
-    kkint32                noiseGuaranteedSize;  /**< Images smaller than this size will be classified as noise 
-                                                  * and will not be used for training purposes.
+    kkint32                   noiseGuaranteedSize;  /**< Images smaller than this size will be classified as noise 
+                                                     * and will not be used for training purposes.
+                                                     */
+
+    MLClassPtr                noiseImageClass;
+
+    TrainingClassPtr          noiseTrainingClass;   /**< The specific Training Class that is to be 
+                                                     * used for noise images. 
+                                                     */
+
+    NormalizationParmsPtr     normalizationParms;
+
+    KKStr                     rootDir;           /**< Common directory that all images for this training
+                                                  * library come from.  This is determined by iterating 
+                                                  * through all the 'trainingClasses' entries and 
+                                                  * looking for the common string that they all start by.
                                                   */
 
-    MLClassPtr             noiseImageClass;
+    KKStr                     rootDirExpanded;   /**< Same as 'rootDir' except environment variables will be expanded. */
 
-    TrainingClassPtr       noiseTrainingClass;   /**< The specific Training Class that is to be 
-                                                  * used for noise images. 
+    TrainingClassList         trainingClasses;   /**< List of  'Training_Class' objects.  One for
+                                                  * each 'Training_Classe' section defined in
+                                                  * configuration file.  Plus one for the 
+                                                  * 'Noise_Images' section.
                                                   */
 
-    NormalizationParmsPtr  normalizationParms;
-
-    KKStr                  rootDir;           /**< Common directory that all images for this training
-                                               * library come from.  This is determined by iterating 
-                                               * through all the 'trainingClasses' entries and 
-                                               * looking for the common string that they all start by.
-                                               */
-
-    KKStr                  rootDirExpanded;   /**< Same as 'rootDir' except environment variables will be expanded. */
-
-    TrainingClassList      trainingClasses;   /**< List of  'Training_Class' objects.  One for
-                                               * each 'Training_Classe' section defined in
-                                               * configuration file.  Plus one for the 
-                                               * 'Noise_Images' section.
-                                               */
-
-    bool                   validateDirectories;
+    bool                      validateDirectories;
   };  /* TrainingConfiguration2 */
 
   #define  _TrainingConfiguration2Defined_

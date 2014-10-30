@@ -133,6 +133,42 @@ namespace KKMachineLearning
 
 
 
+    /**                       FeatureDataReSink
+     *@brief Synchronizes the contents of a feature data file with a directory of images.
+     *        Used with  applications to verify that feature file is up-to-date.
+     *        Was specifically meant to work with training libraries, to account for
+     *        images being added and deleted from training library.  If there are no 
+     *        changes, then function will run very quickly.
+     *@param[in] _dirName,      Directory where source images are located.
+     *@param[in] _fileName,     Feature file that is being synchronized.
+     *@param[in] _unknownClass, Class to be used when class is unknown
+     *@param[in] _useDirectoryNameForClassName, if true then class name of each entry
+     *            will be set to directory name.
+     *@param[in] _mlClasses,  list of classes
+     *@param[in]  _cancelFlag  Will be monitored; if it goes to 'true'  will exit as soon as possible.
+     *@param[out] _changesMade, If returns as true then there were changes made to the 
+     *             feature file 'fileName'.  If set to false, then no changes were made.
+     *@param[out] Timestamp of feature file.
+     *@param[in] log, where to send diagnostic messages to.
+     *@return - A FeatureVectorList derived instance ; This object will own all the examples loaded
+     *
+     * A change in feature file version number would also cause all entries in the feature
+     * file to be recomputed.  The feature file version number gets incremented whenever we change
+     * the feature file computation routine.
+     */
+    virtual
+    FeatureVectorListPtr  FeatureDataReSink (KKStr           _dirName, 
+                                             const KKStr&    _fileName, 
+                                             MLClassPtr      _unknownClass,
+                                             bool            _useDirectoryNameForClassName,
+                                             MLClassList&    _mlClasses,
+                                             VolConstBool&   _cancelFlag,
+                                             bool&           _changesMade,
+                                             KKB::DateTime&  _timeStamp,
+                                             RunLog&         _log
+                                            );
+
+
 
 
     //***************************************************************************
@@ -292,7 +328,7 @@ namespace KKMachineLearning
 
   typedef  FeatureFileIO::FeatureFileIOPtr   FeatureFileIOPtr;
 
-  #define  _FEATUREFILEIODEFINED_
+  #define  _FeatureFileIO_Defined_
 
 
 }  /* namespace KKMachineLearning  */

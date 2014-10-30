@@ -631,3 +631,18 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
 
 
 
+
+
+FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (KKStr           _dirName, 
+                                                        const KKStr&    _fileName, 
+                                                        MLClassPtr      _unknownClass,
+                                                        bool            _useDirectoryNameForClassName,
+                                                        MLClassList&    _mlClasses,
+                                                        VolConstBool&   _cancelFlag,
+                                                        bool&           _changesMade,
+                                                        KKB::DateTime&  _timeStamp,
+                                                        RunLog&         _log
+                                                      )
+{
+  return NULL;
+}

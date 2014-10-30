@@ -25,6 +25,7 @@ using namespace  KKB;
 
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
+#include "FactoryFVProducer.h"
 #include "FeatureFileIO.h"
 //#include "FeatureFileIOKK.h"
 #include "FeatureNumList.h"
@@ -110,17 +111,19 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr   _fileDesc,
-                                                const KKStr&  _configFileName, 
-                                                RunLog&       _log,
-                                                bool          _validateDirectories
+TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
+                                                const KKStr&          _configFileName, 
+                                                FactoryFVProducerPtr  _fvFactoryProducer,
+                                                bool                  _validateDirectories,
+                                                RunLog&               _log
                                                ):
 
   Configuration (GetEffectiveConfigFileName (_configFileName), _log),
 
   configFileNameSpecified   (_configFileName),
   fileDesc                  (_fileDesc),
-  mlClasses              (NULL),
+  fvFactoryProducer         (_fvFactoryProducer),
+  mlClasses                 (NULL),
   imageClassesWeOwnIt       (false),
   log                       (_log),
   modelingMethod            (Model::mtNULL),
@@ -176,16 +179,18 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr   _fileDesc,
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr        _fileDesc,
-                                                MLClassListPtr  _mlClasses,
-                                                KKStr              _parameterStr,
-                                                RunLog&            _log
+TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
+                                                MLClassListPtr        _mlClasses,
+                                                KKStr                 _parameterStr,
+                                                FactoryFVProducerPtr  _fvFactoryProducer,
+                                                RunLog&               _log
                                                ):
   Configuration             (_log),
 
   configFileNameSpecified   (""),
   fileDesc                  (_fileDesc),
-  mlClasses              (NULL),
+  fvFactoryProducer         (_fvFactoryProducer),
+  mlClasses                 (NULL),
   imageClassesWeOwnIt       (false),
   log                       (_log),
   modelingMethod            (Model::mtNULL),
@@ -251,7 +256,8 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
 
   configFileNameSpecified   (tc.configFileNameSpecified),
   fileDesc                  (tc.fileDesc),
-  mlClasses              (NULL),
+  fvFactoryProducer         (tc.fvFactoryProducer),
+  mlClasses                 (NULL),
   imageClassesWeOwnIt       (false),
   log                       (tc.log),
   modelingMethod            (tc.modelingMethod),
@@ -497,9 +503,9 @@ void  TrainingConfiguration2::Save (const KKStr& fileName)
 
 TrainingConfiguration2::~TrainingConfiguration2 ()
 {
-  delete  noiseTrainingClass;
-  delete  normalizationParms;
-  delete  modelParameters;
+  delete  noiseTrainingClass;  noiseTrainingClass = NULL;
+  delete  normalizationParms;  normalizationParms = NULL;
+  delete  modelParameters;     modelParameters    = NULL;
 
   if  (imageClassesWeOwnIt)
   {
@@ -540,21 +546,29 @@ KKStr  TrainingConfiguration2::ModelParameterCmdLine ()  const
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
-                                                    (FeatureVectorList&  _examples,
-                                                     MLClassListPtr   _mlClasses,
-                                                     RunLog&             _log
+                                                    (FeatureVectorList&    _examples,
+                                                     MLClassListPtr        _mlClasses,
+                                                     FactoryFVProducerPtr  _fvFactoryProducer,
+                                                     RunLog&               _log
                                                     )
 {
   _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
   FileDescPtr  fileDesc = _examples.FileDesc ();
+
+  if  ((*fileDesc) != (*_fvFactoryProducer->FileDesc ()))
+  {
+    _log.Level (-1) << "TrainingConfiguration2::CreateFromFeatureVectorList   ***ERROR***   The FileDesc instances from _examples do not match what '_fvFactoryProducer' will produce." << endl;
+    return NULL;
+  }
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();
 
   TrainingConfiguration2Ptr  config 
       = new TrainingConfiguration2 (fileDesc,
-                                   mlClasses, 
-                                   "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P", 
+                                    mlClasses, 
+                                   "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P",
+                                   _fvFactoryProducer,
                                    _log
                                   );
 
@@ -591,12 +605,13 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure 
-                                                    (FileDescPtr    _fileDesc,
-                                                     const KKStr&   _existingConfigFileName,
-                                                     const KKStr&   _subDir,
-                                                     RunLog&        _log,
-                                                     bool&          _successful,
-                                                     KKStr&         _errorMessage
+                                                    (FileDescPtr           _fileDesc,
+                                                     const KKStr&          _existingConfigFileName,
+                                                     const KKStr&          _subDir,
+                                                     FactoryFVProducerPtr  _fvFactoryProducer,
+                                                     RunLog&               _log,
+                                                     bool&                 _successful,
+                                                     KKStr&                _errorMessage
                                                     )
 {
   _log.Level (10) << "TrainingConfiguration2::CreateFromDirectoryStructure"  << endl
@@ -626,8 +641,9 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
     {
       config = new TrainingConfiguration2 (_fileDesc, 
                                            _existingConfigFileName, 
-                                           _log, 
-                                           false
+                                           _fvFactoryProducer,
+                                           false,         //  false = DO NOT Validate Directories.
+                                           _log
                                           );
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
@@ -643,9 +659,10 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
     if  (osFileExists (directoryConfigFileName))
     {
       config = new TrainingConfiguration2 (_fileDesc,
-                                           directoryConfigFileName, 
-                                           _log, 
-                                           false
+                                           directoryConfigFileName,
+                                           _fvFactoryProducer,
+                                           false,  // false = Do Not Validate Directories.
+                                           _log 
                                           );
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
@@ -661,6 +678,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
     config = new TrainingConfiguration2 (_fileDesc,
                                          NULL,      // Not supplying the MLClassList
                                          "=-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P",
+                                         _fvFactoryProducer,
                                          _log
                                         );
     config->RootDir (_subDir);
@@ -1726,10 +1744,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
   bool  errorOccured = false;
 
-  FeatureVectorListPtr  featureData = new PostLarvaeFVList (fileDesc, 
-                                                            true,     // true = we own data in list
-                                                            log
-                                                           );
+  FeatureVectorListPtr  featureData = fvFactoryProducer->ManufacturFeatureVectorList (log);
 
   changesMadeToTrainingLibraries = false;
 
@@ -1833,17 +1848,31 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                  << endl;
 
   KKStr  expandedDir = trainingClass->ExpandedDirectory (rootDir);
-  FeatureVectorListPtr  extractedExamples = FeatureFileIOKK::FeatureDataReSink 
-                                (expandedDir,
-                                 trainingClass->FeatureFileName (),
-                                 trainingClass->MLClass (),
-                                 true,   //  Make all entries in this directory 'trainingClass->MLClass ()'
-                                 *mlClasses,
-                                 cancelFlag,
-                                 changesMade,
-                                 latestTimeStamp,
-                                 log
-                                );
+
+  FeatureFileIOPtr  driver = NULL;
+  if  (fvFactoryProducer)
+    driver = fvFactoryProducer->DefaultFeatureFileIO ();
+
+  FeatureVectorListPtr  extractedExamples  = NULL;
+
+  if  (driver == NULL)
+  {
+    extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (log);
+  }
+  else
+  {
+    extractedExamples = driver->FeatureDataReSink 
+                 (expandedDir,
+                  trainingClass->FeatureFileName (),
+                  trainingClass->MLClass (),
+                  true,   //  Make all entries in this directory 'trainingClass->MLClass ()'
+                  *mlClasses,
+                  cancelFlag,
+                  changesMade,
+                  latestTimeStamp,
+                  log
+                 );
+  }
   {
     // We now want to reset the ImageFileNames stored in each 'FeatureVector' instance so that it 
     // reflects the sub-diorectory from where it was retrieved.  Bewteen that and the 'rootDir' 
@@ -1923,80 +1952,6 @@ KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (const  KKStr&  confi
 
   return  configFileNameInDefaultDirectory;
 }  /* GetEffectiveConfigFileName */
-
-
-
-TrainingConfiguration2Ptr  TrainingConfiguration2::PromptForConfigurationFile (RunLog&  log)
-{
-  FileDescPtr  fileDesc = PostLarvaeFV::PostLarvaeFeaturesFileDesc ();
-
-  KKStr  configFileSpec = osAddSlash (KKMLVariables::TrainingModelsDir ()) + "*.cfg";
-  KKStrListPtr   configFileList = osGetListOfFiles (configFileSpec);
-  kkint32  numFiles = 0;
-  kkint32 x;
-  if  (configFileList != NULL)
-    numFiles = configFileList->QueueSize ();
-  if  (numFiles == 0)
-  {
-    delete  configFileList;  configFileList = NULL;
-    cerr << endl << endl << endl
-         << "There are no configuration files to choose from." << endl;
-    osWaitForEnter ();
-    return NULL;
-  }
-
-  KKStr  configFileName;
-
-  TrainingConfiguration2Ptr  selectedConfig = NULL;
-
-  kkint32  fileNum = 0;
-
-  while  (!selectedConfig)
-  {
-    cout << endl << endl
-         << "Configuration Files:" << endl;
-
-    for  (x = 0;  x < numFiles;  x++)
-    {
-      KKStr&  fileName  = (*(configFileList->IdxToPtr (x)));
-      cout << "   " << StrFormatInt ((x + 1), "##0") << ": " << fileName << endl;
-    }
-
-    cout << endl
-         << "Select configuration file number or -1 to exit ? ";
-    cin >> fileNum;
-    if  (fileNum < 0)
-      break;
-
-    if  ((fileNum < 1)  ||  (fileNum > numFiles))
-    {
-      cerr << endl << endl 
-           << "***ERROR***   Invalid Response, must be between '1' and '" << numFiles << "'." << endl;
-      osWaitForEnter ();
-      continue;
-    }
-
-    configFileName = (*(configFileList->IdxToPtr (fileNum - 1)));
-
-    selectedConfig = new TrainingConfiguration2 (fileDesc, configFileName, log, true);
-    if  (!(selectedConfig->FormatGood ()))
-    {
-      delete  selectedConfig;
-      selectedConfig = NULL;
-      cerr << endl << endl << endl
-           << "***ERROR***   Configuration file[" << configFileName << "] has errors; select a different one." << endl;
-      osWaitForEnter ();
-    }
-
-    delete  configFileList;
-    configFileList = NULL;
-  }
-
-  delete configFileList;
-  configFileList = NULL;
-
-  return  selectedConfig;
-}  /* PromptForConfigurationFile */
 
 
 

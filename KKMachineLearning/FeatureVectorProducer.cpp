@@ -26,8 +26,8 @@ using namespace  KKMachineLearning;
 
 
 FeatureVectorProducer::FeatureVectorProducer (const KKStr&  _name,
-                                            FileDescPtr   _fileDesc
-                                           ):
+                                              FileDescPtr   _fileDesc
+                                             ):
     fileDesc (_fileDesc),
     name     (_name)
 {
@@ -45,6 +45,8 @@ void  FeatureVectorProducer::SetFileDesc (FileDescPtr  _fileDesc)
 {
   fileDesc = _fileDesc;
 }
+
+
 
 
 

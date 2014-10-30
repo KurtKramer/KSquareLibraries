@@ -58,6 +58,8 @@ namespace KKMachineLearning
                                                     ) = 0;
 
 
+    virtual  FeatureVectorProducerPtr  DuplicateInstance ()  const = 0;
+
     /**  @brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
 

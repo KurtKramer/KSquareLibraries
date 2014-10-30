@@ -29,6 +29,9 @@ CLASSSTATISTIC     = ClassStatistic.h      $(IMAGECLASS)
 FEATUREVECTOR      = FeatureVector.h       $(ATTRIBUTE)          $(CLASSSTATISTIC)     FeatureFileIO.h   \
                      $(FEATURENUMLIST)     $(FILEDESC)           $(IMAGECLASS)
 
+FACTORYFVPRODUCER  = FactoryFVProducer.h
+FEATUREVECTORPRODUCER = FeatureVectorProducer.h
+
 IMAGEFEATURES      = ImageFeatures.h       $(ATTRIBUTE)          $(CLASSSTATISTIC)     $(FEATURENUMLIST) \
                      $(FEATUREVECTOR)      $(FILEDESC)
 
@@ -162,6 +165,7 @@ OBJECTS  = Attribute.o                  BinaryClassParms.o           BitReductio
            Classifier2.o                ClassStatistic.o             ClassificationBiasMatrix.o   \
            ConfusionMatrix2.o           CrossValidation2.o           CrossValidationMxN.o         \
            CrossValidationThreeWay.o    CrossValidationVoting.o      DuplicateImages.o            \
+           FactoryFVProducer.o          FeatureVectorProducer.o                                   \
            FeatureEncoder.o             FeatureEncoder2.o            FeatureFileIO.o              \
            FeatureFileIOArff.o          FeatureFileIOC45.o           FeatureFileIOColumn.o        \
            FeatureFileIODstWeb.o        FeatureFileIOKK.o            FeatureFileIORoberts.o       \
@@ -251,11 +255,17 @@ DuplicateImages.o :  DuplicateImages.cpp         $(DUPLICATEIMAGES)           $(
 	$(CC) $(CFLAGS) -c DuplicateImages.cpp
 
 
+FactoryFVProducer.o  FactoryFVProducer.cpp     $(FEATUREVECTOR)    $(FEATUREVECTORPRODUCER)
+	$(CC)  $(CFLAGS) -c FactoryFVProducer.cpp
+
+
+FeatureVectorProducer.o   FeatureVectorProducer.cpp  $(FEATUREVECTORPRODUCER )
+	$(CC)  $(CFLAGS) -c FeatureVectorProducer.cpp
+
 
 FeatureEncoder.o :   FeatureEncoder.cpp     $(FEATUREENCODER)   $(BITREDUCTION)  $(BINARYCLASSPARMS) \
                     $(FEATURENUMLIST)       $(FEATUREVECTOR)    $(SVMWRAPPER)
 	$(CC)  $(CFLAGS) -c FeatureEncoder.cpp
-
 
 
 FeatureEncoder2.o :  FeatureEncoder2.cpp    $(FEATUREENCODER2)  $(BINARYCLASSPARMS)    $(FEATURENUMLIST) \
@@ -417,6 +427,7 @@ TrainingConfiguration.o : TrainingConfiguration.cpp   $(TRAININGCONFIGURATION)  
 
 
 TrainingConfiguration2.o : TrainingConfiguration2.cpp  $(TRAININGCONFIGURATION2)      $(BINARYCLASSPARMS)    \
+                           $(FACTORYFVPRODUCER)        $(FEATUREVECTORPRODUCER)                              \
                            $(FEATUREFILEIO)            $(FEATUREFILEIOPICES)          $(FEATURENUMLIST)      \
                            $(FEATUREVECTOR)            $(FILEDESC)                    $(IMAGECLASS)          \
                            $(IMAGEFEATURES)            $(MODEL)                       $(MODELPARAMKNN)       \

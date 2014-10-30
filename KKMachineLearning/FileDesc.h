@@ -51,7 +51,7 @@ namespace KKMachineLearning
   class  FileDescList;
   typedef  FileDescList*  FileDescListPtr;
 
-  #if  !defined(_FEATUREFILEIODEFINED_)
+  #if  !defined(_FeatureFileIO_Defined_)
   class  FeatureFileIO;
   typedef  FeatureFileIO* FeatureFileIOPtr;
   #endif

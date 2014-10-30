@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FactoryFVProducer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FeatureEncoder.cpp"
 				>
 			</File>
@@ -416,6 +420,10 @@
 			</File>
 			<File
 				RelativePath=".\DuplicateImages.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FactoryFVProducer.h"
 				>
 			</File>
 			<File
