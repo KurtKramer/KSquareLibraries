@@ -111,8 +111,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
-                                                const KKStr&          _configFileName, 
+TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFileName, 
                                                 FactoryFVProducerPtr  _fvFactoryProducer,
                                                 bool                  _validateDirectories,
                                                 RunLog&               _log
@@ -121,7 +120,7 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
   Configuration (GetEffectiveConfigFileName (_configFileName), _log),
 
   configFileNameSpecified (_configFileName),
-  fileDesc                (_fileDesc),
+  fileDesc                (NULL),
   fvFactoryProducer       (_fvFactoryProducer),
   mlClasses               (NULL),
   imageClassesWeOwnIt     (false),
@@ -139,6 +138,7 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
   validateDirectories     (_validateDirectories)
 
 {
+  fileDesc = fvFactoryProducer->FileDesc ();
   if  (!fileDesc)
   {
     KKStr  errMsg = "TrainingConfiguration2   ***ERROR***   FileDesc == NULL";
@@ -179,8 +179,7 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
-                                                MLClassListPtr        _mlClasses,
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses,
                                                 KKStr                 _parameterStr,
                                                 FactoryFVProducerPtr  _fvFactoryProducer,
                                                 RunLog&               _log
@@ -188,7 +187,7 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
   Configuration             (_log),
 
   configFileNameSpecified   (""),
-  fileDesc                  (_fileDesc),
+  fileDesc                  (NULL),
   fvFactoryProducer         (_fvFactoryProducer),
   mlClasses                 (NULL),
   imageClassesWeOwnIt       (false),
@@ -204,14 +203,16 @@ TrainingConfiguration2::TrainingConfiguration2 (FileDescPtr           _fileDesc,
   validateDirectories       (false)
 
 {
-  if  (!fileDesc)
+  if  (!fvFactoryProducer)
   {
-    KKStr  errMsg = "TrainingConfiguration2    ***ERROR***   FileDesc == NULL";
+    KKStr  errMsg = "TrainingConfiguration2    ***ERROR***   fvFactoryProducer == NULL";
     log.Level (-1) << endl 
                    << errMsg << endl 
                    << endl;
     throw KKException (errMsg);
   }
+
+  fileDesc = fvFactoryProducer->FileDesc ();
 
   if  (_mlClasses)
     mlClasses = new MLClassList (*_mlClasses);
@@ -565,8 +566,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
   mlClasses->SortByName ();
 
   TrainingConfiguration2Ptr  config 
-      = new TrainingConfiguration2 (fileDesc,
-                                    mlClasses, 
+      = new TrainingConfiguration2 (mlClasses, 
                                    "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P",
                                    _fvFactoryProducer,
                                    _log
@@ -605,8 +605,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure 
-                                                    (FileDescPtr           _fileDesc,
-                                                     const KKStr&          _existingConfigFileName,
+                                                    (const KKStr&          _existingConfigFileName,
                                                      const KKStr&          _subDir,
                                                      FactoryFVProducerPtr  _fvFactoryProducer,
                                                      RunLog&               _log,
@@ -620,9 +619,9 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
   _successful = true;
 
-  if  (_fileDesc == NULL)
+  if  (_fvFactoryProducer == NULL)
   {
-    KKStr errMsg = "TrainingConfiguration2::CreateFromDirectoryStructure   ***ERROR***   _fileDesc == NULL.";
+    KKStr errMsg = "TrainingConfiguration2::CreateFromDirectoryStructure   ***ERROR***   _fvFactoryProducer == NULL.";
     _log.Level (-1) << errMsg << endl;
     return  NULL;
   }
@@ -639,8 +638,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
   {
     if  (osFileExists (_existingConfigFileName))
     {
-      config = new TrainingConfiguration2 (_fileDesc, 
-                                           _existingConfigFileName, 
+      config = new TrainingConfiguration2 (_existingConfigFileName, 
                                            _fvFactoryProducer,
                                            false,         //  false = DO NOT Validate Directories.
                                            _log
@@ -658,8 +656,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
   {
     if  (osFileExists (directoryConfigFileName))
     {
-      config = new TrainingConfiguration2 (_fileDesc,
-                                           directoryConfigFileName,
+      config = new TrainingConfiguration2 (directoryConfigFileName,
                                            _fvFactoryProducer,
                                            false,  // false = Do Not Validate Directories.
                                            _log 
@@ -675,8 +672,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
   if  (!config)
   {
-    config = new TrainingConfiguration2 (_fileDesc,
-                                         NULL,      // Not supplying the MLClassList
+    config = new TrainingConfiguration2 (NULL,      // Not supplying the MLClassList
                                          "=-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P",
                                          _fvFactoryProducer,
                                          _log
@@ -1744,7 +1740,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
   bool  errorOccured = false;
 
-  FeatureVectorListPtr  featureData = fvFactoryProducer->ManufacturFeatureVectorList (log);
+  FeatureVectorListPtr  featureData = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
 
   changesMadeToTrainingLibraries = false;
 
@@ -1857,7 +1853,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
 
   if  (driver == NULL)
   {
-    extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (log);
+    extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
   }
   else
   {

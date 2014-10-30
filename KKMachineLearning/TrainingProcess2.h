@@ -62,7 +62,6 @@ public:
     */
    TrainingProcess2 (const KKStr&         _configFileName,
                      FeatureVectorListPtr _excludeList,
-                     FileDescPtr          _fileDesc,
                      FactoryFVProducerPtr _fvFactoryProducer,
                      RunLog&              _log,
                      std::ostream*        _report,
@@ -108,7 +107,6 @@ public:
     */
    TrainingProcess2 (const KKStr&         _configFileName,
                      FeatureVectorListPtr _excludeList,
-                     FileDescPtr          _fileDesc,
                      FactoryFVProducerPtr _fvFactoryProducer,
                      RunLog&              _log,
                      kkuint32             _level,            /**< Class hierarchy level to train at. */
@@ -144,7 +142,6 @@ public:
     *                            the user as a way of letting them know what is happening.
     */
    TrainingProcess2 (const KKStr&         _configFileName,
-                     FileDescPtr          _fileDesc,
                      FactoryFVProducerPtr _fvFactoryProducer,
                      RunLog&              _log,
                      bool                 _featuresAlreadyNormalized,
@@ -173,7 +170,6 @@ public:
                      FeatureVectorListPtr       _trainingExamples,
                      MLClassListPtr             _mlClasses,
                      std::ostream*              _reportFile,
-                     FileDescPtr                _fileDesc,
                      FactoryFVProducerPtr       _fvFactoryProducer,
                      RunLog&                    _log,
                      bool                       _featuresAlreadyNormalized,

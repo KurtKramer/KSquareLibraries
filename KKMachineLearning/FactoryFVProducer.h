@@ -25,11 +25,17 @@ namespace KKMachineLearning
   typedef  FeatureVectorProducer*    FeatureVectorProducerPtr;
 #endif
 
+
 #if  !defined(_FeatureFileIO_Defined_)
   class  FeatureFileIO;
   typedef  FeatureFileIO* FeatureFileIOPtr;
 #endif
 
+
+#if  !defined(_FileDesc_Defined_)
+  class  FileDesc;
+  typedef  FileDesc*  FileDescPtr;
+#endif
 
 
   /**
@@ -43,52 +49,49 @@ namespace KKMachineLearning
   public:
     typedef  FactoryFVProducer*  FactoryFVProducerPtr;
 
-    FactoryFVProducer (const FactoryFVProducer&  factory);
-
-    FactoryFVProducer (const KKStr&      _name,
-                       const KKStr&      _description,
-                       FileDescPtr       _fileDesc,
-                       FeatureFileIOPtr  _defaultFeatureFileIO
+    FactoryFVProducer (const KKStr&  _name,
+                       const KKStr&  _description
                       );
 
-  private:
+  protected:
     /**
      *@brief  A Factory can neer be deleted until the application terminates;  the atexit method will perform the deletes.
      */
     virtual ~FactoryFVProducer ();
 
   public:
-    const KKStr&      Description          ()  const  {return description;}
-    FeatureFileIOPtr  DefaultFeatureFileIO ()  const  {return defaultFeatureFileIO;}
-    FileDescPtr       FileDesc             ()  const  {return fileDesc;}
-    const KKStr&      Name                 ()  const  {return name;}
+    const KKStr&   Description ()  const  {return description;}
+    const KKStr&   Name        ()  const  {return name;}
 
 
-    virtual  FeatureVectorProducerPtr  ManufacturInstance (RunLog&  runLog)  = 0;
+    virtual  FeatureFileIOPtr  DefaultFeatureFileIO ()  const = 0;
+
+    virtual  FileDescPtr       FileDesc             ()  const = 0;
+
+    virtual  FeatureVectorProducerPtr  ManufactureInstance (RunLog&  runLog)  = 0;
 
 
     /**
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is approprite for containing instances 
      *of FeatureVectors produced by the associated FeatureVectorProducer.
-     *@details  The instanve 'FeatureVectorList' that is returned have 'owner' set to true; meaning that it will 
-     *own the FeatureVector instances added to it.
      */
-    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (RunLog&  runLog);
-
+    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                                RunLog&  runLog
+                                                               );
 
 
     /**
      *@brief Using register Factory  with "_name" will return a new instanve of FeatureVectorProducer.
      */
-    static  FeatureVectorProducerPtr  ManufacturInstance (const KKStr&  _name,
-                                                          RunLog&       runLog
-                                                         );
+    static  FeatureVectorProducerPtr  ManufactureInstance (const KKStr&  _name,
+                                                           RunLog&       runLog
+                                                          );
 
 
     static  FactoryFVProducerPtr  LookUpFactory (const KKStr&  _name);
 
     static  void  RegisterFactory (FactoryFVProducerPtr  factory,
-                                   RunLog&               runLog
+                                   RunLog*               runLog
                                   );
 
 

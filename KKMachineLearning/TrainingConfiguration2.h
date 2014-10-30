@@ -40,8 +40,7 @@ namespace KKMachineLearning
     typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
 
 
-    TrainingConfiguration2 (FileDescPtr           _fileDesc,
-                            const KKStr&          _configFileName,
+    TrainingConfiguration2 (const KKStr&          _configFileName,
                             FactoryFVProducerPtr  _fvFactoryProducer,           /**< We will take ownership of this instance and delete it in destructor. */
                             bool                  _validateDirectories,
                             RunLog&               _log
@@ -59,8 +58,7 @@ namespace KKMachineLearning
      *@param[in]  _fvFactoryProducer  Factory for creating FeatureVectorProducer instance.
      *@param[in]  _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (FileDescPtr           _fileDesc,
-                            MLClassListPtr        _mlClasses,       
+    TrainingConfiguration2 (MLClassListPtr        _mlClasses,       
                             KKStr                 _parameterStr,
                             FactoryFVProducerPtr  _fvFactoryProducer,      /**< We will take ownership of this instance and delete it in destructor. */
                             RunLog&               _log             
@@ -88,8 +86,7 @@ namespace KKMachineLearning
      */
     static
     TrainingConfiguration2*  CreateFromDirectoryStructure 
-                                            (FileDescPtr           _fileDesc,
-                                             const KKStr&          _existingConfigFileName,
+                                            (const KKStr&          _existingConfigFileName,
                                              const KKStr&          _subDir,
                                              FactoryFVProducerPtr  _fvFactoryProducer,
                                              RunLog&               _log,

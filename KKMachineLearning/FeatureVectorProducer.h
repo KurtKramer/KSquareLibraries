@@ -19,6 +19,9 @@
 
 #include "RunLog.h"
 #include "Raster.h"
+using namespace  KKB;
+
+
 
 namespace KKMachineLearning 
 {
@@ -35,6 +38,10 @@ namespace KKMachineLearning
   typedef  FileDesc* const  FileDescConstPtr;
 #endif
 
+#if  !defined(_MLClass_Defined_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+#endif
 
 
   class  FeatureVectorProducer
@@ -48,8 +55,10 @@ namespace KKMachineLearning
 
     virtual ~FeatureVectorProducer ();
 
-    virtual  FeatureVectorPtr  ComputeFeatureVector (RasterPtr  image,
-                                                     RunLog&    runLog
+    virtual  FeatureVectorPtr  ComputeFeatureVector (Raster&           image,
+                                                     const MLClassPtr  knownClass,
+                                                     RasterListPtr     intermediateImages,
+                                                     RunLog&           runLog
                                                     ) = 0;
 
 

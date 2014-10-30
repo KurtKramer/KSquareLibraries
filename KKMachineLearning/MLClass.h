@@ -47,7 +47,6 @@
 
 namespace KKMachineLearning
 {
-
   class  MLClassListIndex;
   typedef  MLClassListIndex*  MLClassListIndexPtr;
 
