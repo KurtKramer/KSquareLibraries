@@ -157,15 +157,16 @@ namespace KKMachineLearning
      * the feature file computation routine.
      */
     virtual
-    FeatureVectorListPtr  FeatureDataReSink (KKStr           _dirName, 
-                                             const KKStr&    _fileName, 
-                                             MLClassPtr      _unknownClass,
-                                             bool            _useDirectoryNameForClassName,
-                                             MLClassList&    _mlClasses,
-                                             VolConstBool&   _cancelFlag,
-                                             bool&           _changesMade,
-                                             KKB::DateTime&  _timeStamp,
-                                             RunLog&         _log
+    FeatureVectorListPtr  FeatureDataReSink (FactoryFVProducerPtr  _fvProducerFactory,
+                                             const KKStr&          _dirName, 
+                                             const KKStr&          _fileName, 
+                                             MLClassPtr            _unknownClass,
+                                             bool                  _useDirectoryNameForClassName,
+                                             MLClassList&          _mlClasses,
+                                             VolConstBool&         _cancelFlag,
+                                             bool&                 _changesMade,
+                                             KKB::DateTime&        _timeStamp,
+                                             RunLog&               _log
                                             );
 
 

@@ -33,13 +33,12 @@ using namespace KKB;
 #include "FeatureFileIOC45.h"
 #include "FeatureFileIOColumn.h"
 #include "FeatureFileIODstWeb.h"
-//#include "FeatureFileIOKK.h"
 #include "FeatureFileIORoberts.h"
 #include "FeatureFileIOSparse.h"
 #include "FeatureFileIOUCI.h"
 
+#include "FactoryFVProducer.h"
 #include "FileDesc.h"
-#include "GoalKeeper.h"
 #include "MLClass.h"
 using namespace KKMachineLearning;
 
@@ -93,6 +92,7 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 
   GlobalGoalKeeper::EndBlock ();
 } /* RegisterFeatureFileIODriver */
+
 
 
 
@@ -633,16 +633,225 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
 
 
 
-FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (KKStr           _dirName, 
-                                                        const KKStr&    _fileName, 
-                                                        MLClassPtr      _unknownClass,
-                                                        bool            _useDirectoryNameForClassName,
-                                                        MLClassList&    _mlClasses,
-                                                        VolConstBool&   _cancelFlag,
-                                                        bool&           _changesMade,
-                                                        KKB::DateTime&  _timeStamp,
-                                                        RunLog&         _log
+FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _fvProducerFactory,
+                                                        const KKStr&          _dirName,
+                                                        const KKStr&          _fileName, 
+                                                        MLClassPtr            _unknownClass,
+                                                        bool                  _useDirectoryNameForClassName,
+                                                        MLClassList&          _mlClasses,
+                                                        VolConstBool&         _cancelFlag,
+                                                        bool&                 _changesMade,
+                                                        KKB::DateTime&        _timeStamp,
+                                                        RunLog&               _log
                                                       )
 {
-  return NULL;
+  _changesMade = false;
+  _timeStamp = DateTime ();
+
+  FileDescPtr  fileDesc = _fvProducerFactory->FileDesc ();
+  if  (_unknownClass == NULL)
+    _unknownClass = MLClass::GetUnKnownClassStatic ();
+
+  KKStr  className = _unknownClass->Name ();
+
+  _log.Level (10) << "FeatureFileIO::FeatureDataReSink  dirName: " << _dirName << endl
+                  << "               fileName: " << _fileName << "  UnKnownClass: " << className << endl;
+
+  KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
+
+  bool  successful;
+
+  KKStr fileNameToOpen;
+  if  (_dirName.Empty ())
+    fileNameToOpen = _fileName;
+  else
+    fileNameToOpen = osAddSlash (_dirName) + _fileName;
+
+  bool  versionsAreSame = false;
+
+  FeatureVectorListPtr  origFeatureVectorData 
+        = LoadFeatureFile (fileNameToOpen, _mlClasses, -1, _cancelFlag, successful, _changesMade, _log);
+
+  if  (origFeatureVectorData == NULL)
+  {
+    successful = false;
+    origFeatureVectorData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+  }
+
+  if  (_cancelFlag)
+  {
+    delete  origFeatureVectorData;  origFeatureVectorData = NULL;
+    return  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+  }
+
+  FeatureVectorListPtr  
+
+  PostLarvaeFVListPtr origFeatureData = NULL;
+
+  if  (typeid (*origFeatureVectorData) == typeid (PostLarvaeFVList))
+  {
+     origFeatureData = dynamic_cast<PostLarvaeFVListPtr>(origFeatureVectorData);
+  }
+  else
+  {
+    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    delete  origFeatureVectorData;
+    origFeatureVectorData = NULL;
+  }
+
+  KKStr  fileSpec = osAddSlash (_dirName) + "*.*";
+  KKStrListPtr   fileNameList = osGetListOfFiles (fileSpec);
+
+  if  (!fileNameList)
+  {
+    // There are no Image Files,  so we need to return a Empty List of Image Features.
+
+    if  (origFeatureData->QueueSize () > 0)
+      _changesMade = true;
+
+    delete  origFeatureData;  origFeatureData = NULL;
+
+    return  new PostLarvaeFVList (fileDesc, true, _log);
+  }
+
+  if  (successful)
+  {
+    if  (origFeatureData->Version () == CurrentFeatureFileVersionNum)
+    {
+      versionsAreSame = true;
+      _timeStamp = osGetFileDateTime (fileNameToOpen);
+    }
+
+    else
+    {
+      _changesMade = true;
+    }
+  }
+  else
+  {
+    delete  origFeatureData;
+    origFeatureData = new PostLarvaeFVList (fileDesc, true, _log);
+  }
+
+  origFeatureData->SortByRootName (false);
+
+
+  PostLarvaeFVListPtr  extractedFeatures = new PostLarvaeFVList (fileDesc, true, _log);
+  extractedFeatures->Version (CurrentFeatureFileVersionNum);
+
+  fileNameList->Sort (false);
+
+  KKStrList::iterator  fnIDX;
+  fnIDX = fileNameList->begin ();   // fileNameList
+
+  KKStrPtr  imageFileName;
+
+  kkint32  numImagesFoundInOrigFeatureData = 0;
+  kkint32  numOfNewFeatureExtractions = 0;
+
+  for  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!_cancelFlag);  ++fnIDX)
+  {
+    imageFileName = *fnIDX;
+    bool validImageFileFormat = SupportedImageFileFormat (*imageFileName);
+    
+    if  (!validImageFileFormat)
+      continue;
+
+    PostLarvaeFVPtr  origImage = origFeatureData->BinarySearchByName (*imageFileName);
+    if  (origImage)
+      numImagesFoundInOrigFeatureData++;
+
+    if  (origImage  &&  versionsAreSame)
+    {
+      if  (_useDirectoryNameForClassName)
+      {
+        if  (origImage->MLClass () != _unknownClass)
+        {
+          _changesMade = true;
+          origImage->MLClass (_unknownClass);
+        }
+      }
+
+      else if  ((origImage->MLClass ()->UnDefined ())  &&  (origImage->MLClass () != _unknownClass))
+      {
+        _changesMade = true;
+        origImage->MLClass (_unknownClass);
+      }
+
+      extractedFeatures->PushOnBack (origImage);
+      origFeatureData->DeleteEntry (origImage);
+    }
+    else
+    {
+      // We either  DON'T have an original image    or    versions are not the same.
+
+      KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
+      PostLarvaeFVPtr image = NULL;
+      try
+      {
+        image = new PostLarvaeFV (fullFileName, _unknownClass, successful, NULL);
+      }
+      catch  (...)
+      {
+        _log.Level (-1) << endl << endl
+          << "FeatureDataReSink   ***ERROR***"  << endl
+          << "       Exception occured calling constructor 'PostLarvaeFV'  trying to compute FeatureVector." << endl
+          << endl;
+        successful = false;
+        image = NULL;
+      }
+
+      if  (!successful)
+      {
+        _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
+                       << imageFileName << "]."
+                       << endl;
+        delete  image;
+        image = NULL;
+      }
+
+      else
+      {
+        _changesMade = true;
+        image->ImageFileName (*imageFileName);
+
+        _log.Level (30) << image->ImageFileName () << "  " << image->OrigSize () << endl;
+        extractedFeatures->PushOnBack (image);
+        numOfNewFeatureExtractions++;
+
+        if  ((numOfNewFeatureExtractions % 100) == 0)
+          cout << numOfNewFeatureExtractions << " Images Extracted." << endl;
+      }
+    }
+  }
+
+  if  (numImagesFoundInOrigFeatureData != extractedFeatures->QueueSize ())
+    _changesMade = true;
+  
+  extractedFeatures->Version (CurrentFeatureFileVersionNum);
+
+  if  ((_changesMade)  &&  (!_cancelFlag))
+  {
+    //extractedFeatures->WriteImageFeaturesToFile (fullFeatureFileName, RawFormat, FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()));
+
+    kkuint32  numExamplesWritten = 0;
+
+    driver.SaveFeatureFile (fullFeatureFileName,  
+                            FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()),
+                            *extractedFeatures,
+                            numExamplesWritten,
+                            _cancelFlag,
+                            successful,
+                            _log
+                           );
+
+    _timeStamp = osGetLocalDateTime ();
+  }
+
+  delete  fileNameList;      fileNameList    = NULL;
+  delete  origFeatureData;   origFeatureData = NULL;
+
+  _log.Level (10) << "FeatureDataReSink  Exiting  Dir: "  << _dirName << endl;
+
+  return  extractedFeatures;
 }
