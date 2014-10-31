@@ -1,7 +1,7 @@
 var searchData=
 [
   ['uccignore',['uccIGNORE',['../_usf_cas_cor_8h.html#a4ceb1c7218fd4acd0217093788b5830b',1,'UsfCasCor.h']]],
-  ['uchar',['uchar',['../class_k_k_machine_learning_1_1_post_larvae_f_v.html#adcd38a2aeeb1fa778f17b24f9cb01811',1,'KKMachineLearning::PostLarvaeFV::uchar()'],['../namespace_k_k_b.html#ace9969169bf514f9ee6185186949cdf7',1,'KKB::uchar()']]],
+  ['uchar',['uchar',['../namespace_k_k_b.html#ace9969169bf514f9ee6185186949cdf7',1,'KKB']]],
   ['uint',['uint',['../namespace_k_k_b.html#ab8557ae1b1f2361659d82a890e2f8014',1,'KKB']]],
   ['uint32_5fmax',['uint32_max',['../_k_k_base_types_8h.html#aeafa0104ac2fa8acea546f2754f8301b',1,'KKBaseTypes.h']]],
   ['uint64_5fmax',['uint64_max',['../_k_k_base_types_8h.html#a746b79a7ea43cc2ce2c406bb43a6e8ed',1,'KKBaseTypes.h']]],
@@ -26,8 +26,8 @@ var searchData=
   ['uppername',['UpperName',['../class_k_k_machine_learning_1_1_m_l_class.html#a355861629915d4ac4d06003a01834dd4',1,'KKMachineLearning::MLClass']]],
   ['usecache',['UseCache',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#a69dc53cbaf1b6aa6caf790aa1427b405',1,'KKMachineLearning::UsfCasCor::UseCache()'],['../class_k_k_machine_learning_1_1_model_param_usf_cas_cor.html#a11bdb418fdd849de6cd38f43f17dbc15',1,'KKMachineLearning::ModelParamUsfCasCor::UseCache() const '],['../class_k_k_machine_learning_1_1_model_param_usf_cas_cor.html#ae5128f661d829e421bd8cf155f523150',1,'KKMachineLearning::ModelParamUsfCasCor::UseCache(bool _useCache)']]],
   ['useprobabilitytobreakties',['UseProbabilityToBreakTies',['../class_k_k_machine_learning_1_1_model_param_old_s_v_m.html#aaf6958c8e70fa5b723e5d99fb80c1b18',1,'KKMachineLearning::ModelParamOldSVM::UseProbabilityToBreakTies()'],['../class_k_k_machine_learning_1_1_s_v_mparam.html#a2e1cccbc4c2df18b412d814f6e719bf0',1,'KKMachineLearning::SVMparam::UseProbabilityToBreakTies()']]],
-  ['usfcascor',['UsfCasCor',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#a037123e2de119d2e1b81528ce21c3187',1,'KKMachineLearning::UsfCasCor']]],
   ['usfcascor',['UsfCasCor',['../class_k_k_machine_learning_1_1_usf_cas_cor.html',1,'KKMachineLearning']]],
+  ['usfcascor',['UsfCasCor',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#a037123e2de119d2e1b81528ce21c3187',1,'KKMachineLearning::UsfCasCor']]],
   ['usfcascor_2ecpp',['UsfCasCor.cpp',['../_usf_cas_cor_8cpp.html',1,'']]],
   ['usfcascor_2eh',['UsfCasCor.h',['../_usf_cas_cor_8h.html',1,'']]],
   ['usfcascorclassifier',['usfCasCorClassifier',['../class_k_k_machine_learning_1_1_model_usf_cas_cor.html#a22d2f426098dcd74aea56494d1d009b0',1,'KKMachineLearning::ModelUsfCasCor']]],

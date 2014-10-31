@@ -23,6 +23,7 @@ var searchData=
   ['kkqueue_3c_20point_20_3e',['KKQueue&lt; Point &gt;',['../class_k_k_b_1_1_k_k_queue.html',1,'KKB']]],
   ['kkqueue_3c_20raster_20_3e',['KKQueue&lt; Raster &gt;',['../class_k_k_b_1_1_k_k_queue.html',1,'KKB']]],
   ['kkqueue_3c_20startstopregion_20_3e',['KKQueue&lt; StartStopRegion &gt;',['../class_k_k_b_1_1_k_k_queue.html',1,'KKB']]],
+  ['kkqueue_3c_20trainingconfiguration2_20_3e',['KKQueue&lt; TrainingConfiguration2 &gt;',['../class_k_k_b_1_1_k_k_queue.html',1,'KKB']]],
   ['kkstr',['KKStr',['../class_k_k_b_1_1_k_k_str.html',1,'KKB']]],
   ['kkstrlist',['KKStrList',['../class_k_k_b_1_1_k_k_str_list.html',1,'KKB']]],
   ['kkstrmatrix',['KKStrMatrix',['../class_k_k_b_1_1_k_k_str_matrix.html',1,'KKB']]],

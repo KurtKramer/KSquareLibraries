@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -194,8 +194,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">void</span>    <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a7106733ffbda73236008e71baf95b129">AddBinaryClassParms</a> (BinaryClassParmsPtr  binaryClassParms);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">void</span>    <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a22ec2260fc8dfbe33bb2c1117f6eca63" title="Add a Binary parameters using svm_parametr cmd line str. Typically used by TrainingConfiguration. ">AddBinaryClassParms</a> (MLClassPtr          class1,</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                 MLClassPtr          class2,</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">void</span>    <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a22ec2260fc8dfbe33bb2c1117f6eca63" title="Add a Binary parameters using svm_parametr cmd line str. Typically used by TrainingConfiguration. ">AddBinaryClassParms</a> (MLClassPtr             class1,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                                 MLClassPtr             class2,</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="struct_s_v_m233_1_1svm__parameter.html">svm_parameter</a>&amp;   _param,</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                                 <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp;  _selectedFeatures,</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                                 <span class="keywordtype">float</span>                  _weight</div>
@@ -258,12 +258,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="comment">// Member update methods</span></div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a1791100f8a340b67ac0b48464d8fd90f">A_Param</a>            (<span class="keywordtype">float</span>          _A);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#aa2f055aaa47a5ae839aee315e67c97dc">C_Param</a>            (<span class="keywordtype">double</span>         _CC);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a1791100f8a340b67ac0b48464d8fd90f">A_Param</a>            (<span class="keywordtype">float</span>       _A);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#aa2f055aaa47a5ae839aee315e67c97dc">C_Param</a>            (<span class="keywordtype">double</span>      _CC);</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a3826910d5c5f40a2d3d85f5f83d670ce">C_Param</a>            (MLClassPtr  class1,</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                              MLClassPtr  class2,</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                              <span class="keywordtype">double</span>         cParam</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                              <span class="keywordtype">double</span>      cParam</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                             );</div>
 <div class="line"><a name="l00175"></a><span class="lineno"><a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#acbde69ded51c6881bc459903332eac7a">  175</a></span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#acbde69ded51c6881bc459903332eac7a">EncodingMethod</a>     (SVM_EncodingMethod     _encodingMethod)     {encodingMethod    = _encodingMethod;}</div>
 <div class="line"><a name="l00176"></a><span class="lineno"><a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a9a6f0bdff29d17c3ab9e9d3afa45ccac">  176</a></span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a9a6f0bdff29d17c3ab9e9d3afa45ccac">Gamma</a>              (<span class="keywordtype">double</span>                 _gamma)              {param<a class="code" href="struct_s_v_m233_1_1svm__parameter.html#a027beafb4ebb5704a76522e03f9b35d6">.</a><a class="code" href="struct_s_v_m233_1_1svm__parameter.html#a027beafb4ebb5704a76522e03f9b35d6">Gamma</a> <a class="code" href="struct_s_v_m233_1_1svm__parameter.html#a027beafb4ebb5704a76522e03f9b35d6">(</a>_gamma<a class="code" href="struct_s_v_m233_1_1svm__parameter.html#a027beafb4ebb5704a76522e03f9b35d6">)</a>;}</div>
@@ -274,8 +274,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#ade4a06d7cba3303b5e9283de87676e4f">  181</a></span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#ade4a06d7cba3303b5e9283de87676e4f">SamplingRate</a>       (<span class="keywordtype">float</span>                  _samplingRate)       {samplingRate       = _samplingRate;}</div>
 <div class="line"><a name="l00182"></a><span class="lineno"><a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a335e51aa9daa8c20b3ae11ab51674eb1">  182</a></span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a335e51aa9daa8c20b3ae11ab51674eb1">SelectedFeatures</a>   (<span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp;  _selectedFeatures)   {selectedFeatures   <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html#a8ed98cfd85a47e75d833fbce3c11f9c9">=</a> _selectedFeatures;}</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a2910f9d49a81d2dec62a10fa30d0cc1f">SetBinaryClassFields</a> (MLClassPtr          class1,</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                                MLClassPtr          class2,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a2910f9d49a81d2dec62a10fa30d0cc1f">SetBinaryClassFields</a> (MLClassPtr             class1,</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                                MLClassPtr             class2,</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                                <span class="keyword">const</span> <a class="code" href="struct_s_v_m233_1_1svm__parameter.html">svm_parameter</a>&amp;   _param,</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                                <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp;  _features,</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                                <span class="keywordtype">float</span>                  _weight</div>
@@ -283,8 +283,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a6da42d9131d62ced2de18aa0ce15a5a4">SetFeatureNums</a> (<span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp;  _features);</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a0276534a81928a165da18c77b755c2e7">SetFeatureNums</a>    (MLClassPtr          class1,</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                             MLClassPtr          class2,</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_mparam.html#a0276534a81928a165da18c77b755c2e7">SetFeatureNums</a>    (MLClassPtr             class1,</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                             MLClassPtr             class2,</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                             <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp;  _features,</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                             <span class="keywordtype">float</span>                  _weight = -1  <span class="comment">// -1 Indicats use existing value, </span></div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                            );</div>
@@ -367,7 +367,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:18 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:05:40 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

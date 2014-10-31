@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -213,7 +213,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<a class="code" href="class_k_k_machine_learning_1_1_orderings.html" title="Used to maintain multiple orderings of a single list of FeatureVector objects. ">Orderings</a>::<a class="code" href="class_k_k_machine_learning_1_1_orderings.html#a330a39783fa424a0c474d43a521f3bf6" title="Constructs Orderings of a FeatureVectorList from a previous construction that was saved in a data fil...">Orderings</a> (<span class="keyword">const</span> <a class="code" href="class_k_k_b_1_1_k_k_str.html" title="A string class providing safe runtime string management. ">KKStr</a>&amp;      _featureFileName,</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                      <a class="code" href="namespace_k_k_machine_learning.html#a2889997c126cf98f53fa14652e5ad910">FeatureFileIOPtr</a>  _driver,</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                      <a class="code" href="namespace_k_k_machine_learning.html#ace07b8d8d12720ca042e5ec8ad544338">FeatureFileIOPtr</a>  _driver,</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                      <a class="code" href="class_k_k_b_1_1_run_log.html" title="Used for logging messages. ">RunLog</a>&amp;           _log,</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                      <span class="keywordtype">bool</span>&amp;             _cancelFlag</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    ):</div>
@@ -350,7 +350,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  FeatureVectorListPtr  workList = <span class="keyword">new</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html" title="Container class for FeatureVector derived objects. ">FeatureVectorList</a> <a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0b01f5191bfa56809c1c3b4c83fe1801" title="Create a duplicate list, depending on the &#39;_owner&#39; parameter may also duplicate the contents...">(</a>*data<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0b01f5191bfa56809c1c3b4c83fe1801" title="Create a duplicate list, depending on the &#39;_owner&#39; parameter may also duplicate the contents...">,</a> <span class="keyword">false</span><a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0b01f5191bfa56809c1c3b4c83fe1801" title="Create a duplicate list, depending on the &#39;_owner&#39; parameter may also duplicate the contents...">)</a>;</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  <span class="keywordflow">while</span>  (orderings.size () &lt; numOfOrderings)</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;  {</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    workList<a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0">-&gt;</a><a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0">RandomizeOrder</a> <a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0">(</a><a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0">)</a>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    workList<a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0" title="Randomizes the order of the vector. ">-&gt;</a><a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0" title="Randomizes the order of the vector. ">RandomizeOrder</a> <a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0" title="Randomizes the order of the vector. ">(</a><a class="code" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0" title="Randomizes the order of the vector. ">)</a>;</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    FeatureVectorListPtr  ordering = workList<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">-&gt;</a><a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">StratifyAmoungstClasses</a> <a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">(</a>mlClasses<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">,</a> -1<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">,</a> numOfFolds<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html#a0321dcb81acf5657a12429ce46dcde32">)</a>;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;    orderings.push_back (ordering);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  }</div>
@@ -728,7 +728,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:37 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:06:02 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

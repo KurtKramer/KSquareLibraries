@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -158,6 +158,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc09d961e9f995ccf6183ff1a5e87e23"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_k_k_b_1_1_k_k_queue.html">KKQueue</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#acc09d961e9f995ccf6183ff1a5e87e23">DuplicateListAndContents</a> () const </td></tr>
 <tr class="memdesc:acc09d961e9f995ccf6183ff1a5e87e23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new container including duplicating the contents, which also makes the new instance the owner of those contents.  <a href="#acc09d961e9f995ccf6183ff1a5e87e23">More...</a><br/></td></tr>
 <tr class="separator:acc09d961e9f995ccf6183ff1a5e87e23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc98856d9a20f8838bd647e0391e6b2"><td class="memTemplParams" colspan="2">template&lt;typename Functor &gt; </td></tr>
+<tr class="memitem:a0cc98856d9a20f8838bd647e0391e6b2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a0cc98856d9a20f8838bd647e0391e6b2">FindTheKthElement</a> (<a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> k, Functor pred)</td></tr>
+<tr class="separator:a0cc98856d9a20f8838bd647e0391e6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af449cfe0b0d33b6623949be7b7dc1103"><td class="memItemLeft" align="right" valign="top">EntryPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#af449cfe0b0d33b6623949be7b7dc1103">FrontOfQueue</a> () const </td></tr>
 <tr class="memdesc:af449cfe0b0d33b6623949be7b7dc1103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the element that is at from of the queue with out removing it from the queue.  <a href="#af449cfe0b0d33b6623949be7b7dc1103">More...</a><br/></td></tr>
 <tr class="separator:af449cfe0b0d33b6623949be7b7dc1103"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,8 +170,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8cd2a0f6218ce6f63cba5c0dacf97fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add82fc1ce599b683485830cced1d5126"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#add82fc1ce599b683485830cced1d5126">GrowthRate</a> () const </td></tr>
 <tr class="separator:add82fc1ce599b683485830cced1d5126"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad642f4c00da166bd00636288c6bd96ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#ad642f4c00da166bd00636288c6bd96ee">GrowthRate</a> (<a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> _growthRate)</td></tr>
-<tr class="separator:ad642f4c00da166bd00636288c6bd96ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acce2bdd8b3327e38266cf198382cd852"><td class="memItemLeft" align="right" valign="top">EntryPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#acce2bdd8b3327e38266cf198382cd852">IdxToPtr</a> (<a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> idx) const </td></tr>
 <tr class="memdesc:acce2bdd8b3327e38266cf198382cd852"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or &gt;= <a class="el" href="class_k_k_b_1_1_k_k_queue.html#a1dab601f75ee6a65d97f02bddf71c40d" title="Same as calling vector&lt;&gt;::size(). Returns the number of elements in KKQueue. ">QueueSize()</a> will return NULL.  <a href="#acce2bdd8b3327e38266cf198382cd852">More...</a><br/></td></tr>
 <tr class="separator:acce2bdd8b3327e38266cf198382cd852"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,11 +194,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8c2edf92ac57e26fe47032ad4d92f165"><td class="memItemLeft" align="right" valign="top">Entry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a8c2edf92ac57e26fe47032ad4d92f165">operator[]</a> (<a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> i) const </td></tr>
 <tr class="memdesc:a8c2edf92ac57e26fe47032ad4d92f165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to element indexed by 'i'.  <a href="#a8c2edf92ac57e26fe47032ad4d92f165">More...</a><br/></td></tr>
 <tr class="separator:a8c2edf92ac57e26fe47032ad4d92f165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4990d037ff09dd504cc7df53819bf61a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a4990d037ff09dd504cc7df53819bf61a">Owner</a> () const </td></tr>
-<tr class="separator:a4990d037ff09dd504cc7df53819bf61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf47f5cb6057e35b9f0d230b8b9a3906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#aaf47f5cb6057e35b9f0d230b8b9a3906">Owner</a> (bool _owner)</td></tr>
 <tr class="memdesc:aaf47f5cb6057e35b9f0d230b8b9a3906"><td class="mdescLeft">&#160;</td><td class="mdescRight">You can specify who owns the contents of the container. '_owner' == true means when the container is deleted it will also call the destructor for each element it contains.  <a href="#aaf47f5cb6057e35b9f0d230b8b9a3906">More...</a><br/></td></tr>
 <tr class="separator:aaf47f5cb6057e35b9f0d230b8b9a3906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4990d037ff09dd504cc7df53819bf61a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a4990d037ff09dd504cc7df53819bf61a">Owner</a> () const </td></tr>
+<tr class="separator:a4990d037ff09dd504cc7df53819bf61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03844c19a838fed7e7bcc5816846dcfd"><td class="memItemLeft" align="right" valign="top">EntryPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a03844c19a838fed7e7bcc5816846dcfd">PopFromBack</a> ()</td></tr>
 <tr class="memdesc:a03844c19a838fed7e7bcc5816846dcfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the last element in the container and returns its pointer. If the container is empty will return NULL.  <a href="#a03844c19a838fed7e7bcc5816846dcfd">More...</a><br/></td></tr>
 <tr class="separator:a03844c19a838fed7e7bcc5816846dcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,9 +218,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1dab601f75ee6a65d97f02bddf71c40d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as calling vector&lt;&gt;::size(). Returns the number of elements in <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a>.  <a href="#a1dab601f75ee6a65d97f02bddf71c40d">More...</a><br/></td></tr>
 <tr class="separator:a1dab601f75ee6a65d97f02bddf71c40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab43920c3ec182b87d3affa1e1611e1b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#ab43920c3ec182b87d3affa1e1611e1b0">RandomizeOrder</a> ()</td></tr>
+<tr class="memdesc:ab43920c3ec182b87d3affa1e1611e1b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Randomizes the order of the vector.  <a href="#ab43920c3ec182b87d3affa1e1611e1b0">More...</a><br/></td></tr>
 <tr class="separator:ab43920c3ec182b87d3affa1e1611e1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72f950cfa2e3482aa8c527eb024a57ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a72f950cfa2e3482aa8c527eb024a57ee">RandomizeOrder</a> (<a class="el" href="namespace_k_k_b.html#a85ec32b13453eef3cd1fc5e29ecf636c">kkint64</a> seed)</td></tr>
 <tr class="separator:a72f950cfa2e3482aa8c527eb024a57ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9fd71e0f10f8383153eecbbbfce0f30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#af9fd71e0f10f8383153eecbbbfce0f30">RandomizeOrder</a> (<a class="el" href="class_k_k_b_1_1_random_num_generator.html">RandomNumGenerator</a> &amp;randomVariable)</td></tr>
+<tr class="memdesc:af9fd71e0f10f8383153eecbbbfce0f30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Randomizes the order of the vector.  <a href="#af9fd71e0f10f8383153eecbbbfce0f30">More...</a><br/></td></tr>
+<tr class="separator:af9fd71e0f10f8383153eecbbbfce0f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a667988c7ff02753f1324fb6c52debf84"><td class="memItemLeft" align="right" valign="top">EntryPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_b_1_1_k_k_queue.html#a667988c7ff02753f1324fb6c52debf84">RemoveFirst</a> ()</td></tr>
 <tr class="memdesc:a667988c7ff02753f1324fb6c52debf84"><td class="mdescLeft">&#160;</td><td class="mdescRight">same as PopFromFront  <a href="#a667988c7ff02753f1324fb6c52debf84">More...</a><br/></td></tr>
 <tr class="separator:a667988c7ff02753f1324fb6c52debf84"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,7 +256,7 @@ class KKB::KKQueue&lt; Entry &gt;</h3>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00075">75</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00076">76</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="aeb057c9c010446f46f57c1e355f981f1"></a>
 <div class="memitem">
@@ -265,7 +270,7 @@ template&lt;class Entry&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00087">87</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00088">88</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +286,7 @@ template&lt;class Entry&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00086">86</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00087">87</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -302,7 +307,7 @@ template&lt;class Entry &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00192">192</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00217">217</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -333,7 +338,7 @@ template&lt;class Entry &gt; </div>
 <p>Copy Constructor, will create a new instance. </p>
 <p>If the parameter 'q' owns its contents then this constructor will also create new instances of its contents. That is it will call the Copy Constructor for each one of the elements it contains If 'q' does not own its contents it will just copy over the pointers from 'q', meaning that the new instance of <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a> will point to the same locations as 'q' does. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00200">200</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00225">225</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +371,7 @@ template&lt;class Entry &gt; </div>
 <p>Constructor, similar to the Copy Constructor except that you can control whether it duplicates the contents. </p>
 <p>If the '_owner' parameter is set to true then it will create new instances of the contents otherwise it will just point to the instances that already exist. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00216">216</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00241">241</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -385,7 +390,7 @@ template&lt;class Entry &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00253">253</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00278">278</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -416,7 +421,7 @@ template&lt;class Entry &gt; </div>
 
 <p>same as PushOnBack </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00312">312</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00337">337</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -446,7 +451,7 @@ template&lt;class Entry &gt; </div>
 
 <p>same as PushOnFront </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00320">320</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00345">345</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -469,7 +474,7 @@ template&lt;class Entry &gt; </div>
 <p>Add the contents of a separate <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a> container to this container. </p>
 <p>Be careful how the Owner flags are set. This method adds the pointers of 'q' to the end of its own container. It does not concern itself with the state of the 'Owner' flags. If you are not careful you can have both containers thinking they own the same entries. I suggest that after you add the contents of 'q' to this container that the caller set the 'owner' flag of 'q' to false. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00328">328</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00353">353</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -490,7 +495,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns pointer of last element in the container without removing it. If the container is empty will return NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00538">538</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00667">667</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -511,7 +516,7 @@ template&lt;class Entry &gt; </div>
 
 <p>No longer does anything. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00560">560</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00689">689</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -532,7 +537,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Empties the container, if 'owner' is set to true will call the destructor on each element. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00294">294</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00319">319</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -554,7 +559,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Removes from <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a> the entry who's pointer = '_entry'. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00569">569</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00698">698</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -576,7 +581,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Removes from <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a> the entry who's index = '_idx'. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00600">600</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00729">729</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -597,7 +602,39 @@ template&lt;class Entry &gt; </div>
 
 <p>Creates a new container including duplicating the contents, which also makes the new instance the owner of those contents. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00236">236</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00261">261</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0cc98856d9a20f8838bd647e0391e6b2"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Entry &gt; </div>
+<div class="memtemplate">
+template&lt;typename Functor &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> KKQueue::FindTheKthElement </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a>&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Functor&#160;</td>
+          <td class="paramname"><em>pred</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00533">533</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -618,7 +655,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns a pointer to the element that is at from of the queue with out removing it from the queue. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00550">550</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00679">679</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -645,7 +682,7 @@ template&lt;class Entry &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00339">339</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00364">364</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -672,7 +709,7 @@ template&lt;class Entry &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00347">347</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00372">372</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -687,24 +724,6 @@ template&lt;class Entry&gt; </div>
           <td>(</td>
           <td class="paramname">)</td><td></td>
           <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad642f4c00da166bd00636288c6bd96ee"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Entry&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_k_k_b_1_1_k_k_queue.html">KKB::KKQueue</a>&lt; Entry &gt;::GrowthRate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a>&#160;</td>
-          <td class="paramname"><em>_growthRate</em>)</td><td></td>
-          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -729,7 +748,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or &gt;= <a class="el" href="class_k_k_b_1_1_k_k_queue.html#a1dab601f75ee6a65d97f02bddf71c40d" title="Same as calling vector&lt;&gt;::size(). Returns the number of elements in KKQueue. ">QueueSize()</a> will return NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00617">617</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00746">746</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -751,7 +770,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns the index of the element who's address is '_entry'. If not found in container will return back -1. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00630">630</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00759">759</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -772,7 +791,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns pointer to element at Back of container with out removing it from the container. If container is empty will return back NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00504">504</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00633">633</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -793,7 +812,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns pointer to element at Front of container with out removing it from the container. If container is empty will return back NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00515">515</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00644">644</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -815,7 +834,7 @@ template&lt;class Entry&gt; </div>
 
 <p>returns False if NOT every entry in both containers point to the same elements </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00430">430</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00455">455</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -842,7 +861,7 @@ template&lt;class Entry &gt; </div>
 <div class="line"><span class="stringliteral">   else </span></div>
 <div class="line"><span class="stringliteral">     Copy over &#39;</span>q<span class="stringliteral">&#39;s pointers to self and then set &#39;</span>owner<span class="stringliteral">&#39; flag to false.</span></div>
 </div><!-- fragment --> 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00388">388</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00413">413</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -864,7 +883,7 @@ template&lt;class Entry&gt; </div>
 
 <p>Returns True if every entry in both containers point to the same elements. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00411">411</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00436">436</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -886,26 +905,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Returns a reference to element indexed by 'i'. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00687">687</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a4990d037ff09dd504cc7df53819bf61a"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Entry &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool KKQueue::Owner </td>
-          <td>(</td>
-          <td class="paramname">)</td><td></td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00278">278</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00816">816</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -927,7 +927,26 @@ template&lt;class Entry &gt; </div>
 
 <p>You can specify who owns the contents of the container. '_owner' == true means when the container is deleted it will also call the destructor for each element it contains. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00270">270</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00295">295</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4990d037ff09dd504cc7df53819bf61a"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Entry &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool KKQueue::Owner </td>
+          <td>(</td>
+          <td class="paramname">)</td><td></td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00303">303</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -948,7 +967,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Removes the last element in the container and returns its pointer. If the container is empty will return NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00525">525</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00654">654</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -969,7 +988,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Removes the first element in the container and returns its pointer. If the container is empty will return NULL. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00473">473</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00602">602</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -991,7 +1010,7 @@ template&lt;class Entry &gt; </div>
 
 <p>returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00646">646</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00775">775</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1013,7 +1032,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Adds '_entry' to the End of the container. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00371">371</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00396">396</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1035,7 +1054,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Adds '_entry' to the Front of the container. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00356">356</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00381">381</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1056,7 +1075,7 @@ template&lt;class Entry &gt; </div>
 
 <p>Same as calling vector&lt;&gt;::size(). Returns the number of elements in <a class="el" href="class_k_k_b_1_1_k_k_queue.html" title="A typed container class/template that keeps track of entries via pointers only. ">KKQueue</a>. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00286">286</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00311">311</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1074,9 +1093,11 @@ template&lt;class Entry &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>2011-01-27 Sergiy Fisher-Yates Uniform Random Sort. </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00440">440</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Randomizes the order of the vector. </p>
+<p>Implements the "Fisher-Yates Uniform Random Sort"; this implementation was done by Sergiy Fefilatyev (2011-01-27) </p>
+
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00475">475</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1096,7 +1117,30 @@ template&lt;class Entry &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00463">463</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00496">496</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af9fd71e0f10f8383153eecbbbfce0f30"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Entry &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void KKQueue::RandomizeOrder </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_k_k_b_1_1_random_num_generator.html">RandomNumGenerator</a> &amp;&#160;</td>
+          <td class="paramname"><em>randomVariable</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Randomizes the order of the vector. </p>
+<p>Implements the "Fisher-Yates Uniform Random Sort"; this implementation was done by Sergiy Fefilatyev (2011-01-27) </p>
+
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00510">510</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1125,7 +1169,7 @@ template&lt;class Entry &gt; </div>
 
 <p>same as PopFromFront </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00488">488</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00617">617</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1154,7 +1198,7 @@ template&lt;class Entry &gt; </div>
 
 <p>same as PopFromBack </p>
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00496">496</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00625">625</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1184,7 +1228,7 @@ template&lt;class Entry&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00585">585</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00714">714</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1214,7 +1258,7 @@ template&lt;class Entry &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00654">654</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_k_k_queue_8h_source.html#l00783">783</a> of file <a class="el" href="_k_k_queue_8h_source.html">KKQueue.h</a>.</p>
 
 </div>
 </div>
@@ -1224,7 +1268,7 @@ template&lt;class Entry &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:45 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:06:10 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

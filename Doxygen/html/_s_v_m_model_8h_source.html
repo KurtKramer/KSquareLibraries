@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -273,12 +273,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordtype">double</span>   <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#abe91fa28c9c6fda597a79e60bcb702da">DistanceFromDecisionBoundary</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example,</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                                         MLClassPtr     class1,</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                         MLClassPtr     class2</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                                         MLClassPtr        class1,</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                                         MLClassPtr        class2</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                                        );</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  MLClassPtr      <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a76b4316914f1f272d61010477e41d7f6">Predict</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  MLClassPtr  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a76b4316914f1f272d61010477e41d7f6">Predict</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example);</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="comment">/**</span></div>
@@ -297,9 +297,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">   *@param[out] breakTie The difference in probability between the classes with thetwo hiest probabilities.</span></div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment">   */</span></div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordtype">void</span>   <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a8109fa1105f1838dd305ea2a225adbde" title="Will predict the two most likely classes of &#39;example&#39;. ">Predict</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example,</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                  MLClassPtr     knownClass,</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                  MLClassPtr&amp;    predClass1,</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                  MLClassPtr&amp;    predClass2,</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                  MLClassPtr        knownClass,</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                  MLClassPtr&amp;       predClass1,</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                  MLClassPtr&amp;       predClass2,</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                  kkint32&amp;          predClass1Votes,</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                  kkint32&amp;          predClass2Votes,</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                  <span class="keywordtype">double</span>&amp;           probOfKnownClass,</div>
@@ -322,10 +322,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="comment">   *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  </span></div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment">   *            The probability of class in _mlClasses[x] will be returned in _probabilities[x].</span></div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#ab0135a2475507446ebaa8e71d051dc61" title="Will get the probabilities assigned to each class. ">ProbabilitiesByClass</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>       example,</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="keywordtype">void</span>  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#ab0135a2475507446ebaa8e71d051dc61" title="Will get the probabilities assigned to each class. ">ProbabilitiesByClass</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>    example,</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                              <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;  _mlClasses,</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                              kkint32*                 _votes,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                              <span class="keywordtype">double</span>*                _probabilities</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                              kkint32*            _votes,</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                              <span class="keywordtype">double</span>*             _probabilities</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                             );</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;</div>
@@ -343,8 +343,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;<span class="comment">   */</span></div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  vector&lt;<a class="code" href="class_k_k_machine_learning_1_1_prob_name_pair.html">ProbNamePair</a>&gt;  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a5edb1c8e3a68a0cd9363ad5c7e70ef43" title="For a given two class pair return the names of the &#39;numToFind&#39; worst S/V&#39;s. ">FindWorstSupportVectors</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example,</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                                                 kkint32           numToFind,</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                                                 MLClassPtr     c1,</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                                                 MLClassPtr     c2</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                                                 MLClassPtr        c1,</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                                                 MLClassPtr        c2</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                                                );</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;</div>
@@ -359,16 +359,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;<span class="comment">   */</span></div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  vector&lt;<a class="code" href="class_k_k_machine_learning_1_1_prob_name_pair.html">ProbNamePair</a>&gt;  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a79401afd040562c6d7e1439a866a1e54" title="For a given two class pair return the names of the &#39;numToFind&#39; worst S/V&#39;s. ">FindWorstSupportVectors2</a> (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example,</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                                                  kkint32           numToFind,</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                                                  MLClassPtr     c1,</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                                                  MLClassPtr     c2</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                                                  MLClassPtr        c1,</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                                                  MLClassPtr        c2</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;                                                 );</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;</div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;</div>
 <div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;  vector&lt;<a class="code" href="class_k_k_b_1_1_k_k_str.html" title="A string class providing safe runtime string management. ">KKStr</a>&gt;  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a21df134c13366bf28399f7e8e0187ab9">SupportVectorNames</a> ()  <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  vector&lt;<a class="code" href="class_k_k_b_1_1_k_k_str.html" title="A string class providing safe runtime string management. ">KKStr</a>&gt;  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a7b3d8801789dbdae36c5a4494ff853f3">SupportVectorNames</a> (MLClassPtr     c1,</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                                     MLClassPtr     c2</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;  vector&lt;<a class="code" href="class_k_k_b_1_1_k_k_str.html" title="A string class providing safe runtime string management. ">KKStr</a>&gt;  <a class="code" href="class_k_k_machine_learning_1_1_s_v_m_model.html#a7b3d8801789dbdae36c5a4494ff853f3">SupportVectorNames</a> (MLClassPtr  c1,</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                                     MLClassPtr  c2</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                                    )  <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
@@ -428,13 +428,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;<span class="comment">   *            while classes that are not in &#39;classesThisAssignment&#39; will be coded as</span></div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;<span class="comment">   *            &#39;1&#39; or the &quot;All&quot; in &quot;One-Vs-All&quot;.</span></div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="comment">   */</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordtype">void</span>  BuildProblemOneVsAll (<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html" title="Container class for FeatureVector derived objects. ">FeatureVectorList</a>&amp;     examples,</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                              <span class="keyword">struct</span> <a class="code" href="struct_s_v_m233_1_1svm__problem.html">svm_problem</a>&amp;    prob,</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#a97c2526915f4cb7a775951b70bd7581d">XSpacePtr</a>&amp;             xSpace,</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                              <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;  classesThisAssignment,</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#a869add267946f45773f1ecb23cc953b6">FeatureEncoderPtr</a>      featureEncoder,</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                              <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;        allClasses,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#abda1434cc71912a6a4d81ab38703144c">ClassAssignmentsPtr</a>&amp;   classAssignments</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  <span class="keywordtype">void</span>  BuildProblemOneVsAll (<a class="code" href="class_k_k_machine_learning_1_1_feature_vector_list.html" title="Container class for FeatureVector derived objects. ">FeatureVectorList</a>&amp;    examples,</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                              <span class="keyword">struct</span> <a class="code" href="struct_s_v_m233_1_1svm__problem.html">svm_problem</a>&amp;   prob,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#a97c2526915f4cb7a775951b70bd7581d">XSpacePtr</a>&amp;            xSpace,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                              <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;    classesThisAssignment,</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#a869add267946f45773f1ecb23cc953b6">FeatureEncoderPtr</a>     featureEncoder,</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                              <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;          allClasses,</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                              <a class="code" href="namespace_k_k_machine_learning.html#abda1434cc71912a6a4d81ab38703144c">ClassAssignmentsPtr</a>&amp;  classAssignments</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                             );</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
@@ -462,15 +462,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;                                  <a class="code" href="namespace_k_k_machine_learning.html#a869add267946f45773f1ecb23cc953b6">FeatureEncoderPtr</a>&amp;    _encoder,</div>
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;                                  <span class="keyword">struct</span> <a class="code" href="struct_s_v_m233_1_1svm__problem.html">svm_problem</a>&amp;   prob,</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;                                  <a class="code" href="namespace_k_k_machine_learning.html#a97c2526915f4cb7a775951b70bd7581d">XSpacePtr</a>&amp;            xSpace,</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                                  MLClassPtr         class1,</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                                  MLClassPtr         class2</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;                                  MLClassPtr            class1,</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;                                  MLClassPtr            class2</div>
 <div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;                                 );</div>
 <div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
 <div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;</div>
-<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  <span class="keywordtype">void</span>  PredictProbabilitiesByBinaryCombos (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>       example,</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;  <span class="keywordtype">void</span>  PredictProbabilitiesByBinaryCombos (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>    example,</div>
 <div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;                                            <span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_m_l_class_list.html" title="Maintains a list of MLClass instances. ">MLClassList</a>&amp;  _mlClasses,</div>
-<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;                                            kkint32*                 _votes,</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                                            <span class="keywordtype">double</span>*                _probabilities</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;                                            kkint32*            _votes,</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;                                            <span class="keywordtype">double</span>*             _probabilities</div>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;                                           );</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;</div>
 <div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
@@ -532,7 +532,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  <span class="keyword">static</span></div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;  <span class="keywordtype">void</span>  GreaterVotes (<span class="keywordtype">bool</span>     useProbability,</div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                      kkint32  numClasses,</div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                      kkint32*   votes,</div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                      kkint32* votes,</div>
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;                      kkint32&amp; numOfWinners,</div>
 <div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;                      <span class="keywordtype">double</span>*  probabilities,</div>
 <div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;                      kkint32&amp; pred1Idx,</div>
@@ -544,24 +544,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;  <span class="keywordtype">void</span>  SetSelectedFeatures (<span class="keyword">const</span> <a class="code" href="class_k_k_machine_learning_1_1_feature_num_list.html" title="Keeps track of selected features. ">FeatureNumList</a>&amp; _selectedFeatures);</div>
 <div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;</div>
 <div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;  <span class="keywordtype">void</span>  PredictOneVsAll (<a class="code" href="namespace_k_k_machine_learning.html#a97c2526915f4cb7a775951b70bd7581d">XSpacePtr</a>       xSpace,</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;  <span class="keywordtype">void</span>  PredictOneVsAll (<a class="code" href="namespace_k_k_machine_learning.html#a97c2526915f4cb7a775951b70bd7581d">XSpacePtr</a>    xSpace,</div>
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                         MLClassPtr   knownClass,</div>
 <div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;                         MLClassPtr&amp;  predClass,</div>
 <div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                         MLClassPtr&amp;  predClass2,</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;                         <span class="keywordtype">double</span>&amp;         probOfKnownClass,</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                         <span class="keywordtype">double</span>&amp;         probOfPredClass,</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                         <span class="keywordtype">double</span>&amp;         probOfPredClass2,</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                         kkint32&amp;        numOfWinners,</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;                         <span class="keywordtype">bool</span>&amp;           knownClassOneOfTheWinners,</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                         <span class="keywordtype">double</span>&amp;         breakTie</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;                         <span class="keywordtype">double</span>&amp;      probOfKnownClass,</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                         <span class="keywordtype">double</span>&amp;      probOfPredClass,</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                         <span class="keywordtype">double</span>&amp;      probOfPredClass2,</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                         kkint32&amp;     numOfWinners,</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;                         <span class="keywordtype">bool</span>&amp;        knownClassOneOfTheWinners,</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;                         <span class="keywordtype">double</span>&amp;      breakTie</div>
 <div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;                        );</div>
 <div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;</div>
 <div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
 <div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;</div>
 <div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;  <span class="keywordtype">void</span>  PredictByBinaryCombos (<a class="code" href="namespace_k_k_machine_learning.html#ac81b4fbc1b6b928d876cfa0a76cea8e4">FeatureVectorPtr</a>  example,</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;                               MLClassPtr     knownClass,</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;                               MLClassPtr&amp;    predClass,</div>
-<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;                               MLClassPtr&amp;    predClass2,</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;                               MLClassPtr        knownClass,</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;                               MLClassPtr&amp;       predClass,</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;                               MLClassPtr&amp;       predClass2,</div>
 <div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;                               kkint32&amp;          predClass1Votes,</div>
 <div class="line"><a name="l00473"></a><span class="lineno">  473</span>&#160;                               kkint32&amp;          predClass2Votes,</div>
 <div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;                               <span class="keywordtype">double</span>&amp;           probOfKnownClass,</div>
@@ -672,7 +672,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:18 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:05:40 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

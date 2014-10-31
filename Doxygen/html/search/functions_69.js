@@ -1,7 +1,7 @@
 var searchData=
 [
   ['id',['Id',['../class_k_k_b_1_1_blob.html#add1ed75f6509956508b71aabeeae213c',1,'KKB::Blob']]],
-  ['idxtoptr',['IdxToPtr',['../class_k_k_b_1_1_k_k_queue.html#acce2bdd8b3327e38266cf198382cd852',1,'KKB::KKQueue::IdxToPtr()'],['../class_k_k_machine_learning_1_1_post_larvae_f_v_list.html#ab05f56a7e40685e11c368765a1a22105',1,'KKMachineLearning::PostLarvaeFVList::IdxToPtr()']]],
+  ['idxtoptr',['IdxToPtr',['../class_k_k_b_1_1_k_k_queue.html#acce2bdd8b3327e38266cf198382cd852',1,'KKB::KKQueue']]],
   ['image',['Image',['../class_k_k_b_1_1_bmp_image.html#a122d01d6b6996cd9b0df01e856746234',1,'KKB::BmpImage::Image()'],['../class_k_k_machine_learning_1_1_image_data_tree_entry.html#a710cd92f188a68772016e8eca9e47e30',1,'KKMachineLearning::ImageDataTreeEntry::Image()']]],
   ['imageclasses',['ImageClasses',['../class_k_k_machine_learning_1_1_confusion_matrix2.html#a6d890cc01887f19c0c1e9ad6af774692',1,'KKMachineLearning::ConfusionMatrix2::ImageClasses()'],['../class_k_k_machine_learning_1_1_training_process2.html#a522853cc4404c44bd32d2d8a7391699f',1,'KKMachineLearning::TrainingProcess2::ImageClasses()'],['../class_k_k_machine_learning_1_1_orderings.html#a0ef79a5d871ea6c0058e1c15383dbb61',1,'KKMachineLearning::Orderings::ImageClasses()']]],
   ['imageclassname',['ImageClassName',['../class_k_k_machine_learning_1_1_feature_vector.html#a52e20662053d532eaaf4d3905a660e96',1,'KKMachineLearning::FeatureVector']]],
@@ -45,5 +45,5 @@ var searchData=
   ['isfinite',['IsFinite',['../namespace_k_k_b.html#afad902625fe9ca2e38e057ed850641db',1,'KKB::IsFinite(const float &amp;f)'],['../namespace_k_k_b.html#af10a43daa93634c3e5da3e0e38832ad0',1,'KKB::IsFinite(const double &amp;f)'],['../_k_k_base_types_8cpp.html#a2bf64a9baf3ac4b4036f4374fd7aedbf',1,'IsFinite(const float &amp;f):&#160;KKBaseTypes.cpp'],['../_k_k_base_types_8cpp.html#a14a45c98999a5b9e4fef6251549eb507',1,'IsFinite(const double &amp;f):&#160;KKBaseTypes.cpp']]],
   ['isnan',['IsNaN',['../namespace_k_k_b.html#a29cd3e80e6120bec198075818a947e54',1,'KKB::IsNaN(const float &amp;f)'],['../namespace_k_k_b.html#a9f43b9751a8bb639af152d7de9ddadc9',1,'KKB::IsNaN(const double &amp;d)']]],
   ['issubset',['IsSubSet',['../class_k_k_machine_learning_1_1_feature_num_list.html#a713173e1ea194ed56ac6df78e0b1b038',1,'KKMachineLearning::FeatureNumList']]],
-  ['iterator',['Iterator',['../class_k_k_b_1_1_iterator.html#a37bd34fa66e93b3614979d822efc9fa7',1,'KKB::Iterator::Iterator()'],['../class_k_k_machine_learning_1_1_post_larvae_f_v_list_1_1iterator.html#a4af9babe515e3bb5d3648a6a23a29929',1,'KKMachineLearning::PostLarvaeFVList::iterator::iterator()'],['../class_k_k_machine_learning_1_1_post_larvae_f_v_list_1_1iterator.html#ad60f26d1f91f312e0a9ebc9ae2f9bf16',1,'KKMachineLearning::PostLarvaeFVList::iterator::iterator(const iterator &amp;idx)'],['../class_k_k_machine_learning_1_1_post_larvae_f_v_list_1_1iterator.html#af10ad27141d7ae652802ffa758e8c3c2',1,'KKMachineLearning::PostLarvaeFVList::iterator::iterator(const FeatureVectorList::iterator &amp;idx)']]]
+  ['iterator',['Iterator',['../class_k_k_b_1_1_iterator.html#a37bd34fa66e93b3614979d822efc9fa7',1,'KKB::Iterator']]]
 ];

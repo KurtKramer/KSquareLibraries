@@ -6,8 +6,6 @@ var searchData=
   ['plotpoint',['PlotPoint',['../class_k_k_b_1_1_chart_1_1_plot_point.html',1,'KKB::Chart']]],
   ['point',['Point',['../class_k_k_b_1_1_point.html',1,'KKB']]],
   ['pointlist',['PointList',['../class_k_k_b_1_1_point_list.html',1,'KKB']]],
-  ['postlarvaefv',['PostLarvaeFV',['../class_k_k_machine_learning_1_1_post_larvae_f_v.html',1,'KKMachineLearning']]],
-  ['postlarvaefvlist',['PostLarvaeFVList',['../class_k_k_machine_learning_1_1_post_larvae_f_v_list.html',1,'KKMachineLearning']]],
   ['probabilitycomparer',['ProbabilityComparer',['../class_class_prob_list_1_1_probability_comparer.html',1,'KKMachineLearning::ClassProbList']]],
   ['probabilitycomparison',['ProbabilityComparison',['../class_feature_vector_list_1_1_probability_comparison.html',1,'KKMachineLearning::FeatureVectorList']]],
   ['probabilitycomparisonreversed',['ProbabilityComparisonReversed',['../class_feature_vector_list_1_1_probability_comparison_reversed.html',1,'KKMachineLearning::FeatureVectorList']]],

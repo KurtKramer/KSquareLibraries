@@ -33,7 +33,7 @@ var searchData=
   ['brown',['Brown',['../class_k_k_b_1_1_pixel_value.html#aa9a5b8bef81ff8c7c88d6d5af5fd7761',1,'KKB::PixelValue']]],
   ['bsvindex',['BSVIndex',['../struct_s_v_m233_1_1svm__model.html#ae2e07e50389f1c9d50a52a2a5bd60722',1,'SVM233::svm_model']]],
   ['bucketcount',['bucketCount',['../class_size_distribution_1_1_class_totals.html#abdf41fb2a72d7cedc0910dd366cb4007',1,'SizeDistribution::ClassTotals']]],
-  ['bucketsize',['bucketSize',['../class_dark_spot_stats.html#abf148506d6bdd591a74c92488a3d07d0',1,'DarkSpotStats::bucketSize()'],['../class_size_distribution_1_1_class_totals.html#a86c97ad3d2108324fcab94986b6c6ae8',1,'KKMachineLearning::SizeDistribution::ClassTotals::bucketSize()']]],
+  ['bucketsize',['bucketSize',['../class_size_distribution_1_1_class_totals.html#a86c97ad3d2108324fcab94986b6c6ae8',1,'SizeDistribution::ClassTotals']]],
   ['byte0',['byte0',['../union_k_k_b_1_1_word_format32_bits.html#a7172ef166d47f672768eaf94666ec5cd',1,'KKB::WordFormat32Bits']]],
   ['byte1',['byte1',['../union_k_k_b_1_1_word_format32_bits.html#a3a4cec5553f28a1010a3a1bb6f182f3f',1,'KKB::WordFormat32Bits']]],
   ['byte2',['byte2',['../union_k_k_b_1_1_word_format32_bits.html#a7dce1e987826e201b31d75d3050359ba',1,'KKB::WordFormat32Bits']]],

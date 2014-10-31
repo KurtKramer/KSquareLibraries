@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['factoryfvproducer_2ecpp',['FactoryFVProducer.cpp',['../_factory_f_v_producer_8cpp.html',1,'']]],
+  ['factoryfvproducer_2eh',['FactoryFVProducer.h',['../_factory_f_v_producer_8h.html',1,'']]],
   ['featureencoder_2ecpp',['FeatureEncoder.cpp',['../_feature_encoder_8cpp.html',1,'']]],
   ['featureencoder_2eh',['FeatureEncoder.h',['../_feature_encoder_8h.html',1,'']]],
   ['featureencoder2_2ecpp',['FeatureEncoder2.cpp',['../_feature_encoder2_8cpp.html',1,'']]],
@@ -14,8 +16,6 @@ var searchData=
   ['featurefileiocolumn_2eh',['FeatureFileIOColumn.h',['../_feature_file_i_o_column_8h.html',1,'']]],
   ['featurefileiodstweb_2ecpp',['FeatureFileIODstWeb.cpp',['../_feature_file_i_o_dst_web_8cpp.html',1,'']]],
   ['featurefileiodstweb_2eh',['FeatureFileIODstWeb.h',['../_feature_file_i_o_dst_web_8h.html',1,'']]],
-  ['featurefileiokk_2ecpp',['FeatureFileIOKK.cpp',['../_feature_file_i_o_k_k_8cpp.html',1,'']]],
-  ['featurefileiokk_2eh',['FeatureFileIOKK.h',['../_feature_file_i_o_k_k_8h.html',1,'']]],
   ['featurefileioroberts_2ecpp',['FeatureFileIORoberts.cpp',['../_feature_file_i_o_roberts_8cpp.html',1,'']]],
   ['featurefileioroberts_2eh',['FeatureFileIORoberts.h',['../_feature_file_i_o_roberts_8h.html',1,'']]],
   ['featurefileiosparse_2ecpp',['FeatureFileIOSparse.cpp',['../_feature_file_i_o_sparse_8cpp.html',1,'']]],
@@ -26,8 +26,8 @@ var searchData=
   ['featurenumlist_2eh',['FeatureNumList.h',['../_feature_num_list_8h.html',1,'']]],
   ['featurevector_2ecpp',['FeatureVector.cpp',['../_feature_vector_8cpp.html',1,'']]],
   ['featurevector_2eh',['FeatureVector.h',['../_feature_vector_8h.html',1,'']]],
-  ['featurevectorcomputer_2ecpp',['FeatureVectorComputer.cpp',['../_feature_vector_computer_8cpp.html',1,'']]],
-  ['featurevectorcomputer_2eh',['FeatureVectorComputer.h',['../_feature_vector_computer_8h.html',1,'']]],
+  ['featurevectorproducer_2ecpp',['FeatureVectorProducer.cpp',['../_feature_vector_producer_8cpp.html',1,'']]],
+  ['featurevectorproducer_2eh',['FeatureVectorProducer.h',['../_feature_vector_producer_8h.html',1,'']]],
   ['filedesc_2ecpp',['FileDesc.cpp',['../_file_desc_8cpp.html',1,'']]],
   ['filedesc_2eh',['FileDesc.h',['../_file_desc_8h.html',1,'']]],
   ['firstincludes_2eh',['FirstIncludes.h',['../_first_includes_8h.html',1,'']]],

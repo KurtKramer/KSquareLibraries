@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['darksportstats001',['darkSportStats001',['../_post_larvae_f_v_8cpp.html#aa02e8cb59fe2ccd7d58a64d1757c3e16',1,'PostLarvaeFV.cpp']]],
-  ['darksportstats010',['darkSportStats010',['../_post_larvae_f_v_8cpp.html#ac36f22725ad6cc964a1eca836b3c8d6b',1,'PostLarvaeFV.cpp']]],
-  ['darksportstats050',['darkSportStats050',['../_post_larvae_f_v_8cpp.html#af9c91c1261f8098f9dcef360be8d2771',1,'PostLarvaeFV.cpp']]],
-  ['darksportstats100',['darkSportStats100',['../_post_larvae_f_v_8cpp.html#acdf6247f8c16a66fcc80c6eb72c70831',1,'PostLarvaeFV.cpp']]],
-  ['darksportstats500',['darkSportStats500',['../_post_larvae_f_v_8cpp.html#a563cdbf4c1ae0c674399f1a4f8a3d1fa',1,'PostLarvaeFV.cpp']]],
   ['daysytdformonth',['daysYTDforMonth',['../_usf_cas_cor_8cpp.html#aea419c0c7ee3cd79dac520ebf300b2e1',1,'UsfCasCor.cpp']]],
   ['dec_5fvalues',['dec_values',['../struct_s_v_m289___m_f_s_1_1svm__model.html#af73ce5af440470abc9713f2a44f15806',1,'SVM289_MFS::svm_model::dec_values()'],['../struct_s_v_m289___b_f_s_1_1svm__model.html#a049da9e71e8581b703d3014a9356facc',1,'SVM289_BFS::svm_model::dec_values()']]],
   ['defaultcolors',['defaultColors',['../_chart_8cpp.html#a5cf6b6b634a1ddf76684cfa95ada0a6b',1,'Chart.cpp']]],
@@ -17,6 +12,5 @@ var searchData=
   ['divisor',['divisor',['../class_k_k_b_1_1_raster.html#afaaaf54fd824a4a47fba97f7fba9398f',1,'KKB::Raster']]],
   ['doublemax',['DoubleMax',['../namespace_k_k_b.html#ad44c1392d19990e1279f4bd560df285d',1,'KKB']]],
   ['doublemin',['DoubleMin',['../namespace_k_k_b.html#ac986478abc5917bf650913249e2f457b',1,'KKB']]],
-  ['ds',['ds',['../struct_dark_spots_stats_list_1_1_sort_key.html#a63d29276c57b4149edc51df2bc383f55',1,'DarkSpotsStatsList::SortKey']]],
   ['dummysumerrors',['DummySumErrors',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#a54d3d6dfde85bdceaaf07bda5b94e16e',1,'KKMachineLearning::UsfCasCor']]]
 ];

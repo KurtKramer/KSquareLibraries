@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['factoryfvproducer',['FactoryFVProducer',['../class_k_k_machine_learning_1_1_factory_f_v_producer.html',1,'KKMachineLearning']]],
   ['featureencoder',['FeatureEncoder',['../class_k_k_machine_learning_1_1_feature_encoder.html',1,'KKMachineLearning']]],
   ['featureencoder2',['FeatureEncoder2',['../class_k_k_machine_learning_1_1_feature_encoder2.html',1,'KKMachineLearning']]],
   ['featurefileio',['FeatureFileIO',['../class_k_k_machine_learning_1_1_feature_file_i_o.html',1,'KKMachineLearning']]],
@@ -7,7 +8,6 @@ var searchData=
   ['featurefileioc45',['FeatureFileIOC45',['../class_k_k_machine_learning_1_1_feature_file_i_o_c45.html',1,'KKMachineLearning']]],
   ['featurefileiocolumn',['FeatureFileIOColumn',['../class_k_k_machine_learning_1_1_feature_file_i_o_column.html',1,'KKMachineLearning']]],
   ['featurefileiodstweb',['FeatureFileIODstWeb',['../class_k_k_machine_learning_1_1_feature_file_i_o_dst_web.html',1,'KKMachineLearning']]],
-  ['featurefileiokk',['FeatureFileIOKK',['../class_k_k_machine_learning_1_1_feature_file_i_o_k_k.html',1,'KKMachineLearning']]],
   ['featurefileioroberts',['FeatureFileIORoberts',['../class_k_k_machine_learning_1_1_feature_file_i_o_roberts.html',1,'KKMachineLearning']]],
   ['featurefileiosparse',['FeatureFileIOSparse',['../class_k_k_machine_learning_1_1_feature_file_i_o_sparse.html',1,'KKMachineLearning']]],
   ['featurefileiouci',['FeatureFileIOUCI',['../class_k_k_machine_learning_1_1_feature_file_i_o_u_c_i.html',1,'KKMachineLearning']]],
@@ -15,8 +15,8 @@ var searchData=
   ['featurevar2',['FeatureVar2',['../struct_feature_encoder2_1_1_feature_var2.html',1,'KKMachineLearning::FeatureEncoder2']]],
   ['featurevar2list',['FeatureVar2List',['../class_feature_encoder2_1_1_feature_var2_list.html',1,'KKMachineLearning::FeatureEncoder2']]],
   ['featurevector',['FeatureVector',['../class_k_k_machine_learning_1_1_feature_vector.html',1,'KKMachineLearning']]],
-  ['featurevectorcomputer',['FeatureVectorComputer',['../class_k_k_machine_learning_1_1_feature_vector_computer.html',1,'KKMachineLearning']]],
   ['featurevectorlist',['FeatureVectorList',['../class_k_k_machine_learning_1_1_feature_vector_list.html',1,'KKMachineLearning']]],
+  ['featurevectorproducer',['FeatureVectorProducer',['../class_k_k_machine_learning_1_1_feature_vector_producer.html',1,'KKMachineLearning']]],
   ['fftw_5fcomplex',['fftw_complex',['../struct_k_k_b_1_1fftw__complex.html',1,'KKB']]],
   ['fftw_5fplan_5fclass',['fftw_plan_class',['../class_k_k_b_1_1fftw__plan__class.html',1,'KKB']]],
   ['fftwnd_5fplan_5fclass',['fftwnd_plan_class',['../class_k_k_b_1_1fftwnd__plan__class.html',1,'KKB']]],

@@ -17,7 +17,6 @@ var searchData=
   ['singleepoch',['SingleEpoch',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#ad053e512ac93cd69cac4cb50d73904cf',1,'KKMachineLearning::UsfCasCor']]],
   ['singlepass',['SinglePass',['../class_k_k_machine_learning_1_1_usf_cas_cor.html#a0393d77b7d20a08104d1375d16e837a6',1,'KKMachineLearning::UsfCasCor']]],
   ['sizebuckets',['sizeBuckets',['../class_size_distribution_1_1_class_totals.html#a5db5eb160bfda1a7de8ca10fdaf151e3',1,'SizeDistribution::ClassTotals']]],
-  ['sizehist',['sizeHist',['../class_dark_spot_stats.html#ab280f6b66ab1b8b0002368bb51830ee4',1,'DarkSpotStats']]],
   ['spaces',['spaces',['../union_scanner_file3_bit_encoded_1_1_op_rec.html#a84dd30292d5a11eed9d174961ab5b778',1,'ScannerFile3BitEncoded::OpRec']]],
   ['srcblue',['srcBlue',['../class_k_k_b_1_1_morph_op.html#ad11edf2de07634c4c68df9a2e74cfd6c',1,'KKB::MorphOp']]],
   ['srcbluearea',['srcBlueArea',['../class_k_k_b_1_1_morph_op.html#a52fcf660b2173a2b6e8988ed23cf638c',1,'KKB::MorphOp']]],

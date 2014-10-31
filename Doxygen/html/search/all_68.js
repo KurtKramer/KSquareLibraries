@@ -7,7 +7,7 @@ var searchData=
   ['hashtable_2eh',['HashTable.h',['../_hash_table_8h.html',1,'']]],
   ['hashvalue',['HashValue',['../class_k_k_b_1_1_hash_table.html#af52b312fc23d6f07325b67ceed97b1e7',1,'KKB::HashTable']]],
   ['headerdatawritten',['headerDataWritten',['../class_k_k_l_s_c_1_1_scanner_file.html#af07a14225690ce6ff6c2a9194323f0d4',1,'KKLSC::ScannerFile']]],
-  ['headerfields',['headerFields',['../class_k_k_l_s_c_1_1_scanner_file.html#a31b2da4ffa80bf114aab2340d3104f3e',1,'KKLSC::ScannerFile::headerFields()'],['../class_k_k_l_s_c_1_1_scanner_file.html#ad48ac6314d8849a6d5ad43911c2e695f',1,'KKLSC::ScannerFile::HeaderFields() const ']]],
+  ['headerfields',['HeaderFields',['../class_k_k_l_s_c_1_1_scanner_file.html#ad48ac6314d8849a6d5ad43911c2e695f',1,'KKLSC::ScannerFile::HeaderFields() const '],['../class_k_k_l_s_c_1_1_scanner_file.html#a31b2da4ffa80bf114aab2340d3104f3e',1,'KKLSC::ScannerFile::headerFields()']]],
   ['height',['Height',['../class_k_k_b_1_1_blob.html#aa38a04e912ff9abf0abb950a69b65955',1,'KKB::Blob::Height()'],['../class_k_k_b_1_1_bmp_image.html#ae9a8a8f35af1c7d4b2fabbea4b92cc23',1,'KKB::BmpImage::Height()'],['../class_k_k_b_1_1_raster.html#af8d10d15697d5b92fb9595c48b529feb',1,'KKB::Raster::Height() const '],['../class_k_k_b_1_1_raster.html#af39ff189de4fbb6de98392e187efafb7',1,'KKB::Raster::height()']]],
   ['hexstr',['HexStr',['../class_k_k_b_1_1_bit_string.html#a100eecb241e6df9b39ce197b5b38f635',1,'KKB::BitString']]],
   ['hh_5fmm_5fss',['HH_MM_SS',['../class_k_k_b_1_1_time_type.html#a120d19c3fcb1105e6e2c93a969ccc92e',1,'KKB::TimeType']]],

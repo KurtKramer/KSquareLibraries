@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -94,6 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="class_k_k_machine_learning_1_1_feature_file_i_o-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">KKMachineLearning::FeatureFileIO Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -110,14 +111,13 @@ Inheritance diagram for KKMachineLearning::FeatureFileIO:</div>
  <div class="center">
   <img src="class_k_k_machine_learning_1_1_feature_file_i_o.png" usemap="#KKMachineLearning::FeatureFileIO_map" alt=""/>
   <map id="KKMachineLearning::FeatureFileIO_map" name="KKMachineLearning::FeatureFileIO_map">
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_arff.html" title="Support the writing of ARFF Formated Feature Files. " alt="KKMachineLearning::FeatureFileIOArff" shape="rect" coords="264,56,518,80"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_c45.html" title="Supports the reading and writing of feature data from C45 formated feature files. ..." alt="KKMachineLearning::FeatureFileIOC45" shape="rect" coords="264,112,518,136"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_column.html" title="Supports a simple Feature File format where each column represents a example and each row a feature v..." alt="KKMachineLearning::FeatureFileIOColumn" shape="rect" coords="264,168,518,192"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_dst_web.html" alt="KKMachineLearning::FeatureFileIODstWeb" shape="rect" coords="264,224,518,248"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_k_k.html" title="Supports the reading and writing of feature data from &quot;KK&quot; feature data files. " alt="KKMachineLearning::FeatureFileIOKK" shape="rect" coords="264,280,518,304"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_roberts.html" title="Supports the writting of Feature Data to a file that can then be read by OpenDT. " alt="KKMachineLearning::FeatureFileIORoberts" shape="rect" coords="264,336,518,360"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_sparse.html" title="Supports the reading and writing of Sparse feature files similar to the ones libSVM use..." alt="KKMachineLearning::FeatureFileIOSparse" shape="rect" coords="264,392,518,416"/>
-<area href="class_k_k_machine_learning_1_1_feature_file_i_o_u_c_i.html" title="Supports the reading and writing of Feature data from a file format commonly used by many dataset&#39;s i..." alt="KKMachineLearning::FeatureFileIOUCI" shape="rect" coords="264,448,518,472"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_arff.html" title="Support the writing of ARFF Formated Feature Files. " alt="KKMachineLearning::FeatureFileIOArff" shape="rect" coords="0,56,254,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_c45.html" title="Supports the reading and writing of feature data from C45 formated feature files. ..." alt="KKMachineLearning::FeatureFileIOC45" shape="rect" coords="264,56,518,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_column.html" title="Supports a simple Feature File format where each column represents a example and each row a feature v..." alt="KKMachineLearning::FeatureFileIOColumn" shape="rect" coords="528,56,782,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_dst_web.html" alt="KKMachineLearning::FeatureFileIODstWeb" shape="rect" coords="792,56,1046,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_roberts.html" title="Supports the writting of Feature Data to a file that can then be read by OpenDT. " alt="KKMachineLearning::FeatureFileIORoberts" shape="rect" coords="1056,56,1310,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_sparse.html" title="Supports the reading and writing of Sparse feature files similar to the ones libSVM use..." alt="KKMachineLearning::FeatureFileIOSparse" shape="rect" coords="1320,56,1574,80"/>
+<area href="class_k_k_machine_learning_1_1_feature_file_i_o_u_c_i.html" title="Supports the reading and writing of Feature data from a file format commonly used by many dataset&#39;s i..." alt="KKMachineLearning::FeatureFileIOUCI" shape="rect" coords="1584,56,1838,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -140,6 +140,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afb7ce1acb9128ab7140938e45c57d2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1647100834f92150c9c0370a38cef99e"><td class="memItemLeft" align="right" valign="top">const KKStr &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a1647100834f92150c9c0370a38cef99e">DriverName</a> ()</td></tr>
 <tr class="separator:a1647100834f92150c9c0370a38cef99e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a287df1dbb04495d7a4dc23b3af1a2ca6"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_k_k_machine_learning.html#aa7727d579d77bab8fc0c19ab44c34a71">FeatureVectorListPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a287df1dbb04495d7a4dc23b3af1a2ca6">FeatureDataReSink</a> (<a class="el" href="namespace_k_k_machine_learning.html#a79a1f8fe598f591a3b760cd4f62ec857">FactoryFVProducerPtr</a> _fvProducerFactory, const <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;_dirName, const <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;_fileName, <a class="el" href="namespace_k_k_machine_learning.html#aa78fdcae582a2d420bcf83209ed12375">MLClassPtr</a> _unknownClass, bool _useDirectoryNameForClassName, <a class="el" href="class_k_k_machine_learning_1_1_m_l_class_list.html">MLClassList</a> &amp;_mlClasses, <a class="el" href="namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f">VolConstBool</a> &amp;_cancelFlag, bool &amp;_changesMade, <a class="el" href="class_k_k_b_1_1_date_time.html">KKB::DateTime</a> &amp;_timeStamp, <a class="el" href="class_k_k_b_1_1_run_log.html">RunLog</a> &amp;_log)</td></tr>
+<tr class="memdesc:a287df1dbb04495d7a4dc23b3af1a2ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synchronizes the contents of a feature data file with a directory of images.  <a href="#a287df1dbb04495d7a4dc23b3af1a2ca6">More...</a><br/></td></tr>
+<tr class="separator:a287df1dbb04495d7a4dc23b3af1a2ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7f2c8c7e322b2eaed971559223aaced"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_k_k_machine_learning.html#ab9813c7d25622fc8d1d76b02506680b7">FileDescPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#ad7f2c8c7e322b2eaed971559223aaced">GetFileDesc</a> (const KKStr &amp;_fileName, std::istream &amp;_in, <a class="el" href="namespace_k_k_machine_learning.html#ad150a1939cee7bdc5d8f6e9a5c27219b">MLClassListPtr</a> _classes, kkint32 &amp;_estSize, KKStr &amp;_errorMessage, RunLog &amp;_log)=0</td></tr>
 <tr class="memdesc:ad7f2c8c7e322b2eaed971559223aaced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="class_k_k_machine_learning_1_1_file_desc.html" title="Provides a detailed description of the attributes of a dataset. ">FileDesc</a> object from the input stream '_in'.  <a href="#ad7f2c8c7e322b2eaed971559223aaced">More...</a><br/></td></tr>
 <tr class="separator:ad7f2c8c7e322b2eaed971559223aaced"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +152,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a14db79c3c9ef367603727aa9dc2e6407"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespace_k_k_machine_learning.html#aa7727d579d77bab8fc0c19ab44c34a71">FeatureVectorListPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a14db79c3c9ef367603727aa9dc2e6407">LoadFile</a> (const KKStr &amp;_fileName, const <a class="el" href="namespace_k_k_machine_learning.html#ab9813c7d25622fc8d1d76b02506680b7">FileDescPtr</a> _fileDesc, <a class="el" href="class_k_k_machine_learning_1_1_m_l_class_list.html">MLClassList</a> &amp;_classes, std::istream &amp;_in, kkint32 _maxCount, VolConstBool &amp;_cancelFlag, bool &amp;_changesMade, KKStr &amp;_errorMessage, RunLog &amp;_log)=0</td></tr>
 <tr class="memdesc:a14db79c3c9ef367603727aa9dc2e6407"><td class="mdescLeft">&#160;</td><td class="mdescRight">To be implemented by derived classes; loads the contents of a feature data file and returns a ImageFeaturesList container object.  <a href="#a14db79c3c9ef367603727aa9dc2e6407">More...</a><br/></td></tr>
 <tr class="separator:a14db79c3c9ef367603727aa9dc2e6407"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce09712a763ba49bf0cc55d0fdae784"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_k_k_machine_learning.html#aa7727d579d77bab8fc0c19ab44c34a71">FeatureVectorListPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#abce09712a763ba49bf0cc55d0fdae784">LoadInSubDirectoryTree</a> (<a class="el" href="namespace_k_k_machine_learning.html#a79a1f8fe598f591a3b760cd4f62ec857">FactoryFVProducerPtr</a> _fvProducerFactory, <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> _rootDir, <a class="el" href="class_k_k_machine_learning_1_1_m_l_class_list.html">MLClassList</a> &amp;_mlClasses, bool _useDirectoryNameForClassName, <a class="el" href="namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f">VolConstBool</a> &amp;_cancelFlag, bool _rewiteRootFeatureFile, <a class="el" href="class_k_k_b_1_1_run_log.html">RunLog</a> &amp;_log)</td></tr>
+<tr class="memdesc:abce09712a763ba49bf0cc55d0fdae784"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a feature vector list of all images located in the specified sub-directory tree.  <a href="#abce09712a763ba49bf0cc55d0fdae784">More...</a><br/></td></tr>
+<tr class="separator:abce09712a763ba49bf0cc55d0fdae784"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a557e18433bb2fc5e87369a7c8d2eaaa1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a557e18433bb2fc5e87369a7c8d2eaaa1">SaveFeatureFile</a> (const <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;_fileName, const <a class="el" href="class_k_k_machine_learning_1_1_feature_num_list.html">FeatureNumList</a> &amp;_selFeatures, <a class="el" href="class_k_k_machine_learning_1_1_feature_vector_list.html">FeatureVectorList</a> &amp;_examples, <a class="el" href="namespace_k_k_b.html#a603a0dbc71d8138d72bc8ccd9cf6369e">kkuint32</a> &amp;_numExamplesWritten, <a class="el" href="namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f">VolConstBool</a> &amp;_cancelFlag, bool &amp;_successful, <a class="el" href="class_k_k_b_1_1_run_log.html">RunLog</a> &amp;_log)</td></tr>
 <tr class="memdesc:a557e18433bb2fc5e87369a7c8d2eaaa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save examples to 'fileName'.  <a href="#a557e18433bb2fc5e87369a7c8d2eaaa1">More...</a><br/></td></tr>
 <tr class="separator:a557e18433bb2fc5e87369a7c8d2eaaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +182,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:aeb842177c7e2152e93e1f69eeaf84ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab116957f61da1a3c1caeadefc705a6c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="namespace_k_k_b.html#a364b14008a6e406e88e0c44b87ec2863">VectorKKStr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#ab116957f61da1a3c1caeadefc705a6c1">RegisteredDriverNames</a> ()</td></tr>
 <tr class="separator:ab116957f61da1a3c1caeadefc705a6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbfa02f160488be79107e018e5143676"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#adbfa02f160488be79107e018e5143676">RegisterFeatureFileIODriver</a> (<a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a40c9aad113e2bd30beaa92312be7f1b1">FeatureFileIOPtr</a> _driver)</td></tr>
+<tr class="memdesc:adbfa02f160488be79107e018e5143676"><td class="mdescLeft">&#160;</td><td class="mdescRight">For each feature file format register the appropriate driver thru this static method.  <a href="#adbfa02f160488be79107e018e5143676">More...</a><br/></td></tr>
+<tr class="separator:adbfa02f160488be79107e018e5143676"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -184,13 +193,18 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:ae79ac82b32e63fa7e7d96c833b5631f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#ae79ac82b32e63fa7e7d96c833b5631f2">GetToken</a> (std::istream &amp;_in, const char *_delimiters, <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;_token, bool &amp;_eof, bool &amp;_eol)</td></tr>
 <tr class="memdesc:ae79ac82b32e63fa7e7d96c833b5631f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will retrieve the next token from the input stream.  <a href="#ae79ac82b32e63fa7e7d96c833b5631f2">More...</a><br/></td></tr>
 <tr class="separator:ae79ac82b32e63fa7e7d96c833b5631f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a7fe96188c22f2a224da1963810c17fcc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a7fe96188c22f2a224da1963810c17fcc">RegisterDriver</a> (<a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a40c9aad113e2bd30beaa92312be7f1b1">FeatureFileIOPtr</a> driver)</td></tr>
+<tr class="separator:a7fe96188c22f2a224da1963810c17fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for all <a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html" title="Base class for all FeatureFileIO classes. ">FeatureFileIO</a> classes. </p>
 <p>This is a abstract class. For each type of FeatureFile you will need to implement a separate class derived from this class that supports the specific file format. You only need to implement the pure virtual functions.</p>
 <p>If you create a new <a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html" title="Base class for all FeatureFileIO classes. ">FeatureFileIO</a> class you will need to modify 'RegisterAllDrivers' method in <a class="el" href="_feature_file_i_o_8cpp.html">FeatureFileIO.cpp</a>. </p>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00042">42</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00048">48</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a40c9aad113e2bd30beaa92312be7f1b1"></a>
 <div class="memitem">
@@ -202,7 +216,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00045">45</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00051">51</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
 
 </div>
 </div>
@@ -237,7 +251,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00304">304</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00341">341</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -262,7 +276,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00317">317</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00354">354</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -321,7 +335,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00506">506</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00543">543</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -346,7 +360,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00054">54</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00060">60</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
 
 </div>
 </div>
@@ -371,7 +385,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00055">55</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00061">61</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
 
 </div>
 </div>
@@ -396,7 +410,111 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00213">213</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8h_source.html#l00290">290</a> of file <a class="el" href="_feature_file_i_o_8h_source.html">FeatureFileIO.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a287df1dbb04495d7a4dc23b3af1a2ca6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_k_k_machine_learning.html#aa7727d579d77bab8fc0c19ab44c34a71">FeatureVectorListPtr</a> FeatureFileIO::FeatureDataReSink </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_machine_learning.html#a79a1f8fe598f591a3b760cd4f62ec857">FactoryFVProducerPtr</a>&#160;</td>
+          <td class="paramname"><em>_fvProducerFactory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;&#160;</td>
+          <td class="paramname"><em>_dirName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;&#160;</td>
+          <td class="paramname"><em>_fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_machine_learning.html#aa78fdcae582a2d420bcf83209ed12375">MLClassPtr</a>&#160;</td>
+          <td class="paramname"><em>_unknownClass</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_useDirectoryNameForClassName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_machine_learning_1_1_m_l_class_list.html">MLClassList</a> &amp;&#160;</td>
+          <td class="paramname"><em>_mlClasses</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f">VolConstBool</a> &amp;&#160;</td>
+          <td class="paramname"><em>_cancelFlag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &amp;&#160;</td>
+          <td class="paramname"><em>_changesMade</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_b_1_1_date_time.html">KKB::DateTime</a> &amp;&#160;</td>
+          <td class="paramname"><em>_timeStamp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_b_1_1_run_log.html">RunLog</a> &amp;&#160;</td>
+          <td class="paramname"><em>_log</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Synchronizes the contents of a feature data file with a directory of images. </p>
+<pre class="fragment">                    FeatureDataReSink
+</pre><p>Used with applications to verify that feature file is up-to-date. Was specifically meant to work with training libraries, to account for images being added and deleted from training library. If there are no changes, then function will run very quickly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">_fvProducerFactory</td><td>Factory that specifoes the <a class="el" href="class_k_k_machine_learning_1_1_feature_vector.html" title="Represents a Feature Vector of a single example, labeled or unlabele. ">FeatureVector</a>'s we want to produce. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_dirName,Directory</td><td>where source images are located. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_fileName,Feature</td><td>file that is being synchronized. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_unknownClass,Class</td><td>to be used when class is unknown </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_useDirectoryNameForClassName,if</td><td>true then class name of each entry will be set to directory name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_mlClasses,list</td><td>of classes </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_cancelFlag</td><td>Will be monitored; if it goes to 'true' will exit as soon as possible. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">_changesMade,If</td><td>returns as true then there were changes made to the feature file 'fileName'. If set to false, then no changes were made. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">_timeStamp</td><td>of feature file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_log</td><td>where to send diagnostic messages to.  A <a class="el" href="class_k_k_machine_learning_1_1_feature_vector_list.html" title="Container class for FeatureVector derived objects. ">FeatureVectorList</a> derived instance ; This object will own all the examples loaded</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>A change in feature file version number would also cause all entries in the feature file to be recomputed. The feature file version number gets incremented whenever we change the feature file computation routine. </p>
+
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00827">827</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -485,7 +603,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00242">242</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00301">301</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -510,7 +628,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00197">197</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00256">256</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -535,7 +653,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00219">219</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00278">278</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -563,7 +681,7 @@ Protected Member Functions</h2></td></tr>
 <p>Before you terminate your application and after all <a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html" title="Base class for all FeatureFileIO classes. ">FeatureFileIO</a> activity is done call this method to destroy statically dynamically allocated data structures. </p>
 <p>This method undoes everything that 'RegisterAllDrivers' does. Its primary usefulness is aid in tracking down memory leaks. This way the '_CrtSetDbgFlag' debugging functionality will not report the memory allocated by the different feature FileIO drivers. </p>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00120">120</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00202">202</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -677,7 +795,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00323">323</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00360">360</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -744,7 +862,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00367">367</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00404">404</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -827,7 +945,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o_c45.html#a5223da28157b11024119c1edd93143c2">KKMachineLearning::FeatureFileIOC45</a>.</p>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00445">445</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00482">482</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -930,6 +1048,113 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="abce09712a763ba49bf0cc55d0fdae784"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_k_k_machine_learning.html#aa7727d579d77bab8fc0c19ab44c34a71">FeatureVectorListPtr</a> FeatureFileIO::LoadInSubDirectoryTree </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_machine_learning.html#a79a1f8fe598f591a3b760cd4f62ec857">FactoryFVProducerPtr</a>&#160;</td>
+          <td class="paramname"><em>_fvProducerFactory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a>&#160;</td>
+          <td class="paramname"><em>_rootDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_machine_learning_1_1_m_l_class_list.html">MLClassList</a> &amp;&#160;</td>
+          <td class="paramname"><em>_mlClasses</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_useDirectoryNameForClassName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f">VolConstBool</a> &amp;&#160;</td>
+          <td class="paramname"><em>_cancelFlag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_rewiteRootFeatureFile</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_k_k_b_1_1_run_log.html">RunLog</a> &amp;&#160;</td>
+          <td class="paramname"><em>_log</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a feature vector list of all images located in the specified sub-directory tree. </p>
+<pre class="fragment">                    LoadInSubDirectoryTree
+</pre><p>Meant to work with images, it starts at a specified sub-directory and processes all sub-directories. It makes use of FeatureDataReSink for each specific sub-directory. Will make use of FeatureData files that already exist in any of the sub-directories. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">_fvProducerFactory</td><td>Factory that specifoes the <a class="el" href="class_k_k_machine_learning_1_1_feature_vector.html" title="Represents a Feature Vector of a single example, labeled or unlabele. ">FeatureVector</a>'s we want to produce. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_rootDir</td><td>Starting directory. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">_mlClasses,List</td><td>of classes, any new classes in fileName will be added. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_useDirectoryNameForClassName,if</td><td>true set class names to sub-directory name. This happens because the user may manually move images between directories using the sub-directory name as the class name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_cancelFlag</td><td>If turns to 'true' method is to exit asap. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_rewiteRootFeatureFile,If</td><td>true rewrite the feature file in the specified 'rootDir'. This feature file will contain all entries from all sub-directories below it. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_log,where</td><td>to send diagnostic messages to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>- A PostLarvaeFVList container object. This object will own all the examples loaded. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_cancelFlag</td><td>will be monitored, if set to True Load will terminate. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00677">677</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7fe96188c22f2a224da1963810c17fcc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FeatureFileIO::RegisterDriver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a40c9aad113e2bd30beaa92312be7f1b1">FeatureFileIOPtr</a>&#160;</td>
+          <td class="paramname"><em>driver</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00165">165</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ab116957f61da1a3c1caeadefc705a6c1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -951,7 +1176,36 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00265">265</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00324">324</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adbfa02f160488be79107e018e5143676"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FeatureFileIO::RegisterFeatureFileIODriver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_k_k_machine_learning_1_1_feature_file_i_o.html#a40c9aad113e2bd30beaa92312be7f1b1">FeatureFileIOPtr</a>&#160;</td>
+          <td class="paramname"><em>_driver</em>)</td><td></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>For each feature file format register the appropriate driver thru this static method. </p>
+<p>You will be giving ownership of the driver to this class; it will call the destructor when the application shutsdown. </p>
+
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00085">85</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -1032,7 +1286,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00548">548</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00585">585</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -1098,7 +1352,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00580">580</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_feature_file_i_o_8cpp_source.html#l00617">617</a> of file <a class="el" href="_feature_file_i_o_8cpp_source.html">FeatureFileIO.cpp</a>.</p>
 
 </div>
 </div>
@@ -1201,7 +1455,7 @@ Protected Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:46 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:06:11 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>

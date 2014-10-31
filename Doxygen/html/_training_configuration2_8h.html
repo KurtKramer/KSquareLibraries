@@ -24,7 +24,7 @@
   <td id="projectlogo"><img alt="Logo" src="KSquareLogo.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">KSquareLibraries
-   &#160;<span id="projectnumber">1.3</span>
+   &#160;<span id="projectnumber">1.32</span>
    </div>
   </td>
  </tr>
@@ -100,12 +100,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_configuration_8h_source.html">Configuration.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_date_time_8h_source.html">DateTime.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_k_k_str_8h_source.html">KKStr.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_file_desc_8h_source.html">FileDesc.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_factory_f_v_producer_8h_source.html">FactoryFVProducer.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="_feature_vector_producer_8h_source.html">FeatureVectorProducer.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_feature_vector_8h_source.html">FeatureVector.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_model_8h_source.html">Model.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_model_param_8h_source.html">ModelParam.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_model_param_old_s_v_m_8h_source.html">ModelParamOldSVM.h</a>&quot;</code><br/>
-<code>#include &quot;<a class="el" href="_k_k_str_8h_source.html">KKStr.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_s_v_mparam_8h_source.html">SVMparam.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="_training_class_8h_source.html">TrainingClass.h</a>&quot;</code><br/>
 </div>
@@ -132,41 +134,57 @@ Constant Groups</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a4ccc5dad51e23ddb829a16503bab78b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_training_configuration2_8h.html#a4ccc5dad51e23ddb829a16503bab78b8">_TrainingConfiguration2Defined_</a></td></tr>
-<tr class="separator:a4ccc5dad51e23ddb829a16503bab78b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5d21109a9da8617eab46b9282cac3be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_training_configuration2_8h.html#ab5d21109a9da8617eab46b9282cac3be">_TrainingConfiguration2_Defined_</a></td></tr>
+<tr class="separator:ab5d21109a9da8617eab46b9282cac3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a250aef3c587560c7d5ea1c915b53beed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_training_configuration2_8h.html#a250aef3c587560c7d5ea1c915b53beed">_TrainingConfiguration2List_Defined_</a></td></tr>
+<tr class="separator:a250aef3c587560c7d5ea1c915b53beed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a6d1b4e2bf65e04b286818f1bf784e368"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
-TrainingConfiguration2List *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_k_k_machine_learning.html#a6d1b4e2bf65e04b286818f1bf784e368">KKMachineLearning::TrainingConfiguration2ListPtr</a></td></tr>
-<tr class="separator:a6d1b4e2bf65e04b286818f1bf784e368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8878f4ce2541a4ea240024dc1050a9e7"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
+TrainingConfiguration2List *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_k_k_machine_learning.html#a8878f4ce2541a4ea240024dc1050a9e7">KKMachineLearning::TrainingConfiguration2ListPtr</a></td></tr>
+<tr class="separator:a8878f4ce2541a4ea240024dc1050a9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aced3ef2fd8117290042fb929293470bc"><td class="memItemLeft" align="right" valign="top">KKStr &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_k_k_machine_learning.html#aced3ef2fd8117290042fb929293470bc">KKMachineLearning::operator&lt;&lt;</a> (KKStr &amp;left, TrainingConfiguration2::ModelTypes modelingMethod)</td></tr>
-<tr class="separator:aced3ef2fd8117290042fb929293470bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc602392f6c9354181c3f69c5ebead5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_k_k_machine_learning.html#adc602392f6c9354181c3f69c5ebead5c">KKMachineLearning::operator&lt;&lt;</a> (<a class="el" href="class_k_k_b_1_1_k_k_str.html">KKStr</a> &amp;left, <a class="el" href="class_k_k_machine_learning_1_1_model.html#af6f24530b035cca14e95d942774363a3">TrainingConfiguration2::ModelTypes</a> modelingMethod)</td></tr>
+<tr class="separator:adc602392f6c9354181c3f69c5ebead5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b3ec8f86eb8e070dd3e0faa97a83131"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_k_k_machine_learning.html#a4b3ec8f86eb8e070dd3e0faa97a83131">KKMachineLearning::operator&lt;&lt;</a> (std::ostream &amp;os, <a class="el" href="class_k_k_machine_learning_1_1_model.html#af6f24530b035cca14e95d942774363a3">TrainingConfiguration2::ModelTypes</a> modelingMethod)</td></tr>
 <tr class="separator:a4b3ec8f86eb8e070dd3e0faa97a83131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a4ccc5dad51e23ddb829a16503bab78b8"></a>
+<a class="anchor" id="ab5d21109a9da8617eab46b9282cac3be"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define _TrainingConfiguration2Defined_</td>
+          <td class="memname">#define _TrainingConfiguration2_Defined_</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_training_configuration2_8h_source.html#l00340">340</a> of file <a class="el" href="_training_configuration2_8h_source.html">TrainingConfiguration2.h</a>.</p>
+<p>Definition at line <a class="el" href="_training_configuration2_8h_source.html#l00356">356</a> of file <a class="el" href="_training_configuration2_8h_source.html">TrainingConfiguration2.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a250aef3c587560c7d5ea1c915b53beed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define _TrainingConfiguration2List_Defined_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_training_configuration2_8h_source.html#l00388">388</a> of file <a class="el" href="_training_configuration2_8h_source.html">TrainingConfiguration2.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 26 2014 21:42:44 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 31 2014 14:06:10 for KSquareLibraries by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.4
 </small></address>
