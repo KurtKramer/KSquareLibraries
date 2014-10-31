@@ -158,8 +158,8 @@ namespace KKMachineLearning
 
     static  bool  atExitDefined;
 
-    static  map<KKStr,FactoryFVProducerPtr>  factories;
-    static  map<KKStr,FactoryFVProducerPtr>::iterator  factoriesIdx;
+    typedef  map<KKStr,FactoryFVProducerPtr>  FactoryMap;
+    static  FactoryMap*  factories;
   };  /* FactoryFVProducer */
 
   typedef  FactoryFVProducer::FactoryFVProducerPtr  FactoryFVProducerPtr;

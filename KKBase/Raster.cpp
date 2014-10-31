@@ -19,7 +19,7 @@
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  include  <fftw3.h>
+#  include  <fftw.h>
 #else
 #  include  "kku_fftw.h"
 #endif

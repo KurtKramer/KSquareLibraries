@@ -136,6 +136,9 @@ FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
 {
   GlobalGoalKeeper::StartBlock ();
 
+  if  (registeredDrivers == NULL)
+    registeredDrivers = new std::vector<FeatureFileIOPtr> ();
+
   FeatureFileIOPtr  result = NULL;
 
   KKStr  driverNameLower = _driverName.ToLower ();

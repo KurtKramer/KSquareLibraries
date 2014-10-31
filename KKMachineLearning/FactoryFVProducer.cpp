@@ -75,9 +75,18 @@ FactoryFVProducerPtr  FactoryFVProducer::LookUpFactory (const KKStr&  _name)
 
   GlobalGoalKeeper::StartBlock ();
 
-  factoriesIdx = factories.find (_name);
-  if  (factoriesIdx != factories.end ())
-    factory = factoriesIdx->second;
+  if  (!factories)
+  {
+    factories = new FactoryMap ();
+    atexit (FactoryFVProducer::FinaleCleanUp);
+    atExitDefined = true;
+  }
+
+  FactoryMap::iterator idx;
+
+  idx = factories->find (_name);
+  if  (idx != factories->end ())
+    factory = idx->second;
 
   GlobalGoalKeeper::EndBlock ();
   return  factory;
@@ -108,20 +117,23 @@ void  FactoryFVProducer::RegisterFactory (FactoryFVProducerPtr  factory,
 
     runLog->Level (30) << "FactoryFVProducer::RegisterFactory  Name: " << factory->Name () << "  Description: " << factory->Description () << endl;
 
-    if  (!atExitDefined)
+    if  (!factories)
     {
+      factories = new FactoryMap ();
       atexit (FactoryFVProducer::FinaleCleanUp);
       atExitDefined = true;
     }
 
-    factoriesIdx = factories.find (factory->Name ());
-    if  (factoriesIdx != factories.end ())
+    FactoryMap::iterator idx;
+
+    idx = factories->find (factory->Name ());
+    if  (idx != factories->end ())
     {
       runLog->Level (-1) << "FactoryFVProducer::RegisterFactory   ***ERROR***   Factory With Name: " << factory->Name () << " alreadt defined." << endl;
     }
     else
     {
-      factories.insert (pair<KKStr,FactoryFVProducerPtr> (factory->Name (), factory));
+      factories->insert (pair<KKStr,FactoryFVProducerPtr> (factory->Name (), factory));
     }
 
     GlobalGoalKeeper::EndBlock ();
@@ -143,11 +155,16 @@ void  FactoryFVProducer::FinaleCleanUp ()
 {
   GlobalGoalKeeper::StartBlock ();
 
-  for  (factoriesIdx = factories.begin ();  factoriesIdx != factories.end ();  ++factoriesIdx)
+  FactoryMap::iterator idx;
+
+  for  (idx = factories->begin ();  idx != factories->end ();  ++idx)
   {
-    delete factoriesIdx->second;
-    factoriesIdx->second = NULL;
+    delete idx->second;
+    idx->second = NULL;
   }
+
+  delete  factories;
+  factories = NULL;
 
   atExitDefined = false;
   GlobalGoalKeeper::EndBlock ();
@@ -159,7 +176,5 @@ void  FactoryFVProducer::FinaleCleanUp ()
 
 bool  FactoryFVProducer::atExitDefined = false;
 
-map<KKStr,FactoryFVProducerPtr>  FactoryFVProducer::factories;
-
-map<KKStr,FactoryFVProducerPtr>::iterator  FactoryFVProducer::factoriesIdx;
+FactoryFVProducer::FactoryMap* FactoryFVProducer::factories = NULL;
 
