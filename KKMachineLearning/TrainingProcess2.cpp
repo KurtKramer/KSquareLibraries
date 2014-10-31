@@ -824,7 +824,8 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
     driver = fvFactoryProducer->DefaultFeatureFileIO ();
 
   FeatureVectorListPtr  extractedImages = driver->FeatureDataReSink 
-                                (expDirName,
+                                (fvFactoryProducer,
+                                 expDirName,
                                  trainingClass->FeatureFileName (),
                                  trainingClass->MLClass (),
                                  true,   //  Make all entries in this directory 'trainingClass->MLClass ()'

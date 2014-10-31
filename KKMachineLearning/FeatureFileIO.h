@@ -13,13 +13,13 @@
  *          method in FeatureFileIO.cpp.
  */
 
-#include  "FeatureNumList.h"
-#include  "FeatureVector.h"
-#include  "GoalKeeper.h"
-#include  "MLClass.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
-#include  "KKStr.h"
+#include "FeatureNumList.h"
+#include "FeatureVector.h"
+#include "GoalKeeper.h"
+#include "MLClass.h"
+#include "OSservices.h"
+#include "RunLog.h"
+#include "KKStr.h"
 
 namespace KKMachineLearning 
 {
@@ -36,6 +36,12 @@ namespace KKMachineLearning
   #if  !defined(_FeatureVectorList_Defined_)
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
+  #endif
+
+
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
   #endif
 
 
@@ -135,22 +141,22 @@ namespace KKMachineLearning
 
     /**                       FeatureDataReSink
      *@brief Synchronizes the contents of a feature data file with a directory of images.
-     *        Used with  applications to verify that feature file is up-to-date.
-     *        Was specifically meant to work with training libraries, to account for
-     *        images being added and deleted from training library.  If there are no 
-     *        changes, then function will run very quickly.
+     *@details  Used with  applications to verify that feature file is up-to-date.
+     * Was specifically meant to work with training libraries, to account for
+     * images being added and deleted from training library.  If there are no 
+     * changes, then function will run very quickly.
+     *@param[in] _fvProducerFactory  Factory that specifoes the FeatureVector's we want to produce.
      *@param[in] _dirName,      Directory where source images are located.
      *@param[in] _fileName,     Feature file that is being synchronized.
      *@param[in] _unknownClass, Class to be used when class is unknown
-     *@param[in] _useDirectoryNameForClassName, if true then class name of each entry
-     *            will be set to directory name.
+     *@param[in] _useDirectoryNameForClassName, if true then class name of each entry will be set to directory name.
      *@param[in] _mlClasses,  list of classes
      *@param[in]  _cancelFlag  Will be monitored; if it goes to 'true'  will exit as soon as possible.
      *@param[out] _changesMade, If returns as true then there were changes made to the 
      *             feature file 'fileName'.  If set to false, then no changes were made.
-     *@param[out] Timestamp of feature file.
-     *@param[in] log, where to send diagnostic messages to.
-     *@return - A FeatureVectorList derived instance ; This object will own all the examples loaded
+     *@param[out] _timeStamp of feature file.
+     *@param[in]  _log where to send diagnostic messages to.
+     *@returnz  A FeatureVectorList derived instance ; This object will own all the examples loaded
      *
      * A change in feature file version number would also cause all entries in the feature
      * file to be recomputed.  The feature file version number gets incremented whenever we change
@@ -168,6 +174,35 @@ namespace KKMachineLearning
                                              KKB::DateTime&        _timeStamp,
                                              RunLog&               _log
                                             );
+
+
+    /**                       LoadInSubDirectoryTree
+     *@brief Creates a feature vector list of all images located in the specified sub-directory tree.
+     *@details Meant to work with images, it starts at a specified sub-directory and
+     *        processes all sub-directories.  It makes use of FeatureDataReSink for each specific
+     *        sub-directory.  Will make use of FeatureData files that already exist in any of the
+     *        sub-directories.
+     *@param[in] _fvProducerFactory  Factory that specifoes the FeatureVector's we want to produce.
+     *@param[in] _rootDir  Starting directory.
+     *@param[in,out] _mlClasses, List of classes, any new classes in fileName will be added.
+     *@param[in] _useDirectoryNameForClassName, if true set class names to sub-directory name.
+     *           This happens because the user may manually move images between directories using
+     *           the sub-directory name as the class name.
+     *@param[in] _cancelFlag  If turns to 'true' method is to exit asap.
+     *@param[in] _rewiteRootFeatureFile, If true rewrite the feature file in the specified 'rootDir'.  This
+     *           feature file will contain all entries from all sub-directories below it.
+     *@param[in] _log, where to send diagnostic messages to.
+     *@returns - A PostLarvaeFVList container object.  This object will own all the examples loaded.
+     */
+    FeatureVectorListPtr  LoadInSubDirectoryTree (FactoryFVProducerPtr  _fvProducerFactory,
+                                                  KKStr                 _rootDir,
+                                                  MLClassList&          _mlClasses,
+                                                  bool                  _useDirectoryNameForClassName,
+                                                  VolConstBool&         _cancelFlag,    /**< will be monitored, if set to True  Load will terminate. */
+                                                  bool                  _rewiteRootFeatureFile,
+                                                  RunLog&               _log
+                                                 );
+
 
 
 
@@ -194,6 +229,11 @@ namespace KKMachineLearning
                                        KKStr&          _errorMessage,
                                        RunLog&         _log
                                       ) = 0;
+
+
+
+
+
 
 
     /**
@@ -305,6 +345,7 @@ namespace KKMachineLearning
                     bool&          _eof
                    );
 
+    static  void  RegisterDriver (FeatureFileIOPtr  driver);
 
   private:
     bool    canRead;
@@ -312,12 +353,11 @@ namespace KKMachineLearning
     KKStr   driverName;
     KKStr   driverNameLower;
 
-    void  RegisterDriver (FeatureFileIOPtr  driver);
     static void  RegisterAllDrivers ();
 
 
-  static
-    std::vector<FeatureFileIOPtr>*  registeredDrivers;
+  static  bool  atExitDefined;
+  static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
 
   static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
 

@@ -68,6 +68,7 @@ namespace KKMachineLearning
     void  OrigSize         (float             _origSize)       {origSize         = _origSize;}        /**< @brief The value of Feature[0] before normalization. */
     void  PredictedClass   (const MLClassPtr  _predictedClass) {predictedClass   = _predictedClass;}
     void  Probability      (float             _probability)    {probability      = _probability;}     /**< @brief Assign a prediction probability to this example.  */
+    void  Version          (kkint16           _version)        {version          = _version;}
 
     /**
      *@brief Assign a value to a specific feature number for the feature vector.
@@ -112,6 +113,7 @@ namespace KKMachineLearning
     float          Probability        () const  {return probability;}     /**< @brief The probability assigned by classifier to the predicted class.     */
     float          TrainWeight        () const  {return trainWeight;}
     bool           Validated          () const  {return validated;}
+    kkint16        Version            () const  {return version;}
 
     float          FeatureData        (kkint32 featureNum)  const;        /**< @returns The value of 'featureNum'                             */
     const float*   FeatureData        () const  {return featureData;}     /**< @brief Returns as a pointer to the feature data itself.        */
@@ -152,7 +154,7 @@ namespace KKMachineLearning
     float          origSize;
     MLClassPtr     predictedClass;   /**< @brief Represents the class that the Classifier assigned to this 
                                        * image; added to aid in the grading function.2 
-                               .        */
+                                       */
 
     float          probability;      /**< @brief Probability assigned by classifier to predicted Class. */
 
@@ -164,6 +166,14 @@ namespace KKMachineLearning
     bool           validated;        /**< @brief  If true then the 'mlClass' entry has been validated by 
                                       * an expert; was introduced when the DataBase was implemeneted.
                                       */
+
+    kkint16        version;          /**< This is the same versionNumber as in FeatureVectorList
+                                      * It is related to the Feature calculation routine.  This
+                                      * will assist in us changing the feature calcs in the 
+                                      * future and  objects and methods having a meens of 
+                                      * knowing if the features are similar.
+                                      */
+
   };  /* FeatureVector */
 
 
@@ -258,18 +268,19 @@ namespace KKMachineLearning
 
     virtual  ~FeatureVectorList ();
 
+  
     // Access methods.
-    IFL_SortOrder             CurSortOrder    () const  {return curSortOrder;}
-    kkint32                   FeatureCount    () const  {return numOfFeatures;}
-    const FileDescPtr         FileDesc        () const  {return fileDesc;}
-    kkint32                   NumOfFeatures   () const  {return numOfFeatures;}
-    const  KKStr&             FileName        () const  {return fileName;}
+    IFL_SortOrder         CurSortOrder    () const  {return curSortOrder;}
+    kkint32               FeatureCount    () const  {return numOfFeatures;}
+    const FileDescPtr     FileDesc        () const  {return fileDesc;}
+    const  KKStr&         FileName        () const  {return fileName;}
+    kkint32               NumOfFeatures   () const  {return numOfFeatures;}
+    kkint16               Version         () const  {return version;}
     //virtual  const char*      UnderlyingClass () const  {return "FeatureVectorList";}
 
 
     void   FileName (const KKStr& _fileName)  {fileName = _fileName;}
-
-
+    void   Version  (kkint16      _version)   {version  = _version;}
 
     void   AddSingleExample (FeatureVectorPtr  _imageFeatures);  /**< @brief Same as PushOnBack */
 
@@ -515,6 +526,18 @@ namespace KKMachineLearning
     KKStr          fileName;
 
     kkint32        numOfFeatures;
+
+    kkint16        version;  /**< Represents the version of the Feature data,  when ever I update the
+                              * way Feastures are calculated I increment the VersionNum in the respective 
+                              * "FeatureVectorProducer" derived class. This way if we load a older 
+                              * FeatureData file we can be aware of this.  Methods like FeatureDataReSink
+                              * will force the recalculation of Feature data if not up-to-date.  Also 
+                              * works in coordination with the version field in the PostLarvaeFV object.
+                              * A value of 0 indicates that we do not know what Version the feature data 
+                              * is. This can happen when not all the PostLarvaeFV objects in the list have 
+                              * the same version number.
+                              */
+
   };  /* FeatureVectorList */
 
 

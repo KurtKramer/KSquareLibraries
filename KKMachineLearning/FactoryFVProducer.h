@@ -87,7 +87,13 @@ namespace KKMachineLearning
 
     virtual  FeatureFileIOPtr  DefaultFeatureFileIO ()  const = 0;
 
-    virtual  FileDescPtr       FileDesc             ()  const = 0;
+    /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FactoryFVProducer' works with. */
+    virtual  const type_info*  FeatureVectorTypeId      () const = 0;
+
+    /**  @brief  Returns the 'type_info' of the FeatureVectorList that this instance of 'FactoryFVProducer' will create. */
+    virtual  const type_info*  FeatureVectorListTypeId  () const = 0;
+
+    virtual  FileDescPtr       FileDesc                 ()  const = 0;
 
     /**
      *@brief   Derived classes will instantiate appropriate instances of 'FeatureVectorProducer'.

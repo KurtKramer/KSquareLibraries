@@ -14,14 +14,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "MemoryDebug.h"
-
-
 using namespace std;
 
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
 #include "GlobalGoalKeeper.h"
+#include "ImageIO.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -38,6 +37,7 @@ using namespace KKB;
 #include "FeatureFileIOUCI.h"
 
 #include "FactoryFVProducer.h"
+#include "FeatureVectorProducer.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace KKMachineLearning;
@@ -65,7 +65,7 @@ void  ReportError (RunLog&        log,
 
 
 
-
+bool  FeatureFileIO::atExitDefined = false;
 
 
 vector<FeatureFileIOPtr>*  FeatureFileIO::registeredDrivers = NULL;
@@ -85,6 +85,13 @@ std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
 void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
+
+  if  (!atExitDefined)
+  {
+    atexit (FeatureFileIO::FinalCleanUp);
+    atExitDefined = true;
+  }
+
   if  (!registeredDrivers)
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
 
@@ -99,6 +106,12 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 void  FeatureFileIO::RegisterAllDrivers ()
 {
   GlobalGoalKeeper::StartBlock ();
+
+  if  (!atExitDefined)
+  {
+    atexit (FeatureFileIO::FinalCleanUp);
+    atExitDefined = true;
+  }
 
   if  (registeredDrivers == NULL)
   {
@@ -115,6 +128,62 @@ void  FeatureFileIO::RegisterAllDrivers ()
 
   GlobalGoalKeeper::EndBlock ();
 }  /* RegisterAllDrivers */
+
+
+
+
+FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
+{
+  GlobalGoalKeeper::StartBlock ();
+
+  FeatureFileIOPtr  result = NULL;
+
+  KKStr  driverNameLower = _driverName.ToLower ();
+  vector<FeatureFileIOPtr>::const_iterator  idx;
+  for  (idx = registeredDrivers->begin ();  idx != registeredDrivers->end ();  idx++)
+  {
+    if  ((*idx)->driverNameLower == driverNameLower)
+    {
+      result =  *idx;
+      break;
+    }
+  }
+
+  GlobalGoalKeeper::EndBlock ();
+
+  return  result;
+}  /* LookUpDriver */
+
+
+
+
+
+
+void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
+{
+  GlobalGoalKeeper::StartBlock ();
+
+  FeatureFileIOPtr  existingDriver = LookUpDriver (_driver->driverName);
+  if  (existingDriver)
+  {
+    // We are trying to register two drivers with the same name;  we can not do that.
+    cerr << endl << endl 
+         << "FeatureFileIO::RegisterDriver     ***ERROR***" << endl 
+         << endl
+         << "             trying to register more than one FeatureFileIO driver with " << endl
+         << "             the same name[" << _driver->driverName << "]." << endl
+         << endl;
+  }
+  else
+  {
+    registeredDrivers->push_back (_driver);
+  }
+
+  GlobalGoalKeeper::EndBlock ();
+}  /* RegisterDriver */
+
+
+
 
 
 
@@ -147,24 +216,6 @@ void FeatureFileIO::FinalCleanUp ()
   GlobalGoalKeeper::EndBlock ();
 }  /* CleanUpFeatureFileIO */
 
-
-
-
-
-FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
-{
-  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
-
-  KKStr  driverNameLower = _driverName.ToLower ();
-  vector<FeatureFileIOPtr>::const_iterator  idx;
-  for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
-  {
-    if  ((*idx)->driverNameLower == driverNameLower)
-      return  *idx;
-  }
-  
-  return  NULL;
-}  /* LookUpDriver */
 
 
 
@@ -278,28 +329,6 @@ VectorKKStr  FeatureFileIO::RegisteredDriverNames ()
 
   return  names;
 }  /* RegisteredDriverNames */
-
-
-
-
-void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
-{
-  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
-  FeatureFileIOPtr  existingDriver = LookUpDriver (_driver->driverName);
-  if  (existingDriver)
-  {
-    // We are trying to register two drivers with the same name;  we can not do that.
-    cerr << endl << endl 
-         << "FeatureFileIO::RegisterDriver     ***ERROR***" << endl 
-         << endl
-         << "             trying to register more than one FeatureFileIO driver with " << endl
-         << "             the same name[" << _driver->driverName << "]." << endl
-         << endl;
-    return;
-  }
-
-  drivers->push_back (_driver);
-}  /* RegisterDriver */
 
 
 
@@ -633,6 +662,165 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
 
 
 
+
+
+
+
+
+
+
+
+FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree 
+                         (FactoryFVProducerPtr  _fvProducerFactory,
+                          KKStr                 _rootDir,
+                          MLClassList&          _mlClasses,
+                          bool                  _useDirectoryNameForClassName,
+                          VolConstBool&         _cancelFlag, 
+                          bool                  _rewiteRootFeatureFile,
+                          RunLog&               _log
+                         )
+{
+  _log.Level (10) << "FeatureFileIO::LoadInSubDirectoryTree    rootDir[" << _rootDir << "]." << endl;
+
+  osAddLastSlash (_rootDir);
+
+  KKStr  featureFileName ("");
+  KKStr  fullFeatureFileName ("");
+
+  if  (!_rootDir.Empty ())
+  {
+    featureFileName = osGetRootNameOfDirectory (_rootDir) + ".data";
+    fullFeatureFileName = _rootDir + featureFileName;
+  }
+  else
+  {
+    featureFileName     = "Root.data";
+    fullFeatureFileName = "Root.data";
+  }
+
+  MLClassPtr  unKnownClass = _mlClasses.GetUnKnownClass ();
+  if  (_useDirectoryNameForClassName)
+  {
+    KKStr className = MLClass::GetClassNameFromDirName (_rootDir);
+    unKnownClass    = _mlClasses.GetMLClassPtr (className);
+  }
+
+  bool  changesMade = false;
+
+  FeatureVectorListPtr  dirImages = NULL;
+
+  FileDescPtr  fileDesc = _fvProducerFactory->FileDesc ();
+
+  if  (_rewiteRootFeatureFile)
+  {
+    DateTime  timeStamp;
+    dirImages = FeatureDataReSink (_fvProducerFactory,
+                                   _rootDir,
+                                   featureFileName,
+                                   unKnownClass,
+                                   _useDirectoryNameForClassName,
+                                   _mlClasses,
+                                   _cancelFlag,
+                                   changesMade,
+                                   timeStamp,
+                                   _log
+                                  );
+    if  (_useDirectoryNameForClassName)
+    {
+      FeatureVectorList::iterator  idx;
+      for  (idx = dirImages->begin ();  idx != dirImages->end ();  idx++)
+      {
+        if  ((*idx)->MLClass () != unKnownClass)
+        {
+          (*idx)->MLClass (unKnownClass);
+          changesMade = true;
+        }
+      }
+
+      if  (changesMade)
+      {
+        KKStr  fullFileName = osAddSlash (_rootDir) + featureFileName;
+        kkuint32  numExamplesWritten = 0;
+        bool  cancel     = false;
+        bool  successful = false;
+        SaveFeatureFile (fullFileName, 
+                         dirImages->AllFeatures (), 
+                         *dirImages, 
+                         numExamplesWritten,
+                         cancel,
+                         successful,
+                         _log
+                        );
+      }
+    }
+  }
+  else
+  {
+    dirImages =  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+  }
+
+  // Now that we have processed all image files in "rootDir",
+  // lets process any sub-directories.
+
+  KKStr  dirSearchPath = osAddSlash (_rootDir) + "*.*";
+
+  KKStrListPtr  subDirectories = osGetListOfDirectories (dirSearchPath);
+  if  (subDirectories)
+  {
+    KKStrList::iterator  idx;
+
+    for  (idx = subDirectories->begin ();  (idx != subDirectories->end ()  &&  (!_cancelFlag));   idx++)
+    {
+      KKStr  subDirName (**idx);
+      if  (subDirName == "BorderImages")
+      {
+        // We ignore this director
+        continue;
+      }
+
+      KKStr  newDirPath = osAddSlash (_rootDir) + subDirName;
+
+      FeatureVectorListPtr  subDirImages = LoadInSubDirectoryTree (_fvProducerFactory,
+                                                                   newDirPath, 
+                                                                   _mlClasses, 
+                                                                   _useDirectoryNameForClassName, 
+                                                                   _cancelFlag,
+                                                                   true,     // true = ReWriteRootFeatureFile
+                                                                   _log
+                                                                  );
+      FeatureVectorPtr  fv = NULL;
+
+      osAddLastSlash (subDirName);
+
+      // We want to add the directory path to the ImageFileName so that we can later locate the source image.
+      FeatureVectorList::iterator  idx = subDirImages->begin ();
+      for  (idx = subDirImages->begin ();  idx != subDirImages->end ();  idx++)
+      {
+        fv = *idx;
+        KKStr  newImageFileName = subDirName + fv->ImageFileName ();
+        fv->ImageFileName (newImageFileName);
+      }
+
+      dirImages->AddQueue (*subDirImages);
+      subDirImages->Owner (false);
+      delete  subDirImages;
+    }
+
+    delete  subDirectories;  subDirectories = NULL;
+  }
+
+  _log.Level (10) << "LoadInSubDirectoryTree - Done" << endl;
+
+  return  dirImages;
+}  /* LoadInSubDirectoryTree */
+
+
+
+
+
+
+
+
 FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _fvProducerFactory,
                                                         const KKStr&          _dirName,
                                                         const KKStr&          _fileName, 
@@ -684,13 +872,13 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     return  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
   }
 
-  FeatureVectorListPtr  
+  FeatureVectorListPtr  origFeatureData = NULL;
 
-  PostLarvaeFVListPtr origFeatureData = NULL;
-
-  if  (typeid (*origFeatureVectorData) == typeid (PostLarvaeFVList))
+  if  ((&typeid (*origFeatureVectorData) == _fvProducerFactory->FeatureVectorListTypeId ())  &&
+       ((*(origFeatureVectorData->FileDesc ())) ==  (*(_fvProducerFactory->FileDesc ())))
+      )
   {
-     origFeatureData = dynamic_cast<PostLarvaeFVListPtr>(origFeatureVectorData);
+     origFeatureData = origFeatureVectorData;
   }
   else
   {
@@ -711,12 +899,14 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
     delete  origFeatureData;  origFeatureData = NULL;
 
-    return  new PostLarvaeFVList (fileDesc, true, _log);
+    return  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
   }
+
+  FeatureVectorProducerPtr  fvProducer = _fvProducerFactory->ManufactureInstance (_log);
 
   if  (successful)
   {
-    if  (origFeatureData->Version () == CurrentFeatureFileVersionNum)
+    if  (origFeatureData->Version () == fvProducer->Version ())
     {
       versionsAreSame = true;
       _timeStamp = osGetFileDateTime (fileNameToOpen);
@@ -730,14 +920,14 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   else
   {
     delete  origFeatureData;
-    origFeatureData = new PostLarvaeFVList (fileDesc, true, _log);
+    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
   }
 
   origFeatureData->SortByRootName (false);
 
 
-  PostLarvaeFVListPtr  extractedFeatures = new PostLarvaeFVList (fileDesc, true, _log);
-  extractedFeatures->Version (CurrentFeatureFileVersionNum);
+  FeatureVectorListPtr  extractedFeatures = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+  extractedFeatures->Version (fvProducer->Version ());
 
   fileNameList->Sort (false);
 
@@ -757,39 +947,44 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     if  (!validImageFileFormat)
       continue;
 
-    PostLarvaeFVPtr  origImage = origFeatureData->BinarySearchByName (*imageFileName);
-    if  (origImage)
+    FeatureVectorPtr  origFV = origFeatureData->BinarySearchByName (*imageFileName);
+    if  (origFV)
       numImagesFoundInOrigFeatureData++;
 
-    if  (origImage  &&  versionsAreSame)
+    if  (origFV  &&  versionsAreSame)
     {
       if  (_useDirectoryNameForClassName)
       {
-        if  (origImage->MLClass () != _unknownClass)
+        if  (origFV->MLClass () != _unknownClass)
         {
           _changesMade = true;
-          origImage->MLClass (_unknownClass);
+          origFV->MLClass (_unknownClass);
         }
       }
 
-      else if  ((origImage->MLClass ()->UnDefined ())  &&  (origImage->MLClass () != _unknownClass))
+      else if  ((origFV->MLClass ()->UnDefined ())  &&  (origFV->MLClass () != _unknownClass))
       {
         _changesMade = true;
-        origImage->MLClass (_unknownClass);
+        origFV->MLClass (_unknownClass);
       }
 
-      extractedFeatures->PushOnBack (origImage);
-      origFeatureData->DeleteEntry (origImage);
+      extractedFeatures->PushOnBack (origFV);
+      origFeatureData->DeleteEntry (origFV);
     }
     else
     {
       // We either  DON'T have an original image    or    versions are not the same.
 
       KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
-      PostLarvaeFVPtr image = NULL;
+      FeatureVectorPtr fv = NULL;
       try
       {
-        image = new PostLarvaeFV (fullFileName, _unknownClass, successful, NULL);
+        RasterPtr image = ReadImage (fullFileName);
+        if  (image)
+          fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
+        delete image;
+        image = NULL;
+
       }
       catch  (...)
       {
@@ -798,7 +993,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           << "       Exception occured calling constructor 'PostLarvaeFV'  trying to compute FeatureVector." << endl
           << endl;
         successful = false;
-        image = NULL;
+        fv = NULL;
       }
 
       if  (!successful)
@@ -806,17 +1001,17 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
         _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
                        << imageFileName << "]."
                        << endl;
-        delete  image;
-        image = NULL;
+        delete  fv;
+        fv = NULL;
       }
 
       else
       {
         _changesMade = true;
-        image->ImageFileName (*imageFileName);
+        fv->ImageFileName (*imageFileName);
 
-        _log.Level (30) << image->ImageFileName () << "  " << image->OrigSize () << endl;
-        extractedFeatures->PushOnBack (image);
+        _log.Level (30) << fv->ImageFileName () << "  " << fv->OrigSize () << endl;
+        extractedFeatures->PushOnBack (fv);
         numOfNewFeatureExtractions++;
 
         if  ((numOfNewFeatureExtractions % 100) == 0)
@@ -828,7 +1023,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   if  (numImagesFoundInOrigFeatureData != extractedFeatures->QueueSize ())
     _changesMade = true;
   
-  extractedFeatures->Version (CurrentFeatureFileVersionNum);
+  extractedFeatures->Version (fvProducer->Version ());
 
   if  ((_changesMade)  &&  (!_cancelFlag))
   {
@@ -836,22 +1031,23 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
     kkuint32  numExamplesWritten = 0;
 
-    driver.SaveFeatureFile (fullFeatureFileName,  
-                            FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()),
-                            *extractedFeatures,
-                            numExamplesWritten,
-                            _cancelFlag,
-                            successful,
-                            _log
-                           );
+    SaveFeatureFile (fullFeatureFileName,  
+                     FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()),
+                     *extractedFeatures,
+                     numExamplesWritten,
+                     _cancelFlag,
+                     successful,
+                     _log
+                    );
 
     _timeStamp = osGetLocalDateTime ();
   }
 
+  delete  fvProducer;        fvProducer      = NULL;
   delete  fileNameList;      fileNameList    = NULL;
   delete  origFeatureData;   origFeatureData = NULL;
 
   _log.Level (10) << "FeatureDataReSink  Exiting  Dir: "  << _dirName << endl;
 
   return  extractedFeatures;
-}
+}  /* FeatureDataReSink */

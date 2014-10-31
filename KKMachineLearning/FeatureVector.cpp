@@ -37,14 +37,15 @@ FeatureVector::FeatureVector (kkint32  _numOfFeatures):
         featureData      (NULL),
         numOfFeatures    (_numOfFeatures),
         breakTie         (0.0f),
-        mlClass       (NULL),
+        mlClass          (NULL),
         imageFileName    (),
         missingData      (false),
         origSize         (0.0f),
         predictedClass   (NULL),
         probability      (-1.0),
         trainWeight      (1.0f),
-        validated        (false)
+        validated        (false),
+        version          (-1)
 {
   AllocateFeatureDataArray ();
 }
@@ -66,7 +67,8 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
 
   trainWeight      (_example.trainWeight),
 
-  validated        (_example.validated)
+  validated        (_example.validated),
+  version          (-1)
 
 {
   if  (_example.featureData)
@@ -83,6 +85,7 @@ FeatureVector::~FeatureVector ()
 {
   delete[] featureData;  featureData = NULL;
 }
+
 
 
 
@@ -309,8 +312,8 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
   curSortOrder  (IFL_UnSorted),
   fileDesc      (_fileDesc),
   fileName      (),
-  numOfFeatures (0)
-
+  numOfFeatures (0),
+  version       (-1)
 {
   if  (!fileDesc)
   {
@@ -335,12 +338,10 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      curSortOrder  (IFL_UnSorted),
      fileDesc      (examples.fileDesc),
      fileName      (examples.fileName),
-     numOfFeatures (examples.numOfFeatures)
-
+     numOfFeatures (examples.numOfFeatures),
+     version       (examples.version)
 {
 }
-
-
 
 
 FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
@@ -352,14 +353,15 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
    curSortOrder  (IFL_UnSorted),
    fileDesc      (examples.fileDesc),
    fileName      (examples.fileName),
-   numOfFeatures (examples.numOfFeatures)
+   numOfFeatures (examples.numOfFeatures),
+   version       (examples.version)
 {
 }
 
 
 
 
-FeatureVectorList::FeatureVectorList (MLClassList&     _mlClasses,
+FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
                                       FeatureVectorList&  _examples,
                                       RunLog&             _log
                                      ):
@@ -369,8 +371,8 @@ FeatureVectorList::FeatureVectorList (MLClassList&     _mlClasses,
   curSortOrder  (IFL_UnSorted),
   fileDesc      (_examples.fileDesc),
   fileName      (_examples.fileName),
-  numOfFeatures (_examples.numOfFeatures)
-
+  numOfFeatures (_examples.numOfFeatures),
+  version       (_examples.version)
 {
   FeatureVectorList::const_iterator  idx;
   for  (idx = _examples.begin ();  idx != _examples.end ();  ++idx)
@@ -681,6 +683,20 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
                    << "       examplesToAdd.numOfFeatures[" << examplesToAdd.numOfFeatures << "]";
     log.Level (-1) << endl << errMsg << endl << endl;
     throw  errMsg;
+  }
+
+  if  (QueueSize () < 1)
+  {
+    // Since we don't have any examples in the existing queue then the version number
+    // of the queue that we are adding will be our version number.
+    Version (examplesToAdd.Version ());
+  }
+  else
+  {
+    // Since there are examples in both queues,  then they should have the same version number
+    // otherwise the version number of the resulting KKQueue will be undefined (-1).
+    if  (examplesToAdd.Version () != Version ())
+      Version (-1);
   }
 
   KKQueue<FeatureVector>::AddQueue (examplesToAdd);

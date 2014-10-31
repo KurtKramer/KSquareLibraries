@@ -1858,7 +1858,8 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
   else
   {
     extractedExamples = driver->FeatureDataReSink 
-                 (expandedDir,
+                 (fvFactoryProducer,
+                  expandedDir,
                   trainingClass->FeatureFileName (),
                   trainingClass->MLClass (),
                   true,   //  Make all entries in this directory 'trainingClass->MLClass ()'

@@ -70,8 +70,10 @@ namespace KKMachineLearning
                                                     ) = 0;
 
 
-    /**  @brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates. */
+    /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FeatureVectorProducer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
+
+    virtual  kkint16  Version ()  const = 0;  /**< The version number of the FeatureVector thati sgoing to be computed. */
 
 
     /** @brief  Returns pointer to factory that instantiated this instance */
@@ -91,6 +93,8 @@ namespace KKMachineLearning
     const KKStr&  FeatureName (kkuint32  fieldNum)  const;
 
     kkuint32  MaxNumOfFeatures ()     {return  FeatureCount ();}  /**<  Same as FeatureCount  */
+
+
 
   protected:
     void  SetFileDesc (FileDescPtr  _fileDesc);
