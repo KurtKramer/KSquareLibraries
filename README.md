@@ -3,6 +3,8 @@ KSquareLibraries
 
 [Project Page](http://kurtkramer.github.io/KSquareLibraries)
 
+[Doxygen generated Documentation](http://kurtkramer.github.io/KSquareLibraries/Doxygen/html)
+
 
 c++ Tool Kit routines developed over the past several years.
 
