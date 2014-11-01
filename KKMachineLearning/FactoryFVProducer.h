@@ -148,11 +148,9 @@ namespace KKMachineLearning
 
 
   private:
-    KKStr             description;            /**<  Description  of  FeatuireVectorProducer.                                                            */
-    FeatureFileIOPtr  defaultFeatureFileIO;
-    KKStr             fvClassName;            /**<  The name of the 'FeatureVector' derived class that we are going to generate.                         */
-    FileDescPtr       fileDesc;               /**<  File Description  that would be used by the feature vectors produced by the FeatireVector producer. */
-    KKStr             name;                   /**<  Name of FeatuireVectorProducer will create.                                                         */
+    KKStr   description;            /**<  Description  of  FeatuireVectorProducer.                                                            */
+    KKStr   fvClassName;            /**<  The name of the 'FeatureVector' derived class that we are going to generate.                         */
+    KKStr   name;                   /**<  Name of FeatuireVectorProducer will create.                                                         */
 
     static  void  FinaleCleanUp ();
 
