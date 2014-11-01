@@ -1,7 +1,10 @@
 KSquareLibraries
 ================
 
-c++ Tool Kit routines developed over the past 15 years.
+[Project Page](http://kurtkramer.github.io/KSquareLibraries)
+
+
+c++ Tool Kit routines developed over the past several years.
 
  *@section  Introduction   Introduction
  * The KKBaseLibrery is my tool box of handy objects that I have been building since 1994.  
