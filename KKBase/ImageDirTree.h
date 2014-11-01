@@ -56,7 +56,7 @@ namespace  KKB
      *@param[in]  fileName  Image File you are searching for.
      *@return Pointer to directory where 'fileName' is found.
      */
-    const KKStrPtr  LocateImage (const KKStr&  fileName);
+    KKStrConstPtr  LocateImage (const KKStr&  fileName);
 
 
     /** @brief returns the number of image files found the sub-directory tree. */

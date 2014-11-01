@@ -99,7 +99,7 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
 
 
 
-const KKStrPtr  ImageDirTree::LocateImage (const KKStr&  fileName)
+KKStrConstPtr  ImageDirTree::LocateImage (const KKStr&  fileName)
 {
   EntryTable::const_iterator p;
 

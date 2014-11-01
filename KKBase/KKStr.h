@@ -75,6 +75,8 @@ namespace  KKB
 
     KKStr (const KKStr&  str);
 
+    //KKStr (KKStr&&  str);  /**< Move Constructor */
+
     KKStr (KKStrConstPtr str);
 
     KKStr (kkint32  size);     /**< @brief Creates a KKStr object that preallocates space for 'size' characters. */
@@ -112,9 +114,9 @@ namespace  KKB
 
     bool     operator!= (const KKStr& right)      const;
 
-    bool     operator== (const KKStrPtr& right)   const;
+    bool     operator== (KKStrConstPtr right)     const;
 
-    bool     operator!= (const KKStrPtr& right)   const;
+    bool     operator!= (KKStrConstPtr right)     const;
 
     bool     operator== (const char*  rtStr)      const;
 
@@ -686,16 +688,14 @@ namespace  KKB
     void  ValidateLen ()  const;
 
   public:
-   class  LessCaseInsensitiveOperator
-   {
-     public:
-     LessCaseInsensitiveOperator ();
-     bool  operator () (const KKStr&  s1,  
-                        const KKStr&  s2
-                       );
-   };  /* LessCaseInsensitiveOperator */
-
-
+    class  LessCaseInsensitiveOperator
+    {
+      public:
+      LessCaseInsensitiveOperator ();
+      bool  operator () (const KKStr&  s1,  
+                         const KKStr&  s2
+                        );
+    };  /* LessCaseInsensitiveOperator */
   };   /* KKStr */
 
 

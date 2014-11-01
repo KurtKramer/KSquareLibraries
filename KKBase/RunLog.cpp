@@ -417,7 +417,7 @@ RunLog&  RunLog::operator<< (const KKStr&  right)
 
 
 
-RunLog&  RunLog::operator<< (const KKStrPtr  right)
+RunLog&  RunLog::operator<< (KKStrConstPtr  right)
 {
   if  (right)
     Append (right->Str ());

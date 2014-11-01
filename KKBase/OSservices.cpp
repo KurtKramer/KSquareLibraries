@@ -186,7 +186,7 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
   if  (searchFields->QueueSize () < 1)
     return true;
 
-  const KKStrPtr  field = searchFields->IdxToPtr (0);
+  KKStrConstPtr  field = searchFields->IdxToPtr (0);
 
   if  (searchFields->QueueSize () == 1)
   {
@@ -377,7 +377,7 @@ KKStr  KKB::osGetCurrentDirectory ()
 
 
 #ifdef WIN32
-bool  KKB::osValidDirectory (const KKStrPtr  name)
+bool  KKB::osValidDirectory (KKStrConstPtr  name)
 {
   DWORD  returnCd = GetFileAttributes (name->Str ());
 
@@ -410,7 +410,7 @@ bool  KKB::osValidDirectory (const KKStr&  name)
 
 #else
 
-bool  KKB::osValidDirectory (const KKStrPtr  name)
+bool  KKB::osValidDirectory (KKStrConstPtr  name)
 {
   DIR*  openDir = opendir (name->Str ());
 

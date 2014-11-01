@@ -426,7 +426,7 @@ namespace KKB
                                const KKStr&  newName
                               );
 
-  bool           osValidDirectory (const KKStrPtr  _name);
+  bool           osValidDirectory (KKStrConstPtr  _name);
 
   bool           osValidDirectory (const KKStr&  _name);
 

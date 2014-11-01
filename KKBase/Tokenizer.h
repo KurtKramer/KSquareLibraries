@@ -44,9 +44,9 @@ namespace  KKB
      */
     KKStrListPtr  GetNextTokens (const KKStr& delToken);  
 
-    const KKStrPtr  Peek (kkuint32 idx);
+    KKStrConstPtr  Peek (kkuint32 idx);
 
-    const KKStrPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
+    KKStrConstPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
 
 
   private:

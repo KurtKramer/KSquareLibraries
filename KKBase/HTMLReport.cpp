@@ -204,8 +204,8 @@ HTMLReport&  KKB::operator<< (HTMLReport&   htmlReport,
 
 
 
-HTMLReport&  KKB::operator<< (HTMLReport&     htmlReport,
-                              const KKStrPtr  right
+HTMLReport&  KKB::operator<< (HTMLReport&    htmlReport,
+                              KKStrConstPtr  right
                              )
 {
   if  (right)

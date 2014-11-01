@@ -43,7 +43,7 @@ namespace KKB
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  char            right);
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  const char*     right);
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  const KKStr&    right);
-    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  const KKStrPtr  right);
+    friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  KKStrConstPtr   right);
 
     friend  HTMLReport&  operator<< (HTMLReport&  htmlReport,  const DateTime&  dateTime);
 
@@ -114,8 +114,8 @@ namespace KKB
                            const KKStr&  right
                           );
 
-  HTMLReport&  operator<< (HTMLReport&     htmlReport,
-                           const KKStrPtr  right
+  HTMLReport&  operator<< (HTMLReport&    htmlReport,
+                           KKStrConstPtr  right
                           );
 
   HTMLReport&  operator<< (HTMLReport&      htmlReport,

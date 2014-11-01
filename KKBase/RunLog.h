@@ -137,19 +137,18 @@ namespace KKB
     void    WriteLine (const char* s);
 
 
-    RunLog&  operator<< (bool            right);
-    RunLog&  operator<< (kkint16         right);
-    RunLog&  operator<< (kkuint16        right);
-    RunLog&  operator<< (kkint32         right);
-    RunLog&  operator<< (kkuint32        right);
-    RunLog&  operator<< (kkint64         right);
-    RunLog&  operator<< (kkuint64        right);
-    RunLog&  operator<< (double          right);
-
-    RunLog&  operator<< (char            right);
-    RunLog&  operator<< (const char*     right);
-    RunLog&  operator<< (const KKStr&    right);
-    RunLog&  operator<< (const KKStrPtr  right);
+    RunLog&  operator<< (bool           right);
+    RunLog&  operator<< (kkint16        right);
+    RunLog&  operator<< (kkuint16       right);
+    RunLog&  operator<< (kkint32        right);
+    RunLog&  operator<< (kkuint32       right);
+    RunLog&  operator<< (kkint64        right);
+    RunLog&  operator<< (kkuint64       right);
+    RunLog&  operator<< (double         right);
+    RunLog&  operator<< (char           right);
+    RunLog&  operator<< (const char*    right);
+    RunLog&  operator<< (const KKStr&   right);
+    RunLog&  operator<< (KKStrConstPtr  right);
 
     RunLog&  operator<< (ostream& (* mf)(ostream &));
 

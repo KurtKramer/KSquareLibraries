@@ -553,6 +553,30 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
+/*
+ KKStr::KKStr (KKStr&&  str):
+    allocatedSize (str.allocatedSize),
+    len           (str.len)
+    val           (str.val)
+{
+  str.allocatedSize = 0;
+  str.len           = 0;
+  str.val           = NULL;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  @brief  Constructs a new KKStr from a pointer to a KKStr.
@@ -1493,7 +1517,7 @@ bool  KKStr::operator!= (const KKStr& right)  const
 
 
 
-bool  KKStr::operator== (const KKStrPtr& right)  const
+bool  KKStr::operator== (KKStrConstPtr right)  const
 {
   if  (!right)
     return false;
@@ -1504,7 +1528,7 @@ bool  KKStr::operator== (const KKStrPtr& right)  const
 
 
 
-bool  KKStr::operator!= (const KKStrPtr&  right)  const
+bool  KKStr::operator!= (KKStrConstPtr  right)  const
 {
   if  (!right)
     return true;
