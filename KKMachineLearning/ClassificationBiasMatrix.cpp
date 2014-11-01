@@ -1,30 +1,30 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdio.h>
-#include  <math.h>
-#include  <ctype.h>
-#include  <time.h>
-#include  <fstream>
-#include  <iostream>
-#include  <map>
-#include  <ostream>
-#include  <string>
-#include  <vector>
+#include <stdio.h>
+#include <math.h>
+#include <ctype.h>
+#include <time.h>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <ostream>
+#include <string>
+#include <vector>
 using namespace  std;
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 
-#include  "KKBaseTypes.h"
-#include  "KKException.h"
-#include  "KKStr.h"
-#include  "Matrix.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "KKBaseTypes.h"
+#include "KKException.h"
+#include "KKStr.h"
+#include "Matrix.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace  KKB;
 
 
-#include  "MLClass.h"
+#include "MLClass.h"
 using namespace  KKMachineLearning;
 
 #include "ClassificationBiasMatrix.h"

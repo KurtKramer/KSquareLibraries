@@ -29,6 +29,8 @@
 #include <vector>
 
 #include "KKStr.h"
+#include "KKQueue.h"
+using namespace  KKB;
 
 
 namespace KKMachineLearning 

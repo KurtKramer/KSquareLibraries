@@ -19,7 +19,7 @@
  **-------------------------------------------------------------------*
  ** Was developed to support Feature Selection for each binary class  *
  ** combination.  This way each two class combination can have SVM    *
- ** and feature parameters taht are specific to them.                 *
+ ** and feature parameters that are specific to them.                 *
  **********************************************************************
  @endcode
  @see  KKMachineLearning::SVMparam, KKMachineLearning::ModelParamOldSVM, KKMachineLearning::SVM233
@@ -31,7 +31,6 @@
 
 namespace KKMachineLearning
 {
-
 
   #if  !defined (_MLCLASS_)
   class  MLClass;

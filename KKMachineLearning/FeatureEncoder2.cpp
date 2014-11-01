@@ -217,7 +217,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
       log.Level(-1) 
            << endl
            << endl
-           << "FeatureEncoder2::CreateEncodedFileDesc     *** ERROR ***"           << endl
+           << "FeatureEncoder2::CreateEncodedFileDesc     *** ERROR ***"          << endl
            << "             overriding number of encoded features.  This should"  << endl
            << "             never be able to happen. Something is wrong with"     << endl
            << "             object."                                              << endl

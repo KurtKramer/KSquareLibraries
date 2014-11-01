@@ -1,35 +1,35 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdio.h>
+#include <stdio.h>
 
-#include  <iomanip>
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
+#include <iomanip>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
  
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace std;
 
 
 
 
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace KKB;
 
-#include  "CrossValidation.h"
+#include "CrossValidation.h"
 
-#include  "Classifier2.h"
-#include  "ConfusionMatrix2.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "FeatureVector.h"
-#include  "StatisticalFunctions.h"
-#include  "TrainingConfiguration2.h"
-#include  "TrainingProcess2.h"
+#include "Classifier2.h"
+#include "ConfusionMatrix2.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "FeatureVector.h"
+#include "StatisticalFunctions.h"
+#include "TrainingConfiguration2.h"
+#include "TrainingProcess2.h"
 using namespace  KKMachineLearning;
 
 

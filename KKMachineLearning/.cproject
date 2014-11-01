@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?fileVersion 5.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage2">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="cdt.managedbuild.config.gnu.cross.lib.debug.383865691">
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.debug.383865691_org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.cross.lib.debug.383865691" name="Debug"/>
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.debug.383865691_cdtBuildSystem" version="4.0.0"/>
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.debug.383865691_org.eclipse.cdt.core.externalSettings"/>
-		</cconfiguration>
-		<cconfiguration id="cdt.managedbuild.config.gnu.cross.lib.release.2090965794">
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.release.2090965794_org.eclipse.cdt.core.settings" id="cdt.managedbuild.config.gnu.cross.lib.release.2090965794" name="Release"/>
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.release.2090965794_cdtBuildSystem" version="4.0.0"/>
-			<storageModule externalCElementFile="cdt.managedbuild.config.gnu.cross.lib.release.2090965794_org.eclipse.cdt.core.externalSettings"/>
+		<cconfiguration id="0.714002480">
+			<storageModule externalCElementFile="0.714002480_org.eclipse.cdt.core.settings" id="0.714002480" name="Default"/>
+			<storageModule externalCElementFile="0.714002480_cdtBuildSystem" version="4.0.0"/>
+			<storageModule externalCElementFile="0.714002480_org.eclipse.cdt.core.externalSettings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="KKMachineLearning.cdt.managedbuild.target.gnu.cross.lib.1145625658" name="Static Library" projectType="cdt.managedbuild.target.gnu.cross.lib"/>
+		<project id="KKMachineLearning.null.179835598" name="KKMachineLearning"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
@@ -26,11 +21,30 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.lib.release.2090965794;cdt.managedbuild.config.gnu.cross.lib.release.2090965794.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.183539589;cdt.managedbuild.tool.gnu.cpp.compiler.input.1322857483">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.714002480">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.lib.debug.383865691;cdt.managedbuild.config.gnu.cross.lib.debug.383865691.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1474796227;cdt.managedbuild.tool.gnu.cpp.compiler.input.1188312499">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
-	<storageModule moduleId="refreshScope"/>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/KKMachineLearning"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets>
+			<target name="All" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+				<buildCommand>make</buildCommand>
+				<buildArguments/>
+				<buildTarget>All</buildTarget>
+				<stopOnError>true</stopOnError>
+				<useDefaultCommand>true</useDefaultCommand>
+				<runAllBuilders>true</runAllBuilders>
+			</target>
+		</buildTargets>
+	</storageModule>
 </cproject>
