@@ -57,8 +57,7 @@ namespace KKMachineLearning
     typedef  FeatureVectorProducer*  FeatureVectorProducerPtr;
 
     FeatureVectorProducer (const KKStr&          _name,
-                           FactoryFVProducerPtr  _factory,  /**<  Pointer to factory that instantiated this instance. */
-                           FileDescPtr           _fileDesc
+                           FactoryFVProducerPtr  _factory  /**<  Pointer to factory that instantiated this instance. */
                          );
 
     virtual ~FeatureVectorProducer ();
@@ -73,14 +72,27 @@ namespace KKMachineLearning
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FeatureVectorProducer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
 
+    /** 
+     *@brief Returns the 'type_info' of the FeatureVectorList derived class that can contain instances in 'FeatureVector' 
+     * instances created by this producer.
+     */
+    virtual  const type_info*  FeatureVectorListTypeId () const = 0;
+
+
     virtual  kkint16  Version ()  const = 0;  /**< The version number of the FeatureVector that is going to be computed. */
 
 
     /** @brief  Returns pointer to factory that instantiated this instance */
     FactoryFVProducerPtr  Factory ()  const  {return factory;}
 
-    /**  @brief  Returns back a "FileDesc" instance that describes the features that this instance of 'FeatureVectorProducer' creates.  */
-    FileDescConstPtr  FileDesc () const {return  fileDesc;}
+    /**  
+     *@brief  Returns back a "FileDesc" instance that describes the features that this instance of 'FeatureVectorProducer' creates.
+     * The class derived form this class is responsible for creating the FileDesc instance.  When this methoid is called if "fileDesc" 
+     * equals NULL  then will call "DefineFileDesc", which is a purve virtual method that will be implemented by the derived class, to 
+     * instaiate a new instance.
+     */
+
+    FileDescConstPtr  FileDesc ()  const;
 
 
     /**  @brief  Returns a kkint16 description of the FeatureVector which can be used as part/all of a File or Directory name.  */
@@ -94,14 +106,21 @@ namespace KKMachineLearning
 
     kkuint32  MaxNumOfFeatures ()     {return  FeatureCount ();}  /**<  Same as FeatureCount  */
 
+    /**
+     *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
+     *of FeatureVectors by this FeatureVectorProducer.
+     */
+    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
+                                                                RunLog&  runLog
+                                                               ) = 0;
 
 
   protected:
-    void  SetFileDesc (FileDescPtr  _fileDesc);
+    virtual  FileDescPtr  DefineFileDesc () const = 0;
 
   private:
     FactoryFVProducerPtr  factory;
-    FileDescPtr           fileDesc;
+    mutable FileDescPtr   fileDesc;
     KKStr                 name;
 
     static  bool  atExitDefined;

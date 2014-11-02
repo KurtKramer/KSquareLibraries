@@ -13,7 +13,7 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 using namespace  KKB;
 
@@ -26,11 +26,10 @@ using namespace  KKMachineLearning;
 
 
 FeatureVectorProducer::FeatureVectorProducer (const KKStr&          _name,
-                                              FactoryFVProducerPtr  _factory,  /**<  Pointer to factory that instatiated this instance. */
-                                              FileDescPtr           _fileDesc
+                                              FactoryFVProducerPtr  _factory  /**<  Pointer to factory that instatiated this instance. */
                                               ):
     factory  (_factory),
-    fileDesc (_fileDesc),
+    fileDesc (NULL),
     name     (_name)
 {
 }
@@ -44,10 +43,23 @@ FeatureVectorProducer::~FeatureVectorProducer ()
 
 
 
-void  FeatureVectorProducer::SetFileDesc (FileDescPtr  _fileDesc)
+
+FileDescConstPtr  FeatureVectorProducer::FileDesc ()  const
 {
-  fileDesc = _fileDesc;
+  if  (!fileDesc)
+  {
+    GlobalGoalKeeper::StartBlock ();
+    if  (!fileDesc)
+    {
+      fileDesc = DefineFileDesc ();
+      fileDesc = FileDesc::GetExistingFileDesc (fileDesc);
+    }
+    GlobalGoalKeeper::EndBlock ();
+  }
+  retunrn  fileDesc;
 }
+
+
 
 
 

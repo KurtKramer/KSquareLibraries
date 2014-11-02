@@ -1005,36 +1005,6 @@ kkint32 Raster::TotalBackgroundPixels () const
 
 
 
-float  Raster::CentroidCol ()
-{
-  if  (centroidCol >= 0)
-    return  centroidCol;
-
-  float  centroidColWeighted;
-  float  centroidRowWeighted;
-
-  kkint32  weight = 0;
-  CalcCentroid (totPixels, weight, centroidRow, centroidCol, centroidRowWeighted, centroidColWeighted);
-
-  return  centroidCol;
-} 
-
-
-
-float    Raster::CentroidRow ()
-{
-  if  (centroidRow >= 0)
-    return  centroidRow;
-
-  float  centroidColWeighted;
-  float  centroidRowWeighted;
-  kkint32  weight = 0;
-  CalcCentroid (totPixels, weight, centroidRow, centroidCol, centroidRowWeighted, centroidColWeighted);
-  return  centroidRow;
-}
-
-
-
 
 RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
                                        kkint32    padding
@@ -1658,7 +1628,7 @@ void  Raster::Dialation (MaskTypes  mask)
 
 
 
-void  Raster::Dialation (RasterPtr  dest)
+void  Raster::Dialation (RasterPtr  dest)  const
 {
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
     dest->ReSize (height, width, color);
@@ -1762,6 +1732,7 @@ void  Raster::Dialation (RasterPtr  dest)
 void  Raster::Dialation (RasterPtr  dest,
                          MaskTypes  mask
                         )
+                          const
 {
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
     dest->ReSize (height, width, color);
@@ -2240,7 +2211,7 @@ void  Raster::Erosion (MaskTypes  mask)
 
 
 
-void  Raster::Erosion (RasterPtr  dest)
+void  Raster::Erosion (RasterPtr  dest)  const
 {
   if  ((dest->Height () != height)  |  (dest->Width () != width))
     dest->ReSize (height, width, false);
@@ -2346,6 +2317,7 @@ void  Raster::Erosion (RasterPtr  dest)
 void  Raster::Erosion (RasterPtr  dest,
                        MaskTypes  mask
                       )
+                        const
 {
   if  ((dest->Height () != height)  |  (dest->Width () != width))
     dest->ReSize (height, width, false);
@@ -3142,6 +3114,7 @@ void  Raster::CalcAreaAndIntensityHistogramWhite (kkint32&  area,
 void  Raster::CalcAreaAndIntensityHistogram (kkint32&  area,
                                              kkuint32  intensityHistBuckets[8]
                                             )
+                                              const
 {
   kkint32  r, c;
 
@@ -3179,11 +3152,12 @@ void  Raster::CalcAreaAndIntensityHistogram (kkint32&  area,
 
 
 void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
-                                             float&  weightedSize,
+                                             float&    weightedSize,
                                              kkuint32  intensityHistBuckets[8],
                                              kkint32&  areaWithWhiteSpace,
                                              kkuint32  intensityHistBucketsWhiteSpace[8]
-                                            )
+                                            )  
+                                              const
 {
   kkint32  x;
 
@@ -3243,7 +3217,8 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
                                              float&    weightedSize,
                                              kkuint32  intensityHistBuckets[8]
-                                            )
+                                            )  
+                                              const
 {
   kkint32  x;
 
@@ -3638,16 +3613,12 @@ void  Raster::MomentWeighted (float& m00,
 
 
 
-
-
-
-
-void  Raster::CentralMoments (kkint32&  foregroundPixelCount,
-                              float&    weightedPixelCount,
-                              float     centralMoments[9],
-                              float     centralMomentsWeighted[9]
-                             )  
-                               const
+void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
+                                       float&    weightedPixelCount,
+                                       float     centralMoments[9],
+                                       float     centralMomentsWeighted[9]
+                                      )  
+                                       const
 {
   kkint32  m00,  m10,  m01;
   float    mw00, mw10, mw01;
@@ -3656,8 +3627,8 @@ void  Raster::CentralMoments (kkint32&  foregroundPixelCount,
   foregroundPixelCount = m00;
   weightedPixelCount   = mw00;
 
-  float centroidCol = (float)m10 / (float)m00;
-  float centroidRow = (float)m01 / (float)m00;
+  centroidCol = (float)m10 / (float)m00;
+  centroidRow = (float)m01 / (float)m00;
 
   float centroidColW  = mw10 / mw00;
   float centroidRowW  = mw01 / mw00;
@@ -3829,7 +3800,7 @@ void  Raster::CentralMoments (kkint32&  foregroundPixelCount,
 
   centralMomentsWeighted[5] = (cmw30 - (float)3.0 * cmw12) * (cmw30 + cmw12) * 
                 ((cmw30 + cmw12) * (cmw30 + cmw12) - 
-                (float)3.0 * (cmw21 + cmw03) * (cmw21 + cmw03)) +
+                 (float)3.0 * (cmw21 + cmw03) * (cmw21 + cmw03)) +
                 ((float)3.0 * cmw21 - cmw03) * (cmw21 + cmw03) * 
                 ((float)3.0 * (cmw30 + cmw12) * (cmw30 + cmw12) - 
                 (cmw21 + cmw03) * (cmw21 + cmw03));
