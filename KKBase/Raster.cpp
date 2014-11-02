@@ -148,23 +148,23 @@ typedef  enum
 
 
 kkint32  biases[] = {1,  // CROSS3 
-                   2,  // CROSS5
-                   1,  // SQUARE3
-                   2,  // SQUARE5
-                   3,  // SQUARE7
-                   4,  // SQUARE9
-                   5   // SQUARE11
-                  };
+                     2,  // CROSS5
+                     1,  // SQUARE3
+                     2,  // SQUARE5
+                     3,  // SQUARE7
+                     4,  // SQUARE9
+                     5   // SQUARE11
+                    };
 
 
 kkint32  maskShapes[] = {Cross,   // CROSS3 
-                       Cross,   // CROSS5
-                       Square,  // SQUARE3
-                       Square,  // SQUARE5
-                       Square,  // SQUARE7
-                       Square,  // SQUARE9
-                       Square   // SQUARE11
-                      };
+                         Cross,   // CROSS5
+                         Square,  // SQUARE3
+                         Square,  // SQUARE5
+                         Square,  // SQUARE7
+                         Square,  // SQUARE9
+                         Square   // SQUARE11
+                        };
 
 
 
@@ -198,8 +198,8 @@ kkint32  Min (kkint32  x1,  kkint32  x2)
 
 inline  
 kkint32  Max6 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-             kkint32 x4,  kkint32 x5,  kkint32 x6
-            )
+               kkint32 x4,  kkint32 x5,  kkint32 x6
+              )
 {
   kkint32  r;
   
@@ -220,9 +220,9 @@ kkint32  Max6 (kkint32 x1,  kkint32 x2,  kkint32 x3,
 
 inline  
 kkint32  Max9 (kkint32 x1,  kkint32 x2,  kkint32 x3,  
-             kkint32 x4,  kkint32 x5,  kkint32 x6,  
-             kkint32 x7,  kkint32 x8,  kkint32 x9
-            )
+               kkint32 x4,  kkint32 x5,  kkint32 x6,  
+               kkint32 x7,  kkint32 x8,  kkint32 x9
+              )
 {
   kkint32  r;
   
@@ -3241,7 +3241,7 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 
 
 void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
-                                             float&  weightedSize,
+                                             float&    weightedSize,
                                              kkuint32  intensityHistBuckets[8]
                                             )
 {
@@ -3436,7 +3436,6 @@ void  Raster::Moment (kkint32& m00,
   m00 = 0;
   m10 = 0;
   m01 = 0;
-
 
   kkint32  col;
   kkint32  row;
@@ -3636,6 +3635,289 @@ void  Raster::MomentWeighted (float& m00,
   return;
 }  /* MomentWeighted */
 
+
+
+
+
+
+
+
+void  Raster::CentralMoments (kkint32&  foregroundPixelCount,
+                              float&    weightedPixelCount,
+                              float     centralMoments[9],
+                              float     centralMomentsWeighted[9]
+                             )  
+                               const
+{
+  kkint32  m00,  m10,  m01;
+  float    mw00, mw10, mw01;
+  Moments (m00, m10, m01, mw00, mw10, mw01);
+
+  foregroundPixelCount = m00;
+  weightedPixelCount   = mw00;
+
+  float centroidCol = (float)m10 / (float)m00;
+  float centroidRow = (float)m01 / (float)m00;
+
+  float centroidColW  = mw10 / mw00;
+  float centroidRowW  = mw01 / mw00;
+        
+  float  cm00   = (float)m00;
+  float  gamma2 = (float)(m00 * m00);
+  float  gamma3 = gamma2 * (float)sqrt ((float)m00);
+        
+  float  cm20 = 0.0;
+  float  cm02 = 0.0;
+  float  cm11 = 0.0;
+
+  float  cm30 = 0.0;
+  float  cm03 = 0.0;
+  float  cm12 = 0.0;
+  float  cm21 = 0.0;
+
+  float cmw00   = mw00;
+  float gammaW2 = mw00 * mw00;
+  float gammaW3 = gammaW2 * (float)sqrt (mw00);
+        
+  float cmw20 = 0.0f;
+  float cmw02 = 0.0f;
+  float cmw11 = 0.0f;
+
+  float cmw30 = 0.0f;
+  float cmw03 = 0.0f;
+  float cmw12 = 0.0f;
+  float cmw21 = 0.0f;
+
+  {
+    float  cmw = 0.0;
+    float  cm  = 0.0;
+    kkint32  col;
+    kkint32  row;
+
+    float   deltaCol = 0.0f;
+    float   deltaRow = 0.0f;
+   
+    kkint32  maxPixVal = 0;
+
+    for  (row = 0;  row < height;  ++row)
+    {
+      uchar*  rowData = green[row];
+
+      float  deltaRow  = row - centroidRow;
+      float  deltaRowW = row - centroidRowW;
+
+      float  rowPow0 = 1.0;
+      float  rowPow1 = deltaRow;
+      float  rowPow2 = deltaRow * deltaRow;
+      float  rowPow3 = rowPow2  * deltaRow;
+
+      float  rowPowW0 = 1;
+      float  rowPowW1 = deltaRowW;
+      float  rowPowW2 = deltaRowW * deltaRowW;
+      float  rowPowW3 = rowPowW2  * deltaRowW;
+
+      for  (col = 0;  col < width;  ++col)
+      {
+        uchar pv = rowData[col];
+        if  (pv > backgroundPixelTH)
+        {
+          float  deltaCol = col - centroidCol;
+
+          float  colPow0 = 1.0f;
+          float  colPow1 = deltaCol;
+          float  colPow2 = deltaCol * deltaCol;
+          float  colPow3 = colPow2  * deltaCol;
+
+          cm20 += colPow2 * rowPow0;
+          cm02 += colPow0 * rowPow2;
+          cm11 += colPow1 * rowPow1;
+          cm30 += colPow3 * rowPow0;
+          cm03 += colPow0 * rowPow3;
+
+          cm12 += colPow1 * rowPow2;
+          cm21 += colPow2 * rowPow1;
+
+          if  (pv > maxPixVal)
+            maxPixVal = pv;
+
+          float  deltaColW = col - centroidColW;
+          float  colPowW0 = 1;
+          float  colPowW1 = deltaColW;
+          float  colPowW2 = deltaColW * deltaColW;
+          float  colPowW3 = colPowW2  * deltaColW;
+
+          cmw20 += colPowW2 * rowPowW0;
+          cmw02 += colPowW0 * rowPowW2;
+          cmw30 += colPowW3 * rowPowW0;
+          cmw03 += colPowW0 * rowPowW3;
+          cmw12 += colPowW1 * rowPowW2;
+          cmw21 += colPowW2 * rowPowW1;
+        }
+      }
+    }
+
+    cmw20 = cmw20 / (float)maxPixVal;
+    cmw02 = cmw02 / (float)maxPixVal;
+    cmw30 = cmw30 / (float)maxPixVal;
+    cmw03 = cmw03 / (float)maxPixVal;
+    cmw12 = cmw12 / (float)maxPixVal;
+    cmw21 = cmw21 / (float)maxPixVal;
+  }
+
+  cm20  = cm20  / gamma2;
+  cm02  = cm02  / gamma2;
+  cm11  = cm11  / gamma2;
+
+  cm30  = cm30  / gamma3;
+  cm03  = cm03  / gamma3;
+  cm12  = cm12  / gamma3;
+  cm21  = cm21  / gamma3;
+
+  cmw20 = cmw20 / gammaW2;
+  cmw02 = cmw02 / gammaW2;
+  cmw11 = cmw11 / gammaW2;
+
+  cmw30 = cmw30 / gammaW3;
+  cmw03 = cmw03 / gammaW3;
+  cmw12 = cmw12 / gammaW3;
+  cmw21 = cmw21 / gammaW3;
+
+
+  centralMoments[0] = cm00;
+
+  centralMoments[1] = cm20 + cm02;
+ 
+  centralMoments[2] = (cm20 - cm02) * (cm20 - cm02) + 
+                4.0f * cm11 * cm11;
+
+  centralMoments[3] = (cm30 - 3.0f * cm12) * (cm30 - 3.0f * cm12) + 
+                (3.0f * cm21 - cm03) * (3.0f * cm21 - cm03);
+
+  centralMoments[4] = (cm30 + cm12) * (cm30 + cm12) + (cm21 + cm03) * (cm21 + cm03);
+
+  centralMoments[5] = (cm30 - 3.0f * cm12) * (cm30 + cm12) * ((cm30 + cm12) * (cm30 + cm12) - 
+                3.0f * (cm21 + cm03) * (cm21 + cm03))  +  (3.0f * cm21 - cm03) * (cm21 + cm03) * 
+                (3.0f * (cm30 + cm12) * (cm30 + cm12) - (cm21 + cm03) * (cm21 + cm03));
+
+  centralMoments[6] = (cm20 - cm02) * 
+                ((cm30 + cm12) * (cm30 + cm12) - (cm21 + cm03) * (cm21 + cm03))
+                + 4.0f * cm11 * (cm30 + cm12) * (cm21 + cm03);
+
+  centralMoments[7] = (3.0f * cm21 - cm03) * (cm30 + cm12) * 
+                ((cm30 + cm12) * (cm30 + cm12) - 3.0f * (cm21 + cm03) * (cm21 + cm03) )
+               -(cm30 - 3.0f * cm12) * (cm21 + cm03) * 
+               (3.0f * (cm30 + cm12) * (cm30 + cm12) - (cm21 + cm03) * (cm21 + cm03) );
+
+  //added by baishali to calculate eccentricity
+  centralMoments[8] = (((cm20 - cm02) * (cm20 - cm02)) - 
+                (4.0f * cm11 * cm11))/((cm20 + cm02) * (cm20 + cm02));
+
+
+
+  centralMomentsWeighted[0] = cmw00;
+
+  centralMomentsWeighted[1] = cmw20 + cmw02;
+ 
+  centralMomentsWeighted[2] = (cmw20 - cmw02) * (cmw20 - cmw02) + (float)4.0 * cmw11 * cmw11;
+
+  centralMomentsWeighted[3] = (cmw30 - (float)3.0 * cmw12) * 
+                (cmw30 - (float)3.0 * cmw12) + 
+                ((float)3.0 * cmw21 - cmw03) * 
+                ((float)3.0 * cmw21 - cmw03);
+
+  centralMomentsWeighted[4] = (cmw30 + cmw12) * (cmw30 + cmw12) + (cmw21 + cmw03) * (cmw21 + cmw03);
+
+  centralMomentsWeighted[5] = (cmw30 - (float)3.0 * cmw12) * (cmw30 + cmw12) * 
+                ((cmw30 + cmw12) * (cmw30 + cmw12) - 
+                (float)3.0 * (cmw21 + cmw03) * (cmw21 + cmw03)) +
+                ((float)3.0 * cmw21 - cmw03) * (cmw21 + cmw03) * 
+                ((float)3.0 * (cmw30 + cmw12) * (cmw30 + cmw12) - 
+                (cmw21 + cmw03) * (cmw21 + cmw03));
+
+  centralMomentsWeighted[6] = (cmw20 - cmw02) * 
+                (
+                 (cmw30 + cmw12) * (cmw30 + cmw12) - 
+                 (cmw21 + cmw03) * (cmw21 + cmw03)
+                ) +
+                (float)4.0 * cmw11 * (cmw30 + cmw12) * (cmw21 + cmw03);
+
+  centralMomentsWeighted[7] = ((float)3.0 * cmw21 - cmw03) * 
+                (cmw30 + cmw12) * ((cmw30 + cmw12) * 
+                (cmw30 + cmw12) - (float)3.0 * 
+                (cmw21 + cmw03) * (cmw21 + cmw03)) -
+                (cmw30 - (float)3.0 * cmw12) * 
+                (cmw21 + cmw03) * ((float)3.0 * 
+                (cmw30 + cmw12) * (cmw30 + cmw12) - 
+                (cmw21 + cmw03) * (cmw21 + cmw03));
+
+//added by baishali to calculate eccentricity
+  centralMomentsWeighted[8] = (float)((((cmw20 - cmw02) * (cmw20 - cmw02)) - 
+                (4.0 * cmw11 * cmw11))/((cmw20 + cmw02) * (cmw20 + cmw02)));
+
+  return;
+}  /* CentralMoments */
+
+
+
+
+
+
+
+
+
+void  Raster::Moments (kkint32&  m00,
+                       kkint32&  m10,
+                       kkint32&  m01,
+                       float&    mw00,
+                       float&    mw10,
+                       float&    mw01
+                      )  const
+{
+  m00  = 0;
+  m10  = 0;
+  m01  = 0;
+
+  mw00 = 0.0f;
+  mw10 = 0.0f;
+  mw01 = 0.0f;
+
+  kkint32  m00Int = 0;
+  kkint32  m10Int = 0;
+  kkint32  m01Int = 0;
+
+  kkint32  col = 0;
+  kkint32  row = 0;
+
+  kkint32  maxPixVal = 0;
+
+  for  (row = 0;  row < height;  ++row)
+  {
+    uchar*  rowData = green[row];
+    for  (col = 0;  col < width;  ++col)
+    {
+      uchar pv = rowData[col];
+      if  (pv > backgroundPixelTH)
+      {
+        m00Int += pv;
+        m10Int = m10Int + col * pv;
+        m01Int = m01Int + row * pv;
+
+        if  (pv > maxPixVal)
+          maxPixVal = pv;
+
+        ++m00;
+        m10 = m10 + col;
+        m01 = m01 + row;
+      }
+    }
+  }
+ 
+  mw00 = (float)m00Int / (float)maxPixVal;
+  mw10 = (float)m10Int / (float)maxPixVal;
+  mw01 = (float)m01Int / (float)maxPixVal;
+
+  return;
+}  /* Moments */
 
 
 
@@ -6224,7 +6506,7 @@ RasterPtr  Raster::ReduceByEvenMultiple (kkint32  multiple)  const
   kkint32  nRow, nCol;
 
   kkuint32**  workRaster  = new kkuint32*[nHeight];
-  uchar**   workDivisor = new uchar*[nHeight];
+  uchar**     workDivisor = new uchar*[nHeight];
   kkuint32*   workRow     = NULL;
 
   uchar*  workDivisorRow = NULL;

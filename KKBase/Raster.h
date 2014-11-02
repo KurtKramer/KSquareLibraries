@@ -521,7 +521,7 @@ namespace KKB
      * represents a range of 32.
      */
     void          CalcAreaAndIntensityFeatures (kkint32&  area,
-                                                float&  weightedSize,
+                                                float&    weightedSize,
                                                 kkuint32  intensityHistBuckets[8]
                                                );
 
@@ -557,6 +557,13 @@ namespace KKB
                                     ) const;
 
     void          CentralMomentsWeighted (float  features[9])  const;
+
+    void          CentralMoments (kkint32&  foregroundPixelCount,
+                                  float&    weightedPixelCount,
+                                  float     centralMoments[9],
+                                  float     centralMomentsWeighted[9]
+                                 )  
+                                  const;
 
     void          Closing ();
 
@@ -1193,6 +1200,18 @@ namespace KKB
                            float& m01
                           )  const;
 
+    /**
+     *@brief  Computes two sets of moments;  Black and White  and  Weighted.
+     *@details  The Black and white are only concerened weather the pixels are Foreground while the weighted 
+     * weight each pixel by itys intensity value.
+     */
+    void  Moments(kkint32& m00,
+                  kkint32& m10,
+                  kkint32& m01,
+                  float&   mw00,
+                  float&   mw10,
+                  float&   mw01
+                 )  const;
 
     inline
     kkint32  NearestNeighborUpperLeft (kkint32  centRow,
