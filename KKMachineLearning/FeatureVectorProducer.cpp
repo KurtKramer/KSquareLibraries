@@ -14,6 +14,7 @@
 using namespace  std;
 
 #include "GlobalGoalKeeper.h"
+#include "ImageIO.h"
 #include "KKBaseTypes.h"
 using namespace  KKB;
 
@@ -40,6 +41,33 @@ FeatureVectorProducer::FeatureVectorProducer (const KKStr&          _name,
 FeatureVectorProducer::~FeatureVectorProducer ()
 {
 }
+
+
+
+
+FeatureVectorPtr  FeatureVectorProducer::ComputeFeatureVectorFromImage (const KKStr&      fileName,
+                                                                        const MLClassPtr  knownClass,
+                                                                        RasterListPtr     intermediateImages,
+                                                                        RunLog&           runLog
+                                                                       )
+{
+  FeatureVectorPtr  fv = NULL;
+
+  RasterPtr  i = KKB::ReadImage (fileName);
+  if  (i == NULL)
+  {
+    runLog.Level (-1) << "FeatureVectorProducer::ComputeFeatureVectorFromImage   ***ERROR***   Error loading ImageFile: " << fileName << endl << endl;
+  }
+  else
+  {
+    fv = ComputeFeatureVector (*i, knownClass, intermediateImages, runLog);
+    delete  i;
+    i = NULL;
+  }
+
+  return  fv;
+}  /* ComputeFeatureVectorFromImage */
+
 
 
 

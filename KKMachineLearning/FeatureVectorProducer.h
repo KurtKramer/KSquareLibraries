@@ -68,11 +68,18 @@ namespace KKMachineLearning
 
     virtual ~FeatureVectorProducer ();
 
-    virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&           image,
+    virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&     image,
                                                      const MLClassPtr  knownClass,
                                                      RasterListPtr     intermediateImages,
                                                      RunLog&           runLog
                                                     ) = 0;
+
+    virtual  FeatureVectorPtr  ComputeFeatureVectorFromImage (const KKStr&      fileName,
+                                                              const MLClassPtr  knownClass,
+                                                              RasterListPtr     intermediateImages,
+                                                              RunLog&           runLog
+                                                             );
+
 
 
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FeatureVectorProducer' creates. */

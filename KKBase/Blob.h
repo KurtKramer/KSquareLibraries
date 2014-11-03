@@ -24,8 +24,8 @@
  *@see KKB::Raster::ExtractABlobTightly
  */                                                                     
 
-#include  "KKQueue.h"
-#include  "Point.h"
+#include "KKQueue.h"
+#include "Point.h"
 
 namespace  KKB
 {
