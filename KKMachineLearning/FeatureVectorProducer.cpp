@@ -56,7 +56,7 @@ FileDescConstPtr  FeatureVectorProducer::FileDesc ()  const
     }
     GlobalGoalKeeper::EndBlock ();
   }
-  retunrn  fileDesc;
+  return  fileDesc;
 }
 
 

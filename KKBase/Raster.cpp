@@ -7290,7 +7290,7 @@ bool k_ThinningStep1cdTests     (uchar m_Matrix22[][3]);
 bool k_ThinningCheckTransitions (uchar m_Matrix22[][3]);
 
 
-RasterPtr  Raster::ThinContour ()
+RasterPtr  Raster::ThinContour ()  const
 {
   #if  defined(DEBUG_ThinContour)
   cout << std::endl << std::endl 
@@ -7377,7 +7377,7 @@ RasterPtr  Raster::ThinContour ()
         pntinpic++;
 
         if (ThinningSearchNeighbors  (iCountX, iCountY, workGreen, &m_Matrix22[0])  &&
-            k_ThinningCheckTransitions (&m_Matrix22[0])                               &&
+            k_ThinningCheckTransitions (&m_Matrix22[0])                             &&
             k_ThinningStep1cdTests     (&m_Matrix22[0])
            )
         {
@@ -7666,6 +7666,7 @@ bool  Raster::ThinningSearchNeighbors  (kkint32 x,   // collumn
                                         uchar** g, 
                                         uchar   m_Matrix22[][3]
                                        )
+                                         const
 /* As (a) in Gonzales and Woods, between 2 and 6 black neighbors */
 {
   #if  defined(DEBUG_ThinContour)

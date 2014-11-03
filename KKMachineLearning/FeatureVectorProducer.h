@@ -32,6 +32,12 @@ namespace KKMachineLearning
 #endif
 
 
+#if  !defined(_FeatureVectorList_Defined_)
+  class  FeatureVectorList;
+  typedef  FeatureVectorList*  FeatureVectorListPtr;
+#endif
+
+
 #if  !defined(_FileDesc_Defined_)
   class FileDesc;
   typedef  FileDesc*        FileDescPtr;
@@ -62,7 +68,7 @@ namespace KKMachineLearning
 
     virtual ~FeatureVectorProducer ();
 
-    virtual  FeatureVectorPtr  ComputeFeatureVector (Raster&           image,
+    virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&           image,
                                                      const MLClassPtr  knownClass,
                                                      RasterListPtr     intermediateImages,
                                                      RunLog&           runLog
