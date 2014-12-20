@@ -26,7 +26,7 @@ namespace KKB
    */
   void           osAddLastSlash (KKStr&  fileSpec);
 
-  KKB::KKStr     osAddSlash (const KKStr&  fileSpec); // @brief Returns fileSpec with a directory separating character at end.
+  KKB::KKStr     osAddSlash (const KKStr&  fileSpec); // Returns fileSpec with a directory separating character at end.
 
   void           osChangeDir (const KKStr&  dirName,
                               bool&         successful
@@ -88,6 +88,21 @@ namespace KKB
   //***************************************************************************
 
   /**
+   *@brief  Extracts the final sub-directory name of the fill directory specification.
+   *@code
+   **  ex:Input                              Returns
+   **     -----------------------            ----------------------
+   **     c:\an\Example\FileSpec\Romeo       Romeo
+   **     /usr/kkramer/Kinsey/Release_2      Release_2
+   **     /usr/kkramer/Thesis/               Thesis
+   **     /usr/kkramer/Thesis.dat/           Thesis.dat
+   *@endcode
+   *@param[in]  dirPath Directory path to get dir name from .
+   */
+  KKStr          osGetDirNameFromPath (KKStr  dirPath);
+
+
+  /**
    *@brief  osGetFileNamePartOfFile, retrieves the file name part of the file spec.
    *@details
    *@code
@@ -117,9 +132,30 @@ namespace KKB
    */
   KKStr          osGetDirNameFromPath (KKStr  dirPath);
 
+
   KKStr          osGetErrorNoDesc (kkint32  errorNo);
 
   KKStr          osGetFileExtension (KKStr  fullFileName);
+
+
+  /** @brief  returns the name and path of th ecurrent running application. */
+  KKStr          osGetFullPathOfApplication ();
+
+  /**
+   *@brief  Returns the Parent directory path to 'dirPath'.
+   *@details
+   *@code
+   **  ex:Input                              Returns
+   **     -----------------------            ----------------------
+   **     c:\an\Example\FileSpec\Romeo       c:\an\Example\FileSpec
+   **     /usr/kkramer/Kinsey/Release_2      /usr/kkramer/Kinsey
+   **     /usr/kkramer/Thesis/               /usr/kkramer
+   **     /usr/kkramer/Thesis.dat/           /usr/kkramer
+   *@endcode
+   */
+  KKStr          osGetParentDirPath (KKStr  dirPath);
+
+
 
   KKStr          osGetHostName ();
 

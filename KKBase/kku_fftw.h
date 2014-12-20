@@ -1,90 +1,100 @@
 /* kku_fftw.cpp -- Implements a Fast Fourier transform via a template.
  * Copyright (C) 2012-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
+ * I took this module from my Work at Larcos;  
+ * it is a very simple implementation of the Fourietr transform.  It has the advantage of 
+ * not requiring external libraries and easier to debug.
  */
 #ifndef _KKU_FFTW_
 #define _KKU_FFTW_
 
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <complex>
 
-#include  "KKBaseTypes.h"
+#if  defined(FFTW_AVAILABLE)
+#include <fftw3.h>
+#endif
+
+#include "KKBaseTypes.h"
 
 namespace  KKB
 {
   /*********************************************
    * Complex numbers and operations 
    *********************************************/
+
+  /*
   typedef struct 
   {
     double re;
     double im;
   } fftw_complex;
+  
 
-
-  /* flags for the planner */
+  // flags for the planner
   #define  FFTW_ESTIMATE (0)
   #define  FFTW_MEASURE  (1)
 
   typedef enum {FFTW_FORWARD = -1, FFTW_BACKWARD = 1}  fftw_direction;
 
-
+  
   class  fftw_plan_class
   {
   public:
-    fftw_plan_class (kkint32         _n,
+    fftw_plan_class (kkint32           _n,
                      fftw_direction  _dir,
-                     kkint32         _flags
+                     kkint32           _flags
                     );
 
     fftw_direction  Dir   ()  const  {return dir;}
-    kkint32         Flags ()  const  {return flags;}
-    kkint32         N     ()  const  {return n;}
+    kkint32           Flags ()  const  {return flags;}
+    kkint32           N     ()  const  {return n;}
 
 
   private:
-    kkint32           n;
+    kkint32             n;
     fftw_direction    dir;
-    kkint32           flags;
-  };  /* fftw_plan_class */
+    kkint32             flags;
+  };  // fftw_plan_class
 
 
   class  fftwnd_plan_class
   {
   public:
-    fftwnd_plan_class (kkint32         nx,
-                       kkint32         ny, 
+    fftwnd_plan_class (kkint32           nx,
+                       kkint32           ny, 
                        fftw_direction  dir,
-                       kkint32         flags
+                       kkint32           flags
                       );
 
     fftw_direction  Dir   ()  const  {return dir;}
-    kkint32         Flags ()  const  {return flags;}
-    kkint32         NX    ()  const  {return nx;}
-    kkint32         NY    ()  const  {return ny;}
+    kkint32           Flags ()  const  {return flags;}
+    kkint32           NX    ()  const  {return nx;}
+    kkint32           NY    ()  const  {return ny;}
 
   private:
-    kkint32         nx;
-    kkint32         ny; 
+    kkint32           nx;
+    kkint32           ny; 
     fftw_direction  dir;
-		kkint32         flags;
-  };  /* fftwnd_plan_class */
+		kkint32           flags;
+  }; // fftwnd_plan_class 
 
 
   typedef  fftw_plan_class*    fftw_plan;
   typedef  fftwnd_plan_class*  fftwnd_plan;
 
 
-  fftw_plan    fftw_create_plan (kkint32         n, 
+  fftw_plan    fftw_create_plan (kkint32           n, 
                                  fftw_direction  dir, 
-                                 kkint32         flags
+                                 kkint32           flags
                                 );
  
-  fftwnd_plan  fftw2d_create_plan (kkint32         nx, 
-                                   kkint32         ny, 
+  fftwnd_plan  fftw2d_create_plan (kkint32           nx, 
+                                   kkint32           ny, 
                                    fftw_direction  dir,
-				                   kkint32         flags
+				                   kkint32           flags
                                   );
 
   void  fftw_destroy_plan (fftw_plan  plan);
@@ -102,18 +112,31 @@ namespace  KKB
                     fftw_complex*  in, 
                     fftw_complex*  out
                    );
+ */
+
+
+  void  FFT (float    data[], 
+             kkuint32 number_of_complex_samples, 
+             kkint32  isign
+            );
+
+  float Log2 (float x);
+
 
 
 
   template<typename DftType>
-  class  KK_DFT
+  class  KK_DFT1D
   {
   public:
     typedef  std::complex<DftType>  DftComplexType;
 
-    KK_DFT (kkint32 _size,
-            bool  _forwardTransform
-           );
+
+    KK_DFT1D (kkint32 _size,
+              bool    _forwardTransform
+             );
+
+    ~KK_DFT1D ();
 
 
     void  Transform (DftComplexType*  src,
@@ -127,7 +150,12 @@ namespace  KKB
     void  TransformNR (DftComplexType*  src);
 
 
-    const DftComplexType**  FourierMask () const {return fourierMask;}
+    DftComplexType**  FourierMask () 
+    {
+      if  (!fourierMask)
+        BuildMask ();
+      return fourierMask;
+    }
 
   private:
     void  BuildMask ();
@@ -142,7 +170,10 @@ namespace  KKB
     DftComplexType**  fourierMask;
     DftComplexType*   fourierMaskArea;
     kkint32           size;
-  };  /* KK_DFT */
+  };  /* KK_DFT1D */
+
+  typedef  KK_DFT1D<float>   KK_DFT1D_Float;
+  typedef  KK_DFT1D<double>  KK_DFT1D_Double;
 
 
 
@@ -163,6 +194,22 @@ namespace  KKB
                      DftComplexType**  dest
                     );
 
+    void  Transform (KKB::uchar**      src,
+                     DftComplexType**  dest
+                    );
+
+    void  Transform2 (KKB::uchar**      src,
+                      DftComplexType**  dest
+                     );
+
+    void  AllocateArray (DftComplexType*   &arrayArea,
+                         DftComplexType**  &array
+                        )  const;
+
+    void  DestroyArray (DftComplexType*   &arrayArea,
+                        DftComplexType**  &array
+                       )  const;
+
   private:
     kkint32  height;
     kkint32  width;
@@ -171,17 +218,21 @@ namespace  KKB
     DftComplexType    Zero;
     DftComplexType**  workArray;
     DftComplexType*   workArrayArea;
+    DftComplexType*   workCol;
 
-    KK_DFT<DftType>*  rowDFT;
-    KK_DFT<DftType>*  colDFT;
+    KK_DFT1D<DftType>*  rowDFT;
+    KK_DFT1D<DftType>*  colDFT;
   };  /* KK_DFT2D */
+
+  typedef  KK_DFT2D<float>   KK_DFT2D_Float;
+  typedef  KK_DFT2D<double>  KK_DFT2D_Double;
 
 
 
   template<typename DftType>
-  KK_DFT<DftType>::KK_DFT (kkint32 _size,
-                           bool  _forwardTransform
-                          ):
+  KK_DFT1D<DftType>::KK_DFT1D (kkint32 _size,
+                               bool    _forwardTransform
+                              ):
       MinusOne         ((DftType)-1.0,          (DftType)0.0),
       One              ((DftType)1.0,           (DftType)0.0),
       Pi               ((DftType)3.14159265359, (DftType)0.0),
@@ -192,12 +243,20 @@ namespace  KKB
       fourierMaskArea  (NULL),
       size             (_size)
   {
-    BuildMask ();
+    //BuildMask ();
   }
 
 
   template<typename DftType>
-  void  KK_DFT<DftType>::BuildMask ()
+  KK_DFT1D<DftType>::~KK_DFT1D ()
+  {
+    delete  fourierMask;      fourierMask     = NULL;
+    delete  fourierMaskArea;  fourierMaskArea = NULL;
+  }
+
+
+  template<typename DftType>
+  void  KK_DFT1D<DftType>::BuildMask ()
   {
     DftComplexType  N((DftType)size, 0);
     DftComplexType  M((DftType)size, 0);
@@ -210,9 +269,14 @@ namespace  KKB
     else
       direction = DftComplexType ((DftType)1.0, (DftType)0.0);
 
-    DftComplexType**  fourierMask = new DftComplexType*[size];
+    fourierMaskArea = new DftComplexType [size * size];
+    DftComplexType* fourierMaskAreaPtr = fourierMaskArea;
+    fourierMask = new DftComplexType*[size];
     for  (x = 0;  x < size;  x++)
-      fourierMask[x] = new DftComplexType[size];
+    {
+      fourierMask[x] = fourierMaskAreaPtr;
+      fourierMaskAreaPtr += size;
+    }
 
     DftComplexType  j;
     j = sqrt (MinusOne);
@@ -225,58 +289,137 @@ namespace  KKB
       {
         DftComplexType  kc ((DftType)k, (DftType)0);
         fourierMask[m][k] = exp (direction * j * Two * Pi * kc * mc / M);
-
-        DftType  exponetPart = (DftType)2.0 * (DftType)3.14159265359 * (DftType)k * (DftType)m / (DftType)size;
-        DftType  realPart = cos (exponetPart);
-        DftType  imgPart  = -sin (exponetPart);
-
-        if  (realPart != fourierMask[m][k].real ())
-        {
-          continue;
-        }
-
-        if  (imgPart != fourierMask[m][k].imag ())
-        {
-          continue;
-        }
       }
     }
 
     return;
   }  /* BuildMask */
 
-
+ 
 
   template<typename DftType>
-  void  KK_DFT<DftType>::Transform (DftComplexType*  src,
-                                    DftComplexType*  dest
-                                   )
+  void  KK_DFT1D<DftType>::Transform (DftComplexType*  src,
+                                      DftComplexType*  dest
+                                     )
   {
+    DftComplexType  M((DftType)size, 0);
+
+    DftComplexType direction;
+    if  (forwardTransform)
+      direction = DftComplexType ((DftType)-1.0, (DftType)0.0);
+    else
+      direction = DftComplexType ((DftType)1.0, (DftType)0.0);
+ 
+    DftComplexType  j;
+    j = sqrt (MinusOne);
+
+
     for  (kkint32  l = 0;  l < size;  l++)
     {
       dest[l] = Zero;
+
+      DftComplexType  lc ((DftType)l, (DftType)0);
       for  (kkint32 k = 0;  k < size;  k++)
       {
-        dest[l] = dest[l] + src[k] * fourierMask[l][k];
+        //DftType  exponetPart = (DftType)2.0 * (DftType)3.14159265359 * (DftType)k * (DftType)l / (DftType)size;
+        //DftType  realPart = cos (exponetPart);
+        //DftType  imgPart  = -sin (exponetPart);
+
+        DftComplexType  kc ((DftType)k, (DftType)0);
+        DftComplexType  fm = exp (direction * j * Two * Pi * kc * lc / M);
+
+        //dest[l] = dest[l] + src[k] * fourierMask[l][k];
+        dest[l] = dest[l] + src[k] * fm;
       }
     }
+  
+    /*
+    {
+      // Performs a comparison with a alternatve result that performs much faster but is only good for 
+      //  where size is = (n^2) for (n > 0)
+      kkint32  newSize = (kkint32)pow (2.0f, (float)ceil (Log2 ((float)size)));
+
+      // Lets do a comparison
+      int x, y;
+      float* wa = new float[newSize * 2];
+      for  (x = 0;  x < (newSize * 2);  ++x)
+        wa[x] = 0.0;
+
+      for  (x = 0, y = 0;  x < size;  ++x, y += 2)
+      {
+        wa[y]     = src[x].real ();
+        wa[y + 1] = src[x].imag ();
+      }
+      FFT (wa, size, 1); 
+
+      for  (x = 0, y = 0;  x < size;  ++x, y += 2)
+      {
+        float  deltaR = (wa[y]     - dest[x].real ());
+        float  deltaI = (wa[y + 1] - dest[x].imag ());
+
+        //if  (deltaR != 0.0)
+        //  cout << x << "\t" << wa[y]     << "\t" << dest[x].real () << "\t" << deltaR << endl;
+
+        //if  (deltaI != 0.0)
+        //  cout << x << "\t" << wa[y + 1] << "\t" << dest[x].imag () << "\t" << deltaI << endl;
+
+        float waSquare   = wa[y]           * wa[y]            + wa[y + 1]       * wa[y + 1];
+        float destSquare = dest[x].real () * dest[x].real ()  + dest[x].imag () * dest[x].imag ();
+
+        float  waMag   = sqrt (waSquare);
+        float  destMag = sqrt (destSquare);
+
+        cout  << x << "\t" << waMag << "\t" << destMag << endl;
+      }
+      delete  wa;
+      wa = NULL;
+    }
+    */
+
     return;
   }  /* Transform */
 
 
 
   template<typename DftType>
-  void  KK_DFT<DftType>::Transform (KKB::uchar*      src,
-                                    DftComplexType*  dest
-                                   )
+  void  KK_DFT1D<DftType>::Transform (KKB::uchar*      src,
+                                      DftComplexType*  dest
+                                     )
   {
+    if  (!fourierMask)
+      BuildMask ();
+    
+    kkint32  firstK = 0;
+    bool   firstKFound = false;
+    kkint32  lastK  = 0;
+
+    for  (kkint32 k = 0;  k < size;  ++k)
+    {
+      if  (src[k] != 0)
+      {
+        lastK = k;
+        if  (!firstKFound)
+        {
+          firstKFound = true;
+          firstK = k;
+        }
+      }
+    }
+
     for  (kkint32  l = 0;  l < size;  l++)
     {
-      dest[l] = Zero;
-      for  (kkint32 k = 0;  k < size;  k++)
+      DftComplexType*  fourierMaskL = fourierMask[l];
+
+      DftType  destReal = 0.0;
+      DftType  destImag = 0.0;
+
+      for  (kkint32 k = firstK;  k <= lastK;  k++)
       {
-        dest[l] = dest[l] + (DftComplexType)(src[k]) * fourierMask[l][k];
+        destReal +=  src[k] * fourierMaskL[k].real ();
+        destImag +=  src[k] * fourierMaskL[k].imag ();
       }
+
+      dest[l] = complex<DftType> (destReal, destImag);
     }
     return;
   }  /* Transform */
@@ -285,7 +428,7 @@ namespace  KKB
 
 
   template<typename DftType>
-  void  KK_DFT<DftType>::TransformNR (DftComplexType*  src)
+  void  KK_DFT1D<DftType>::TransformNR (DftComplexType*  src)
   {
     kkint32  n = 0;
     kkint32  mmax = 0;
@@ -344,32 +487,33 @@ namespace  KKB
 
 
 
-
   template<typename DftType>
   KK_DFT2D<DftType>::KK_DFT2D (kkint32 _height,
                                kkint32 _width,
-                               bool  _forwardTransform
+                               bool    _forwardTransform
                               ):
     height           (_height),
-    width            (width),
+    width            (_width),
     forwardTransform (_forwardTransform),
     rowDFT           (NULL),
     colDFT           (NULL),
     workArray        (NULL),
     workArrayArea    (NULL),
+    workCol          (NULL),
     Zero             ((DftType)0.0, (DftType)0.0)
   {
-    rowDFT = new KK_DFT<DftType> (_width,  _forwardTransform);
-    colDFT = new KK_DFT<DftType> (_height, _forwardTransform);
-
+    rowDFT = new KK_DFT1D<DftType> (_width,  _forwardTransform);
+    colDFT = new KK_DFT1D<DftType> (_height, _forwardTransform);
 
     workArrayArea = new DftComplexType[height * width];
+    workArray     = new DftComplexType*[height];
     DftComplexType*  workArrayAreaPtr = workArrayArea;
     for  (kkint32 row = 0;  row < height;  ++row)
     {
       workArray[row] = workArrayAreaPtr;
       workArrayAreaPtr += width;
     }
+    workCol = new DftComplexType[height];
   }
 
 
@@ -380,6 +524,7 @@ namespace  KKB
     delete  colDFT;         colDFT        = NULL;
     delete  workArray;      workArray     = NULL;
     delete  workArrayArea;  workArrayArea = NULL;
+    delete  workCol;        workCol       = NULL;
   }
 
 
@@ -390,23 +535,154 @@ namespace  KKB
                                      )
   {
     for  (kkint32 row = 0;  row < height;  ++row)
-      rowDFT->Transform (src[row], workArrayArea[row]);
+      rowDFT->Transform (src[row], workArray[row]);
 
-    const DftComplexType**  colFourierMask = colDFT->FourierMask ();
+    DftComplexType**  colFourierMask = colDFT->FourierMask ();
 
     for  (kkint32 col = 0;  col < width;  ++col)
     {
       for  (kkint32  row = 0;  row < height;  row++)
       {
-        dest[row][col] = Zero;
+        DftComplexType  v = Zero;
         for  (kkint32 k = 0;  k < height;  k++)
         {
-          dest[row][col] = dest[row] + src[k] * colFourierMask[row][k];
+          v = v  + workArray[k][col] * colFourierMask[row][k];
         }
+
+        dest[row][col] = v;
       }
     }
 
   }  /* Transform*/
+
+
+  template<typename DftType>
+  void  KK_DFT2D<DftType>::Transform (KKB::uchar**      src,
+                                      DftComplexType**  dest
+                                     )
+  {
+    for  (kkint32 row = 0;  row < height;  ++row)
+      rowDFT->Transform (src[row], workArray[row]);
+
+    DftComplexType**  colFourierMask = colDFT->FourierMask ();
+
+    for  (kkint32 col = 0;  col < width;  ++col)
+    {
+      kkuint32  firstRow = 0;
+      bool    firstRowFound = false;
+      kkuint32  lastRow = 0;
+
+      for  (kkint32 l = 0;  l < height;  ++l)
+      {
+        workCol[l] = workArray[l][col];
+        bool  nonZero = (workCol[l].imag () != 0.0f)  ||  (workCol[l].real () != 0.0f);
+        if  (nonZero)
+        {
+          lastRow = l;
+          if  (!firstRowFound)
+          {
+            firstRowFound = true;
+            firstRow = l;
+          }
+        }
+      }
+
+      for  (kkint32  row = 0;  row < height;  row++)
+      {
+        DftComplexType*  colFourierMaskRow = colFourierMask[row];
+
+        DftComplexType  v = Zero;
+        for  (kkuint32 k = firstRow;  k <= lastRow;  k++)
+        {
+          v = v  + workCol[k] * colFourierMaskRow[k];
+        }
+
+        dest[row][col] = v;
+      }
+    }
+  }  /* Transform */
+
+
+
+
+
+  template<typename DftType>
+  void  KK_DFT2D<DftType>::AllocateArray (DftComplexType*   &arrayArea,
+                                          DftComplexType**  &array
+                                         )  const
+  {
+    kkint32  total = height * width;
+    array = NULL;
+    arrayArea = new DftComplexType[total];
+    if  (!arrayArea)
+      return;
+
+    array = new DftComplexType*[height];
+    DftComplexType*  rowPtr = arrayArea;
+
+    for  (kkint32  row = 0;  row < height;  ++row)
+    {
+      array[row] = rowPtr;
+      rowPtr = rowPtr + width;
+    }
+
+    for  (kkint32  x = 0;  x < total;  ++x)
+    {
+      arrayArea[x].real ((DftType)0.0);
+      arrayArea[x].imag ((DftType)0.0);
+    }
+
+    return;
+  }  /* AllocateArray */
+
+
+
+
+
+  template<typename DftType>
+  void  KK_DFT2D<DftType>::DestroyArray (DftComplexType*   &arrayArea,
+                                         DftComplexType**  &array
+                                        )  const
+  {
+    delete  arrayArea;  arrayArea = NULL;
+    delete  array;      array     = NULL;
+    return;
+  }  /* DestroyArray */
+
+
+
+
+
+#if  !defined(FFTW_AVAILABLE)
+#endif
+
+
+
+#if  defined(FFTW_AVAILABLE)
+  fftwf_plan  fftwCreateTwoDPlan (kkint32         height,
+                                  kkint32         width,
+                                  fftwf_complex*  src,
+                                  fftwf_complex*  dest,
+                                  int             sign,
+                                  int             flag
+                                 );
+
+  fftwf_plan  fftwCreateOneDPlan (kkint32         len,
+                                  fftwf_complex*  src,
+                                  fftwf_complex*  dest,
+                                  int             sign,
+                                  int             flag
+                                 );
+
+  void  fftwDestroyPlan (fftwf_plan&  plan);
+#endif
+
 }  /* KKB */
+
+
+
+
+
+
 #endif			/* _KKU_FFTW_ */
 

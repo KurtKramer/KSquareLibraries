@@ -2,26 +2,27 @@
  * Copyright (C) 1994-2011 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
-#include  <stdlib.h>
-#include  <memory>
-#include  <math.h>
-#include  <complex>
-#include  <fstream>
-#include  <iostream>
-#include  <string>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdlib.h>
+#include <memory>
+#include <math.h>
+#include <complex>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  include  <fftw.h>
+//#  include  <fftw.h>
 #else
 #  include  "kku_fftw.h"
 #endif
 
 
 
+#include "kku_fftw.h"
 #include "ContourFollower.h"
 #include "Raster.h"
 #include "KKStr.h"
@@ -190,8 +191,8 @@ void  ContourFollower::GetNextPixel (kkint32&  nextRow,
 
 
 float  CalcMagnitude (fftw_complex*  dest,
-                       kkint32        index
-                      )
+                      kkint32        index
+                     )
 {
   float  mag = 0.0f;
 

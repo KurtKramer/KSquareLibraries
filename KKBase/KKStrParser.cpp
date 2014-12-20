@@ -8,9 +8,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <iostream>
+#include <string.h>
 #include <string>
 #include <vector>
-#include <string.h>
+
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -147,6 +148,14 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
   return KKStr (str, startPos, endPos);
 }  /* ExtractToken */
 
+
+
+char  KKStrParser::GetNextTokenChar (const char* delStr)
+{
+  KKStr  nextToken = GetNextToken (delStr);
+  char nextTokenChar = nextToken[0];
+  return  nextTokenChar;
+}
 
 
 KKB::DateTime  KKStrParser::GetNextTokenDateTime (const char* delStr)

@@ -19,7 +19,7 @@
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  include  <fftw.h>
+//#  include  <fftw.h>
 #else
 #  include  "kku_fftw.h"
 #endif
@@ -35,6 +35,7 @@ using namespace std;
 #include "GoalKeeper.h"
 #include "Histogram.h"
 #include "ImageIO.h"
+#include "kku_fftw.h"
 #include "KKException.h"
 #include "Matrix.h"
 #include "MorphOpBinarize.h"
@@ -4133,6 +4134,83 @@ uchar  Raster::Hit  (MaskTypes  mask,
 
 
 
+RasterPtr  Raster::FastFourierKK ()  const
+{
+
+  KK_DFT2D_Float  plan (height, width, true);
+  KK_DFT2D_Float::DftComplexType**  dest;
+  KK_DFT2D_Float::DftComplexType*   destArea;
+  plan.AllocateArray (destArea, dest);
+
+  if  (destArea == NULL)
+  {
+    std::cerr 
+        << std::endl << std::endl
+        << "Raster::FastFourierKK   ***ERROR***    Allocation of 'dest' failed'" << std::endl
+        << "              totPixels[" << totPixels << "]"    << std::endl
+        << "              FileName[" << fileName   << "]"    << std::endl
+        << std::endl;
+    return NULL;
+  }
+
+  plan.Transform (green, dest);
+
+  RasterPtr fourierImage = AllocateARasterInstance (height, width, false);
+
+  uchar*  destData = fourierImage->greenArea;
+
+  fourierImage->AllocateFourierMagnitudeTable ();
+  float* fourierMagArray = fourierImage->fourierMagArea;
+
+  float  mag = 0.0f;
+
+  float  maxAmplitude = 0.0f;
+
+  kkint32 idx = 0;
+  for  (kkint32 row = 0; row < height; row++ )
+  {
+    for (kkint32 col = 0; col < width; col++ )
+    {
+      double  r = dest[row][col].real ();
+      double  i = dest[row][col].imag ();
+
+      mag = (float)(sqrt (r * r + i * i));
+      if  (mag > maxAmplitude)
+        maxAmplitude = mag;
+
+      fourierMagArray[idx] = mag;  // kk 2004-May-18
+      ++idx;
+    }
+  }
+
+  float  maxAmplitudeLog = log (maxAmplitude);
+
+  idx = 0;
+  for (idx = 0; idx < totPixels; idx++ )
+  {
+    //  mag = (float)sqrt (dest[idx].re * dest[idx].re + dest[idx].im * dest[idx].im);  // kk 2004-May-18
+    mag = fourierMagArray[idx];                                                          // kk 2004-May-18
+
+    // destData[idx] = (uchar)(dest[idx].re * maxPixVal / maxAmplitude);
+
+    // kk  2004-May-18
+    // Changed the above line to use the constant 255 instead of maxPixVal,  
+    // If we have an image who's maxPixVal is less than 255 then the values
+    // being calc'ed for the fourier features will not be consistent.
+    // destData[idx] = (uchar)(dest[idx].re * 255 / maxAmplitude);
+    destData[idx] = (uchar)(log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
+  }
+
+  delete  dest;      dest     = NULL;
+  delete  destArea;  destArea = NULL;
+
+  return  fourierImage;
+}  /* FastFourierKK */
+
+
+
+
+
 RasterPtr  Raster::FastFourier ()  const
 {
   fftw_complex*   src;
@@ -8025,7 +8103,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
     {     
       if  (retainBackground  &&  BackgroundPixel (greenArea[idx]))
       {
-        // Since in the original source image this pixel was a back ground pixel;  we will
+        // Since in the original source image this pixel was a background pixel;  we will
         // continue to let it be one.
         destData[idx] = backgroundPixelValue;
       }

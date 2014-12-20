@@ -91,8 +91,8 @@ namespace  KKB
                                       );
 
     /**
-     *@brief  Destroys an existing insdtance of GoalKeeper.
-     *@details  Use this method rather tna calling the destructor directly.  This way the 
+     *@brief  Destroys an existing instance of GoalKeeper.
+     *@details  Use this method rather than calling the destructor directly.  This way the 
      * 'existingGoalKeepers' data member can be kepped up to date.  If for some reason two 
      * different threads managed to call this method for the same GoalKeeper instance only 
      * one of them will actually detroy the instance.

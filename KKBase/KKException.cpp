@@ -2,22 +2,22 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
-#include  <ctype.h>
-#include  <limits.h>
-#include  <math.h>
-#include  <stdio.h>
-#include  <iostream>
-#include  <memory>
-#include  <sstream>
-#include  <string>
-#include  <vector>
+#include "FirstIncludes.h"
+#include <ctype.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
+#include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "KKException.h"
+#include "KKException.h"
 using namespace KKB;
 
 

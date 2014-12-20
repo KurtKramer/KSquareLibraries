@@ -11,6 +11,7 @@
 #if  defined(OS_WINDOWS)
 #include <direct.h>
 #include <windows.h>
+#include <Lmcons.h>
 #include <conio.h>
 #else
 #include <dirent.h>
@@ -27,9 +28,9 @@
 #include <iostream>
 #include <fstream> 
 #include <stdio.h>
+#include <string.h>
 #include <string>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -2736,3 +2737,15 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
 
   return  parts;
 }  /* osSplitDirectoryPathIntoParts */
+
+
+KKStr  KKB::osGetFullPathOfApplication ()
+{
+#if  defined(WIN32)
+  char  szAppPath[MAX_PATH] = "";
+  DWORD  result = ::GetModuleFileName (0, szAppPath, MAX_PATH);
+  return  szAppPath;
+#else
+  return  KKStr::EmptyStr ();
+#endif
+}

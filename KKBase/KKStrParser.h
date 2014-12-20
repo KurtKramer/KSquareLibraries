@@ -25,6 +25,8 @@ namespace KKB
 
     KKStr    GetNextToken       (const char* delStr = "\n\t\r ");
 
+    char     GetNextTokenChar   (const char* delStr = "\n\t\r ");
+
     KKB::DateTime  GetNextTokenDateTime (const char* delStr = "\n\t\r ");
 
     kkint32  GetNextTokenInt    (const char* delStr = "\n\t\r ");
