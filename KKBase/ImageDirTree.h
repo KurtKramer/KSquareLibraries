@@ -1,29 +1,9 @@
 /* ImageDirTree.h -- Builds list of Image Files in a Sub Directory Tree.
- * Copyright (C) 1994-2011 Kurt Kramer
+ * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #ifndef  _IMAGEDIRTREE_
 #define  _IMAGEDIRTREE_
-//*******************************************************************************
-//*                                ImageDirTree                                 *
-//*                                                                             *
-//*                                                                             *
-//* Purpose:  Given a SubDirectory Starting Point.  Will create a list of all   *
-//*           image files in the sub directory tree.  This will allow us to     *
-//*           quickly locate a image file by name.  Originally developed it     *
-//*           to help in the recalculation of feature data.  Used in            *
-//*           ImageFeaturesList.                                                *
-//*                                                                             *
-//*-----------------------------------------------------------------------------*
-//*  Programmer     Date    Description                                         *
-//*  ===========  ========  ==================================================  *
-//*  Kurt Kramer  04-10-04  Created,  to help aid in Thesis data, feature cal-  *
-//*                         culations.                                          *
-//*                                                                             *
-//*******************************************************************************
-
-//class  DirEntry;
-//typedef  DirEntry*  DirEntryPtr;
 
 //typedef  vector<DirEntryPtr>  DirEntryList;
 
@@ -74,7 +54,7 @@ namespace  KKB
     KKStrListPtr  Directories (const KKStr& fileName)  const;
 
   private:
-    typedef  map<KKStr,kkint32>          DuplicateTable;
+    typedef  map<KKStr,kkint32>        DuplicateTable;
     typedef  multimap<KKStr,KKStrPtr>  EntryTable;
   
     void    Load (const KKStr&  _subDir);

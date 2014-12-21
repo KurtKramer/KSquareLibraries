@@ -133,8 +133,8 @@ uchar  DateType::DaysInTheMonth (kkint32 year,
 
 
 kkint32  DateType::DaysYTDforMonth (kkint32 year,
-                                uchar month
-                               )
+                                    uchar month
+                                   )
 {
   if  ((month < 1)  ||  (month > 12))
     return 0;
@@ -510,6 +510,12 @@ kkuint64   DateType::Seconds ()  const
 }
 
 
+KKU::uint32  DateType::ToDays    ()  const  {return  Days ();}
+KKU::uint32  DateType::ToHours   ()  const  {return  Days () * 24;}
+KKU::uint64  DateType::ToSeconds ()  const  {return  (uint64)(Days ()) * (uint64)86400;}
+
+
+
 
 kkint32  DateType::Compare (const DateType&  right)  const
 {
@@ -662,9 +668,9 @@ DateType& DateType::operator++ ()
 KKStr   DateType::MM_DD_YY ()  const
 {
   KKStr  s (9);
-  s << StrFormatInt (Month (),     "00")  << "/"
-    << StrFormatInt (Day   (),     "00")  << "/"
-    << StrFormatInt (Year  () % 2, "00");
+  s << StrFormatInt (Month (),       "00")  << "/"
+    << StrFormatInt (Day   (),       "00")  << "/"
+    << StrFormatInt (Year  () % 100, "00");
   return  s;
 }  /* MM_DD_YY */
 
@@ -688,9 +694,9 @@ KKStr   DateType::MMM_DD_YYYY ()  const
 KKStr   DateType::YY_MM_DD ()  const
 {
   KKStr  s (9);
-  s << StrFormatInt (year,    "00")  << "/"
-    << StrFormatInt (month,   "00")  << "/"
-    << StrFormatInt (day % 2, "00");
+  s << StrFormatInt (year % 100, "00")  << "/"
+    << StrFormatInt (month,      "00")  << "/"
+    << StrFormatInt (day,        "00");
   return  s;
 }  /* YY_MM_DD */
 
@@ -713,8 +719,8 @@ KKStr   DateType::YYYY_MMM_DD ()  const
     monthStr = monthlyShortNames[month];
 
   KKStr  s (12);
-  s << StrFormatInt (year,   "0000")  << "-"
-    << monthStr                       << "-"
+  s << StrFormatInt (year,   "0000")  << "/"
+    << monthStr                       << "/"
     << StrFormatInt (day,    "00");
   return  s;
 }  /* YYYY_MM_DD */
@@ -925,6 +931,21 @@ kkuint32  TimeType::Seconds ()  const
 }
 
 
+double  TimeType::ToHours ()  const
+{
+  return  (double)hour +  (double)(minute * 60 + second) / 3600.0;
+}
+
+
+double  TimeType::ToMinutes ()  const
+{
+  return  (double)hour +  (double)(minute * 60 + second) / 60.0;
+}
+
+
+
+
+
 TimeType  TimeType::operator+ (const TimeType&  right)  const
 {
   kkint32  totSeconds = Seconds () + right.Seconds ();
@@ -1079,6 +1100,9 @@ kkuint64  DateTime::Seconds () const
 }
 
 
+kkuint32  DateTime::ToDays    ()  const  {return  date.Days ();}
+double    DateTime::ToHours   ()  const  {return  date.Days () * 24 + time.ToHours ();}
+kkuint64  DateTime::ToSeconds ()  const  {return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();};
 
 
 void  DateTime::AddDays (kkint32  _days)
@@ -1185,6 +1209,21 @@ void  DateTime::SecondsAdd  (long  _secs)
 KKStr  DateTime::YYYYMMDDHHMMSS ()  const
 {
   return  date.YYYYMMDD () + time.HHMMSS ();
+}
+
+
+
+KKStr  DateTime::YYYY_MM_DD_HH_MM_SS () const
+{
+  return  date.YYYY_MM_DD () + "-" + time.HH_MM_SS ();
+}
+
+
+KKStr  DateTime::HH_MM_SS () const
+{
+  return  StrFormatInt ((date.ToHours () + time.Hour ()), "###00") + ":" + 
+          StrFormatInt (time.Minute (), "00")                      + ":" +
+          StrFormatInt (time.Second (), "00");
 }
 
 

@@ -84,16 +84,20 @@ namespace  KKB
      *          you have two instances of 'DateType'  'd1' and 'd2'.  The number of days between the two
      *          dates can be determined by  "int deltaDays = d1.Days () - d2.Days ();".
      */
-    kkint32  Days ()  const;
+    kkint32   Days ()  const;
 
-    kkuint64   Seconds () const;
+    kkuint64  Seconds () const;
 
-    KKStr   MM_DD_YY    () const;
-    KKStr   MMM_DD_YYYY () const;    /**< @brief Convert into displayable string; ex: May/02/2010.  */
-    KKStr   YY_MM_DD    () const;    /**< @brief Convert into displayable string; ex: 11/05/17      */
-    KKStr   YYYY_MM_DD  () const;    /**< @brief Convert into displayable string; ex: 20011/05/17   */
-    KKStr   YYYY_MMM_DD () const;    /**< @brief Convert into displayable string; ex: 20011/May/17  */
-    KKStr   YYYYMMDD    () const;    /**< @brief Convert into displayable string; ex: 20110517      */
+    kkuint32  ToDays    ()  const;
+    kkuint32  ToHours   ()  const;
+    kkuint64  ToSeconds ()  const;
+
+    KKStr     MM_DD_YY    () const;
+    KKStr     MMM_DD_YYYY () const;    /**< @brief Convert into displayable string; ex: May/02/2010.  */
+    KKStr     YY_MM_DD    () const;    /**< @brief Convert into displayable string; ex: 11/05/17      */
+    KKStr     YYYY_MM_DD  () const;    /**< @brief Convert into displayable string; ex: 20011/05/17   */
+    KKStr     YYYY_MMM_DD () const;    /**< @brief Convert into displayable string; ex: 20011/May/17  */
+    KKStr     YYYYMMDD    () const;    /**< @brief Convert into displayable string; ex: 20110517      */
 
     DateType&  operator=  (const DateType&  right);
     bool       operator== (const DateType&  right)  const;
@@ -166,11 +170,13 @@ namespace  KKB
 
     TimeType (KKStr  s);
 
-    uchar  Hour   () const {return hour;}
-    uchar  Minute () const {return minute;}
-    uchar  Second () const {return second;}
+    uchar    Hour   () const {return hour;}
+    uchar    Minute () const {return minute;}
+    uchar    Second () const {return second;}
 
-    kkuint32 Seconds ()  const;
+    kkuint32 Seconds   ()  const;
+    double   ToHours   ()  const;
+    double   ToMinutes ()  const;
 
     void  Hour   (uchar _hour)   {hour   = _hour;}
     void  Minute (uchar _minute) {minute = _minute;}
@@ -251,6 +257,10 @@ namespace  KKB
     void                  SecondsAdd  (long  _secs);
 
     KKStr                 YYYYMMDDHHMMSS ()  const;
+
+    KKStr                 YYYY_MM_DD_HH_MM_SS () const;
+
+    KKStr                 HH_MM_SS () const;            /**< The date part will be converted into hours. */
 
     DateTime&       operator=  (const DateTime&  right);
     bool            operator== (const DateTime&  right)  const;

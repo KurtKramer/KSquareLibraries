@@ -45,18 +45,18 @@ namespace KKB
     PointListPtr  GenerateContourList ();
 
     kkint32  FollowContour (float*  countourFreq,
-                          float   fourierDescriptors[15],
-                          kkint32 totalPixels,
-                          bool&   successful
-                         );
+                            float   fourierDescriptors[15],
+                            kkint32 totalPixels,
+                            bool&   successful
+                           );
 
     kkint32  FollowContour2 (float*  countourFreq,
-                           bool&   successful
-                          );
+                             bool&   successful
+                            );
 
     kkint32  CreateFourierDescriptorBySampling (kkint32 numOfBuckets,
-                                              float*  countourFreq,
-                                              bool&   successful
+                                                float*  countourFreq,
+                                                bool&   successful
                                              );
 
     void  HistogramDistanceFromAPointOfEdge (float     pointRow,
@@ -80,8 +80,8 @@ namespace KKB
                        );
 
     kkint32  PixelCountIn9PixelNeighborhood (kkint32  row, 
-                                           kkint32  col
-                                          );
+                                             kkint32  col
+                                            );
 
     uchar  PixelValue (kkint32 row,
                        kkint32 col
@@ -98,31 +98,6 @@ namespace KKB
     kkint32  width;
   }; /* ContourFollower*/
 
-
-
-
-  /*
-  class  PixelAddr
-  {
-  public:  
-    PixelAddr (kkint32  _row,
-               kkint32  _col
-              ):
-          row (_row),
-          col (_col)
-      {}
-
-    kkint32  Row ()  {return row;}
-    kkint32  Col ()  {return col;}
-
-
-  private:
-    kkint32  row;
-    kkint32  col;
-  };
-
-  */
-
-} /* namespace KKB; */
+} /* namespace KKU; */
 
 #endif

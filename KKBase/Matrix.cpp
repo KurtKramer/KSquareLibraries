@@ -544,7 +544,7 @@ Matrix  Matrix::operator* (double  right)
  */
 double  Matrix::CalcDeterminent (kkint32*  rowMap,
                                  kkint32*  colMap,
-                                 kkint32  size
+                                 kkint32   size
                                 )
 
 {

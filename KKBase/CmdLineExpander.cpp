@@ -73,6 +73,7 @@ CmdLineExpander::CmdLineExpander (const KKStr&  _applicationName,
   }
 
   BuildCmdLineParameters (initialParameters);
+  BuildExpandedParameterPairs ();
 }
 
 
@@ -101,6 +102,7 @@ void  CmdLineExpander::ExpandCmdLine (kkint32 argc,
   }
 
   BuildCmdLineParameters (initialParameters);
+  BuildExpandedParameterPairs ();
 
   return;
 }  /* ExpandCmdLine */
@@ -218,10 +220,69 @@ void  CmdLineExpander::BuildCmdLineParameters (const VectorKKStr&  argv)
 
 
 
+void  CmdLineExpander::BuildExpandedParameterPairs ()
+{
+  kkuint32  x = 0;
+  expandedParameterPairs.clear ();
+
+  while  (x < expandedParameters.size ())
+  {
+    const KKStr&  nextField = expandedParameters[x];
+    x++;
+
+    KKStr  parmSwitch = "";
+    KKStr  parmValue  = "";
+
+    if  (!ParameterIsASwitch (nextField))
+    {
+      parmSwitch = "";
+      parmValue  = nextField;
+    }
+    else
+    {
+      parmSwitch = nextField;
+      if  (x < expandedParameters.size ())
+      {
+        if  (!ParameterIsASwitch (expandedParameters[x]))
+        {
+          parmValue = expandedParameters[x];
+          x++;
+        }
+      }
+    }
+
+    expandedParameterPairs.push_back (KKStrPair (parmSwitch, parmValue));
+  }
+
+}  /* BuildExpandedParameterPairs */
+
+
+
+
+bool  CmdLineExpander::ParameterIsASwitch (const KKStr&  parm)
+{
+  if  (parm.Len () < 1)
+    return false;
+
+  if  (parm[(int16)0] != '-')
+    return false;
+
+  if  (parm.Len () == 1)
+    return true;
+
+  double  parmValue = 0.0;
+  if  (parm.ValidNum (parmValue))
+    return false;
+
+  return true;
+}  /* ParameterIsASwitch */
+
+
+
 
 void  CmdLineExpander::ExtractParametersFromFile (const KKStr&  cmdFileName, 
                                                   VectorKKStr&  cmdFileParameters,
-                                                  bool&          validFile
+                                                  bool&         validFile
                                                  )
 {
   FILE*  in = osFOPEN (cmdFileName.Str (), "r");

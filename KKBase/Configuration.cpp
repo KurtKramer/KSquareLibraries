@@ -389,6 +389,19 @@ void  StripOutAnyComments (KKStr&  line)
  
 
 
+void  Configuration::PrintFormatErrors (ostream& o)
+{
+  o << endl
+    << "Num" << "\t" << "LineNum" << "\t" << "Description" << endl;
+
+  for  (uint32 idx = 0;  idx < formatErrors.size ();  ++idx)
+  {
+    o << idx << "\t" << formatErrorsLineNums[idx]  << "\t"  << formatErrors[idx] << endl;
+  }
+}  /* PrintFormatErrors */
+
+
+
 void  Configuration::LoadFile ()
 {
   log.Level (10) << "Configuration::LoadFile: " << fileName << endl;
@@ -430,6 +443,9 @@ void  Configuration::LoadFile ()
     line.TrimLeft ();
 
     StripOutAnyComments (line);
+
+    log.Level (70) << line << endl;
+    
     StripOutAnyComments (line);
 
     if  (line.Empty ())            

@@ -1,5 +1,5 @@
 /* GlobalGoalKeeper.cpp -- Implements a single GoalKeeper that can be used anywhere in the application.
- * Copyright (C) 1994-2011 Kurt Kramer
+ * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"

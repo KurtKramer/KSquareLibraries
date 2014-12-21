@@ -11,6 +11,11 @@
 
 namespace KKB
 {
+  #if  !defined(_KKTHREADMANAGER_)
+  class  KKThreadManager;
+  typedef  KKThreadManager*  KKThreadManagerPtr;
+  #endif
+
   class  KKThreadList;
   typedef  KKThreadList*  KKThreadListPtr;
 
@@ -41,8 +46,9 @@ namespace KKB
                    ThreadStatus;
 
 
-    KKThread (const KKStr&  _threadName,
-              MsgQueuePtr   _msgQueue
+    KKThread (const KKStr&        _threadName,
+              KKThreadManagerPtr  _threadManager,
+              MsgQueuePtr         _msgQueue
              );
 
     virtual ~KKThread ();
@@ -112,7 +118,7 @@ namespace KKB
     void  AddMsg (KKStrPtr  msg);      /**<  Taking ownership of 'msg' and will append to 'msgQueue'.           */
     void  AddMsg (const KKStr&  msg);  /**<  A copy of the message 'msg' will be added to the end of msgQueue.  */
 
-    bool  CancelOrTerminateRequested ()  {return  (terminateFlag || shutdownFlag);}
+    bool  ShutdownOrTerminateRequested ()  {return  (terminateFlag || shutdownFlag);}
 
     bool  ThereIsACircularReferenceStart (KKThreadPtr  _thread)  const;
 

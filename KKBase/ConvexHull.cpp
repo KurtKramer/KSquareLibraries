@@ -233,9 +233,6 @@ double  ConvexHull::ConvexArea2 ()
  
 
 void  ConvexHull::CalcConvexArea (RasterPtr   raster)
-//effects: if upper.size()<3 throw IllegalStateException
-//        else calculate the area for the convex area
-
 {
   convexArea = 0;
 
@@ -270,9 +267,6 @@ void  ConvexHull::CalcConvexArea (RasterPtr   raster)
 
   return;
 }  /* CalcConvexArea */
-
-
- 
 
 
 
@@ -512,8 +506,9 @@ void  ConvexHull::Merge ()
 
 
 kkint32 ConvexHull::RelativeCCW (Point&  sp,
-                               Point&  ep,
-                               Point&  p)
+                                 Point&  ep,
+                                 Point&  p
+                                )
 {
   if  (sp.Col () == ep.Col ())
   {

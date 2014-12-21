@@ -79,8 +79,10 @@ void  KKThread::SetThreadName ()
 
 
 
-KKThread::KKThread (const KKStr&  _threadName,
-                    MsgQueuePtr   _msgQueue
+
+KKThread::KKThread (const KKStr&        _threadName,
+                    KKThreadManagerPtr  _threadManager,
+                    MsgQueuePtr         _msgQueue
                    ):
    crashed               (false),
    msgQueue              (_msgQueue),

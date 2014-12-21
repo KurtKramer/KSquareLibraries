@@ -92,8 +92,8 @@ namespace KKB
 
     /**
      *@brief  Constructs a BMP image from the file specified by '_fileName'.
-     *@param[in]  _fileName     Name of file to load BMP image from.
-     *@param[out] successful   Returns true if file successful in loading.
+     *@param[in]  _fileName   Name of file to load BMP image from.
+     *@param[out] successful  Returns true if file successful in loading.
      */
     BmpImage (const KKStr&  _fileName,
               bool&         successful

@@ -67,7 +67,7 @@ namespace KKB
                            const KKStr&  error
                           );
 
-    void  FormatErrorsClear ();  /**< @brief Call this to vlear all format error messages. */
+    void  FormatErrorsClear ();  /**< @brief Call this to clear all format error messages. */
 
     void  LoadFile ();
 
@@ -79,7 +79,9 @@ namespace KKB
 
     kkint32 NumOfSettings (kkint32  sectionNum)  const;                 /**< @brief Returns number of settings for the specified section, */
    
-    bool  SectionDefined (const KKB::KKStr&  sectionName)  const;   /**< @brief Returns true if the section is defined. */
+    void  PrintFormatErrors (ostream& o);
+
+    bool  SectionDefined (const KKU::KKStr&  sectionName)  const;   /**< @brief Returns true if the section is defined. */
 
 
     // Access Methods.
@@ -137,7 +139,7 @@ namespace KKB
     KKB::KKStr          curSectionName;
     KKB::KKStr          fileName;
     bool                formatGood;
-    VectorKKStr         formatErrors;   /**< Configuration Format Errors will be recorder hear */
+    VectorKKStr         formatErrors;   /**< Configuration Format Errors will be recorder here. */
     VectorInt           formatErrorsLineNums;
     ConfSectionListPtr  sections; 
 

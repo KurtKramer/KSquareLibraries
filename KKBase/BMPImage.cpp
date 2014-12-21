@@ -748,7 +748,11 @@ BmpImage::~BmpImage ()
 
 
 
-/**  @brief  Returns true if BMP file is a a reversed GrayScale Image. */
+/**  
+ *@brief  Returns true if BMP file is a a reversed GrayScale Image. 
+ *@details  The original version in PICES had sne special checks to detect 
+ * SIPPER Immeages;  if there are issues with this routine suggenst comparing with.
+ */
 bool  BmpImage::ReversedGrayscaleImage ()
 {
   kkint32 x = 0;
@@ -1084,20 +1088,17 @@ public:
     lastColorsSet = false;
   }
 
-
   kkint32  NumOfColors ()  const  {return (kkint32)colorsUsed.size ();}
 
-
   kkint32  PalletIndex (uchar red,
-                      uchar green,
-                      uchar blue
-                     )
+                        uchar green,
+                        uchar blue
+                       )
   {
     RGBQUAD  key;
     key.rgbRed   = red;
     key.rgbGreen = green;
     key.rgbBlue  = blue;
-
     idx = colorsUsed.find (key);
     if  (idx == colorsUsed.end ())
       return -1;
@@ -1324,16 +1325,36 @@ void  BmpImage::ReAllocateForBiggerScreen ()
 
 
   uchar**  newImage = new uchar*[newHeight];
+  uchar**  newRed = NULL;
+  uchar**  newBlue = NULL;
+  if  (color)
+  {
+     newRed  = new uchar*[newHeight];
+     newBlue = new uchar*[newHeight];
+  }
+
   for  (newRow = 0; newRow < newHeight; newRow++)
   {
     newImage[newRow] = new uchar[newWidth];
     memset (newImage[newRow], 0, newWidth);
+    if  (color)
+    {
+      newRed [newRow] = new uchar[newWidth];
+      newBlue[newRow] = new uchar[newWidth];
+      memset (newRed  [newRow], 0, newWidth);
+      memset (newBlue [newRow], 0, newWidth);
+    }
   }
 
   newRow = 3;
   for  (oldRow = 0; oldRow < bmh.biHeight; oldRow++)
   {
     memcpy ((newImage[newRow] + 3), image[oldRow], bmh.biWidth);
+    if  (color)
+    {
+      memcpy ((newRed[newRow]  + 3), red [oldRow], bmh.biWidth);
+      memcpy ((newBlue[newRow] + 3), blue[oldRow], bmh.biWidth);
+    }
     newRow++;
   }
 
@@ -1341,10 +1362,22 @@ void  BmpImage::ReAllocateForBiggerScreen ()
   {
     delete  image[oldRow];
     image[oldRow] = NULL;
+    if  (color)
+    {
+      delete  red [oldRow];  red [oldRow] = NULL;
+      delete  blue[oldRow];  blue[oldRow] = NULL;
+    }
   }
-  delete  image;
+  delete image;
+  delete red;
+  delete blue;
 
   image = newImage;
+  if  (color)
+  {
+    red  = newRed;    newRed  = NULL;
+    blue = newBlue;   newBlue = NULL;
+  }
   bmh.biHeight = newHeight;
   bmh.biWidth  = newWidth;
 }  /* RealocateForBiggerScreen */
@@ -2406,16 +2439,14 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
 void  BmpImage::SaveColor (FILE*  outFile)
 {
   /** @todo  Need to finish implementing and testing compressed color.  */
-  PalletBuilderPtr  palletBuilder = BuildPalletFromRasterData ();
-  if  (palletBuilder->NumOfColors () <= 256)
-    SaveColorCompressed256 (palletBuilder, outFile);
-  else 
-    SaveColor24BPP (outFile);
-  delete  palletBuilder;
-  palletBuilder = NULL;
+  //PalletBuilderPtr  palletBuilder = BuildPalletFromRasterData ();
+  //if  (palletBuilder->NumOfColors () <= 256)
+  //  SaveColorCompressed256 (palletBuilder, outFile);
+  //else 
+  //  SaveColor24BPP (outFile);
+  //delete  palletBuilder;
 
-
-  //SaveColor24BPP (outFile);
+  SaveColor24BPP (outFile);
 }  /* SaveColor */
 
 

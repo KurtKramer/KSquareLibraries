@@ -24,7 +24,7 @@ namespace  KKB
   typedef  GoalKeeperList*  GoalKeeperListPtr;
 
   /**
-   * @brief  Used to deal with issues related to thread synchronization issues when sharing the same variables.  
+   * @brief Used to deal with issues related to thread synchronization issues when sharing the same variables.  
    * @details Use the GoalKeeper::Create method to create an instance of this class.  The Create method will ensure 
    * that two different threads don't accidently create two different instances of the same GoalKeeper object.<p>
    *

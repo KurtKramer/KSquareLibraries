@@ -57,44 +57,57 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
 
   KKStrListPtr  files = osGetListOfFiles (fileSpec);
 
-  KKStrPtr  fileName = NULL;
-  KKStrList::iterator  fIDX;
-  for  (fIDX = files->begin ();  fIDX != files->end ();  ++fIDX)
+  if  (files)
   {
-    fileName = *fIDX;
-    if  (SupportedImageFileFormat (*fileName))
-    {
-      existingIdx = entries.find (*fileName);
-      if  (existingIdx != entries.end ())
-      {
-        dupIdx = duplicates.find (fileName);
-        if  (dupIdx == duplicates.end ())
-          duplicates.insert (pair<KKStr, kkint32> (*fileName, 2));
-        else
-          (dupIdx->second)++;
-      }
+    KKStrPtr  fileName = NULL;
 
-      entries.insert (pair<KKStr, KKStrPtr> (*fileName, dirPath));
+    KKStrList::iterator  fIDX;
+
+    for  (fIDX = files->begin ();  fIDX != files->end ();  ++fIDX)
+    {
+      fileName = *fIDX;
+      if  (SupportedImageFileFormat (*fileName))
+      {
+        existingIdx = entries.find (*fileName);
+        if  (existingIdx != entries.end ())
+        {
+          dupIdx = duplicates.find (fileName);
+          if  (dupIdx == duplicates.end ())
+            duplicates.insert (pair<KKStr, int32> (*fileName, 2));
+          else
+            (dupIdx->second)++;
+        }
+
+        entries.insert (pair<KKStr, KKStrPtr> (*fileName, dirPath));
+      }
     }
+
+    delete  files;
+    files = NULL;
   }
 
-  delete  files;  files = NULL;
 
   KKStrListPtr  dirs = osGetListOfDirectories (*dirPath);
 
-  KKStrPtr  subDirName = NULL;
-  KKStrList::iterator  dIDX;
-  for  (dIDX = dirs->begin ();  dIDX != dirs->end ();  ++dIDX)
+  if  (dirs)
   {
-    subDirName = *dIDX;
-    if  ((*subDirName == ".")  ||  (*subDirName == ".."))
-      continue;
+    KKStrPtr  subDirName = NULL;
+    KKStrList::iterator  dIDX;
+    for  (dIDX = dirs->begin ();  dIDX != dirs->end ();  ++dIDX)
+    {
+      subDirName = *dIDX;
+      if  ((*subDirName == ".")  ||  (*subDirName == ".."))
+        continue;
 
-    Load (*dirPath + *subDirName);
+      Load (*dirPath + *subDirName);
+    }
+
+    delete  dirs;
+    dirs = NULL;
   }
-
-  delete  dirs;  dirs = NULL;
 }  /* Load */
+
+
 
 
 

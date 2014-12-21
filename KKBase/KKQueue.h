@@ -18,7 +18,7 @@
  **                                                                                  *
  **  Developed By:  Kurt A. Kramer                                                   *
  **                                                                                  *
- **  Date:          Way back in history before 1995                                  *
+ **  Date:          Way back in history                                              *
  **                                                                                  *
  *************************************************************************************
  **  A KKQueue template.  Makes it quick and easy to create Container objects.       *

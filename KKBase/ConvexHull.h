@@ -15,8 +15,8 @@
  */
 
 
-#include  "KKBaseTypes.h"
-#include  "MorphOp.h"
+#include "KKBaseTypes.h"
+#include "MorphOp.h"
 
 
 namespace KKB

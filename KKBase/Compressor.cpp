@@ -18,8 +18,8 @@ using namespace std;
 using namespace KKB;
 
 
-void*  Compressor::CreateCompressedBuffer (void*    source,
-                                           kkuint32 sourceLen,
+void*  Compressor::CreateCompressedBuffer (void*      source,
+                                           kkuint32   sourceLen,
                                            kkuint32&  compressedBuffLen
                                           )
 {
@@ -182,13 +182,15 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   if  (compressedBuff == NULL)
     return  NULL;
 
-  kkuint32   have      = 0;
-  uchar*     unCompressedBuff    = NULL;
+  GlobalGoalKeeper::StartBlock ();
 
-  Bytef*     outBuffer = NULL;
+  kkuint32   have              = 0;
+  uchar*     unCompressedBuff  = NULL;
+
+  Bytef*     outBuffer    = NULL;
   kkint32    outBufferLen = 0;
 
-  kkint32    ret;
+  int32      ret;
   z_stream   strm;
 
   /* allocate inflate state */
@@ -203,6 +205,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   {
     cerr << "Compressor::Decompress  ***ERROR***  zlib function call 'inflateInit'  failed." << std::endl;
     unCompressedLen = 0;
+    GlobalGoalKeeper::EndBlock ();
     return NULL;
   }
 
@@ -227,6 +230,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       delete  outBuffer;  outBuffer = NULL;
       delete  unCompressedBuff;     unCompressedBuff    = NULL;
       unCompressedLen = 0;
+      GlobalGoalKeeper::EndBlock ();
       return NULL;
     }
 
@@ -238,9 +242,10 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       {
         cerr << "Compressor::Decompress  ***ERROR***  zlib function call 'inflate'  failed."  << std::endl;
         (void)inflateEnd (&strm);
-        delete  outBuffer;  outBuffer = NULL;
-        delete  unCompressedBuff;     unCompressedBuff    = NULL;
+        delete  outBuffer;          outBuffer        = NULL;
+        delete  unCompressedBuff;   unCompressedBuff = NULL;
         unCompressedLen = 0;
+        GlobalGoalKeeper::EndBlock ();
         return NULL;
       }
     }
@@ -254,7 +259,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     }
     else
     {
-      kkint32  newUnCompressedLen   = unCompressedLen + have;
+      int32  newUnCompressedLen   = unCompressedLen + have;
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);
@@ -269,7 +274,10 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   /* clean up and return */
   (void)inflateEnd(&strm);
 
-  delete  outBuffer;  outBuffer = NULL;
+  delete  outBuffer;
+  outBuffer = NULL;
+
+  GlobalGoalKeeper::EndBlock ();
 
   return  unCompressedBuff;
 #else

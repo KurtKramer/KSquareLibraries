@@ -20,11 +20,11 @@ namespace  KKB
 {
   /**
    *@brief  Expands command line parameters, by parsing for special parameters and expanding them to their full value.
-   *@details A couple of parameters are specifically searched for and processed.  The "-log" and "-CmdFile" parameters.
-   * The "-log" parameter is processed for the log file.  The "-CmdFile" parameter will expand into multiple parameters.
-   * This is done by reading in the text file specified by the "-CmdLine" parameter.  Each line in the text file processed 
-   * for parameters that are then added to the original cmdline in place of '-CmdFile'.  The command line parameters in the
-   * text file can specify another -CmdFile" parameter as long as it does not cause a circular loop.
+   *@details A couple of parameters are specifically searched for and processed. The "-log" and "-CmdFile" parameters.
+   * The "-log" parameter is provides the name of a file where logging messages are to be written to via the "RunLog"
+   * class. The "-CmdFile" parameter provides the name of a text file that contains more command-line parameters that
+   * are to be processed along with all other parameters; the text in this file will be inserted where the original
+   * -"CmdLine" parameter appeared.
    *@author  Kurt Kramer
    */
 
@@ -32,7 +32,7 @@ namespace  KKB
   {
   public:
     /**
-     *@brief Construct using the parameters passed through on the command line into main().
+     *@brief Constructor using the parameters passed through on the command line into main().
      */
     CmdLineExpander (const KKStr&  _applicationName,
                      RunLog&       _log,
@@ -55,24 +55,30 @@ namespace  KKB
                           char**  argv
                          );
 
-    const VectorKKStr&  ExpandedParameters ()  const  {return expandedParameters;}
-    const KKStr&        LogFileName        ()  const  {return logFileName;}
-    bool                ParmsGood          ()  const  {return parmsGood;}
+    const VectorKKStr&        ExpandedParameters     ()  const  {return expandedParameters;}
+    const vector<KKStrPair>&  ExpandedParameterPairs ()  const  {return expandedParameterPairs;}
+    const KKStr&              LogFileName            ()  const  {return logFileName;}
+    bool                      ParmsGood              ()  const  {return parmsGood;}
 
   private:
      void  BuildCmdLineParameters (const VectorKKStr&  argv);
+
+     void  BuildExpandedParameterPairs ();
 
      void  ExtractParametersFromFile (const KKStr&  cmdFileName, 
                                       VectorKKStr&  cmdFileParameters,
                                       bool&         validFile
                                      );
 
-      KKStr        applicationName;
-      VectorKKStr  cmdFileStack;
-      VectorKKStr  expandedParameters;
-      RunLog&      log;
-      KKStr        logFileName;
-      bool         parmsGood;
+     bool  ParameterIsASwitch (const KKStr&  parm);
+
+     KKStr              applicationName;
+     VectorKKStr        cmdFileStack;
+     vector<KKStrPair>  expandedParameterPairs;
+     VectorKKStr        expandedParameters;
+     RunLog&            log;
+     KKStr              logFileName;
+     bool               parmsGood;
   };  /* CmdLineExpander */
 
 
