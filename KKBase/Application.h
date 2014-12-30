@@ -6,7 +6,6 @@
 #ifndef  _APPLICATION_
 #define  _APPLICATION_
 
-#include "KKBaseTypes.h"
 #include "KKStr.h"
 #include "RunLog.h"
 
@@ -26,6 +25,13 @@ namespace KKB
   {
   public:
     /** 
+     *@brief  Constructor for Application class that will start with a default logger(RunLog),
+     *@details After creating an instance of this class you initialize it by calling InitalizeApplication.
+     */
+    Application ();
+
+
+    /** 
      *@brief  Copy Constructor for Application class.
      *@param[in]  _application  Application instance to copy.
      */
@@ -33,27 +39,12 @@ namespace KKB
 
 
     /**
-     *@brief  Constructor for Application class with no parameters.
-     *@details This constructor is not interested in any command line parameters.
+     *@brief  Constructor for Application class where we already have an existing logger '_log'.
+     *@details After creating an instance of this class you initialize it by calling InitalizeApplication.
      *@param[in]  _log  A reference to a RunLog object.
      */
     Application (RunLog&  _log);
 
-
-    /** 
-     *@brief  Constructor for Application class that expects Command Line Parameters.
-     *@details This constructor will scan the command line parameters for the log file options  (-L, -Log, or -LogFile)  and use its
-     *        parameter as the LogFile name.  If none is provided it will assume the stdout as the Log File to write to.  It will take
-     *        ownership of this log file and delete it in its destructor.  Right after calling this constructor you will need to
-     *        call the method ProcessCmdLineParameters.
-     *@see  RunLog
-     *@see  ProcessCmdLineParameters
-     *@param[in]  argc  Number of arguments in argv.
-     *@param[in]  argv  List of ascii-z strings; one string for each argument.
-     */
-    Application (kkint32  argc,
-                 char**   argv
-                );
 
     virtual
     ~Application ();
@@ -79,9 +70,54 @@ namespace KKB
 
     void         AssignLog (RunLog&  _log);  /**< @brief Replaces the Log file to write to.  */
 
+    virtual
     KKStr        BuildDate ()  const;
 
 
+
+    /** 
+     *@brief  Initialized Application Instance; 1st method to be called after instance construction.
+     *@details This method will scan the command line parameters for the log file options  (-L, -Log, or -LogFile)  and use its
+     *        parameter as the LogFile name.  If none is provided it will assume the stdout as the Log File to write to.  It will take
+     *        ownership of this log file and delete it in its destructor.  Right after calling this constructor you will need to
+     *        call the method ProcessCmdLineParameters.
+     *@see  RunLog
+     *@see  ProcessCmdLineParameters
+     *@param[in]  argc  Number of arguments in argv.
+     *@param[in]  argv  List of asciiz strings; one string for each argument.
+     */
+    virtual
+    void     InitalizeApplication (kkint32  argc,
+                                   char**   argv
+                                  );
+
+
+
+  protected:
+    /**
+     *@brief  Will display Command Lone parameters that the 'Application' class will manage.
+     *@details  Derived classes that implement this method need to call their immediate base class version of this method
+     * to include these parameters.
+     */
+    virtual
+    void  DisplayCommandLineParameters ();
+
+
+    /**
+     *@brief This method will get called once for each parameter specified in the command line.
+     *@details  Derived classes should define this method to intercept parameters that they are interested in.
+     *          Parameters are treated as pairs, Switched and Values where switches have a leading dash("-").
+     *          The CmdLineExpander class will be used to expand any "-CmdFile" parameters.
+     *@param[in] parmSwitch      The fill switch parameter.
+     *@param[in] parmValue       Any value parameter that followed the switch parameter.
+     */
+    virtual 
+    bool    ProcessCmdLineParameter (const KKStr&  parmSwitch, 
+                                     const KKStr&  parmValue
+                                    );
+
+
+  private: 
     /**
      *@brief Processes all the command line parameters; will also expand the -CmdFile option.
      *@details This method assumes that the command line consists of pairs of Switches and Operands.  Switches are proceeded by the
@@ -91,41 +127,9 @@ namespace KKB
      *@param[in] argc   Number of parameters.
      *@param[in] argv   The actual parameters.
      */
-    void         ProcessCmdLineParameters (kkint32  argc,
-                                           char**   argv
-                                          );
-
-    /**
-     *@brief This method will get called once for each parameter specified in the command line.
-     *@details  Derived classes should define this method to intercept parameters that they are interested in.
-     *          Parameters are treated as pairs, Switched and Values where switches have a leading dash("-").
-     *          The CmdLineExpander class will be used to expand any "-CmdFile" parameters.
-     *@param[in] parmSwitchCode  The first character of the switch parameter.
-     *@param[in] parmSwitch      The fill switch parameter.
-     *@param[in] parmValue       Any value parameter that followed the switch parameter.
-     */
-    virtual 
-    bool         ProcessCmdLineParameter (char    parmSwitchCode, 
-                                          KKStr   parmSwitch, 
-                                          KKStr   parmValue
+    void        ProcessCmdLineParameters (kkint32  argc,
+                                          char**   argv
                                          );
-
-
-  private: 
-    void        BuildCmdLineParameters (const VectorKKStr&  argv,
-                                        VectorKKStr&        expamdedParameters,
-                                        VectorKKStr&        cmdFileStack,
-                                        bool&               parmsGood
-                                       );
-
-  
-    void        ExtractParametersFromFile (const KKStr&  cmdFileName, 
-                                           VectorKKStr&  cmdFileParameters,
-                                           bool&         validFile
-                                          );
-
-
-    bool        ParameterIsASwitch (const KKStr&  parm);
 
 
     bool        abort;
@@ -134,8 +138,9 @@ namespace KKB
     RunLog&     log;  
 
   private:
-    KKStr       logFileName;
-    RunLogPtr   ourLog;  // We use this Log file if one is not provided,
+    vector<KKStrPair>  expandedParameterPairs;
+    KKStr              logFileName;
+    RunLogPtr          ourLog;  // We use this Log file if one is not provided,
   };  /* Application */
 }  /* NameSpace KKB */
 

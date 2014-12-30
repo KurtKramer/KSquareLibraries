@@ -510,9 +510,9 @@ kkuint64   DateType::Seconds ()  const
 }
 
 
-KKU::uint32  DateType::ToDays    ()  const  {return  Days ();}
-KKU::uint32  DateType::ToHours   ()  const  {return  Days () * 24;}
-KKU::uint64  DateType::ToSeconds ()  const  {return  (uint64)(Days ()) * (uint64)86400;}
+kkuint32  DateType::ToDays    ()  const  {return  Days ();}
+kkuint32  DateType::ToHours   ()  const  {return  Days () * 24;}
+kkuint64  DateType::ToSeconds ()  const  {return  (kkuint64)(Days ()) * (kkuint64)86400;}
 
 
 

@@ -1,6 +1,4 @@
-
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <ctype.h>
 #include <time.h>
@@ -36,7 +34,6 @@ Attribute::Attribute (const KKStr&   _name,
     fieldNum           (_fieldNum),
     name               (_name),
     nameUpper          (_name),
-    nominalValues      (NULL),
     nominalValuesUpper (NULL),
     type               (_type)
 
@@ -44,8 +41,9 @@ Attribute::Attribute (const KKStr&   _name,
   nameUpper.Upper ();
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
   {
-    nominalValues      = new KKStrList (true);
-    nominalValuesUpper = new KKStrList (true);
+    nominalValuesUpper = new KKStrListIndexed (true,   // true == nominalValuesUpper will own its contents.
+                                               false   // false = Not Case Sensitive.
+                                              );
   }
 }
 
@@ -54,22 +52,13 @@ Attribute::Attribute (const Attribute&  a):
     fieldNum           (a.fieldNum),
     name               (a.name),
     nameUpper          (a.nameUpper),
-    nominalValues      (NULL),
     nominalValuesUpper (NULL),
     type               (a.type)
 
 {
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
   {
-    nominalValues      = new KKStrList (true);
-    nominalValuesUpper = new KKStrList (true);
-
-    kkint32  x;
-    for  (x = 0;  x < a.nominalValues->QueueSize ();  x++)
-    {
-      nominalValues->PushOnBack      (new KKStr (a.nominalValues->IdxToPtr      (x)));
-      nominalValuesUpper->PushOnBack (new KKStr (a.nominalValuesUpper->IdxToPtr (x)));
-    }
+    nominalValuesUpper = new KKStrListIndexed (*(a.nominalValuesUpper));
   }
 }
 
@@ -78,7 +67,6 @@ Attribute::Attribute (const Attribute&  a):
 
 Attribute::~Attribute ()
 {
-  delete  nominalValues;
   delete  nominalValuesUpper;
 }
 
@@ -86,11 +74,8 @@ Attribute::~Attribute ()
 kkint32  Attribute::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (Attribute)  + 
-    name.MemoryConsumedEstimated ()                  +
-    nameUpper.MemoryConsumedEstimated ();
-
-  if  (nominalValues)
-    memoryConsumedEstimated += nominalValues->MemoryConsumedEstimated ();
+           name.MemoryConsumedEstimated ()               +
+           nameUpper.MemoryConsumedEstimated ();
 
   if  (nominalValuesUpper)
     memoryConsumedEstimated += nominalValuesUpper->MemoryConsumedEstimated ();
@@ -104,13 +89,10 @@ void  Attribute::ValidateNominalType (const KKStr&  funcName)  const
 {
   if  ((type != NominalAttribute)  &&  (type != SymbolicAttribute))
   {
-    cerr << endl
-         << "***  ERROR  ***             Attribute::" << funcName << endl
-         << endl
-         << "     Must be a Nominal Type to perform this operation."
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  msg (80);
+    msg <<  "Attribute::ValidateNominalType   Attribute[" << funcName << "] must be a Nominal or Symbolic Type to perform this operation.";
+    cerr << std::endl << msg << std::endl << std::endl;
+    throw  KKException (msg);
   }
 
   return;
@@ -119,11 +101,10 @@ void  Attribute::ValidateNominalType (const KKStr&  funcName)  const
 
 
 void  Attribute::AddANominalValue (const KKStr&  nominalValue,
-                                   bool&          alreadyExists
+                                   bool&         alreadyExists
                                   )
 {
   ValidateNominalType ("AddANominalValue");
-
   kkint32  code = GetNominalCode (nominalValue);
   if  (code >= 0)
   {
@@ -132,11 +113,7 @@ void  Attribute::AddANominalValue (const KKStr&  nominalValue,
   }
 
   alreadyExists = false;
-
-  KKStrPtr  nominalValueUpper = new KKStr (nominalValue);
-  nominalValueUpper->Upper ();
-  nominalValues->PushOnBack (new KKStr (nominalValue));
-  nominalValuesUpper->PushOnBack (nominalValueUpper);
+  nominalValuesUpper->Add (new KKStr (nominalValue));
 }  /* AddANominalValue */
 
 
@@ -155,24 +132,20 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
     return missingDataValue;
   }
 
-  if  (!nominalValues)
+  if  (!nominalValuesUpper)
     return  KKStr::EmptyStr ();
 
-  if  ((code < 0)  ||  (code >= nominalValues->QueueSize ()))
+  KKStrConstPtr  result = nominalValuesUpper->LookUp (code);
+  if  (result == NULL)
   {
-    // Out of bounds.  This should never happen,  if it does,  there is a major logic
-    // error in the program that NEEDS to be fixed NOW NOW NOW
-    cerr << endl
-         << "***  ERROR  ***             Attribute::GetNominalValue" << endl
-         << "      AttributeName[" << name                        << "]" << endl
-         << "      Cardinality  [" << nominalValues->QueueSize () << "]" << endl
-         << "      Code         [" << code                        << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    cerr << endl << endl
+      << "Attribute::GetNominalValue   ***ERROR***    Code[" << code << "]  Does not exist." << endl
+      << "                    Attribute::Name[" << name << "]"  << endl
+      << endl;
+    return  KKStr::EmptyStr ();
   }
-  
-  return  *(nominalValues->IdxToPtr (code));
+
+  return  *result;
 }  /* GetNominalValue */
 
 
@@ -180,7 +153,7 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 kkint32  Attribute::Cardinality ()
 {
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
-    return  nominalValues->QueueSize ();
+    return  nominalValuesUpper->size ();
   else
     return 999999999;
 }  /* Cardinality */
@@ -190,18 +163,8 @@ kkint32  Attribute::Cardinality ()
 kkint32  Attribute::GetNominalCode  (const KKStr&  nominalValue)  const
 {
   ValidateNominalType ("GetNominalCode");
-
-  KKStr  nominalValueUpper = nominalValue.ToUpper ();
-  
-  kkint32  code = 0;
-  while  (code < nominalValuesUpper->QueueSize ())
-  {
-    if  (nominalValueUpper == *(nominalValuesUpper->IdxToPtr (code)))
-      return code;
-    code++;
-  }
-
-  return -1;
+  int32  code = nominalValuesUpper->LookUp (nominalValue);
+  return code;
 }  /* GetNominalCode */
 
 
@@ -234,20 +197,15 @@ bool  Attribute::operator!= (const Attribute&  rightSide)  const
 
 Attribute&  Attribute::operator= (const Attribute&  right)
 {
-  fieldNum           = right.fieldNum;
-  name               = right.name;
-  nameUpper          = right.nameUpper;
+  fieldNum  = right.fieldNum;
+  name      = right.name;
+  nameUpper = right.nameUpper;
 
-  if  (right.nominalValues  &&  nominalValuesUpper)
-  {
-    nominalValues      = right.nominalValues->DuplicateListAndContents ();
-    nominalValuesUpper = right.nominalValuesUpper->DuplicateListAndContents ();
-  }
+  delete  nominalValuesUpper;
+  if  (nominalValuesUpper)
+    nominalValuesUpper = new KKStrListIndexed (*right.nominalValuesUpper);
   else
-  {
-    nominalValues      = NULL;
     nominalValuesUpper = NULL;
-  }
 
   type = right.type;
   return  *this;
@@ -390,20 +348,18 @@ KKStr  KKMachineLearning::AttributeTypeToStr (AttributeType  type)
 
 
 
-bool  KKMachineLearning::operator== (const AttributeList&  left,
-                                     const AttributeList&  right
-                                    )
+bool  AttributeList::operator== (const AttributeList&  right)  const
 { 
-  if  (left.size () != right.size ())
+  if  (size () != right.size ())
     return false;
 
   AttributeList::const_iterator idxL;
   AttributeList::const_iterator idxR;
 
-  idxL = left.begin ();
+  idxL = begin ();
   idxR = right.begin ();
 
-  while  (idxL != left.end ())
+  while  (idxL != end ())
   {
     AttributePtr leftAttribute  = *idxL;
     AttributePtr rightAttribute = *idxR;
@@ -411,8 +367,8 @@ bool  KKMachineLearning::operator== (const AttributeList&  left,
     if  ((*leftAttribute) != (*rightAttribute))
       return false;
 
-    idxL++;
-    idxR++;
+    ++idxL;
+    ++idxR;
   }
 
   return true;
@@ -420,11 +376,9 @@ bool  KKMachineLearning::operator== (const AttributeList&  left,
 
 
 
-bool  KKMachineLearning::operator!= (const AttributeList&  left,
-                                     const AttributeList&  right
-                                    )
+bool  AttributeList::operator!= (const AttributeList&  right)  const
 { 
-  return  !(left == right);
+  return  !(*this == right);
 }  /* operator!= */
 
 

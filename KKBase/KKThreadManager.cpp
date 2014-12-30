@@ -24,7 +24,7 @@ KKThreadManager::KKThreadManager (const KKStr&   _managerName,
                                   kkuint32       _maxNumThreads,
                                   MsgQueuePtr    _msgQueue
                                  ):
-  KKThread (_managerName, _msgQueue),
+  KKThread (_managerName, NULL, _msgQueue),
 
   crashed            (false),
   doneExecuting      (false),

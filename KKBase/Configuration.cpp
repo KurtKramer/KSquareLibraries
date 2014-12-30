@@ -394,7 +394,7 @@ void  Configuration::PrintFormatErrors (ostream& o)
   o << endl
     << "Num" << "\t" << "LineNum" << "\t" << "Description" << endl;
 
-  for  (uint32 idx = 0;  idx < formatErrors.size ();  ++idx)
+  for  (kkuint32 idx = 0;  idx < formatErrors.size ();  ++idx)
   {
     o << idx << "\t" << formatErrorsLineNums[idx]  << "\t"  << formatErrors[idx] << endl;
   }

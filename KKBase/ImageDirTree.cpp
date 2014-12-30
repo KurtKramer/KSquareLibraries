@@ -73,7 +73,7 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
         {
           dupIdx = duplicates.find (fileName);
           if  (dupIdx == duplicates.end ())
-            duplicates.insert (pair<KKStr, int32> (*fileName, 2));
+            duplicates.insert (pair<KKStr, kkint32> (*fileName, 2));
           else
             (dupIdx->second)++;
         }

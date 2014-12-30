@@ -66,16 +66,34 @@ namespace KKMachineLearning
 
     ~Attribute ();
 
+    /**
+      *@brief  Adds a allowable Nominal value to the Nominal or Symbolic field that this attribute represents.
+      *@details To only be used by instances of 'Attribute' that represent Nominal or Symbolic type attributes. If the
+      *         Attribute type is not s 'Nominal' or 'Symbolic' then this method will throw am exception
+      *@param[in] nominalValue A possible value that this instance of 'Attribute' could represent.
+      *@param[out] alreadyExists Indicates if this instance of 'Attribute' already contains a nominal value called 'nominalValue'.
+      */
     void           AddANominalValue (const KKStr&  nominalValue,
                                      bool&         alreadyExists
                                     );
 
-    kkint32        Cardinality (); 
+    /**
+     *@brief Returns back the cardinality of the attribute; the number of possible values it can take.
+     *@details Only  attributes with type NominalAttribute or SymbolicAttribute have a fixed number
+     *         of possible values all others will return 999999999.
+     */
+    kkint32        Cardinality ();
 
     kkint32        FieldNum ()  const  {return  fieldNum;}
 
     kkint32        GetNominalCode  (const KKStr&  nominalValue)  const;  // -1 means not found.
 
+    /**
+     *@brief  Returns the nominal value for the given ordinal value.
+     *@details For example: you could have a Attribute called DayOfTheWeek that would be type 'NominalAttribute'
+     *  where its possible values  are "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", and "Sat". In this case a call
+     *  to this method where 'code' == 3 would return "Wed".
+     */
     const  
     KKStr&         GetNominalValue (kkint32 code) const;
 
@@ -99,12 +117,11 @@ namespace KKMachineLearning
   private:
     void    ValidateNominalType (const KKStr&  funcName)  const;
 
-    kkint32        fieldNum;
-    KKStr          name;
-    KKStr          nameUpper;
-    KKStrListPtr   nominalValues;
-    KKStrListPtr   nominalValuesUpper;
-    AttributeType  type;
+    kkint32            fieldNum;
+    KKStr              name;
+    KKStr              nameUpper;
+    KKStrListIndexed*  nominalValuesUpper;
+    AttributeType      type;
   };  /* Attribute */
 
   typedef  Attribute*  AttributePtr;
@@ -129,20 +146,16 @@ namespace KKMachineLearning
     void  PushOnFront  (AttributePtr  attribute);
 
     /**
-     *@brief  Determines if two different attribute lists are the same.  Compares 
+     *@brief  Determines if two different attribute lists are the same. Compares 
      *        each respective attribute, name and type.                                                
      */
-    friend  bool  operator== (const AttributeList&  left,
-                              const AttributeList&  right
-                             );
+    bool  operator== (const AttributeList&  right);
 
     /**
-     *@brief  Determines if two different attribute lists are different.  Compares 
+     *@brief  Determines if two different attribute lists are different. Compares 
      *        each respective attribute, name and type.                                                
      */
-    friend  bool  operator!= (const AttributeList&  left,
-                              const AttributeList&  right
-                             );
+    friend  bool  operator!= (const AttributeList&  right);
 
   private:
     void  AddToNameIndex (AttributePtr  attribute);
@@ -151,18 +164,6 @@ namespace KKMachineLearning
   };  /* AttributeList */
 
   KKStr  AttributeTypeToStr (AttributeType  type);
-
-
-  // Created this declaration because MinGW compiler wanted one declared in the namespace;  2013-12-06
-  bool  operator== (const AttributeList&  left,
-                    const AttributeList&  right
-                   );
-
-  bool  operator!= (const AttributeList&  left,
-                    const AttributeList&  right
-                   );
-
-
 
 }  /* namespace KKMachineLearning */
 

@@ -249,7 +249,7 @@ kkuint32  ScannerFile3BitEncoded::ReadBufferFrame ()
     ++numScanLinesReadThisFrameBuffer;
   }
 
-  bool  endOfFileFound = feof (file);
+  bool  endOfFileFound = (feof (file) != 0);
   if  (endOfFileFound)
     cerr << "end of file was found." << endl;
 

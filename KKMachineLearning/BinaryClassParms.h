@@ -111,7 +111,7 @@ namespace KKMachineLearning
   public:
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
-    BinaryClassParmsList (bool   _owner,
+    BinaryClassParmsList (bool     _owner,
                           kkint32  _size
                          );
     

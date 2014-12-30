@@ -54,7 +54,7 @@ namespace  KKB
 
     bool  AnyProcessorsCrashed ();
 
-    void  KillAllRunningThreads ();  /**< Will STOP ALL running threads;  NOT Graceful;  */
+    void  KillAllRunningThreads ();  /**< Will STOP ALL running threads;  NOT Gracefull;  */
 
     void  ManageThreads (bool&  successful);
 
