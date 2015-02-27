@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}</ProjectGuid>
+    <RootNamespace>KKBase</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\Libraries\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\Libraries\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Atom.cpp" />
+    <ClCompile Include="BitString.cpp" />
+    <ClCompile Include="Blob.cpp" />
+    <ClCompile Include="BMPImage.cpp" />
+    <ClCompile Include="Chart.cpp" />
+    <ClCompile Include="CmdLineExpander.cpp" />
+    <ClCompile Include="Compressor.cpp" />
+    <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="ContourFollower.cpp" />
+    <ClCompile Include="ConvexHull.cpp" />
+    <ClCompile Include="DateTime.cpp" />
+    <ClCompile Include="EigenVector.cpp" />
+    <ClCompile Include="GlobalGoalKeeper.cpp" />
+    <ClCompile Include="GoalKeeper.cpp" />
+    <ClCompile Include="GoalKeeperSimple.cpp" />
+    <ClCompile Include="Histogram.cpp" />
+    <ClCompile Include="HTMLReport.cpp" />
+    <ClCompile Include="ImageDirTree.cpp" />
+    <ClCompile Include="ImageIO.cpp" />
+    <ClCompile Include="KKBaseTypes.cpp" />
+    <ClCompile Include="KKException.cpp" />
+    <ClCompile Include="KKObservable.cpp" />
+    <ClCompile Include="KKObserver.cpp" />
+    <ClCompile Include="KKStr.cpp" />
+    <ClCompile Include="KKStrMatrix.cpp" />
+    <ClCompile Include="KKStrParser.cpp" />
+    <ClCompile Include="KKThread.cpp" />
+    <ClCompile Include="KKThreadManager.cpp" />
+    <ClCompile Include="kku_fftw.cpp" />
+    <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MorphOp.cpp" />
+    <ClCompile Include="MorphOpBinarize.cpp" />
+    <ClCompile Include="MorphOpErosion.cpp" />
+    <ClCompile Include="MorphOpMaskExclude.cpp" />
+    <ClCompile Include="MorphOpStretcher.cpp" />
+    <ClCompile Include="MsgQueue.cpp" />
+    <ClCompile Include="OSservices.cpp" />
+    <ClCompile Include="PixelValue.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="RandomNumGenerator.cpp" />
+    <ClCompile Include="Raster.cpp" />
+    <ClCompile Include="RasterBuffer.cpp" />
+    <ClCompile Include="RunLog.cpp" />
+    <ClCompile Include="SegmentorOTSU.cpp" />
+    <ClCompile Include="SimpleCompressor.cpp" />
+    <ClCompile Include="Sobel.cpp" />
+    <ClCompile Include="StatisticalFunctions.cpp" />
+    <ClCompile Include="TokenBuffer.cpp" />
+    <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="XmlStream.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Atom.h" />
+    <ClInclude Include="BitString.h" />
+    <ClInclude Include="Blob.h" />
+    <ClInclude Include="BMPheader.h" />
+    <ClInclude Include="BMPImage.h" />
+    <ClInclude Include="Chart.h" />
+    <ClInclude Include="CmdLineExpander.h" />
+    <ClInclude Include="Compressor.h" />
+    <ClInclude Include="Configuration.h" />
+    <ClInclude Include="ContourFollower.h" />
+    <ClInclude Include="ConvexHull.h" />
+    <ClInclude Include="DateTime.h" />
+    <ClInclude Include="EigenVector.h" />
+    <ClInclude Include="FirstIncludes.h" />
+    <ClInclude Include="GlobalGoalKeeper.h" />
+    <ClInclude Include="GoalKeeper.h" />
+    <ClInclude Include="GoalKeeperSimple.h" />
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="Histogram.h" />
+    <ClInclude Include="HTMLReport.h" />
+    <ClInclude Include="ImageDirTree.h" />
+    <ClInclude Include="ImageIO.h" />
+    <ClInclude Include="KKB_Namespace.h" />
+    <ClInclude Include="KKBaseTypes.h" />
+    <ClInclude Include="KKException.h" />
+    <ClInclude Include="KKObservable.h" />
+    <ClInclude Include="KKObserver.h" />
+    <ClInclude Include="KKQueue.h" />
+    <ClInclude Include="KKStr.h" />
+    <ClInclude Include="KKStrMatrix.h" />
+    <ClInclude Include="KKStrParser.h" />
+    <ClInclude Include="KKThread.h" />
+    <ClInclude Include="KKThreadManager.h" />
+    <ClInclude Include="KKU.h" />
+    <ClInclude Include="kku_fftw.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MemoryDebug.h" />
+    <ClInclude Include="MorphOp.h" />
+    <ClInclude Include="MorphOpBinarize.h" />
+    <ClInclude Include="MorphOpErosion.h" />
+    <ClInclude Include="MorphOpMaskExclude.h" />
+    <ClInclude Include="MorphOpStretcher.h" />
+    <ClInclude Include="MsgQueue.h" />
+    <ClInclude Include="OSservices.h" />
+    <ClInclude Include="PixelValue.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="RandomNumGenerator.h" />
+    <ClInclude Include="Raster.h" />
+    <ClInclude Include="RasterBuffer.h" />
+    <ClInclude Include="RBTree.h" />
+    <ClInclude Include="RunLog.h" />
+    <ClInclude Include="SegmentorOTSU.h" />
+    <ClInclude Include="SimpleCompressor.h" />
+    <ClInclude Include="Sobel.h" />
+    <ClInclude Include="StatisticalFunctions.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TokenBuffer.h" />
+    <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="XmlStream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

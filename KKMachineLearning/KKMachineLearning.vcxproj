@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}</ProjectGuid>
+    <RootNamespace>KKMachineLearning</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)\Libraries\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)\Libraries\$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="BinaryClassParms.cpp" />
+    <ClCompile Include="ClassAssignments.cpp" />
+    <ClCompile Include="ClassificationBiasMatrix.cpp" />
+    <ClCompile Include="Classifier2.cpp" />
+    <ClCompile Include="ClassProb.cpp" />
+    <ClCompile Include="ClassStatistic.cpp" />
+    <ClCompile Include="ConfusionMatrix2.cpp" />
+    <ClCompile Include="CrossValidation.cpp" />
+    <ClCompile Include="CrossValidationMxN.cpp" />
+    <ClCompile Include="CrossValidationVoting.cpp" />
+    <ClCompile Include="DuplicateImages.cpp" />
+    <ClCompile Include="FactoryFVProducer.cpp" />
+    <ClCompile Include="FeatureEncoder.cpp" />
+    <ClCompile Include="FeatureEncoder2.cpp" />
+    <ClCompile Include="FeatureFileIO.cpp" />
+    <ClCompile Include="FeatureFileIOArff.cpp" />
+    <ClCompile Include="FeatureFileIOC45.cpp" />
+    <ClCompile Include="FeatureFileIOColumn.cpp" />
+    <ClCompile Include="FeatureFileIODstWeb.cpp" />
+    <ClCompile Include="FeatureFileIORoberts.cpp" />
+    <ClCompile Include="FeatureFileIOSparse.cpp" />
+    <ClCompile Include="FeatureFileIOUCI.cpp" />
+    <ClCompile Include="FeatureNumList.cpp" />
+    <ClCompile Include="FeatureVector.cpp" />
+    <ClCompile Include="FeatureVectorProducer.cpp" />
+    <ClCompile Include="FileDesc.cpp" />
+    <ClCompile Include="ImageFeaturesDataIndexed.cpp" />
+    <ClCompile Include="ImageFeaturesNameIndexed.cpp" />
+    <ClCompile Include="KKMLVariables.cpp" />
+    <ClCompile Include="MLClass.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelKnn.cpp" />
+    <ClCompile Include="ModelOldSVM.cpp" />
+    <ClCompile Include="ModelParam.cpp" />
+    <ClCompile Include="ModelParamKnn.cpp" />
+    <ClCompile Include="ModelParamOldSVM.cpp" />
+    <ClCompile Include="ModelParamSvmBase.cpp" />
+    <ClCompile Include="ModelParamUsfCasCor.cpp" />
+    <ClCompile Include="ModelSvmBase.cpp" />
+    <ClCompile Include="ModelUsfCasCor.cpp" />
+    <ClCompile Include="NormalizationParms.cpp" />
+    <ClCompile Include="Orderings.cpp" />
+    <ClCompile Include="SizeDistribution.cpp" />
+    <ClCompile Include="svm.cpp" />
+    <ClCompile Include="svm2.cpp" />
+    <ClCompile Include="svm289_BFS.cpp" />
+    <ClCompile Include="SVMModel.cpp" />
+    <ClCompile Include="SVMparam.cpp" />
+    <ClCompile Include="SvmWrapper.cpp" />
+    <ClCompile Include="TrainingClass.cpp" />
+    <ClCompile Include="TrainingConfiguration2.cpp" />
+    <ClCompile Include="TrainingProcess2.cpp" />
+    <ClCompile Include="UsfCasCor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Attribute.h" />
+    <ClInclude Include="BinaryClassParms.h" />
+    <ClInclude Include="ClassAssignments.h" />
+    <ClInclude Include="ClassificationBiasMatrix.h" />
+    <ClInclude Include="Classifier2.h" />
+    <ClInclude Include="ClassProb.h" />
+    <ClInclude Include="ClassStatistic.h" />
+    <ClInclude Include="ConfusionMatrix2.h" />
+    <ClInclude Include="CrossValidation.h" />
+    <ClInclude Include="CrossValidationMxN.h" />
+    <ClInclude Include="CrossValidationVoting.h" />
+    <ClInclude Include="DuplicateImages.h" />
+    <ClInclude Include="FactoryFVProducer.h" />
+    <ClInclude Include="FeatureEncoder.h" />
+    <ClInclude Include="FeatureEncoder2.h" />
+    <ClInclude Include="FeatureFileIO.h" />
+    <ClInclude Include="FeatureFileIOArff.h" />
+    <ClInclude Include="FeatureFileIOC45.h" />
+    <ClInclude Include="FeatureFileIOColumn.h" />
+    <ClInclude Include="FeatureFileIODstWeb.h" />
+    <ClInclude Include="FeatureFileIORoberts.h" />
+    <ClInclude Include="FeatureFileIOSparse.h" />
+    <ClInclude Include="FeatureFileIOUCI.h" />
+    <ClInclude Include="FeatureNumList.h" />
+    <ClInclude Include="FeatureVector.h" />
+    <ClInclude Include="FeatureVectorProducer.h" />
+    <ClInclude Include="FileDesc.h" />
+    <ClInclude Include="ImageFeaturesDataIndexed.h" />
+    <ClInclude Include="ImageFeaturesNameIndexed.h" />
+    <ClInclude Include="KKMLVariables.h" />
+    <ClInclude Include="MLClass.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelKnn.h" />
+    <ClInclude Include="ModelOldSVM.h" />
+    <ClInclude Include="ModelParam.h" />
+    <ClInclude Include="ModelParamKnn.h" />
+    <ClInclude Include="ModelParamOldSVM.h" />
+    <ClInclude Include="ModelParamSvmBase.h" />
+    <ClInclude Include="ModelParamUsfCasCor.h" />
+    <ClInclude Include="ModelSvmBase.h" />
+    <ClInclude Include="ModelUsfCasCor.h" />
+    <ClInclude Include="NormalizationParms.h" />
+    <ClInclude Include="Orderings.h" />
+    <ClInclude Include="SizeDistribution.h" />
+    <ClInclude Include="svm.h" />
+    <ClInclude Include="svm2.h" />
+    <ClInclude Include="svm289_BFS.h" />
+    <ClInclude Include="SVMModel.h" />
+    <ClInclude Include="SVMparam.h" />
+    <ClInclude Include="SvmWrapper.h" />
+    <ClInclude Include="TrainingClass.h" />
+    <ClInclude Include="TrainingConfiguration2.h" />
+    <ClInclude Include="TrainingProcess2.h" />
+    <ClInclude Include="UsfCasCor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KKBase\KKBase.vcxproj">
+      <Project>{d9bb6d83-937e-40fd-bfc3-ff48d8a04d11}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

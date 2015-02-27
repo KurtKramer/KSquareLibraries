@@ -34,3 +34,5 @@ Release
 *.user
 /OutsidePackages
 /Doxygen/html
+Backup
+
