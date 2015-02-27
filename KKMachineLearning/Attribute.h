@@ -149,13 +149,13 @@ namespace KKMachineLearning
      *@brief  Determines if two different attribute lists are the same. Compares 
      *        each respective attribute, name and type.                                                
      */
-    bool  operator== (const AttributeList&  right);
-
+    bool  operator== (const AttributeList&  right)  const;
+  
     /**
      *@brief  Determines if two different attribute lists are different. Compares 
      *        each respective attribute, name and type.                                                
      */
-    friend  bool  operator!= (const AttributeList&  right);
+    bool  operator!= (const AttributeList&  right)  const;
 
   private:
     void  AddToNameIndex (AttributePtr  attribute);

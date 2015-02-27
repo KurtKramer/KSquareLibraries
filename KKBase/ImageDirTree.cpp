@@ -2,24 +2,25 @@
  * Copyright (C) 1994-2011 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdio.h>
+#include <stdio.h>
 
-#include  <vector>
-#include  <map>
-#include  <algorithm>
-#include  <functional>
-#include  <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <functional>
+#include <iostream>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace std;
 
-#include  "ImageDirTree.h"
-#include  "ImageIO.h"
-#include  "OSservices.h"
-#include  "KKStr.h"
+#include "ImageDirTree.h"
+#include "ImageIO.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
+#include "OSservices.h"
 using namespace KKB;
 
 

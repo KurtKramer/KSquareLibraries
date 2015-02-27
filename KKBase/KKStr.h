@@ -14,6 +14,7 @@
 //*  KKStr class and string manipulation routines.
 //************************************************************************************
 
+#include <map>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -867,6 +868,71 @@ namespace  KKB
 
   typedef  KKStrList::KKStrListPtr  KKStrListPtr;
   typedef  KKStrList::KKStrListPtr  StringListPtr; /**<  For comparability with previous version. */
+
+
+
+
+
+  /**
+   *@brief Maintains a list of ordered KKStr instances that can be recalled by eithe string of index.
+   */
+  class  KKStrListIndexed
+  {
+  public:
+    KKStrListIndexed (bool _owner,
+                      bool _caseSensitive
+                     );
+
+    KKStrListIndexed (const KKStrListIndexed&  list);
+
+    ~KKStrListIndexed ();
+
+    kkint32 Add (KKStrPtr  s);
+
+    kkint32 Add (const KKStr&  s);
+
+    kkint32 Delete (KKStr&  s);
+
+    kkint32 LookUp (const KKStr&  s)  const;
+
+    kkint32 LookUp (KKStrPtr s)  const;
+
+    const KKStrConstPtr  LookUp (kkint32 x);
+
+    kkint32 MemoryConsumedEstimated ()  const;
+
+    kkuint32 size ()  const;
+
+    bool  operator== (const KKStrListIndexed&  right);
+
+    bool  operator!= (const KKStrListIndexed&  right);
+
+  private:
+    class  KKStrPtrComp
+    {
+    public:
+      KKStrPtrComp (bool  _caseSensitive);
+      KKStrPtrComp (const KKStrPtrComp&  comparator);
+      bool operator() (const KKStrConstPtr& lhs, const KKStrConstPtr& rhs)  const;
+      bool  caseSensitive;
+    };
+
+    typedef  std::map<KKStrPtr, kkint32, KKStrPtrComp>  StrIndex;
+    typedef  std::pair<KKStrPtr,kkint32>   StrIndexPair;
+
+    typedef  std::map<kkint32,  KKStrPtr const>  IndexIndex;
+    typedef  std::pair<kkint32, KKStrPtr const>  IndexIndexPair;
+
+    bool          caseSensative;
+    KKStrPtrComp  comparator;
+    IndexIndex    indexIndex;
+    kkint32       memoryConsumedEstimated;
+    kkint32       nextIndex;
+    bool          owner;
+    StrIndex*     strIndex;
+  };  /* KKStrListIndexed */
+
+
 
 
   KKStr  StrFormatDouble (double       val,

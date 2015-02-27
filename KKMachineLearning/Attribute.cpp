@@ -13,6 +13,7 @@ using namespace std;
 
 #include "DateTime.h"
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "KKQueue.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -163,7 +164,7 @@ kkint32  Attribute::Cardinality ()
 kkint32  Attribute::GetNominalCode  (const KKStr&  nominalValue)  const
 {
   ValidateNominalType ("GetNominalCode");
-  int32  code = nominalValuesUpper->LookUp (nominalValue);
+  kkint32  code = nominalValuesUpper->LookUp (nominalValue);
   return code;
 }  /* GetNominalCode */
 
@@ -344,7 +345,6 @@ KKStr  KKMachineLearning::AttributeTypeToStr (AttributeType  type)
 
   return AttributeTypeStrings[type];
 }  /* TypeStr */
-
 
 
 
