@@ -370,7 +370,7 @@ void  NormalizationParms::Write (ostream&  o)
 {
   kkint32  i = 0;
 
-  kkint32  origPrecision = o.precision ();
+  kkint32  origPrecision = (kkint32)o.precision();
   o.precision (12);
 
   o << "<NormalizationParms>"      << endl;

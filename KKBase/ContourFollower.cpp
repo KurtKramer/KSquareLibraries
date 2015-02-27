@@ -1205,10 +1205,10 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 {
   //ComplexDouble*  src = new ComplexDouble[points.QueueSize ()];
 
-  #ifdef  FFTW3_H
+  #if  defined(FFTW_AVAILABLE)
      fftw_complex*  src = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * points.QueueSize ());
   #else
-     fftw_complex*  src = new fftw_complex[points.QueueSize ()];
+     KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[points.QueueSize()];
   #endif
 
 
@@ -1223,12 +1223,12 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 
     //src[x] = ComplexDouble ((double)point.Row (), (double)point.Col ());
 
-    #ifdef  FFTW3_H 
+    #if  defined(FFTW_AVAILABLE)
       src[x][0] = (double)point.Row ();
       src[x][1] = (double)point.Col ();
     #else
-      src[x].re = (double)point.Row ();
-      src[x].im = (double)point.Col ();
+      src[x].real ((double)point.Row ());
+      src[x].imag ((double)point.Col ());
     #endif
 
     totalRow += point.Row ();
@@ -1244,31 +1244,27 @@ vector<ComplexDouble>  ContourFollower::CreateFourierFromPointList (const PointL
 //  }
 //
 
-  #ifdef  FFTW3_H
-    fftw_complex*   destFFTW = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * points.QueueSize ());
-  #else
-    fftw_complex*   destFFTW = new fftw_complex[points.QueueSize ()];
-  #endif
 
-  fftw_plan       plan;
-
-  #ifdef  FFTW3_H
+  #if  defined(FFTW_AVAILABLE)
+    fftw_complex*   destFFTW = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * points.QueueSize());
+    fftw_plan       plan;
     plan = fftw_plan_dft_1d (points.QueueSize (), src, destFFTW, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute (plan);
-  #else
-    plan = fftw_create_plan (points.QueueSize (), FFTW_FORWARD, FFTW_ESTIMATE);
-    fftw_one (plan, src, destFFTW);
+    fftw_destroy_plan (plan);  
+#else
+    KK_DFT1D_Double::DftComplexType*  destFFTW = new KK_DFT1D_Double::DftComplexType[points.QueueSize()];
+    KK_DFT1D_Double  plan(points.QueueSize(), true);
+    plan.Transform (src, destFFTW);
   #endif
-  fftw_destroy_plan (plan);  
 
   vector<ComplexDouble>  dest;
 
   for  (kkint32  l = 0;  l < points.QueueSize ();  l++)
   {
-    #ifdef  FFTW3_H
+    #if  defined(FFTW_AVAILABLE)
     dest.push_back (ComplexDouble (destFFTW[l][0] / (double)(points.QueueSize ()), destFFTW[l][1] / (double)(points.QueueSize ())));
     #else
-    dest.push_back (ComplexDouble (destFFTW[l].re / (double)(points.QueueSize ()), destFFTW[l].im / (double)(points.QueueSize ())));
+    dest.push_back (ComplexDouble (destFFTW[l].real () / (double)(points.QueueSize ()), destFFTW[l].imag () / (double)(points.QueueSize ())));
     #endif
   }
   delete[]  destFFTW;
@@ -1292,40 +1288,34 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
 
   size_t  numOfEdgePixels = origPointList.size ();
 
-  #ifdef  FFTW3_H
+  #if  defined(FFTW_AVAILABLE)
      fftw_complex*  src = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * numOfEdgePixels);
   #else
-     fftw_complex*  src = new fftw_complex[numOfEdgePixels];
+     KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[numOfEdgePixels];
   #endif
 
   for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
   {
-    #ifdef  FFTW3_H
+    #if  defined(FFTW_AVAILABLE)
     src[l][0] = fourier[l].real ();
     src[l][1] = fourier[l].imag ();
     #else
-    src[l].re = fourier[l].real ();
-    src[l].im = fourier[l].imag ();
+    src[l].real (fourier[l].real());
+    src[l].imag (fourier[l].imag ());
     #endif
   }
 
-
-  #ifdef  FFTW3_H
+  #if  defined(FFTW_AVAILABLE)
     fftw_complex*   destFFTW = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * numOfEdgePixels);
-  #else
-    fftw_complex*   destFFTW = new fftw_complex[numOfEdgePixels];
-  #endif
-
-  fftw_plan       plan;
-
-  #ifdef  FFTW3_H
+    fftw_plan       plan;
     plan = fftw_plan_dft_1d (numOfEdgePixels, src, destFFTW, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute (plan);
+    fftw_destroy_plan (plan);  
   #else
-    plan = fftw_create_plan ((kkint32)numOfEdgePixels, FFTW_BACKWARD, FFTW_ESTIMATE);
-    fftw_one (plan, src, destFFTW);
+    KK_DFT1D_Double::DftComplexType*  destFFTW = new KK_DFT1D_Double::DftComplexType[numOfEdgePixels];
+    KK_DFT1D_Double  plan(numOfEdgePixels, false);
+    plan.Transform(src, destFFTW);
   #endif
-  fftw_destroy_plan (plan);  
 
 
   kkint32  largestRow  = -1;
@@ -1336,13 +1326,13 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
   for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
   {
 
-    #ifdef  FFTW3_H
+    #if  defined(FFTW_AVAILABLE)
        double  realPart = (double)destFFTW[l][0];
        double  imagPart = (double)destFFTW[l][1];
        ComplexDouble  z (realPart, imagPart);
     #else
-       double  realPart = (double)destFFTW[l].re;
-       double  imagPart = (double)destFFTW[l].im;
+       double  realPart = (double)destFFTW[l].real ();
+       double  imagPart = (double)destFFTW[l].imag ();
        ComplexDouble  z (realPart, imagPart);
     #endif
 
