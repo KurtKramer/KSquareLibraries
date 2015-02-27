@@ -27,7 +27,8 @@ namespace KKMachineLearning
 
   #ifndef  _MLCLASS_
   class MLClass;
-  typedef  MLClass*  MLClassPtr;
+  typedef  MLClass*         MLClassPtr;
+  typedef  MLClass const *  MLClassConstPtr;
   class MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif

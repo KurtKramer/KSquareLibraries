@@ -313,7 +313,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
     if  (numOfBorderPixels >= maxNumOfBorderPoints)
     {
-      int32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
+      kkint32  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
 
       #if  defined(FFTW_AVAILABLE)
         fftwf_complex*  newSrc = (fftwf_complex*)fftwf_malloc (sizeof (fftwf_complex) * newMaxNumOfAngles);
@@ -407,7 +407,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
   kkint32  numOfedgePixels = numOfBorderPixels;
 
-  kkint32*  count = new int32 [numOfBuckets];
+  kkint32*  count = new kkint32 [numOfBuckets];
 
   for  (x = 0;  x < numOfBuckets;  x++)
   {
@@ -601,7 +601,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
         KK_DFT1D_Float::DftComplexType*  newSrc = new KK_DFT1D_Float::DftComplexType[newMaxNumOfAngles];
       #endif
 
-      int32  x;
+      kkint32  x;
       for  (x = 0; x < maxNumOfBorderPoints; x++)
       {
         #if  defined(FFTW_AVAILABLE)
@@ -661,7 +661,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
     #endif
   }
 
-  int32  numOfedgePixels = numOfBorderPixels;
+  kkint32  numOfedgePixels = numOfBorderPixels;
 
   #if  defined(FFTW_AVAILABLE)
     fftwf_complex*  dest = (fftwf_complex*)fftwf_malloc (sizeof (fftwf_complex) * maxNumOfBorderPoints);
@@ -675,7 +675,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
     plan.Transform (src, dest);
   #endif
 
-  int32*  count = new int32 [numOfBuckets];
+  kkint32*  count = new kkint32 [numOfBuckets];
 
   for  (x = 0; x < numOfBuckets; x++)
   {
@@ -694,7 +694,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
   float  deltaX;
   float  mag;
 
-  int32  region = 0;
+  kkint32  region = 0;
 
   for  (x = 1; x < numOfBorderPixels; x++)
   {
@@ -710,13 +710,13 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
 
     deltaX = (float)x - middle;
 
-    if  (Fabs (deltaX) < r0)
+    if  (fabs (deltaX) < r0)
       continue;
 
     if  (deltaX < 0)
     {
       // We are on the Left half.
-      deltaX = Fabs (deltaX);
+      deltaX = fabs (deltaX);
 
       if       (x == 1)        region = 0;
       else if  (x == 2)        region = 1;

@@ -36,6 +36,16 @@ Application::Application (RunLog&  _log):
 
 
 
+Application::Application ():
+  abort       (false),
+  log         (*(new RunLog ())),
+  logFileName (),
+  ourLog      (NULL)
+{
+  ourLog = &log;
+}
+
+
 
 
 Application::Application (const Application&  _application):
@@ -43,25 +53,9 @@ Application::Application (const Application&  _application):
   log          (_application.log),
   logFileName  (_application.logFileName),
   ourLog       (_application.ourLog)
-
 {
 }
 
-
- Application::Application (kkint32  argc,
-                           char**   argv
-                          ):
-  abort       (false),
-  log         (*(new RunLog ())),
-  logFileName (),
-  ourLog      (NULL)
-
-{
-  ourLog = &log;
-  ProcessCmdLineParameters (argc, argv);
-  if  (!logFileName.Empty ())
-    log.AttachFile (logFileName);
-}
 
 
 Application::~Application ()
@@ -69,6 +63,18 @@ Application::~Application ()
   delete  ourLog;
   ourLog = NULL;
 }
+
+
+
+void  Application::InitalizeApplication (kkint32 argc,
+                                         char**  argv
+                                        )
+{
+  ProcessCmdLineParameters (argc, argv);
+  if  (!logFileName.Empty ())
+    log.AttachFile (logFileName);
+}
+
 
 
 const char*  Application::ApplicationName ()
@@ -96,8 +102,6 @@ void  Application::ProcessCmdLineParameters (kkint32  argc,
                                              char**   argv
                                             )
 {
-  kkuint32  x;
-
   bool  allParmsGood = true;
 
   CmdLineExpander  cmdLineExpander (ApplicationName (), log, argc, argv);
@@ -108,48 +112,18 @@ void  Application::ProcessCmdLineParameters (kkint32  argc,
   if  (!cmdLineExpander.LogFileName ().Empty ())
     logFileName = cmdLineExpander.LogFileName ();
 
+  expandedParameterPairs = cmdLineExpander.ExpandedParameterPairs ();
 
-  const  VectorKKStr&  expandedParameters = cmdLineExpander.ExpandedParameters ();
+  vector<KKStrPair>::const_iterator  idx;
 
-  x = 0;
-  while  (x < expandedParameters.size ())
+  for  (idx = expandedParameterPairs.begin ();  idx != expandedParameterPairs.end ();  ++idx)
   {
-    KKStr  nextField = expandedParameters[x];
-    x++;
-
-    bool   parmGood       = true;
-    KKStr  parmValue      = "";
-    KKStr  parmSwitch     = "";
-    char   parmSwitchCode = 0;
-
-    if  (nextField[(kkint16)0] == '-')
-    {
-      parmSwitch = nextField;
-      KKStr  parmSwitchUpper = parmSwitch.ToUpper ();
-
-      parmSwitchCode = nextField[(kkint16)1];
-
-      if  (x < expandedParameters.size ())
-      {
-        if  (!ParameterIsASwitch (expandedParameters[x]))
-        {
-          parmValue = expandedParameters[x];
-          x++;
-        }
-      }
-
-      parmGood = ProcessCmdLineParameter (parmSwitchCode, parmSwitch, parmValue);
-    }
-
-    else
-    {
-      parmValue = nextField;
-      parmGood = ProcessCmdLineParameter (parmSwitchCode, parmSwitch, parmValue);
-    }
-
+    const KKStr&  parmSwitch = idx->first;
+    const KKStr&  parmValue  = idx->second;
+    bool  parmGood = ProcessCmdLineParameter (parmSwitch, parmValue);
     if  (!parmGood)
       allParmsGood = false;
-  }  /*  end of for loop  */
+  }
 
   if  (!allParmsGood)
     abort = true;
@@ -157,32 +131,29 @@ void  Application::ProcessCmdLineParameters (kkint32  argc,
 
 
 
-bool  Application::ParameterIsASwitch (const KKStr&  parm)
+void  Application::DisplayCommandLineParameters ()
 {
-  if  (parm.Len () < 1)
-    return false;
-
-  if  (parm[(kkint16)0] != '-')
-    return false;
-
-  if  (parm.Len () == 1)
-    return true;
-
-  double  parmValue = 0.0;
-  if  (parm.ValidNum (parmValue))
-    return false;
-
-  return true;
+  cout << ApplicationName () << endl
+       << endl
+       << "    -LogFile   <FileName>        File that logging messages will be written to; if left will"  << endl
+       << "                                 be written to Standard-Out (cout)."                           << endl
+       << endl
+       << "    -CmdFile   <File-Name>       Filename where additional command line options are stored;"   << endl
+       << "                                 This file can also specify additional '-CmdFile parameters."  << endl
+       << endl;
 }
 
 
 
-bool  Application::ProcessCmdLineParameter (char    parmSwitchCode, 
-                                            KKStr  parmSwitch, 
-                                            KKStr  parmValue
+
+bool  Application::ProcessCmdLineParameter (const KKStr&  parmSwitch, 
+                                            const KKStr&  parmValue
                                            )
 {
-  return  true;
+  log.Level (-1) << endl
+    << "Application::ProcessCmdLineParameter   ***ERROR***    Unrecognized Parameter [" << parmSwitch << "]  Value [" << parmValue << "]" << endl
+    << endl;
+  return  false;
 }
 
 

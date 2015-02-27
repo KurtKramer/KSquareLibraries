@@ -4739,7 +4739,240 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 
 
 
-
 const  kkuint32  KKB::KKStr::StrIntMax = USHRT_MAX;
+
+
+
+KKStrListIndexed::KKStrPtrComp::KKStrPtrComp (bool  _caseSensitive):
+  caseSensitive (_caseSensitive)
+{}
+
+  
+KKStrListIndexed::KKStrPtrComp::KKStrPtrComp (const KKStrPtrComp&  comparator):
+  caseSensitive (comparator.caseSensitive)
+{}
+
+
+
+bool  KKStrListIndexed::KKStrPtrComp::operator() (const KKStrConstPtr& lhs, const KKStrConstPtr& rhs) const
+{
+  if  (caseSensitive)
+    return ((*lhs) < (*rhs));
+  else
+    return  (lhs->Compare (*rhs) < 0);
+}
+
+
+
+
+KKStrListIndexed::KKStrListIndexed (bool _owner,
+                                    bool _caseSensitive
+                                   ):
+  comparator              (_caseSensitive),
+  indexIndex              (),
+  memoryConsumedEstimated (0),
+  nextIndex               (0),
+  owner                   (_owner),
+  strIndex                (NULL)
+{
+  strIndex = new StrIndex (comparator);
+  memoryConsumedEstimated = sizeof (*this);
+}
+
+
+
+KKStrListIndexed::KKStrListIndexed (const KKStrListIndexed&  list):
+   comparator              (list.comparator),
+   indexIndex              (),
+   memoryConsumedEstimated (0),
+   nextIndex               (0),
+   owner                   (list.owner),
+   strIndex                (NULL)
+{
+  strIndex = new StrIndex (comparator);
+  memoryConsumedEstimated = sizeof (*this);
+  IndexIndex::const_iterator  idx;
+  for  (idx = list.indexIndex.begin ();  idx != list.indexIndex.end ();  ++idx)
+  {
+    if  (owner)
+      Add (new KKStr (*(idx->second)));
+    else
+      Add (idx->second);
+  }
+}
+
+
+
+
+KKStrListIndexed::~KKStrListIndexed ()
+{
+  if  (owner)
+  {
+    StrIndex::iterator  idx;
+    for  (idx = strIndex->begin ();  idx != strIndex->end ();  ++idx)
+    {
+      KKStrPtr s = idx->first;
+      delete s;
+    }
+  }
+
+  delete  strIndex;
+  strIndex = NULL;
+}
+
+
+kkuint32  KKStrListIndexed::size ()  const
+{
+  return  indexIndex.size ();
+}
+
+
+
+kkint32  KKStrListIndexed::MemoryConsumedEstimated ()  const
+{
+  return  memoryConsumedEstimated;
+}  /* MemoryConsumedEstimated */
+
+
+
+
+bool  KKStrListIndexed::operator== (const KKStrListIndexed&  right)
+{
+  if  (indexIndex.size () != right.indexIndex.size ())
+    return false;
+
+  bool  caseSensativeComparison = caseSensative  ||  right.caseSensative;
+
+  IndexIndex::const_iterator  idxLeft  = indexIndex.begin ();
+  IndexIndex::const_iterator  idxRight = right.indexIndex.begin ();
+
+  while  ((idxLeft != indexIndex.end ())  &&  (idxRight != right.indexIndex.end ()))
+  {
+    if  (idxLeft->first != idxRight->first)
+      return false;
+
+    if  (caseSensativeComparison)
+    {
+      if  (idxLeft->second->Compare (*(idxRight->second)) != 0)
+        return false;
+    }
+    else
+    {
+      if  (idxLeft->second->CompareIgnoreCase (*(idxRight->second)) != 0)
+        return false;
+    }
+
+    if  ((*(idxLeft->second)) != (*(idxRight->second)))
+
+    ++idxLeft;
+    ++idxRight;
+  }
+
+  return  true;
+}  /* operator== */
+
+
+
+bool  KKStrListIndexed::operator!= (const KKStrListIndexed&  right)
+{
+  return  !((*this) == right);
+}  /* operator!= */
+
+
+
+kkint32  KKStrListIndexed::Add (KKStrPtr  s)
+{
+  StrIndex::iterator  idx;
+  idx = strIndex->find (s);
+  if  (idx != strIndex->end ())
+    return -1;
+
+  kkint32  index = nextIndex;
+  ++nextIndex;
+
+  strIndex->insert (StrIndexPair (s, index));
+  indexIndex.insert (IndexIndexPair (index, s));
+
+  if  (owner)
+    memoryConsumedEstimated += s->MemoryConsumedEstimated ();
+  memoryConsumedEstimated += 8;
+  return  index;
+}  /* Add */
+
+
+
+kkint32   KKStrListIndexed::Delete (KKStr&  s)
+{
+  StrIndex::iterator  idx;
+  idx = strIndex->find (&s);
+  if  (idx == strIndex->end ())
+    return -1;
+ 
+  KKStrPtr  strIndexStr = idx->first;
+
+  kkint32  index = idx->second;
+  strIndex->erase (idx);
+
+  IndexIndex::iterator  idx2;
+  idx2 = indexIndex.find (index);
+  if  (idx2 != indexIndex.end ())
+    indexIndex.erase (idx2);
+
+  if  (owner)
+  {
+    memoryConsumedEstimated -= strIndexStr->MemoryConsumedEstimated ();
+    delete  strIndexStr;
+    strIndexStr = NULL;
+  }
+  memoryConsumedEstimated -= 8;
+  return index;
+}  /* Delete */
+
+
+
+kkint32  KKStrListIndexed::LookUp (const KKStr& s)  const
+{
+  StrIndex::const_iterator  idx;
+
+  KKStr  sNotConst (s);
+
+  idx = strIndex->find (&sNotConst);
+  if  (idx == strIndex->end ())
+    return -1;
+  else
+    return idx->second;
+}
+
+
+kkint32  KKStrListIndexed::LookUp (KKStrPtr s)  const
+{
+  StrIndex::iterator  idx;
+  idx = strIndex->find (s);
+  if  (idx == strIndex->end ())
+    return -1;
+  else
+    return idx->second;
+}
+
+
+
+const  KKStrConstPtr  KKStrListIndexed::LookUp (kkint32 x)
+{
+  IndexIndex::iterator  idx;
+  idx = indexIndex.find (x);
+  if  (idx == indexIndex.end ())
+    return NULL;
+  else
+    return idx->second;
+}
+
+
+
+
+
+
+
+
+
 
 

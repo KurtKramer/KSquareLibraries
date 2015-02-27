@@ -156,6 +156,8 @@ namespace KKB
 
     kkint32                threadId;
 
+    KKThreadManagerPtr     threadManager;
+
     KKStr                  threadName;
 
 #if  defined(WIN32)

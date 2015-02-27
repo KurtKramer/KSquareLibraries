@@ -43,8 +43,7 @@ namespace  KKB
 
     /**
      *@brief Construct a BitString of length _bitLen with bits indicated by '_bitNums' set to '1'.
-     *
-     *@param[in]  _bitLen      Length of bit string.
+     *@param[in]  _binLen      Length of bit string.
      *@param[in]  _bitNums     List if bit positions to set to '1'.
      *@param[in]  _bitNumsLen  Size of '_bitNums' array.
      */

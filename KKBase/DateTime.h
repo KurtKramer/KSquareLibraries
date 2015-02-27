@@ -250,10 +250,12 @@ namespace  KKB
     uchar                 Month () const  {return  date.Month ();}
     uchar                 Day   () const  {return  date.Day   ();}
 
-    void                  HoursAdd    (kkint32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
- 
-    void                  MinutesAdd  (kkint32 _mins);
+    kkuint32              ToDays    ()  const;
+    double                ToHours   ()  const;
+    kkuint64              ToSeconds ()  const;
 
+    void                  HoursAdd    (kkint32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
+    void                  MinutesAdd  (kkint32 _mins);
     void                  SecondsAdd  (long  _secs);
 
     KKStr                 YYYYMMDDHHMMSS ()  const;

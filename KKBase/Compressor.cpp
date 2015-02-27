@@ -14,6 +14,7 @@ using namespace std;
 
 
 #include "Compressor.h"
+#include "GlobalGoalKeeper.h"
 #include "OSservices.h"
 using namespace KKB;
 
@@ -190,7 +191,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   Bytef*     outBuffer    = NULL;
   kkint32    outBufferLen = 0;
 
-  int32      ret;
+  kkint32    ret;
   z_stream   strm;
 
   /* allocate inflate state */
@@ -259,7 +260,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     }
     else
     {
-      int32  newUnCompressedLen   = unCompressedLen + have;
+      kkint32  newUnCompressedLen = unCompressedLen + have;
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);

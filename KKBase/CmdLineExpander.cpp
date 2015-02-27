@@ -264,7 +264,7 @@ bool  CmdLineExpander::ParameterIsASwitch (const KKStr&  parm)
   if  (parm.Len () < 1)
     return false;
 
-  if  (parm[(int16)0] != '-')
+  if  (parm[(kkint16)0] != '-')
     return false;
 
   if  (parm.Len () == 1)

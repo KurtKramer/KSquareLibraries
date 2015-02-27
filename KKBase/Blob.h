@@ -9,13 +9,13 @@
  *@class KKB::Blob
  *@brief Used by the Raster object to identify a distinct blob; where it is in the raster and its unique id.
  *
- *@details It is used by the Raster object while performing a connected component analysis.  For each distinct
+ *@details It is used by the Raster object while performing a connected component analysis. For each distinct
  *         blob located an instance of this class will be created.  Its location in the raster and its unique
  *         blob ID will be stored here.  These blobs will later be able to be extracted from the image by
  *         referencing this blob.
  *
- *         The "id" field in this blob will be stored in a array in the associated Raster object.   This allows
- *         the Raster object to identify the specific pixels that belong to this Blob.  Using the fields "colLeft"
+ *         The "id" field in this blob will be stored in a array in the associated Raster object. This allows
+ *         the Raster object to identify the specific pixels that belong to this Blob. Using the fields "colLeft"
  *         "colRight", "rowBot", and "rowTop" the Raster object will be able to quickly locate the associated
  *         blob.
  * 
@@ -87,6 +87,14 @@ namespace  KKB
     BlobPtr  LookUpByBlobId (kkint32  blobId);   /**< @brief  Will return pointer to blob with 'blobId'; if not found will return NULL. */
 
     BlobPtr  LocateLargestBlob ();               /**< @brief  Will return Blob with largest pixel count. */
+
+    /**
+     *@brief  Loactes the blob that covers the greatest part of the raster; that is the one who has the 
+     * largest (Height  x  Width)
+     */
+    BlobPtr  LocateMostComplete ();
+
+
 
     /**
      *@brief  Used by the Connected component analysis to merge two blobs together.

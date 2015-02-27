@@ -61,7 +61,6 @@ BlobPtr  BlobList::LookUpByBlobId (kkint32  blobId)
 
 
 
-
 BlobList::BlobList (bool  _owner):
   availableBlobs (),
   nextBlobId     (0)
@@ -117,7 +116,6 @@ BlobPtr  BlobList::NewBlob (kkuint32  rowTop,
   PushOnBack (blob);
   return  blob;
 }
-
 
 
 
@@ -249,6 +247,33 @@ BlobPtr  BlobList::LocateLargestBlob ()
   }
   return  blob;
 } /* LocateLargestBlob */
+
+
+
+BlobPtr  BlobList::LocateMostComplete ()
+{
+  BlobPtr   blob        = NULL;
+  BlobPtr   tempBlob    = NULL;
+  kkint32   largestSize = 0;
+
+  const_iterator  idx;
+  const_iterator  endIdx = end ();
+
+  for  (idx = begin ();  idx != endIdx;  ++idx)
+  {
+    tempBlob = idx->second;
+    kkint32  size = tempBlob->Height () * tempBlob->Width ();
+    if  (size > largestSize)
+    {
+      largestSize = size;
+      blob = tempBlob;
+    }
+  }
+  return  blob;
+} /* LocateMostComplete */
+
+
+
 
 
 

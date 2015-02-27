@@ -92,8 +92,8 @@ KKStr  BinaryClassParms::ToTabDelString ()  const
 
 
 BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
-                                                            FileDescPtr    _fileDesc,
-                                                            RunLog&        _log
+                                                            FileDescPtr   _fileDesc,
+                                                            RunLog&       _log
                                                            )
 {
   MLClassPtr   class1    = NULL;
@@ -156,7 +156,7 @@ kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
 
 
 
-BinaryClassParmsList::BinaryClassParmsList (bool   _owner,
+BinaryClassParmsList::BinaryClassParmsList (bool     _owner,
                                             kkint32  _size
                                            ):
         KKQueue<BinaryClassParms> (_owner)

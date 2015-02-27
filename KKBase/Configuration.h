@@ -81,13 +81,13 @@ namespace KKB
    
     void  PrintFormatErrors (ostream& o);
 
-    bool  SectionDefined (const KKU::KKStr&  sectionName)  const;   /**< @brief Returns true if the section is defined. */
+    bool  SectionDefined (const KKB::KKStr&  sectionName)  const;      /**< @brief Returns true if the section is defined. */
 
 
     // Access Methods.
     const KKB::KKStr&  FileName () const  {return  fileName;}
 
-    KKStrConstPtr      SectionName (kkint32 sectionNum)  const;       /**< @brief Returns the name of the section for specified index, if index not defined will return NULL. */
+    KKStrConstPtr      SectionName (kkint32 sectionNum)  const;        /**< @brief Returns the name of the section for specified index, if index not defined will return NULL. */
 
     kkint32            SectionNum (const KKB::KKStr&  sectionName)  const;
 
