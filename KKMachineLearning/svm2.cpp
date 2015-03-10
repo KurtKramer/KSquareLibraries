@@ -4264,7 +4264,7 @@ void  SVM289_MFS::svm_save_model_XML (ostream&          o,
                                       const svm_model&  model
                                      )
 {
-  kkint32  origPrecision = o.precision ();
+  kkint32  origPrecision = (kkint32)o.precision ();
 
   kkint32 nr_class = model.nr_class;
   kkint32 l = model.numSVs;
@@ -5038,7 +5038,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
     const  FeatureVector&  p = SV[i];
     o << "SupportVector" << "\t" << p.ImageFileName ();
 
-    kkint32  origPrec = o.precision ();
+    kkint32  origPrec = (kkint32)o.precision ();
     o.precision (16);
     for  (kkint32 j = 0;  j < nr_class - 1;  j++)
     {

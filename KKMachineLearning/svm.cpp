@@ -3319,7 +3319,7 @@ void  SVM233::Svm_Save_Model (ostream&         o,
   kkint32 nr_class = model->nr_class;
   kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
 
-  kkint32  origPrecision = o.precision ();
+  kkint32  origPrecision = (kkint32)o.precision ();
   o.precision (14);
 
   o << "<Svm233>"   << endl;
@@ -3339,7 +3339,7 @@ void  SVM233::Svm_Save_Model (ostream&         o,
 
   if  (model->margin)
   {
-    kkint32  oldPrecision = o.precision ();
+    kkint32  oldPrecision = (kkint32)o.precision ();
     o.precision (9);
     o << "Margins";
     for  (kkint32 i = 0;  i < numberOfBinaryClassifiers;  i++)
