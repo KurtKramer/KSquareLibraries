@@ -2,24 +2,24 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
-#include  <stdlib.h>
-#include  <string.h>
-#include  <stdio.h>
-#include  <math.h>
-#include  <fstream>
-#include  <iostream>
-#include  <ostream>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <fstream>
+#include <iostream>
+#include <ostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "Matrix.h"
+#include "Matrix.h"
 
-#include  "KKException.h"
-#include  "OSservices.h"
-#include  "KKStr.h"
+#include "KKException.h"
+#include "OSservices.h"
+#include "KKStr.h"
 using namespace KKB;
 
 

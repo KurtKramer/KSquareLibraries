@@ -212,7 +212,10 @@ namespace KKMachineLearning
      @details
      @code
      * ******************************* GetExistingFileDesc ******************************
-     * *  Will look for a existing FileDesc that is the same as the 'fileDesc' being    *
+     * * first look to to see if a the same FileDesc is already in th eeixtng list in that case 
+     * * will return back the same pointer.
+     * *
+     * * Second Will look for a existing FileDesc that is the same as the 'fileDesc' being    *
      * *  passed in.                                                                    *
      * *  if  one is found   them                                                       *
      * *    fileDesc is deleted                                                         *

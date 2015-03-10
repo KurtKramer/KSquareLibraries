@@ -850,7 +850,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
 
-  bool  successful;
+  bool  successful = false;
 
   KKStr fileNameToOpen;
   if  (_dirName.Empty ())
@@ -877,7 +877,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   FeatureVectorListPtr  origFeatureData = NULL;
 
-  if  ((&typeid (*origFeatureVectorData) == _fvProducerFactory->FeatureVectorListTypeId ())  &&
+  if  (successful  &&
+       (&typeid (*origFeatureVectorData) == _fvProducerFactory->FeatureVectorListTypeId ())  &&
        ((*(origFeatureVectorData->FileDesc ())) ==  (*(_fvProducerFactory->FileDesc ())))
       )
   {
@@ -950,12 +951,15 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     if  (!validImageFileFormat)
       continue;
 
+    bool  deatureVectorCoputaionSuccessful = false;
+
     FeatureVectorPtr  origFV = origFeatureData->BinarySearchByName (*imageFileName);
     if  (origFV)
       numImagesFoundInOrigFeatureData++;
 
     if  (origFV  &&  versionsAreSame)
     {
+      deatureVectorCoputaionSuccessful = true;
       if  (_useDirectoryNameForClassName)
       {
         if  (origFV->MLClass () != _unknownClass)
@@ -987,19 +991,19 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
         delete image;
         image = NULL;
+        deatureVectorCoputaionSuccessful = true;
 
       }
       catch  (...)
       {
         _log.Level (-1) << endl << endl
           << "FeatureDataReSink   ***ERROR***"  << endl
-          << "       Exception occured calling constructor 'PostLarvaeFV'  trying to compute FeatureVector." << endl
+          << "       Exception occured calling constructor 'ComputeFeatureVector'." << endl
           << endl;
-        successful = false;
         fv = NULL;
       }
 
-      if  (!successful)
+      if  (!deatureVectorCoputaionSuccessful)
       {
         _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
                        << imageFileName << "]."

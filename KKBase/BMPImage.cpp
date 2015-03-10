@@ -1088,7 +1088,9 @@ public:
     lastColorsSet = false;
   }
 
+
   kkint32  NumOfColors ()  const  {return (kkint32)colorsUsed.size ();}
+
 
   kkint32  PalletIndex (uchar red,
                         uchar green,
@@ -2439,14 +2441,16 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
 void  BmpImage::SaveColor (FILE*  outFile)
 {
   /** @todo  Need to finish implementing and testing compressed color.  */
-  //PalletBuilderPtr  palletBuilder = BuildPalletFromRasterData ();
-  //if  (palletBuilder->NumOfColors () <= 256)
-  //  SaveColorCompressed256 (palletBuilder, outFile);
-  //else 
-  //  SaveColor24BPP (outFile);
-  //delete  palletBuilder;
+  PalletBuilderPtr  palletBuilder = BuildPalletFromRasterData ();
+  if  (palletBuilder->NumOfColors () <= 256)
+    SaveColorCompressed256 (palletBuilder, outFile);
+  else 
+    SaveColor24BPP (outFile);
+  delete  palletBuilder;
+  palletBuilder = NULL;
 
-  SaveColor24BPP (outFile);
+
+  //SaveColor24BPP (outFile);
 }  /* SaveColor */
 
 

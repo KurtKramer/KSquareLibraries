@@ -78,7 +78,6 @@ namespace  KKB
 
   /**
    *@brief  Hash Table management template; developed to support BitReduction algorithm.
-   *@author  Tong Luo
    *@details  This template was originally written by Tong Luo to support his experiments in Bit reduction.
    *          It was later heavily modified by Kurt Kramer to conform to the PicesLibrary structure.
    */

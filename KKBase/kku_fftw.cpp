@@ -22,9 +22,9 @@ using namespace KKB;
 
 
 /*
-fftw_plan_class::fftw_plan_class (kkint32           _n,
+fftw_plan_class::fftw_plan_class (kkint32         _n,
                                   fftw_direction  _dir,
-                                  kkint32           _flags
+                                  kkint32         _flags
                                  ):
    n     (_n),
    dir   (_dir),
@@ -34,10 +34,10 @@ fftw_plan_class::fftw_plan_class (kkint32           _n,
 
 
 
-fftwnd_plan_class::fftwnd_plan_class (kkint32           _nx,
-                                      kkint32           _ny, 
+fftwnd_plan_class::fftwnd_plan_class (kkint32         _nx,
+                                      kkint32         _ny, 
                                       fftw_direction  _dir,
-		                                  kkint32           _flags
+		                                  kkint32         _flags
                                      ):
    nx    (_nx),
    ny    (_ny),
@@ -48,9 +48,9 @@ fftwnd_plan_class::fftwnd_plan_class (kkint32           _nx,
 
 
 
-fftw_plan  KKB::fftw_create_plan (kkint32           n, 
+fftw_plan  KKB::fftw_create_plan (kkint32         n, 
                                   fftw_direction  dir, 
-                                  kkint32           flags
+                                  kkint32         flags
                                  )
 {
   return  new fftw_plan_class (n, dir, flags);
@@ -66,10 +66,10 @@ void  KKB::fftw_destroy_plan (fftw_plan  plan)
 
 
 
-fftwnd_plan  KKB::fftw2d_create_plan (kkint32           nx, 
-                                      kkint32           ny, 
+fftwnd_plan  KKB::fftw2d_create_plan (kkint32         nx, 
+                                      kkint32         ny, 
                                       fftw_direction  dir,
-				                              kkint32           flags
+				                              kkint32         flags
                                      )
 {
   return new fftwnd_plan_class (nx, ny, dir, flags);

@@ -14,12 +14,15 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-//#include  <fftw3.h>
+#if defined(FFTW_AVAILABLE)
+#  include  <fftw3.h>
+#else
+#  include  "kku_fftw.h"
+#endif
 
 
 
 #include "ContourFollower.h"
-#include "kku_fftw.h"
 #include "Raster.h"
 #include "KKStr.h"
 using namespace KKB;
@@ -275,6 +278,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
   lastRow = startRow;
   lastCol = startCol;
+
 
   while  (true)  
   {

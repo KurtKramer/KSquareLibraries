@@ -57,7 +57,7 @@ namespace KKB
     kkint32  CreateFourierDescriptorBySampling (kkint32 numOfBuckets,
                                                 float*  countourFreq,
                                                 bool&   successful
-                                             );
+                                               );
 
     void  HistogramDistanceFromAPointOfEdge (float     pointRow,
                                              float     pointCol,

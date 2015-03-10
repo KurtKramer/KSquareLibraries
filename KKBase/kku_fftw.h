@@ -1,9 +1,6 @@
 /* kku_fftw.cpp -- Implements a Fast Fourier transform via a template.
  * Copyright (C) 2012-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
- * I took this module from my Work at Larcos;  
- * it is a very simple implementation of the Fourietr transform.  It has the advantage of 
- * not requiring external libraries and easier to debug.
  */
 #ifndef _KKU_FFTW_
 #define _KKU_FFTW_
@@ -18,6 +15,7 @@
 #endif
 
 #include "KKBaseTypes.h"
+
 
 namespace  KKB
 {
@@ -115,7 +113,7 @@ namespace  KKB
  */
 
 
-  void  FFT (float    data[], 
+  void  FFT (float  data[], 
              kkuint32 number_of_complex_samples, 
              kkint32  isign
             );
@@ -130,7 +128,6 @@ namespace  KKB
   {
   public:
     typedef  std::complex<DftType>  DftComplexType;
-
 
     KK_DFT1D (kkint32 _size,
               bool    _forwardTransform
@@ -169,7 +166,7 @@ namespace  KKB
     bool              forwardTransform;
     DftComplexType**  fourierMask;
     DftComplexType*   fourierMaskArea;
-    kkint32           size;
+    kkint32             size;
   };  /* KK_DFT1D */
 
   typedef  KK_DFT1D<float>   KK_DFT1D_Float;
@@ -231,7 +228,7 @@ namespace  KKB
 
   template<typename DftType>
   KK_DFT1D<DftType>::KK_DFT1D (kkint32 _size,
-                               bool    _forwardTransform
+                               bool  _forwardTransform
                               ):
       MinusOne         ((DftType)-1.0,          (DftType)0.0),
       One              ((DftType)1.0,           (DftType)0.0),
@@ -490,7 +487,7 @@ namespace  KKB
   template<typename DftType>
   KK_DFT2D<DftType>::KK_DFT2D (kkint32 _height,
                                kkint32 _width,
-                               bool    _forwardTransform
+                               bool  _forwardTransform
                               ):
     height           (_height),
     width            (_width),
@@ -659,15 +656,15 @@ namespace  KKB
 
 
 #if  defined(FFTW_AVAILABLE)
-  fftwf_plan  fftwCreateTwoDPlan (kkint32         height,
-                                  kkint32         width,
+  fftwf_plan  fftwCreateTwoDPlan (kkint32           height,
+                                  kkint32           width,
                                   fftwf_complex*  src,
                                   fftwf_complex*  dest,
                                   int             sign,
                                   int             flag
                                  );
 
-  fftwf_plan  fftwCreateOneDPlan (kkint32         len,
+  fftwf_plan  fftwCreateOneDPlan (kkint32           len,
                                   fftwf_complex*  src,
                                   fftwf_complex*  dest,
                                   int             sign,

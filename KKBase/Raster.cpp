@@ -1006,6 +1006,36 @@ kkint32 Raster::TotalBackgroundPixels () const
 
 
 
+float  Raster::CentroidCol ()  const
+{
+  if  (centroidCol >= 0)
+    return  centroidCol;
+
+  float  centroidColWeighted;
+  float  centroidRowWeighted;
+
+  kkint32  weight = 0;
+  CalcCentroid (totPixels, weight, centroidRow, centroidCol, centroidRowWeighted, centroidColWeighted);
+
+  return  centroidCol;
+} 
+
+
+
+float    Raster::CentroidRow ()  const
+{
+  if  (centroidRow >= 0)
+    return  centroidRow;
+
+  float  centroidColWeighted;
+  float  centroidRowWeighted;
+  kkint32  weight = 0;
+  CalcCentroid (totPixels, weight, centroidRow, centroidCol, centroidRowWeighted, centroidColWeighted);
+  return  centroidRow;
+}
+
+
+
 
 RasterPtr  Raster::CreatePaddedRaster (BmpImage&  image,
                                        kkint32    padding
@@ -5176,7 +5206,7 @@ void  Raster::CalcCentroid (kkint32&  size,
                             float&  colCenter,
                             float&  rowCenterWeighted,
                             float&  colCenterWeighted
-                           )
+                           )  const
 {
   size              = 0;
   weight            = 0;
