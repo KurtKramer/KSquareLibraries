@@ -34,3 +34,7 @@ Release
 *.user
 /OutsidePackages
 /Doxygen/html
+Backup
+TEMP_BaseLibrary
+
+

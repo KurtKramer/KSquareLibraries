@@ -1,24 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKBase", "KKBase\KKBase.vcproj", "{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKBase", "KKBase\KKBase.vcxproj", "{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKLineScanner", "KKLineScanner\KKLineScanner.vcproj", "{65B4E499-F9C5-472A-B5D1-90541F817513}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKLineScanner", "KKLineScanner\KKLineScanner.vcxproj", "{65B4E499-F9C5-472A-B5D1-90541F817513}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKMachineLearning", "KKMachineLearning\KKMachineLearning.vcproj", "{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKMachineLearning", "KKMachineLearning\KKMachineLearning.vcxproj", "{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KKControls", "KKControls\KKControls.csproj", "{3404FEA2-61A5-4102-9280-729AC235A031}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKJobManager", "JobManager\KKJobManager.vcproj", "{FD50AE69-2D86-483D-BDC2-204B72CF94CD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11} = {D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KKJobManager", "JobManager\KKJobManager.vcxproj", "{FD50AE69-2D86-483D-BDC2-204B72CF94CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
