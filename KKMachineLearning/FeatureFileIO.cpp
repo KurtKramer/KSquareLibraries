@@ -850,7 +850,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
 
-  bool  successful;
+  bool  successful = true;
 
   KKStr fileNameToOpen;
   if  (_dirName.Empty ())
@@ -945,6 +945,12 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   for  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!_cancelFlag);  ++fnIDX)
   {
     imageFileName = *fnIDX;
+
+    // pv414-_002_20140414-162243_02068814-1261.bmp
+    KKStr  rootName = osGetRootName (imageFileName);
+    if  (rootName == "pv414-_002_20140414-162243_02068814-1261")
+      cout << "Stop Here." << endl;
+
     bool validImageFileFormat = SupportedImageFileFormat (*imageFileName);
     
     if  (!validImageFileFormat)
@@ -978,6 +984,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     {
       // We either  DON'T have an original image    or    versions are not the same.
 
+      bool  succesfullyComputed = true;
+
       KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
       FeatureVectorPtr fv = NULL;
       try
@@ -987,7 +995,10 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
         delete image;
         image = NULL;
-
+        if  (fv)
+          succesfullyComputed = true;
+        else
+          succesfullyComputed = false;
       }
       catch  (...)
       {
@@ -995,11 +1006,11 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           << "FeatureDataReSink   ***ERROR***"  << endl
           << "       Exception occured calling constructor 'PostLarvaeFV'  trying to compute FeatureVector." << endl
           << endl;
-        successful = false;
+        succesfullyComputed = false;
         fv = NULL;
       }
 
-      if  (!successful)
+      if  (!succesfullyComputed)
       {
         _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
                        << imageFileName << "]."

@@ -3299,16 +3299,16 @@ float  Raster::CalcWeightedArea ()  const
  */
 void  Raster::CentralMoments (float  features[9])  const
 {
-  kkint32  m00, m10, m01;
+  kkint64  m00, m10, m01;
   Moment (m00, m10, m01);
 
   centroidCol = (float)m10 / (float)m00;   // Center Col
   centroidRow = (float)m01 / (float)m00;   // Center Row
 
-  foregroundPixelCount = m00;
+  foregroundPixelCount = (kkint32)m00;
 
   float  cm00   = (float)m00;
-  float  gamma2 = (float)(m00 * m00);
+  float  gamma2 = (float)m00 * (float)m00;
   float  gamma3 = gamma2 * (float)sqrt ((float)m00);
         
   float  cm20 = 0.0;
@@ -3404,9 +3404,9 @@ void  Raster::CentralMoments (float  features[9])  const
 
 
 
-void  Raster::Moment (kkint32& m00,
-                      kkint32& m10,
-                      kkint32& m01
+void  Raster::Moment (kkint64& m00,
+                      kkint64& m10,
+                      kkint64& m01
                      )  const
 {
   m00 = 0;
@@ -3573,13 +3573,13 @@ void  Raster::MomentWeighted (float& m00,
                               float& m01
                              )  const
 {
-  m00 = 0.0;
-  m10 = 0.0;
-  m01 = 0.0;
+  m00 = 0.0f;
+  m10 = 0.0f;
+  m01 = 0.0f;
 
-  kkint32  m00Int = 0;
-  kkint32  m10Int = 0;
-  kkint32  m01Int = 0;
+  kkint64  m00Int = 0;
+  kkint64  m10Int = 0;
+  kkint64  m01Int = 0;
 
   kkint32  col;
   kkint32  row;
@@ -3621,11 +3621,11 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
                                       )  
                                        const
 {
-  kkint32  m00,  m10,  m01;
+  kkint64  m00,  m10,  m01;
   float    mw00, mw10, mw01;
   Moments (m00, m10, m01, mw00, mw10, mw01);
 
-  foregroundPixelCount = m00;
+  foregroundPixelCount = (kkint32)m00;
   weightedPixelCount   = mw00;
 
   centroidCol = (float)m10 / (float)m00;
@@ -3635,7 +3635,7 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
   float centroidRowW  = mw01 / mw00;
         
   float  cm00   = (float)m00;
-  float  gamma2 = (float)(m00 * m00);
+  float  gamma2 = (float)m00 * (float)m00;
   float  gamma3 = gamma2 * (float)sqrt ((float)m00);
         
   float  cm20 = 0.0;
@@ -3648,8 +3648,8 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
   float  cm21 = 0.0;
 
   float cmw00   = mw00;
-  float gammaW2 = mw00 * mw00;
-  float gammaW3 = gammaW2 * (float)sqrt (mw00);
+  float gammaW2 = (float)mw00 * (float)mw00;
+  float gammaW3 = (float)gammaW2 * (float)sqrt ((float)mw00);
         
   float cmw20 = 0.0f;
   float cmw02 = 0.0f;
@@ -3837,9 +3837,9 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
 
 
 
-void  Raster::Moments (kkint32&  m00,
-                       kkint32&  m10,
-                       kkint32&  m01,
+void  Raster::Moments (kkint64&  m00,
+                       kkint64&  m10,
+                       kkint64&  m01,
                        float&    mw00,
                        float&    mw10,
                        float&    mw01
@@ -3853,9 +3853,9 @@ void  Raster::Moments (kkint32&  m00,
   mw10 = 0.0f;
   mw01 = 0.0f;
 
-  kkint32  m00Int = 0;
-  kkint32  m10Int = 0;
-  kkint32  m01Int = 0;
+  kkint64  m00Int = 0;
+  kkint64  m10Int = 0;
+  kkint64  m01Int = 0;
 
   kkint32  col = 0;
   kkint32  row = 0;

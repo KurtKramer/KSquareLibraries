@@ -9,10 +9,10 @@
 #include <time.h>
 #include <fstream>
 #include <iostream>
+#include <string.h>
 #include <string>
 #include <sstream>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -42,8 +42,8 @@ RunLog::RunLog ():
 
 
 RunLog::RunLog (const char*  _fileName):
-  msgQueue    (NULL),
-  ourLogFile  (NULL)
+  msgQueue   (NULL),
+  ourLogFile (NULL)
 {
   fileName   = _fileName;
   lineCount  = 0;
@@ -423,6 +423,18 @@ RunLog&  RunLog::operator<< (KKStrConstPtr  right)
     Append (right->Str ());
   return  *this;
 }
+
+
+
+RunLog&  RunLog::operator<< (const VectorKKStr& right)
+{
+  VectorKKStr::const_iterator  idx;
+  for  (idx = right.begin ();  idx != right.end ();  ++idx)
+    (*this) << *idx << endl;
+  return *this;
+}
+
+
 
 
 RunLog& RunLog::operator<< (ostream& (* mf)(ostream &))
