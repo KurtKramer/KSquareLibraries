@@ -1,24 +1,24 @@
-#include  "FirstIncludes.h"
-#include  <stdio.h>
-#include  <fstream>
-#include  <string>
-#include  <iostream>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace KKB;
 
 
-#include  "SVMparam.h"
-#include  "BinaryClassParms.h"
-#include  "ClassAssignments.h"
-#include  "FeatureVector.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
+#include "SVMparam.h"
+#include "BinaryClassParms.h"
+#include "ClassAssignments.h"
+#include "FeatureVector.h"
+#include "FileDesc.h"
+#include "MLClass.h"
 using namespace KKMachineLearning;
 
 
@@ -30,23 +30,23 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
                      bool&                  _validFormat
                     ):
 
-  binaryParmsList            (NULL),
-  encodingMethod             (NoEncoding),
-  fileDesc                   (_fileDesc),
-  fileName                   (),
-  log                        (_log),
-  param                      (),
-  samplingRate               (0.0f),
-  selectedFeatures           (_selectedFeatures), 
-  selectionMethod            (SelectByVoting),
-  useProbabilityToBreakTies  (false),
-  validParam                 (false)
+  binaryParmsList           (NULL),
+  encodingMethod            (NoEncoding),
+  fileDesc                  (_fileDesc),
+  fileName                  (),
+  log                       (_log),
+  param                     (),
+  samplingRate              (0.0f),
+  selectedFeatures          (_selectedFeatures), 
+  selectionMethod           (SelectByVoting),
+  useProbabilityToBreakTies (false),
+  validParam                (false)
 {
   if  (!fileDesc)
   {
     log.Level (-1) << endl
-                   << "SVMparam::SVMparam      *** ERROR ***" << endl
-                   << "                       fileDesc == NULL" << endl
+                   << "SVMparam::SVMparam  *** ERROR ***" << endl
+                   << "                    fileDesc == NULL" << endl
                    << endl;
     osWaitForEnter ();
     exit (-1);
@@ -59,8 +59,8 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
 
 
 
-SVMparam::SVMparam  (FileDescPtr  _fileDesc,
-                     RunLog&      _log
+SVMparam::SVMparam  (FileDescPtr _fileDesc,
+                     RunLog&     _log
                     ):
 
   binaryParmsList           (NULL),
@@ -79,8 +79,8 @@ SVMparam::SVMparam  (FileDescPtr  _fileDesc,
   if  (!fileDesc)
   {
     log.Level (-1) << endl
-                   << "SVMparam::SVMparam      *** ERROR ***" << endl
-                   << "                       fileDesc == NULL" << endl
+                   << "SVMparam::SVMparam  *** ERROR ***" << endl
+                   << "                    fileDesc == NULL" << endl
                    << endl;
     osWaitForEnter ();
     exit (-1);
@@ -492,7 +492,7 @@ void  SVMparam::ReadXML (FILE*  i)
 
 
 void  SVMparam::Load (ClassAssignments& _assignments,
-                      KKStr&           _fileName,
+                      KKStr&            _fileName,
                       bool&             _successful
                      )
 {
@@ -588,41 +588,24 @@ void    SVMparam::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms)
 
 float   SVMparam::AvgMumOfFeatures ()
 {
-  //if  (!binaryParmsList)
-  //  return  (float)selectedFeatures.NumOfFeatures ();
-
+  float  avgNumOfFeatures = 0.0f;
   if  ((machineType == BinaryCombos)  &&  (binaryParmsList))
-  {
-    kkint32  totalNumOfFeatures = 0;
-    BinaryClassParmsList::iterator  idx;
-    for  (idx = binaryParmsList->begin ();  idx != binaryParmsList->end ();  idx++)
-    {
-      BinaryClassParmsPtr  bcp = *idx;
-      totalNumOfFeatures += bcp->SelectedFeatures ().NumOfFeatures ();
-    }
-
-    if  (binaryParmsList->QueueSize () == 0)
-      return 0.0f;
-    return  (float)totalNumOfFeatures / (float)(binaryParmsList->QueueSize ());
-  }
-
-  else
-  {
-    return  (float)selectedFeatures.NumOfFeatures ();
-  }
+    avgNumOfFeatures = binaryParmsList->FeatureCountNet ();
+  if  (avgNumOfFeatures== 0.0f)
+    avgNumOfFeatures = (float)selectedFeatures.NumOfFeatures ();
+  return  avgNumOfFeatures;
 }  /* AvgMumOfFeatures */
 
 
 
 /**
- @brief  returns back the average number of features per training example.
- @details  Will calculate the average number of features per tyraining example. For each
-           binary class combination, multiplies the number of training examples for that pair 
-           by the number of features for that pair.  the sum of all class pairs are then 
-           divided by the total number of examples.
- @param[in] trainExamples  List of traninig examples that were or are to be used to train with.
+ *@brief  returns back the class weighted average number of features per training example.
+ *@details  Will calculate the average number of features per tyraining example. For each
+ *          binary class combination, multiplies the number of training examples for that pair 
+ *          by the number of features for that pair.  the sum of all class pairs are then 
+ *          divided by the total number of examples.
+ *@param[in] trainExamples  List of traninig examples that were or are to be used to train with.
  */
-
 float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 {
   if  (machineType == BinaryCombos)
@@ -635,7 +618,6 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 
     kkuint32  idx1 = 0;
     kkuint32  idx2 = 0;
-
     for  (idx1 = 0;  idx1 < (stats->size() - 1);  idx1++)
     {
       ClassStatisticPtr  class1Stats = stats->IdxToPtr (idx1);
@@ -655,21 +637,14 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
         toatlNumExamples     += numExamplesThisCombo;
       }
     }
-
     delete  stats;  stats = NULL;
-
     return  (float)totalNumFeaturesUsed / (float)toatlNumExamples;
   }
-
   else
   {
     return  (float)selectedFeatures.NumOfFeatures ();
   }
 }  /* AvgMumOfFeatures */
-
-
-
-
 
 
 
