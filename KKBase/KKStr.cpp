@@ -67,10 +67,10 @@ char*  KKB::STRDUP (const char* src)
 
 
 
-inline char*  KKB::STRCAT (char*        dest, 
-                           kkint32      destSize,
-                           const char*  src
-                          )
+char*  KKB::STRCAT (char*        dest, 
+                    kkint32      destSize,
+                    const char*  src
+                   )
 {
 # ifdef  USE_SECURE_FUNCS
     strcat_s  (dest, destSize, src);
@@ -85,9 +85,9 @@ inline char*  KKB::STRCAT (char*        dest,
 
 
 
-inline kkint32  KKB::STRICMP (const char*  left,
-                            const char*  right
-                           )
+kkint32  KKB::STRICMP (const char*  left,
+                       const char*  right
+                      )
 {
   if  (left == NULL)
   {
@@ -119,11 +119,47 @@ inline kkint32  KKB::STRICMP (const char*  left,
 
 
 
+kkint32  KKB::STRNICMP (const char*  left,
+                        const char*  right,
+                        kkint32        len
+                       )
+{
+  if  (left == NULL)
+  {
+    if  (right == NULL)
+      return 0;
+    else
+      return -1;
+  }
+  else if  (!right)
+    return 1;
+
+  if  (len < 1)
+    return 0;
+
+  kkint32  x = 0;
+  kkint32  zed = (toupper (*left)) - (toupper (*right));
+  while  ((zed == 0)  &&  (*left != 0)  &&  (x < len))
+  {
+    ++left;    ++right;     ++x;
+    zed = (toupper (*left)) - (toupper (*right));
+  }
+
+  if  (zed < 0)
+    return -1;
+  else if  (zed == 0)  
+    return 0;
+  else
+    return 1;
+}  /* STRNICMP */
+
+
+
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkint16      right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkint16      right
+                      )
 {
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
@@ -135,10 +171,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkuint16     right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkuint16     right
+                      )
 {
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
@@ -151,10 +187,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkint32      right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkint32      right
+                      )
 {
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
@@ -166,10 +202,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkuint32     right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkuint32     right
+                      )
 {
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
@@ -181,10 +217,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkint64      right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkint64      right
+                      )
 {
   
 # ifdef  USE_SECURE_FUNCS
@@ -197,10 +233,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkuint64     right
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkuint64     right
+                      )
 {
 
 # ifdef  USE_SECURE_FUNCS
@@ -213,11 +249,11 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*        buff,
-                     kkint32      buffSize,
-                     const char*  formatSpec,
-                     kkint32      precision,
-                     double       d
-                    )
+                       kkint32      buffSize,
+                       const char*  formatSpec,
+                       kkint32      precision,
+                       double       d
+                      )
 {
 #ifdef  USE_SECURE_FUNCS
   return  sprintf_s (buff, buffSize, formatSpec, precision, d);
@@ -229,10 +265,10 @@ kkint32  KKB::SPRINTF (char*        buff,
 
 
 kkint32  KKB::SPRINTF (char*         buff,
-                     kkint32       buffSize,
-                     char  const*  formatSpec,
-                     double        d
-                    )
+                       kkint32       buffSize,
+                       char  const*  formatSpec,
+                       double        d
+                      )
 {
   #ifdef  USE_SECURE_FUNCS
   return sprintf_s (buff, buffSize, formatSpec, d);
@@ -276,8 +312,8 @@ const char*  KKStr::StrChr (const char*  str,
 
 
 kkint32  KKStr::StrCompareIgnoreCase (const char* s1, 
-                                    const char* s2
-                                   )
+                                      const char* s2
+                                     )
 {
   if  (s1 == NULL)
   {
@@ -2406,6 +2442,16 @@ void  KKStr::Lower ()
 
 
 
+KKStr  KKStr::MaxLen (kkint32  maxLen)  const
+{
+  maxLen = Max ((kkint32)0, maxLen);
+  if  (len < maxLen)
+    return *this;
+  else
+    return SubStrPart (0, maxLen - 1);
+}
+
+
 
 KKStr  KKStr::ToUpper ()  const
 {
@@ -3404,6 +3450,17 @@ kkint32  KKStr::ToInt () const
 
 
 
+kkint16  KKStr::ToInt16 () const
+{
+  if  (!val)
+    return 0;
+
+  kkint16  i = (kkint16)atoi (val);
+  return i;
+}  /* ToInt32*/
+
+
+
 kkint32  KKStr::ToInt32 () const
 {
   if  (!val)
@@ -3469,6 +3526,14 @@ KKB::ulong  KKStr::ToUlong () const
 
 
 
+KKB::kkuint32  KKStr::ToUint32 () const
+{
+  if  (!val)  return 0;
+  return  (kkuint32)atol (val);
+}
+
+
+
 KKB::kkuint64  KKStr::ToUint64 () const
 {
   if  (!val)  return 0;
@@ -3495,9 +3560,7 @@ wchar_t*  KKStr::ToWchar_t () const
     size_t  wideLen = len + 1;
     wa = new wchar_t[wideLen];
     mbstowcs (wa, val, wideLen);
-    
   }
-
   return wa;
 }
 
@@ -3519,6 +3582,12 @@ double  KKStr::ToLatitude ()  const
   {
     north = false;
     latitudeStr.ChopLastChar ();
+  }
+
+  if  (latitudeStr.FirstChar () == '-')
+  {
+    latitudeStr.ChopFirstChar ();
+    north = !north;
   }
 
   double  degrees = 0.0;
@@ -3565,6 +3634,12 @@ double  KKStr::ToLongitude ()  const
   {
     east = false;
     longitudeStr.ChopLastChar ();
+  }
+
+  if  (longitudeStr.FirstChar () == '-')
+  {
+    longitudeStr.ChopFirstChar ();
+    east = !east;
   }
 
   double  degrees = 0.0;
@@ -3806,6 +3881,14 @@ KKStr  KKStr::operator+ (double  right)  const
   result.Append (*this);
   result.Append (buff);
   return  result;
+}
+
+
+
+KKStr&  KKStr::operator<< (char  right)
+{
+  Append (right);
+  return  *this;
 }
 
 
@@ -4086,6 +4169,28 @@ KKStrList::KKStrList (bool   owner):
   sorted (false)
 {
 }
+
+
+
+KKStrList::KKStrList (const char*  s[]):
+    KKQueue<KKStr> (true, 10),
+    sorted (false)
+{
+  if  (s == NULL)
+    return;
+
+  int  x = 0;
+  while  (s[x] != NULL)
+  {
+    PushOnBack (new KKStr (s[x]));
+    ++x;
+  }
+}
+
+
+
+
+
 
 
 

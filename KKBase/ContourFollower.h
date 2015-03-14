@@ -98,6 +98,6 @@ namespace KKB
     kkint32  width;
   }; /* ContourFollower*/
 
-} /* namespace KKU; */
+} /* namespace KKB; */
 
 #endif
