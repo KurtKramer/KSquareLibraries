@@ -13,7 +13,7 @@
  **  Each instance of this class represents a single Class as used in *
  **  Machine Learning sense.  Each instance of 'FeatureVector' class  *
  **  will point to an instance of this class.  There can only be one  *
- **  instance of each Class in memory.  Specificacly the 'name' field *
+ **  instance of each Class in memory.  Specifically the 'name' field *
  **  will be unique.  This is enforced by making the constructor and  *
  **  destructor private.  The only way to create a new instance of a  *
  **  'MLClass' object is to call one of the the static methods of  *
@@ -55,7 +55,11 @@ namespace KKMachineLearning
 
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
+  typedef  MLClass  const  MLClassConst;
+  typedef  MLClassConst*  MLClassConstPtr;
 
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
 
   class  MLClass 
   {
@@ -99,7 +103,7 @@ namespace KKMachineLearning
      *@param[in]  newName     New name that you with to give instance of 'MLClass'
      *@param[out] changeSuccessful Will return'True' if change was successful,  a reason it would not work is that the name is already used.
      */
-    static  void  ChangeNameOfClass (MLClassPtr    mlClass, 
+    static  void  ChangeNameOfClass (MLClassPtr    mlClass,
                                      const KKStr&  newName,
                                      bool&         changeSuccessful
                                     );
