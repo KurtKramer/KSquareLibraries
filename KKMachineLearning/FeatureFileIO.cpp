@@ -850,11 +850,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
 
-<<<<<<< HEAD
-  bool  successful = false;
-=======
   bool  successful = true;
->>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
 
   KKStr fileNameToOpen;
   if  (_dirName.Empty ())
@@ -933,7 +929,6 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   origFeatureData->SortByRootName (false);
 
-
   FeatureVectorListPtr  extractedFeatures = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
   extractedFeatures->Version (fvProducer->Version ());
 
@@ -961,7 +956,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     if  (!validImageFileFormat)
       continue;
 
-    bool  deatureVectorCoputaionSuccessful = false;
+    bool  featureVectorCoputaionSuccessful = false;
 
     FeatureVectorPtr  origFV = origFeatureData->BinarySearchByName (*imageFileName);
     if  (origFV)
@@ -969,7 +964,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
     if  (origFV  &&  versionsAreSame)
     {
-      deatureVectorCoputaionSuccessful = true;
+      featureVectorCoputaionSuccessful = true;
       if  (_useDirectoryNameForClassName)
       {
         if  (origFV->MLClass () != _unknownClass)
@@ -992,8 +987,6 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     {
       // We either  DON'T have an original image    or    versions are not the same.
 
-      bool  succesfullyComputed = true;
-
       KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
       FeatureVectorPtr fv = NULL;
       try
@@ -1003,15 +996,10 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
         delete image;
         image = NULL;
-<<<<<<< HEAD
-        deatureVectorCoputaionSuccessful = true;
-
-=======
         if  (fv)
-          succesfullyComputed = true;
+          featureVectorCoputaionSuccessful = true;
         else
-          succesfullyComputed = false;
->>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
+          featureVectorCoputaionSuccessful = false;
       }
       catch  (...)
       {
@@ -1019,18 +1007,11 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           << "FeatureDataReSink   ***ERROR***"  << endl
           << "       Exception occured calling constructor 'ComputeFeatureVector'." << endl
           << endl;
-<<<<<<< HEAD
+        featureVectorCoputaionSuccessful = false;
         fv = NULL;
       }
 
-      if  (!deatureVectorCoputaionSuccessful)
-=======
-        succesfullyComputed = false;
-        fv = NULL;
-      }
-
-      if  (!succesfullyComputed)
->>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
+      if  (!featureVectorCoputaionSuccessful)
       {
         _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
                        << imageFileName << "]."
@@ -1043,7 +1024,6 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       {
         _changesMade = true;
         fv->ImageFileName (*imageFileName);
-
         _log.Level (30) << fv->ImageFileName () << "  " << fv->OrigSize () << endl;
         extractedFeatures->PushOnBack (fv);
         numOfNewFeatureExtractions++;
@@ -1077,9 +1057,9 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     _timeStamp = osGetLocalDateTime ();
   }
 
-  delete  fvProducer;        fvProducer      = NULL;
-  delete  fileNameList;      fileNameList    = NULL;
-  delete  origFeatureData;   origFeatureData = NULL;
+  delete fvProducer;        fvProducer      = NULL;
+  delete fileNameList;      fileNameList    = NULL;
+  delete origFeatureData;   origFeatureData = NULL;
 
   _log.Level (10) << "FeatureDataReSink  Exiting  Dir: "  << _dirName << endl;
 
