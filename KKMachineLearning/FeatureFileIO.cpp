@@ -850,7 +850,11 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
   KKStr  fullFeatureFileName = osAddSlash (_dirName) +  _fileName;
 
+<<<<<<< HEAD
   bool  successful = false;
+=======
+  bool  successful = true;
+>>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
 
   KKStr fileNameToOpen;
   if  (_dirName.Empty ())
@@ -946,6 +950,12 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   for  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!_cancelFlag);  ++fnIDX)
   {
     imageFileName = *fnIDX;
+
+    // pv414-_002_20140414-162243_02068814-1261.bmp
+    KKStr  rootName = osGetRootName (imageFileName);
+    if  (rootName == "pv414-_002_20140414-162243_02068814-1261")
+      cout << "Stop Here." << endl;
+
     bool validImageFileFormat = SupportedImageFileFormat (*imageFileName);
     
     if  (!validImageFileFormat)
@@ -982,6 +992,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     {
       // We either  DON'T have an original image    or    versions are not the same.
 
+      bool  succesfullyComputed = true;
+
       KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
       FeatureVectorPtr fv = NULL;
       try
@@ -991,8 +1003,15 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
         delete image;
         image = NULL;
+<<<<<<< HEAD
         deatureVectorCoputaionSuccessful = true;
 
+=======
+        if  (fv)
+          succesfullyComputed = true;
+        else
+          succesfullyComputed = false;
+>>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
       }
       catch  (...)
       {
@@ -1000,10 +1019,18 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
           << "FeatureDataReSink   ***ERROR***"  << endl
           << "       Exception occured calling constructor 'ComputeFeatureVector'." << endl
           << endl;
+<<<<<<< HEAD
         fv = NULL;
       }
 
       if  (!deatureVectorCoputaionSuccessful)
+=======
+        succesfullyComputed = false;
+        fv = NULL;
+      }
+
+      if  (!succesfullyComputed)
+>>>>>>> d22d9e90c4a4583ddc5ebba7f9cd91d0a6a2fc87
       {
         _log.Level (-1) << " FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File["
                        << imageFileName << "]."
