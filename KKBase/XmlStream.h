@@ -1,6 +1,6 @@
 /* XmlStream.h -- Class to XML Objects;  still in development.
  * Copyright (C) 1994-2011 Kurt Kramer
- * For conditions of distribution and use, see copyright notice in KKU.h
+ * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #ifndef  _XMLSTREAM_
 #define  _XMLSTREAM_

@@ -109,9 +109,9 @@ namespace KKB
   #define int32_max    (kkint32)2147483647
   #define int32_min    (kkint32)-214748367
   #define uint32_max   (kkuint32)4294967295
-  #define int64_max    (int64)9223372036854775807
-  #define int64_min    (int64)-9223372036854775807
-  #define uint64_max   (uint64)18446744073709551615
+  #define int64_max    (kkint64)9223372036854775807
+  #define int64_min    (kkint64)-9223372036854775807
+  #define uint64_max   (kkuint64)18446744073709551615
 
  
   extern  float   FloatMax;
@@ -148,6 +148,7 @@ namespace KKB
   typedef  VectorDouble*         VectorDoubletPtr;
   typedef  VectorShort*          VectorShortPtr;
 
+  typedef  char const * const  * const ConstCharStarArray;
 
   typedef  volatile const bool  VolConstBool;  /**< Commonly used for passing Cancel Flag in multi threaded environment.  */
 

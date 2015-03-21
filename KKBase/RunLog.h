@@ -149,6 +149,7 @@ namespace KKB
     RunLog&  operator<< (const char*    right);
     RunLog&  operator<< (const KKStr&   right);
     RunLog&  operator<< (KKStrConstPtr  right);
+    RunLog&  operator<< (const VectorKKStr& right);
 
     RunLog&  operator<< (ostream& (* mf)(ostream &));
 

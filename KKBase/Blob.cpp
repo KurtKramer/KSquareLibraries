@@ -3,13 +3,13 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 
-#include  "FirstIncludes.h"
-#include  <stdlib.h>
-#include  <iostream>
-#include  <map>
-#include  <vector>
+#include "FirstIncludes.h"
+#include <stdlib.h>
+#include <iostream>
+#include <map>
+#include <vector>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace std;
 
 #include "BitString.h"

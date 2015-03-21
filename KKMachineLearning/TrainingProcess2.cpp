@@ -125,7 +125,11 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
               << endl;
     }
 
-    log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl;
+    log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl
+      << endl
+      << config->FormatErrors () << endl
+      << endl;
+
     Abort (true);
     return;
   }
@@ -823,7 +827,11 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
   if  (fvFactoryProducer)
     driver = fvFactoryProducer->DefaultFeatureFileIO ();
 
-  FeatureVectorListPtr  extractedImages = driver->FeatureDataReSink 
+  FeatureVectorListPtr  extractedImages = NULL; 
+
+  try
+  {
+    extractedImages = driver->FeatureDataReSink 
                                 (fvFactoryProducer,
                                  expDirName,
                                  trainingClass->FeatureFileName (),
@@ -835,8 +843,25 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
                                  latestTimeStamp,
                                  log
                                 );
-  //  We will use list from ReSink  to add to trainingExamples
-
+    //  We will use list from ReSink  to add to trainingExamples
+  }
+  catch (const std::exception&  e1)
+  {
+    log.Level (-1) << endl
+      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+      << e1.what () << endl
+      << endl;
+    extractedImages = NULL;
+    Abort (true);
+  }
+  catch  (...)
+  {
+    log.Level (-1) << endl
+      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+      << endl;
+    extractedImages = NULL;
+    Abort (true);
+  }
 
   if  ((extractedImages == NULL)  ||  (extractedImages->QueueSize () < 1))
   {
@@ -848,10 +873,13 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
     Abort (true);
   }
 
-  trainingExamples->AddQueue (*extractedImages);
-  extractedImages->Owner (false);
-  delete  extractedImages;
-  extractedImages = NULL;
+  if  (extractedImages)
+  {
+    trainingExamples->AddQueue (*extractedImages);
+    extractedImages->Owner (false);
+    delete  extractedImages;
+    extractedImages = NULL;
+  }
 
   log.Level (30) << "TrainingProcess2::ExtractFeatures  Exiting" << endl;
 }  /* ExtractFeatures */

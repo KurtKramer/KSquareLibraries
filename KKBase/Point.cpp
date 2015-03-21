@@ -153,6 +153,82 @@ Point  PointList::CalculateCenterPoint ()
 
 
 
+KKStr  PointList::ToDelStr (char del)  const
+{
+  if  (QueueSize () < 1)
+    return "[]";
+
+  KKStr  result (QueueSize () * 10);
+
+  int  count = 0;
+  PointList::const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  ++idx, ++count)
+  {
+    PointPtr  p = *idx;
+    if  (count > 0)
+      result << del;
+    result << p->Row () << del << p->Col ();
+  }
+  return  result;
+}  /* ToDelStr */
+
+
+PointListPtr  PointList::FromDelStr (const KKStr&  _s)
+{
+  PointListPtr  result = new PointList (true);
+
+  KKStr  s (_s);
+  s.TrimLeft ();
+
+  while  (s.Len () > 0)
+  {
+    char nextCh = s.FirstChar ();
+    char endPairChar = 0;
+    if  (nextCh == '[')
+      endPairChar = ']';
+
+    else if  (nextCh == '(')
+      endPairChar = ')';
+
+    else
+    {
+      // Not Bracked.
+      endPairChar = 0;
+      kkint16  row = (kkint16)s.ExtractTokenInt (",\t\n\t");
+      kkint16  col = (kkint16)s.ExtractTokenInt (",\t\n\t");
+      result->PushOnBack (new Point (row, col));
+    }
+
+    if  (endPairChar != 0)
+    {
+      KKStr pairStr = "";
+      kkint32  idx = s.Find (endPairChar);
+      if  (idx >= 0)
+      {
+        pairStr = s.SubStrPart (0, idx - 1);
+        s = s.SubStrPart (idx + 1);
+      }
+      else
+      {
+        pairStr = s;
+        s = "";
+      }
+
+      kkint16  row = (kkint16)pairStr.ExtractTokenInt (",");
+      kkint16  col = (kkint16) pairStr.ExtractTokenInt (",");
+      result->PushOnBack (new Point (row, col));
+      nextCh = s.FirstChar ();
+      if  ((nextCh == ',')  ||  (nextCh == '\n')  ||  (nextCh == '\r')  || (nextCh == '\t'))
+        s.ChopFirstChar ();
+    }
+    s.TrimLeft ();
+  }
+
+  return  result;
+}  /* FromDelStr */
+
+
+
 
 float  PointList::ComputeSegmentLens (float  heightFactor,
                                       float  widthFactor

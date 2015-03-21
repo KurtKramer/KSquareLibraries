@@ -25,16 +25,15 @@
  @see  KKMachineLearning::SVMparam, KKMachineLearning::ModelParamOldSVM, KKMachineLearning::SVM233
  */
 
-#include  "svm.h"
-
-#include  "FeatureNumList.h"
+#include "svm.h"
+#include "FeatureNumList.h"
 
 namespace KKMachineLearning
 {
-
   #if  !defined (_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
+  typedef  MLClass const * MLClassConstPtr;
   #endif
 
 
@@ -63,9 +62,9 @@ namespace KKMachineLearning
     ~BinaryClassParms ();
 
     static
-    BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr&  _str,
-                                              FileDescPtr    _fileDesc,
-                                              RunLog&        _log
+    BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr& _str,
+                                              FileDescPtr  _fileDesc,
+                                              RunLog&      _log
                                              );
 
     //  Member Access Methods
@@ -78,6 +77,7 @@ namespace KKMachineLearning
     float                  Weight           () const {return  weight;}
 
     // member Update methods
+    void  AParam           (float                  _A)                 {param.A           = _A;}
     void  C                (double                 _c)                 {param.C           = _c;}
     void  Gamma            (double                 _gamma)             {param.gamma       = _gamma;}
     void  Param            (const svm_parameter&   _param)             {param             = _param;}
@@ -149,6 +149,12 @@ namespace KKMachineLearning
 
     kkint32  MemoryConsumedEstimated ()  const;
 
+    virtual
+    void  PushOnBack  (BinaryClassParmsPtr  binaryParms);
+
+    virtual
+    void  PushOnFront (BinaryClassParmsPtr  binaryParms);
+
     void  ReadXML (FILE*        i,
                    FileDescPtr  fileDesc,
                    RunLog&      log
@@ -163,7 +169,21 @@ namespace KKMachineLearning
 
 
   private:
+     struct  KeyField
+     {
+       KeyField (MLClassPtr  _class1,  
+                 MLClassPtr  _class2
+                );
 
+       bool  operator< (const KeyField& p2)  const;
+
+       MLClassPtr  class1;
+       MLClassPtr  class2;
+     };
+
+     typedef  map<KeyField,BinaryClassParmsPtr>   ClassIndexType;
+     typedef  pair<KeyField, BinaryClassParmsPtr>  ClassIndexPair;
+     ClassIndexType  classIndex;
   };
 
 

@@ -60,7 +60,6 @@ void  Raster::Initialize ()
     atexit (Raster::FinaleCleanUp);
   }
   goalKeeper->EndBlock ();
-
 }
 
 
@@ -185,6 +184,19 @@ kkint32  freqHistBucketIdx[256] =
            6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, // 192 - 223
            7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7  // 224 - 255
           };
+
+kkint32  freqHist16BucketIdx[256] = 
+          {0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, //   0  - 31
+           2,   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3, //  31  - 63
+           4,   4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,  5, //  64  - 95
+           6,   6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, //  96 - 127
+           8,   8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9,  9, // 128 - 159
+           10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, // 160 - 191
+           12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, // 192 - 223
+           14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15  // 224 - 255
+          };
+
+
 
 inline  
 kkint32  Min (kkint32  x1,  kkint32  x2)
@@ -862,11 +874,11 @@ void  Raster::ReSize (kkint32  _height,
 
 
 
-void  Raster::Initialize (kkint32  _height,
-                          kkint32  _width,
-                          uchar*   _grayScaleData,
-                          uchar**  _grayScaleRows,
-                          bool     _takeOwnership
+void  Raster::Initialize (kkint32    _height,
+                          kkint32    _width,
+                          uchar*     _grayScaleData,
+                          uchar**    _grayScaleRows,
+                          bool       _takeOwnership
                          )
 {
   CleanUpMemory ();
@@ -883,6 +895,7 @@ void  Raster::Initialize (kkint32  _height,
 
   greenArea = _grayScaleData;
   green = _grayScaleRows;
+
   weOwnRasterData = _takeOwnership;
 }
 
@@ -918,6 +931,44 @@ void  Raster::Initialize (kkint32  _height,
  
   weOwnRasterData = _takeOwnership;
 }
+
+
+
+
+void  Raster::TakeOwnershipOfAnotherRastersData (Raster&  otherRaster)
+{
+  CleanUpMemory ();
+  backgroundPixelValue    = otherRaster.backgroundPixelValue;
+  backgroundPixelTH       = otherRaster.backgroundPixelTH;
+  blobIds                 = otherRaster.blobIds;
+  centroidCol             = otherRaster.centroidCol;
+  centroidRow             = otherRaster.centroidRow;
+  color                   = otherRaster.color;
+  divisor                 = otherRaster.divisor;
+  fileName                = otherRaster.fileName;
+  foregroundPixelCount    = otherRaster.foregroundPixelCount;
+  foregroundPixelValue    = otherRaster.foregroundPixelValue;
+  fourierMag              = otherRaster.fourierMag;
+  fourierMagArea          = otherRaster.fourierMagArea;
+  height                  = otherRaster.height;
+  maxPixVal               = otherRaster.maxPixVal;
+  title                   = otherRaster.title;
+  totPixels               = otherRaster.totPixels;
+  weOwnRasterData         = otherRaster.weOwnRasterData;
+  width                   = otherRaster.width;
+  redArea                 = otherRaster.redArea;
+  greenArea               = otherRaster.greenArea;
+  blueArea                = otherRaster.blueArea;
+  red                     = otherRaster.red;
+  green                   = otherRaster.green;
+  blue                    = otherRaster.blue;
+  otherRaster.weOwnRasterData = false;
+  otherRaster.fourierMagArea = NULL;
+  otherRaster.fourierMag     = NULL;
+  otherRaster.blobIds        = NULL;
+}  /* TakeOwnershipOfAnotherRastersData */
+
+
 
 
 RasterPtr  Raster::AllocateARasterInstance (kkint32  height,
@@ -1421,6 +1472,31 @@ void  Raster::SetPixelValue (ColorChannels  channel,
 }  /* SetPixelValue  */
 
 
+
+bool  Raster::AreThereEdgePixels (kkint32 edgeWidth)
+{
+  for  (kkint32 edgeIdx = 0;  edgeIdx < edgeWidth;  ++edgeIdx)
+  {
+    kkint32  topRow = edgeIdx;
+    kkint32  botRow = height - (edgeIdx + 1);
+
+    for  (int c = 0;  c < width;  ++c)
+    {
+      if  (ForegroundPixel (topRow, c)  ||  ForegroundPixel (botRow, c))
+        return true;
+    }
+
+    kkint32  leftCol = edgeIdx;
+    kkint32  rightCol = width - (1 + edgeIdx);
+
+    for  (int r = 0;  r < height;  ++r)
+    {
+      if  (ForegroundPixel (r, leftCol)  ||  ForegroundPixel (r, rightCol))
+        return true;
+    }
+  }
+  return  false;
+}  /* AreThereEdgePixels */
 
 
 
@@ -2992,6 +3068,214 @@ void  Raster::ConnectedComponent (uchar connectedComponentDist)
 
 
 
+
+
+void  Raster::ReduceToMostCompleteBlob (uchar connectedComponentDist)
+{
+  if  (connectedComponentDist < 1)
+    connectedComponentDist = 3;
+
+  kkint32  row = 0, col = 0;
+
+  BlobListPtr  blobs = ExtractBlobs (connectedComponentDist);
+
+  BlobPtr largestBlob = blobs->LocateMostComplete ();
+  if  (largestBlob)
+  {
+    kkint32  blobId = largestBlob->Id ();
+     
+    uchar*   newImageArea = new uchar[totPixels];
+    memset (newImageArea, 0, totPixels);
+    uchar*   newImageAreaPtr = newImageArea;
+
+    uchar**  newRows = new uchar*[height];
+
+    for  (row = 0; row < height; row++)
+    {
+      newRows[row] = newImageAreaPtr;
+      
+      for  (col = 0; col < width; col++)
+      {
+        if  (blobIds[row][col] == blobId)
+        {
+          newRows[row][col] = green[row][col];
+        }
+      }
+
+      newImageAreaPtr = newImageAreaPtr + width;
+    }
+
+    delete  green;
+    delete  greenArea;
+
+    greenArea = newImageArea;
+    green = newRows;
+  }
+
+  for  (row = 0; row < height; row++)
+    delete  blobIds[row];
+  delete  blobIds;
+  blobIds = NULL;
+
+  delete  blobs;  blobs = NULL;
+
+  return;
+}  /* ReduceToMostCompleteBlob */
+
+
+
+
+
+
+
+
+
+
+void  Raster::ConnectedComponent8Conected ()
+{
+  uchar*   curRow         = NULL;
+  kkint32*   curRowBlobIds  = NULL;
+  kkint32*   prevRowBlobIds = NULL;
+
+  kkint32  col = 2;
+  kkint32  row = 2;
+
+  BlobPtr  curBlob    = NULL;
+  kkint32  curBlobId  = 0;
+  kkint32  nearBlobId = 0;
+
+  kkint32  blankColsInARow = 0;
+
+  // Initialize Blob ID's
+
+  blobIds = new kkint32*[height];
+
+  for  (row = 0; row < height; row++)
+  {
+    blobIds[row] = new kkint32[width];
+    for  (col = 0; col < width; col++)
+    {
+      blobIds[row][col] = -1;
+    }
+  }
+
+  BlobListPtr blobs = new BlobList (true);
+
+  for  (row = 1; row < height - 1; row++)
+  {
+    curRow         = green[row];
+    curRowBlobIds  = blobIds[row];
+    prevRowBlobIds = blobIds[row - 1];
+
+
+    curBlob = NULL;
+
+    col = 1;
+    while  (col < (width - 1))
+    {
+      if  (ForegroundPixel (curRow[col]))
+      {
+        blankColsInARow = 0;
+
+        nearBlobId = Max (prevRowBlobIds[col - 1],
+                          prevRowBlobIds[col],
+                          prevRowBlobIds[col + 1]
+                         );
+        if  (curBlob)
+        {
+          if  (nearBlobId >= 0)
+          {
+            if  (nearBlobId != curBlobId)
+            {
+              blobs->MergeBlobIds (curBlob, nearBlobId, blobIds);
+            }
+          }
+
+          curRowBlobIds[col] = curBlobId;
+          curBlob->colRight  = Max (curBlob->colRight, col);
+          curBlob->rowBot    = Max (curBlob->rowBot,   row);
+          curBlob->pixelCount++;
+        }
+        else
+        {
+          // No Current Blob
+          if  (nearBlobId >= 0)
+          {
+            curBlob   = blobs->LookUpByBlobId (nearBlobId);
+            curBlobId = curBlob->id;
+          }
+          else
+          {
+            curBlob = blobs->NewBlob (row, col);
+            curBlobId = curBlob->id;
+          }
+
+          curRowBlobIds[col] = curBlobId;
+          curBlob->colLeft   = Min  (curBlob->colLeft,  col);
+          curBlob->colRight  = Max (curBlob->colRight, col);
+          curBlob->rowBot    = Max (curBlob->rowBot,   row);
+          curBlob->rowTop    = Min  (curBlob->rowTop,   row);
+          curBlob->pixelCount++;
+        }
+      }
+      else
+      {
+        blankColsInARow++;
+        curBlob = NULL;
+        curBlobId = -1;
+      }
+
+      col++;
+    }
+  }
+
+  BlobPtr largestBlob = blobs->LocateLargestBlob ();
+  if  (largestBlob)
+  {
+    kkint32  blobId = largestBlob->Id ();
+    
+    uchar*   newImageArea = new uchar[totPixels];
+    memset (newImageArea, 0, totPixels);
+    uchar*   newImageAreaPtr = newImageArea;
+
+    uchar**  newRows = new uchar*[height];
+
+    for  (row = 0; row < height; row++)
+    {
+      newRows[row] = newImageAreaPtr;
+      
+      for  (col = 0; col < width; col++)
+      {
+        if  (blobIds[row][col] == blobId)
+        {
+          newRows[row][col] = green[row][col];
+        }
+      }
+
+      newImageAreaPtr = newImageAreaPtr + width;
+    }
+
+    delete  green;
+    delete  greenArea;
+
+    greenArea = newImageArea;
+    green = newRows;
+  }
+
+  for  (row = 0; row < height; row++)
+    delete  blobIds[row];
+  delete  blobIds;
+  blobIds = NULL;
+
+  delete  blobs;  blobs = NULL;
+
+  return;
+}  /* ConnectedComponent8Conected */
+
+
+
+
+
 RasterPtr  Raster::ExtractABlobTightly (const BlobPtr  blob,
                                         kkint32        padding
                                        )  const
@@ -3245,6 +3529,49 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
 
 
 
+void   Raster::CalcAreaAndIntensityFeatures16 (kkint32&  area,
+                                               float&    weighedSize,
+                                               kkuint32  intensityHistBuckets[16]
+                                              )
+{
+  kkint32  x;
+
+  long  totalPixelValues = 0;
+
+  area               = 0;
+  weighedSize        = 0.0f;
+  maxPixVal          = 0;
+
+  for  (x = 0;  x < 16;  x++)
+  {
+   intensityHistBuckets[x] = 0;
+  }
+
+  maxPixVal = 0;
+  uchar  pixVal;
+
+  for  (x = 0;  x < totPixels;  x++)
+  {
+    pixVal = greenArea [x];
+    if  (pixVal > maxPixVal)
+      maxPixVal = pixVal;
+    if  (ForegroundPixel (pixVal))
+    {
+      area++;
+      intensityHistBuckets[freqHist16BucketIdx[pixVal]]++;
+      totalPixelValues += pixVal;
+    }
+  }
+
+  foregroundPixelCount = area;
+
+  weighedSize = (float)totalPixelValues / (float)maxPixVal;
+}  /* CalcAreaAndIntensityFeatures16 */
+
+
+
+
+
 void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
                                              float&    weightedSize,
                                              kkuint32  intensityHistBuckets[8]
@@ -3329,16 +3656,16 @@ float  Raster::CalcWeightedArea ()  const
  */
 void  Raster::CentralMoments (float  features[9])  const
 {
-  kkint32  m00, m10, m01;
+  kkint64  m00, m10, m01;
   Moment (m00, m10, m01);
 
   centroidCol = (float)m10 / (float)m00;   // Center Col
   centroidRow = (float)m01 / (float)m00;   // Center Row
 
-  foregroundPixelCount = m00;
+  foregroundPixelCount = (kkint32)m00;
 
   float  cm00   = (float)m00;
-  float  gamma2 = (float)(m00 * m00);
+  float  gamma2 = (float)m00 * (float)m00;
   float  gamma3 = gamma2 * (float)sqrt ((float)m00);
         
   float  cm20 = 0.0;
@@ -3434,9 +3761,9 @@ void  Raster::CentralMoments (float  features[9])  const
 
 
 
-void  Raster::Moment (kkint32& m00,
-                      kkint32& m10,
-                      kkint32& m01
+void  Raster::Moment (kkint64& m00,
+                      kkint64& m10,
+                      kkint64& m01
                      )  const
 {
   m00 = 0;
@@ -3603,13 +3930,13 @@ void  Raster::MomentWeighted (float& m00,
                               float& m01
                              )  const
 {
-  m00 = 0.0;
-  m10 = 0.0;
-  m01 = 0.0;
+  m00 = 0.0f;
+  m10 = 0.0f;
+  m01 = 0.0f;
 
-  kkint32  m00Int = 0;
-  kkint32  m10Int = 0;
-  kkint32  m01Int = 0;
+  kkint64  m00Int = 0;
+  kkint64  m10Int = 0;
+  kkint64  m01Int = 0;
 
   kkint32  col;
   kkint32  row;
@@ -3651,11 +3978,11 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
                                       )  
                                        const
 {
-  kkint32  m00,  m10,  m01;
+  kkint64  m00,  m10,  m01;
   float    mw00, mw10, mw01;
   Moments (m00, m10, m01, mw00, mw10, mw01);
 
-  foregroundPixelCount = m00;
+  foregroundPixelCount = (kkint32)m00;
   weightedPixelCount   = mw00;
 
   centroidCol = (float)m10 / (float)m00;
@@ -3665,7 +3992,7 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
   float centroidRowW  = mw01 / mw00;
         
   float  cm00   = (float)m00;
-  float  gamma2 = (float)(m00 * m00);
+  float  gamma2 = (float)m00 * (float)m00;
   float  gamma3 = gamma2 * (float)sqrt ((float)m00);
         
   float  cm20 = 0.0;
@@ -3678,8 +4005,8 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
   float  cm21 = 0.0;
 
   float cmw00   = mw00;
-  float gammaW2 = mw00 * mw00;
-  float gammaW3 = gammaW2 * (float)sqrt (mw00);
+  float gammaW2 = (float)mw00 * (float)mw00;
+  float gammaW3 = (float)gammaW2 * (float)sqrt ((float)mw00);
         
   float cmw20 = 0.0f;
   float cmw02 = 0.0f;
@@ -3867,9 +4194,9 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
 
 
 
-void  Raster::Moments (kkint32&  m00,
-                       kkint32&  m10,
-                       kkint32&  m01,
+void  Raster::Moments (kkint64&  m00,
+                       kkint64&  m10,
+                       kkint64&  m01,
                        float&    mw00,
                        float&    mw10,
                        float&    mw01
@@ -3883,9 +4210,9 @@ void  Raster::Moments (kkint32&  m00,
   mw10 = 0.0f;
   mw01 = 0.0f;
 
-  kkint32  m00Int = 0;
-  kkint32  m10Int = 0;
-  kkint32  m01Int = 0;
+  kkint64  m00Int = 0;
+  kkint64  m10Int = 0;
+  kkint64  m01Int = 0;
 
   kkint32  col = 0;
   kkint32  row = 0;
@@ -4957,37 +5284,6 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
 
 
 
-Point  DerivePreRotatedPoint (kkint32  height,
-                              kkint32  width,
-                              kkint32  rotatedRow,
-                              kkint32  rotatedCol,
-                              float  turnAngle
-                             )
-{
-  kkint32  diag = (kkint32)sqrt ((float)(height * height + width * width)) + 10;
-
-  float  a11 = (float)(cos (-turnAngle));
-  float  a12 = (float)(sin (-turnAngle));
-  float  b1  = width  * 0.5f;
-
-  float  a21 = -a12;
-  float  a22 = a11;
-  float  b2  = height * 0.5f;
-
-  kkint32  halfDiag = (diag + 1) / 2;
-
-  kkint32  centDestRow = rotatedRow - halfDiag;
-  kkint32  centDestCol = rotatedCol - halfDiag;
-
-  kkint32  srcY = (kkint32)((float)(a21 * centDestCol) + (float)(a22 * centDestRow) + b2 + 0.5);
-  kkint32  srcX = (kkint32)((float)(a11 * centDestCol) + (float)(a12 * centDestRow) + b1 + 0.5);
-
-  return  Point (srcY, srcX);
-}
-
-
-
-
 RasterPtr  Raster::Rotate (float  turnAngle)
 {
 
@@ -5044,6 +5340,39 @@ RasterPtr  Raster::Rotate (float  turnAngle)
 
   return  rotatedImage;
 }  /* Rotate */
+
+
+
+
+Point  Raster::RotateDerivePreRotatedPoint (kkint32  height,
+                                            kkint32  width,
+                                            Point&   rotatedPoint, 
+                                            float    turnAngle
+                                           )
+                                           const
+{
+  kkint32  diag = (kkint32)sqrt ((float)(height * height + width * width)) + 10;
+
+  float  a11 = (float)(cos (-turnAngle));
+  float  a12 = (float)(sin (-turnAngle));
+  float  b1  = width  * 0.5f;
+
+  float  a21 = -a12;
+  float  a22 = a11;
+  float  b2  = height * 0.5f;
+
+  kkint32  halfDiag = (diag + 1) / 2;
+
+  kkint32  centDestRow = rotatedPoint.Row () - halfDiag;
+  kkint32  centDestCol = rotatedPoint.Col () - halfDiag;
+
+  kkint32  srcY = (kkint32)((float)(a21 * centDestCol) + (float)(a22 * centDestRow) + b2 + 0.5);
+  kkint32  srcX = (kkint32)((float)(a11 * centDestCol) + (float)(a12 * centDestRow) + b1 + 0.5);
+
+  return  Point (srcY, srcX);
+}  /* RotateDerivePreRotatedPoint */
+
+
 
 
 void  Raster::FindBoundingBox (kkint32&  tlRow,
@@ -6923,7 +7252,7 @@ RasterPtr  Raster::SobelEdgeDetector ()
 
 RasterPtr  Raster::BinarizeByThreshold (uchar  min,
                                         uchar  max
-                                       )
+                                       )  const
 {
   MorphOpBinarize  binarizer (min, max);
   RasterPtr result = binarizer.PerformOperation (this);
@@ -9114,35 +9443,6 @@ void  Raster::FillBlob (RasterPtr   origImage,
 
 
 
-Point  DerivePreRotatedPoint (kkint32 height,
-                              kkint32 width,
-                              Point&  rotatedPoint, 
-                              float   turnAngle
-                             )
-{
-  kkint32  diag = (kkint32)sqrt ((float)(height * height + width * width)) + 10;
-
-  float  a11 = (float)(cos (-turnAngle));
-  float  a12 = (float)(sin (-turnAngle));
-  float  b1  = width  * 0.5f;
-
-  float  a21 = -a12;
-  float  a22 = a11;
-  float  b2  = height * 0.5f;
-
-  kkint32  halfDiag = (diag + 1) / 2;
-
-  kkint32  centDestRow = rotatedPoint.Row () - halfDiag;
-  kkint32  centDestCol = rotatedPoint.Col () - halfDiag;
-
-  kkint32  srcY = (kkint32)((float)(a21 * centDestCol) + (float)(a22 * centDestRow) + b2 + 0.5);
-  kkint32  srcX = (kkint32)((float)(a11 * centDestCol) + (float)(a12 * centDestRow) + b1 + 0.5);
-
-  return  Point (srcY, srcX);
-}
-
-
-
 
 PointListPtr  Raster::DeriveImageLength () const
 {
@@ -9151,9 +9451,9 @@ PointListPtr  Raster::DeriveImageLength () const
   float  eigenRatio;
   float  orientationAngle;
 
-  RasterPtr  workRaster = CreateErodedImage (SQUARE3);
+  RasterPtr  workRaster = CreateErodedImage(MorphOp::SQUARE3);
   workRaster->FillHole ();
-  workRaster->Erosion (SQUARE7);
+  workRaster->Erosion(MorphOp::SQUARE7);
   workRaster->ConnectedComponent (1);
   workRaster->CalcOrientationAndEigerRatio (eigenRatio,
                                             orientationAngle
@@ -9176,6 +9476,7 @@ PointListPtr  Raster::DeriveImageLength () const
     uchar**  imageData = rotatedImage->Green ();
 
     kkint32  boxWidth  = brCol - tlCol;
+    kkint32  boxHeight = brRow - tlRow;
 
     kkint32  mark1Col = (kkint32)((float)boxWidth * 0.05f + 0.5f) + tlCol;
     kkint32  mark2Col = (kkint32)((float)boxWidth * 0.95f + 0.5f) + tlCol;
@@ -9238,9 +9539,9 @@ PointListPtr  Raster::DeriveImageLength () const
     Point p3 ((kkint16)(0.5f + a3RowTot / a3PixCount), (kkint16)(0.5f + a3ColTot / a3PixCount));
 
    
-    Point p1Orig = DerivePreRotatedPoint (height, width, p1, orientationAngle);
-    Point p2Orig = DerivePreRotatedPoint (height, width, p2, orientationAngle);
-    Point p3Orig = DerivePreRotatedPoint (height, width, p3, orientationAngle);
+    Point p1Orig = RotateDerivePreRotatedPoint (height, width, p1, orientationAngle);
+    Point p2Orig = RotateDerivePreRotatedPoint (height, width, p2, orientationAngle);
+    Point p3Orig = RotateDerivePreRotatedPoint (height, width, p3, orientationAngle);
 
     results = new PointList (true);
     results->PushOnBack (new Point (p1Orig));

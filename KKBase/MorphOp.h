@@ -12,14 +12,17 @@
  *@details 
  * 
  *@see KKB::Raster
- */                                                                     
-
-#include  "KKQueue.h"
-#include  "KKStr.h"
-#include  "RunLog.h"
+ */
 
 
-#if  !defined(_RASTER_)
+
+
+#include "KKQueue.h"
+#include "KKStr.h"
+#include "RunLog.h"
+
+
+#if  !defined(_Raster_Defined_)
 namespace  KKB
 {
   class  Raster;

@@ -250,7 +250,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
                                      )
 {
   _log.Level (20) << "FeatureFileIOColumn::SaveFile     FileName[" << _fileName << "]." << endl;
-  kkint32  p = _out.precision ();
+  kkint32  p = (kkint32)_out.precision ();
   _out.precision (9);
 
   FileDescPtr  fileDesc = _data.FileDesc ();

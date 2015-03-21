@@ -64,6 +64,8 @@ namespace KKB
 
   typedef  Point*  PointPtr;
 
+  typedef  vector<Point>  VectorPoint;
+
 
   /**
    *@class  PointList  Point.h
@@ -72,6 +74,8 @@ namespace KKB
   class  PointList:  public KKQueue<Point>
   {
   public:
+    typedef  PointList*  PointListPtr;
+
     PointList (const PointList&  pointList);
 
 
@@ -89,12 +93,17 @@ namespace KKB
                                float  widthFactor
                               )  const;
 
+
+    KKStr  ToDelStr (char del)  const;
+
+    static
+    PointListPtr  FromDelStr (const KKStr&  s);
+
   };  /* PointList */
     
-  typedef  PointList*  PointListPtr;
 
-  typedef  PointList::iterator  PointListIterator;
 
+  typedef  PointList::PointListPtr  PointListPtr;
 
 
   KKStr&  operator<< (KKStr&        left,

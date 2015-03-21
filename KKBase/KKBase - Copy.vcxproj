@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+=======
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+>>>>>>> origin/master
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -18,13 +22,21 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
+<<<<<<< HEAD
+    <PlatformToolset>v110</PlatformToolset>
+=======
     <PlatformToolset>v120</PlatformToolset>
+>>>>>>> origin/master
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
+<<<<<<< HEAD
+    <PlatformToolset>v110</PlatformToolset>
+=======
     <PlatformToolset>v120</PlatformToolset>
+>>>>>>> origin/master
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -38,7 +50,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
+<<<<<<< HEAD
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+=======
     <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+>>>>>>> origin/master
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\Libraries\$(Configuration)\</OutDir>
@@ -52,7 +68,11 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+<<<<<<< HEAD
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+=======
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+>>>>>>> origin/master
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -67,7 +87,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;FFTW_AVAILABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -152,8 +172,13 @@
     <ClInclude Include="HTMLReport.h" />
     <ClInclude Include="ImageDirTree.h" />
     <ClInclude Include="ImageIO.h" />
+<<<<<<< HEAD
+    <ClInclude Include="KKB_Namespace.h" />
+    <ClInclude Include="KKBaseTypes.h" />
+=======
     <ClInclude Include="KKBaseTypes.h" />
     <ClInclude Include="KKB_Namespace.h" />
+>>>>>>> origin/master
     <ClInclude Include="KKException.h" />
     <ClInclude Include="KKObservable.h" />
     <ClInclude Include="KKObserver.h" />
@@ -185,6 +210,7 @@
     <ClInclude Include="SimpleCompressor.h" />
     <ClInclude Include="Sobel.h" />
     <ClInclude Include="StatisticalFunctions.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TokenBuffer.h" />
     <ClInclude Include="Tokenizer.h" />
@@ -193,12 +219,19 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+<<<<<<< HEAD
+=======
   <ItemGroup>
+    <ProjectReference Include="..\..\OutsidePackages\fftw\fftw.vcxproj">
+      <Project>{c7277f58-b7bd-4444-abbe-f1ac49452360}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\..\OutsidePackages\zlib123\projects\visualc6\zlib.vcxproj">
       <Project>{7c37d3e1-52ba-4dc0-9c7b-49375bf46b37}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
+>>>>>>> origin/master
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

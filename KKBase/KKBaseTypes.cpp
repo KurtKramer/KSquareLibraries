@@ -30,7 +30,7 @@ float  KKB::FloatAbs (float f)
 
 // Constant
 kkint64         _lrand48_sequence = 0x1234ABCD330ELL;
-//static KKB::int64  _lrand48_seed     = 305441741LL;
+//static KKB::kkint64  _lrand48_seed     = 305441741LL;
 
 // lrand48 function
 kkint32  KKB::LRand48 ()

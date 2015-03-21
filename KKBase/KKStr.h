@@ -386,6 +386,8 @@ namespace  KKB
 
     void     Lower ();                                       /**< @brief Make all characters in the String into lower case. */
 
+    KKStr    MaxLen (kkint32  maxLen)  const;
+
     kkint32  MemoryConsumedEstimated () const;
 
     /** @brief  Will break up the contents of the string into tokens where one of the characters in 'delStr' separates each token. */
@@ -525,6 +527,7 @@ namespace  KKB
     double    ToDouble     () const;
     float     ToFloat      () const;
     kkint32   ToInt        () const;
+    kkint16   ToInt16      () const;
     kkint32   ToInt32      () const;
     kkint64   ToInt64      () const;
     double    ToLatitude   () const;   /**< @brief Processes string as if a standard latitude; ex: "15:32.2S" = -15.53833. */
@@ -533,6 +536,7 @@ namespace  KKB
     float     ToPercentage () const;
     kkuint32  ToUint       () const;
     ulong     ToUlong      () const;
+    kkuint32  ToUint32     () const;
     kkuint64  ToUint64     () const;
 
     wchar_t*  ToWchar_t    () const;
@@ -550,8 +554,8 @@ namespace  KKB
     void      Upper ();
 
     bool      ValidInt (kkint32&  value); /**< returns true if KKStr is formated as a valid integer otherwise false.
-                                         *@param[out] value of string as interpreted as a integer.
-                                         */
+                                           *@param[out] value of string as interpreted as a integer.
+                                           */
 
     bool      ValidMoney (float&  value)  const;
 
@@ -644,32 +648,31 @@ namespace  KKB
     KKStr  operator+ (const char*   right) const;
     KKStr  operator+ (const KKStr&  right) const;
     KKStr  operator+ (kkint16       right) const;    
-    KKStr& operator+= (kkint32      right)        {return  *this << right;}
-
-    KKStr  operator+ (kkuint16  right) const;
-    KKStr  operator+ (kkint32   right) const;
-    KKStr  operator+ (kkuint32  right) const;
-    KKStr  operator+ (kkint64   right) const;
-    KKStr  operator+ (kkuint64  right) const;
-    KKStr  operator+ (float     right) const;
-    KKStr  operator+ (double    right) const;
+    KKStr  operator+ (kkuint16      right) const;
+    KKStr  operator+ (kkint32       right) const;
+    KKStr  operator+ (kkuint32      right) const;
+    KKStr  operator+ (kkint64       right) const;
+    KKStr  operator+ (kkuint64      right) const;
+    KKStr  operator+ (float         right) const;
+    KKStr  operator+ (double        right) const;
 
     KKStr&  operator<< (const char*   right);
     KKStr&  operator<< (const KKStr&  right);
-    KKStr&  operator<< (kkint16   right);
-    KKStr&  operator<< (kkuint16  right);
-    KKStr&  operator<< (kkint32   right);
-    KKStr&  operator<< (kkuint32  right);
-    KKStr&  operator<< (kkint64   right);
-    KKStr&  operator<< (kkuint64  right);
-    KKStr&  operator<< (float     right);
-    KKStr&  operator<< (double    right);
+    KKStr&  operator<< (char          right);
+    KKStr&  operator<< (kkint16       right);
+    KKStr&  operator<< (kkuint16      right);
+    KKStr&  operator<< (kkint32       right);
+    KKStr&  operator<< (kkuint32      right);
+    KKStr&  operator<< (kkint64       right);
+    KKStr&  operator<< (kkuint64      right);
+    KKStr&  operator<< (float         right);
+    KKStr&  operator<< (double        right);
 
     KKStr&  operator+= (const char*   right)  {return  *this << right;}
     KKStr&  operator+= (const KKStr&  right)  {return  *this << right;}
-    //KKStr&  operator+= (int16   right)      {return  *this << right;}
+    KKStr&  operator+= (kkint16   right)      {return  *this << right;}
     KKStr&  operator+= (kkuint16  right)      {return  *this << right;}
-    //KKStr&  operator+= (kkint32 right)      {return  *this << right;}
+    KKStr&  operator+= (kkint32   right)      {return  *this << right;}
     KKStr&  operator+= (kkuint32  right)      {return  *this << right;}
     KKStr&  operator+= (kkint64   right)      {return  *this << right;}
     KKStr&  operator+= (kkuint64  right)      {return  *this << right;}
@@ -742,7 +745,6 @@ namespace  KKB
   #endif
 
 
-
   char*  STRCAT (char*        dest,
                  kkint32      destSize,
                  const char*  src
@@ -763,57 +765,62 @@ namespace  KKB
 
 
   kkint32  STRICMP (const char*  left,
-                  const char*  right
-                 );
+                    const char*  right
+                   );
+
+  kkint32  STRNICMP (const char*  left,
+                     const char*  right,
+                     kkint32      len
+                    );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkint16      right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkint16      right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkuint16     right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkuint16     right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkint32      right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkint32      right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkuint32     right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkuint32     right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkint64      right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkint64      right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkuint64     right
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkuint64     right
+                   );
 
   kkint32  SPRINTF (char*        buff,
-                  kkint32      buffSize,
-                  const char*  formatSpec,
-                  kkint32      precision,
-                  double       d
-                 );
+                    kkint32      buffSize,
+                    const char*  formatSpec,
+                    kkint32      precision,
+                    double       d
+                   );
 
   kkint32  SPRINTF (char*         buff,
-                  kkint32       buffSize,
-                  char  const*  formatSpec,
-                  double        d
-                 );
+                    kkint32       buffSize,
+                    char  const*  formatSpec,
+                    double        d
+                   );
 
 
   template<typename T>
@@ -840,6 +847,18 @@ namespace  KKB
 
 
     KKStrList (bool owner = false);
+
+
+
+    /**
+     *@brief  Creates a list from a NULL terminated list of (char*) strings.
+     *@details  The last entry in the list has to be NULL.
+     *@code
+     *  const char* zed[] = {"This", "is", "a", "test", NULL};
+     *  KKStrList  wordList (zed);
+     *@endcode
+     */
+    KKStrList (const char*  s[]);
 
     
     void      AddString (KKStrPtr  str);

@@ -87,36 +87,7 @@ namespace KKB
   //*  file specification.                                                    *
   //***************************************************************************
 
-  /**
-   *@brief  Extracts the final sub-directory name of the fill directory specification.
-   *@code
-   **  ex:Input                              Returns
-   **     -----------------------            ----------------------
-   **     c:\an\Example\FileSpec\Romeo       Romeo
-   **     /usr/kkramer/Kinsey/Release_2      Release_2
-   **     /usr/kkramer/Thesis/               Thesis
-   **     /usr/kkramer/Thesis.dat/           Thesis.dat
-   *@endcode
-   *@param[in]  dirPath Directory path to get dir name from .
-   */
-  KKStr          osGetDirNameFromPath (KKStr  dirPath);
-
-
-  /**
-   *@brief  osGetFileNamePartOfFile, retrieves the file name part of the file spec.
-   *@details
-   *@code
-   * ex:  Input (fullFileName)                 Returned
-   *      --------------------------------_    ---------------
-   *      c:\KurtUtilities\KKBase\KKStr.cpp    KKStr.cpp
-   *      /bin/usr/KKramer/Dictionary.dat      Dictionary.dat
-   *      dataFile.data                       dataFile.data
-   *@endcode
-   *@param[in]  fullFileName  Sting that contains the full file name specification.
-   *@return File Name.
-   */
-  KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
-  
+  KKStr          osGetCurrentDirectory ();
 
   /**
    *@brief  Extracts the final sub-directory name of the fill directory specification.
@@ -135,11 +106,29 @@ namespace KKB
 
   KKStr          osGetErrorNoDesc (kkint32  errorNo);
 
+
+  /**
+   *@brief  osGetFileNamePartOfFile, retrieves the file name part of the file spec.
+   *@details
+   *@code
+   * ex:  Input (fullFileName)                 Returned
+   *      --------------------------------_    ---------------
+   *      c:\KurtUtilities\KKBase\KKStr.cpp    KKStr.cpp
+   *      /bin/usr/KKramer/Dictionary.dat      Dictionary.dat
+   *      dataFile.data                       dataFile.data
+   *@endcode
+   *@param[in]  fullFileName  Sting that contains the full file name specification.
+   *@return File Name.
+   */
+  KKStr          osGetFileNamePartOfFile (KKStr  fullFileName);
+  
+
   KKStr          osGetFileExtension (KKStr  fullFileName);
 
 
   /** @brief  returns the name and path of th ecurrent running application. */
   KKStr          osGetFullPathOfApplication ();
+
 
   /**
    *@brief  Returns the Parent directory path to 'dirPath'.
@@ -159,7 +148,7 @@ namespace KKB
 
   KKStr          osGetHostName ();
 
-  KKStr          osGetCurrentDirectory ();
+  KKStr          osGetUserName ();
 
   /**
    *@brief  Given a full drive with path and name return the drive letter specified.  
@@ -226,6 +215,11 @@ namespace KKB
   KKStr          osGetPathPartOfFile (KKStr  fullFileName);   
 
   kkint32        osGetProcessId ();
+
+  /** @brief returns the number of CPU's or number of simultaneous threads that you can have. */
+  kkint32        osGetNumberOfProcessors ();
+
+  KKStr          osGetProgName ();
 
   KKStr          osGetRootName (const KKStr&  fullFileName);
 
@@ -372,7 +366,7 @@ namespace KKB
    *          recognizes the concept of a line that is terminated by the line feed 
    *          ('\n') character. When end of line is reached it will return an empty 
    *          string setting 'eol' to true;  the very next call will return the first 
-   *          token on the next line.  The leading whitespace characters ' ' and '\]r' 
+   *          token on the next line. The leading whitespace characters ' ' and '\]r' 
    *          will be skipped before reading the next token.  Tokens will be separated 
    *          by any one of the characters specified in 'delimiters'. Two or more
    *          delimiters that occur consecutively will not be treated as one separator.
@@ -383,7 +377,7 @@ namespace KKB
    *               "Apple",  "Peer", "", "Grape", "", ""(eol = True)
    *@param[in]  in          Input Stream to read from.
    *@param[in]  delimiters  c string listing delimiter characters.
-   *@param[out] eof         End of file flag.  When this goes true so will eol,  also 
+   *@param[out] eof         End of file flag. When this goes true so will eol,  also 
    *                        no token will be returned.
    *@param[out] eol         Will be set to true when the end-of-line is reached ('\n').  
    *                        No token will be returned.  The next call to this method 
@@ -470,6 +464,8 @@ namespace KKB
   
   /** @brief  Returns list of errors in '_name' with respect to it being a valid file name for the O/S.  */
   KKStrListPtr   osValidFileNameErrors (const KKStr&  _name);
+
+  bool           osIsBackGroundProcess ();
 
   void           osRunAsABackGroundProcess ();
   

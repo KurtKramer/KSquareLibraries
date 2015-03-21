@@ -1327,6 +1327,28 @@ KKStr    KKB::osGetFileExtension (KKStr  fullFileName)
 
 
 
+
+KKStr  KKB::osGetParentDirPath (KKStr  dirPath)
+{
+  if  ((dirPath.LastChar () == '\\')  ||  (dirPath.LastChar () == '/'))
+    dirPath.ChopLastChar ();
+  
+  int x = Max (dirPath.LocateLastOccurrence ('\\'), dirPath.LocateLastOccurrence ('/'));
+  
+  if  (x < 0)
+  {
+    x = dirPath.LocateLastOccurrence (':');
+    if  (x >= 0)
+      return  dirPath.SubStrPart (0, x - 1);
+    else
+      return  KKStr::EmptyStr ();
+  }
+
+  return  dirPath.SubStrPart (0, x - 1);
+}
+
+
+
 KKStr   KKB::osGetHostName ()
 {
 #if  defined(OS_WINDOWS)
@@ -1348,6 +1370,8 @@ KKStr   KKB::osGetHostName ()
     if  (compNameStr)
     {
       compName = *compNameStr;
+      delete compNameStr;
+      compNameStr = NULL;
     }
     else
     {
@@ -1370,6 +1394,74 @@ KKStr   KKB::osGetHostName ()
 
 #endif
 }  /* osGetHostName */
+
+
+
+KKStr  KKB::osGetProgName ()
+{
+#if  defined(OS_WINDOWS)
+  KKStr  progName;
+
+  char filename[ MAX_PATH ];
+  DWORD size = GetModuleFileNameA (NULL, filename, MAX_PATH);
+  if  (size)
+    progName = filename;  
+  else
+    progName = "";
+
+  return progName;
+
+#else
+  return  "NotImplemented";  
+#endif
+}
+
+
+
+
+
+
+KKStr  KKB::osGetUserName ()
+{
+#if  defined(OS_WINDOWS)
+  TCHAR name [ UNLEN + 1 ];
+  DWORD size = UNLEN + 1;
+
+  KKStr  userName = "";
+  if  (GetUserName ((TCHAR*)name, &size))
+    userName = name;
+  else
+    userName = "***ERROR***";
+
+  return  userName;
+#else
+
+  return "NoImplemented";
+#endif
+}  /* osGetUserName */
+
+
+
+
+
+kkint32  KKB::osGetNumberOfProcessors ()
+{
+#if  defined(OS_WINDOWS)
+  KKStrPtr numProcessorsStr = osGetEnvVariable ("NUMBER_OF_PROCESSORS");
+  kkuint32  numOfProcessors = -1;
+  if  (numProcessorsStr)
+  {
+    numOfProcessors = numProcessorsStr->ToInt32 ();
+    delete  numProcessorsStr;
+    numProcessorsStr = NULL;
+  }
+
+  return  numOfProcessors;
+#else
+  /** @todo  Need to implement 'osGetNumberOfProcessors' for linux. */
+  return  1;
+#endif
+}  /* osGetNumberOfProcessors */
 
 
 
@@ -1406,6 +1498,14 @@ void  KKB::osRunAsABackGroundProcess ()
 {
   backGroundProcess = true;
 }
+
+
+
+bool  KKB::osIsBackGroundProcess ()
+{
+  return  backGroundProcess;
+}
+
 
 
 void  KKB::osWaitForEnter ()
@@ -1877,7 +1977,7 @@ kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 }  /* osGetSystemTimeInMiliSecs */
 
 #else
-uint64  KKB::osGetSystemTimeInMiliSecs ()
+kkuint64  KKB::osGetSystemTimeInMiliSecs ()
 {
   struct timeval now;
   gettimeofday(&now, NULL);
@@ -2007,7 +2107,7 @@ kkint64  KKB::osGetFileSize (const KKStr&  fileName)
 
 #else
 
-KKB::int64   KKB::osGetFileSize (const KKStr&  fileName)
+KKB::kkint64 KKB::osGetFileSize (const KKStr&  fileName)
 {
   struct  stat  buf;
 

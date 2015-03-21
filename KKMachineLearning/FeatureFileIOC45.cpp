@@ -1110,7 +1110,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
   }
 
 
-  kkint32  origPrecision = _out.precision ();
+  kkint32  origPrecision = (kkint32)_out.precision ();
   _out.precision (7);
 
   FeatureVectorPtr   example = NULL;
