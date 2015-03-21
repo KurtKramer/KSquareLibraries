@@ -3125,12 +3125,6 @@ void  Raster::ReduceToMostCompleteBlob (uchar connectedComponentDist)
 
 
 
-
-
-
-
-
-
 void  Raster::ConnectedComponent8Conected ()
 {
   uchar*   curRow         = NULL;
