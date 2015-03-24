@@ -147,11 +147,9 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
 
 
 
-
-
-void  MLClass::ChangeNameOfClass (MLClassPtr  mlClass, 
-                                  const KKStr&   newName,
-                                  bool&          changeSuccessful
+void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass, 
+                                  const KKStr&  newName,
+                                  bool&         changeSuccessful
                                  )
 {
   changeSuccessful = false;
@@ -490,8 +488,8 @@ kkuint32 MLClassList::NumHierarchialLevels ()  const
 
 
 void  MLClassList::Load (KKStr  _fileName,
-                            bool&  _successfull
-                           )
+                         bool&  _successfull
+                        )
 {
   char   buff[20480];
   kkint32  lineCount = 0;

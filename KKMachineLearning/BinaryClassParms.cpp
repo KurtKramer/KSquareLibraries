@@ -155,9 +155,7 @@ kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
 
 
 
-BinaryClassParmsList::BinaryClassParmsList (bool     _owner,
-                                            kkint32  _size
-                                           ):
+BinaryClassParmsList::BinaryClassParmsList (bool  _owner):
         KKQueue<BinaryClassParms> (_owner)
 {
 }
@@ -185,6 +183,7 @@ BinaryClassParmsList::~BinaryClassParmsList ()
 }
 
 
+
 kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
@@ -196,12 +195,13 @@ kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 
 
 
+
 BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*        i, 
                                                               FileDescPtr  fileDesc,
                                                               RunLog&      log
                                                              )
 {
-  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true, 10);
+  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
   binaryClassParmsList->ReadXML (i, fileDesc, log);
   return  binaryClassParmsList;
 }
@@ -213,7 +213,7 @@ BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&     i,
                                                               RunLog&      log
                                                              )
 {
-  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true, 10);
+  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
   binaryClassParmsList->ReadXML (i, fileDesc, log);
   return  binaryClassParmsList;
 }
@@ -267,7 +267,7 @@ BinaryClassParmsPtr  BinaryClassParmsList::LookUp (MLClassPtr  _class1,
 
 BinaryClassParmsListPtr  BinaryClassParmsList::DuplicateListAndContents ()  const
 {
-  BinaryClassParmsListPtr  duplicatedQueue = new BinaryClassParmsList (true, QueueSize ());
+  BinaryClassParmsListPtr  duplicatedQueue = new BinaryClassParmsList (true);
 
   for  (const_iterator idx = begin ();  idx != end ();  idx++)
   {

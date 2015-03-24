@@ -104,7 +104,7 @@ namespace KKMachineLearning
      */
     static  void  FinalCleanUp ();
 
-    static  bool  FinaleCleanUpRanAlready ()  {return finaleCleanUpRanAlready;}
+    static  bool  FinalCleanUpRanAlready ()  {return finalCleanUpRanAlready;}
 
     /**
      @brief  Creates a simple FileDesc that consists of continuous data only.
@@ -315,7 +315,7 @@ namespace KKMachineLearning
       FileDescListPtr     exisitingDescriptions;  /**< Will keep a list of all FileDesc s instantiated. */
 
     static
-      bool                finaleCleanUpRanAlready;
+      bool                finalCleanUpRanAlready;
 
   };  /* FileDesc */
 

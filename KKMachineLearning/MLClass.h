@@ -137,19 +137,19 @@ namespace KKMachineLearning
 
    
 
-    kkint32         ClassId ()  const  {return classId;}
+    kkint32         ClassId ()  const  {return classId;}  /**< From MySQL table  Classes, '-1' indicates that not loaded from mydsql table. */
     void            ClassId (kkint32 _classId)  {classId = _classId;}
 
     float           CountFactor () const  {return countFactor;}
     void            CountFactor (float _countFactor)  {countFactor = _countFactor;}
 
+    const KKStr&    Description ()  const {return description;}
     void            Description (const KKStr&  _description)  {description = _description;}
 
-    const KKStr&    Description ()  const {return description;}
+    bool            IsAnAncestor (MLClassPtr  c);   // will return true if 'c' is an ancestor
 
     MLClassPtr      MLClassForGivenHierarchialLevel (kkuint32 level)  const;
 
-    bool            IsAnAncestor (MLClassPtr  c);   // will return true if 'c' is an ancestor
 
     kkuint32        NumHierarchialLevels ()  const;
 
@@ -170,32 +170,41 @@ namespace KKMachineLearning
                     
 
     bool            UnDefined ()  const  {return  unDefined;}
-
     void            UnDefined (bool _unDefined)  {unDefined = _unDefined;}
 
     void            WriteXML (std::ostream& o)  const;
     
-
   private:
-    kkint32        classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
-    float          countFactor;  /**< Specifies number to increment count when this class picked;  ex:  Shrinmp_02 would have 2.0. */
-    KKStr          name;         /**< Name of Class.                                                                               */
-    KKStr          upperName;    /**< Upper case version of name;  Used by LookUpByName to assist in performance.                  */
+    kkint32         classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
+    float           countFactor;  /**< Specifies number to increment count when this class picked;  ex:  Shrinmp_02 would have 2.0. */
+    KKStr           description;
 
-    bool           unDefined;  /**< When  true  MLClass  represents a generic catch-all for all images that do not have a class
-                                * defined for them. Only one MLClass in a list should have this set to true. For this one
-                                * MLClass the Name field will be empty or "UNKNOWN".
-                                */
+    KKStr           name;         /**< Name of Class.                                                                               */
 
-    MLClassPtr     parent;     /**< Supports the concept of Parent/Child classes as part of a hierarchy.  Adding this field to help
-                                * support the UnManagedInterface version of this class.
-                                */
+    MLClassPtr      parent;       /**< Supports the concept of Parent/Child classes as part of a hierarchy.  Adding this field to help
+                                   * support the UnManagedInterface version of this class.
+                                   */
 
-    bool           storedOnDataBase;  /**< Because we have no control over classes that users unilaterally creates it would be
-                                       * useful to know which ones are stored in database table.
-                                       */
+    bool            storedOnDataBase;
+                                  /**< Because we have no control over classes that users unilaterally create
+                                   * it would be useful to know which ones are stored in the PICES database
+                                   * table "Classes".
+                                   */
 
-    KKStr          description;
+
+
+
+
+
+
+
+    KKStr           upperName;    /**< Upper case version of name;  Used by LookUpByName to assist in performance. */
+
+    bool            unDefined;  /**< When  true  MLClass  represents a generic catch-all for all images that do not have a class
+                                 * defined for them. Only one MLClass in a list should have this set to true. For this one
+                                 * MLClass the Name field will be empty or "UNKNOWN".
+                                 */
+
   };  /* MLClass */
 
   #define  _MLClass_Defined_
@@ -317,19 +326,19 @@ namespace KKMachineLearning
                           bool&   _successfull
                          );
 
-    void            SortByName ();
+    void        SortByName ();
 
-    KKStr           ToString ()  const; 
+    KKStr       ToString ()  const;
 
-    KKStr           ToCommaDelimitedStr ()  const;
+    KKStr       ToCommaDelimitedStr ()  const;
 
-    KKStr           ToTabDelimitedStr ()  const;
+    KKStr       ToTabDelimitedStr ()  const;
 
-    void            WriteXML (std::ostream&  o)  const;
+    void        WriteXML (std::ostream&  o)  const;
 
-    bool            operator== (const MLClassList&  right)  const;
+    bool        operator== (const MLClassList&  right)  const;
 
-    bool            operator!= (const MLClassList&  right)  const;
+    bool        operator!= (const MLClassList&  right)  const;
 
                                                                        
     MLClassList& operator=  (const MLClassList&  right);
@@ -346,8 +355,9 @@ namespace KKMachineLearning
 
     /**
      *@brief  Set the owner flag.
-     *@details Forcing Owner to be private to make sure that no list can own any MLClass objects, to prevent accidental deletion of a 'MLClass'
-     * object.  Only 'MLClass::existingMLClasses' may own the contents of its list.
+     *@details Forcing Owner to be private to make sure that no list can own any MLClass objects, to
+     * prevent accidental deletion of a 'MLClass' object.  Only 'MLClass::existingMLClasses' may own
+     * the contents of its list.
      */
     void      Owner (bool _owner)  {KKQueue<MLClass>::Owner (_owner);}
 

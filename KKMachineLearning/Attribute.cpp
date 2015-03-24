@@ -20,7 +20,6 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
-
 #include "Attribute.h"
 #include "FeatureNumList.h"
 #include "MLClass.h"
@@ -151,7 +150,7 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 
 
 
-kkint32  Attribute::Cardinality ()
+kkint32 Attribute::Cardinality ()
 {
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
     return  nominalValuesUpper->size ();

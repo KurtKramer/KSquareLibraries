@@ -23,11 +23,8 @@
  *@see  KKMachineLearning::FeatureEncoder, KKMachineLearning::FeatureVector, KKMachineLearning::FeatureFileIO
 */
 
-
-
 #include <map>
 #include <vector>
-
 #include "KKStr.h"
 #include "KKQueue.h"
 using namespace  KKB;

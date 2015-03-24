@@ -59,19 +59,19 @@ namespace KKMachineLearning
 
 void  FileDesc::FinalCleanUp ()
 {
-  if  (finaleCleanUpRanAlready)
+  if  (finalCleanUpRanAlready)
     return;
 
   FileDesc::CreateBlocker ();
   blocker->StartBlock ();
-  if  (!finaleCleanUpRanAlready)
+  if  (!finalCleanUpRanAlready)
   {
     if  (exisitingDescriptions)
     {
       delete  exisitingDescriptions;
       exisitingDescriptions = NULL;
     }
-    finaleCleanUpRanAlready = true;
+    finalCleanUpRanAlready = true;
   }
   blocker->EndBlock ();
 
@@ -544,7 +544,7 @@ FileDescListPtr  FileDesc::exisitingDescriptions = NULL;
 GoalKeeperPtr    FileDesc::blocker = NULL;
 
 
-bool             FileDesc::finaleCleanUpRanAlready = false;
+bool             FileDesc::finalCleanUpRanAlready = false;
 
 
 
@@ -571,7 +571,7 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
     exisitingDescriptions = new FileDescList (true);
     exisitingDescriptions->PushOnBack (fileDesc);
     result = fileDesc;
-    finaleCleanUpRanAlready = false;
+    finalCleanUpRanAlready = false;
     atexit (FileDesc::FinalCleanUp);
   }
 

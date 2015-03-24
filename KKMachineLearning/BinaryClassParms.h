@@ -25,6 +25,8 @@
  @see  KKMachineLearning::SVMparam, KKMachineLearning::ModelParamOldSVM, KKMachineLearning::SVM233
  */
 
+#include "KKQueue.h"
+
 #include "svm.h"
 #include "FeatureNumList.h"
 
@@ -111,9 +113,7 @@ namespace KKMachineLearning
   public:
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
-    BinaryClassParmsList (bool     _owner,
-                          kkint32  _size
-                         );
+    BinaryClassParmsList (bool  _owner);
     
 
   private:
