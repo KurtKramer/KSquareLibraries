@@ -38,3 +38,14 @@ Backup
 TEMP_BaseLibrary
 
 
+*.pdom
+.metadata/.plugins/org.eclipse.core.resources/.history/e6/60fc5ddf64610014184aa2bac530446a
+.metadata/.plugins/org.eclipse.core.resources/.history/e8/80ad1f8365610014142fd102aadf5211
+.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/org.eclipse.egit.core/GitProjectData.properties
+.metadata/.plugins/org.eclipse.core.resources/.projects/KKBase/org.eclipse.egit.core/GitProjectData.properties
+.metadata/.plugins/org.eclipse.core.resources/.projects/RemoteSystemsTempFiles/.indexes/properties.index
+.metadata/.plugins/org.eclipse.core.resources/.projects/KKBase/.markers
+.metadata/.plugins/org.eclipse.core.resources/.projects/KKBase/.indexes/history.index
+.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version
+/KKBase_2015-03-20
+/.metadata
