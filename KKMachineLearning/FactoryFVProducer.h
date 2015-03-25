@@ -75,7 +75,7 @@ namespace KKMachineLearning
 
   protected:
     /**
-     *@brief  A Factory can neer be deleted until the application terminates;  the atexit method will perform the deletes.
+     *@brief  A Factory can near be deleted until the application terminates;  the atexit method will perform the deletes.
      */
     virtual ~FactoryFVProducer ();
 

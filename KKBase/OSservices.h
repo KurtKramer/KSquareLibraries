@@ -126,7 +126,7 @@ namespace KKB
   KKStr          osGetFileExtension (KKStr  fullFileName);
 
 
-  /** @brief  returns the name and path of th ecurrent running application. */
+  /** @brief  returns the name and path of the current running application. */
   KKStr          osGetFullPathOfApplication ();
 
 
@@ -186,7 +186,7 @@ namespace KKB
 
 
   /**
-   *@brief Returns milisecs that system (Windows = has been started,  Linux time in epoch).
+   *@brief Returns mili-secs that system (Windows = has been started,  Linux time in epoch).
    */
   kkuint64  osGetSystemTimeInMiliSecs ();
 
@@ -209,7 +209,7 @@ namespace KKB
    *       /usr/kkramer/Plankton/Relase_2     /usr/kkramer/Plankton
    *       /usr/kkramer/Thesis/               /usr/kkramer/Thesis
    *@endcode
-   *@param[in]  fullFileName    The full file specification including directory path, rootname, and extension.
+   *@param[in]  fullFileName    The full file specification including directory path, root-name, and extension.
    *@return  Path part of fullFileName.
    */
   KKStr          osGetPathPartOfFile (KKStr  fullFileName);   

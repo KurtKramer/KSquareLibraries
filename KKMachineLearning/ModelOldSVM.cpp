@@ -223,7 +223,7 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
       }
       catch (...)
       {
-        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Exception occured calling 'new SVMModel'." << endl << endl;
+        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Exception occurred calling 'new SVMModel'." << endl << endl;
         validModel = false;
         _successful = false;
       }
@@ -231,7 +231,7 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
       if  (!_successful)
       {
         validModel = false;
-        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Could not loadf model in SVMModel::SVMModel." << endl << endl;
+        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Could not load model in SVMModel::SVMModel." << endl << endl;
       }
     }
   }
@@ -508,7 +508,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   }
   catch (...)
   {
-    log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occured building training model." << endl << endl;
+    log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occurred building training model." << endl << endl;
     validModel = false;
     delete  svmModel;
     svmModel = NULL;

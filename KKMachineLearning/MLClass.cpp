@@ -210,7 +210,6 @@ void  MLClass::FinalCleanUp ()
   {
     if  (!FileDesc::FinaleCleanUpRanAlready ())
     {
-      //cerr << endl << "MLClass::FinalCleanUp   ***ERROR***   Need to run MLClass::FinaleCleanUp  before  FileDesc::FinaleCleanUp" << endl << endl;
       FileDesc::FinalCleanUp ();
     }
 
@@ -326,10 +325,10 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
   kkint32 x = className.LocateLastOccurrence ('_');
   if  (x > 0)
   {
-    // Now lets eliminate any seqence number in name
-    // We are assuming that a underscore{"_") character seperates the class name from the seq number.
+    // Now lets eliminate any sequence number in name
+    // We are assuming that a underscore{"_") character separates the class name from the seq number.
     // So if there is an underscore character,  and all the characters to the right of it are
-    // numeric charcters,  then we will remove the underscore and the following numbers.
+    // numeric characters,  then we will remove the underscore and the following numbers.
 
     kkint32  y = x + 1;
 
@@ -381,7 +380,7 @@ void  MLClass::WriteXML (ostream& o)  const
     <<   "Name="             << name.QuotedStr ()                             << ","
     <<   "ClassId="          << classId                                       << ","
     <<   "UnDefined="        << (unDefined ? "Y":"N")                         << ","
-    <<   "Paremt="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
+    <<   "Parent="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
     <<   "StoredOnDataBase=" << (storedOnDataBase ? "Y" : "N")                << ","
     <<   "Description="      << description.QuotedStr ()                      << ","
     <<   "CountFactor="      << countFactor

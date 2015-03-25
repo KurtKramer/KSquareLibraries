@@ -469,7 +469,7 @@ bool  FeatureNumList::InList (kkuint16 _featureNum)  const
 
 
 /**
- @brief Indicates wheather feature '_featureNum' is selected.
+ @brief Indicates whether feature '_featureNum' is selected.
  */
 bool  FeatureNumList::Test (kkuint16 _featureNum)  const
 {
@@ -794,13 +794,13 @@ bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 {
   if  (numOfFeatures != _features.numOfFeatures)
   {
-    // No point even comparing the list of feature nums, if the lengths are 
+    // No point even comparing the list of feature numbers, if the lengths are 
     // different, then they can not be equal.
     return false;
   }
 
   return  Compare (_features) == 0;
-}  /* operatir== */
+}  /* operator== */
 
 
 
@@ -811,7 +811,7 @@ bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) < 0;
-}  /* operatir== */
+}  /* operator== */
 
 
 
@@ -822,7 +822,7 @@ bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator> (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) > 0;
-}  /* operatir== */
+}  /* operator== */
 
 
 
@@ -857,7 +857,7 @@ FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  c
 {
   if  (fileDesc != rightSide.FileDesc ())
   {
-    KKStr errMsg = "FeatureNumList::operator*  ***ERROR***   Incompatable FileDesc's";
+    KKStr errMsg = "FeatureNumList::operator*  ***ERROR***   Incompatible FileDesc's";
     errMsg << endl
            << "      The associated FileDesc instances are not the same.";
     cerr << endl << endl << errMsg << endl <<endl;
@@ -1096,7 +1096,7 @@ FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (kkint32  numToKeep) 
   for  (x = 0; x < numOfFeatures; x++)
     selectedFeatures[x] = featureNums[x];
 
-  // Randomize the order of the selcted featured
+  // Randomize the order of the selected featured
   //for (x = 0; x < numOfFeatures; x++)
   for (x = 0; x < numToKeep; x++)
   {
@@ -1133,7 +1133,7 @@ AttributeType  FeatureNumList::FeatureAttributeType (kkint32 idx)  const
 
   if  (!fileDesc)
   {
-    KKStr errMsg = "FeatureNumList::AttributeType   ***ERROR***  'fileDesc == NULL'   There is a major porgramming flaw.";
+    KKStr errMsg = "FeatureNumList::AttributeType   ***ERROR***  'fileDesc == NULL'   There is a major programing flaw.";
     cerr << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
@@ -1158,5 +1158,5 @@ FeatureNumList  FeatureNumList::Complement ()  const
   }
 
   return  result;
-}  /* Complemnt */
+}  /* Complement */
 

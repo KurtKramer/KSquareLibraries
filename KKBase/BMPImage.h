@@ -36,8 +36,8 @@ namespace KKB
    * formats are supported, but the compressed version is, which most others don't support.  As a result 
    * this class will write considerably smaller BMP files than other utilities that I have tried.  This
    * results in faster writing images due to less disk-io.  This is especially useful when working with 
-   * grayscale images that utilize only a small number of bits per pixel.  For example a image that is 
-   * 4096 x 4096 using only 8 levels of grayscale (3 bits/Pixel) can compress to just several KB in many
+   * gray-scale images that utilize only a small number of bits per pixel.  For example a image that is 
+   * 4096 x 4096 using only 8 levels of gray-scale (3 bits/Pixel) can compress to just several KB in many
    * cases rather than the 16MB that a non compressed version of BMP would require.
    * 
    * This code has been around for +10 years.  AT some point in the future when convenient it should be
@@ -124,7 +124,7 @@ namespace KKB
     const   
     uchar*   BlueRow (kkint32 row)  const;                    /**< @brief Returns the specified Row from the Blue Channel. */
 
-    uchar**  Image ()            {return  image;}           /**< @brief Returns back two dimension matrix of image; if color it will be the green channel. */
+    uchar**  Image ()            {return  image;}             /**< @brief Returns back two dimension matrix of image; if color it will be the green channel. */
 
     const   
     uchar*   ImageRow (kkint32 row)  const;                   /**< @brief Returns the specified Row from the Green Channel. */
@@ -168,16 +168,16 @@ namespace KKB
 
 
     /**
-     *@brief  Saves image using 4 bit compressed grayscale where Background = 255 and foreground = 0
-     *@details  If image is color will convert to grayscale 1st.
+     *@brief  Saves image using 4 bit compressed gray-scale where Background = 255 and foreground = 0
+     *@details  If image is color will convert to gray-scale 1st.
      * Palette will be set to 0 = 255, 1 = 238, 2 = 221, 3 = 204...  255 = 0.
      */
     void  SaveGrayscaleInverted4Bit (const KKStr&  _fileName);
 
 
     /**
-     *@brief  Saves image using compressed grayscale where Background = 255 and foreground = 0
-     *@details  If image is color will convert to grayscale 1st.
+     *@brief  Saves image using compressed gray-scale where Background = 255 and foreground = 0
+     *@details  If image is color will convert to gray-scale 1st.
      * Palette will be set to 0 = 255, 1 = 254, 2 = 253, ...  255 = 0.
      */
     void  SaveGrayscaleInverted8Bit (const KKStr&  _fileName);
@@ -275,7 +275,7 @@ namespace KKB
     BITMAPINFOHEADER  bmh;
     KKStr             fileName;
     uchar**           red;
-    uchar**           image;             /**< Used if grayscale.  */
+    uchar**           image;             /**< Used if gray-scale.  */
     uchar**           blue;
     kkint32           maxPixVal;         /**< Largest PixelValue  */
     kkint32           numOfColors;

@@ -8,7 +8,7 @@
  *@details
  *@code
  **********************************************************************
- **                          MLClass                               *
+ **                            MLClass                                *
  **                                                                   *
  **  Each instance of this class represents a single Class as used in *
  **  Machine Learning sense.  Each instance of 'FeatureVector' class  *
@@ -16,23 +16,23 @@
  **  instance of each Class in memory.  Specifically the 'name' field *
  **  will be unique.  This is enforced by making the constructor and  *
  **  destructor private.  The only way to create a new instance of a  *
- **  'MLClass' object is to call one of the the static methods of  *
- **  'CreateNewMLClass'.  These methods will look for a instance   *
- **  of 'MLClass' that already exists.  If one does not they will  *
+ **  'MLClass' object is to call one of the static methods of         *
+ **  'CreateNewMLClass'.  These methods will look for a instance      *
+ **  of 'MLClass' that already exists.  If one does not they will     *
  **  then create a new one.                                           *
  **                                                                   *
- **  Please refer to MLClassList at bottom of file.  That class is *
- **  the object you will most be unsing when dealing with Images.     *
+ **  Please refer to MLClassList at bottom of file.  That class is    *
+ **  the object you will most be using when dealing with Images.      *
  **  classes.                                                         *
  **                                                                   *
  **  UmiClass                                                         *
  **  There is a special relationship between this class  and a class  *
  **  called 'UmiClass' in the 'UnManagedInterface' library'.  UmiClass*
  **  is a managed c++ version of this class.  There is a one-to-one   *
- **  corespondance between the two classes.  When ever a instance     *
- **  of 'UmiClass' gets created it will automatically call the the    *
- **  the static method 'MLClass::CreateNewMLClass' to get the   *
- **  unmanaged version of the class.                                  *
+ **  correspondence between the two classes.  When ever a instance    *
+ **  of 'UmiClass' gets created it will automatically call the static *
+ **  method 'MLClass::CreateNewMLClass' to get the unmanaged version  *
+ ** of the class.                                                     *
  **********************************************************************
  *@endcode
  *@see KKMachineLearning::MLClassList, KKMachineLearning::FeatureVector, UnManagedInterface::UmiClass
@@ -137,7 +137,7 @@ namespace KKMachineLearning
 
    
 
-    kkint32         ClassId ()  const  {return classId;}  /**< From MySQL table  Classes, '-1' indicates that not loaded from mydsql table. */
+    kkint32         ClassId ()  const  {return classId;}  /**< From MySQL table  Classes, '-1' indicates that not loaded from mysql table. */
     void            ClassId (kkint32 _classId)  {classId = _classId;}
 
     float           CountFactor () const  {return countFactor;}

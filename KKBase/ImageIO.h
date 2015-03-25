@@ -46,8 +46,8 @@ namespace KKB
 
 
   /**
-   *@brief  Saves image as BMP file using 4 bit compressed grayscale where Background = 255 and foreground = 0
-   *@details  If image is color will convert to grayscale 1st.
+   *@brief  Saves image as BMP file using 4 bit compressed gray-scale where Background = 255 and foreground = 0
+   *@details  If image is color will convert to gray-scale 1st.
    * Palette will be set to 0 = 255, 1 = 238, 2 = 221, 3 = 204...  255 = 0.
    */
   void  SaveImageGrayscaleInverted4Bit (const Raster&  image, 
@@ -56,8 +56,8 @@ namespace KKB
 
 
   /**
-   *@brief  Saves image as BMP using compressed grayscale where Background = 255 and foreground = 0
-   *@details  If image is color will convert to grayscale 1st.
+   *@brief  Saves image as BMP using compressed gray-scale where Background = 255 and foreground = 0
+   *@details  If image is color will convert to gray-scale 1st.
    * Palette will be set to 0 = 255, 1 = 254, 2 = 253, ...  255 = 0.
    */
   void  SaveImageGrayscaleInverted8Bit (const Raster&  image, 

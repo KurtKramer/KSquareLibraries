@@ -1,23 +1,5 @@
 #ifndef  _CLASSIFIER2_
 #define  _CLASSIFIER2_
-//***************************************************************************
-//*                              Classifier2                                 *
-//*                                                                         *
-//*                                                                         *
-//* <p>Copyright: Copyright (c) 2010</p>                                    *
-//* <p>author     Kurt Kramer                                               * 
-//*                                                                         *
-//*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*
-//*                                                                         *
-//*  July 2002    Works hand in hand with TrainningProcess object.          *   
-//*  Kurt Kramer  TrainingProcess2 will create a trainedModel from TrainingData     *
-//*               using that trainedModel this object can then proceed to classify *
-//*               images.                                                   *
-//*                                                                         *
-//*  2004-12-22  Kurt Kramer  Added method ProbabilitiesByClass which allow *
-//*                           us to get the probabilities of each class.    *
-//*                           class                                         *
-//***************************************************************************
 
 #include "Application.h"
 #include "Model.h"
@@ -110,8 +92,8 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  Example that was classified incorrectly.
-     *@param[in]  numToFind  The number of teh worst examples you are looking for.
-     *@param[in]  c1  Class that the 'example; parameter sghould have been classed as.
+     *@param[in]  numToFind  The number of the worst examples you are looking for.
+     *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
@@ -127,8 +109,8 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@details  This method will iterate through all the S/V's removing them one at a 
      *          time and rebuild a new SVM then submit example for testing.
      *@param[in]  example  Example that was classified incorrectly.
-     *@param[in]  numToFind  The number of teh worst examples you are looking for.
-     *@param[in]  c1  Class that the 'example; parameter sghould have been classed as.
+     *@param[in]  numToFind  The number of the worst examples you are looking for.
+     *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
     vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
@@ -144,10 +126,10 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
     /**
      *@brief  For a given feature vector return back the probabilities and votes for each class.
      *@details
-     *@param classes       [in]  List of classes that we can be predicted for  The ordering of 'votes' and 'probabilities' will be dictatd by this list.
-     *@param example       [in]  Feature Vector to mak eprediction on.
-     *@param votes         [out] Pointer to list of ints,  must be as large as 'classes'  The number of votes for each coresponding class will be stored hear.
-     *@param probabilities [out] Pointer to list of double's,  must be as large as 'classes'  The priobability for each coresponding class will be stored hear.
+     *@param classes       [in]  List of classes that we can be predicted for  The ordering of 'votes' and 'probabilities' will be dictated by this list.
+     *@param example       [in]  Feature Vector to make prediction on.
+     *@param votes         [out] Pointer to list of ints,  must be as large as 'classes'  The number of votes for each corresponding class will be stored hear.
+     *@param probabilities [out] Pointer to list of double's,  must be as large as 'classes'  The probability for each corresponding class will be stored hear.
      */
     void                 ProbabilitiesByClass (const MLClassList&  classes,
                                                FeatureVectorPtr    example,

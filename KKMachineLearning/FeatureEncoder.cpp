@@ -37,7 +37,7 @@ using namespace  KKMachineLearning;
  * @param[in] _fileDesc 
  * @param[in] _class1 
  * @param[in] _class2 
- * @param[in] _log A logfile stream. All important events will be ouput to this stream
+ * @param[in] _log A log-file stream. All important events will be output to this stream
  */
 FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
                                 FileDescPtr           _fileDesc,
@@ -389,7 +389,7 @@ FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorList
  * @brief Converts a single image into the svm_problem format, using the method specified 
  * by the EncodingMethod() value returned by svmParam
  * @param[in] The image That we're converting
- * @param[in] The row kkint32 he svm_problem structue that the converted data will be stored
+ * @param[in] The row kkint32 he svm_problem structure that the converted data will be stored
  */
 void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
                                     svm_node*         xSpace,
@@ -411,7 +411,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
       cerr << endl
            << endl
            << "FeatureEncoder::EncodeAExample     *** ERROR ***"  << endl
-           << "             We are overring end of xSpace"      << endl
+           << "             We are overwriting end of xSpace"      << endl
            << endl;
       osWaitForEnter ();
       exit (-1);
@@ -552,7 +552,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
                    << "     Num of Examples       [" << numOfExamples             << "]" << endl
                    << "     Num XSpaceNodesNeeded [" << numNeededXspaceNodes      << "]" << endl
                    << endl;
-    // we sill have to allocate space for each individule training example seperatly.
+    // we sill have to allocate space for each individual training example separately.
     //throw "FeatureEncoder::Compress     Allocation of memory for xSpace Failed.";
   }
 
@@ -571,7 +571,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
     if  (totalxSpaceUsed > numNeededXspaceNodes)
     {
       log.Level (-1) << endl << endl
-        << "FeatureEncoder::Compress   ***ERROR***   We have exceedd the numer of XSpace nodes allocated." << endl
+        << "FeatureEncoder::Compress   ***ERROR***   We have exceeded the number of XSpace nodes allocated." << endl
         << endl;
     }
 

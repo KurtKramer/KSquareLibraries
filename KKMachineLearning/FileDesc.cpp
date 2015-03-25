@@ -171,7 +171,7 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
   AttributePtr existingAttribute = attributes.LookUpByName (_name);
   if  (existingAttribute)
   {
-    // This is a very bad error, it should not beable to happen
+    // This is a very bad error, it should not be able to happen
     alreadyExists = true;
     return;
   }
@@ -308,7 +308,7 @@ void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
   {
     cerr  << endl
           << endl
-          << "Filedesc::" << funcName << "   *** ERROR ***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
+          << "FileDesc::" << funcName << "   *** ERROR ***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
           << endl
           << endl;
     osWaitForEnter ();

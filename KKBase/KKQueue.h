@@ -562,8 +562,8 @@ namespace  KKB
 
     else
     {
-      // This should not be able to happen; but if it does then we have a flaw in teh code or the logoc somewhere,
-      cerr << "KKQueue<Entry>::FindTheKthElement  ***ERROR***  An invalid situation just occured." << endl
+      // This should not be able to happen; but if it does then we have a flaw in the code or the logic somewhere,
+      cerr << "KKQueue<Entry>::FindTheKthElement  ***ERROR***  An invalid situation just occurred." << endl
             <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m        << endl;
       return  m - 1;
     }

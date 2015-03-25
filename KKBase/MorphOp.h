@@ -90,7 +90,7 @@ namespace  KKB
 
     /**
      *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
-     *@see  Erosion, Dialation, Closing, Opening, MaskType
+     *@see  Erosion, Dilatation, Closing, Opening, MaskType
      */
     bool  Fit (MaskTypes  mask,
                kkint32    row, 

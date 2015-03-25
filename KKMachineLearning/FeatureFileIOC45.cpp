@@ -217,7 +217,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 
     else if  (thisChar == '\\')
     {
-      // A posible escape sequence
+      // A possible escape sequence
       if  (strchr (",:?", nextChar))
       {
         x++;
@@ -236,7 +236,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 
 
 /**
- *@brief  Locates first 'ch' in 'txt' that is  not preceeded by an escape character('\\').
+ *@brief  Locates first 'ch' in 'txt' that is  not preceded by an escape character('\\').
  */
 kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
                                                    char          ch
@@ -649,7 +649,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     {
       if  (ch == '\\')
       {
-        // We may have an escape charater that c45 Allows
+        // We may have an escape character that c45 Allows
         // http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm
 
         char nextCh = in.get (); bool nextEOF = in.eof ();
@@ -913,7 +913,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     if  (!eof)
     {
       // Consume the rest of the characters in the line so that the next pass starts at
-      // the beginning of th enext line.
+      // the beginning of the next line.
       kkint32  ch = _in.peek ();
       while  ((ch != '\n')  &&  (ch != '\r')  &&  (!_in.eof ()))
       {
@@ -975,7 +975,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
     else if  ((extension == "DATA")  ||  (extension == "TEST"))
     {
       // Since there is an extension and it is not the 'names'  extension,
-      // will just assume the the user knows what they are doing.
+      // will just assume the user knows what they are doing.
       namesFileName = leedingPart + "names";
       dataFileName  = fileName;
     }

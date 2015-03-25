@@ -82,7 +82,7 @@ void  ModelParamKnn::ParseCmdLineParameter (const KKStr&  parameter,
     k = value.ToInt ();
     if  ((k < 1)  ||  (k > 1000))
     {
-      log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K paramketer[" << value << "]" << endl;
+      log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K parameter[" << value << "]" << endl;
       validParam = false;
     }
   }
@@ -113,7 +113,7 @@ void    ModelParamKnn::ReadSpecificImplementationXML (istream&  i)
   while  (i.getline (buff, sizeof (buff)))
   {
     KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape charaters
+    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
     field.Upper ();
 
     if  (field.EqualIgnoreCase ("</ModelParamKnn>"))
@@ -132,7 +132,7 @@ void    ModelParamKnn::ReadSpecificImplementationXML (istream&  i)
       k = kStr.ToInt ();
       if  ((k < 1)  ||  (k > 1000))
       {
-        log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K paramketer[" << kStr << "]" << endl;
+        log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K parameter[" << kStr << "]" << endl;
         validParam = false;
       }
     }

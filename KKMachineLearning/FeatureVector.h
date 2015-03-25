@@ -4,7 +4,7 @@
 
 /**
  *@class  KKMachineLearning::FeatureVector
- *@brief  Represents a Feature Vector of a single example, labeled or unlabele
+ *@brief  Represents a Feature Vector of a single example, labeled or unlabeled
  *@author  Kurt Kramer
  *@details Used for the representation of a Single example.  You create an instance of 
  *        this object for each single feature vector. You can subclass from this Class
@@ -74,7 +74,7 @@ namespace KKMachineLearning
      *@brief Assign a value to a specific feature number for the feature vector.
      *@details This method will validate that '_featureNum' is not out of range (0 - 'numOfFeatures').
      * This will prevent the caller from corrupting memory.
-     *@param[in] _featureNum Feature Num to assign '_featureValue' to.
+     *@param[in] _featureNum Feature Number to assign '_featureValue' to.
      *@param[in] _featureValue Value to assign to feature '_featureNum'.
      */
     void  FeatureData (kkint32 _featureNum,
@@ -96,7 +96,7 @@ namespace KKMachineLearning
     void  TrainWeight      (float  _trainWeight)   {trainWeight  = _trainWeight;}  
 
 
-    /** @brief  Indicated wheather an expert has validated the class assignment. */
+    /** @brief  Indicated whether an expert has validated the class assignment. */
     void  Validated        (bool   _validated)     {validated    = _validated;}
 
 
@@ -117,7 +117,7 @@ namespace KKMachineLearning
 
     float          FeatureData        (kkint32 featureNum)  const;        /**< @returns The value of 'featureNum'                             */
     const float*   FeatureData        () const  {return featureData;}     /**< @brief Returns as a pointer to the feature data itself.        */
-    float*         FeatureDataAlter   ()        {return featureData;}     /**< @brief ame as 'FeatureData() except you can modify the data.   */
+    float*         FeatureDataAlter   ()        {return featureData;}     /**< @brief Same as 'FeatureData() except you can modify the data.  */
                                                                       
     const float*   FeatureDataConst   () const  {return featureData;}
     bool           FeatureDataValid   ();
@@ -131,7 +131,7 @@ namespace KKMachineLearning
     bool  operator== (FeatureVector &other_example)  const;
 
 
-    /** @brief Used by container classes such as 'FeatureVectorList'.  This way they can determine real underlyimg class. */
+    /** @brief Used by container classes such as 'FeatureVectorList'.  This way they can determine real underlying class. */
     //virtual  const char*  UnderlyingClass ()  const  {return  "FeatureVector";}
 
 
@@ -164,13 +164,13 @@ namespace KKMachineLearning
                                       */
 
     bool           validated;        /**< @brief  If true then the 'mlClass' entry has been validated by 
-                                      * an expert; was introduced when the DataBase was implemeneted.
+                                      * an expert; was introduced when the DataBase was implemented.
                                       */
 
     kkint16        version;          /**< This is the same versionNumber as in FeatureVectorList
                                       * It is related to the Feature calculation routine.  This
-                                      * will assist in us changing the feature calcs in the 
-                                      * future and  objects and methods having a meens of 
+                                      * will assist in us changing the feature calculations in the 
+                                      * future and  objects and methods having a means of 
                                       * knowing if the features are similar.
                                       */
 
@@ -297,7 +297,7 @@ namespace KKMachineLearning
      *@brief Will search for the example with the same name as '_imageFileName'.
      *@details  If the list is  already sorted in name order will use a Binary Search otherwise a linear search.
      *  The method 'SortByImageFileName' will set a flag 'curSortOrder' indicating if the examples are sorted.
-     *  The idea is that if you know that will will be doing many searches then for performance reasons you
+     *  The idea is that if you know that will be doing many searches then for performance reasons you
      *  should call 'SortByImageFileName' first. The methods 'PushOnBack', 'PushOnFront', and 'AddSingleExample'
      *  will reset 'curSortOrder' to unsorted.
      */
@@ -377,10 +377,10 @@ namespace KKMachineLearning
      *     ex:   Level 1:  gelatinous
      *           Level 2:  gelatinous_hydromedusae
      *           Level 3:  gelatinous_hydromedusae_solmundella
-     *     If the 'level' parameter is set to 1 then all FeatureVectors whow's class name starts with 'gelatinous' will be 
+     *     If the 'level' parameter is set to 1 then all FeatureVectors who's class name starts with 'gelatinous' will be 
      *     grouped together under the class name 'gelatinous_hydromedusae'.
      *@endcode
-     *@bug  This method appears to be a suplicate of 'CreateListForAGivenLevel'; We should verify this and get rid of one of them.
+     *@bug  This method appears to be a duplicate of 'CreateListForAGivenLevel'; We should verify this and get rid of one of them.
      */
     FeatureVectorListPtr      ExtractExamplesForHierarchyLevel (kkuint32 level);
 
@@ -516,7 +516,7 @@ namespace KKMachineLearning
     /** 
      * @brief  Keeps track of the current order of FeatureVector entries in the list.
      * @details This helps functions such as LookUpByImageFileName to work more efficiently.  If in ImageFileName order
-     *  it can then perform a binary search rather than a seq. scan.  This field is updated by the diff sort
+     *  it can then perform a binary search rather than a seq. scan. This field is updated by the different sort
      *  routines, and by the methods that allow you to add an entry.
      */
     IFL_SortOrder  curSortOrder;   
@@ -528,7 +528,7 @@ namespace KKMachineLearning
     kkint32        numOfFeatures;
 
     kkint16        version;  /**< Represents the version of the Feature data,  when ever I update the
-                              * way Feastures are calculated I increment the VersionNum in the respective 
+                              * way Features are calculated I increment the VersionNum in the respective 
                               * "FeatureVectorProducer" derived class. This way if we load a older 
                               * FeatureData file we can be aware of this.  Methods like FeatureDataReSink
                               * will force the recalculation of Feature data if not up-to-date.  Also 

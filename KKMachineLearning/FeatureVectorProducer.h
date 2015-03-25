@@ -100,9 +100,9 @@ namespace KKMachineLearning
 
     /**  
      *@brief  Returns back a "FileDesc" instance that describes the features that this instance of 'FeatureVectorProducer' creates.
-     * The class derived form this class is responsible for creating the FileDesc instance.  When this methoid is called if "fileDesc" 
-     * equals NULL  then will call "DefineFileDesc", which is a purve virtual method that will be implemented by the derived class, to 
-     * instaiate a new instance.
+     * The class derived form this class is responsible for creating the FileDesc instance.  When this method is called if "fileDesc" 
+     * equals NULL  then will call "DefineFileDesc", which is a pure virtual method that will be implemented by the derived class, to 
+     * instantiate a new instance.
      */
 
     FileDescConstPtr  FileDesc ()  const;

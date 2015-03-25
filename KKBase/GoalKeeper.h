@@ -26,7 +26,7 @@ namespace  KKB
   /**
    * @brief Used to deal with issues related to thread synchronization issues when sharing the same variables.  
    * @details Use the GoalKeeper::Create method to create an instance of this class.  The Create method will ensure 
-   * that two different threads don't accidently create two different instances of the same GoalKeeper object.<p>
+   * that two different threads don't accidentally create two different instances of the same GoalKeeper object.<p>
    *
    * GoalKeeper has a concept of levels of depth. That is a particular thread may call 'StartBlock' more than once, 
    * each time doing so it would be one level deeper.  In this case it would have to call 'EndBlock' an equal number
@@ -93,9 +93,9 @@ namespace  KKB
     /**
      *@brief  Destroys an existing instance of GoalKeeper.
      *@details  Use this method rather than calling the destructor directly.  This way the 
-     * 'existingGoalKeepers' data member can be kepped up to date.  If for some reason two 
+     * 'existingGoalKeepers' data member can be kept up to date.  If for some reason two 
      * different threads managed to call this method for the same GoalKeeper instance only 
-     * one of them will actually detroy the instance.
+     * one of them will actually destroy the instance.
      *@param[in,out]  _goalKeeperInstance  Instance of GoalKeeper that is to be destroyed.  Upon return
      * it will be set to NULL.
      */

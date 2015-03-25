@@ -31,7 +31,7 @@ namespace KKMachineLearning
     void    ReadSpecificImplementationXML (istream&  i);
 
     /*! 
-     @brief Createsa a Command Line String that represents these parameters.
+     @brief Creates a Command Line String that represents these parameters.
      */
     virtual
     KKStr   ToCmdLineStr ()  const;

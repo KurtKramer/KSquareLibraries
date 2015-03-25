@@ -1,20 +1,6 @@
 #ifndef  _SIZEDISTRIBUTION_
 #define  _SIZEDISTRIBUTION_
 
-//***************************************************************************
-//*                                                                         *
-//*-------------------------------------------------------------------------*
-//*  History                                                                *
-//*                                                                         *
-//*  Prog       Date      Description                                       *
-//*  ------- -----------  ------------------------------------------------- *
-//*  Kurt    Oct-19-2002  Increment Will now take ImageClasses instead of   *
-//*                       numbers.  We will also make a unique copy of      *
-//*                       mlClassesList.  This way we will not have to     *
-//*                       worry abount the numbering in the classList       *
-//*                       behind our back.                                  * 
-//***************************************************************************
-//* 
 
 //#define  BucketCount  50
 //#define  BucketSize   100
@@ -33,8 +19,12 @@ typedef  ClassTotalsList*  ClassTotalsListPtr;
 
 namespace  KKMachineLearning
 {
-class  SizeDistribution
-{
+  /**
+   *@brief Used to keep track of examples by size; typically used by 'CrossValidation'; for each example predicted
+   * it would call the ;Increment' method keeping track 
+   */
+  class  SizeDistribution
+  {
   public:
     SizeDistribution (kkint32  _bucketCount,
                       kkint32  _bucketSize,
@@ -44,23 +34,23 @@ class  SizeDistribution
     ~SizeDistribution ();
 
 
-    void     Increment (MLClassPtr   mlClass,
-                        kkint32      size
-                       );
+    void   Increment (MLClassPtr  mlClass,
+                      kkint32     size
+                     );
 
 
-    void     PrintFormatedDistributionMatrix (ostream&  _outFile)  const;
+    void   PrintFormatedDistributionMatrix (ostream&  _outFile)  const;
 
 
-    void     PrintCSVDistributionMatrix (ostream&  _outFile)  const;
+    void   PrintCSVDistributionMatrix (ostream&  _outFile)  const;
 
 
-    void     PrintTabDelDistributionMatrix (ostream&  _outFile)  const;
+    void   PrintTabDelDistributionMatrix (ostream&  _outFile)  const;
 
 
-    void     PrintByClassCollumns (ostream&      o,
-                                   VectorUlong*  scanLinesPerMeter 
-                                  )  const;
+    void   PrintByClassCollumns (ostream&      o,
+                                 VectorUlong*  scanLinesPerMeter 
+                                )  const;
 
 
   private:
@@ -78,8 +68,8 @@ class  SizeDistribution
 
 
 
-    kkint32               bucketCount;
-    kkint32               bucketSize;
+    kkint32             bucketCount;
+    kkint32             bucketSize;
     RunLog&             log;
     ClassTotalsListPtr  totals;
   };  /* SizeDistribution */

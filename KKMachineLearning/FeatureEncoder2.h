@@ -39,7 +39,7 @@ namespace KKMachineLearning
      * @param[in] _fileDesc
      * @param[in] _attributeTypes   caller keeps ownership,  but encoder will continue to reference it.
      * @param[in] _cardinalityTable caller keeps ownership,  but encoder will continue to reference it.
-     * @param[in] _log A logfile stream. All important events will be output to this stream
+     * @param[in] _log A log-file stream. All important events will be output to this stream
      */
     FeatureEncoder2 (const ModelParam& _param,
                      FileDescPtr       _fileDesc,

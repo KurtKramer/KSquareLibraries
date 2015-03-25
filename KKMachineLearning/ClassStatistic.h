@@ -30,7 +30,7 @@ namespace KKMachineLearning
 
   private:
     MLClassPtr  mlClass;   /**< Does not own the mlClass object. */
-    kkuint32    count;        /**< represents the number of PostLarvaeFV instances in a FeatureVectorList that point to mageClass */
+    kkuint32    count;     /**< represents the number of PostLarvaeFV instances in a FeatureVectorList that point to mageClass */
   };
 
 

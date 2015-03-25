@@ -1,11 +1,5 @@
 #ifndef  _FEATUREFILEIODSTWEB_
 #define  _FEATUREFILEIODSTWEB_
-/**
-  ************************************************************************************************
-  *  @author  Kurt Krame                                                                         *
-  *  Date:  2009-04-16                                                                           *
-  ************************************************************************************************
-  */
 
 #include  "FeatureFileIO.h"
 
@@ -17,7 +11,7 @@ namespace KKMachineLearning
     *  "dst" file format used by for the Anonymous web data from www.microsoft.com.                *
     *  For detailed description go to http://kdd.ics.uci.edu/databases/msweb/msweb.data.html       *
     *  In addition to the layout described above you will need to add a line at the top of the     *
-    *  file of the format "ClassName = xxxx"  whre xxxx = the name of the attribute that will be   *
+    *  file of the format "ClassName = xxxx"  where xxxx = the name of the attribute that will be  *
     *  used as the Class-Name.                                                                     *
     ************************************************************************************************
     * @see  FeatureFileIO

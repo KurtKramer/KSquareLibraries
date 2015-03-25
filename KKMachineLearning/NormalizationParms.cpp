@@ -86,7 +86,7 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
          (!example->FeatureDataValid ())
         )
     {
-      // We have a noise example and do not want this as partof our Normalization 
+      // We have a noise example and do not want this as part of our Normalization 
       // procedure.
       numOfNoise++;
     }
@@ -182,13 +182,13 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr  _config,
          (!example->FeatureDataValid ())
         )
     {
-      // We have a noise example and do not want this as partof our Normalization 
+      // We have a noise example and do not want this as part of our Normalization 
       // procedure.
       numOfNoise++;
     }
     else
     {
-      // Since this example is defimed then we can use it in our normalization calculations.
+      // Since this example is defined then we can use it in our normalization calculations.
       for  (i = 0; i < numOfFeatures; i++)
       {
         featureValue = double (example->FeatureData (i));
@@ -626,7 +626,7 @@ float  NormalizationParms::Mean (kkint32 i)
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
-    log.Level (-1) << "NormalizationParms::Mean feature Num[" << i << "]  out of bounds." << endl;
+    log.Level (-1) << "NormalizationParms::Mean feature Number[" << i << "]  out of bounds." << endl;
     return  (float)-99999.99;
   }
   else
@@ -643,7 +643,7 @@ float  NormalizationParms::Sigma (kkint32 i)
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
-    log.Level (-1) << "NormalizationParms::Mean feature Num[" << i << "]  out of bounds." << endl;
+    log.Level (-1) << "NormalizationParms::Mean feature Number[" << i << "]  out of bounds." << endl;
     return  (float)-99999.99;
   }
   else

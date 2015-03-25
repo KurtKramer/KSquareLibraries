@@ -129,7 +129,7 @@ void  FactoryFVProducer::RegisterFactory (FactoryFVProducerPtr  factory,
     idx = factories->find (factory->Name ());
     if  (idx != factories->end ())
     {
-      runLog->Level (-1) << "FactoryFVProducer::RegisterFactory   ***ERROR***   Factory With Name: " << factory->Name () << " alreadt defined." << endl;
+      runLog->Level (-1) << "FactoryFVProducer::RegisterFactory   ***ERROR***   Factory With Name: " << factory->Name () << " already defined." << endl;
     }
     else
     {

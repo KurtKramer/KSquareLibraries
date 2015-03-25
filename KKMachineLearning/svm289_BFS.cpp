@@ -60,9 +60,9 @@ namespace  SVM289_BFS
                            double  B
                           );
 
-  void  multiclass_probability (kkint32   k, /**< Number of Classes.      */
-                                double**  r, /**< Pairwise Probabilites.  */
-                                double*   p  /**< Class Probability       */
+  void  multiclass_probability (kkint32   k, /**< Number of Classes.       */
+                                double**  r, /**< Pairwise Probabilities.  */
+                                double*   p  /**< Class Probability        */
                                );
 
   void  readline (FILE*    input,
@@ -1638,13 +1638,13 @@ void  SVM289_BFS::Solver::Solve (kkint32          l,
 
 // return 1 if already optimal, return 0 otherwise
 kkint32  SVM289_BFS::Solver::select_working_set (kkint32&  out_i, 
-                                               kkint32&  out_j
-                                              )
+                                                 kkint32&  out_j
+                                                )
 {
   // return i,j such that
   // i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)
   // j: minimizes the decrease of obj value
-  //    (if quadratic coefficeint <= 0, replace it with tau)
+  //    (if quadratic coefficient <= 0, replace it with tau)
   //    -y_j*grad(f)_j < -y_i*grad(f)_i, j in I_low(\alpha)
   
   double  Gmax         = -INF;
@@ -2919,7 +2919,7 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
 
 
-// Platt's binary SVM Probablistic Output: an improvement from Lin et al.
+// Platt's binary SVM Probabilistic Output: an improvement from Lin et al.
 void  SVM289_BFS::sigmoid_train (kkint32        l, 
                                  const double*  dec_values, 
                                  const double*  labels, 
@@ -3072,9 +3072,9 @@ double  SVM289_BFS::sigmoid_predict (double  decision_value,
 
 
 // Method 2 from the multiclass_prob paper by Wu, Lin, and Weng
-void  SVM289_BFS::multiclass_probability (kkint32   k, /**< Number of Classes.      */
-                                          double**  r, /**< Pairwise Probabilites.  */
-                                          double*   p  /**< Class Probability       */
+void  SVM289_BFS::multiclass_probability (kkint32   k, /**< Number of Classes.       */
+                                          double**  r, /**< Pairwise Probabilities.  */
+                                          double*   p  /**< Class Probability        */
                                          )
 {
   kkint32 t,j;
@@ -3329,7 +3329,7 @@ double  svm_svr_probability (const svm_problem&   prob,
 
 
 
-// label: label name, start: begin of each class, count: #data of classes, perm: indices to the original data
+// label: label name, start: begin of each class, count: #data of classes, perm: indexes to the original data
 // perm, length l, must be allocated before calling this subroutine
 void  svm_group_classes (const svm_problem*  prob, 
                          kkint32*              nr_class_ret, 

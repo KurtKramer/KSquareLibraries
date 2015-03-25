@@ -27,7 +27,7 @@ using namespace  KKMachineLearning;
 
 
 FeatureVectorProducer::FeatureVectorProducer (const KKStr&          _name,
-                                              FactoryFVProducerPtr  _factory  /**<  Pointer to factory that instatiated this instance. */
+                                              FactoryFVProducerPtr  _factory  /**<  Pointer to factory that instantiated this instance. */
                                               ):
     factory  (_factory),
     fileDesc (NULL),

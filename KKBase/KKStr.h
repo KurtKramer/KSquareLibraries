@@ -223,7 +223,7 @@ namespace  KKB
 
     kkint32  CountInstancesOf (char  ch)  const;
 
-    /** @brief  Trees this KKSr instance as a QuotedStr; decodes escape sequences such as '\\', '\r', '\n',  '\t', and '\0' into original chracters. */
+    /** @brief  Trees this KKSr instance as a QuotedStr; decodes escape sequences such as '\\', '\r', '\n',  '\t', and '\0' into original characters. */
     KKStr    DecodeQuotedStr ()  const;
 
 
@@ -247,7 +247,7 @@ namespace  KKB
     bool     EqualIgnoreCase (const char*          s2)  const;
 
     /**
-     *@brief  Removes the first character from the string and retuns it to the caller.
+     *@brief  Removes the first character from the string and returns it to the caller.
      *@details  If the String is already empty it will return 0.
      */
     char     ExtractChar ();
@@ -350,7 +350,7 @@ namespace  KKB
     kkint32  InstancesOfChar (char ch)  const;               /**< @brief Returns the number of instances of 'ch' in the string. */
 
     /**
-     *@brief Returns a quoted version of string where special characters line Line Feed, Carriage Return,
+     *@brief Returns a quoted version of string where special characters Line-Feed, Carriage Return,
      * and Tab, are encoded as escape sequences.
      *@details string where 'Line Feed(\\n'), Carriage Returns('\\r'), Tabs('\\t'), and Quotes(") are coded as escape
      * sequences "\\n", "\\r", "t", or "\\".  It is then enclosed in quotes(").
@@ -893,7 +893,7 @@ namespace  KKB
 
 
   /**
-   *@brief Maintains a list of ordered KKStr instances that can be recalled by eithe string of index.
+   *@brief Maintains a list of ordered KKStr instances that can be recalled by either string of index.
    */
   class  KKStrListIndexed
   {

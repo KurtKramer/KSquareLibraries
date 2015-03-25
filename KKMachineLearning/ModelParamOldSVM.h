@@ -26,7 +26,7 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
   /**
     ************************************************************************************************
-    * this class encapsulates are the information neccesary to build a SVMModel class.             *
+    * this class encapsulates are the information necessary to build a SVMModel class.             *
     ************************************************************************************************
     * @see  ModelSVM
     * @see  SVM233
@@ -132,7 +132,7 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
     void  SetFeatureNums    (MLClassPtr             class1,
                              MLClassPtr             class2,
                              const FeatureNumList&  _features,
-                             float                  _weight = -1  // -1 Indicats use existing value, 
+                             float                  _weight = -1  /**< -1 Indicates use existing value. */
                             );
 
     void  ParseCmdLine (KKStr   _cmdLineStr,

@@ -199,7 +199,7 @@ void  ModelParamUsfCasCor::ReadSpecificImplementationXML (istream&  i)
     if  ((ln.Len () < 1)  || (ln.SubStrPart (0, 1) == "//"))
       continue;
 
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true); // true = decode escape charaters
+    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true); // true = decode escape characters
     field.Upper ();
 
     if  (field.EqualIgnoreCase ("<ModelParamUsfCasCor>"))

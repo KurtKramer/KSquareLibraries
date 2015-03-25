@@ -42,10 +42,10 @@ namespace KKB
     /**
      *@brief  Segments image into 'numClasses'.
      *@param[in]  srcImage  Image to segment.  If it is a color image will be 
-     *                      converted to Grayscale using 'CreateGrayScaleKLTOnMaskedArea'
+     *                      converted to Gray-Scale using 'CreateGrayScaleKLTOnMaskedArea'
      *@param[in]  numClasses Number of classes to segment image into.  Current only '2' and '3' are supported.
      *@param[out]  sep  
-     *@return  Labeled grayscale image where pixels will be labels into their respective class; between '1' and 'numClasses'.
+     *@return  Labeled gray-scale image where pixels will be labels into their respective class; between '1' and 'numClasses'.
      */
     RasterPtr  SegmentImage (RasterPtr  srcImage,
                              kkint32    numClasses,
@@ -57,12 +57,12 @@ namespace KKB
      *@brief  Segments image into 'numClasses' taking into account only pixels 
      *        indicated by 'mask' image.
      *@param[in]  srcImage  Image to segment.  If it is a color image will be 
-     *                      converted to Grayscale using 'CreateGrayScaleKLTOnMaskedArea'
+     *                      converted to Gray-Scale using 'CreateGrayScaleKLTOnMaskedArea'
      *@param[in]  mask  Indicates which pixels to consider when thresholding image.  Pixels
      *                  that are not part of mask will be assigned label '0'.
      *@param[in]  numClasses Number of classes to segment image into.  Current only '2' and '3' are supported.
      *@param[out]  sep  
-     *@return  Labeled grayscale image where pixels will be label into their respective class; between '1' and 'numClasses'.
+     *@return  Labeled gray-scale image where pixels will be label into their respective class; between '1' and 'numClasses'.
      */
     RasterPtr  SegmentMaskedImage (RasterPtr  srcImage,
                                    RasterPtr  mask,

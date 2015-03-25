@@ -1,11 +1,5 @@
 #ifndef  _FEATUREFILEIOROBERTS_
 #define  _FEATUREFILEIOROBERTS_
-/**
-  ************************************************************************************************
-  *  @author  Kurt Krame                                                                         *
-  *  Date:  2009-04-16                                                                           *
-  ************************************************************************************************
-  */
 
 #include  "FeatureFileIO.h"
 
@@ -16,7 +10,7 @@ namespace KKMachineLearning
 
   /**
     @class  FeatureFileIORoberts
-    @brief  Supports the writting of Feature Data to a file that can then be read by OpenDT.
+    @brief  Supports the writing of Feature Data to a file that can then be read by OpenDT.
     @details
     @code
     * ************************************************************************************************

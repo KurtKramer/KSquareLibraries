@@ -150,7 +150,7 @@ namespace  KKMachineLearning
 
     void  WriteXML (ostream&  f)  const;
 
-    // This method writes a simple confusion marix table; one row for each class.  The BIAS
+    // This method writes a simple confusion matrix table; one row for each class.  The BIAS
     // adjustment routines can then utilize this data to adjust final counts.
     void  WriteSimpleConfusionMatrix (ostream&  f)  const;
 

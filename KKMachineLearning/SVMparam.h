@@ -41,7 +41,7 @@ namespace KKMachineLearning
                   BRcompressionPost, 
                   BRcompressionPre, 
                   BRunBalancedVariance,
-                  BRunBalancedSpecified    // Meaning we will tell you wich features are unbalanced.
+                  BRunBalancedSpecified    // Meaning we will tell you which features are unbalanced.
                  }       
                     SVM_CompressionMethod;
 

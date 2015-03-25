@@ -125,7 +125,7 @@ Model::Model (FileDescPtr    _fileDesc,
  *@param[in] _fileDesc A description of the data file.
  *@param[in] _cancelFlag  This field will be monitored and if it goes true then any processing 
  *           going on will quit and exit back to caller.
- *@param[in] _log A logfile stream. All important events will be output to this stream
+ *@param[in] _log A log-file stream. All important events will be output to this stream
  */
 Model::Model (const KKStr&       _name,
               const ModelParam&  _param,      // Create new model from
@@ -290,7 +290,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   catch  (const KKException& e)
   {
     _log.Level (-1) << endl
-      << "Model::CreateFromStream    ***ERROR***  Exception occured in executing 'ReadXML'" << endl
+      << "Model::CreateFromStream    ***ERROR***  Exception occurred in executing 'ReadXML'" << endl
       << "      " << e.ToString ()  << endl
       << endl;
     successful = false;
@@ -300,7 +300,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   catch (...)
   {
     _log.Level (-1) << endl
-      << "Model::CreateFromStream    ***ERROR***  Exception occured in executing 'ReadXML'" << endl
+      << "Model::CreateFromStream    ***ERROR***  Exception occurred in executing 'ReadXML'" << endl
       << endl;
     successful = false;
     delete  model;
@@ -699,7 +699,7 @@ void  Model::ReadXML (istream&  i,
         _successful = false;
         validModel = false;
         KKStr  errMsg;
-        errMsg << "Exception executing fuction 'ModelParam::CreateModelParam'.  Exception[" << e.what () << "]";
+        errMsg << "Exception executing function 'ModelParam::CreateModelParam'.  Exception[" << e.what () << "]";
         log.Level (-1) << endl << "Model::ReadXML    ***ERROR***    "  << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -759,7 +759,7 @@ void  Model::ReadXML (istream&  i,
   {
     _successful = false;
     log.Level (-1) << endl << endl 
-                   << "Model::ReadXML    Normalization Parmameters was not defined." << endl
+                   << "Model::ReadXML    Normalization Parameters was not defined." << endl
                    << endl;
   }
 
@@ -811,7 +811,7 @@ void  Model::ReadSkipToSection (istream& i,
 
 
 /**
- *@brief Performs operations such as FeatureEncoding, and  Normailization.  The actual training 
+ *@brief Performs operations such as FeatureEncoding, and  Normalization; the actual training 
  *       of models occurs in the specific implementation of 'Model'.
  */
 void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
@@ -952,7 +952,7 @@ void  Model::ReduceTrainExamples ()
   bool  reductionNeeded = false;
 
   {
-    // First lets see if reduction is even nessasary.
+    // First lets see if reduction is even necessary.
     ClassStatisticListPtr  stats = trainExamples->GetClassStatistics ();
     if  (!stats)
     {
@@ -979,7 +979,7 @@ void  Model::ReduceTrainExamples ()
   }
 
   FeatureVectorListPtr  reducedSet = new FeatureVectorList (fileDesc, false, log);
-  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false, log);  // Examples taht we do not use will need to be deleted.
+  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false, log);  // Examples that we do not use will need to be deleted.
   MLClassList::iterator  idx;
 
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)

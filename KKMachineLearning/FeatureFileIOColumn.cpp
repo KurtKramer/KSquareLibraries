@@ -67,7 +67,7 @@ FileDescPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
 
   {
     // Read first Row to get number of examples.
-    // First row specifies the Class for the correspondinmg Collumn.
+    // First row specifies the Class for the corresponding Column.
     KKStr  field;
     GetToken (_in, " ", field, eof, eol);  rowNum++;
     while  ((!eol)  &&  (!eof))
@@ -186,7 +186,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
     if  (featureNum >= numOfFeatures)
     {
       // We have more rows than there are supposed to be features.  Something 
-      // has gone VERY WRONG.  Will abord load.
+      // has gone VERY WRONG.  Will abort load.
       _errorMessage << "Line more rows that there are supposed to be features.";
       _log.Level (-1) << endl << endl << endl
                       << "FeatureFileIOColumn::LoadFile    ***ERROR***" << endl

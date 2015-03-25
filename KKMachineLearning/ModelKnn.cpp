@@ -1,20 +1,17 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdio.h>
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <math.h>
-#include  <vector>
-#include  <sstream>
-#include  <iomanip>
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <math.h>
+#include <vector>
+#include <sstream>
+#include <iomanip>
+#include <set>
+#include <vector>
 
-#include  <set>
-#include  <vector>
-
-
-#include  "MemoryDebug.h"
-
+#include "MemoryDebug.h"
 using namespace  std;
 
 
@@ -30,11 +27,8 @@ using namespace  KKB;
 #include "ClassProb.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
-
 #include "ModelKnn.h"
-
 using namespace  KKMachineLearning;
-
 
 
 ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
@@ -151,18 +145,18 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 
 
-void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr       example,
+void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
                                       const MLClassList&  _mlClasses,
-                                      kkint32*                 _votes,
-                                      double*                _probabilities
+                                      kkint32*            _votes,
+                                      double*             _probabilities
                                      )
 {
 }
 
 
-void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr       _example,
+void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                       const MLClassList&  _mlClasses,
-                                      double*                _probabilities
+                                      double*             _probabilities
                                      )
 {
 }  /* ProbabilitiesByClass */
@@ -199,7 +193,7 @@ void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
 
     else
     {
-      // Add code tro deal with items that are specific to 'ModelSvmBase'
+      // Add code to deal with items that are specific to 'ModelSvmBase'
     }
   }
 

@@ -109,7 +109,7 @@ namespace KKMachineLearning {
     virtual const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
     virtual bool                     ValidParam                 () const {return validParam;}
   
-    // Acess members that werre originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
+    // Access members that were originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
     virtual float   A_Param  () const;
     virtual double  C_Param  () const;  // Same as 'Cost'
     virtual double  Cost     () const;
@@ -119,7 +119,7 @@ namespace KKMachineLearning {
 
     // Member update methods
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}
-    virtual void  ExamplesPerClass   (kkint32                  _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
+    virtual void  ExamplesPerClass   (kkint32                _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
     virtual void  FileName           (const KKStr&           _fileName)           {fileName           = _fileName;}
     virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
     virtual void  ValidParam         (bool                   _validParam)         {validParam         = _validParam;}
@@ -164,7 +164,7 @@ namespace KKMachineLearning {
 
     bool                     validParam;
 
-    // folowing parameters are placed hear to support SVM based algorithms.
+    // following parameters are placed hear to support SVM based algorithms.
     // to help transition from old(CRAPPY) design to newer less crappy design.
     double  cost;
     double  gamma;

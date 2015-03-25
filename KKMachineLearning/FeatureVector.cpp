@@ -152,7 +152,7 @@ float  FeatureVector::FeatureData (kkint32 featureNum)  const
   if  ((featureNum < 0)  ||  (featureNum >= NumOfFeatures ()))
   {
     cerr << endl
-         << "*** ERROR ***   FeatureVector::FeatureData(" << featureNum << ")  Imndex out of bounds." << endl
+         << "*** ERROR ***   FeatureVector::FeatureData(" << featureNum << ")  Index out of bounds." << endl
          << endl;
     return 0.0f;
   }
@@ -171,7 +171,7 @@ void  FeatureVector::FeatureData (kkint32  _featureNum,
   {
     cerr << endl
          << endl
-         << "*** ERROR ***   FeatureVector::FeatureData(" << _featureNum << ")  Imndex out of bounds,    no value set." << endl
+         << "*** ERROR ***   FeatureVector::FeatureData(" << _featureNum << ")  Index out of bounds,    no value set." << endl
          << endl;
     return;
   }
@@ -226,7 +226,7 @@ void  FeatureVector::AddFeatureData (kkint32  _featureNum,
   {
     cerr << endl
          << "AddFeatureData  *** ERROR ***  FeatureNum[" 
-         << _featureNum << "] exceeds maximum allowed Feature Num["
+         << _featureNum << "] exceeds maximum allowed Feature Number["
          << numOfFeatures << "]."
          << endl
          << endl;
@@ -445,7 +445,7 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   if  (!fileDesc)
   {
     // This should never ever be able to happen,  but will check 
-    // any way.  If missing something has gone very very wring.
+    // any way.  If missing something has gone very wring.
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "      *** ERROR ***  'fileDesc == NULL'";
     log.Level (-1) << endl << endl << msg << endl << endl;
@@ -987,7 +987,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
 
     if  (txtLine.SubStrPart (0, 1) == "//")
     {
-      // Coment line, wil ignore.
+      // Comment line, will ignore.
       continue;
     }
 
@@ -997,7 +997,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
       // Image file name used more than once, will treat as error
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                     << "                      ImageFileName[" << imageFileName << "] occured more than once in file." << endl
+                     << "                      ImageFileName[" << imageFileName << "] occurred more than once in file." << endl
                      << endl;
       fclose (in);
       delete  orderedImages;
@@ -1007,7 +1007,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
     example = LookUpByImageFileName (imageFileName);
     if  (!example)
     {
-      // Image file name not in list, will treet as error.
+      // Image file name not in list, will treat as error.
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
                      << "                      ImageFileName[" << imageFileName << "] Not in list." << endl
@@ -1571,7 +1571,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percenta
   if  (percentage <= 0.0f)
   {
     log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percantage[" << percentage << "]  Will return empty list" << endl 
+                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  Will return empty list" << endl 
                    << endl;
     percentage = 0.0f;
   }
@@ -1579,7 +1579,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percenta
   if  (percentage > 100.0f)
   {
     log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percantage[" << percentage << "]  will default it to 1.0f" << endl 
+                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  will default it to 1.0f" << endl 
                    << endl;
     percentage = 1.0f;
   }

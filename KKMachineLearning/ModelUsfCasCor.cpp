@@ -141,21 +141,21 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
   catch (const KKException&  e)
   {
     validModel = false;
-    KKStr  errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occured calling 'Model::TrainModel'.";
+    KKStr  errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
     log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
     throw  KKException (errMsg, e);
   }
   catch (const exception& e2)
   {
     validModel = false;
-    KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occured calling 'Model::TrainModel'.";
+    KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
     log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
     throw KKException (errMsg, e2);
   }
   catch (...)
   {
     validModel = false;
-    KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occured calling 'Model::TrainModel'.";
+    KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
     log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
@@ -343,7 +343,7 @@ void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            example,
   if  (_mlClasses.size () != probabilities.size ())
   {
     log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
-      << "\"_mlClasses.size () != probabilities.size ()\"   This should noyt ever be ble to happen." << endl
+      << "\"_mlClasses.size () != probabilities.size ()\"   This should not ever be able to happen." << endl
       << endl;
     for  (int x = 0;  x < _mlClasses.QueueSize ();  ++x)
     {
@@ -418,7 +418,7 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _exampl
   if  (_mlClasses.size () != probabilities.size ())
   {
     log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
-      << "\"_mlClasses.size () != probabilities.size ()\"   This should noyt ever be ble to happen." << endl
+      << "\"_mlClasses.size () != probabilities.size ()\"   This should not ever be able to happen." << endl
       << endl;
     for  (int x = 0;  x < _mlClasses.QueueSize ();  ++x)
     {

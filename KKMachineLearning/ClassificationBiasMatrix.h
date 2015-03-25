@@ -13,7 +13,7 @@
 //  Job in Life:   This module is the Managed version of "DataBaseServer".
 //
 // See the paper: 
-//    "Estimating the Taxonomic composition of a sample when individules are classified with error"
+//    "Estimating the Taxonomic composition of a sample when individuals are classified with error"
 //     by Andrew Solow, Cabll Davis, Qiao Hu
 //     Woods Hole Ocanographic Institution, Woods Hole Massachusetts
 //     Marine Ecology Progresss Series
@@ -79,7 +79,7 @@ namespace KKMachineLearning
 
 
     /**
-     *@brief  Construct a ClassificationBiasMatrix instance from from the parameter file for '_configFileName'.
+     *@brief  Construct a ClassificationBiasMatrix instance from the parameter file for '_configFileName'.
      *@param[in]     _configFileName The name of the BiasMatrix file will be derived from the configuration 
      *                               file name.  the term '_BiasMatrix.txt' will be appended onto the end.
      *@param[in]     _classes        List of classes that you are expecting to be in the 'BiasMatrix' file.

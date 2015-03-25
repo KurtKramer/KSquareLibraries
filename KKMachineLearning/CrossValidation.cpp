@@ -268,8 +268,8 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
 
   totalPredProb = 0.0;
 
-  // We need to get a duplicate copy of each image data because the traininer and classofier
-  // will nor,alize the data.
+  // We need to get a duplicate copy of each image data because the trainer and classifier
+  // will normalize the data.
   FeatureVectorListPtr  trainingImages = examples->DuplicateListAndContents ();
   FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
 
@@ -323,7 +323,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   catch  (const std::exception  e)
   {
     log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occured in 'CreateModelsFromTrainingData'"  << endl
+      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
       << "            Exception[" << e.what () << "]" << endl
       << endl;
     trainer.Abort (true);
@@ -331,7 +331,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   catch (...)
   {
     log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occured in 'CreateModelsFromTrainingData'"  << endl
+      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
       << endl;
     trainer.Abort (true);
   }

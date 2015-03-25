@@ -37,7 +37,7 @@ namespace  KKB
    *@class  Matrix
    *@brief  Supports two dimensional matrices.
    *@details  Developed for Machine Learning Project for support of Import Vector Machine.
-   *  Handles two dimensional matrixes.  Functions supported are matrix addition, subtraction
+   *  Handles two dimensional matrices.  Functions supported are matrix addition, subtraction
    *  multiplication, transpose, determinant, and inversion.  Where appropriate arithmetic
    *  arithmetic operators +, -, * were overloaded.  Addition, Subtraction and Multiplication
    *  can be done against either another matrix or scaler.  Also Transpose and Determinant
@@ -113,10 +113,10 @@ namespace  KKB
                                   VectorDouble*&  eigenValues
                                  )  const;
 
-    /** @brief  Locates the maximum value in a matrix along with the row and column that is is located. */
-    void            FindMaxValue (double&  maxVal, 
-                                  kkint32&   row, 
-                                  kkint32&   col
+    /** @brief  Locates the maximum value in a matrix along with the row and column that is located. */
+    void            FindMaxValue (double&   maxVal, 
+                                  kkint32&  row, 
+                                  kkint32&  col
                                  );
 
     VectorDouble    GetCol (kkint32 col)  const;
@@ -170,7 +170,7 @@ namespace  KKB
                 )  const;
 
     double**  data;       /**< A two dimensional array that will index into 'dataArea'.       */
-    double*   dataArea;   /**< one dimensional array that will contain all the matrixes data. */
+    double*   dataArea;   /**< one dimensional array that will contain all the matrices data. */
     kkint32   numOfCols;
     kkint32   numOfRows;
     RowPtr    rows;

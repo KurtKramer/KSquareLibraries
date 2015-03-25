@@ -105,7 +105,7 @@ void  CrossValidationMxN::CheckFileDescCopasetic ()
   if  (config->FileDesc () != orderings->FileDesc ())
   {
     // The Configuration 'fileDesc' is different than the orderings 'FileDesc'.
-    // This is a VERY VERY bad situation. Pprocessing needs to stop NOW NOW NOW.
+    // This is a VERY VERY bad situation. Processing needs to stop NOW NOW NOW.
     log.Level (-1) << endl << endl
                    << "CrossValidationMxN     *** ERROR ***    File Description Mismatch." << endl
                    << endl;
@@ -184,7 +184,7 @@ void  CrossValidationMxN::RunValidations ()
  * @brief Will run M number of Train then Test passes.
  *        
  * @param[in] numExamplsToUseForTraining The number examples in each ordering(group)
- *            that are to be used for training, teh remainding examples will be 
+ *            that are to be used for training, the remaining examples will be 
  *            used as test data.
  */
 void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)

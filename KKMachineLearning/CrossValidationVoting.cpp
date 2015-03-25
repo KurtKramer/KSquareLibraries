@@ -230,8 +230,8 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationD
   AllocateMemory ();
 
 
-  // We need to get a duplicate copy of each image data because the traininer and classofier
-  // will nor,alize the data.
+  // We need to get a duplicate copy of each image data because the trainer and classifier
+  // will normalize the data.
   FeatureVectorListPtr  trainingImages = examples->DuplicateListAndContents ();
   FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
 

@@ -49,9 +49,9 @@ namespace  KKB
     XmlTag (TokenizerPtr  _tokenStream);
 
     /**
-     *@brief Will construct a generix XML tag from the following characters in the stream.
-     *@details It sis assumed that the next chracter read from the input strem "i" will be '<'; if not then it is assumed that the next 
-     * chracter is the one imediately following the '<'.
+     *@brief Will construct a generic XML tag from the following characters in the stream.
+     *@details It sis assumed that the next character read from the input stream "i" will be '<'; if not then it is assumed that the next 
+     * character is the one immediately following the '<'.
      */
     XmlTag (istream&  i);
 

@@ -33,7 +33,7 @@ public:
     *                             will be specified.
     *
     *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-    *                          If will check by both ImageFileName and FeatureValues. If this param-
+    *                          If will check by both ImageFileName and FeatureValues. If this parameter
     *                          is not equal to NULL then will not save the Training model.  Will
     *                          NOT take ownership of list or its contents.  Caller still owns it.
     *
@@ -51,7 +51,7 @@ public:
     *@param[in] _checkForDuplicates  If set to true will look for duplicates in the training data. Two
     *                                FeatureVectors will be considered duplicate if they have the Same
     *                                ImageFileName or the save Feature Values.  If duplicates are in 
-    *                                the same class then all all but one will be removes.  If they are
+    *                                the same class then all but one will be removes.  If they are
     *                                in more then one class then they will both be removed.
     *
     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
@@ -76,7 +76,7 @@ public:
     *@brief  Build a new model from scratch for the specified class level. Will also remove duplicates.
     *
     *@details  Using the parameter '_level' will construct a classifier that groups classes together
-    *          by group.  Underscore characters in the class name will be used to deliminate group
+    *          by group.  Underscore characters in the class name will be used to differentiate group
     *          levels.  Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
     *          belongs to level 1.
     *
@@ -85,7 +85,7 @@ public:
     *                             will be specified.
     *
     *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-    *                          If will check by both ImageFileName and FeatureValues. If this param-
+    *                          If will check by both ImageFileName and FeatureValues. If this parameter
     *                          is not equal to NULL then will not save the Training model.  Will
     *                          NOT take ownership of list or its contents.  Caller still owns it.
     *
@@ -285,7 +285,7 @@ private:
 
   KKB::DateTime                buildDateTime;
 
-  VolConstBool&                cancelFlag;  /**< A calling app can set this to true Training Process will monitor this Flag, if true will terminate. */
+  VolConstBool&                cancelFlag;  /**< A calling application can set this to true Training Process will monitor this Flag, if true will terminate. */
 
 
   TrainingConfiguration2Ptr    config;

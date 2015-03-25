@@ -379,7 +379,7 @@ void  FeatureFileIO::GetLine (istream&  _in,
 
   if  (!_in.eof ())
   {
-    _in.get ();  // Skip over eond of line character.
+    _in.get ();  // Skip over end of line character.
     if  (ch == '\n')
     {
       ch = _in.peek ();
@@ -1005,7 +1005,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       {
         _log.Level (-1) << endl << endl
           << "FeatureDataReSink   ***ERROR***"  << endl
-          << "       Exception occured calling constructor 'ComputeFeatureVector'." << endl
+          << "       Exception occurred calling constructor 'ComputeFeatureVector'." << endl
           << endl;
         featureVectorCoputaionSuccessful = false;
         fv = NULL;

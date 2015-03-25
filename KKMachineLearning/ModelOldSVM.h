@@ -59,7 +59,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in] _param The parameters for the svm, and for creating the model.
      *@param[in] _fileDesc A description of the data file.
      *@param[in] _cancelFlag  If you want this instance to stop processing set this field to true in another thread.
-     *@param[in] _log A logfile stream. All important events will be output to this stream
+     *@param[in] _log A log-file stream. All important events will be output to this stream
      */
     ModelOldSVM (const KKStr&             _name,
                  const ModelParamOldSVM&  _param,

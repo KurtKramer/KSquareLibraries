@@ -76,10 +76,10 @@ FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileNa
                                                      )
 {
   _log.Level (10) << endl << endl 
-                  << "FeatureFileIORoberts::LoadFile   ***ERROR***      ARFF  read Functionality nopt implemented." << endl 
+                  << "FeatureFileIORoberts::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl 
                   << endl;
                 
-  _errorMessage = "ROBERTS read functionality not implemeneted.";
+  _errorMessage = "ROBERTS read functionality not implemented.";
   return NULL;
 }  /* LoadFile */
 

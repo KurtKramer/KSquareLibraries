@@ -99,7 +99,7 @@ namespace KKMachineLearning
      *@param[in]  _fileName  Name of file top same examples/images to.
      *@param[in]  _selFeatures Specify specific features to save, typically all features.
      *@param[in]  _examples Examples that are to be saved.
-     *@param[in]  _numExamplesWritten Will reflect the num examples written, caller will be able to monitor.
+     *@param[in]  _numExamplesWritten Will reflect the number of examples written, caller will be able to monitor.
      *@param[in]  _cancelFlag If this flag turns true the writing of data will terminate and return to caller.
      *@param[out] _successful False will be returned if the save failed.
      *@param[in]  _log log file to send messages to.
@@ -108,7 +108,7 @@ namespace KKMachineLearning
       void  SaveFeatureFile (const KKStr&           _fileName, 
                              const FeatureNumList&  _selFeatures,
                              FeatureVectorList&     _examples,
-                             kkuint32&              _numExamplesWritten,  // caller will be able to manitor this variable.
+                             kkuint32&              _numExamplesWritten,  /**< caller will be able to monitor this variable. */
                              VolConstBool&          _cancelFlag,
                              bool&                  _successful,
                              RunLog&                _log
@@ -119,7 +119,7 @@ namespace KKMachineLearning
      *@brief Saves the feature file in multiple parts with no one single part larger that 64k examples.
      *@details Same as 'SaveFeatureFile', if more than 64k examples will break into multiple files.
      *         If there are more than 64k examples, will save all images into 'fileName', but also
-     *         a second copy of them into files with same name plus seq num with max of 64k samples
+     *         a second copy of them into files with same name plus seq number with max of 64k samples
      *         in each one.
      *
      *@param[in]  _fileName  Name of file top same examples/images to.
@@ -145,7 +145,7 @@ namespace KKMachineLearning
      * Was specifically meant to work with training libraries, to account for
      * images being added and deleted from training library.  If there are no 
      * changes, then function will run very quickly.
-     *@param[in] _fvProducerFactory  Factory that specifoes the FeatureVector's we want to produce.
+     *@param[in] _fvProducerFactory  Factory that specifies the FeatureVector's we want to produce.
      *@param[in] _dirName,      Directory where source images are located.
      *@param[in] _fileName,     Feature file that is being synchronized.
      *@param[in] _unknownClass, Class to be used when class is unknown
@@ -182,7 +182,7 @@ namespace KKMachineLearning
      *        processes all sub-directories.  It makes use of FeatureDataReSink for each specific
      *        sub-directory.  Will make use of FeatureData files that already exist in any of the
      *        sub-directories.
-     *@param[in] _fvProducerFactory  Factory that specifoes the FeatureVector's we want to produce.
+     *@param[in] _fvProducerFactory  Factory that specifies the FeatureVector's we want to produce.
      *@param[in] _rootDir  Starting directory.
      *@param[in,out] _mlClasses, List of classes, any new classes in fileName will be added.
      *@param[in] _useDirectoryNameForClassName, if true set class names to sub-directory name.
@@ -268,7 +268,7 @@ namespace KKMachineLearning
      *@param[in]  _fileName  Name of file top same examples/images to.
      *@param[in]  _selFeatures Specify specific features to save, typically all features.
      *@param[out] _out  Output stream to save feature data to.
-     *@param[out] _numExamplesWritten Will reflect the num examples written, caller will be able to monitor.
+     *@param[out] _numExamplesWritten Will reflect the number examples written, caller will be able to monitor.
      *@param[in]  _cancelFlag If this flag turns true the writing of data will terminate and return to caller.
      *@param[out] _successful False will be returned if the save failed.
      *@param[out] _errorMessage If the save fails (_successful == false)  then a description of the error will be placed here.
@@ -309,9 +309,9 @@ namespace KKMachineLearning
     static  void               FinalCleanUp ();
 
     /**
-     *@brief  For each feature file format register the appropriate driver thru this static method.
+     *@brief  For each feature file format register the appropriate driver through this static method.
      *@details  You will be giving ownership of the driver to this class; it will call the destructor 
-     *when the application shutsdown.
+     *when the application shutdown.
      */
     static  void               RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver);
       

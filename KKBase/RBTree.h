@@ -163,9 +163,9 @@ namespace  KKB
 
       EntryPtr  GetNext ()       {return  Successor ();}
 
-      EntryPtr  GetPrev ()       {return  Predeccessor ();}
+      EntryPtr  GetPrev ()       {return  Predecessor ();}
 
-      EntryPtr  Predeccessor ();
+      EntryPtr  Predecessor ();
  
       NodePtr   RBInsert (EntryPtr  e);
 
@@ -232,7 +232,7 @@ namespace  KKB
 
       NodePtr  Minimum (NodePtr  n);
 
-      NodePtr  Predeccessor (NodePtr  n);
+      NodePtr  Predecessor (NodePtr  n);
 
       NodePtr  RBDelete (NodePtr z);
 
@@ -679,18 +679,18 @@ Entry*  KKB::RBTree<Entry,CompareNodes,KeyType>::GetLess (const KeyType&  key)
 
 
 template <class Entry,class CompareNodes,typename KeyType>
-Entry*  KKB::RBTree<Entry,CompareNodes,KeyType>::Predeccessor ()
+Entry*  KKB::RBTree<Entry,CompareNodes,KeyType>::Predecessor ()
 {
   if  ((curNode == nil)   ||  (curNode == NULL))
     return NULL;
 
-  curNode = Predeccessor (curNode);
+  curNode = Predecessor (curNode);
 
   if  ((curNode == nil)   ||  (curNode == NULL))
     return NULL;
 
   return  curNode->Data ();
-}  /* Predeccessor */
+}  /* Predecessor */
 
 
 
@@ -732,7 +732,7 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::DeleteCurrentNode ()
 
   NodePtr  node2Delete = curNode;
 
-  curNode = Predeccessor (node2Delete);
+  curNode = Predecessor (node2Delete);
   if  ((curNode == nil)  ||  (curNode == NULL))
     curNode = Successor (node2Delete);
 
@@ -901,7 +901,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Successor (NodePtr
 
 
 template <class Entry,class CompareNodes,typename KeyType>
-KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Predeccessor (NodePtr  n)
+KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Predecessor (NodePtr  n)
 {
   if  ((n == nil)  ||  (n == NULL))
     return  nil;
@@ -920,7 +920,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Predeccessor (Node
   }
 
   return  pred;
-}  /* Predeccessor */
+}  /* Predecessor */
 
 
 
@@ -937,7 +937,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Delete (NodePtr  z
   {
     curNode = Successor (z);
     if  (curNode == nil)
-      curNode = Predeccessor (z);
+      curNode = Predecessor (z);
   }
 
   if  ((z->Left () == nil)  ||  (z->Right () == nil))
@@ -1064,7 +1064,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::RightRotate (NodeP
 
   if  (x->Left () == nil)
   {
-    // There is no Left Child, So can Not Posibly LeftRotate
+    // There is no Left Child, So can Not Possibly LeftRotate
     cerr << std::endl
          << "                   ******* ERROR *******"                            << std::endl
          << std::endl
@@ -1413,7 +1413,7 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::CalcTreeStats ()
             << "Number of Leafs   [" << numOfLeafs   << "]"  << std::endl
             << "Shortest Path     [" << shortestPath << "]"  << std::endl
             << "Longest  Path     [" << longestPath  << "]"  << std::endl
-            << "Average Lengath   [" << avgLen       << "]"  << std::endl;
+            << "Average Length    [" << avgLen       << "]"  << std::endl;
 }
 
 
@@ -1694,13 +1694,13 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetEqual (const KeyType&  key
       prevNode = tree->GetLess (tree->root, key);
 
     else
-      prevNode = tree->Predeccessor (nextNode);
+      prevNode = tree->Predecessor (nextNode);
   
     return NULL;
   }
 
 
-  prevNode = tree->Predeccessor (curNode);
+  prevNode = tree->Predecessor (curNode);
   nextNode = tree->Successor (curNode);
 
   return  curNode->Data ();
@@ -1725,7 +1725,7 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetGreater (const KeyType&  k
   else
   {
     nextNode = tree->Successor (curNode);
-    prevNode = tree->Predeccessor (curNode);
+    prevNode = tree->Predecessor (curNode);
   }
 
   return  curNode->Data ();
@@ -1750,7 +1750,7 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetGreaterOrEqual (const KeyT
   else
   {
     nextNode = tree->Successor (tree.curMode);
-    prevNode = tree->Predeccessor (tree.curNode);
+    prevNode = tree->Predecessor (tree.curNode);
   }
 
   return  curNode->Data ();
@@ -1782,7 +1782,7 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetLast ()
   IsTreeStillThere ();
   
   curNode  = tree->Maximum ();
-  prevNode = tree->Predeccessor (curNode);
+  prevNode = tree->Predecessor (curNode);
   nextNode = tree->nil;
 
   return  curNode->Data ();
@@ -1807,7 +1807,7 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetNext ()
 
   if  (prevNode == tree->nil)
   {
-    prevNode = tree->Predeccessor (curNode);
+    prevNode = tree->Predecessor (curNode);
   }
 
   nextNode = tree->Successor (curNode);
@@ -1836,7 +1836,7 @@ Entry*  KKB::Iterator<Entry,CompareNodes,KeyType>::GetPrev ()
     prevNode = tree->Successor (curNode);
   }
 
-  prevNode = tree->Predeccessor (curNode);
+  prevNode = tree->Predecessor (curNode);
   
   return  curNode->Data ();  
 }
@@ -1867,7 +1867,7 @@ void  KKB::Iterator<Entry,CompareNodes,KeyType>::DeletionOfNode (NodePtr  n)
   if  (n == prevNode)
   {
     if  (prevNode != tree->nil)
-      prevNode = tree->Predeccessor (prevNode);
+      prevNode = tree->Predecessor (prevNode);
 
     return;
   }

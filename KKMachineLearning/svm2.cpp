@@ -62,9 +62,9 @@ namespace  SVM289_MFS
                            double  B
                           );
 
-  void  multiclass_probability (kkint32   numClasses,     /**< Number of Classes.      */
-                                double**  pairwiseProbs,  /**< Pairwise Probabilites.  */
-                                double*   classProb       /**< Class Probability       */
+  void  multiclass_probability (kkint32   numClasses,     /**< Number of Classes.       */
+                                double**  pairwiseProbs,  /**< Pairwise Probabilities.  */
+                                double*   classProb       /**< Class Probability        */
                                );
 
   void  svm_load_model_XML_SupportVectorSection (istream&     in,
@@ -1644,7 +1644,7 @@ kkint32  SVM289_MFS::Solver::select_working_set (kkint32&  out_i,
   // return i,j such that
   // i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)
   // j: minimizes the decrease of obj value
-  //    (if quadratic coefficeint <= 0, replace it with tau)
+  //    (if quadratic coefficient <= 0, replace it with tau)
   //    -y_j*grad(f)_j < -y_i*grad(f)_i, j in I_low(\alpha)
   
   double  Gmax         = -INF;
@@ -1945,7 +1945,7 @@ kkint32  SVM289_MFS::Solver_NU::select_working_set (kkint32&  out_i,
   // return i,j such that y_i = y_j and
   // i: maximizes -y_i * grad(f)_i, i in I_up(\alpha)
   // j: minimizes the decrease of obj value
-  //    (if quadratic coefficeint <= 0, replace it with tau)
+  //    (if quadratic coefficient <= 0, replace it with tau)
   //    -y_j*grad(f)_j < -y_i*grad(f)_i, j in I_low(\alpha)
 
   double  Gmaxp     = -INF;
@@ -2923,7 +2923,7 @@ decision_function  SVM289_MFS::svm_train_one (const svm_problem&    prob,
 
 
 
-// Platt's binary SVM Probablistic Output: an improvement from Lin et al.
+// Platt's binary SVM Probabilistic Output: an improvement from Lin et al.
 void  SVM289_MFS::sigmoid_train (kkint32        numExamples, 
                                  const double*  dec_values, 
                                  const double*  labels, 
@@ -3085,9 +3085,9 @@ double  SVM289_MFS::sigmoid_predict (double  decision_value,
  */
 
 // Method 2 from the multiclass_prob paper by Wu, Lin, and Weng
-void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number of Classes.      */
-                                          double**  pairwiseProbs,  /**< Pairwise Probabilites.  */
-                                          double*   classProb       /**< Class Probability       */
+void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number of Classes.       */
+                                          double**  pairwiseProbs,  /**< Pairwise Probabilities.  */
+                                          double*   classProb       /**< Class Probability        */
                                          )
 {
   kkint32 t,j;
@@ -3345,7 +3345,7 @@ double  svm_svr_probability (const svm_problem&   prob,
 
 
 
-// label: label name, start: begin of each class, count: #data of classes, perm: indices to the original data
+// label: label name, start: begin of each class, count: #data of classes, perm: indexes to the original data
 // perm, length l, must be allocated before calling this subroutine
 void  svm_group_classes (const svm_problem*  prob, 
                          kkint32*                nr_class_ret, 
@@ -3463,7 +3463,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
 
     model->numSVs = nSV;
     //model->SV = Malloc(svm_node *,nSV);
-    // model->SV is now a FeatureVectorList object that was initialized to empty and not owner in the consructor
+    // model->SV is now a FeatureVectorList object that was initialized to empty and not owner in the constructor
     model->SV.Owner (true);
     model->sv_coef[0] = new double[nSV];
     kkint32 j = 0;
@@ -3836,7 +3836,7 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
 
     subprob.numTrainExamples = numTrainExamples - (end - begin);
     //subprob.x = Malloc(struct svm_node*,subprob.l);
-    // subprob.x  will be initilized to an empty FeatureVectorList 
+    // subprob.x  will be initialized to an empty FeatureVectorList 
     subprob.y = new double[subprob.numTrainExamples];
       
     k = 0;
@@ -5274,7 +5274,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
 
 
 
-/** @brief Derives multiclass probability. */
+/** @brief Derives multi-class probability. */
 void  SVM289_MFS::svm_model::NormalizeProbability ()
 {
   // Make sure that the ProbEstimates array exists.
@@ -5424,7 +5424,7 @@ svm_model *svm_load_model (const char*  model_file_name,
 
     else if  (strcmp (cmd, "probA") == 0)
     {
-      kkint32 n = model->nr_class * (model->nr_class-1) / 2;  // n = Totl num of Binary Combos
+      kkint32 n = model->nr_class * (model->nr_class-1) / 2;  // n = Total number of Binary Combos
       model->probA = new double[n];
       for (kkint32 i = 0;  i < n;  i++)
         fscanf (fp, "%lf", &model->probA[i]);

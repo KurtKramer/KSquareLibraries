@@ -1,10 +1,6 @@
 #ifndef  _FEATURENUMLIST_
 #define  _FEATURENUMLIST_
 
-//************************************************************************
-//*                           FeatureNumList                             *
-//************************************************************************
-
 /**
  *@class KKMachineLearning::FeatureNumList
  *@brief Keeps track of selected features.  
@@ -173,7 +169,7 @@ namespace KKMachineLearning
     kkint32 Compare (const FeatureNumList&  _features)  const;
 
 
-    /** @brief Perform a comkplement of selected features.  That is if a feature is selected turn it off and if it is not selected then turn it on. */
+    /** @brief Perform a complement of selected features.  That is if a feature is selected turn it off and if it is not selected then turn it on. */
     FeatureNumList  Complement ()  const;
 
 
@@ -232,7 +228,7 @@ namespace KKMachineLearning
     void  Save (std::ostream&  o);
 
 
-    /** @brief  Selects all featues except those that are flagged as 'IgnoreAttribute' in the associated FileDesc instance. */
+    /** @brief  Selects all features except those that are flagged as 'IgnoreAttribute' in the associated FileDesc instance. */
     void   SetAllFeatures ();
 
     bool   Test (kkuint16 _featureNum)  const;  /**< Same as 'InList' */
@@ -309,7 +305,7 @@ namespace KKMachineLearning
 
     void   AllocateArraySize (kkint32 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
 
-    kkuint16*    featureNums;              /**< @brief The feature nums in this array are always kept in ascending order.  
+    kkuint16*    featureNums;              /**< @brief The feature numbers in this array are always kept in ascending order.  
                                             * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
                                             * indicates the size allocated, if more space is needed you need to call 
                                             * 'AllocateArraySize' to increase it.

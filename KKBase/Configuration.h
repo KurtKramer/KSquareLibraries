@@ -77,7 +77,7 @@ namespace KKB
   
     kkint32 NumOfSettings (const KKB::KKStr&  sectionName);
 
-    kkint32 NumOfSettings (kkint32  sectionNum)  const;                 /**< @brief Returns number of settings for the specified section, */
+    kkint32 NumOfSettings (kkint32  sectionNum)  const;                /**< @brief Returns number of settings for the specified section, */
    
     void  PrintFormatErrors (ostream& o);
 

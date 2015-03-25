@@ -208,7 +208,7 @@ FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
     {
       _log.Level (-1) << endl
                       << endl
-                      << "FeatureFileIODstWeb::GetFileDesc    *** ERROR ***    Atrribute Code Occurs more than once" << endl
+                      << "FeatureFileIODstWeb::GetFileDesc    *** ERROR ***    Attribute Code Occurs more than once" << endl
                       << "    code [" << attributes[x]->code << "]." << endl
                       << endl;
       // Can not delete an instance of a 'FileDesc' class once it has been created.

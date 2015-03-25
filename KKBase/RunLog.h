@@ -11,7 +11,7 @@
  *@details
  * Has facilities to deal with different levels of logging.  You use the normal insertion operators to write
  * to this object.  You can specify at any point a Logging level.  If this level is less than or equal to a
- * specified threshold the the message will be recorded in the log.
+ * specified threshold the message will be recorded in the log.
  * <br \>
  * The idea is that during normal production runs log level would be set to 10.  But if there appears to be
  * some issue then you would set the logging level to a higher level to get more details. The higher the

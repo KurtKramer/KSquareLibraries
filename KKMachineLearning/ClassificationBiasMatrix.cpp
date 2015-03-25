@@ -575,7 +575,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
   //    "Estimating the Taxonomic composition of a sample when individuals are classified with error"
   //     by Andrew Solow, Cabll Davis, Qiao Hu
   //     Woods Hole Oceanographic Institution, Woods Hole Massachusetts
-  //     Marine Ecology Progresss Series
+  //     Marine Ecology Progress Series
   //     published 2006-july-06;  vol 216:309-311
 
   if  (classifiedCounts.size () != (kkuint32)numClasses)
@@ -598,7 +598,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
     {
       if  ((*probabilities)[x][x] == 0.0)
       {
-        // This will cause the inversion of the diagonal marix to fail.  To deal
+        // This will cause the inversion of the diagonal matrix to fail.  To deal
         // with this situation; I will steal some probability from other buckets on 
         // same row.
 

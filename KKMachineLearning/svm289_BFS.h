@@ -14,14 +14,14 @@ using namespace KKMachineLearning;
  *@namespace  SVM289_BFS   
  *@brief Namespce used to wrap implementation of libSVM version 2.89  to be used as a pair-wise SVM.
  *@details  There is more than obe version of libSVM implemented in the library.  To prevent
- * name coflicts between them each one was wrapped in their own namespace.
+ * name conflicts between them each one was wrapped in their own namespace.
  *<br/>
  * libSVM is a Support Vector Machine implementaton done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
  * was downloaded from http://www.csie.ntu.edu.tw/~cjlin/libsvm/.  The source code was modified by 
- * Kurt Kramer.  The primary changes to this implementation involves the replacement of the sparce data-structure 
+ * Kurt Kramer.  The primary changes to this implementation involves the replacement of the sparse data-structure 
  * in the original implementation with fixed length array implemented through the "FeatureVector" class and 
  * the ability to specify a sub-set of features to be utilized via the "FeatureNumList" class.  This allows 
- * us to load in a single set of training data with all its features that can then beuswed for multuple Support 
+ * us to load in a single set of training data with all its features that can then be used for multiple Support 
  * Vector Machine instances where each instance utilizes a different set of features.  This particular implementation
  * SVM289_BFS was meant to work with the Binary-Feature-Selection (Pair-Wise) version of the support vector machine as 
  * described by "Increased classification accuracy and speedup through pair-wise feature selection for support vector machines."
@@ -123,7 +123,7 @@ namespace  SVM289_BFS
     kkint32      shrinking;      /* use the shrinking heuristics      */
     kkint32      probability;    /* do probability estimates          */
 
-    double       probParam;      /*  probability parameter as done using USF multi class prob calc */
+    double       probParam;      /*  probability parameter as done using USF multi class prob calculation */
 
     static  const char*  svm_type_table[];
 
@@ -193,7 +193,7 @@ namespace  SVM289_BFS
     FeatureVectorList  SV;         /**< SVs (SV[l])                                                  */
     double**           sv_coef;    /**< Coefficients for SVs in decision functions (sv_coef[k-1][l]) */
     double*            rho;        /**< constants in decision functions (rho[k*(k-1)/2])             */
-    double*            probA;      /**< pariwise probability information                             */
+    double*            probA;      /**< pair-wise probability information                            */
     double*            probB;
     FeatureNumList     selFeatures;
 

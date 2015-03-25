@@ -28,12 +28,12 @@ typedef enum {False, True} Boolean;
 /* switches used in the interface routines */
 #define INT         0
 #define FLOAT       1
-#define ENUM        2      /* interger values that use #defines */
+#define ENUM        2      /* integer values that use #defines */
 #define BOOLE       3
 #define GETTRAINING 4
 #define GETTEST     5
 #define GO          6
-#define INT_NO      7      /* parameters only good in netfile */
+#define INT_NO      7      /* parameters only good in net-file */
 #define FLOAT_NO    8      /* most are used in memory allocation  */
 #define ENUM_NO     9      /* and cannot be changed mid-simulation */
 #define BOOLE_NO    10
@@ -409,12 +409,12 @@ namespace KKMachineLearning
     int UnitType;		               /**< hidden unit type can be SIGMOID or GAUSIAN*/
     int OutputType;	               /**< output unit type can be SIGMOID or LINEAR */
     
-    float SigmoidMax;              /**< Maximum output vaule for sigmoid units. Used to alter sigmoid range without having to edit *
+    float SigmoidMax;              /**< Maximum output value for sigmoid units. Used to alter sigmoid range without having to edit *
                                     * training values.  Use the symbols "min" and  "max" in the input file.  The input routines    * 
                                     * will translate to the appropriate float values.
                                     */
    
-    float SigmoidMin;              /**< Minimum output vaule for sigmoid units.                                            */
+    float SigmoidMin;              /**< Minimum output value for sigmoid units.                                            */
     float WeightRange;             /**< Random-init weights in range [-WR,+WR]                                             */
     float SigmoidPrimeOffset;      /**< Add to sigmoid-prime to kill flat spots                                            */
     float WeightMultiplier;	       /**< Scale Candidate correlation to get init weight                                     */
@@ -431,7 +431,7 @@ namespace KKMachineLearning
                                     */
 
     float OutputChangeThreshold;   /**< The error must change by at least this fraction of its old value to count as a significant change. */
-    float InputMu;	               /**< Mu used to quickprop train input weights.  */
+    float InputMu;	               /**< Mu used to quick prop train input weights.  */
     float InputShrinkFactor;       /**< Used in computing whether the proposed step is too large.  Related to InputMu. */
     float InputEpsilon;	           /**< Controls the amount of linear gradient descent to use in updating Input weights. */
     float InputDecay;	             /* This factor times the current weight is added to the slope at the start of each Input epoch *
@@ -448,7 +448,7 @@ namespace KKMachineLearning
     int      ErrorBits;             /**< Total # bits in epoch that were wrong           */
 
     float*   SumErrors;             /**< Accumulate the sum of the error values used in the correlation phase. 
-                                     * Sum is stored seperately for each output.  Values are converted to 
+                                     * Sum is stored separately for each output.  Values are converted to 
                                      * average errors before use in ADJUST_CORRELATION 
                                      */
 
@@ -510,10 +510,10 @@ namespace KKMachineLearning
     int      Nunits;              /**<  Total number of active units in net */
     int      Ninputs;             /**< Number of input units */
     int      Noutputs;            /**< Number of output units */
-    int      Ncandidates;	        /**< Nu mber of candidate units trained at once. */
-    int      MaxCases;		        /**< Maxi mum number of training cases that can be accommdated by the current data structures.  */
+    int      Ncandidates;	        /**< Number of candidate units trained at once. */
+    int      MaxCases;		        /**< Maxi mum number of training cases that can be accommodated by the current data structures.  */
     int      Ncases;		          /**< Number  of training cases currently in use. Assume a contiguous block beginning with   */
-    int      FirstCase;	          /**< Addres s of the first training case in the currently active set.  Usually zero, but may
+    int      FirstCase;	          /**< Address of the first training case in the currently active set.  Usually zero, but may
                                    *  differ if we are training on different chunks of the training set at different times.       
                                    */
 
@@ -569,12 +569,12 @@ namespace KKMachineLearning
     int      NtestOutputValues;	       /**< Number of outputs in the test set.      */
     float    TrainingStdDev;           /**< Std Dev of entire training set.  Used to normalize the ErrorIndex. */
     float    TestStdDev;
-    float    ErrorIndex;               /**< Normalized error function for continuos output training sets. */
+    float    ErrorIndex;               /**< Normalized error function for continuous output training sets. */
     float    ErrorIndexThreshold;      /**< Stop training when ErrorIndex is < EIT. */
     int      ErrorMeasure;             /**< Set to BITS for using ErrorBits to stop of INDEX to use ErrorIndex to stop.  */
 
     /***************************************************************************/
-    /* Save and plot file related varibles                                     */
+    /* Save and plot file related variables                                     */
     /***************************************************************************/
     FILE*    WeightFile;	             /**< Contains weights from the current net. */
 

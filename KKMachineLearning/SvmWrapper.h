@@ -1,33 +1,15 @@
 #ifndef  _SVMWRAPPER_
 #define  _SVMWRAPPER_
 
-/**
- @file SvmWrapper.h
- @code
- **********************************************************************************
- * @author Kurt Kramer                                                            *
- *                                                                                *
- *  Provides an interface to the svm.cpp functions.  This was copyied from a ver- *
- *  sion written by Tong Luo.  Received from Tong June-2-2003.                    *
- *                                                                                *
- **********************************************************************************
- @endcode
- */
-
-
 #include  "SVMparam.h"
-
 
 namespace KKMachineLearning 
 {
-
   typedef enum {NORMAL, BAGGING, BOOSTING, SUBSPACE, SAMPLESV} Learn_Type;
 
-
   typedef  std::vector<kkint32>  Ivector;
-  typedef  std::vector<float>  Fvector;
-  typedef  std::vector<double> Dvector;
-
+  typedef  std::vector<float>    Fvector;
+  typedef  std::vector<double>   Dvector;
 
   void    SvmSaveModel (ostream&            o,
                         struct svm_model**  model
@@ -61,21 +43,21 @@ namespace KKMachineLearning
    *@param[in] svmParam  Structure that has all the parameters used for building the SVM.
    *@param[in] subModel  This is the model(classifier) returned by SvmTrainModel.
    *@param[in] probabilities Array that must be as big as number of classes the probability 
-   *                     of each class will be retrned where there sum is 1.0
+   *                     of each class will be returned where there sum is 1.0
    *
    *@param[in] unknownClassFeatureData  data structure you build that represents a sparse array of 
    *                     the feature data that is to be used for prediction.
    *
    *@param[in] knownClass  If you happen to know hat the class really is you can specify it 
-   *                     here so as to get the probability of it returned bacj to you.
+   *                     here so as to get the probability of it returned back to you.
    *
-   *@param[in] predClass   The prediction will be retuend back in this field.
+   *@param[in] predClass   The prediction will be returned back in this field.
    *@param[in] winners   If voting was specified in 'svmParam' and there was a tie 
    *                     between 2 or more classes; them the classes that ties
    *                     will be in this vector.
    *
-   *@param[in] crossClassProbTable A 2 dimensional table that will have the computed probabities
-   *                     between all the posible 2 class combinations.
+   *@param[in] crossClassProbTable A 2 dimensional table that will have the computed probabilities
+   *                     between all the possible 2 class combinations.
    *
    *@param[in] breakTie  The difference in probability between the two most likely classes.
    *
@@ -101,13 +83,13 @@ namespace KKMachineLearning
 
 
   kkint32  SvmPredictTwoClass (const struct svm_parameter&   param,
-                             svm_model**                   submodel, 
-                             const svm_node*               unKnownData, 
-                             kkint32                       desired, 
-                             double&                       dist,
-                             double&                       probability,
-                             kkint32                       excludeSupportVectorIDX
-                            );
+                               svm_model**                   submodel, 
+                               const svm_node*               unKnownData, 
+                               kkint32                       desired, 
+                               double&                       dist,
+                               double&                       probability,
+                               kkint32                       excludeSupportVectorIDX
+                              );
 
   void   SvmDestroyModel (struct svm_model**  subModel);
 

@@ -344,7 +344,7 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
   }
 
 
-  // Since this class is a special case that handles the old SvmParam paradign we need
+  // Since this class is a special case that handles the old SvmParam paradigm we need
   // to update the local Model:: parameters with those that were updated in 'SvmParam'.
   ModelParam::EncodingMethod ((ModelParam::EncodingMethodType)svmParameters->EncodingMethod     ());
   
@@ -432,7 +432,7 @@ void  ModelParamOldSVM::ReadSpecificImplementationXML (istream& i)
   while  (i.getline (buff, sizeof (buff)))
   {
     KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape charaters
+    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
     field.Upper ();
 
     if  (field.EqualIgnoreCase ("</ModelParamOldSVM>"))

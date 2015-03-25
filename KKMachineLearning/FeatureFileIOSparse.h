@@ -29,7 +29,7 @@ namespace KKMachineLearning
     * *                                                                                               *
     * *   - First Field is the Class Name.  This differers from libSVM which assumes that class-names *
     * *     are integers.  We support alpha numeric class names.                                      *
-    * *   - Attribute Fields will will be of the following format.  <FeatureNum>:<Feature value>.     *
+    * *   - Attribute Fields will be of the following format.  <FeatureNum>:<Feature value>.          *
     * *                                                                                               *
     * *  ex:                                                                                          *
     * *     "0 0:12.12 4:87.1242 12:-65.63 15:0.872"                                                  *

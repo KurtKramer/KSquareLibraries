@@ -8,7 +8,7 @@
 /**
  *@class KKB::MorphOp
  *@brief Creates a image where the only pixels that are passed thru are the 
- * ones that would be removed by the specified mask when a Open-Dialation operation
+ * ones that would be removed by the specified mask when a Open-Dilatation operation
  * are performed.
  * 
  *@see KKB::Raster

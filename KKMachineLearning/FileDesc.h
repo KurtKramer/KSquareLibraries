@@ -6,24 +6,20 @@
  @author  Kurt Kramer
  @details
  @code
- **************************************************************************************
- **                                                                                  *
- **  Kurt Kramer                                                                     *
- **                                                                                  *
+ *************************************************************************************
  **  Describes the different fields of a dataset. There will be one instance of this *
- **  class for each tyope of Dataset that you have in an application.  From this     *
+ **  class for each type of Dataset that you have in an application.  From this      *
  **  object you can get information such as number of attributes, Attribute types,   *
- **  weather they are nomainal, continuous.  If nomainal what are the accepted       *
+ **  weather they are nominal, continuous.  If nominal what are the accepted         *
  **  values.                                                                         *
- **                                                                                  *
  **                                                                                  *
  **  Never delete an instance of a FileDesc object.                                  *
  **                                                                                  *
  **  Only one FileDesc object can exist for any Dataset.  Example the Forest Cover   *
- **  dataset.  You can split the data into many files and manage them seperately but *
- **  you will only have one instance of a FileDesc object tha they will all refer    *
+ **  dataset.  You can split the data into many files and manage them separately but *
+ **  you will only have one instance of a FileDesc object that they will all refer   *
  **  to.  See "GetExistingFileDesc" method below.  You would initially create an     *
- **  instance of FileDesc abd then use "GetExistingFileDesc" to make sure that it is *
+ **  instance of FileDesc and then use "GetExistingFileDesc" to make sure that it is *
  **  unique. This typically happens in the FeatureFileIO derived classes.            *
  **                                                                                  *
  *************************************************************************************
@@ -57,7 +53,7 @@ namespace KKMachineLearning
   #endif
 
 
-  /**
+   /**
     *@class  FileDesc
     *@brief  Provides a detailed description of the attributes of a dataset.
     *@author Kurt Kramer
@@ -92,7 +88,7 @@ namespace KKMachineLearning
     typedef  FileDesc*  const   FileDescConstPtr;
 
     /**
-     @brief  Clean up function,  call just vefore exiting the application.
+     @brief  Clean up function,  call just before exiting the application.
      @details
      @code
      * *******************************************************************************
@@ -164,7 +160,7 @@ namespace KKMachineLearning
                                           )  const;
 
     const 
-      KKMachineLearning::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsable for deleteing  */
+      KKMachineLearning::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
 
     KKMachineLearning::AttributeTypeVector  CreateAttributeTypeTable ()  const;
     
@@ -211,18 +207,18 @@ namespace KKMachineLearning
      @brief Returns a pointer to an existing instance of 'fileDesc' if it exists, otherwise will use one being passed in.
      @details
      @code
-     * ******************************* GetExistingFileDesc ******************************
-     * * first look to to see if a the same FileDesc is already in th eeixtng list in that case 
-     * * will return back the same pointer.
-     * *
-     * * Second Will look for a existing FileDesc that is the same as the 'fileDesc' being    *
-     * *  passed in.                                                                    *
-     * *  if  one is found   them                                                       *
-     * *    fileDesc is deleted                                                         *
-     * *    exiting one will be returned.                                               *
-     * *  else                                                                          *
-     * *    fileDesc will be added to existinList (exisitingDescriptions) and returned. *
-     * *    and returned.                                                               *
+     * ************************************ GetExistingFileDesc **************************
+     * * > First looks to see if a the same FileDesc is already in the existing list     *
+     * *   in that case will return back the same pointer.                               *
+     * *                                                                                 *
+     * * > Second Will look for a existing FileDesc that is the same as the 'fileDesc'   *
+     * *   being passed in.                                                              *
+     * *   if  one is found   them                                                       *
+     * *     fileDesc is deleted                                                         *
+     * *     exiting one will be returned.                                               *
+     * *   else                                                                          *
+     * *     fileDesc will be added to existinList (exisitingDescriptions) and returned. *
+     * *     and returned.                                                               *
      * **********************************************************************************
      @endcode
      @param[in] fileDesc Pointer to a FileDesc object that you want to look and see if one that is identical already exists.

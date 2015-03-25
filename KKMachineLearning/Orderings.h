@@ -8,7 +8,7 @@
  @brief  Used to maintain multiple orderings of a single list of FeatureVector objects.
  @details
   Will maintain multiple orderings of a single FeatureVectorList.  These orderings will be saved in 
-  a text file for recall later. This will allow the user to beable to repeat experiments using the 
+  a text file for recall later. This will allow the user to be able to repeat experiments using the 
   same ordering of data again. The Idea is that the 1st time this orderings is created the order 
   will be randomly driven with Stratification by Class.  This ordering will then be saved in data 
   Files for future recall.  More than one order can be maintained for a single list. An example of 
@@ -63,11 +63,11 @@ public:
   /**
    *@brief Constructs Orderings object from ImageFeatursList object.
    *@details Use this when an existing list does not exist.  Will create 'numOfOrderings' 
-   *         seperate lists of 'data' that are randomly ordered and stratified by 
+   *         separate lists of 'data' that are randomly ordered and stratified by 
    *         'numOfFolds'.
    *
    *@param[in] _data  ImagFeaturesList object, 
-   *@param[in] _numOfOrderings  Number of seperate orderings of data neeed.
+   *@param[in] _numOfOrderings  Number of separate orderings of data need.
    *@param[in] _numOfFolds  Used to help stratify data in each fold.
    */
   Orderings (const FeatureVectorListPtr _data,
@@ -80,16 +80,16 @@ public:
    *@brief Constructs Orderings of a FeatureVectorList from a previous construction that was saved
    *       in a data file.
    *@details Will load object from the Feature File '_featureFileName'  and retrieve the 
-   *         different orderings from a separate index file whos name will be 
+   *         different orderings from a separate index file who's name will be 
    *         osExtention (FeatureFileName) + ".idx".  The load routine will validate that all 
    *         FeatureVector instances are accounted for in each ordering.  If the index file does not 
    *         exist it then the  'successful' flag will bet to false.  
    *
    *@param[in] _featureFileName  File to load FeatureVector' objects from.  This will be used as 
    *                             master list for 'Orderings'.
-   *@param[in] _driver           Feature File driver toutilize.
+   *@param[in] _driver           Feature File driver to utilize.
    *@param[in] _log              Log file to write messages to.
-   *@param[in] v                 If flag tturns to 'TRUE' then will terminate the load process and return to caller.
+   *@param[in] v                 If flag turns to 'TRUE' then will terminate the load process and return to caller.
    */
   Orderings (const KKStr&      _featureFileName,
              FeatureFileIOPtr  _driver,
@@ -122,7 +122,7 @@ public:
    *         built Orderings data index file.
    *@details Will use FileName from "data" parameter to derive both 'featureFileName' and 
    *        'indexFileName' using the 'FileName' method from FeatureVectorList.  It is expected 
-   *        that a seperate index file by the name osDeletExtention (FeatureFileName) + ".idx" 
+   *        that a separate index file by the name osDeletExtention (FeatureFileName) + ".idx" 
    *        will exist.  The orderings will be loaded from that file.
    *@param[in]  _data  FeatureVectorList that we want different orderings of.
    */
@@ -136,11 +136,11 @@ public:
    *@brief   Constructs a Orderings object for a specified FeatureVectorList.
    *@details Will use FileName from "_data" parameter to derive both 'featureFileName' and 
    *        'indexFileName' using the 'FileName' method from FeatureVectorList.  If a separate 
-   *        Index file does not exist it will randomly xcreate orderings and save the orderings 
+   *        Index file does not exist it will randomly create orderings and save the orderings 
    *        in a new Index file.
    *@param[in]  _data  FeatureVectorList that we want different orderings of.
    *@param[in]  _numOfOrderings  Expected number of orderings.
-   *@param[in]  _numOfFolds  Number of folds each ordering should be straitified by.
+   *@param[in]  _numOfFolds  Number of folds each ordering should be stratified by.
    */
   static
   OrderingsPtr  CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,

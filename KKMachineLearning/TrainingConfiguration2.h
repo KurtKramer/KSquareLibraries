@@ -54,7 +54,7 @@ namespace KKMachineLearning
      *@brief Use this one if you want to create a default Configuration object.
      *@param[in]  _fileDesc  Description of features.
      *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
-     *@param[in]  _parameterStr Sting with Machine Learninig Parameters.
+     *@param[in]  _parameterStr Sting with Machine Learning Parameters.
      *@param[in]  _fvFactoryProducer  Factory for creating FeatureVectorProducer instance.
      *@param[in]  _log  Where to send logging messages to.
      */
@@ -71,14 +71,14 @@ namespace KKMachineLearning
      *@brief  Will create a instance using a sub-directory tree to drive the TraningClassList.
      *@details for each unique sub-directory entry below it that contains 'bmp' files a TrainingClass' 
      * instance will be created using the root-name as the class name.  If an existing Config file already
-     * exists then parameters will be taken from it otherwise a default cnfiguration will be created.
+     * exists then parameters will be taken from it otherwise a default configuration will be created.
      *@param[in]  _fileDesc  
      *@param[in]  _existingConfigFileName  Caller can specify an existing Configuration file to extract configuration 
      *                                     parameters from; if left blank then a configuration file with the same name 
      *                                     of the last directory in the path specified by _subDir will be assumed in the 
      *                                     default TraningModel directory.
      *@param[in]  _subDir   The root directory entry to the Sub-Directory structure that is to be used to construct 
-     *                      training classs list from.
+     *                      training class list from.
      *@param[in]  _fvFactoryProducerr
      *@param[in]  _log
      *@param[out] _successful
@@ -184,8 +184,9 @@ namespace KKMachineLearning
 
     void                   ModelParameters (ModelParamPtr  _modelParameters);
 
-    kkuint32               NumHierarchialLevels ()  const;  // returns back the number of hierarchail levels there
-                                                            // are in the trainingClass that has the most.
+    kkuint32               NumHierarchialLevels ()  const;  /**< returns back the number of hierarchical levels there
+                                                             * are in the trainingClass that has the most.
+                                                             */
 
     SVM_SelectionMethod    SelectionMethod ()  const;
     void                   SelectionMethod (SVM_SelectionMethod  _selectionMethod);
@@ -193,7 +194,7 @@ namespace KKMachineLearning
     const SVMparam&        SVMparamREF ()  const;
 
     /**
-     *@brief Adds specified Trainig Class to list taking ownership of it.
+     *@brief Adds specified Training Class to list taking ownership of it.
      */
     void                   AddATrainingClass (TrainingClassPtr  _trainClass);
 
@@ -219,7 +220,7 @@ namespace KKMachineLearning
 
     FeatureNumList         GetFeatureNums ()  const;
 
-    /**@brief  Retuns features selected for teh specified class-pair. */
+    /**@brief  Returns features selected for the specified class-pair. */
     FeatureNumList         GetFeatureNums (MLClassPtr  class1,   /**< First of two classes of pair. */
                                            MLClassPtr  class2    /**< Second of two classes of pair. */
                                           );

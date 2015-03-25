@@ -147,7 +147,7 @@ namespace  KKMachineLearning
     kkint32                   numSVs;             /**< Total Support Vectors Detected. */
 
     kkint32                   totalNumSVs;        /**< This is different from 'numOfSupportVectors' it will reflect all the Support Vectors
-                                                   * that are created in a Multi Class SVM.  That is if a given example is used in three
+                                                   * that are created in a Multi Class SVM. That is if a given example is used in three
                                                    * different binary classifiers it will be counted three times.
                                                    */
 

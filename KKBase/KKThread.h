@@ -78,7 +78,7 @@ namespace KKB
      *@brief  Specify threads that must start before this thread is started.
      *@details This method can be called multiple times;  the information is used by the 'KKTHreadManager' instance to control the
      *  start of the thread.
-     *@param[in]  _thread  A thread that needs to be in the the 'tsRunning' status before this thread can start;  we do NOT take ownership.
+     *@param[in]  _thread  A thread that needs to be in the 'tsRunning' status before this thread can start;  we do NOT take ownership.
      */
     void  AddStartPrerequistite (KKThreadPtr  _thread);
 
@@ -86,7 +86,7 @@ namespace KKB
      *@brief  Specify threads that must stop before this thread is started.
      *@details This method can be called multiple times;  the information is used by the 'KKTHreadManager' instance to control the
      *  orderly shutdown of the controlling 'KKTHreadManager' instance.
-     *@param[in]  _thread  A thread that needs to be in the the 'tsStopped' status before this thread can be shutdown;  we do NOT take ownership.
+     *@param[in]  _thread  A thread that needs to be in the 'tsStopped' status before this thread can be shutdown;  we do NOT take ownership.
      */
     void  AddShutdownPrerequistite (KKThreadPtr  _thread);
 

@@ -54,7 +54,7 @@ namespace KKB
 
 
     /*
-     *@brief Will perform Convexhull on 'src' and place result into 'dest'.
+     *@brief Will perform Convex-hull on 'src' and place result into 'dest'.
      *@returns  Returns dest.
      */
     RasterPtr  Filter (const Raster&  src,

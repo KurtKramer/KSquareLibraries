@@ -514,8 +514,8 @@ void  Orderings::Load (const KKStr&  _indexFileName,
   {
     log.Level (-1) << endl << endl
                    << "Orderings::Load  *** ERROR ***  Not orderings were loaded." << endl
-                   << "                 Expected  [" << numOfOrderings          << "]" << endl
-                   << "                 Num Found [" << (kkuint32)orderings.size () << "]" << endl
+                   << "                 Expected     [" << numOfOrderings          << "]" << endl
+                   << "                 Number Found [" << (kkuint32)orderings.size () << "]" << endl
                    << endl;
     successful = false;
     valid      = false;
@@ -593,7 +593,7 @@ void  Orderings::Save ()
       indexIDX = index.find (example);
       if (indexIDX == index.end ())
       {
-        // We have a very serios problem,  for some reason we 
+        // We have a very serious problem,  for some reason we 
         // could not locate the FeatureVector object in the master list.
         log.Level (-1) << endl << endl << endl
                        << "Orderings::Save  *** ERROR ***    FileName[" << indexFileName << "]" << endl
@@ -623,8 +623,8 @@ FeatureVectorListPtr  Orderings::Ordering (kkuint32  orderingIdx)  const
   {
     log.Level (-1) << endl << endl << endl
                    << "Orderings::Ordering  *** ERROR ***    Index Out Of Range." << endl
-                   << "                 Num Of Orderings [" << (kkuint32)orderings.size ()  << "]" << endl
-                   << "                 OrderingIdx      [" << (kkuint32)orderingIdx        << "]" << endl
+                   << "                 Number Of Orderings [" << (kkuint32)orderings.size ()  << "]" << endl
+                   << "                 OrderingIdx         [" << (kkuint32)orderingIdx        << "]" << endl
                    << endl;
     osWaitForEnter ();
     exit (-1);

@@ -89,7 +89,7 @@ namespace  KKB
     BlobPtr  LocateLargestBlob ();               /**< @brief  Will return Blob with largest pixel count. */
 
     /**
-     *@brief  Loactes the blob that covers the greatest part of the raster; that is the one who has the 
+     *@brief  Locates the blob that covers the greatest part of the raster; that is the one who has the 
      * largest (Height  x  Width)
      */
     BlobPtr  LocateMostComplete ();

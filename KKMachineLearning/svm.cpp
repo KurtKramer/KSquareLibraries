@@ -917,9 +917,9 @@ private:
 
   struct head_t
   {
-    head_t *prev, *next;  // a cicular list
+    head_t *prev, *next;  // a circular list
     Qfloat *data;
-    kkint32 len;              // data[0,len) is cached in this entry
+    kkint32 len;          // data[0,len) is cached in this entry
   };
 
   head_t* head;
@@ -2091,7 +2091,7 @@ void SVM233::Solver_NU::do_shrinking()
     --k;  // look at the newcomer
   }
 
-  // unshrink, check all variables again before final iterations
+  // un-shrink, check all variables again before final iterations
 
   if(unshrinked || max(-(Gm1+Gm2),-(Gm3+Gm4)) > eps*10) return;
 
