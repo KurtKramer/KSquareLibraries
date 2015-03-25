@@ -96,8 +96,8 @@ struct  ScannerFile4BitEncoded::OpRecRunLen
 
 struct  ScannerFile4BitEncoded::OpRecRun256Len1
 {
-  /** For one or two raw pixles */
-  uchar  opCode     :4;      /**< 10 = up to 256 run-len  */
+  /** For one or two raw pixels */
+  uchar  opCode     :4;      /**< 10 = up to 256 run-length  */
   uchar  pixelValue :4;
 };  /* OpRecRunLen */
 
@@ -105,7 +105,6 @@ struct  ScannerFile4BitEncoded::OpRecRun256Len1
 
 struct  ScannerFile4BitEncoded::OpRecRun256Len2
 {
-  /** For one or two raw pixels */
   uchar  runLen     :8;      /**< 0= 1-Pixel, 1=2-Pixels, ... 255=256-Pixels */
 };  /* OpRecRunLen */
 
@@ -121,7 +120,6 @@ struct  ScannerFile4BitEncoded::OpRecRaw1Pixel
 
 struct  ScannerFile4BitEncoded::OpRecRaw32Pixels
 {
-  /** For one or two raw pixels */
   uchar  opCode  :4;      /**< 12 = Even run length 2 thru 32 pixels      */
   uchar  len     :4;      /**< Num-Raw-Pixels = (len + 1) * 2   */
   /** To be followed by 'len' RawPixel recs */
@@ -131,17 +129,15 @@ struct  ScannerFile4BitEncoded::OpRecRaw32Pixels
 
 struct  ScannerFile4BitEncoded::OpRecRaw513Pixels1
 {
-  /** For one or two raw pixels */
   uchar  opCode  :4;      /**< 13 = Odd number of pixels, up to 513 pixels.          */
   uchar  lenHigh :4;      /**< Num-Raw-Pixels = 1 + 2 * (1 + lenHigh * 16 + lenLow)  */
-  /** To be followed by 'len' RawPixelRec's */
+  /** To be followed by length RawPixelRec's */
 };  /* OpRecRaw513Pixels1 */
 
 
 
 struct  ScannerFile4BitEncoded::OpRecRaw513Pixels2
 {
-  /** For one or two raw pixles */
   uchar  lenLow :4;      /**< 13 = Odd number of pixes, up to 513 pixels.    */
   uchar  pix0   :4;      /**< 1st Raw pixel  */
 
@@ -288,9 +284,9 @@ ScannerFile4BitEncoded::~ScannerFile4BitEncoded (void)
   if  (opened)
     Close ();
 
-  delete  encodedBuff;          encodedBuff         = NULL;
-  delete  rawPixelRecBuffer;    rawPixelRecBuffer   = NULL;
-  delete  rawStr;               rawStr              = NULL;
+  delete encodedBuff;        encodedBuff       = NULL;
+  delete rawPixelRecBuffer;  rawPixelRecBuffer = NULL;
+  delete rawStr;             rawStr            = NULL;
 }
 
 

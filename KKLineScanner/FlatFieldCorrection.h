@@ -16,8 +16,8 @@ namespace  KKLSC
 {
   /**
    *@details  It is assumed that sample data provided via 'AddSampleLine' will be the data from a camera 
-   * such that 255 is background and 0 is forground.  The data athat will result from 'ApplyFlatFieldCorrection'
-   * will have 0 as forground and 255 as background.  
+   * such that 255 is background and 0 is foreground.  The data that will result from 'ApplyFlatFieldCorrection'
+   * will have 0 as foreground and 255 as background.  
    */
   class  FlatFieldCorrection
   {
@@ -40,7 +40,7 @@ namespace  KKLSC
 
 
     /**
-     *@brief  Provide sample of one scan line as from the camera;  where 0 = forground and 255 = background.
+     *@brief  Provide sample of one scan line as from the camera;  where 0 = foreground and 255 = background.
      */
     void  AddSampleLine (const uchar*  sampleLine);
 

@@ -38,20 +38,20 @@ struct  ScannerFile2BitEncoded::OpRecEndOfScanLine
 
 struct  ScannerFile2BitEncoded::OpRecTextBlock
 {
-  /** Will handle text blocks in one or more sections with 2^11 characters im each *
+  /** Will handle text blocks in one or more sections with 2^11 characters in each *
    *  The last section will have 'endOfText' == '1'                                 *
    */
 
   uchar opCode:      4;  /**< 1 = Text Block.                                      */
   uchar endOfText:   1;  /**< 0 = More Text blocks to follow, 1 = last text block. */
-  uchar lenHigh:     3;  /**< Len = 256 * lenHighBits + lenLowBits                 */
+  uchar lenHigh:     3;  /**< Length = 256 * lenHigh + lenLow                      */
 };  /* OpRecTextBlock */
   
 
 
 struct  ScannerFile2BitEncoded::OpRecTextBlock_2
 {
-  uchar lenLow :8;     /**< Add this value to the prev rec 'lenHighBits' field to get the lenegth of the text block. */
+  uchar lenLow :8;     /**< Add this value to the prev rec 'lenHighBits' field to get the length of the text block. */
 };
 
 
@@ -68,14 +68,14 @@ struct  ScannerFile2BitEncoded::OpRecRunLen10Bit
 {
   uchar  opCode    :4;      /**< 8  Variable Run Length range (0 - 1023).  */
   uchar  pix       :2;      /**< Pixel                                     */
-  uchar  lenHigh   :2;      /**< len = lenHigh * 256 + lenLow              */
+  uchar  lenHigh   :2;      /**< length = lenHigh * 256 + lenLow           */
 };  /* OpRecRunLen10Bit */
 
 
 
 struct  ScannerFile2BitEncoded::OpRecRunLen10Bit_2
 {
-  uchar   lenLow   :8;        /**< High bits of run len    */
+  uchar   lenLow   :8;        /**< High bits of run-length    */
 };  /* OpRecRunLen10Bit_2 */
 
 
@@ -597,7 +597,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
 
     else if  (opCode == 12)
     {
-      // Variable Length Raw Pixels where string len = (3 thru 18)
+      // Variable Length Raw Pixels where string length = (3 thru 18)
       kkuint32  numRawPixels = rec.rawPixelsVarLen4Bit.len + 3;
       ProcessRawPixelRecs (numRawPixels, lineBuff, lineBuffSize, bufferLineLen);
     }
@@ -605,7 +605,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
 
     else if  (opCode == 13)
     {
-      // Variable Length Raw Pixels where string len = (0 thru 4095)
+      // Variable Length Raw Pixels where string length = (0 thru 4095)
 
       // Variable Run Length 0 thru 1023
       recsRead = fread (&rec2, sizeof (rec2), 1, file);

@@ -226,7 +226,7 @@ namespace  KKLSC
     /**
      *@brief  Writes a 32 bit number into the Scanner File Stream at current location.  
      *@param[in]  idNum  nNumber that identifies Instrument data,  ex: 0 is reserved for Flow Meter Count.
-     *@param[in]  scanLineNum  Scan-line that 'dataWord' occured at.
+     *@param[in]  scanLineNum  Scan-line that 'dataWord' occurred at.
      *@param[in]  dataWord 32 bit number being written.
      */
     virtual
@@ -409,7 +409,7 @@ namespace  KKLSC
 
 
     
-    kkuint32  flowMeterCounter;          /**< Updated when readung Scanner Files; whenever InstrumentID == 0 is read
+    kkuint32  flowMeterCounter;          /**< Updated while reading Scanner Files; whenever InstrumentID == 0 is read
                                           * this field will be updated along with 'flowMeterCounterScanLineNum'.
                                           */
 
@@ -438,7 +438,7 @@ namespace  KKLSC
                                           * be incremented to reflect the new amount occupied.                                *
                                           */
  
-    kkuint32  frameBufferNextLine;       /**< Next scanline in 'frameBuffer' to either read or write; used to compute the     *
+    kkuint32  frameBufferNextLine;       /**< Next scan-line in 'frameBuffer' to either read or write; used to compute the    *
                                           *   byte offset into the buffer.                                                    *
                                           */
 

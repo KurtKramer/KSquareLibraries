@@ -35,12 +35,12 @@ namespace  KKLSC
    *
    *   2: Number of White Spaces
    *      Bits 4 - 15  Number of 4 pixels that are background (0).  The total length of
-   *                   this field is this number times 4 allowing for a run len of up
+   *                   this field is this number times 4 allowing for a run-length of up
    *                   to (4 * 4096) spaces divisible by 4.
    *
    *   3: Number of Black Spaces
    *      Bits 4 - 15  Number of 4 pixels that are foreground (7/255).  The total length of
-   *                   this field is this number times 4 allowing for a run len of up
+   *                   this field is this number times 4 allowing for a run-length of up
    *                   to (4 * 4096) Foreground pixels (7/255) divisible by 4.
    *
    *   4: Instrument Data

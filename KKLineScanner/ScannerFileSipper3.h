@@ -16,7 +16,7 @@ namespace  KKLSC
    * Adding all the pixels in a single scan line you call 'Write'  to write
    * all the Sipper3 buffer records to disk.  The input range of pixel values
    * is '0 '- thru '255' where '0' is the background.  'AddPixel' will
-   * convert into 3 bit grayscale by dividing by 32.
+   * convert into 3 bit gray-scale by dividing by 32.
    */
   class  ScannerFileSipper3
   {

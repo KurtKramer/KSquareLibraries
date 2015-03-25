@@ -26,7 +26,7 @@ namespace  KKLSC
    *  2:  Text block up to 65,535 bytes long,       x = 2, will be followed by "2" bytes (High order, low order) specifying
    *      text block length.
    *
-   *  Op-Coes 5, 6, 7 assume that frame size recorded is the same as defined in the header.
+   *  Op-Codes 5, 6, 7 assume that frame size recorded is the same as defined in the header.
    *  5:  Zlib compressed data up to 65,535 bytes,  x = 2, will be followed by "2" bytes (High order, low order) specifying 
    *      compressed data length.
    *  6:  ZLib compressed data up to 16,777,215,    x = 3, Will be followed by "3" bytes that specify length of compressed data.

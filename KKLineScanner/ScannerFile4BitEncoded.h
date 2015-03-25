@@ -15,14 +15,14 @@ namespace  KKLSC
    *  1) Records are or varying length.
    *  2) Each record starts with a 4 bit Op-Code.
    *  3) Records contain either Text or Imagery
-   *  4) Imagery records can be eith Run-Length (Same Pixel repeating) or Raw-String(A sequence of pixels).
+   *  4) Imagery records can be either Run-Length (Same Pixel repeating) or Raw-String(A sequence of pixels).
    *
    *   Summary of Op-Codes:
    *   --------------------------------------------------------------------
    *   0: End-Of-Line:  Indicates that end of Scan-Line reached.
    *   1: Text-Block:
    *   2: InsrumentData
-   *   3: Un-Used
+   *   3: Unused
    *   4: Run-Length (2 Pixels).
    *   5: Run-Length (3 Pixels).
    *   6: Run-Length (4 Pixels).
@@ -33,8 +33,8 @@ namespace  KKLSC
    *  11: Raw-String (1 Pixel Length).
    *  12: Raw-String (Even length 2 thru 32).
    *  13: Raw-String (Odd Length 1 thru 513).
-   *  14: Un-Used.
-   *  15: Un-Used.
+   *  14: Unused.
+   *  15: Unused.
    *
    *
    *  Bits
@@ -71,9 +71,9 @@ namespace  KKLSC
    *
    *----------------------------------------------------------
    * Op-Code = 10:   Run-length of range "1" thru "256"
-   *                 Since there are no run-lengths of '0';  '0' will decode to Run-Lengrth = 1;
+   *                 Since there are no run-lengths of '0';  '0' will decode to Run-Length = 1;
    *  4 -  7: Pixel Value being repeated.
-   *  8 - 15: Runlen     0=1, 1=2, 2=3,... 254=255, 255=256
+   *  8 - 15: Run-length     0=1, 1=2, 2=3,... 254=255, 255=256
    *
    *
    *----------------------------------------------------------
@@ -87,15 +87,15 @@ namespace  KKLSC
    *                always be multiples of 2.
    *
    *  4 -  7:     Len;   Num-Raw-Pixels = (Len + 1) * 2
-   *              Len  0=(2 raw Pixels), 1=(4 raw pixels), 2=(6 raw pixels),,, 15=(32 raw pixles)
+   *              Len  0=(2 raw Pixels), 1=(4 raw pixels), 2=(6 raw pixels),,, 15=(32 raw pixels)
    *              Number of following bytes = (Len + 1).
    *
    *
    *----------------------------------------------------------
    * Op-Code = 13  Odd number of raw pixels up to length of 513 pixels.
    *               We use the other 4 bits in the 1st byte to represent the high order bits of the length
-   *               and the 1st 4 bits ibn the second byte for the low order;  that leaves room for one 
-   *               pixels in the second byte.  This is why odd length stings are supported.
+   *               and the 1st 4 bits in the second byte for the low order;  that leaves room for one 
+   *               pixel in the second byte.  This is why odd length stings are supported.
    *
    *   8 -  7:  LenHigh             String Length = 1 + 2 * (LenHigh * 16 + LenLow);
    *   8 - 11:  LenLow
