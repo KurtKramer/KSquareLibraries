@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 5.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage2">
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<configuration artifactName="KKMachineLearning" buildProperties="" description="" id="0.714002480" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+			<folderInfo id="0.714002480." name="/" resourcePath="">
+				<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.600345712" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
+					<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.600345712.151504804" name=""/>
+					<builder id="cdt.managedbuild.builder.gnu.cross.327606" superClass="cdt.managedbuild.builder.gnu.cross"/>
+					<tool id="org.eclipse.cdt.build.core.settings.holder.libs.920551248" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
+					<tool id="org.eclipse.cdt.build.core.settings.holder.1873115665" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
+						<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.766295334" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+					</tool>
+					<tool id="org.eclipse.cdt.build.core.settings.holder.1121870557" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
+						<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1022679089" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
+							<listOptionValue builtIn="false" value="&quot;${workspace_loc:/KKBase}&quot;"/>
+						</option>
+						<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.368744769" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+					</tool>
+					<tool id="org.eclipse.cdt.build.core.settings.holder.1682019720" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
+						<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1204683144" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+					</tool>
+				</toolChain>
+			</folderInfo>
+		</configuration>
+	</storageModule>
+</cproject>
