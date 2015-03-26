@@ -549,7 +549,7 @@ kkint32 ConvexHull::RelativeCCW (Point&  sp,
     }
     else
     {
-      //  This is a verticle Line Pointing Down.
+      //  This is a vertical Line Pointing Down.
       if  (p.Col () > ep.Col ())
       {
         return  1;  // Counter-Clockwise Turn(Left).

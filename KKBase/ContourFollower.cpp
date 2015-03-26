@@ -528,10 +528,10 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
 
 kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
-                                        bool&   successful
-                                       )
+                                          bool&   successful
+                                         )
 {
-  // A diff Version of FollowContour
+  // A different Version of FollowContour
 
   // startRow and startCol is assumed to come from the left (6)
 

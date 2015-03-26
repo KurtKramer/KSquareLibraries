@@ -186,7 +186,7 @@ bool  MorphOp::ForegroundPixel (kkint32  row,
 
 /**
  *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
- *@see  Erosion, Dialation, Closing, Opening, MaskType
+ *@see  Erosion, Dilation, Closing, Opening, MaskType
  */
 bool  MorphOp::Fit (MaskTypes  mask,
                     kkint32    row, 

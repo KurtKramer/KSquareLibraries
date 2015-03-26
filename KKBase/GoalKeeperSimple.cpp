@@ -147,7 +147,7 @@ void   GoalKeeperSimple::EndBlock ()
     throw KKB::KKException ("GoalKeeperSimple::EndBlock    Name[" + name + "]  Is not currently blocked.");
 
   if  (curThreadId != blockerThreadId)
-    throw KKB::KKException ("GoalKeeperSimple::EndBlock    Name[" + name + "]  ThreadId[" + blockerThreadId + "] Currenly holds Block;  our ThreadId[" + curThreadId + "]");
+    throw KKB::KKException ("GoalKeeperSimple::EndBlock    Name[" + name + "]  ThreadId[" + blockerThreadId + "] Currently holds Block;  our ThreadId[" + curThreadId + "]");
 
   --levels;
   if  (levels < 1)
@@ -314,7 +314,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
 
   if  (_goalKeeperInstance == NULL)
   {
-    // Some other thread managed to destory this instance.
+    // Some other thread managed to destroy this instance.
   }
   else
   {
@@ -350,7 +350,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
 
   if  (_goalKeeperInstance == NULL)
   {
-    // Some other thread managed to destory this instance.
+    // Some other thread managed to destroy this instance.
   }
   else
   {

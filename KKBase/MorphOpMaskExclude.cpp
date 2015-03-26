@@ -51,7 +51,7 @@ RasterPtr   MorphOpMaskExclude::PerformOperation (RasterConstPtr  _image)
 
   maskImage->Opening ((KKB::MaskTypes)mask);
   //maskImage->ConnectedComponent();
-  maskImage->Dialation ((KKB::MaskTypes)mask);
+  maskImage->Dilation ((KKB::MaskTypes)mask);
 
   RasterPtr  result = new Raster (srcHeight, srcWidth, srcColor);
 

@@ -400,7 +400,7 @@ map<KKStr, XmlStream::XmlElementCreator>  XmlStream::xmlElementCreators;
 
 /**
  @brief Register a 'XmlElementCreator' function with its associated name.
- @details  if you try to register the same function with the same name will generate a warnming to 
+ @details  if you try to register the same function with the same name will generate a warning to 
            cerr.  If you try and register two different functions with the same name will throw 
            an exception.
  */
@@ -415,7 +415,7 @@ void   XmlStream::RegisterXmlElementCreator  (const KKStr&       elementName,
     // A 'XmlElementCreator'  creator already exists with name 'elementName'.
     if  (idx->second == creator)
     {
-      // Trying to regisetr the same function,  No harm done.
+      // Trying to register the same function,  No harm done.
       cerr << std::endl
            << "XmlStream::RegisterXmlElementCreator   ***WARNING***   trying to register[" << elementName << "] Creator more than once." << std::endl
            << std::endl;

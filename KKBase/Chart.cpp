@@ -191,7 +191,7 @@ void  KKB::Chart::AddAValue (kkuint32  _seriesIDX,
     cerr << std::endl
          << "*** ERROR ***  Chart::AddAValue" << std::endl
          << "               Invalid SeriesIDX[" << _seriesIDX << "]"  << std::endl
-         << "               Only [" << series.size () << "] deries defined." << std::endl
+         << "               Only [" << series.size () << "] series defined." << std::endl
          << std::endl;
     exit (-1);
   }
@@ -540,7 +540,7 @@ void  Chart::Save (KKStr  _fileName)
 
 
   {
-    // Collumn Headers 
+    // Column Headers 
     o << "XLabel" << "\t" << "XValue"; 
     for  (kkint32 seriesIDX = 0;  seriesIDX < NumOfSeries ();  seriesIDX++)
     {

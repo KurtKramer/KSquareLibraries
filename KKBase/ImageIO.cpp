@@ -877,7 +877,7 @@ void  KKB::SaveImageGrayscaleInverted4Bit (const Raster&  image,
   }
   catch (...)
   {
-    KKStr  errMsg = "SaveImageGrayscaleInverted4Bit   Exception occured calling 'BmpImage::Save'  for file[" + _fileName + "]";
+    KKStr  errMsg = "SaveImageGrayscaleInverted4Bit   Exception occurred calling 'BmpImage::Save'  for file[" + _fileName + "]";
     cerr << std::endl << errMsg << std::endl << std::endl;
     throw  KKException (errMsg);
   }
@@ -887,8 +887,8 @@ void  KKB::SaveImageGrayscaleInverted4Bit (const Raster&  image,
 
 
 /**
- *@brief  Saves image as BMP using compressed grayscale where Background = 255 and foreground = 0
- *@details  If image is color will convert to grayscale 1st.
+ *@brief  Saves image as BMP using compressed GrayScale where Background = 255 and foreground = 0
+ *@details  If image is color will convert to GrayScale 1st.
  * Palette will be set to 0 = 255, 1 = 254, 2 = 253, ...  255 = 0.
  */
 void  KKB::SaveImageGrayscaleInverted8Bit (const Raster&  image, 

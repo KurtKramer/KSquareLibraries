@@ -1,20 +1,20 @@
-/* CmdLineExpander.cpp -- Pre-process Command Line parameters.
+/* CmdLineExpander.cpp -- PreProcess Command Line parameters.
  * Copyright (C) 1994-2011 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdlib.h>
-#include  <stdio.h>
-#include  <fcntl.h>
-#include  <string>
-#include  <iomanip>
-#include  <fstream>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <string>
+#include <iomanip>
+#include <fstream>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 #include <sys/types.h>
 #ifdef  WIN32

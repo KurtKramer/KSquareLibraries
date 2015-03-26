@@ -230,7 +230,7 @@ void  GoalKeeper::StartBlock ()
     {
       if  (curThreadId == blockerThreadId)
       {
-        // We are the thread that already holds the block;  so ok for us 
+        // We are the thread that already holds the block;  so okay for us 
         // to process.
         blockerDepth++;
         weAreBlocked = false;
@@ -335,7 +335,7 @@ void   GoalKeeper::EndBlock ()
     throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  There was no block established.");
 
   else if  (errorCode == 2)
-    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Curenly holds Block;  our ThreadId[" + curProcessorId + "]");
+    throw KKStr ("GoalKeeper::EndBlock    Name[" + name + "]  ThreadId[" + curProcessorId + "] Currently holds Block;  our ThreadId[" + curProcessorId + "]");
 
   return;
 }  /* EndBlock */
@@ -496,7 +496,7 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
 
   if  (_goalKeeperInstance == NULL)
   {
-    // Some other thread managed to destory this instance.
+    // Some other thread managed to destroy this instance.
   }
   else
   {
@@ -532,7 +532,7 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
 
   if  (_goalKeeperInstance == NULL)
   {
-    // Some other thread managed to destory this instance.
+    // Some other thread managed to destroy this instance.
   }
   else
   {

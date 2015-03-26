@@ -499,7 +499,7 @@ void  Configuration::LoadFile ()
       {
         // We have a improperly formated line.
         log.Level (-1) << endl
-                       << "Configuration::LoadFile   ***ERROR***   LineNumber[" << lastLineNum << "] Impropperly Formated Line[" << line << "]." 
+                       << "Configuration::LoadFile   ***ERROR***   LineNumber[" << lastLineNum << "] Improperly Formated Line[" << line << "]." 
                        << endl;
         formatGood = false;
       }
@@ -728,7 +728,7 @@ void  Configuration::FormatErrorsAdd (kkint32       lineNum,
 
 
 
-void  Configuration::FormatErrorsClear ()  /**< Call this to vlear all format error messages. */
+void  Configuration::FormatErrorsClear ()  /**< Call this to clear all format error messages. */
 {
   formatErrors.clear ();
   formatErrorsLineNums.clear ();

@@ -73,7 +73,7 @@ void  Raster::FinaleCleanUp ()
 
 
 /**
- * @brief  Supports the tracking down of memory leaks in Raster; it will be called everytime a new instanvce of a 'Raster' object is created.
+ * @brief  Supports the tracking down of memory leaks in Raster; it will be called every time a new instance of a 'Raster' object is created.
  */
 map<RasterPtr, RasterPtr>  Raster::allocatedRasterInstances;
 void  Raster::AddRasterInstance (const RasterPtr  r)
@@ -169,7 +169,7 @@ kkint32  maskShapes[] = {Cross,   // CROSS3
 
 
 //****************************************************************************************
-//*   Used to help quickly calvculate a Intnsity Histogram of a image.  The image has 8  *
+//*   Used to help quickly calculate a Intensity Histogram of a image.  The image has 8  *
 //*   levels of gray scale, from 0 -> 7.                                                 *
 //****************************************************************************************
 //                                       1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  3  3 
@@ -372,8 +372,8 @@ Raster::Raster (kkint32 _height,
 
 
 /**
- *@brief  Constructs a Raster from a BMP image loadded from disk.
- *@details If BMP Image is a grayscale value pixel values will be reveresed.  See description of grayscale constructor.
+ *@brief  Constructs a Raster from a BMP image loaded from disk.
+ *@details If BMP Image is a gray-scale value pixel values will be reversed.  See description of gray-scale constructor.
  */
 Raster::Raster (const BmpImage&  _bmpImage):
 
@@ -770,7 +770,7 @@ Raster::Raster (kkint32       _height,
   if  ((!_redChannel)  ||  (!_greenChannel)  ||  (!_blueChannel))
   {
     KKB::KKStr errMsg;
-    errMsg << "Raster::Raster    ***ERROR***   One of the [rpvided channels is 'NULL'.";
+    errMsg << "Raster::Raster    ***ERROR***   One of the provided channels is 'NULL'.";
     cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
     throw KKException (errMsg);
   }
@@ -1532,7 +1532,7 @@ void  Raster::DrawGrid (float              pixelsPerMinor,
 
   x = 0;
 
-  // Verticle Hash Marks
+  // Vertical Hash Marks
   // kkint32  vertOffset = (height - (kkint32)((height / pixelsPerMinor) * pixelsPerMinor) / 2);
   while  (true)
   {
@@ -1580,7 +1580,7 @@ void Raster::CalcDialatedValue (kkint32 row,
 
 
 
-RasterPtr  Raster::CreateDialatedRaster ()  const
+RasterPtr  Raster::CreateDilatedRaster ()  const
 {
   kkint32  row;
   kkint32  col;
@@ -1633,14 +1633,14 @@ RasterPtr  Raster::CreateDialatedRaster ()  const
 
   result->foregroundPixelCount = resultForegroundPixelCount;
   return  result;
-}  /* CreateDialatedRaster */
+}  /* CreateDilatedRaster */
 
 
 
 
-void  Raster::Dialation ()
+void  Raster::Dilation ()
 {
-  RasterPtr  tempRaster = CreateDialatedRaster ();
+  RasterPtr  tempRaster = CreateDilatedRaster ();
 
   delete  greenArea;
   delete  green;
@@ -1654,12 +1654,12 @@ void  Raster::Dialation ()
   foregroundPixelCount = tempRaster->foregroundPixelCount;
 
   delete  tempRaster;
-}  /* Dialation */
+}  /* Dilation */
 
   
 
 
-RasterPtr  Raster::CreateDialatedRaster (MaskTypes  mask)  const
+RasterPtr  Raster::CreateDilatedRaster (MaskTypes  mask)  const
 {
   kkint32 row;
   kkint32 col;
@@ -1706,15 +1706,15 @@ RasterPtr  Raster::CreateDialatedRaster (MaskTypes  mask)  const
   result->foregroundPixelCount = resultForegroundPixelCount;
 
   return  result;
-}  /* CreateDialatedRaster */
+}  /* CreateDilatedRaster */
 
 
 
 
 
-void  Raster::Dialation (MaskTypes  mask)
+void  Raster::Dilation (MaskTypes  mask)
 {    
-  RasterPtr tempRaster = CreateDialatedRaster (mask);
+  RasterPtr tempRaster = CreateDilatedRaster (mask);
 
   delete  greenArea;
   delete  green;
@@ -1728,14 +1728,14 @@ void  Raster::Dialation (MaskTypes  mask)
   tempRaster->green     = NULL;
 
   delete  tempRaster;
-} /* Dialation */
+} /* Dilation */
 
 
 
 
 
 
-void  Raster::Dialation (RasterPtr  dest)  const
+void  Raster::Dilation (RasterPtr  dest)  const
 {
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
     dest->ReSize (height, width, color);
@@ -1830,13 +1830,13 @@ void  Raster::Dialation (RasterPtr  dest)  const
   }
 
   dest->foregroundPixelCount = pixelCount;
-}  /* Dialation */
+}  /* Dilation */
 
 
 
 
 
-void  Raster::Dialation (RasterPtr  dest,
+void  Raster::Dilation (RasterPtr  dest,
                          MaskTypes  mask
                         )
                           const
@@ -1869,7 +1869,7 @@ void  Raster::Dialation (RasterPtr  dest,
   }
 
   dest->foregroundPixelCount = pixelCount;
-}  /* Dialation */
+}  /* Dilation */
 
 
 
@@ -2060,7 +2060,7 @@ void  Raster::FillHole (RasterPtr  mask)
   }
 
   {
-    // Check Top and Botton Mask Rows for background pixels and flag them as having access to the border.
+    // Check Top and Bottom Mask Rows for background pixels and flag them as having access to the border.
     uchar*  rowTop = maskRows[0];
     uchar*  rowBot = maskRows[height - 1];
 
@@ -2074,7 +2074,7 @@ void  Raster::FillHole (RasterPtr  mask)
   }
 
   {
-    // Check Left and Right collumns for background pixels and flag them as having access to the border.
+    // Check Left and Right columns for background pixels and flag them as having access to the border.
     uchar*  leftCol  = maskArea;
     uchar*  rightCol = maskArea + (width - 1);
     for  (r = 0;  r < height;  ++r)
@@ -2090,7 +2090,7 @@ void  Raster::FillHole (RasterPtr  mask)
   }
 
 
-  // We wil not iterivly scan the Mask image for pixels that have access top the edge of the image.
+  // We will not iteratively scan the Mask image for pixels that have access top the edge of the image.
   // We will repeat the following loop until no pixels get flagged.
   bool  fillInFound = false;
   do
@@ -2509,7 +2509,7 @@ RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
 void  Raster::Opening ()
 {
   Erosion ();
-  Dialation ();
+  Dilation ();
 }  /* Opening */
 
 
@@ -2517,7 +2517,7 @@ void  Raster::Opening ()
 void  Raster::Opening (MaskTypes mask)
 {
   Erosion (mask);
-  Dialation (mask);
+  Dilation (mask);
 }  /* Open */
 
 
@@ -2525,7 +2525,7 @@ void  Raster::Opening (MaskTypes mask)
 
 void  Raster::Closing ()
 {
-  Dialation ();
+  Dilation ();
   Erosion ();
 }  /* Open */
 
@@ -2535,7 +2535,7 @@ void  Raster::Closing ()
 
 void  Raster::Closing (MaskTypes mask)
 {
-  Dialation (mask);
+  Dilation (mask);
   Erosion (mask);
 }  /* Open */
 
@@ -3643,10 +3643,10 @@ float  Raster::CalcWeightedArea ()  const
 
   
 /**
- *@brief returns in 'features' the 8 central moments as defined by Hu plus eccentricity in the eigth bucket.
- *@details See M. K. Hu, �Visual pattern recognition by moment invariants�  IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179�187, 1962.
- *@param[in] features A array with 9 elements (0 thru 8) that will receive the 8 central moments as defined by HU plus ecentricity 
- * in the eigth element.
+ *@brief returns in 'features' the 8 central moments as defined by Hu plus eccentricity in the eight bucket.
+ *@details See M. K. Hu, Visual pattern recognition by moment invariants  IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179�187, 1962.
+ *@param[in] features A array with 9 elements (0 thru 8) that will receive the 8 central moments as defined by HU plus eccentricity 
+ * in the eighth element.
  */
 void  Raster::CentralMoments (float  features[9])  const
 {
@@ -3787,9 +3787,9 @@ void  Raster::Moment (kkint64& m00,
 
 /**
  *@brief Similar to 'CentralMoments' except each pixel position is weighted by its intensity value.
- *@details See M. K. Hu, �Visual pattern recognition by moment invariants�  IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179�187, 1962.
- *@param[in] features A array with 9 elements (0 thru 8) that will receive the 8 central moments as defined by HU plus ecentricity 
- * in the eigth element.
+ *@details See M. K. Hu, Visual pattern recognition by moment invariants IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179, 187, 1962.
+ *@param[in] features A array with 9 elements (0 through 8) that will receive the 8 central moments as defined by HU plus eccentricity 
+ * in the eighth element.
  */
 void  Raster::CentralMomentsWeighted (float  features[9])  const
 {
@@ -3907,7 +3907,7 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
                 (cm30 + cm12) * (cm30 + cm12) - 
                 (cm21 + cm03) * (cm21 + cm03));
 
-//added by baishali to calculate eccentricity
+//added by Baishali to calculate eccentricity
   features[8] = (float)((((cm20 - cm02) * (cm20 - cm02)) - 
                 (4.0 * cm11 * cm11))/((cm20 + cm02) * (cm20 + cm02)));
 
@@ -4248,7 +4248,7 @@ void  Raster::Moments (kkint64&  m00,
 
 /**
  *@brief Returns back a two dimension array that is a copy of the specified region in the image.
- *@details The caller will take owneship of the two dimensional array created.
+ *@details The caller will take ownership of the two dimensional array created.
  */
 uchar**  Raster::GetSubSet (uchar**  _src,
                             kkint32  _row,
@@ -4264,8 +4264,8 @@ uchar**  Raster::GetSubSet (uchar**  _src,
        (_col < 0)  ||  (endC >= width))
   {
     cerr << "***ERROR***, Raster::Raster  *** ERROR ***,  Index's Exceed Raster Bounds" << std::endl;
-    cerr << "       Raster Dimnsions["       << width    << ", "  << height << "]."     << std::endl;
-    cerr << "       Requested Coordinites [" << _row     << ", "  << _col      << "], "
+    cerr << "       Raster Dimensions["       << width    << ", "  << height << "]."     << std::endl;
+    cerr << "       Requested Coordinates [" << _row     << ", "  << _col      << "], "
          << "       Height["  << _height << "],  Width[" << _width << "]."
          << std::endl;
     //WaitForEnter ();
@@ -4298,7 +4298,7 @@ uchar**  Raster::GetSubSet (uchar**  _src,
 
 /**
  *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
- *@see  Erosion, Dialation, Closing, Opening, MaskType
+ *@see  Erosion, Dilation, Closing, Opening, MaskType
  */
 bool  Raster::Fit (MaskTypes  mask,
                    kkint32    row, 
@@ -4356,7 +4356,7 @@ bool  Raster::Fit (MaskTypes  mask,
 
 /**
  *@brief Returns true if any one of the pixels covered by the specified mask are Foreground pixels.
- *@see  Erosion, Dialation, Closing, Opening, MaskType
+ *@see  Erosion, Dilation, Closing, Opening, MaskType
  */
 bool  Raster::IsThereANeighbor (MaskTypes  mask,
                                 kkint32    row, 
@@ -4412,7 +4412,7 @@ bool  Raster::IsThereANeighbor (MaskTypes  mask,
 
 /**
  *@brief  Used by morphological operators to determine the average pixel value of the foreground pixels that the specifies mask covers.
- *@see  Erosion, Dialation, Closing, Opening, MaskType
+ *@see  Erosion, Dilation, Closing, Opening, MaskType
  */
 uchar  Raster::Hit  (MaskTypes  mask,
                      kkint32    row,
@@ -4540,14 +4540,14 @@ RasterPtr  Raster::FastFourierKK ()  const
   for (idx = 0; idx < totPixels; idx++ )
   {
     //  mag = (float)sqrt (dest[idx].re * dest[idx].re + dest[idx].im * dest[idx].im);  // kk 2004-May-18
-    mag = fourierMagArray[idx];                                                          // kk 2004-May-18
+    mag = fourierMagArray[idx];                                                         // kk 2004-May-18
 
     // destData[idx] = (uchar)(dest[idx].re * maxPixVal / maxAmplitude);
 
     // kk  2004-May-18
     // Changed the above line to use the constant 255 instead of maxPixVal,  
     // If we have an image who's maxPixVal is less than 255 then the values
-    // being calc'ed for the fourier features will not be consistent.
+    // being calculated for the Fourier features will not be consistent.
     // destData[idx] = (uchar)(dest[idx].re * 255 / maxAmplitude);
     destData[idx] = (uchar)(log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
   }
@@ -4692,7 +4692,7 @@ RasterPtr  Raster::FastFourier ()  const
     // kk  2004-May-18
     // Changed the above line to use the constant 255 instead of maxPixVal,  
     // If we have an image who's maxPixVal is less than 255 then the values
-    // being calc'ed for the fourier features will not be consistent.
+    // being calculated for the Fourier features will not be consistent.
     // destData[idx] = (uchar)(dest[idx].re * 255 / maxAmplitude);
     destData[idx] = (uchar)(log (fourierMagArray[idx]) * 255.0f / maxAmplitudeLog);
   }            
@@ -4767,7 +4767,7 @@ void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
   if  (!fourierMagArea)
   {
      cerr << std::endl
-          << "*** ERROR ***    This Raster image is not the result of a fast fourier" << std::endl
+          << "*** ERROR ***    This Raster image is not the result of a fast Fourier" << std::endl
           << std::endl;
      osWaitForEnter ();
      exit (-1);
@@ -4867,10 +4867,10 @@ void  Raster::FourierExtractFeatures (float  fourierFeatures[5])  const
 
 
 /**
- *@brief Returns the differenmyt between two angles in degrees.
- *@details  Givn two angles, will determine the angular distance
+ *@brief Returns the difference between two angles in degrees.
+ *@details  Given two angles, will determine the angular distance
  * between them, going from the ang1 to ang2.  A positive
- * delta indicates that ang2 is infront of ang1, negative
+ * delta indicates that ang2 is in front of ang1, negative
  * means it is behind ang1.  The result can be from -180
  * to +180 degrees.
  */
@@ -5610,7 +5610,7 @@ RasterPtr  Raster::CreateGrayScale ()  const
 {
   if  (!color)
   {
-    // Already a Grayscale image,  Just return copy of self.
+    // Already a gray-scale image,  Just return copy of self.
     return  (AllocateARasterInstance (*this));
   }
 
@@ -5744,7 +5744,6 @@ RasterPtr  Raster::HistogramEqualizedImage (HistogramPtr  equalizedHistogram)  c
 
 
 
-
 RasterPtr  Raster::HistogramGrayscaleImage ()  const
 {
   HistogramPtr histogram = NULL;
@@ -5822,7 +5821,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
   {
     cerr << std::endl
          << "*** WARNING ***"
-         << "Raster::DrawLine,  Out of Raster Boundries   Height[" << height << "]  width[" << width << "]."  << std::endl
+         << "Raster::DrawLine,  Out of Raster Boundaries   Height[" << height << "]  width[" << width << "]."  << std::endl
          << "                   BeginPoint" << Point (bpRow, bpCol) << "   EndPoint" << Point (epRow, epCol) << "." << std::endl
          << std::endl;
     return;
@@ -6039,7 +6038,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
   {
     cerr << std::endl
          << "*** WARNING ***"
-         << "Raster::DrawLine,  Out of Raster Boundries   Height[" << height << "]  width[" << width << "]."  << std::endl
+         << "Raster::DrawLine,  Out of Raster Boundaries   Height[" << height << "]  width[" << width << "]."  << std::endl
          << "                   BeginPoint" << Point (bpRow, bpCol) << "   EndPoint" << Point (epRow, epCol) << "." << std::endl
          << std::endl;
     return;
@@ -6197,7 +6196,7 @@ void  Raster::DrawFatLine (Point       startPoint,
   {
     cerr << std::endl
          << "*** WARNING ***"
-         << "Raster::DrawFatLine,  Out of Raster Boundries   Height[" << height << "]  width[" << width << "]."  << std::endl
+         << "Raster::DrawFatLine,  Out of Raster Boundaries   Height[" << height << "]  width[" << width << "]."  << std::endl
          << "                      BeginPoint" << startPoint << "   EndPoint" << endPoint << "." << std::endl
          << std::endl;
     return;
@@ -6903,7 +6902,7 @@ RasterPtr  Raster::HalfSize ()
 RasterPtr  Raster::ReduceByEvenMultiple (kkint32  multiple)  const
 {
   // We will pad one extra pixel top, bot, left, and right.
-  // This is nessasary because some feature calcs assume that there edge rows are empty.
+  // This is necessary because some feature calculations assume that there edge rows are empty.
 
   kkint32  nHeight = kkint32 (height / multiple) + 2;
   kkint32  nWidth  = kkint32 (width  / multiple) + 2; 
@@ -7296,7 +7295,7 @@ RasterPtr  Raster::ExtractChannel (ColorChannels  channel)
 
 
 /**
- *@brief  Extracts the pixel locations where the 'mask' images pixel location is a forground pixel. 
+ *@brief  Extracts the pixel locations where the 'mask' images pixel location is a foreground pixel. 
  */
 RasterPtr  Raster::ExtractUsingMask (RasterPtr  mask)
 {
@@ -7359,9 +7358,9 @@ RasterPtr  Raster::ExtractUsingMask (RasterPtr  mask)
 
 
 
-//******************************************************************************
-//*  Wrote this method to deel with polution sample particles, meeded to help  *
-//* segment out particles from a verynoisy background.                         *
+//*******************************************************************************
+//*  Wrote this method to deal with pollution sample particles, needed to help  *
+//* segment out particles from a very noisy background.                         *
 //******************************************************************************
 RasterPtr   Raster::SegmentImage (bool  save)
 {
@@ -7579,8 +7578,8 @@ RasterListPtr  Raster::SplitImageIntoEqualParts (kkint32 numColSplits,
   kkint32  partStartingCol = 0;
   kkint32  partStartingRow = 0;
  
-  // becuase the uimage might not divide evenly we may have to do some
-  // adjusting,  posibly loosing some rows and columns off the edges.
+  // because the image might not divide evenly we may have to do some
+  // adjusting,  possibly loosing some rows and columns off the edges.
   kkint32  partWidth  = (kkint32)((float)(width  / numColSplits) + 0.5);
   kkint32  colsNeeded = numColSplits * partWidth;
   if  (colsNeeded > width)
@@ -7648,7 +7647,7 @@ void  Raster::ErodeSpurs ()
     {
       if  (ForegroundPixel (green[r][c]))
       {
-        // We have a forground Pixel.
+        // We have a foreground Pixel.
 
         if  ((BackgroundPixel (origGreen[r - 1][c - 1]))  &&
              (BackgroundPixel (origGreen[r - 1][c]    ))  &&
@@ -7706,7 +7705,7 @@ void  Raster::ErodeSpurs ()
 //***************************************************************
 //
 //   The Image Processing Library 98, IPL98    
-//   by Ren� Dencker Eriksen - edr@mip.sdu.dk
+//   by Ren Dencker Eriksen - edr@mip.sdu.dk
 //
 //  from module   "~\ipl98\source\ipl98\kernel_c\algorithms\kernel_morphology.c"
 //
@@ -7759,7 +7758,7 @@ RasterPtr  Raster::ThinContour ()  const
 
   uchar**   workGreen  = workRaster->Green ();
   workRaster->ErodeSpurs ();
-  // workRaster->Dialation ();
+  // workRaster->Dilation ();
 
   //   k_SetBorder(1,1,pImg);
   PointsRemoved = false;
@@ -8030,7 +8029,7 @@ RasterPtr  Raster::ThinContour ()  const
 
 
 
-/* performes the tests (c') and (d') in step 2 as explained in Gonzales and Woods page 493 */
+/* performs the tests (c') and (d') in step 2 as explained in Gonzales and Woods page 493 */
 
 bool  k_ThinningStep2cdTests (uchar m_Matrix22[][3])
 {
@@ -8044,7 +8043,7 @@ bool  k_ThinningStep2cdTests (uchar m_Matrix22[][3])
 
 
 
-/* performes the tests (c) and (d) in step 1 as explained in Gonzales and Woods page 492 */
+/* performs the tests (c) and (d) in step 1 as explained in Gonzales and Woods page 492 */
 
 bool  k_ThinningStep1cdTests (uchar  m_Matrix22[][3])
 {
@@ -8097,7 +8096,7 @@ bool k_ThinningCheckTransitions(uchar  m_Matrix22[][3])
 
 
 
-bool  Raster::ThinningSearchNeighbors  (kkint32 x,   // collumn
+bool  Raster::ThinningSearchNeighbors  (kkint32 x,   // column
                                         kkint32 y,   // row
                                         uchar** g, 
                                         uchar   m_Matrix22[][3]
@@ -8367,7 +8366,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
   double  deltaColSquared = 0.0;
 
 
-  // Because the lower frequencise are further away from the center than higher frequencies
+  // Because the lower frequencies are further away from the center than higher frequencies
   // the 'lowerFreqBoundDistFromCenter' will be greater than 'upperFreqBoundDistFromCenter'
   
   double  zzz = sqrt ((double)(centerCol * centerCol + centerRow * centerRow));
@@ -8418,7 +8417,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
     reversePlan->Transform (dest, src);
   #endif
 
-  // We now need to transform the fourier results back to GreayScale.
+  // We now need to transform the Fourier results back to GreayScale.
   double  smallestNum;
   double  largestNum;
 
@@ -8578,8 +8577,8 @@ RasterPtr  Raster::FromSimpleCompression (const uchar*  compressedBuff,
                                           kkuint32      compressedBuffLen
                                          )  
 {
-  // I expect simple run length compressed data to be passed in.  The data was  orginally 
-  // compressed by SimpleCompressor ansd we will use the same class to decompress.
+  // I expect simple run length compressed data to be passed in.  The data was  originally 
+  // compressed by SimpleCompressor and we will use the same class to decompress.
 
   // The format of the uncompressed data is very simple.
   //  Bytes    Description
@@ -8592,7 +8591,7 @@ RasterPtr  Raster::FromSimpleCompression (const uchar*  compressedBuff,
   //                   --     ---     ---     ----   
   //          Row Height - 1 : (Last row of image) 
   //
-  //          Each byte inthe raster represents one pixel 0 - 255 grayscale;  where 0=background.
+  //          Each byte in the raster represents one pixel 0 - 255 gray-scale;  where 0=background.
 
   kkuint32  unCompressedSize = 0;
 
@@ -8716,7 +8715,7 @@ uchar*  Raster::ToCompressor (kkuint32&  compressedBuffLen)  const
   // Will first write Rater data to a buffer that will be compressed by zlib by the Compressor class.
   // 0 - 3:    Height:  high order to low order
   // 4 - 7:    Width:   high order to low order
-  // 8 - 8:    Color    0 = Grayscale,  1 = Color
+  // 8 - 8:    Color    0 = Gray-scale,  1 = Color
   // 9 - 8 + (Height * Width) Green Channel
   // xxxxx                    Red  Channel
   // xxxxx                    Blue Channel
@@ -8784,7 +8783,7 @@ RasterPtr  Raster::FromCompressor (const uchar*  compressedBuff,    // Creates a
 
   // 0 - 3:    Height:  high order to low order
   // 4 - 7:    Width:   high order to low order
-  // 8 - 8:    Color    0 = Grayscale,  1 = Color
+  // 8 - 8:    Color    0 = Gray--                                     scale,  1 = Color
   // 9 - 8 + (Height * Width) Green Channel
   // xxxxx                    Red  Channel
   // xxxxx                    Blue Channel
@@ -9006,7 +9005,7 @@ RasterPtr  Raster::ThresholdInHSI (float              thresholdH,
   float tempH, tempS, tempI;
   float y, x, r, xOriginalPoint, yOriginalPoint;
 
-  // converts from polar coordinates to cartesian coordinates. Hue is an angle and Saturation is a distance from an origin.
+  // converts from polar coordinates to Cartesian coordinates. Hue is an angle and Saturation is a distance from an origin.
   // xOriginalPoint and yOriginalPoint are the threshold point coordinates (origin)
   xOriginalPoint = thresholdS * cos (thresholdH);
   yOriginalPoint = thresholdS * sin (thresholdH);
@@ -9020,7 +9019,7 @@ RasterPtr  Raster::ThresholdInHSI (float              thresholdH,
       GetPixelValue (m, n, color);
       color.ToHSI (tempH, tempS, tempI);
 
-      // Convert from cartesian polar coordinates to cartesian coordinates. These are the cartesian coordinates of the
+      // Convert from Cartesian polar coordinates to Cartesian coordinates. These are the Cartesian coordinates of the
       // current pixel
       x = tempS * cos (tempH);
       y = tempS * sin (tempH);
@@ -9046,7 +9045,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
 {
   if  (!color)
   {
-    // Already a Grayscale image,  nothing much to do.
+    // Already a Gray-scale image,  nothing much to do.
     return AllocateARasterInstance (*this);
   }
 
@@ -9089,7 +9088,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
       double*  varXs = centeredVals[varIdxX];
       for  (kkint32 varIdxY = varIdxX;  varIdxY < 3;  ++varIdxY)
       {
-        // Calc the covariance between chanIdx0 and chanIdx1
+        // Calculate the covariance between chanIdx0 and chanIdx1
 
         double*  varYs = centeredVals[varIdxY];
         double total = 0.0f;
@@ -9186,7 +9185,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
 {
   if  (!color)
   {
-    // Already a Grayscale image,  nothing much to do.
+    // Already a Gray-scale image,  nothing much to do.
     return AllocateARasterInstance (*this);
   }
 
@@ -9247,7 +9246,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
       double*  varXs = centeredVals[varIdxX];
       for  (kkint32 varIdxY = varIdxX;  varIdxY < 3;  ++varIdxY)
       {
-        // Calc the covariance between chanIdx0 and chanIdx1
+        // Calculate the covariance between chanIdx0 and chanIdx1
 
         double*  varYs = centeredVals[varIdxY];
         double total = 0.0f;
@@ -9298,7 +9297,7 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
 
   VectorDouble  eigenVector = eigenVectors->GetCol (eigenValueMaxIdx);
   // We are now going to do Matrix multiplication between the original image and the eigenVector
-  // but since the eigen vector may have negative values the resultant nuebts can be negative for
+  // but since the eigen vector may have negative values the resultant numbers can be negative for
   // some pixels and a magnitude greater than 255.  We will place temporarily into a floating 
   // array,  after which we will no the adjustment value and scaling factor.
 

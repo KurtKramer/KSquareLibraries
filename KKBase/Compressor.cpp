@@ -155,7 +155,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   }
 
   // The process is complete, but we still need to deallocate the state to avoid a memory leak (or rather more like a memory
-  // hemorage if you didn't do this). Then finally we can return with a happy return value.
+  // hemorrhage if you didn't do this). Then finally we can return with a happy return value.
   /* clean up and return */
  (void)deflateEnd (&strm);
 

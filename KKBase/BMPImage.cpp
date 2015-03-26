@@ -360,7 +360,7 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure8Bit (kkint32&  len)
 {
   kkint32  buffSize = codesAllocated;
 
-  uchar* buff = new uchar [buffSize + 4];  // + 4 For Safty
+  uchar* buff = new uchar [buffSize + 4];  // + 4 For Safety
   memset (buff, 0, codesAllocated);
 
   kkint32  curPair = 0;
@@ -750,8 +750,8 @@ BmpImage::~BmpImage ()
 
 /**  
  *@brief  Returns true if BMP file is a a reversed GrayScale Image. 
- *@details  The original version in PICES had sne special checks to detect 
- * SIPPER Immeages;  if there are issues with this routine suggenst comparing with.
+ *@details  The original version in PICES had special checks to detect if a SIPPER image;  if
+ * there are issues with this routine suggest comparing with BasiLibrary in PICES.
  */
 bool  BmpImage::ReversedGrayscaleImage ()
 {
@@ -983,7 +983,7 @@ void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
 
 
 
-/**  @brief  Returns true if palette is for a grayscale image.*/
+/**  @brief  Returns true if palette is for a GrayScale image.*/
 bool  GrayScaleImage (RGBQUAD*  palette,
                       kkint32   palletSize
                      )
@@ -1014,7 +1014,7 @@ void  BmpImage::InitializeFields (kkint32  _height,
   hdr.bfType            = 19778;
   hdr.bfReserved1       = 0;
   hdr.bfReserved2       = 0;
-  // hdr.bfOffBits         = sizeof (bmh
+  // hdr.bfOffBits         = sizeof (bmh)
 
 
   bmh.biSize            = sizeof (bmh);
@@ -2454,7 +2454,7 @@ void  BmpImage::SaveColor (FILE*  outFile)
 }  /* SaveColor */
 
 
-/** @brief  Will write a color compressd BMP file with a maximum of 256 colors. */
+/** @brief  Will write a color compressed BMP file with a maximum of 256 colors. */
 void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
                                         FILE*             outFile
                                        )
@@ -2496,7 +2496,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
 
   numOfColors = paletteEntries;
   imageBuff = pixelData.CreatePixelDataStructure8Bit (imageBuffLen);
-  bmh.biCompression  = BI_RLE8;  /* 'BI_RLE8' is wrere each pixel is reprsented by a 8 but number that indexes into a color palet. */
+  bmh.biCompression  = BI_RLE8;  /* 'BI_RLE8' is where each pixel is represented by a 8 bit number that indexes into a color pallet. */
   bmh.biBitCount     = 8;
 
   bmh.biSizeImage    = imageBuffLen; 

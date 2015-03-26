@@ -25,7 +25,7 @@ float  KKB::PairedTTest (const VectorFloat&  set1,
                          const VectorFloat&  set2
                         )
 {
-  // Formula was taken from Mathworld
+  // Formula was taken from MathWorld
   // http://mathworld.wolfram.com/Pairedt-Test.html
 
   //ofstream  out ("T-Test_Stats.txt", ios_base::app);

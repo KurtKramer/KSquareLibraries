@@ -485,9 +485,6 @@ T  SegmentorOTSU::Sum (const vector<T>&  v)
 
 
 
-
-    //[w0,w2] = ndgrid(w0,w2);
-
 void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
                              const VectorDouble&  y,
                              Matrix&              xm,
@@ -696,7 +693,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   %OTSU Global image thresholding/segmentation using Otsu's method.
   %   IDX = OTSU(srcImage,N) segments the image srcImage into N classes by means of Otsu's
   %   N-thresholding method. OTSU returns an array IDX containing the cluster
-  %   indices (from 1 to N) of each point. Zero values are assigned to
+  %   indexes (from 1 to N) of each point. Zero values are assigned to
   %   non-finite (NaN or Inf) pixels.
   %
   %   IDX = OTSU(srcImage) uses two classes (N=2, default value).
@@ -1053,12 +1050,12 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
  *@brief  Segments image into 'numClasses' taking into account only pixels 
  *        indicated by 'mask' image.
  *@param[in]  srcImage  Image to segment.  If it is a color image will be 
- *                      converted to Grayscale using 'CreateGrayScaleKLTOnMaskedArea'
- *@param[in]  mask  Indictes which pixels to consider when thresholding image.  Pixels 
+ *                      converted to GrayScale using 'CreateGrayScaleKLTOnMaskedArea'
+ *@param[in]  mask  Indicates which pixels to consider when thresholding image.  Pixels 
  *                  that are not part of mask will be assigned label '0'.
  *@param[in]  numClasses Number of classes to segment image into.  Current only '2' and '3' are supported.
  *@param[out]  sep  
- *@return  Labeled grayscal image where pixels will be label into their respective class; between '1' and 'numClasses'.
+ *@return  Labeled GrayScale image where pixels will be label into their respective class; between '1' and 'numClasses'.
  */
 RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
                                               RasterPtr  mask,

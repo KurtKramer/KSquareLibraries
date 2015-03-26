@@ -72,7 +72,7 @@ const uchar  DateType::daysInEachMonth[] =
   30, // Sep
   31, // Oct
   30, // Nov
-  31  // dec
+  31  // Dec
 };
 
 
@@ -90,7 +90,7 @@ const short  DateType::daysYTDforMonth[] =
  273, // Sep
  304, // Oct
  334, // Nov
- 365  // dec
+ 365  // Dec
 };
 
 
