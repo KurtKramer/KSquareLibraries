@@ -208,7 +208,7 @@ void  MLClass::FinalCleanUp ()
   blocker->StartBlock ();
   if  (needToRunFinaleCleanUp)
   {
-    if  (!FileDesc::FinaleCleanUpRanAlready ())
+    if  (!FileDesc::FinalCleanUpRanAlready ())
     {
       FileDesc::FinalCleanUp ();
     }
