@@ -693,7 +693,7 @@ KKStr::KKStr (double  d,
 
 
 /**
- *@brief Creates a KKStr object that has 'size' charaters preallocatd; and set to empty string.
+ *@brief Creates a KKStr object that has 'size' characters preallocated; and set to empty string.
  */
 KKStr::KKStr (kkint32  size):
         val (NULL)
@@ -731,7 +731,7 @@ KKStr::KKStr (const std::string&  s):
 }
 
 
-/** @brief  Constructs a KKStr instance fomm a substr of 'src'.  */
+/** @brief  Constructs a KKStr instance from a substr of 'src'.  */
 KKStr::KKStr (const char*  src,
               kkuint32     startPos,
               kkuint32     endPos
@@ -754,7 +754,7 @@ KKStr::KKStr (const char*  src,
     subStrLen = 1 + endPos - startPos;
   }
 
-  AllocateStrSpace (1 + subStrLen);             // Need one extra byte for NULL terminating chracter.
+  AllocateStrSpace (1 + subStrLen);             // Need one extra byte for NULL terminating character.
 
   memcpy (val, src + startPos, subStrLen);
   len = (kkuint16)subStrLen;
@@ -821,7 +821,7 @@ void  KKStr::GrowAllocatedStrSpace (kkuint32  newAllocatedSize)
 
   if  (newAllocatedSize >= (StrIntMax - 5))
   {
-    //  Can not allocate this much space;  This strig has gotten out of control.
+    //  Can not allocate this much space;  This string has gotten out of control.
     cerr << std::endl
          << "KKStr::GrowAllocatedStrSpace   ***ERROR***      NewAllocatedSize["  << newAllocatedSize << "] is larger than StrIntMax[" << (StrIntMax - 5) << "]" << std::endl
          << std::endl;
@@ -2297,7 +2297,7 @@ void  KKStr::LeftPad (kkint32 width,
     // 2010-04-20
     // This code has never been debugged.  So the first time we run it
     // we want to make sure that it is doing what I say it is doing.
-    /** @todo  Need to properly debug thru 'KKStr::LeftPad; */
+    /** @todo  Need to properly debug through 'KKStr::LeftPad; */
     kkuint16  toIdx    = 0;
     kkuint16  fromIdx  = len - (kkuint16)width;
     while  (fromIdx < len)
@@ -2361,7 +2361,7 @@ char  KKStr::EnterStr ()
       
       else if  (ch == 0)
         {
-          // We have a control chracter.
+          // We have a control character.
           ch = (uchar)getchar ();
         }
 
@@ -3007,7 +3007,7 @@ KKStr   KKStr::GetNextToken2 (const char* delStr) const
   {
     if  (strchr (delStr, val[lastCharPos]) != NULL)
     {
-      // We just found the first delimeter
+      // We just found the first delimiter
       lastCharPos--;
       return  SubStrPart (startCharPos, lastCharPos);
     }
@@ -4290,7 +4290,7 @@ KKStrListPtr  KKStrList::ParseDelimitedString (const KKStr&  str,
 
   while  (*nextChar)
   {
-    // Skip Past Leading Blamks
+    // Skip Past Leading Blanks
     while  ((*nextChar)  &&  (*nextChar == ' '))
     {
       nextChar++;
@@ -4438,7 +4438,7 @@ KKStr  KKB::StrFormatDouble (double       val,
                              const char*  mask
                             )
 {
-  // Get num of decimal Places
+  // Get number of decimal Places
 
   char  buff[512];
   char* bp = buff + 511;
@@ -4496,7 +4496,7 @@ KKStr  KKB::StrFormatDouble (double       val,
     {
       // This can occur,  
       //  ex:  mask = "#0.000",  val = 1.9997
-      //  fracInt will end up equailng 1.000. because of rounding.  
+      //  fracInt will end up equaling 1.000. because of rounding.  
       intPart = intPart + fracInt;
     }
 
@@ -4632,7 +4632,7 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
                             const char*  mask
                            )
 {
-  // Get num of decimal Places
+  // Get number of decimal Places
 
   char  buff[128];
   char* bp = buff + 127;

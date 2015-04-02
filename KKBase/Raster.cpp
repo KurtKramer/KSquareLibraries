@@ -3645,7 +3645,7 @@ float  Raster::CalcWeightedArea ()  const
 /**
  *@brief returns in 'features' the 8 central moments as defined by Hu plus eccentricity in the eight bucket.
  *@details See M. K. Hu, Visual pattern recognition by moment invariants  IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179�187, 1962.
- *@param[in] features A array with 9 elements (0 thru 8) that will receive the 8 central moments as defined by HU plus eccentricity 
+ *@param[in] features A array with 9 elements (0 through 8) that will receive the 8 central moments as defined by HU plus eccentricity 
  * in the eighth element.
  */
 void  Raster::CentralMoments (float  features[9])  const

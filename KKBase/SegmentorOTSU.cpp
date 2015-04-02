@@ -777,7 +777,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     // %% Convert to 256 levels
     // srcImage = srcImage-min(srcImage(:));
     // srcImage = round(srcImage/max(srcImage(:))*255);
-    //  Re-scale Source Image to utilize range of 0 thru 255.
+    //  Re-scale Source Image to utilize range of 0 through 255.
 
     //%% Probability dCistribution
     //unI = sort(unique(srcImage));

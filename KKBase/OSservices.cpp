@@ -480,7 +480,7 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
         errors->PushOnBack (new KKStr ("Can not use \"" + _name + "\""));
     }
 
-    // Check for invalid charcters
+    // Check for invalid characters
     for  (x = 0;  x < _name.Len ();  ++x)
     {
       char c = _name[x];
@@ -929,7 +929,7 @@ KKStrPtr  KKB::osGetEnvVariable (KKStr  _varName)
 
 
 /**
- * Searches a string starting from a specified index for the start of an Enviromnent String Specification.
+ * Searches a string starting from a specified index for the start of an Environment String Specification.
  * @code
  *                         1         2         3         4         5         6
  *  ex:          0123456789012345678901234567890123456789012345678901234567890123456789 

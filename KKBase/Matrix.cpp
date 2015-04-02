@@ -313,7 +313,7 @@ double  Matrix::DeterminantSlow ()
 
   delete  colMap;
   return  det;
-}  /* Determinent */
+}  /* Determinant */
 
 
 /*
@@ -1009,7 +1009,7 @@ MatrixPtr  Matrix::Covariance ()  const
     return NULL;
   }
 
-  // Used web site below to help with Covariance calcs.
+  // Used web site below to help with Covariance calculations
   //  http://www.itl.nist.gov/div898/handbook/pmc/section5/pmc541.htm
 
   kkint32  col = 0;
@@ -1048,7 +1048,7 @@ MatrixPtr  Matrix::Covariance ()  const
     double*  varXs = centeredVals[varIdxX];
     for  (kkint32 varIdxY = varIdxX;  varIdxY < numOfCols;  ++varIdxY)
     {
-      // Calc the covariance between chanIdx0 and chanIdx1
+      // Calculate the covariance between chanIdx0 and chanIdx1
 
       double*  varYs = centeredVals[varIdxY];
       double total = 0.0f;
@@ -1080,7 +1080,7 @@ MatrixPtr  Matrix::Covariance ()  const
  *          is to reduce the matrix 'a' from a symmetric matrix to a orthogonal matrix.
  *@param[in,out]  a  On output a is replaced by the orthogonal matrix Q effecting the transform.
  *@param[in]      n  Size of matrix is (n x n).
- *@param[out]     d  Returns the the diagonal elements of the tridiagonal matrix,
+ *@param[out]     d  Returns the diagonal elements of the tridiagonal matrix,
  *@param[out]     e  The off-diagonal elements with e[0] = 0.
  */
 void  Matrix::Tred2 (double** a, 
