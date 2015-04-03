@@ -541,11 +541,13 @@ namespace  KKB
 
     wchar_t*  ToWchar_t    () const;
 
+    KKStr&    Trim (const char* whiteSpaceChars = "\n\r\t ");
+
+    void      TrimLeft (const char* whiteSpaceChars = "\n\r\t ");
+
     KKStr&    TrimRight (const char* whiteSpaceChars = "\n\r\t ");
 
     void      TrimRightChar ();
-
-    void      TrimLeft (const char* whiteSpaceChars = "\n\r\t ");
 
     KKStr     ToLower ()  const;
    

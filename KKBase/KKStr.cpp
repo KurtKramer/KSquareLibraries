@@ -606,14 +606,6 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
-
-
-
-
-
-
-
-
 /**
  @brief  Constructs a new KKStr from a pointer to a KKStr.
  */
@@ -693,7 +685,7 @@ KKStr::KKStr (double  d,
 
 
 /**
- *@brief Creates a KKStr object that has 'size' charaters preallocatd; and set to empty string.
+ *@brief Creates a KKStr object that has 'size' characters preallocated; and set to empty string.
  */
 KKStr::KKStr (kkint32  size):
         val (NULL)
@@ -731,7 +723,7 @@ KKStr::KKStr (const std::string&  s):
 }
 
 
-/** @brief  Constructs a KKStr instance fomm a substr of 'src'.  */
+/** @brief  Constructs a KKStr instance from a substr of 'src'.  */
 KKStr::KKStr (const char*  src,
               kkuint32     startPos,
               kkuint32     endPos
@@ -754,7 +746,7 @@ KKStr::KKStr (const char*  src,
     subStrLen = 1 + endPos - startPos;
   }
 
-  AllocateStrSpace (1 + subStrLen);             // Need one extra byte for NULL terminating chracter.
+  AllocateStrSpace (1 + subStrLen);             // Need one extra byte for NULL terminating character.
 
   memcpy (val, src + startPos, subStrLen);
   len = (kkuint16)subStrLen;
@@ -821,7 +813,7 @@ void  KKStr::GrowAllocatedStrSpace (kkuint32  newAllocatedSize)
 
   if  (newAllocatedSize >= (StrIntMax - 5))
   {
-    //  Can not allocate this much space;  This strig has gotten out of control.
+    //  Can not allocate this much space;  This string has gotten out of control.
     cerr << std::endl
          << "KKStr::GrowAllocatedStrSpace   ***ERROR***      NewAllocatedSize["  << newAllocatedSize << "] is larger than StrIntMax[" << (StrIntMax - 5) << "]" << std::endl
          << std::endl;
@@ -1673,6 +1665,14 @@ void  KKStr::ChopLastChar ()
 
 
 
+KKStr&  KKStr::Trim (const char* whiteSpaceChars)
+{
+  TrimRight (whiteSpaceChars);
+  TrimLeft(whiteSpaceChars);
+  return  *this;  
+}  /* Trim */
+
+
 
 KKStr&  KKStr::TrimRight (const char* whiteSpaceChars)
 {
@@ -1688,7 +1688,6 @@ KKStr&  KKStr::TrimRight (const char* whiteSpaceChars)
   }
 
   kkint32  x = len - 1;
-
   while  ((len > 0)  && (strchr (whiteSpaceChars, val[x])))
   {
     val[x] = 0;
@@ -2361,7 +2360,7 @@ char  KKStr::EnterStr ()
       
       else if  (ch == 0)
         {
-          // We have a control chracter.
+          // We have a control character.
           ch = (uchar)getchar ();
         }
 
@@ -3007,7 +3006,7 @@ KKStr   KKStr::GetNextToken2 (const char* delStr) const
   {
     if  (strchr (delStr, val[lastCharPos]) != NULL)
     {
-      // We just found the first delimeter
+      // We just found the first delimiter
       lastCharPos--;
       return  SubStrPart (startCharPos, lastCharPos);
     }
@@ -3571,6 +3570,8 @@ wchar_t*  KKStr::ToWchar_t () const
 double  KKStr::ToLatitude ()  const
 {
   KKStr latitudeStr (*this);
+  latitudeStr.Trim ();
+
   bool  north = true;
   char  lastChar = (char)toupper (latitudeStr.LastChar ());
   if  (lastChar == 'N')
@@ -3583,31 +3584,71 @@ double  KKStr::ToLatitude ()  const
     north = false;
     latitudeStr.ChopLastChar ();
   }
+  latitudeStr.TrimRight ();
 
   if  (latitudeStr.FirstChar () == '-')
   {
     latitudeStr.ChopFirstChar ();
     north = !north;
+    latitudeStr.TrimLeft ();
   }
 
   double  degrees = 0.0;
   double  minutes = 0.0;
   double  seconds = 0.0;
 
-  KKStr  degreesStr = latitudeStr.GetNextToken2 (":");
-  KKStr  minutesStr = latitudeStr.GetNextToken2 (":");
-  
-  degrees = degreesStr.ToDouble ();
-  minutes = minutesStr.ToDouble ();
-  seconds = latitudeStr.ToDouble ();
+  KKStr  degreesStr = "";
+  KKStr  minutesStr = "";
+  KKStr  secondsStr  = "";
 
-  double  latitude = degrees + (minutes / 60.0) + (seconds / 3600.0);
-  if  (latitude < 0.0)
+  kkint32  x = latitudeStr.LocateCharacter (':');
+  if  (x >= 0)
   {
-    north = !north;
-    latitude = 0.0 - latitude;
+    degreesStr = latitudeStr.SubStrPart (0, x - 1);
+    degreesStr.TrimRight ();
+    minutesStr = latitudeStr.SubStrPart (x + 1);
+    minutesStr.Trim ();
+  }
+  else
+  {
+    x = latitudeStr.LocateCharacter (' ');
+    if  (x >= 0)
+    {
+      degreesStr = latitudeStr.SubStrPart (0, x - 1);
+      degreesStr.TrimRight ();
+      minutesStr = latitudeStr.SubStrPart (x + 1);
+      minutesStr.Trim ();
+    }
+    else
+    {
+      degreesStr = latitudeStr;
+      minutesStr = "";
+    }
   }
 
+  x = minutesStr.LocateCharacter (':');
+  if  (x >= 0)
+  {
+    secondsStr = minutesStr.SubStrPart (x + 1);
+    minutesStr = minutesStr.SubStrPart (0, x - 1);
+    secondsStr.Trim ();
+  }
+  else
+  {
+    x = minutesStr.LocateCharacter (' ');
+    if  (x >= 0)
+    {
+      secondsStr = minutesStr.SubStrPart (x + 1);
+      minutesStr = minutesStr.SubStrPart (0, x - 1);
+      secondsStr.Trim ();
+    }
+  }
+ 
+  degrees = degreesStr.ToDouble ();
+  minutes = minutesStr.ToDouble ();
+  seconds = secondsStr.ToDouble ();
+
+  double  latitude = degrees + (minutes / 60.0) + (seconds / 3600.0);
   while  (latitude > 90.0)
     latitude = latitude - 180.0;
 
@@ -3646,23 +3687,60 @@ double  KKStr::ToLongitude ()  const
   double  minutes = 0.0;
   double  seconds = 0.0;
 
-  KKStr  degreesStr = longitudeStr.GetNextToken2 (":");
-  KKStr  minutesStr = longitudeStr.GetNextToken2 (":");
-  
-  degrees = degreesStr.ToDouble ();
-  minutes = minutesStr.ToDouble ();
-  seconds = longitudeStr.ToDouble ();
+  KKStr  degreesStr = "";
+  KKStr  minutesStr = "";
+  KKStr  secondsStr  = "";
 
-  double  longitude = degrees + (minutes / 60.0) + (seconds / 3600.0);
-  if  (longitude < 0.0)
+  kkint32  x = longitudeStr.LocateCharacter (':');
+  if  (x >= 0)
   {
-    east = !east;
-    longitude = 0.0 - longitude;
+    degreesStr = longitudeStr.SubStrPart (0, x - 1);
+    degreesStr.TrimRight ();
+    minutesStr = longitudeStr.SubStrPart (x + 1);
+    minutesStr.Trim ();
+  }
+  else
+  {
+    x = longitudeStr.LocateCharacter (' ');
+    if  (x >= 0)
+    {
+      degreesStr = longitudeStr.SubStrPart (0, x - 1);
+      degreesStr.TrimRight ();
+      minutesStr = longitudeStr.SubStrPart (x + 1);
+      minutesStr.Trim ();
+    }
+    else
+    {
+      degreesStr = longitudeStr;
+      minutesStr = "";
+    }
   }
 
+  x = minutesStr.LocateCharacter (':');
+  if  (x >= 0)
+  {
+    secondsStr = minutesStr.SubStrPart (x + 1);
+    minutesStr = minutesStr.SubStrPart (0, x - 1);
+    secondsStr.Trim ();
+  }
+  else
+  {
+    x = minutesStr.LocateCharacter (' ');
+    if  (x >= 0)
+    {
+      secondsStr = minutesStr.SubStrPart (x + 1);
+      minutesStr = minutesStr.SubStrPart (0, x - 1);
+      secondsStr.Trim ();
+    }
+  }
+ 
+  degrees = degreesStr.ToDouble ();
+  minutes = minutesStr.ToDouble ();
+  seconds = secondsStr.ToDouble ();
+
+  double  longitude = degrees + (minutes / 60.0) + (seconds / 3600.0);
   while  (longitude > 180.0)
     longitude = longitude - 360.0;
-
   if  (!east)
     longitude = 0.0 - longitude;
 
@@ -4290,7 +4368,7 @@ KKStrListPtr  KKStrList::ParseDelimitedString (const KKStr&  str,
 
   while  (*nextChar)
   {
-    // Skip Past Leading Blamks
+    // Skip Past Leading Blanks
     while  ((*nextChar)  &&  (*nextChar == ' '))
     {
       nextChar++;
@@ -4438,7 +4516,7 @@ KKStr  KKB::StrFormatDouble (double       val,
                              const char*  mask
                             )
 {
-  // Get num of decimal Places
+  // Get number of decimal Places
 
   char  buff[512];
   char* bp = buff + 511;
@@ -4496,7 +4574,7 @@ KKStr  KKB::StrFormatDouble (double       val,
     {
       // This can occur,  
       //  ex:  mask = "#0.000",  val = 1.9997
-      //  fracInt will end up equailng 1.000. because of rounding.  
+      //  fracInt will end up equaling 1.000. because of rounding.  
       intPart = intPart + fracInt;
     }
 
@@ -4632,7 +4710,7 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
                             const char*  mask
                            )
 {
-  // Get num of decimal Places
+  // Get number of decimal Places
 
   char  buff[128];
   char* bp = buff + 127;
