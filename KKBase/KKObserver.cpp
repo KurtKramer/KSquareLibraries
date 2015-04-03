@@ -39,7 +39,7 @@ KKObserver::KKObserver (const KKStr&  _name):
 
 KKObserver::~KKObserver ()
 {
-  // Let KKObservable instnces know that we are not observing them anymore.
+  // Let KKObservable instances know that we are not observing them anymore.
 
   GlobalGoalKeeper::StartBlock ();
   for  (observablesIdx = observables.begin ();  observablesIdx != observables.end ();  ++observablesIdx)

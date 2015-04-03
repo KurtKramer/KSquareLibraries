@@ -166,7 +166,7 @@ void  KKThreadManager::ShutdownProcessing (kkint32  miliSecsToWait)
     {
       if  ((miliSecsToWait > 0)  &&  (numMiliSecsWaited > miliSecsToWait))
       {
-        // The shutdown process is taking longer than the the 'miliSecsToWait' parameter will allow for;  we need to terminate
+        // The shutdown process is taking longer than the 'miliSecsToWait' parameter will allow for;  we need to terminate
         // all running threads now.
         KillAllRunningThreads ();
         break;

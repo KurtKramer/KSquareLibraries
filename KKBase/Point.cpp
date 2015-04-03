@@ -192,7 +192,7 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
 
     else
     {
-      // Not Bracked.
+      // Not Bracketed.
       endPairChar = 0;
       kkint16  row = (kkint16)s.ExtractTokenInt (",\t\n\t");
       kkint16  col = (kkint16)s.ExtractTokenInt (",\t\n\t");

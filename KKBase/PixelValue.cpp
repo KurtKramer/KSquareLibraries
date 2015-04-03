@@ -141,7 +141,7 @@ PixelValue  PixelValue::FromHSI (float  hue,
 
   if  (sat == 0.0f) 
   {
-    // grayscale image
+    // gray-scale image
     kkint32  greyValue = (kkint32)(0.5f + intensity * 255.0f);
     uchar  gv = (uchar)greyValue;
     return  PixelValue (gv, gv, gv);

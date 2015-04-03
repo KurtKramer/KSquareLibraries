@@ -2296,7 +2296,7 @@ void  KKStr::LeftPad (kkint32 width,
     // 2010-04-20
     // This code has never been debugged.  So the first time we run it
     // we want to make sure that it is doing what I say it is doing.
-    /** @todo  Need to properly debug thru 'KKStr::LeftPad; */
+    /** @todo  Need to properly debug through 'KKStr::LeftPad; */
     kkuint16  toIdx    = 0;
     kkuint16  fromIdx  = len - (kkuint16)width;
     while  (fromIdx < len)
