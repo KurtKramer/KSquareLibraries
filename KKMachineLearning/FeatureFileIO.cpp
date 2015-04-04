@@ -1057,9 +1057,9 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     _timeStamp = osGetLocalDateTime ();
   }
 
-  delete fvProducer;        fvProducer      = NULL;
-  delete fileNameList;      fileNameList    = NULL;
-  delete origFeatureData;   origFeatureData = NULL;
+  delete fvProducer;       fvProducer      = NULL;
+  delete fileNameList;     fileNameList    = NULL;
+  delete origFeatureData;  origFeatureData = NULL;
 
   _log.Level (10) << "FeatureDataReSink  Exiting  Dir: "  << _dirName << endl;
 
