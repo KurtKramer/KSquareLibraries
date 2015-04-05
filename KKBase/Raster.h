@@ -26,8 +26,8 @@ namespace KKB
    ***************************************************************************
    **                                Raster                                  *
    **                                                                        *
-   **  Supports image Morphological operations such as Dilation, Opening,   *
-   **  Closing and other operations.                                        *
+   **  Supports image Morphological operations such as Dilation, Opening,    *
+   **  Closing and other operations.                                         *
    ***************************************************************************
    *@endcode
    *@sa Blob
@@ -592,7 +592,7 @@ namespace KKB
     /**
      *@brief  Computes central moments; one set where each pixel is treated as 1 or 0(Foreground/Background) and the 
      *other where each pixel is weighted by intensity value.
-     *@details See M. K. Hu, Visual pattern recognition by moment invariants IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179�187, 1962.
+     *@details See M. K. Hu, Visual pattern recognition by moment invariants IRE Trans; Inform. Theory, vol. IT, no. 8, pp. 179?187, 1962.
      *While performing this computation the mutable fields 'centroidRow' and 'centroidCol' will be recomputed and their values
      * can be retrieved by their respective access methods.
      *@param[out] foregroundPixelCount  Number of pixels that are considered Foreground; as per the 'Foreground' method.
