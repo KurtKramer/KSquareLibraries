@@ -58,24 +58,19 @@ namespace KKMachineLearning
     *@brief  Provides a detailed description of the attributes of a dataset.
     *@author Kurt Kramer
     *@details
-    *@code
-    * ***********************************************************************************
-    * * Describes the different fields of a dataset. There will be one instance of this *
-    * * class for each type of Dataset that you have in an application.  From this      *
-    * * object you can get information such as number of attributes, Attribute types,   *
-    * * weather they are nominal, continuous.  If nominal what are the accepted         *
-    * * values.                                                                         *
-    * *                                                                                 *
-    * *  Never delete an instance of a FileDesc object.                                 *
-    * *                                                                                 *
-    * * Only one FileDesc object can exist for any Dataset.  Example the Forest Cover   *
-    * * dataset.  You can split the data into many files and manage them separately but *
-    * * you will only have one instance of a FileDesc object that they will all refer   *
-    * * to.  See "GetExistingFileDesc" method below.  You would initially create an     *
-    * * instance of FileDesc and then use "GetExistingFileDesc" to make sure that it is *
-    * * unique. This typically happens in the FeatureFileIO derived classes.            *
-    *************************************************************************************
-    *@endcode
+    * Describes the different fields of a dataset. There will be one instance of this
+    * class for each type of Dataset that you have in an application.  From this
+    * object you can get information such as number of attributes, Attribute types,
+    * weather they are nominal, continuous.  If nominal what are the accepted values.                                                                         *
+    *
+    * Never delete an instance of a FileDesc object.
+    *
+    * Only one FileDesc object can exist for any Dataset.  Example the Forest-Cover
+    * dataset.  You can split the data into many files and manage them separately but
+    * you will only have one instance of a FileDesc object that they will all refer
+    * to.  See "GetExistingFileDesc" method below.  You would initially create an
+    * instance of FileDesc and then use "GetExistingFileDesc" to make sure that it is
+    * unique. This typically happens in the FeatureFileIO derived classes.
     *@see GetExistingFileDesc
     *@see FeatureVectorList
     *@see FeatureFileIo
@@ -88,15 +83,11 @@ namespace KKMachineLearning
     typedef  FileDesc*  const   FileDescConstPtr;
 
     /**
-     @brief  Clean up function,  call just before exiting the application.
-     @details
-     @code
-     * *******************************************************************************
-     * * Before you terminate your application you should call this method.  It will *
-     * * clean up the FileDesc objects that were created during the runtime of your  *
-     * * application.                                                                *
-     *********************************************************************************
-     @endcode
+     *@brief  Clean up function, call just before exiting the application.
+     *@details
+     * Before you terminate your application you should call this method.  It will
+     * clean up the FileDesc objects that were created during the runtime of your
+     * application.
      */
     static  void  FinalCleanUp ();
 
@@ -105,12 +96,8 @@ namespace KKMachineLearning
     /**
      @brief  Creates a simple FileDesc that consists of continuous data only.
      @details
-     @code
-     * ***************************************************************************
-     * * Creates a file description that will consist of continuous fields only. *
-     * * The vector '_fieldNames' will provide the list of field names.          *
-     * ***************************************************************************
-     @endcode
+     * Creates a file description that will consist of continuous fields only.
+     * The vector '_fieldNames' will provide the list of field names.
      @param[in]  _log   Logging file to use.
      @param[in]  _fieldNames Name of fields;  one entry for each field.
      */
@@ -204,23 +191,21 @@ namespace KKMachineLearning
 
 
     /**
-     @brief Returns a pointer to an existing instance of 'fileDesc' if it exists, otherwise will use one being passed in.
-     @details
-     @code
-     * ************************************ GetExistingFileDesc **************************
-     * * > First looks to see if a the same FileDesc is already in the existing list     *
-     * *   in that case will return back the same pointer.                               *
-     * *                                                                                 *
-     * * > Second Will look for a existing FileDesc that is the same as the 'fileDesc'   *
-     * *   being passed in.                                                              *
-     * *   if  one is found   them                                                       *
-     * *     fileDesc is deleted                                                         *
-     * *     exiting one will be returned.                                               *
-     * *   else                                                                          *
-     * *     fileDesc will be added to existinList (exisitingDescriptions) and returned. *
-     * *     and returned.                                                               *
-     * **********************************************************************************
-     @endcode
+     *@brief Returns a pointer to an existing instance of 'fileDesc' if it exists, otherwise will use one being passed in.
+     *@details
+     * > First looks to see if a the same FileDesc is already in the existing list 
+     *   in that case will return back the same pointer.
+     *
+     *@code
+     * > Second Will look for a existing FileDesc that is the same as the 'fileDesc'
+     *   being passed in.
+     *   if  one is found   them
+     *     fileDesc is deleted
+     *     exiting one will be returned.
+     *   else
+     *     fileDesc will be added to existinList (exisitingDescriptions) and returned.
+     *     and returned.
+     *@endcode
      @param[in] fileDesc Pointer to a FileDesc object that you want to look and see if one that is identical already exists.
      @return pointer to the 'FileDesc' instance that the caller should be using.
      */

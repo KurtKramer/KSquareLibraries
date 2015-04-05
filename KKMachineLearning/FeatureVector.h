@@ -44,7 +44,7 @@ namespace KKMachineLearning
   /**
    *@class FeatureVector
    *@brief  Represents a Feature Vector of a single example, labeled or unlabeled
-   *@details Used for the representation of a Single example.  You create an instance of this object for each single feature
+   *@details Used for the representation of a Single example. You create an instance of this object for each single feature
    * vector. You can subclass from this Class to make a specialized FeatureVector as in the PostLarvaeFV class.  Besides
    * keeping track of feature data this class will also track other fields such as ImageFileName which should indicate
    *where the FeatureVector was derived from, probability, breakTie, and others.

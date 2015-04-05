@@ -5,15 +5,15 @@
  *@class KKMachineLearning::ClassAssignments
  *@author Kurt Kramer
  *@brief Binds MLClass objects to the appropriate number that the Learning Algorithm expects.
- *@details This class will bind MLClass objects to the appropriate num that the learning 
+ *@details This class will bind MLClass objects to the appropriate number that the learning 
  *         algorithm knows for this class.  When originally implementing this system, this info was 
  *         kept in the MLClass object.  This would cause problems when doing multilevel
  *         classification.  The same MLClass might be known to the L.A. as one number in one level 
  *         and another number in a different level.  This caused us to have to maintain a separate
  *         instantiation of these classes on the SvmModel objects. 
  *
- *         It is sub-classed from multimap<kkint16, MLClassPtr>.  This allows for fast lookup by 
- *         number.  There is also a secondary index by MLClass.  This allows us to do a fast 
+ *         It is sub-classed from multimap<kkint16, MLClassPtr>. This allows for fast lookup by 
+ *         number.  There is also a secondary index by MLClass. This allows us to do a fast 
  *         lookup by class.
  */
 

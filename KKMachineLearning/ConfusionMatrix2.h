@@ -12,8 +12,8 @@
 //*  ------- -----------  ------------------------------------------------- *
 //*  Kurt    Oct-19-2002  Increment Will now take ImageClasses instead of   *
 //*                       numbers.  We will also make a unique copy of      *
-//*                       mlClassesList.  This way we will not have to     *
-//*                       worry abount the numbering in the classList       *
+//*                       mlClassesList.  This way we will not have to      *
+//*                       worry about the numbering in the classList        *
 //*                       behind our back.                                  * 
 //***************************************************************************
 //* 

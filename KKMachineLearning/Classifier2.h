@@ -91,7 +91,7 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *          time and recompute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
-     *@param[in]  example  Example that was classified incorrectly.
+     *@param[in]  example  The example that was classified incorrectly.
      *@param[in]  numToFind  The number of the worst examples you are looking for.
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
@@ -108,7 +108,7 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
      *          time and rebuild a new SVM then submit example for testing.
-     *@param[in]  example  Example that was classified incorrectly.
+     *@param[in]  example  The example that was classified incorrectly.
      *@param[in]  numToFind  The number of the worst examples you are looking for.
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
@@ -128,7 +128,7 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
      *@details
      *@param classes       [in]  List of classes that we can be predicted for  The ordering of 'votes' and 'probabilities' will be dictated by this list.
      *@param example       [in]  Feature Vector to make prediction on.
-     *@param votes         [out] Pointer to list of ints,  must be as large as 'classes'  The number of votes for each corresponding class will be stored hear.
+     *@param votes         [out] Pointer to list of int's,  must be as large as 'classes'  The number of votes for each corresponding class will be stored hear.
      *@param probabilities [out] Pointer to list of double's,  must be as large as 'classes'  The probability for each corresponding class will be stored hear.
      */
     void                 ProbabilitiesByClass (const MLClassList&  classes,
