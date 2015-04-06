@@ -80,9 +80,9 @@ typedef  struct svm_node*     XSpacePtr;
     /**
      *@brief Loads an SVM model from disk
      *@param[in]  _rootFileName The filename for the model; without an extension.
-     *@param[out] _successful Set to true if the model is succesfulyl loaded, false otherwise
+     *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
      *@param[in]  _fileDesc A description of the training data that was used to train the classifier.
-     *@param[in]  _log A logfile stream. All important events will be ouput to this stream
+     *@param[in]  _log A LogFile stream. All important events will be output to this stream
      *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
      */
     SVMModel (const KKStr&   _rootFileName,   
@@ -159,8 +159,7 @@ typedef  struct svm_node*     XSpacePtr;
     kkint32            MemoryConsumedEstimated ()  const;
 
     virtual
-    bool               NormalizeNominalAttributes ();  // Return tru, if nominal fields
-                                                       // need to be normalized.
+    bool               NormalizeNominalAttributes ();  /**< Return true, if nominal fields need to be normalized.  */
 
     kkint32            NumOfClasses ()  const  {return numOfClasses;}
 
@@ -324,7 +323,7 @@ typedef  struct svm_node*     XSpacePtr;
      *         is pitted against all other classes.  Using the 'classesThisAssignment'
      *         parameter several classes can be grouped together as one logical class.
      *@param[in]  examples The examples to build the svm_problem(s) with
-     *@param[out] prob The svm_problem struct that will be constructed
+     *@param[out] prob The svm_problem structure that will be constructed
      *@param[in]  xSpace A list of pointers to the memory allocated for all of the 
      *            svm_node structures used in building the svm_problem.
      *@param[in]  classesThisAssignment The list of classes that are to be treated 

@@ -13,10 +13,10 @@ using namespace KKMachineLearning;
 /**
  *@namespace  SVM289_BFS   
  *@brief Namespce used to wrap implementation of libSVM version 2.89  to be used as a pair-wise SVM.
- *@details  There is more than obe version of libSVM implemented in the library.  To prevent
+ *@details  There is more than one version of libSVM implemented in the library.  To prevent
  * name conflicts between them each one was wrapped in their own namespace.
  *<br/>
- * libSVM is a Support Vector Machine implementaton done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
+ * libSVM is a Support Vector Machine implementor done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
  * was downloaded from http://www.csie.ntu.edu.tw/~cjlin/libsvm/.  The source code was modified by 
  * Kurt Kramer.  The primary changes to this implementation involves the replacement of the sparse data-structure 
  * in the original implementation with fixed length array implemented through the "FeatureVector" class and 
@@ -207,7 +207,7 @@ namespace  SVM289_BFS
                                   // 0 if svm_model is created by svm_train
 
 
-    // Support Prediction Calcs
+    // Support Prediction Calculations
     double*    dec_values;
     double**   pairwise_prob;
     double*    prob_estimates;

@@ -1,7 +1,7 @@
 #if  !defined(__USFCASCOR__H_)
 
 /**
- *@brief   Adapted by Kurt Kramer be a 'class' definition so as to  ake it more usable in th ePices software world.
+ *@brief   Adapted by Kurt Kramer be a 'class' definition so as to  make it more usable in th ePices software world.
  *@details  The original author is _____________.
  */
 
@@ -167,7 +167,7 @@ namespace KKMachineLearning
                               MLClassPtr&         predClass2,
                               float&              predClass2Prob,
                               float&              knownClassProb,
-                              const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populatd. */
+                              const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populated. */
                               VectorFloat&        probabilities
                              );
 
@@ -231,7 +231,7 @@ namespace KKMachineLearning
 
 
     //***************************************************************
-    //*                            usfcascor                        *
+    //*                            usf-cascor                        *
     //***************************************************************
     int  in_limit;
     int  out_limit;

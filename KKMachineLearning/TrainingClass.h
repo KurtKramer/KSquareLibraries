@@ -7,7 +7,7 @@
  *                         TrainingClass                             *
  *                                                                   *
  * You create one instance of this object for each set of training   *
- * data tou want to specify.  There will be a 'many to one'          *
+ * data you want to specify.  There will be a 'many to one'          *
  * relationship between 'TrainingClass'  and  'MLClass'.  This is   *
  * based on the assumption that there can be more than one set of    *
  * training data that you can use for the same class.                *
