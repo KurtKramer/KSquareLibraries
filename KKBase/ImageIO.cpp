@@ -213,6 +213,11 @@ RasterPtr  KKB::ReadImage (const KKStr&  imageFileName)
   else if  ((extension == "jpg")  ||  (extension == "tif")  ||  (extension == "tiff"))
   {
     image = ReadImageUsingGDI (imageFileName);
+    if  (image)
+    {
+      if  (!image->Color ())
+        image->ReverseImage ();
+    }
   }
 #endif
 
@@ -279,8 +284,9 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
       
       kkuint32  row, col;
 
-      uchar*  ptr = (uchar*)(void*)scan0;
+      bool  grayScaleImage = true;
 
+      uchar*  ptr = (uchar*)(void*)scan0;
       for  (row = 0;  row < height;  ++row)
       {
         for  (col = 0;  col < width;  ++col)
@@ -288,11 +294,20 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
           red   = *ptr;  ++ptr;
           green = *ptr;  ++ptr;
           blue  = *ptr;  ++ptr;
-
           r->SetPixelValue (row, col, red, green, blue);
+
+          if  ((red != green)  ||  (red != blue))
+            grayScaleImage= false;
         }
-        
         ptr += nOffset;
+      }
+
+      if  (grayScaleImage)
+      {
+        RasterPtr  grayScaleR = r->CreateGrayScale ();
+        delete  r;
+        r = grayScaleR;
+        grayScaleR = NULL;
       }
     }
 
@@ -339,8 +354,8 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
 
     bm->UnlockBits (bitmapData);
 
-    delete  bm;
-    bm = NULL;
+    delete  bitmapData;  bitmapData = NULL;
+    delete  bm;          bm = NULL;
   }
 
   delete  imageFileNameWide;
@@ -401,6 +416,11 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
       )
   {
     fclose (i);
+    cerr << endl << endl
+      << "ReadImagePGM   ***ERROR***  ImageFile[" << imageFileName << "]  Invalid Header"
+      << "  width[" << width << "]  height[" << height << "]  pixelSize[" << pixelSize << "]"
+      << endl
+      << endl;
     return  NULL;
   }
 
