@@ -163,7 +163,8 @@ namespace  KKB
       return sizeof (lineNum) + name.MemoryConsumedEstimated () + settings.MemoryConsumedEstimated ();
     }
 
-    kkint32 NumOfSettings ()  {return  settings.QueueSize ();}
+
+    kkint32 NumOfSettings ()  const {return  settings.QueueSize ();}
 
 
     KKStrConstPtr   SettingName (kkint32 settingNum)  const
@@ -539,7 +540,7 @@ kkint32  Configuration::NumOfSections ()
 
 
 
-kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)
+kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)  const
 {
   ConfSectionPtr  section = sections->LookUp (sectionName);
 

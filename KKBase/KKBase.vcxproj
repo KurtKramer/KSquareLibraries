@@ -109,6 +109,8 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MorphOp.cpp" />
     <ClCompile Include="MorphOpBinarize.cpp" />
+    <ClCompile Include="MorphOpBmiFiltering.cpp" />
+    <ClCompile Include="MorphOpDilation.cpp" />
     <ClCompile Include="MorphOpErosion.cpp" />
     <ClCompile Include="MorphOpMaskExclude.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
@@ -169,6 +171,8 @@
     <ClInclude Include="MemoryDebug.h" />
     <ClInclude Include="MorphOp.h" />
     <ClInclude Include="MorphOpBinarize.h" />
+    <ClInclude Include="MorphOpBmiFiltering.h" />
+    <ClInclude Include="MorphOpDilation.h" />
     <ClInclude Include="MorphOpErosion.h" />
     <ClInclude Include="MorphOpMaskExclude.h" />
     <ClInclude Include="MorphOpStretcher.h" />

@@ -22,23 +22,23 @@ using namespace KKB;
 
 
 kkint32  MorphOp::biases[] = {1,  // CROSS3 
-                            2,  // CROSS5
-                            1,  // SQUARE3
-                            2,  // SQUARE5
-                            3,  // SQUARE7
-                            4,  // SQUARE9
-                            5   // SQUARE11
-                           };
+                              2,  // CROSS5
+                              1,  // SQUARE3
+                              2,  // SQUARE5
+                              3,  // SQUARE7
+                              4,  // SQUARE9
+                              5   // SQUARE11
+                             };
 
 
 kkint32  MorphOp::maskShapes[] = {stCross,   // CROSS3 
-                                stCross,   // CROSS5
-                                stSquare,  // SQUARE3
-                                stSquare,  // SQUARE5
-                                stSquare,  // SQUARE7
-                                stSquare,  // SQUARE9
-                                stSquare   // SQUARE11
-                               };
+                                  stCross,   // CROSS5
+                                  stSquare,  // SQUARE3
+                                  stSquare,  // SQUARE5
+                                  stSquare,  // SQUARE7
+                                  stSquare,  // SQUARE9
+                                  stSquare   // SQUARE11
+                                 };
 
 
 MorphOp::MorphOp ():
@@ -70,11 +70,14 @@ KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
   if  (_operation == moStretcher)
     return "Stretcher";
 
-  else if  (_operation == moBinarize)
-    return "Binarize";
+  else if  (_operation == moBmiFiltering)
+    return "BmiFiltering";
 
   else if  (_operation == moConvexHull)
     return "ConvexHull";
+
+  else if  (_operation == moDilation)
+    return "Dilation";
 
   else if  (_operation == moErosion)
     return "Erosion";
@@ -95,6 +98,9 @@ MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _ope
 
   else if  (_operationStr.EqualIgnoreCase ("Binarize"))
     return  moBinarize;
+
+  else if  (_operationStr.EqualIgnoreCase ("BmiFiltering"))
+    return  moBmiFiltering;
 
   else if  (_operationStr.EqualIgnoreCase ("ConvexHull"))
     return  moConvexHull;

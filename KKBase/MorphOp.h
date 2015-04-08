@@ -41,7 +41,9 @@ namespace  KKB
     {
       moNULL,
       moBinarize,
+      moBmiFiltering,
       moConvexHull,
+      moDilation,
       moErosion,
       moMaskExclude,
       moStretcher
