@@ -16,9 +16,10 @@ using namespace std;
 
 #if defined(FFTW_AVAILABLE)
 #  include  <fftw3.h>
-#else
-#  include  "kku_fftw.h"
+//#else
+//#  include  "kku_fftw.h"
 #endif
+#include "kku_fftw.h"
 
 
 
@@ -46,15 +47,16 @@ MovDir   movements[8]  = {{-1,  0}, // Up
 ContourFollower::ContourFollower (Raster&  _raster,
                                   RunLog&  _log
                                  ):
-  curCol  (-1),
-  curRow  (-1),
-  fromDir (),
-  height  (_raster.Height ()),
-  lastDir (0),
-  log     (_log),
-  raster  (_raster),
-  rows    (_raster.Rows   ()),
-  width   (_raster.Width  ())
+  backgroundPixelTH (_raster.BackgroundPixelTH ()),
+  curCol            (-1),
+  curRow            (-1),
+  fromDir           (),
+  height            (_raster.Height ()),
+  lastDir           (0),
+  log               (_log),
+  raster            (_raster),
+  rows              (_raster.Rows   ()),
+  width             (_raster.Width  ())
 {
 }
 
@@ -71,19 +73,19 @@ uchar  ContourFollower::PixelValue (kkint32 row,
 
 
 kkint32  ContourFollower::PixelCountIn9PixelNeighborhood (kkint32  row, 
-                                                      kkint32  col
-                                                     )
+                                                          kkint32  col
+                                                         )
 {
   kkint32  count = 0;
-  if  (PixelValue (row - 1, col - 1) > 0)  ++count;
-  if  (PixelValue (row - 1, col    ) > 0)  ++count;
-  if  (PixelValue (row - 1, col + 1) > 0)  ++count;
-  if  (PixelValue (row    , col - 1) > 0)  ++count;
-  if  (PixelValue (row    , col    ) > 0)  ++count;
-  if  (PixelValue (row    , col + 1) > 0)  ++count;
-  if  (PixelValue (row + 1, col - 1) > 0)  ++count;
-  if  (PixelValue (row + 1, col    ) > 0)  ++count;
-  if  (PixelValue (row + 1, col + 1) > 0)  ++count;
+  if  (PixelValue (row - 1, col - 1) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row - 1, col    ) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row - 1, col + 1) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row    , col - 1) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row    , col    ) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row    , col + 1) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row + 1, col - 1) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row + 1, col    ) > backgroundPixelTH)  ++count;
+  if  (PixelValue (row + 1, col + 1) > backgroundPixelTH)  ++count;
   return  count;
 }
 
@@ -99,8 +101,10 @@ void  ContourFollower::GetFirstPixel (kkint32&  startRow,
   startRow = height / 2;
   startCol = 0;
 
-  while  ((startCol < width)  &&  (rows[startRow][startCol] == 0))
+  while  (startCol < width)
   {
+    if  ((rows[startRow][startCol] > backgroundPixelTH)  &&  (PixelCountIn9PixelNeighborhood (startRow, startCol) > 1))
+      break;
     startCol++;
   }
 
@@ -114,11 +118,11 @@ void  ContourFollower::GetFirstPixel (kkint32&  startRow,
     kkint32  row;
     kkint32  col;
 
-    for  (row = 0; ((row < height)  &&  (!found));  row++)
+    for  (row = 0;  ((row < height)  &&  (!found));  ++row)
     {
-      for  (col = 0; ((col < width)  &&  (!found)); col++)
+      for  (col = 0;  ((col < width)  &&  (!found));  ++col)
       {
-        if  (rows[row][col] != 0)
+        if  ((rows[row][col] > backgroundPixelTH)  &&  (PixelCountIn9PixelNeighborhood (startRow, startCol) > 1))
         {
           found = true;
           startRow = row;
@@ -136,7 +140,6 @@ void  ContourFollower::GetFirstPixel (kkint32&  startRow,
 
   curRow = startRow;
   curCol = startCol;
-
 }  /* GetFirstPixel */
 
 
@@ -170,7 +173,7 @@ void  ContourFollower::GetNextPixel (kkint32&  nextRow,
     {
       nextDir++;
     }
-    else if  (rows[nextRow][nextCol] > 0)
+    else if  (rows[nextRow][nextCol] > backgroundPixelTH)
     {
       nextPixelFound = true;
     }
@@ -501,7 +504,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
     }
   }
 
-  for  (x = 0; x < numOfBuckets; x++)
+  for  (x = 0;  x < numOfBuckets;  ++x)
   {
     if  (count[x] <= 0)
     {
@@ -781,23 +784,25 @@ PointListPtr  ContourFollower::GenerateContourList ()
 {
   // startRow and startCol is assumed to come from the left (6)
 
-  kkint32  startRow;
-  kkint32  startCol;
+  kkint32  startRow = 0;
+  kkint32  startCol = 0;
 
-  kkint32  scndRow;
-  kkint32  scndCol;
+  kkint32  scndRow  = 0;
+  kkint32  scndCol  = 0;
 
-  kkint32  lastRow;
-  kkint32  lastCol;
+  kkint32  lastRow  = 0;
+  kkint32  lastCol  = 0;
 
-  kkint32  nextRow;
-  kkint32  nextCol;
+  kkint32  nextRow  = 0;
+  kkint32  nextCol  = 0;
 
   PointListPtr  points = new PointList (true);
 
   GetFirstPixel (startRow, startCol);
   if  ((startRow < 0)  ||  (startCol < 0)  ||  (PixelCountIn9PixelNeighborhood (startRow, startCol) < 2))
   {
+    delete  points;
+    points = NULL;
     cout << "Very Bad Starting Point" << std::endl;
     return  NULL;
   }
@@ -997,8 +1002,8 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
 
 
 kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBuckets,
-                                                           float*  countourFreq,
-                                                           bool&    successful
+                                                             float*   countourFreq,
+                                                             bool&    successful
                                                           )
 {
   // startRow and startCol is assumed to come from the left (6)
@@ -1142,12 +1147,12 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
 
 
 
-void  ContourFollower::HistogramDistanceFromAPointOfEdge (float   pointRow,
-                                                          float   pointCol,
-                                                          kkint32 numOfBuckets,
+void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
+                                                          float     pointCol,
+                                                          kkint32   numOfBuckets,
                                                           kkint32*  buckets,
-                                                          float&  minDistance,
-                                                          float&  maxDistance,
+                                                          float&    minDistance,
+                                                          float&    maxDistance,
                                                           kkint32&  numOfEdgePixels
                                                          )
 {

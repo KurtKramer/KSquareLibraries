@@ -656,15 +656,15 @@ namespace  KKB
 
 
 #if  defined(FFTW_AVAILABLE)
-  fftwf_plan  fftwCreateTwoDPlan (kkint32           height,
-                                  kkint32           width,
+  fftwf_plan  fftwCreateTwoDPlan (kkint32         height,
+                                  kkint32         width,
                                   fftwf_complex*  src,
                                   fftwf_complex*  dest,
                                   int             sign,
                                   int             flag
                                  );
 
-  fftwf_plan  fftwCreateOneDPlan (kkint32           len,
+  fftwf_plan  fftwCreateOneDPlan (kkint32         len,
                                   fftwf_complex*  src,
                                   fftwf_complex*  dest,
                                   int             sign,

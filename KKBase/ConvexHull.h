@@ -103,16 +103,17 @@ namespace KKB
       
     kkint32 RelativeCCW (Point&  sp,
                          Point&  ep,
-                         Point&  p);
+                         Point&  p
+                        );
 
     static 
     double TriangleArea (Point& a, 
                          Point& b, 
-		                 Point& c);
+                         Point& c
+                        );
 
 
     kkint32       convexArea;
-
     PointListPtr  upperPoints;
     PointListPtr  lowerPoints;
     PointListPtr  upper;

@@ -19,10 +19,11 @@
 using namespace std;
 
 #if defined(FFTW_AVAILABLE)
-#  include  <fftw.h>
-#else
-#  include  "kku_fftw.h"
+#  include  <fftw3.h>
+//#else
+//#  include  "kku_fftw.h"
 #endif
+#  include  "kku_fftw.h"
 
 #include "Raster.h"
 

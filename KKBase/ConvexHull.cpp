@@ -33,11 +33,11 @@ using namespace KKB;
 
 ConvexHull::ConvexHull ():
   MorphOp (),
-  convexArea   (0),
-  upperPoints  (NULL),
-  lowerPoints  (NULL),
-  upper        (NULL),
-  lower        (NULL)
+  convexArea  (0),
+  upperPoints (NULL),
+  lowerPoints (NULL),
+  upper       (NULL),
+  lower       (NULL)
 {
   AllocateMemory ();
 }
@@ -87,6 +87,8 @@ RasterPtr  ConvexHull::PerformOperation (RasterConstPtr  _image)
  */
 RasterPtr  ConvexHull::Filter (const Raster&  src)
 {
+  SetSrcRaster (&src);
+
   kkint32 w = src.Width ();
   kkint32 h = src.Height ();
         
@@ -248,7 +250,7 @@ void  ConvexHull::CalcConvexArea (RasterPtr   raster)
 
     for  (topRow = h - 1;  topRow >= 0;  topRow--)
     {
-      if  (rows[topRow][col] > 0)
+      if  (ForegroundPixel (rows[topRow][col]))
         break;
     }
 
@@ -257,7 +259,7 @@ void  ConvexHull::CalcConvexArea (RasterPtr   raster)
 
       for  (botRow = 0; botRow < h; botRow++)
       {
-        if  (rows[botRow][col] > 0)
+        if  (ForegroundPixel (rows[botRow][col]))
           break;
       }
 
@@ -741,7 +743,7 @@ void  ConvexHull::Store (const Raster&  input)
     kkint32 row;
     for  (row = h - 1;  row >= 0;  --row)
     {
-      if  (rows[row][col] > 0)
+      if  (ForegroundPixel (row, col))
       {
         PointPtr u = new Point (row, col);
         upperPoints->Add (u);
@@ -753,7 +755,7 @@ void  ConvexHull::Store (const Raster&  input)
     {
       for  (row = 0; row < h; row++)
       {
-        if  (rows[row][col] > 0)
+        if  (ForegroundPixel (row, col))
         {
           PointPtr l = new Point (row, col);
           lowerPoints->AddFirst (l);

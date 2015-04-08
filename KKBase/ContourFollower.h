@@ -87,6 +87,7 @@ namespace KKB
                        kkint32 col
                       );
 
+    uchar    backgroundPixelTH;  /**< Will come from the raster instance that we are processing. */
     kkint32  curCol;
     kkint32  curRow;
     kkint32  fromDir;
