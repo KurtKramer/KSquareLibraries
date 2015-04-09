@@ -6,7 +6,7 @@
 #define  _MORPHOPEREROSION_
 
 #include "KKBaseTypes.h"
-#include "MorphOp.h"
+#include "MorphOpStruct.h"
 
 
 #if  !defined(_RASTER_)
@@ -21,7 +21,7 @@ namespace  KKB
 
 namespace  KKB
 {
-  class  MorphOpErosion :  public MorphOp
+  class  MorphOpErosion :  public MorphOpStruct
   {
   public:
     MorphOpErosion (StructureType  _structure,
@@ -37,12 +37,6 @@ namespace  KKB
     kkint32  MemoryConsumedEstimated ();
 
   private:
-    bool  Fit (kkint32  row, 
-               kkint32  col
-              )  const;
-
-    StructureType  structure;
-    kkuint16       structureSize;
   };  /* MorphOpErosion */
 
   typedef  MorphOpErosion*  MorphOpErosionPtr;

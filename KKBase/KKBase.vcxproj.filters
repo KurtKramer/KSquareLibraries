@@ -174,6 +174,9 @@
     <ClCompile Include="MorphOpDilation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MorphOpStruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -360,6 +363,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MorphOpDilation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MorphOpStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

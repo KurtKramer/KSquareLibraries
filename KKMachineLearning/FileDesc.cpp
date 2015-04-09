@@ -75,8 +75,7 @@ void  FileDesc::FinalCleanUp ()
   }
   blocker->EndBlock ();
 
-  GoalKeeper::Destroy (blocker);
-  blocker = NULL;
+  GoalKeeper::Destroy (blocker);  blocker = NULL;
 }  /* FinalCleanUp */
 
 
@@ -143,10 +142,6 @@ FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
 
 
 
-
-
-
-
 void  FileDesc::AddAAttribute (const Attribute&  attribute)
 {
   attributes.PushOnBack (new Attribute (attribute));
@@ -189,9 +184,9 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
 
 
 
-void  FileDesc::AddClasses (MLClassList&  classesToAdd)
+void  FileDesc::AddClasses (const MLClassList&  classesToAdd)
 {
-  MLClassList::iterator  idx;
+  MLClassList::const_iterator  idx;
   for  (idx = classesToAdd.begin ();  idx != classesToAdd.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
@@ -279,14 +274,14 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
 
 
 
-MLClassPtr  FileDesc::LookUpImageClassByName (const KKStr&  className)
+MLClassPtr       FileDesc::LookUpMLClassByName (const KKStr&  className)
 {
   return  classes.LookUpByName (className);
 }
 
 
 
-MLClassPtr  FileDesc::LookUpUnKnownImageClass ()
+MLClassPtr       FileDesc::LookUpUnKnownMLClass ()
 {
   return  classes.GetUnKnownClass ();
 }
@@ -712,7 +707,8 @@ kkint32  FileDesc::GetFieldNumFromAttributeName (const KKStr&  attributeName)  c
 
 /**
  * @brief Allows the user to quickly determine if there are no nominal fields.
- * @details  Example use is in CrossValidation application, by using this method it can quickly determine if it is worth while using encoding.
+ * @details  Example use is in CrossValidation application, by using this method it can quickly determine
+ * if it is worth while using encoding.
  */
 bool  FileDesc::AllFieldsAreNumeric ()  const
 {
@@ -805,4 +801,10 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
   return  GetExistingFileDesc (f);
 }  /* MergeSymbolicFields */
 
+
+
+const  AttributeTypeVector&  FileDesc::AttributeVector ()  const
+{
+  return  attributeVector;
+}
 

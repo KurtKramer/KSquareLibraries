@@ -45,15 +45,15 @@ namespace KKMachineLearning
                                       );
 
 
-    virtual  FeatureVectorListPtr  LoadFile (const KKStr&          _fileName,
-                                             const FileDescPtr     _fileDesc,
-                                             MLClassList&          _classes, 
-                                             istream&              _in,
-                                             kkint32               _maxCount,    // Maximum # images to load.
-                                             VolConstBool&  _cancelFlag,
-                                             bool&                 _changesMade,
-                                             KKStr&                _errorMessage,
-                                             RunLog&               _log
+    virtual  FeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
+                                             const FileDescPtr  _fileDesc,
+                                             MLClassList&       _classes, 
+                                             istream&           _in,
+                                             kkint32            _maxCount,    // Maximum # images to load.
+                                             VolConstBool&      _cancelFlag,
+                                             bool&              _changesMade,
+                                             KKStr&             _errorMessage,
+                                             RunLog&            _log
                                             );
 
 
@@ -72,7 +72,6 @@ namespace KKMachineLearning
 
   private:
     static  FeatureFileIOUCI  driver;
-
   };  /* FeatureFileIOUCI*/
 
 }  /* namespace KKMachineLearning */

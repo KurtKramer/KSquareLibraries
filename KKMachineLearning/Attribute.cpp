@@ -21,6 +21,7 @@ using namespace std;
 using namespace KKB;
 
 #include "Attribute.h"
+#include "MLLTypes.h"
 #include "FeatureNumList.h"
 #include "MLClass.h"
 using namespace KKMachineLearning;

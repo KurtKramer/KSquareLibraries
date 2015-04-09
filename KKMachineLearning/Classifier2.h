@@ -12,6 +12,13 @@
 
 namespace  KKMachineLearning
 {
+#if  !defined(_CLASSPROB_)
+class  ClassProb;
+typedef  ClassProb*  ClassProbPtr;
+class  ClassProbList;
+typedef  ClassProbList*  ClassProbListPtr;
+#endif
+
 
 #ifndef  _FeatureVector_Defined_
 class  FeatureVector;
@@ -27,7 +34,14 @@ typedef  FeatureVectorList*  FeatureVectorListPtr;
 #ifndef  _MLCLASS_
 class  MLClass;
 typedef  MLClass*  MLClassPtr;
+typedef  MLClass const *  MLClassPtr     ;
 
+class  MLClassList;
+typedef  MLClassList*  MLClassListPtr;
+#endif
+
+
+#if  !defined(_MLClassConstListDefined_)
 class  MLClassList;
 typedef  MLClassList*  MLClassListPtr;
 #endif
@@ -39,25 +53,34 @@ typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
 #endif
 
 
-#ifndef  _TRAININGPROCESS2_
+#ifndef  _TrainingProcess2_Defined_
 class  TrainingProcess2;
 typedef  TrainingProcess2*  TrainingProcess2Ptr;
 #endif
 
 
+#ifndef  _TrainingProcess2List_Defined_
+class  TrainingProcess2List;
+typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
+#endif
+
+  class  Classifier2List;
+  typedef  Classifier2List*  Classifier2ListPtr;
 
   class  Classifier2
   {
   public:
+    typedef  Classifier2*  Classifier2Ptr;
+
     Classifier2 (TrainingProcess2Ptr  _trainer,
                  RunLog&              _log
                 );
 
     virtual  ~Classifier2 ();
 
+    bool                 Abort           ()  const  {return abort;}
+    const KKStr&         ConfigRootName  ()  const  {return configRootName;}
     SVM_SelectionMethod   SelectionMethod ()  const;
-
-    bool                 Abort ()  {return abort;}
 
     MLClassPtr           ClassifyAImage    (FeatureVector&  example);
 
@@ -123,6 +146,22 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
     virtual
     kkint32 MemoryConsumedEstimated ()  const;
 
+
+    void  PredictRaw (FeatureVectorPtr  example,
+                      MLClassPtr     &  predClass,
+                      double&           dist
+                     );
+
+
+
+    /**
+     *@brief  Returns the distribution of the training data used to build the classifier.
+     *@details  The caller will NOT own this list.  Ownership will remain with 'trainingProcess'
+     * member of this class.
+     */
+    ClassProbList const *  PriorProbability ()  const;
+
+
     /**
      *@brief  For a given feature vector return back the probabilities and votes for each class.
      *@details
@@ -137,6 +176,18 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
                                                double*             probabilities
                                               );
 
+    
+    ClassProbListPtr     ProbabilitiesByClass (FeatureVectorPtr  example);
+
+
+    void                 ProbabilitiesByClassDual (FeatureVectorPtr   example,
+                                                   KKStr&             classifier1Desc,
+                                                   KKStr&             classifier2Desc,
+                                                   ClassProbListPtr&  classifier1Results,
+                                                   ClassProbListPtr&  classifier2Results
+                                                  );
+
+
     void                 RetrieveCrossProbTable (MLClassList&  classes,
                                                  double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                                 );
@@ -149,6 +200,14 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
 
   private:
+    typedef  map<MLClassPtr     , Classifier2Ptr>      ClassClassifierIndexType;
+    typedef  pair<MLClassPtr     , Classifier2Ptr>     ClassClassifierPair;
+    typedef  multimap<Classifier2Ptr,MLClassPtr     >  ClassifierClassIndexType;
+    typedef  pair<Classifier2Ptr,MLClassPtr     >      ClassifierClassPair;
+
+
+    void             BuildSubClassifierIndex ();
+
     MLClassPtr  ClassifyAImageOneLevel (FeatureVector&  example);
  
     MLClassPtr  ClassifyAImageOneLevel (FeatureVector&  example,
@@ -164,25 +223,49 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
                                         double&         breakTie
                                        );
 
+    Classifier2Ptr  LookUpSubClassifietByClass (MLClassPtr c);
 
-    //************************************************************
-    // Variables that are Global to Classifier2 application. *
-    //************************************************************
+    MLClassListPtr  PredictionsThatHaveSubClassifier (ClassProbListPtr  predictions);
+
+    ClassProbListPtr  ProcessSubClassifersMethod1 (FeatureVectorPtr  example,
+                                                   ClassProbListPtr  upperLevelPredictions
+                                                  );
+
+    ClassProbListPtr  ProcessSubClassifersMethod2 (FeatureVectorPtr  example,
+                                                   ClassProbListPtr  upperLevelPredictions
+                                                  );
+
+    ClassProbListPtr  GetListOfPredictionsForClassifier (Classifier2Ptr    classifier,
+                                                         ClassProbListPtr  predictions
+                                                        );
+
+
 
     bool                   abort;
 
+    KKStr                  configRootName;  /**< Name from 'TrainingConfiguration2' instance that was used to build the 
+                                             * 'TrainingProcess2'instance that this instance will refer to.
+                                             */
+
     bool                   featuresAlreadyNormalized;
 
+    RunLog&                log;
+  
     MLClassListPtr         mlClasses;          /**< We will own the MLClass objects in this
                                                 *   list.  Will be originally populated by
                                                 *   TrainingConfiguration2 construction.
                                                 */
-    RunLog&                log;
   
-    MLClassPtr             noiseImageClass;    /**< Point to class that represents Noise Images
+    MLClassPtr             noiseMLClass;    /**< Point to class that represents Noise Images
                                                 *  The object pointed to will also be included 
                                                 *  in mlClasses.
                                                 */
+
+    Classifier2ListPtr     subClassifiers;
+
+    ClassClassifierIndexType classClassifierIndex;
+    ClassifierClassIndexType classifierClassIndex;
+
     ModelPtr               trainedModel;
 
     ModelOldSVMPtr         trainedModelOldSVM;
@@ -191,10 +274,34 @@ typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
     TrainingProcess2Ptr    trainingProcess;
 
-    MLClassPtr             unKnownImageClass;
+    MLClassPtr             unKnownMLClass;
   };
   typedef  Classifier2*   Classifier2Ptr;
-}  /* namespace  KKMachineLearning */
+
+#define  _Classifier2_Defined_
+
+
+
+
+  class  Classifier2List:  public KKQueue<Classifier2>
+  {
+  public:
+    Classifier2List (bool _owner);
+    virtual  ~Classifier2List ();
+
+    Classifier2Ptr  LookUpByName (const KKStr&  rootName)  const;
+  };
+  typedef  Classifier2List*  Classifier2ListPtr;
+
+#define  _Classifier2List_Defined_
+
+
+
+}  /* namespace  MLL */
+
+
+
+
 
 
 #define  _Classifier2Defined_

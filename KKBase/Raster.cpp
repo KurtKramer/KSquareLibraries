@@ -36,10 +36,12 @@ using namespace std;
 #include "GoalKeeper.h"
 #include "Histogram.h"
 #include "ImageIO.h"
-#include "kku_fftw.h"
 #include "KKException.h"
+#include "kku_fftw.h"
 #include "Matrix.h"
 #include "MorphOpBinarize.h"
+#include "MorphOpDilation.h"
+#include "MorphOpErosion.h"
 #include "MorphOpStretcher.h"
 #include "OSservices.h"
 #include "SimpleCompressor.h"
@@ -58,13 +60,13 @@ void  Raster::Initialize ()
   if  (!rasterInitialized)
   {
     rasterInitialized = true;
-    atexit (Raster::FinaleCleanUp);
+    atexit (Raster::FinalCleanUp);
   }
   goalKeeper->EndBlock ();
 }
 
 
-void  Raster::FinaleCleanUp ()
+void  Raster::FinalCleanUp ()
 {
   GoalKeeper::Destroy (goalKeeper);
   goalKeeper = NULL;
@@ -1734,6 +1736,32 @@ void  Raster::Dilation (MaskTypes  mask)
 
 
 
+void  Raster::Dilation (MorphOp::StructureType  _structure,
+                        kkuint16                _structureSize,
+                        kkint32                 _foregroundCountTH
+                       )
+{
+  MorphOpDilation  dialator (_structure, _structureSize);
+  dialator.ForegroundCountTH (_foregroundCountTH);
+  RasterPtr tempRaster = dialator.PerformOperation (this);
+
+  delete  greenArea;
+  delete  green;
+
+  foregroundPixelCount = tempRaster->ForegroundPixelCount ();
+
+  greenArea = tempRaster->greenArea;
+  green     = tempRaster->green;
+
+  tempRaster->greenArea = NULL;
+  tempRaster->green     = NULL;
+
+  delete  tempRaster;
+} /* Dilation */
+
+
+
+
 
 
 void  Raster::Dilation (RasterPtr  dest)  const
@@ -1838,8 +1866,8 @@ void  Raster::Dilation (RasterPtr  dest)  const
 
 
 void  Raster::Dilation (RasterPtr  dest,
-                         MaskTypes  mask
-                        )
+                        MaskTypes  mask
+                       )
                           const
 {
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
@@ -2319,6 +2347,30 @@ void  Raster::Erosion (MaskTypes  mask)
 
 
 
+
+void  Raster::Erosion (MorphOp::StructureType  _structure,
+                       kkuint16                _structureSize,
+                       kkint32                 _backgroundCountTH
+                      )
+{
+  MorphOpErosion  eroder (_structure, _structureSize);
+  eroder.BackgroundCountTH (_backgroundCountTH);
+  RasterPtr tempRaster = eroder.PerformOperation (this);
+  delete  greenArea;
+  delete  green;
+  foregroundPixelCount = tempRaster->ForegroundPixelCount ();
+
+  greenArea = tempRaster->greenArea;
+  green     = tempRaster->green;
+
+  tempRaster->greenArea = NULL;
+  tempRaster->green     = NULL;
+
+  delete  tempRaster;
+} /* Erosion */
+
+
+
 void  Raster::Erosion (RasterPtr  dest)  const
 {
   if  ((dest->Height () != height)  |  (dest->Width () != width))
@@ -2465,6 +2517,355 @@ void  Raster::Erosion (RasterPtr  dest,
 
 
 
+
+void  Raster::ErosionChanged (MaskTypes  mask, 
+                              kkint32      row, 
+                              kkint32      col
+                             )
+{
+  kkint32  r;
+  kkint32  c;
+
+  kkint32  bias = biases[mask];
+
+  kkint32  maskRowStart ;
+  kkint32  maskRowEnd  ; 
+  kkint32  maskColStart ;
+  kkint32  maskColEnd  ;
+  maskRowStart = 0 - bias;
+  maskRowEnd   = 0+ bias;
+  maskColStart = 0 - bias;
+  maskColEnd   = 0 + bias;
+  
+  kkint32  maskRow;
+  kkint32  maskCol;
+  bool  fit;
+
+  foregroundPixelCount = 0;
+  Raster      tempRaster (*this);
+  uchar**     tempGreen = tempRaster.Green ();
+  uchar*      tempRowData = NULL;
+  MaskShapes  m = (MaskShapes)maskShapes[mask];
+
+  for  (r = row- 150;  r < row+150;  r++)
+  { 
+    if (r<0)
+    r =0;
+    maskColStart = 0 - bias;
+    maskColEnd   = 0 + bias;
+    
+    tempRowData = tempGreen[r];
+
+    for  (c = col - 10; c < col + 10; c++)
+    {
+      if  (c < 0)
+        c = 0;
+      // cout << maskColStart <<" ";
+        
+      if  (ForegroundPixel (green[r][c]))
+      {
+        fit = true;
+        if  ((maskRowStart <  row - 100)  || 
+             (maskRowEnd   >= row + 100)  ||  
+             (maskColStart <  col - 10)   ||
+             (maskColStart >= col + 10)
+            )
+        {
+          fit = false;
+        }
+
+        else if  (m == Square)
+        {
+          for  (maskRow = row - 150;  ((maskRow <= row + 150)  &&  fit);  maskRow++)
+          {
+            tempRowData =  tempGreen[maskRow];
+            for  (maskCol = col - 10;  maskCol <= col + 10 ; maskCol++)
+            {
+              if  (BackgroundPixel (tempRowData[maskCol]))
+              {
+                fit = false;
+                break;
+              }
+            }
+          } 
+        }
+
+        else
+        {
+          //  Cross Structure
+          for  (maskRow = row-20;  maskRow <= row+20;  maskRow++)
+          {
+            if  (BackgroundPixel (tempGreen[maskRow][c]))
+            {
+              fit = false;
+              break;
+            }
+          }
+
+          tempRowData =  tempGreen[maskRow];
+          for  (maskCol = col-20;  maskCol <= col+20;  maskCol++)
+          {
+            if  (BackgroundPixel (tempRowData[maskCol]))
+            {
+              fit = false;
+              break;
+            }
+          }
+        }
+
+        if  (!fit)
+          green[r][c] = backgroundPixelValue;
+        else
+          foregroundPixelCount++;
+      }
+
+      maskColStart++;
+      maskColEnd++;
+    }   /* End of for(c) */
+
+    maskRowStart++;
+    maskRowEnd++;
+  }   /* End of for(r) */
+
+}  /* ErosionChanged */
+
+
+
+void  Raster::ErosionChanged1 (MaskTypes  mask, 
+                               kkint32      row, 
+                               kkint32      col
+                              )
+{
+  kkint32  r;
+  kkint32  c;
+
+  kkint32  bias = biases[mask];
+
+  kkint32  maskRowStart = 0;
+  kkint32  maskRowEnd   = 0; 
+  kkint32  maskColStart = 0;
+  kkint32  maskColEnd   = 0;
+
+  maskRowStart = 0 - bias;
+  maskRowEnd   = 0 + bias;
+  maskColStart = 0 - bias;
+  maskColEnd   = 0 + bias;
+  
+  kkint32  maskRow;
+  kkint32  maskCol;
+  bool  fit;
+
+  foregroundPixelCount = 0;
+
+  Raster  tempRaster (*this);
+
+  uchar**     tempGreen   = tempRaster.Green ();
+  uchar*      tempRowData = NULL;
+  MaskShapes  m           = (MaskShapes)maskShapes[mask];
+
+  for  (r = row- 20;  r < row+20;  r++)
+  { 
+    if  (r < 0)
+      r =0;
+  
+    maskColStart = 0 - bias;
+    maskColEnd   = 0 + bias;
+    
+    tempRowData = tempGreen[r];
+
+    for  (c = col - 150; c < col + 150; c++)
+    {
+      if  (c < 0)
+        c=0;
+      // cout << maskColStart <<" ";
+        
+      if  (ForegroundPixel (green[r][c]))
+      {
+        fit = true;
+        if  ((maskRowStart <  row - 50)  || 
+             (maskRowEnd   >= row + 50)  ||  
+             (maskColStart <  col - 100) ||
+             (maskColStart >= col+100)
+            )
+        {
+          fit = false;
+        }
+
+        else if  (m == Square)
+        {
+          for  (maskRow = row - 20;  ((maskRow <= row + 20)  &&  fit);  maskRow++)
+          {
+            tempRowData =  tempGreen[maskRow];
+            for  (maskCol = col - 150;  maskCol <= col + 150 ; maskCol++)
+            {
+              if  (BackgroundPixel (tempRowData[maskCol]))
+              {
+                fit = false;
+                break;
+              }
+            }
+          } 
+        }
+
+        else
+        {
+          //  Cross Structure
+          for  (maskRow = row-20;  maskRow <= row+20;  maskRow++)
+          {
+            if  (BackgroundPixel (tempGreen[maskRow][c]))
+            {
+              fit = false;
+              break;
+            }
+          }
+
+          tempRowData =  tempGreen[maskRow];
+          for  (maskCol = col-20;  maskCol <= col+20;  maskCol++)
+          {
+            if  (BackgroundPixel (tempRowData[maskCol]))
+            {
+              fit = false;
+              break;
+            }
+          }
+        }
+
+        if  (!fit)
+          green[r][c] = backgroundPixelValue;
+        else
+          foregroundPixelCount++;
+      }
+
+      maskColStart++;
+      maskColEnd++;
+    }   /* End of for(c) */
+
+    maskRowStart++;
+    maskRowEnd++;
+  }   /* End of for(r) */
+}  /* ErosionChanged1 */
+
+
+
+void  Raster::ErosionBoundary (MaskTypes  mask, 
+                               kkint32    blobrowstart, 
+                               kkint32    blobrowend, 
+                               kkint32    blobcolstart, 
+                               kkint32    blobcolend
+                              )
+{
+  kkint32  r;
+  kkint32  c;
+
+  kkint32  bias = biases[mask];
+
+  kkint32  maskRowStart = 0 - bias;
+  kkint32  maskRowEnd   = 0 + bias;
+  kkint32  maskColStart = 0 - bias;
+  kkint32  maskColEnd   = 0 + bias;
+
+  kkint32  maskRow = 0;
+  kkint32  maskCol = 0;
+  bool  fit    = false;
+
+  foregroundPixelCount = 0;
+  Raster  tempRaster (*this);
+
+  uchar**     tempGreen   = tempRaster.Green ();
+  uchar*      tempRowData = NULL;
+
+  MaskShapes  m = (MaskShapes)maskShapes[mask];
+
+  for  (r = 0;  r < height;  r++)
+  {
+    //if ((r>= blobrowstart+30) && (r<= blobrowend-30))
+    // {
+    // }
+  // else
+  // {
+    maskColStart = 0 - bias;
+    maskColEnd   = 0 + bias;
+
+    tempRowData = tempGreen[r];
+
+    for  (c = 0; c < width; c++)
+    {
+      if  ((c >= blobcolstart + 100)  &&  (c <= blobcolend - 100))
+      {
+      }
+      else
+      {
+        if  (ForegroundPixel (green[r][c]))
+        {
+          fit = true;
+          if  ((maskRowStart <  0)       || 
+               (maskRowEnd   >= height)  ||  
+               (maskColStart <  0)       ||
+               (maskColStart >= width)
+              )
+          {
+            fit = false;
+          }
+
+          else if  (m == Square)
+          {
+            for  (maskRow = maskRowStart;  ((maskRow <= maskRowEnd)  &&  fit);  maskRow++)
+            {
+              tempRowData =  tempGreen[maskRow];
+              for  (maskCol = maskColStart;  maskCol <= maskColEnd;  maskCol++)
+              {
+                if  (BackgroundPixel (tempRowData[maskCol]))
+                {
+                  fit = false;
+                  break;
+                }
+              }
+            }
+          }
+          else
+          {
+            //  Cross Structure
+            for  (maskRow = maskRowStart;  maskRow <= maskRowEnd;  maskRow++)
+            {
+              if  (BackgroundPixel (tempGreen[maskRow][c]))
+              {
+                fit = false;
+                break;
+              }
+            }
+
+            tempRowData =  tempGreen[maskRow];
+            for  (maskCol = maskColStart;  maskCol <= maskColEnd;  maskCol++)
+            {
+              if  (BackgroundPixel (tempRowData[maskCol]))
+              {
+                fit = false;
+                break;
+              }
+            }
+          }
+
+          if  (!fit)
+            green[r][c] = backgroundPixelValue;
+          else
+            foregroundPixelCount++;
+        }
+
+        maskColStart++;
+        maskColEnd++;
+      }
+    }   /* End of for(c) */
+
+    maskRowStart++;
+    maskRowEnd++;
+    //}
+  }   /* End of for(r) */
+
+}  /* ErosionBoundary */
+
+
+
+
 RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
 {
   kkint32  r;
@@ -2476,7 +2877,7 @@ RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
   uchar**     destGreen = erodedRaster->Green ();
   uchar*      destRow   = NULL;
 
-  kkint32  erodedForegroundPixelCount = 0;
+  kkint32  erodedForegroundPixelCount = foregroundPixelCount;
 
   for  (r = 0;  r < height;  ++r)
   {
@@ -2491,10 +2892,6 @@ RasterPtr  Raster::CreateErodedImage (MaskTypes  mask)  const
         {
           destRow[c] = backgroundPixelValue;
           erodedForegroundPixelCount--;
-        }
-        else
-        {
-          ++erodedForegroundPixelCount;
         }
       }
     }  /* for (c) */
@@ -2678,8 +3075,6 @@ void  Raster::Edge (RasterPtr  dest)
 
 
 
-
-
 inline
 kkint32 Raster::BlobId (kkint32  row,
                       kkint32  col
@@ -2698,9 +3093,9 @@ kkint32 Raster::BlobId (kkint32  row,
 
 
 kkint32  Raster::NearestNeighborUpperLeft (kkint32 row,
-                                         kkint32 col,
-                                         kkint32 dist
-                                        )
+                                           kkint32 col,
+                                           kkint32 dist
+                                          )
 {
   kkint32  nearestBlob = -1;
   kkint32 c, r, startCol, blobID;
@@ -3480,7 +3875,7 @@ void   Raster::CalcAreaAndIntensityFeatures (kkint32&  area,
   long  totalPixelValues = 0;
 
   area               = 0;
-  weightedSize        = 0.0f;
+  weightedSize       = 0.0f;
   areaWithWhiteSpace = 0;
 
 
@@ -9350,6 +9745,29 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
 
   return  result;
 }  /* CreateGrayScaleKLTOnMaskedArea */
+
+
+
+void   Raster::WhiteOutBackground ()
+{
+  for  (kkint32 r = 0;  r < height;  ++r)
+  {
+    for  (kkint32 c = 0;  c < width;  ++c)
+    {
+      if  (BackgroundPixel (r, c))
+      {
+        green[r][c] = backgroundPixelValue;
+        if  (color)
+        {
+          red[r][c] = backgroundPixelValue;
+          blue[r][c] = backgroundPixelValue;
+        }
+      }
+    }
+  }
+}  /* WhiteOutBackground */
+
+
 
 
 

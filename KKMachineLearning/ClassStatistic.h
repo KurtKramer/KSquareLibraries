@@ -1,13 +1,16 @@
-#ifndef  _CLASSSTATISTIC_
+#if !defined(_CLASSSTATISTIC_)
+#define  _CLASSSTATISTIC_
 
 #include "KKBaseTypes.h"
-#include "MLClass.h"
 #include "KKStr.h"
 
+#include "MLClass.h"
 
 namespace KKMachineLearning
 {
-
+  /**
+   *@brief Used by routines that retrieve Class statistics from FeatureVectorList instances.
+   */
   class  ClassStatistic 
   {
   public:
@@ -24,19 +27,15 @@ namespace KKMachineLearning
 
     const KKStr&     Name       ()  const;
 
-
     const  ClassStatistic&  operator+= (const ClassStatistic&  right);
-
 
   private:
     MLClassPtr  mlClass;   /**< Does not own the mlClass object. */
-    kkuint32    count;     /**< represents the number of PostLarvaeFV instances in a FeatureVectorList that point to mageClass */
+    kkuint32    count;     /**< represents the number of FeatureVector derived instances in a FeatureVectorList that point to mageClass */
   };
 
 
-
   typedef  ClassStatistic*  ClassStatisticPtr;
-
 
 
   class  ClassStatisticList:  public KKQueue<ClassStatistic> 
@@ -44,7 +43,7 @@ namespace KKMachineLearning
   public:
     ClassStatisticList (bool  _owner);
 
-    ClassStatisticPtr  LookUpByImageClass (MLClassPtr  mlClass)  const;
+    ClassStatisticPtr  LookUpByMLClass (MLClassPtr  mlClass)  const;
 
     void  SortByClassName  ();
     void  SortByCount  ();
@@ -57,7 +56,6 @@ namespace KKMachineLearning
     kkint32 operator[]  (MLClassPtr  mlClass);
     const  ClassStatisticList&  operator+= (const ClassStatisticList&  right);
 
-
   private:
     class  ClassStatisticSortComparrison;
 
@@ -66,16 +64,10 @@ namespace KKMachineLearning
     class  ClassStatSortByCount;
   };  /* ClassStatisticList */
 
-
-
   typedef  ClassStatisticList*  ClassStatisticListPtr;
-
-
-
-  #define  _CLASSSTATISTIC_
-
 }  /* namespace KKMachineLearning */
 
+#define  _ClassStatistic_Defined_
 
 #endif
 

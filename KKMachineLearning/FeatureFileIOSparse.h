@@ -1,12 +1,5 @@
 #ifndef  _FEATUREFILEIOSPARSE_
 #define  _FEATUREFILEIOSPARSE_
-/**
-  @file  FeatureFileIOSparse.cpp
-  ************************************************************************************************
-  *  @author  Kurt Kramer                                                                        *
-  *  Date:  2009-04-16                                                                           *
-  ************************************************************************************************
-  */
 
 #include  "FeatureFileIO.h"
 
@@ -88,7 +81,7 @@ namespace KKMachineLearning
   private:
     static  FeatureFileIOSparse  driver;
 
-  };
+  };  /* FeatureFileIOSparse */
 
 }  /* namespace KKMachineLearning */
 

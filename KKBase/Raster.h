@@ -60,17 +60,6 @@ namespace KKB
   typedef  MorphOp::MaskTypes      MaskTypes;
   typedef  MorphOp::StructureType  StructureType;
 
-  //typedef  enum  
-  //{
-  //  CROSS3   = 0,
-  //  CROSS5   = 1,
-  //  SQUARE3  = 2,
-  //  SQUARE5  = 3,
-  //  SQUARE7  = 4,
-  //  SQUARE9  = 5,
-  //  SQUARE11 = 6
-  //}  MaskTypes;
-
 
   typedef  enum  {RedChannel, GreenChannel, BlueChannel}  ColorChannels;
 
@@ -119,8 +108,8 @@ namespace KKB
     Raster (const Raster&  _raster);  /**< @brief Copy Constructor */
 
     /**
-     *@brief Constructs a blank  image with given dimensions; all pixels will be initialized to 0.  
-     *@details  When working with  images pixel value of '0' = Background and '255'= foreground.
+     *@brief Constructs a blank image with given dimensions; all pixels will be initialized to 0.
+     *@details  When working with images pixel value of '0' = Background and '255'= foreground.
      *          The green channel will be used to represent the  value.  When these raster images
      *          are saved to a image file such as a BMP file the pixel value of 0 will point to the color
      *          value of (255, 255, 255) and  pixel value 255 will point to the color value of (0, 0, 0).
@@ -144,14 +133,14 @@ namespace KKB
 
     /**
      *@brief  Constructs a Raster from a BMP image loaded from disk.
-     *@details If BMP Image is a  value pixel values will be reversed.  See description of
+     *@details If BMP Image is a gray-scale value pixel values will be reversed. See description of
      *         constructor.
      */
     Raster (const BmpImage&  _bmpImage);
 
 
     /**
-     *@brief Constructs a new Raster using a subset of the specified Raster as its source.  The
+     *@brief Constructs a new Raster using a subset of the specified Raster as its source. The
      *      dimensions of the resultant raster will be '_height', and '_width'
      */
     Raster (const Raster& _raster,  /**<  Source Raster                             */
@@ -191,7 +180,7 @@ namespace KKB
 
     /**
      *@brief  Construct a raster object that will utilize a image already in memory.
-     *@details  This instance will NOT OWN the raster data; It will only point to it.  That means when this instance 
+     *@details  This instance will NOT OWN the raster data; it will only point to it.  That means when this instance 
      * is destroyed the raster data will still be left intact.
      *@param[in]  _height  Height of image.
      *@param[in]  _width   Width of image.
@@ -616,18 +605,24 @@ namespace KKB
 
     RasterPtr     CreateDilatedRaster ()  const;
 
+    RasterPtr     CreateDilatedRaster (MaskTypes  mask)  const;
+
     void          Dilation ();
 
     void          Dilation (RasterPtr  dest)  const;
 
-    void          Dilation (RasterPtr  dest,
-                             MaskTypes  mask
-                            )
-                              const;
 
-
-    RasterPtr     CreateDilatedRaster (MaskTypes  mask)  const;
     void          Dilation (MaskTypes  mask);
+
+    void          Dilation (RasterPtr  dest,
+                            MaskTypes  mask
+                           )
+                            const;
+
+    void          Dilation (MorphOp::StructureType  _structure,
+                            kkuint16                _structureSize,
+                            kkint32                 _foregroundCountTH
+                           );
 
     RasterPtr     CreateErodedImage (MaskTypes  mask)  const;
 
@@ -845,6 +840,10 @@ namespace KKB
 
     void          Erosion (MaskTypes  mask);
 
+    void          Erosion (MorphOp::StructureType  _structure,
+                           kkuint16                _structureSize,
+                           kkint32                 _backgroundCountTH
+                          );
 
     /**
      *@brief  Place into destination a eroded version of this instances image.
@@ -855,6 +854,10 @@ namespace KKB
                            MaskTypes  mask
                           )
                             const;
+
+    void          ErosionChanged (MaskTypes  mask, kkint32 row, kkint32 col);
+    void          ErosionChanged1 (MaskTypes  mask, kkint32 row, kkint32 col);
+    void          ErosionBoundary (MaskTypes  mask, kkint32 blobrowstart, kkint32 blobrowend, kkint32 blobcolstart, kkint32 blobcolend);
 
 
     /**
@@ -913,7 +916,7 @@ namespace KKB
 
     
     /**
-     *@brief Will return a  image consisting of the specified color channel only.
+     *@brief Will return a gray-scale image consisting of the specified color channel only.
      */
     RasterPtr     ExtractChannel (ColorChannels  channel);
 
@@ -1139,6 +1142,12 @@ namespace KKB
     RasterPtr     ToColor ()  const;
 
     /**
+     *@brief  Sets all pixels that are in the Background Range ov values to BackgroundPixelValue.
+     */
+    void          WhiteOutBackground ();
+
+
+    /**
      *@brief Compresses the image in Raster using zlib library and returns a pointer to compressed data.
      *@details Will first write Rater data to a buffer that will be compressed by the Compressor class using the zlib library.
      *@code
@@ -1335,7 +1344,7 @@ namespace KKB
     static volatile GoalKeeperPtr  goalKeeper;
     static volatile bool           rasterInitialized;
     static void  Initialize ();
-    static void  FinaleCleanUp ();
+    static void  FinalCleanUp ();
     static void  AddRasterInstance (const RasterPtr  r);
     static void  RemoveRasterInstance (const RasterPtr  r);
   public:

@@ -114,6 +114,7 @@
     <ClCompile Include="MorphOpErosion.cpp" />
     <ClCompile Include="MorphOpMaskExclude.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
+    <ClCompile Include="MorphOpStruct.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
     <ClCompile Include="OSservices.cpp" />
     <ClCompile Include="PixelValue.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="MorphOpErosion.h" />
     <ClInclude Include="MorphOpMaskExclude.h" />
     <ClInclude Include="MorphOpStretcher.h" />
+    <ClInclude Include="MorphOpStruct.h" />
     <ClInclude Include="MsgQueue.h" />
     <ClInclude Include="OSservices.h" />
     <ClInclude Include="PixelValue.h" />

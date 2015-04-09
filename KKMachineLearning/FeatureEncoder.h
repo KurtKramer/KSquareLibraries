@@ -100,7 +100,6 @@ namespace KKMachineLearning
     kkint32           XSpaceNeededPerImage ()  {return xSpaceNeededPerImage;}
 
 
-
   private:
     /**  
      * Computes the number of XSpace nodes that need to be allocated to represent the contents of a specified FeatureVectorList.  Will

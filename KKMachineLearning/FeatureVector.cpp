@@ -16,15 +16,15 @@
 using namespace  std;
 
 #include "KKBaseTypes.h"
-#include "KKException.h"
 #include "DateTime.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FeatureVector.h"
+#include "ClassProb.h"
 #include "DuplicateImages.h"
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
@@ -57,19 +57,15 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
   featureData      (NULL),
   numOfFeatures    (_example.numOfFeatures),
   breakTie         (_example.breakTie),
-  mlClass       (_example.mlClass),
+  mlClass          (_example.mlClass),
   imageFileName    (_example.imageFileName),
-
   missingData      (false),
   origSize         (_example.origSize),
   predictedClass   (_example.predictedClass),
   probability      (_example.probability),
-
   trainWeight      (_example.trainWeight),
-
   validated        (_example.validated),
   version          (-1)
-
 {
   if  (_example.featureData)
   {
@@ -85,7 +81,6 @@ FeatureVector::~FeatureVector ()
 {
   delete[] featureData;  featureData = NULL;
 }
-
 
 
 
@@ -268,13 +263,13 @@ const KKStr&  FeatureVector::PredictedClassName ()  const
 
 
 
-const KKStr&  FeatureVector::ImageClassName  ()  const
+const KKStr&  FeatureVector::MLClassName  ()  const
 {
   if  (mlClass)
     return mlClass->Name ();
   else
     return KKStr::EmptyStr ();
-}  /* ImageClassName */
+}  /* MLClassName */
 
 
 
@@ -294,10 +289,6 @@ bool FeatureVector::operator== (FeatureVector &other_image)  const
 
   return true;
 }  /* operator== */
-
-
-
-
 
 
 
@@ -344,6 +335,16 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
 }
 
 
+/**
+ *@brief  Constructor that create a duplicate list of FeatureVectors;  
+ *@details 
+ *@code
+ *if (owner == true)  then will also
+ *   1) duplicate the cotents. That is each example in the list will be 
+ *      duplicated by calling the copy constructor.
+ *   2) And the new list will own these newly created examples.
+ *@endcode
+ */
 FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
                                       bool                      _owner
                                      ):
@@ -360,7 +361,17 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
 
 
 
-
+/**
+ *@brief  Constructs a list of examples that are a subset of the ones in _examples as dictated by _mlClasses
+ *@details
+ * The subset will consist of the examples who's mlClass is one of the ones in mlClasses. The new 
+ * instance created will not own the contents;  it will just point to the existing examples that were in
+ * '_examples'.
+ *
+ *@param[in] _mlClasses  List of classes that the subset of examples will come from.
+ *@param[in] _examples  Examples that the subset will be derived from.
+ *@param[in] _log  Logging file.
+ */
 FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
                                       FeatureVectorList&  _examples,
                                       RunLog&             _log
@@ -405,7 +416,12 @@ kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
 
 
 
-
+/**
+ *@details   
+ *  Determines if the other FeatreVectorList has the same underlining layout;  that is each
+ *  field is of the same type and meaning. This way we can determine if one list contains
+ *  Apples while the other contains Oranges.
+ */
 bool  FeatureVectorList::SameExceptForSymbolicData (const FeatureVectorList&  otherData)  const
 {
   return  fileDesc->SameExceptForSymbolicData (*(otherData.FileDesc ()), log);
@@ -606,8 +622,7 @@ void  FeatureVectorList::PushOnFront (FeatureVectorPtr  example)
 
   KKQueue<FeatureVector>::PushOnFront (example);
   curSortOrder = IFL_UnSorted;
-}  /* Push On Back */
-
+}  /* PushOnFront */
 
 
 
@@ -653,23 +668,13 @@ void  FeatureVectorList::AddSingleExample (FeatureVectorPtr  _imageFeatures)
 
 
 
-
-void  FeatureVectorList::RemoveDuplicateEntries ()
+void  FeatureVectorList::RemoveDuplicateEntries (bool allowDupsInSameClass)
 {
-  DuplicateImages  dupDetector (this, FileDesc (),  log);
-  if  (dupDetector.DuplicatesFound ())
-  {
-    FeatureVectorListPtr  dupsToDelete = dupDetector.ListOfExamplesToDelete ();
-
-    FeatureVectorList::iterator  idx;
-    for  (idx = dupsToDelete->begin ();  idx != dupsToDelete->end ();  idx++)
-    {
-      FeatureVectorPtr  example = *idx;
-      DeleteEntry (example);
-      if  (Owner ())
-        delete  example;
-    }
-  }
+  DuplicateImages  dupDetector (this,
+                                allowDupsInSameClass
+                                log
+                               );
+  dupDetector.PurgeDuplicates (this, NULL);
 }  /* RemoveDuplicateEntries */
 
 
@@ -693,7 +698,7 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
   }
   else
   {
-    // Since there are examples in both queues,  then they should have the same version number
+    // Since there are examples in both queues, then they should have the same version number
     // otherwise the version number of the resulting KKQueue will be undefined (-1).
     if  (examplesToAdd.Version () != Version ())
       Version (-1);
@@ -802,24 +807,41 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName ()
   FeatureVectorList::iterator  iIDX = this->begin ();
 
   FeatureVectorPtr  lastImage = *iIDX;  ++iIDX;
-  FeatureVectorPtr  example = NULL;
 
-  while  (iIDX != this->end ())
+
+  while  (iIDX != end ())
   {
-    example = *iIDX;
+    FeatureVectorPtr  example = *iIDX;  ++iIDX;
+
     if  (example->ImageFileName () == lastImage->ImageFileName ())
     {
       duplicateImages->PushOnBack (new KKStr (example->ImageFileName ()));
-      while  ((iIDX != this->end ())  &&   (example->ImageFileName () == lastImage->ImageFileName ()))
+
+      if  (iIDX != end ())
       {
         example = *iIDX;
         ++iIDX; 
       }
+      else
+      {
+        example = NULL;
+    }
+
+      while  ((example != NULL)   &&   (example->ImageFileName () == lastImage->ImageFileName ()))
+      {
+        if  (iIDX != end ())
+        {
+          example = *iIDX;
+    ++iIDX;
+  }
+        else
+        {
+          example = NULL;
+        }
+      }
     }
 
     lastImage = example;
-
-    ++iIDX;
   }
 
   return  duplicateImages;
@@ -1067,6 +1089,10 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
 
 
 
+/**
+ *@brief  Creates a duplicate of list and also dupliactes it contents.
+ *@return Duplicated list with hardcopy of its contents.
+ */
 FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
   FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true, log);
@@ -1118,13 +1144,14 @@ ClassStatisticListPtr  FeatureVectorList::GetClassStatistics ()  const
   MLClassPtr        mlClass = NULL;
   FeatureVectorPtr  example = NULL;
 
-  FeatureVectorList::const_iterator  idx  = begin ();
+  FeatureVectorList::const_iterator  idx;
+
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     example = *idx;
     mlClass = example->MLClass ();
     
-    ClassStatisticPtr  classStatistic = classStatistics->LookUpByImageClass (mlClass);
+    ClassStatisticPtr  classStatistic = classStatistics->LookUpByMLClass (mlClass);
     if  (classStatistic == NULL)
     {
       classStatistic = new ClassStatistic (mlClass, 0);
@@ -1142,6 +1169,36 @@ ClassStatisticListPtr  FeatureVectorList::GetClassStatistics ()  const
 
 
 
+ClassProbListPtr  FeatureVectorList::GetClassDistribution () const
+{
+  ClassStatisticListPtr  stats = GetClassStatistics ();
+  ClassProbListPtr  distribution = new ClassProbList (true);
+
+  kkuint32 countTotal = 0;
+  ClassStatisticList::const_iterator  idx;
+  for  (idx = stats->begin ();  idx != stats->end ();  ++idx)
+  {
+    ClassStatisticPtr cs = *idx;
+    countTotal += cs->Count ();
+  }
+
+  if  (countTotal > 0)
+  {
+    for  (idx = stats->begin ();  idx != stats->end ();  ++idx)
+    {
+      ClassStatisticPtr cs = *idx;
+      distribution->PushOnBack (new ClassProb (cs->MLClass (), ((float)(cs->Count ()) / (float)countTotal), 0));
+    }
+  }
+
+  delete  stats;
+  stats = NULL;
+
+  return  distribution;
+}  /* GetClassDistribution */
+
+
+
 
 FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
@@ -1154,14 +1211,14 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
     return  duplicateList;
   }
 
-
   FeatureVectorList  workList (*this, 
                                false    // owner = false,  only create a list of pointers to existing instances
                               );  // 
 
   workList.SortByRootName (false);
   
-  FeatureVectorList::iterator  idx  = workList.begin ();
+  FeatureVectorList::iterator  idx;
+  idx = workList.begin ();
 
   FeatureVectorPtr  lastImage = *idx;  ++idx;
   FeatureVectorPtr  example   = *idx;  ++idx;
@@ -1250,7 +1307,8 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
   if  ((_featureNum < 0)  ||  (_featureNum >= NumOfFeatures ()))
   {
-    log.Level (-1) << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
+    log.Level (-1) << endl
+                   << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
                    << "                                            FeatureNum   [" << _featureNum      << "]" << endl
                    << "                                            NumOfFeatures[" << NumOfFeatures () << "]" << endl
                    << endl;
@@ -1295,7 +1353,6 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
 
 
-
 FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds)
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
@@ -1325,7 +1382,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     folds[x] = new FeatureVectorList (fileDesc, false, log);
 
   MLClassPtr  mlClass = NULL;
-  MLClassList::iterator  icIDX = mlClasses->begin ();
+  MLClassList::iterator  icIDX;
 
   for  (icIDX = mlClasses->begin ();  icIDX != mlClasses->end ();  ++icIDX)
   {
@@ -1336,6 +1393,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     {
       log.Level (-1) << endl
                      << "FeatureVectorList::DistributesImagesRandomlyWithInFolds    ***ERROR***" << endl
+                     << endl
                      << "*** ERROR ***,  Not enough examples to split amongst the different folds." << endl
                      << "                Class           [" << mlClass->Name ()         << "]."  << endl
                      << "                Number of Images[" << imagesInClass->QueueSize () << "]."  << endl
@@ -1347,6 +1405,8 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
       msg << "Not enough Images[" << imagesInClass->QueueSize ()  << "] "
           << "for Class["         << mlClass->Name ()          << "] "
           << "to distribute in Folds.";
+
+      if  (!osIsBackGroundProcess ())
       osDisplayWarning (msg);
     }
 
@@ -1372,6 +1432,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
   stratafiedImages->Compress ();
 
   delete  folds;
+  folds = NULL;
   return  stratafiedImages;
 }  /* StratifyAmoungstClasses */
 
@@ -1419,7 +1480,7 @@ void  FeatureVectorList::PrintClassStatistics (ostream&  o)  const
   o << "Total_Classes\t" << stats->QueueSize () << endl;
   o << endl;
 
-  ClassStatisticList::iterator  statsIDX = stats->begin ();
+  ClassStatisticList::const_iterator  statsIDX;
   kkint32  index = 0;
 
   o << "Class_Name" << "\t" << "Index" << "\t" << "Count" << endl;
@@ -1430,6 +1491,7 @@ void  FeatureVectorList::PrintClassStatistics (ostream&  o)  const
   }
 
   delete  stats;
+  stats = NULL;
   return;
 }  /* PrintClassStatistics */
 
@@ -1532,6 +1594,9 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
 
     classIdx++;
   }
+
+  delete  mlClasses;
+  mlClasses = NULL;
 }  /* PrintFeatureStatisticsByClass */
 
 

@@ -4,9 +4,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
@@ -135,11 +133,11 @@ void  CrossValidationMxN::RunValidations ()
 { 
   CleanUpMemory ();
 
-  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->ImageClasses ()), log);
+  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()), log);
 
   kkuint32  cvIDX = 0;
 
-  MLClassListPtr  mlClasses = orderings->ImageClasses ();
+  MLClassListPtr  mlClasses = orderings->MLClasses ();
 
   for  (cvIDX = 0;  cvIDX < numOfOrderings;  cvIDX++)
   {
@@ -162,7 +160,7 @@ void  CrossValidationMxN::RunValidations ()
     trainingTimes.push_back (cv->TrainTimeTotal ());
     testTimes.push_back     (cv->TestTimeTotal  ());
 
-    meanConfusionMatrix->AddIn (*(cv->ConfussionMatrix ()));
+    meanConfusionMatrix->AddIn (*(cv->ConfussionMatrix ()), log);
 
     delete  cv;
   }
@@ -191,11 +189,11 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
 { 
   CleanUpMemory ();
 
-  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->ImageClasses ()), log);
+  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()), log);
 
   kkuint32  cvIDX = 0;
 
-  MLClassListPtr  mlClasses = orderings->ImageClasses ();
+  MLClassListPtr  mlClasses = orderings->MLClasses ();
 
   for  (cvIDX = 0;  cvIDX < numOfOrderings;  cvIDX++)
   {
@@ -235,7 +233,7 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
     trainingTimes.push_back (cv->TrainTimeTotal ());
     testTimes.push_back     (cv->TestTimeTotal  ());
 
-    meanConfusionMatrix->AddIn (*(cv->ConfussionMatrix ()));
+    meanConfusionMatrix->AddIn (*(cv->ConfussionMatrix ()), log);
 
     delete  cv;
   }

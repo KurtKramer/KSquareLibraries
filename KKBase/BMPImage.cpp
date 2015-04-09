@@ -10,11 +10,10 @@
 #include <functional>
 #include <iostream>
 #include <map>
-#include <vector>
-
-#include <stdio.h>
 #include <string.h>
-
+#include <string>
+#include <vector>
+#include <stdio.h>
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -748,8 +747,8 @@ BmpImage::~BmpImage ()
 
 
 
-/**  
- *@brief  Returns true if BMP file is a a reversed GrayScale Image. 
+/**
+ *@brief  Returns true if BMP file is a a reversed GrayScale Image.
  *@details  The original version in PICES had special checks to detect if a SIPPER image;  if
  * there are issues with this routine suggest comparing with BasiLibrary in PICES.
  */
@@ -757,7 +756,7 @@ bool  BmpImage::ReversedGrayscaleImage ()
 {
   kkint32 x = 0;
   bool  allChannelsSameValue = true;
-  bool  alwaysDecending      = true;   // Reversed images pixel values will always be descending.
+  bool  alwaysDecending      = true;   // Reversed images pixel values will always be decending.
   //kkint32  firstUnbalancedChannel = (kkint32)0;
 
   for  (x = 0;  (x < paletteEntries)  &&  allChannelsSameValue;  ++x)
@@ -983,7 +982,9 @@ void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
 
 
 
-/**  @brief  Returns true if palette is for a GrayScale image.*/
+/**
+ *@brief  Returns true if palette is for a grayscale image.
+ */
 bool  GrayScaleImage (RGBQUAD*  palette,
                       kkint32   palletSize
                      )
@@ -1088,9 +1089,7 @@ public:
     lastColorsSet = false;
   }
 
-
   kkint32  NumOfColors ()  const  {return (kkint32)colorsUsed.size ();}
-
 
   kkint32  PalletIndex (uchar red,
                         uchar green,
@@ -2496,7 +2495,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
 
   numOfColors = paletteEntries;
   imageBuff = pixelData.CreatePixelDataStructure8Bit (imageBuffLen);
-  bmh.biCompression  = BI_RLE8;  /* 'BI_RLE8' is where each pixel is represented by a 8 bit number that indexes into a color pallet. */
+  bmh.biCompression  = BI_RLE8;  /* 'BI_RLE8' is where each pixel is represented by a 8 bit number that indexes into a color palette. */
   bmh.biBitCount     = 8;
 
   bmh.biSizeImage    = imageBuffLen; 

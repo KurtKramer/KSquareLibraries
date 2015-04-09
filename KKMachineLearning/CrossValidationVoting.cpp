@@ -19,13 +19,13 @@ using namespace  KKB;
 
 
 
-#include "TrainingConfiguration2.h"
 #include "CrossValidationVoting.h"
 #include "Classifier2.h"
 #include "ConfusionMatrix2.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
+#include "TrainingConfiguration2.h"
 #include "TrainingProcess2.h"
 using namespace  KKMachineLearning;
 
@@ -58,6 +58,9 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    numOfWinnersCorrects         (NULL),
    numOfWinnersOneOfTheWinners  (NULL),
    classificationTime           (0.0),
+   reductionTime                (0.0),
+   reductionPreExampleCount     (0),
+   reductionPostExampleCount    (0),
    trainingTime                 (0.0)
  
 {
@@ -291,7 +294,8 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
   {
     // Force the creation of a noise class
-    mlClasses->GetNoiseClass ();
+    MLClassPtr  noiseMLClass = mlClasses->GetNoiseClass ();
+    noiseMLClass = NULL;
   }
 
   FeatureVectorList::iterator  imageIDX = testImages->begin ();
@@ -310,10 +314,10 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   {
     MLClassPtr  knownClass = (*imageIDX)->MLClass ();
 
-    kkint32     numOfWinners;
-    bool        knownClassOneOfTheWinners;
-    MLClassPtr  predictedClass = NULL;
-    double      breakTie;
+    kkint32     numOfWinners              = 0;
+    bool        knownClassOneOfTheWinners = false;
+    MLClassPtr  predictedClass            = NULL;
+    double      breakTie                  = 0.0;
 
     Classifier2Ptr  classifier = NULL;
 
@@ -413,13 +417,15 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
     confusionMatrix->Increment (knownClass, 
                                 predictedClass, 
                                 (kkint32)(*imageIDX)->OrigSize (), 
-                                probability
+                                probability,
+                                log
                                );
 
     cmByNumOfConflicts[numOfWinners]->Increment (knownClass, 
                                                  predictedClass, 
                                                  (kkint32)(*imageIDX)->OrigSize (), 
-                                                 probability
+                                                 probability,
+                                                 log
                                                 );
 
     bool  correctClassificationMade = false;

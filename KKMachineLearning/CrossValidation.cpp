@@ -13,8 +13,6 @@
 using namespace std;
 
 
-
-
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -323,7 +321,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   catch  (const std::exception  e)
   {
     log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
+      << "CrossValidation::CrossValidate  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
       << "            Exception[" << e.what () << "]" << endl
       << endl;
     trainer.Abort (true);
@@ -331,7 +329,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   catch (...)
   {
     log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidat  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
+      << "CrossValidation::CrossValidate  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
       << endl;
     trainer.Abort (true);
   }
@@ -428,13 +426,15 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
     confusionMatrix->Increment (knownClass, 
                                 predictedClass, 
                                 (kkint32)(example->OrigSize ()),
-                                probability
+                                probability,
+                                log
                                );
 
     cmByNumOfConflicts[numOfWinners]->Increment (knownClass, 
                                                  predictedClass, 
                                                  (kkint32)(example->OrigSize ()), 
-                                                 probability
+                                                 probability,
+                                                 log
                                                 );
 
     bool  correctClassificationMade = false;

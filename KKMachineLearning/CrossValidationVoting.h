@@ -43,6 +43,10 @@ namespace  KKMachineLearning
 
 
   #ifndef  _MLCLASS_
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  typedef  MLClass const  MLClassConst;
+  typedef  MLClassConst*  MLClassConstPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
@@ -93,6 +97,7 @@ namespace  KKMachineLearning
                              bool*                classedCorrectly = NULL
                             );
 
+
     ConfusionMatrix2Ptr    ConfussionMatrix ()  {return  confusionMatrix;}
 
     float   Accuracy                  ();
@@ -132,7 +137,6 @@ namespace  KKMachineLearning
     kkint32*                      numOfWinnersCounts;
     kkint32*                      numOfWinnersCorrects;
     kkint32*                      numOfWinnersOneOfTheWinners;
-
     double                        classificationTime;
     double                        trainingTime;
   };

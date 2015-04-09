@@ -195,7 +195,6 @@ kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 
 
 
-
 BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*        i, 
                                                               FileDescPtr  fileDesc,
                                                               RunLog&      log

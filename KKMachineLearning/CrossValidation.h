@@ -2,10 +2,34 @@
 #define  _CROSSVALIDATION_
 
 /**
- *@class  KKMachineLearning::CrossValidation
- *@brief  A class that is meant to manage a n-Fold Cross Validation.
- *@author  Kurt Kramer
- *@details
+ @class  MLL::CrossValidation
+ @brief  A class that is meant to manage a n-Fold Cross Validation.
+ @author  Kurt Kramer
+ @details
+ @code
+ *********************************************************************
+ *                           CrossValidation                         *
+ *                                                                   *
+ *                                                                   *
+ *                                                                   *
+ *-------------------------------------------------------------------*
+ *  History                                                          *
+ *                                                                   *
+ *    Date     Programmer   Description                              *
+ *  ---------- -----------  -----------------------------------------*
+ *  2004       Kurt Kramer  Origanol Development.                    *
+ *                                                                   *
+ *                                                                   *
+ *  2005-01-07 Kurt Kramer  Added classedCorrectly parameter to      *
+ *                          CrossValidate. If not null it should     *
+ *                          point to an array of bool that has as    *
+ *                          many elemenst as there are in the        *
+ *                          testImages list. Each element reprsents  *
+ *                          weather the coresponding element in      *
+ *                          testImages was classified correctly.     *
+ *                                                                   *
+ *********************************************************************
+ @endcode
  */
 
 
@@ -15,14 +39,17 @@
 
 namespace  KKMachineLearning  
 {
-
-  #ifndef  _FeatureVector_Defined_
+  #ifndef  _FeatureVectorDefined_
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif
 
 
-  #ifndef  _MLCLASS_
+  #if  !defined (_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  typedef  MLClass const  MLClassConst;
+  typedef  MLClassConst*  MLClassConstPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
@@ -45,7 +72,6 @@ namespace  KKMachineLearning
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
-
 
 
   class  CrossValidation
@@ -89,8 +115,11 @@ namespace  KKMachineLearning
     kkint32       NumOfSupportVectors        () const {return  numSVs;}
     kkint32       NumSVs                     () const {return  numSVs;}
     kkint32       TotalNumSVs                () const {return  totalNumSVs;}
+
     kkint32       SupportPointsTotal         () const {return  numSVs;}
     
+    const CompressionStats&  CompStats    ()  const  {return  compStats;}
+
     const VectorFloat&   Accuracies          () const {return foldAccuracies;}
     float                AccuracyMean        () const {return accuracyMean;}
     float                AccuracyStdDev      () const {return accuracyStdDev;}
@@ -101,7 +130,6 @@ namespace  KKMachineLearning
     double               SupportPointsMean   () const {return supportPointsMean;}
     double               SupportPointsStdDev () const {return supportPointsStdDev;}
 
-
     const VectorDouble&  TestTimes       () const {return testTimes;}
     double               TestTimeMean    () const {return testTimeMean;}
     double               TestTimeStdDev  () const {return testTimeStdDev;}
@@ -111,8 +139,6 @@ namespace  KKMachineLearning
     double               TrainTimeMean   () const {return trainTimeMean;}
     double               TrainTimeStdDev () const {return trainTimeStdDev;}
     double               TrainTimeTotal  () const {return  trainingTime;}
-
-
 
   private:
     void  AllocateMemory ();
@@ -178,7 +204,6 @@ namespace  KKMachineLearning
 
     bool                      weOwnConfusionMatrix;
   };
-
 
   typedef  CrossValidation*  CrossValidationPtr;
 

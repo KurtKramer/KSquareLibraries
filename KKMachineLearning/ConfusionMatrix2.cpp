@@ -37,56 +37,51 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,  // Will make 
                                    ):
   bucketSize                  (_bucketSize),
   classCount                  (0),
+  classes                     (_classes),
   correctByKnownClassByProb   (NULL),
   correctByKnownClassBySize   (NULL),
   correctCount                (0.0),
-  countByKnownClassByProb     (NULL),
-  countByKnownClassBySize     (NULL),
-  countsByKnownClass          (NULL),
-  classes                     (_classes),
-  log                         (_log),
+  countByKnownClassByProb     (),
+  countByKnownClassBySize     (),
+  countsByKnownClass          (),
   numInvalidClassesPredicted  (0.0),
   numOfBuckets                (_numOfBuckets),
   numOfProbBuckets            (_numOfProbBuckets),
-  predictedCountsCM           (NULL),
+  predictedCountsCM           (),
   probBucketSize              (_probBucketSize),
   totalCount                  (0.0),
   totalPredProb               (0.0),
-  totalPredProbsByKnownClass  (NULL),
-  totalSizesByKnownClass      (NULL),
-  totPredProbCM               (NULL)
+  totalPredProbsByKnownClass  (),
+  totalSizesByKnownClass      (),
+  totPredProbCM               ()
 {
   InitializeMemory ();
-  Read (f);
+  Read (f, _log);
 }
 
 
 
-ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,   // Will make its own copy of list
-                                    RunLog&             _log
-                                   ):
+ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will make its own copy of list
 
   bucketSize                  (100),
   classCount                  (0),
-  correctByKnownClassByProb   (NULL),
-  correctByKnownClassBySize   (NULL),
+  correctByKnownClassByProb   (),
+  correctByKnownClassBySize   (),
   correctCount                (0.0),
-  countByKnownClassByProb     (NULL),
-  countByKnownClassBySize     (NULL),
-  countsByKnownClass          (NULL),
+  countByKnownClassByProb     (),
+  countByKnownClassBySize     (),
+  countsByKnownClass          (),
   classes                     (_classes),
-  log                         (_log),
   numInvalidClassesPredicted  (0.0),
   numOfBuckets                (40),
   numOfProbBuckets            (20),
-  predictedCountsCM           (NULL),
+  predictedCountsCM           (),
   probBucketSize              (5),
   totalCount                  (0.0),
   totalPredProb               (0.0),
-  totalPredProbsByKnownClass  (NULL),
-  totalSizesByKnownClass      (NULL),
-  totPredProbCM               (NULL)
-
+  totalPredProbsByKnownClass  (),
+  totalSizesByKnownClass      (),
+  totPredProbCM               ()
 {
   InitializeMemory ();
 }
@@ -98,171 +93,227 @@ ConfusionMatrix2::ConfusionMatrix2 (const ConfusionMatrix2&  cm):
 
   bucketSize                  (cm.bucketSize),
   classCount                  (cm.classCount),
-  correctByKnownClassByProb   (NULL),
-  correctByKnownClassBySize   (NULL),
+  correctByKnownClassByProb   (),
+  correctByKnownClassBySize   (),
   correctCount                (cm.correctCount),
-  countByKnownClassByProb     (NULL),
-  countByKnownClassBySize     (NULL),
-  countsByKnownClass          (NULL),
+  countByKnownClassByProb     (),
+  countByKnownClassBySize     (),
+  countsByKnownClass          (),
   classes                     (cm.classes),
-  log                         (cm.log),
   numInvalidClassesPredicted  (cm.numInvalidClassesPredicted),
   numOfBuckets                (cm.numOfBuckets),
   numOfProbBuckets            (cm.numOfProbBuckets),
-  predictedCountsCM           (NULL),
+  predictedCountsCM           (),
   probBucketSize              (cm.probBucketSize),
   totalCount                  (cm.totalCount),
   totalPredProb               (cm.totalPredProb),
-  totalPredProbsByKnownClass  (NULL),
-  totalSizesByKnownClass      (NULL),
-  totPredProbCM               (NULL)
-
+  totalPredProbsByKnownClass  (),
+  totalSizesByKnownClass      (),
+  totPredProbCM               ()
 {
-  kkint32  x;
-  kkint32  y;
+  CopyVector (cm.countsByKnownClass,         countsByKnownClass);
+  CopyVector (cm.totalPredProbsByKnownClass, totalPredProbsByKnownClass);
+  CopyVector (cm.totalSizesByKnownClass,     totalSizesByKnownClass);
 
-  countsByKnownClass         = new double [classCount];
-  totalPredProbsByKnownClass = new double [classCount];
-  totalSizesByKnownClass     = new double [classCount];
+  CopyVectorDoublePtr (cm.predictedCountsCM, predictedCountsCM,   classCount);
+  CopyVectorDoublePtr (cm.totPredProbCM,     totPredProbCM,       classCount);
 
-  predictedCountsCM = new double* [classCount];
-  totPredProbCM     = new double* [classCount];
-
-  countByKnownClassBySize   = new double* [classCount];
-  correctByKnownClassBySize = new double* [classCount];
-
-  countByKnownClassByProb   = new double* [classCount];
-  correctByKnownClassByProb = new double* [classCount];
-
-
-  for  (x = 0; x < classCount; x++)
-  {
-    countsByKnownClass         [x] = cm.countsByKnownClass         [x];
-    totalSizesByKnownClass     [x] = cm.totalSizesByKnownClass     [x];
-    totalPredProbsByKnownClass [x] = cm.totalPredProbsByKnownClass [x];
-
-    predictedCountsCM [x] = new double [classCount];
-    totPredProbCM     [x] = new double [classCount];
-
-    countByKnownClassBySize   [x] = new double [numOfBuckets];
-    correctByKnownClassBySize [x] = new double [numOfBuckets];
-
-    countByKnownClassByProb   [x] = new double [numOfProbBuckets];
-    correctByKnownClassByProb [x] = new double [numOfProbBuckets];
-
-    for  (y = 0; y < classCount; y++)
-    {
-      predictedCountsCM [x][y] = cm.predictedCountsCM [x][y];
-      totPredProbCM     [x][y] = cm.totPredProbCM        [x][y];
-    }
-
-    for  (y = 0; y < numOfBuckets; y++)
-    {
-      countByKnownClassBySize   [x][y] = cm.countByKnownClassBySize   [x][y];
-      correctByKnownClassBySize [x][y] = cm.correctByKnownClassBySize [x][y];
-    }
-
-    for  (y = 0; y < numOfProbBuckets; y++)
-    {
-      countByKnownClassByProb   [x][y] = cm.countByKnownClassByProb   [x][y];
-      correctByKnownClassByProb [x][y] = cm.correctByKnownClassByProb [x][y];
-    }
-  }
+  CopyVectorDoublePtr (cm.countByKnownClassBySize,   countByKnownClassBySize,   numOfBuckets);
+  CopyVectorDoublePtr (cm.correctByKnownClassBySize, correctByKnownClassBySize, numOfBuckets);
+  CopyVectorDoublePtr (cm.countByKnownClassByProb,   countByKnownClassByProb,   numOfProbBuckets);
+  CopyVectorDoublePtr (cm.correctByKnownClassByProb, correctByKnownClassByProb, numOfProbBuckets);
 }
 
 
 
 
 ConfusionMatrix2::~ConfusionMatrix2 ()
-{
-  kkint32  x;
-  for  (x = 0; x < classCount; x++)
   {
-    delete[] predictedCountsCM [x];
-    delete[] totPredProbCM     [x];
-
-    delete[] countByKnownClassBySize   [x];
-    delete[] correctByKnownClassBySize [x];
-
-    delete[] countByKnownClassByProb   [x];
-    delete[] correctByKnownClassByProb [x];
-
-  }
-
-
-  delete[] predictedCountsCM;
-  delete[] totPredProbCM;
-  delete[] countsByKnownClass;
-  delete[] totalSizesByKnownClass;
-  delete[] totalPredProbsByKnownClass;
-
-  delete[] countByKnownClassBySize;
-  delete[] correctByKnownClassBySize;
-
-  delete[] countByKnownClassByProb;
-  delete[] correctByKnownClassByProb;
+  DeleteVectorDoublePtr (countByKnownClassBySize);
+  DeleteVectorDoublePtr (correctByKnownClassBySize);
+  DeleteVectorDoublePtr (countByKnownClassByProb);
+  DeleteVectorDoublePtr (correctByKnownClassByProb);
+  DeleteVectorDoublePtr (predictedCountsCM);
+  DeleteVectorDoublePtr (totPredProbCM);
 }
 
 
 
 
 void  ConfusionMatrix2::InitializeMemory ()
-{
-  kkint32  x;
-  kkint32  y;
-
+    {
   classes.SortByName ();
 
   classCount = classes.QueueSize ();
 
-  countsByKnownClass         = new double [classCount];
-  totalSizesByKnownClass     = new double [classCount];
-  totalPredProbsByKnownClass = new double [classCount];
 
-  predictedCountsCM          = new double* [classCount];
-  totPredProbCM              = new double* [classCount];
+  InitializeVector (countsByKnownClass,         classCount);
+  InitializeVector (totalSizesByKnownClass,     classCount);
+  InitializeVector (totalPredProbsByKnownClass, classCount);
 
-  countByKnownClassBySize    = new double* [classCount];
-  correctByKnownClassBySize  = new double* [classCount];
+  InitializeVectorDoublePtr (predictedCountsCM,         classCount, classCount);
+  InitializeVectorDoublePtr (totPredProbCM,             classCount, classCount);
 
-  countByKnownClassByProb    = new double* [classCount];
-  correctByKnownClassByProb  = new double* [classCount];
+  InitializeVectorDoublePtr (countByKnownClassBySize,   classCount, numOfBuckets);
+  InitializeVectorDoublePtr (correctByKnownClassBySize, classCount, numOfBuckets);
+
+  InitializeVectorDoublePtr (countByKnownClassByProb,   classCount, numOfProbBuckets);
+  InitializeVectorDoublePtr (correctByKnownClassByProb, classCount, numOfProbBuckets);
+}  /* InitializeMemory */
 
 
-  for  (x = 0; x < classCount; x++)
+
+void  ConfusionMatrix2::InitializeVector (vector<double>&  v,
+                                          kkint32          x
+                                          )
+{
+  v.clear ();
+  for  (kkint32 y = 0;  y < x;  ++y)
+    v.push_back (0.0);
+  }
+
+
+
+void  ConfusionMatrix2::CopyVector (const vector<double>&  src,
+                                    vector<double>&        dest
+                                   )
+{
+  dest.clear ();
+
+  vector<double>::const_iterator idx;
+  for  (idx = src.begin ();  idx != src.end ();  ++idx)
+    dest.push_back (*idx);
+}  /* CopyVector */
+
+
+
+void  ConfusionMatrix2::InitializeVectorDoublePtr (vector<double*>& v,
+                                                   kkint32          numClasses,
+                                                   kkint32          numBuckets
+                                                  )
+{
+  for  (kkuint32 x = 0;  x < v.size ();  ++x)
   {
-    countsByKnownClass         [x] = 0.0;
-    totalSizesByKnownClass     [x] = 0.0;
-    totalPredProbsByKnownClass [x] = 0.0;
+    delete  v[x];
+    v[x] = NULL;
+}
 
-    predictedCountsCM [x] = new double [classCount];
-    totPredProbCM     [x] = new double [classCount];
+  v.clear ();
+  while  (v.size () < (kkuint32)numClasses)
+  {
+    double*  d = new double[numBuckets];
+    v.push_back (d);
+    for  (kkint32 y = 0;  y < numBuckets;  ++y)
+      d[y] = 0.0;
+  }
+}  /* InitializeVectorDoublePtr */
 
-    countByKnownClassBySize   [x] = new double [numOfBuckets];
-    correctByKnownClassBySize [x] = new double [numOfBuckets];
 
-    countByKnownClassByProb   [x] = new double [numOfProbBuckets];
-    correctByKnownClassByProb [x] = new double [numOfProbBuckets];
 
-    for  (y = 0; y < classCount; y++)
+void  ConfusionMatrix2::IncreaseVectorDoublePtr (vector<double*>&  v,
+                                                 int               numBucketsOld,
+                                                 int               numBucketsNew
+                                                )
+{
+  if  (numBucketsOld != numBucketsNew)
+  {
+    vector<double*>::iterator  idx;
+    for  (idx = v.begin ();  idx != v.end ();  ++idx)
     {
-      predictedCountsCM [x][y] = 0.0;
-      totPredProbCM     [x][y] = 0.0;
-    }
+      double*  oldArray = *idx;
+      double*  newArray = new double[numBucketsNew];
+      for  (kkint32 x = 0;  x < numBucketsOld;  ++x)
+        newArray[x]= oldArray[x];
 
-    for  (y = 0; y < numOfBuckets; y++)
-    {
-      countByKnownClassBySize   [x][y] = 0;
-      correctByKnownClassBySize [x][y] = 0;
-    }
+      for  (kkint32 x = numBucketsOld;  x < numBucketsNew;  ++x)
+        newArray[x] = 0.0;
 
-    for  (y = 0; y < numOfProbBuckets; y++)
-    {
-      countByKnownClassByProb   [x][y] = 0;
-      correctByKnownClassByProb [x][y] = 0;
+      *idx = newArray;
+      delete  oldArray;
+      oldArray = NULL;
     }
   }
-}  /* InitializeMemory */
+
+  double*  d = new double[numBucketsNew];
+  v.push_back (d);
+  for  (kkint32 x = 0;  x < numBucketsNew;  ++x)
+    d[x] = 0.0;
+
+}  /* IncreaseVectorDoublePtr */
+
+
+
+void  ConfusionMatrix2::CopyVectorDoublePtr (const vector<double*>&  src,
+                                             vector<double*>&        dest,
+                                             kkint32                 numBuckets
+                                            )
+{
+  for  (kkuint32 x = 0;  x < dest.size ();  ++x)
+  {
+    delete  dest[x];
+    dest[x] = NULL;
+  }
+
+  kkint32 classIdx = 0;
+  dest.clear ();
+  while  (dest.size () < src.size ())
+  {
+    double*  s = src[classIdx];
+    double*  d = new double[numBuckets];
+    dest.push_back (d);
+    for  (kkint32 y = 0;  y < numBuckets;  ++y)
+      d[y] = s[y];
+
+    ++classIdx;
+  }
+}  /* CopyVectorDoublePtr */
+
+
+
+void  ConfusionMatrix2::DeleteVectorDoublePtr (vector<double*>&  v)
+    {
+  for  (kkuint32 x = 0;  x < v.size ();  ++x)
+    {
+    delete  v[x];
+    v[x] = NULL;
+    }
+}  /* DeleteVectorDoublePtr */
+
+
+
+
+
+kkint32 ConfusionMatrix2::AddClassToConfusionMatrix (MLClassPtr       newClass,
+                                                    RunLog&             log
+                                                   )
+    {
+  kkint32 existingClassIdx = classes.PtrToIdx (newClass);
+  if  (existingClassIdx >= 0)
+  {
+    log.Level (-1) << endl
+      << "ConfusionMatrix2::AddClassToConfusionMatrix  ***ERROR***  Class[" << newClass->Name () << "]  already in class list." << endl
+      << endl;
+    return  existingClassIdx;
+  }
+
+  classes.PushOnBack (newClass);
+  classCount++;
+ 
+  IncreaseVectorDoublePtr (correctByKnownClassByProb, numOfProbBuckets, numOfProbBuckets);
+  IncreaseVectorDoublePtr (countByKnownClassByProb,   numOfProbBuckets, numOfProbBuckets);
+
+  IncreaseVectorDoublePtr (correctByKnownClassBySize, numOfBuckets, numOfBuckets);
+  IncreaseVectorDoublePtr (countByKnownClassBySize,   numOfBuckets, numOfBuckets);
+
+  IncreaseVectorDoublePtr (predictedCountsCM,         classCount - 1, classCount);
+  IncreaseVectorDoublePtr (totPredProbCM,             classCount - 1, classCount);
+
+  countsByKnownClass.push_back         (0.0);
+  totalPredProbsByKnownClass.push_back (0.0); 
+  totalSizesByKnownClass.push_back     (0.0);
+
+  return classes.PtrToIdx (newClass);
+}  /* AddClassToConfusionMatrix */
 
 
 
@@ -311,12 +362,9 @@ double  ConfusionMatrix2::CountsByKnownClass (kkint32 knownClassIdx)  const
 
 
 
-VectorDouble  ConfusionMatrix2::CountsByKnownClass ()  const
+const VectorDouble&  ConfusionMatrix2::CountsByKnownClass ()  const
 {
-  VectorDouble  cbnc;
-  for  (kkint32 x = 0;  x < classCount;  x++)
-    cbnc.push_back (countsByKnownClass[x]);
-  return  cbnc;
+  return  countsByKnownClass;
 }  /* CountsByKnownClass */
 
 
@@ -325,7 +373,8 @@ VectorDouble  ConfusionMatrix2::CountsByKnownClass ()  const
 void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
                                    MLClassPtr  _predClass,
                                    kkint32     _size,
-                                   double      _probability
+                                   double           _probability,
+                                   RunLog&          _log
                                   )
 {
   kkint32  knownClassNum = -1;
@@ -337,7 +386,7 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
   if  (!_knownClass)
   {
     numInvalidClassesPredicted += 1.0;
-    log.Level (-1) << endl
+    _log.Level (-1) << endl
                    << "ConfusionMatrix2::Increment  **** _knownClass = NULL ****"
                    << endl
                    << endl;
@@ -347,7 +396,7 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
   if  (!_predClass)
   {
     numInvalidClassesPredicted += 1.0;
-    log.Level (-1) << endl
+    _log.Level (-1) << endl
                    << "ConfusionMatrix2::Increment  **** _predClass = NULL ****"
                    << endl
                    << endl;
@@ -355,19 +404,24 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
   }
 
   knownClassNum = classes.PtrToIdx (_knownClass);
+  if  (knownClassNum < 0)
+    knownClassNum = AddClassToConfusionMatrix (_knownClass, _log);
+
   predClassNum  = classes.PtrToIdx (_predClass);
+  if  (predClassNum < 0)
+    predClassNum = AddClassToConfusionMatrix (_predClass, _log);
 
   if  ((knownClassNum < 0)  ||  (knownClassNum >= classCount))
   {
     numInvalidClassesPredicted += 1.0;
-    log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    knownClassNum[" << knownClassNum << "] out of bounds." << endl;
+    _log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    knownClassNum[" << knownClassNum << "] out of bounds." << endl;
     return;
   }
 
   if  ((predClassNum < 0)  ||  (predClassNum >= classCount))
   {
     numInvalidClassesPredicted += 1.0;
-    log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    predClassNum[" << predClassNum << "] out of bounds." << endl;
+    _log.Level (-1) << "ConfusionMatrix2::IncrementPredHits    predClassNum[" << predClassNum << "] out of bounds." << endl;
     return;
   }
 
@@ -1762,8 +1816,45 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
 
 
 
+void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr       ic,
+                                                  double&          truePositives,
+                                                  double&          trueNegatives,
+                                                  double&          falsePositives,
+                                                  double&          falseNegatives
+                                                 )
+                                                 const
+{
+  truePositives  = 0.0;
+  trueNegatives  = 0.0;
+  falsePositives = 0.0;
+  falseNegatives = 0.0;
 
-float  ConfusionMatrix2::FMeasure (MLClassPtr  positiveClass)  const
+  kkint32 x = classes.PtrToIdx (ic);
+  if  (x < 0)
+    return;
+
+  kkint32 numOfClasses = classes.QueueSize ();
+
+  truePositives  = predictedCountsCM [x][x];
+
+  for  (kkint32 y = 0;  y < numOfClasses;  y++)
+  {
+    if  (y != x)
+    {
+      falsePositives += predictedCountsCM [y][x];  // Was classified as x but was classed as x.
+      falseNegatives += predictedCountsCM [x][y];  // Should have been classed as x not y.
+      trueNegatives  += (countsByKnownClass [y] - predictedCountsCM [y][x]);
+    }
+  }
+  return;
+}  /* ComputeFundamentalStats */
+
+
+
+
+float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
+                                   RunLog&              log
+                                  )  const
 {
   kkint32 positiveIDX = classes.PtrToIdx (positiveClass);
   if  (positiveIDX < 0)
@@ -2702,17 +2793,26 @@ void ConfusionMatrix2::PrintConfusionMatrixHTML (const char *title,
 
 
 
-void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm)
+void  ConfusionMatrix2::MakeSureWeHaveTheseClasses (const MLClassList&  classList,
+                                                    RunLog&                     log
+                                                   )
 {
-  if  (classes != cm.classes)
+  MLClassList::const_iterator  idx;
+  for  (idx = classList.begin ();  idx != classList.end ();  ++idx)
   {
-    // 'cm' is not for the same classes as thos confusion matrix.
-    log.Level (-1) << endl << endl 
-                   << "ConfusionMatrix2::AddIn      *** ERROR ***   Mismatched ImageClasses." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    MLClassPtr       ic = *idx;
+    if  (classes.PtrToIdx (ic) < 0)
+      AddClassToConfusionMatrix (ic, log);
   }
+}  /* MakeSureWeHaveTheseClasses */
+
+
+
+void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm,
+                                RunLog&                  log
+                               )
+{
+  MakeSureWeHaveTheseClasses (cm.classes, log);
 
   kkint32  numOfClasses = classes.QueueSize ();
   kkint32  classIDX = 0;
@@ -2732,7 +2832,12 @@ void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm)
   for  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
   {
     kkint32 cmsIDX = ind[classIDX];
-
+    if  (cmsIDX < 0)
+    {
+      // cmsIDX < 0 indicates that the confusion matrix being added in does not include the class indicatd by 'classIDX'.
+    }
+    else
+    {
     countsByKnownClass         [classIDX] += cm.countsByKnownClass         [cmsIDX];
     totalSizesByKnownClass     [classIDX] += cm.totalSizesByKnownClass     [cmsIDX];
     totalPredProbsByKnownClass [classIDX] += cm.totalPredProbsByKnownClass [cmsIDX];
@@ -2741,9 +2846,12 @@ void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm)
     for  (predictedClassIDX = 0;   predictedClassIDX  < numOfClasses;  predictedClassIDX++)
     {
       kkint32  cmsPredictedClassIDX = ind[predictedClassIDX];
+        if  (cmsPredictedClassIDX >= 0)
+        {
       predictedCountsCM[classIDX][predictedClassIDX] += cm.predictedCountsCM[cmsIDX][cmsPredictedClassIDX];
       totPredProbCM    [classIDX][predictedClassIDX] += cm.totPredProbCM    [cmsIDX][cmsPredictedClassIDX];
     }
+      }
 
     kkint32  bucketIDX = 0;
     for  (bucketIDX = 0;  bucketIDX < numOfBuckets;  bucketIDX++)
@@ -2758,6 +2866,7 @@ void   ConfusionMatrix2::AddIn (const ConfusionMatrix2&  cm)
       countByKnownClassByProb   [classIDX][probIDX] += cm.countByKnownClassByProb   [cmsIDX][probIDX];
       correctByKnownClassByProb [classIDX][probIDX] += cm.correctByKnownClassByProb [cmsIDX][probIDX];
     }
+  }
   }
 
   correctCount  += cm.correctCount;
@@ -2784,6 +2893,60 @@ KKStr  ArrayToDelimitedDelimitedStr (T*     _array,
   }
   return s;
 }  /* ArrayToDelimitedDelimitedStr */
+
+
+
+template<typename T>
+KKStr  ArrayToDelimitedDelimitedStr (const vector<T>&   v,
+                                     char               delimiter
+                                    )
+{
+  KKStr s (v.size () * 10);
+
+  for  (kkuint32 x = 0;  x < v.size ();  x++)
+  {
+    if  (x > 0)  s.Append (delimiter);
+    s << v[x];
+  }
+  return s;
+}  /* ArrayToDelimitedDelimitedStr */
+
+
+
+
+
+void   DelimitedStrToArray (vector<kkint32>&  v,
+                            kkint32         minSize,
+                            const KKStr&    l,
+                            char            delimiter
+                           )
+{
+  v.clear ();
+  VectorKKStr  fields = l.Split (delimiter);
+  kkint32 lastField = (kkint32)fields.size ();
+  for  (kkint32 idx = 0;  idx < lastField;  ++idx)
+    v.push_back (fields[idx].ToInt32 ());
+  while  (v.size () < (kkuint32)minSize)
+    v.push_back ((kkint32)0);
+}  /* DelimitedStrToArray */
+
+
+
+void   DelimitedStrToArray (vector<double>&  v,
+                            kkint32          minSize,
+                            const KKStr&     l,
+                            char             delimiter
+                           )
+{
+  v.clear ();
+  VectorKKStr  fields = l.Split (delimiter);
+  kkint32 lastField = (kkint32)fields.size ();
+  for  (kkint32 idx = 0;  idx < lastField;  idx++)
+    v.push_back (fields[idx].ToDouble ());
+  while  (v.size () < (kkuint32)minSize)
+    v.push_back ((double)0);
+}  /* DelimitedStrToArray */
+
 
 
 
@@ -2837,9 +3000,9 @@ void  ConfusionMatrix2::WriteXML (ostream&  f)  const
     << "NumInvalidClassesPredicted"  << "\t" << numInvalidClassesPredicted  << endl
     << endl;
 
-  f << "CountsByKnownClass"          << "\t" << ArrayToDelimitedDelimitedStr (countsByKnownClass,          classCount, ',') << endl;
-  f << "TotalSizesByKnownClass"      << "\t" << ArrayToDelimitedDelimitedStr (totalSizesByKnownClass,      classCount, ',') << endl;
-  f << "TotalPredProbsByKnownClass"  << "\t" << ArrayToDelimitedDelimitedStr (totalPredProbsByKnownClass,  classCount, ',') << endl;
+  f << "CountsByKnownClass"          << "\t" << ArrayToDelimitedDelimitedStr (countsByKnownClass,          ',') << endl;
+  f << "TotalSizesByKnownClass"      << "\t" << ArrayToDelimitedDelimitedStr (totalSizesByKnownClass,      ',') << endl;
+  f << "TotalPredProbsByKnownClass"  << "\t" << ArrayToDelimitedDelimitedStr (totalPredProbsByKnownClass,  ',') << endl;
 
 
   kkint32  classIndex = 0;
@@ -2884,7 +3047,7 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
   char  buff[10240];
   buff[0] = 0;
 
-  kkint32  startPos = (kkint32)f.tellg ();
+  kkint64   startPos = f.tellg ();
   MLClassListPtr  classes = NULL;
 
   kkint32  bucketSize        = -1;
@@ -2892,8 +3055,6 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
   kkint32  numOfBuckets      = -1;
   kkint32  numOfProbBuckets  = -1;
   kkint32  probBucketSize    = -1;
-
-  //bucketSize = -1;
 
   f.getline (buff, sizeof (buff));
   while  ((!f.eof ())  &&  ((!classes)  ||  (bucketSize < 1)  ||  (numOfBuckets < 1)  ||  (numOfProbBuckets < 1)  ||  (probBucketSize < 1)  ||  (classCount < 1)))
@@ -2967,7 +3128,9 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
 
 
 
-void   ConfusionMatrix2::Read (istream& f)
+void   ConfusionMatrix2::Read (istream&  f,
+                               RunLog&   log
+                              )
 {
   if  (f.eof ())
   {
@@ -2979,8 +3142,12 @@ void   ConfusionMatrix2::Read (istream& f)
   buff[0] = 0;
   KKStr l  (512);
 
+  MLClassListPtr  classes = NULL;
+
+  kkint32 bucketSize        = -1;
   kkint32  numOfBuckets      = -1;
   kkint32  numOfProbBuckets  = -1;
+  kkint32 probBucketSize    = -1;
 
   kkint32  classIndex = 0;
   KKStr  className = "";
@@ -3125,11 +3292,6 @@ void  ConfusionMatrix2::WriteSimpleConfusionMatrix (ostream&  f)  const
 
 
 
-
-
-
-
-
 ConfussionMatrix2List::ConfussionMatrix2List (bool _owner):
        KKQueue<ConfusionMatrix2> (_owner)
 {
@@ -3145,7 +3307,7 @@ ConfussionMatrix2List::~ConfussionMatrix2List ()
 
 
 
-ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix ()  const
+ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix (RunLog&  log)  const
 {
   if  (QueueSize () == 0)
   {
@@ -3155,14 +3317,12 @@ ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix ()  con
   const_iterator  cmIDX = begin ();
   const ConfusionMatrix2Ptr  firstCM = *cmIDX;
 
-  RunLog&  log = firstCM->Log ();
-
-  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->ImageClasses (), log);
+  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->MLClasses ());
 
   for  (cmIDX = begin ();  cmIDX != end ();  cmIDX++)
   {
     const ConfusionMatrix2Ptr  cm = *cmIDX;
-    meanCM->AddIn (*cm); 
+    meanCM->AddIn (*cm, log); 
   }
 
   double  factor = 1.0 / (double)QueueSize ();

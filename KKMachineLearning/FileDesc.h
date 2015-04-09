@@ -27,18 +27,17 @@
  */
 
 #ifdef  WIN32
-#include  "..\\KKBase\\GoalKeeper.h"
-#include  "..\\KKBase\\RunLog.h"
-#include  "..\\KKBase\\KKStr.h"
+#include "GoalKeeper.h"
+#include "RunLog.h"
+#include "KKStr.h"
 #else
-#include  "../KKBase/GoalKeeper.h"
-#include  "../KKBase/RunLog.h"
-#include  "../KKBase/KKStr.h"
+#include "GoalKeeper.h"
+#include "RunLog.h"
+#include "KKStr.h"
 #endif
 
 #include  "Attribute.h"
 #include  "MLClass.h"
-
 
 
 
@@ -121,7 +120,7 @@ namespace KKMachineLearning
     const VectorInt32&                        CardinalityVector   ()  const  {return cardinalityVector;}
     const MLClassList&                        Classes             ()  const  {return classes;}
     const KKStr&                              ClassNameAttribute  ()  const  {return classNameAttribute;}   /**< ClassNameAttribute added to support dstWeb  data files. */
-    const KKStr&                              FileName            ()  const  {return  fileName;}
+    const KKStr&                              FileName            ()  const  {return fileName;}
     kkint32                                   SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
     kkint16                                   Version             ()  const  {return version;}
 
@@ -135,12 +134,11 @@ namespace KKMachineLearning
                                              bool&                             alreadyExists
                                             );
                             
-    void                      AddAAttribute (const KKMachineLearning::Attribute&  attribute);
+    void                      AddAAttribute (const MLL::Attribute&  attribute);
 
-    void                      AddClasses (MLClassList&  classesToAdd);
+    void                      AddClasses (const MLClassList&  classesToAdd);
                             
     bool                      AllFieldsAreNumeric ()  const;
-
 
     kkint32                   Cardinality (kkint32  fieldNum,
                                            RunLog&  log
@@ -172,20 +170,22 @@ namespace KKMachineLearning
                                                  const KKStr&  nominalValue
                                                 )  const;
 
-    MLClassPtr                LookUpImageClassByName (const KKStr&  className);
+    MLClassPtr                LookUpMLClassByName (const KKStr&  className);
 
-    MLClassPtr                LookUpUnKnownImageClass ();
+    MLClassPtr                LookUpUnKnownMLClass ();
     
     kkint32                   MemoryConsumedEstimated ()  const;
 
-    kkuint32                  NumOfFields () const  {return attributes.size ();}
+    kkuint32                  NumOfFields () const  {return (kkuint32)attributes.size ();}
 
     bool                      SameExceptForSymbolicData (const FileDesc&  otherFd,
                                                          RunLog&          log
                                                         )  const;
 
-    KKMachineLearning::AttributeType        
-                              Type (kkint32 fieldNum)  const;
+    void                      SparseMinFeatureNum (kkint32 _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
+    kkint32                   SparseMinFeatureNum () const {return sparseMinFeatureNum;}
+
+    KKMachineLearning::AttributeType  Type (kkint32 fieldNum)  const;
 
     KKStr                     TypeStr (kkint32 fieldNum)  const;
 
@@ -303,7 +303,6 @@ namespace KKMachineLearning
 
   typedef  FileDesc::FileDescPtr        FileDescPtr;  
   typedef  FileDesc::FileDescConstPtr   FileDescConstPtr;
-
 
   #define  _FileDesc_Defined_
 

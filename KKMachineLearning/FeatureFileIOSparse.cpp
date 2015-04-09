@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include  <ctype.h>
+#include <limits.h>
 #include  <time.h>
 
 #include  <string>
@@ -83,7 +84,8 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
     }
 
     MLClassPtr  mlClass = _classes->GetMLClassPtr (className);
-    //mlClass = _classes->GetMLClassPtr (className);
+
+    mlClass = _classes->GetMLClassPtr (className);
 
     KKStr  field;
     GetToken (_in, " \t", field, eof, eol);

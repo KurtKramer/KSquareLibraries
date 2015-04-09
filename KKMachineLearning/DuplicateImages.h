@@ -53,8 +53,16 @@ namespace KKMachineLearning
   class DuplicateImages
   {
   public:
+    /**
+     *@brief  You would use this instance to search for duplicates in the list of 'examples'.
+     *@details  You can still call 'AddExamples' and 'AddSingleImage'; 
+     */
     DuplicateImages (FeatureVectorListPtr  _examples,
-                     FileDescPtr           _fileDesc,
+                     RunLog&               _log
+                    );
+
+
+    DuplicateImages (FileDescPtr  _fileDesc,
                      RunLog&               _log
                     );
 
@@ -86,24 +94,23 @@ namespace KKMachineLearning
 
     FeatureVectorListPtr   ListOfExamplesToDelete ();
 
-    void                   PurgeDuplicates (ostream*  report,                /**<  if not equal NULL will list examples being purged. */
-                                            bool      allowDupsInSameClass
-                                            );
+    void                   PurgeDuplicates (FeatureVectorListPtr  examples,
+                                            bool                  allowDupsInSameClass,
+                                            ostream*              report
+                                           );  /**<  if not equal NULL will list examples being purged. */
 
     void                   ReportDuplicates (ostream&  o);
 
 
   private:
-    void  FindDuplicates ();  // Used to build duplicate list from current contents
-                              // of examples.
+    void  FindDuplicates (FeatureVectorListPtr  examples);  /**< Used to build duplicate list from current contents of examples. */
 
     kkint32                      duplicateCount;
     kkint32                      duplicateDataCount;
     kkint32                      duplicateNameCount;
     DuplicateImageListPtr        dupExamples;
     ImageFeaturesDataIndexedPtr  featureDataTree;
-    FeatureVectorListPtr         examples;
-    bool                         weOwnExamples;   /**< true indicates that we own the instance of 'examples' and should delete it in destructor */
+    FileDescPtr                  fileDesc;
     RunLog&                      log;
     ImageFeaturesNameIndexedPtr  nameTree;
   };
@@ -156,7 +163,7 @@ namespace KKMachineLearning
   class  DuplicateImageList: public KKQueue<DuplicateImage>
   {
   public:
-    DuplicateImageList (bool _owner = true);
+    DuplicateImageList (bool _owner);
     ~DuplicateImageList ();
 
     DuplicateImagePtr  LocateByImage (FeatureVectorPtr  image);

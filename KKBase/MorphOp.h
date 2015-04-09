@@ -79,6 +79,7 @@ namespace  KKB
 
     virtual  OperationType   Operation ()  const  = 0;
 
+
     virtual  RasterPtr  PerformOperation (Raster const* _image) = 0;
 
   protected:
@@ -90,25 +91,18 @@ namespace  KKB
                            kkint32  col
                          )  const;  
 
-    /**
-     *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
-     *@see  Erosion, Dilatation, Closing, Opening, MaskType
-     */
-    bool  Fit (MaskTypes  mask,
-               kkint32    row, 
-               kkint32    col
-              )  const;
-
     bool  ForegroundPixel (uchar  pixel)  const;
 
     bool  ForegroundPixel (kkint32  row,
                            kkint32  col
                           )  const;
 
+
     void  SetSrcRaster (RasterConstPtr  _srcRaster);
 
     uchar            backgroundPixelTH;
     uchar            backgroundPixelValue;
+
 
     RasterConstPtr   srcRaster;
 

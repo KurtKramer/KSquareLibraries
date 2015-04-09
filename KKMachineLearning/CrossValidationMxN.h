@@ -11,11 +11,8 @@
 #include  "KKBaseTypes.h"
 #include  "RunLog.h"
 
-
-
 namespace KKMachineLearning
 {
-
   #if  !defined (_FILEDESC_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
@@ -23,15 +20,15 @@ namespace KKMachineLearning
 
 
   #ifndef  _MLCLASS_
+  class  MLClass;
+  typedef  MLClass*       MLClassPtr;
+  typedef  MLClass const  MLClassConst;
+  typedef  MLClassConst*  MLClassConstPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
 
 
-  #ifndef  _FeatureVector_Defined_
-  class  FeatureVectorList;
-  typedef  FeatureVectorList*  FeatureVectorListPtr;
-  #endif
 
 
 
@@ -47,6 +44,18 @@ namespace KKMachineLearning
   #endif
 
 
+  #ifndef  _FeatureVectorDefined_
+  class  FeatureVector;
+  typedef  FeatureVector*  FeatureVectorPtr;
+  #endif
+
+
+  #ifndef  _FeatureVectorListDefined_
+  class  FeatureVectorList;
+  typedef  FeatureVectorList*  FeatureVectorListPtr;
+  #endif
+
+
   #if  !defined(_ORDERINGS_)
   class  Orderings;
   typedef  Orderings*  OrderingsPtr;
@@ -57,7 +66,6 @@ namespace KKMachineLearning
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
   #endif
-
 
 
   class CrossValidationMxN
@@ -83,7 +91,6 @@ namespace KKMachineLearning
     void  RunTrainAndTest (kkint32  numExamplsToUseForTraining);
 
     void  RunValidations ();
-
 
     // Access Methods
     kkint32               NumOfOrderings       () const {return numOfOrderings;}
@@ -142,7 +149,6 @@ namespace KKMachineLearning
     double        testTimeMean;
     double        testTimeStdDev;
   };
-
 } /* namespace KKMachineLearning */
 
 

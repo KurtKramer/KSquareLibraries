@@ -5,20 +5,18 @@
 
 namespace KKMachineLearning
 {
-
-
 /**
- * @class  FeatureFileIOC45
- * @brief  Supports the reading and writing of feature data from C45 formated feature files.
- * @details
- * @code
- * ************************************************************************************************
- * *  FeatureFileIODC45   Sub-classed from FeatureFileIO.  Supports the reading and writing of    *
- * *  the C45 file format.  For each data set there will be two files.  'Names'  and  'Data'      *
- * *  http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm  for description                    *
- * ************************************************************************************************
- * @endcode
- * @see  FeatureFileIO
+ *@class  FeatureFileIOC45
+ *@brief  Supports the reading and writing of feature data from C45 formated feature files.
+ *@details
+ *@code
+ *************************************************************************************************
+ **  FeatureFileIODC45   Sub-classed from FeatureFileIO.  Supports the reading and writing of    *
+ **  the C45 file format.  For each data set there will be two files.  'Names'  and  'Data'      *
+ **  http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm  for description                    *
+ *************************************************************************************************
+ *@endcode
+ *@see  FeatureFileIO
  */
 class  FeatureFileIOC45: public FeatureFileIO
 {

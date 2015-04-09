@@ -1,17 +1,15 @@
 #include  "FirstIncludes.h"
-
-#include <stdio.h>
-#include <math.h>
 #include <ctype.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
 #include <time.h>
-
+#include <string.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include "KKBaseTypes.h"
@@ -171,6 +169,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   return  examples;
 }  /* LoadFeatureFile */
+
 
 
 
@@ -455,7 +454,6 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
   FileDescPtr  fileDesc = new FileDesc ();
   fileDesc->AddClasses (*_classes);
 
-
   // Can now load in attribute data
   GetLine (_in, ln, eof);  lineNum++;
   while  (!eof)
@@ -609,7 +607,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     else if  (ch == '.')
     {
       // Dots have special meaning when at the end of the line or followed 
-      // by a white space character.  In these cases they delimit a separate entry.
+      // by a white space character.  In these cases they delimit a separated entry.
       char nextCh = in.get (); bool nextEOF = in.eof ();
       if  (nextEOF)
       {
@@ -725,10 +723,6 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
 
 
-
-
- 
-
 FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
                                                   const FileDescPtr  _fileDesc,
                                                   MLClassList&       _classes, 
@@ -756,12 +750,14 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
 
   bool  lineIsValid = true;
 
+  KKStr  imageFileName = "";
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
 
   while  (!eof)
   {
     lineIsValid = true;
+    imageFileName = "";
     KKStr  field = C45ReadNextToken (_in, ",", eof, eol);
     if  (eof)
       break;
@@ -840,6 +836,10 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
         else
         {
           // This is not a missing data.
+
+          if  (attributeTable[fieldNum]->Name ().EqualIgnoreCase ("ImageFileName"))
+            imageFileName = field;
+
           code = attributeTable[fieldNum]->GetNominalCode (field);
           if  (code < 0)
           {
@@ -882,11 +882,11 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     if  (field == "?")
     {
       // The class is unknown
-      mlClass = _fileDesc->LookUpUnKnownImageClass ();
+      mlClass = _fileDesc->LookUpUnKnownMLClass ();
     }
     else
     {
-      mlClass = _fileDesc->LookUpImageClassByName (field);
+      mlClass = _fileDesc->LookUpMLClassByName (field);
       if  (!mlClass)
       {
         lineIsValid = false;
@@ -901,8 +901,11 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     }
 
     example->MLClass (mlClass);
-    KKStr  imageName = fileRootName + "_" + StrFormatInt (lineCount, "zzzzzz0");
-    example->ImageFileName (imageName);
+
+    if  (imageFileName.Empty ())
+      imageFileName = fileRootName + "_" + StrFormatInt (lineCount, "ZZZZZ0");
+
+    example->ImageFileName (imageFileName);
 
 
     if  (lineIsValid)
@@ -1041,7 +1044,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
   {
     // Write out names file
     ofstream  nf (namesFileName.Str ());
-    MLClassListPtr  classes = _data.ExtractListOfClasses ();
+    MLClassListPtr  classes = _data.ExtractMLClassConstList ();
     for  (x = 0;  x < classes->QueueSize ();  x++)
     {
       if  (x > 0)
@@ -1082,6 +1085,9 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
 
       nf << "." << endl;
     }
+
+    nf << "ImageFileName" << ": " << "Symbolic" << "." << endl;
+
     nf.close ();
   }
 
@@ -1109,9 +1115,8 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
     delete  stats;
   }
 
-
   kkint32  origPrecision = (kkint32)_out.precision ();
-  _out.precision (7);
+  _out.precision (9);
 
   FeatureVectorPtr   example = NULL;
 
@@ -1142,6 +1147,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
       }
       _out << ",";
     }
+    _out << example->ImageFileName () << ",";
     _out << example->ClassName ();
     _out << endl;
     _numExamplesWritten++;

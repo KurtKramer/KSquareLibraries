@@ -264,7 +264,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
     {
       if  (lineNum > 0)
         _out << " ";
-      _out << _data[lineNum].ImageClassName ();
+      _out << _data[lineNum].MLClassName ();
     }
     _out << endl;
   }

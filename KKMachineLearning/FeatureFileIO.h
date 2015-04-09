@@ -232,15 +232,11 @@ namespace KKMachineLearning
 
 
 
-
-
-
-
     /**
      *@brief To be implemented by derived classes; loads the contents of a feature data file and returns a ImageFeaturesList container object.
      *@param[in]  _fileName   Feature file that is being loaded.
      *@param[in]  _fileDesc  Description of feature data that is to be loaded.
-     *@param[in,out] _classes All classes encounter during the loading of the feature file will be added to this list.
+     *@param[in,out] _classes All classes encountered during the loading of the feature file will be added to this list.
      *@param[in]  _in  input stream that feature data is to be loaded/read from.
      *@param[in]  _maxCount Maximum number of examples to load, -1 = load all
      *@param[in]  _cancelFlag If this flag turns true the load will terminate and return to caller.
@@ -304,7 +300,9 @@ namespace KKMachineLearning
 
     static  KKStr              FileFormatsReadAndWriteOptionsStr ();
 
-    static  VectorKKStr        RegisteredDriverNames ();
+    static  VectorKKStr        RegisteredDriverNames (bool  canRead,
+                                                      bool  canWrite
+                                                     );
 
     static  void               FinalCleanUp ();
 
@@ -353,7 +351,9 @@ namespace KKMachineLearning
     KKStr   driverName;
     KKStr   driverNameLower;
 
+    void  RegisterDriver (FeatureFileIOPtr  driver);
     static void  RegisterAllDrivers ();
+    static GoalKeeperPtr  featureFileIOGoalKeeper;
 
 
   static  bool  atExitDefined;
@@ -369,7 +369,7 @@ namespace KKMachineLearning
 
   typedef  FeatureFileIO::FeatureFileIOPtr   FeatureFileIOPtr;
 
-  #define  _FeatureFileIO_Defined_
+#define  _FeatureFileIO_Defined_
 
 
 }  /* namespace KKMachineLearning  */

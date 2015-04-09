@@ -14,7 +14,7 @@ using namespace std;
 
 #include "MorphOpStruct.h"
 #include "Raster.h"
-using namespace KKU;
+using namespace KKB;
 
 
 

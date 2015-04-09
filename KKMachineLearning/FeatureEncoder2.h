@@ -37,8 +37,6 @@ namespace KKMachineLearning
      * @brief Constructs a Feature Encoder object.
      * @param[in] _param
      * @param[in] _fileDesc
-     * @param[in] _attributeTypes   caller keeps ownership,  but encoder will continue to reference it.
-     * @param[in] _cardinalityTable caller keeps ownership,  but encoder will continue to reference it.
      * @param[in] _log A log-file stream. All important events will be output to this stream
      */
     FeatureEncoder2 (const ModelParam& _param,
@@ -95,6 +93,7 @@ namespace KKMachineLearning
     typedef  FeatureVar2List*  FeatureVar2ListPtr;
   };  /* FeatureEncoder2 */
 
+#define  _FeatureEncoder2_Defined_
 
   typedef  FeatureEncoder2::FeatureEncoder2Ptr  FeatureEncoder2Ptr;
 

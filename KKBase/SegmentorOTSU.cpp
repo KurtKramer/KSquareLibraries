@@ -27,7 +27,9 @@ using namespace  KKB;
 
 
 SegmentorOTSU::SegmentorOTSU (RunLog&  _log):
-  log (_log)
+  log        (_log),
+  threshold1 (0),
+  threshold2 (0)
 {
   double z = 0.0;
   NaN = 1.0 / z;
@@ -770,9 +772,10 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   }
 
   kkint32  totPixels = srcImage->TotPixels ();
+  kkint32  pixelsCounted = 0;
   VectorInt  unI;
   VectorInt  unICounts;
-  
+  VectorInt32  counts (256, 0);
   {
     // %% Convert to 256 levels
     // srcImage = srcImage-min(srcImage(:));
@@ -786,11 +789,16 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     uchar*  greenArea = srcImage->GreenArea ();
 
-    uchar  pixelMin = greenArea[0];
-    uchar  pixelMax = greenArea[0];
+    uchar  pixelMin = 255;
+    uchar  pixelMax = 1;
 
     for  (pixelIdx = 1;  pixelIdx < totPixels;  ++pixelIdx)
     {
+      if  (greenArea[pixelIdx] < 1)
+        continue;
+
+      pixelsCounted++;
+
       if  (greenArea[pixelIdx] < pixelMin)
         pixelMin = greenArea[pixelIdx];
 
@@ -814,7 +822,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
       counts[greenArea[pixelIdx]]++;
     }
 
-    for  (x = 0;  x < (kkint32)counts.size ();  ++x)
+    for  (x = 1;  x < (kkint32)counts.size ();  ++x)
     {
       if  (counts[x] > 0)
       {
@@ -852,7 +860,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   //P = histo/sum(histo);
   VectorDouble  P (histo.size (), 0.0);
   for  (x = 0;  x < (kkint32)histo.size ();  ++x)
-    P[x] = (double)(histo[x]) / (double)totPixels;
+    P[x] = (double)(histo[x]) / (double)pixelsCounted;
 
   //clear unI
   unI.clear ();
@@ -902,16 +910,30 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     //% segmented image
     //IDX = ones(size(srcImage));
     //IDX(srcImage>pixval(k+1)) = 2;
-    kkint32  threshold = pixval[k + 1];
+    threshold1 = pixval[k + 1];
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     uchar*  resultArea = result->GreenArea ();
     uchar*  srcArea    = srcImage->GreenArea ();
-    for  (x = 0;  x < totPixels;  ++x)
+
+    while  (true)
     {
-      if  (srcArea[x] > threshold)
-        resultArea[x] = 2;
-      else
-        resultArea[x] = 1;
+      kkuint32  numClass2Pixs = 0;
+      for  (x = 0;  x < totPixels;  ++x)
+      {
+        if  (srcArea[x] > threshold1)
+        {
+          resultArea[x] = 2;
+          ++numClass2Pixs;
+        }
+        else
+        {
+          resultArea[x] = 1;
+        }
+      }
+
+      if  ((threshold1 < 1)  ||  (numClass2Pixs >100))
+        break;
+      --threshold1;
     }
     
     //% separability criterion
@@ -989,13 +1011,13 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
       //IDX(srcImage>pixval(k1) & srcImage<=pixval(k2)) = 2;
       uchar*  srcData = srcImage->GreenArea ();
       uchar*  data = result->GreenArea ();
-      double  th1 = pixval[k1];
-      double  th2 = pixval[k2];
+      threshold1 = pixval[k1];
+      threshold2 = pixval[k2];
       for  (x = 0;  x < totPixels;  ++x)
       {
-        if  (srcData[x] <= th1)
+        if  (srcData[x] <= threshold1)
           data[x] = 1;
-        else if  (srcData[x] <= th2)
+        else if  (srcData[x] <= threshold2)
           data[x] = 2;
         else
           data[x] = 3;

@@ -17,10 +17,10 @@
  * <br />
  * Two of the constructors allow you to specify a list of features in a string.
  * The list can consist of single features and/or ranges of features. Ranges of
- * features are specified by using the dash('-') charter between two numbers.
+ * features are specified by using the dash('-') character between two numbers.
  * The comma(',') character will be used as a separator.  "All" specifies all are
  * to be selected except those that are flagged as  'IgnoreAttribute' in the 
- * Associated FileDesc instance. The list should be in ascending order.
+ * associated FileDesc instance. The list should be in ascending order.
  *
  *@code
  *  Example Strings:
@@ -59,8 +59,10 @@ namespace KKMachineLearning
     /** @brief  Copy constructor.  */
     FeatureNumList (const FeatureNumList&  featureNumList);
 
-
-    /** @brief  Constructs a new 'FeatureNumList' instance with NO features selected. */
+    /*
+     *@brief  Constructs an instance with no features selected and no associated 'FileDesc' instance.
+     *        This is a private constructor and is used for internal use of 'FeatureNumList only.
+     */
     FeatureNumList (FileDescPtr  _fileDesc);
 
 
@@ -81,7 +83,7 @@ namespace KKMachineLearning
     /**
      * @brief Constructs a 'FeatureNumList' instance from a string that contains a list of selected features.
      * @details The list can consist of single features and/or ranges of features. Ranges of features
-     *  are specified by using the dash('-') charter between two numbers.  The comma(',')
+     *         are specified by using the dash('-') character between two numbers.  The comma(',')
      *  character will be used as a separator.  "All" specifies all ate to be selected except
      *  those that are flagged as  'IgnoreAttribute' in the associated FileDesc instance.
      *  The list should be in ascending order.
@@ -110,8 +112,8 @@ namespace KKMachineLearning
      *  should be included or excluded.
      *
      * @details The list can consist of single features and/or ranges of features. Ranges of features
-     *  are specified by using the ('-') charter between two numbers.  The comma(',')
-     *  Character will be used as a separator.  The list should be in ascending order.
+     *         are specified by using the ('-') character between two numbers.  The comma(',')
+     *         character will be used as a separator.  The list should be in ascending order.
      *  The '_selectionType' parameter specifies weather we are going to select these
      *  features or exclude them form the list of all features(complement).
      * @code
@@ -153,32 +155,25 @@ namespace KKMachineLearning
     /** @brief Adds 'featureNum' to the list of selected features.  If it is already selected nothing happens. */
     void    AddFeature (kkuint16  featureNum);
 
-
     /** @brief Returns true if all features are selected. */
     bool    AllFeaturesSelected ()  const;
 
-
     KKMachineLearning::AttributeType  FeatureAttributeType (kkint32 idx)  const;
-
 
     /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
     static  FeatureNumList   AllFeatures (FileDescPtr  fileDesc);
 
-
     /** @brief Compare with another featureNumList returning -1, 0, and 1 indicating less_than, equal, or greater_than. */
     kkint32 Compare (const FeatureNumList&  _features)  const;
-
 
     /** @brief Perform a complement of selected features.  That is if a feature is selected turn it off and if it is not selected then turn it on. */
     FeatureNumList  Complement ()  const;
 
-
     /**
-     * @brief Allocates a array of kkint32's that is a copy  of FeatureNums; The caller will own the array and is responsible for deleting it.
-     * @return A dynamically allocated array if kkint16 its that will consists of a list of selected features.
+     *@brief Allocates a array of kkint32's that is a copy  of FeatureNums.  The caller will own the array and is responsible for deleting it.
+     *@returns A dynamically allocated array that will consist of a list of selected features.
      */
     kkuint16*  CreateFeatureNumArray ()  const;
-
 
 
     /**
@@ -188,7 +183,7 @@ namespace KKMachineLearning
      * @code
      *  ex's:   String          Selected Features
      *         "1,2,3,10,20"    [1,2,3,10, 20].
-     *         "1,4-7,9-12,13"  [1,4,,5,6,7,9,10,11,12,13]
+     *         "1,4-7,9-12,23"  [1,4,5,6,7,9,10,11,12,23]
      *         "All"            Selects all features that '_fileDesc' includes accept those that are
      *                          flagged as 'IgnoreAttribute' in the associated FileDesc instance.
      * @endcode
@@ -197,12 +192,9 @@ namespace KKMachineLearning
                                      bool&   valid
                                     );
 
-    bool   IsSubSet (const FeatureNumList&  z);
-
-
-    /**@brief returns true if _featureNum in  featureNums, meaning it was selected. */
-    bool   InList (kkuint16 featureNum)  const;
-
+    bool   IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
+    
+    bool   InList (kkuint16 featureNum)  const;    /**@brief returns true if '_featureNum' is one of the selected features. */
 
     void   Load (const KKStr&  _fileName,
                  bool&         _successful,
@@ -210,7 +202,6 @@ namespace KKMachineLearning
                 );
 
     kkint32  MemoryConsumedEstimated ()  const;
-
 
     /**
      * @brief Generates a new FeatureNumList object that will select at random 'numToKeep' features from this instance.
@@ -224,23 +215,18 @@ namespace KKMachineLearning
                 RunLog&       _log
                );
    
+    void   Save (std::ostream&  o);
 
-    void  Save (std::ostream&  o);
+    void   SetAllFeatures ();                     /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
 
-
-    /** @brief  Selects all features except those that are flagged as 'IgnoreAttribute' in the associated FileDesc instance. */
-    void   SetAllFeatures ();
-
-    bool   Test (kkuint16 _featureNum)  const;  /**< Same as 'InList' */
-
+    bool   Test (kkuint16 _featureNum)  const;    /**< @brief Indicates whether feature '_featureNum' is selected. */
 
     void   ToBitString (BitString&  bitStr)  const;
-
 
     KKStr  ToHexString ()  const;
 
 
-    /** @brief Returns comma delimited list of all features selected.  Will make use of range specification. */
+    /** @brief Returns comma delimited list of all features selected; will make use of range specification. */
     KKStr       ToString ()  const;
 
 
@@ -250,50 +236,45 @@ namespace KKMachineLearning
     /** @brief   Turns off all features so that no feature is selected.      */
     void        UnSet ();
 
-
     /** @brief Turns off specified feature 'featureNum'; if 'featureNum' is not turned on then nothing happens; same as using 'operator-='.  */
     void        UnSet (kkuint16  featureNum);
 
-
     /**
-     * @brief Returns back the selected feature.
-     * @details  A FeatureNumList instance consists of an list of selected features.  It is logically like an array of selected
-     *  features that is the same length as the number of selected features.
-     * @code
-     *  Example code that scans the FeatureNumList object  'goodFeatures'
+     *@brief Returns back the selected feature.
+     *@details  A FeatureNumList instance consists of a list of selected features. It is logically like an 
+     * array of selectedfeatures that is the same length as the number of selected features.
+     *@code
+     * Example code that scans the FeatureNumList object  'goodFeatures'
      *
-     *  void  PrintSelectedFeatures (const FeatureNumList&  goodFeatures)
-     *  {
-     *    cout << "Selected Features: ";
-     *    for  (kkint32 x = 0;  x < goodFeatures.NumOfFeatures ();
-     *    {
-     *      if  (x > 0)  cout << ",";
-     *      cout << goodFeatures[x];
-     *    }
-     *    cout << endl;
-     *  }
-     * @endcode
-     * @param[in]  _idx  The position in this instance that you want to return.
-     * @return  Selected feature at position '_idx'.
+     * void  PrintSelectedFeatures (const FeatureNumList&  goodFeatures)
+     * {
+     *   cout << "Selected Features: ";
+     *   for  (kkint32 x = 0;  x < goodFeatures.NumOfFeatures ();
+     *   {
+     *     if  (x > 0)  cout << ",";
+     *     cout << goodFeatures[x];
+     *   }
+     *   cout << endl;
+     * }
+     *@endcode
+     *@param[in]  _idx  The position in this instance that you want to return.
+     *@return  Selected feature at position '_idx'.
      */
     kkuint16      operator[] (kkint32  idx)  const;
 
-
-
     FeatureNumList&  operator=  (const FeatureNumList&    _features);
     FeatureNumList&  operator=  (const FeatureNumListPtr  _features);
-    FeatureNumList   operator+  (const FeatureNumList&    rightSide)  const;
-    FeatureNumList   operator+  (kkuint16                 rightSide)  const;
-    FeatureNumList&  operator+= (const FeatureNumList&    rightSide);
-    FeatureNumList&  operator+= (kkuint16                 featureNum);
-    FeatureNumList   operator-  (const FeatureNumList&    rightSide)  const;
-    FeatureNumList   operator-  (kkuint16                 rightSide)  const;
-    FeatureNumList&  operator-= (kkuint16                 rightSide);
-
-    FeatureNumList   operator*  (const FeatureNumList&    rightSide)  const;
-    bool             operator== (const FeatureNumList&    _features)  const;
-    bool             operator>  (const FeatureNumList&    _features)  const;
-    bool             operator<  (const FeatureNumList&    _features)  const;
+    FeatureNumList   operator+  (const FeatureNumList&  rightSide)  const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList   operator+  (kkuint16 rightSide)  const;                /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList&  operator+= (const FeatureNumList&  rightSide);         /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList&  operator+= (kkuint16 featureNum);                      /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList   operator-  (const FeatureNumList&  rightSide)  const;  /**< Removes features that are selected in 'rightSide' from this instance and returns the result. */
+    FeatureNumList   operator-  (kkuint16 rightSide)  const;                /**< Returns this instance with the feature specified by 'rightSide'  removed.                    */
+    FeatureNumList&  operator-= (kkuint16 rightSide);                       /**< Remove the feature specified by 'rightSide' from this instance.                              */
+    FeatureNumList   operator*  (const FeatureNumList&  rightSide)  const;  /**<*@brief  Returns new instance that is the intersection of features.                      */
+    bool             operator== (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
+    bool             operator>  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is greater than the right one.   */
+    bool             operator<  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
 
   private:
     /*
@@ -301,7 +282,6 @@ namespace KKMachineLearning
      *  This is a private constructor and is used for internal use of 'FeatureNumList only.
      */
     FeatureNumList ();
-
 
     void   AllocateArraySize (kkint32 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
 

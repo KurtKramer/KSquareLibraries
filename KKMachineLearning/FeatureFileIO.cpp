@@ -1,12 +1,8 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
-
-
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -19,6 +15,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "GoalKeeper.h"
 #include "GlobalGoalKeeper.h"
 #include "ImageIO.h"
 #include "OSservices.h"
@@ -65,10 +62,12 @@ void  ReportError (RunLog&        log,
 
 
 
-bool  FeatureFileIO::atExitDefined = false;
+
 
 
 vector<FeatureFileIOPtr>*  FeatureFileIO::registeredDrivers = NULL;
+GoalKeeperPtr  FeatureFileIO::featureFileIOGoalKeeper = NULL;
+
 
 
 std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
@@ -85,12 +84,6 @@ std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
 void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
-
-  if  (!atExitDefined)
-  {
-    atexit (FeatureFileIO::FinalCleanUp);
-    atExitDefined = true;
-  }
 
   if  (!registeredDrivers)
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
@@ -223,6 +216,22 @@ void FeatureFileIO::FinalCleanUp ()
 
 
 
+FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
+{
+  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+  KKStr  driverNameLower = _driverName.ToLower ();
+  vector<FeatureFileIOPtr>::const_iterator  idx;
+  for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+  {
+    if  ((*idx)->driverNameLower == driverNameLower)
+      return  *idx;
+  }
+  return  NULL;
+}  /* LookUpDriver */
+
+
+
+
 FeatureFileIOPtr  FeatureFileIO::FileFormatFromStr  (const KKStr&  _fileFormatStr)
 {
   return  LookUpDriver (_fileFormatStr);
@@ -321,17 +330,50 @@ KKStr  FeatureFileIO::FileFormatsReadAndWriteOptionsStr ()
 
 
 
-VectorKKStr  FeatureFileIO::RegisteredDriverNames ()
+VectorKKStr  FeatureFileIO::RegisteredDriverNames (bool  canRead,
+                                                   bool  canWrite
+                                                  )
 {
   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
   VectorKKStr  names;
   vector<FeatureFileIOPtr>::iterator  idx;
 
   for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
-    names.push_back ((*idx)->DriverName ());
+  {
+    FeatureFileIOPtr  driver = *idx;
+    if  (canRead  &&  (!driver->CanRead ()))
+      continue;
+
+    if  (canWrite  &&  (!driver->CanWrite ()))
+      continue;
+
+    names.push_back (driver->DriverName ());
+  }
 
   return  names;
 }  /* RegisteredDriverNames */
+
+
+
+
+void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
+{
+  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+  FeatureFileIOPtr  existingDriver = LookUpDriver (_driver->driverName);
+  if  (existingDriver)
+  {
+    // We are trying to register two drivers with the same name;  we can not do that.
+    cerr << endl << endl 
+         << "FeatureFileIO::RegisterDriver     ***ERROR***" << endl 
+         << endl
+         << "             trying to register more than one FeatureFileIO driver with " << endl
+         << "             the same name[" << _driver->driverName << "]." << endl
+         << endl;
+    return;
+  }
+
+  drivers->push_back (_driver);
+}  /* RegisterDriver */
 
 
 
@@ -345,7 +387,9 @@ FeatureFileIO::FeatureFileIO (const KKStr&  _driverName,
    canRead         (_canRead),
    canWrite        (_canWrite),
    driverName      (_driverName),
-   driverNameLower (_driverName.ToLower ())
+   driverNameLower (_driverName.ToLower ()),
+   canRead         (_canRead),
+   canWrite        (_canWrite)
 {
 }
 
@@ -660,14 +704,6 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
     }
   }
 }  /* SaveFeatureFileMultipleParts */
-
-
-
-
-
-
-
-
 
 
 

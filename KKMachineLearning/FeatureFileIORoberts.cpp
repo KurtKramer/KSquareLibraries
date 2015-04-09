@@ -110,7 +110,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
     // Write _out names file
     ofstream  nf (namesFileName.Str ());
 
-    MLClassListPtr classes = _data.ExtractListOfClasses ();
+    MLClassListPtr classes = _data.ExtractMLClassConstList ();
     classes->SortByName ();
     for  (x = 0;  x < classes->QueueSize ();  x++)
     {
@@ -118,6 +118,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
       nf << classes->IdxToPtr (x)->Name ();
     }
     delete  classes;
+    classes = NULL;
     nf << endl << endl;
 
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)

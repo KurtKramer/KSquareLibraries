@@ -50,7 +50,6 @@ namespace KKMachineLearning
 
   typedef  AttributeTypeVector*        AttributeTypeVectorPtr;
 
-
   class  Attribute
   {
   public:
