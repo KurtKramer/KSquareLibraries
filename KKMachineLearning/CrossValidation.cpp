@@ -28,7 +28,7 @@ using namespace KKB;
 #include "StatisticalFunctions.h"
 #include "TrainingConfiguration2.h"
 #include "TrainingProcess2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

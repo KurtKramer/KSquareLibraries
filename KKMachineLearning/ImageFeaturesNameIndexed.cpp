@@ -21,7 +21,7 @@ using namespace  KKB;
 
 #include "ImageFeaturesNameIndexed.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

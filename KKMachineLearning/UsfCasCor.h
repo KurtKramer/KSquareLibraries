@@ -89,7 +89,7 @@ typedef enum {False, True} Boolean;
 #include "FeatureVector.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined(_CLASSPROB_)
   class  ClassProb;
@@ -598,6 +598,6 @@ namespace KKMachineLearning
 
   typedef  UsfCasCor*  UsfCasCorPtr;
 
-} /* MLL */
+} /* KKMLL */
 
 #endif

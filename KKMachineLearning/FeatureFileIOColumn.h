@@ -4,7 +4,7 @@
 #include  "FeatureFileIO.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 /**
   @class FeatureFileIOColumn
@@ -63,7 +63,7 @@ private:
   static  FeatureFileIOColumn  driver;
 };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

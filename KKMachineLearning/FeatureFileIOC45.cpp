@@ -23,7 +23,7 @@ using namespace  KKB;
 #include "FeatureFileIOC45.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -1044,7 +1044,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
   {
     // Write out names file
     ofstream  nf (namesFileName.Str ());
-    MLClassListPtr  classes = _data.ExtractMLClassConstList ();
+    MLClassListPtr  classes = _data.ExtractListOfClasses ();
     for  (x = 0;  x < classes->QueueSize ();  x++)
     {
       if  (x > 0)

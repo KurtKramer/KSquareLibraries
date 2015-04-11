@@ -2,7 +2,7 @@
 #define  _CLASSASSIGNMENTS_
 
 /**
- *@class KKMachineLearning::ClassAssignments
+ *@class KKMLL::ClassAssignments
  *@author Kurt Kramer
  *@brief Binds MLClass objects to the appropriate number that the Learning Algorithm expects.
  *@details This class will bind MLClass objects to the appropriate number that the learning 
@@ -22,7 +22,7 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _MLCLASS_
@@ -97,6 +97,6 @@ namespace KKMachineLearning
 
   typedef  ClassAssignments*  ClassAssignmentsPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

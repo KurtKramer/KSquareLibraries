@@ -37,7 +37,7 @@ using namespace KKB;
 #include "FeatureVectorProducer.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -63,10 +63,7 @@ void  ReportError (RunLog&        log,
 
 
 
-
-
 vector<FeatureFileIOPtr>*  FeatureFileIO::registeredDrivers = NULL;
-GoalKeeperPtr  FeatureFileIO::featureFileIOGoalKeeper = NULL;
 
 
 
@@ -216,20 +213,6 @@ void FeatureFileIO::FinalCleanUp ()
 
 
 
-FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
-{
-  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
-  KKStr  driverNameLower = _driverName.ToLower ();
-  vector<FeatureFileIOPtr>::const_iterator  idx;
-  for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
-  {
-    if  ((*idx)->driverNameLower == driverNameLower)
-      return  *idx;
-  }
-  return  NULL;
-}  /* LookUpDriver */
-
-
 
 
 FeatureFileIOPtr  FeatureFileIO::FileFormatFromStr  (const KKStr&  _fileFormatStr)
@@ -356,27 +339,6 @@ VectorKKStr  FeatureFileIO::RegisteredDriverNames (bool  canRead,
 
 
 
-void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
-{
-  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
-  FeatureFileIOPtr  existingDriver = LookUpDriver (_driver->driverName);
-  if  (existingDriver)
-  {
-    // We are trying to register two drivers with the same name;  we can not do that.
-    cerr << endl << endl 
-         << "FeatureFileIO::RegisterDriver     ***ERROR***" << endl 
-         << endl
-         << "             trying to register more than one FeatureFileIO driver with " << endl
-         << "             the same name[" << _driver->driverName << "]." << endl
-         << endl;
-    return;
-  }
-
-  drivers->push_back (_driver);
-}  /* RegisterDriver */
-
-
-
 
 
 
@@ -387,9 +349,7 @@ FeatureFileIO::FeatureFileIO (const KKStr&  _driverName,
    canRead         (_canRead),
    canWrite        (_canWrite),
    driverName      (_driverName),
-   driverNameLower (_driverName.ToLower ()),
-   canRead         (_canRead),
-   canWrite        (_canWrite)
+   driverNameLower (_driverName.ToLower ())
 {
 }
 

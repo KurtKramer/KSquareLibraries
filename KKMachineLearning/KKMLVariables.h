@@ -5,14 +5,14 @@
 
 
 /** 
- *@namespace  KKMachineLearning
+ *@namespace  KKMLL
  *@brief This library provides data structures that support Machine Learning functionality.
  *@details There are several classes defined in this library but the central ones that should be understood are
  * MLClass, FeatureVector, Model, FileDesc, and Attribute.  there is support for reading and writing several
  * feature Data file formats  C45 probably being the most well known.<p>
  */
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /** 
    *@class  Variables
@@ -36,6 +36,6 @@ namespace KKMachineLearning
 
     static  KKStr  machineLearningHomeDir;
   };  /* KKMLVariables */
-}  /* KKMachineLearning*/
+}  /* KKMLL*/
 #endif
 

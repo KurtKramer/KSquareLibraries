@@ -2,7 +2,7 @@
 #define  _FEATURENUMLIST_
 
 /**
- *@class KKMachineLearning::FeatureNumList
+ *@class KKMLL::FeatureNumList
  *@brief Keeps track of selected features.  
  *@details Used by SVMModel and the newer 'Model', 'ModelParam' based classes.
  * Each instance of this class will have an associated 'FileDesc' instance. It
@@ -39,7 +39,7 @@
 #include  "KKStr.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   #ifndef  _FILEDESC_
   class  FileDesc;
@@ -158,7 +158,7 @@ namespace KKMachineLearning
     /** @brief Returns true if all features are selected. */
     bool    AllFeaturesSelected ()  const;
 
-    KKMachineLearning::AttributeType  FeatureAttributeType (kkint32 idx)  const;
+    KKMLL::AttributeType  FeatureAttributeType (kkint32 idx)  const;
 
     /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
     static  FeatureNumList   AllFeatures (FileDescPtr  fileDesc);
@@ -312,7 +312,7 @@ namespace KKMachineLearning
 
   extern
   const  char*  FeatureDecriptions[];
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif
 

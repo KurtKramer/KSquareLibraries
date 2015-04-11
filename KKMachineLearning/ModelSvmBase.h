@@ -11,17 +11,13 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
-#include "FileDesc.h"
-#include "MLClass.h"
 #include "Model.h"
 #include "ModelParam.h"
 #include "ModelParamSvmBase.h"
 #include "svm2.h"
 
 
-namespace  KKMachineLearning  
+namespace  KKMLL  
 {
   class  ModelSvmBase: public Model
   {
@@ -44,24 +40,21 @@ namespace  KKMachineLearning
   
     ModelSvmBase (const ModelSvmBase&   _model);
 
-    virtual
-    ~ModelSvmBase ();
+    virtual  ~ModelSvmBase ();
 
-    virtual
-    kkint32                 MemoryConsumedEstimated ()  const;
+    virtual  KKStr        Description ()  const;
+
+    virtual  ModelSvmBasePtr    Duplicate ()  const;
+
+    virtual  kkint32      MemoryConsumedEstimated ()  const;
 
     virtual ModelTypes    ModelType () const  {return mtSvmBase;}
 
-    virtual
-    kkint32                 NumOfSupportVectors () const;
-
-    virtual
-    ModelSvmBasePtr       Duplicate ()  const;
+    virtual  kkint32      NumOfSupportVectors () const;
 
     ModelParamSvmBasePtr  Param ();
 
-    virtual
-    MLClassPtr            Predict (FeatureVectorPtr  image);
+    virtual  MLClassPtr   Predict (FeatureVectorPtr  image);
   
     virtual
     void                  Predict (FeatureVectorPtr  example,
@@ -143,6 +136,6 @@ namespace  KKMachineLearning
 
 typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
 
-} /* namespace  KKMachineLearning */
+} /* namespace  KKMLL */
 
 #endif

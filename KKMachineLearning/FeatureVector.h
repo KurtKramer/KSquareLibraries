@@ -3,7 +3,7 @@
 
 
 /**
- *@class  KKMachineLearning::FeatureVector
+ *@class  KKMLL::FeatureVector
  *@brief  Represents a Feature Vector of a single example, labeled or unlabeled
  *@author  Kurt Kramer
  *@details Used for the representation of a Single example.  You create an instance of 
@@ -30,7 +30,7 @@
 #include "MLClass.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 
@@ -314,7 +314,7 @@ namespace KKMachineLearning
 
     KKStr  ClassStatisticsStr ()  const;
 
-    KKMachineLearning::AttributeTypeVector  CreateAttributeTypeTable ()  const;
+    KKMLL::AttributeTypeVector  CreateAttributeTypeTable ()  const;
 
     vector<kkint32>  CreateCardinalityTable ()  const;
 
@@ -384,7 +384,7 @@ namespace KKMachineLearning
     MLClassListPtr            ExtractListOfClasses ()  const;
 
     bool                      AllFieldsAreNumeric ()  const;                  /**< @brief  Returns true if all fields are numeric, no nominal fields.              */
-    KKMachineLearning::AttributeType  FeatureType        (kkint32 featureNum) const;  /**< @brief  Returns the type of attribute for specified 'featureNum'. @see FileDesc */
+    KKMLL::AttributeType  FeatureType        (kkint32 featureNum) const;  /**< @brief  Returns the type of attribute for specified 'featureNum'. @see FileDesc */
     KKStr                     FeatureTypeStr     (kkint32 featureNum) const;
     kkint32                   FeatureCardinality (kkint32 featureNum) const;  /**< @brief Returns the number of values defined for a Nominal Field. @see FileDesc::Cardinality */
     const KKStr&              FieldName          (kkint32 featureNum) const;  /**< @bnrie Returns name of Attribute Field.                                        */
@@ -548,7 +548,7 @@ namespace KKMachineLearning
 
   typedef  FeatureVectorList*  FeatureVectorListPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

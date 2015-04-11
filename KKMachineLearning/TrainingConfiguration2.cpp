@@ -38,7 +38,7 @@ using namespace  KKB;
 #include "ModelParamOldSVM.h"
 #include "ModelParamSvmBase.h"
 #include "NormalizationParms.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -1684,7 +1684,7 @@ bool  TrainingConfiguration2::NormalizeNominalFeatures ()
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   KKStr&  operator<< (KKStr&                              left,
                       TrainingConfiguration2::ModelTypes  modelingMethod

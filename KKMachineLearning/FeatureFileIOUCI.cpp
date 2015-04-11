@@ -25,7 +25,7 @@ using namespace  KKB;
 #include "FeatureFileIOUCI.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

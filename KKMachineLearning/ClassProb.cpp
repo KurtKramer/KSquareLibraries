@@ -14,7 +14,7 @@ using namespace  KKB;
 
 #include "ClassProb.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 ClassProb::ClassProb (MLClassPtr _classLabel,

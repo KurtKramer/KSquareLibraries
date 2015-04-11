@@ -10,7 +10,6 @@
 #include <iomanip>
 #include <set>
 #include <vector>
-
 #include "MemoryDebug.h"
 using namespace  std;
 
@@ -28,7 +27,8 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "ModelKnn.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
+
 
 
 ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
@@ -132,7 +132,7 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkuint32  idx;
+  kkint32 idx;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);

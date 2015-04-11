@@ -1,7 +1,7 @@
 #if  !defined(_CLASSPROB_)
 #define  _CLASSPROB_
 /**
- *@class  KKMachineLearning::ClassProb
+ *@class  KKMLL::ClassProb
  *@brief Used to record probability for a specified class;  and a list of classes.
  *@author  Kurt Kramer
  */
@@ -11,7 +11,7 @@
 #include "KKStr.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined(_MLCLASS_)
   class  MLClass;

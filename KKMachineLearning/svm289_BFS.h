@@ -7,7 +7,7 @@
 #include  "FeatureVector.h"
 #include  "KKStr.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 /**

@@ -26,7 +26,7 @@ using namespace  KKB;
 
 
 #include  "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "svm289_BFS.h"
 using  namespace  SVM289_BFS;
@@ -4328,7 +4328,7 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
       const FeatureVector&  p = SV[i];
       o.precision (13);
       o << "SupportVector" << "\t" << p.ImageFileName ()
-                           << "\t" << p.ImageClassName ();
+                           << "\t" << p.MLClassName ();
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
         o << "\t" << sv_coef[j][i];
 

@@ -2,7 +2,7 @@
 #define  _ATTRIBUTE_
 
 /**
- *@class  KKMachineLearning::Attribute
+ *@class  KKMLL::Attribute
  *@author  Kurt Kramer
  *@brief describes a single Feature, Type and possible values.
  *@details Used to support 'FileDesc', 'FeatureVector', and 'PostLarvaeFV' classes.  FileDesc 
@@ -20,7 +20,7 @@
  * Symbolic - Similar to Nominal except you do not know all the possible values this attribute
  *            can take on.
  *@endcode
- *@see  KKMachineLearning::FeatureEncoder, KKMachineLearning::FeatureVector, KKMachineLearning::FeatureFileIO
+ *@see  KKMLL::FeatureEncoder, KKMLL::FeatureVector, KKMLL::FeatureFileIO
 */
 
 #include <map>
@@ -30,7 +30,7 @@
 using namespace  KKB;
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   typedef  enum 
   {
@@ -159,6 +159,6 @@ namespace KKMachineLearning
 
   KKStr  AttributeTypeToStr (AttributeType  type);
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

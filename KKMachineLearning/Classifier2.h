@@ -10,7 +10,7 @@
 #include "SVMModel.h"
 
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
 #if  !defined(_CLASSPROB_)
 class  ClassProb;
@@ -297,7 +297,7 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
 
 
-}  /* namespace  MLL */
+}  /* namespace  KKMLL */
 
 
 

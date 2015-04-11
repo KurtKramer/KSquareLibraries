@@ -14,7 +14,7 @@
 using namespace SVM233;
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _BINARYCLASSPARMS_
@@ -264,7 +264,7 @@ namespace KKMachineLearning
   SVM_SelectionMethod    SelectionMethodFromStr   (const KKStr&  selectionMethodStr);
 
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 

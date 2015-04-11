@@ -28,7 +28,7 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "SvmWrapper.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -2143,7 +2143,7 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
 
 
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
   bool  PairCompareOperator(ProbNamePair l, ProbNamePair  r) 
   { 

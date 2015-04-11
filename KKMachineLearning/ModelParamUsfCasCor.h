@@ -7,7 +7,7 @@
 #include "ModelParam.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /**
    *@brief  This class encapsulates are the information necessary to build a UsfCasCor class.
@@ -62,7 +62,7 @@ namespace KKMachineLearning
 
     /**
      *@brief Creates a Command Line String that represents these parameters.
-     *@details  All derived classes should implement this method.  They should first call this method and 
+     *@details  All derived classes should implement this method. They should first call this method and 
      *          then append there own parameters that are specific to their implementation.
      */
     virtual KKStr  ToCmdLineStr ()  const;
@@ -85,7 +85,7 @@ namespace KKMachineLearning
   };  /* ModelParamUsfCasCor */
 
   typedef  ModelParamUsfCasCor*   ModelParamUsfCasCorPtr;
-}  /* namespace MLL */
+}  /* namespace KKMLL */
 
 
 

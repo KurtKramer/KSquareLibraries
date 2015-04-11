@@ -40,7 +40,7 @@ using namespace  KKB;
 #include "ModelSvmBase.h"
 #include "TrainingClass.h"
 #include "TrainingConfiguration2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -772,7 +772,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
       FeatureVectorPtr  example = *idx;
 
       if  (report)
-        *report << example->ImageFileName () << "\t" << example->ImageClassName () << endl;
+        *report << example->ImageFileName () << "\t" << example->MLClassName () << endl;
 
       trainingExamples->DeleteEntry (example);
     }
@@ -789,6 +789,7 @@ void  TrainingProcess2::CheckForDuplicates (bool  allowDupsInSameClass)
 {
   // Lets check for duplicate trainingExamples in training data.  Just to get a count, no other reason
   DuplicateImages  dupDetector (trainingExamples, fileDesc, log);
+
   duplicateDataCount = dupDetector.DuplicateDataCount ();
   if  (duplicateDataCount > 0)
   {

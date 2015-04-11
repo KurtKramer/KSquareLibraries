@@ -22,7 +22,7 @@
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 
@@ -553,7 +553,7 @@ typedef  struct svm_node*     XSpacePtr;
 
     double                 trainingTime;
 
-    KKMachineLearning::AttributeTypeVector  type_table;
+    KKMLL::AttributeTypeVector  type_table;
 
     bool                   validModel;
 
@@ -572,7 +572,7 @@ typedef  struct svm_node*     XSpacePtr;
   typedef  SVMModel*  SVMModelPtr;
 
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 
 #endif

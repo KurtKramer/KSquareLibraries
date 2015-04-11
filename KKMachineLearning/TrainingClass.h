@@ -1,7 +1,7 @@
 #ifndef  _TRAININGCLASS_
 #define  _TRAININGCLASS_
 /**
- @class  KKMachineLearning::TrainingClass
+ @class  KKMLL::TrainingClass
  @code
  *********************************************************************
  *                         TrainingClass                             *
@@ -30,7 +30,7 @@
 #include  "KKStr.h"
 #include  "KKQueue.h"
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   #ifndef  _MLCLASS_
   class  MLClass;
@@ -133,7 +133,7 @@ namespace KKMachineLearning
 
   typedef  TrainingClassList*  TrainingClassListPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

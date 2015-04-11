@@ -1,23 +1,23 @@
-#include  "FirstIncludes.h"
-#include  <stdio.h>
-#include  <fstream>
-#include  <string>
-#include  <iostream>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
-
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace KKB;
 
 
-#include  "ModelParamSvmBase.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-using namespace KKMachineLearning;
+#include "ModelParamSvmBase.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "MLLTypes.h"
+using namespace KKMLL;
 
 
 #include  "svm2.h"

@@ -7,7 +7,7 @@
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 
@@ -98,7 +98,7 @@ namespace KKMachineLearning
   };
 
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

@@ -30,7 +30,7 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,

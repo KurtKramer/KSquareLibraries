@@ -36,7 +36,7 @@ using namespace  KKB;
 #include "ClassProb.h"
 
 #include "UsfCasCor.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

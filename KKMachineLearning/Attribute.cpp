@@ -24,7 +24,7 @@ using namespace KKB;
 #include "MLLTypes.h"
 #include "FeatureNumList.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -329,7 +329,7 @@ AttributeTypeVectorPtr  AttributeList::CreateAttributeTypeVector ()  const
 
 
 
-KKStr  KKMachineLearning::AttributeTypeToStr (AttributeType  type)
+KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
 {
   static const char* AttributeTypeStrings[] = 
     {

@@ -2,7 +2,7 @@
 #define  _DUPLICATEIMAGES_
 
 /** 
- *@class KKMachineLearning::DuplicateImages
+ *@class KKMLL::DuplicateImages
  *@author  Kurt Kramer
  *@brief   Detects duplicate images in a given FeaureVectorList objects.
  *@details  Will derive a list of duplicate FeatureVector objects in a given list.  It will 
@@ -20,7 +20,7 @@
 #include  "FeatureVector.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   class  DuplicateImageList;
   typedef  DuplicateImageList*  DuplicateImageListPtr;
@@ -173,7 +173,7 @@ namespace KKMachineLearning
 
   typedef  DuplicateImageList*  DuplicateImageListPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

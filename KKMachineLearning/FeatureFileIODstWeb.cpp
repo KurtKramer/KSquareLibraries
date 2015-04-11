@@ -26,7 +26,7 @@ using namespace KKB;
 #include "FeatureFileIODstWeb.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 

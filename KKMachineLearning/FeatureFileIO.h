@@ -3,7 +3,7 @@
 
 
 /**
- *@class  KKMachineLearning::FeatureFileIO
+ *@class  KKMLL::FeatureFileIO
  *@brief  Base class for all FeatureFileIO classes.
  *@details  This is a abstract class.  For each type of FeatureFile you will need to implement
  *          a separate class derived from this class that supports the specific file format.
@@ -21,7 +21,7 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   class  FeatureFileIO;
   typedef  FeatureFileIO*  FeatureFileIOPtr;
@@ -343,26 +343,24 @@ namespace KKMachineLearning
                     bool&          _eof
                    );
 
-    static  void  RegisterDriver (FeatureFileIOPtr  driver);
-
   private:
     bool    canRead;
     bool    canWrite;
     KKStr   driverName;
     KKStr   driverNameLower;
 
-    void  RegisterDriver (FeatureFileIOPtr  driver);
+    static void  RegisterDriver (FeatureFileIOPtr  driver);
     static void  RegisterAllDrivers ();
     static GoalKeeperPtr  featureFileIOGoalKeeper;
 
 
-  static  bool  atExitDefined;
-  static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
+    static  bool  atExitDefined;
+    static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
 
-  static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
+    static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
 
-  static
-    FeatureFileIOPtr  LookUpDriver (const KKStr&  _driverName);
+    static
+      FeatureFileIOPtr  LookUpDriver (const KKStr&  _driverName);
   };  /* FeatureFileIO */
 
 
@@ -372,7 +370,7 @@ namespace KKMachineLearning
 #define  _FeatureFileIO_Defined_
 
 
-}  /* namespace KKMachineLearning  */
+}  /* namespace KKMLL  */
 
 
 

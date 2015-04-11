@@ -16,7 +16,7 @@
 #include "TrainingClass.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   #if  !defined(_NormalizationParmsDefined_)
   class  NormalizationParms;
@@ -387,6 +387,6 @@ namespace KKMachineLearning
   typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
 
   #define  _TrainingConfiguration2List_Defined_
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

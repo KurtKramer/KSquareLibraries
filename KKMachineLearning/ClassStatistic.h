@@ -6,7 +6,7 @@
 
 #include "MLClass.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   /**
    *@brief Used by routines that retrieve Class statistics from FeatureVectorList instances.
@@ -65,7 +65,7 @@ namespace KKMachineLearning
   };  /* ClassStatisticList */
 
   typedef  ClassStatisticList*  ClassStatisticListPtr;
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #define  _ClassStatistic_Defined_
 

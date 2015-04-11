@@ -6,7 +6,7 @@
 #include  "KKStr.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _FeatureVector_Defined_
@@ -47,7 +47,7 @@ namespace KKMachineLearning
      KKStr  ExtractKey (FeatureVectorPtr  image);
   };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

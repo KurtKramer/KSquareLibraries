@@ -3,7 +3,7 @@
 
 #include  "ModelParam.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   class ModelParamKnn: public  ModelParam
   {

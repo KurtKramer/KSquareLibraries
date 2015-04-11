@@ -2,7 +2,7 @@
 #define  _CROSSVALIDATION_
 
 /**
- @class  MLL::CrossValidation
+ @class  KKMLL::CrossValidation
  @brief  A class that is meant to manage a n-Fold Cross Validation.
  @author  Kurt Kramer
  @details
@@ -37,7 +37,7 @@
 #include  "RunLog.h"
 
 
-namespace  KKMachineLearning  
+namespace  KKMLL  
 {
   #ifndef  _FeatureVectorDefined_
   class  FeatureVectorList;
@@ -118,8 +118,6 @@ namespace  KKMachineLearning
 
     kkint32       SupportPointsTotal         () const {return  numSVs;}
     
-    const CompressionStats&  CompStats    ()  const  {return  compStats;}
-
     const VectorFloat&   Accuracies          () const {return foldAccuracies;}
     float                AccuracyMean        () const {return accuracyMean;}
     float                AccuracyStdDev      () const {return accuracyStdDev;}
@@ -207,7 +205,7 @@ namespace  KKMachineLearning
 
   typedef  CrossValidation*  CrossValidationPtr;
 
-}  /* namespace  KKMachineLearning */
+}  /* namespace  KKMLL */
 
 #endif
 

@@ -11,11 +11,11 @@
 #include  "FeatureFileIO.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 /**
- * @class  KKMachineLearning::FeatureFileIOArff
+ * @class  KKMLL::FeatureFileIOArff
  * @brief Support the writing of ARFF Formated Feature Files.
  * @details
  * Supports the writing of the ARFF format as supported by the WEKA machine learning system
@@ -78,7 +78,7 @@ private:
 
 };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

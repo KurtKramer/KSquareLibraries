@@ -23,7 +23,7 @@ using namespace KKB;
 #include "Orderings.h"
 #include "StatisticalFunctions.h"
 #include "TrainingConfiguration2.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 

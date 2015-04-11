@@ -2,7 +2,7 @@
 #define  _BINARYCLASSPARMS_
 
 /**
- @class  KKMachineLearning::BinaryClassParms
+ @class  KKMLL::BinaryClassParms
  @brief  Machine Learning parameters to be used by a pair of classes.
  @author Kurt Kramer
  @details
@@ -22,7 +22,7 @@
  ** and feature parameters that are specific to them.                 *
  **********************************************************************
  @endcode
- @see  KKMachineLearning::SVMparam, KKMachineLearning::ModelParamOldSVM, KKMachineLearning::SVM233
+ @see  KKMLL::SVMparam, KKMLL::ModelParamOldSVM, KKMLL::SVM233
  */
 
 #include "KKQueue.h"
@@ -30,7 +30,7 @@
 #include "svm.h"
 #include "FeatureNumList.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined (_MLCLASS_)
   class  MLClass;
@@ -189,7 +189,7 @@ namespace KKMachineLearning
 
   typedef  BinaryClassParmsList::BinaryClassParmsListPtr  BinaryClassParmsListPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

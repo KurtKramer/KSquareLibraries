@@ -19,7 +19,7 @@ using namespace  KKB;
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "svm.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 using namespace  SVM233;
 
 

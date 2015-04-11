@@ -23,7 +23,7 @@
 
 #include "MLClass.h"
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
 
   /// <summary>
@@ -345,6 +345,6 @@ namespace  KKMachineLearning
 
 #define  _ConfussionMatrix2List_Defined_
 
-} /* namespace  KKMachineLearning */
+} /* namespace  KKMLL */
 
 #endif

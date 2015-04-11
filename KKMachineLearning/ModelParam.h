@@ -2,31 +2,44 @@
 #define  _MODELPARAM_
 
 
-#include  "FeatureNumList.h"
-#include  "FileDesc.h"
 #include  "RunLog.h"
 #include  "KKStr.h"
 
+#include "FeatureNumList.h"
 
-namespace KKMachineLearning {
+namespace KKMLL
+{
+  #ifndef _FileDescDefined_
+  class  FileDesc;
+  typedef  FileDesc*  FileDescPtr;
+  #endif
+
+
+  // All the classes sub-classed from 'ModelParam'  will need this.
+  #if  !defined(_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
+  #endif
 
 
 /**
-  @brief  Abstract Base class for Machine Learning parameters.
-  @author Kurt Kramer
-  @details
-  For each Machine Learning algorithm implemented you would create a specialization of this class
-  to manage the parameters required by the algorithm.  Specifically for each new class that you
-  create that is derived from 'Model' you will new to create a class derived from 'ModelParam'.
-  This class encapsulates general parameters that are common to all Machine Learning Models.   *
-  @see  Model
+  *@brief  Abstract Base class for Machine Learning parameters.
+  *@author Kurt Kramer
+  *@details
+  *For each Machine Learning algorithm implemented you would create a specialization of this class
+  *to manage the parameters required by the algorithm. Specifically for each new class that you
+  *create that is derived from 'Model' you will new to create a class derived from 'ModelParam'.
+  *This class encapsulates general parameters that are common to all Machine Learning Models.
+  *@see  Model
   */
   class  ModelParam
   {
   public:
     typedef  ModelParam*  ModelParamPtr;
 
-    typedef  enum  {mptNULL, mptKNN, mptOldSVM, mptSvmBase, mptUsfCasCor}  ModelParamTypes;
+    typedef  enum  {mptNULL, mptDual, mptKNN, mptOldSVM, mptSvmBase, mptUsfCasCor}  ModelParamTypes;
     static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
   
@@ -78,10 +91,10 @@ namespace KKMachineLearning {
     void    ReadSpecificImplementationXML (istream&  i) = 0;
   
 
-    /*!
-     @brief Creates a a Command Line String that represents these parameters.
-     @details  All derived classes should implement this method.  They should first call this method and
-               then append there own parameters that are specific to their implementation.
+    /**
+     *@brief Creates a a Command Line String that represents these parameters.
+     *@details  All derived classes should implement this method. They should first call this method and
+     *          then append there own parameters that are specific to their implementation.
      */
     virtual
     KKStr   ToCmdLineStr ()  const;
@@ -133,9 +146,7 @@ namespace KKMachineLearning {
 
     static  KKStr   EncodingMethodToStr    (EncodingMethodType     encodingMethod);
 
-
     static  EncodingMethodType     EncodingMethodFromStr    (const KKStr&  encodingMethodStr);
-
 
   protected:
     FileDescPtr    fileDesc;
@@ -160,12 +171,12 @@ namespace KKMachineLearning {
 
     bool                     normalizeNominalFeatures;
 
-    FeatureNumList           selectedFeatures;    // Feature Number to use.
+    FeatureNumList           selectedFeatures;    /**< Feature Number to use. */
 
     bool                     validParam;
 
-    // following parameters are placed hear to support SVM based algorithms.
-    // to help transition from old(CRAPPY) design to newer less crappy design.
+    // The following parameters are placed hear to support SVM based algorithms.
+    // to help transition from old(CRAPPY) design to newer less crapy design.
     double  cost;
     double  gamma;
     float   prob;
@@ -175,7 +186,7 @@ namespace KKMachineLearning {
 
   typedef  ModelParam::ModelParamPtr   ModelParamPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 

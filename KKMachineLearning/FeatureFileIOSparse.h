@@ -4,7 +4,7 @@
 #include  "FeatureFileIO.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   /**
@@ -83,6 +83,6 @@ namespace KKMachineLearning
 
   };  /* FeatureFileIOSparse */
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

@@ -5,7 +5,7 @@
 #include "Model.h"
 #include "ModelParamKnn.h"
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
   class  ModelKnn: public Model
   {
@@ -69,22 +69,22 @@ namespace  KKMachineLearning
 
 
     /**
-     * @brief Derives predicted probabilities by class.
-     * @details Will get the probabilities assigned to each class by the classifier.  The '_mlClasses' parameter dictates the order
-     *  of the classes. That is the probabilities for any given index in '_probabilities' will be for the class Specified in the same
-     *  index in '_mlClasses'.
-     *
-     * @param[in]  _example       FeatureVector object to calculate predicted probabilities for.
-     * @param[in]  _ImageClasses  List of classes that caller is aware of. This should be the same list that was used
-     *                            when constructing this Model object. The list must be the same but not necessarily in
-     *                            the same order as when Model was 1st constructed.
-     *@param[out] _probabilities  An array that must be as big as the number of classes as in mlClasses.  The probability
-     *                            of class in mlClasses[x] will be returned in probabilities[x].
+     *@brief Derives predicted probabilities by class.
+     *@details Will get the probabilities assigned to each class by the classifier. The '_mlClasses' parameter
+     *  dictates the order of the classes. That is the probabilities for any given index in '_probabilities'
+     *  will be for the class specified in the same index in '_mlClasses'.
+     *@param[in]  _example       FeatureVector object to calculate predicted probabilities for.
+     *@param[in]  _mlClasses  List image classes that caller is aware of. This should be the same list that was
+     *                        used when constructing this Model object. The list must be the same but not
+     *                        necessarily in the same order as when Model was 1st constructed.
+     *@param[out] _probabilities An array that must be as big as the number of classes as in
+     *           mlClasses. The probability of class in mlClasses[x] will be returned
+     *           in probabilities[x].
      */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities
                                );
 
 
@@ -103,7 +103,7 @@ namespace  KKMachineLearning
 
 
   private:
-    ModelParamKnnPtr   param;   /**<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
+    ModelParamKnnPtr   param;   /**<   We will NOT own this instance; it will point to same instance defined in parent class Model.  */
   };  /* ModelKnn */
 
   typedef  ModelKnn::ModelKnnPtr  ModelKnnPtr;

@@ -2,7 +2,7 @@
 #define  _FEATUREVECTORPRODUCER_
 
 /**
- *@class  KKMachineLearning::FeatureVectorProducer
+ *@class  KKMLL::FeatureVectorProducer
  *@brief  A abstract class that is meant to compute a FeatureVector from a source image.
  *@details Applications that want to utilize this library will either use one of the 
  *provided "FeatureVectorProducer" derived classes or supply their own.  This class will 
@@ -23,7 +23,7 @@ using namespace  KKB;
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 #if  !defined(_FeatureVector_Defined_)
@@ -143,7 +143,7 @@ namespace KKMachineLearning
 
 #define  _FeatureVectorProducer_Defined_
 
-}  /* KKMachineLearning */
+}  /* KKMLL */
 
 
 

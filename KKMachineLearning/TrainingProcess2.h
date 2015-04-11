@@ -16,7 +16,7 @@
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 class  TrainingProcess2
@@ -334,6 +334,6 @@ private:
 typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif

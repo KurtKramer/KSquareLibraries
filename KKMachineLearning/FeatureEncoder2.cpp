@@ -25,7 +25,7 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "SvmWrapper.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
@@ -397,7 +397,7 @@ struct  FeatureEncoder2::FeatureVar2
           var           (_var)
         {}
 
-    KKMachineLearning::AttributeType  attributeType;
+    KKMLL::AttributeType  attributeType;
     kkint32  featureNum;
     kkint32  idx;
     double   var;

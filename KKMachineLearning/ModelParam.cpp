@@ -1,13 +1,9 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
-
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -17,20 +13,17 @@ using namespace std;
 using namespace KKB;
 
 
-
-
 #include "ModelParam.h"
 #include "ModelParamKnn.h"
 #include "ModelParamOldSVM.h"
 #include "ModelParamSvmBase.h"
-
+#include "ModelParamUsfCasCor.h"
+#include "ModelParamDual.h"
+#include "MLLTypes.h"
+#include "Model.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "Model.h"
-using namespace  KKMachineLearning;
-
-
-
+using namespace  KKMLL;
 
 
 
@@ -155,6 +148,9 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   ModelParamPtr modelParam = NULL;
   switch  (modelParamType)
   {
+  case  mptDual:      modelParam = new ModelParamDual      (_fileDesc, _log);
+                      break;
+
   case  mptKNN:      modelParam = new ModelParamKnn     (_fileDesc, _log);
                      break;
 
@@ -163,6 +159,9 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
  
   case  mptSvmBase:  modelParam = new ModelParamSvmBase (_fileDesc, _log);
                      break;
+
+  case  mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_fileDesc, _log);
+                      break;
 
   }
 
@@ -182,6 +181,9 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
   if  (_modelParamType == mptNULL)
     return "NULL";
   
+  else if  (_modelParamType == mptDual)
+    return "ModelParamDual";
+
   else if  (_modelParamType == mptKNN)
     return "ModelParamKnn";
 
@@ -192,7 +194,7 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
     return "ModelParamSvmBase";
 
   else if  (_modelParamType == mptUsfCasCor)
-    return "ModelUsfCasCor";
+    return  "UsfCasCor";
 
   else
     return "NULL";
@@ -202,7 +204,10 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 
 ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _modelParamTypeStr)
 {
-  if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
+  if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamDual"))
+    return mptDual;
+
+  else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
     return mptOldSVM;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamSvmBase"))
@@ -211,7 +216,7 @@ ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _m
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamKnn"))
     return mptKNN;
 
-  else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelUsfCasCor"))
+  else if  (_modelParamTypeStr.EqualIgnoreCase ("UsfCasCor"))
     return mptUsfCasCor;
 
   else

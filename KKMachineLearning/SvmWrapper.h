@@ -3,7 +3,7 @@
 
 #include  "SVMparam.h"
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   typedef enum {NORMAL, BAGGING, BOOSTING, SUBSPACE, SAMPLESV} Learn_Type;
 
@@ -93,6 +93,6 @@ namespace KKMachineLearning
 
   void   SvmDestroyModel (struct svm_model**  subModel);
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

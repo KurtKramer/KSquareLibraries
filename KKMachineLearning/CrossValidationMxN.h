@@ -11,7 +11,7 @@
 #include  "KKBaseTypes.h"
 #include  "RunLog.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined (_FILEDESC_)
   class  FileDesc;
@@ -149,7 +149,7 @@ namespace KKMachineLearning
     double        testTimeMean;
     double        testTimeStdDev;
   };
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 
 #endif

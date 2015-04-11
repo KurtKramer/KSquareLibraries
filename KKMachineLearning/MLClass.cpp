@@ -19,16 +19,15 @@ using namespace  KKB;
 
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
-MLClassListIndexPtr  MLClass::existingMLClasses = NULL;
+MLClassListPtr  MLClass::existingMLClasses = NULL;
+map<MLClassListPtr,MLClassListPtr>  MLClass::existingClassLists;
 
 GoalKeeperPtr    MLClass::blocker = NULL;
-bool             MLClass::needToRunFinaleCleanUp = false;
-
-
+bool             MLClass::needToRunFinalCleanUp = false;
 
 
 // Will instantiate an instance of "GoalKeeper" if "blocker" does not already
@@ -39,9 +38,9 @@ void  MLClass::CreateBlocker ()
   {
     GoalKeeper::Create ("GlobalMLClass", blocker);  // Will handle Race condition.
     blocker->StartBlock ();
-    if  (!needToRunFinaleCleanUp)
+    if  (!needToRunFinalCleanUp)
     {
-      needToRunFinaleCleanUp = true;
+      needToRunFinalCleanUp = true;
       atexit (MLClass::FinalCleanUp);
     }
     blocker->EndBlock ();
@@ -50,19 +49,52 @@ void  MLClass::CreateBlocker ()
 
 
 
-
-
-MLClassListIndexPtr  MLClass::GlobalClassList ()
+MLClassListPtr  MLClass::GlobalClassList ()
 {
   if  (!existingMLClasses)
   {
     CreateBlocker ();
     blocker->StartBlock ();
-    existingMLClasses = new MLClassListIndex ();
+    if  (!existingMLClasses)
+    {
+      existingMLClasses = new MLClassList ();
     existingMLClasses->Owner (true);
+    }
     blocker->EndBlock ();
   }
   return  existingMLClasses;
+}  /* GlobalClassList */
+
+
+
+/** @brief  Called by MLClassList constructors to add to list of existing MLClassList instances. */
+void  MLClass::AddImageClassList (MLClassListPtr  list)
+{
+  CreateBlocker ();
+  blocker->StartBlock ();
+  existingClassLists.insert (pair<MLClassListPtr,MLClassListPtr> (list, list));
+  blocker->EndBlock ();
+}
+
+
+
+/** @brief  Called by MLClassList destructor to remove from list of existing MLClassList instances. */
+void  MLClass::DeleteImageClassList (MLClassListPtr  list)
+{
+  blocker->StartBlock ();
+
+  map<MLClassListPtr,MLClassListPtr>::iterator idx;
+  idx = existingClassLists.find (list);
+  if  (idx != existingClassLists.end ())
+  {
+    existingClassLists.erase (idx);
+  }
+  else
+  {
+    cerr << endl << endl << "MLClass::DeleteImageClassList   MLClassList instance was not found." << endl << endl;
+  }
+
+  blocker->EndBlock ();
 }
 
 
@@ -73,7 +105,7 @@ MLClassPtr  MLClass::CreateNewMLClass (const KKStr&  _name,
 {
   KKStr  upperName = _name.ToUpper ();
 
-  MLClassListIndexPtr  globalList = existingMLClasses;
+  MLClassListPtr  globalList = existingMLClasses;
   if  (!globalList)
     globalList = GlobalClassList ();
 
@@ -87,13 +119,17 @@ MLClassPtr  MLClass::CreateNewMLClass (const KKStr&  _name,
     mlClass = globalList->LookUpByName (_name);
     if  (mlClass == NULL)
     {
-      mlClass = new MLClass (_name);
-      mlClass->ClassId (_classId);
-      existingMLClasses->AddMLClass (mlClass);
+      MLClassPtr  temp = new MLClass (_name);
+      temp->ClassId (_classId);
+      existingMLClasses->AddMLClass (temp);
+      mlClass = temp;
     }
 
     blocker->EndBlock ();
   }
+
+  if  ((mlClass->ClassId () < 0)  &&  (_classId >= 0))
+    ((MLClassPtr)mlClass)->ClassId (_classId);
 
   return  mlClass;
 } /* CreateNewMLClass */
@@ -118,12 +154,11 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
   MLClassListPtr  results = new MLClassList ();
   results->PushOnBack (parent);
 
-  MLClassPtr  ancestor = NULL;
   MLClassPtr  startingAncestor = NULL;
 
   MLClassList::const_iterator  idx;
 
-  for  (idx = existingMLClasses->begin ();  idx != existingMLClasses->end ();  idx++)
+  for  (idx = existingMLClasses->begin ();  idx != existingMLClasses->end ();  ++idx)
   {
     MLClassPtr ancestor = *idx;
     startingAncestor = *idx;
@@ -149,36 +184,72 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
 
 void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass, 
                                   const KKStr&  newName,
-                                  bool&         changeSuccessful
+                                  bool&         successful
                                  )
 {
-  changeSuccessful = false;
-  if  (!existingMLClasses)
-    return;
+  successful = true;
+  KKStr  oldName = mlClass->Name();
 
-  KKStr  newNameUpper = newName.ToUpper ();
-  if  (newNameUpper == mlClass->UpperName ())
-  {
-    // Name did not really change.
-    changeSuccessful = true;
-    mlClass->Name (newName);
-    return;
-  }
+  if  (!blocker)
+    CreateBlocker ();
+  blocker->StartBlock ();
 
-  existingMLClasses->ChangeNameOfClass (mlClass, mlClass->Name (), newName, changeSuccessful);
-  if  (!changeSuccessful)
+  existingMLClasses->ChangeNameOfClass (mlClass, oldName, newName, successful);
+  if  (!successful)
   {
-    cerr << endl << endl 
-         << " MLClass::ChangeNameOfClass  ***ERROR***   Could not change the name of the class,  possibly new name already in use." << endl
+    cerr << endl 
+         << "MLClass::ChangeNameOfClass   'existingMLClasses'  failed to vahne name." << endl
+         << "                        NewName[" << newName << "]" << endl
+         << "                        OldName[" << mlClass->Name () << "]" << endl
          << endl;
-    return;
+    successful = false;
+  }
+  else
+  {
+    // It is okay to change the name;  we will also need to inform all 
+    // instances of MLClassList that the name changed so they can 
+    // update their nameIndex structures.
+    mlClass->Name (newName);
+
+    map<MLClassListPtr,MLClassListPtr>::iterator  idx;
+    for  (idx = existingClassLists.begin ();  idx != existingClassLists.end ();  ++idx)
+  {
+      MLClassListPtr  list = idx->first;
+      kkuint32 classInList = list->PtrToIdx (mlClass);
+      if  (classInList >= 0)
+      {
+        bool  nameChangedInList = false;
+        list->ChangeNameOfClass (mlClass, oldName, newName, nameChangedInList);
+      }
+    }
   }
 
-  mlClass->Name (newName);
-  changeSuccessful = true;
+  blocker->EndBlock ();
+
   return;
 }  /* ChangeNameOfClass */
 
+
+void  MLClass::ResetAllParentsToAllClasses ()
+{
+  CreateBlocker ();
+  blocker->StartBlock ();
+  
+  MLClassListPtr  globalClassList = GlobalClassList ();
+
+  MLClassPtr       allClasses = globalClassList->LookUpByName ("AllClasses");
+
+  MLClassList::iterator  idx;
+  for  (idx = globalClassList->begin ();  idx != globalClassList->end ();  ++idx)
+  {
+    MLClassPtr  ic = *idx;
+    if  (ic == allClasses)
+      ic->Parent (NULL);
+    else
+      ic->Parent (allClasses);
+  }
+  blocker->EndBlock ();
+}  /* ResetAllParentsToNull */
 
 
 
@@ -187,7 +258,6 @@ void  MLClass::Name (const KKStr&  _name)
   name = _name;
   upperName = name.ToUpper ();
 }
-
 
 
 
@@ -202,14 +272,15 @@ MLClassPtr  MLClass::GetUnKnownClassStatic ()
 /** @brief  Call this at very end of program to clean up existingMLClasses. */
 void  MLClass::FinalCleanUp ()
 {
-  if  (!needToRunFinaleCleanUp)
+  if  (!needToRunFinalCleanUp)
     return;
 
   blocker->StartBlock ();
-  if  (needToRunFinaleCleanUp)
+  if  (needToRunFinalCleanUp)
   {
     if  (!FileDesc::FinalCleanUpRanAlready ())
     {
+      //cerr << endl << "MLClass::FinalCleanUp   ***ERROR***   Need to run MLClass::FinalCleanUp  before  FileDesc::FinalCleanUp" << endl << endl;
       FileDesc::FinalCleanUp ();
     }
 
@@ -219,7 +290,7 @@ void  MLClass::FinalCleanUp ()
       existingMLClasses = NULL;
     }
 
-    needToRunFinaleCleanUp = false;
+    needToRunFinalCleanUp = false;
   }
   blocker->EndBlock ();
 
@@ -230,14 +301,15 @@ void  MLClass::FinalCleanUp ()
 
 
 
-
 MLClass::MLClass (const KKStr&  _name):
     classId          (-1),
     countFactor      (0.0f),
     description      (),
+    mandatory        (false),
     name             (_name),
     parent           (NULL),
-    storedOnDataBase (false)
+    storedOnDataBase (false),
+    summarize        (false)
 
 {
   if  (name.Empty ())
@@ -247,14 +319,17 @@ MLClass::MLClass (const KKStr&  _name):
          << endl;
   }
 
-  upperName = name;
-  upperName.Upper ();
+  upperName = name.ToUpper ();
+  KKStr  topLevel = upperName;
+  kkuint32 x = upperName.LocateCharacter ('_');
+  if  (x >= 0)
+    topLevel = upperName.SubStrPart (0, x - 1);
+
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
              (upperName == "UNDEFINED")    ||  
-             (upperName == "NOISE")        ||
-             (upperName == "NOISY")        ||
-             (upperName == "NONPLANKTON");
+             (upperName == "NONPLANKTON")  ||
+             (topLevel  == "NOISE");
 }
 
 
@@ -298,7 +373,7 @@ KKStr  MLClass::ToString ()  const
 
 
 
-
+/*
 void  MLClass::ProcessRawData (KKStr&  _data)
 {
   name = _data.ExtractToken (" ,\n\t\r");
@@ -312,10 +387,9 @@ void  MLClass::ProcessRawData (KKStr&  _data)
              (upperName == "UNKNOWN")      ||  
              (upperName == "UNDEFINED")    ||  
              (upperName == "NOISE")        ||
-             (upperName == "NOISY")        ||
-             (upperName == "NONPLANKTTON");
-
-} /* ProcessRawData */
+             (upperName == "NONPLANKTON");
+} /// / ProcessRawData 
+*/
 
 
 
@@ -326,7 +400,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
   if  (x > 0)
   {
     // Now lets eliminate any sequence number in name
-    // We are assuming that a underscore{"_") character separates the class name from the seq number.
+    // We are assuming that a underscore{"_") character separates the class name from the sequence number.
     // So if there is an underscore character,  and all the characters to the right of it are
     // numeric characters,  then we will remove the underscore and the following numbers.
 
@@ -352,7 +426,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
 
 
-bool  MLClass::IsAnAncestor (MLClassPtr  c)   // will return true if 'c' is an ancestor
+bool  MLClass::IsAnAncestor (MLClassPtr  c) const
 {
   if  (c == this)
     return true;
@@ -366,9 +440,9 @@ bool  MLClass::IsAnAncestor (MLClassPtr  c)   // will return true if 'c' is an a
 
 
 
-kkuint32 MLClass::NumHierarchialLevels ()  const
+kkuint16 MLClass::NumHierarchialLevels ()  const
 {
-  return  (kkuint32)name.InstancesOfChar ('_') + 1;
+  return  (kkuint16)name.InstancesOfChar ('_') + 1;
 }
 
 
@@ -380,10 +454,12 @@ void  MLClass::WriteXML (ostream& o)  const
     <<   "Name="             << name.QuotedStr ()                             << ","
     <<   "ClassId="          << classId                                       << ","
     <<   "UnDefined="        << (unDefined ? "Y":"N")                         << ","
-    <<   "Parent="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
+    <<   "Paremt="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
+    <<   "CountFactor="      << countFactor                                   << ","
     <<   "StoredOnDataBase=" << (storedOnDataBase ? "Y" : "N")                << ","
     <<   "Description="      << description.QuotedStr ()                      << ","
-    <<   "CountFactor="      << countFactor
+    <<   "Mandatory="        << (mandatory  ? "Y" :"N")                       << ","
+    <<   "Summarize="        << (summarize  ? "Y" :"N")
     << " />"
     << endl;
 }  /* WriteXML */
@@ -392,16 +468,13 @@ void  MLClass::WriteXML (ostream& o)  const
 
 
 
-MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint32 level)  const
+MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint16 level)  const
 {
-  if  (level < 0)
-    level = 0;
-
   VectorKKStr  levelNames = name.Split ('_');
   KKStr fullLevelName = "";
 
-  kkuint32  curLevel = 0;
-  while  ((curLevel <= level)  &&  (curLevel < levelNames.size ()))
+  kkuint16 curLevel = 0;
+  while  ((curLevel < level)  &&  (curLevel < levelNames.size ()))
   {
     if  (curLevel < 1)
       fullLevelName = levelNames[curLevel];
@@ -421,6 +494,7 @@ MLClassList::MLClassList ():
      KKQueue<MLClass> (false),
      undefinedLoaded (false)
 {
+  MLClass::AddImageClassList (this);
 }
 
 
@@ -429,6 +503,8 @@ MLClassList::MLClassList ():
 MLClassList::MLClassList (const MLClassList&  _mlClasses):
   KKQueue<MLClass> (false)
 {
+  MLClass::AddImageClassList (this);
+
   kkuint32  numOfClasses = _mlClasses.QueueSize ();
   kkuint32  x;
   
@@ -442,18 +518,20 @@ MLClassList::MLClassList (const MLClassList&  _mlClasses):
 
 
 
-MLClassList::MLClassList (KKStr   _fileName,
-                                bool&    _successfull
-                               ):
+MLClassList::MLClassList (const KKStr&  _fileName,
+                          bool&    _successfull
+                         ):
      KKQueue<MLClass> (false),
      undefinedLoaded (false)
 {
+  MLClass::AddImageClassList (this);
+
   Load (_fileName, _successfull);
 
   if  (!undefinedLoaded)
   {
     // We have to make sure that there is a UnDefined MLClass.
-    AddMLClass (new MLClass (KKStr ("UNKNOWN")));
+    AddMLClass (MLClassList::GetMLClassPtr ("UNKNOWN"));
     undefinedLoaded = true;
   }
 }
@@ -463,7 +541,9 @@ MLClassList::MLClassList (KKStr   _fileName,
      
 MLClassList::~MLClassList ()
 {
+  MLClass::DeleteImageClassList (this);
 }
+
 
 
 kkint32  MLClassList::MemoryConsumedEstimated ()  const
@@ -473,9 +553,54 @@ kkint32  MLClassList::MemoryConsumedEstimated ()  const
 
 
 
-kkuint32 MLClassList::NumHierarchialLevels ()  const
+void  MLClassList::Clear ()
 {
-  kkuint32  numHierarchialLevels = 0;
+  clear ();
+  nameIndex.clear ();
+}
+
+
+
+/** @brief  Update the nameIndex structure about a class name change. */
+void  MLClassList::ChangeNameOfClass (MLClassPtr    mlClass, 
+                                      const KKStr&  oldName,
+                                      const KKStr&  newName,
+                                      bool&         successful
+                                     )
+{
+  MLClassPtr  existingClass = this->LookUpByName (newName);
+  if  ((existingClass != NULL)  &&  (existingClass != mlClass))
+  {
+    cerr << endl
+      << "MLClassList::ChangeNameOfClass   NewName[" << newName << "]  alreadty used." << endl
+      << endl;
+    successful = false;
+  }
+  else
+  {
+    NameIndex::iterator idx = nameIndex.find (oldName.ToUpper ());
+    if  (idx == nameIndex.end ())
+    {
+      cerr << endl
+        << "MLClassList::ChangeNameOfClass   NewName[" << oldName << "]  not found." << endl
+        << endl;
+      successful = false;
+    }
+    else
+    {
+      nameIndex.erase (idx);
+      nameIndex.insert (pair<KKStr,MLClassPtr> (newName.ToUpper (), mlClass));
+      successful = true;
+    }
+  }
+}  /* ChangeNameOfClass */
+
+
+
+
+kkuint16 MLClassList::NumHierarchialLevels ()  const
+{
+  kkuint16 numHierarchialLevels = 0;
   MLClassList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
     numHierarchialLevels = Max (numHierarchialLevels, (*idx)->NumHierarchialLevels ());
@@ -486,7 +611,7 @@ kkuint32 MLClassList::NumHierarchialLevels ()  const
 
 
 
-void  MLClassList::Load (KKStr  _fileName,
+void  MLClassList::Load (const KKStr&  _fileName,
                          bool&  _successfull
                         )
 {
@@ -508,7 +633,7 @@ void  MLClassList::Load (KKStr  _fileName,
 
     dataRow.TrimRight ();
 
-    MLClassPtr  oneRow = new MLClass (dataRow);
+    MLClassPtr  oneRow = MLClass::CreateNewMLClass (dataRow);
 
     AddMLClass (oneRow);
 
@@ -548,43 +673,106 @@ void  MLClassList::Save (KKStr   _fileName,
 
 
 
+void  MLClassList::AddMLClassToNameIndex (MLClassPtr  _mlClass)
+{
+  NameIndex::iterator  idx;
+  idx = nameIndex.find (_mlClass->UpperName ());
+  if  (idx == nameIndex.end ())
+    nameIndex.insert (pair<KKStr,MLClassPtr>(_mlClass->UpperName (), _mlClass));
+}
+
+
+
 void  MLClassList::AddMLClass (MLClassPtr  _mlClass)
 {
   if  (_mlClass->Name ().Empty ())
   {
     cerr << "MLClassList::AddMLClass   Class Name Empty" << endl;
   }
-  PushOnBack (_mlClass);
+  KKQueue<MLClass>::PushOnBack (_mlClass);
+  AddMLClassToNameIndex (_mlClass);
 }
 
 
 
-MLClassPtr  MLClassList::LookUpByName (const KKStr&  _name)  const
+MLClassPtr  MLClassList::PopFromBack ()
 {
-  kkint32      idx;
-  kkint32      qSize = QueueSize ();
-  MLClassPtr   mlClass = NULL;
-  MLClassPtr   tempMLClass = NULL;
+  NameIndex::iterator  idx;
+  MLClassPtr ic = KKQueue<MLClass>::PopFromBack ();
+  if  (!ic)
+    return NULL;
 
-  for  (idx = 0;  (idx < qSize);  idx++)
+  idx = nameIndex.find (ic->UpperName ());
+  if  (idx != nameIndex.end ())
+    nameIndex.erase (idx);
+  return  ic;
+}  /* PopFromBack*/
+
+
+
+MLClassPtr  MLClassList::PopFromFront ()
+{
+  NameIndex::iterator  idx;
+  MLClassPtr ic = KKQueue<MLClass>::PopFromFront ();
+  if  (!ic)
+    return NULL;
+
+  idx = nameIndex.find (ic->UpperName ());
+  if  (idx != nameIndex.end ())
+    nameIndex.erase (idx);
+  return  ic;
+}  /* PopFromFront*/
+
+
+
+void  MLClassList::PushOnBack (MLClassPtr  _mlClass)
   {
-    tempMLClass = IdxToPtr (idx);
-    if  (_name.EqualIgnoreCase (tempMLClass->Name ()))
+  if  (_mlClass->Name ().Empty ())
     {
-      mlClass = tempMLClass;
-      break;
+    cerr << "MLClassList::PushOnBack   Class Name Empty" << endl;
     }
+
+  KKQueue<MLClass>::PushOnBack (_mlClass);
+  AddMLClassToNameIndex (_mlClass);
   }
 
-  return  mlClass;
+
+
+void  MLClassList::PushOnFront (MLClassPtr  _mlClass)
+{
+  if  (_mlClass->Name ().Empty ())
+  {
+    cerr << "MLClassList::PushOnFront   Class Name Empty" << endl;
+  }
+
+  KKQueue<MLClass>::PushOnBack (_mlClass);
+  AddMLClassToNameIndex (_mlClass);
+}
+
+
+
+/**                 
+ *@brief  Returns a pointer of MLClass object with name (_name);  if none 
+ *        in list will then return NULL.
+ *@param[in]  _name  Name of MLClass to search for.
+ *@return  Pointer to MLClass or NULL  if not Found.
+ */
+MLClassPtr  MLClassList::LookUpByName (const KKStr&  _name)  const
+{
+  NameIndex::const_iterator  idx;
+  idx = nameIndex.find (_name.ToUpper ());
+  if  (idx == nameIndex.end ())
+    return NULL;
+  else
+    return idx->second;
 } /* LookUpByName */
 
 
 
 
-MLClassPtr  MLClassList::LookUpByClassId (kkint32  _classId)
+MLClassPtr  MLClassList::LookUpByClassId (kkint32 _classId)  const
 {
-  MLClassList::iterator  idx;
+  MLClassList::const_iterator  idx;
   MLClassPtr  mlClass;
   for  (idx = begin ();  idx != end ();  idx++)
   {
@@ -599,16 +787,16 @@ MLClassPtr  MLClassList::LookUpByClassId (kkint32  _classId)
 
 
 
+/** @brief  return pointer to instance with '_name';  if none exists, create one and add to list. */
 MLClassPtr  MLClassList::GetMLClassPtr (const  KKStr& _name)
 {
-  MLClassPtr mlClass = LookUpByName (_name);
-  if  (!mlClass)
+  MLClassPtr ic = LookUpByName (_name);
+  if  (ic == NULL)
   {
-    mlClass = MLClass::CreateNewMLClass (_name);
-    AddMLClass (mlClass);
+    ic = MLClass::CreateNewMLClass (_name);
+    AddMLClass (ic);
   }
-
-  return  mlClass;
+  return  ic;
 }  /* GetMLClassPtr */
 
 
@@ -636,7 +824,7 @@ MLClassPtr  MLClassList::GetNoiseClass ()  const
 
 MLClassPtr  MLClassList::GetUnKnownClass ()
 {
-  MLClassPtr  unKnownClass = LookUpByName (KKStr ("UNKNOWN"));
+  MLClassPtr  unKnownClass = LookUpByName ("UNKNOWN");
   if  (!unKnownClass)
   {
     unKnownClass = MLClass::CreateNewMLClass ("UNKNOWN");
@@ -645,8 +833,6 @@ MLClassPtr  MLClassList::GetUnKnownClass ()
 
   return  unKnownClass;
 }  /* GetUnKnownClass */
-
-
 
 
 
@@ -726,6 +912,37 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
 }  /* ToCommaDelimitedStr */
 
 
+
+MLClassListPtr  MLClassList::ExtractSummarizeClasses ()  const
+{
+  MLClassListPtr  result = new MLClassList ();
+
+  const_iterator  idx;
+  for  (idx = begin();  idx != end ();  ++idx)
+  {
+    if  ((*idx)->Summarize ())
+      result->PushOnBack (*idx);
+  }
+
+  return  result;
+}  /* ExtractSummarizeClasses */
+
+
+
+
+MLClassListPtr  MLClassList::ExtractMandatoryClasses ()  const
+{
+  MLClassListPtr  result = new MLClassList ();
+
+  const_iterator  idx;
+  for  (idx = begin();  idx != end ();  ++idx)
+  {
+    if  ((*idx)->Mandatory ())
+      result->PushOnBack (*idx);
+  }
+
+  return  result;
+}  /* ExtractMandatoryClasses */
 
 
 
@@ -894,7 +1111,7 @@ KKStr   MLClassList::ExtractHTMLTableHeader () const
 {
   KKStr  header (QueueSize () * 50);
 
-  kkuint32 x;
+  kkuint16 x;
 
   MLClassList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
@@ -981,8 +1198,6 @@ MLClassListPtr  MLClassList::BuildListFromDelimtedStr (const KKStr&  s,
 
 
 
-
-
 void   MLClassList::WriteXML (std::ostream&  o)  const
 {
   o << "<MLClassList  NumOfClasses=" << QueueSize () << " >" << endl;
@@ -990,15 +1205,12 @@ void   MLClassList::WriteXML (std::ostream&  o)  const
   MLClassList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
   {
-    const MLClassPtr  ic = *idx;
+    MLClassPtr       ic = *idx;
     ic->WriteXML (o);
   }
 
   o << "</MLClassList>" << endl;
 }  /* WriteXML */
-
-
-
 
 
 
@@ -1044,7 +1256,7 @@ MLClassList&  MLClassList::operator-= (const MLClassList&  right)
   MLClassList::const_iterator  idx;
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
-    const MLClassPtr  ic = *idx;
+    MLClassPtr  ic = *idx;
     DeleteEntry (ic);  // if  'ic'  exists in our list it will be deleted.
   }
 
@@ -1077,8 +1289,7 @@ MLClassList&  MLClassList::operator= (const MLClassList&  right)
   if  (&right == this)
     return *this;
 
-  while  (QueueSize () > 0)
-    PopFromBack ();
+  Clear ();
 
   MLClassList::const_iterator  idx;
   for  (idx = right.begin ();  idx != right.end ();  idx++)
@@ -1109,16 +1320,17 @@ MLClassList  MLClassList::operator- (const MLClassList&  right)  const
 
 
 
-ostream&  operator<< (      ostream&          os, 
-                      const MLClassList&   classList
-                     )
+ostream&  KKMLL::operator<< (      ostream&          os, 
+                             const MLClassList&   classList
+                            )
 {
   os << classList.ToString ();
   return  os;
 }
 
 
-KKStr&  operator<< (      KKStr&           str, 
+
+KKStr&  KKMLL::operator<< (      KKStr&            str, 
                     const MLClassList&   classList
                    )
 {
@@ -1159,6 +1371,18 @@ ClassIndexList::ClassIndexList (const MLClassList&  classes):
     shortIdx.insert (pair<kkint16, MLClassPtr> (largestIndex, *idx));
   }
 }
+
+
+
+void  ClassIndexList::Clear ()
+{
+  clear ();
+  shortIdx.clear ();
+  largestIndex = 0;
+}
+
+
+
 
 
 kkint32  ClassIndexList::MemoryConsumedEstimated ()  const
@@ -1219,16 +1443,9 @@ kkint16  ClassIndexList::GetClassIndex (MLClassPtr  c)
   map<MLClassPtr, kkint16>::iterator p;
   p = find (c);
   if  (p == end ())
-  {
-    largestIndex++;
-    insert (pair<MLClassPtr, kkint16> (c, largestIndex));
-    shortIdx.insert (pair<kkint16, MLClassPtr> (largestIndex, c));
-    index = largestIndex;
-  }
+    index = -1;
   else
-  {
     index = p->second;
-  } 
 
   return  index;
 }  /* GetClassIndex */
@@ -1249,8 +1466,7 @@ MLClassPtr  ClassIndexList::GetMLClass (kkint16  classIndex)
 
 void  ClassIndexList::ParseClassIndexList (const KKStr&  s)
 {
-  clear ();
-  shortIdx.clear ();
+  Clear ();
   largestIndex = 0;
 
   bool   duplicate = false;
@@ -1258,7 +1474,7 @@ void  ClassIndexList::ParseClassIndexList (const KKStr&  s)
   KKStr  name   = "";
 
   VectorKKStr  pairs = s.Split (",");
-  for  (kkuint32 x = 0;  x < pairs.size ();  x++)
+  for  (kkuint16 x = 0;  x < pairs.size ();  x++)
   {
     KKStr  pair = pairs[x];
     name  = pair.ExtractToken2 (":");
@@ -1285,125 +1501,3 @@ KKStr  ClassIndexList::ToCommaDelString ()
 
 
 
-
-MLClassListIndex::MLClassListIndex ():
-  MLClassList ()
-{
-}
-
-
-/**
- *@brief  Copy constructor; will make a duplicate list of mlClass pointers 
- *        but will not be owner of them.
- */
-MLClassListIndex::MLClassListIndex (const MLClassListIndex&  _mlClasses):
-  MLClassList (_mlClasses)
-{
-  MLClassListIndex::const_iterator  idx;
-  for  (idx = _mlClasses.begin ();  idx != _mlClasses.end ();  ++idx)
-  {
-    MLClassPtr  ic = *idx;
-    nameIndex.insert (pair<KKStr,MLClassPtr> (ic->UpperName (), ic));
-  }
-}
-  
-
-/**
- *@brief  Conversion constructor;  will convert a MLClassList instance to a 'MLClassListIndex' instance.
- */
-MLClassListIndex::MLClassListIndex (const MLClassList&  _mlClasses):
-  MLClassList (_mlClasses)
-{
-  MLClassListIndex::const_iterator  idx;
-  for  (idx = _mlClasses.begin ();  idx != _mlClasses.end ();  ++idx)
-  {
-    MLClassPtr  ic = *idx;
-    nameIndex.insert (pair<KKStr,MLClassPtr> (ic->UpperName (), ic));
-  }
-}
-  
-
-
-MLClassListIndex::~MLClassListIndex ()
-{
-}
-
-
-
-void   MLClassListIndex::AddMLClass (MLClassPtr  _mlClass)
-{
-  MLClassList::AddMLClass  (_mlClass);
-
-  NameIndex::iterator  idx;
-  idx = nameIndex.find (_mlClass->UpperName ());
-  if  (idx == nameIndex.end ())
-    nameIndex.insert (pair<KKStr,MLClassPtr>(_mlClass->UpperName (), _mlClass));
-}  /* AddMLClass */
-
-
-
-
-
-MLClassPtr  MLClassListIndex::LookUpByName (const KKStr&  _name)  const
-{
-  NameIndex::const_iterator  idx;
-  idx = nameIndex.find (_name.ToUpper ());
-  if  (idx == nameIndex.end ())
-    return NULL;
-  else
-    return idx->second;
-}  /* LookUpByName */
-
-
-
-MLClassPtr  MLClassListIndex::GetMLClassPtr (const KKStr& _name)
-{
-  MLClassPtr ic = LookUpByName (_name);
-  if  (ic == NULL)
-  {
-    ic = MLClass::CreateNewMLClass (_name);
-    AddMLClass (ic);
-  }
-  return  ic;
-}  /* GetMLClassPtr */
-
-
-
-void  MLClassListIndex::ChangeNameOfClass (MLClassPtr  mlClass, 
-                                              const KKStr&   oldName,
-                                              const KKStr&   newName,
-                                              bool&          successful
-                                             )
-{
-  successful = true;
-  if  (newName.EqualIgnoreCase (oldName))
-  {
-    // Nothing to do;  name has not really changed.
-    return;
-  }
-
-  MLClassPtr  exitingClass = LookUpByName (newName);
-  if  (exitingClass)
-  {
-    successful = false;
-    cerr << endl << endl 
-         << "MLClassListIndex::ChangeNameOfClass  ***ERROR***   newName[" << newName << "]  already in use." << endl
-         << endl;
-    return;
-  }
-
-  NameIndex::iterator  idx = nameIndex.find (oldName.ToUpper ());
-  if  (idx == nameIndex.end ())
-  {
-    successful = false;
-    cerr << endl << endl 
-         << "MLClassListIndex::ChangeNameOfClass  ***ERROR***   oldName[" << oldName << "]  was not in the index." << endl
-         << endl;
-    return;
-  }
-  
-  nameIndex.erase (idx);
-
-  nameIndex.insert (pair<KKStr,MLClassPtr> (newName.ToUpper (), mlClass));
-  return;
-}  /* ChangeNameOfClass */

@@ -3,7 +3,7 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 /**
  *@class  FeatureFileIOC45
@@ -112,5 +112,5 @@ private:
 
 typedef  FeatureFileIOC45::FeatureFileIOC45Ptr   FeatureFileIOC45Ptr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 #endif

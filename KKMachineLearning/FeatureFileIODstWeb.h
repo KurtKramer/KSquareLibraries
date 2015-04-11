@@ -3,7 +3,7 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   /**
     ************************************************************************************************
@@ -68,7 +68,7 @@ namespace KKMachineLearning
   };  /* FeatureFileIODstWeb */
 
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

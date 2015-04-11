@@ -24,7 +24,7 @@
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _FEATURENUMLIST_
@@ -135,6 +135,6 @@ namespace KKMachineLearning
   typedef  FeatureEncoder*  FeatureEncoderPtr;
 
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif

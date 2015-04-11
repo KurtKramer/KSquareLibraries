@@ -20,7 +20,7 @@
 //     published 2006-july-06;  vol 216:309-311
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /**
    *@class  ClassificationBiasMatrix
@@ -145,4 +145,4 @@ namespace KKMachineLearning
   };
 
   typedef  ClassificationBiasMatrix::ClassificationBiasMatrixPtr  ClassificationBiasMatrixPtr;
-}  /*  namespace KKMachineLearning  */
+}  /*  namespace KKMLL  */

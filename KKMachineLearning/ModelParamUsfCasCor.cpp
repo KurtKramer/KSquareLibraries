@@ -7,21 +7,17 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKB;
 
 
-
 #include "ModelParamUsfCasCor.h"
-
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
-
-
+#include "MLLTypes.h"
+using namespace  KKMLL;
 
 
 ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,

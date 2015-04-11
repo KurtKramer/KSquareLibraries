@@ -1,27 +1,28 @@
-#ifndef  _MODELPARAMOLDSVM_
+#if  !defined(_MODELPARAMOLDSVM_)
 #define  _MODELPARAMOLDSVM_
 
+#include "KKStr.h"
+#include "RunLog.h"
 
-#include  "BinaryClassParms.h"
-#include  "FeatureNumList.h"
-#include  "MLClass.h"
-#include  "FileDesc.h"
-#include  "ModelParam.h"
-#include  "RunLog.h"
-#include  "KKStr.h"
-#include  "svm.h"
-#include  "SVMparam.h"
+#include "BinaryClassParms.h"
+#include "FeatureNumList.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "ModelParam.h"
+#include "svm.h"
+#include "SVMparam.h"
 using namespace SVM233;
 
 
-namespace KKMachineLearning {
+namespace KKMLL 
+{
 
-#ifndef  _BINARYCLASSPARMS_
-class  BinaryClassParms;
-typedef  BinaryClassParms*  BinaryClassParmsPtr;
-class  BinaryClassParmsList;
-typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
-#endif
+  #ifndef  _BINARYCLASSPARMS_
+  class  BinaryClassParms;
+  typedef  BinaryClassParms*  BinaryClassParmsPtr;
+  class  BinaryClassParmsList;
+  typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
+  #endif
 
 
   /**
@@ -36,6 +37,7 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
   {
   public:
     typedef  ModelParamOldSVM*  ModelParamOldSVMPtr;
+    typedef  SVM233::svm_parameter   svm_parameter;
 
     ModelParamOldSVM  (FileDescPtr  _fileDesc,
                        RunLog&      _log
@@ -69,6 +71,16 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
     virtual  float   AvgMumOfFeatures ();
 
+
+    /** If no entry exists for class pair then NULL will be rretirned. */
+    BinaryClassParmsPtr   GetBinaryClassParms (MLClassPtr       class1,
+                                               MLClassPtr       class2
+                                              )  const;
+
+    /**
+     * If no entry exists for class pair a new one will be created using the global parameters from 
+     *the underlying 'svmParameters' object.
+     */
     BinaryClassParmsPtr  GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
                                                           MLClassPtr  class2
                                                          );
@@ -127,8 +139,6 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
                                 float                  _weight
                                );
 
-
-
     void  SetFeatureNums    (MLClassPtr             class1,
                              MLClassPtr             class2,
                              const FeatureNumList&  _features,
@@ -155,7 +165,7 @@ typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
   };  /* ModelParamOldSVM */
 
   typedef  ModelParamOldSVM*   ModelParamOldSVMPtr;
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 

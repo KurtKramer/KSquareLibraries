@@ -29,12 +29,12 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /**
    *@class FileDescList
@@ -52,7 +52,7 @@ namespace KKMachineLearning
   private:
   };
 
-}  /* KKMachineLearning */
+}  /* KKMLL */
 
 
 
@@ -800,11 +800,4 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 
   return  GetExistingFileDesc (f);
 }  /* MergeSymbolicFields */
-
-
-
-const  AttributeTypeVector&  FileDesc::AttributeVector ()  const
-{
-  return  attributeVector;
-}
 

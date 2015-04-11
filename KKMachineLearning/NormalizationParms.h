@@ -1,4 +1,4 @@
-#ifndef  _NORMALIZATIONPARMS_
+#if  !defined(_NORMALIZATIONPARMS_)
 #define  _NORMALIZATIONPARMS_
 
 #include "Attribute.h"
@@ -8,7 +8,7 @@
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _RUNLOG_
@@ -50,13 +50,17 @@ namespace KKMachineLearning
   /**
    *@brief  Normalization Parameters;  calculation and implementation.
    *@details Normalization parameters will be calculated for all features but 
-   *         when individual examples are normalized, only the ones specified by 
-   *        _featuresToNormalize' will be normalized.              
+   * when individual examples are normalized, only the ones specified by 
+   * _featuresToNormalize' will be normalized.              
    */
-
   class  NormalizationParms
   {
   public:
+    NormalizationParms (bool                _normalizeNominalFeatures,
+                        FeatureVectorList&  _examples,
+                        RunLog&             _log
+                       );
+
     NormalizationParms (const ModelParam&   _param,
                         FeatureVectorList&  _examples,
                         RunLog&             _log
@@ -114,26 +118,28 @@ namespace KKMachineLearning
 
     void  Write (std::ostream&  o);
 
-    float  Mean (kkint32 i);
-    float  Sigma (kkint32 i);
+    double  Mean (kkint32 i);
+    double  Sigma (kkint32 i);
 
-    const float*  Mean ()  {return  mean;}
-    const float*  Sigma () {return  sigma;}
+    const double*  Mean ()  {return  mean;}
+    const double*  Sigma () {return  sigma;}
 
 
   private:
     void  ConstructNormalizeFeatureVector ();
+    void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
 
-    KKMachineLearning::AttributeTypeVector  attriuteTypes;
-    FileDescPtr               fileDesc;
-    KKStr                     fileName;
-    RunLog&                   log;
-    float*                   mean;
-    bool*                     normalizeFeature;
-    bool                      normalizeNominalFeatures;
-    kkint32                     numOfFeatures;
-    float                    numOfExamples;
-    float*                   sigma;
+
+    AttributeTypeVector  attriuteTypes;
+    FileDescPtr          fileDesc;
+    KKStr                fileName;
+    RunLog&              log;
+    double*              mean;
+    bool*                normalizeFeature;
+    bool                 normalizeNominalFeatures;
+    kkint32              numOfFeatures;
+    float                numOfExamples;
+    double*              sigma;
   };  /* NormalizationParms */
 
 
@@ -142,7 +148,7 @@ namespace KKMachineLearning
 
   #define  _NormalizationParmsDefined_
 
-}  /* namespace KKMachineLearning { */
+}  /* namespace KKMLL { */
 
 
 #endif

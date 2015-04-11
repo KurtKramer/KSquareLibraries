@@ -1,9 +1,9 @@
-#ifndef  _MODELOLDSVM_
+#if  !defined(_MODELOLDSVM_)
 #define  _MODELOLDSVM_
 
 
 /**
- *@class KKMachineLearning::ModelOldSVM
+ *@class KKMLL::ModelOldSVM
  *@browse
  *@details
  *@code
@@ -19,27 +19,26 @@
  */
 
 
-#include  "KKStr.h"
-#include  "ClassAssignments.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "FeatureEncoder2.h"
-#include  "FeatureNumList.h"
-#include  "FeatureVector.h"
 #include  "RunLog.h"
+#include  "KKStr.h"
+
 #include  "svm.h"
 #include  "Model.h"
-#include  "ModelParamOldSVM.h"
 #include  "SVMModel.h"
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
+  #if  !defined(_CLASSASSIGNMENTS_)
+  class  ClassAssignments;
+  typedef  ClassAssignments*  ClassAssignmentsPtr;
+  #endif
 
-#ifndef  _FEATUREENCODER_
-class  FeatureEncoder2;
-typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
+
+  #if  !defined(_MODELPARAMOLDSVM_)
+  class  ModelParamOldSVM;
+  typedef  ModelParamOldSVM*  ModelParamOldSVMPtr;
 #endif
 
 
@@ -62,7 +61,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
      *@param[in] _log A log-file stream. All important events will be output to this stream
      */
     ModelOldSVM (const KKStr&             _name,
-                 const ModelParamOldSVM&  _param,
+                 const ModelParamOldSVM&  _param,         // Create new model from
                  FileDescPtr              _fileDesc,
                  VolConstBool&            _cancelFlag,
                  RunLog&                  _log
@@ -78,6 +77,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     virtual ModelTypes       ModelType () const  {return mtOldSVM;}
 
     const ClassAssignments&  Assignments () const;
+
+    virtual
+    KKStr                    Description ()  const;  /**< Return short user readable description of model. */
 
     const FeatureNumList&    GetFeatureNums ()  const;
 
@@ -115,13 +117,18 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
                           kkint32&          predClass1Votes,
                           kkint32&          predClass2Votes,
                           double&           probOfKnownClass,
-                          double&           probOfPredClass1,
-                          double&           probOfPredClass2,
+                          double&           predClass1Prob,
+                          double&           predClass2Prob,
                           kkint32&          numOfWinners,
                           bool&             knownClassOneOfTheWinners,
                           double&           breakTie
                          );
 
+
+    virtual  void  PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr     &  predClass,
+                               double&           dist
+                              );
 
 
     virtual  
@@ -256,7 +263,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
 
   typedef  ModelOldSVM::ModelOldSVMPtr  ModelOldSVMPtr;
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 
 

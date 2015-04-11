@@ -1,7 +1,7 @@
 #ifndef  _MODEL_
 #define  _MODEL_
 /**
- @class  KKMachineLearning::Model
+ @class  KKMLL::Model
  @brief Base class to all Learning Algorithms.
  @author  Kurt Kramer
  @details
@@ -10,30 +10,61 @@
    supplied labeled examples(List of FeatureVector objects),  Prediction of an unlabeled example.
  */
 
+#include "KKBaseTypes.h"
 #include "RunLog.h"
 #include "KKStr.h"
 
-#include "ClassProb.h"
-#include "FeatureEncoder2.h"
-#include "FeatureVector.h"
-#include "FileDesc.h"
-#include "MLClass.h"
+
 #include "ModelParam.h"
-#include "NormalizationParms.h"
 
 
-
-namespace KKMachineLearning
+namespace KKMLL
 {
+  #if  !defined(_CLASSPROB_)
+  class  ClassProb;
+  typedef  ClassProb*  ClassProbPtr;
+  class  ClassProbList;
+  typedef  ClassProbList*  ClassProbListPtr;
+  #endif
+
+  #if  !defined(_FEATUREENCODER2_)
+  class  FeatureEncoder2;
+  typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
+  #endif
+
+
   #ifndef  _FeatureNumListDefined_
   class  FeatureNumList;
   typedef  FeatureNumList*  FeatureNumListPtr;
   #endif
 
 
-  #ifndef _FileDesc_Defined_
+  #if  !defined(_FEATUREVECTOR_)
+  class  FeatureVector;
+  typedef  FeatureVector*  FeatureVectorPtr;
+  class  FeatureVectorList;
+  typedef  FeatureVectorList*  FeatureVectorListPtr;
+  #endif
+
+
+  #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  #endif
+
+
+  #if  !defined(_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  typedef  MLClass const *  MLClassPtr     ;
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
+  #endif
+
+
+  #if  !defined(_NORMALIZATIONPARMS_)
+  class  NormalizationParms;
+  typedef  NormalizationParms*  NormalizationParmsPtr;
   #endif
 
 
@@ -43,44 +74,9 @@ namespace KKMachineLearning
   public:
     typedef  Model*  ModelPtr;
 
-    typedef  enum  {mtNULL, mtOldSVM, mtSvmBase, mtKNN, mtUsfCasCor}   ModelTypes;
+    enum  ModelTypes {mtNULL = 0, mtOldSVM = 1, mtSvmBase = 2 , mtKNN= 3, mtUsfCasCor = 4, mtDual = 5};
     static KKStr       ModelTypeToStr   (ModelTypes    _modelingType);
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
-
-
-/*
-    class  ClassPairProb
-    {
-    public:
-      ClassPairProb (MLClassPtr _classLabel,
-                     double     _probability
-                    );
-
-      ClassPairProb (const ClassPairProb&  _pair);
-
-      MLClassPtr classLabel;
-      double     probability;
-    };
-    typedef  ClassPairProb*  ClassPairProbPtr;
-
-
-
-    class ClassPairProbList:  public  KKQueue<ClassPairProb>
-    {
-    public:
-      ClassPairProbList ();
-      ClassPairProbList (bool owner);
-      ClassPairProbList (const ClassPairProbList&  pairList);
-      void  SortByClassName ();
-      void  SortByProbability (bool highToLow = true);
-    private:
-      static bool  CompairByClassName (const ClassPairProbPtr left, const ClassPairProbPtr right);
-
-      class  ProbabilityComparer;
-    };
-    typedef  ClassPairProbList*  ClassPairProbListPtr;
-
-*/
 
 
     /**
@@ -137,7 +133,7 @@ namespace KKMachineLearning
   
     /**
      *@brief  A factory method that will instantiate the appropriate class of training model based off the contents of the istream "i".
-     *@details  This method is used to construct a model that has already been build and saved to disk.
+     *@details  This method is used to construct a model that has already been built and saved to disk.
      *@param[in] i  Input stream where previously built model has been saved.
      *@param[in] _param  Parameters used to drive the creating of the model.
      *@param[in] _fileDesc Description of the dataset that will be used to train the classifier and examples that will be classified.
@@ -156,25 +152,43 @@ namespace KKMachineLearning
 
     // Access Methods
     bool                              AlreadyNormalized          () const {return alreadyNormalized;}
+
+    virtual
+    KKStr                    Description ()  const;  /**< Return short user readable description of model. */
+
     const FeatureEncoder2&            Encoder                    () const;
+
     virtual const FeatureNumList&     GetFeatureNums             () const;
+
     virtual kkint32                   MemoryConsumedEstimated    () const;
+
     virtual ModelTypes                ModelType                  () const = 0;
+
     virtual KKStr                     ModelTypeStr               () const  {return ModelTypeToStr (ModelType ());}
+
     const KKStr&                      Name                       () const  {return name;}
+    void                              Name (const KKStr&  _name)  {name = _name;}
+
     virtual bool                      NormalizeNominalAttributes () const; /**< Return true, if nominal fields need to be normalized. */
+
     ModelParamPtr                     Param                      () const  {return  param;}
+
     virtual const FeatureNumList&     SelectedFeatures           () const;
+
     const KKStr&                      RootFileName               () const {return rootFileName;}
+
+    const KKB::DateTime&              TimeSaved               () const {return timeSaved;}
+
     double                            TrainingTime               () const {return trainingTime;}
+
     double                            TrianingPrepTime           () const {return trianingPrepTime;}  //*< Time ins secs spent preparing training data in Model::TrainModel */
+
     bool                              ValidModel                 () const {return validModel;}
 
 
     // Access Update Methods
     void  RootFileName (const KKStr&  _rootFileName)  {rootFileName = _rootFileName;}
   
-
 
 
     /**
@@ -234,8 +248,14 @@ namespace KKMachineLearning
     void  WriteSpecificImplementationXML (ostream&  o) = 0;
 
 
-
-
+    virtual  void  PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr     &  predClass,
+                               double&           dist
+                              )
+    {
+      predClass = NULL;
+      dist = 0.0;
+    }
 
     //*********************************************************************
     //*     Routines that should be implemented by descendant classes.    *
@@ -264,6 +284,16 @@ namespace KKMachineLearning
    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example) = 0;
 
 
+    /**@brief  Only applied to ModelDual classifier. */
+    virtual
+    void  ProbabilitiesByClassDual (FeatureVectorPtr   example,
+                                    KKStr&             classifier1Desc,
+                                    KKStr&             classifier2Desc,
+                                    ClassProbListPtr&  classifier1Results,
+                                    ClassProbListPtr&  classifier2Results
+                                   );
+
+
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
@@ -278,7 +308,7 @@ namespace KKMachineLearning
      *        probabilities for any given index in '_probabilities' will be for the class
      *        specified in the same index in '_mlClasses'.
      *@param[in]  _example       FeatureVector object to calculate predicted probabilities for.
-     *@param[in]  _ImageClasses  List of image classes that caller is aware of.  This should be the
+     *@param[in]  _mlClasses  List of image classes that caller is aware of. This should be the
      *            same list that was used when constructing this Model object.  The list must
      *            be the same but not necessarily in the same order as when Model was 1st
      *            constructed.  The ordering of this list will dictate the order that '_probabilities'
@@ -302,7 +332,7 @@ namespace KKMachineLearning
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**           crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                  );
 
     /**
@@ -322,11 +352,18 @@ namespace KKMachineLearning
                       bool                  _takeOwnership  
                      );
 
+
   protected:
     void  AllocatePredictionVariables ();
 
 
     void  DeAllocateSpace ();
+
+
+    void  NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
+                                              double*  probabilities,
+                                              double   minProbability
+                                             );
 
 
     void  Read         (istream& i,
@@ -339,6 +376,7 @@ namespace KKMachineLearning
                             );
 
     void  ReduceTrainExamples ();
+
 
 
     bool                   alreadyNormalized;
@@ -361,19 +399,20 @@ namespace KKMachineLearning
 
     RunLog&                log;
 
-    KKStr                  name;
-
-    kkuint32               numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
-
     NormalizationParmsPtr  normParms;
 
-    ModelParamPtr          param;          /**< Will own this instance                            */
+    kkint32                numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
 
-    KKStr                  rootFileName;   /**< This is the root name to be used by all component objects; such as svm_model, mlClasses, and
-                                            * svmParam(including selected features).  Each one will have the same rootName with a different Suffix
+    ModelParamPtr          param;          /**< Will own this instance,                           */
+
+    KKStr                  rootFileName;   /**< This is the root name to be used by all component objects; such as svm_model,
+                                            * mlClasses, and svmParam(including selected features). Each one will have the
+                                            * same rootName with a different suffix.
+                                            *@code
                                             *      mlClasses  "<rootName>.image_classes"
                                             *      svmParam      "<rootName>.svm_parm"
                                             *      model         "<rootName>"
+                                            *@endcode
                                             */
 
     FeatureVectorListPtr   trainExamples;
@@ -382,12 +421,17 @@ namespace KKMachineLearning
 
     kkint32*                 votes;
 
-    bool                   weOwnTrainExamples;
+    bool                   weOwnTrainExamples;  /**< Indicates if we own the 'trainExamples'. This does not mean that we own its
+                                                 * contents. That is determined by 'trainExamples->Owner ()'.
+                                                 */
+   
 
   private:
     double                 trianingPrepTime;    /**<  Time that it takes to perform normalization, and encoding */
     double                 trainingTime;
     double                 trainingTimeStart;   /**<  Time that the clock for TraininTime was started. */
+    KKStr                  name;
+    KKB::DateTime          timeSaved;           /**<  Date and Time that this model was saved. */
   };
   
   typedef  Model::ModelPtr  ModelPtr;

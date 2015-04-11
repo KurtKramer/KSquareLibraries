@@ -14,7 +14,7 @@ using namespace  KKB;
 
 #include "ClassStatistic.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

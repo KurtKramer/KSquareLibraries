@@ -1,7 +1,7 @@
 #ifndef  _FEATUREENCODER2_
 #define  _FEATUREENCODER2_
 /**
- *@class  KKMachineLearning::FeatureEncoder2
+ *@class  KKMLL::FeatureEncoder2
  *@code
  ***********************************************************************
  *                       FeatureEncoder2                               *
@@ -22,7 +22,7 @@
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   class  FeatureEncoder2
   {
@@ -97,6 +97,6 @@ namespace KKMachineLearning
 
   typedef  FeatureEncoder2::FeatureEncoder2Ptr  FeatureEncoder2Ptr;
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif

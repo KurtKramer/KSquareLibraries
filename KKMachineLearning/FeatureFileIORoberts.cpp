@@ -26,7 +26,7 @@ using namespace  KKB;
 #include "FeatureFileIORoberts.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 FeatureFileIORoberts  FeatureFileIORoberts::driver;
@@ -110,7 +110,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
     // Write _out names file
     ofstream  nf (namesFileName.Str ());
 
-    MLClassListPtr classes = _data.ExtractMLClassConstList ();
+    MLClassListPtr classes = _data.ExtractListOfClasses ();
     classes->SortByName ();
     for  (x = 0;  x < classes->QueueSize ();  x++)
     {

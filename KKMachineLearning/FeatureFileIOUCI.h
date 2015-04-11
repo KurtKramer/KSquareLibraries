@@ -3,7 +3,7 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 
@@ -74,6 +74,6 @@ namespace KKMachineLearning
     static  FeatureFileIOUCI  driver;
   };  /* FeatureFileIOUCI*/
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

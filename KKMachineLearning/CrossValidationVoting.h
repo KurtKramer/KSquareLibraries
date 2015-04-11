@@ -33,7 +33,7 @@
 
 
 
-namespace  KKMachineLearning 
+namespace  KKMLL 
 {
 
   #ifndef  _FeatureVectorList_Defined_
@@ -144,7 +144,7 @@ namespace  KKMachineLearning
 
   typedef  CrossValidationVoting*  CrossValidationVotingPtr;
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif
 

@@ -10,10 +10,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -30,12 +27,18 @@ using namespace  KKB;
 #include "ModelSvmBase.h"
 #include "ModelKnn.h"
 #include "ModelUsfCasCor.h"
+#include "ModelDual.h"
 
+
+#include "ClassProb.h"
 #include "FeatureEncoder2.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "ModelParam.h"
-using namespace  KKMachineLearning;
+#include "ModelParamDual.h"
+#include "ModelParamOldSVM.h"
+#include "NormalizationParms.h"
+using namespace  KKMLL;
 
 
 
@@ -86,7 +89,7 @@ Model::Model (const Model&  _model):
 
     
 /**
- @brief  Use this when you are planning on creating a empty model without parameters.
+ *@brief  Use this when you are planning on creating a empty model without parameters.
  */
 Model::Model (FileDescPtr    _fileDesc,
               VolConstBool&  _cancelFlag,
@@ -170,17 +173,11 @@ Model::Model (const KKStr&       _name,
 Model::~Model ()
 {
   DeAllocateSpace ();
-  delete  classesIndex;
-  classesIndex = NULL;
 
-  delete  classes;
-  classes = NULL;
-
-  delete  encoder;
-  encoder = NULL;
-
-  delete  normParms;
-  normParms = NULL;
+  delete  classesIndex;  classesIndex = NULL;
+  delete  classes;       classes = NULL;
+  delete  encoder;       encoder = NULL;
+  delete  normParms;     normParms = NULL;
 
   if  (weOwnTrainExamples)
   {
@@ -209,6 +206,13 @@ kkint32  Model::MemoryConsumedEstimated ()  const
     memoryConsumedEstimated += trainExamples->MemoryConsumedEstimated ();
 
   return  memoryConsumedEstimated;
+}
+
+
+
+KKStr  Model::Description ()  const
+{
+  return ModelTypeStr () + "(" + Name () + ")";
 }
 
 
@@ -277,6 +281,11 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   case  mtSvmBase:  model = new ModelSvmBase (_fileDesc, _cancelFlag, _log);
                     break;
 
+  case  mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag, _log);
+                     break;
+
+  case  mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag, _log);
+                     break;
   }
 
   if  (!model)
@@ -339,6 +348,9 @@ KKStr  Model::ModelTypeToStr (ModelTypes   _modelingType)
   else if  (_modelingType == mtUsfCasCor)
     return "UsfCasCor";
 
+  else if  (_modelingType == mtDual)
+    return "Dual";
+  
   else
     return "NULL";
 }  /* ModelingMethodToStr */
@@ -359,6 +371,9 @@ Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 
   else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))
     return mtUsfCasCor;
+
+  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))
+    return mtDual;
 
   else
     return mtNULL;
@@ -392,28 +407,30 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
     case  mtUsfCasCor: model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag, _log);
                        break;
 
+    case  mtDual:      model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag, _log);
+                       break;
     }  /* end of switch */
+  }
+  catch  (const KKException&  e)
+  {
+    delete  model; model = NULL; throw  e;
+    throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
   catch  (const std::exception&  e)
   {
-    delete  model;
-    model = NULL;
+    delete  model;  model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
   catch  (const char*  e2)
   {
-    delete  model;
-    model = NULL;
-
+    delete  model;  model = NULL;
     KKStr  exceptionStr = "Model::CreateAModel  Exception calling constructor[";
     exceptionStr << e2 << "]."; 
     throw  KKException (exceptionStr);
   }
-
   catch  (...)
   {
-    delete  model;
-    model = NULL;
+    delete  model;  model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.  No info provided.");
   }
 
@@ -425,7 +442,8 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
 
 void  Model::AllocatePredictionVariables ()
 {
-  kkuint32  x, y;
+  kkint32 x = 0;
+  kkint32 y = 0;
 
   DeAllocateSpace ();
 
@@ -464,7 +482,7 @@ void  Model::AllocatePredictionVariables ()
 
 void  Model::DeAllocateSpace ()
 {
-  kkuint32  x;
+  kkint32 x = 0;
   if  (crossClassProbTable)
   {
     for  (x = 0;  x < numOfClasses;  x++)
@@ -546,7 +564,7 @@ void  Model::Load (const KKStr&  _rootFileName,
                    bool&         _successful
                   )
 {
-  log.Level (20) << "Model::Load  Load Model in File[" << _rootFileName << "]." << endl;
+  log.Level (10) << "Model::Load  Load Model in File[" << _rootFileName << "]." << endl;
   rootFileName = _rootFileName;
   KKStr  fileName = rootFileName + ".Model";
 
@@ -570,7 +588,7 @@ void  Model::Save (const KKStr&  _rootFileName,
                    bool&         _successful
                   )
 {
-  log.Level (20) << "Model::Save  Saving Model in File["
+  log.Level (10) << "Model::Save  Saving Model in File["
                  << _rootFileName << "]."
                  << endl;
 
@@ -599,12 +617,13 @@ void  Model::Save (const KKStr&  _rootFileName,
 
 void  Model::WriteXML (ostream&  o)
 {
-  log.Level (20) << "Model::WriteXML  Saving Model in File." << endl;
+  log.Level (20) << "Model::WriteXML  Saving Model [" << Name () << "] in File." << endl;
+
+  timeSaved = osGetLocalDateTime ();
 
   o << "<Model>" << endl;
   o << "ModelType"          << "\t" << ModelTypeStr ()                                  << endl;
   o << "Name"               << "\t" << Name ()                                          << endl;
-
   o << "RootFileName"       << "\t" << rootFileName                                     << endl;
   o << "Classes"            << "\t" << classes->ToCommaDelimitedStr ()                  << endl;
   if  (classesIndex)
@@ -616,7 +635,8 @@ void  Model::WriteXML (ostream&  o)
     param->WriteXML (o);
     o << "</Parameters>" << endl;
   }
-  o << "Time"               << "\t" << osGetLocalDateTime ()                            << endl;
+
+  o << "TimeSaved"          << "\t" << timeSaved                                        << endl;
   o << "TrainingTime"       << "\t" << trainingTime                                     << endl;
   o << "AlreadyNormalized"  << "\t" << (alreadyNormalized ? "Yes" : "No")               << endl;
   if  (normParms)
@@ -681,8 +701,10 @@ void  Model::ReadXML (istream&  i,
       name = ln.ExtractToken2 ("\n\r\t");
     }
 
-    else if  (field == "TIME")
+    else if  (field.EqualIgnoreCase ("TimeSaved"))
     {
+      KKStr  timeSavedStr = ln.ExtractToken2 ("\t");
+      timeSaved = DateTime (timeSavedStr);
     }
 
     else if  (field.EqualIgnoreCase ("<Parameters>"))
@@ -768,6 +790,8 @@ void  Model::ReadXML (istream&  i,
     numOfClasses = classes->QueueSize ();
     AllocatePredictionVariables ();
   }
+
+  log.Level (10) << "Model::ReadXML   Model[" << Name () << "]  Done Loading." << endl;
 }  /* ReadXML */
 
 
@@ -819,7 +843,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
                          bool                  _takeOwnership  /*!< True = Model will take ownership of these examples */
                         )
 {
-  log.Level (40) << "Model::TrainModel" << endl;
+  log.Level (10) << "Model::TrainModel   Preparing for training of Model[" << Name () << "]  Examples[" << _trainExamples->QueueSize () << "]" << endl;
 
   double  prepStartTime = osGetSystemTimeUsed ();
 
@@ -857,8 +881,17 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     if  (!weOwnTrainExamples)
     {
+      // Since we do not own the We will have to duplicate the trainExamples list and its contents before we normalize the data.
       FeatureVectorListPtr  temp = new FeatureVectorList (*trainExamples, true);
       weOwnTrainExamples = true;
+      trainExamples = temp;
+    }
+    else if  (!trainExamples->Owner ())
+    {
+      // Even though we own 'trainExamples' we do not own its contents; so we will need to create a new list and own those contents.
+      FeatureVectorListPtr  temp = new FeatureVectorList (*trainExamples, true);
+      weOwnTrainExamples = true;
+      delete  trainExamples;
       trainExamples = temp;
     }
     delete  normParms;
@@ -902,6 +935,15 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
+/**
+ *@brief  Every prediction  method in every class that is inherited from this class should call
+ *        this method before performing there prediction. Such things as Normalization and
+ *        Feature Encoding.
+ *@param[in]  fv  Feature vector of example that needs to be prepared.
+ *@param[out]  newExampleCreated  Indicates if either Feature Encoding and/or Normalization needed
+ *             to be done. If neither then the original instance is returned. If Yes then
+ *             a new instance which the caller will have to be delete will be returned.
+ */
 FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
                                                    bool&             newExampleCreated
                                                   )
@@ -920,7 +962,7 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
     newExampleCreated = true;
   }
 
-  // I do not believe we need the encoder at this point. At least not for the Features Selected part.  Maybe the conversion from niminal fields will make sense.
+  // I do not believe we need the encoder at this point. At least not for the Features Selected part. Maybe the conversion from minimal fields will make sense.
   if  (encoder)
   {
     oldFV = fv;
@@ -935,6 +977,45 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
   return  fv;
 }  /* PrepExampleForPrediction */
+
+
+
+
+/**
+ * Will normailize probabilites such that the sum of all equal 1.0 and no one probability will be less than 'minProbability'.
+ */
+void  Model::NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
+                                                 double*  probabilities,
+                                                 double   minProbability
+                                                )
+{
+  double  sumGreaterOrEqualMin = 0.0;
+  kkint32 numLessThanMin = 0;
+
+  kkint32 x = 0;
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      ++numLessThanMin;
+    else
+      sumGreaterOrEqualMin += probabilities[x];
+  }
+
+  double probLessMinTotal = numLessThanMin * minProbability;
+  double probLeftToAllocate  = 1.0 - probLessMinTotal;  
+
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      probabilities[x] = minProbability;
+    else
+      probabilities[x] = (probabilities[x] / sumGreaterOrEqualMin) * probLeftToAllocate;
+  }
+}  /* NormalizeProbabilitiesWithAMinumum */
+
+
+
+
 
 
 
@@ -970,6 +1051,7 @@ void  Model::ReduceTrainExamples ()
     }
 
     delete  stats;
+    stats = NULL;
   }
 
   if  (!reductionNeeded)
@@ -1032,9 +1114,11 @@ void  Model::ReduceTrainExamples ()
   }
   else
   {
+    // Since we are replacing 'trainExamples' with 'reducedSet' we will now own 'trainExamples' but not its contents.
+    reducedSet->Owner (false);
+    weOwnTrainExamples = true;
     trainExamples = reducedSet;
     reducedSet = NULL;
-    trainExamples->Owner (false);
     deleteSet->Owner (false);
     delete  deleteSet;
     deleteSet = NULL;
@@ -1114,5 +1198,25 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
   delete  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
+
+
+
+void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
+                                       KKStr&             classifier1Desc,
+                                       KKStr&             classifier2Desc,
+                                       ClassProbListPtr&  classifier1Results,
+                                       ClassProbListPtr&  classifier2Results
+                                      )
+{
+  delete classifier1Results;  classifier1Results = NULL;
+  delete classifier2Results;  classifier2Results = NULL;
+
+  classifier1Desc = Description ();
+  classifier2Desc = Description ();
+
+  classifier1Results = ProbabilitiesByClass (example);
+  if  (classifier1Results)
+    classifier2Results = new ClassProbList (*classifier1Results);
+}  /* ProbabilitiesByClassDual */
 
 

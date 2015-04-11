@@ -3,7 +3,7 @@
 
 
 /**
- @class  KKMachineLearning::Orderings
+ @class  KKMLL::Orderings
  @author  Kurt Kramer
  @brief  Used to maintain multiple orderings of a single list of FeatureVector objects.
  @details
@@ -22,7 +22,7 @@
 #include  "KKStr.h"
 
 
-namespace  KKMachineLearning  {
+namespace  KKMLL  {
 
 
 #ifndef  _FeatureVector_Defined_
@@ -202,6 +202,6 @@ private:
 
 typedef  Orderings::OrderingsPtr  OrderingsPtr;
 
-}  /* namespace  KKMachineLearning  */
+}  /* namespace  KKMLL  */
 
 #endif

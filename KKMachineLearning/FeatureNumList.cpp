@@ -20,7 +20,7 @@ using namespace  KKB;
 
 #include "FeatureNumList.h"
 #include "FileDesc.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -826,7 +826,7 @@ bool  FeatureNumList::operator> (const FeatureNumList&  _features)  const
 
 
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
   ostream& operator<< (      ostream&          os, 
                        const FeatureNumList&   features

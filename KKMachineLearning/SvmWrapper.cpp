@@ -30,7 +30,7 @@ using namespace KKB;
 
 #include "SvmWrapper.h"
 #include "svm.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -312,7 +312,7 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
 
 
 
-struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter&  param,
+struct svm_model**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
                                                       struct       svm_problem&    subprob
                                                      )
 { 
@@ -356,7 +356,7 @@ struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter
 
 
 
-void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
+void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                                            struct svm_model**      subModel,
                                            const struct svm_node*  unknownClassFeatureData, 
                                            kkint32*                  votes,
@@ -423,7 +423,7 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
 
 
 
-kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   param,
+kkint32  KKMLL::SvmPredictTwoClass (const struct svm_parameter&   param,
                                               svm_model**                   submodel, 
                                               const svm_node*               unKnownData, 
                                               kkint32                       desired, 
@@ -457,7 +457,7 @@ kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   pa
 
 
 
-void  KKMachineLearning::SvmSaveModel (struct svm_model**  subModel,
+void  KKMLL::SvmSaveModel (struct svm_model**  subModel,
                                        const char*         fileName,
                                        bool&               successfull
                                       )
@@ -470,7 +470,7 @@ void  KKMachineLearning::SvmSaveModel (struct svm_model**  subModel,
 
 
 
-void  KKMachineLearning::SvmSaveModel (ostream&             o,
+void  KKMLL::SvmSaveModel (ostream&             o,
                          struct  svm_model**  model
                         )
 {
@@ -481,7 +481,7 @@ void  KKMachineLearning::SvmSaveModel (ostream&             o,
 
 
 
-struct svm_model**   KKMachineLearning::SvmLoadModel (const char* fileName)
+struct svm_model**   KKMLL::SvmLoadModel (const char* fileName)
 {
   svm_model**  models = new svm_model*[1];
   models[0] = svm_load_model(fileName);
@@ -496,7 +496,7 @@ struct svm_model**   KKMachineLearning::SvmLoadModel (const char* fileName)
 
 
 
-struct svm_model**   KKMachineLearning::SvmLoadModel (istream&  f,
+struct svm_model**   KKMLL::SvmLoadModel (istream&  f,
                                         RunLog&   log
                                        )
 {
@@ -516,7 +516,7 @@ struct svm_model**   KKMachineLearning::SvmLoadModel (istream&  f,
 
 
 
-void   KKMachineLearning::SvmDestroyModel (struct svm_model**  subModel)
+void   KKMLL::SvmDestroyModel (struct svm_model**  subModel)
 {
   svm_destroy_model (subModel[0]);
 }

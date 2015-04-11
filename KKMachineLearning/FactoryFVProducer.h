@@ -5,7 +5,7 @@
 #include "RunLog.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 #if  !defined(_FeatureVector_Defined_)
@@ -42,7 +42,7 @@ namespace KKMachineLearning
    *@class  FactoryFVProducer
    *@brief  Responsible for creating a FeatureFectorProducer instance.
    *@details  
-   * To make the 'KKMachineLearning' library independent of the actual details of the FeatureVetir computations and 
+   * To make the 'KKMLL' library independent of the actual details of the FeatureVetir computations and 
    * their underlying source data a Factory - Producer strategy was implemented. For every FeatureVector derived class
    * there will be at least one 'FeatureVectorProducer' derived class and one 'FactoryFVProducer' derived class.
    *
@@ -167,7 +167,7 @@ namespace KKMachineLearning
 #define  _FactoryFVProducer_Defined_
 
 
-}  /* KKMachineLearning */
+}  /* KKMLL */
 
 
 

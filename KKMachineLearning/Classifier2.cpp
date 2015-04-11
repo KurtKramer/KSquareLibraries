@@ -35,7 +35,7 @@ using namespace  KKB;
 #include "MLClass.h"
 #include "NormalizationParms.h"
 #include "TrainingProcess2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 

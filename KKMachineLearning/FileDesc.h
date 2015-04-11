@@ -1,4 +1,4 @@
-#ifndef  _FILEDESC_
+#if  !defined(_FILEDESC_)
 #define  _FILEDESC_
 
 /**
@@ -41,7 +41,7 @@
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   class  FileDescList;
   typedef  FileDescList*  FileDescListPtr;
@@ -115,7 +115,7 @@ namespace KKMachineLearning
 
   public:
     // Access Methods
-    const KKMachineLearning::AttributeList&   Attributes          ()  const  {return attributes;};
+    const KKMLL::AttributeList&   Attributes          ()  const  {return attributes;};
     const AttributeTypeVector&                AttributeVector     ()  const  {return attributeVector;};
     const VectorInt32&                        CardinalityVector   ()  const  {return cardinalityVector;}
     const MLClassList&                        Classes             ()  const  {return classes;}
@@ -130,11 +130,11 @@ namespace KKMachineLearning
 
 
     void                      AddAAttribute (const KKB::KKStr&                 _name,
-                                             KKMachineLearning::AttributeType  _type,
+                                             KKMLL::AttributeType  _type,
                                              bool&                             alreadyExists
                                             );
                             
-    void                      AddAAttribute (const MLL::Attribute&  attribute);
+    void                      AddAAttribute (const KKMLL::Attribute&  attribute);
 
     void                      AddClasses (const MLClassList&  classesToAdd);
                             
@@ -145,15 +145,15 @@ namespace KKMachineLearning
                                           )  const;
 
     const 
-      KKMachineLearning::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
+      KKMLL::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
 
-    KKMachineLearning::AttributeTypeVector  CreateAttributeTypeTable ()  const;
+    KKMLL::AttributeTypeVector  CreateAttributeTypeTable ()  const;
     
     VectorInt32               CreateCardinalityTable ()  const;
 
     const KKStr&              FieldName (kkint32  fieldNum)  const;
 
-    const KKMachineLearning::Attribute&     GetAAttribute (kkint32 fieldNum) const;
+    const KKMLL::Attribute&     GetAAttribute (kkint32 fieldNum) const;
 
     const  
     KKStr&                    GetNominalValue (kkint32  fieldNum, 
@@ -185,7 +185,7 @@ namespace KKMachineLearning
     void                      SparseMinFeatureNum (kkint32 _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
     kkint32                   SparseMinFeatureNum () const {return sparseMinFeatureNum;}
 
-    KKMachineLearning::AttributeType  Type (kkint32 fieldNum)  const;
+    KKMLL::AttributeType  Type (kkint32 fieldNum)  const;
 
     KKStr                     TypeStr (kkint32 fieldNum)  const;
 
@@ -213,7 +213,7 @@ namespace KKMachineLearning
       FileDescPtr     GetExistingFileDesc (FileDescPtr  fileDesc);
 
     const
-      KKMachineLearning::AttributePtr      LookUpByName (const KKStr&  attributeName)  const;  
+      KKMLL::AttributePtr      LookUpByName (const KKStr&  attributeName)  const;  
 
 
     void  DisplayAttributeMappings ();
@@ -242,7 +242,7 @@ namespace KKMachineLearning
      *  the same(NOT case sensitive), and each field in both instances must be the same type.  If all these conditions
      *  are not 'true' will return NULL.  The fields that are of 'SymbolicAttribute' will have their values merged
      *  together.
-     *@see MLL:Attribute
+     *@see KKMLL:Attribute
      */
     static FileDescPtr  MergeSymbolicFields (const FileDesc&  left,
                                              const FileDesc&  right,
@@ -278,16 +278,16 @@ namespace KKMachineLearning
                             const char*  funcName
                            )  const;
 
-    KKMachineLearning::AttributeList    attributes;
-    AttributeTypeVector                 attributeVector;
-    VectorInt32                         cardinalityVector;
-    MLClassList                         classes;
-    KKStr                               classNameAttribute;   /**< Added to support DstWeb files.  The name of the attribute that specifies the className */
-    KKMachineLearning::AttributePtr     curAttribute;
-    KKStr                               fileName;
-    //RunLog&                           log;
-    kkint32                             sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
-    kkint16                             version;
+    KKMLL::AttributeList    attributes;
+    AttributeTypeVector     attributeVector;
+    VectorInt32             cardinalityVector;
+    MLClassList             classes;
+    KKStr                   classNameAttribute;   /**< Added to support DstWeb files.  The name of the attribute that specifies the className */
+    KKMLL::AttributePtr     curAttribute;
+    KKStr                   fileName;
+    //RunLog&               log;
+    kkint32                 sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
+    kkint16                 version;
 
     static
       KKB::GoalKeeperPtr  blocker;
@@ -306,7 +306,8 @@ namespace KKMachineLearning
 
   #define  _FileDesc_Defined_
 
-}  /* namespace KKMachineLearning  */
+}  /* namespace KKMLL  */
 
 
 #endif
+

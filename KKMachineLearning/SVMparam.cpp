@@ -19,7 +19,7 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -528,7 +528,7 @@ BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  cla
 
   if  (binaryParmsList == NULL)
   {
-    binaryParmsList = new BinaryClassParmsList (true, 20);
+    binaryParmsList = new BinaryClassParmsList (true);
     twoClassComboParms = NULL;
   }
   else
@@ -579,7 +579,7 @@ const FeatureNumList&  SVMparam::GetFeatureNums (MLClassPtr  class1,
 void    SVMparam::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms)
 {
   if  (!binaryParmsList)
-    binaryParmsList = new BinaryClassParmsList (true, 20);
+    binaryParmsList = new BinaryClassParmsList (true);
 
   binaryParmsList->PushOnBack (binaryClassParms);
 }  /* AddBinaryClassParms */
@@ -831,7 +831,7 @@ void  SVMparam::AddBinaryClassParms (MLClassPtr            class1,
 
 
 
-KKStr  KKMachineLearning::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
+KKStr  KKMLL::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
 {
   if  (encodingMethod == BinaryEncoding)
     return  "Binary";
@@ -845,7 +845,7 @@ KKStr  KKMachineLearning::EncodingMethodToStr (SVM_EncodingMethod  encodingMetho
 
 
         
-SVM_EncodingMethod  KKMachineLearning::EncodingMethodFromStr (const KKStr&  encodingMethodStr)
+SVM_EncodingMethod  KKMLL::EncodingMethodFromStr (const KKStr&  encodingMethodStr)
 {
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
@@ -863,7 +863,7 @@ SVM_EncodingMethod  KKMachineLearning::EncodingMethodFromStr (const KKStr&  enco
 
 
 
-KKStr  KKMachineLearning::KernalTypeToStr (SVM_KernalType  kernalType)
+KKStr  KKMLL::KernalTypeToStr (SVM_KernalType  kernalType)
 {
   switch  (kernalType)
   {
@@ -878,7 +878,7 @@ KKStr  KKMachineLearning::KernalTypeToStr (SVM_KernalType  kernalType)
 
 
 
-SVM_KernalType  KKMachineLearning::KernalTypeFromStr (const KKStr&  kernalTypeStr)
+SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
 {
   KKStr kernalTypeUpper = kernalTypeStr;
   kernalTypeUpper.Upper ();
@@ -911,7 +911,7 @@ SVM_KernalType  KKMachineLearning::KernalTypeFromStr (const KKStr&  kernalTypeSt
 
 
 
-KKStr  KKMachineLearning::MachineTypeToStr (SVM_MachineType  machineType)
+KKStr  KKMLL::MachineTypeToStr (SVM_MachineType  machineType)
 {
   if  (machineType == OneVsOne)
     return  "OneVsOne";
@@ -932,7 +932,7 @@ KKStr  KKMachineLearning::MachineTypeToStr (SVM_MachineType  machineType)
 
 
 
-SVM_MachineType  KKMachineLearning::MachineTypeFromStr (const KKStr&  machineTypeStr)
+SVM_MachineType  KKMLL::MachineTypeFromStr (const KKStr&  machineTypeStr)
 {
   KKStr  machineTypeUpper = machineTypeStr.ToUpper ();
 
@@ -954,7 +954,7 @@ SVM_MachineType  KKMachineLearning::MachineTypeFromStr (const KKStr&  machineTyp
 
 
 
-KKStr  KKMachineLearning::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
+KKStr  KKMLL::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
 {
   if  (selectionMethod == SelectByVoting)
     return  "Voting";
@@ -968,7 +968,7 @@ KKStr  KKMachineLearning::SelectionMethodToStr (SVM_SelectionMethod  selectionMe
 
 
 
-SVM_SelectionMethod  KKMachineLearning::SelectionMethodFromStr (const KKStr&  selectionMethodStr)
+SVM_SelectionMethod  KKMLL::SelectionMethodFromStr (const KKStr&  selectionMethodStr)
 {
   KKStr  selectionMethodUpper = selectionMethodStr.ToUpper ();
 

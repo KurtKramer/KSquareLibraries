@@ -1,7 +1,5 @@
 #include  "FirstIncludes.h"
-
 #include  <stdio.h>
-
 #include  <fstream>
 #include  <string>
 #include  <iostream>
@@ -9,8 +7,8 @@
 #include  "MemoryDebug.h"
 using namespace std;
 
-
 #include  "KKBaseTypes.h"
+#include "KKException.h"
 #include  "OSservices.h"
 #include  "RunLog.h"
 using namespace KKB;
@@ -20,7 +18,8 @@ using namespace KKB;
 #include  "BinaryClassParms.h"
 #include  "FileDesc.h"
 #include  "MLClass.h"
-using namespace KKMachineLearning;
+#include "MLLTypes.h"
+using namespace KKMLL;
 
 
 ModelParamOldSVM::ModelParamOldSVM  (FileDescPtr  _fileDesc,
@@ -447,6 +446,12 @@ void  ModelParamOldSVM::ReadSpecificImplementationXML (istream& i)
 
 
 
+BinaryClassParmsPtr   ModelParamOldSVM::GetBinaryClassParms (MLClassPtr       class1,
+                                                             MLClassPtr       class2
+                                                            )  const
+{
+  return svmParameters->GetBinaryClassParms (class1, class2);
+}
 
 
 

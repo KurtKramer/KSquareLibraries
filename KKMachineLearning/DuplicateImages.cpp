@@ -23,7 +23,7 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 DuplicateImages::DuplicateImages (FeatureVectorListPtr  _examples,

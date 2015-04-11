@@ -27,7 +27,7 @@ using namespace  KKB;
 #include "FeatureVector.h"
 #include "TrainingConfiguration2.h"
 #include "TrainingProcess2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -58,9 +58,6 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    numOfWinnersCorrects         (NULL),
    numOfWinnersOneOfTheWinners  (NULL),
    classificationTime           (0.0),
-   reductionTime                (0.0),
-   reductionPreExampleCount     (0),
-   reductionPostExampleCount    (0),
    trainingTime                 (0.0)
  
 {

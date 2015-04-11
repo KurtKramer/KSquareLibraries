@@ -10,14 +10,11 @@
 #include <iomanip>
 #include <set>
 #include <vector>
-
-
 #include "MemoryDebug.h"
-#include "KKBaseTypes.h"
-#include "KKException.h"
 using namespace  std;
 
-
+#include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -25,13 +22,17 @@ using namespace  KKB;
 
 
 #include "ModelOldSVM.h"
-#include "ModelParamOldSVM.h"
 #include "BinaryClassParms.h"
+#include "ClassAssignments.h"
+#include "ClassProb.h"
 #include "FeatureEncoder2.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
+#include "MLLTypes.h"
+#include "ModelParamOldSVM.h"
+#include "NormalizationParms.h"
 #include "SVMparam.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -107,6 +108,21 @@ ModelOldSVMPtr  ModelOldSVM::Duplicate ()  const
 }
 
 
+KKStr  ModelOldSVM::Description ()  const
+{
+  KKStr  result = "SVM(" + Name () + ")";
+
+  if  (svmModel)
+  {
+    const SVMparam&  p = svmModel->SVMParameters ();
+    result << " " << MachineTypeToStr (p.MachineType ())
+           << " " << SelectionMethodToStr (p.SelectionMethod ());
+  }
+  return  result;
+}
+
+
+
 const ClassAssignments&  ModelOldSVM::Assignments ()  const
 {
   return svmModel->Assignments ();
@@ -177,7 +193,7 @@ SVM_SelectionMethod  ModelOldSVM::SelectionMethod () const
 
 void  ModelOldSVM::WriteSpecificImplementationXML (ostream& o)
 {
-  log.Level (40) << "ModelOldSVM::WriteSpecificImplementationXML  Saving Model in File." << endl;
+  log.Level (20) << "ModelOldSVM::WriteSpecificImplementationXML  Saving Model in File." << endl;
 
   bool successful = true;
   o << "<ModelOldSVM>" << endl;
@@ -205,7 +221,7 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
     if  (ln.Len () < 1)
       continue;
 
-    if  ((ln[(kkint16)0] == '/')  &&  (ln[(kkint16)1] == '/'))
+    if  ((ln[0] == '/')  &&  (ln[1] == '/'))
       continue;
 
     KKStr  lineName = ln.ExtractToken2 ("\t\n\r");
@@ -235,7 +251,6 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
       }
     }
   }
-
 
   if  (_successful  ||  validModel)
   {
@@ -312,6 +327,20 @@ MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example)
 
 
 
+
+
+void  ModelOldSVM::PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr     &  predClass,
+                               double&           dist
+                              )
+{
+  svmModel->PredictRaw (example, predClass, dist);
+}  /* PredictRaw */
+
+
+
+
+
 ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
 {
   if  (!svmModel)
@@ -333,12 +362,17 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
   
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkuint32  idx;
+  kkint32 idx = 0;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classes->IdxToPtr (idx);
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
   }
+
+  if  (svmModel->SVMParameters ().SelectionMethod () == SelectByVoting)
+    results->SortByVotes (true);
+  else
+    results->SortByProbability (true);
 
   return  results;
 }  /* ProbabilitiesByClass */
