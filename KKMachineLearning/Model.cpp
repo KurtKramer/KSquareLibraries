@@ -807,7 +807,6 @@ void  Model::ReadSkipToSection (istream& i,
   char  buff[10240];
   sectName.Upper ();
 
-
   KKStr  field;
 
   // Skip to start of OneVsOne section
@@ -1129,7 +1128,7 @@ void  Model::ReduceTrainExamples ()
 
 
 void  Model::RetrieveCrossProbTable (MLClassList&   classes,
-                                     double**          crossClassProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                     double**       crossClassProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                     )
 {
   if  (classes.QueueSize () != crossClassProbTableSize)

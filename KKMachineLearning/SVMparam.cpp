@@ -19,6 +19,7 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
+#include "MLLTypes.h"
 using namespace KKMLL;
 
 
@@ -36,6 +37,7 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
   fileName                  (),
   log                       (_log),
   param                     (),
+  probClassPairs             (),
   samplingRate              (0.0f),
   selectedFeatures          (_selectedFeatures), 
   selectionMethod           (SelectByVoting),
@@ -70,6 +72,7 @@ SVMparam::SVMparam  (FileDescPtr _fileDesc,
   log                       (_log),
   machineType               (OneVsOne),
   param                     (),
+  probClassPairs            (),
   samplingRate              (0.0f),
   selectedFeatures          (_fileDesc), 
   selectionMethod           (SelectByVoting),
@@ -100,6 +103,7 @@ SVMparam::SVMparam  (const SVMparam&  _svmParam):
   log                        (_svmParam.log),
   machineType                (_svmParam.machineType),
   param                      (_svmParam.param),
+  probClassPairs             (_svmParam.probClassPairs),
   samplingRate               (_svmParam.samplingRate),
   selectedFeatures           (_svmParam.selectedFeatures),
   selectionMethod            (_svmParam.selectionMethod),
@@ -140,6 +144,41 @@ kkint32  SVMparam::MemoryConsumedEstimated () const
 
 
 
+
+void  SVMparam::ProbClassPairsInitialize (const ClassAssignments&  assignments)
+{
+  kkuint32  numClasses = assignments.size ();
+  if  (numClasses < 1)
+    return;
+
+  kkuint32  numPairs   = numClasses * (numClasses - 1) / 2;
+  probClassPairs.clear ();
+  if  (binaryParmsList == NULL)
+  {
+    for  (kkuint32 x = 0;  x < numPairs;  ++x)
+      probClassPairs.push_back (param.A);
+  }
+  else
+  {
+    for (kkuint32 class1IDX = 0;  class1IDX < (numClasses - 1);  ++class1IDX)
+    {
+      MLClassPtr       class1 = assignments.GetMLClass ((kkint16)class1IDX);
+      for (kkuint32 class2IDX = class1IDX + 1;  class2IDX < numClasses;  ++class2IDX)
+      {
+        MLClassPtr       class2 = assignments.GetMLClass ((kkint16)class2IDX);
+        BinaryClassParmsPtr  bcp = binaryParmsList->LookUp (class1, class2);
+        if  (bcp)
+          probClassPairs.push_back ((float)bcp->AParam ());
+        else
+          probClassPairs.push_back ((float)param.A);
+      }
+    }
+  }
+}  /* ProbClassPairsInitialize */
+
+
+
+
 void  SVMparam::A_Param (float  _A)
 {
   param.A = _A;
@@ -152,8 +191,6 @@ void  SVMparam::C_Param (double  _CC)
 {
   param.C = _CC;
 }
-
-
 
 
 
@@ -173,7 +210,6 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   KKStr valueUpper (value);
   valueUpper.Upper ();
 
-
   param.ProcessSvmParameter (parameter,value, valueNum, parameterUsed);
   if  (parameterUsed)
     return;
@@ -192,7 +228,7 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
     {
       _validFormat = false;
       log.Level (-1) << endl 
-        << "SVMparam::ParseCmdLine     *** ERROR ***" << endl
+        << "SVMparam::ParseCmdLineParameter     *** ERROR ***" << endl
         << "                Invalid -MT Parm[" << value << "]" << endl
         << endl;
     }
@@ -204,7 +240,7 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
     if  (selectionMethod == SelectionMethod_NULL)
     {
       log.Level (-1) << endl
-        << "SVMparam::ParseCmdLine    *** ERROR ***"  << endl
+        << "SVMparam::ParseCmdLineParameter    *** ERROR ***"  << endl
         << "            Invalid SelectionMethod (-SM)[" << value << "]." << endl
         << endl;
       _validFormat = false;
@@ -387,7 +423,6 @@ void  SVMparam::WriteXML (ostream&  o)  const
     << "</SelectedFeatures>"
     << endl;
 
-
   if  (binaryParmsList)
     binaryParmsList->WriteXML (o);
 
@@ -488,9 +523,6 @@ void  SVMparam::ReadXML (FILE*  i)
 
 
 
-
-
-
 void  SVMparam::Load (ClassAssignments& _assignments,
                       KKStr&            _fileName,
                       bool&             _successful
@@ -544,6 +576,21 @@ BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  cla
 
   return  twoClassComboParms;
 }  /* GetParamtersToUSeFor2ClassCombo */
+
+
+
+
+
+BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr       class1,
+                                                     MLClassPtr       class2
+                                                    )
+{
+  if  (binaryParmsList == NULL)
+    return NULL;
+  else
+    return binaryParmsList->LookUp (class1, class2);
+}  /* GetBinaryClassParms */
+
 
 
 

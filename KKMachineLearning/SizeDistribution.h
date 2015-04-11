@@ -54,7 +54,7 @@ namespace  KKMLL
 
 
   private:
-    MLClassListPtr   BuildImageClassList ()  const;
+    MLClassListPtr   BuildMLClassList ()  const;
 
     void  PrintCSVHeader      (ostream&  o)  const;
     void  PrintFormatedHeader (ostream&  o)  const;

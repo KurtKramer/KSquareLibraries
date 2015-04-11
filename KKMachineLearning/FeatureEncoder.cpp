@@ -7,13 +7,10 @@
 #include <math.h>
 #include <vector>
 #include <sstream>
+#include <string.h>
 #include <string>
 #include <iomanip>
-
-#include <string.h>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -43,8 +40,8 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
                                 FileDescPtr           _fileDesc,
                                 AttributeTypeVector&  _attributeTypes,
                                 VectorInt32&          _cardinalityTable,
-                                MLClassPtr         _class1,
-                                MLClassPtr         _class2,
+                                MLClassPtr            _class1,
+                                MLClassPtr            _class2,
                                 RunLog&               _log
                                ):
 
@@ -54,7 +51,6 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     class1                   (_class1),
     class2                   (_class2),
     codedNumOfFeatures       (0),
-    compressionMethod        (BRNull),
     destFeatureNums          (NULL),
     destFileDesc             (NULL),
     destWhatToDo             (NULL),
@@ -66,7 +62,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     selectedFeatures         (_fileDesc),
     srcFeatureNums           (NULL),
     svmParam                 (_svmParam),
-    xSpaceNeededPerImage     (0)
+    xSpaceNeededPerExample   (0)
     
 {
   log.Level (40) << "FeatureEncoder::FeatureEncoder" << endl;
@@ -80,7 +76,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
 
   encodingMethod    = svmParam.EncodingMethod ();
 
-  xSpaceNeededPerImage = 0;
+  xSpaceNeededPerExample = 0;
   srcFeatureNums   = new kkint32[numOfFeatures];
   cardinalityDest  = new kkint32[numOfFeatures];
   destFeatureNums  = new kkint32[numOfFeatures];
@@ -93,10 +89,10 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
   for  (x = 0;  x < numOfFeatures;  x++)
   {
     kkint32  srcFeatureNum = selectedFeatures[x];
-    srcFeatureNums    [x] = srcFeatureNum;
-    destFeatureNums   [x] = xSpaceNeededPerImage;
-    cardinalityDest   [x] = 1;
-    destWhatToDo      [x] = FeAsIs;
+    srcFeatureNums  [x] = srcFeatureNum;
+    destFeatureNums [x] = xSpaceNeededPerExample;
+    cardinalityDest [x] = 1;
+    destWhatToDo    [x] = FeAsIs;
 
     Attribute  srcAttribute = (fileDesc->Attributes ())[srcFeatureNum];
 
@@ -107,7 +103,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         {
           destWhatToDo    [x] = FeBinary;
           cardinalityDest [x] = cardinalityTable[srcFeatureNums [x]];
-          xSpaceNeededPerImage += cardinalityDest[x];
+          xSpaceNeededPerExample += cardinalityDest[x];
           numEncodedFeatures   += cardinalityDest[x];
           for  (kkint32 zed = 0;  zed < cardinalityDest[x];  zed++)
           {
@@ -117,7 +113,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         }
         else
         {
-          xSpaceNeededPerImage++;
+          xSpaceNeededPerExample++;
           numEncodedFeatures++;
           destWhatToDo [x] = FeAsIs;
           destFieldNames.push_back (srcAttribute.Name ());
@@ -126,7 +122,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
 
 
       case  ScaledEncoding:
-        xSpaceNeededPerImage++;
+        xSpaceNeededPerExample++;
         numEncodedFeatures++;
         if  ((attributeTypes[srcFeatureNums[x]] == NominalAttribute)  ||  (attributeTypes[srcFeatureNums[x]] == SymbolicAttribute))
           destWhatToDo [x] = FeScale;
@@ -137,9 +133,9 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         break;
 
 
-      case     NoEncoding:
+      case  NoEncoding:
       default:
-        xSpaceNeededPerImage++;
+        xSpaceNeededPerExample++;
         numEncodedFeatures++;
         destWhatToDo [x] = FeAsIs;
         destFieldNames.push_back (srcAttribute.Name ());
@@ -147,11 +143,11 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     }
   }
 
-  codedNumOfFeatures = xSpaceNeededPerImage;
+  codedNumOfFeatures = xSpaceNeededPerExample;
 
   destFileDesc = FileDesc::NewContinuousDataOnly (log, destFieldNames);
 
-  xSpaceNeededPerImage++;  // Add one more for the terminating (-1)
+  xSpaceNeededPerExample++;  // Add one more for the terminating (-1)
 }
 
 
@@ -294,12 +290,12 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 /**
  * @brief Converts a single example into the svm_problem format, using the method specified 
  * by the EncodingMethod() value returned by svmParam
- * @param[in] image That we're converting
+ * @param[in] example That we're converting
  */
 XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
 {
-  // XSpacePtr  xSpace  = (struct svm_node*)malloc (xSpaceNeededPerImage * sizeof (struct svm_node));
-  XSpacePtr  xSpace  = new svm_node[xSpaceNeededPerImage];
+  // XSpacePtr  xSpace  = (struct svm_node*)malloc (xSpaceNeededPerExample * sizeof (struct svm_node));
+  XSpacePtr  xSpace  = new svm_node[xSpaceNeededPerExample];
   kkint32  xSpaceUsed = 0;
   EncodeAExample (example, xSpace, xSpaceUsed);
   return  xSpace;
@@ -309,14 +305,14 @@ XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
 
 
 FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileDesc,
-                                                FeatureVectorPtr  src
-                                               )
+                                                  FeatureVectorPtr  src
+                                                 )
 {
-  FeatureVectorPtr  encodedImage = new FeatureVector (numEncodedFeatures);
-  encodedImage->MLClass     (src->MLClass     ());
-  encodedImage->PredictedClass (src->PredictedClass ());
-  //encodedImage->Version        (src->Version        ());
-  encodedImage->TrainWeight    (src->TrainWeight    ());
+  FeatureVectorPtr  encodedExample = new FeatureVector (numEncodedFeatures);
+  encodedExample->MLClass     (src->MLClass     ());
+  encodedExample->PredictedClass (src->PredictedClass ());
+  //encodedExample->Version        (src->Version        ());
+  encodedExample->TrainWeight    (src->TrainWeight    ());
 
   const float*  featureData = src->FeatureData ();
   kkint32  x;
@@ -330,7 +326,7 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
     {
     case  FeAsIs:
       {
-        encodedImage->AddFeatureData (y, featureVal);
+        encodedExample->AddFeatureData (y, featureVal);
       }
       break;
 
@@ -339,7 +335,7 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
         for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
           float  bVal = ((kkint32)featureVal == z);
-          encodedImage->AddFeatureData (y, bVal);
+          encodedExample->AddFeatureData (y, bVal);
           y++;
         }
       }
@@ -348,13 +344,13 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
 
     case  FeScale:
       {
-        encodedImage->AddFeatureData (y, (featureVal / (float)cardinalityDest[x]));
+        encodedExample->AddFeatureData (y, (featureVal / (float)cardinalityDest[x]));
       }
       break;
     }
   }
 
-  return  encodedImage;
+  return  encodedExample;
 }  /* EncodeAExample */
 
 
@@ -380,23 +376,23 @@ FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorList
   }
 
   return  encodedExamples;
-}  /* EncodeAllImages */
+}  /* EncodeAllExamples */
 
 
 
 
 /**
- * @brief Converts a single image into the svm_problem format, using the method specified 
+ * @brief Converts a single example into the svm_problem format, using the method specified 
  * by the EncodingMethod() value returned by svmParam
- * @param[in] The image That we're converting
+ * @param[in] The example That we're converting
  * @param[in] The row kkint32 he svm_problem structure that the converted data will be stored
  */
-void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
-                                    svm_node*         xSpace,
-                                    kkint32&          xSpaceUsed
-                                   )
+void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
+                                      svm_node*         xSpace,
+                                      kkint32&          xSpaceUsed
+                                     )
 {
-  const float*  featureData = image->FeatureData ();
+  const float*  featureData = example->FeatureData ();
   kkint32  x;
 
   xSpaceUsed = 0;
@@ -406,7 +402,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  image,
     float  featureVal = featureData [srcFeatureNums[x]];
     kkint32  y = destFeatureNums[x];
 
-    if  (y >= xSpaceNeededPerImage)
+    if  (y >= xSpaceNeededPerExample)
     {
       cerr << endl
            << endl
@@ -522,15 +518,15 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
 {
   FeatureVectorListPtr  compressedExamples    = NULL;
-  FeatureVectorListPtr  imagesToUseFoXSpace = NULL;
-  kkint32               xSpaceUsed = 0;
+  FeatureVectorListPtr  examplesToUseFoXSpace = NULL;
+  kkint32               xSpaceUsed            = 0;
 
   totalxSpaceUsed = 0;
 
-  imagesToUseFoXSpace = src;
+  examplesToUseFoXSpace = src;
 
-  kkint32  numOfExamples = imagesToUseFoXSpace->QueueSize ();
-  //kkint32  elements      = numOfExamples * xSpaceNeededPerImage;
+  kkint32  numOfExamples = examplesToUseFoXSpace->QueueSize ();
+  //kkint32  elements      = numOfExamples * xSpaceNeededPerExample;
 
   prob.l     = numOfExamples;
   prob.y     = (double*)malloc  (prob.l * sizeof (double));
@@ -538,7 +534,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
   prob.index = new kkint32[prob.l];
   prob.exampleNames.clear ();
 
-  kkint32  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (imagesToUseFoXSpace);
+  kkint32  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (examplesToUseFoXSpace);
 
   kkint32  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * sizeof (struct svm_node);  // I added '10' to elements because I am paranoid
 
@@ -559,12 +555,12 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
   prob.W = NULL;
 
   kkint32 i = 0;
+ 
+  FeatureVectorPtr  example      = NULL;
+  MLClassPtr        lastMlClass  = NULL;
+  kkint16           lastClassNum = -1;
 
-  FeatureVectorPtr  image          = NULL;
-  MLClassPtr        lastImageClass = NULL;
-  kkint16           lastClassNum   = -1;
-
-  kkint32  bytesOfxSpacePerImage = xSpaceNeededPerImage * sizeof (struct svm_node);
+  kkint32  bytesOfxSpacePerExample = xSpaceNeededPerExample * sizeof (struct svm_node);
 
   for (i = 0;  i < prob.l;  i++)
   {
@@ -575,36 +571,49 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
         << endl;
     }
 
-    image = imagesToUseFoXSpace->IdxToPtr (i);
+    example = examplesToUseFoXSpace->IdxToPtr (i);
 
-    if  (image->MLClass () != lastImageClass)
+    if  (example->MLClass () != lastExampleClass)
     {
-      lastImageClass = image->MLClass ();
-      lastClassNum   = assignments.GetNumForClass (lastImageClass);
+      lastMlClass  = example->MLClass ();
+      lastClassNum = assignments.GetNumForClass (lastMlClass);
     }
 
     prob.y[i]     = lastClassNum;
     prob.index[i] = i;
-    prob.exampleNames.push_back (osGetRootName (image->ImageFileName ()));
+    prob.exampleNames.push_back (osGetRootName (example->ExampleFileName ()));
+
+    if  (prob.W)
+    {
+      prob.W[i] = example->TrainWeight () * svmParam.C_Param ();
+      if  (example->TrainWeight () <= 0.0f)
+      {
+        log.Level (-1) << endl 
+                       << "FeatureEncoder::EncodeIntoSparseMatrix    ***ERROR***   Example[" << example->ExampleFileName () << "]" << endl
+                       << "      has a TrainWeight value of 0 or less defaulting to 1.0" << endl
+                       << endl;
+        prob.W[i] = 1.0 * svmParam.C_Param ();
+      }
+    }
 
     if  (xSpace == NULL)
     {
-      struct svm_node*  xSpaceThisImage = (struct svm_node*) malloc (bytesOfxSpacePerImage);
-      prob.x[i] = xSpaceThisImage;
-      EncodeAExample (image, prob.x[i], xSpaceUsed);
-      if  (xSpaceUsed < xSpaceNeededPerImage)
+      struct svm_node*  xSpaceThisExample = (struct svm_node*) malloc (bytesOfxSpacePerExample);
+      prob.x[i] = xSpaceThisExample;
+      EncodeAExample (example, prob.x[i], xSpaceUsed);
+      if  (xSpaceUsed < xSpaceNeededPerExample)
       {
         kkint32  bytesNeededForThisExample = xSpaceUsed * sizeof (struct svm_node);
-        struct svm_node*  smallerXSpaceThisImage = (struct svm_node*) malloc (bytesNeededForThisExample);
-        memcpy (smallerXSpaceThisImage, xSpaceThisImage, bytesNeededForThisExample);
-        free  (xSpaceThisImage);
-        prob.x[i] = smallerXSpaceThisImage;
+        struct svm_node*  smallerXSpaceThisExample = (struct svm_node*) malloc (bytesNeededForThisExample);
+        memcpy (smallerXSpaceThisExample, xSpaceThisExample, bytesNeededForThisExample);
+        free  (xSpaceThisExample);
+        prob.x[i] = smallerXSpaceThisExample;
       }
     }
     else
     {
       prob.x[i] = &xSpace[totalxSpaceUsed];
-      EncodeAExample (image, prob.x[i], xSpaceUsed);
+      EncodeAExample (example, prob.x[i], xSpaceUsed);
     }
     totalxSpaceUsed += xSpaceUsed;
   }
@@ -612,6 +621,28 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
   delete  compressedExamples;
   return;
 }  /* Compress */
+
+
+
+
+
+/**
+ * @brief  Left over from BitReduction days; reoved all code except that which processed the NO bit reduction option.
+ * @param[in] examples_list The list of examples you want to attempt to reduce
+ * @param[out] compressed_examples_list The reduced list of examples
+ */
+void  FeatureEncoder::CompressExamples (FeatureVectorListPtr    srcExamples,
+                                        FeatureVectorListPtr    compressedExamples,
+                                        ClassAssignments&       assignments
+                                       )
+{
+  double time_before, time_after;
+  time_before = osGetSystemTimeUsed ();
+  compressedExamples->AddQueue (*srcExamples);
+  time_after = osGetSystemTimeUsed ();
+  compressedExamples->Owner (false);
+  return stats;
+}  /* CompressExamples */
 
 
 
@@ -641,6 +672,7 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
     encodedFeatureVectorList->PushOnBack (encodedFeatureVector);
 
     delete  encodedData;
+    encodedData = NULL;
   }
 
   return  encodedFeatureVectorList;

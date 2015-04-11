@@ -2,15 +2,13 @@
 #define  _SVMPARAM_
 
 
-
-
-#include  "ClassAssignments.h"
-#include  "FeatureNumList.h"
-#include  "MLClass.h"
-#include  "FileDesc.h"
-#include  "RunLog.h"
-#include  "KKStr.h"
-#include  "svm.h"
+#include "ClassAssignments.h"
+#include "FeatureNumList.h"
+#include "FileDesc.h"
+#include "KKStr.h"
+#include "MLClass.h"
+#include "RunLog.h"
+#include "svm.h"
 using namespace SVM233;
 
 
@@ -36,14 +34,6 @@ namespace KKMLL
 
   typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  SVM_EncodingMethod;
 
-  typedef  enum  {BRNull,
-                  BRnoCompression, 
-                  BRcompressionPost, 
-                  BRcompressionPre, 
-                  BRunBalancedVariance,
-                  BRunBalancedSpecified    // Meaning we will tell you which features are unbalanced.
-                 }       
-                    SVM_CompressionMethod;
 
   typedef  enum  {KT_Linear, KT_Polynomial, KT_RBF, KT_NULL}                  SVM_KernalType;
 
@@ -74,7 +64,6 @@ namespace KKMLL
     SVMparam  (FileDescPtr  _fileDesc,
                RunLog&      _log
               );
-
 
     SVMparam  (const SVMparam&  _svmParam);
 
@@ -109,6 +98,12 @@ namespace KKMLL
     float   AvgMumOfFeatures ();
     float   AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const;
 
+
+    /** If binary class parms don't exist will return NULL. */
+    BinaryClassParmsPtr   GetBinaryClassParms (MLClassPtr  class1,
+                                               MLClassPtr  class2
+                                              );
+
     BinaryClassParmsPtr  GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
                                                           MLClassPtr  class2
                                                          );
@@ -137,6 +132,7 @@ namespace KKMLL
     double                   C_Param  (MLClassPtr  class1,
                                        MLClassPtr  class2
                                       )  const;
+
     SVM_EncodingMethod       EncodingMethod             () const {return encodingMethod;}
 
     float                    FeatureCountNet            () const;
@@ -152,6 +148,8 @@ namespace KKMLL
     kkint32                  NumOfFeaturesAfterEncoding () const;
 
     const svm_parameter&     Param                      () const {return param;}
+
+    const VectorFloat&       ProbClassPairs             () const {return probClassPairs;}
 
     float                    SamplingRate               () const {return samplingRate;}
 
@@ -209,6 +207,9 @@ namespace KKMLL
                                  bool&         _validFormat
                                 );
 
+    void  ProbClassPairsInitialize (const ClassAssignments&  assignments);
+
+
 
   private:
     //void  DecodeParamStr (KKStr&         _paramStr,
@@ -232,6 +233,8 @@ namespace KKMLL
     SVM_MachineType          machineType;
 
     svm_parameter            param;             // From SVMlib2
+
+    VectorFloat              probClassPairs;   
 
     float                    samplingRate;      // USed with BoostSVM
 

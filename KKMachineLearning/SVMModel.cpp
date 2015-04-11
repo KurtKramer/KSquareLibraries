@@ -14,8 +14,8 @@
 using namespace  std;
 
 
-#include "KKException.h"
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -23,6 +23,7 @@ using namespace  KKB;
 
 
 #include "SVMModel.h"
+#include "MLLTypes.h"
 #include "BinaryClassParms.h"
 #include "FeatureEncoder.h"
 #include "FeatureNumList.h"
@@ -111,7 +112,7 @@ double  AdjProb (double  prob)
 
 void  SVMModel::GreaterVotes (bool     useProbability,
                               kkint32  numClasses,
-                              kkint32*   votes,
+                              kkint32* votes,
                               kkint32& numOfWinners,
                               double*  probabilities,
                               kkint32& pred1Idx,
@@ -370,7 +371,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   catch  (const exception& e)
   {
     log.Level (-1) << endl
-      << "SVMModel  ***ERROR***   Exception occured constructing model." << endl
+      << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << e.what () << endl
       << endl;
     validModel = false;
@@ -378,7 +379,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   catch  (...)
   {
     log.Level (-1) << endl
-      << "SVMModel  ***ERROR***   Exception occured constructing model." << endl
+      << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << endl;
     validModel = false;
   }
@@ -397,7 +398,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 
 SVMModel::~SVMModel ()
 {
-  log.Level (20) << "SVMModel::~SVMModel   Srarting Destructor for Model[" << rootFileName << "]" << endl;
+  log.Level (20) << "SVMModel::~SVMModel   Starting Destructor for Model[" << rootFileName << "]" << endl;
 
   kkint32  x;
 
@@ -529,6 +530,7 @@ kkint32  SVMModel::MemoryConsumedEstimated ()  const
     memoryConsumedEstimated +=  numOfModels * sizeof (ModelPtr);
     for  (kkint32 x = 0;  x < numOfModels;  ++x)
     {
+      if  (models[x])
       if  (models[x][0])
        memoryConsumedEstimated += models[x][0]->MemoryConsumedEstimated ();
     }
@@ -538,7 +540,10 @@ kkint32  SVMModel::MemoryConsumedEstimated ()  const
   {
     memoryConsumedEstimated += numOfModels * sizeof (ClassAssignmentsPtr);
     for  (kkint32 x = 0;  x < numOfModels;  ++x)
-      memoryConsumedEstimated += oneVsAllClassAssignments[x]->MemoryConsumedEstimated ();
+    {
+      if  (oneVsAllClassAssignments[x])
+        memoryConsumedEstimated += oneVsAllClassAssignments[x]->MemoryConsumedEstimated ();
+    }
   }
 
   if  (predictXSpace)
@@ -582,13 +587,13 @@ void  SVMModel::BuildClassIdxTable ()
 
 
 
-void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&     examples,
-                                      struct svm_problem&    prob,
-                                      XSpacePtr&             xSpace,
-                                      const MLClassList&  classesThisAssignment,
-                                      FeatureEncoderPtr      featureEncoder,
-                                      MLClassList&        allClasses,
-                                      ClassAssignmentsPtr&   classAssignments
+void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
+                                      struct svm_problem&   prob,
+                                      XSpacePtr&            xSpace,
+                                      const MLClassList&    classesThisAssignment,
+                                      FeatureEncoderPtr     featureEncoder,
+                                      MLClassList&          allClasses,
+                                      ClassAssignmentsPtr&  classAssignments
                                      )
 { 
   log.Level (20) << "SVMModel::BuildProblemOneVsAll" << endl;
@@ -642,8 +647,8 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
                                           FeatureEncoderPtr&    _encoder,
                                           struct svm_problem&   prob, 
                                           XSpacePtr&            xSpace, 
-                                          MLClassPtr         class1, 
-                                          MLClassPtr         class2
+                                          MLClassPtr            class1, 
+                                          MLClassPtr            class2
                                          )
 { 
   log.Level (10) << "SVMModel::BuildProblemBinaryCombos   Class1[" << class1->Name () << "]  Class2[" << class2->Name () << "]" << endl;
@@ -1119,7 +1124,7 @@ void  SVMModel::ReadOneVsAll (istream&  i)
     if  (field == "</ONEVSALL>")
       break;
 
-    if  (field == "<ONEVSONEENTRY>")
+    if  (field == "<ONEVSALLENTRY>")
     {
       ReadOneVsAllEntry (i, modelIDX);
     }
@@ -1139,10 +1144,10 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
   char  buff[20480];
   KKStr  field;
 
-  kkint32              assignmentNum = -1;
-  MLClassPtr        classForOneSide = NULL;
+  kkint32              assignmentNum   = -1;
+  MLClassPtr           classForOneSide = NULL;
   KKStr                modelFileName;
-  ClassAssignmentsPtr  assignment       = NULL;
+  ClassAssignmentsPtr  assignment      = NULL;
 
   while  (i.getline (buff, sizeof (buff)))
   {
@@ -1396,21 +1401,33 @@ double   SVMModel::DistanceFromDecisionBoundary (FeatureVectorPtr  example,
 
 
 
+void  SVMModel::InializeProbClassPairs ()
+{
+  if  (svmParam.ProbClassPairs ().size () < 1)
+  {
+    svmParam.ProbClassPairsInitialize (assignments);
+  }
+}  /* InializeProbClassPairs */
+
+
+
 
 void   SVMModel::Predict (FeatureVectorPtr  example,
-                          MLClassPtr     knownClass,
-                          MLClassPtr&    predClass,
-                          MLClassPtr&    predClass2,
+                          MLClassPtr        knownClass,
+                          MLClassPtr&       predClass1,
+                          MLClassPtr&       predClass2,
                           kkint32&          predClass1Votes,
                           kkint32&          predClass2Votes,
                           double&           probOfKnownClass,
-                          double&           probOfPredClass,
-                          double&           probOfPredClass2,
+                          double&           predClass1Prob,
+                          double&           predClass2Prob,
                           kkint32&          numOfWinners,
                           bool&             knownClassOneOfTheWinners,
                           double&           breakTie
                          )
 {
+  InializeProbClassPairs ();
+
   breakTie = 0.0f;   // expirements.
 
   knownClassOneOfTheWinners = false;
@@ -1421,9 +1438,9 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
   predClass1Votes = -1;
   predClass2Votes = -1;
 
-  probOfKnownClass  = 0.0;
-  probOfPredClass   = 0.0;
-  probOfPredClass2  = -1.0f;
+  probOfKnownClass = 0.0;
+  predClass1Prob   = 0.0;
+  predClass2Prob   = -1.0f;
 
   numOfWinners = 0;
 
@@ -1435,8 +1452,8 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
                      predClass,
                      predClass2,
                      probOfKnownClass,
-                     probOfPredClass,
-                     probOfPredClass2,
+                     predClass1Prob,
+                     predClass2Prob,
                      numOfWinners,
                      knownClassOneOfTheWinners,
                      breakTie
@@ -1469,8 +1486,8 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
                      prediction2,
                      predClass1Votes,
                      predClass2Votes,
-                     probOfPredClass,
-                     probOfPredClass2,
+                     predClass1Prob,
+                     predClass2Prob,
                      probOfKnownClass,
                      winners,
                      crossClassProbTable,
@@ -1503,8 +1520,8 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
                            predClass1Votes,
                            predClass2Votes,
                            probOfKnownClass,
-                           probOfPredClass,
-                           probOfPredClass2,
+                           predClass1Prob,
+                           predClass2Prob,
                            breakTie,
                            numOfWinners,
                            knownClassOneOfTheWinners
@@ -1523,27 +1540,44 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
 
 
 
+void  SVMModel::PredictRaw (FeatureVectorPtr example,
+                            MLClassPtr&      predClass,
+                            double&          dist
+                           )
+{
+  InializeProbClassPairs ();
+
+  dist = 0.0;
+  double  label = 0.0;
+  EncodeExample (example, predictXSpace);
+  SvmPredictRaw (models[0], predictXSpace, label, dist);
+  predClass  = assignments.GetMLClass ((kkint16)label);
+  return;
+}  /* PredictRaw */
 
 
-void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
+
+
+void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
                                   MLClassPtr   knownClass,
                                   MLClassPtr&  predClass,  
                                   MLClassPtr&  predClass2,  
-                                  double&         probOfKnownClass,
-                                  double&         probOfPredClass,
-                                  double&         probOfPredClass2,
-                                  kkint32&        numOfWinners,
-                                  bool&           knownClassOneOfTheWinners,
-                                  double&         breakTie
+                                  double&      probOfKnownClass,
+                                  double&      predClass1Prob,
+                                  double&      predClass2Prob,
+                                  kkint32&     numOfWinners,
+                                  bool&        knownClassOneOfTheWinners,
+                                  double&      breakTie
                                  )
-
 {
-  predClass  = NULL;
+  InializeProbClassPairs ();
+
+  predClass1 = NULL;
   predClass2 = NULL;
   knownClassOneOfTheWinners = false;
 
   probOfKnownClass = 0.0;
-  probOfPredClass  = 0.0;
+  predClass1Prob   = 0.0;
 
   vector<kkint32>   winningClasses;
 
@@ -1565,7 +1599,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
 
   kkuint32  assignmentIDX;
 
-  for  (assignmentIDX = 0;  assignmentIDX < oneVsAllAssignment.size ();  assignmentIDX++)
+  for  (assignmentIDX = 0;  assignmentIDX < oneVsAllAssignment.size ();  ++assignmentIDX)
   {
     kkint16  assignmentNum = oneVsAllAssignment[assignmentIDX];
 
@@ -1595,7 +1629,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
     vector<kkint32>  winners;
 
     double*  tempProbabilities = new double[numOfClasses + 2];  // kk 2004-12-22     // I am addin 2 as a deperate measure to deal with a memory corruption problem   kak
-    kkint32*   tempVotes         = new kkint32[numOfClasses + 2];
+    kkint32* tempVotes         = new kkint32[numOfClasses + 2];
 
     kkint32  predClass1Votes = -1;
     kkint32  predClass2Votes = -1;
@@ -1608,7 +1642,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
                      predClass1Votes,
                      predClass2Votes,
                      knownClassNum,    
-                     predClassNum,
+                     predClassNum1,
                      predClassNum2,
                      predictedClassProbability,
                      predictedClassProbability2,
@@ -1620,7 +1654,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
 
     delete[]  tempVotes;
     tempVotes = NULL;
-    delete[]  tempProbabilities;  // kk 2004-12-22
+    delete[]  tempProbabilities;
     tempProbabilities = NULL;
 
     if  (predClassNum == 0)
@@ -1679,7 +1713,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
 
   else if  (winningClasses.size () == 1)
   {
-    assignmentIDXthatWon = winningClasses[0];
+    assignmentIDXthatWon      = winningClasses[0];
     knownClassOneOfTheWinners = (assignmentIDXthatWon == knownAssignmentIDX);
     assignmentIDXsecond       = largestLosingProbabilityIDX;
   }
@@ -1700,11 +1734,11 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
     }
   }
 
-  predClass  = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXthatWon]);
+  predClass1 = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXthatWon]);
   predClass2 = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXsecond]);
 
-  probOfPredClass   = (probabilities [oneVsAllAssignment[assignmentIDXthatWon]]);
-  probOfKnownClass  = (probabilities [oneVsAllAssignment[knownAssignmentIDX]]);
+  predClass1Prob   = (probabilities [oneVsAllAssignment[assignmentIDXthatWon]]);
+  probOfKnownClass = (probabilities [oneVsAllAssignment[knownAssignmentIDX]]);
 
   delete[]  probabilities;      
   probabilities = NULL;
@@ -1718,18 +1752,19 @@ void   SVMModel::PredictOneVsAll (XSpacePtr       xSpace,
 
 MLClassPtr  SVMModel::Predict (FeatureVectorPtr  example)
 {
-  double         breakTie         = -1.0f;
-  bool           knownClassOneOfTheWinners = false;
-  kkint32        numOfWinners     = -1;
+  double      breakTie         = -1.0f;
+  bool        knownClassOneOfTheWinners = false;
+  kkint32     numOfWinners     = -1;
   MLClassPtr  pred1            = NULL;
   MLClassPtr  pred2            = NULL;
-  double         probOfPredClass1 = -1.0;
-  double         probOfPredClass2 = -1.0;
-  double         probOfKnownClass = -1.0;
+  double      predClass1Prob   = -1.0;
+  double      predClass2Prob   = -1.0;
+  double      probOfKnownClass = -1.0;
 
-  kkint32        predClass1Votes = -1;
-  kkint32        predClass2Votes = -1;
+  kkint32     predClass1Votes = -1;
+  kkint32     predClass2Votes = -1;
   
+  InializeProbClassPairs ();
 
   Predict (example, 
            NULL,
@@ -1738,8 +1773,8 @@ MLClassPtr  SVMModel::Predict (FeatureVectorPtr  example)
            predClass1Votes,
            predClass2Votes,
            probOfKnownClass,
-           probOfPredClass1,
-           probOfPredClass2,
+           predClass1Prob,
+           predClass2Prob,
            numOfWinners,
            knownClassOneOfTheWinners,
            breakTie
@@ -1753,14 +1788,14 @@ MLClassPtr  SVMModel::Predict (FeatureVectorPtr  example)
 
 
 void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
-                                       MLClassPtr     knownClass,
-                                       MLClassPtr&    predClass1,
-                                       MLClassPtr&    predClass2,
+                                       MLClassPtr        knownClass,
+                                       MLClassPtr&       predClass1,
+                                       MLClassPtr&       predClass2,
                                        kkint32&          predClass1Votes,
                                        kkint32&          predClass2Votes,
                                        double&           probOfKnownClass,
-                                       double&           probOfPredClass1,
-                                       double&           probOfPredClass2,
+                                       double&           predClass1Prob,
+                                       double&           predClass2Prob,
                                        double&           breakTie,
                                        kkint32&          numOfWinners,
                                        bool&             knownClassOneOfTheWinners
@@ -1771,11 +1806,11 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
   predClass1        = NULL;
   predClass2        = NULL;
   probOfKnownClass  = -1.0f;
-  probOfPredClass1  = -1.0f;
-  probOfPredClass2  = -1.0f;
+  predClass1Prob  = -1.0f;
+  predClass2Prob  = -1.0f;
 
-  probOfPredClass1 = 0;
-  probOfPredClass2 = 0;
+  predClass1Prob = 0.0;
+  predClass2Prob = 0.0;
 
   knownClassOneOfTheWinners = false;
 
@@ -1802,6 +1837,7 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
      
     for  (kkint32  class2IDX = (class1IDX + 1);  class2IDX < numOfClasses;  class2IDX++)
     {
+      MLClassPtr           class2 = classIdxTable [class2IDX];
       BinaryClassParmsPtr  thisComboPrameters = binaryParameters[modelIDX];
 
       kkint32  xSpaceUsed;
@@ -1817,6 +1853,7 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
       binaryFeatureEncoders[modelIDX]->EncodeAExample (example, predictXSpace, xSpaceUsed);
 
       double  distance = 0.0;
+      double  margin   = 0.0;
 
       svm_predictTwoClasses (models[modelIDX][0], predictXSpace, distance, -1);
       probability = (1.0 / (1.0 + exp (-1.0 * (thisComboPrameters->Param ().A) * distance)));
@@ -1860,23 +1897,23 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
 
   if  (predClass1IDX >= 0)
   {
-    predClass1        = classIdxTable [predClass1IDX];
-    predClass1Votes   = votes         [predClass1IDX];
-    probOfPredClass1  = probabilities [predClass1IDX];
+    predClass1      = classIdxTable [predClass1IDX];
+    predClass1Votes = votes         [predClass1IDX];
+    predClass1Prob  = probabilities [predClass1IDX];
   }
 
   if  (predClass2IDX >= 0)
   {
-    predClass2        = classIdxTable [predClass2IDX];
-    predClass2Votes   = votes         [predClass2IDX];
-    probOfPredClass2  = probabilities [predClass2IDX];
+    predClass2      = classIdxTable [predClass2IDX];
+    predClass2Votes = votes         [predClass2IDX];
+    predClass2Prob  = probabilities [predClass2IDX];
   }
 
   if  (knownClassIDX >= 0)
     probOfKnownClass = probabilities[knownClassIDX];
 
 
-  breakTie = fabs (probOfPredClass1 - probOfPredClass2);
+  breakTie = fabs (predClass1Prob - predClass2Prob);
   knownClassOneOfTheWinners = (predClass1IDX == knownClassIDX);
 
   return;
@@ -1942,18 +1979,26 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
                                       double*                _probabilities
                                      )
 {
-  if  (_mlClasses.size () != assignments.size ())
-  {
-    log.Level (-1) << endl
-                   << endl
-                   << "SVMModel::ProbabilitiesByClass    *** ERROR ***" << endl
-                   << "                 _mlClasses[" << (kkint32)_mlClasses.QueueSize () << "] and "
-                   <<                   "assignments["  << (kkint32)assignments.size ()  << "]." 
-                   << "                 ar not the same length."
-                   << endl
-                   << endl;
-    return;
-  }
+  // KAK 2012-08-02  Decided that since the code will only populate the entries in '_votes'
+  //                 and '_probabilities' based off  the '_mlClasses'  data structure
+  //                 and if a predictedClass is not in '_mlClasses' then it will print 
+  //                 a warning to log file and not corrupt data.  Only problem is that iof 
+  //                 this happens then the sum of '_probabilities' will be less than 1.0.
+  //
+  //if  (_mlClasses.size () != assignments.size ())
+  //{
+  //  log.Level (-1) << endl
+  //                 << endl
+  //                 << "SVMModel::ProbabilitiesByClass    *** ERROR ***" << endl
+  //                 << "                 _mlClasses[" << _mlClasses.QueueSize () << "] and "
+  //                 <<                   "assignments["   << (kkint32)assignments.size ()  << "]." 
+  //                 << "                 ar not the same length."
+  //                 << endl
+  //                 << endl;
+  //  return;
+  //}
+
+  InializeProbClassPairs ();
 
   if  (svmParam.MachineType () == BinaryCombos)
   {
@@ -1961,19 +2006,18 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
     return;
   }
 
+  kkint32  predClass1Votes         = -1;
+  kkint32  predClass2Votes         = -1;
+  double   predClass1Prob          = 0.0;
+  double   predClass2Prob          = 0.0;
+  double   probOfKnownClass        = 0.0;
+  double   smallestDistOfPredClass = 0.0;
 
-  kkint32   predClass1Votes   = -1;
-  kkint32   predClass2Votes   = -1;
-  double    probOfPredClass   = 0.0;
-  double    probOfPredClass2  = 0.0;
-  double    probOfKnownClass  = 0.0;
-
-  double    breakTie          = 0.0f;
+  double   breakTie                = 0.0f;
 
   MLClassPtr  predictedClass  = NULL;
-  XSpacePtr      xSpace          = NULL;
-  kkint32        x, y;
-
+  XSpacePtr   xSpace          = NULL;
+  kkint32     x, y;
 
   xSpace = featureEncoder->EncodeAExample (example);
 
@@ -2000,8 +2044,8 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
                    prediction2,
                    predClass1Votes,
                    predClass2Votes,
-                   probOfPredClass,
-                   probOfPredClass2,
+                   predClass1Prob,
+                   predClass2Prob,
                    probOfKnownClass,
                    winners,
                    crossClassProbTable,
@@ -2049,6 +2093,8 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
                                                     double*                _probabilities
                                                    )
 {
+  InializeProbClassPairs ();
+
   kkint32   classIDX;
 
   double  probability = -1.0;
@@ -2132,8 +2178,21 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
     for  (idx = _mlClasses.begin ();  idx != _mlClasses.end ();  idx++)
     {
       kkint32  ourIdx = assignments.GetNumForClass (*idx);
-      _votes        [callersIdx] = votes        [ourIdx];
-      _probabilities[callersIdx] = probabilities[ourIdx] / totProbability;
+      if  ((ourIdx < 0)  ||  (ourIdx >= numOfClasses))
+      {
+        // For what ever reason the MLClass instance in '_mlClasses' provoded by caller
+        // is not one of the classes that this model was built for.
+        log.Level (-1) << endl 
+          << "SVMModel::PredictProbabilitiesByBinaryCombos   ***WARNING***    MLClass[" << (*idx)->Name () << "] is not one of the classes in SVMModel."  << endl
+          << endl;
+        _votes        [callersIdx] = 0;
+        _probabilities[callersIdx] = 0.0;
+      }
+      else
+      {
+        _votes        [callersIdx] = votes        [ourIdx];
+        _probabilities[callersIdx] = probabilities[ourIdx] / totProbability;
+      }
       callersIdx++;
     }
   }
@@ -2178,7 +2237,7 @@ vector<KKStr>  SVMModel::SupportVectorNames (MLClassPtr     c1,
   {
     // Binary Combo not found.
     log.Level (-1) << endl << endl
-                   << "SVMModel::FindWorstSupportVectors   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
+                   << "SVMModel::SupportVectorNames   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
                    << endl;
     return results;
   }
@@ -2232,8 +2291,8 @@ vector<KKStr>  SVMModel::SupportVectorNames () const
 
 vector<ProbNamePair>  SVMModel::FindWorstSupportVectors (FeatureVectorPtr  example,
                                                          kkint32           numToFind,
-                                                         MLClassPtr     c1,
-                                                         MLClassPtr     c2
+                                                         MLClassPtr        c1,
+                                                         MLClassPtr        c2
                                                         )
 {
   vector<ProbNamePair>  results;
@@ -2424,6 +2483,8 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
     KKStr  svName = models[modelIDX][0]->SupportVectorName (svIDX);
     candidates.push_back (ProbNamePair (svName, deltaProb));
 
+    subSetModel->Dispose ();
+
     delete  subSetModel;  subSetModel = NULL;
     delete  subSetProb;   subSetProb = NULL;
   }
@@ -2485,8 +2546,8 @@ void SVMModel::CalculatePredictXSpaceNeeded ()
 
 
 kkint32  SVMModel::EncodeExample (FeatureVectorPtr  example,
-                              svm_node*         row
-                             )
+                                  svm_node*         row
+                                 )
 {
   if  (!featureEncoder)
   {
@@ -2551,9 +2612,6 @@ void SVMModel::ConstructOneVsOneModel (FeatureVectorListPtr  examples,
   models[0] = SvmTrainModel (svmParam.Param (), prob);
   double  endTrainingTime = osGetSystemTimeUsed ();
   trainingTime = endTrainingTime - startTrainingTime;
-
-  //delete  compressedImageList;  compressedImageList = NULL;
-  //imagesForBuildProblem = NULL;
 
   // free the memory for the svm_problem
   delete[] prob.index;  prob.index = NULL;
@@ -2717,7 +2775,7 @@ void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr examples)
                                 class2
                                );
 
-      maxXSpaceNeededPerExample = Max (maxXSpaceNeededPerExample, binaryFeatureEncoders [modelIDX]->XSpaceNeededPerImage ());
+      maxXSpaceNeededPerExample = Max (maxXSpaceNeededPerExample, binaryFeatureEncoders [modelIDX]->XSpaceNeededPerExample ());
 
       // train the model
       double  startTrainingTime = osGetSystemTimeUsed ();
@@ -2742,7 +2800,7 @@ void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr examples)
       }
       */
 
-      log.Level (10) << "Support Vectors[" << models[modelIDX][0]->l << "]" << endl;
+      // log.Level (10) << "Support Vectors[" << models[modelIDX][0]->l << "]" << endl;
 
       //osWaitForEnter ();
 
@@ -2791,8 +2849,8 @@ FeatureVectorListPtr*   SVMModel::BreakDownExamplesByClass (FeatureVectorListPtr
   for  (x = 0;  x < numOfClasses;  x++)
     examplesByClass[x] = new FeatureVectorList (fileDesc, false, log);
 
-  MLClassPtr  lastImageClass = NULL;
-  kkint32          classIdx       = 0;
+  MLClassPtr  lastMLClass = NULL;
+  kkint32     classIdx     = 0;
 
   FeatureVectorList::iterator  idx;
 
@@ -2800,10 +2858,10 @@ FeatureVectorListPtr*   SVMModel::BreakDownExamplesByClass (FeatureVectorListPtr
   {
     FeatureVectorPtr example = *idx;
     
-    if  (lastImageClass != example->MLClass ())
+    if  (lastMLClass != example->MLClass ())
     {
-      lastImageClass = example->MLClass ();
-      classIdx       = assignments.GetNumForClass (lastImageClass);
+      lastMLClass = example->MLClass ();
+      classIdx    = assignments.GetNumForClass (lastMLClass);
     }
 
     examplesByClass[classIdx]->PushOnBack (example);

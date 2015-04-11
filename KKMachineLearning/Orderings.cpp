@@ -24,7 +24,6 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-
 Orderings::Orderings (FeatureVectorListPtr  _data,
                       kkuint32              _numOfOrderings,
                       kkuint32              _numOfFolds
@@ -32,7 +31,7 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   log            (_data->Log ()),
   numOfFolds     (_numOfFolds),
   numOfOrderings (_numOfOrderings),
@@ -51,13 +50,13 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
 
 Orderings::Orderings (const FeatureVectorListPtr  _data,
                       const KKStr&                _indexFileName,
-                      kkint32                       _numOfOrderings,
-                      kkint32                       _numOfFolds
+                      kkuint32                    _numOfOrderings,
+                      kkuint32                    _numOfFolds
                      ):
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   indexFileName  (_indexFileName),
   log            (_data->Log ()),
   numOfFolds     (_numOfFolds),
@@ -81,7 +80,7 @@ Orderings::Orderings (FeatureVectorListPtr  _data):
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   indexFileName  (),
   log            (_data->Log ()),
   numOfFolds     (0),

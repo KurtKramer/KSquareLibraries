@@ -1,14 +1,19 @@
 #ifndef _SVM2_
 #define _SVM2_
 
+#include <string.h>
+#include <string>
+
+
 #define LIBSVM_VERSION 289
 
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
 #include "KKStr.h"
 
-using namespace KKMLL;
+#include "MLLTypes.h"
+#include "FeatureNumList.h"
+#include "FeatureVector.h"
 
+using namespace KKMLL;
 
 
 /**
@@ -56,10 +61,10 @@ namespace  SVM289_MFS
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}
 
-    kkint32             numTrainExamples;
-    FeatureNumList      selFeatures;
-    FeatureVectorList   x;
-    double*             y;
+    kkint32           numTrainExamples;
+    FeatureNumList    selFeatures;
+    FeatureVectorList x;
+    double*           y;
   };  /* svm_problem */
 
 
@@ -315,7 +320,7 @@ namespace  SVM289_MFS
   class  SVR_Q;
   struct decision_function;
 
-}  /* Svm289 */
+}  /* SVM289_MFS */
 
 
 #endif /* _LIBSVM_H */

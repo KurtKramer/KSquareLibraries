@@ -64,8 +64,8 @@ namespace  KKMLL
                                    kkint32&          predClass1Votes,
                                    kkint32&          predClass2Votes,
                                    double&           probOfKnownClass,
-                                   double&           probOfPredClass1,
-                                   double&           probOfPredClass2,
+                                   double&           predClass1Prob,
+                                   double&           predClass2Prob,
                                    kkint32&          numOfWinners,
                                    bool&             knownClassOneOfTheWinners,
                                    double&           breakTie

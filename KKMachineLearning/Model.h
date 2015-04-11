@@ -272,8 +272,8 @@ namespace KKMLL
                          kkint32&          predClass1Votes,
                          kkint32&          predClass2Votes,
                          double&           probOfKnownClass,
-                         double&           probOfPredClass1,
-                         double&           probOfPredClass2,
+                         double&           predClass1Prob,
+                         double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
                          double&           breakTie
@@ -318,9 +318,9 @@ namespace KKMLL
      *            returned in probabilities[x].
      */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities
                                ) = 0;
   
 
@@ -332,7 +332,7 @@ namespace KKMLL
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**           crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                  double**      crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                  );
 
     /**

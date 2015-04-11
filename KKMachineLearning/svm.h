@@ -13,9 +13,9 @@
 
 /**
  *@namespace  SVM233   
- *@brief Namespce used to wrap implementation of libSVM version 2.33.
- *@details  There is more than one version of libSVM implemented in the library.  To prevent
- * name conflicts between them each one was wrapped in their own namespace.
+ *@brief   This is version 2.33 of "Chih-Chung Chang" and "Chih-Jen Lin"  Support vector Machine; the class "ModelOldSVM" calls ths version.
+ *@brief   This is a vesion 2.33 of "Chih-Chung Chang" and "Chih-Jen Lin"  libSVM (Support Vector Machine); the class "ModelOldSVM" calls ths version.
+ *@details 
  *<br/>
  * libSVM is a Support Vector Machine implementation done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
  * was downloaded from http://www.csie.ntu.edu.tw/~cjlin/libsvm/.  The source code was modified by 
@@ -196,7 +196,7 @@ struct svm_model
   {
     kkint32  memoryConsumedEstimated = sizeof (svm_model)
       +  param.MemoryConsumedEstimated ()
-      +  exampleNames.size () * 40;
+      +  (kkint32)exampleNames.size () * 40;
 
     if  (SV)             memoryConsumedEstimated  += sizeof (svm_node*) * l;
     if  (sv_coef)        memoryConsumedEstimated  += (nr_class - 1) * sizeof (double*) + l * (nr_class - 1) * sizeof (double);
@@ -304,22 +304,41 @@ double  svm_predict  (const struct svm_model*  model,
                      );
 
 
+
+/**
+ *@brief Predics a class for the specifoied training example.
+ *@param[in]  model   A previously trainied model.
+ *@param[in]  x       Exmaple that we want to make prediction on.
+ *@param[out] dist    Entry for each class-pair indicating the distance from the decision boundary.
+ *@param[out] winners A list of one or more classes that won the highest number of votes; that is for each pair of classes 
+ *                    there is a vote and it is possible for there t be a tie for winner.
+ *@excludeSupportVectorIDX[in]  Index of training example that should be excluded from computation; if less than zero will 
+ *                    be ignored; this would be the same index specified when trainig the model to ignore.
+ *@returns The predicted class; the won that won the most amount of votes; if there is a tie the 1st one will be returned.
+ */
 double  svm_predict  (const struct svm_model*  model, 
                       const svm_node*          x, 
                       std::vector<double>&     dist,
                       std::vector<kkint32>&    winners,
-                      kkint32                  excludeSupportVectorIDX  /**< Specify index of a S/V to remove from computation. */
+                      kkint32                  excludeSupportVectorIDX
                      );
 
 
+/**
+ *@param[in]  model   A previously trainied model.
+ *@param[in]  x       Exmaple that we want to make prediction on.
+ *@param[out] dist    Distance from decision boundary.
+ *@excludeSupportVectorIDX[in]  Index of support vector that should be excluded form computation; if less than zero will be ignored.
+ *@returns The predicted class; Zero(0) or One(1);  if (dist <= 0)  the class Zero otherwise class One.
+ */
 double  svm_predictTwoClasses (const svm_model*  model,
                                const svm_node*   x,
                                double&           dist,
-                               kkint32           excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+                               kkint32           excludeSupportVectorIDX
                               );
 
 svm_problem*  svm_BuildProbFromTwoClassModel (const svm_model*  model,
-                                              kkint32           excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+                                              kkint32           excludeSupportVectorIDX
                                              );
 
 

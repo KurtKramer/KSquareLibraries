@@ -102,15 +102,6 @@ namespace  SVM289_BFS
   }  /* GrowAllocation */
 
 
-  double Min (double  x,  double   y) {return (x < y) ? x : y;}
-  kkint32  Min (kkint32 x,  kkint32  y) {return (x < y) ? x : y;}
-  float  Min (float   x,  float    y) {return (x < y) ? x : y;}
-  kkuint32 Min (kkuint32  x,  kkuint32 y) {return (x < y) ? x : y;}
-
-  kkint32  Max (kkint32 x,  kkint32  y) {return (x > y) ? x : y;}
-  double Max (double  x,  double   y) {return (x > y) ? x : y;}
-  float  Max (float   x,  float    y) {return (x > y) ? x : y;}
-  kkuint32 Max (kkuint32  x,  kkuint32 y) {return (x > y) ? x : y;}
 
   inline double  powi (double base, kkint32 times)
   {
@@ -343,8 +334,8 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
     cmdStr << "-ProbParam " << probParam << "  ";
          
   cmdStr << "-r " << coef0                 << "  "
-         << "-s " << (kkint32)svm_type       << "  "
-         << "-t " << (kkint32)kernel_type    << "  ";
+         << "-s " << (kkint32)svm_type     << "  "
+         << "-t " << (kkint32)kernel_type  << "  ";
 
   return  cmdStr;
 }
@@ -354,9 +345,9 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
 
 
 void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
-                                                  const KKStr&  value,
-                                                  bool&         parmUsed
-                                                 )
+                                                      const KKStr&  value,
+                                                      bool&         parmUsed
+                                                     )
 {
   parmUsed = true;
 
@@ -653,7 +644,7 @@ static void info(const char *fmt,...)
   va_list ap;
   va_start(ap,fmt);
 
-#ifdef WIN32
+#if  defined(USE_SECURE_FUNCS)
   vsprintf_s(buf, BUFSIZ, fmt, ap);
 #else
   vsprintf(buf,fmt,ap);
@@ -692,9 +683,9 @@ public:
    *@details Return some position p where [p,len) need to be filled (p >= len if nothing needs to be filled)
    */
   kkint32  get_data(const kkint32  index, 
-                  Qfloat**     data, 
-                  kkint32      len
-                 );
+                    Qfloat**       data, 
+                    kkint32        len
+                   );
 
   void swap_index (kkint32 i, kkint32 j);  
 
@@ -5238,7 +5229,9 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
 
 
 
-/** @brief Derives multiclass probability. */
+/**
+ @brief Derining multiclass probability as done in "Recognizing Plankton Images From the SIPPER".
+ */
 void  SVM289_BFS::svm_model::NormalizeProbability ()
 {
   // Make sure that the ProbEstimates array exists.

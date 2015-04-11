@@ -18,8 +18,9 @@ using namespace  KKB;
 #include "BinaryClassParms.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "svm.h"
 using namespace KKMLL;
+
+#include "svm.h"
 using namespace  SVM233;
 
 

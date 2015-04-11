@@ -274,13 +274,13 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
 
 void   ModelOldSVM::Predict (FeatureVectorPtr  example,
                              MLClassPtr        knownClass,
-                             MLClassPtr&       predClass,
+                             MLClassPtr&       predClass1,
                              MLClassPtr&       predClass2,
                              kkint32&          predClass1Votes,
                              kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
-                             double&           probOfPredClass,
-                             double&           probOfPredClass2,
+                             double&           predClass1Prob,
+                             double&           predClass2Prob,
                              kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
                              double&           breakTie
@@ -288,10 +288,10 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->Predict (encodedExample, knownClass, predClass, predClass2,
+  svmModel->Predict (encodedExample, knownClass, predClass1, predClass2,
                      predClass1Votes,  predClass2Votes,
                      probOfKnownClass, 
-                     probOfPredClass,  probOfPredClass2,
+                     predClass1Prob,    predClass2Prob,
                      numOfWinners,
                      knownClassOneOfTheWinners,
                      breakTie

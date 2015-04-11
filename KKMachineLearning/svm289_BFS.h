@@ -259,7 +259,7 @@ namespace  SVM289_BFS
   double svm_predict_probability (      svm_model*      model, 
                                   const FeatureVector&  x, 
                                   double*               prob_estimates,
-                                  kkint32*                votes
+                                  kkint32*              votes
                                  );
 
   void svm_destroy_model (struct svm_model*&  model);

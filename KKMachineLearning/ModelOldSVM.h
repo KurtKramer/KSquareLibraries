@@ -126,7 +126,7 @@ namespace KKMLL
 
 
     virtual  void  PredictRaw (FeatureVectorPtr  example,
-                               MLClassPtr     &  predClass,
+                               MLClassPtr&       predClass,
                                double&           dist
                               );
 

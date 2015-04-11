@@ -282,8 +282,8 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
                              kkint32&          predClass1Votes,
                              kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
-                             double&           probOfPredClass1,
-                             double&           probOfPredClass2,
+                             double&           predClass1Prob,
+                             double&           predClass2Prob,
                              kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
                              double&           breakTie
@@ -361,11 +361,11 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
   predClass2 = classesIndex->GetMLClass (maxIndex2);
   predClass1Votes = votes[maxIndex1];
   predClass2Votes = votes[maxIndex2];
-  probOfPredClass1 = maxProb1;
-  probOfPredClass2 = maxProb2;
+  predClass1Prob = maxProb1;
+  predClass2Prob = maxProb2;
 
+  breakTie = predClass1Prob - predClass2Prob;
 
-  breakTie = probOfPredClass1 - probOfPredClass2;
   if  ((knownClassIdx < 0)  ||  (knownClassIdx >= numOfClasses))
   {
     probOfKnownClass = 0.0;
@@ -524,7 +524,7 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
       log.Level (-1) << endl << endl << errMsg << endl << endl;
-      throw KKException (errMsg);
+      _probabilities [idx] = 0.0f;
     }
     else
     {
@@ -553,9 +553,12 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
       KKStr  errMsg = "ModelSvmBase::RetrieveCrossProbTable  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
       log.Level (-1) << endl << endl << errMsg << endl << endl;
-      throw KKException (errMsg);
+      pairWiseIndexes[idx1] = 0;
     }
-    pairWiseIndexes[idx1] = pairWiseIndex;
+    else
+    {
+      pairWiseIndexes[idx1] = pairWiseIndex;
+    }
 
     for  (idx2 = 0;  idx2 < _classes.size ();  idx2++)
       _crossProbTable[idx1][idx2] = 0.0;

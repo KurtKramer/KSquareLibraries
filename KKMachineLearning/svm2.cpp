@@ -21,9 +21,9 @@
 using namespace  std;
 
 
-#include  "KKException.h"
-#include  "KKStr.h"
-#include  "OSservices.h"
+#include "KKException.h"
+#include "KKStr.h"
+#include "OSservices.h"
 using namespace  KKB;
 
 
@@ -105,10 +105,12 @@ namespace  SVM289_MFS
 
   double Min (double  x,  double   y) {return (x < y) ? x : y;}
   kkint32  Min (kkint32 x,  kkint32  y) {return (x < y) ? x : y;}
+  long   Min (long    x,  long     y) {return (x < y) ? x : y;}
   float  Min (float   x,  float    y) {return (x < y) ? x : y;}
   kkuint32 Min (kkuint32  x,  kkuint32 y) {return (x < y) ? x : y;}
 
   kkint32  Max (kkint32 x,  kkint32  y) {return (x > y) ? x : y;}
+  long   Max (long    x,  long     y) {return (x > y) ? x : y;}
   double Max (double  x,  double   y) {return (x > y) ? x : y;}
   float  Max (float   x,  float    y) {return (x > y) ? x : y;}
   kkuint32 Max (kkuint32  x,  kkuint32 y) {return (x > y) ? x : y;}
@@ -2235,7 +2237,7 @@ public:
                       );
     QD = new Qfloat[prob.numTrainExamples];
 
-    for  (kkint32 i = 0;  i < prob.numTrainExamples;  i++)
+    for  (kkint32 i = 0;  i < prob.numTrainExamples;  ++i)
       QD[i] = (Qfloat)(this->*kernel_function)(i, i);
   }
 
@@ -2490,7 +2492,7 @@ void  SVM289_MFS::solve_c_svc (const svm_problem*     prob,
 
   kkint32 i;
 
-  for  (i = 0;  i < numTrainExamples;  i++)
+  for  (i = 0;  i < numTrainExamples;  ++i)
   {
     alpha[i]      = 0;
     minus_ones[i] = -1;
@@ -2603,7 +2605,7 @@ void  SVM289_MFS::solve_nu_svc (const svm_problem*     prob,
 
   info ("C = %f\n",1/r);
 
-  for  (i = 0;  i < numTrainExamples;  i++)
+  for  (i = 0;  i < numTrainExamples;  ++i)
     alpha[i] *= y[i] / r;
 
   si->rho /= r;
@@ -3060,8 +3062,6 @@ void  SVM289_MFS::sigmoid_train (kkint32        numExamples,
 
 
 
-
-
 double  SVM289_MFS::sigmoid_predict (double  decision_value, 
                                      double  A, 
                                      double  B
@@ -3113,7 +3113,7 @@ void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number 
       Q[t][j] =  Q[j][t];
     }
 
-    for  (j = t + 1;  j < numClasses;  j++)
+    for  (j = t + 1;  j < numClasses;  ++j)
     {
       Q[t][t] +=  pairwiseProbs[j][t] * pairwiseProbs[j][t];
       Q[t][j] =-  pairwiseProbs[j][t] * pairwiseProbs[t][j];
@@ -3132,7 +3132,7 @@ void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number 
       pQp += classProb[t] * Qp[t];
     }
     double max_error = 0;
-    for (t = 0;  t < numClasses;  t++)
+    for (t = 0;  t < numClasses;  ++t)
     {
       double error = fabs (Qp[t] - pQp);
       if  (error > max_error)
@@ -3142,12 +3142,12 @@ void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number 
     if  (max_error < eps) 
       break;
     
-    for  (t = 0;  t < numClasses;  t++)
+    for  (t = 0;  t < numClasses;  ++t)
     {
       double diff = (-Qp[t] +pQp) / Q[t][t];
       classProb[t] += diff;
       pQp = (pQp + diff * (diff * Q[t][t] + 2 * Qp[t]))  /  (1 + diff) / (1 + diff);
-      for (j = 0;  j < numClasses;  j++)
+      for (j = 0;  j < numClasses;  ++j)
       {
         Qp[j] = (Qp[j] + diff * Q[t][j]) / (1 + diff);
         classProb[j] /= (1 + diff);
@@ -3157,7 +3157,7 @@ void  SVM289_MFS::multiclass_probability (kkint32   numClasses,     /**< Number 
   if  (iter >= max_iter)
     info ("Exceeds max_iter in multiclass_prob\n");
 
-  for  (t = 0;  t < numClasses;  t++)
+  for  (t = 0;  t < numClasses;  ++t)
   {delete Q[t];  Q[t] = NULL;}
 
   delete  Q;  Q  = NULL;
@@ -3184,15 +3184,15 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
   FeatureVectorPtr*  subX    = NULL;
   svm_problem*       subProb = NULL;
 
-  double *dec_values = new double[prob->numTrainExamples];
+  double*  dec_values = new double[prob->numTrainExamples];
 
   // random shuffle
-  for  (i = 0;  i < prob->numTrainExamples;  i++) 
+  for  (i = 0;  i < prob->numTrainExamples;  ++i) 
     perm[i]=i;
   
-  for  (i = 0;  i < prob->numTrainExamples;  i++)
+  for  (i = 0;  i < prob->numTrainExamples;  ++i)
   {
-    kkint32 j = i + rand() % (prob->numTrainExamples-i);
+    kkint32 j = i + rand() % (prob->numTrainExamples - i);
     SVM289_MFS::swap (perm[i], perm[j]);
   }
     
@@ -3216,7 +3216,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
       ++k;
     }
 
-    for  (j = end;  j < prob->numTrainExamples;  j++)
+    for  (j = end;  j < prob->numTrainExamples;  ++j)
     {
       subX[k] = prob->x.IdxToPtr (perm[j]);
       subY[k] = (float)prob->y[perm[j]];
@@ -3316,7 +3316,7 @@ double  svm_svr_probability (const svm_problem&   prob,
   newparam.probability = 0;
   svm_cross_validation (prob, newparam, nr_fold, ymv, log);
 
-  for  (i = 0;  i < prob.numTrainExamples;  i++)
+  for  (i = 0;  i < prob.numTrainExamples;  ++i)
   {
     ymv[i] = prob.y[i] - ymv[i];
     mae += fabs (ymv[i]);
@@ -3326,7 +3326,7 @@ double  svm_svr_probability (const svm_problem&   prob,
   double  std = sqrt (2 * mae * mae);
   kkint32 count = 0;
   mae = 0;
-  for  (i = 0;  i < prob.numTrainExamples;  i++)
+  for  (i = 0;  i < prob.numTrainExamples;  ++i)
   {
     if  (fabs(ymv[i]) > (5 * std)) 
       count = count + 1;
@@ -3455,7 +3455,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
 
     kkint32 nSV = 0;
     kkint32 i;
-    for  (i = 0;  i < prob.numTrainExamples;  i++)
+    for  (i = 0;  i < prob.numTrainExamples;  ++i)
     {
       if  (fabs(f.alpha[i]) > 0) 
         ++nSV;
@@ -3467,7 +3467,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
     model->SV.Owner (true);
     model->sv_coef[0] = new double[nSV];
     kkint32 j = 0;
-    for  (i = 0;  i < prob.numTrainExamples;  i++)
+    for  (i = 0;  i < prob.numTrainExamples;  ++i)
     {
       if  (fabs (f.alpha[i]) > 0)
       {
@@ -3814,10 +3814,10 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
   }
   else
   {
-    for (i = 0;  i < numTrainExamples;  i++)
+    for (i = 0;  i < numTrainExamples;  ++i)
       perm[i]=i;
 
-    for (i = 0;  i < numTrainExamples;  i++)
+    for (i = 0;  i < numTrainExamples;  ++i)
     {
       kkint32 j = i + rand() % (numTrainExamples - i);
       SVM289_MFS::swap (perm[i], perm[j]);
@@ -4406,13 +4406,14 @@ void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
     for  (x = 0;  x < nr_class - 1;  x++)
     {
       model.sv_coef[x] = new double[numSVs];
-      for  (y = 0;  y < numSVs;  y++)
+      for  (y = 0;  y < numSVs;  ++y)
         model.sv_coef[x][y] = 0.0;
     }
   }
 
   model.SV.DeleteContents ();
   model.SV.Owner (true);
+  model.weOwnSupportVectors = true;
 
   kkint32  numSupportVectorsRead = 0;
   while  (!eof)
@@ -4499,8 +4500,6 @@ void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
 
     valid = false;
   }
-
-
 }  /* svm_load_model_XML_SupportVectorSection */
 
 
@@ -4720,7 +4719,7 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
     for  (kkint32 j = 0;  j < m;  j++)
     {
       sv_coef[j] = new double[numSVs];
-      for  (kkint32 i = 0;   i < numSVs;  i++)
+      for  (kkint32 i = 0;   i < numSVs;  ++i)
        sv_coef[j][i] = _model.sv_coef[j][i];
     }
   }
@@ -4764,24 +4763,24 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
 
 
 
-SVM289_MFS::svm_model::svm_model (FileDescPtr   _fileDesc,
-                                  RunLog&       _log
+SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc,
+                                  RunLog&     _log
                                  ):
-   param       (),
-   nr_class    (0),
-   numSVs      (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   numSVs              (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
 }
 
@@ -4842,21 +4841,21 @@ SVM289_MFS::svm_model::svm_model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
                                  ):
-   param       (),
-   nr_class    (0),
-   numSVs      (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   numSVs              (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Read (_in, _fileDesc, _log);
 }
@@ -5033,7 +5032,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
     o << endl;
   }
 
-  for  (kkint32 i = 0;  i < numSVs;  i++)
+  for  (kkint32 i = 0;  i < numSVs;  ++i)
   {
     const  FeatureVector&  p = SV[i];
     o << "SupportVector" << "\t" << p.ImageFileName ();

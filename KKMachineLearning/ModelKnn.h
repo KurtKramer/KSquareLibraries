@@ -49,8 +49,8 @@ namespace  KKMLL
                          kkint32&          predClass1Votes,
                          kkint32&          predClass2Votes,
                          double&           probOfKnownClass,
-                         double&           probOfPredClass1,
-                         double&           probOfPredClass2,
+                         double&           predClass1Prob,
+                         double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
                          double&           breakTie
@@ -61,10 +61,10 @@ namespace  KKMLL
     ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
 
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                   _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities
                                );
 
 

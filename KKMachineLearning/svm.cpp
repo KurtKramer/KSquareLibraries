@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <float.h>
+#include <string.h>
 #include <string>
 #include <stdarg.h>
 #include <vector>
@@ -17,10 +18,13 @@ using namespace std;
 
 #include  "KKBaseTypes.h"
 #include  "KKException.h"
+#include "KKStrParser.h"
 #include  "OSservices.h"
 using namespace KKB;
 
 
+#include  "MLLTypes.h"
+using namespace KKMLL;
 
 #pragma warning(disable : 4996)
 
@@ -233,7 +237,7 @@ template <class S, class T> inline void  clone(T*& dst, S* src, kkint32 n)
 #define Malloc(type,n) (type *)malloc((n)*sizeof(type))
 
 #if 0
-  void info(char *fmt,...)
+  void info(const char *fmt,...)
   {
     va_list ap;
     va_start(ap,fmt);
@@ -246,7 +250,7 @@ template <class S, class T> inline void  clone(T*& dst, S* src, kkint32 n)
     fflush(stdout);
   }
 #else
-  void info(char *fmt,...) {}
+  void info(const char *fmt,...) {}
   void info_flush() {}
 #endif
 
@@ -1049,8 +1053,8 @@ void SVM233::Cache::swap_index (kkint32 i,
 
 
 /**
- **brief Kernel evaluation
- *
+ *@brief Kernel evaluation
+ *@details
  * the static method k_function is for doing single kernel evaluation
  * the constructor of Kernel prepares to calculate the l*l kernel matrix
  * the member function get_Q is for getting one column from the Q Matrix
@@ -3420,7 +3424,8 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 {
   svm_model*  model = new svm_model ();
 
-  char  buff[100000];
+  kkint32 bullAllocSize = 500000;
+  char* buff = new char[bullAllocSize];
 
   kkint32  numOfClasses       = -1;
   kkint32  numSVsLoaded       = 0;
@@ -3432,12 +3437,12 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
   bool  validFormat = true;
 
-  KKStr  line (1024);  // Preallocating to at least 1024 chracters kkint32.
+  KKStr  line (1024);  // Preallocating to at least 1024 chracters.
 
   // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
   // an invalid Training Model.
   {
-    while  (f.getline (buff, sizeof (buff)))
+    while  (f.getline (buff, bullAllocSize))
     {
       line = buff;
       line.TrimLeft ("\n\r\t ");
@@ -3457,8 +3462,8 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
     log.Level (-1) << endl << endl
       << "SVM233::Svm_Load_Model    ***ERROR***    The '<Svm233>'  header is missing.  Not a valid model." << endl
       << endl;
-    delete  model;
-    model = NULL;
+    delete  model; model = NULL;
+    delete  buff;  buff = NULL;
     return NULL;
   }
 
@@ -3466,35 +3471,35 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
    @todo Modify SVM233::Svm_Load_Model to read one token at a time rather than a whol eline at a time.
    */
 
-  while  (f.getline (buff, sizeof (buff)))
+  while  (f.getline (buff, bullAllocSize))
   {
-    KKStr  line (buff);
-    line.TrimLeft ();
-    line.TrimRight ();
+    KKStrParser  line (buff);
+    line.SkipWhiteSpace (" ");
 
-    if  (line == "<SvmMachine>")
+    KKStr lineName = line.GetNextToken ();
+
+    if  (lineName.EqualIgnoreCase ("<SvmMachine>"))
       continue;
 
-    if  (line == "</Svm233>")
+    if  (lineName.EqualIgnoreCase ("</Svm233>"))
       break;
 
-    KKStr  lineName = line.ExtractToken2 ("\t");
     lineName.Upper ();
 
     if  (lineName == "PARAMETERS")
     {
-      model->param.ParseTabDelStr (line);
+      model->param.ParseTabDelStr (line.GetRestOfLine ());
     }
 
     else if  (lineName == "NUMOFCLASSES")
     {
-      numOfClasses = line.ExtractTokenInt ("\t");
+      numOfClasses = line.GetNextTokenInt ("\t");
       model->nr_class = numOfClasses;
     }
 
     else if  (lineName == "TOTALNUMOFSUPPORTVECTORS")
     {
-      totalNumSVs = line.ExtractTokenInt ("\t");
+      totalNumSVs = line.GetNextTokenInt ("\t");
       model->l = totalNumSVs;
     }
 
@@ -3503,14 +3508,14 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
       kkint32 n = numOfClasses * (numOfClasses - 1) / 2;
       model->rho = Malloc (double, n);
       for (kkint32 i = 0;  i < n;  i++)
-        model->rho[i] = line.ExtractTokenDouble ("\t");
+        model->rho[i] = line.GetNextTokenDouble ("\t");
     }
 
     else if  (lineName == "LABEL")
     {
       model->label = Malloc (kkint32, numOfClasses);
       for  (kkint32 i=0;  i < numOfClasses;  i++)
-        model->label[i] = line.ExtractTokenInt ("\t");
+        model->label[i] = line.GetNextTokenInt ("\t");
     }
   
 
@@ -3518,7 +3523,7 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
     {
       model->nSV = Malloc(kkint32, numOfClasses);
       for  (kkint32 i = 0;  i < numOfClasses;  i++)
-        model->nSV[i] = line.ExtractTokenInt ("\t");
+        model->nSV[i] = line.GetNextTokenInt ("\t");
     }
 
 
@@ -3528,12 +3533,12 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
       delete  model->margin;
       model->margin = new double[n];
       for (kkint32 i = 0;  i < n;  i++)
-        model->margin[i] = line.ExtractTokenDouble ("\t");
+        model->margin[i] = line.GetNextTokenDouble ("\t");
     }
 
     else if  (lineName == "TOTALNUMOFELEMENTS")
     {
-      totalNumOfElements = line.ExtractTokenInt ("\t");
+      totalNumOfElements = line.GetNextTokenInt ("\t");
 
       kkint32 m = model->nr_class - 1;
       kkint32 l = model->l;
@@ -3571,17 +3576,17 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
       if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
       {
         // this Support Vector has a mame to it.
-        model->exampleNames.push_back (line.ExtractToken2 ("\t"));
+        model->exampleNames.push_back (line.GetNextToken ("\t"));
       }
 
       for (kkint32 j = 0;  j < numOfClasses - 1;  j++)
-        model->sv_coef[j][numSVsLoaded] = line.ExtractTokenDouble ("\t");
+        model->sv_coef[j][numSVsLoaded] = line.GetNextTokenDouble ("\t");
 
       model->SV[numSVsLoaded] = &(x_space[numElementsLoaded]);
-      while  ((!line.Empty ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
+      while  ((line.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
       {
-        x_space[numElementsLoaded].index = line.ExtractTokenInt (":");
-        x_space[numElementsLoaded].value = line.ExtractTokenDouble ("\t");
+        x_space[numElementsLoaded].index = line.GetNextTokenInt (":");
+        x_space[numElementsLoaded].value = line.GetNextTokenDouble ("\t");
         numElementsLoaded++;
       }
 
@@ -3641,6 +3646,10 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
   if  (model)
     model->kValueTable = new double[model->l];
+
+
+  delete  buff;
+  buff = NULL;
 
   return  model;
 }  /* Svm_Load_Model */
@@ -3828,7 +3837,7 @@ out:
         if(c=='\n') goto out2;
       } while(isspace(c));
       ungetc(c,fp);
-      fscanf (fp, "%d:%lf", (x_space[j].index), (x_space[j].value));
+      fscanf(fp,"%d:%lf",&(x_space[j].index),&(x_space[j].value));
       ++j;
       }
 out2:
@@ -4025,10 +4034,10 @@ double  SVM233::svm_predict (const svm_model*      model,
 
 
 /****************************************************************************************/
-double  SVM233::svm_predictTwoClasses (const svm_model*    model,
-                                       const svm_node*     x,
-                                       double&             dist,
-                                       kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
+double  SVM233::svm_predictTwoClasses (const svm_model*  model,
+                                       const svm_node*   x,
+                                       double&           dist,
+                                       kkint32           excludeSupportVectorIDX
                                       )
 {
   kkint32  winner = 0;

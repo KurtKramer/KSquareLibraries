@@ -63,8 +63,8 @@ namespace KKMLL
     MLClassPtr  Class2 () const  {return class2;}
 
     /**
-     *@brief  Compresses 'src' images, allocating new 'xSpace' data structure.
-     *@param[in]  src              Images that are to be compressed
+     *@brief  Compresses 'src' examples, allocating new 'xSpace' data structure.
+     *@param[in]  src              Examples that are to be compressed
      *@param[in]  assignments      Class Assignments
      *@param[in]  xSpace           will allocate enough xSpace nodes and place compressed results in this structure.
      *@param[out] totalxSpaceUsed  number nodes used in xSpace</param>
@@ -97,7 +97,7 @@ namespace KKMLL
 
     kkint32           MemoryConsumedEstimated ()  const;
 
-    kkint32           XSpaceNeededPerImage ()  {return xSpaceNeededPerImage;}
+    kkint32           XSpaceNeededPerExample ()  {return xSpaceNeededPerExample;}
 
 
   private:
@@ -110,31 +110,31 @@ namespace KKMLL
 
 
 
-    AttributeTypeVector&         attributeTypes;     /**< Will not own, passed in by creator. */
-    kkint32*                     cardinalityDest;
-    VectorInt32&                 cardinalityTable;   /**< Will not own, passed in by creator. */
-    MLClassPtr                   class1;
-    MLClassPtr                   class2;
-    kkint32                      codedNumOfFeatures;
-    SVM_CompressionMethod        compressionMethod;
-    kkint32*                     destFeatureNums;
-    FileDescPtr                  destFileDesc;
-    FeWhatToDoPtr                destWhatToDo;
-    SVM_EncodingMethod           encodingMethod;
-    FileDescPtr                  fileDesc;
-    RunLog&                      log;
-    kkint32                      numEncodedFeatures;
-    kkint32                      numOfFeatures;
-    FeatureNumList               selectedFeatures;
-    kkint32*                     srcFeatureNums;
-    const SVMparam&              svmParam;
-    kkint32                      xSpaceNeededPerImage;
+    AttributeTypeVector&    attributeTypes;     /**< Will not own, passed in by creator. */
+    kkint32*                cardinalityDest;
+    VectorInt32&            cardinalityTable;   /**< Will not own, passed in by creator. */
+    MLClassPtr              class1;
+    MLClassPtr              class2;
+    kkint32                 codedNumOfFeatures;
+    SVM_CompressionMethod   compressionMethod;
+    kkint32*                destFeatureNums;
+    FileDescPtr             destFileDesc;
+    FeWhatToDoPtr           destWhatToDo;
+    SVM_EncodingMethod      encodingMethod;
+    FileDescPtr             fileDesc;
+    RunLog&                 log;
+    kkint32                 numEncodedFeatures;
+    kkint32                 numOfFeatures;
+    FeatureNumList          selectedFeatures;
+    kkint32*                srcFeatureNums;
+    const SVMparam&         svmParam;
+    kkint32                 xSpaceNeededPerExample;
   };  /* FeatureEncoder */
 
 
   typedef  FeatureEncoder*  FeatureEncoderPtr;
 
 
-} /* namespace KKMLL */
+} /* KKMLL */
 
 #endif
