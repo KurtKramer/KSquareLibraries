@@ -1,28 +1,15 @@
-#ifndef  _TRAININGCLASS_
+#if  !defined(_TRAININGCLASS_)
 #define  _TRAININGCLASS_
 /**
  @class  KKMLL::TrainingClass
- @code
- *********************************************************************
- *                         TrainingClass                             *
- *                                                                   *
- * You create one instance of this object for each set of training   *
- * data you want to specify.  There will be a 'many to one'          *
- * relationship between 'TrainingClass'  and  'MLClass'.  This is   *
- * based on the assumption that there can be more than one set of    *
- * training data that you can use for the same class.                *
- *                                                                   *
- *-------------------------------------------------------------------*
- *                                                                   *
- *  directory  - Directory where Training Images are stored.         *
- *                                                                   *
- *  featureFileName - Name of data file that is to contain feature   *
- *               data for this TrainingClass.                        *
- *                                                                   *
- *  mlClass - Pointer to MLClass that this TrainingClass is    *
- *               for.                                                *
- *********************************************************************
- @endcode
+ *@brief  Specify where training examples and other related data for a MLClass that is 
+ * needed to train a classifier.
+ *@details 
+ * You create one instance of this object for each MLClass instance that you 
+ * want to include in a classifier. Each instance will tie a class to the 
+ * directories where you can find training examples. Other info that is 
+ * imcluded is 'CountFator', training Weight,  dun-classifier that is to be 
+ * used to further define the prediction.
  */
 
 
@@ -40,6 +27,17 @@ namespace KKMLL
   typedef  MLClassList*  MLClassListPtr;
   #endif
 
+  #if  !defined(_TrainingConfiguration2_Defined_)
+  class  TrainingConfiguration2;
+  typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
+  #endif
+
+  #if  !defined(_TrainingConfiguration2List_Defined_)
+  class  TrainingConfiguration2List;
+  typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
+  #endif
+
+
 
   class  TrainingClass
   {
@@ -47,49 +45,70 @@ namespace KKMLL
     /**
      *@brief  Constructor,  Creates a new instance of TrainingClass and populates
      *fields with respective data from parameters.
-     *@param[in] Directory where training examples will be located.
+     *@param[in] _directories A list of directories where training examples for class '_name' can be found.
      *@param[in] _weight 
      *@param[in] _countFactor
+     *@param[in] _subClassifier  If not NULL points to the configuration that is to be used if this class is predicted.
      *@param[in,out] mlClasses List of classes.
      */
-    TrainingClass (KKStr         _directory,
-                   KKStr         _name,
-                   float         _weight,
-                   float         _countFactor,
-                   MLClassList&  mlClasses
+    TrainingClass (const VectorKKStr&         _directories,
+                   KKStr                      _name,
+                   float                      _weight,
+                   float                      _countFactor,
+                   TrainingConfiguration2Ptr  _subClassifier,
+                   MLClassList&               _mlClasses
                   );
 
     TrainingClass (const TrainingClass&  tc);
 
 
-    float               CountFactor     () const  {return  countFactor;}
-    const KKStr&        Directory       () const  {return  directory;}
-    const KKStr&        FeatureFileName () const  {return  featureFileName;}
-    const MLClassPtr    MLClass         () const  {return  mlClass;}
-    const KKStr&        Name            () const;
-    float               Weight          () const  {return  weight;}
+    float                      CountFactor     () const  {return  countFactor;}
+    const KKStr&               Directory       (kkuint32 idx) const;
+    kkuint32                   DirectoryCount  () const;
+    const VectorKKStr&         Directories     () const  {return  directories;}
+    const KKStr&               FeatureFileName () const  {return  featureFileName;}
+    const MLClassPtr           MLClass         () const  {return  mlClass;}
+    const KKStr&               Name            () const;
+    TrainingConfiguration2Ptr  SubClassifier   () const  {return  subClassifier;}
+    float                      Weight          () const  {return  weight;}
 
-    KKStr               ExpandedDirectory (const KKStr&  rootDir);
+    KKStr                      ExpandedDirectory (const KKStr&  rootDir,
+                                                  kkuint32      idx
+                                                 );
+
+    void  AddDirectory    (const KKStr&  _directory);
 
     void  CountFactor     (float         _countFactor)      {countFactor     = _countFactor;}
-    void  Directory       (const KKStr&  _directory)        {directory       = _directory;}
     void  FeatureFileName (const KKStr&  _featureFileName)  {featureFileName = _featureFileName;}
     void  MLClass         (MLClassPtr    _mlClass)          {mlClass         = _mlClass;}
     void  Weight          (float         _weight)           {weight          = _weight;}
+
+    void  Directory       (kkuint32      idx, 
+                           const KKStr&  directory
+                          );
 
 
   private:
     KKStr       SubstituteInEvironmentVariables (const KKStr&  src);
 
-    KKStr       directory;
-    KKStr       featureFileName;
-    MLClassPtr  mlClass;
-    float       weight;      /**< Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
-                              * the SVM Cost parameter from examples in this class will be weighted by this value.
-                              */
+    float            countFactor;  /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
+    VectorKKStr      directories;
+    KKStr            featureFileName;
+    MLClassPtr       mlClass;
 
-    float       countFactor;  /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
-  };
+    TrainingConfiguration2Ptr  
+                     subClassifier;  /**< The classifier hat is to be used to further define the class;  for example
+                                      *  if 'mlClass' is predicted 'subClassifier' is to be called to further define the
+                                      *  prediction.  The instance of 'TrainingClass' will not own this classifier; it will
+                                      * be owned by 'subClassifiers' in 'TrainingConfiguration2'.
+                                      */
+
+    float            weight;      /**< Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
+                                   * the SVM Cost parameter from examples in this class will be weighted by this value.
+                                   */
+
+  };  /* TrainingClass */
+
 
 
   typedef  TrainingClass*  TrainingClassPtr;
@@ -98,9 +117,8 @@ namespace KKMLL
   class  TrainingClassList:  public KKQueue<TrainingClass>
   {
   public:
-    TrainingClassList (const KKStr&  _rootDirExpanded,
-                       bool          owner    = true,
-                       kkint32       initSize = 5
+    TrainingClassList (const KKStr&  rootDir,
+                       bool          owner
                       );
 
   private:
@@ -112,28 +130,28 @@ namespace KKMLL
                       );
 
 
-    const KKStr&      RootDirExpanded ()  {return  rootDirExpanded;}
-    void              RootDir (const KKStr&  _rootDirExpanded)  {rootDirExpanded = _rootDirExpanded;}
+    const KKStr&      RootDir ()  {return  rootDir;}
+    void              RootDir (const KKStr&  _rootDir)  {rootDir = _rootDir;}
 
     void              AddTrainingClass (TrainingClassPtr  trainingClass);
 
 
     TrainingClassList*  DuplicateListAndContents ()  const;
 
-    TrainingClassPtr    LocateByImageClass (const MLClassPtr  _mlClass)  const;
+    TrainingClassPtr    LocateByMLClass (MLClassPtr       _mlClass)  const;
 
-    TrainingClassPtr    LocateByImageClassName (const KKStr&  className);
+    TrainingClassPtr    LocateByMLClassName (const KKStr&  className);
 
     TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
 
   private: 
-    KKStr   rootDirExpanded;
-  };
+    KKStr   rootDir;
+  };  /* TrainingClassList*/
 
 
   typedef  TrainingClassList*  TrainingClassListPtr;
 
-}  /* namespace KKMLL */
+}  /* KKMLL */
 
 
 #endif

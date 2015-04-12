@@ -28,13 +28,17 @@ using namespace  KKB;
 
 #include "TrainingProcess2.h"
 #include "ClassAssignments.h"
+#include "ClassProb.h"
 #include "DuplicateImages.h"
 #include "FactoryFVProducer.h"
 #include "FeatureFileIO.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "MLClass.h"
+#include "ImageFeaturesDataIndexed.h"
+#include "ImageFeaturesNameIndexed.h"
 #include "Model.h"
+#include "ModelDual.h"
 #include "ModelOldSVM.h"
 #include "ModelKnn.h"
 #include "ModelSvmBase.h"
@@ -43,23 +47,23 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-
-TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
-                                    FeatureVectorListPtr  _excludeList,
-                                    FactoryFVProducerPtr  _fvFactoryProducer,
-                                    RunLog&               _log,
-                                    ostream*              _report,
-                                    bool                  _forceRebuild,
-                                    bool                  _checkForDuplicates,
-                                    VolConstBool&         _cancelFlag,
-                                    KKStr&                _statusMessage
+TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
+                                    FeatureVectorListPtr       _excludeList,
+                                    FactoryFVProducerPtr       _fvFactoryProducer,
+                                    RunLog&                    _log,
+                                    ostream*                   _report,
+                                    bool                       _forceRebuild,
+                                    bool                       _checkForDuplicates,
+                                    VolConstBool&              _cancelFlag,
+                                    KKStr&                     _statusMessage
                                    ):
   abort                     (false),
   buildDateTime             (DateTime (1900, 1, 1, 0, 0, 0)),
   cancelFlag                (_cancelFlag),
-  config                    (NULL),
-  configFileName            (_configFileName),
-  configFileNameSpecified   (_configFileName),
+  config                    (_config),
+  configFileName            (""),
+  configFileNameSpecified   (""),
+  duplicateCount            (0),
   duplicateDataCount        (0),
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
@@ -68,18 +72,23 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
   mlClasses                 (NULL),
   log                       (_log),
   model                     (NULL),
+  priorProbability          (NULL),
   report                    (_report),
   savedModelName            (),
   statusMessage             (_statusMessage),
+  subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnImageClassesConfig   (true),
-  weOwnTrainingExamples     (true)
+  weOwnConfig               (false),
+  weOwnTrainingExamples     (true),
+  weOwnMLClasses            (true)
 
 {
   log.Level (10) << "TrainingProcess2::TrainingProcess2   9 Parameters." << endl;
 
   fileDesc = fvFactoryProducer->FileDesc ();
 
+  configFileName          = config->FileName ();
+  configFileNameSpecified = config->ConfigFileNameSpecified ();
   trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  log);
 
   configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
@@ -111,11 +120,6 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
     useExistingSavedModel = false;
   }
 
-  config = new TrainingConfiguration2 (configFileName,
-                                       fvFactoryProducer,
-                                       true,   // true = Validate Directories
-                                       log
-                                      );
   if  (!config->FormatGood ())
   {
     if  (report)
@@ -134,7 +138,10 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
     return;
   }
 
+  if  (weOwnMLClasses)
+    delete  mlClasses;
   mlClasses = config->ExtractClassList ();
+  weOwnMLClasses = true;
   mlClasses->SortByName ();
 
   configTimeStamp = osGetFileDateTime (configFileName);
@@ -143,17 +150,22 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
 
   cout  << "*PHASE_MSG* Extracting Training Class Data" << endl;
 
-//  PostLarvaeFVResetDarkSpotCounts ();
+  try
+  {ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary);}
+  catch (std::exception& e1)
+  {
+    log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred calling 'ExtractTrainingClassFeatures'." << endl
+                   << "   Exception[" << e1.what () << "]" << endl;
+    Abort (true);
+  }
+  catch (...)
+  {
+    log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred calling 'ExtractTrainingClassFeatures'." << endl;
+    Abort (true);
+  }
 
-  ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary);
   if  (cancelFlag)
     Abort (true);
-  //{
-  //  ofstream o ("C:\\Temp\\DarkSpots.txt");
-  //  PostLarvaeFVPrintReport (o);
-  //  o.close ();
-  //}
-
 
   if  (Abort ())
   {
@@ -195,51 +207,62 @@ TrainingProcess2::TrainingProcess2 (const KKStr&          _configFileName,
     }
     else
     {
-      bool  successful = false;
-      Read (in, successful);
-      if  (!successful)
+      try
       {
-        log.Level (-1) << endl << endl << endl
-                       << "TrainingProcess2      *** Invalid Format in SaveFile[" << savedModelName << "]  we will have to rebuild model." << endl
-                       << endl;
-
-        useExistingSavedModel = false;
-        delete  model;
-        model = NULL;
-        // Since we have to build the model anyway we need to reload th etrainingExamples.
-        delete  config;              config             = NULL;
-        delete  trainingExamples;    trainingExamples   = NULL;
-        delete  mlClasses;        mlClasses       = NULL;
-
-        mlClasses = new MLClassList ();
-        trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  log);
-
-        config = new  TrainingConfiguration2 (configFileName,
-                                              fvFactoryProducer,
-                                              true,   // true = Validate Directories.
-                                              log
-                                             );
-
-        if  (!config->FormatGood ())
+        bool  successful = false;
+        Read (in, successful);
+        if  (!successful)
         {
-          log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl;
-          Abort (true);
-          return;
+          log.Level (-1) << endl << endl << endl
+              << "TrainingProcess2      *** Invalid Format in SaveFile[" << savedModelName << "]  we will have to rebuild model." << endl
+              << endl;
+
+          useExistingSavedModel = false;
+          delete  model;             model            = NULL;
+          delete  trainingExamples;  trainingExamples = NULL;
+          if  (weOwnMLClasses)
+          {
+            delete  mlClasses;
+            mlClasses = NULL;
+          }
+
+          trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  log);
+
+          if  (!config->FormatGood ())
+          {
+            log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl;
+            Abort (true);
+            return;
+          }
+
+          if  (weOwnMLClasses)
+            delete  mlClasses;
+          mlClasses = config->ExtractClassList ();
+          mlClasses->SortByName ();
+          weOwnMLClasses = true;
+
+          ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary);
+          if  (cancelFlag)
+            Abort (true);
         }
 
-        mlClasses = config->ExtractClassList ();
-        mlClasses->SortByName ();
-
-        ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary);
-        if  (cancelFlag)
-          Abort (true);
+        in.close ();
       }
-
-      in.close ();
+      catch (std::exception e2)
+      {
+        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing exisating model." << endl
+                       << "   Exception[" << e2.what () << ":]" << endl;
+        Abort (true);
+      }
+      catch (...)
+      {
+        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing exisating model." << endl;
+        Abort (true);
+      }
     }
   }
 
-  if  (!useExistingSavedModel)
+  if  ((!useExistingSavedModel)  &&  (!cancelFlag))
   {
     statusMessage = "Building Support Vector Machine";
 
@@ -306,6 +329,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   config                    (NULL),
   configFileName            (_configFileName),
   configFileNameSpecified   (_configFileName),
+  duplicateCount            (0),
   duplicateDataCount        (0),
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
@@ -413,6 +437,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   config                    (NULL),
   configFileName            (_configFileName),
   configFileNameSpecified   (_configFileName),
+  duplicateCount            (0),
   duplicateDataCount        (0),
   excludeList               (NULL),
   featuresAlreadyNormalized (_featuresAlreadyNormalized),
@@ -494,6 +519,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     config                    (_config),
     configFileName            (),
     configFileNameSpecified   (),
+    duplicateCount            (0),
     duplicateDataCount        (0),
     excludeList               (NULL),
     featuresAlreadyNormalized (_featuresAlreadyNormalized),
@@ -789,7 +815,7 @@ void  TrainingProcess2::CheckForDuplicates (bool  allowDupsInSameClass)
 {
   // Lets check for duplicate trainingExamples in training data.  Just to get a count, no other reason
   DuplicateImages  dupDetector (trainingExamples, fileDesc, log);
-
+  duplicateCount = dupDetector.DuplicateCount ();
   duplicateDataCount = dupDetector.DuplicateDataCount ();
   if  (duplicateDataCount > 0)
   {
@@ -1158,6 +1184,12 @@ double   TrainingProcess2::TrainingTime ()  const
     return 0.0;
 }
 
+
+
+kkint32 TrainingProcess2::DuplicateCount () const
+{
+  return  duplicateCount;
+}
 
 
 kkint32  TrainingProcess2::DuplicateDataCount () const

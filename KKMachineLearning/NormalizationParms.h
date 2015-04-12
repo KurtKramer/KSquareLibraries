@@ -146,7 +146,7 @@ namespace KKMLL
   typedef  NormalizationParms*  NormalizationParmsPtr;
 
 
-  #define  _NormalizationParmsDefined_
+  #define  _NormalizationParms_Defined_
 
 }  /* namespace KKMLL { */
 

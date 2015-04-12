@@ -1,14 +1,11 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -18,25 +15,23 @@ using namespace  std;
 #include "RunLog.h"
 using namespace  KKB;
 
-//#include "Variables.h"
-//using namespace  KKLSC;
-
 
 
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
 #include "FactoryFVProducer.h"
 #include "FeatureFileIO.h"
-//#include "FeatureFileIOKK.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "KKMLVariables.h"
 #include "Model.h"
+#include "ModelParamDual.h"
 #include "ModelParamKnn.h"
 #include "ModelParamOldSVM.h"
 #include "ModelParamSvmBase.h"
+#include "ModelParamUsfCasCor.h"
 #include "NormalizationParms.h"
 using namespace  KKMLL;
 
@@ -56,9 +51,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
   if  (_parametersLineNum < 0)
   {
     KKStr errMsg = "'Parameters' setting was not specified.";
-    log.Level (-1) << endl 
-                   << "CreateModelParameters   ***ERROR***   " << errMsg << endl 
-                   << endl;
+    log.Level (-1) << endl << endl << "CreateModelParameters   ***ERROR***   " << errMsg << endl << endl;
     FormatErrorsAdd (_sectionLineNum, errMsg);
     FormatGood (false);
   }
@@ -73,9 +66,17 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   case  Model::mtKNN:     modelParameters = new ModelParamKnn (fileDesc, log);
                           break;
+
+  case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (fileDesc, log);
+                            break;
+
+  case  Model::mtDual:      modelParameters = new ModelParamDual      (fileDesc, log);
+                            break;
+
   default:
-    log.Level (-1) << endl
-      << "TrainingConfiguration2::CreateModelParameters  ***ERROR***   Invalid modelingMethod selected at this time." << endl
+    log.Level (-1) << endl << endl
+      << "TrainingConfiguration2::CreateModelParameters  ***ERROR***   Invalid modeling method[" 
+      << Model::ModelTypeToStr (modelingMethod) << "] selected at this time." << endl
       << endl;
     break;
   }
@@ -120,23 +121,26 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
   Configuration (GetEffectiveConfigFileName (_configFileName), _log),
 
   configFileNameSpecified (_configFileName),
+  configRootName            (KKB::osGetRootName (_configFileName)),
   fileDesc                (NULL),
   fvFactoryProducer       (_fvFactoryProducer),
   mlClasses               (NULL),
-  imageClassesWeOwnIt     (false),
+  mlClassesWeOwnIt        (false),
   log                     (_log),
   modelingMethod          (Model::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
   noiseGuaranteedSize     (0),
-  noiseImageClass         (NULL),
+  noiseMLClass            (NULL),
   noiseTrainingClass      (NULL),
   normalizationParms      (NULL),
+  otherClass              (NULL),
+  otherClassLineNum       (-1),
   rootDir                 (),
   rootDirExpanded         (),
-  trainingClasses         ("", true, 10),
+  subClassifiers          (NULL),
+  trainingClasses         ("", true),
   validateDirectories     (_validateDirectories)
-
 {
   fileDesc = fvFactoryProducer->FileDesc ();
   if  (!fileDesc)
@@ -157,7 +161,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
   }
 
   mlClasses = new MLClassList ();
-  imageClassesWeOwnIt = true;
+  mlClassesWeOwnIt = true;
 
   ValidateConfiguration ();
   
@@ -184,24 +188,28 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
                                                 FactoryFVProducerPtr  _fvFactoryProducer,
                                                 RunLog&               _log
                                                ):
-  Configuration             (_log),
-
-  configFileNameSpecified   (""),
-  fileDesc                  (NULL),
-  fvFactoryProducer         (_fvFactoryProducer),
-  mlClasses                 (NULL),
-  imageClassesWeOwnIt       (false),
-  log                       (_log),
-  modelingMethod            (Model::mtNULL),
-  examplesPerClass          (0),
-  modelParameters           (NULL),
-  noiseGuaranteedSize       (0),
-  noiseImageClass           (NULL),
-  noiseTrainingClass        (NULL),
-  normalizationParms        (NULL),
-  trainingClasses           ("", true, 10),
-  validateDirectories       (false)
-
+  Configuration           (_log),
+  configFileNameSpecified (""),
+  configRootName          (),
+  fileDesc                (NULL),
+  fvFactoryProducer       (_fvFactoryProducer),
+  mlClasses               (NULL),
+  mlClassesWeOwnIt        (false),
+  log                     (_log),
+  modelingMethod          (Model::mtNULL),
+  examplesPerClass        (0),
+  modelParameters         (NULL),
+  noiseGuaranteedSize     (0),
+  noiseMLClass            (NULL),
+  noiseTrainingClass      (NULL),
+  normalizationParms      (NULL),
+  otherClass              (NULL),
+  otherClassLineNum       (-1),
+  rootDir                 (),
+  rootDirExpanded         (),
+  subClassifiers          (NULL),
+  trainingClasses         ("", true),
+  validateDirectories     (false)
 {
   if  (!fvFactoryProducer)
   {
@@ -219,14 +227,15 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   else
     mlClasses = new MLClassList ();
 
-  imageClassesWeOwnIt = true;
+  mlClassesWeOwnIt = true;
 
   {
     MLClassList::iterator idx;
     for  (idx = mlClasses->begin ();  idx != mlClasses->end ();  idx++)
     {
       MLClassPtr mlClass = *idx;
-      TrainingClassPtr  tc = new TrainingClass ("", mlClass->Name (), 1.0f, 1.0f, *mlClasses);
+      VectorKKStr  directories;
+      TrainingClassPtr  tc = new TrainingClass (directories, mlClass->Name (), 1.0f, 1.0f, NULL, *mlClasses);
       trainingClasses.PushOnBack (tc);
     }
   }
@@ -252,27 +261,105 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
 
 
 
+  
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses,
+                                                ModelParamPtr         _modelParameters,
+                                                FactoryFVProducerPtr  _fvFactoryProducer,
+                                                RunLog&               _log
+                                               ):
+  Configuration           (_log),
+  configFileNameSpecified (""),
+  configRootName          (""),
+  fileDesc                (NULL),
+  fvFactoryProducer       (_fvFactoryProducer),
+  mlClasses               (NULL),
+  mlClassesWeOwnIt        (false),
+  log                     (_log),
+  modelingMethod          (Model::mtNULL),
+  examplesPerClass        (0),
+  modelParameters         (_modelParameters),
+  noiseGuaranteedSize     (0),
+  noiseMLClass            (NULL),
+  noiseTrainingClass      (NULL),
+  normalizationParms      (NULL),
+  otherClass              (NULL),
+  otherClassLineNum       (-1),
+  rootDir                 (),
+  rootDirExpanded         (),
+  subClassifiers          (NULL),
+  trainingClasses         ("", true),
+  validateDirectories     (false)
+{
+  if  (!fvFactoryProducer)
+  {
+    KKStr  errMsg = "TrainingConfiguration2    ***ERROR***   fvFactoryProducer == NULL";
+    log.Level (-1) << endl 
+                   << errMsg << endl 
+                   << endl;
+    throw KKException (errMsg);
+  }
+
+  fileDesc = fvFactoryProducer->FileDesc ();
+
+  if  (_mlClasses)
+    mlClasses = new MLClassList (*_mlClasses);
+  else
+    mlClasses = new MLClassList ();
+  mlClassesWeOwnIt = true;
+
+  {
+    MLClassList::iterator idx;
+    for  (idx = mlClasses->begin ();  idx != mlClasses->end ();  idx++)
+    {
+      MLClassPtr      mlClass = *idx;
+      VectorKKStr  directories;
+      TrainingClassPtr  tc = new TrainingClass (directories, mlClass->Name (), 1.0f, 1.0f, NULL, *mlClasses);
+      trainingClasses.PushOnBack (tc);
+    }
+  }
+
+  switch  (_modelParameters->ModelParamType ())
+  {
+  case  ModelParam::mptDual:        modelingMethod =   Model::mtDual;       break;
+  case  ModelParam::mptKNN:         modelingMethod =   Model::mtKNN;        break;
+  case  ModelParam::mptOldSVM:      modelingMethod =   Model::mtOldSVM;     break;
+  case  ModelParam::mptSvmBase:     modelingMethod =   Model::mtSvmBase;    break;
+  case  ModelParam::mptUsfCasCor:   modelingMethod =   Model::mtUsfCasCor;  break;
+  }
+
+  {
+    examplesPerClass = int32_max;
+    FeatureNumList  selectedFeatures (fileDesc);
+    selectedFeatures.SetAllFeatures ();
+  }
+}
+  
+  
+  
+  
 TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  tc):
   Configuration (tc),
-
   configFileNameSpecified   (tc.configFileNameSpecified),
+  configRootName            (tc.configRootName),
   fileDesc                  (tc.fileDesc),
   fvFactoryProducer         (tc.fvFactoryProducer),
   mlClasses                 (NULL),
-  imageClassesWeOwnIt       (false),
+  mlClassesWeOwnIt          (false),
   log                       (tc.log),
   modelingMethod            (tc.modelingMethod),
   examplesPerClass          (tc.examplesPerClass),
   modelParameters           (NULL),
   noiseGuaranteedSize       (tc.noiseGuaranteedSize),
-  noiseImageClass           (tc.noiseImageClass),
+  noiseMLClass              (tc.noiseMLClass),
   noiseTrainingClass        (tc.noiseTrainingClass),
   normalizationParms        (NULL),
+  otherClass                (tc.otherClass),
+  otherClassLineNum         (tc.otherClassLineNum),
   rootDir                   (tc.rootDir),
   rootDirExpanded           (tc.rootDirExpanded),
-  trainingClasses           (tc.rootDir, true, tc.trainingClasses.QueueSize ()),
+  subClassifiers            (NULL),
+  trainingClasses           (tc.rootDir, true),
   validateDirectories       (tc.validateDirectories)
-
 {
   {
     kkint32  x;
@@ -287,7 +374,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   if  (tc.mlClasses)
   {
     mlClasses = new MLClassList (*tc.mlClasses);
-    imageClassesWeOwnIt = true;
+    mlClassesWeOwnIt = true;
   }
 
   if  (tc.normalizationParms)
@@ -295,6 +382,37 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
 
   if  (tc.modelParameters)
     modelParameters  = tc.modelParameters->Duplicate ();
+
+  if  (tc.subClassifiers)
+  {
+    subClassifiers = new TrainingConfiguration2List (true);
+    TrainingConfiguration2List::const_iterator  idx;
+    for  (idx = tc.subClassifiers->begin ();  idx != tc.subClassifiers->end ();  ++idx)
+    {
+      TrainingConfiguration2Ptr  subClassifier = *idx;
+      subClassifiers->PushOnBack (new TrainingConfiguration2 (*subClassifier));
+    }
+  }
+}
+
+
+
+
+
+TrainingConfiguration2::~TrainingConfiguration2 ()
+{
+  delete  noiseTrainingClass;  noiseTrainingClass = NULL;
+  delete  normalizationParms;  normalizationParms = NULL;
+  delete  modelParameters;     modelParameters    = NULL;
+
+  if  (mlClassesWeOwnIt)
+  {
+    delete  mlClasses;
+    mlClasses = NULL;
+  }
+
+  delete  subClassifiers;
+  subClassifiers = NULL;
 }
 
 
@@ -324,7 +442,7 @@ KKStr  TrainingConfiguration2::DirectoryPathForClass (MLClassPtr  mlClass)  cons
   {
     const TrainingClassPtr  tc = *idx;
     if  (tc->MLClass () == mlClass)
-      return  tc->ExpandedDirectory (rootDirExpanded);
+      return  tc->ExpandedDirectory (rootDir, 0);
   }
 
   return  KKStr::EmptyStr ();
@@ -337,7 +455,7 @@ kkuint32  TrainingConfiguration2::NumHierarchialLevels ()  const
 {
   TrainingClassList::const_iterator  idx;
 
-  kkuint32  numHierarchialLevels = 0;
+  kkuint16 numHierarchialLevels = 0;
 
   for  (idx = trainingClasses.begin ();  idx !=  trainingClasses.end ();  idx++)
   {
@@ -351,16 +469,16 @@ kkuint32  TrainingConfiguration2::NumHierarchialLevels ()  const
 
 
 
-void  TrainingConfiguration2::SyncronizeImageClassListWithTrainingClassList ()
+void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
 {
-  if  (imageClassesWeOwnIt)
+  if  (mlClassesWeOwnIt)
   {
     delete  mlClasses;
     mlClasses = NULL;
   }
 
   mlClasses = new MLClassList ();
-  imageClassesWeOwnIt = true;
+  mlClassesWeOwnIt = true;
   TrainingClassList::const_iterator  idx;
 
   for  (idx = trainingClasses.begin ();  idx !=  trainingClasses.end ();  idx++)
@@ -369,7 +487,7 @@ void  TrainingConfiguration2::SyncronizeImageClassListWithTrainingClassList ()
     if  (mlClasses->PtrToIdx (ic) < 0)
       mlClasses->AddMLClass (ic);
   }
-}  /* SyncronizeImageClassListWithTrainingClassList */
+}  /* SyncronizeMLClassListWithTrainingClassList */
 
 
 
@@ -408,10 +526,10 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHier
   {
     const TrainingClassPtr tc = *idx;
     MLClassPtr  ic = tc->MLClass ()->MLClassForGivenHierarchialLevel (level);
-    hierarchialConfig->AddATrainingClass (new TrainingClass (tc->Directory (), ic->Name (), 1.0f, 1.0f, *hierarchialClassList));
+    hierarchialConfig->AddATrainingClass (new TrainingClass (tc->Directories (), ic->Name (), 1.0f, 1.0f, NULL, *hierarchialClassList));
   }
 
-  hierarchialConfig->SyncronizeImageClassListWithTrainingClassList ();
+  hierarchialConfig->SyncronizeMLClassListWithTrainingClassList ();
 
   delete  hierarchialClassList;
   return  hierarchialConfig;
@@ -433,6 +551,9 @@ void  TrainingConfiguration2::Save (ostream&  o)
       o << "Examples_Per_Class=" << examplesPerClass << endl;
 
     o << "Features_Included=" << modelParameters->SelectedFeatures ().ToString () << endl;
+
+    if  (otherClass != NULL)
+      o << "OtherClass=" << otherClass->Name () << endl;
     o << endl;
   }
 
@@ -446,6 +567,9 @@ void  TrainingConfiguration2::Save (ostream&  o)
 
     o << "Dir="        << noiseTrainingClass->Directory () << endl;
     o << "Class_Name=" << noiseTrainingClass->Name ()      << endl;
+
+    for  (kkuint32 zed = 0;  zed < noiseTrainingClass->DirectoryCount ();  ++zed)
+      o << "Dir=" << noiseTrainingClass->Directory (zed) << endl;
     o << endl;
   }
 
@@ -456,12 +580,30 @@ void  TrainingConfiguration2::Save (ostream&  o)
     TrainingClassPtr  tc = *tcIDX;
 
     o << "[TRAINING_CLASS]" << endl;
-    o << "Dir=" << tc->Directory ()   << endl;
+
     o << "Class_Name=" << tc->Name () << endl;
     if  (tc->Weight () != 1.0f)
       o << "Weight=" << tc->Weight () << endl;
+
     if  (tc->CountFactor () > 0.0f)
       o << "Count_Factor=" << tc->CountFactor () << endl;
+
+    TrainingConfiguration2Ptr  subClassifier =  tc->SubClassifier ();
+    if  (subClassifier)
+      o << "Sub_Classifier=" << subClassifier->ConfigRootName () << endl;
+
+    for  (kkuint32 zed = 0;  zed < tc->DirectoryCount ();  ++zed)
+    {
+      const KKStr&  trainClassDir = tc->Directory (zed);
+      if  (!trainClassDir.StartsWith (rootDir))
+      {
+        KKStr  dirStr = tc->Directory (zed);
+        dirStr.TrimLeft ();
+        dirStr.TrimRight ();
+        if  (!dirStr.Empty ())
+          o << "Dir=" << dirStr  << endl;
+      }
+    }
     o << endl;
   }
 
@@ -502,21 +644,6 @@ void  TrainingConfiguration2::Save (const KKStr& fileName)
 
 
 
-TrainingConfiguration2::~TrainingConfiguration2 ()
-{
-  delete  noiseTrainingClass;  noiseTrainingClass = NULL;
-  delete  normalizationParms;  normalizationParms = NULL;
-  delete  modelParameters;     modelParameters    = NULL;
-
-  if  (imageClassesWeOwnIt)
-  {
-    delete  mlClasses;
-    mlClasses = NULL;
-  }
-}
-
-
-
 void   TrainingConfiguration2::RootDir (const KKStr& _rootDir)
 {
   rootDir = _rootDir;
@@ -547,11 +674,11 @@ KKStr  TrainingConfiguration2::ModelParameterCmdLine ()  const
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
-                                                    (FeatureVectorList&    _examples,
-                                                     MLClassListPtr        _mlClasses,
-                                                     FactoryFVProducerPtr  _fvFactoryProducer,
-                                                     RunLog&               _log
-                                                    )
+                                            (FeatureVectorList&   _examples,
+                                             const KKStr&         _parameterStr, 
+                                             FactoryFVProducerPtr _fvFactoryProducer,  /**< Will take ownership and delete in destructor.  */
+                                             RunLog&              _log
+                                            )
 {
   _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
   FileDescPtr  fileDesc = _examples.FileDesc ();
@@ -564,10 +691,13 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();
+  KKStr  parameterStr = _parameterStr;
+  if  (parameterStr.Empty ())
+    parameterStr = "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P";
 
   TrainingConfiguration2Ptr  config 
       = new TrainingConfiguration2 (mlClasses, 
-                                   "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P",
+                                    parameterStr,
                                    _fvFactoryProducer,
                                    _log
                                   );
@@ -578,7 +708,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
 
   return  config;
 }  /* CreateFromFeatureVectorList */
-
 
 
 
@@ -601,6 +730,42 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
   return  classes;
 }   /* ExtractClassList */
 
+
+
+
+
+MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
+{
+  TrainingClassList::const_iterator  idx;
+
+  MLClassListPtr  classes = new MLClassList ();
+
+  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
+  {
+    TrainingClassPtr  tc = *idx;
+    if  (tc->SubClassifier () == NULL)
+    {
+      if  (classes->PtrToIdx (tc->MLClass ()) < 0)
+        classes->PushOnBack (tc->MLClass ());
+    }
+    else
+    {
+      MLClassListPtr  subClassifierClasses = tc->SubClassifier ()->ExtractFullHierachyOfClasses ();
+      MLClassList::const_iterator  idx2;
+      for  (idx2 = subClassifierClasses->begin();  idx2 != subClassifierClasses->end ();  ++idx2)
+      {
+        MLClassPtr       subClass = *idx2;
+        if  (classes->PtrToIdx (subClass) < 0)
+          classes->PushOnBack (subClass);
+      }
+      delete  subClassifierClasses;
+      subClassifierClasses = NULL;
+    }
+  }
+
+  classes->SortByName ();
+  return  classes;
+}  /* ExtractFullHierachyOfClasses */
 
 
 
@@ -684,6 +849,10 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
                                                         _successful, 
                                                         _errorMessage
                                                        );
+
+  if  (config->Gamma () == 0.0)
+    config->Gamma (0.01507);
+
   config->Save (directoryConfigFileName);
 
   return  config;
@@ -753,7 +922,7 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
 
   delete  origTraniningClasses;
   origTraniningClasses = NULL;
-}
+}  /* BuildTrainingClassListFromDirectoryStructure */
 
 
 
@@ -801,10 +970,6 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryEntry (const KK
 
 
 
-
-
-
-
 /**
  * @brief  Add a Training class to configuration
  *         Will take ownership of allocation.
@@ -816,14 +981,19 @@ void  TrainingConfiguration2::AddATrainingClass (TrainingClassPtr  _trainClass)
 
 
 
-
-void   TrainingConfiguration2::AddATrainingClass (MLClassPtr  _newClass)  // Will assume that images for this class will 
-{                                                                            // be saved off the RootDirectory using its own 
-                                                                             // name for the subdirectory name.
-  TrainingClassPtr  tc = new TrainingClass ("",
+/**
+ *@brief Will assume that images for this class will be saved off the RootDirectory using its own
+  name for the subdirectory name.
+ */
+void   TrainingConfiguration2::AddATrainingClass (MLClassPtr  _newClass)
+{
+  VectorKKStr directories;
+  TrainingClassPtr  tc 
+    = new TrainingClass (directories,
                                             _newClass->Name (),
                                             1.0f,                            // Weight given to this Class during training
                                             1.0f,                            // CountFactor
+                         NULL,               // Sub-Classifier
                                             *mlClasses
                                            );
   AddATrainingClass (tc);
@@ -921,6 +1091,29 @@ void  TrainingConfiguration2::C_Param (double _CCC)
 
 
 
+kkint32 TrainingConfiguration2::Number_of_rounds ()  const
+{
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::mptUsfCasCor))
+  {
+    return  dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds ();
+  }
+  else
+  {
+    return  -1;
+  }
+}
+
+
+
+void   TrainingConfiguration2::Number_of_rounds (kkint32 _number_of_rounds)
+{
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::mptUsfCasCor))
+  {
+    dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds (_number_of_rounds);
+  }
+}
+
+
 
 void  TrainingConfiguration2::MachineType (SVM_MachineType _machineType)
 {
@@ -933,7 +1126,7 @@ void  TrainingConfiguration2::MachineType (SVM_MachineType _machineType)
 
 
 
-SVM_MachineType  TrainingConfiguration2::MachineType ()
+SVM_MachineType  TrainingConfiguration2::MachineType ()  const
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
@@ -1159,25 +1352,15 @@ kkint32  TrainingConfiguration2::ExamplesPerClass ()  const
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 FeatureNumList   TrainingConfiguration2::GetFeatureNums (MLClassPtr  class1,
                                                          MLClassPtr  class2
                                                         )
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
+  {
     return  oldSVMparms->GetFeatureNums (class1, class2);
+  }
   else
     return  FeatureNumList::AllFeatures (fileDesc);
 }  /* GetFeatureNums */
@@ -1198,8 +1381,36 @@ void  TrainingConfiguration2::SetModelParameters (ModelParamPtr  _svmParanters,
 
 
 
+TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const KKStr&  subClassifierName,
+                                                                          bool&         errorsFound
+                                                                         )
+{
+  errorsFound = false;
+  KKStr  rootName = KKB::osGetRootName (subClassifierName);
+  if  (!subClassifiers)
+    subClassifiers = new TrainingConfiguration2List (true);
+
+  TrainingConfiguration2Ptr config = subClassifiers->LookUp (subClassifierName);
+  if  (!config)
+  {
+    config = new TrainingConfiguration2 (fileDesc, subClassifierName, log, validateDirectories);
+    subClassifiers->PushOnBack (config);
+    if  (!config->FormatGood ())
+      errorsFound = true;
+  }
+
+  return  config;
+}  /* ValidateSubClassifier */
+
+
+
+
+
+
 TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionNum)
 {
+  kkint32  numOfSettings = NumOfSettings ((kkint32)sectionNum);
+
   kkint32  classNameLineNum   = 0;
   kkint32  dirLineNum         = 0;
   kkint32  weightLineNum      = 0;
@@ -1207,18 +1418,64 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
 
   kkint32  sectionLineNum = SectionLineNum (sectionNum);
 
-  KKStrConstPtr  classDir       = SettingValue (sectionNum, "DIR",          dirLineNum);
-  KKStrConstPtr  className      = SettingValue (sectionNum, "CLASS_NAME",   classNameLineNum);
-  KKStrConstPtr  weightStr      = SettingValue (sectionNum, "WEIGHT",       weightLineNum);
-  KKStrConstPtr  countFactorStr = SettingValue (sectionNum, "COUNT_FACTOR", countFactorLineNum);
+  VectorKKStr  directories;
+  KKStr        className;
+  KKStr        subClassifierName;
+  float        weight = 1.0f;
+  float        countFactor = 1.0f;
 
-  KKStr  classDirToUse = "";
-  if  ((classDir)  &&  (!classDir->Empty ()))
-    classDirToUse = *classDir;
-  else
-    classDirToUse = "";
+  for  (kkint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
+  {
+    KKStrConstPtr  settingNamePtr = SettingName (sectionNum, settingNum);
+    if  (!settingNamePtr)
+      continue;
 
-  if  (!className)
+    kkint32 settingLineNum = 0;
+    KKStrConstPtr  setingValuePtr = SettingValue (sectionNum, settingNum, settingLineNum);
+    KKStr  settingValue = "";
+    if  (setingValuePtr)
+      settingValue = *setingValuePtr;
+    
+    if  (settingNamePtr->EqualIgnoreCase ("CLASS_NAME"))
+    {
+      className = settingValue;
+      classNameLineNum = settingLineNum;
+    }
+
+    else if  (settingNamePtr->EqualIgnoreCase ("SUB_CLASSIFIER"))
+    {
+      subClassifierName = settingValue;
+      subClassifierLineNum = settingLineNum;
+    }
+
+    else if  (settingNamePtr->EqualIgnoreCase ("WEIGHT"))
+    {
+      weight = settingValue.ToFloat ();
+      weightLineNum = settingLineNum;
+    }
+
+    else if  (settingNamePtr->EqualIgnoreCase ("COUNT_FACTOR"))
+    {
+      countFactor = settingValue.ToFloat ();
+      countFactorNum = settingLineNum;
+    }
+
+    else if  (settingNamePtr->EqualIgnoreCase ("DIR"))
+    {
+      if  (!settingValue.Empty ())
+        directories.push_back (settingValue);
+
+      else if  (!className.Empty ())
+        directories.push_back (className);
+    }
+  }
+
+  if  (directories.size () < 1)
+  {
+    directories.push_back (className);
+  }
+
+  if  (className.Empty ())
   {
     KKStr errMsg = "'TRAINING_CLASS' section, CLASS_NAME not defined.";
     log.Level (-1) << "ValidateClassConfig   " << errMsg  << endl;
@@ -1227,30 +1484,39 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
     return  NULL;
   }
 
-  float  weight = 1.0f;
-  if  ((weightStr != NULL)  &&  (weightStr->Len () > 0))
+
+  TrainingConfiguration2Ptr subClassifer = NULL;
+  if  (!subClassifierName.Empty ())
   {
-    weight = weightStr->ToFloat ();
+    bool  errorsFound = false;
+    subClassifer = ValidateSubClassifier (subClassifierName, errorsFound);
+    if  (errorsFound)
+    {
+      KKStr  errMsg = "Sub-Classifier [" + (subClassifierName) + "] has a format error: " + subClassifer->FileName ();
+      FormatErrorsAdd (subClassifierLineNum, errMsg);
+      VectorKKStr subClassifierErrors = subClassifer->FormatErrorsWithLineNumbers ();
+      VectorKKStr::const_iterator  idx;
+      for  (idx = subClassifierErrors.begin ();  idx != subClassifierErrors.end ();  ++idx)
+        FormatErrorsAdd (subClassifierLineNum, "  " + subClassifierName + ": " + *idx);
+    }
+  }
+
     if  (weight <= 0.0f)
     {
-      KKStr  errMsg = "Class[" + (*className)  + "]    Invalid Weight Parameter.";
+    KKStr  errMsg = "Class[" + className + "]    Invalid Weight Parameter.";
       log.Level (-1) << "ValidateClassConfig   " << errMsg << endl;
       FormatErrorsAdd (weightLineNum, errMsg);
       FormatGood (false);
       return  NULL;
     }
-  }
 
-  float  countFactor = 0.0f;
-  if  (countFactorStr != NULL)
-    countFactor = countFactorStr->ToFloat ();
-
-  TrainingClassPtr tc = new TrainingClass (classDirToUse, *className, weight, countFactor, *mlClasses);
+  TrainingClassPtr tc = new TrainingClass (directories, className, weight, classFactor, subClassifer, *mlClasses);
 
   if  (validateDirectories)
   {
-    KKStr  expandedDir = tc->ExpandedDirectory (rootDirExpanded);
-
+    for  (kkuint32  zed = 0;  zed < tc->DirectoryCount ();  ++zed)
+    {
+      KKStr  expandedDir = tc->ExpandedDirectory (rootDir, zed);
     if  (!osValidDirectory (expandedDir))
     {
       KKStr  errMsg = "Invalid Directory Specified[" + expandedDir + "].";
@@ -1260,12 +1526,27 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
       delete  tc;  tc = NULL;
       return NULL;
     }
-
+    }
   }
 
   return  tc;
 }  /* ValidateClassConfig */
 
+
+
+void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr       otherClass,
+                                                  kkint32             otherClassLineNum
+                                                 )
+{
+  KKStr  classDirToUse = osAddSlash (rootDir) + otherClass->Name ();
+  if  (!osValidDirectory (classDirToUse))
+  {
+    KKStr  errMsg = "OtherClass  Directory [" + classDirToUse + "]  does not exist.";
+    log.Level (-1) << endl << "ValidateOtherClass   ***ERROR***  " << errMsg << endl << endl;
+    FormatErrorsAdd (otherClassLineNum, errMsg);
+    FormatGood (false);
+  }
+}  /* ValidateOtherClass */
 
 
 
@@ -1279,8 +1560,6 @@ void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum)
   }
 
 }  /* ValidateTrainingClassConfig */
-
-
 
 
 
@@ -1336,11 +1615,6 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
 
 
 
-//****************************************************************
-//*  Kurt  Oct-19-2002                                           *
-//*                                                              *
-//*  Added next method to support Multiple Modeling Methods.     *
-//****************************************************************
 void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
 {
   kkint32  methodLineNum  = 0;
@@ -1350,7 +1624,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
   KKStr  modelingMethodStr  (SettingValue (sectionNum, "MODELING_METHOD", methodLineNum));
   modelingMethodStr.Upper ();
 
-  log.Level (30) << "ValidateGlobalSection - ModelingMethod[" << Model::ModelTypeToStr (modelingMethod) << "]." << endl;
+  log.Level (30) << "ValidateGlobalSection - ModelingMethod[" << Model::ModelTypeToStr (modelingMethod) << "]   LineNum[" << methodLineNum << "]." << endl;
 
   modelingMethod = ModelTypeFromStr (modelingMethodStr);
 
@@ -1474,8 +1748,22 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     else
       examplesPerClass = modelParameters->ExamplesPerClass ();
   }
-} /* ValidateGlobalSection */
 
+  KKStr  otherClassName (SettingValue (sectionNum, "OtherClass", otherClassLineNum));
+  if  (otherClassLineNum >= 0)
+  {
+    if  (otherClassName.Empty ())
+    {
+      KKStr  errMsg = "OtherClass specified but no name provided.";
+      log.Level (-1) << endl << "ValidateGlobalSection   ***ERROR***   " << errMsg << endl;
+      FormatErrorsAdd (examplesPerClassLineNum, errMsg);
+      FormatGood (false);
+    }
+
+    otherClass = MLClass::CreateNewMLClass (otherClassName, -1);
+    ValidateOtherClass (otherClass, otherClassLineNum);
+  }
+} /* ValidateGlobalSection */
 
 
 
@@ -1518,12 +1806,24 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum)
     FormatGood (false);
   }
 
+  MLClassPtr  class1 = mlClasses->LookUpByName (class1Name);
+  MLClassPtr  class2 = mlClasses->LookUpByName (class2Name);
+
+  if  (!class1)
+  {
+    log.Level (20) << "ValidateTwoClassParameters  LineNum[" << class1NameLineNum << "]  Class[" << class1Name << "] not part of classifier."  << endl;
+    return;
+  }
+
+  if  (!class2)
+  {
+    log.Level (20) << "ValidateTwoClassParameters  LineNum[" << class2NameLineNum << "]  Class[" << class2Name << "] not part of classifier."  << endl;
+    return;
+  }
+
   FeatureNumListPtr  selectedFeatures = DeriveFeaturesSelected (sectionNum);
   if  (!selectedFeatures)
     selectedFeatures = new FeatureNumList (modelParameters->SelectedFeatures ());
-
-  MLClassPtr  class1 = mlClasses->LookUpByName (class1Name);
-  MLClassPtr  class2 = mlClasses->LookUpByName (class2Name);
 
   if  ((class1NameLineNum > 0)  &&  (!class1))
   {
@@ -1596,8 +1896,8 @@ void   TrainingConfiguration2::ValidateConfiguration ()
        if  (noiseTrainingClass)
        {
          kkint32  noiseGuaranteedSizeLineNum = -1;
-         noiseImageClass = noiseTrainingClass->MLClass ();
-         noiseImageClass->UnDefined (true);
+         noiseMLClass = noiseTrainingClass->MLClass ();
+         noiseMLClass->UnDefined (true);
          KKStr   noiseGuaranteedSizeStr (SettingValue (sectionNum, "GUARANTEED_SIZE", noiseGuaranteedSizeLineNum));
          noiseGuaranteedSize = atoi (noiseGuaranteedSizeStr.Str ());
        }
@@ -1609,12 +1909,10 @@ void   TrainingConfiguration2::ValidateConfiguration ()
        }
     }
 
-
     else if  (sectionName == "GLOBAL")
     {
       ValidateGlobalSection (sectionNum);
     }
-
 
     else if  ((sectionName == "TWO_CLASS_PARAMETERS")  ||
               (sectionName == "TWOCLASSPARAMETERS")    ||
@@ -1624,8 +1922,6 @@ void   TrainingConfiguration2::ValidateConfiguration ()
       ValidateTwoClassParameters (sectionNum);
     }
   }
-
-
 
   if  (trainingClasses.QueueSize () < 1)
   {
@@ -1640,6 +1936,17 @@ void   TrainingConfiguration2::ValidateConfiguration ()
     FormatGood (false);
   }
 
+  if  (otherClass != NULL)
+  {
+    if  (trainingClasses.LocateByMLClass (otherClass) != NULL)
+    {
+      KKStr  errMsg = "OtherClass[" + otherClass->Name () + "] was also defined as a TrainingClass.";
+      log.Level (-1) << endl << "ValidateConfiguration   ***ERROR***    " << errMsg << endl << endl;
+      FormatErrorsAdd (otherClassLineNum, errMsg);
+      FormatGood (false);
+    }
+  }
+
 }  /* ValidateConfiguration */
 
 
@@ -1647,9 +1954,9 @@ void   TrainingConfiguration2::ValidateConfiguration ()
 
 
 
-TrainingClassPtr   TrainingConfiguration2::LocateByImageClassName (const KKStr&  className)
+TrainingClassPtr   TrainingConfiguration2::LocateByMLClassName (const KKStr&  className)
 {
-  return  trainingClasses.LocateByImageClassName (className);
+  return  trainingClasses.LocateByMLClassName (className);
 }
 
 
@@ -1696,16 +2003,14 @@ namespace KKMLL
 
 
 
-  ostream&  operator<< (std::ostream&                       os,
-                        TrainingConfiguration2::ModelTypes  modelingMethod
-                       )
+  ostream&  KKMLL::operator<< (std::ostream&                       os,
+                              TrainingConfiguration2::ModelTypes  modelingMethod
+                              )
   {
     os << TrainingConfiguration2::ModelTypeToStr (modelingMethod);
     return os;
   }
 }
-
-
 
 
 
@@ -1790,7 +2095,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
   if  (NoiseTrainingClass ()  &&  (!cancelFlag)  &&  (!errorOccured))
   {
-    log.Level (30) << "LoadFeatureDataFromTrainingLibraries  Loading Noise Class [" << NoiseTrainingClass ()->ExpandedDirectory (rootDir) << "]" << endl;
+    log.Level (30) << "LoadFeatureDataFromTrainingLibraries  Loading Noise Class [" << NoiseTrainingClass ()->ExpandedDirectory (rootDir, 0) << "]" << endl;
     FeatureVectorListPtr  noiseFeatureData = ExtractFeatures (NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag);
     if  (!noiseFeatureData)
     {
@@ -1817,6 +2122,9 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
     }
   }
 
+
+  InstrumentDataFileManager::InitializePop ();
+
   if  (cancelFlag  ||  errorOccured)
   {
     log.Level (-1) << "LoadFeatureDataFromTrainingLibraries     ***ERROR***    CancelFlag or ErrorOcured  set to 'true'." << endl;
@@ -1838,26 +2146,24 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                                                                bool&                   cancelFlag
                                                               )
 {
-  log.Level (30) << "TrainingConfiguration2::ExtractFeatures - Extracting Features from Directory["
-                 << trainingClass->ExpandedDirectory (rootDir) << "],  into file["
+  log.Level (30) << "TrainingConfiguration2::ExtractFeatures - Extracting Features For Class["
+                 << trainingClass->Name () << "],  into file["
                  << trainingClass->FeatureFileName   ()        << "]."
                  << endl;
 
   KKStr  expandedDir = trainingClass->ExpandedDirectory (rootDir);
+  FeatureVectorListPtr  extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
+
 
   FeatureFileIOPtr  driver = NULL;
   if  (fvFactoryProducer)
     driver = fvFactoryProducer->DefaultFeatureFileIO ();
 
-  FeatureVectorListPtr  extractedExamples  = NULL;
-
-  if  (driver == NULL)
+  for  (kkuint32 zed = 0;  zed < trainingClass->DirectoryCount ();  ++zed)
   {
-    extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
-  }
-  else
-  {
-    extractedExamples = driver->FeatureDataReSink 
+    KKStr  expandedDir = trainingClass->ExpandedDirectory (rootDir, zed);
+    log.Level (30) << "ExtractFeatures  Directory: " << expandedDir << endl;
+    FeatureVectorListPtr  extractedExamplesThisDir = driver->FeatureDataReSink 
                  (fvFactoryProducer,
                   expandedDir,
                   trainingClass->FeatureFileName (),
@@ -1869,23 +2175,28 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                   latestTimeStamp,
                   log
                  );
-  }
   {
     // We now want to reset the ImageFileNames stored in each 'FeatureVector' instance so that it 
-    // reflects the sub-diorectory from where it was retrieved.  Bewteen that and the 'rootDir' 
+      // reflects the sub-directory from where it was retrieved.  Bewteen that and the 'rootDir' 
     // field you will be able to get the full path to then original image.
 
-    KKStr subDirName = trainingClass->Directory ();
+      KKStr subDirName = trainingClass->Directory (zed);
     if  (!subDirName.Empty ())
       subDirName = osAddSlash (subDirName);
 
     FeatureVectorList::iterator  idx;
-    for  (idx = extractedExamples->begin ();  idx != extractedExamples->end ();  idx++)
+      for  (idx = extractedExamplesThisDir->begin ();  idx != extractedExamplesThisDir->end ();  ++idx)
     {
       FeatureVectorPtr  fv = *idx;
       KKStr  newFileName =  subDirName + osGetRootNameWithExtension (fv->ImageFileName ());
       fv->ImageFileName (newFileName);
     }
+  }
+
+    extractedExamples->AddQueue (*extractedExamplesThisDir);
+    extractedExamplesThisDir->Owner (false);
+    delete  extractedExamplesThisDir;
+    extractedExamplesThisDir = NULL;
   }
 
   log.Level (30) << "ExtractFeatures    Exiting" << endl;
@@ -1952,6 +2263,16 @@ KKStr   TrainingConfiguration2::GetEffectiveConfigFileName (const  KKStr&  confi
 
 
 
+bool  TrainingConfiguration2::ConfigFileExists (const KKStr& _configFileName)
+{
+  KKStr  effectiveName = GetEffectiveConfigFileName (_configFileName);
+  return osFileExists (effectiveName);
+}  /* ConfigFileExists */
+
+
+
+
+
 
 void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
 {
@@ -1964,25 +2285,29 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
 
   kkuint32 zed = 0;
 
-  VectorKKStr  rootDirParts = osSplitDirectoryPathIntoParts (trainingClasses[0].ExpandedDirectory (rootDir));
+  VectorKKStr  rootDirParts = osSplitDirectoryPathIntoParts (trainingClasses[0].ExpandedDirectory (rootDir, 0));
   for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
   {
     TrainingClassPtr  tc = *idx;
-    VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir));
 
-    while  (rootDirParts.size () > parts.size ())
-      rootDirParts.pop_back ();
-    
-    zed = 0;
-    while  (zed < rootDirParts.size ())
+    for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
     {
-      if  (!(rootDirParts[zed].EqualIgnoreCase (parts[zed])))
-        break;
-      zed++;
+      VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
+
+      while  (rootDirParts.size () > parts.size ())
+        rootDirParts.pop_back ();
+    
+      zed = 0;
+      while  (zed < rootDirParts.size ())
+      {
+        if  (!(rootDirParts[zed].EqualIgnoreCase (parts[zed])))
+          break;
+        zed++;
     }
 
     while  (zed < rootDirParts.size ())
       rootDirParts.pop_back ();
+  }
   }
 
 
@@ -1994,13 +2319,17 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
   for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
   {
     TrainingClassPtr  tc = *idx;
-    VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir));
+
+    for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
+    {
+      VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
 
     KKStr newTrainClassSubDir = "";
     for (zed = (kkuint32)rootDirParts.size ();  zed < (kkuint32)parts.size ();  zed++)
       newTrainClassSubDir << parts[zed];
 
-    tc->Directory (newTrainClassSubDir);
+      tc->Directory (dirIdx, newTrainClassSubDir);
+    }
   }
 
   rootDir = "";
@@ -2012,15 +2341,44 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
 
 
 const
-BinaryClassParmsPtr    TrainingConfiguration2::BinaryClassParms (MLClassPtr  class1,
-                                                                 MLClassPtr  class2
-                                                                )  const
+BinaryClassParmsPtr  TrainingConfiguration2::GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
+                                                                              MLClassPtr  class2
+                                                                             )  const
 {
   const SVMparamPtr  param = SVMparamToUse ();
-
   if  (!param)
     return NULL;
 
   return param->GetParamtersToUseFor2ClassCombo (class1, class2);
 }  /* BinaryClassParms */
+
+
+
+BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr       class1,
+                                                                   MLClassPtr       class2
+                                                                  )
+{
+  const SVMparamPtr  param = SVMparamToUse ();
+  if  (!param)
+    return NULL;
+
+  return param->GetBinaryClassParms (class1, class2);
+}
+
+
+
+TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  configFileName)  const
+{
+  KKStr  rootName = KKB::osGetRootName (configFileName);
+  TrainingConfiguration2List::const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  ++idx)
+  {
+    TrainingConfiguration2Ptr c = *idx;
+    if  (c->ConfigRootName ().EqualIgnoreCase (rootName))
+      return c;
+  }
+  return NULL;
+}
+
+
 
