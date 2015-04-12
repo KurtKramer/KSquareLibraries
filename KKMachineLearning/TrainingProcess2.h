@@ -25,7 +25,7 @@ namespace KKMLL
   #endif
 
 
-  #ifndef _FileDescDefined_
+  #if  !defined_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
@@ -124,9 +124,8 @@ namespace KKMLL
      *          levels.  Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
      *          belongs to level 1.
      *
-     *@param[in]  _configFileName  Configuration file name where classes and SVM parameters are
-     *                             specified.  The directories where example images for each class
-     *                             will be specified.
+     *@param[in]  _config  Configuration that will provide parameters such as classes and their related 
+     *                     directories where training examples are found.
      *
      *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
      *                          If will check by both ImageFileName and FeatureValues. If this parameter
@@ -147,22 +146,22 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (const KKStr&         _configFileName,
-                      FeatureVectorListPtr _excludeList,
-                      FactoryFVProducerPtr _fvFactoryProducer,
-                      RunLog&              _log,
-                      kkuint32             _level,
-                      VolConstBool&        _cancelFlag, 
-                      KKStr&               _statusMessage
+    TrainingProcess2 (TrainingConfiguration2Ptr  _config,
+                      FeatureVectorListPtr       _excludeList,
+                      FactoryFVProducerPtr       _fvFactoryProducer,
+                      RunLog&                    _log,
+                      kkuint32                   _level,
+                      VolConstBool&              _cancelFlag, 
+                      KKStr&                     _statusMessage
                      );
 
    
    
     /**
      *@brief  Constructor Will use existing built model; will not check to see if it is up-to-date.
-     *@details  If the previously saved training process is invalid or does not exist it will set the
-     *    'Abort' flag to 'true' an return to caller.  It will NOT attempt to build a brand new
-     *    TrainingProcess model.
+     *@details  If no changes to config file or training data, will utilize an existing built model
+     *          that was saved to disk earlier;  otherwise will train from data in training library
+     *          and save resultant training classifier to disk.
      *
      *@param[in]  _configFileName  Configuration file name where classes and SVM parameters are
      *                             specified.  The directories where example images for each class
@@ -191,6 +190,35 @@ namespace KKMLL
 
 
     /**
+     *@brief  Constructor Will read existing built model from provided input stream.
+     *
+     *@param[in]  _in  Input stream that contains trainingProcess instance;  will process until 
+     *                 first line containing "</TrainingProcess2>" is encountered.
+     *
+     *@param[in]  _fvFactoryProducer  
+     *
+     *@param[in,out]  _log   Logging file.
+     *
+     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
+     *                                       training data are normalized.
+     *
+     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
+     *                        to caller as soon as convenient.
+     *
+     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
+     *                            the user as a way of letting them know what is happening.
+     */
+    TrainingProcess2 (istream&             _in,
+                      FactoryFVProducerPtr _fvFactoryProducer,
+                      RunLog&              _log,
+                      bool                 _featuresAlreadyNormalized,
+                      VolConstBool&        _cancelFlag,
+                      KKStr&               _statusMessage
+                     );
+
+
+
+    /**
      *@brief  Constructor that gets its training data from a list of examples provided in one of the parameters.
      *@param[in]  _config  A configuration that is already loaded in memory.
      *@param[in]  _trainingExamples  Training data to train classifier with.
@@ -207,7 +235,6 @@ namespace KKMLL
      */
     TrainingProcess2 (TrainingConfiguration2Ptr  _config, 
                       FeatureVectorListPtr       _trainingExamples,
-                      MLClassListPtr             _mlClasses,
                       std::ostream*              _reportFile,
                       FactoryFVProducerPtr       _fvFactoryProducer,
                       RunLog&                    _log,
@@ -216,72 +243,83 @@ namespace KKMLL
                       KKStr&                     _statusMessage
                      );
 
+    virtual
+    ~TrainingProcess2 ();
 
-     ~TrainingProcess2 ();
+    kkint32  MemoryConsumedEstimated ()  const;
 
-    void    CreateModelsFromTrainingData ();
-
-    void    ExtractTrainingClassFeatures (KKB::DateTime&  latestImageTimeStamp,
-                                          bool&           changesMadeToTrainingLibraries
-                                         );
-
-    void    ReportTraningClassStatistics (std::ostream&  report);
-
-    void    SaveResults ();
-
-    void    ValidateConfiguration ();
 
 
     // Access Members
-    bool                     Abort              () const  {return abort;}
+    void  Abort (bool _abort)  {abort = _abort;}
 
-    const KKB::DateTime&     BuildDateTime      () const  {return  buildDateTime;}
+    bool                      Abort                     () const  {return abort;}
+    const KKB::DateTime&      BuildDateTime             () const  {return buildDateTime;}
+    TrainingConfiguration2Ptr Config                    ()        {return config;}    
+    const KKStr&              ConfigFileName            () const  {return configFileName;}
+    VectorKKStr               ConfigFileFormatErrors    () const;
+    kkint32                   DuplicateCount            () const  {return duplicateCount;}
+    kkint32                   DuplicateDataCount        () const  {return duplicateDataCount;}
+    bool                      FeaturesAlreadyNormalized () const  {return featuresAlreadyNormalized;}
+    FeatureVectorListPtr      Images                    ()        {return trainingExamples;}
+    MLClassListPtr            MLClasses                 () const  {return mlClasses;}
+    RunLog&                   Log                       ()        {return log;}
+    Model::ModelTypes         ModelType                 () const;
+    KKStr                     ModelTypeStr              () const;
+    KKStr                     ModelDescription          () const;
+    SVMModelPtr               Model3                    ();
+    kkint32                   NumOfSupportVectors       () const;
+    ModelOldSVMPtr            OldSVMModel               () const;
+    ClassProbList const *     PriorProbability          () const  {return  priorProbability;}
+    ModelParamPtr             Parameters                () const;
+    TrainingProcess2ListPtr   SubTrainingProcesses      () const  {return subTrainingProcesses;}
+    ModelPtr                  TrainedModel              () const  {return model;}
+    double                    TrainingTime              () const;
 
-    TrainingConfiguration2Ptr Config            ()        {return  config;}    
-
-    const KKStr&             ConfigFileName     () const  {return configFileName;}
-
-    VectorKKStr              ConfigFileFormatErrors ()  const;
-
-    kkint32                   DuplicateCount () const;
-
-   kkint32                  DuplicateDataCount () const;
-
-   bool                     FeaturesAlreadyNormalized ()  
-                                                  {return  featuresAlreadyNormalized;}
 
 
-   FeatureVectorListPtr     Images             () {return  trainingExamples;}
+    void  CreateModelsFromTrainingData ();
 
-   MLClassListPtr           ImageClasses       () {return  mlClasses;}
+    /**@brief Extracts the list of classes including ones from Sub-Classifiers */
+    MLClassListPtr  ExtractFullHierachyOfClasses ()  const;  
 
-   RunLog&                  Log                () {return log;}
+    void  ExtractTrainingClassFeatures (KKB::DateTime&  latestImageTimeStamp,
+                                        bool&           changesMadeToTrainingLibraries
+                                       );
 
-   kkint32                  MemoryConsumedEstimated ()  const;
+    void  LoadPrevTrainedOtherwiseRebuild (bool  _forceRebuild,
+                                           bool  _checkForDuplicates
+                                          );
 
-    S VMModelPtr              Model3 ();
- 
-    ModelOldSVMPtr            OldSVMModel ()  const;
+    void  Read (istream&  in,
+                bool&     successful
+               );
 
-    ClassProbList const *     PriorProbability ()  const  {return  priorProbability;}
+    void  ReportTraningClassStatistics (std::ostream&  report);
 
-    void                      Read (istream&  in,
-                                   bool&     successful
+    void  SaveResults ();
+
+    void  SupportVectorStatistics (kkint32&  numSVs,
+                                   kkint32&  totalNumSVs
                                   );
 
-    ModelParamPtr            Parameters                () const;
+    /**
+      *@brief Returns back pointer to 1st classifier of Dual Classifier.
+      *@details If not a Dual classifier will return back NULL. Keep in mind that you will
+      *  not own this classifier and that ot can be deleted at any time.
+      */
+    TrainingProcess2Ptr   TrainingProcessLeft ();
 
-    ModelPtr                 TrainedModel              () const  {return model;}
+    /**
+      *@brief Returns back pointer to 2nd classifier of Dual Classifier.
+      *@details If not a Dual classifier will return back NULL.
+      */
+    TrainingProcess2Ptr   TrainingProcessRight ();
 
-    double                   TrainingTime              () const;   // Comes from SVMModel
 
-    kkint32                  NumOfSupportVectors       () const;
+    void  ValidateConfiguration ();
 
-    void                     SupportVectorStatistics (kkint32&  numSVs,
-                                                      kkint32&  totalNumSVs
-                                                     );
-
-    void                     Abort (bool _abort)  {abort = _abort;}
+    void  WriteXml (ostream&  o);
 
 
   private:
@@ -293,6 +331,10 @@ namespace KKMLL
 
     void    CheckForDuplicates (bool  allowDupsInSameClass);
 
+    void    LoadSubClassifiers (bool  forceRebuild,
+                                bool  checkForDuplicates
+                               );
+
     void    RemoveExcludeListFromTrainingData ();
 
 
@@ -301,7 +343,6 @@ namespace KKMLL
     //             Routines for Extracting Features              *
     //************************************************************
     void  ExtractFeatures (const TrainingClassPtr  trainingClass,
-  
                            KKB::DateTime&          latestTimeStamp,
                            bool&                   changesMade
                           );

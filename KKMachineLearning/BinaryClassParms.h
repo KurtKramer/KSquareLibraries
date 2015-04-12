@@ -24,7 +24,6 @@
  @endcode
  @see  KKMLL::SVMparam, KKMLL::ModelParamOldSVM, KKMLL::SVM233
  */
-
 #include "KKQueue.h"
 
 #include "svm.h"
@@ -51,7 +50,7 @@ namespace KKMLL
 
     typedef  SVM233::svm_parameter  svm_parameter;
 
-    /** @brief  Create from existing Model on Disk. */
+    /** @brief  Constructor for 'BinaryClassParms' where caller supplies the two classes and parameters for that specific class pair. */
     BinaryClassParms (MLClassPtr             _class1,
                       MLClassPtr             _class2,
                       const svm_parameter&   _param,
@@ -96,8 +95,8 @@ namespace KKMLL
     MLClassPtr      class1;
     MLClassPtr      class2;
 
-    svm_parameter   param;             /**< From SVMlib            */
-    FeatureNumList  selectedFeatures;  /**< Feature Number to use. */
+    svm_parameter   param;             /**< From SVMlib             */
+    FeatureNumList  selectedFeatures;  /**< Feature Numbers to use. */
     float           weight;
   };  /* BinaryClassParms */
 

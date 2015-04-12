@@ -20,6 +20,7 @@ using namespace KKB;
 
                 
 //#include "FeatureFileIOKK.h"
+#include "FeatureFileIOPices.h"
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"

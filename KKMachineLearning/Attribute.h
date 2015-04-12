@@ -5,7 +5,7 @@
  *@class  KKMLL::Attribute
  *@author  Kurt Kramer
  *@brief describes a single Feature, Type and possible values.
- *@details Used to support 'FileDesc', 'FeatureVector', and 'PostLarvaeFV' classes.  FileDesc 
+ *@details Used to support 'FileDesc', 'FeatureVector', and is derived classes classes.  FileDesc 
  *         will maintain a list of 'Attribute' objects to describe each separate field in a given
  *         FeatureFile.  A given Feature can be one of several types, Numeric, Nominal, Ordinal, 
  *         and Symbolic.
