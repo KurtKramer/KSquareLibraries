@@ -561,18 +561,15 @@ void  TrainingConfiguration2::Save (ostream&  o)
   if  (noiseTrainingClass)
   {
     o << "[NOISE_IMAGES]" << endl;
-
     if (noiseGuaranteedSize > 0)
       o << "GUARANTEED_SIZE=" << noiseGuaranteedSize << endl;
 
-    o << "Dir="        << noiseTrainingClass->Directory () << endl;
-    o << "Class_Name=" << noiseTrainingClass->Name ()      << endl;
-
+    o << "Class_Name=" << noiseTrainingClass->Name ()  << endl;
     for  (kkuint32 zed = 0;  zed < noiseTrainingClass->DirectoryCount ();  ++zed)
       o << "Dir=" << noiseTrainingClass->Directory (zed) << endl;
+
     o << endl;
   }
-
 
   TrainingClassList::iterator tcIDX;
   for  (tcIDX = trainingClasses.begin ();  tcIDX !=  trainingClasses.end ();  tcIDX++)
@@ -910,8 +907,8 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
     {
       TrainingClassPtr  tc = *idx;
 
-      // I am not sure about this line.  Might need top use rootDir from original configuration file.
-      TrainingClassPtr  origTC = origTraniningClasses->LocateByDirectory (tc->ExpandedDirectory (_subDir));
+      // I am not sure about this line.  Might need to use rootDir from original configuration file.
+      TrainingClassPtr  origTC = origTraniningClasses->LocateByDirectory (tc->ExpandedDirectory (_subDir, 0));
       if  (origTC)
       {
         tc->MLClass      (origTC->MLClass ());
@@ -948,7 +945,9 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryEntry (const KK
     if  (thereAreImageFilesInDir)
     {
       KKStr  className = MLClass::GetClassNameFromDirName (currentDirectory);
-      AddATrainingClass (new TrainingClass (subDir, className, 1.0f, 1.0f, *mlClasses));
+      VectorKKStr subDirs;
+      subDirs.push_back (subDir);
+      AddATrainingClass (new TrainingClass (subDirs, className, 1.0f, 1.0f, NULL, *mlClasses));
     }
   }
 
@@ -1393,10 +1392,17 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
   TrainingConfiguration2Ptr config = subClassifiers->LookUp (subClassifierName);
   if  (!config)
   {
-    config = new TrainingConfiguration2 (fileDesc, subClassifierName, log, validateDirectories);
+    config = new TrainingConfiguration2 (subClassifierName, fvFactoryProducer, true, log);
     subClassifiers->PushOnBack (config);
     if  (!config->FormatGood ())
+    {
       errorsFound = true;
+      const VectorKKStr&  errors   = config->FormatErrors ();
+      const VectorInt&    lineNums = config->FormatErrorsLineNums ();
+      kkuint32 zed = Max (errors.size (), lineNums.size ());
+      for  (kkuint32 x = 0;  x < zed;  ++x)
+        FormatErrorsAdd (lineNums[x], errors[x]);
+    }
   }
 
   return  config;
@@ -1415,6 +1421,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
   kkint32  dirLineNum         = 0;
   kkint32  weightLineNum      = 0;
   kkint32  countFactorLineNum = 0;
+  kkint32  subClassifierLineNum = 0;
 
   kkint32  sectionLineNum = SectionLineNum (sectionNum);
 
@@ -1457,7 +1464,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
     else if  (settingNamePtr->EqualIgnoreCase ("COUNT_FACTOR"))
     {
       countFactor = settingValue.ToFloat ();
-      countFactorNum = settingLineNum;
+      countFactorLineNum = settingLineNum;
     }
 
     else if  (settingNamePtr->EqualIgnoreCase ("DIR"))
@@ -1510,7 +1517,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
       return  NULL;
     }
 
-  TrainingClassPtr tc = new TrainingClass (directories, className, weight, classFactor, subClassifer, *mlClasses);
+  TrainingClassPtr tc = new TrainingClass (directories, className, weight,  countFactor, subClassifer, *mlClasses);
 
   if  (validateDirectories)
   {
@@ -2101,7 +2108,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
     {
       log.Level (-1) << endl
                      << "TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries   ***ERROR***  Error Loading feature data for Noise Images, Directory[" 
-                     << NoiseTrainingClass ()->ExpandedDirectory (rootDir) 
+                     << NoiseTrainingClass ()->ExpandedDirectory (rootDir, 0) 
                      << "]." 
                      << endl
                      << endl;
@@ -2121,9 +2128,6 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
       delete  noiseFeatureData;  noiseFeatureData = NULL;
     }
   }
-
-
-  InstrumentDataFileManager::InitializePop ();
 
   if  (cancelFlag  ||  errorOccured)
   {
@@ -2151,9 +2155,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                  << trainingClass->FeatureFileName   ()        << "]."
                  << endl;
 
-  KKStr  expandedDir = trainingClass->ExpandedDirectory (rootDir);
   FeatureVectorListPtr  extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
-
 
   FeatureFileIOPtr  driver = NULL;
   if  (fvFactoryProducer)

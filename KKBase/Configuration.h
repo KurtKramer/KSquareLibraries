@@ -59,7 +59,9 @@ namespace KKB
 
     void  FormatGood (bool _formatGood)  {formatGood = _formatGood;}
 
-    const VectorKKStr&   FormatErrors ()  const {return formatErrors;}
+    const VectorKKStr&   FormatErrors         ()  const {return formatErrors;}
+    const VectorInt&     FormatErrorsLineNums ()  const {return formatErrorsLineNums;}
+
 
     VectorKKStr          FormatErrorsWithLineNumbers ()  const;
 

@@ -35,7 +35,7 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
 {
   featureFileName << ".data";   // Will be equal to ClassName + ".data".     ex:  "Copepods.data"
 
-  mlClass = mlClasses.GetMLClassPtr (_name);
+  mlClass = _mlClasses.GetMLClassPtr (_name);
   mlClass->CountFactor (_countFactor);
 }
 

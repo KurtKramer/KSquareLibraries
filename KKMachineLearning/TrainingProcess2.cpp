@@ -1,5 +1,4 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <string>
 #include <sstream>
@@ -507,12 +506,12 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
 
 
-TrainingProcess2::TrainingProcess2 (istream&       _in,
-                                    FileDescPtr    _fileDesc,
-                                    RunLog&        _log,
-                                    bool           _featuresAlreadyNormalized,
-                                    VolConstBool&  _cancelFlag,
-                                    KKStr&         _statusMessage
+TrainingProcess2::TrainingProcess2 (istream&             _in,
+                                    FactoryFVProducerPtr _fvFactoryProducer,
+                                    RunLog&              _log,
+                                    bool                 _featuresAlreadyNormalized,
+                                    VolConstBool&        _cancelFlag,
+                                    KKStr&               _statusMessage
                                    ):
 
   abort                     (false),
@@ -525,6 +524,7 @@ TrainingProcess2::TrainingProcess2 (istream&       _in,
   duplicateDataCount        (0),
   excludeList               (NULL),
   featuresAlreadyNormalized (_featuresAlreadyNormalized),
+  fvFactoryProducer         (_fvFactoryProducer),
   fileDesc                  (NULL),
   mlClasses                 (new MLClassList ()),
   log                       (_log),
@@ -590,7 +590,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     featuresAlreadyNormalized (_featuresAlreadyNormalized),
     fileDesc                  (NULL),
     fvFactoryProducer         (_fvFactoryProducer),
-    mlClasses                 (_mlClasses),
+    mlClasses                 (NULL),
     log                       (_log),
     model                     (NULL),
     priorProbability          (NULL),
@@ -804,7 +804,7 @@ void  TrainingProcess2::WriteXml (ostream&  o)
 void  TrainingProcess2::Read (istream&  in,
                               bool&     successful
                              )
-
+                             
 {
   log.Level (20) << "TrainingProcess2::Read" << endl;
 
@@ -926,7 +926,7 @@ void  TrainingProcess2::Read (istream&  in,
     {
       if  (weOwnConfig)
         delete  config;
-      config = new TrainingConfiguration2 (fileDesc, osGetRootName (configFileName), log, false);
+      config = new TrainingConfiguration2 (osGetRootName (configFileName), fvFactoryProducer, false, log);
       weOwnConfig = true;
 
       if  (config->SubClassifiers () != NULL)
@@ -1218,7 +1218,7 @@ void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingE
     {
       log.Level (-1) << endl << endl
           << "TrainingProcess2::AddImagesToTrainingLibray    ***ERROR***  " << endl
-          <<         Example["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "] Has Invalid Feature Data."
+          << "        Example["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "] Has Invalid Feature Data."
           << endl << endl;
 
       if  (report)
@@ -1467,7 +1467,7 @@ void  TrainingProcess2::LoadSubClassifiers (bool  forceRebuild,
     TrainingConfiguration2Ptr  subClassifier = *idx;
     TrainingProcess2Ptr  tp = new TrainingProcess2 (subClassifier, 
                                                     NULL,     // ExcludeList
-                                                    fileDesc,
+                                                    fvFactoryProducer,
                                                     log,
                                                     NULL,     // reportFile
                                                     forceRebuild,

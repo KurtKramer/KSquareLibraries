@@ -1,11 +1,11 @@
 #if  !defined(_TRAININGCONFIGURATION2_)
 #define _TRAININGCONFIGURATION2_
 
+#include "Configuration.h"
 #include "DateTime.h"
 #include "GoalKeeper.h"
 #include "KKStr.h"
 
-#include "Configuration.h"
 #include "FileDesc.h"
 #include "FactoryFVProducer.h"
 #include "FeatureVectorProducer.h"

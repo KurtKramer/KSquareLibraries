@@ -388,11 +388,11 @@ namespace KKMLL
                                                 * data. If you wish to grade the results it would only be fare to delete these trainingExamples.
                                                 */
 
-    FactoryFVProducerPtr         fvFactoryProducer;
-
     bool                         featuresAlreadyNormalized;
 
     FileDescPtr                  fileDesc;
+
+    FactoryFVProducerPtr         fvFactoryProducer;
 
     MLClassListPtr               mlClasses; /**< List of all classes that are to be processed. There will be one entry for each MLClass,
                                              * Including one for noise trainingExamples(unknown trainingExamples).
