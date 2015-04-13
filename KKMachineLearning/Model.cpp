@@ -413,7 +413,7 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
   }
   catch  (const KKException&  e)
   {
-    delete  model; model = NULL; throw  e;
+    delete  model; model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
   catch  (const std::exception&  e)

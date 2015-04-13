@@ -1,18 +1,13 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <ctype.h>
 #include <limits.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 

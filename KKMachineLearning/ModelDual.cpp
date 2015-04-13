@@ -229,7 +229,11 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     }
   }
 
-  config1 = new TrainingConfiguration2 (fileDesc, param->ConfigFileName1 (), log, false);
+  config1 = new TrainingConfiguration2 (param->ConfigFileName1 (),
+                                        NULL,   // fvFactoryProducer
+                                        false,  // false = Do NOT validate directories.
+                                        log
+                                       );
   if  (!config1->FormatGood ())
   {
     validModel = false;
@@ -238,7 +242,11 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     throw KKException (errMsg);
   }
 
-  config2 = new TrainingConfiguration2 (fileDesc, param->ConfigFileName2 (), log, false);
+  config2 = new TrainingConfiguration2 (param->ConfigFileName2 (), 
+                                        NULL,   // fvFactoryProducer
+                                        false,  // false = Do NOT validate directories.
+                                        log
+                                       );
   if  (!config2->FormatGood ())
   {
     validModel = false;
@@ -251,10 +259,10 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   trainer1 = new TrainingProcess2 (config1, 
                                    trainExamples, 
-                                   NULL,           /**< _reportFile, */
-                                   fileDesc,
+                                   NULL,              /**< _reportFile  */
+                                   NULL,              /**< fvFactoryProducer  */
                                    log,
-                                   true,           /**< 'true' = Feature data already normalized. */
+                                   true,              /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
                                    trainer1StatusMsg
                                   );
@@ -293,7 +301,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   trainer2 = new TrainingProcess2 (config2, 
                                    trainExamples, 
                                    NULL,             // _reportFile,
-                                   fileDesc,
+                                   NULL,             /**< fvFactoryProducer  */
                                    log,
                                    true,             /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
@@ -472,15 +480,14 @@ MLClassPtr       ModelDual::Predict (FeatureVectorPtr  example)
 
 void  ModelDual::Predict (FeatureVectorPtr  example,
                           MLClassPtr        knownClass,
-                          MLClassPtr     &  predClass1,
-                          MLClassPtr     &  predClass2,
-                          kkint32&            predClass1Votes,
-                          kkint32&            predClass2Votes,
+                          MLClassPtr&       predClass1,
+                          MLClassPtr&       predClass2,
+                          kkint32&          predClass1Votes,
+                          kkint32&          predClass2Votes,
                           double&           probOfKnownClass,
                           double&           predClass1Prob,
                           double&           predClass2Prob,
-                          double&           compact,
-                          kkint32&            numOfWinners,
+                          kkint32&          numOfWinners,
                           bool&             knownClassOneOfTheWinners,
                           double&           breakTie
                          )
@@ -499,7 +506,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   double           probOfKnownClassC1 = 0.0;
   double           predClass1ProbC1   = 0.0;
   double           predClass2ProbC1   = 0.0;
-  double           compactC1          = 0;
   kkint32          numOfWinnersC1     = 0;
   bool             knownClassOneOfTheWinnersC1 = false;
   double           breakTieC1         = 0.0;
@@ -511,7 +517,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   double           probOfKnownClassC2 = 0.0;
   double           predClass1ProbC2   = 0.0;
   double           predClass2ProbC2   = 0.0;
-  double           compactC2          = 0;
   kkint32          numOfWinnersC2     = 0;
   bool             knownClassOneOfTheWinnersC2 = false;
   double           breakTieC2         = 0.0;
@@ -527,8 +532,7 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                                probOfKnownClassC1,
                                predClass1ProbC1,   predClass2ProbC1,
                                numOfWinnersC1,
-                               breakTieC1,
-                               compactC1
+                               breakTieC1
                               );
 
   classifier2->ClassifyAImage (*encodedExample, 
@@ -537,8 +541,7 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                                probOfKnownClassC2,
                                predClass1ProbC2,   predClass2ProbC2,
                                numOfWinnersC2,
-                               breakTieC2,
-                               compactC2
+                               breakTieC2
                               );
 
   predClass1 = ReconcilePredictions (predClass1C1, predClass1C2);
@@ -586,7 +589,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   
 
   probOfKnownClass  = (probOfKnownClassC1 + probOfKnownClassC2) / 2.0;
-  compact           = (compactC1          + compactC2)          / 2.0;
   breakTie          = (breakTieC1         + breakTieC2)         / 2.0;
   numOfWinners      = (numOfWinnersC1     + numOfWinnersC2)     / 2;
   knownClassOneOfTheWinners = (knownClass == predClass1C1)  ||  (knownClass == predClass1C2);
@@ -608,7 +610,7 @@ ClassProbListPtr  ModelDual::ProbabilitiesByClass (FeatureVectorPtr  example)
 {
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::Predict   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return NULL;
   }
 
@@ -652,7 +654,7 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::Predict   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClassDual   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -706,7 +708,7 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr         example,
 
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::Predict   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -820,7 +822,7 @@ void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
 {
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::Predict   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    log.Level (-1) << endl << endl << "ModelDual::RetrieveCrossProbTable   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -906,9 +908,9 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
       delete  trainer1;     trainer1    = NULL;
 
       trainer1 = new TrainingProcess2 (i,
-                                       fileDesc,
+                                       NULL,       /**< fvFactoryProducer  */
                                        log,
-                                       true,   // 'true' = Feature data already normalized.
+                                       true,       /**<  'true' = Feature data already normalized. */
                                        cancelFlag, 
                                        trainer1StatusMsg
                                       );
@@ -937,9 +939,9 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
       delete  trainer2;     trainer2    = NULL;
 
       trainer2 = new TrainingProcess2 (i,
-                                       fileDesc,
+                                       NULL,    /**< fvFactoryProducer  */
                                        log,
-                                       true,   // 'true' = Feature data already normalized.
+                                       true,    /**< 'true' = Feature data already normalized.  */
                                        cancelFlag, 
                                        trainer2StatusMsg
                                       );

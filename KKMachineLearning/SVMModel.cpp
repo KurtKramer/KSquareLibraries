@@ -23,7 +23,7 @@ using namespace  KKB;
 
 
 #include "SVMModel.h"
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "BinaryClassParms.h"
 #include "FeatureEncoder.h"
 #include "FeatureNumList.h"
@@ -1432,7 +1432,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
 
   knownClassOneOfTheWinners = false;
 
-  predClass  = NULL;
+  predClass1 = NULL;
   predClass2 = NULL;
 
   predClass1Votes = -1;
@@ -1449,7 +1449,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
     EncodeExample (example, predictXSpace);
     PredictOneVsAll (predictXSpace,   //  used to be xSpace,  
                      knownClass,
-                     predClass,
+                     predClass1,
                      predClass2,
                      probOfKnownClass,
                      predClass1Prob,
@@ -1505,7 +1505,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
       }
     }
 
-    predClass  = assignments.GetMLClass (prediction);
+    predClass1 = assignments.GetMLClass (prediction);
     predClass2 = assignments.GetMLClass (prediction2);
     //free (xSpace);
   }
@@ -1515,7 +1515,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
   {
     PredictByBinaryCombos (example, 
                            knownClass,
-                           predClass,
+                           predClass1,
                            predClass2,
                            predClass1Votes,
                            predClass2Votes,
@@ -1560,7 +1560,7 @@ void  SVMModel::PredictRaw (FeatureVectorPtr example,
 
 void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
                                   MLClassPtr   knownClass,
-                                  MLClassPtr&  predClass,  
+                                  MLClassPtr&  predClass1, 
                                   MLClassPtr&  predClass2,  
                                   double&      probOfKnownClass,
                                   double&      predClass1Prob,
@@ -1604,7 +1604,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
     kkint16  assignmentNum = oneVsAllAssignment[assignmentIDX];
 
     kkint32  knownClassNum = -1;
-    kkint32  predClassNum  = -1;
+    kkint32  predClassNum1 = -1;
     kkint32  predClassNum2 = -1;
 
     MLClassPtr  classWeAreLookingAt = assignments.GetMLClassByIndex (assignmentNum);
@@ -1657,7 +1657,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
     delete[]  tempProbabilities;
     tempProbabilities = NULL;
 
-    if  (predClassNum == 0)
+    if  (predClassNum1 == 0)
     {
       winningClasses.push_back (assignmentIDX);
       probabilities[assignmentIDX] = predictedClassProbability;
@@ -1706,7 +1706,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
     assignmentIDXthatWon = largestLosingProbabilityIDX;
     assignmentIDXsecond  = secondLargestLosingProbabilityIDX;
 
-    predClass = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXthatWon]);
+    predClass1 = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXthatWon]);
 
     knownClassOneOfTheWinners = false;
   }

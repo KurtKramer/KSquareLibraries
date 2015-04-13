@@ -703,7 +703,7 @@ void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  examples)
   {
     log.Level (-1) << "NormalizationParms::NoralizeImage  **** ERROR ****     Mismatched Feature Count." << endl
                    << "            NormalizationParms [" << numOfFeatures            << "]" << endl
-                   << "            ImageFeatiresList  [" << images->NumOfFeatures () << "]."  << endl
+                   << "            ImageFeatiresList  [" << examples->NumOfFeatures () << "]."  << endl
                    << endl;
 
     osWaitForEnter ();
@@ -725,7 +725,7 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
 {
   FeatureVectorPtr  result = new FeatureVector (*example);
   float*  featureData = result->FeatureDataAlter ();
-  for  (kkint32 i = 0; i < numOfFeatures; i++)
+  for  (kkint32 i = 0;  i < numOfFeatures;  ++i)
   {
     if  (normalizeFeature[i])
     {

@@ -1,17 +1,13 @@
 #if  !defined(_TRAININGCLASS_)
 #define  _TRAININGCLASS_
 /**
- @class  KKMLL::TrainingClass
- *@brief  Specify where training examples and other related data for a MLClass that is 
- * needed to train a classifier.
+ *@class  KKMLL::TrainingClass
+ *@brief  Specify where training examples and other related data for a MLClass that is  needed to train a classifier.
  *@details 
- * You create one instance of this object for each MLClass instance that you 
- * want to include in a classifier. Each instance will tie a class to the 
- * directories where you can find training examples. Other info that is 
- * imcluded is 'CountFator', training Weight,  dun-classifier that is to be 
- * used to further define the prediction.
+ * You create one instance of this object for each MLClass instance that you want to include in a classifier. Each instance 
+ * will tie a class to the directories where you can find training examples. Other info that is included is 'CountFator', 
+ * training Weight,  dun-classifier that is to be used to further define the prediction.
  */
-
 
 
 #include  "KKStr.h"
@@ -19,7 +15,7 @@
 
 namespace KKMLL 
 {
-  #ifndef  _MLCLASS_
+  #if   !defined(_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
   typedef  MLClass  const * MLClassConstPtr;
@@ -89,9 +85,7 @@ namespace KKMLL
 
 
   private:
-    KKStr       SubstituteInEvironmentVariables (const KKStr&  src);
-
-    float            countFactor;  /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
+    float            countFactor;    /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
     VectorKKStr      directories;
     KKStr            featureFileName;
     MLClassPtr       mlClass;
@@ -100,12 +94,12 @@ namespace KKMLL
                      subClassifier;  /**< The classifier hat is to be used to further define the class;  for example
                                       *  if 'mlClass' is predicted 'subClassifier' is to be called to further define the
                                       *  prediction.  The instance of 'TrainingClass' will not own this classifier; it will
-                                      * be owned by 'subClassifiers' in 'TrainingConfiguration2'.
+                                      *  be owned by 'subClassifiers' in 'TrainingConfiguration2'.
                                       */
 
-    float            weight;      /**< Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
-                                   * the SVM Cost parameter from examples in this class will be weighted by this value.
-                                   */
+    float            weight;         /**< Will be used in 'TrainingProcess::ExtractFeatures' to weight images.  
+                                      * the SVM Cost parameter from examples in this class will be weighted by this value.
+                                      */
 
   };  /* TrainingClass */
 

@@ -36,7 +36,7 @@ using namespace KKB;
 #include "SvmWrapper.h"
 
 
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "svm.h"
 using namespace KKMLL;
 

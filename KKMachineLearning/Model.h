@@ -389,7 +389,7 @@ namespace KKMLL
 
     MLClassListPtr         classes;
 
-    MLClassIndexListPtr      classesIndex;
+    MLClassIndexListPtr    classesIndex;
 
     double*                classProbs;
  
@@ -423,7 +423,7 @@ namespace KKMLL
 
     bool                   validModel;
 
-    kkint32*                 votes;
+    kkint32*               votes;
 
     bool                   weOwnTrainExamples;  /**< Indicates if we own the 'trainExamples'. This does not mean that we own its
                                                  * contents. That is determined by 'trainExamples->Owner ()'.

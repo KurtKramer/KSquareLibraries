@@ -376,12 +376,12 @@ namespace KKMLL
 
     MLClassPtr             otherClass;            /**< class that is to be used for "Other" examples when performing
                                                    * adjustment calculations. This was done as part of the Dual Class
-                                                   * classificatuion program. When specified the acytual training of 
-                                                   * the classifier wil lnot inclusde this class. It will be used when 
-                                                   * a clas can not be determined.
+                                                   * classification program. When specified the actual training of 
+                                                   * the classifier will not include this class. It will be used when 
+                                                   * a class can not be determined.
                                                    */
 
-    kkint32                otherClassLineNum;     /**< Line where OtherClass in configuratyon was defined. */
+    kkint32                otherClassLineNum;     /**< Line where OtherClass in configuration was defined. */
 
     KKStr                  rootDir;               /**< Common directory that all images for this training
                                                    * library come from.  This is determined by iterating 
@@ -392,12 +392,12 @@ namespace KKMLL
     KKStr                  rootDirExpanded;       /**< Same as 'rootDir' except environment variables will be expanded. */
 
     TrainingConfiguration2ListPtr
-                           subClassifiers;        /**< Used when implementing a hierarchial classifier.  This list is 
-                                                   * a consolidared list from the 'TrainingClass'  objects that are 
+                           subClassifiers;        /**< Used when implementing a hierarchical classifier.  This list is 
+                                                   * a consolidated list from the 'TrainingClass'  objects that are 
                                                    * specified in the configuration file.  Each 'TrainingClass' section 
                                                    * can specify a Sub-Classifier that is used to further break down that 
-                                                   * class.  More mutiple 'TrainingClass' sections can specify the same 
-                                                   * subClasifer; in that case we wil want top only maintan one 
+                                                   * class.  More multiple 'TrainingClass' sections can specify the same 
+                                                   * subClasifer; in that case we will want top only maintain one 
                                                    * instance of that classifier.
                                                    */
 

@@ -121,7 +121,7 @@ KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
   if  (directory.LocateStr (rootDirWithSlash) == 0)
     return  directory;
   else
-    return rootDirWithSlash + SipperVariables::SubstituteInEvironmentVariables (directory);
+    return rootDirWithSlash + osSubstituteInEnvironmentVariables (directory);
 }  /* ExpandedDirectory */
 
 

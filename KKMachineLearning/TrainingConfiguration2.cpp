@@ -70,7 +70,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
   case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (fileDesc, log);
                             break;
 
-  case  Model::mtDual:      modelParameters = new ModelParamDual      (fileDesc, log);
+  case  Model::mtDual:      modelParameters = new ModelParamDual (fileDesc, log);
                             break;
 
   default:
@@ -121,7 +121,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
   Configuration (GetEffectiveConfigFileName (_configFileName), _log),
 
   configFileNameSpecified (_configFileName),
-  configRootName            (KKB::osGetRootName (_configFileName)),
+  configRootName          (KKB::osGetRootName (_configFileName)),
   fileDesc                (NULL),
   fvFactoryProducer       (_fvFactoryProducer),
   mlClasses               (NULL),

@@ -19,7 +19,7 @@ using namespace KKB;
 #include "ModelParamSvmBase.h"
 #include "ModelParamUsfCasCor.h"
 #include "ModelParamDual.h"
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "Model.h"
 #include "FileDesc.h"
 #include "MLClass.h"
