@@ -1,4 +1,4 @@
-#ifndef  _FEATURENUMLIST_
+#if  !defined(_FEATURENUMLIST_)
 #define  _FEATURENUMLIST_
 
 /**
@@ -192,14 +192,14 @@ namespace KKMLL
                                      bool&   valid
                                     );
 
-    bool   IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
+    bool  IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
     
-    bool   InList (kkuint16 featureNum)  const;    /**@brief returns true if '_featureNum' is one of the selected features. */
+    bool  InList (kkuint16 featureNum)  const;    /**< @brief returns true if '_featureNum' is one of the selected features. */
 
-    void   Load (const KKStr&  _fileName,
-                 bool&         _successful,
-                 RunLog&       _log
-                );
+    void  Load (const KKStr&  _fileName,
+                bool&         _successful,
+                RunLog&       _log
+               );
 
     kkint32  MemoryConsumedEstimated ()  const;
 
@@ -215,29 +215,29 @@ namespace KKMLL
                 RunLog&       _log
                );
    
-    void   Save (std::ostream&  o);
+    void  Save (std::ostream&  o);
 
-    void   SetAllFeatures ();                     /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
+    void  SetAllFeatures ();                     /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
 
-    bool   Test (kkuint16 _featureNum)  const;    /**< @brief Indicates whether feature '_featureNum' is selected. */
+    bool  Test (kkuint16 _featureNum)  const;    /**< @brief Indicates whether feature '_featureNum' is selected. */
 
-    void   ToBitString (BitString&  bitStr)  const;
+    void  ToBitString (BitString&  bitStr)  const;
 
     KKStr  ToHexString ()  const;
 
 
     /** @brief Returns comma delimited list of all features selected; will make use of range specification. */
-    KKStr       ToString ()  const;
+    KKStr  ToString ()  const;
 
 
-    KKStr       ToCommaDelStr ()  const {return  ToString ();}
+    KKStr  ToCommaDelStr ()  const {return  ToString ();}
 
 
     /** @brief   Turns off all features so that no feature is selected.      */
-    void        UnSet ();
+    void   UnSet ();
 
     /** @brief Turns off specified feature 'featureNum'; if 'featureNum' is not turned on then nothing happens; same as using 'operator-='.  */
-    void        UnSet (kkuint16  featureNum);
+    void   UnSet (kkuint16  featureNum);
 
     /**
      *@brief Returns back the selected feature.
@@ -260,7 +260,7 @@ namespace KKMLL
      *@param[in]  _idx  The position in this instance that you want to return.
      *@return  Selected feature at position '_idx'.
      */
-    kkuint16      operator[] (kkint32  idx)  const;
+    kkuint16  operator[] (kkint32  idx)  const;
 
     FeatureNumList&  operator=  (const FeatureNumList&    _features);
     FeatureNumList&  operator=  (const FeatureNumListPtr  _features);
@@ -298,7 +298,7 @@ namespace KKMLL
 
   typedef  FeatureNumList*  FeatureNumListPtr;
 
-  #define  _FeatureNumListDefined_
+  #define  _FeatureNumList_Defined_
 
 
   std::ostream& operator<< (      std::ostream&     os, 

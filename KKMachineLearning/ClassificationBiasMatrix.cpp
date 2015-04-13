@@ -125,7 +125,7 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (const ClassificationBiasMatr
    runLog              (_runLog),
    valid               (true)
 {
-  classes = new MLClassList (cm.ImageClasses ());
+  classes = new MLClassList (cm.MLClasses ());
   numClasses = classes->QueueSize ();
   DeclareMatrix ();
   BuildFromConfusionMatrix (cm);
@@ -172,9 +172,9 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (RunLog&  _runLog):
 {
   BuildTestMatrix ();
 
-  ofstream  sw ("c:\\Temp\\ClassificationBiasMatrix_Test.txt");
-  TestPaperResults (sw);
-  sw.close ();
+  //ofstream  sw ("c:\\Temp\\ClassificationBiasMatrix_Test.txt");
+  //TestPaperResults (sw);
+  //sw.close ();
 }
 
 
@@ -782,15 +782,20 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
   }
   catch  (KKException&  e)
   {
-    throw e;
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  KKException";
+    runLog.Level (-1) << errMsg << endl << e.ToString () << endl;
+    throw KKException (errMsg, e);
   }
   catch  (std::exception& e2)
   {
-    throw KKException (e);
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  std::exception";
+    runLog.Level (-1) << errMsg << endl << e2.what() << endl;
+    throw KKException (errMsg, e2);
   }
   catch  (...)
   {
-    KKStr  m = "ClassificationBiasMatrix::PrintAdjustedResults     Exception thrown.";
-    throw KKException (m);
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  Exception(...)";
+    runLog.Level (-1) << endl << errMsg << endl;
+    throw KKException (errMsg);
   }
 }  /* PrintAdjustedResults */

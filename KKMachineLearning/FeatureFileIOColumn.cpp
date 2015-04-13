@@ -1,17 +1,13 @@
-#include  "FirstIncludes.h"
-
-#include  <stdio.h>
-#include  <math.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <math.h>
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
@@ -167,7 +163,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
       exampleClass = _classes.GetMLClassPtr (field);
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
       example->MLClass (exampleClass);
-      example->ImageFileName (rootName + "_" + StrFormatInt (lineCount, "00000"));
+      example->ExampleFileName (rootName + "_" + StrFormatInt (lineCount, "00000"));
       examples->PushOnBack (example);
       lineCount++;
       GetToken (_in, " ", field, eof, eol);

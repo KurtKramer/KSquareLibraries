@@ -20,7 +20,7 @@ using namespace KKB;
 
                 
 //#include "FeatureFileIOKK.h"
-#include "FeatureFileIOPices.h"
+//#include "FeatureFileIOPices.h"
 #include "FeatureVector.h"
 #include "ImageFeaturesNameIndexed.h"
 #include "ImageFeaturesDataIndexed.h"
@@ -81,7 +81,7 @@ DuplicateImages::~DuplicateImages(void)
 
 bool  DuplicateImages::ExampleInDetector (FeatureVectorPtr  fv)
 {
-  if  (nameTree->GetEqual (fv->ImageFileName ()) != NULL)
+  if  (nameTree->GetEqual (fv->ExampleFileName ()) != NULL)
     return true;
 
   if  (featureDataTree->GetEqual (fv) != NULL)
@@ -98,7 +98,7 @@ bool   DuplicateImages::AddExamples (FeatureVectorListPtr  examples)
   FeatureVectorList::iterator idx;
   for (idx = examples->begin ();  idx != examples->end ();  idx++)
   {
-    DuplicateImagePtr dupExample = AddSingleImage (*idx);
+    DuplicateImagePtr dupExample = AddSingleExample (*idx);
     if  (dupExample)
       dupsDetected = true;
   }
@@ -110,66 +110,66 @@ bool   DuplicateImages::AddExamples (FeatureVectorListPtr  examples)
 
 
 /**
- *@brief Will add one more image to list and if it turns out to be a duplicate will return pointer to a "DuplicateImage" structure
+ *@brief Will add one more example to list and if it turns out to be a duplicate will return pointer to a "DuplicateImage" structure
  * that will contain a list of all images that it is duplicate to. If no duplicate found will then return a NULL pointer.
  */
-DuplicateImagePtr  DuplicateImages::AddSingleImage (FeatureVectorPtr  image)
+DuplicateImagePtr  DuplicateImages::AddSingleExample (FeatureVectorPtr  example)
 {
-  DuplicateImagePtr dupImage = NULL;
+  DuplicateImagePtr dupExample = NULL;
 
-  FeatureVectorPtr  existingNameImage = NULL;
+  FeatureVectorPtr    existingNameExample = NULL;
 
-  const KKStr&  imageFileName = image->ImageFileName ();
+  const KKStr&  imageFileName = example->ExampleFileName ();
   if  (!imageFileName.Empty ())
   {
-    existingNameImage = nameTree->GetEqual (osGetRootName (image->ImageFileName ()));
-    if  (!existingNameImage)
-      nameTree->RBInsert (image);
+      existingNameExample = nameTree->GetEqual (osGetRootName (example->ExampleFileName ()));
+    if  (!existingNameExample)
+      nameTree->RBInsert (example);
   }
 
-  FeatureVectorPtr  existingDataImage = featureDataTree->GetEqual (image);
+  FeatureVectorPtr  existingDataImage = featureDataTree->GetEqual (example);
   if  (!existingDataImage)
-    featureDataTree->RBInsert (image);
+    featureDataTree->RBInsert (example);
 
-  if  ((existingNameImage)  ||  (existingDataImage))
+  if  ((existingNameExample)  ||  (existingDataImage))
   {
     duplicateCount++;
-    if  (existingNameImage)
+    if  (existingNameExample)
     {
-    duplicateNameCount++;
-    dupImage = dupExamples->LocateByImage (existingNameImage);
-      if  (!dupImage)
-    {
-        dupImage = new DuplicateImage (fileDesc, existingNameImage, image, log);
-        dupExamples->PushOnBack (dupImage);
+      duplicateNameCount++;
+      dupExample = dupExamples->LocateByImage (existingNameExample);
+      if  (!dupExample)
+      {
+        dupExample = new DuplicateImage (fileDesc, existingNameExample, example, log);
+        dupExamples->PushOnBack (dupExample);
+      }
+      else
+      {
+          dupExample->AddADuplicate (example);
+      }
     }
-    else
-    {
-        dupImage->AddADuplicate (image);
-    }
-  }
     
     if  (existingDataImage) 
     {
       duplicateDataCount++;
-      if  (existingDataImage != existingNameImage)
+      if  (existingDataImage != existingNameExample)
       {
-      dupImage = dupExamples->LocateByImage (existingDataImage);
-        if  (!dupImage)
-      {
-          dupImage = new DuplicateImage (fileDesc, existingDataImage, image, log);
-          dupExamples->PushOnBack (dupImage);
-      }
-      else
-      {
-          dupImage->AddADuplicate (image);
+        dupExample = dupExamples->LocateByImage (existingDataImage);
+        if  (!dupExample)
+        {
+          dupExample = new DuplicateImage (fileDesc, existingDataImage, example, log);
+          dupExamples->PushOnBack (dupExample);
+        }
+        else
+        {
+          dupExample->AddADuplicate (example);
         }
       }
     }
   }
 
-  return dupImage;
-}  /* AddSingleImage */
+  return dupExample;
+}  /* AddSingleExample */
 
 
 
@@ -180,11 +180,11 @@ void  DuplicateImages::FindDuplicates (FeatureVectorListPtr  examples)
   if  (!examples)
     return;
 
-  FeatureVectorPtr   image = NULL;
+  FeatureVectorPtr   example = NULL;
   for  (FeatureVectorList::iterator  idx = examples->begin ();  idx != examples->end ();  idx++)
   {
-    image = *idx;
-    AddSingleImage (image);
+    example = *idx;
+    AddSingleExample (example);
   }
 }  /* FindDuplicates */
 
@@ -204,7 +204,7 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
 {
   log.Level (10) << "DuplicateImageList::PurgeDuplicates" << endl;
 
-  DuplicateImageListPtr  dupExamples = DupImages ();
+  DuplicateImageListPtr  dupExamples = DupExamples ();
 
   DuplicateImageList::iterator  dIDX = dupExamples->begin ();
 
@@ -212,39 +212,39 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
   {
     DuplicateImagePtr dupSet = *dIDX;
 
-    log.Level (20) << "PurgeDuplicates  Duplicate Set[" << dupSet->FirstImageAdded ()->ImageFileName () << "]" << endl;
+    log.Level (20) << "PurgeDuplicates  Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
-    FeatureVectorListPtr  imagesInSet = dupSet->DuplicatedImages ();
-    FeatureVectorPtr imageToKeep = NULL;
+    FeatureVectorListPtr  examplesInSet = dupSet->DuplicatedImages ();
+    FeatureVectorPtr exampleToKeep = NULL;
 
     if  (dupSet->AllTheSameClass ())
     {
       if  (allowDupsInSameClass)
         continue;
       else
-        imageToKeep = dupSet->ImageWithSmallestScanLine ();
+        exampleToKeep = dupSet->ExampleWithSmallestScanLine ();
     }
     
-    FeatureVectorList::iterator iIDX = imagesInSet->begin ();
+    FeatureVectorList::iterator iIDX = examplesInSet->begin ();
 
-    for  (iIDX = imagesInSet->begin ();  iIDX != imagesInSet->end ();  iIDX++)
+    for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  iIDX++)
     {
-      FeatureVectorPtr image = *iIDX;
+      FeatureVectorPtr example = *iIDX;
 
-      if  (image == imageToKeep)
+      if  (example == exampleToKeep)
       {
-        log.Level (30) << "PurgeDuplicates  Keeping [" << imageToKeep->ImageFileName () << "]." << endl;
+        log.Level (30) << "PurgeDuplicates  Keeping [" << exampleToKeep->ExampleFileName () << "]." << endl;
         if  (report)
-          *report << image->ImageFileName () << "\t" << "Class" << "\t" << image->MLClassName () << "\t" << "Duplicate retained." << endl;
+          *report << example->ExampleFileName () << "\t" << "Class" << "\t" << example->MLClassName () << "\t" << "Duplicate retained." << endl;
       }
       else
       {
-        log.Level (30) << "PurgeDuplicates  Deleting [" << image->ImageFileName () << "]." << endl;
+        log.Level (30) << "PurgeDuplicates  Deleting [" << example->ExampleFileName () << "]." << endl;
         if  (report)
-          *report << image->ImageFileName () << "\t" << "Class" << "\t" << image->MLClassName () << "\t" << "Duplicate deleted." << endl;
-        examples->DeleteEntry (image);
+          *report << example->ExampleFileName () << "\t" << "Class" << "\t" << example->MLClassName () << "\t" << "Duplicate deleted." << endl;
+        examples->DeleteEntry (example);
         if  (examples->Owner ())
-          delete  image;
+          delete  example;
       }
     }
   }
@@ -259,7 +259,7 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
 
   log.Level (10) << "DuplicateImages::ListOfExamplesToDelete" << endl;
 
-  DuplicateImageListPtr  dupExamples = DupImages ();
+  DuplicateImageListPtr  dupExamples = DupExamples ();
 
   DuplicateImageList::iterator  dIDX = dupExamples->begin ();
 
@@ -267,30 +267,30 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
   {
     DuplicateImagePtr dupSet = *dIDX;
 
-    log.Level (20) << "ListOfExamplesToDelete   Duplicate Set[" << dupSet->FirstImageAdded ()->ImageFileName () << "]" << endl;
+    log.Level (20) << "ListOfExamplesToDelete   Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
-    FeatureVectorListPtr  imagesInSet = dupSet->DuplicatedImages ();
-    FeatureVectorPtr imageToKeep = NULL;
+    FeatureVectorListPtr  examplesInSet = dupSet->DuplicatedImages ();
+    FeatureVectorPtr exampleToKeep = NULL;
 
     if  (dupSet->AllTheSameClass ())
     {
-      imageToKeep = dupSet->ImageWithSmallestScanLine ();
+      exampleToKeep = dupSet->ExampleWithSmallestScanLine ();
     }
     
-    FeatureVectorList::iterator iIDX = imagesInSet->begin ();
+    FeatureVectorList::iterator iIDX = examplesInSet->begin ();
 
-    for  (iIDX = imagesInSet->begin ();  iIDX != imagesInSet->end ();  iIDX++)
+    for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  iIDX++)
     {
-      FeatureVectorPtr image = *iIDX;
+      FeatureVectorPtr example = *iIDX;
 
-      if  (image == imageToKeep)
+      if  (example == exampleToKeep)
       {
-        log.Level (30) << "ListOfExamplesToDelete  Keeping [" << imageToKeep->ImageFileName () << "]." << endl;
+        log.Level (30) << "ListOfExamplesToDelete  Keeping [" << exampleToKeep->ExampleFileName () << "]." << endl;
       }
       else
       {
-        log.Level (30) << "ListOfExamplesToDelete  Deleting [" << image->ImageFileName () << "]." << endl;
-        examplesToDelete->PushOnBack (image);
+        log.Level (30) << "ListOfExamplesToDelete  Deleting [" << example->ExampleFileName () << "]." << endl;
+        examplesToDelete->PushOnBack (example);
       }
     }
   }
@@ -308,17 +308,17 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
 
   for  (DuplicateImageList::iterator  idx = dupExamples->begin ();  idx != dupExamples->end ();  idx++)
   {
-    DuplicateImagePtr dupImageSet = *idx;
+    DuplicateImagePtr dupExampleSet = *idx;
 
-    const FeatureVectorListPtr  dupList = dupImageSet->DuplicatedImages ();
+    const FeatureVectorListPtr  dupList = dupExampleSet->DuplicatedImages ();
 
     o << "Group[" << groupNum << "] Contains [" << dupList->QueueSize () << "] Duplicates." << endl;
 
     kkint32  numOnLine = 0;
-    FeatureVectorList::const_iterator  imageIDX;
-    for  (imageIDX = dupList->begin ();  imageIDX != dupList->end (); imageIDX++)
+    FeatureVectorList::const_iterator  fvIDX;
+    for  (fvIDX = dupList->begin ();  fvIDX != dupList->end ();  ++fvIDX)
     {
-      FeatureVectorPtr  i = *imageIDX;
+      FeatureVectorPtr  i = *fvIDX;
 
       if  (numOnLine > 8)
       {
@@ -328,7 +328,7 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
 
       if  (numOnLine > 0)
         o << "\t";
-      o << i->ImageFileName () << "[" << i->MLClassName () << "]";
+      o << i->ExampleFileName () << "[" << i->MLClassName () << "]";
 
       numOnLine++;
     }
@@ -366,9 +366,9 @@ DuplicateImage::~DuplicateImage ()
 }
 
 
-void  DuplicateImage::AddADuplicate (FeatureVectorPtr  image)
+void  DuplicateImage::AddADuplicate (FeatureVectorPtr  example)
 {
-  duplicatedImages.PushOnBack (image);
+  duplicatedImages.PushOnBack (example);
 }  /* AddADuplicate */
 
 
@@ -396,15 +396,15 @@ bool  DuplicateImage::AllTheSameClass ()
 
 
 
-bool  DuplicateImage::AlreadyHaveImage (FeatureVectorPtr image)
+bool  DuplicateImage::AlreadyHaveExample (FeatureVectorPtr example)
 {
-  return  (duplicatedImages.PtrToIdx (image) >= 0);
+  return  (duplicatedImages.PtrToIdx (example) >= 0);
 }
 
 
 
 
-FeatureVectorPtr  DuplicateImage::ImageWithSmallestScanLine ()
+FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
 {
   kkint32  smallestScanLine = 99999999;
   FeatureVectorPtr  imageWithSmallestScanLine = NULL;
@@ -413,9 +413,9 @@ FeatureVectorPtr  DuplicateImage::ImageWithSmallestScanLine ()
   for  (FeatureVectorList::iterator  iIDX = duplicatedImages.begin ();  iIDX != duplicatedImages.end (); iIDX++)
   {
     FeatureVectorPtr i = *iIDX;
-    // First lets derive scan line from image file name
+    // First lets derive scan line from example file name
    
-    KKStr  rootName = osGetRootName (i->ImageFileName ());
+    KKStr  rootName = osGetRootName (i->ExampleFileName ());
     rootName.Upper ();
 
     kkint32  scanLine = 9999999;
@@ -471,13 +471,13 @@ DuplicateImageList::~DuplicateImageList ()
 
 
 
-DuplicateImagePtr  DuplicateImageList::LocateByImage (FeatureVectorPtr  image)
+DuplicateImagePtr  DuplicateImageList::LocateByImage (FeatureVectorPtr  example)
 {
   for  (DuplicateImageList::iterator  idx = begin ();  idx != end ();  idx++)
   {
-    DuplicateImagePtr dupImageSet = *idx;
-    if  (dupImageSet->AlreadyHaveImage (image))
-      return  dupImageSet;
+    DuplicateImagePtr dupExampleSet = *idx;
+    if  (dupExampleSet->AlreadyHaveExample (example))
+      return  dupExampleSet;
   }
 
   return NULL;

@@ -113,81 +113,105 @@ namespace KKMLL
   public:
     friend class KKQueue<FileDesc>;
 
+    kkint32  MemoryConsumedEstimated ()  const;
+
+
   public:
     // Access Methods
-    const KKMLL::AttributeList&   Attributes          ()  const  {return attributes;};
-    const AttributeTypeVector&                AttributeVector     ()  const  {return attributeVector;};
-    const VectorInt32&                        CardinalityVector   ()  const  {return cardinalityVector;}
-    const MLClassList&                        Classes             ()  const  {return classes;}
-    const KKStr&                              ClassNameAttribute  ()  const  {return classNameAttribute;}   /**< ClassNameAttribute added to support dstWeb  data files. */
-    const KKStr&                              FileName            ()  const  {return fileName;}
-    kkint32                                   SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
-    kkint16                                   Version             ()  const  {return version;}
+    const KKMLL::AttributeList&  Attributes          ()  const  {return attributes;};
+    const AttributeTypeVector&   AttributeVector     ()  const  {return attributeVector;};
+    const VectorInt32&           CardinalityVector   ()  const  {return cardinalityVector;}
+    const MLClassList&           Classes             ()  const  {return classes;}
+    const KKStr&                 ClassNameAttribute  ()  const  {return classNameAttribute;}   /**< ClassNameAttribute added to support dstWeb  data files. */
+    const KKStr&                 FileName            ()  const  {return fileName;}
+    kkint32                      SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
+    kkint16                      Version             ()  const  {return version;}
 
     void   SparseMinFeatureNum (kkint32  _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
     void   Version             (kkint16  _version)              {version             = _version;}
 
 
 
-    void                      AddAAttribute (const KKB::KKStr&                 _name,
-                                             KKMLL::AttributeType  _type,
-                                             bool&                             alreadyExists
-                                            );
+    void  AddAAttribute (const KKB::KKStr&     _name,
+                         KKMLL::AttributeType  _type,
+                         bool&                 alreadyExists
+                        );
                             
-    void                      AddAAttribute (const KKMLL::Attribute&  attribute);
+    void  AddAAttribute (const KKMLL::Attribute&  attribute);
 
-    void                      AddClasses (const MLClassList&  classesToAdd);
+    void  AddClasses (const MLClassList&  classesToAdd);
                             
-    bool                      AllFieldsAreNumeric ()  const;
+    bool  AllFieldsAreNumeric ()  const;
 
-    kkint32                   Cardinality (kkint32  fieldNum,
-                                           RunLog&  log
-                                          )  const;
+    void  AddANominalValue (kkint32       fieldNum,
+                            const KKStr&  nominalValue,
+                            bool&         alreadyExist,
+                            RunLog&       log
+                           );
+
+
+    void  AddANominalValue (const KKStr&  nominalValue,
+                            bool&         alreadyExist,
+                            RunLog&       log
+                           );
+
+
+    void  AddANominalValue (const KKStr&  attributeName,
+                            const KKStr&  nominalValue,
+                            bool&         alreadyExist,
+                            RunLog&       log
+                           );
+
+
+    kkint32  Cardinality (kkint32  fieldNum,
+                          RunLog&  log
+                         )  const;
 
     const 
       KKMLL::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
 
     KKMLL::AttributeTypeVector  CreateAttributeTypeTable ()  const;
     
-    VectorInt32               CreateCardinalityTable ()  const;
+    VectorInt32                 CreateCardinalityTable ()  const;
 
-    const KKStr&              FieldName (kkint32  fieldNum)  const;
+    void                        DisplayAttributeMappings ();
+
+    const KKStr&                FieldName (kkint32  fieldNum)  const;
 
     const KKMLL::Attribute&     GetAAttribute (kkint32 fieldNum) const;
 
     const  
-    KKStr&                    GetNominalValue (kkint32  fieldNum, 
-                                               kkint32  code
-                                              ) const;
+    KKStr&                      GetNominalValue (kkint32  fieldNum, 
+                                                 kkint32  code
+                                                ) const;
 
-    MLClassPtr                GetMLClassPtr       (const KKStr&  className);
+    MLClassPtr                  GetMLClassPtr (const KKStr&  className);
 
-    kkint32                   GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
+    kkint32                     GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
 
     //RunLog&                   Log () const {return log;}
 
-    kkint32                   LookUpNominalCode (kkint32       fieldNum, 
-                                                 const KKStr&  nominalValue
-                                                )  const;
+    const
+    KKMLL::AttributePtr         LookUpByName (const KKStr&  attributeName)  const;  
 
-    MLClassPtr                LookUpMLClassByName (const KKStr&  className);
+    kkint32                     LookUpNominalCode (kkint32       fieldNum, 
+                                                   const KKStr&  nominalValue
+                                                  )  const;
 
-    MLClassPtr                LookUpUnKnownMLClass ();
+    MLClassPtr                  LookUpMLClassByName (const KKStr&  className);
+
+    MLClassPtr                  LookUpUnKnownMLClass ();
     
-    kkint32                   MemoryConsumedEstimated ()  const;
+    kkuint32                    NumOfFields () const  {return (kkuint32)attributes.size ();}
 
-    kkuint32                  NumOfFields () const  {return (kkuint32)attributes.size ();}
+    bool                        SameExceptForSymbolicData (const FileDesc&  otherFd,
+                                                           RunLog&          log
+                                                          )  const;
 
-    bool                      SameExceptForSymbolicData (const FileDesc&  otherFd,
-                                                         RunLog&          log
-                                                        )  const;
 
-    void                      SparseMinFeatureNum (kkint32 _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
-    kkint32                   SparseMinFeatureNum () const {return sparseMinFeatureNum;}
+    KKMLL::AttributeType        Type (kkint32 fieldNum)  const;
 
-    KKMLL::AttributeType  Type (kkint32 fieldNum)  const;
-
-    KKStr                     TypeStr (kkint32 fieldNum)  const;
+    KKStr                       TypeStr (kkint32 fieldNum)  const;
 
 
     /**
@@ -209,14 +233,21 @@ namespace KKMLL
      @param[in] fileDesc Pointer to a FileDesc object that you want to look and see if one that is identical already exists.
      @return pointer to the 'FileDesc' instance that the caller should be using.
      */
-    static
-      FileDescPtr     GetExistingFileDesc (FileDescPtr  fileDesc);
+    static  FileDescPtr     GetExistingFileDesc (FileDescPtr  fileDesc);
 
-    const
-      KKMLL::AttributePtr      LookUpByName (const KKStr&  attributeName)  const;  
+    /**
+     * @brief  Merges the Symbolic fields of two different 'FileDesc' instances producing a new instance of 'FileDesc'.
+     * @details This method will only work if both instances have the same number of fields, their names must be
+     *  the same(NOT case sensitive), and each field in both instances must be the same type.  If all these conditions
+     *  are not 'true' will return NULL.  The fields that are of 'SymbolicAttribute' will have their values merged
+     *  together.
+     *@see KKMLL:Attribute
+     */
+    static FileDescPtr  MergeSymbolicFields (const FileDesc&  left,
+                                             const FileDesc&  right,
+                                             RunLog&          log
+                                            );
 
-
-    void  DisplayAttributeMappings ();
 
     /** 
      *@brief Returns true if file description on the right size is identical.
@@ -235,38 +266,6 @@ namespace KKMLL
      */
     bool  operator!= (const FileDesc&  rightSize)  const;
 
-
-    /**
-     * @brief  Merges the Symbolic fields of two different 'FileDesc' instances producing a new instance of 'FileDesc'.
-     * @details This method will only work if both instances have the same number of fields, their names must be
-     *  the same(NOT case sensitive), and each field in both instances must be the same type.  If all these conditions
-     *  are not 'true' will return NULL.  The fields that are of 'SymbolicAttribute' will have their values merged
-     *  together.
-     *@see KKMLL:Attribute
-     */
-    static FileDescPtr  MergeSymbolicFields (const FileDesc&  left,
-                                             const FileDesc&  right,
-                                             RunLog&          log
-                                            );
-  public:
-    void  AddANominalValue (kkint32       fieldNum,
-                            const KKStr&  nominalValue,
-                            bool&         alreadyExist,
-                            RunLog&       log
-                           );
-
-
-    void  AddANominalValue (const KKStr&  nominalValue,
-                            bool&         alreadyExist,
-                            RunLog&       log
-                           );
-
-
-    void  AddANominalValue (const KKStr&  attributeName,
-                            const KKStr&  nominalValue,
-                            bool&         alreadyExist,
-                            RunLog&       log
-                           );
 
   private:
     static void  CreateBlocker ();

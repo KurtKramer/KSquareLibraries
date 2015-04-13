@@ -46,6 +46,13 @@ FactoryFVProducer::~FactoryFVProducer ()
 }
 
 
+FeatureVectorPtr  FactoryFVProducer::ManufacturFeatureVector (kkint32  numOfFeatires,
+                                                              RunLog&  runLog
+                                                             )
+{
+  return  new FeatureVector (numOfFeatires);
+}
+
 
 FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                       RunLog&  runLog

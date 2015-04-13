@@ -1342,13 +1342,13 @@ KKStr&  KKMLL::operator<< (      KKStr&            str,
 
 
 
-ClassIndexList::ClassIndexList ():
+MLClassIndexList::MLClassIndexList ():
    largestIndex (-1)
 {
 }
 
 
-ClassIndexList::ClassIndexList (const  ClassIndexList&  _list)
+MLClassIndexList::MLClassIndexList (const  MLClassIndexList&  _list)
 {
   const_iterator  idx;
   bool  dupEntry = false;
@@ -1360,7 +1360,7 @@ ClassIndexList::ClassIndexList (const  ClassIndexList&  _list)
 
 
 
-ClassIndexList::ClassIndexList (const MLClassList&  classes):
+MLClassIndexList::MLClassIndexList (const MLClassList&  classes):
     largestIndex(-1)
 {
   MLClassList::const_iterator  idx;
@@ -1374,7 +1374,7 @@ ClassIndexList::ClassIndexList (const MLClassList&  classes):
 
 
 
-void  ClassIndexList::Clear ()
+void  MLClassIndexList::Clear ()
 {
   clear ();
   shortIdx.clear ();
@@ -1385,14 +1385,14 @@ void  ClassIndexList::Clear ()
 
 
 
-kkint32  ClassIndexList::MemoryConsumedEstimated ()  const
+kkint32  MLClassIndexList::MemoryConsumedEstimated ()  const
 {
-  return sizeof (ClassIndexList) + (shortIdx.size () * (sizeof (kkint16) + sizeof (MLClassPtr) + 10));  // added 10- bytes per entry for overhead.
+  return sizeof (MLClassIndexList) + (shortIdx.size () * (sizeof (kkint16) + sizeof (MLClassPtr) + 10));  // added 10- bytes per entry for overhead.
 }
 
 
 
-void  ClassIndexList::AddClass (MLClassPtr  _ic,
+void  MLClassIndexList::AddClass (MLClassPtr  _ic,
                                 bool&          _dupEntry
                                )
 {
@@ -1414,7 +1414,7 @@ void  ClassIndexList::AddClass (MLClassPtr  _ic,
 
 
 
-void  ClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
+void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
                                                kkint16    _classIndex,
                                                bool&      _dupEntry
                                               )
@@ -1437,7 +1437,7 @@ void  ClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
 
 
 
-kkint16  ClassIndexList::GetClassIndex (MLClassPtr  c)
+kkint16  MLClassIndexList::GetClassIndex (MLClassPtr  c)
 {
   kkint32  index = -1;
   map<MLClassPtr, kkint16>::iterator p;
@@ -1452,7 +1452,7 @@ kkint16  ClassIndexList::GetClassIndex (MLClassPtr  c)
 
 
 
-MLClassPtr  ClassIndexList::GetMLClass (kkint16  classIndex)
+MLClassPtr  MLClassIndexList::GetMLClass (kkint16  classIndex)
 {
   map<kkint16, MLClassPtr>::iterator p;
   p = shortIdx.find (classIndex);
@@ -1464,7 +1464,7 @@ MLClassPtr  ClassIndexList::GetMLClass (kkint16  classIndex)
 
 
 
-void  ClassIndexList::ParseClassIndexList (const KKStr&  s)
+void  MLClassIndexList::ParseClassIndexList (const KKStr&  s)
 {
   Clear ();
   largestIndex = 0;
@@ -1485,7 +1485,7 @@ void  ClassIndexList::ParseClassIndexList (const KKStr&  s)
 
 
 
-KKStr  ClassIndexList::ToCommaDelString ()
+KKStr  MLClassIndexList::ToCommaDelString ()
 {
   KKStr  delStr (255);
   map<kkint16, MLClassPtr>::const_iterator  idx;

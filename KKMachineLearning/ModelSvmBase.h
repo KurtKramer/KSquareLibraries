@@ -78,10 +78,10 @@ namespace  KKMLL
 
 
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                 _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities
                                );
 
     /**
@@ -100,9 +100,9 @@ namespace  KKMLL
      *            in probabilities[x].
     */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities
                                );
   
     virtual  void  ReadSpecificImplementationXML (istream&  i,
@@ -112,7 +112,7 @@ namespace  KKMLL
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize () squared. */
                                  );
 
 

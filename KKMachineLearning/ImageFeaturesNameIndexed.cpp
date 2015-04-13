@@ -56,5 +56,5 @@ ImageFeaturesNameIndexed::ImageFeaturesNameIndexed (FeatureVectorList&  images):
 
 KKStr  ExtractImageFileName::ExtractKey (FeatureVectorPtr  image)
 {
-  return  osGetRootName (image->ImageFileName ());
+  return  osGetRootName (image->ExampleFileName ());
 }

@@ -142,7 +142,7 @@ namespace  KKMLL
     void  AllocateMemory ();
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
-                         FeatureVectorListPtr   trainingImages,
+                         FeatureVectorListPtr   trainingExamples,
                          kkint32                foldNum,
                          bool*                  classedCorrectly = NULL
                         );

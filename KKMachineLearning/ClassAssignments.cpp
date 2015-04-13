@@ -46,6 +46,7 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes,
 }
 
 
+
 kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (ClassAssignments) 
@@ -80,9 +81,9 @@ void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
 
 
 
-MLClassPtr  ClassAssignments::GetMLClass (kkint16 num)
+MLClassPtr  ClassAssignments::GetMLClass (kkint16 num)  const
 {
-  multimap<kkint16, MLClassPtr>::iterator p;
+  multimap<kkint16, MLClassPtr>::const_iterator p;
   p = find (num);
   if  (p == end ())
     return NULL;

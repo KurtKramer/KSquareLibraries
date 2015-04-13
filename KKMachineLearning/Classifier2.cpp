@@ -321,12 +321,11 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
       double           subPredClass2Prob  = 0.0;
       kkint32          subNumOfWinners    = 0;
       double           subBreakTie        = 0.0;
-      double           subCompact         = 0.0;
 
       subClassifer->ClassifyAImage (example, subPredClass1, subPredClass2, 
                                     subPredClass1Votes, subPredClass2Votes, subKnownClassProb,
                                     subPredClass1Prob,  subPredClass2Prob,  subNumOfWinners,
-                                    subBreakTie, subCompact        
+                                    subBreakTie
                                    );
       predClass1 = subPredClass1;
       predClass1Votes += subPredClass1Votes;
@@ -334,12 +333,11 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
       knownClassProb  *= subKnownClassProb;
       numOfWinners    += subNumOfWinners;
       breakTie        += subBreakTie * (1.0 - breakTie);
-      compact         += subCompact;
-  }
+    }
 
     subClassifer = LookUpSubClassifietByClass (predClass2);
     if  (subClassifer)
-  {
+    {
       MLClassPtr       subPredClass1      = NULL;
       MLClassPtr       subPredClass2      = NULL;
       kkint32          subPredClass1Votes = 0;
@@ -349,12 +347,11 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
       double           subPredClass2Prob  = 0.0;
       kkint32          subNumOfWinners    = 0;
       double           subBreakTie        = 0.0;
-      double           subCompact         = 0.0;
 
       subClassifer->ClassifyAImage (example, subPredClass1, subPredClass2, 
                                     subPredClass1Votes, subPredClass2Votes, subKnownClassProb,
                                     subPredClass1Prob,  subPredClass2Prob,  subNumOfWinners,
-                                    subBreakTie, subCompact        
+                                    subBreakTie        
                                    );
       predClass2 = subPredClass1;
       predClass2Votes += subPredClass1Votes;

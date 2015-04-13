@@ -4341,7 +4341,7 @@ void  SVM289_MFS::svm_save_model_XML (ostream&          o,
       //const svm_node *p = SV[i];
       const FeatureVector&  p = SV[i];
       o.precision (13);
-      o << "SupportVector" << "\t" << p.ImageFileName ()
+      o << "SupportVector" << "\t" << p.ExampleFileName ()
                            << "\t" << p.MLClassName ();
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
         o << "\t" << sv_coef[j][i];
@@ -4443,7 +4443,7 @@ void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
       FeatureVectorPtr fv = new FeatureVector (fileDesc->NumOfFields ());
       KKStr  imageFileName = osReadNextToken (in, "\t", eof, eol);
       KKStr  className     = osReadNextToken (in, "\t", eof, eol);
-      fv->ImageFileName (imageFileName);
+      fv->ExampleFileName (imageFileName);
       fv->MLClass (MLClass::CreateNewMLClass (imageFileName));
 
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
@@ -5035,7 +5035,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
   for  (kkint32 i = 0;  i < numSVs;  ++i)
   {
     const  FeatureVector&  p = SV[i];
-    o << "SupportVector" << "\t" << p.ImageFileName ();
+    o << "SupportVector" << "\t" << p.ExampleFileName ();
 
     kkint32  origPrec = (kkint32)o.precision ();
     o.precision (16);
@@ -5240,7 +5240,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
       KKStr  imageFileName = line.ExtractToken2 ("\t");
       //model->SV[i] = &x_space[j];
       FeatureVectorPtr  fv = new FeatureVector (fileDesc->NumOfFields ());
-      fv->ImageFileName (imageFileName);
+      fv->ExampleFileName (imageFileName);
 
       for  (j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
         sv_coef[j][i] = line.ExtractTokenDouble ("\t");

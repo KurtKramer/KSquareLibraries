@@ -108,6 +108,7 @@
     <ClCompile Include="KKMLVariables.cpp" />
     <ClCompile Include="MLClass.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelDual.cpp" />
     <ClCompile Include="ModelKnn.cpp" />
     <ClCompile Include="ModelOldSVM.cpp" />
     <ClCompile Include="ModelParam.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="KKMLVariables.h" />
     <ClInclude Include="MLClass.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelDual.h" />
     <ClInclude Include="ModelKnn.h" />
     <ClInclude Include="ModelOldSVM.h" />
     <ClInclude Include="ModelParam.h" />

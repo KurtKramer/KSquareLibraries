@@ -161,7 +161,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
       example->MLClass (mlClass);
 
       KKStr  imageFileName = rootName + "_" + StrFormatInt (lineCount, "ZZZZZZ0");
-      example->ImageFileName (imageFileName);
+      example->ExampleFileName (imageFileName);
 
       examples->PushOnBack (example);
 
@@ -197,9 +197,21 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
   kkint32  idx;
   kkint32  x;
 
+  FileDescPtr  fileDesc = _selFeatures.FileDesc ();
+
+  _out << "ExampleFileName";
+  for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+  {
+    kkint32 featureNum = _selFeatures[x];
+    _out << "," << fileDesc->FieldName (featureNum);
+  }
+  _out << "," << "ClassLabel" << endl;
+
   for  (idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
+
+    _out << ("Train_" + KKB::osGetRootName (example->ExampleFileName ())) << ",";
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {

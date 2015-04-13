@@ -1,4 +1,4 @@
-#ifndef  _FEATUREENCODER2_
+#if  !defined(_FEATUREENCODER2_)
 #define  _FEATUREENCODER2_
 /**
  *@class  KKMLL::FeatureEncoder2

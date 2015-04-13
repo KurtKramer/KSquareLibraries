@@ -2026,7 +2026,7 @@ namespace KKMLL
  *                they are out of date.  In that case the data will be recomputed from the    *
  *                original images.                                                            *
  *                                                                                            *
- * ImageFileName: This field that is in each 'FeatureVector' instance will reflect the sub-   *
+ * ExampleFileName: This field that is in each 'FeatureVector' instance will reflect the sub-   *
  *                directory from where it was retrieved.  Bewteen that and the 'rootDir' field*
  *                you will be able to get the full path to then original image.               *
  **********************************************************************************************  
@@ -2188,8 +2188,8 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
       for  (idx = extractedExamplesThisDir->begin ();  idx != extractedExamplesThisDir->end ();  ++idx)
     {
       FeatureVectorPtr  fv = *idx;
-      KKStr  newFileName =  subDirName + osGetRootNameWithExtension (fv->ImageFileName ());
-      fv->ImageFileName (newFileName);
+      KKStr  newFileName =  subDirName + osGetRootNameWithExtension (fv->ExampleFileName ());
+      fv->ExampleFileName (newFileName);
     }
   }
 

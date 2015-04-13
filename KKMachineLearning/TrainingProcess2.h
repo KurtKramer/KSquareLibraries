@@ -25,7 +25,7 @@ namespace KKMLL
   #endif
 
 
-  #if  !defined_FileDesc_Defined_)
+  #if  !defined(FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
@@ -67,18 +67,18 @@ namespace KKMLL
      *          that was saved to disk earlier;  otherwise will train from data in training library
      *          and save resultant training classifier to disk.
      *
-     *@todo  I need to make a stucture that would contain variables required to perform prediction 
+     *@todo  I need to make a structure that would contain variables required to perform prediction 
      *       The idea is that we should only need to create one instance of "TrainingProcess2" for 
-     *       use by multiple threads.  Since diferent classifiers will require different structures
-     *       "TrainingProcess2" wil have a factory method for creating instances of these structures.
-     *       These structures woul dthen have their own predict methods.
+     *       use by multiple threads.  Since different classifiers will require different structures
+     *       "TrainingProcess2" will have a factory method for creating instances of these structures.
+     *       These structures would then have their own predict methods.
      *
-     *@param[in]  _config  A previously loaded confguration file that specifoes directories where 
+     *@param[in]  _config  A previously loaded configuration file that specifies directories where 
      *                     example images for each class can be found.  Caller will still own 'config'
-     *                     and be resposnsible for deleting it.
+     *                     and be responsible for deleting it.
      *
      *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-     *                          If will check by both ImageFileName and FeatureValues. If this parameter
+     *                          If will check by both ExampleFileName and FeatureValues. If this parameter
      *                          is not equal to NULL then will not save the Training model.  Will
      *                          NOT take ownership of list or its contents.  Caller still owns it.
      *
@@ -93,7 +93,7 @@ namespace KKMLL
      * 
      *@param[in] _checkForDuplicates  If set to true will look for duplicates in the training data. Two
      *                                FeatureVectors will be considered duplicate if they have the Same
-     *                                ImageFileName or the save Feature Values.  If duplicates are in 
+     *                                ExampleFileName or the save Feature Values.  If duplicates are in 
      *                                the same class then all but one will be removes.  If they are
      *                                in more then one class then they will both be removed.
      *
@@ -128,7 +128,7 @@ namespace KKMLL
      *                     directories where training examples are found.
      *
      *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-     *                          If will check by both ImageFileName and FeatureValues. If this parameter
+     *                          If will check by both ExampleFileName and FeatureValues. If this parameter
      *                          is not equal to NULL then will not save the Training model.  Will
      *                          NOT take ownership of list or its contents.  Caller still owns it.
      *
@@ -323,9 +323,9 @@ namespace KKMLL
 
 
   private:
-    void    AddImagesToTrainingLibray (FeatureVectorList&  trainingImages,
-                                     FeatureVectorList&  imagesToAdd
-                                    );
+    void    AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
+                                       FeatureVectorList&  examplesToAdd
+                                      );
 
     void    BuildModel3 ();
 

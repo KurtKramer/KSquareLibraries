@@ -42,12 +42,10 @@ using namespace KKMLL;
 
 
 
-
-
-void  ReportError (RunLog&        log,
+void  ReportError (RunLog&       log,
                    const KKStr&  fileName,
                    const KKStr&  funcName,
-                   kkint32          lineCount,
+                   kkint32       lineCount,
                    const KKStr&  errorDesc
                   )
 {
@@ -122,36 +120,6 @@ void  FeatureFileIO::RegisterAllDrivers ()
 
 
 
-FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
-{
-  GlobalGoalKeeper::StartBlock ();
-
-  if  (registeredDrivers == NULL)
-    registeredDrivers = new std::vector<FeatureFileIOPtr> ();
-
-  FeatureFileIOPtr  result = NULL;
-
-  KKStr  driverNameLower = _driverName.ToLower ();
-  vector<FeatureFileIOPtr>::const_iterator  idx;
-  for  (idx = registeredDrivers->begin ();  idx != registeredDrivers->end ();  idx++)
-  {
-    if  ((*idx)->driverNameLower == driverNameLower)
-    {
-      result =  *idx;
-      break;
-    }
-  }
-
-  GlobalGoalKeeper::EndBlock ();
-
-  return  result;
-}  /* LookUpDriver */
-
-
-
-
-
-
 void  FeatureFileIO::RegisterDriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
@@ -211,6 +179,20 @@ void FeatureFileIO::FinalCleanUp ()
 
 
 
+
+
+FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
+{
+  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+  KKStr  driverNameLower = _driverName.ToLower ();
+  vector<FeatureFileIOPtr>::const_iterator  idx;
+  for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+  {
+    if  ((*idx)->driverNameLower == driverNameLower)
+      return  *idx;
+  }
+  return  NULL;
+}  /* LookUpDriver */
 
 
 
@@ -335,8 +317,6 @@ VectorKKStr  FeatureFileIO::RegisteredDriverNames (bool  canRead,
 
   return  names;
 }  /* RegisteredDriverNames */
-
-
 
 
 
@@ -791,13 +771,13 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
       osAddLastSlash (subDirName);
 
-      // We want to add the directory path to the ImageFileName so that we can later locate the source image.
+      // We want to add the directory path to the ExampleFileName so that we can later locate the source image.
       FeatureVectorList::iterator  idx = subDirImages->begin ();
       for  (idx = subDirImages->begin ();  idx != subDirImages->end ();  idx++)
       {
         fv = *idx;
-        KKStr  newImageFileName = subDirName + fv->ImageFileName ();
-        fv->ImageFileName (newImageFileName);
+        KKStr  newImageFileName = subDirName + fv->ExampleFileName ();
+        fv->ExampleFileName (newImageFileName);
       }
 
       dirImages->AddQueue (*subDirImages);
@@ -1019,8 +999,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       else
       {
         _changesMade = true;
-        fv->ImageFileName (*imageFileName);
-        _log.Level (30) << fv->ImageFileName () << "  " << fv->OrigSize () << endl;
+        fv->ExampleFileName (*imageFileName);
+        _log.Level (30) << fv->ExampleFileName () << "  " << fv->OrigSize () << endl;
         extractedFeatures->PushOnBack (fv);
         numOfNewFeatureExtractions++;
 

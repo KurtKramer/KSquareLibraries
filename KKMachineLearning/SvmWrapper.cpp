@@ -585,15 +585,15 @@ struct svm_model**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
 void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                                struct svm_model**      subModel,
                                const struct svm_node*  unknownClassFeatureData, 
-                               kkint32*                  votes,
+                               kkint32*                votes,
                                double*                 probabilities,
                                kkint32                 knownClass,
                                kkint32&                predClass1,
                                kkint32&                predClass2,
                                kkint32&                predClass1Votes,
                                kkint32&                predClass2Votes,
-                               double&                 probOfPredClass1,
-                               double&                 probOfPredClass2,
+                               double&                 predClass1Prob,
+                               double&                 predClass2Prob,
                                double&                 probOfKnownClass,
                                Ivector&                winners,
                                double**                crossClassProbTable,
@@ -609,15 +609,16 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
 
 
   svm_predict (subModel[0], unknownClassFeatureData, dist, winners, -1);
+
+
   ComputeProb  (NUMCLASS,
-                param.A,
+                svmParam.ProbClassPairs (),
                 dist,                   // Distances for each binary classifier from decision boundary.
                 crossClassProbTable,    // Will get Probabilities between classes.
                 votes,
                 probabilities,          // Probabilities for Each Class
                 knownClass              // -1 = Don't know the class otherwise the Number of the Class.
                );
-
 
   GreaterVotes ((svmParam.SelectionMethod () == SelectByProbability),
                 NUMCLASS,
@@ -629,19 +630,19 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
   if  (predClass1 >= 0)
   {
     predClass1Votes    = votes[predClass1];
-    probOfPredClass1   = probabilities[predClass1];
+    predClass1Prob   = probabilities[predClass1];
   }
 
   if  (predClass2 >= 0)
   {
     predClass2Votes    = votes[predClass2];
-    probOfPredClass2   = probabilities[predClass2];
+    predClass2Prob   = probabilities[predClass2];
   }
 
   if  (knownClass >= 0)
     probOfKnownClass   = probabilities[knownClass];
 
-  breakTie = (probOfPredClass1 - probOfPredClass2);
+  breakTie = (predClass1Prob - predClass2Prob);
 }  /* SvmPredictClass */
 
 
@@ -649,14 +650,14 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
 
 
 
-kkint32  KKMLL::SvmPredictTwoClass (const struct svm_parameter&   param,
-                                              svm_model**                   submodel, 
-                                              const svm_node*               unKnownData, 
-                                              kkint32                       desired, 
-                                              double&                       dist,
-                                              double&                       probability,
-                                              kkint32                       excludeSupportVectorIDX
-                                             )
+kkint32  KKMLL::SvmPredictTwoClass (const svm_parameter&  param,
+                                    svm_model**           submodel, 
+                                    const svm_node*       unKnownData, 
+                                    kkint32               desired, 
+                                    double&               dist,
+                                    double&               probability,
+                                    kkint32               excludeSupportVectorIDX
+                                   )
 {
   if  (submodel[0]->nr_class != 2)
   {
@@ -670,7 +671,6 @@ kkint32  KKMLL::SvmPredictTwoClass (const struct svm_parameter&   param,
     exit (-1);
   }
 
-
   kkint32  v = kkint32 (svm_predictTwoClasses (submodel[0], unKnownData, dist, excludeSupportVectorIDX));
 
   probability = (1.0 / (1.0 + exp (-1.0 * param.A * dist)));
@@ -679,6 +679,32 @@ kkint32  KKMLL::SvmPredictTwoClass (const struct svm_parameter&   param,
 }  /* SvmPredictTwoClass */
 
 
+
+
+void  KKMLL::SvmPredictRaw (svm_model**      submodel, 
+                            const svm_node*  unKnownData,
+                            double&          label,
+                            double&          dist
+                           )
+{
+  if  (submodel[0]->nr_class != 2)
+  {
+    cerr << endl
+         << endl
+         << "SvmPredictTwoClass    *** ERROR ***" << endl
+         << endl
+         << "Number of classes should be equal to two." << endl
+         << endl;
+    osWaitForEnter ();
+    exit (-1);
+  }
+
+  dist = 0.0;
+
+  label = svm_predictTwoClasses (submodel[0], unKnownData, dist, -1);
+
+  return;
+}  /* SvmPredictRaw */
 
 
 

@@ -1,24 +1,18 @@
 #include  "FirstIncludes.h"
-
 #include  <stdio.h>
-
 #include  <iomanip>
 #include  <string>
 #include  <iostream>
 #include  <fstream>
 #include  <map>
 #include  <vector>
-
 #include  "MemoryDebug.h"
 #include  "KKBaseTypes.h"
-
 using namespace std;
-
 
 #include  "OSservices.h"
 #include  "RunLog.h"
 using namespace KKB;
-
 
 
 #include  "ConfusionMatrix2.h"
@@ -61,8 +55,9 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,  // Will make 
 
 
 
-ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will make its own copy of list
-
+ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,
+                                    RunLog&             _log
+                                   ):   // Will make its own copy of list
   bucketSize                  (100),
   classCount                  (0),
   correctByKnownClassByProb   (),
@@ -90,7 +85,6 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will mak
 
 
 ConfusionMatrix2::ConfusionMatrix2 (const ConfusionMatrix2&  cm):
-
   bucketSize                  (cm.bucketSize),
   classCount                  (cm.classCount),
   correctByKnownClassByProb   (),
@@ -165,7 +159,7 @@ void  ConfusionMatrix2::InitializeMemory ()
 
 void  ConfusionMatrix2::InitializeVector (vector<double>&  v,
                                           kkint32          x
-                                          )
+                                         )
 {
   v.clear ();
   for  (kkint32 y = 0;  y < x;  ++y)
@@ -3317,7 +3311,7 @@ ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix (RunLog
   const_iterator  cmIDX = begin ();
   const ConfusionMatrix2Ptr  firstCM = *cmIDX;
 
-  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->MLClasses ());
+  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->MLClasses (), log);
 
   for  (cmIDX = begin ();  cmIDX != end ();  cmIDX++)
   {

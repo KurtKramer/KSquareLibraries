@@ -573,7 +573,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
     example = examplesToUseFoXSpace->IdxToPtr (i);
 
-    if  (example->MLClass () != lastExampleClass)
+    if  (example->MLClass () != lastMlClass)
     {
       lastMlClass  = example->MLClass ();
       lastClassNum = assignments.GetNumForClass (lastMlClass);
@@ -627,7 +627,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
 
 /**
- * @brief  Left over from BitReduction days; reoved all code except that which processed the NO bit reduction option.
+ * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
  * @param[in] examples_list The list of examples you want to attempt to reduce
  * @param[out] compressed_examples_list The reduced list of examples
  */
@@ -641,7 +641,7 @@ void  FeatureEncoder::CompressExamples (FeatureVectorListPtr    srcExamples,
   compressedExamples->AddQueue (*srcExamples);
   time_after = osGetSystemTimeUsed ();
   compressedExamples->Owner (false);
-  return stats;
+  return;
 }  /* CompressExamples */
 
 

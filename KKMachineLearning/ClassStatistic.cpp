@@ -1,4 +1,5 @@
 #include "FirstIncludes.h"
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -15,7 +16,6 @@ using namespace  KKB;
 #include "ClassStatistic.h"
 #include "MLClass.h"
 using namespace  KKMLL;
-
 
 
 
@@ -94,7 +94,7 @@ const  ClassStatisticList&  ClassStatisticList::operator+= (const ClassStatistic
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
     ClassStatisticPtr  rightStat = *idx;
-    ClassStatisticPtr  leftStat = LookUpByImageClass (rightStat->MLClass ());
+    ClassStatisticPtr  leftStat = LookUpByMLClass (rightStat->MLClass ());
 
     if  (leftStat)
       (*leftStat) += (*rightStat);

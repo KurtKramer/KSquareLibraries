@@ -1,4 +1,4 @@
-#ifndef  _CLASSASSIGNMENTS_
+#if  !defined(_CLASSASSIGNMENTS_)
 #define  _CLASSASSIGNMENTS_
 
 /**
@@ -28,7 +28,8 @@ namespace KKMLL
   #ifndef  _MLCLASS_
   class MLClass;
   typedef  MLClass*         MLClassPtr;
-  typedef  MLClass const *  MLClassConstPtr;
+  typedef  MLClass const    MLClassConst;
+  typedef  MLClassConst*    MLClassConstPtr;
   class MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
@@ -58,7 +59,7 @@ namespace KKMLL
 
     MLClassPtr      GetMLClassByIndex (size_t idx);
 
-    MLClassPtr      GetMLClass (kkint16 num);
+    MLClassPtr           GetMLClass    (kkint16 num)  const;
 
     MLClassList     GetMLClasses (kkint16 num)  const;
 

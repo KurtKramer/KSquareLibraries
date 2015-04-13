@@ -23,7 +23,6 @@
 #include "SVMparam.h"
 
 
-
 namespace KKMLL
 {
 
@@ -63,6 +62,20 @@ namespace KKMLL
     MLClassPtr  Class2 () const  {return class2;}
 
     /**
+     * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
+     */
+    void  FeatureEncoder::CompressExamples (FeatureVectorListPtr    srcExamples,
+                                            FeatureVectorListPtr    compressedExamples,
+                                            ClassAssignments&       assignments
+                                           );
+
+
+    FileDescPtr       CreateEncodedFileDesc (ostream*  o);
+
+    FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
+
+
+    /**
      *@brief  Compresses 'src' examples, allocating new 'xSpace' data structure.
      *@param[in]  src              Examples that are to be compressed
      *@param[in]  assignments      Class Assignments
@@ -77,16 +90,14 @@ namespace KKMLL
                                   struct svm_problem&   prob
                                  );
 
-    FileDescPtr       CreateEncodedFileDesc (ostream*  o);
+    XSpacePtr  EncodeAExample (FeatureVectorPtr  example);
 
-    FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
 
-    XSpacePtr         EncodeAExample (FeatureVectorPtr  example);
+    void   EncodeAExample (FeatureVectorPtr  example,
+                           svm_node*         xSpace,
+                           kkint32&          xSpaceUsed
+                          );
 
-    void              EncodeAExample (FeatureVectorPtr  example,
-                                      svm_node*         xSpace,
-                                      kkint32&          xSpaceUsed
-                                     );
 
     FeatureVectorListPtr  EncodeAllExamples (const FeatureVectorListPtr  srcData);
 
@@ -116,7 +127,6 @@ namespace KKMLL
     MLClassPtr              class1;
     MLClassPtr              class2;
     kkint32                 codedNumOfFeatures;
-    SVM_CompressionMethod   compressionMethod;
     kkint32*                destFeatureNums;
     FileDescPtr             destFileDesc;
     FeWhatToDoPtr           destWhatToDo;

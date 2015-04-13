@@ -7,11 +7,11 @@
  *@brief   Detects duplicate images in a given FeaureVectorList objects.
  *@details  Will derive a list of duplicate FeatureVector objects in a given list.  It will 
  *          use both the Image File Name and feature data to detect duplicates.  A duplicate
- *          can be detected in two ways.  If two or more entries have the same ImageFileName  
+ *          can be detected in two ways.  If two or more entries have the same ExampleFileName  
  *          or FeatureData.
  *         
  *          The simplest way to use this object is to create an instance with a FeatureVectorList 
- *          object that you are concerned with.  Then call the method DupImages (), which will 
+ *          object that you are concerned with.  Then call the method DupExamples (), which will 
  *          return the list of duplicates found via a structure called DuplicateImageList.
  */
 
@@ -55,7 +55,7 @@ namespace KKMLL
   public:
     /**
      *@brief  You would use this instance to search for duplicates in the list of 'examples'.
-     *@details  You can still call 'AddExamples' and 'AddSingleImage'; 
+     *@details  You can still call 'AddExamples' and 'AddSingleExample'; 
      */
     DuplicateImages (FeatureVectorListPtr  _examples,
                      RunLog&               _log
@@ -63,7 +63,7 @@ namespace KKMLL
 
 
     DuplicateImages (FileDescPtr  _fileDesc,
-                     RunLog&               _log
+                     RunLog&      _log
                     );
 
     ~DuplicateImages ();
@@ -74,15 +74,15 @@ namespace KKMLL
 
     /**
      *@brief  Add one more FeatureVector to the list.
-     *@details  Will add one more image to list and if it turns out to be a duplicate will 
+     *@details  Will add one more example to list and if it turns out to be a duplicate will 
      *          return pointer to a "DuplicateImage" structure that will contain a list of 
      *          all images that it is duplicate to. If no duplicate found will then return
      *          a NULL pointer.      
-     *@param[in]  image  FeatureVecvtor that you want to add to the list.
+     *@param[in]  example  FeatureVecvtor that you want to add to the list.
      */
-    DuplicateImagePtr      AddSingleImage (FeatureVectorPtr  image);
+    DuplicateImagePtr      AddSingleExample (FeatureVectorPtr  example);
 
-    DuplicateImageListPtr  DupImages          ()  const {return dupExamples;}
+    DuplicateImageListPtr  DupExamples        ()  const {return dupExamples;}
 
     kkint32                DuplicateCount     ()  const {return duplicateCount;}
     kkint32                DuplicateDataCount ()  const {return duplicateDataCount;}
@@ -132,18 +132,18 @@ namespace KKMLL
 
     ~DuplicateImage ();
 
-    void  AddADuplicate (FeatureVectorPtr  image);
+    void  AddADuplicate (FeatureVectorPtr  example);
 
-    bool                    AllTheSameClass ();
+    bool  AllTheSameClass ();
 
-    bool                    AlreadyHaveImage (FeatureVectorPtr image);
+    bool  AlreadyHaveExample (FeatureVectorPtr example);
 
     const 
       FeatureVectorListPtr  DuplicatedImages ()  {return &duplicatedImages;}
 
-    FeatureVectorPtr        FirstImageAdded  ()  {return firstImageAdded;}
+    FeatureVectorPtr  FirstExampleAdded  ()  {return firstImageAdded;}
 
-    FeatureVectorPtr        ImageWithSmallestScanLine (); 
+    FeatureVectorPtr  ExampleWithSmallestScanLine (); 
 
   private:
     FileDescPtr        fileDesc;
@@ -166,7 +166,7 @@ namespace KKMLL
     DuplicateImageList (bool _owner);
     ~DuplicateImageList ();
 
-    DuplicateImagePtr  LocateByImage (FeatureVectorPtr  image);
+    DuplicateImagePtr  LocateByImage (FeatureVectorPtr  example);
 
   private:
   };

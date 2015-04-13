@@ -958,7 +958,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
   {
     FeatureVectorPtr  example = *idx;
 
-    KKStr  rootImageFileName = osGetRootName (example->ImageFileName ());
+    KKStr  rootImageFileName = osGetRootName (example->ExampleFileName ());
     if  (nameIndex.GetEqual (rootImageFileName) != NULL)
     {
       // Need to remove this example from training data.
@@ -1001,7 +1001,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
       FeatureVectorPtr  example = *idx;
 
       if  (report)
-        *report << example->ImageFileName () << "\t" << example->MLClassName () << endl;
+        *report << example->ExampleFileName () << "\t" << example->MLClassName () << endl;
 
       trainingExamples->DeleteEntry (example);
     }
@@ -1166,7 +1166,7 @@ void  TrainingProcess2::ExtractTrainingClassFeatures (DateTime&  latestImageTime
   {
     if  (config->NoiseTrainingClass ())
     {
-      cout  << "*PHASE_MSG2* Training Class[" << config->NoiseTrainingClass ()->Directory () << "]" << endl;
+      cout  << "*PHASE_MSG2* Training Class[" << config->NoiseTrainingClass ()->Name () << "]" << endl;
       ExtractFeatures (config->NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass);
       if  (latestTimeStamp > latestImageTimeStamp)
         latestImageTimeStamp = latestTimeStamp;
@@ -1196,34 +1196,34 @@ void  TrainingProcess2::ReportTraningClassStatistics (ostream&  report)
 
 
 
-void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingImages,
-                                                   FeatureVectorList&  imagesToAdd
+void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
+                                                   FeatureVectorList&  examplesToAdd
                                                   )
 {
   kkint32 idx        = 0;
 
-  kkint32  numOfImages = imagesToAdd.QueueSize ();
+  kkint32  numOfImages = examplesToAdd.QueueSize ();
 
   FeatureVectorPtr  example = NULL;
 
   for  (idx = 0;  idx < numOfImages;  idx++)
   {
-    example = imagesToAdd.IdxToPtr (idx);
+    example = examplesToAdd.IdxToPtr (idx);
 
     if  (example->FeatureDataValid ())
     {
-      trainingImages.PushOnBack (example);
+      trainingExamples.PushOnBack (example);
     }
     else
     {
       log.Level (-1) << endl << endl
-          << "TrainingProcess2::AddImagesToTrainingLibray    ***ERROR***,  Image["  << example->ImageFileName () << "], Class[" << example->ClassName () << "]"
-          << "  Has Invalid Feature Data."
+          << "TrainingProcess2::AddImagesToTrainingLibray    ***ERROR***  " << endl
+          <<         Example["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "] Has Invalid Feature Data."
           << endl << endl;
 
       if  (report)
       {
-        *report << "** ERROR **,  Image["  << example->ImageFileName () << "], Class[" << example->ClassName () << "]"
+        *report << "** ERROR **,  Image["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "]"
                 << "  Has Invalid Feature Data."
                 << endl;
       }
@@ -1247,6 +1247,9 @@ void  TrainingProcess2::CreateModelsFromTrainingData ()
     Abort (true);
     return;
   }
+
+  delete  priorProbability;
+  priorProbability = trainingExamples->GetClassDistribution ();
 
   // Will Create the Appropriate Model class given 'config->ModelingMethod ()'.
   model = Model::CreateAModel (config->ModelingMethod (),
@@ -1283,6 +1286,11 @@ void  TrainingProcess2::CreateModelsFromTrainingData ()
   if  (!model->ValidModel ())
   {
     Abort (true);
+  }
+  else
+  {
+    // Need to LOad Sub Processors.
+    LoadSubClassifiers (false, true);
   }
 
   //trainingExamples->Owner (false);
@@ -1412,6 +1420,19 @@ double   TrainingProcess2::TrainingTime ()  const
 
 
 
+MLClassListPtr    TrainingProcess2::ExtractFullHierachyOfClasses ()  const
+{
+  if  (config)
+    return config->ExtractFullHierachyOfClasses ();
+  
+  else if  (mlClasses)
+    return  new  MLClassList (*mlClasses);
+
+  else
+    return  NULL;
+}
+
+
 
 
 /**
@@ -1424,4 +1445,77 @@ VectorKKStr  TrainingProcess2::ConfigFileFormatErrors ()  const
   else
     return VectorKKStr ();
 }  /* ConfigFileFormatErrors */
+
+
+
+
+void  TrainingProcess2::LoadSubClassifiers (bool  forceRebuild,
+                                            bool  checkForDuplicates
+                                           )
+{
+  if  ((config == NULL)  ||  (config->SubClassifiers () == NULL))
+    return;
+
+  delete  subTrainingProcesses;
+  subTrainingProcesses = new TrainingProcess2List (true);
+
+
+  TrainingConfiguration2ListPtr  subClassifiers = config->SubClassifiers ();
+  TrainingConfiguration2List::const_iterator idx;
+  for  (idx = subClassifiers->begin ();  idx != subClassifiers->end ();  ++idx)
+  {
+    TrainingConfiguration2Ptr  subClassifier = *idx;
+    TrainingProcess2Ptr  tp = new TrainingProcess2 (subClassifier, 
+                                                    NULL,     // ExcludeList
+                                                    fileDesc,
+                                                    log,
+                                                    NULL,     // reportFile
+                                                    forceRebuild,
+                                                    checkForDuplicates,
+                                                    cancelFlag,
+                                                    statusMessage
+                                                   );
+    subTrainingProcesses->PushOnBack (tp);
+    if  (tp->Abort ())
+    {
+      log.Level (-1) << endl 
+        << "TrainingProcess2::LoadSubClassifiers   ***ERROR***   Loading SubClassifier[" << subClassifier->ConfigRootName () << "]." << endl
+        << endl;
+      Abort (true);
+      break;
+    }
+  }
+}  /* LoadSubClassifiers */
+
+
+
+
+TrainingProcess2List::TrainingProcess2List (bool  _owner):
+   KKQueue<TrainingProcess2> (_owner)
+{
+}
+
+
+
+TrainingProcess2List::~TrainingProcess2List ()
+{
+}
+
+
+
+kkint32 TrainingProcess2List::MemoryConsumedEstimated ()  const
+{
+  kkint32  memoryConsumedEstimated = 0;
+
+  TrainingProcess2List::const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  ++idx)
+  {
+    TrainingProcess2Ptr  tp = *idx;
+    if  (tp)
+      memoryConsumedEstimated += tp->MemoryConsumedEstimated ();
+  }
+  return memoryConsumedEstimated;
+}
+
+
 

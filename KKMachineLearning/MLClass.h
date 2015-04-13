@@ -1,4 +1,4 @@
-#ifndef  _MLCLASS_
+#if  !defined(_MLCLASS_)
 #define  _MLCLASS_
 
 /**
@@ -25,17 +25,18 @@
  **  the object you will most be using when dealing with Images.      *
  **  classes.                                                         *
  **                                                                   *
- **  UmiClass                                                         *
+ **  UmiClass  and PicesClass                                         *
  **  There is a special relationship between this class  and a class  *
- **  called 'UmiClass' in the 'UnManagedInterface' library'.  UmiClass*
- **  is a managed c++ version of this class.  There is a one-to-one   *
+ **  called 'UmiClass' and 'PicesClass in the 'UnManagedInterface'    *
+ **  and PicesInterface libraries, ".net' Managed libraries'.  These  *
+ **  managed c++ versions of this class.  There is a one-to-one       *
  **  correspondence between the two classes.  When ever a instance    *
- **  of 'UmiClass' gets created it will automatically call the static *
- **  method 'MLClass::CreateNewMLClass' to get the unmanaged version  *
- ** of the class.                                                     *
+ **  of 'UmiClass' or 'PicesClass' get created they  will automatic-  *
+ **  ally call the static method 'MLClass::CreateNewMLClass' to get   *
+ **  the unmanaged version of the class.                              *
  **********************************************************************
  *@endcode
- *@see KKMLL::MLClassList, KKMLL::FeatureVector, UnManagedInterface::UmiClass
+ *@see KKMLL::MLClassList, KKMLL::FeatureVector, UnManagedInterface::UmiClass, MLL::PicesClass
  */
 
 
@@ -95,11 +96,19 @@ namespace KKMLL
     static  MLClassPtr  GetByClassId (kkint32  _classId);
 
     /**
-     *@brief Will change the name of an existing class verifying that a duplicate does not get created.
-     *@details Will make sure that the new name is not in use by another class     *
-     *@param[in]  mlClass  Pointer to existing MLClass instance that you wish to rename.
-     *@param[in]  newName     New name that you with to give instance of 'MLClass'
-     *@param[out] changeSuccessful Will return'True' if change was successful,  a reason it would not work is that the name is already used.
+     *@brief Changes the name of an existing class verifying that a duplicate does not get created.
+     *@details Since the class name can not be duplicated and there is a nameIndex structure maintained by each
+     * 'MLClassList' instances we need to make sure the name is not already in use by another instance of 
+     * 'mlClass'.  This is done by first trying to update the 'nameIndex' in 'existingMLClasses' (list
+     * of all 'inageClass' instances in existence); if this is successful will then change the name in 'mlClass'
+     * and update all existing 'MLClassList' instances 'nameIndex' structures.
+     *
+     *@param[in,out] mlClass Class having its name changed; upon entry should contain its original name; if
+     *                          no other class already has its name it will be updated to the value in 
+     *                          'newName'.
+     *@param[in] newName  The new name that 'mlClass' is to receive.
+     *@param[out] changeSuccessful Returns 'true' if name was changed; if set to false then the 'name' field in 'mlClass'
+     *                       will not be changed.
      */
     static  void  ChangeNameOfClass (MLClassPtr    mlClass,
                                      const KKStr&  newName,
@@ -421,7 +430,7 @@ namespace KKMLL
                                  *   classified yet has been loaded.
                                  */
 
-    class  mlClassNameComparison;
+    class  MLClassNameComparison;
   };  /* MLClassList */
 
   #define  _MLClassList_Defined_
@@ -455,14 +464,16 @@ namespace KKMLL
    *@see KKMLL::Model
    *@see KKMLL::FeatureEncoder2::compress
    */
-  class  ClassIndexList: public  map<MLClassPtr, kkint16>
+  class  MLClassIndexList: public  map<MLClassPtr, kkint16>
   {
   public:
-    typedef  ClassIndexList*  ClassIndexListPtr;
+    typedef  MLClassIndexList*  MLClassIndexListPtr;
 
-    ClassIndexList ();
-    ClassIndexList (const ClassIndexList&  _list);
-    ClassIndexList (const MLClassList&  _classes);
+    MLClassIndexList ();
+    MLClassIndexList (const MLClassIndexList&  _list);
+    MLClassIndexList (const MLClassList&  _classes);
+
+    kkint32  MemoryConsumedEstimated ()  const;
 
     virtual
       void  Clear ();
@@ -489,8 +500,6 @@ namespace KKMLL
      */
     MLClassPtr  GetMLClass (kkint16 classIndex);
 
-    kkint32  MemoryConsumedEstimated ()  const;
-
     void  ParseClassIndexList (const KKStr&  s);
 
     KKStr  ToCommaDelString ();
@@ -499,11 +508,11 @@ namespace KKMLL
   private:
     map<kkint16, MLClassPtr>  shortIdx;
     kkint16                   largestIndex;   /**< largest index used so far. */
-  };  /* ClassIndexList */
+  };  /* MLClassIndexList */
 
-  typedef  ClassIndexList::ClassIndexListPtr  ClassIndexListPtr;
+  typedef  MLClassIndexList::MLClassIndexListPtr  MLClassIndexListPtr;
 
-  #define  _ClassIndexList_Defined_
+  #define  _MLClassIndexList_Defined_
 
 
   extern  MLClassList  globalClassList;

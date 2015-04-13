@@ -202,11 +202,11 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
     FeatureVectorList  trainingData (fileDesc, false, log);
     FeatureVectorList  testData     (fileDesc, false, log);
 
-    FeatureVectorList::iterator  imageIDX;
+    FeatureVectorList::iterator  fvIDX;
 
-    for  (imageIDX = data->begin ();  imageIDX != data->end ();  imageIDX++)
+    for  (fvIDX = data->begin ();  fvIDX != data->end ();  fvIDX++)
     {
-      FeatureVectorPtr example = *imageIDX;
+      FeatureVectorPtr example = *fvIDX;
 
       if  (trainingData.QueueSize () < numExamplsToUseForTraining)
         trainingData.PushOnBack (example);

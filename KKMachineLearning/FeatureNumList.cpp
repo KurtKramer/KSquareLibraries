@@ -1,13 +1,10 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
@@ -21,7 +18,6 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FileDesc.h"
 using namespace  KKMLL;
-
 
 
 FeatureNumList::FeatureNumList (FileDescPtr _fileDesc):
@@ -85,8 +81,6 @@ FeatureNumList::FeatureNumList (FileDescPtr       _fileDesc,
 
 
 
-
-
 FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
@@ -121,7 +115,6 @@ FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
 
 
 
-
 FeatureNumList::FeatureNumList (FileDescPtr   _fileDesc,
                                 const KKStr&  _featureListStr,
                                 bool&         _valid
@@ -146,8 +139,6 @@ FeatureNumList::FeatureNumList (FileDescPtr   _fileDesc,
 
   ExtractFeatureNumsFromStr (_featureListStr, _valid);
 }
-
-
 
 
 
@@ -203,7 +194,6 @@ FeatureNumList::FeatureNumList (FileDescPtr           _fileDesc,
 
 
 
-
 FeatureNumList::FeatureNumList ():
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
@@ -211,7 +201,6 @@ FeatureNumList::FeatureNumList ():
   numOfFeatures            (0)
 {
 }
-
 
 
 
@@ -230,7 +219,6 @@ kkint32  FeatureNumList::MemoryConsumedEstimated ()  const
 
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
-
 
 
 
@@ -282,7 +270,6 @@ void   FeatureNumList::ToBitString (BitString&  bitStr)  const
 
 
 
-
 kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
 {
   kkuint16*  newList = new kkuint16[numOfFeatures];
@@ -290,7 +277,6 @@ kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
     newList[x] = featureNums[x];
   return  newList;
 }  /* CreateFeatureNumArray */
-
 
 
 
@@ -410,7 +396,6 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
 
 
 
-
 FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
 {
   bool  valid;
@@ -420,10 +405,9 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
 
 
 
-
 void   FeatureNumList::SetAllFeatures ()
 {
-  for  (kkuint32 x = 0; x < fileDesc->NumOfFields (); x++)
+  for  (kkuint16 x = 0; x < fileDesc->NumOfFields ();  ++x)
   {
     if  (fileDesc->Type (x) != IgnoreAttribute)
       AddFeature (kkuint16 (x));
@@ -431,8 +415,9 @@ void   FeatureNumList::SetAllFeatures ()
   return;
 }  /* SetAllFeatures */
 
+
 /**
- *brief  Returns true if 'z' is a subset of myself.
+ *brief  Returns true if the FeatureNumList 'z' is a subset of myself.
  */
 bool  FeatureNumList::IsSubSet (const FeatureNumList&  z)
 {
@@ -467,16 +452,10 @@ bool  FeatureNumList::InList (kkuint16 _featureNum)  const
 
 
 
-
-/**
- @brief Indicates whether feature '_featureNum' is selected.
- */
 bool  FeatureNumList::Test (kkuint16 _featureNum)  const
 {
   return InList (_featureNum);
 }  /* Test */
-
-
 
 
 
@@ -544,13 +523,13 @@ KKStr  FeatureNumList::ToString ()  const
 
 
 
+
 KKStr   FeatureNumList::ToHexString ()  const
 {
   BitString  bs (fileDesc->NumOfFields ());
   ToBitString (bs);
   return  bs.HexStr ();
 }  /* ToHexString */
-
 
 
 
@@ -628,7 +607,6 @@ void  FeatureNumList::ExtractFeatureNumsFromStr (KKStr   _featureListStr,
     }
     field = _featureListStr.ExtractToken (", \n\r\t");
   }
-
 }  /* ExtractFeatureNumsFromStr */
 
 
@@ -656,7 +634,7 @@ void  FeatureNumList::Load (const KKStr&  _fileName,
   {
     KKStr  firstLine (buff);
     kkint32 fileDescNumOfFields = atoi (firstLine.Str ());
-    if  ((kkint32)(fileDesc->NumOfFields ()) != fileDescNumOfFields)
+    if  (fileDesc->NumOfFields () != fileDescNumOfFields)
     {
       _log.Level (-1) << endl
                       << "FeatureNumList::Load      *** ERROR ***" << endl
@@ -695,11 +673,9 @@ void  FeatureNumList::Load (const KKStr&  _fileName,
     _successful = false;
   }
 
-
   fclose (inputFile);
   _successful = true;
 }  /* Load */
-
 
 
 
@@ -762,7 +738,6 @@ FeatureNumList&  FeatureNumList::operator=  (const FeatureNumListPtr  _features)
 
 
 
-
 kkint32  FeatureNumList::Compare (const FeatureNumList&  _features)  const
 {
   kkint32  x = 0;
@@ -789,7 +764,7 @@ kkint32  FeatureNumList::Compare (const FeatureNumList&  _features)  const
 
 
 
-/**  @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
+/**  @brief  Indicates if the two FeatureNumList instances have the same features selected. */
 bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 {
   if  (numOfFeatures != _features.numOfFeatures)
@@ -811,7 +786,7 @@ bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) < 0;
-}  /* operator== */
+}  /* operator< */
 
 
 
@@ -822,7 +797,7 @@ bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator> (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) > 0;
-}  /* operator== */
+}  /* operator> */
 
 
 
@@ -849,9 +824,9 @@ namespace  KKMLL
 
 
 /**
- * @brief Performs a logical 'AND' operation on the two FeatureNumList instances.
- * @details Will return a new FeatureNumList instance that will consist of a list of features that are selected in both the left and right FeatureNumList
- *  instances.  Both FeatureNumList objects must be referencing the same FileDesc instance otherwise an exception will be thrown.
+ *@brief Performs a logical 'AND' operation on the two FeatureNumList instances.
+ *@details Will return a new FeatureNumList instance that will consist of a list of features that are selected in both the left and right FeatureNumList
+ * instances.  Both FeatureNumList objects must be referencing the same FileDesc instance otherwise an exception will be thrown.
  */
 FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  const
 {
@@ -1032,8 +1007,6 @@ FeatureNumList  FeatureNumList::operator-  (kkuint16  rightSide) const
 
 
 
-
-
 /**
  * @brief Returns a new FeatureNumList instance that consists of the left side instance with the
  *  selected features in the right side removed.
@@ -1044,7 +1017,7 @@ FeatureNumList  FeatureNumList::operator- (const FeatureNumList&  rightSide) con
 {
   if  (fileDesc != rightSide.FileDesc ())
   {
-    KKStr errMsg = "FeatureNumList::operator-  ***ERROR***   Incomparable FileDesc's";
+    KKStr errMsg = "FeatureNumList::operator-  ***ERROR***   Incompatible FileDesc's";
     errMsg << endl
            << "      The associated FileDesc instances are not the same.";
     cerr << endl << endl << errMsg << endl <<endl;
@@ -1068,8 +1041,6 @@ FeatureNumList&  FeatureNumList::operator-= (kkuint16  rightSide)
   UnSet (rightSide);
   return  *this;
 }  /* operator-= */
-
-
 
 
 
@@ -1140,8 +1111,6 @@ AttributeType  FeatureNumList::FeatureAttributeType (kkint32 idx)  const
 
   return  fileDesc->Type (featureNums[idx]);
 }  /* FeatureAttributeType */
-
-
 
 
 

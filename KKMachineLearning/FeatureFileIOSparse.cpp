@@ -179,7 +179,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
     example->MLClass (mlClass);
 
     KKStr  exampleName = rootName + "_" + StrFormatInt (lineCount, "ZZZZZZ0");
-    example->ImageFileName (exampleName);
+    example->ExampleFileName (exampleName);
 
     KKStr  field = "";
     GetToken (_in, " \t", field, eof, eol);

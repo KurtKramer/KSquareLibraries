@@ -31,35 +31,30 @@ typedef  FeatureVectorList*  FeatureVectorListPtr;
 #endif
 
 
-#ifndef  _MLCLASS_
+#if   !defined(_MLCLASS_)
 class  MLClass;
 typedef  MLClass*  MLClassPtr;
-typedef  MLClass const *  MLClassPtr     ;
+typedef  const  MLClass  MLClassConst;
+typedef  MLClassConst*  MLClassConstPtr;
 
 class  MLClassList;
 typedef  MLClassList*  MLClassListPtr;
 #endif
 
 
-#if  !defined(_MLClassConstListDefined_)
-class  MLClassList;
-typedef  MLClassList*  MLClassListPtr;
-#endif
-
-
-#ifndef  _TRAININGCONFIGURATION2_
+#if  !defined(_TRAININGCONFIGURATION2_)
 class  TrainingConfiguration2;
 typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
 #endif
 
 
-#ifndef  _TrainingProcess2_Defined_
+#if   !defined(_TrainingProcess2_Defined_)
 class  TrainingProcess2;
 typedef  TrainingProcess2*  TrainingProcess2Ptr;
 #endif
 
 
-#ifndef  _TrainingProcess2List_Defined_
+#if  !defined(_TrainingProcess2List_Defined_)
 class  TrainingProcess2List;
 typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 #endif
@@ -78,11 +73,11 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
     virtual  ~Classifier2 ();
 
-    bool                 Abort           ()  const  {return abort;}
-    const KKStr&         ConfigRootName  ()  const  {return configRootName;}
+    bool                  Abort           ()  const  {return abort;}
+    const KKStr&          ConfigRootName  ()  const  {return configRootName;}
     SVM_SelectionMethod   SelectionMethod ()  const;
 
-    MLClassPtr           ClassifyAImage    (FeatureVector&  example);
+    MLClassPtr            ClassifyAImage    (FeatureVector&  example);
 
     void  ClassifyAImage (FeatureVector&  example,
                           MLClassPtr&     predClass1,
@@ -111,7 +106,7 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
-     *          time and recompute the decision boundary and probability.  It will then
+     *          time and re-compute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  The example that was classified incorrectly.
@@ -299,11 +294,5 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
 }  /* namespace  KKMLL */
 
-
-
-
-
-
-#define  _Classifier2Defined_
 
 #endif

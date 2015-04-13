@@ -1,17 +1,13 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -52,7 +48,7 @@ FileDescPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
                                              MLClassListPtr  _classes,
                                              kkint32&        _estSize,
                                              KKStr&          _errorMessage,
-                                             RunLog&          _log
+                                             RunLog&         _log
                                             )
 {
   _log.Level (10) << endl << endl 
@@ -165,7 +161,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
       _out << endl;
     }
 
-    _out << "@attribute ImageFileName  " << "string" << endl;
+    _out << "@attribute ExampleFileName  " << "string" << endl;
 
     _out << "@attribute Classes? { " << classListStr << " }" << endl;
 
@@ -202,7 +198,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
       _out << ",";
     }
 
-    KKStr  imageFileName = osGetRootNameWithExtension (example->ImageFileName ());
+    KKStr  imageFileName = osGetRootNameWithExtension (example->ExampleFileName ());
     if  (imageFileName.Empty ())
       imageFileName == "Row_" + StrFormatInt (idx, rowMask.Str ());
     _out << imageFileName << ",";

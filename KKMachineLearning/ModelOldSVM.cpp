@@ -28,7 +28,7 @@ using namespace  KKB;
 #include "FeatureEncoder2.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "ModelParamOldSVM.h"
 #include "NormalizationParms.h"
 #include "SVMparam.h"

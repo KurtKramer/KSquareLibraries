@@ -205,7 +205,7 @@ void  CrossValidation::RunCrossValidation ()
 
     log.Level (20) << "Fold [" << (foldNum + 1) << "]  of  [" << numOfFolds << "]" << endl;
 
-    FeatureVectorListPtr  trainingImages = new FeatureVectorList (fileDesc, true, log);
+    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true, log);
 
     FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true, log);
 
@@ -224,19 +224,19 @@ void  CrossValidation::RunCrossValidation ()
       }
       else
       {
-        trainingImages->PushOnBack (newImage);
+        trainingExamples->PushOnBack (newImage);
       }
     }
 
-    log.Level (20) << "Number Of Training Images : " << trainingImages->QueueSize () << endl;
+    log.Level (20) << "Number Of Training Images : " << trainingExamples->QueueSize () << endl;
     log.Level (20) << "Number Of Test Images     : " << testImages->QueueSize ()     << endl;
 
     if  (cancelFlag)
       break;
     
-    CrossValidate (testImages, trainingImages, foldNum);
+    CrossValidate (testImages, trainingExamples, foldNum);
 
-    delete  trainingImages;
+    delete  trainingExamples;
     delete  testImages;
     firstInGroup = firstInGroup + numImagesPerFold;
   }
@@ -268,17 +268,17 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
 
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
-  FeatureVectorListPtr  trainingImages = examples->DuplicateListAndContents ();
+  FeatureVectorListPtr  trainingExamples = examples->DuplicateListAndContents ();
   FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
 
-  CrossValidate (testImages, trainingImages, 0, classedCorrectly);
+  CrossValidate (testImages, trainingExamples, 0, classedCorrectly);
 
   if  (testImages->QueueSize () > 0)
     avgPredProb = totalPredProb / testImages->QueueSize ();
   else
     avgPredProb = 0.0f;
 
-  delete  trainingImages;  trainingImages = NULL;
+  delete  trainingExamples;  trainingExamples = NULL;
   delete  testImages;      testImages     = NULL;
 
 
@@ -295,7 +295,7 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
 
 
 void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages, 
-                                      FeatureVectorListPtr   trainingImages,
+                                      FeatureVectorListPtr   trainingExamples,
                                       kkint32                foldNum,
                                       bool*                  classedCorrectly
                                      )
@@ -305,8 +305,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   KKStr  statusMessage;
 
   TrainingProcess2  trainer (config, 
-                             trainingImages, 
-                             mlClasses,
+                             trainingExamples, 
                              NULL,
                              config->FvFactoryProducer (),
                              log,
@@ -376,13 +375,13 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   vector<MLClassPtr>        predictedClassHist            (numTestExamples);
   vector<double>            probabilityHist               (numTestExamples, 0.0f);
 
-  FeatureVectorList::iterator  exampleIDX;
+  FeatureVectorList::iterator  fvIDX;
 
   double  startClassificationTime = osGetSystemTimeUsed ();
 
-  for  (exampleIDX = testImages->begin ();  (exampleIDX != testImages->end ())  &&  (!cancelFlag);  exampleIDX++)
+  for  (fvIDX = testImages->begin ();  (fvIDX != testImages->end ())  &&  (!cancelFlag);  fvIDX++)
   {
-    example = *exampleIDX;
+    example = *fvIDX;
 
     knownClass = example->MLClass ();
 

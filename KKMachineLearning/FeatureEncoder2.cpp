@@ -1,5 +1,4 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -8,9 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -27,12 +24,16 @@ using namespace  KKB;
 #include "SvmWrapper.h"
 using namespace  KKMLL;
 
-
+/**
+  *@brief Constructs a Feature Encoder object.
+  *@param[in] _param 
+  *@param[in] _fileDesc
+  *@param[in] _log A logfile stream. All important events will be output to this stream
+  */
 FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
                                   FileDescPtr        _fileDesc,
                                   RunLog&            _log
-                                 ):
-
+                                  ):
     attributeVector     (_fileDesc->AttributeVector ()),
     cardinalityDest     (NULL),
     cardinalityVector   (_fileDesc->CardinalityVector ()),
@@ -123,20 +124,19 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
 
 FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
-    attributeVector      (_encoder.attributeVector),
-    cardinalityDest      (NULL),
-    cardinalityVector    (_encoder.cardinalityVector),
-    codedNumOfFeatures   (_encoder.codedNumOfFeatures),
-    destFeatureNums      (NULL),
-    destWhatToDo         (NULL),
-    encodedFileDesc      (_encoder.encodedFileDesc),
-    encodingMethod       (_encoder.encodingMethod),
-    fileDesc             (_encoder.fileDesc),
-    log                  (_encoder.log),
-    numOfFeatures        (_encoder.numOfFeatures),
-    srcFeatureNums       (NULL),
-    param                (_encoder.param)
-    
+    attributeVector    (_encoder.attributeVector),
+    cardinalityDest    (NULL),
+    cardinalityVector  (_encoder.cardinalityVector),
+    codedNumOfFeatures (_encoder.codedNumOfFeatures),
+    destFeatureNums    (NULL),
+    destWhatToDo       (NULL),
+    encodedFileDesc    (_encoder.encodedFileDesc),
+    encodingMethod     (_encoder.encodingMethod),
+    fileDesc           (_encoder.fileDesc),
+    log                (_encoder.log),
+    numOfFeatures      (_encoder.numOfFeatures),
+    srcFeatureNums     (NULL),
+    param              (_encoder.param)
 {
   log.Level (30) << "FeatureEncoder2::FeatureEncoder2" << endl;
 
@@ -148,7 +148,6 @@ FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
   kkint32  x;
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    //kkint32  srcFeatureNum = param.SelectedFeatures () [x];
     srcFeatureNums   [x] = _encoder.srcFeatureNums [x];
     destFeatureNums  [x] = _encoder.destFeatureNums[x];
     cardinalityDest  [x] = _encoder.cardinalityDest[x];
@@ -159,6 +158,9 @@ FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
 
 
 
+/**
+  * @brief Frees any memory allocated by, and owned by the FeatureEncoder2
+  */
 FeatureEncoder2::~FeatureEncoder2 ()
 {
   delete  srcFeatureNums;
@@ -199,7 +201,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
   if  (o)
   {
     *o << endl 
-       << "Orig"     << "\t" << "Orig"      << "\t" << "Field" << "\t" << "Encoded"  << "\t" << "Encoded"   << endl;
+        << "Orig"     << "\t" << "Orig"      << "\t" << "Field" << "\t" << "Encoded"  << "\t" << "Encoded"   << endl;
     *o << "FieldNum" << "\t" << "FieldName" << "\t" << "Type"  << "\t" << "FieldNum" << "\t" << "FieldName" << endl;
   }
 
@@ -215,20 +217,20 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
     if  (y >= codedNumOfFeatures)
     {
       log.Level(-1) 
-           << endl
-           << endl
-           << "FeatureEncoder2::CreateEncodedFileDesc     *** ERROR ***"          << endl
-           << "             overriding number of encoded features.  This should"  << endl
-           << "             never be able to happen. Something is wrong with"     << endl
-           << "             object."                                              << endl
-           << endl;
+            << endl
+            << endl
+            << "FeatureEncoder2::CreateEncodedFileDesc     *** ERROR ***"          << endl
+            << "             overriding number of encoded features.  This should"  << endl
+            << "             never be able to happen. Something is wrong with"     << endl
+            << "             object."                                              << endl
+            << endl;
       osWaitForEnter ();
       exit (-1);
     }
 
     KKStr  origFieldDesc = StrFormatInt (srcFeatureNum, "zz0") + "\t" +
-                           fileDesc->FieldName (srcFeatureNum) + "\t" +
-                           fileDesc->TypeStr   (srcFeatureNum);
+                            fileDesc->FieldName (srcFeatureNum) + "\t" +
+                            fileDesc->TypeStr   (srcFeatureNum);
 
 
     switch (destWhatToDo[x])
@@ -239,9 +241,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
-             << y                      << "\t"
-             << fileDesc->FieldName (x)
-             << endl;
+              << y                      << "\t"
+              << fileDesc->FieldName (x)
+              << endl;
         }
       }
       break;
@@ -256,9 +258,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
           if  (o)
           {
             *o << origFieldDesc << "\t" 
-               << y             << "\t"
-               << encodedName
-               << endl;
+                << y             << "\t"
+                << encodedName
+                << endl;
           }
 
           y++;
@@ -273,9 +275,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
         if  (o)
         {
           *o << origFieldDesc << "\t" 
-             << y             << "\t"
-             << fileDesc->FieldName (x)
-             << endl;
+              << y             << "\t"
+              << fileDesc->FieldName (x)
+              << endl;
         }
       }
       break;
@@ -344,8 +346,8 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
 FeatureVectorListPtr  FeatureEncoder2::EncodeAllExamples (const FeatureVectorListPtr  srcData)
 {
   FeatureVectorListPtr  encodedExamples = new FeatureVectorList (encodedFileDesc, 
-                                                                 true,                  // Will own the contents 
-                                                                 log
+                                                                  true,                  // Will own the contents 
+                                                                  log
                                                                 );
 
   FeatureVectorList::const_iterator  idx;
@@ -387,9 +389,9 @@ FeatureVectorListPtr  FeatureEncoder2::EncodedFeatureVectorList (const FeatureVe
 struct  FeatureEncoder2::FeatureVar2
 {
   FeatureVar2 (kkint32        _featureNum,  
-               AttributeType  _attributeType,
-               kkint32        _idx,  
-               double         _var
+                AttributeType  _attributeType,
+                kkint32        _idx,  
+                double         _var
               ):
           attributeType (_attributeType),
           featureNum    (_featureNum), 
@@ -410,10 +412,9 @@ class  FeatureEncoder2::FeatureVar2List: public KKQueue<FeatureEncoder2::Feature
 {
 public:
   FeatureVar2List (bool _owner):
-     KKQueue<FeatureVar2> (_owner)
-     {}
+      KKQueue<FeatureVar2> (_owner)
+      {}
 
   ~FeatureVar2List () 
   {}
 };
-

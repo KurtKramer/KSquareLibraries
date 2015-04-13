@@ -1,14 +1,11 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <iomanip>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -48,7 +45,7 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    confusionMatrix              (NULL),
    cmByNumOfConflicts           (NULL),
    examples                     (new FeatureVectorList (*_mlClasses, *_examples, _log)),
-   mlClasses                 (_mlClasses),
+   mlClasses                    (_mlClasses),
    examplesPerClass             (0),
    log                          (_log),
    maxNumOfConflicts            (0),
@@ -183,7 +180,7 @@ void  CrossValidationVoting::RunCrossValidation ()
 
     cout << "Fold [" << (foldNum + 1) << "]  of  [" << numOfFolds << "]" << endl;
 
-    FeatureVectorListPtr  trainingImages = new FeatureVectorList (fileDesc, true, log);
+    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true, log);
 
     FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true, log);
 
@@ -202,16 +199,16 @@ void  CrossValidationVoting::RunCrossValidation ()
       }
       else
       {
-        trainingImages->PushOnBack (newImage);
+        trainingExamples->PushOnBack (newImage);
       }
     }
 
-    cout << "Number Of Training Images : " << trainingImages->QueueSize () << endl;
+    cout << "Number Of Training Images : " << trainingExamples->QueueSize () << endl;
     cout << "Number Of Test Images     : " << testImages->QueueSize ()     << endl;
 
-    CrossValidate (testImages, trainingImages, foldNum);
+    CrossValidate (testImages, trainingExamples, foldNum);
 
-    delete  trainingImages;
+    delete  trainingExamples;
     delete  testImages;
     firstInGroup = firstInGroup + numImagesPerFold;
   }
@@ -222,8 +219,8 @@ void  CrossValidationVoting::RunCrossValidation ()
 
 
 void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationData,
-                                          bool*                classedCorrectly
-                                         )
+                                                bool*                classedCorrectly
+                                               )
 {
   log.Level (10) << "CrossValidationVoting::RunValidationOnly" << endl;
   DeleteAllocatedMemory ();
@@ -232,12 +229,12 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationD
 
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
-  FeatureVectorListPtr  trainingImages = examples->DuplicateListAndContents ();
+  FeatureVectorListPtr  trainingExamples = examples->DuplicateListAndContents ();
   FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
 
-  CrossValidate (testImages, trainingImages, 0, classedCorrectly);
+  CrossValidate (testImages, trainingExamples, 0, classedCorrectly);
 
-  delete  trainingImages;
+  delete  trainingExamples;
   delete  testImages;
 }  /* RunValidationOnly */
 
@@ -245,7 +242,7 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationD
 
 
 void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages, 
-                                            FeatureVectorListPtr   trainingImages,
+                                            FeatureVectorListPtr   trainingExamples,
                                             kkint32                foldNum,
                                             bool*                  classedCorrectly
                                            )
@@ -266,8 +263,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
     TrainingConfiguration2Ptr  config = configs->IdxToPtr (idx);
     
     TrainingProcess2Ptr  trainer = new TrainingProcess2 (config, 
-                                                         trainingImages, 
-                                                         mlClasses,
+                                                         trainingExamples, 
                                                          NULL,
                                                          config->FvFactoryProducer (),
                                                          log,

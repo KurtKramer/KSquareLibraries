@@ -85,7 +85,7 @@ namespace KKMLL
     const KKStr&   Name        () const  {return name;}
 
 
-    virtual  FeatureFileIOPtr  DefaultFeatureFileIO ()  const = 0;
+    virtual  FeatureFileIOPtr  DefaultFeatureFileIO     ()  const = 0;
 
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FactoryFVProducer' works with. */
     virtual  const type_info*  FeatureVectorTypeId      () const = 0;
@@ -102,14 +102,20 @@ namespace KKMLL
 
 
     /**
+     *@brief Manufactures a instance of a derived 'FeatureVector' class that is appropriate for containing instances
+     *of FeatureVectors produced by the associated FeatureVectorProducer.
+     */
+    virtual  FeatureVectorPtr  ManufacturFeatureVector (kkint32  numOfFeatires,
+                                                        RunLog&  runLog
+                                                       );
+
+    /**
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
      *of FeatureVectors produced by the associated FeatureVectorProducer.
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
                                                                );
-
-
 
 
     /**

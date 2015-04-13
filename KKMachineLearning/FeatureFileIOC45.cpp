@@ -837,7 +837,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
         {
           // This is not a missing data.
 
-          if  (attributeTable[fieldNum]->Name ().EqualIgnoreCase ("ImageFileName"))
+          if  (attributeTable[fieldNum]->Name ().EqualIgnoreCase ("ExampleFileName"))
             imageFileName = field;
 
           code = attributeTable[fieldNum]->GetNominalCode (field);
@@ -905,7 +905,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     if  (imageFileName.Empty ())
       imageFileName = fileRootName + "_" + StrFormatInt (lineCount, "ZZZZZ0");
 
-    example->ImageFileName (imageFileName);
+    example->ExampleFileName (imageFileName);
 
 
     if  (lineIsValid)
@@ -1086,7 +1086,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
       nf << "." << endl;
     }
 
-    nf << "ImageFileName" << ": " << "Symbolic" << "." << endl;
+    nf << "ExampleFileName" << ": " << "Symbolic" << "." << endl;
 
     nf.close ();
   }
@@ -1147,7 +1147,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
       }
       _out << ",";
     }
-    _out << example->ImageFileName () << ",";
+    _out << example->ExampleFileName () << ",";
     _out << example->ClassName ();
     _out << endl;
     _numExamplesWritten++;

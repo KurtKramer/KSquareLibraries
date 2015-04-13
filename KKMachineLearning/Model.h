@@ -10,9 +10,10 @@
    supplied labeled examples(List of FeatureVector objects),  Prediction of an unlabeled example.
  */
 
+#include "DateTime.h"
 #include "KKBaseTypes.h"
-#include "RunLog.h"
 #include "KKStr.h"
+#include "RunLog.h"
 
 
 #include "ModelParam.h"
@@ -56,9 +57,12 @@ namespace KKMLL
   #if  !defined(_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
-  typedef  MLClass const *  MLClassPtr     ;
+  typedef  const MLClass  MLClassConst;
+  typedef  MLClassConst*  MLClassConstPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
+  class  MLClassIndexList;
+  typedef  MLClassIndexList*  MLClassIndexListPtr;
   #endif
 
 
@@ -177,7 +181,7 @@ namespace KKMLL
 
     const KKStr&                      RootFileName               () const {return rootFileName;}
 
-    const KKB::DateTime&              TimeSaved               () const {return timeSaved;}
+    const KKB::DateTime&              TimeSaved                  () const {return timeSaved;}
 
     double                            TrainingTime               () const {return trainingTime;}
 
@@ -385,7 +389,7 @@ namespace KKMLL
 
     MLClassListPtr         classes;
 
-    ClassIndexListPtr      classesIndex;
+    MLClassIndexListPtr      classesIndex;
 
     double*                classProbs;
  

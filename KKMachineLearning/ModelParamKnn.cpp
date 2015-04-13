@@ -15,7 +15,7 @@ using namespace KKB;
 #include "ModelParamKnn.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKMLL;

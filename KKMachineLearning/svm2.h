@@ -9,7 +9,7 @@
 
 #include "KKStr.h"
 
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 

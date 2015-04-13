@@ -79,7 +79,7 @@ Model::Model (const Model&  _model):
   }
 
   if  (_model.classesIndex)
-    classesIndex = new ClassIndexList (*_model.classesIndex);
+    classesIndex = new MLClassIndexList (*_model.classesIndex);
 
 
   if  (_model.encoder)
@@ -686,13 +686,13 @@ void  Model::ReadXML (istream&  i,
       delete  classes;
       classes = MLClassList::BuildListFromDelimtedStr (ln, ',');
       delete  classesIndex;
-      classesIndex = new ClassIndexList (*classes);
+      classesIndex = new MLClassIndexList (*classes);
     }
 
     else if  (field.EqualIgnoreCase ("ClassesIndex"))
     {
       delete  classesIndex;  classesIndex = NULL;
-      classesIndex = new ClassIndexList ();
+      classesIndex = new MLClassIndexList ();
       classesIndex->ParseClassIndexList (ln);
     }
 
@@ -870,7 +870,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   classes->SortByName ();
 
   delete  classesIndex;
-  classesIndex = new ClassIndexList (*classes);
+  classesIndex = new MLClassIndexList (*classes);
 
 
   if  (param->ExamplesPerClass () < int32_max)

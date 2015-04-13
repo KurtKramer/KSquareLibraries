@@ -45,6 +45,20 @@ using namespace  KKMLL;
 
    See notes below for original author, etc.
 
+   Modified by Kurt Kramer 2012-09-10:
+      Originally written by    R. Scott Crowder, III   Se below for his comments.
+
+      I turnd in this implementation as found at USF into a c++ Class and integrated into the Pices
+      application.
+        1) Restructured code as a c++ class.
+        2) A trained classifier are wriiten to disk and can be reread in ab instacne.
+        3) Integrated into the Pices application.
+        4) Primary use will to be used in a Dual classifer setup along with a Support Vector Machine(SVM)(libSVM)
+           where both classifiers agree on the prediction will the lable be returned otherwise the label
+           "UnKnown" will be returned.  User will have option to have the common part of the prediction in the 
+           class hierarchy returned instead.
+
+
    Changes made by Steven Eschrich <eschrich@csee.usf.edu>
    Fall, 2001
 
@@ -720,14 +734,25 @@ ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
       totalDelta += (Outputs[j] - SigmoidMin);
   } 
 
-
   ClassProbListPtr  results = new ClassProbList (true);
 
-  for  (int j = 0;  j < Noutputs;  j++)
+  if  (totalDelta == 0.0f)
   {
-    MLClassPtr  ic = classes->IdxToPtr (j);
-    float  prob = (Outputs[j] - SigmoidMin) / totalDelta;
-    results->PushOnBack (new ClassProb (ic, prob, 0.0f));
+    float p = 1.0f / Noutputs;
+    for  (int j = 0;  j < Noutputs;  j++)
+    {
+      MLClassPtr       ic = classes->IdxToPtr (j);
+      results->PushOnBack (new ClassProb (ic, p, 0.0f));
+    }
+  }
+  else
+  {
+    for  (int j = 0;  j < Noutputs;  j++)
+    {
+      MLClassPtr  ic = classes->IdxToPtr (j);
+      float  prob = (Outputs[j] - SigmoidMin) / totalDelta;
+      results->PushOnBack (new ClassProb (ic, prob, 0.0f));
+    }
   }
 
   /* restore globals */

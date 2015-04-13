@@ -1,18 +1,12 @@
 #include  "FirstIncludes.h"
-
-
 #include  <ctype.h>
 #include  <time.h>
-
 #include  <string>
 #include  <iostream>
 #include  <fstream>
 #include  <math.h>
 #include  <vector>
-
- 
 #include  "MemoryDebug.h"
-
 using namespace  std;
 
 #include "KKBaseTypes.h"
@@ -38,7 +32,7 @@ FeatureVector::FeatureVector (kkint32  _numOfFeatures):
         numOfFeatures    (_numOfFeatures),
         breakTie         (0.0f),
         mlClass          (NULL),
-        imageFileName    (),
+        exampleFileName  (),
         missingData      (false),
         origSize         (0.0f),
         predictedClass   (NULL),
@@ -58,7 +52,7 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
   numOfFeatures    (_example.numOfFeatures),
   breakTie         (_example.breakTie),
   mlClass          (_example.mlClass),
-  imageFileName    (_example.imageFileName),
+  exampleFileName  (_example.exampleFileName),
   missingData      (false),
   origSize         (_example.origSize),
   predictedClass   (_example.predictedClass),
@@ -87,7 +81,7 @@ FeatureVector::~FeatureVector ()
 kkint32 FeatureVector::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (FeatureVector)
-    +  imageFileName.MemoryConsumedEstimated ();
+    +  exampleFileName.MemoryConsumedEstimated ();
 
   if  (featureData)
     memoryConsumedEstimated += sizeof (float) * numOfFeatures;
@@ -668,13 +662,12 @@ void  FeatureVectorList::AddSingleExample (FeatureVectorPtr  _imageFeatures)
 
 
 
-void  FeatureVectorList::RemoveDuplicateEntries (bool allowDupsInSameClass)
+void  FeatureVectorList::RemoveDuplicateEntries (bool     allowDupsInSameClass,
+                                                 RunLog&  runLog
+                                                )
 {
-  DuplicateImages  dupDetector (this,
-                                allowDupsInSameClass
-                                log
-                               );
-  dupDetector.PurgeDuplicates (this, NULL);
+  DuplicateImages  dupDetector (this, runLog);
+  dupDetector.PurgeDuplicates (this, allowDupsInSameClass, NULL);
 }  /* RemoveDuplicateEntries */
 
 
@@ -795,27 +788,27 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
 
 
 
-KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName () 
+KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName () 
 {
   SortByImageFileName ();
 
-  KKStrListPtr  duplicateImages = new KKStrList (true);
+  KKStrListPtr  duplicateExamples = new KKStrList (true);
 
   if  (QueueSize () < 2)
-    return  duplicateImages;
+    return  duplicateExamples;
 
   FeatureVectorList::iterator  iIDX = this->begin ();
 
-  FeatureVectorPtr  lastImage = *iIDX;  ++iIDX;
+  FeatureVectorPtr  lastExample = *iIDX;  ++iIDX;
 
 
   while  (iIDX != end ())
   {
     FeatureVectorPtr  example = *iIDX;  ++iIDX;
 
-    if  (example->ImageFileName () == lastImage->ImageFileName ())
+    if  (example->ExampleFileName () == lastExample->ExampleFileName ())
     {
-      duplicateImages->PushOnBack (new KKStr (example->ImageFileName ()));
+      duplicateExamples->PushOnBack (new KKStr (example->ExampleFileName ()));
 
       if  (iIDX != end ())
       {
@@ -827,7 +820,7 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName ()
         example = NULL;
     }
 
-      while  ((example != NULL)   &&   (example->ImageFileName () == lastImage->ImageFileName ()))
+      while  ((example != NULL)   &&   (example->ExampleFileName () == lastExample->ExampleFileName ()))
       {
         if  (iIDX != end ())
         {
@@ -841,10 +834,10 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName ()
       }
     }
 
-    lastImage = example;
+    lastExample = example;
   }
 
-  return  duplicateImages;
+  return  duplicateExamples;
 }  /*  ExtractDuplicateImageFileNames  */
 
 
@@ -859,7 +852,7 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
     cerr << endl
          << "FeatureVectorList::BinarySearchByName    ****  ERROR ****"  << endl
          << endl
-         << "                   List is Not sorted in ImageFileName Order"  << endl
+         << "                   List is Not sorted in ExampleFileName Order"  << endl
          << endl;
     osDisplayWarning ("FeatureVectorList::BinarySearchByName  Invalid Sort Order.");
     exit (-1);
@@ -877,12 +870,12 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
 
     example = IdxToPtr (mid);
 
-    if  (example->ImageFileName () < _imageFileName)
+    if  (example->ExampleFileName () < _imageFileName)
     {
       low = mid + 1;
     }
 
-    else if  (example->ImageFileName () > _imageFileName)
+    else if  (example->ExampleFileName () > _imageFileName)
     {
       high = mid - 1;
     }
@@ -915,7 +908,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
     for  (idx = begin ();  idx != end ();  idx++)
     {
       example = *idx;
-      if  (_rootName == osGetRootName (example->ImageFileName ()))
+      if  (_rootName == osGetRootName (example->ExampleFileName ()))
         return example;
     }
     return NULL;
@@ -932,7 +925,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
       example = IdxToPtr (mid);
 
-      KKStr  tempName = osGetRootName (example->ImageFileName ());
+      KKStr  tempName = osGetRootName (example->ExampleFileName ());
 
       if  (tempName < _rootName)
       {
@@ -976,7 +969,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
     for  (idx = 0; ((idx < qSize) && (!example)); idx++)
     {
       tempImage = IdxToPtr (idx);
-      if  (_imageFileName == tempImage->ImageFileName ())   
+      if  (_imageFileName == tempImage->ExampleFileName ())   
          example = tempImage;
     }
 
@@ -1013,26 +1006,26 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
       continue;
     }
 
-    KKStr imageFileName = txtLine.ExtractToken ("\n\r\t");
-    if  (orderedImages->LookUpByImageFileName (imageFileName))
+    KKStr exampleFileName = txtLine.ExtractToken ("\n\r\t");
+    if  (orderedImages->LookUpByImageFileName (exampleFileName))
     {
       // Image file name used more than once, will treat as error
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                     << "                      ImageFileName[" << imageFileName << "] occurred more than once in file." << endl
+                     << "                      ExampleFileName[" << exampleFileName << "] occurred more than once in file." << endl
                      << endl;
       fclose (in);
       delete  orderedImages;
       return NULL;
     }
 
-    example = LookUpByImageFileName (imageFileName);
+    example = LookUpByImageFileName (exampleFileName);
     if  (!example)
     {
       // Image file name not in list, will treat as error.
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                     << "                      ImageFileName[" << imageFileName << "] Not in list." << endl
+                     << "                      ExampleFileName[" << exampleFileName << "] Not in list." << endl
                      << endl;
       fclose (in);
       delete  orderedImages;
@@ -1076,7 +1069,7 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
   FeatureVectorList::iterator  idx;
 
   for  (idx = begin ();  idx != end ();  idx++)
-    o << (*idx)->ImageFileName () << endl;
+    o << (*idx)->ExampleFileName () << endl;
 
   o.close ();
 
@@ -1220,19 +1213,19 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
   FeatureVectorList::iterator  idx;
   idx = workList.begin ();
 
-  FeatureVectorPtr  lastImage = *idx;  ++idx;
+  FeatureVectorPtr  lastExample = *idx;  ++idx;
   FeatureVectorPtr  example   = *idx;  ++idx;
 
-  KKStr  lastRootName = osGetRootName (lastImage->ImageFileName ());
+  KKStr  lastRootName = osGetRootName (lastExample->ExampleFileName ());
   KKStr  rootName;
 
   while  (example)
   {
-    rootName = osGetRootName (example->ImageFileName ());
+    rootName = osGetRootName (example->ExampleFileName ());
     if  (rootName != lastRootName)
     {
       lastRootName = rootName;
-      lastImage    = example;
+      lastExample    = example;
       if  (idx == workList.end ())
         example = NULL;
       else
@@ -1243,7 +1236,7 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
     }
     else
     {
-      duplicateList->PushOnBack (lastImage);
+      duplicateList->PushOnBack (lastExample);
       while  ((example != NULL)  &&  (rootName == lastRootName))
       {
         duplicateList->PushOnBack (example);
@@ -1256,7 +1249,7 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
         }
 
         if  (example)
-          rootName = osGetRootName (example->ImageFileName ());
+          rootName = osGetRootName (example->ExampleFileName ());
       }
     }
   }
@@ -1946,7 +1939,7 @@ public:
                      FeatureVectorPtr  p2
                     )
   {
-    return  (p1->ImageFileName () < p2->ImageFileName ());
+    return  (p1->ExampleFileName () < p2->ExampleFileName ());
   }
 };  /* ImageFileNameComparison */
 
@@ -1963,7 +1956,7 @@ public:
                       FeatureVectorPtr  p2
                      )
   {
-    return  (p1->ImageFileName () > p2->ImageFileName ());
+    return  (p1->ExampleFileName () > p2->ExampleFileName ());
   }
 
 };  /* ImageFileNameComparison */
@@ -1982,8 +1975,8 @@ public:
                      FeatureVectorPtr  p2
                     )
   {
-    KKStr  root1 = osGetRootNameWithExtension (p1->ImageFileName ());
-    KKStr  root2 = osGetRootNameWithExtension (p2->ImageFileName ());
+    KKStr  root1 = osGetRootNameWithExtension (p1->ExampleFileName ());
+    KKStr  root2 = osGetRootNameWithExtension (p2->ExampleFileName ());
 
     return  (root1 < root2);
   }
@@ -2000,8 +1993,8 @@ public:
                     FeatureVectorPtr  p2
                    )
   {
-    KKStr  root1 = osGetRootName (p1->ImageFileName ());
-    KKStr  root2 = osGetRootName (p2->ImageFileName ());
+    KKStr  root1 = osGetRootName (p1->ExampleFileName ());
+    KKStr  root2 = osGetRootName (p2->ExampleFileName ());
 
     return  root1 > root2;
   }
@@ -2038,7 +2031,7 @@ public:
         return false;
     }
 
-    return p1->ImageFileName () < p2->ImageFileName ();
+    return p1->ExampleFileName () < p2->ExampleFileName ();
   }
 };  /* ClassNameComparrison */
 
@@ -2074,7 +2067,7 @@ public:
         return true;
     }
 
-    return p1->ImageFileName () > p2->ImageFileName ();
+    return p1->ExampleFileName () > p2->ExampleFileName ();
   }
 };  /* ClassNameComparrisonReversed */
 
