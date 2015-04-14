@@ -172,11 +172,12 @@ SVM289_MFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
 
 
 SVM289_MFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
+                                      FileDescPtr            _fileDesc,
                                       RunLog&                _log
                                      ):
   numTrainExamples (0),
   selFeatures      (_selFeatures), 
-  x                (_selFeatures.FileDesc (), false, _log),
+  x                (_fileDesc, false, _log),
   y                (NULL)
 {
   kkint32  zed = 87989;
@@ -3554,7 +3555,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
     {
       for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
-        svm_problem  sub_prob (prob.SelFeatures (), log);
+        svm_problem  sub_prob (prob.SelFeatures (), prob.FileDesc (), log);
         kkint32 si = start[i], sj = start[j];
         kkint32 ci = count[i], cj = count[j];
         sub_prob.numTrainExamples = ci + cj;
@@ -3832,7 +3833,7 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
     kkint32 end = fold_start[i+1];
     kkint32 j,k;
 
-    svm_problem  subprob (prob.SelFeatures (), log);
+    svm_problem  subprob (prob.SelFeatures (), prob.FileDesc (), log);
 
     subprob.numTrainExamples = numTrainExamples - (end - begin);
     //subprob.x = Malloc(struct svm_node*,subprob.l);
@@ -4625,7 +4626,7 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
     {
       bool  validFeatureSelected = false;
       KKStr  selFeaturesStr = osReadNextToken (in, "\t", eof, eol);
-      model->selFeatures = FeatureNumList (fileDesc, selFeaturesStr, validFeatureSelected);
+      model->selFeatures = FeatureNumList (selFeaturesStr, validFeatureSelected);
     }
 
     else if  (fieldName.EqualIgnoreCase ("nr_sv"))
@@ -5203,7 +5204,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
     else if  (fieldName.EqualIgnoreCase ("SelFeatures"))
     {
       bool  valid = false;
-      selFeatures = FeatureNumList (fileDesc, line, valid);
+      selFeatures = FeatureNumList (line, valid);
     }
 
 

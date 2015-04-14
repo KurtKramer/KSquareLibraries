@@ -539,6 +539,8 @@ namespace  KKB
     kkuint32  ToUint32     () const;
     kkuint64  ToUint64     () const;
 
+    VectorInt32*  ToVectorInt32 ()  const;
+
     wchar_t*  ToWchar_t    () const;
 
     KKStr&    Trim (const char* whiteSpaceChars = "\n\r\t ");

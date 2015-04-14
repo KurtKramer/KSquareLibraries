@@ -25,7 +25,7 @@ using namespace  std;
 using namespace  KKB;
 
 
-#include  "FeatureVector.h"
+#include "FeatureVector.h"
 using namespace  KKMLL;
 
 #include "svm289_BFS.h"
@@ -127,10 +127,11 @@ namespace  SVM289_BFS
 
 
 SVM289_BFS::svm_problem::svm_problem (const svm_problem&  _prob):
-      l                  (_prob.l),
-      selFeatures        (_prob.selFeatures),
-      x                  (_prob.x, false),
-      y                  (NULL)
+      fileDesc     (_prob.fileDesc),
+      l            (_prob.l),
+      selFeatures  (_prob.selFeatures),
+      x            (_prob.x, false),
+      y            (NULL)
 
 {
   clone (y, _prob.y, l);
@@ -143,6 +144,8 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
                                       const float*              _y,
                                       const FeatureNumList&     _selFeatures
                                      ):
+  fileDesc    (x.FileDesc ()),
+  l           (0),
   selFeatures (_selFeatures), 
   x           (_x, false),
   y           (NULL)
@@ -158,11 +161,13 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
 
 
 SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
+                                      FileDescPtr            _fileDesc,
                                       RunLog&                _log
                                      ):
+  fileDesc    (_fileDesc),
   l           (0),
   selFeatures (_selFeatures), 
-  x           (_selFeatures.FileDesc (), false, _log),
+  x           (_fileDesc, false, _log),
   y           (NULL)
 {
   kkint32  zed = 87989;
@@ -3530,7 +3535,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     {
       for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
-        svm_problem  sub_prob (prob.SelFeatures (), log);
+        svm_problem  sub_prob (prob.SelFeatures (), prob.FileDesc (), log);
         kkint32 si = start[i], sj = start[j];
         kkint32 ci = count[i], cj = count[j];
         sub_prob.l = ci + cj;
@@ -3808,7 +3813,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     kkint32 end = fold_start[i+1];
     kkint32 j,k;
 
-    svm_problem  subprob (prob.SelFeatures (), log);
+    svm_problem  subprob (prob.SelFeatures (), prob.FileDesc (), log);
 
     subprob.l = l - (end - begin);
     //subprob.x = Malloc(struct svm_node*,subprob.l);
@@ -4601,7 +4606,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
     {
       bool  validFeatureSelected = false;
       KKStr  selFeaturesStr = osReadNextToken (in, "\t", eof, eol);
-      model->selFeatures = FeatureNumList (fileDesc, selFeaturesStr, validFeatureSelected);
+      model->selFeatures = FeatureNumList (selFeaturesStr, validFeatureSelected);
     }
 
     else if  (fieldName.EqualIgnoreCase ("nr_sv"))
@@ -4740,47 +4745,47 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
 
 
 SVM289_BFS::svm_model::svm_model (FileDescPtr   _fileDesc,
-                              RunLog&       _log
-                             ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+                                  RunLog&       _log
+                                ):
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
 }
 
 
 SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
-                              const FeatureNumList& _selFeatures,
-                              FileDescPtr           _fileDesc,
-                              RunLog&               _log
-                             ):
-   param       (_param),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+                                  const FeatureNumList& _selFeatures,
+                                  FileDescPtr           _fileDesc,
+                                  RunLog&               _log
+                                 ):
+   param               (_param),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_selFeatures),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_selFeatures),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 
 {
 }
@@ -4792,21 +4797,21 @@ SVM289_BFS::svm_model::svm_model (const KKStr&  _fileName,
                                   FileDescPtr   _fileDesc,
                                   RunLog&       _log
                                  ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Load (_fileName, _fileDesc, _log);
 }
@@ -4817,21 +4822,21 @@ SVM289_BFS::svm_model::svm_model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
                                  ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true, _log),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Read (_in, _fileDesc, _log);
 }
@@ -5159,7 +5164,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     else if  (fieldName.EqualIgnoreCase ("SelFeatures"))
     {
       bool  valid = false;
-      selFeatures = FeatureNumList (fileDesc, line, valid);
+      selFeatures = FeatureNumList (line, valid);
     }
 
 

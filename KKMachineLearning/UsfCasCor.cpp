@@ -2298,7 +2298,7 @@ void  UsfCasCor::ReadXmlNameValueLine (istream&  i)
   {
     bool  valid = true;
     delete selectedFeatures;
-    selectedFeatures = new FeatureNumList (fileDesc, line, valid);
+    selectedFeatures = new FeatureNumList (line, valid);
   }
 
   // ints

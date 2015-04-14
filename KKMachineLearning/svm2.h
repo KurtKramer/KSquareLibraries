@@ -50,6 +50,7 @@ namespace  SVM289_MFS
                 );
 
     svm_problem (const FeatureNumList&  _selFeatures,
+                 FileDescPtr            _fileDesc,
                  RunLog&                _log
                 );
 

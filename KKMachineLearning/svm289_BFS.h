@@ -45,6 +45,7 @@ namespace  SVM289_BFS
                 );
 
     svm_problem (const FeatureNumList&  _selFeatures,
+                 FileDescPtr            _fileDesc,
                  RunLog&                _log
                 );
 
@@ -56,6 +57,7 @@ namespace  SVM289_BFS
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}
 
+    FileDescPtr         fileDesc;
     kkint32             l;
     FeatureNumList      selFeatures;
     FeatureVectorList   x;

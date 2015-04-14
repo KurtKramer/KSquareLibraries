@@ -21,6 +21,7 @@ using namespace std;
 
 #include "KKStr.h"
 #include "KKException.h"
+#include "KKStrParser.h"
 using namespace KKB;
 
 
@@ -3542,6 +3543,37 @@ KKB::kkuint64  KKStr::ToUint64 () const
     return  (kkuint64)_atoi64 (val);
   #endif
 }
+
+
+VectorInt32*  KKStr::ToVectorInt32 ()  const
+{
+  VectorInt32*  results = new VectorInt32 ();
+
+  KKStrParser parser (val);
+
+  KKStr  field = parser.GetNextToken (",\t \n\r");
+  while  (!field.Empty ())
+  {
+    kkint32 dashPos = field.LocateCharacter ('-');
+    if  (dashPos < 0)
+    {
+      // This is not a range
+      results->push_back (field.ToInt32 ());
+    }
+    else
+    {
+      // We are looking at a range
+      kkint32  startNum = field.SubStrPart (0, dashPos - 1).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
+      for  (kkint32 z = startNum;   z <= endNum;  ++z)
+        results->push_back (z);
+    }
+    field = parser.GetNextToken (",\t \n\r");
+  }
+  return  results;
+}  /* ToVectorint32 */
+
+
 
 
 

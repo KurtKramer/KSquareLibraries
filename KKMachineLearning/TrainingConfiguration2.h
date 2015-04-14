@@ -50,10 +50,9 @@ namespace KKMLL
     typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
 
 
-    TrainingConfiguration2 (const KKStr&          _configFileName,
-                            FactoryFVProducerPtr  _fvFactoryProducer,           /**< We will take ownership of this instance and delete it in destructor. */
-                            bool                  _validateDirectories,
-                            RunLog&               _log
+    TrainingConfiguration2 (const KKStr&  _configFileName,
+                            bool          _validateDirectories,
+                            RunLog&       _log
                            );
 
 
@@ -64,13 +63,11 @@ namespace KKMLL
      *@brief Use this one if you want to create a default Configuration object.
      *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
      *@param[in]  _parameterStr Sting with Machine Learning Parameters.
-     *@param[in]  _fvFactoryProducer  Factory for creating FeatureVectorProducer instance.
      *@param[in]  _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (MLClassListPtr        _mlClasses,       
-                            KKStr                 _parameterStr,
-                            FactoryFVProducerPtr  _fvFactoryProducer,      /**< We will take ownership of this instance and delete it in destructor. */
-                            RunLog&               _log             
+    TrainingConfiguration2 (MLClassListPtr  _mlClasses,       
+                            KKStr           _parameterStr,
+                            RunLog&         _log             
                            );
 
 
@@ -79,15 +76,13 @@ namespace KKMLL
      * from a configuration file.  
      *@details  For each class specified in '_mlClasses' a 'TrainingClass' instance will be created. 
      * All feature-numbers will be assumed to be selected and unlimited exaples per class wil be allowed.
-     *@param[in] _fileDesc
      *@param[in] _mlClasses
      *@param[in] _modelParameters  Will take ownership of this instance.
      *@param[in] _log
      */
-    TrainingConfiguration2 (MLClassListPtr        _mlClasses,
-                            ModelParamPtr         _modelParameters,
-                            FactoryFVProducerPtr  _fvFactoryProducer,
-                            RunLog&               _log
+    TrainingConfiguration2 (MLClassListPtr  _mlClasses,
+                            ModelParamPtr   _modelParameters,
+                            RunLog&         _log
                            );
 
      virtual    
@@ -113,21 +108,20 @@ namespace KKMLL
      */
     static
     TrainingConfiguration2*  CreateFromDirectoryStructure 
-                                            (const KKStr&          _existingConfigFileName,
-                                             const KKStr&          _subDir,
-                                             FactoryFVProducerPtr  _fvFactoryProducer,
-                                             RunLog&               _log,
-                                             bool&                 _successful,
-                                             KKStr&                _errorMessage
+                                            (const KKStr&         _existingConfigFileName,
+                                             const KKStr&         _subDir,
+                                             FactoryFVProducerPtr _fvFactoryProducer,
+                                             RunLog&              _log,
+                                             bool&                _successful,
+                                             KKStr&               _errorMessage
                                             );
 
 
     static
     TrainingConfiguration2*  CreateFromFeatureVectorList
-                                            (FeatureVectorList&   _examples,
-                                             const KKStr&         _parameterStr, 
-                                             FactoryFVProducerPtr _fvFactoryProducer,  /**< Will take ownership and delete in destructor.  */
-                                             RunLog&              _log
+                                            (FeatureVectorList&  _examples,
+                                             const KKStr&        _parameterStr, 
+                                             RunLog&             _log
                                             );
 
     

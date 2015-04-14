@@ -1,5 +1,5 @@
-#if  !defined(_FEATURENUMLIST2_)
-#define  _FEATURENUMLIST2_
+#if  !defined(_FEATURENUMLIST_)
+#define  _FEATURENUMLIST_
 
 /**
  *@class KKMLL::FeatureNumList
@@ -32,20 +32,19 @@
  *@endcode
  */
 
-#include "KKBaseTypes.h"
-#include "BitString.h"
-#include "RunLog.h"
-#include "KKStr.h"
-
-#include "Attribute.h"
+#include  "Attribute.h"
+#include  "KKBaseTypes.h"
+#include  "BitString.h"
+#include  "RunLog.h"
+#include  "KKStr.h"
 
 
 namespace KKMLL 
 {
-#if  !defined(_FileDesc_Defined_)
+  #ifndef  _FILEDESC_
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
-#endif
+  #endif
 
 
   class  FeatureNumList;
@@ -55,51 +54,87 @@ namespace KKMLL
   {
   public:
     typedef  FeatureNumList*  FeatureNumListPtr;
+    typedef enum {IncludeFeatureNums, ExcludeFeatureNums}  FeatureSelectionType;
 
     /** @brief  Copy constructor.  */
     FeatureNumList (const FeatureNumList&  featureNumList);
 
     /*
-     *@brief  Constructs an instance with no features selected and expecting a maximum of 'maxFeatureNum'.
-     */
-    FeatureNumList (kkuint32  _maxFeatureNum);
-
-
-    /*
-     *@brief  Constructs an instance with no features selected and derives the maximum number of features from _fileDesc.
+     *@brief  Constructs an instance with no features selected and no associated 'FileDesc' instance.
+     *        This is a private constructor and is used for internal use of 'FeatureNumList only.
      */
     FeatureNumList (FileDescPtr  _fileDesc);
 
-    
+
     /**
      *@brief Constructs a 'FeatureNumList' instance using the set bits in 'bitString' to indicate which features are selected.
      *@details For each bit position in 'bitString' that is set to '1' the corresponding feature will be selected.  So the bit string '0110111' with consists of
-     * bits 0, 1, 2, 5, and 6  set to one will cause the features elected to be set to (0, 1, 2, 4, 6). The length of 'bitString' will indicate the maximum 
-     * features.
+     * bits 0, 1, 2, 5, and 6  set to one will cause the features elected to be set to (0, 1, 2, 4, 6).<br />
+     * This is a useful constructor when dealing with dataset's that have a large number of features such as DNA based dataset's.
+     *@param[in]  _fileDesc Description of the feature data.
      *@param[in]  bitString A bit string that indicates which features are selected.  Bits that are set to 1 indicate that
      *            the corresponding feature is selected.
      */
-    FeatureNumList (const BitString&  bitString);
+    FeatureNumList (FileDescPtr       _fileDesc,
+                    const BitString&  bitString
+                   );
 
 
     /**
      * @brief Constructs a 'FeatureNumList' instance from a string that contains a list of selected features.
      * @details The list can consist of single features and/or ranges of features. Ranges of features
      *         are specified by using the dash('-') character between two numbers.  The comma(',')
-     *  character will be used as a separator.
+     *  character will be used as a separator.  "All" specifies all ate to be selected except
+     *  those that are flagged as  'IgnoreAttribute' in the associated FileDesc instance.
+     *  The list should be in ascending order.
      * @code
      *  ex's:
      *    "1,2,3,10,20"    Selects [1,2,3,10, 20].
      *    "1,4-7,9-12,13"  Selects [1,4,,5,6,7,9,10,11,12,13]
+     *    "All"            Selects all features that '_fileDesc' includes accept those that are
+     *                     flagged as 'IgnoreAttribute' in the associated FileDesc instance.
      * @endcode
      * @see ExtractFeatureNumsFromStr
+     * @param[in]  _fileDesc Description of the feature data.
      * @param[in]  _featureListStr  Comma separated string that contains list of selected features; a range of
      *             features can be specified using the dash('-') character.  ex:  The string "1,3,5-7,9" indicates
      *             that features 1,3,5,6,7,9 are selected.
      * @param[out] _valid returns false if '_featureListStr' is not a valid format.
      */
-    FeatureNumList (const KKStr&  _featureListStr,
+    FeatureNumList (FileDescPtr   _fileDesc,
+                    const KKStr&  _featureListStr,
                     bool&         _valid
+                   );
+
+
+    /**
+     * @brief Constructs a 'FeatureNumList' instance from a string where '_selectionType' indicates if the features
+     *  should be included or excluded.
+     *
+     * @details The list can consist of single features and/or ranges of features. Ranges of features
+     *         are specified by using the ('-') character between two numbers.  The comma(',')
+     *         character will be used as a separator.  The list should be in ascending order.
+     *  The '_selectionType' parameter specifies weather we are going to select these
+     *  features or exclude them form the list of all features(complement).
+     * @code
+     *   ex's:
+     *     "1,2,3,10,20"    Selects [1,2,3,10, 20].
+     *     "1,4-7,9-12,13"  Selects [1,4,,5,6,7,9,10,11,12,13]
+     *     "All"            Selects all features that '_fileDesc' includes accept those that are
+     *                      flagged as 'IgnoreAttribute' in the associated FileDesc instance.
+     * @endcode
+     * @param[in]  _fileDesc Description of the feature data.
+     * @param[in]  _selectionType  Specifies whether the features listed in '_featureListStr' should be
+     *              included (IncludeFeatureNums) or excluded(ExcludeFeatureNums).
+     * @param[in]  _featureListStr  Comma separated string that contains list of features to be included or excluded;
+     *             a range of features can be specified using the dash('-') character.  ex:  The string "1,3,5-7,9"
+     *             indicates that features 1,3,5,6,7,9 are selected.
+     * @param[out] _valid returns false if '_featureListStr' is not a valid format.
+     */
+    FeatureNumList (FileDescPtr           _fileDesc,
+                    FeatureSelectionType  _selectionType,
+                    const KKStr&          _featureListStr,
+                    bool&                 _valid
                    );
 
 
@@ -109,22 +144,21 @@ namespace KKMLL
 
     // Access Methods.
     const kkuint16*  FeatureNums    () const  {return featureNums;}
-    kkint32          MaxFeatureNum  () const  {return maxFeatureNum;}
+    FileDescPtr      FileDesc       () const  {return fileDesc;}
     kkint32          NumOfFeatures  () const  {return numOfFeatures;}
     kkint32          NumSelFeatures () const  {return numOfFeatures;}
 
 
 
 
-    /** 
-     *@brief Adds 'featureNum' to the list of selected features.
-     *@details  If it is already selected nothing happens.  If 'featureNum' exceeds the maxFeatureNum then 
-     * 'maxfeatureNum'  will be set to this value.
-     */
+
+    /** @brief Adds 'featureNum' to the list of selected features.  If it is already selected nothing happens. */
     void    AddFeature (kkuint16  featureNum);
 
     /** @brief Returns true if all features are selected. */
-    bool    AllFeaturesSelected (FileDescPtr  fileDesc)  const;
+    bool    AllFeaturesSelected ()  const;
+
+    KKMLL::AttributeType  FeatureAttributeType (kkint32 idx)  const;
 
     /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
     static  FeatureNumList   AllFeatures (FileDescPtr  fileDesc);
@@ -154,8 +188,9 @@ namespace KKMLL
      *                          flagged as 'IgnoreAttribute' in the associated FileDesc instance.
      * @endcode
      */
-    static
-    FeatureNumListPtr  ExtractFeatureNumsFromStr (const KKStr&  featureListStr);
+    void  ExtractFeatureNumsFromStr (KKStr  featureListStr,
+                                     bool&   valid
+                                    );
 
     bool  IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
     
@@ -175,19 +210,20 @@ namespace KKMLL
      */
     FeatureNumListPtr  RandomlySelectFeatures (kkint32  numToKeep)  const;
 
-    void  Save (const KKStr&  fileName);
+    void  Save (const KKStr&  _fileName,
+                bool&         _successful,
+                RunLog&       _log
+               );
    
-    void  SaveXML (std::ostream&  o);
+    void  Save (std::ostream&  o);
 
-    void  SetAllFeatures (FileDescPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
+    void  SetAllFeatures ();                     /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
 
-    bool  Test (kkuint16 _featureNum)  const;       /**< @brief Indicates whether feature '_featureNum' is selected. */
+    bool  Test (kkuint16 _featureNum)  const;    /**< @brief Indicates whether feature '_featureNum' is selected. */
 
     void  ToBitString (BitString&  bitStr)  const;
 
-    KKStr  ToHexString ()  const;                        /**< @brief Uses 'maxFeatureNum to determine length of hex string.  */
-
-    KKStr  ToHexString (FileDescPtr  fileDesc)  const;   /**< @brief Uses 'fileDesc' to  determine length of hex string.  */
+    KKStr  ToHexString ()  const;
 
 
     /** @brief Returns comma delimited list of all features selected; will make use of range specification. */
@@ -206,7 +242,7 @@ namespace KKMLL
     /**
      *@brief Returns back the selected feature.
      *@details  A FeatureNumList instance consists of a list of selected features. It is logically like an 
-     * array of selected features that is the same length as the number of selected features.
+     * array of selectedfeatures that is the same length as the number of selected features.
      *@code
      * Example code that scans the FeatureNumList object  'goodFeatures'
      *
@@ -226,19 +262,19 @@ namespace KKMLL
      */
     kkuint16  operator[] (kkint32  idx)  const;
 
-    FeatureNumList&  operator=  (const FeatureNumList&   _features);
-    FeatureNumList&  operator=  (const FeatureNumListPtr _features);
-    FeatureNumList   operator+  (const FeatureNumList&   rightSide)   const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
-    FeatureNumList   operator+  (kkuint16                rightSide)   const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
-    FeatureNumList&  operator+= (const FeatureNumList&   rightSide);          /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
-    FeatureNumList&  operator+= (kkuint16                featureNum);         /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
-    FeatureNumList   operator-  (const FeatureNumList&   rightSide)   const;  /**< Removes features that are selected in 'rightSide' from this instance and returns the result. */
-    FeatureNumList   operator-  (kkuint16                rightSide)   const;  /**< Returns this instance with the feature specified by 'rightSide'  removed.                    */
-    FeatureNumList&  operator-= (kkuint16                rightSide);          /**< Remove the feature specified by 'rightSide' from this instance.                              */
-    FeatureNumList   operator*  (const FeatureNumList&   rightSide)   const;  /**<*@brief  Returns new instance that is the intersection of features.                      */
-    bool             operator== (const FeatureNumList&   _features)   const;  /**< @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
-    bool             operator>  (const FeatureNumList&   _features)   const;  /**< @brief  Indicates if the Left FeatureNumList instances is greater than the right one.   */
-    bool             operator<  (const FeatureNumList&   _features)   const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
+    FeatureNumList&  operator=  (const FeatureNumList&    _features);
+    FeatureNumList&  operator=  (const FeatureNumListPtr  _features);
+    FeatureNumList   operator+  (const FeatureNumList&  rightSide)  const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList   operator+  (kkuint16 rightSide)  const;                /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList&  operator+= (const FeatureNumList&  rightSide);         /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList&  operator+= (kkuint16 featureNum);                      /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList   operator-  (const FeatureNumList&  rightSide)  const;  /**< Removes features that are selected in 'rightSide' from this instance and returns the result. */
+    FeatureNumList   operator-  (kkuint16 rightSide)  const;                /**< Returns this instance with the feature specified by 'rightSide'  removed.                    */
+    FeatureNumList&  operator-= (kkuint16 rightSide);                       /**< Remove the feature specified by 'rightSide' from this instance.                              */
+    FeatureNumList   operator*  (const FeatureNumList&  rightSide)  const;  /**<*@brief  Returns new instance that is the intersection of features.                      */
+    bool             operator== (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
+    bool             operator>  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is greater than the right one.   */
+    bool             operator<  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
 
   private:
     /*
@@ -247,18 +283,16 @@ namespace KKMLL
      */
     FeatureNumList ();
 
-    void   AllocateArraySize (kkuint16 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
+    void   AllocateArraySize (kkint32 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
 
-    static  VectorUint16*  StrToUInt16Vetor (const KKStr&  s);
-
-    kkuint16*  featureNums;              /**< @brief The feature numbers in this array are always kept in ascending order.  
-                                          * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
-                                          * indicates the size allocated, if more space is needed you need to call 
-                                          * 'AllocateArraySize' to increase it.
-                                          */
-    kkint32   featureNumsAllocatedSize;
-    kkint32   maxFeatureNum;
-    kkint32   numOfFeatures;
+    kkuint16*    featureNums;              /**< @brief The feature numbers in this array are always kept in ascending order.  
+                                            * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
+                                            * indicates the size allocated, if more space is needed you need to call 
+                                            * 'AllocateArraySize' to increase it.
+                                            */
+    kkint32      featureNumsAllocatedSize;
+    FileDescPtr  fileDesc;
+    kkint32      numOfFeatures;
   };  /* FeatureNumList */
 
 

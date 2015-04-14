@@ -58,19 +58,19 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   switch  (modelingMethod)
   {
-  case  Model::mtOldSVM:  modelParameters = new ModelParamOldSVM (fileDesc, log);
-                          break;
+  case  Model::mtOldSVM:    modelParameters = new ModelParamOldSVM    (fileDesc, log);
+                            break;
 
-  case  Model::mtSvmBase: modelParameters = new ModelParamSvmBase (fileDesc, log);
-                          break;
+  case  Model::mtSvmBase:   modelParameters = new ModelParamSvmBase   (fileDesc, log);
+                            break;
 
-  case  Model::mtKNN:     modelParameters = new ModelParamKnn (fileDesc, log);
-                          break;
+  case  Model::mtKNN:       modelParameters = new ModelParamKnn       (fileDesc, log);
+                            break;
 
   case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (fileDesc, log);
                             break;
 
-  case  Model::mtDual:      modelParameters = new ModelParamDual (fileDesc, log);
+  case  Model::mtDual:      modelParameters = new ModelParamDual      (fileDesc, log);
                             break;
 
   default:
@@ -185,14 +185,13 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
 
 TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses,
                                                 KKStr                 _parameterStr,
-                                                FactoryFVProducerPtr  _fvFactoryProducer,
                                                 RunLog&               _log
                                                ):
   Configuration           (_log),
   configFileNameSpecified (""),
   configRootName          (),
   fileDesc                (NULL),
-  fvFactoryProducer       (_fvFactoryProducer),
+  fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
@@ -246,7 +245,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   {
     examplesPerClass = int32_max;
     FeatureNumList  selectedFeatures (fileDesc);
-    selectedFeatures.SetAllFeatures ();
+    selectedFeatures.SetAllFeatures (fileDesc);
     CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1);
     if  (!modelParameters  ||  (!modelParameters->ValidParam ()))
     {
