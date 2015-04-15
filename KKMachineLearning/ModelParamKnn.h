@@ -10,9 +10,7 @@ namespace KKMLL
   public:
     typedef  ModelParamKnn*  ModelParamKnnPtr;
 
-    ModelParamKnn  (FileDescPtr  _fileDesc,
-                    RunLog&      _log
-                   );
+    ModelParamKnn  (RunLog&  _log);
 
 
     ModelParamKnn  (const ModelParamKnn&  _param);
@@ -28,7 +26,9 @@ namespace KKMLL
     virtual ModelParamTypes  ModelParamType () const {return mptKNN;}
 
     virtual
-    void    ReadSpecificImplementationXML (istream&  i);
+    void    ReadSpecificImplementationXML (istream&     i,
+                                           FileDescPtr  fileDesc
+                                          );
 
     /*! 
      @brief Creates a Command Line String that represents these parameters.

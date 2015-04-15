@@ -81,9 +81,10 @@ namespace KKMLL
     virtual
     KKStr                    Description ()  const;  /**< Return short user readable description of model. */
 
-    const FeatureNumList&    GetFeatureNums ()  const;
+    FeatureNumListPtr        GetFeatureNums ()  const;
 
-    FeatureNumList           GetFeatureNums (MLClassPtr  class1,
+    FeatureNumListPtr        GetFeatureNums (FileDescPtr filedesc,
+                                             MLClassPtr  class1,
                                              MLClassPtr  class2
                                             );
 

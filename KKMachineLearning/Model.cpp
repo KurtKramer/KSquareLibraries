@@ -512,7 +512,7 @@ const FeatureEncoder2&  Model::Encoder () const
 
 
 
-const FeatureNumList&   Model::GetFeatureNums ()  const
+FeatureNumListPtr   Model::GetFeatureNums ()  const
 {
   if  (!param)
     throw KKException ("Model::GetFeatureNums  'param == NULL'.");
@@ -533,7 +533,7 @@ bool  Model::NormalizeNominalAttributes ()  const
 
 
 
-const FeatureNumList&  Model::SelectedFeatures () const
+FeatureNumListPtr  Model::SelectedFeatures () const
 {
   if  (!param)
     throw KKException ("Model::GetFeatureNums  'param'.");

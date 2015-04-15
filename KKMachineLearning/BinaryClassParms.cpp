@@ -1,19 +1,16 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
+
 
 #include "KKBaseTypes.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
-
 
 #include "BinaryClassParms.h"
 #include "FileDesc.h"
@@ -24,18 +21,20 @@ using namespace KKMLL;
 using namespace  SVM233;
 
 
-BinaryClassParms::BinaryClassParms (MLClassPtr             _class1,
-                                    MLClassPtr             _class2,
-                                    const svm_parameter&   _param,
-                                    const FeatureNumList&  _selectedFeatures,
-                                    float                  _weight
+BinaryClassParms::BinaryClassParms (MLClassPtr            _class1,
+                                    MLClassPtr            _class2,
+                                    const svm_parameter&  _param,
+                                    FeatureNumListPtr     _selectedFeatures,
+                                    float                 _weight
                                    ):
     class1           (_class1),
     class2           (_class2),
     param            (_param),
-    selectedFeatures (_selectedFeatures),
+    selectedFeatures (NULL),
     weight           (_weight)
 {
+  if  (_selectedFeatures)
+    selectedFeatures = new FeatureNumList (*_selectedFeatures);
 }
  
 
@@ -45,16 +44,43 @@ BinaryClassParms::BinaryClassParms (const BinaryClassParms&  binaryClassParms):
     class1           (binaryClassParms.class1),
     class2           (binaryClassParms.class2),
     param            (binaryClassParms.param),
-    selectedFeatures (binaryClassParms.selectedFeatures),
+    selectedFeatures (NULL),
     weight           (binaryClassParms.weight)
 {
+  if  (binaryClassParms.selectedFeatures)
+    selectedFeatures = new FeatureNumList (*binaryClassParms.selectedFeatures);
 }
 
 
   
 BinaryClassParms::~BinaryClassParms ()
 {
+  delete  selectedFeatures;
+  selectedFeatures = NULL;
 }
+
+
+kkuint16  BinaryClassParms::NumOfFeatures (FileDescPtr fileDesc) const
+{
+  return  SelectedFeaturesFD (fileDesc)->NumOfFeatures ();
+}
+
+
+void  BinaryClassParms::SelectedFeatures (const FeatureNumList&  _selectedFeatures)
+{
+  delete  selectedFeatures;
+  selectedFeatures  = new FeatureNumList (_selectedFeatures);
+}
+
+
+void  BinaryClassParms::SelectedFeatures (FeatureNumListPtr  _selectedFeatures)
+{
+   delete selectedFeatures;
+   selectedFeatures = new FeatureNumList (*_selectedFeatures);
+}
+
+
+
 
 
 KKStr   BinaryClassParms::Class1Name ()  const
@@ -76,15 +102,26 @@ KKStr   BinaryClassParms::Class2Name ()  const
 }  /* Class2Name */
 
 
+FeatureNumListPtr  BinaryClassParms::SelectedFeaturesFD (FileDescPtr fileDesc) const
+{
+  if  (!selectedFeatures)
+    selectedFeatures = new FeatureNumList (fileDesc);
+  return  selectedFeatures;
+}
+
+
 
 KKStr  BinaryClassParms::ToTabDelString ()  const
 {
   KKStr  result;
   result << "Class1"            << "\t" << Class1Name ()                << "\t"
          << "Class2"            << "\t" << Class2Name ()                << "\t"
-         << "Svm_Parameter"     << "\t" << param.ToCmdLineStr ()        << "\t"
-         << "SelectedFeatures"  << "\t" << selectedFeatures.ToString () << "\t"
-         << "Weight"            << "\t" << weight;
+         << "Svm_Parameter"     << "\t" << param.ToCmdLineStr ()        << "\t";
+
+  if  (selectedFeatures)
+      result << "SelectedFeatures"  << "\t" << selectedFeatures->ToString () << "\t";
+
+  result << "Weight"            << "\t" << weight;
 
   return  result;
 }  /* ToTabDelString */
@@ -92,15 +129,14 @@ KKStr  BinaryClassParms::ToTabDelString ()  const
 
 
 BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
-                                                            FileDescPtr   _fileDesc,
                                                             RunLog&       _log
                                                            )
 {
-  MLClassPtr   class1    = NULL;
-  MLClassPtr   class2    = NULL;
-  svm_parameter*  svm_param = NULL;
-  FeatureNumList  selectedFeatures (_fileDesc);
-  float           weight    = 0.0f;
+  MLClassPtr         class1    = NULL;
+  MLClassPtr         class2    = NULL;
+  svm_parameter*     svm_param = NULL;
+  FeatureNumListPtr  selectedFeatures = NULL;
+  float              weight    = 0.0f;
 
   KKStr  str (_str);
   while  (!str.Empty())
@@ -126,8 +162,7 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
 
     else if  (field == "SELECTEDFEATURES")
     {
-      bool  sucessful;
-      selectedFeatures.ExtractFeatureNumsFromStr (value, sucessful);
+      selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (value);
     }
 
     else if  (field == "WEIGHT")
@@ -137,20 +172,22 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
   BinaryClassParmsPtr  binaryClassParms 
         = new  BinaryClassParms (class1, class2, *svm_param, selectedFeatures, weight);
 
-  delete  svm_param;  svm_param = NULL;
+  delete  selectedFeatures;  selectedFeatures = NULL;
+  delete  svm_param;         svm_param        = NULL;
 
   return  binaryClassParms;
 }  /* CreateFromTabDelStr */
 
 
 
+
 kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated =
-    sizeof (MLClassPtr) * 2                  + 
-    param.MemoryConsumedEstimated ()            +
-    selectedFeatures.MemoryConsumedEstimated () +
-    sizeof (weight);
+  kkint32  memoryConsumedEstimated = sizeof (*this)  + param.MemoryConsumedEstimated ();
+
+  if  (selectedFeatures)
+    memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
+
   return  memoryConsumedEstimated;
 }
 
@@ -218,22 +255,25 @@ BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&     i,
   return  binaryClassParmsList;
 }
 
+
+
+
 /**
  @brief  Returns the Average number of selected features.
  */
-float  BinaryClassParmsList::FeatureCountNet ()  const
+float  BinaryClassParmsList::FeatureCountNet (FileDescPtr fileDesc)  const
 {
   if  (size () < 1)
     return 0.0f;
 
   const_iterator  idx;
 
-  kkint32  featureCountTotal = 0;
+  kkuint32  featureCountTotal = 0;
 
   for  (idx = begin ();  idx != end ();  idx++)
   {
     const BinaryClassParmsPtr bcp = *idx;
-    featureCountTotal += bcp->SelectedFeatures ().NumSelFeatures ();
+    featureCountTotal += bcp->NumOfFeatures (fileDesc);
   }
 
   return  (float)featureCountTotal / (float)size ();
@@ -324,7 +364,7 @@ void  BinaryClassParmsList::ReadXML (FILE*        i,
     else if  (field == "<BINARYCLASSPARMS>")
     {
       KKStr  binaryClassParmsStr = ln.ExtractQuotedStr ("\n\r\t", true);
-      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, fileDesc, log));
+      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, log));
     }
   }
 }  /* ReadXML */
@@ -356,7 +396,7 @@ void  BinaryClassParmsList::ReadXML (istream&     i,
     else if  (field == "<BINARYCLASSPARMS>")
     {
       KKStr  binaryClassParmsStr = ln.ExtractQuotedStr ("\n\r\t", true);
-      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, fileDesc, log));
+      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, log));
     }
   }
 }  /* ReadXML */

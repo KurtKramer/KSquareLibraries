@@ -28,6 +28,7 @@
 
 #include "svm.h"
 #include "FeatureNumList.h"
+#include "FileDesc.h"
 
 namespace KKMLL
 {
@@ -50,12 +51,20 @@ namespace KKMLL
 
     typedef  SVM233::svm_parameter  svm_parameter;
 
-    /** @brief  Constructor for 'BinaryClassParms' where caller supplies the two classes and parameters for that specific class pair. */
-    BinaryClassParms (MLClassPtr             _class1,
-                      MLClassPtr             _class2,
-                      const svm_parameter&   _param,
-                      const FeatureNumList&  _selectedFeatures,
-                      float                  _weight
+    /** 
+     *@brief  Constructor for 'BinaryClassParms' where caller supplies the two classes and parameters for that specific class pair. 
+     *@param[in]  _class1
+     *@param[in]  _class2
+     *@param[in]  _param
+     *@param[in] _selectedFeatures  Will create a duplicate instance; caller will still have same ownership status.
+     *@param[in] _weight
+     */
+    
+    BinaryClassParms (MLClassPtr            _class1,
+                      MLClassPtr            _class2,
+                      const svm_parameter&  _param,
+                      FeatureNumListPtr     _selectedFeatures,
+                      float                 _weight
                      );
     
     BinaryClassParms (const BinaryClassParms&  binaryClassParms);
@@ -64,25 +73,29 @@ namespace KKMLL
 
     static
     BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr& _str,
-                                              FileDescPtr  _fileDesc,
                                               RunLog&      _log
                                              );
 
     //  Member Access Methods
-    double                 AParam           () const {return  param.A;}
-    MLClassPtr             Class1           () const {return  class1;}
-    MLClassPtr             Class2           () const {return  class2;}
-    double                 C                () const {return  param.C;}
-    const svm_parameter&   Param            () const {return  param;}
-    const FeatureNumList&  SelectedFeatures () const {return  selectedFeatures;}
-    float                  Weight           () const {return  weight;}
+    double                   AParam           () const {return  param.A;}
+    MLClassPtr               Class1           () const {return  class1;}
+    MLClassPtr               Class2           () const {return  class2;}
+    double                   C                () const {return  param.C;}
+    const svm_parameter&     Param            () const {return  param;}
+    FeatureNumListPtr        SelectedFeatures () const {return  selectedFeatures;}
+    float                    Weight           () const {return  weight;}
+
+    kkuint16                 NumOfFeatures    (FileDescPtr fileDesc) const; 
+    FeatureNumListPtr        SelectedFeaturesFD (FileDescPtr fileDesc) const;
+
 
     // member Update methods
     void  AParam           (float                  _A)                 {param.A           = _A;}
     void  C                (double                 _c)                 {param.C           = _c;}
     void  Gamma            (double                 _gamma)             {param.gamma       = _gamma;}
     void  Param            (const svm_parameter&   _param)             {param             = _param;}
-    void  SelectedFeatures (const FeatureNumList&  _selectedFeatures)  {selectedFeatures  = _selectedFeatures;}
+    void  SelectedFeatures (const FeatureNumList&  _selectedFeatures);
+    void  SelectedFeatures (FeatureNumListPtr      _selectedFeatures);  /**< Will make copy of instance;  caller will retain ownership status. */
     void  Weight           (float                  _weight)            {weight            = _weight;}
 
     KKStr   Class1Name ()  const;
@@ -92,12 +105,14 @@ namespace KKMLL
 
 
   private:
-    MLClassPtr      class1;
-    MLClassPtr      class2;
+    MLClassPtr         class1;
+    MLClassPtr         class2;
 
-    svm_parameter   param;             /**< From SVMlib             */
-    FeatureNumList  selectedFeatures;  /**< Feature Numbers to use. */
-    float           weight;
+    svm_parameter      param;             /**< From SVMlib             */
+
+    mutable
+    FeatureNumListPtr  selectedFeatures;  /**< Feature Numbers to use. */
+    float              weight;
   };  /* BinaryClassParms */
 
 
@@ -138,7 +153,7 @@ namespace KKMLL
 
     ~BinaryClassParmsList ();
 
-    float  FeatureCountNet ()  const;
+    float  FeatureCountNet (FileDescPtr fileDesc)  const;
 
     BinaryClassParmsPtr  LookUp (MLClassPtr  _class1,
                                  MLClassPtr  _class2

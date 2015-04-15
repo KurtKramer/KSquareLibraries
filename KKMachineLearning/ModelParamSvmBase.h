@@ -20,12 +20,9 @@ namespace KKMLL
   public:
     typedef  ModelParamSvmBase*  ModelParamSvmBasePtr;
   
-    ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                        RunLog&      _log
-                       );
+    ModelParamSvmBase  (RunLog&  _log);
   
-    ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                        SVM_Type     _svm_type,
+    ModelParamSvmBase  (SVM_Type     _svm_type,
                         Kernel_Type  _kernelType,
                         double       _cost,
                         double       _gamma,
@@ -55,7 +52,9 @@ namespace KKMLL
     virtual SVM_Type     SvmType    ()  const {return  svmParam.SvmType    ();}
 
 
-    virtual  void    ReadSpecificImplementationXML (istream&  i);
+    virtual  void    ReadSpecificImplementationXML (istream&     i, 
+                                                    FileDescPtr  fileDesc
+                                                   );
   
     virtual  void    WriteSpecificImplementationXML (std::ostream&  o)  const;
  

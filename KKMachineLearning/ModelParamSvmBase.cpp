@@ -25,11 +25,9 @@ using namespace  SVM289_MFS;
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                                       RunLog&      _log
-                                      ):
+ModelParamSvmBase::ModelParamSvmBase  (RunLog&   _log):
 
-  ModelParam (_fileDesc, _log),
+  ModelParam (_log),
   svmParam   ()
 {
 }
@@ -37,15 +35,14 @@ ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                                       SVM_Type     _svm_type,
+ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
                                        Kernel_Type  _kernelType,
                                        double       _cost,
                                        double       _gamma,
                                        RunLog&      _log
                                       ):
 
-  ModelParam (_fileDesc, log),
+  ModelParam (log),
   svmParam   ()
 {
   svmParam.SvmType    (_svm_type);
@@ -53,9 +50,6 @@ ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
   svmParam.Cost       (_cost);
   svmParam.Gamma      (_gamma);
 }
-
-
-
 
 
 
@@ -158,7 +152,9 @@ void  ModelParamSvmBase::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 
-void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&  i)
+void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&     i,
+                                                        FileDescPtr  fileDesc
+                                                       )
 {
   log.Level (20) << "ModelParamSvmBase::ReadSpecificImplementationXML from XML file." << endl;
 
@@ -183,7 +179,7 @@ void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&  i)
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i);
+      ModelParam::ReadXML (i, fileDesc);
     }
 
     else if  (field.EqualIgnoreCase ("SvmParam"))

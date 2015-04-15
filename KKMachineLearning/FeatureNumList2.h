@@ -222,17 +222,17 @@ namespace KKMLL
 
     FeatureNumList&  operator=  (const FeatureNumList&    _features);
     FeatureNumList&  operator=  (const FeatureNumListPtr  _features);
-    FeatureNumList   operator+  (const FeatureNumList&  rightSide)  const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
-    FeatureNumList   operator+  (kkuint16 rightSide)  const;                /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
-    FeatureNumList&  operator+= (const FeatureNumList&  rightSide);         /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
-    FeatureNumList&  operator+= (kkuint16 featureNum);                      /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
-    FeatureNumList   operator-  (const FeatureNumList&  rightSide)  const;  /**< Removes features that are selected in 'rightSide' from this instance and returns the result. */
-    FeatureNumList   operator-  (kkuint16 rightSide)  const;                /**< Returns this instance with the feature specified by 'rightSide'  removed.                    */
-    FeatureNumList&  operator-= (kkuint16 rightSide);                       /**< Remove the feature specified by 'rightSide' from this instance.                              */
-    FeatureNumList   operator*  (const FeatureNumList&  rightSide)  const;  /**<*@brief  Returns new instance that is the intersection of features.                      */
-    bool             operator== (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
-    bool             operator>  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is greater than the right one.   */
-    bool             operator<  (const FeatureNumList&  _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
+    FeatureNumList   operator+  (const FeatureNumList&    rightSide)  const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList   operator+  (kkuint16                 rightSide)  const;                /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
+    FeatureNumList&  operator+= (const FeatureNumList&    rightSide);         /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList&  operator+= (kkuint16                 featureNum);        /**< @brief Returns this FeatureNumList that is a union of this instance and 'rightSide'. */
+    FeatureNumList   operator-  (const FeatureNumList&    rightSide)  const;  /**< Removes features that are selected in 'rightSide' from this instance and returns the result. */
+    FeatureNumList   operator-  (kkuint16                 rightSide)  const;  /**< Returns this instance with the feature specified by 'rightSide'  removed.                    */
+    FeatureNumList&  operator-= (kkuint16                 rightSide);         /**< Remove the feature specified by 'rightSide' from this instance.                              */
+    FeatureNumList   operator*  (const FeatureNumList&    rightSide)  const;  /**<*@brief  Returns new instance that is the intersection of features.                      */
+    bool             operator== (const FeatureNumList&    _features)  const;  /**< @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
+    bool             operator>  (const FeatureNumList&    _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is greater than the right one.   */
+    bool             operator<  (const FeatureNumList&    _features)  const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
 
   private:
     /*

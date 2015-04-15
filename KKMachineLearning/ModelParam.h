@@ -45,9 +45,7 @@ namespace KKMLL
   
     typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  EncodingMethodType;
   
-    ModelParam  (FileDescPtr  _fileDesc,
-                 RunLog&      _log
-                );
+    ModelParam  (RunLog&  _log);
   
   
     ModelParam  (const ModelParam&  _param);
@@ -57,7 +55,7 @@ namespace KKMLL
 
     static 
     ModelParamPtr  CreateModelParam (istream&     i,
-                                     FileDescPtr  _fileDesc,
+                                     FileDescPtr  fileDesc,
                                      RunLog&      _log
                                     );
 
@@ -71,7 +69,7 @@ namespace KKMLL
 
     virtual
     void    ParseCmdLine (KKStr  _cmdLineStr,
-                          bool&   _validFormat
+                          bool&  _validFormat
                          );
 
 
@@ -80,15 +78,20 @@ namespace KKMLL
 
 
     virtual
-    void    ReadXML (KKStr&  _fileName,
-                     bool&   _successful
+    void    ReadXML (KKStr&       _fileName,
+                     FileDescPtr  _fileDesc,
+                     bool&        _successful
                     );
   
     virtual
-    void    ReadXML (istream&  i);
+    void    ReadXML (istream&     i,
+                     FileDescPtr  fileDesc
+                    );
   
     virtual
-    void    ReadSpecificImplementationXML (istream&  i) = 0;
+    void    ReadSpecificImplementationXML (istream&     i,
+                                           FileDescPtr  fileDesc
+                                          ) = 0;
   
 
     /**
@@ -112,14 +115,13 @@ namespace KKMLL
     virtual ModelParamTypes          ModelParamType             () const = 0;
     virtual KKStr                    ModelParamTypeStr          () const {return ModelParamTypeToStr (ModelParamType ());}
 
-    virtual float                    AvgMumOfFeatures           () const {return (float)selectedFeatures.NumOfFeatures ();}
+    virtual float                    AvgMumOfFeatures           () const;
     virtual EncodingMethodType       EncodingMethod             () const {return encodingMethod;}
     virtual KKStr                    EncodingMethodStr          () const {return EncodingMethodToStr (encodingMethod);}
     virtual kkint32                  ExamplesPerClass           () const {return examplesPerClass;}
     virtual const KKStr&             FileName                   () const {return fileName;}
     virtual bool                     NormalizeNominalFeatures   () const {return normalizeNominalFeatures;}
-    virtual kkint32                  NumOfFeaturesAfterEncoding () const;
-    virtual const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
+    virtual const FeatureNumListPtr  SelectedFeatures           () const {return selectedFeatures;}
     virtual bool                     ValidParam                 () const {return validParam;}
   
     // Access members that were originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
@@ -134,7 +136,7 @@ namespace KKMLL
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}
     virtual void  ExamplesPerClass   (kkint32                _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
     virtual void  FileName           (const KKStr&           _fileName)           {fileName           = _fileName;}
-    virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
+    virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures);
     virtual void  ValidParam         (bool                   _validParam)         {validParam         = _validParam;}
 
 
@@ -144,14 +146,15 @@ namespace KKMLL
     virtual void  Gamma    (double  _gamma);
     virtual void  Prob     (float   _prob);
 
+    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
+
+
     static  KKStr   EncodingMethodToStr    (EncodingMethodType     encodingMethod);
 
     static  EncodingMethodType     EncodingMethodFromStr    (const KKStr&  encodingMethodStr);
 
   protected:
-    FileDescPtr    fileDesc;
-
-    RunLog&        log;
+    RunLog&   log;
   
 
   private:
@@ -171,12 +174,13 @@ namespace KKMLL
 
     bool                     normalizeNominalFeatures;
 
-    FeatureNumList           selectedFeatures;    /**< Feature Number to use. */
+    mutable
+    FeatureNumListPtr        selectedFeatures;    /**< Feature Number to use. */
 
     bool                     validParam;
 
     // The following parameters are placed hear to support SVM based algorithms.
-    // to help transition from old(CRAPPY) design to newer less crapy design.
+    // to help transition from old(CRAPPY) design to newer less crappy design.
     double  cost;
     double  gamma;
     float   prob;

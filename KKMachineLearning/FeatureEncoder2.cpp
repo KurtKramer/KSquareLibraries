@@ -51,11 +51,11 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 {
   log.Level (40) << "FeatureEncoder2::FeatureEncoder2" << endl;
 
-  numOfFeatures = param.SelectedFeatures ().NumOfFeatures ();
+  numOfFeatures = param.SelectedFeatures ()->NumOfFeatures ();
+  const kkuint16*  srcFeatureNums = param.SelectedFeatures ()->FeatureNums ();
 
   encodingMethod   = param.EncodingMethod ();
 
-  srcFeatureNums   = new kkint32[numOfFeatures];
   cardinalityDest  = new kkint32[numOfFeatures];
   destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
@@ -66,8 +66,9 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    kkint32  srcFeatureNum = param.SelectedFeatures ()[x];
-    srcFeatureNums   [x] = srcFeatureNum;
+    //kkint32  srcFeatureNum = selectedFeatures[x];
+    //srcFeatureNums   [x] = srcFeatureNum;
+    kkint32  srcFeatureNum = srcFeatureNums[x];
     destFeatureNums  [x] = codedNumOfFeatures;
     cardinalityDest  [x] = 1;
     destWhatToDo     [x] = FeAsIs;
@@ -77,7 +78,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     switch (encodingMethod)
     {
       case  ModelParam::BinaryEncoding:
-        if  ((attributeVector[srcFeatureNums[x]] == NominalAttribute)  || (attributeVector[srcFeatureNums[x]] == SymbolicAttribute))
+        if  ((attributeVector[srcFeatureNum] == NominalAttribute)  || (attributeVector[srcFeatureNum] == SymbolicAttribute))
         {
           destWhatToDo    [x] = FeBinary;
           cardinalityDest [x] = cardinalityVector[srcFeatureNums [x]];

@@ -190,8 +190,8 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
   predictXSpaceWorstCase   (0),
   probabilities            (NULL),
   rootFileName             (_rootFileName),
-  selectedFeatures         (_fileDesc),
-  svmParam                 (_fileDesc, _log),
+  selectedFeatures         (NULL),
+  svmParam                 (_log),
   trainingTime             (0.0),
   type_table               (),
   validModel               (true),
@@ -206,6 +206,8 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
 
   _successful = true;
   validModel = true;
+
+  selectedFeatures = new FeatureNumList (fileDesc);
 
   type_table        = fileDesc->CreateAttributeTypeTable ( );
   cardinality_table = fileDesc->CreateCardinalityTable ( );
@@ -260,8 +262,8 @@ SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
   predictXSpaceWorstCase   (0),
   probabilities            (NULL),
   rootFileName             (),
-  selectedFeatures         (_fileDesc),
-  svmParam                 (_fileDesc, _log),
+  selectedFeatures         (NULL),
+  svmParam                 (_log),
   trainingTime             (0.0),
   type_table               (),
   validModel               (true),
@@ -273,6 +275,9 @@ SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
   log.Level (20) << "SVMModel::SVMModel - Construction from File Stream." << endl;
 
   _successful = true;
+
+  selectedFeatures = new FeatureNumList (fileDesc);
+
 
   type_table        = fileDesc->CreateAttributeTypeTable ( );
   cardinality_table = fileDesc->CreateCardinalityTable ( );
@@ -320,7 +325,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   predictXSpaceWorstCase   (0),
   probabilities            (NULL),
   rootFileName             (),
-  selectedFeatures         (_svmParam.SelectedFeatures ()),
+  selectedFeatures         (NULL),
   svmParam                 (_svmParam),
   trainingTime             (0.0),
   type_table               (),
@@ -339,6 +344,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
     return;
   }
 
+  selectedFeatures = new FeatureNumList (fileDesc);
 
   type_table        = fileDesc->CreateAttributeTypeTable ( );
   cardinality_table = fileDesc->CreateCardinalityTable ( );
@@ -483,6 +489,8 @@ SVMModel::~SVMModel ()
     crossClassProbTable = NULL;
   }
 
+  delete  selectedFeatures;  selectedFeatures = NULL;
+
   delete  [] classIdxTable;         classIdxTable        = NULL;
   delete  [] predictXSpace;         predictXSpace        = NULL;
   delete  [] probabilities;         probabilities        = NULL;
@@ -598,7 +606,10 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
 { 
   log.Level (20) << "SVMModel::BuildProblemOneVsAll" << endl;
 
-  kkint32  numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
+  if  (!selectedFeatures)
+    selectedFeatures = new FeatureNumList (examples.FileDesc ());
+
+  kkint32  numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
   MLClassPtr     mlClass = NULL;
   delete  classAssignments;
@@ -733,27 +744,32 @@ void  SVMModel::BuildCrossClassProbTable ()
 
 
 
-
-const FeatureNumList&  SVMModel::GetFeatureNums (MLClassPtr  class1,
-                                                 MLClassPtr  class2
-                                                )  const
-{
-  return  svmParam.GetFeatureNums (class1, class2);
-}  /* GetFeatureNums */
-
-
-
-
-
-const FeatureNumList&   SVMModel::GetFeatureNums ()  const
+FeatureNumListPtr  SVMModel::GetFeatureNums ()  const
 {
   return  svmParam.GetFeatureNums ();
 }
 
 
 
+FeatureNumListPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc)  const
+{
+  return  svmParam.GetFeatureNums (fileDesc);
+}
+
+
+
+FeatureNumListPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc,
+                                             MLClassPtr   class1,
+                                             MLClassPtr   class2
+                                            )  const
+{
+  return  svmParam.GetFeatureNums (fileDesc, class1, class2);
+}  /* GetFeatureNums */
+
+
+
 void  SVMModel::Save (const KKStr&  _rootFileName,
-                      bool&          _successful
+                      bool&         _successful
                      )
 {
   log.Level (20) << "SVMModel::Save  Saving Model in File["
@@ -787,7 +803,8 @@ void  SVMModel::Write (ostream&      o,
   o << "RootFileName"       << "\t" << rootFileName                                     << endl;
   o << "Time"               << "\t" << osGetLocalDateTime ()                            << endl;
   o << "NumOfModels"        << "\t" << numOfModels                                      << endl;
-  o << "SelectedFeatures"   << "\t" << selectedFeatures.ToString ()                     << endl;
+  if  (selectedFeatures)
+    o << "SelectedFeatures"   << "\t" << selectedFeatures->ToString ()                     << endl;
   o << "TrainingTime"       << "\t" << trainingTime                                     << endl;
   o << "MachineType"        << "\t" << MachineTypeToStr (svmParam.MachineType ())       << endl;
   o << "ClassAssignments"   << "\t" << assignments.ToString ().QuotedStr ()             << endl;
@@ -981,10 +998,11 @@ void  SVMModel::ReadHeader (istream&  i)
 
     else if  (field == "SELECTEDFEATURES")
     {
-      bool  valid;
-      FeatureNumList  tempFeatures (fileDesc);
-      tempFeatures.ExtractFeatureNumsFromStr (ln.ExtractQuotedStr ("\n\r\t", true), valid);
+      KKStr  selectedFeaturesStr = ln.ExtractQuotedStr ("\n\r\t", true);
+      FeatureNumListPtr  tempFeatures = FeatureNumList::ExtractFeatureNumsFromStr (selectedFeaturesStr);
       SetSelectedFeatures (tempFeatures);
+      delete  tempFeatures;
+      tempFeatures = NULL;
     }
 
     else if  (field == "TRAININGTIME")
@@ -994,7 +1012,7 @@ void  SVMModel::ReadHeader (istream&  i)
       assignments.ParseToString (ln.ExtractQuotedStr ("\n\r\t", true));
 
     else if  (field == "<SVMPARAM>")
-      svmParam.ReadXML (i);
+      svmParam.ReadXML (i, fileDesc);
   }
 }  /* ReadHeader */
 
@@ -2502,17 +2520,25 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
 
 void SVMModel::CalculatePredictXSpaceNeeded ()
 {
+  if  (!selectedFeatures)
+  {
+    KKStr  errMsg = "SVMModel::CalculatePredictXSpaceNeeded   ***ERROR***    numOfFeaturesSelected  is NOT defined.";
+    log.Level (-1) << endl << errMsg << endl
+      << endl;
+    throw KKException (errMsg);
+  }
+
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
-  kkint32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ( );
+  kkint32 numOfFeaturesSelected = selectedFeatures->NumOfFeatures ( );
 
   switch (svmParam.EncodingMethod())
   {
   case BinaryEncoding:
     for  (z = 0;  z < numOfFeaturesSelected;  z++)
     {
-      if  ((type_table[selectedFeatures[z]] == NominalAttribute)  ||  (type_table[selectedFeatures[z]] == SymbolicAttribute))
-         numFeaturesAfterEncoding += cardinality_table[selectedFeatures[z]];
+      if  ((type_table[(*selectedFeatures)[z]] == NominalAttribute)  ||  (type_table[(*selectedFeatures)[z]] == SymbolicAttribute))
+         numFeaturesAfterEncoding += cardinality_table[(*selectedFeatures)[z]];
       else
          numFeaturesAfterEncoding ++;
     }
@@ -2522,7 +2548,7 @@ void SVMModel::CalculatePredictXSpaceNeeded ()
   case NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
-    numFeaturesAfterEncoding = selectedFeatures.NumOfFeatures ();
+    numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
     break;
   }
 
@@ -2533,7 +2559,7 @@ void SVMModel::CalculatePredictXSpaceNeeded ()
   // We need to make sure that 'predictXSpace' is bigger than the worst possible case.
   // When doing the Binary Combo case we will assume that this can be all EncodedFeatures.
   // Since I am really only worried about the BinaryCombo case with Plankton data where there 
-  // is not encded fields the number of attributes in the FileDesc should surfice.
+  // is not encoded fields the number of attributes in the FileDesc should surface.
   if  (predictXSpaceWorstCase < (fileDesc->NumOfFields () + 10))
      predictXSpaceWorstCase = fileDesc->NumOfFields () + 10;
 
@@ -2884,7 +2910,17 @@ bool  SVMModel::NormalizeNominalAttributes ()
 
 void  SVMModel::SetSelectedFeatures (const FeatureNumList& _selectedFeatures)
 {
-  selectedFeatures = _selectedFeatures;
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (_selectedFeatures);
+  CalculatePredictXSpaceNeeded ();
+}  /* SetSelectedFeatures */
+
+
+
+void  SVMModel::SetSelectedFeatures (FeatureNumListPtr  _selectedFeatures)
+{
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (*_selectedFeatures);
   CalculatePredictXSpaceNeeded ();
 }  /* SetSelectedFeatures */
 

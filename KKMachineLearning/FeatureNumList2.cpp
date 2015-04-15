@@ -562,9 +562,9 @@ FeatureNumListPtr  FeatureNumList::ExtractFeatureNumsFromStr (const KKStr&  _fea
 
 
 void  FeatureNumList::Load (const KKStr&  _fileName,
-                             bool&         _successful,
-                             RunLog&       _log
-                            )
+                            bool&        _successful,
+                            RunLog&      _log
+                           )
 {
   _log.Level (20) << "FeatureNumList::Load - File[" << _fileName << "]." << endl;
 

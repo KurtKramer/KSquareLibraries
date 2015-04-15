@@ -20,11 +20,9 @@ using namespace KKB;
 using namespace  KKMLL;
 
 
-ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                                           RunLog&      _log
-                                          ):
+ModelParamUsfCasCor::ModelParamUsfCasCor  (RunLog&  _log):
 
-  ModelParam (_fileDesc, _log),
+  ModelParam (_log),
   in_limit         (500),
   out_limit        (500),
   number_of_rounds (-1),
@@ -38,16 +36,15 @@ ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
 
 
 
-ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                                           int          _in_limit,
-                                           int          _out_limit,
-                                           int          _number_of_rounds,
-                                           int          _number_of_trials,
-                                           kkint64      _random_seed,
-                                           bool         _useCache,
-                                           RunLog&      _log
+ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
+                                           int       _out_limit,
+                                           int       _number_of_rounds,
+                                           int       _number_of_trials,
+                                           kkint64   _random_seed,
+                                           bool      _useCache,
+                                           RunLog&   _log
                                           ):
-      ModelParam (_fileDesc, _log),
+      ModelParam (_log),
       in_limit         (_in_limit),
       out_limit        (_out_limit),
       number_of_rounds (_number_of_rounds),
@@ -183,7 +180,9 @@ void  ModelParamUsfCasCor::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 
-void  ModelParamUsfCasCor::ReadSpecificImplementationXML (istream&  i)
+void  ModelParamUsfCasCor::ReadSpecificImplementationXML (istream&     i, 
+                                                          FileDescPtr  fileDesc
+                                                         )
 {
   log.Level (20) << "ModelParamUsfCasCor::ReadSpecificImplementationXML from XML file." << endl;
 
@@ -208,7 +207,7 @@ void  ModelParamUsfCasCor::ReadSpecificImplementationXML (istream&  i)
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i);
+      ModelParam::ReadXML (i, fileDesc);
     }
 
     else if  (field.EqualIgnoreCase ("in_limit"))

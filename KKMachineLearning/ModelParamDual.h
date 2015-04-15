@@ -21,12 +21,9 @@ namespace KKMLL
 
     typedef  enum  {pfmNULL, pfmOr, pfmAnd}  ProbFusionMethodType;
   
-    ModelParamDual  (FileDescPtr  _fileDesc,
-                     RunLog&      _log
-                    );
+    ModelParamDual  (RunLog& _log);
   
-    ModelParamDual  (FileDescPtr   _fileDesc,
-                     const KKStr&  _configFileName1,
+    ModelParamDual  (const KKStr&  _configFileName1,
                      const KKStr&  _configFileName2,
                      bool          _fullHierarchyMustMatch,
                      RunLog&       _log
@@ -57,7 +54,9 @@ namespace KKMLL
     ModelParamDualPtr  Duplicate () const;
 
     virtual
-    void    ReadSpecificImplementationXML (istream&  i);
+    void    ReadSpecificImplementationXML (istream&     i,
+                                           FileDescPtr  fileDesc
+                                          );
   
 
     /**

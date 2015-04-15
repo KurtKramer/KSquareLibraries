@@ -22,17 +22,14 @@ using namespace KKB;
 
 #include "FileDesc.h"
 #include "MLClass.h"
-#include "MLLTypes.h"
+#include "KKMLLTypes.h"
 #include "TrainingConfiguration2.h"
 using namespace KKMLL;
 
 
 
-ModelParamDual::ModelParamDual  (FileDescPtr  _fileDesc,
-                                 RunLog&      _log
-                                ):
-
-  ModelParam (_fileDesc, _log),
+ModelParamDual::ModelParamDual  (RunLog& _log):
+  ModelParam (_log),
   configFileName1        (),
   configFileName2        (),
   fullHierarchyMustMatch (false),
@@ -44,14 +41,13 @@ ModelParamDual::ModelParamDual  (FileDescPtr  _fileDesc,
 
 
 
-ModelParamDual::ModelParamDual  (FileDescPtr   _fileDesc,
-                                 const KKStr&  _configFileName1,
+ModelParamDual::ModelParamDual  (const KKStr&  _configFileName1,
                                  const KKStr&  _configFileName2,
                                  bool          _fullHierarchyMustMatch,
                                  RunLog&       _log
                                 ):
 
-  ModelParam             (_fileDesc, _log),
+  ModelParam             (_log),
   configFileName1        (_configFileName1),
   configFileName2        (_configFileName2),
   fullHierarchyMustMatch (_fullHierarchyMustMatch),
@@ -265,7 +261,9 @@ void  ModelParamDual::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 
-void  ModelParamDual::ReadSpecificImplementationXML (istream&  i)
+void  ModelParamDual::ReadSpecificImplementationXML (istream&     i,
+                                                     FileDescPtr  fileDesc
+                                                    )
 {
   log.Level (20) << "ModelParamDual::ReadSpecificImplementationXML from XML file." << endl;
 
@@ -290,7 +288,7 @@ void  ModelParamDual::ReadSpecificImplementationXML (istream&  i)
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i);
+      ModelParam::ReadXML (i, fileDesc);
     }
 
     else if  (field.EqualIgnoreCase ("ConfigFileName1"))

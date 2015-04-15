@@ -53,34 +53,36 @@ namespace KKMLL
   class  SVMparam
   {
   public:
-    SVMparam  (KKStr&                 _cmdLineStr,
-               const FeatureNumList&  _selectedFeatures,
-               FileDescPtr            _fileDesc,
-               RunLog&                _log,
-               bool&                  _validFormat
+    SVMparam  (KKStr&             _cmdLineStr,
+               FeatureNumListPtr  _selectedFeatures,
+               RunLog&            _log,
+               bool&              _validFormat
               );
 
 
-    SVMparam  (FileDescPtr  _fileDesc,
-               RunLog&      _log
-              );
+    SVMparam  (RunLog&  _log);
 
     SVMparam  (const SVMparam&  _svmParam);
 
     ~SVMparam  ();
 
 
-    void    Load (ClassAssignments& _mlClasses,
-                  KKStr&            _fileName,
+    void    Load (KKStr&            _fileName,
+                  FileDescPtr       _fileDesc,
+                  ClassAssignments& _mlClasses,
                   bool&             _successful
                  );
 
-    void    ReadXML (FILE*  i);
+    void    ReadXML (FILE*        i,
+                     FileDescPtr  fileDesc
+                    );
 
-    void    ReadXML (istream&  i);
+    void    ReadXML (istream&     i,
+                     FileDescPtr  fileDesc
+                    );
 
     void    Save (KKStr&  _fileName,
-                  bool&    _successful
+                  bool&   _successful
                  );
 
     void    WriteXML (std::ostream&  o)  const;
@@ -91,11 +93,11 @@ namespace KKMLL
     void    AddBinaryClassParms (MLClassPtr             class1,
                                  MLClassPtr             class2,
                                  const svm_parameter&   _param,
-                                 const FeatureNumList&  _selectedFeatures,
+                                 FeatureNumListPtr      _selectedFeatures,  /**< We will make our own copy; caller will retain ownership status.  */
                                  float                  _weight
                                 );
 
-    float   AvgMumOfFeatures ();
+    float   AvgMumOfFeatures (FileDescPtr fileDesc) const;
     float   AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const;
 
 
@@ -108,11 +110,14 @@ namespace KKMLL
                                                           MLClassPtr  class2
                                                          );
 
-    const FeatureNumList&  GetFeatureNums ()  const;
+    FeatureNumListPtr GetFeatureNums ()  const;
 
-    const FeatureNumList&  GetFeatureNums (MLClassPtr  class1,
-                                           MLClassPtr  class2
-                                          )  const;
+    FeatureNumListPtr GetFeatureNums (FileDescPtr  fileDesc)  const;
+
+    FeatureNumListPtr GetFeatureNums (FileDescPtr  fileDesc,
+                                      MLClassPtr  class1,
+                                      MLClassPtr  class2
+                                     )  const;
 
     void    ProcessSvmParameter (svm_parameter&  _param,
                                  KKStr           cmd,
@@ -145,7 +150,7 @@ namespace KKMLL
 
     kkint32                  MemoryConsumedEstimated    () const;
 
-    kkint32                  NumOfFeaturesAfterEncoding () const;
+    kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
 
     const svm_parameter&     Param                      () const {return param;}
 
@@ -153,7 +158,9 @@ namespace KKMLL
 
     float                    SamplingRate               () const {return samplingRate;}
 
-    const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
+    FeatureNumListPtr        SelectedFeatures           () const {return selectedFeatures;}
+
+    FeatureNumListPtr        SelectedFeatures           (FileDescPtr  fileDesc)  const;
 
     SVM_SelectionMethod      SelectionMethod            () const {return selectionMethod;}
 
@@ -175,21 +182,23 @@ namespace KKMLL
 
     void  MachineType        (SVM_MachineType        _machineType)        {machineType        = _machineType;}
     void  SamplingRate       (float                  _samplingRate)       {samplingRate       = _samplingRate;}
-    void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
+    void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures);
+    void  SelectedFeatures   (FeatureNumListPtr      _selectedFeatures);
 
     void  SetBinaryClassFields (MLClassPtr             class1,
                                 MLClassPtr             class2,
                                 const svm_parameter&   _param,
-                                const FeatureNumList&  _features,
+                                FeatureNumListPtr      _features,
                                 float                  _weight
                                );
 
+    void  SetFeatureNums (FeatureNumListPtr  _features);
     void  SetFeatureNums (const FeatureNumList&  _features);
 
-    void  SetFeatureNums    (MLClassPtr             class1,
-                             MLClassPtr             class2,
-                             const FeatureNumList&  _features,
-                             float                  _weight = -1  /**< -1 Indicates use existing value.  */
+    void  SetFeatureNums    (MLClassPtr         class1,
+                             MLClassPtr         class2,
+                             FeatureNumListPtr  _features,
+                             float              _weight = -1  /**< -1 Indicates use existing value.  */
                             );
 
     void  SelectionMethod   (SVM_SelectionMethod    _selectionMethod)  {selectionMethod  = _selectionMethod;}
@@ -224,8 +233,6 @@ namespace KKMLL
 
     SVM_EncodingMethod       encodingMethod;
 
-    FileDescPtr              fileDesc;
-
     KKStr                    fileName;
 
     RunLog&                  log;
@@ -238,7 +245,8 @@ namespace KKMLL
 
     float                    samplingRate;      // USed with BoostSVM
 
-    FeatureNumList           selectedFeatures;  // Feature Number to use.
+    mutable
+    FeatureNumListPtr        selectedFeatures;  /**< Feature Number to use. */
 
     SVM_SelectionMethod      selectionMethod;
 

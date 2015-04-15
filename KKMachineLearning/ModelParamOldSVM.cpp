@@ -22,21 +22,12 @@ using namespace KKB;
 using namespace KKMLL;
 
 
-ModelParamOldSVM::ModelParamOldSVM  (FileDescPtr  _fileDesc,
-                                     RunLog&      _log
-                                   ):
+ModelParamOldSVM::ModelParamOldSVM  (RunLog&  _log):
 
-  ModelParam (_fileDesc, _log),
+  ModelParam (_log),
   svmParameters (NULL)
 {
-  if  (!fileDesc)
-  {
-    KKStr errMsg = "ModelParamOldSVM::ModelParamOldSVM  *** ERROR ***  (fileDesc == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
-    throw  KKException (errMsg);
-  }
-
-  svmParameters = new SVMparam (_fileDesc, _log);
+  svmParameters = new SVMparam (_log);
 }
 
 
@@ -183,9 +174,9 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding () const
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const
 {
-  return  svmParameters->NumOfFeaturesAfterEncoding ();
+  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc);
 }
 
 
@@ -210,7 +201,7 @@ void  ModelParamOldSVM::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 }
 
 
-const FeatureNumList&   ModelParamOldSVM::SelectedFeatures () const
+const FeatureNumListPtr   ModelParamOldSVM::SelectedFeatures () const
 {
   return svmParameters->SelectedFeatures ();
 }
@@ -422,7 +413,9 @@ void  ModelParamOldSVM::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 
-void  ModelParamOldSVM::ReadSpecificImplementationXML (istream& i)
+void  ModelParamOldSVM::ReadSpecificImplementationXML (istream&     i,
+                                                       FileDescPtr  fileDesc
+                                                      )
 {
   log.Level (20) << "ModelParamOldSVM::ReadSpecificImplementationXML file." << endl;
 
@@ -439,7 +432,7 @@ void  ModelParamOldSVM::ReadSpecificImplementationXML (istream& i)
 
     if  (field.EqualIgnoreCase ("<SVMparam>"))
     {
-      svmParameters->ReadXML (i);
+      svmParameters->ReadXML (i, fileDesc);
     }
   }
 }  /* ReadSpecificImplementationXML */
@@ -464,11 +457,12 @@ BinaryClassParmsPtr   ModelParamOldSVM::GetParamtersToUseFor2ClassCombo (MLClass
 
 
 
-FeatureNumList  ModelParamOldSVM::GetFeatureNums (MLClassPtr  class1,
-                                                  MLClassPtr  class2
-                                                 )  const
+FeatureNumListPtr  ModelParamOldSVM::GetFeatureNums (FileDescPtr  fileDesc,
+                                                     MLClassPtr   class1,
+                                                     MLClassPtr   class2
+                                                   )  const
 {
-  return svmParameters->GetFeatureNums (class1, class2);
+  return svmParameters->GetFeatureNums (fileDesc, class1, class2);
 }  /* GetFeatureNums */
 
 
@@ -482,19 +476,19 @@ void    ModelParamOldSVM::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassP
 
 
 
-float   ModelParamOldSVM::AvgMumOfFeatures ()
+float   ModelParamOldSVM::AvgMumOfFeatures (FileDescPtr  fileDesc)
 {
-  return  svmParameters->AvgMumOfFeatures ();
+  return  svmParameters->AvgMumOfFeatures (fileDesc);
 }  /* AvgMumOfFeatures */
 
 
 
 
 
-void  ModelParamOldSVM::SetFeatureNums (MLClassPtr             class1,
-                                        MLClassPtr             class2,
-                                        const FeatureNumList&  _features,
-                                        float                  _weight
+void  ModelParamOldSVM::SetFeatureNums (MLClassPtr         class1,
+                                        MLClassPtr         class2,
+                                        FeatureNumListPtr  _features,
+                                        float              _weight
                                        )
 {
   svmParameters->SetFeatureNums (class1, class2, _features, _weight);
@@ -504,11 +498,11 @@ void  ModelParamOldSVM::SetFeatureNums (MLClassPtr             class1,
 
 
 
-void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr             class1,
-                                              MLClassPtr             class2,
-                                              const svm_parameter&   _param,
-                                              const FeatureNumList&  _features,
-                                              float                  _weight
+void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr            class1,
+                                              MLClassPtr            class2,
+                                              const svm_parameter&  _param,
+                                              FeatureNumListPtr     _features,
+                                              float                 _weight
                                              )
 {
   svmParameters->SetBinaryClassFields (class1, class2, _param, _features, _weight);
@@ -525,7 +519,7 @@ void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr             class1,
 void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr            class1,
                                              MLClassPtr            class2,
                                              const svm_parameter&  _param,
-                                             const FeatureNumList& _selectedFeatures,
+                                             FeatureNumListPtr     _selectedFeatures,
                                              float                 _weight
                                             )
 {

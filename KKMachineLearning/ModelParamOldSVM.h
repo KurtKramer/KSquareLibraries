@@ -39,9 +39,7 @@ namespace KKMLL
     typedef  ModelParamOldSVM*  ModelParamOldSVMPtr;
     typedef  SVM233::svm_parameter   svm_parameter;
 
-    ModelParamOldSVM  (FileDescPtr  _fileDesc,
-                       RunLog&      _log
-                      );
+    ModelParamOldSVM  (RunLog&  _log);
   
   
     ModelParamOldSVM  (const ModelParamOldSVM&  _param);
@@ -54,25 +52,25 @@ namespace KKMLL
 
     virtual ModelParamTypes  ModelParamType () const {return mptOldSVM;}
 
-    void    ReadSpecificImplementationXML (istream& i);
-
+    void    ReadSpecificImplementationXML (istream& i,
+                                           FileDescPtr  fileDesc
+                                          );
 
     void    WriteSpecificImplementationXML (std::ostream&  o)  const;
 
-
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
-    void    AddBinaryClassParms (MLClassPtr             class1,
-                                 MLClassPtr             class2,
-                                 const svm_parameter&   _param,
-                                 const FeatureNumList&  _selectedFeatures,
-                                 float                  _weight
+    void    AddBinaryClassParms (MLClassPtr            class1,
+                                 MLClassPtr            class2,
+                                 const svm_parameter&  _param,
+                                 FeatureNumListPtr     _selectedFeatures,
+                                 float                 _weight
                                 );
 
-    virtual  float   AvgMumOfFeatures ();
+    virtual  float   AvgMumOfFeatures (FileDescPtr  fileDesc);
 
 
-    /** If no entry exists for class pair then NULL will be rretirned. */
+    /** If no entry exists for class pair then NULL will be returned. */
     BinaryClassParmsPtr   GetBinaryClassParms (MLClassPtr       class1,
                                                MLClassPtr       class2
                                               )  const;
@@ -85,9 +83,10 @@ namespace KKMLL
                                                           MLClassPtr  class2
                                                          );
 
-    FeatureNumList  GetFeatureNums (MLClassPtr  class1,
-                                    MLClassPtr  class2
-                                   )  const;
+    FeatureNumListPtr  GetFeatureNums (FileDescPtr  fileDesc,
+                                       MLClassPtr   class1,
+                                       MLClassPtr   class2
+                                      )  const;
 
 
     // Member access methods
@@ -103,10 +102,10 @@ namespace KKMLL
     virtual double                   Gamma                      () const;
     virtual SVM_KernalType           KernalType                 () const;
     virtual SVM_MachineType          MachineType                () const;
-    virtual kkint32                  NumOfFeaturesAfterEncoding () const;
+    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
     virtual const svm_parameter&     Param                      () const;
     virtual float                    SamplingRate               () const;
-    virtual const FeatureNumList&    SelectedFeatures           () const;
+    virtual const FeatureNumListPtr  SelectedFeatures           () const;
     virtual SVM_SelectionMethod      SelectionMethod            () const;
     virtual SVMparamPtr              SvmParameters              () const;
     virtual bool                     UseProbabilityToBreakTies  () const;
@@ -132,17 +131,17 @@ namespace KKMLL
     virtual void  SelectionMethod    (SVM_SelectionMethod   _selectionMethod);
 
 
-    void  SetBinaryClassFields (MLClassPtr             class1,
-                                MLClassPtr             class2,
-                                const svm_parameter&   _param,
-                                const FeatureNumList&  _features,
-                                float                  _weight
+    void  SetBinaryClassFields (MLClassPtr            class1,
+                                MLClassPtr            class2,
+                                const svm_parameter&  _param,
+                                FeatureNumListPtr     _features,
+                                float                 _weight
                                );
 
-    void  SetFeatureNums    (MLClassPtr             class1,
-                             MLClassPtr             class2,
-                             const FeatureNumList&  _features,
-                             float                  _weight = -1  /**< -1 Indicates use existing value. */
+    void  SetFeatureNums    (MLClassPtr         class1,
+                             MLClassPtr         class2,
+                             FeatureNumListPtr  _features,
+                             float              _weight = -1  /**< -1 Indicates use existing value. */
                             );
 
     void  ParseCmdLine (KKStr   _cmdLineStr,

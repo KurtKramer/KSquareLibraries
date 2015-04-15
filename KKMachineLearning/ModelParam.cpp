@@ -21,29 +21,27 @@ using namespace KKB;
 #include "ModelParamDual.h"
 #include "KKMLLTypes.h"
 #include "Model.h"
-#include "FileDesc.h"
+//#include "FileDesc.h"
 #include "MLClass.h"
 using namespace  KKMLL;
 
 
 
-ModelParam::ModelParam  (FileDescPtr  _fileDesc,
-                         RunLog&      _log
-                        ):
+ModelParam::ModelParam  (RunLog&  _log):
 
   encodingMethod            (NoEncoding),
   examplesPerClass          (int32_max),
-  fileDesc                  (_fileDesc),
   fileName                  (),
   log                       (_log),
   normalizeNominalFeatures  (false),
-  selectedFeatures          (_fileDesc), 
+  selectedFeatures          (NULL), 
   validParam                (true),
   // SVM related parameters
   cost                      (0.0),
   gamma                     (0.0),
   prob                      (0.0f)
 {
+  /*
   if  (!fileDesc)
   {
     log.Level (-1) << endl
@@ -53,6 +51,7 @@ ModelParam::ModelParam  (FileDescPtr  _fileDesc,
     osWaitForEnter ();
     exit (-1);
   }
+  */
 }
 
 
@@ -63,17 +62,18 @@ ModelParam::ModelParam  (const ModelParam&  _param):
 
   encodingMethod             (_param.encodingMethod),
   examplesPerClass           (_param.examplesPerClass),
-  fileDesc                   (_param.fileDesc),
   fileName                   (_param.fileName),
   log                        (_param.log),
   normalizeNominalFeatures   (_param.normalizeNominalFeatures),
-  selectedFeatures           (_param.selectedFeatures),
+  selectedFeatures           (NULL),
   validParam                 (_param.validParam),
   // SVM related parameters
   cost                       (_param.cost),
   gamma                      (_param.gamma),
   prob                       (_param.prob)
 {
+  if  (_param.selectedFeatures)
+    selectedFeatures = new FeatureNumList (*(_param.selectedFeatures));
 }
 
 
@@ -86,15 +86,35 @@ ModelParam::~ModelParam  ()
 kkint32  ModelParam::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (ModelParam)
-    +  fileName.MemoryConsumedEstimated ()
-    +  selectedFeatures.MemoryConsumedEstimated ();
+    +  fileName.MemoryConsumedEstimated ();
 
+  if  (selectedFeatures)
+    memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
 
 
+
+float   ModelParam::AvgMumOfFeatures () const 
+{
+  if  (selectedFeatures)
+    return   (float)selectedFeatures->NumOfFeatures ();
+  else
+    return  0;
+}
+  
+
+
+void  ModelParam::SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   
+{
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (_selectedFeatures);
+}
+
+
+
 ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
-                                             FileDescPtr  _fileDesc,
+                                             FileDescPtr  fileDesc,
                                              RunLog&      _log
                                             )
 {
@@ -138,7 +158,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   {
     // We never found the type of parameter we are looking for.
     _log.Level (-1) << endl
-      << "ModelParam::CreateModelParam  ***ERROR***   No Parameter Tye was defined." << endl
+      << "ModelParam::CreateModelParam  ***ERROR***   No Parameter Type was defined." << endl
       << endl;
     return NULL;
   }
@@ -148,19 +168,19 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   ModelParamPtr modelParam = NULL;
   switch  (modelParamType)
   {
-  case  mptDual:      modelParam = new ModelParamDual      (_fileDesc, _log);
+  case  mptDual:      modelParam = new ModelParamDual      (_log);
                       break;
 
-  case  mptKNN:      modelParam = new ModelParamKnn     (_fileDesc, _log);
-                     break;
+  case  mptKNN:       modelParam = new ModelParamKnn       (_log);
+                      break;
 
-  case  mptOldSVM:   modelParam = new ModelParamOldSVM  (_fileDesc, _log);
-                     break;
+  case  mptOldSVM:    modelParam = new ModelParamOldSVM    (_log);
+                      break;
  
-  case  mptSvmBase:  modelParam = new ModelParamSvmBase (_fileDesc, _log);
-                     break;
+  case  mptSvmBase:   modelParam = new ModelParamSvmBase   (_log);
+                      break;
 
-  case  mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_fileDesc, _log);
+  case  mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_log);
                       break;
 
   }
@@ -168,7 +188,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   if  (!modelParam)
     return  NULL;
 
-  modelParam->ReadXML (i);
+  modelParam->ReadXML (i, fileDesc);
   return  modelParam;
 }  /* CreateModelParam */
 
@@ -330,8 +350,11 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
 
     if  ((field == "-FS")  ||  (field == "-FEATURESSELECTED")  ||  (field == "-FEATURESSEL")  ||  (field == "FEATURESEL"))
     {
+      delete  selectedFeatures;
       bool  valid = true;
-      selectedFeatures.ExtractFeatureNumsFromStr (value, valid);
+      selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (value);
+      if  (!selectedFeatures)
+        _validFormat= false;
     }
 
     else if  (field.EqualIgnoreCase ("-C")  ||  field.EqualIgnoreCase ("-Cost"))
@@ -423,7 +446,8 @@ KKStr   ModelParam::ToCmdLineStr () const
 
   KKStr  cmdStr (300);
 
-  cmdStr = "-SF " + selectedFeatures.ToCommaDelStr ();
+  if  (selectedFeatures)
+    cmdStr << "-SF " + selectedFeatures->ToCommaDelStr ();
 
   if  (examplesPerClass < int32_max)
     cmdStr << "  -EPC " << examplesPerClass;
@@ -445,9 +469,12 @@ void  ModelParam::WriteXML (ostream&  o)  const
     << "ModelParamType"     << "\t"  << ModelParamTypeStr    ()             << std::endl
     << "EncodingMethod"     << "\t"  << EncodingMethodStr    ()             << std::endl
     << "ExamplesPerClass"   << "\t"  << examplesPerClass                    << std::endl
-    << "FileName"           << "\t"  << fileName                            << std::endl
-    << "SelectedFeatures"   << "\t"  << selectedFeatures.ToCommaDelStr ()   << std::endl
-    << endl;
+    << "FileName"           << "\t"  << fileName                            << std::endl;
+
+  if  (selectedFeatures)
+    o << "SelectedFeatures"   << "\t"  << selectedFeatures->ToCommaDelStr ()  << std::endl;
+
+  o  << endl;
   
   o << "<SpecificImplementation>"  << endl;
   WriteSpecificImplementationXML (o);
@@ -460,7 +487,9 @@ void  ModelParam::WriteXML (ostream&  o)  const
 
 
 
-void  ModelParam::ReadXML (istream&  i)
+void  ModelParam::ReadXML (istream&     i,
+                           FileDescPtr  fileDesc
+                          )
 {
   log.Level (20) << "ModelParam::Read from XML file." << endl;
 
@@ -520,10 +549,10 @@ void  ModelParam::ReadXML (istream&  i)
   
     else if  (field.EqualIgnoreCase ("SelectedFeatures"))
     {
-      bool  validFeatureStr = false;
+      delete selectedFeatures;
       KKStr  selectedFeaturesStr =  ln.ExtractToken2 ("\t");
-      selectedFeatures.ExtractFeatureNumsFromStr (selectedFeaturesStr, validFeatureStr);
-      if  (!validFeatureStr)
+      selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (selectedFeaturesStr);
+      if  (!selectedFeatures)
       {
         log.Level (-1) << "ModelParam::ReadXML   ***ERROR***  Invalid selected Features[" << selectedFeaturesStr << "]" << endl;
         validParam = false;
@@ -532,7 +561,7 @@ void  ModelParam::ReadXML (istream&  i)
 
     else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
     {
-      ReadSpecificImplementationXML (i);
+      ReadSpecificImplementationXML (i, fileDesc);
     }
   }
 }  /* ReadXML */
@@ -540,10 +569,9 @@ void  ModelParam::ReadXML (istream&  i)
 
 
 
-
-
-void  ModelParam::ReadXML (KKStr&  _fileName,
-                           bool&   _successful
+void  ModelParam::ReadXML (KKStr&       _fileName,
+                           FileDescPtr  _fileDesc,
+                           bool&        _successful
                           )
 {
   log.Level (10) << "ModelParam::ReadXML - File[" << _fileName << "]." << endl;
@@ -562,26 +590,29 @@ void  ModelParam::ReadXML (KKStr&  _fileName,
     return;
   }
 
-  ReadXML (inputFile);
+  ReadXML (inputFile, _fileDesc);
    
   inputFile.close ();
 }  /* ReadXML */
 
 
 
-
-kkint32  ModelParam::NumOfFeaturesAfterEncoding ()  const
+kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
 {
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
-  kkint32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
+
+  if  (!selectedFeatures)
+    selectedFeatures = new FeatureNumList (fileDesc);
+
+  kkint32 numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
   switch (EncodingMethod ())
   {
   case BinaryEncoding:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
-      kkint32  fieldNum = selectedFeatures[z];
+      kkint32  fieldNum = (*selectedFeatures)[z];
       if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
       else
@@ -593,14 +624,12 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding ()  const
   case NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
-    numFeaturesAfterEncoding = selectedFeatures.NumOfFeatures ();
+    numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
     break;
   }
 
   return  numFeaturesAfterEncoding;
-}  /* NumOfFeaturesAfterEncoding */
-
-
+}  // NumOfFeaturesAfterEncoding 
 
 
 

@@ -45,7 +45,7 @@ ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
   assignments (NULL),
   svmModel    (NULL)
 {
-  Model::param = new ModelParamOldSVM (_fileDesc, _log);
+  Model::param = new ModelParamOldSVM (_log);
 }
 
 
@@ -130,17 +130,18 @@ const ClassAssignments&  ModelOldSVM::Assignments ()  const
 
 
 
-FeatureNumList  ModelOldSVM::GetFeatureNums (MLClassPtr  class1,
-                                             MLClassPtr  class2
-                                            )
+FeatureNumListPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
+                                                MLClassPtr  class1,
+                                                MLClassPtr  class2
+                                               )
 {
-  return svmModel->GetFeatureNums (class1, class2);
+  return svmModel->GetFeatureNums (filedesc, class1, class2);
 }  /* GetFeatureNums */
 
 
 
 
-const FeatureNumList&   ModelOldSVM::GetFeatureNums ()  const
+FeatureNumListPtr   ModelOldSVM::GetFeatureNums ()  const
 {
   return svmModel->GetFeatureNums ();
 }

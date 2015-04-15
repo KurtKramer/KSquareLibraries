@@ -103,6 +103,8 @@
     <ClCompile Include="FeatureVector.cpp" />
     <ClCompile Include="FeatureVectorProducer.cpp" />
     <ClCompile Include="FileDesc.cpp" />
+    <ClCompile Include="GrayScaleImagesFV.cpp" />
+    <ClCompile Include="GrayScaleImagesFVProducer.cpp" />
     <ClCompile Include="ImageFeaturesDataIndexed.cpp" />
     <ClCompile Include="ImageFeaturesNameIndexed.cpp" />
     <ClCompile Include="KKMLVariables.cpp" />
@@ -112,6 +114,7 @@
     <ClCompile Include="ModelKnn.cpp" />
     <ClCompile Include="ModelOldSVM.cpp" />
     <ClCompile Include="ModelParam.cpp" />
+    <ClCompile Include="ModelParamDual.cpp" />
     <ClCompile Include="ModelParamKnn.cpp" />
     <ClCompile Include="ModelParamOldSVM.cpp" />
     <ClCompile Include="ModelParamSvmBase.cpp" />
@@ -160,6 +163,8 @@
     <ClInclude Include="FeatureVector.h" />
     <ClInclude Include="FeatureVectorProducer.h" />
     <ClInclude Include="FileDesc.h" />
+    <ClInclude Include="GrayScaleImagesFV.h" />
+    <ClInclude Include="GrayScaleImagesFVProducer.h" />
     <ClInclude Include="ImageFeaturesDataIndexed.h" />
     <ClInclude Include="ImageFeaturesNameIndexed.h" />
     <ClInclude Include="KKMLVariables.h" />
@@ -169,6 +174,7 @@
     <ClInclude Include="ModelKnn.h" />
     <ClInclude Include="ModelOldSVM.h" />
     <ClInclude Include="ModelParam.h" />
+    <ClInclude Include="ModelParamDual.h" />
     <ClInclude Include="ModelParamKnn.h" />
     <ClInclude Include="ModelParamOldSVM.h" />
     <ClInclude Include="ModelParamSvmBase.h" />

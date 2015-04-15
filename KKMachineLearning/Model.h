@@ -162,7 +162,7 @@ namespace KKMLL
 
     const FeatureEncoder2&            Encoder                    () const;
 
-    virtual const FeatureNumList&     GetFeatureNums             () const;
+    virtual FeatureNumListPtr         GetFeatureNums             () const;
 
     virtual kkint32                   MemoryConsumedEstimated    () const;
 
@@ -177,7 +177,7 @@ namespace KKMLL
 
     ModelParamPtr                     Param                      () const  {return  param;}
 
-    virtual const FeatureNumList&     SelectedFeatures           () const;
+    virtual FeatureNumListPtr         SelectedFeatures           () const;
 
     const KKStr&                      RootFileName               () const {return rootFileName;}
 

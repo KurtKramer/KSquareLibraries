@@ -230,7 +230,6 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   }
 
   config1 = new TrainingConfiguration2 (param->ConfigFileName1 (),
-                                        NULL,   // fvFactoryProducer
                                         false,  // false = Do NOT validate directories.
                                         log
                                        );
@@ -243,7 +242,6 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   }
 
   config2 = new TrainingConfiguration2 (param->ConfigFileName2 (), 
-                                        NULL,   // fvFactoryProducer
                                         false,  // false = Do NOT validate directories.
                                         log
                                        );

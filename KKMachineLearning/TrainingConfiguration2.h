@@ -62,12 +62,14 @@ namespace KKMLL
     /**
      *@brief Use this one if you want to create a default Configuration object.
      *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
+     *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
      *@param[in]  _parameterStr Sting with Machine Learning Parameters.
      *@param[in]  _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (MLClassListPtr  _mlClasses,       
-                            KKStr           _parameterStr,
-                            RunLog&         _log             
+    TrainingConfiguration2 (MLClassListPtr        _mlClasses,
+                            FactoryFVProducerPtr  _fvFactoryProducer,
+                            const KKStr&          _parameterStr,
+                            RunLog&               _log             
                            );
 
 
@@ -75,12 +77,32 @@ namespace KKMLL
      *@brief  Creates a configuration file using the parameters specified in '_modelParameters';  does not read 
      * from a configuration file.  
      *@details  For each class specified in '_mlClasses' a 'TrainingClass' instance will be created. 
-     * All feature-numbers will be assumed to be selected and unlimited exaples per class wil be allowed.
+     * All feature-numbers will be assumed to be selected and unlimited examples per class will be allowed.
      *@param[in] _mlClasses
+     *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
      *@param[in] _modelParameters  Will take ownership of this instance.
      *@param[in] _log
      */
     TrainingConfiguration2 (MLClassListPtr  _mlClasses,
+                            FileDescPtr     _fileDesc,
+                            ModelParamPtr   _modelParameters,
+                            RunLog&         _log
+                           );
+
+
+
+    /**
+     *@brief  Creates a configuration file using the parameters specified in '_modelParameters';  does not read 
+     * from a configuration file.  
+     *@details  For each class specified in '_mlClasses' a 'TrainingClass' instance will be created. 
+     * All feature-numbers will be assumed to be selected and unlimited examples per class will be allowed.
+     *@param[in] _mlClasses
+     *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
+     *@param[in] _modelParameters  Will take ownership of this instance.
+     *@param[in] _log
+     */
+    TrainingConfiguration2 (MLClassListPtr  _mlClasses,
+                            FileDescPtr     _fileDesc,
                             ModelParamPtr   _modelParameters,
                             RunLog&         _log
                            );
@@ -94,32 +116,35 @@ namespace KKMLL
      *@details for each unique sub-directory entry below it that contains 'bmp' files a TrainingClass' 
      * instance will be created using the root-name as the class name.  If an existing Config file already
      * exists then parameters will be taken from it otherwise a default configuration will be created.
-     *@param[in]  _fileDesc  
      *@param[in]  _existingConfigFileName  Caller can specify an existing Configuration file to extract configuration 
      *                                     parameters from; if left blank then a configuration file with the same name 
-     *                                     of the last directory in the path specified by _subDir will be assumed in the 
-     *                                     default TraningModel directory.
+     *                                     of the last name in the directory path specified by _subDir will be assumed 
+     *                                     in the default TraningModel directory. If still no configuration file
+     *                                     found then one will be created using default parameters. 
+     *
      *@param[in]  _subDir   The root directory entry to the Sub-Directory structure that is to be used to construct 
      *                      training class list from.
-     *@param[in]  _fvFactoryProducerr
+     *
+     *@param[in]  _fvFactoryProducer The FeatureVector computation routines you want to use;  if NULL will default.
      *@param[in]  _log
      *@param[out] _successful
      *@param[out] _errorMessage Will contain description of errors encountered. 
      */
     static
     TrainingConfiguration2*  CreateFromDirectoryStructure 
-                                            (const KKStr&         _existingConfigFileName,
-                                             const KKStr&         _subDir,
-                                             FactoryFVProducerPtr _fvFactoryProducer,
-                                             RunLog&              _log,
-                                             bool&                _successful,
-                                             KKStr&               _errorMessage
+                                            (const KKStr&          _existingConfigFileName,
+                                             const KKStr&          _subDir,
+                                             FactoryFVProducerPtr  _fvFactoryProducer,
+                                             RunLog&               _log,
+                                             bool&                 _successful,
+                                             KKStr&                _errorMessage
                                             );
 
 
     static
     TrainingConfiguration2*  CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
+                                             FileDescPtr         _fileDesc,
                                              const KKStr&        _parameterStr, 
                                              RunLog&             _log
                                             );

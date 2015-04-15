@@ -17,18 +17,15 @@ namespace KKMLL
   public:
     typedef  ModelParamUsfCasCor*  ModelParamUsfCasCorPtr;
 
-    ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                          RunLog&      _log
-                         );
-    
-    ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                          int          _in_limit,
-                          int          _out_limit,
-                          int          _number_of_rounds,
-                          int          _number_of_trials,
-                          kkint64      _random_seed,
-                          bool         _useCache,
-                          RunLog&      _log
+    ModelParamUsfCasCor  (RunLog&  _log);
+     
+    ModelParamUsfCasCor  (int      _in_limit,
+                          int      _out_limit,
+                          int      _number_of_rounds,
+                          int      _number_of_trials,
+                          kkint64  _random_seed,
+                          bool     _useCache,
+                          RunLog&  _log
                          );
   
     virtual ~ModelParamUsfCasCor  ();
@@ -56,7 +53,9 @@ namespace KKMLL
     void  UseCache         (bool     _useCache)         {useCache          = _useCache;}
 
 
-    virtual void  ReadSpecificImplementationXML (istream& i);
+    virtual void  ReadSpecificImplementationXML (istream&     i,
+                                                 FileDescPtr  fileDesc
+                                                );
 
     virtual void  WriteSpecificImplementationXML (std::ostream&  o)  const;
 

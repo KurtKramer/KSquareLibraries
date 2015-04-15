@@ -204,7 +204,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
     }
   }
 
-  SVM289_MFS::svm_problem  prob (*trainExamples, y, param->SelectedFeatures ());
+  SVM289_MFS::svm_problem  prob (*trainExamples, y, *(param->SelectedFeatures ()));
   delete  y;  y = NULL;
 
   try

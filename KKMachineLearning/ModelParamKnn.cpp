@@ -24,10 +24,8 @@ using namespace KKMLL;
 
 
 
-ModelParamKnn::ModelParamKnn  (FileDescPtr  _fileDesc,
-                               RunLog&      _log
-                               ):
-  ModelParam (fileDesc, _log),
+ModelParamKnn::ModelParamKnn  (RunLog&  _log):
+  ModelParam (_log),
   k(1)
 {
 }
@@ -100,7 +98,9 @@ void    ModelParamKnn::WriteSpecificImplementationXML (std::ostream&  o)  const
 
 
 
-void    ModelParamKnn::ReadSpecificImplementationXML (istream&  i)
+void    ModelParamKnn::ReadSpecificImplementationXML (istream&     i, 
+                                                      FileDescPtr  fileDesc
+                                                     )
 {
   log.Level (20) << "ModelParamKnn::ReadSpecificImplementationXML from XML file." << endl;
 
@@ -119,7 +119,7 @@ void    ModelParamKnn::ReadSpecificImplementationXML (istream&  i)
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i);
+      ModelParam::ReadXML (i, fileDesc);
     }
 
     else if  (field.EqualIgnoreCase ("K"))

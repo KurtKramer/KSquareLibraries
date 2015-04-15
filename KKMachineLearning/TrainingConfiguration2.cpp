@@ -24,6 +24,7 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "FileDesc.h"
+#include "GrayScaleImagesFVProducer.h"
 #include "MLClass.h"
 #include "KKMLVariables.h"
 #include "Model.h"
@@ -58,19 +59,19 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   switch  (modelingMethod)
   {
-  case  Model::mtOldSVM:    modelParameters = new ModelParamOldSVM    (fileDesc, log);
+  case  Model::mtOldSVM:    modelParameters = new ModelParamOldSVM    (log);
                             break;
 
-  case  Model::mtSvmBase:   modelParameters = new ModelParamSvmBase   (fileDesc, log);
+  case  Model::mtSvmBase:   modelParameters = new ModelParamSvmBase   (log);
                             break;
 
-  case  Model::mtKNN:       modelParameters = new ModelParamKnn       (fileDesc, log);
+  case  Model::mtKNN:       modelParameters = new ModelParamKnn       (log);
                             break;
 
-  case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (fileDesc, log);
+  case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (log);
                             break;
 
-  case  Model::mtDual:      modelParameters = new ModelParamDual      (fileDesc, log);
+  case  Model::mtDual:      modelParameters = new ModelParamDual      (log);
                             break;
 
   default:
@@ -112,10 +113,9 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFileName, 
-                                                FactoryFVProducerPtr  _fvFactoryProducer,
-                                                bool                  _validateDirectories,
-                                                RunLog&               _log
+TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName, 
+                                                bool          _validateDirectories,
+                                                RunLog&       _log
                                                ):
 
   Configuration (GetEffectiveConfigFileName (_configFileName), _log),
@@ -123,7 +123,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
   configFileNameSpecified (_configFileName),
   configRootName          (KKB::osGetRootName (_configFileName)),
   fileDesc                (NULL),
-  fvFactoryProducer       (_fvFactoryProducer),
+  fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
@@ -142,16 +142,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
   trainingClasses         ("", true),
   validateDirectories     (_validateDirectories)
 {
-  fileDesc = fvFactoryProducer->FileDesc ();
-  if  (!fileDesc)
-  {
-    KKStr  errMsg = "TrainingConfiguration2   ***ERROR***   FileDesc == NULL";
-    log.Level (-1) << endl 
-                   << errMsg << endl 
-                   << endl;
-    throw KKException (errMsg);
-  }
-
   if  (!FormatGood ())
   {
     log.Level (-1) << endl 
@@ -184,14 +174,15 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&          _configFil
 
 
 TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses,
-                                                KKStr                 _parameterStr,
-                                                RunLog&               _log
+                                                FactoryFVProducerPtr  _fvFactoryProducer,
+                                                const KKStr&          _parameterStr,
+                                                RunLog&               _log             
                                                ):
   Configuration           (_log),
   configFileNameSpecified (""),
   configRootName          (),
   fileDesc                (NULL),
-  fvFactoryProducer       (NULL),
+  fvFactoryProducer       (_fvFactoryProducer),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
@@ -211,14 +202,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   validateDirectories     (false)
 {
   if  (!fvFactoryProducer)
-  {
-    KKStr  errMsg = "TrainingConfiguration2    ***ERROR***   fvFactoryProducer == NULL";
-    log.Level (-1) << endl 
-                   << errMsg << endl 
-                   << endl;
-    throw KKException (errMsg);
-  }
-
+    fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&_log);
   fileDesc = fvFactoryProducer->FileDesc ();
 
   if  (_mlClasses)
@@ -260,17 +244,85 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
 
 
 
+
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
+                                                FileDescPtr     _fileDesc,
+                                                const KKStr&    _parameterStr,
+                                                RunLog&         _log
+                                               ):
+  Configuration           (_log),
+  configFileNameSpecified (""),
+  configRootName          (),
+  fileDesc                (_fileDesc),
+  fvFactoryProducer       (NULL),
+  mlClasses               (NULL),
+  mlClassesWeOwnIt        (false),
+  log                     (_log),
+  modelingMethod          (Model::mtNULL),
+  examplesPerClass        (0),
+  modelParameters         (NULL),
+  noiseGuaranteedSize     (0),
+  noiseMLClass            (NULL),
+  noiseTrainingClass      (NULL),
+  normalizationParms      (NULL),
+  otherClass              (NULL),
+  otherClassLineNum       (-1),
+  rootDir                 (),
+  rootDirExpanded         (),
+  subClassifiers          (NULL),
+  trainingClasses         ("", true),
+  validateDirectories     (false)
+{
+  if  (_mlClasses)
+    mlClasses = new MLClassList (*_mlClasses);
+  else
+    mlClasses = new MLClassList ();
+
+  mlClassesWeOwnIt = true;
+
+  {
+    MLClassList::iterator idx;
+    for  (idx = mlClasses->begin ();  idx != mlClasses->end ();  idx++)
+    {
+      MLClassPtr mlClass = *idx;
+      VectorKKStr  directories;
+      TrainingClassPtr  tc = new TrainingClass (directories, mlClass->Name (), 1.0f, 1.0f, NULL, *mlClasses);
+      trainingClasses.PushOnBack (tc);
+    }
+  }
+
+  if  (modelingMethod == Model::mtNULL)
+    modelingMethod = Model::mtOldSVM;
+
+  {
+    examplesPerClass = int32_max;
+    FeatureNumList  selectedFeatures (fileDesc);
+    selectedFeatures.SetAllFeatures (fileDesc);
+    CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1);
+    if  (!modelParameters  ||  (!modelParameters->ValidParam ()))
+    {
+      log.Level (-1) << endl
+                     << "TrainingConfiguration2   ***ERROR***   Invalid Parameters." << endl
+                     << "    Parameters[" << _parameterStr << "]" << endl
+                     << endl;
+      FormatGood (false);
+    }
+  }
+}
+
+
+
   
-TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses,
-                                                ModelParamPtr         _modelParameters,
-                                                FactoryFVProducerPtr  _fvFactoryProducer,
-                                                RunLog&               _log
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
+                                                FileDescPtr     _fileDesc,
+                                                ModelParamPtr   _modelParameters,
+                                                RunLog&         _log
                                                ):
   Configuration           (_log),
   configFileNameSpecified (""),
   configRootName          (""),
-  fileDesc                (NULL),
-  fvFactoryProducer       (_fvFactoryProducer),
+  fileDesc                (_fileDesc),
+  fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
@@ -289,17 +341,6 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   trainingClasses         ("", true),
   validateDirectories     (false)
 {
-  if  (!fvFactoryProducer)
-  {
-    KKStr  errMsg = "TrainingConfiguration2    ***ERROR***   fvFactoryProducer == NULL";
-    log.Level (-1) << endl 
-                   << errMsg << endl 
-                   << endl;
-    throw KKException (errMsg);
-  }
-
-  fileDesc = fvFactoryProducer->FileDesc ();
-
   if  (_mlClasses)
     mlClasses = new MLClassList (*_mlClasses);
   else
@@ -326,11 +367,6 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   case  ModelParam::mptUsfCasCor:   modelingMethod =   Model::mtUsfCasCor;  break;
   }
 
-  {
-    examplesPerClass = int32_max;
-    FeatureNumList  selectedFeatures (fileDesc);
-    selectedFeatures.SetAllFeatures ();
-  }
 }
   
   
@@ -338,27 +374,27 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   
 TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  tc):
   Configuration (tc),
-  configFileNameSpecified   (tc.configFileNameSpecified),
-  configRootName            (tc.configRootName),
-  fileDesc                  (tc.fileDesc),
-  fvFactoryProducer         (tc.fvFactoryProducer),
-  mlClasses                 (NULL),
-  mlClassesWeOwnIt          (false),
-  log                       (tc.log),
-  modelingMethod            (tc.modelingMethod),
-  examplesPerClass          (tc.examplesPerClass),
-  modelParameters           (NULL),
-  noiseGuaranteedSize       (tc.noiseGuaranteedSize),
-  noiseMLClass              (tc.noiseMLClass),
-  noiseTrainingClass        (tc.noiseTrainingClass),
-  normalizationParms        (NULL),
-  otherClass                (tc.otherClass),
-  otherClassLineNum         (tc.otherClassLineNum),
-  rootDir                   (tc.rootDir),
-  rootDirExpanded           (tc.rootDirExpanded),
-  subClassifiers            (NULL),
-  trainingClasses           (tc.rootDir, true),
-  validateDirectories       (tc.validateDirectories)
+  configFileNameSpecified  (tc.configFileNameSpecified),
+  configRootName           (tc.configRootName),
+  fileDesc                 (tc.fileDesc),
+  fvFactoryProducer        (tc.fvFactoryProducer),
+  mlClasses                (NULL),
+  mlClassesWeOwnIt         (false),
+  log                      (tc.log),
+  modelingMethod           (tc.modelingMethod),
+  examplesPerClass         (tc.examplesPerClass),
+  modelParameters          (NULL),
+  noiseGuaranteedSize      (tc.noiseGuaranteedSize),
+  noiseMLClass             (tc.noiseMLClass),
+  noiseTrainingClass       (tc.noiseTrainingClass),
+  normalizationParms       (NULL),
+  otherClass               (tc.otherClass),
+  otherClassLineNum        (tc.otherClassLineNum),
+  rootDir                  (tc.rootDir),
+  rootDirExpanded          (tc.rootDirExpanded),
+  subClassifiers           (NULL),
+  trainingClasses          (tc.rootDir, true),
+  validateDirectories      (tc.validateDirectories)
 {
   {
     kkint32  x;
@@ -417,7 +453,7 @@ TrainingConfiguration2::~TrainingConfiguration2 ()
 
 
 
-ModelParamOldSVMPtr    TrainingConfiguration2::OldSvmParameters ()  const
+ModelParamOldSVMPtr   TrainingConfiguration2::OldSvmParameters ()  const
 {
   if  (modelParameters  &&  (modelingMethod == Model::mtOldSVM))
     return  dynamic_cast<ModelParamOldSVMPtr>(modelParameters);
@@ -549,7 +585,8 @@ void  TrainingConfiguration2::Save (ostream&  o)
     if  (examplesPerClass > 0)
       o << "Examples_Per_Class=" << examplesPerClass << endl;
 
-    o << "Features_Included=" << modelParameters->SelectedFeatures ().ToString () << endl;
+    if  (modelParameters->SelectedFeatures ())
+      o << "Features_Included=" << modelParameters->SelectedFeatures ()->ToString () << endl;
 
     if  (otherClass != NULL)
       o << "OtherClass=" << otherClass->Name () << endl;
@@ -668,45 +705,6 @@ KKStr  TrainingConfiguration2::ModelParameterCmdLine ()  const
 
 
 
-
-TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
-                                            (FeatureVectorList&   _examples,
-                                             const KKStr&         _parameterStr, 
-                                             FactoryFVProducerPtr _fvFactoryProducer,  /**< Will take ownership and delete in destructor.  */
-                                             RunLog&              _log
-                                            )
-{
-  _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
-  FileDescPtr  fileDesc = _examples.FileDesc ();
-
-  if  ((*fileDesc) != (*_fvFactoryProducer->FileDesc ()))
-  {
-    _log.Level (-1) << "TrainingConfiguration2::CreateFromFeatureVectorList   ***ERROR***   The FileDesc instances from _examples do not match what '_fvFactoryProducer' will produce." << endl;
-    return NULL;
-  }
-
-  MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
-  mlClasses->SortByName ();
-  KKStr  parameterStr = _parameterStr;
-  if  (parameterStr.Empty ())
-    parameterStr = "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P";
-
-  TrainingConfiguration2Ptr  config 
-      = new TrainingConfiguration2 (mlClasses, 
-                                    parameterStr,
-                                   _fvFactoryProducer,
-                                   _log
-                                  );
-
-  config->SetFeatureNums (_examples.AllFeatures ());
-
-  delete  mlClasses;  mlClasses = NULL;
-
-  return  config;
-}  /* CreateFromFeatureVectorList */
-
-
-
 MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 {
   TrainingClassList::const_iterator  idx;
@@ -765,6 +763,44 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 
 
 
+
+
+TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
+                                            (FeatureVectorList&  _examples,
+                                             FileDescPtr         _fileDesc,
+                                             const KKStr&        _parameterStr, 
+                                             RunLog&             _log
+                                            )
+{
+  _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
+  FileDescPtr  fileDesc = _examples.FileDesc ();
+
+  MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
+  mlClasses->SortByName ();
+  KKStr  parameterStr = _parameterStr;
+  if  (parameterStr.Empty ())
+    parameterStr = "-m 200 -s 0 -n 0.11 -t 2 -g 0.024717  -c 10  -u 100  -up  -mt OneVsOne  -sm P";
+
+  TrainingConfiguration2Ptr  config 
+      = new TrainingConfiguration2 (mlClasses,
+                                    _fileDesc,
+                                    parameterStr,
+                                   _log
+                                  );
+
+  config->SetFeatureNums (_examples.AllFeatures ());
+
+  delete  mlClasses;  mlClasses = NULL;
+
+  return  config;
+}  /* CreateFromFeatureVectorList */
+
+
+
+
+
+
+
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure 
                                                     (const KKStr&          _existingConfigFileName,
                                                      const KKStr&          _subDir,
@@ -780,13 +816,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
   _successful = true;
 
-  if  (_fvFactoryProducer == NULL)
-  {
-    KKStr errMsg = "TrainingConfiguration2::CreateFromDirectoryStructure   ***ERROR***   _fvFactoryProducer == NULL.";
-    _log.Level (-1) << errMsg << endl;
-    return  NULL;
-  }
-
   KKStr  directoryConfigFileName = osGetRootNameOfDirectory (_subDir);
   if  (directoryConfigFileName.Empty ())
     directoryConfigFileName = osAddSlash (KKMLVariables::TrainingModelsDir ()) + "Root.cfg";
@@ -800,7 +829,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
     if  (osFileExists (_existingConfigFileName))
     {
       config = new TrainingConfiguration2 (_existingConfigFileName, 
-                                           _fvFactoryProducer,
                                            false,         //  false = DO NOT Validate Directories.
                                            _log
                                           );
@@ -818,7 +846,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
     if  (osFileExists (directoryConfigFileName))
     {
       config = new TrainingConfiguration2 (directoryConfigFileName,
-                                           _fvFactoryProducer,
                                            false,  // false = Do Not Validate Directories.
                                            _log 
                                           );
@@ -833,9 +860,11 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
   if  (!config)
   {
+    if  (_fvFactoryProducer != NULL)
+      _fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&_log);
     config = new TrainingConfiguration2 (NULL,      // Not supplying the MLClassList
-                                         "=-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P",
                                          _fvFactoryProducer,
+                                         "=-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P",
                                          _log
                                         );
     config->RootDir (_subDir);
@@ -1158,20 +1187,8 @@ SVM_SelectionMethod  TrainingConfiguration2::SelectionMethod   ()  const
 
 void  TrainingConfiguration2::SetFeatureNums (const  FeatureNumList&  features)
 {
-  if  (features.FileDesc () != fileDesc)
-  {
-    // The featureNumList being passed in uses a different fileDesc than 
-    // TrainingConfiguration2,  this should never be able to happen, so something
-    // has gove very wrong.
-
-    KKStr  errMsg = "TrainingConfiguration2::SetFeatureNums      ***ERROR***     MisMatch in FileDesc.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
-
   if  (modelParameters)
     modelParameters->SelectedFeatures (features);
-
 }  /* SetFeatureNums */
 
 
@@ -1577,39 +1594,21 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
   kkint32  featuresExcludedLineNum = 0;
 
   KKStr  includedFeaturesStr (SettingValue (sectionNum, "FEATURES_INCLUDED", featuresIncludedLineNum));
-  KKStr  excludedFeaturesStr (SettingValue (sectionNum, "FEATURES_EXCLUDED", featuresExcludedLineNum));
 
-  FeatureNumListPtr  selectedFeatures;
+  FeatureNumListPtr  selectedFeatures = NULL;
 
-  bool valid = true;
-
-  if  (includedFeaturesStr.Empty ()  &&  excludedFeaturesStr.Empty ())
+  if  (includedFeaturesStr.Empty ()  ||  includedFeaturesStr.EqualIgnoreCase ("ALL"))
   {
     // We will assume user want's all features.
     selectedFeatures = new FeatureNumList (FeatureNumList::AllFeatures (fileDesc));
   }
 
-  else if  (!includedFeaturesStr.Empty ())
+  else 
   {
-    selectedFeatures = new FeatureNumList (fileDesc, FeatureNumList::IncludeFeatureNums, includedFeaturesStr, valid);
+    selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (includedFeaturesStr);
   }
 
-  else  if  (!excludedFeaturesStr.Empty ())
-  {
-    selectedFeatures = new FeatureNumList (fileDesc, FeatureNumList::ExcludeFeatureNums, excludedFeaturesStr, valid);
-  }
-
-  else
-  {
-    KKStr errMsg = "Can not specify both Include and Exclude Features";
-    log.Level (-1) << endl << "DeriveFeaturesSelected   ***ERROR***  " << errMsg << endl << endl;
-
-    FormatErrorsAdd (sectionLineNum, errMsg);
-    FormatGood (false);
-    return NULL;
-  }
-
-  if  (!valid)
+  if  (!selectedFeatures)
   {
     FormatGood (false);
     delete  selectedFeatures;

@@ -142,11 +142,14 @@ typedef  struct svm_node*     XSpacePtr;
      */
     virtual ~SVMModel ();
 
-    const FeatureNumList&   GetFeatureNums ()  const;
+    FeatureNumListPtr   GetFeatureNums ()  const;
 
-    const FeatureNumList&   GetFeatureNums (MLClassPtr  class1,
-                                            MLClassPtr  class2
-                                           )  const;
+    FeatureNumListPtr   GetFeatureNums (FileDescPtr  fileDesc)  const;
+
+    FeatureNumListPtr   GetFeatureNums (FileDescPtr  fileDesc,
+                                        MLClassPtr   class1,
+                                        MLClassPtr   class2
+                                       )  const;
 
     //MLClassList&  MLClasses ()  {return mlClasses;}  
     const ClassAssignments&  Assignments () const  {return assignments;}
@@ -456,6 +459,7 @@ typedef  struct svm_node*     XSpacePtr;
 
 
     void  SetSelectedFeatures (const FeatureNumList& _selectedFeatures);
+    void  SetSelectedFeatures (FeatureNumListPtr     _selectedFeatures);
 
 
     void  PredictOneVsAll (XSpacePtr    xSpace,
@@ -554,7 +558,7 @@ typedef  struct svm_node*     XSpacePtr;
                                              *     model      "<rootName>"
                                              */
 
-    FeatureNumList         selectedFeatures;
+    FeatureNumListPtr      selectedFeatures;
 
     SVMparam               svmParam;
 
