@@ -67,11 +67,15 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
 {
   log.Level (40) << "FeatureEncoder::FeatureEncoder" << endl;
 
-  if  (class1  &&  class2)
-    selectedFeatures = svmParam.GetFeatureNums (fileDesc, class1, class2);
-  else
-    selectedFeatures = svmParam.GetFeatureNums ();
-
+  {
+    FeatureNumListConstPtr  temp = NULL;
+    if  (class1  &&  class2)
+      temp = svmParam.GetFeatureNums (fileDesc, class1, class2);
+    else
+      temp = svmParam.GetFeatureNums ();
+    selectedFeatures = FeatureNumList (*temp);
+  }
+  
   numOfFeatures = selectedFeatures.NumOfFeatures ();
 
   encodingMethod    = svmParam.EncodingMethod ();

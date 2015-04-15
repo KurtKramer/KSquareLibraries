@@ -60,11 +60,11 @@ namespace KKMLL
      *@param[in] _weight
      */
     
-    BinaryClassParms (MLClassPtr            _class1,
-                      MLClassPtr            _class2,
-                      const svm_parameter&  _param,
-                      FeatureNumListPtr     _selectedFeatures,
-                      float                 _weight
+    BinaryClassParms (MLClassPtr              _class1,
+                      MLClassPtr              _class2,
+                      const svm_parameter&    _param,
+                      FeatureNumListConstPtr  _selectedFeatures,
+                      float                   _weight
                      );
     
     BinaryClassParms (const BinaryClassParms&  binaryClassParms);
@@ -77,26 +77,26 @@ namespace KKMLL
                                              );
 
     //  Member Access Methods
-    double                   AParam           () const {return  param.A;}
-    MLClassPtr               Class1           () const {return  class1;}
-    MLClassPtr               Class2           () const {return  class2;}
-    double                   C                () const {return  param.C;}
-    const svm_parameter&     Param            () const {return  param;}
-    FeatureNumListPtr        SelectedFeatures () const {return  selectedFeatures;}
-    float                    Weight           () const {return  weight;}
+    double                   AParam             () const {return  param.A;}
+    MLClassPtr               Class1             () const {return  class1;}
+    MLClassPtr               Class2             () const {return  class2;}
+    double                   C                  () const {return  param.C;}
+    const svm_parameter&     Param              () const {return  param;}
+    FeatureNumListConstPtr   SelectedFeatures   () const {return  selectedFeatures;}
+    float                    Weight             () const {return  weight;}
 
-    kkuint16                 NumOfFeatures    (FileDescPtr fileDesc) const; 
-    FeatureNumListPtr        SelectedFeaturesFD (FileDescPtr fileDesc) const;
+    kkuint16                 NumOfFeatures      (FileDescPtr fileDesc) const; 
+    FeatureNumListConstPtr   SelectedFeaturesFD (FileDescPtr fileDesc) const;
 
 
     // member Update methods
-    void  AParam           (float                  _A)                 {param.A           = _A;}
-    void  C                (double                 _c)                 {param.C           = _c;}
-    void  Gamma            (double                 _gamma)             {param.gamma       = _gamma;}
-    void  Param            (const svm_parameter&   _param)             {param             = _param;}
-    void  SelectedFeatures (const FeatureNumList&  _selectedFeatures);
-    void  SelectedFeatures (FeatureNumListPtr      _selectedFeatures);  /**< Will make copy of instance;  caller will retain ownership status. */
-    void  Weight           (float                  _weight)            {weight            = _weight;}
+    void  AParam           (float                       _A)                 {param.A           = _A;}
+    void  C                (double                      _c)                 {param.C           = _c;}
+    void  Gamma            (double                      _gamma)             {param.gamma       = _gamma;}
+    void  Param            (const svm_parameter&        _param)             {param             = _param;}
+    void  SelectedFeatures (const FeatureNumListConst&  _selectedFeatures);
+    void  SelectedFeatures (FeatureNumListConstPtr      _selectedFeatures);  /**< Will make copy of instance;  caller will retain ownership status. */
+    void  Weight           (float                       _weight)            {weight            = _weight;}
 
     KKStr   Class1Name ()  const;
     KKStr   Class2Name ()  const;

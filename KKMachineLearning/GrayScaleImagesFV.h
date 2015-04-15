@@ -2,7 +2,7 @@
 #define  _LASRCOSFEATUREVECTOR_
 
 /**
- *@class LarcosCounterUnManaged::LarcosFeatureVector
+ *@class LarcosCounterUnManaged::GrayScaleImagesFV
  *@brief  Specialized version of KKMLL::FeatureVector that will be used 
  *to represent the features of a Shrimp.
  *@author  Kurt Kramer
@@ -36,9 +36,8 @@ using namespace KKB;
 using namespace  KKMLL;
 
 
-namespace LarcosCounterUnManaged 
+namespace KKMLL 
 {
-
   #ifndef  _FEATURENUMLIST_
   class  FeatureNumList;
   typedef  FeatureNumList*  FeatureNumListPtr;
@@ -52,15 +51,15 @@ namespace LarcosCounterUnManaged
   #endif
 
 
-  class  LarcosFeatureVector:  public  FeatureVector 
+  class  GrayScaleImagesFV:  public  FeatureVector 
   {
   public:
-    typedef  LarcosFeatureVector*  LarcosFeatureVectorPtr;
+    typedef  GrayScaleImagesFV*  GrayScaleImagesFVPtr;
     typedef  KKB::uchar  uchar;
 
-    LarcosFeatureVector (kkint32  _numOfFeatures);
+    GrayScaleImagesFV (kkint32  _numOfFeatures);
 
-    LarcosFeatureVector (const LarcosFeatureVector&  _fv);
+    GrayScaleImagesFV (const GrayScaleImagesFV&  _fv);
 
 
 
@@ -69,17 +68,17 @@ namespace LarcosCounterUnManaged
      *@details
      *@code
      ** This constructor will detect what the underlying type of 'featureVector' is.
-     ** If (underlying type is a 'LarcosFeatureVector' object)  then
-     **   | Information that is particular to a 'LarcosFeatureVector' object will be extracted
+     ** If (underlying type is a 'GrayScaleImagesFV' object)  then
+     **   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted
      **   | from the 'FeatureVector' object.
      ** else
-     **   | Info that is particular to a 'LarcosFeatureVector' object will be set to default 
+     **   | Info that is particular to a 'GrayScaleImagesFV' object will be set to default 
      **   | values.
      *@endcode
      */
-    LarcosFeatureVector (const FeatureVector&  featureVector);
+    GrayScaleImagesFV (const FeatureVector&  featureVector);
 
-    virtual  ~LarcosFeatureVector ();
+    virtual  ~GrayScaleImagesFV ();
 
 
     // Access Methods.
@@ -100,24 +99,24 @@ namespace LarcosCounterUnManaged
     float     centroidRow;     /**<  centroid Row with just respect to image. */
     kkint32   numOfEdgePixels;
 
-  };  /* LarcosFeatureVector */
+  };  /* GrayScaleImagesFV */
 
 
-  typedef  LarcosFeatureVector::LarcosFeatureVectorPtr  LarcosFeatureVectorPtr;
+  typedef  GrayScaleImagesFV::GrayScaleImagesFVPtr  GrayScaleImagesFVPtr;
 
-#define  _LarcosFeatureVector_Defined_
+#define  _GrayScaleImagesFV_Defined_
 
 
 
-  class  LarcosFeatureVectorList:  public FeatureVectorList
+  class  GrayScaleImagesFVList:  public FeatureVectorList
   {
   public: 
-    typedef  LarcosFeatureVectorList*  LarcosFeatureVectorListPtr;
+    typedef  GrayScaleImagesFVList*  GrayScaleImagesFVListPtr;
 
-    LarcosFeatureVectorList (FileDescPtr  _fileDesc,
-                             bool         _owner,
-                             RunLog&      _log
-                            );
+    GrayScaleImagesFVList (FileDescPtr  _fileDesc,
+                           bool         _owner,
+                           RunLog&      _log
+                          );
 
   private:
     /**
@@ -125,7 +124,7 @@ namespace LarcosCounterUnManaged
      *        'examples' owns its entries, then new duplicate entries will be created, and will 
      *        own them otherwise will only get pointers to existing instances in 'examples'.
      */
-    LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples);
+    GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples);
 
 
   public:
@@ -140,12 +139,12 @@ namespace LarcosCounterUnManaged
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
-     *@param[in]  _examples   The list of 'LarcosFeatureVector' that is to be copied.
-     *@param[in]  _owner      If 'true' new instances of 'LarcosFeatureVector' instances will be created
+     *@param[in]  _examples   The list of 'GrayScaleImagesFV' that is to be copied.
+     *@param[in]  _owner      If 'true' new instances of 'GrayScaleImagesFV' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
-    LarcosFeatureVectorList (const LarcosFeatureVectorList&  _examples,
+    GrayScaleImagesFVList (const GrayScaleImagesFVList&  _examples,
                              bool                            _owner
                             );
 
@@ -160,40 +159,40 @@ namespace LarcosCounterUnManaged
      *  else if  'owner' = false, 
      *     Copy over pointers to existing instances.  
      *@endcode
-     * If any of the existing instances do not have an underlying class of LarcosFeatureVector;  
+     * If any of the existing instances do not have an underlying class of GrayScaleImagesFV;  
      * the function will throw an exception.
      *
-     *@param[in]  _examples   The list of 'LarcosFeatureVector' that is to be copied.
-     *@param[in]  _owner      If 'true' new instances of 'LarcosFeatureVector' instances will be created
+     *@param[in]  _examples   The list of 'GrayScaleImagesFV' that is to be copied.
+     *@param[in]  _owner      If 'true' new instances of 'GrayScaleImagesFV' instances will be created
      *                        and this new list will own them and if 'false' will just point to
      *                        the existing instances and not own the.
      */
-    LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList,
-                             bool                      _owner
-                            );
+    GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList,
+                           bool                      _owner
+                          );
 
 
     /**
      *@brief  Constructor that will extract a list of feature vectors for all the image files in the 
      *        specified directory.
      *@details
-     * Will scan the directory _dirName for any image files.  For each image found a new instance of LarcosFeatureVector
-     * will be created who's features will be derived from the image. These LarcosFeatureVector' objects will be 
+     * Will scan the directory _dirName for any image files.  For each image found a new instance of GrayScaleImagesFV
+     * will be created who's features will be derived from the image. These GrayScaleImagesFV' objects will be 
      * assigned the class specified by '_mlClass'. A new data file containing the extracted features will be 
      * saved in fileName.
      *
      *@param[in] _fvProducerFactory
-     *@param[in] _mlClass   Class to assign to new 'LarcosFeatureVector' objects.
+     *@param[in] _mlClass   Class to assign to new 'GrayScaleImagesFV' objects.
      *@param[in] _dirName   Directory to scan for examples.
      *@param[in] _fileName  Name of file to contain the extracted feature data.  Will be of the Raw format.
      *@param[in] _log       Log file to write messages to.
      */
-    LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
-                             MLClassPtr            _mlClass,
-                             KKStr                 _dirName,
-                             KKStr                 _fileName,
-                             RunLog&               _log
-                            );
+    GrayScaleImagesFVList (FactoryFVProducerPtr  _fvProducerFactory,
+                           MLClassPtr            _mlClass,
+                           KKStr                 _dirName,
+                           KKStr                 _fileName,
+                           RunLog&               _log
+                          );
 
 
 
@@ -208,77 +207,77 @@ namespace LarcosCounterUnManaged
      *@param[in] _examples        Source examples that we want to scan.
      *@param[in] _log           
      */
-    LarcosFeatureVectorList (MLClassList&              _mlClasses,
-                             LarcosFeatureVectorList&  _examples,
-                             RunLog&                   _log
-                           );
+    GrayScaleImagesFVList (MLClassList&              _mlClasses,
+                           GrayScaleImagesFVList&  _examples,
+                           RunLog&                   _log
+                         );
 
 
     /**
      @brief
      @details
-        This constructor is meant to create a list of 'LarcosFeatureVector' objects from the FeatureVector
+        This constructor is meant to create a list of 'GrayScaleImagesFV' objects from the FeatureVector
         objects contained in featureVectorList.
      @code
      If  'featureVectorList'  owns its contents (that is 'featureVectorList.Owner () == true'  then
-        |  We will create new Instances of 'LarcosFeatureVector' objects that we will own.
+        |  We will create new Instances of 'GrayScaleImagesFV' objects that we will own.
         |  The underlying class of the 'FeatureVector' objects will be converted to a
-        |  'LarcosFeatureVector'  class.
+        |  'GrayScaleImagesFV'  class.
      else
         |  all the 'FeatureVector' objects in 'featureVectorList' must have an underlying class of
-        |  'LarcosFeatureVector'.  If one or more do not then the program will halt with a message to
+        |  'GrayScaleImagesFV'.  If one or more do not then the program will halt with a message to
         |  the log.
     @endcode
     */
-    LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList);
+    GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList);
 
 
 
 
-    virtual  ~LarcosFeatureVectorList ();
+    virtual  ~GrayScaleImagesFVList ();
 
 
-    void                   AddQueue (LarcosFeatureVectorList&  imagesToAdd);
+    void                       AddQueue (GrayScaleImagesFVList&  imagesToAdd);
 
-    LarcosFeatureVectorPtr       BackOfQueue ();
+    GrayScaleImagesFVPtr       BackOfQueue ();
 
-    LarcosFeatureVectorPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
+    GrayScaleImagesFVPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
 
-    LarcosFeatureVectorListPtr   DuplicateListAndContents ()  const;
+    GrayScaleImagesFVListPtr   DuplicateListAndContents ()  const;
 
-    LarcosFeatureVectorListPtr   ExtractDuplicatesByRootImageFileName ();
+    GrayScaleImagesFVListPtr   ExtractDuplicatesByRootImageFileName ();
 
-    LarcosFeatureVectorListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                              kkint32     _maxToExtract = -1,
-                                                              float       _minSize      = -1.0f
-                                                             )  const;
+    GrayScaleImagesFVListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+                                                            kkint32     _maxToExtract = -1,
+                                                            float       _minSize      = -1.0f
+                                                           )  const;
 
 
-    LarcosFeatureVectorPtr       IdxToPtr (kkint32 idx) const;
+    GrayScaleImagesFVPtr       IdxToPtr (kkint32 idx) const;
 
-    LarcosFeatureVectorPtr       LookUpByImageFileName (const KKStr&  _imageFileName)  const;
+    GrayScaleImagesFVPtr       LookUpByImageFileName (const KKStr&  _imageFileName)  const;
 
-    LarcosFeatureVectorPtr       LookUpByRootName (const KKStr&  _rootName);
+    GrayScaleImagesFVPtr       LookUpByRootName (const KKStr&  _rootName);
 
 
     
     /**
-     *@brief  Using list of ImageFileNames in a file('fileName') create a new LarcosFeatureVectorList instance 
+     *@brief  Using list of ImageFileNames in a file('fileName') create a new GrayScaleImagesFVList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    LarcosFeatureVectorListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
+    GrayScaleImagesFVListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
 
-    LarcosFeatureVectorPtr       PopFromBack ();
+    GrayScaleImagesFVPtr       PopFromBack ();
 
-    void                         RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
-                                                                         const KKStr&          rootDir,
-                                                                         bool&                 successful
-                                                                        );
+    void                       RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
+                                                                       const KKStr&          rootDir,
+                                                                       bool&                 successful
+                                                                      );
 
-    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (kkint32  numOfFolds);
+    GrayScaleImagesFVListPtr   StratifyAmoungstClasses (kkint32  numOfFolds);
 
 
-    LarcosFeatureVectorListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
+    GrayScaleImagesFVListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                           kkint32         maxImagesPerClass,
                                                           kkint32         numOfFolds
                                                          );
@@ -314,9 +313,9 @@ namespace LarcosCounterUnManaged
       }
 
 
-      const LarcosFeatureVectorPtr  operator*()
+      const GrayScaleImagesFVPtr  operator*()
       {
-        return  (const LarcosFeatureVectorPtr)*idx;
+        return  (const GrayScaleImagesFVPtr)*idx;
       }
 
 
@@ -406,9 +405,9 @@ namespace LarcosCounterUnManaged
       }
 
 
-      LarcosFeatureVectorPtr  operator*()
+      GrayScaleImagesFVPtr  operator*()
       {
-        return  (LarcosFeatureVectorPtr)*idx;
+        return  (GrayScaleImagesFVPtr)*idx;
       }
 
       iterator&   operator= (const iterator&  right)
@@ -443,12 +442,12 @@ namespace LarcosCounterUnManaged
 
 
 
-  };  /* LarcosFeatureVectorList */
+  };  /* GrayScaleImagesFVList */
 
 
-  typedef  LarcosFeatureVectorList::LarcosFeatureVectorListPtr  LarcosFeatureVectorListPtr;
+  typedef  GrayScaleImagesFVList::GrayScaleImagesFVListPtr  GrayScaleImagesFVListPtr;
 
-#define  _LarcosFeatureVectorList_Defined_
+#define  _GrayScaleImagesFVList_Defined_
 
 
 }  /* namespace LarcosCounterUnManaged */

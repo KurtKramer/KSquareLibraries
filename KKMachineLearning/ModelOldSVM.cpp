@@ -130,10 +130,10 @@ const ClassAssignments&  ModelOldSVM::Assignments ()  const
 
 
 
-FeatureNumListPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
-                                                MLClassPtr  class1,
-                                                MLClassPtr  class2
-                                               )
+FeatureNumListConstPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
+                                                     MLClassPtr  class1,
+                                                     MLClassPtr  class2
+                                                    )
 {
   return svmModel->GetFeatureNums (filedesc, class1, class2);
 }  /* GetFeatureNums */
@@ -141,7 +141,7 @@ FeatureNumListPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
 
 
 
-FeatureNumListPtr   ModelOldSVM::GetFeatureNums ()  const
+FeatureNumListConstPtr   ModelOldSVM::GetFeatureNums ()  const
 {
   return svmModel->GetFeatureNums ();
 }

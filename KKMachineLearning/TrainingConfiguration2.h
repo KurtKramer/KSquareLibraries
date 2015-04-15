@@ -74,21 +74,17 @@ namespace KKMLL
 
 
     /**
-     *@brief  Creates a configuration file using the parameters specified in '_modelParameters';  does not read 
-     * from a configuration file.  
-     *@details  For each class specified in '_mlClasses' a 'TrainingClass' instance will be created. 
-     * All feature-numbers will be assumed to be selected and unlimited examples per class will be allowed.
-     *@param[in] _mlClasses
+     *@brief Use this one if you want to create a default Configuration object.
+     *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
      *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
-     *@param[in] _modelParameters  Will take ownership of this instance.
-     *@param[in] _log
+     *@param[in]  _parameterStr Sting with Machine Learning Parameters.
+     *@param[in]  _log  Where to send logging messages to.
      */
     TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                             FileDescPtr     _fileDesc,
-                            ModelParamPtr   _modelParameters,
-                            RunLog&         _log
+                            const KKStr&    _parameterStr,
+                            RunLog&         _log             
                            );
-
 
 
     /**
@@ -106,6 +102,9 @@ namespace KKMLL
                             ModelParamPtr   _modelParameters,
                             RunLog&         _log
                            );
+
+
+
 
      virtual    
      ~TrainingConfiguration2 ();

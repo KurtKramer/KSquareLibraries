@@ -28,7 +28,10 @@ namespace KKMLL
 #ifndef  _FEATURENUMLIST_
 class  FeatureNumList;
 typedef  FeatureNumList*  FeatureNumListPtr;
+typedef  FeatureNumList const FeatureNumListConst;
+typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 #endif
+
 
 #ifndef  _FEATUREENCODER_
 class  FeatureEncoder;
@@ -142,14 +145,14 @@ typedef  struct svm_node*     XSpacePtr;
      */
     virtual ~SVMModel ();
 
-    FeatureNumListPtr   GetFeatureNums ()  const;
+    FeatureNumListConstPtr   GetFeatureNums ()  const;
 
-    FeatureNumListPtr   GetFeatureNums (FileDescPtr  fileDesc)  const;
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc)  const;
 
-    FeatureNumListPtr   GetFeatureNums (FileDescPtr  fileDesc,
-                                        MLClassPtr   class1,
-                                        MLClassPtr   class2
-                                       )  const;
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc,
+                                             MLClassPtr   class1,
+                                             MLClassPtr   class2
+                                            )  const;
 
     //MLClassList&  MLClasses ()  {return mlClasses;}  
     const ClassAssignments&  Assignments () const  {return assignments;}
@@ -458,8 +461,8 @@ typedef  struct svm_node*     XSpacePtr;
     void  InializeProbClassPairs ();
 
 
-    void  SetSelectedFeatures (const FeatureNumList& _selectedFeatures);
-    void  SetSelectedFeatures (FeatureNumListPtr     _selectedFeatures);
+    void  SetSelectedFeatures (FeatureNumListConst&    _selectedFeatures);
+    void  SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures);
 
 
     void  PredictOneVsAll (XSpacePtr    xSpace,

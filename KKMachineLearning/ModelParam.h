@@ -121,7 +121,7 @@ namespace KKMLL
     virtual kkint32                  ExamplesPerClass           () const {return examplesPerClass;}
     virtual const KKStr&             FileName                   () const {return fileName;}
     virtual bool                     NormalizeNominalFeatures   () const {return normalizeNominalFeatures;}
-    virtual const FeatureNumListPtr  SelectedFeatures           () const {return selectedFeatures;}
+    virtual FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
     virtual bool                     ValidParam                 () const {return validParam;}
   
     // Access members that were originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
@@ -136,7 +136,7 @@ namespace KKMLL
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}
     virtual void  ExamplesPerClass   (kkint32                _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
     virtual void  FileName           (const KKStr&           _fileName)           {fileName           = _fileName;}
-    virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures);
+    virtual void  SelectedFeatures   (FeatureNumListConst&   _selectedFeatures);
     virtual void  ValidParam         (bool                   _validParam)         {validParam         = _validParam;}
 
 

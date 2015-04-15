@@ -902,7 +902,7 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
     bool  _validFormat = true;
     KKStr  svmParameterStr = "-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P";
 
-    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM (fileDesc, log);
+    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM (log);
     oldSVMparameters->ParseCmdLine (svmParameterStr, _validFormat);
     ModelParameters (oldSVMparameters);
     ImagesPerClass (1000);
@@ -1203,7 +1203,7 @@ void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
   {
-    oldSVMparms->SetFeatureNums (class1, class2, _features, _weight);
+    oldSVMparms->SetFeatureNums (class1, class2, &_features, _weight);
   }
 }  /* SetFeatureNums */
 
@@ -1271,7 +1271,7 @@ void  TrainingConfiguration2::SetBinaryClassFields (MLClassPtr                  
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
-    oldSVMparms->SetBinaryClassFields (class1, class2, _param, _features, _weight);
+    oldSVMparms->SetBinaryClassFields (class1, class2, _param, &_features, _weight);
 }  /* SetBinaryClassFields */
 
 
@@ -1333,9 +1333,15 @@ void   TrainingConfiguration2::KernalType (SVM_KernalType _kernalType)
 FeatureNumList  TrainingConfiguration2::GetFeatureNums ()  const
 {
   if  (modelParameters)
-    return modelParameters->SelectedFeatures ();
-  else
+  {
+    FeatureNumListConstPtr fnl = modelParameters->SelectedFeatures ();
+    if  (fnl)
+      return *fnl;
+  }
+  if  (fileDesc)
     return FeatureNumList (fileDesc);
+  else
+    return FeatureNumList (1);
 }  /* GetFeatureNums */
 
 
@@ -1344,7 +1350,7 @@ FeatureNumList  TrainingConfiguration2::GetFeatureNums ()  const
 kkint32  TrainingConfiguration2::NumOfFeaturesAfterEncoding ()  const
 {
   if  (modelParameters)
-    return modelParameters->NumOfFeaturesAfterEncoding ();
+    return modelParameters->NumOfFeaturesAfterEncoding (fileDesc);
   else
     return 0;
 }  /* NumOfFeaturesAfterEncoding */
@@ -1374,10 +1380,12 @@ FeatureNumList   TrainingConfiguration2::GetFeatureNums (MLClassPtr  class1,
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
   {
-    return  oldSVMparms->GetFeatureNums (class1, class2);
+    FeatureNumListConstPtr  fnl = oldSVMparms->GetFeatureNums (fileDesc, class1, class2);
+    if  (fnl)
+      return *fnl;
   }
-  else
-    return  FeatureNumList::AllFeatures (fileDesc);
+
+  return  FeatureNumList::AllFeatures (fileDesc);
 }  /* GetFeatureNums */
 
 
@@ -1408,7 +1416,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
   TrainingConfiguration2Ptr config = subClassifiers->LookUp (subClassifierName);
   if  (!config)
   {
-    config = new TrainingConfiguration2 (subClassifierName, fvFactoryProducer, true, log);
+    config = new TrainingConfiguration2 (subClassifierName, true, log);
     subClassifiers->PushOnBack (config);
     if  (!config->FormatGood ())
     {
@@ -1705,7 +1713,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     featuresIncludedStr = "All";
 
   bool validFeaturesNums = false;
-  FeatureNumList selFeatures (fileDesc, featuresIncludedStr, validFeaturesNums);
+  FeatureNumList selFeatures (featuresIncludedStr, validFeaturesNums);
   if  (!validFeaturesNums)
   {
     KKStr  errMsg = "Invalid Features_Included[" + featuresIncludedStr + "].";
@@ -1826,9 +1834,12 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum)
     return;
   }
 
-  FeatureNumListPtr  selectedFeatures = DeriveFeaturesSelected (sectionNum);
+  FeatureNumListConstPtr  selectedFeatures = DeriveFeaturesSelected (sectionNum);
   if  (!selectedFeatures)
-    selectedFeatures = new FeatureNumList (modelParameters->SelectedFeatures ());
+    selectedFeatures = modelParameters->SelectedFeatures ();
+
+  if  (!selectedFeatures)
+    selectedFeatures = new FeatureNumList (fileDesc);
 
   if  ((class1NameLineNum > 0)  &&  (!class1))
   {
@@ -1865,7 +1876,7 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum)
         binaryParam = tempParam;
       }
 
-      oldSvmParameters->AddBinaryClassParms (class1, class2, binaryParam, *selectedFeatures, weight);
+      oldSvmParameters->AddBinaryClassParms (class1, class2, binaryParam, selectedFeatures, weight);
     }
   }
   delete  selectedFeatures;

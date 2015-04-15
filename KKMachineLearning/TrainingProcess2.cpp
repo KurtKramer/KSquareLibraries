@@ -926,7 +926,7 @@ void  TrainingProcess2::Read (istream&  in,
     {
       if  (weOwnConfig)
         delete  config;
-      config = new TrainingConfiguration2 (osGetRootName (configFileName), fvFactoryProducer, false, log);
+      config = new TrainingConfiguration2 (osGetRootName (configFileName), false, log);
       weOwnConfig = true;
 
       if  (config->SubClassifiers () != NULL)

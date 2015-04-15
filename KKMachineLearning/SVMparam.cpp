@@ -24,10 +24,10 @@ using namespace KKMLL;
 
 
 
-SVMparam::SVMparam  (KKStr&            _cmdLineStr,
-                     FeatureNumListPtr _selectedFeatures,
-                     RunLog&           _log,
-                     bool&             _validFormat
+SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
+                     FeatureNumListConstPtr _selectedFeatures,
+                     RunLog&                _log,
+                     bool&                  _validFormat
                     ):
 
   binaryParmsList           (NULL),
@@ -110,7 +110,7 @@ SVMparam::~SVMparam  ()
 
 
 
-FeatureNumListPtr  SVMparam::SelectedFeatures (FileDescPtr  fileDesc)  const
+FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescPtr  fileDesc)  const
 {
   if  (!selectedFeatures)
   {
@@ -143,7 +143,7 @@ void  SVMparam::SelectedFeatures (const FeatureNumList&  _selectedFeatures)
 }
 
 
-void  SVMparam::SelectedFeatures  (FeatureNumListPtr  _selectedFeatures)
+void  SVMparam::SelectedFeatures  (FeatureNumListConstPtr  _selectedFeatures)
 {
   delete  selectedFeatures;
   selectedFeatures  = new FeatureNumList (*_selectedFeatures);
@@ -599,13 +599,14 @@ BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr       class1,
 
 
 
-FeatureNumListPtr  SVMparam::GetFeatureNums ()  const
+FeatureNumListConstPtr  SVMparam::GetFeatureNums ()  const
 {
   return  selectedFeatures;
 }
 
 
-FeatureNumListPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
+
+FeatureNumListConstPtr  SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
 {
   if  (selectedFeatures == NULL)
     return SelectedFeatures (fileDesc);
@@ -615,10 +616,10 @@ FeatureNumListPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
 
 
 
-FeatureNumListPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc,
-                                            MLClassPtr   class1,
-                                            MLClassPtr   class2
-                                           )  const
+FeatureNumListConstPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc,
+                                                 MLClassPtr   class1,
+                                                 MLClassPtr   class2
+                                                )  const
 {
   if  (!binaryParmsList)
   {
@@ -674,7 +675,11 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 {
   FileDescPtr  fileDesc = trainExamples->FileDesc ();
   if  (!selectedFeatures)
-    selectedFeatures = SelectedFeatures (fileDesc);
+  {
+    // The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.
+    // This way we make sure that the variable exists.
+    SelectedFeatures (fileDesc);
+  }
   if  (machineType == BinaryCombos)
   {
     kkint32 totalNumFeaturesUsed = 0;
@@ -700,7 +705,7 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
         kkuint32    class2Qty = class2Stats->Count ();
 
         kkint32  numFeaturesThisCombo = 0;
-        FeatureNumListPtr  cpfn = GetFeatureNums (fileDesc, class1, class2);
+        FeatureNumListConstPtr  cpfn = GetFeatureNums (fileDesc, class1, class2);
         if  (cpfn)
           numFeaturesThisCombo = cpfn->NumSelFeatures ();
 
@@ -724,7 +729,11 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
 {
   if  (!selectedFeatures)
-    selectedFeatures = SelectedFeatures (fileDesc);
+  {
+    // The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.
+    // This way we make sure that the variable exists.
+    SelectedFeatures (fileDesc);
+  }
 
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
@@ -757,10 +766,10 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
 
 
 
-void  SVMparam::SetFeatureNums (MLClassPtr         class1,
-                                MLClassPtr         class2,
-                                FeatureNumListPtr  _features,
-                                float              _weight
+void  SVMparam::SetFeatureNums (MLClassPtr              class1,
+                                MLClassPtr              class2,
+                                FeatureNumListConstPtr  _features,
+                                float                   _weight
                                )
 {
   if  (!binaryParmsList)
@@ -798,7 +807,7 @@ void  SVMparam::SetFeatureNums (const FeatureNumList&  _features)
 
 
 
-void  SVMparam::SetFeatureNums (FeatureNumListPtr  _features)
+void  SVMparam::SetFeatureNums (FeatureNumListConstPtr  _features)
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (*_features);
@@ -867,11 +876,11 @@ void  SVMparam::C_Param (MLClassPtr  class1,
 
 
 
-void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
-                                      MLClassPtr             class2,
-                                      const svm_parameter&   _param,
-                                      FeatureNumListPtr      _features,
-                                      float                  _weight
+void  SVMparam::SetBinaryClassFields (MLClassPtr              class1,
+                                      MLClassPtr              class2,
+                                      const svm_parameter&    _param,
+                                      FeatureNumListConstPtr  _features,
+                                      float                   _weight
                                      )
 {
   if  (!binaryParmsList)
@@ -902,11 +911,11 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  SVMparam::AddBinaryClassParms (MLClassPtr            class1,
-                                     MLClassPtr            class2,
-                                     const svm_parameter&  _param,
-                                     FeatureNumListPtr     _selectedFeatures,  /**< We will NOT be taking ownership; we will make our own copy. */
-                                     float                 _weight
+void  SVMparam::AddBinaryClassParms (MLClassPtr              class1,
+                                     MLClassPtr              class2,
+                                     const svm_parameter&    _param,
+                                     FeatureNumListConstPtr  _selectedFeatures,  /**< We will NOT be taking ownership; we will make our own copy. */
+                                     float                   _weight
                                     )
 {
   AddBinaryClassParms (new BinaryClassParms (class1, class2, _param, _selectedFeatures, _weight));

@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-using namespace std;
-
 #if  defined(WIN32)
 #include <LIMITS.H>
 #include <FLOAT.H>
@@ -18,10 +16,9 @@ using namespace std;
 #define _SCL_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
 #endif
-
-
 #include "MemoryDebug.h"
 using namespace  std;
+
 
 #include "KKBaseTypes.h"
 #include "OSservices.h"
@@ -29,12 +26,9 @@ using namespace  std;
 using namespace  KKB;
 
 
-
-
 #include "MLClass.h"
 #include "FeatureVector.h"
 #include "ClassProb.h"
-
 #include "UsfCasCor.h"
 using namespace  KKMLL;
 
@@ -48,13 +42,13 @@ using namespace  KKMLL;
    Modified by Kurt Kramer 2012-09-10:
       Originally written by    R. Scott Crowder, III   Se below for his comments.
 
-      I turnd in this implementation as found at USF into a c++ Class and integrated into the Pices
+      I turned in this implementation as found at USF into a c++ Class and integrated into the Pices
       application.
         1) Restructured code as a c++ class.
-        2) A trained classifier are wriiten to disk and can be reread in ab instacne.
+        2) A trained classifier are written to disk and can be reread in ab instance.
         3) Integrated into the Pices application.
-        4) Primary use will to be used in a Dual classifer setup along with a Support Vector Machine(SVM)(libSVM)
-           where both classifiers agree on the prediction will the lable be returned otherwise the label
+        4) Primary use will to be used in a Dual classifier setup along with a Support Vector Machine(SVM)(libSVM)
+           where both classifiers agree on the prediction will the label be returned otherwise the label
            "UnKnown" will be returned.  User will have option to have the common part of the prediction in the 
            class hierarchy returned instead.
 
@@ -123,7 +117,7 @@ using namespace  KKMLL;
 /*  Christian Lebiere in D. S. Touretzky (ed.), "Advances in Neural         */
 /*  Information Processing Systems 2", Morgan Kaufmann, 1990.  A somewhat   */
 /*  longer version is available as CMU Computer Science Tech Report         */
-/*  CMU-CS-90-100.  Instructions for Ftping this report are given at the    */
+/*  CMU-CS-90-100.  Instructions for Ftp'ing this report are given at the   */
 /*  end of this file.                                                       */
 /*                                                                          */
 /*  An example of the network set up file is provided at the bottom of      */
@@ -392,7 +386,7 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
 
 
   /***************************************************************************/
-  /* Save and plot file related varibles                                     */
+  /* Save and plot file related variables                                    */
   /***************************************************************************/
   WeightFile              (NULL),
   InterruptPending        (False),
@@ -600,7 +594,7 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
                                      MLClassPtr&         predClass2,
                                      float&              predClass2Prob,
                                      float&              knownClassProb,
-                                     const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populatd. */
+                                     const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populated. */
                                      VectorFloat&        probabilities
                                     )
 {
@@ -769,19 +763,24 @@ ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
 
 
 
-void  UsfCasCor::TrainNewClassifier (kkint32                _in_limit,
-                                     kkint32                _out_limit,
-                                     kkint32                _number_of_rounds,
-                                     kkint32                _number_of_trials,
-                                     kkint64                _the_random_seed,
-                                     bool                   _useCache,
-                                     FeatureVectorListPtr   _trainData,
-                                     const FeatureNumList&  _selectedFeatures
+void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
+                                     kkint32                 _out_limit,
+                                     kkint32                 _number_of_rounds,
+                                     kkint32                 _number_of_trials,
+                                     kkint64                 _the_random_seed,
+                                     bool                    _useCache,
+                                     FeatureVectorListPtr    _trainData,
+                                     FeatureNumListConstPtr  _selectedFeatures
                                     )
 {
   log.Level (10) << "Cascade Correlation:  Version[" << version << "]" << endl;
 
-  selectedFeatures = new FeatureNumList (_selectedFeatures);
+
+  if  (_selectedFeatures)
+    selectedFeatures = new FeatureNumList (*_selectedFeatures);
+  else
+    selectedFeatures = new FeatureNumList (_trainData->FileDesc ());
+
 
   FeatureVectorListPtr  filteredTrainData = FilterOutExtremeExamples (_trainData);
 
@@ -825,11 +824,11 @@ void  UsfCasCor::LoadExistingClassifier (istream&  i,
 
 
 /**
- *@brief Will create a list that excludes wamples that have extreeem values that can trip up the Neural net.
+ *@brief Will create a list that excludes samples that have extreme values that can trip up the Neural net.
  */
 FeatureVectorListPtr  UsfCasCor::FilterOutExtremeExamples (FeatureVectorListPtr  trainExamples)
 {
-  // At this point the trainig data should be normalized.
+  // At this point the training data should be normalized.
 
   kkint16          numSelFeatures = selectedFeatures->NumOfFeatures ();
   const kkuint16*  selFeatures    = selectedFeatures->FeatureNums ();
@@ -2498,8 +2497,8 @@ void  UsfCasCor::ReadXml (istream&  i,
 //******************************************************************************************
 //*                                   load_namesfile.c                                     *
 //******************************************************************************************
-void  UsfCasCor::load_namesfile (FeatureVectorListPtr  trainExamples,
-                                 FeatureNumListPtr     selectedFeatures
+void  UsfCasCor::load_namesfile (FeatureVectorListPtr    trainExamples,
+                                 FeatureNumListConstPtr  selectedFeatures
                                 )
 {
   /* First, ensure the necessary variables are reset */

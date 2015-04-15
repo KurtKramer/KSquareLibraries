@@ -201,7 +201,7 @@ void  ModelParamOldSVM::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 }
 
 
-const FeatureNumListPtr   ModelParamOldSVM::SelectedFeatures () const
+FeatureNumListConstPtr   ModelParamOldSVM::SelectedFeatures () const
 {
   return svmParameters->SelectedFeatures ();
 }
@@ -457,10 +457,10 @@ BinaryClassParmsPtr   ModelParamOldSVM::GetParamtersToUseFor2ClassCombo (MLClass
 
 
 
-FeatureNumListPtr  ModelParamOldSVM::GetFeatureNums (FileDescPtr  fileDesc,
-                                                     MLClassPtr   class1,
-                                                     MLClassPtr   class2
-                                                   )  const
+FeatureNumListConstPtr  ModelParamOldSVM::GetFeatureNums (FileDescPtr  fileDesc,
+                                                          MLClassPtr   class1,
+                                                          MLClassPtr   class2
+                                                        )  const
 {
   return svmParameters->GetFeatureNums (fileDesc, class1, class2);
 }  /* GetFeatureNums */
@@ -485,10 +485,10 @@ float   ModelParamOldSVM::AvgMumOfFeatures (FileDescPtr  fileDesc)
 
 
 
-void  ModelParamOldSVM::SetFeatureNums (MLClassPtr         class1,
-                                        MLClassPtr         class2,
-                                        FeatureNumListPtr  _features,
-                                        float              _weight
+void  ModelParamOldSVM::SetFeatureNums (MLClassPtr              class1,
+                                        MLClassPtr              class2,
+                                        FeatureNumListConstPtr  _features,
+                                        float                  _weight
                                        )
 {
   svmParameters->SetFeatureNums (class1, class2, _features, _weight);
@@ -498,11 +498,11 @@ void  ModelParamOldSVM::SetFeatureNums (MLClassPtr         class1,
 
 
 
-void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr            class1,
-                                              MLClassPtr            class2,
-                                              const svm_parameter&  _param,
-                                              FeatureNumListPtr     _features,
-                                              float                 _weight
+void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr              class1,
+                                              MLClassPtr              class2,
+                                              const svm_parameter&    _param,
+                                              FeatureNumListConstPtr  _features,
+                                              float                   _weight
                                              )
 {
   svmParameters->SetBinaryClassFields (class1, class2, _param, _features, _weight);
@@ -516,11 +516,11 @@ void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr            class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr            class1,
-                                             MLClassPtr            class2,
-                                             const svm_parameter&  _param,
-                                             FeatureNumListPtr     _selectedFeatures,
-                                             float                 _weight
+void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr              class1,
+                                             MLClassPtr              class2,
+                                             const svm_parameter&    _param,
+                                             FeatureNumListConstPtr  _selectedFeatures,
+                                             float                   _weight
                                             )
 {
   svmParameters->AddBinaryClassParms (class1, class2, _param, _selectedFeatures, _weight);

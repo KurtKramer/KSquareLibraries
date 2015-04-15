@@ -744,24 +744,24 @@ void  SVMModel::BuildCrossClassProbTable ()
 
 
 
-FeatureNumListPtr  SVMModel::GetFeatureNums ()  const
+FeatureNumListConstPtr  SVMModel::GetFeatureNums ()  const
 {
   return  svmParam.GetFeatureNums ();
 }
 
 
 
-FeatureNumListPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc)  const
+FeatureNumListConstPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc)  const
 {
   return  svmParam.GetFeatureNums (fileDesc);
 }
 
 
 
-FeatureNumListPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc,
-                                             MLClassPtr   class1,
-                                             MLClassPtr   class2
-                                            )  const
+FeatureNumListConstPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc,
+                                                  MLClassPtr   class1,
+                                                  MLClassPtr   class2
+                                                 )  const
 {
   return  svmParam.GetFeatureNums (fileDesc, class1, class2);
 }  /* GetFeatureNums */
@@ -999,7 +999,7 @@ void  SVMModel::ReadHeader (istream&  i)
     else if  (field == "SELECTEDFEATURES")
     {
       KKStr  selectedFeaturesStr = ln.ExtractQuotedStr ("\n\r\t", true);
-      FeatureNumListPtr  tempFeatures = FeatureNumList::ExtractFeatureNumsFromStr (selectedFeaturesStr);
+      FeatureNumListConstPtr  tempFeatures = FeatureNumList::ExtractFeatureNumsFromStr (selectedFeaturesStr);
       SetSelectedFeatures (tempFeatures);
       delete  tempFeatures;
       tempFeatures = NULL;
@@ -2908,7 +2908,7 @@ bool  SVMModel::NormalizeNominalAttributes ()
 
 
 
-void  SVMModel::SetSelectedFeatures (const FeatureNumList& _selectedFeatures)
+void  SVMModel::SetSelectedFeatures (FeatureNumListConst& _selectedFeatures)
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (_selectedFeatures);
@@ -2917,7 +2917,7 @@ void  SVMModel::SetSelectedFeatures (const FeatureNumList& _selectedFeatures)
 
 
 
-void  SVMModel::SetSelectedFeatures (FeatureNumListPtr  _selectedFeatures)
+void  SVMModel::SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures)
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (*_selectedFeatures);

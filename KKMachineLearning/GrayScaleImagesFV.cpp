@@ -35,22 +35,22 @@ using namespace  KKB;
 #include "FactoryFVProducer.h"
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
-#include "FeatureFileIOKK.h"
-#include "LarcosFVProducer.h"
+#include "FeatureFileIOC45.h"
+#include "GrayScaleImagesFVProducer.h"
 #include "MLClass.h"
 #include "ImageDirTree.h"
 using namespace  KKMLL;
 
 
-#include "LarcosFeatureVector.h"
-using namespace  LarcosCounterUnManaged;
+#include "GrayScaleImagesFV.h"
+using namespace  KKMLL;
                       
 
 
 
 
 
-LarcosFeatureVector::LarcosFeatureVector (kkint32  _numOfFeatures):
+GrayScaleImagesFV::GrayScaleImagesFV (kkint32  _numOfFeatures):
        FeatureVector (_numOfFeatures),
 
         centroidCol     (-1),
@@ -61,7 +61,7 @@ LarcosFeatureVector::LarcosFeatureVector (kkint32  _numOfFeatures):
 
 
 
-LarcosFeatureVector::LarcosFeatureVector (const LarcosFeatureVector&  _fv):
+GrayScaleImagesFV::GrayScaleImagesFV (const GrayScaleImagesFV&  _fv):
   FeatureVector (_fv),
 
   centroidCol     (_fv.centroidCol),
@@ -75,18 +75,18 @@ LarcosFeatureVector::LarcosFeatureVector (const LarcosFeatureVector&  _fv):
 
 
 
-LarcosFeatureVector::LarcosFeatureVector (const FeatureVector&  featureVector):
+GrayScaleImagesFV::GrayScaleImagesFV (const FeatureVector&  featureVector):
    FeatureVector    (featureVector),
    centroidCol      (-1),
    centroidRow      (-1),
    numOfEdgePixels  (-1)
 
 {
-  //if  (strcmp (featureVector.UnderlyingClass (), "LarcosFeatureVector") == 0)
-  if  (typeid (featureVector) == typeid(LarcosFeatureVector))
+  //if  (strcmp (featureVector.UnderlyingClass (), "GrayScaleImagesFV") == 0)
+  if  (typeid (featureVector) == typeid(GrayScaleImagesFV))
   {
-    // The underlying class is another LarcosFeatureVector object.
-    const LarcosFeatureVector&  example = dynamic_cast<const LarcosFeatureVector&>(featureVector);
+    // The underlying class is another GrayScaleImagesFV object.
+    const GrayScaleImagesFV&  example = dynamic_cast<const GrayScaleImagesFV&>(featureVector);
 
     centroidCol      = example.CentroidCol     ();
     centroidRow      = example.CentroidRow     ();
@@ -96,7 +96,7 @@ LarcosFeatureVector::LarcosFeatureVector (const FeatureVector&  featureVector):
 
 
 
-LarcosFeatureVector::~LarcosFeatureVector ()
+GrayScaleImagesFV::~GrayScaleImagesFV ()
 {
 }
 
@@ -108,7 +108,7 @@ LarcosFeatureVector::~LarcosFeatureVector ()
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescPtr  _fileDesc,
+GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescPtr  _fileDesc,
                                                   bool         _owner,
                                                   RunLog&      _log
                                                  ):
@@ -121,7 +121,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (FileDescPtr  _fileDesc,
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProducerFactory,
+GrayScaleImagesFVList::GrayScaleImagesFVList (FactoryFVProducerPtr  _fvProducerFactory,
                                                   MLClassPtr            _mlClass,
                                                   KKStr                 _dirName,
                                                   KKStr                 _fileName,
@@ -137,15 +137,15 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (FactoryFVProducerPtr  _fvProdu
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples):
+GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples):
    FeatureVectorList (examples.FileDesc (), examples.Owner (), examples.log)
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
   {
-    const LarcosFeatureVectorPtr  imageExample = *idx;
+    const GrayScaleImagesFVPtr  imageExample = *idx;
     if  (Owner ())
-      PushOnBack (new LarcosFeatureVector (*imageExample));
+      PushOnBack (new GrayScaleImagesFV (*imageExample));
     else
       PushOnBack (imageExample);
   }
@@ -154,7 +154,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&  examples,
+GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples,
                                                   bool                           _owner
                                                  ):
 
@@ -163,16 +163,16 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const LarcosFeatureVectorList&
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
   {
-    const LarcosFeatureVectorPtr  imageExample = *idx;
+    const GrayScaleImagesFVPtr  imageExample = *idx;
     if  (Owner ())
-      PushOnBack (new LarcosFeatureVector (*imageExample));
+      PushOnBack (new GrayScaleImagesFV (*imageExample));
     else
       PushOnBack (imageExample);
   }
 }
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList,
+GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList,
                                                   bool                      _owner
                                                  ):
 
@@ -181,10 +181,10 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
                      featureVectorList.log
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "LarcosFeatureVectorList") == 0)
-  if  (typeid (featureVectorList) == typeid (LarcosFeatureVectorList))
+  //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
+  if  (typeid (featureVectorList) == typeid (GrayScaleImagesFVList))
   {
-    const LarcosFeatureVectorList&  examples = dynamic_cast<const LarcosFeatureVectorList&> (featureVectorList);
+    const GrayScaleImagesFVList&  examples = dynamic_cast<const GrayScaleImagesFVList&> (featureVectorList);
   }
 
 
@@ -196,13 +196,13 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       FeatureVectorPtr featureVector = *idx;
       
       // The constructor below will detect what the underlying type of 'featureVector' is.  
-      // If (underlying type is a 'LarcosFeatureVector' object)  then
-      //   | Information that is particular to a 'LarcosFeatureVector' object will be extracted
+      // If (underlying type is a 'GrayScaleImagesFV' object)  then
+      //   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted
       //   | from the 'FeatureVector' object being passed in.
       // else
-      //   | info that is particular to a 'LarcosFeatureVector' object will be set to
+      //   | info that is particular to a 'GrayScaleImagesFV' object will be set to
       //   | default values.
-      LarcosFeatureVectorPtr  example = new LarcosFeatureVector (*featureVector);
+      GrayScaleImagesFVPtr  example = new GrayScaleImagesFV (*featureVector);
       PushOnBack (example);
     }
   }
@@ -210,23 +210,23 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
   {
     // Since we will not own the contents but just point to an existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
-    // underlying type of 'LarcosFeatureVector'.
+    // underlying type of 'GrayScaleImagesFV'.
     FeatureVectorList::const_iterator  idx;
     for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
     {
       FeatureVectorPtr featureVector = *idx;
-      //if  (strcmp (featureVector->UnderlyingClass (), "LarcosFeatureVector") == 0)
-      if  (typeid (*featureVector) == typeid (LarcosFeatureVector))
+      //if  (strcmp (featureVector->UnderlyingClass (), "GrayScaleImagesFV") == 0)
+      if  (typeid (*featureVector) == typeid (GrayScaleImagesFV))
       {
-        LarcosFeatureVectorPtr example = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        GrayScaleImagesFVPtr example = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
         PushOnBack (example);
       }
       else
       {
         // ****    ERROR  ****
-        KKStr  errMSsg = "LarcosFeatureVectorList   One of the elements in 'featureVectorList' is not of 'LarcosFeatureVector'  type.";
+        KKStr  errMSsg = "GrayScaleImagesFVList   One of the elements in 'featureVectorList' is not of 'GrayScaleImagesFV'  type.";
         log.Level (-1) << endl << endl << endl
-             << "LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
+             << "GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
              << "        " << errMSsg  << endl
              << "       FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
@@ -249,8 +249,8 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
 //* The subset will consist of the examples who's mlClass is one of the     *
 //* ones in mlClasses.                                                    *
 //****************************************************************************
-LarcosFeatureVectorList::LarcosFeatureVectorList (MLClassList&     _mlClasses,
-                                      LarcosFeatureVectorList&  _examples,
+GrayScaleImagesFVList::GrayScaleImagesFVList (MLClassList&     _mlClasses,
+                                      GrayScaleImagesFVList&  _examples,
                                       RunLog&             _log
                                      ):
   FeatureVectorList (_mlClasses, _examples, _log)
@@ -261,16 +261,16 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (MLClassList&     _mlClasses,
 
 
 
-LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList):
+GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList):
   FeatureVectorList (featureVectorList.FileDesc (),
                      featureVectorList.Owner (), 
                      featureVectorList.log
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "LarcosFeatureVectorList") == 0)
-  if  (typeid (featureVectorList) == typeid (LarcosFeatureVectorList))
+  //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
+  if  (typeid (featureVectorList) == typeid (GrayScaleImagesFVList))
   {
-    const LarcosFeatureVectorList&  examples = dynamic_cast<const LarcosFeatureVectorList&> (featureVectorList);
+    const GrayScaleImagesFVList&  examples = dynamic_cast<const GrayScaleImagesFVList&> (featureVectorList);
   }
 
 
@@ -282,13 +282,13 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
       FeatureVectorPtr featureVector = *idx;
       
       // The constructor below will detect what the underlying type of 'featureVector' is.  
-      // If (underlying type is a 'LarcosFeatureVector' object)  then
-      //   | Information that is particular to a 'LarcosFeatureVector' object will be extracted
+      // If (underlying type is a 'GrayScaleImagesFV' object)  then
+      //   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted
       //   | from the 'FeatureVector' object being passed in.
       // else
-      //   | info that is particular to a 'LarcosFeatureVector' object will be set to
+      //   | info that is particular to a 'GrayScaleImagesFV' object will be set to
       //   | default values.
-      LarcosFeatureVectorPtr  example = new LarcosFeatureVector (*featureVector);
+      GrayScaleImagesFVPtr  example = new GrayScaleImagesFV (*featureVector);
       PushOnBack (example);
     }
   }
@@ -296,24 +296,24 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
   {
     // Since we will not own the contents but just point to existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
-    // underlying type of 'LarcosFeatureVector'.
+    // underlying type of 'GrayScaleImagesFV'.
     FeatureVectorList::const_iterator  idx;
     for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
     {
       FeatureVectorPtr featureVector = *idx;
-      //if  (strcmp (featureVector->UnderlyingClass (), "LarcosFeatureVector") == 0)
-      if  (typeid (*featureVector) == typeid (LarcosFeatureVector))
+      //if  (strcmp (featureVector->UnderlyingClass (), "GrayScaleImagesFV") == 0)
+      if  (typeid (*featureVector) == typeid (GrayScaleImagesFV))
       {
-        LarcosFeatureVectorPtr example = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        GrayScaleImagesFVPtr example = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
         PushOnBack (example);
       }
       else
       {
         // ****    ERROR  ****
         log.Level (-1) << endl << endl << endl
-             << "LarcosFeatureVectorList ::LarcosFeatureVectorList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
+             << "GrayScaleImagesFVList ::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
              << endl
-             << "One of the elements in 'featureVectorList' is not of 'LarcosFeatureVector'  type.  We can not  recast this element"
+             << "One of the elements in 'featureVectorList' is not of 'GrayScaleImagesFV'  type.  We can not  recast this element"
              << "FileName[" << featureVector->ExampleFileName () << "]"  << endl
              << endl;
         osWaitForEnter ();
@@ -327,7 +327,7 @@ LarcosFeatureVectorList::LarcosFeatureVectorList (const FeatureVectorList&  feat
 
 
 
-LarcosFeatureVectorList::~LarcosFeatureVectorList ()
+GrayScaleImagesFVList::~GrayScaleImagesFVList ()
 {
 }
 
@@ -337,28 +337,28 @@ LarcosFeatureVectorList::~LarcosFeatureVectorList ()
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::IdxToPtr (kkint32 idx)  const
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::IdxToPtr (kkint32 idx)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::IdxToPtr (idx);
+  return  (GrayScaleImagesFVPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
 
 
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::BackOfQueue ()
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::BackOfQueue ()
 {
   if  (size () < 1)
     return NULL;
 
   FeatureVectorPtr  fv = back ();
-  //if  (strcmp (fv->UnderlyingClass (), "LarcosFeatureVector") == 0)
-  if  (typeid (*fv) == typeid (LarcosFeatureVector))
-    return  dynamic_cast<LarcosFeatureVectorPtr> (fv);
+  //if  (strcmp (fv->UnderlyingClass (), "GrayScaleImagesFV") == 0)
+  if  (typeid (*fv) == typeid (GrayScaleImagesFV))
+    return  dynamic_cast<GrayScaleImagesFVPtr> (fv);
 
   
   log.Level (-1) << endl << endl 
-                 << "LarcosFeatureVectorList::BackOfQueue ()    ***ERROR***        Entry at back of Queue is not a 'LarcosFeatureVector' object." << endl
+                 << "GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry at back of Queue is not a 'GrayScaleImagesFV' object." << endl
                  << endl;
 
   return NULL;
@@ -367,21 +367,21 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::BackOfQueue ()
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::PopFromBack ()
 {
   if  (size () < 1)  return NULL;
 
   FeatureVectorPtr  fv = back ();
-  //if  (strcmp (fv->UnderlyingClass (), "LarcosFeatureVector") != 0)
-  if  (typeid (*fv) == typeid (LarcosFeatureVector))
+  //if  (strcmp (fv->UnderlyingClass (), "GrayScaleImagesFV") != 0)
+  if  (typeid (*fv) == typeid (GrayScaleImagesFV))
   {
     log.Level (-1)  << endl << endl 
-                    << "LarcosFeatureVectorList::BackOfQueue ()    ***ERROR***        Entry pooped from back of Queue is not a 'LarcosFeatureVector' object." << endl
+                    << "GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry pooped from back of Queue is not a 'GrayScaleImagesFV' object." << endl
                     << endl;
     return NULL;
   }
 
-  return  dynamic_cast<LarcosFeatureVectorPtr> (FeatureVectorList::PopFromBack ());
+  return  dynamic_cast<GrayScaleImagesFVPtr> (FeatureVectorList::PopFromBack ());
 }  /* PopFromBack */
 
 
@@ -389,7 +389,7 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::PopFromBack ()
 
 
 
-void  LarcosFeatureVectorList::AddQueue (LarcosFeatureVectorList&  imagesToAdd)
+void  GrayScaleImagesFVList::AddQueue (GrayScaleImagesFVList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
 }  /* AddQueue */
@@ -399,18 +399,18 @@ void  LarcosFeatureVectorList::AddQueue (LarcosFeatureVectorList&  imagesToAdd)
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
+  return  (GrayScaleImagesFVPtr)FeatureVectorList::BinarySearchByName (_imageFileName);
 }  /* BinarySearchByName */
 
 
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByRootName (const KKStr&  _rootName)
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::LookUpByRootName (_rootName);
+  return  (GrayScaleImagesFVPtr)FeatureVectorList::LookUpByRootName (_rootName);
 }  /* LookUpByRootName */
 
 
@@ -418,20 +418,20 @@ LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByRootName (const KKStr& 
 
 
 
-LarcosFeatureVectorPtr  LarcosFeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
+GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
-  return  (LarcosFeatureVectorPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
+  return  (GrayScaleImagesFVPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
 }  /* LookUpByImageFileName */
 
 
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName)
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const KKStr&  fileName)
 {
   FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName);
   examples->Owner (false);
-  LarcosFeatureVectorListPtr  orderedImages = new LarcosFeatureVectorList (*examples);
+  GrayScaleImagesFVListPtr  orderedImages = new GrayScaleImagesFVList (*examples);
   delete  examples;
   return  orderedImages;
 }  /* OrderUsingNamesFromAFile */
@@ -441,7 +441,7 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::OrderUsingNamesFromAFile (c
 
 
 
-void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
+void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
                                                    KKStr                 _dirName, 
                                                    KKStr                 _fileName, 
                                                    MLClassPtr            _mlClass
@@ -497,21 +497,21 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
     if  (!featureVector)
     {
       KKStr  msg (100);
-      msg << "LarcosFeatureVectorList::FeatureExtraction   ***ERROR***   Could not Allocate LarcosFeatureVector object" << endl
+      msg << "GrayScaleImagesFVList::FeatureExtraction   ***ERROR***   Could not Allocate GrayScaleImagesFV object" << endl
           << "for FileName[" << fullFileName << "].";
       cerr << endl << msg << endl << endl;
     }
     else
     {
-      LarcosFeatureVectorPtr  larcosFeatureVector = NULL;
-      if  (typeid(*featureVector) == typeid(LarcosFeatureVector))
+      GrayScaleImagesFVPtr  larcosFeatureVector = NULL;
+      if  (typeid(*featureVector) == typeid(GrayScaleImagesFV))
       {
-        larcosFeatureVector = dynamic_cast<LarcosFeatureVectorPtr>(featureVector);
+        larcosFeatureVector = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
         featureVector = NULL;
       }
       else
       {
-        larcosFeatureVector = new LarcosFeatureVector (*featureVector);
+        larcosFeatureVector = new GrayScaleImagesFV (*featureVector);
         delete  featureVector;
         featureVector = NULL;
       }
@@ -523,21 +523,22 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
     }
   }
 
+  Version (fvProducer->Version ());
+
   delete  fvProducer;  fvProducer = NULL;
 
-  Version (_LarcosFVProducer_VersionNum_);
 
   kkuint32  numExamplesWritten = 0;
 
   // WriteImageFeaturesToFile (fullFeatureFileName, RawFormat, FeatureNumList::AllFeatures (fileDesc));
-  FeatureFileIOKK::Driver ()->SaveFeatureFile (fullFeatureFileName, 
-                                               FeatureNumList::AllFeatures (FileDesc ()), 
-                                               *this, 
-                                               numExamplesWritten,
-                                               cancelFlag,
-                                               successful,
-                                               log
-                                              );
+  FeatureFileIOC45::Driver ()->SaveFeatureFile (fullFeatureFileName, 
+                                                FeatureNumList::AllFeatures (FileDesc ()), 
+                                                *this, 
+                                                numExamplesWritten,
+                                                cancelFlag,
+                                                successful,
+                                                log
+                                               );
   delete  fileNameList;
   fileNameList = NULL;
 }  /* FeatureExtraction */
@@ -551,14 +552,14 @@ void   LarcosFeatureVectorList::FeatureExtraction (FactoryFVProducerPtr  _fvProd
  * @brief  Creates a duplicate of list and also duplicates it contents.
  * @return Duplicated list with hard copy of its contents.
  */
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()  const
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::DuplicateListAndContents ()  const
 {
-  LarcosFeatureVectorListPtr  copyiedList = new LarcosFeatureVectorList (FileDesc (), true, log);
+  GrayScaleImagesFVListPtr  copyiedList = new GrayScaleImagesFVList (FileDesc (), true, log);
 
   for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
-    LarcosFeatureVectorPtr  curImage = (LarcosFeatureVectorPtr)IdxToPtr (idx);
-    copyiedList->PushOnBack (new LarcosFeatureVector (*curImage));
+    GrayScaleImagesFVPtr  curImage = (GrayScaleImagesFVPtr)IdxToPtr (idx);
+    copyiedList->PushOnBack (new GrayScaleImagesFV (*curImage));
   }
   
   copyiedList->Version (Version ());
@@ -571,7 +572,7 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::DuplicateListAndContents ()
 
 
 
-void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
+void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
                                                                        const KKStr&          rootDir,
                                                                        bool&                 successful
                                                                       )
@@ -599,7 +600,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
   KKStrConstPtr  dirPath = NULL;
 
   iterator  idx;
-  LarcosFeatureVectorPtr  example = NULL;
+  GrayScaleImagesFVPtr  example = NULL;
 
   for  (idx = begin ();   idx != end ();  idx++)
   {
@@ -620,7 +621,7 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
     if  (!validFile)
     {
       delete  raster;  raster = NULL;
-      log.Level (-1) << "LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree   ***ERROR***  Unable to load image: " << fullFileName << endl << endl;
+      log.Level (-1) << "GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree   ***ERROR***  Unable to load image: " << fullFileName << endl << endl;
     }
     else
     {
@@ -635,9 +636,9 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
         example->OrigSize (fv->OrigSize ());
         example->Version (fv->Version ());
 
-        if  (typeid(*fv) == typeid(LarcosFeatureVector))
+        if  (typeid(*fv) == typeid(GrayScaleImagesFV))
         {
-          LarcosFeatureVectorPtr  lfv = dynamic_cast<LarcosFeatureVectorPtr>(fv);
+          GrayScaleImagesFVPtr  lfv = dynamic_cast<GrayScaleImagesFVPtr>(fv);
           example->CentroidCol (lfv->CentroidCol ());
           example->CentroidRow (lfv->CentroidRow ());
           example->NumOfEdgePixels (lfv->NumOfEdgePixels ());
@@ -658,10 +659,10 @@ void  LarcosFeatureVectorList::RecalcFeatureValuesFromImagesInDirTree (FactoryFV
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImageFileName ()
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::ExtractDuplicatesByRootImageFileName ()
 {
   FeatureVectorListPtr  duplicateFeatureVectorObjects = FeatureVectorList::ExtractDuplicatesByRootImageFileName ();
-  LarcosFeatureVectorListPtr  duplicateImageFeaturesObjects = new LarcosFeatureVectorList (*duplicateFeatureVectorObjects);
+  GrayScaleImagesFVListPtr  duplicateImageFeaturesObjects = new GrayScaleImagesFVList (*duplicateFeatureVectorObjects);
   duplicateFeatureVectorObjects->Owner (false);
   delete  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
   return  duplicateImageFeaturesObjects;
@@ -672,13 +673,13 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::ExtractDuplicatesByRootImag
 
 
 
-LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
                                                                                    kkint32     _maxToExtract,
                                                                                    float       _minSize
                                                                                   )  const
 {
   FeatureVectorListPtr  featureVectorList = FeatureVectorList::ExtractImagesForAGivenClass (_mlClass, _maxToExtract, _minSize);
-  LarcosFeatureVectorListPtr  imageFeaturesList = new LarcosFeatureVectorList (*featureVectorList);
+  GrayScaleImagesFVListPtr  imageFeaturesList = new GrayScaleImagesFVList (*featureVectorList);
   featureVectorList->Owner (false);
   delete  featureVectorList;  featureVectorList = NULL;
   return  imageFeaturesList;
@@ -688,13 +689,13 @@ LarcosFeatureVectorListPtr   LarcosFeatureVectorList::ExtractImagesForAGivenClas
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                                               kkint32         maxImagesPerClass,
                                                                               kkint32         numOfFolds
                                                                              )
 {
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds);
-  LarcosFeatureVectorListPtr  stratifiedImagefeatures  = new LarcosFeatureVectorList (*stratifiedFeatureVectors);
+  GrayScaleImagesFVListPtr  stratifiedImagefeatures  = new GrayScaleImagesFVList (*stratifiedFeatureVectors);
   stratifiedFeatureVectors->Owner (false);
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
   return  stratifiedImagefeatures;
@@ -703,12 +704,12 @@ LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (ML
 
 
 
-LarcosFeatureVectorListPtr  LarcosFeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds)
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (kkint32  numOfFolds)
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
   FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (classes, -1, numOfFolds);
-  LarcosFeatureVectorListPtr  stratifiedImagefeatures  = new LarcosFeatureVectorList (*stratifiedFeatureVectors);
+  GrayScaleImagesFVListPtr  stratifiedImagefeatures  = new GrayScaleImagesFVList (*stratifiedFeatureVectors);
   
   stratifiedFeatureVectors->Owner (false);
 

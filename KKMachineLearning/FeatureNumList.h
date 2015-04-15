@@ -55,9 +55,11 @@ namespace KKMLL
   {
   public:
     typedef  FeatureNumList*  FeatureNumListPtr;
+    typedef  FeatureNumList  const  FeatureNumListConst;
+    typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 
     /** @brief  Copy constructor.  */
-    FeatureNumList (const FeatureNumList&  featureNumList);
+    FeatureNumList (FeatureNumListConst&  featureNumList);
 
     /*
      *@brief  Constructs an instance with no features selected and expecting a maximum of 'maxFeatureNum'.
@@ -112,8 +114,6 @@ namespace KKMLL
     kkint32          MaxFeatureNum  () const  {return maxFeatureNum;}
     kkint32          NumOfFeatures  () const  {return numOfFeatures;}
     kkint32          NumSelFeatures () const  {return numOfFeatures;}
-
-
 
 
     /** 
@@ -263,6 +263,8 @@ namespace KKMLL
 
 
   typedef  FeatureNumList*  FeatureNumListPtr;
+  typedef  FeatureNumList  const  FeatureNumListConst;
+  typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 
   #define  _FeatureNumList_Defined_
 

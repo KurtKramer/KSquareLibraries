@@ -37,6 +37,8 @@ namespace KKMLL
   #ifndef  _FeatureNumListDefined_
   class  FeatureNumList;
   typedef  FeatureNumList*  FeatureNumListPtr;
+  typedef  FeatureNumList const  FeatureNumListConst;
+  typedef  FeatureNumListConst*  FeatureNumListConstPtr;
   #endif
 
 
@@ -162,7 +164,7 @@ namespace KKMLL
 
     const FeatureEncoder2&            Encoder                    () const;
 
-    virtual FeatureNumListPtr         GetFeatureNums             () const;
+    virtual FeatureNumListConstPtr    GetFeatureNums             () const;
 
     virtual kkint32                   MemoryConsumedEstimated    () const;
 
@@ -177,7 +179,7 @@ namespace KKMLL
 
     ModelParamPtr                     Param                      () const  {return  param;}
 
-    virtual FeatureNumListPtr         SelectedFeatures           () const;
+    virtual FeatureNumListConstPtr    SelectedFeatures           () const;
 
     const KKStr&                      RootFileName               () const {return rootFileName;}
 

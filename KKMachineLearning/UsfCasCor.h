@@ -299,14 +299,14 @@ namespace KKMLL
     kkint32  MemoryConsumedEstimated ()  const;
 
 
-    void  TrainNewClassifier (kkint32                _in_limit,
-                              kkint32                _out_limit,
-                              kkint32                _number_of_rounds,
-                              kkint32                _number_of_trials,
-                              kkint64                _the_random_seed,
-                              bool                   _useCache,
-                              FeatureVectorListPtr   _trainData,
-                              const FeatureNumList&  _selectedFeatures
+    void  TrainNewClassifier (kkint32                 _in_limit,
+                              kkint32                 _out_limit,
+                              kkint32                 _number_of_rounds,
+                              kkint32                 _number_of_trials,
+                              kkint64                 _the_random_seed,
+                              bool                    _useCache,
+                              FeatureVectorListPtr    _trainData,
+                              FeatureNumListConstPtr  _selectedFeatures
                              );
 
     void  LoadExistingClassifier (istream&  i,
@@ -463,8 +463,8 @@ namespace KKMLL
     //******************************************************************************************
     //*                                   load_namesfile.c                                     *
     //******************************************************************************************
-    void  load_namesfile (FeatureVectorListPtr  trainExamples,
-                          FeatureNumListPtr     selectedFeatures
+    void  load_namesfile (FeatureVectorListPtr    trainExamples,
+                          FeatureNumListConstPtr  selectedFeatures
                          );
 
 

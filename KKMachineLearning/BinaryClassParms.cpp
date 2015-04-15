@@ -21,11 +21,11 @@ using namespace KKMLL;
 using namespace  SVM233;
 
 
-BinaryClassParms::BinaryClassParms (MLClassPtr            _class1,
-                                    MLClassPtr            _class2,
-                                    const svm_parameter&  _param,
-                                    FeatureNumListPtr     _selectedFeatures,
-                                    float                 _weight
+BinaryClassParms::BinaryClassParms (MLClassPtr               _class1,
+                                    MLClassPtr               _class2,
+                                    const svm_parameter&     _param,
+                                    FeatureNumListConstPtr   _selectedFeatures,
+                                    float                    _weight
                                    ):
     class1           (_class1),
     class2           (_class2),
@@ -73,7 +73,7 @@ void  BinaryClassParms::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 }
 
 
-void  BinaryClassParms::SelectedFeatures (FeatureNumListPtr  _selectedFeatures)
+void  BinaryClassParms::SelectedFeatures (FeatureNumListConstPtr  _selectedFeatures)
 {
    delete selectedFeatures;
    selectedFeatures = new FeatureNumList (*_selectedFeatures);
@@ -102,7 +102,7 @@ KKStr   BinaryClassParms::Class2Name ()  const
 }  /* Class2Name */
 
 
-FeatureNumListPtr  BinaryClassParms::SelectedFeaturesFD (FileDescPtr fileDesc) const
+FeatureNumListConstPtr  BinaryClassParms::SelectedFeaturesFD (FileDescPtr fileDesc) const
 {
   if  (!selectedFeatures)
     selectedFeatures = new FeatureNumList (fileDesc);

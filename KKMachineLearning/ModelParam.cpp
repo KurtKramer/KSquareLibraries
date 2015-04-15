@@ -105,7 +105,7 @@ float   ModelParam::AvgMumOfFeatures () const
   
 
 
-void  ModelParam::SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   
+void  ModelParam::SelectedFeatures   (FeatureNumListConst&  _selectedFeatures)   
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (_selectedFeatures);

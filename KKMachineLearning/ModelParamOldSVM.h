@@ -60,11 +60,11 @@ namespace KKMLL
 
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
-    void    AddBinaryClassParms (MLClassPtr            class1,
-                                 MLClassPtr            class2,
-                                 const svm_parameter&  _param,
-                                 FeatureNumListPtr     _selectedFeatures,
-                                 float                 _weight
+    void    AddBinaryClassParms (MLClassPtr              class1,
+                                 MLClassPtr              class2,
+                                 const svm_parameter&    _param,
+                                 FeatureNumListConstPtr  _selectedFeatures,
+                                 float                   _weight
                                 );
 
     virtual  float   AvgMumOfFeatures (FileDescPtr  fileDesc);
@@ -83,10 +83,10 @@ namespace KKMLL
                                                           MLClassPtr  class2
                                                          );
 
-    FeatureNumListPtr  GetFeatureNums (FileDescPtr  fileDesc,
-                                       MLClassPtr   class1,
-                                       MLClassPtr   class2
-                                      )  const;
+    FeatureNumListConstPtr  GetFeatureNums (FileDescPtr  fileDesc,
+                                            MLClassPtr   class1,
+                                            MLClassPtr   class2
+                                           )  const;
 
 
     // Member access methods
@@ -105,7 +105,7 @@ namespace KKMLL
     virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
     virtual const svm_parameter&     Param                      () const;
     virtual float                    SamplingRate               () const;
-    virtual const FeatureNumListPtr  SelectedFeatures           () const;
+    virtual FeatureNumListConstPtr   SelectedFeatures           () const;
     virtual SVM_SelectionMethod      SelectionMethod            () const;
     virtual SVMparamPtr              SvmParameters              () const;
     virtual bool                     UseProbabilityToBreakTies  () const;
@@ -131,17 +131,17 @@ namespace KKMLL
     virtual void  SelectionMethod    (SVM_SelectionMethod   _selectionMethod);
 
 
-    void  SetBinaryClassFields (MLClassPtr            class1,
-                                MLClassPtr            class2,
-                                const svm_parameter&  _param,
-                                FeatureNumListPtr     _features,
-                                float                 _weight
+    void  SetBinaryClassFields (MLClassPtr               class1,
+                                MLClassPtr               class2,
+                                const svm_parameter&     _param,
+                                FeatureNumListConstPtr   _features,
+                                float                    _weight
                                );
 
-    void  SetFeatureNums    (MLClassPtr         class1,
-                             MLClassPtr         class2,
-                             FeatureNumListPtr  _features,
-                             float              _weight = -1  /**< -1 Indicates use existing value. */
+    void  SetFeatureNums    (MLClassPtr              class1,
+                             MLClassPtr              class2,
+                             FeatureNumListConstPtr  _features,
+                             float                   _weight = -1  /**< -1 Indicates use existing value. */
                             );
 
     void  ParseCmdLine (KKStr   _cmdLineStr,
