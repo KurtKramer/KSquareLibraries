@@ -49,6 +49,8 @@ namespace KKMLL
   #if  !defined(_TrainingConfiguration2_Defined_)
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
+  typedef  TrainingConfiguration2  const  TrainingConfiguration2Const;
+  typedef  TrainingConfiguration2Const*  TrainingConfiguration2ConstPtr;
   #endif
 
   class  TrainingProcess2List;
@@ -82,8 +84,6 @@ namespace KKMLL
      *                          is not equal to NULL then will not save the Training model.  Will
      *                          NOT take ownership of list or its contents.  Caller still owns it.
      *
-     *@param[in]  _fvFactoryProducer  
-     *
      *@param[in,out]  _log   Logging file.
      *
      *@param[in] _report  if not set to NULL will write statistics of the training process to stream.
@@ -103,15 +103,14 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (TrainingConfiguration2Ptr _config,
-                      FeatureVectorListPtr      _excludeList,
-                      FactoryFVProducerPtr      _fvFactoryProducer,
-                      RunLog&                   _log,
-                      ostream*                  _report,
-                      bool                      _forceRebuild,
-                      bool                      _checkForDuplicates,
-                      VolConstBool&             _cancelFlag,
-                      KKStr&                    _statusMessage
+    TrainingProcess2 (TrainingConfiguration2 const*  _config,
+                      FeatureVectorListPtr           _excludeList,
+                      RunLog&                        _log,
+                      ostream*                       _report,
+                      bool                           _forceRebuild,
+                      bool                           _checkForDuplicates,
+                      VolConstBool&                  _cancelFlag,
+                      KKStr&                         _statusMessage
                      );
 
 
@@ -132,8 +131,6 @@ namespace KKMLL
      *                          is not equal to NULL then will not save the Training model.  Will
      *                          NOT take ownership of list or its contents.  Caller still owns it.
      *
-     *@param[in]  _fvFactoryProducer  
-     *
      *@param[in,out]  _log   Logging file.
      *
      *@param[in] _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
@@ -146,13 +143,12 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (TrainingConfiguration2Ptr  _config,
-                      FeatureVectorListPtr       _excludeList,
-                      FactoryFVProducerPtr       _fvFactoryProducer,
-                      RunLog&                    _log,
-                      kkuint32                   _level,
-                      VolConstBool&              _cancelFlag, 
-                      KKStr&                     _statusMessage
+    TrainingProcess2 (TrainingConfiguration2 const *  _config,
+                      FeatureVectorListPtr            _excludeList,
+                      RunLog&                         _log,
+                      kkuint32                        _level,
+                      VolConstBool&                   _cancelFlag, 
+                      KKStr&                          _statusMessage
                      );
 
    
@@ -167,8 +163,6 @@ namespace KKMLL
      *                             specified.  The directories where example images for each class
      *                             will be specified.
      *
-     *@param[in]  _fvFactoryProducer  
-     *
      *@param[in,out]  _log   Logging file.
      *
      *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
@@ -180,12 +174,11 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (const KKStr&         _configFileName,
-                      FactoryFVProducerPtr _fvFactoryProducer,
-                      RunLog&              _log,
-                      bool                 _featuresAlreadyNormalized,
-                      VolConstBool&        _cancelFlag,
-                      KKStr&               _statusMessage
+    TrainingProcess2 (const KKStr&   _configFileName,
+                      RunLog&        _log,
+                      bool           _featuresAlreadyNormalized,
+                      VolConstBool&  _cancelFlag,
+                      KKStr&         _statusMessage
                      );
 
 
@@ -208,12 +201,11 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (istream&             _in,
-                      FactoryFVProducerPtr _fvFactoryProducer,
-                      RunLog&              _log,
-                      bool                 _featuresAlreadyNormalized,
-                      VolConstBool&        _cancelFlag,
-                      KKStr&               _statusMessage
+    TrainingProcess2 (istream&       _in,
+                      RunLog&        _log,
+                      bool           _featuresAlreadyNormalized,
+                      VolConstBool&  _cancelFlag,
+                      KKStr&         _statusMessage
                      );
 
 
@@ -233,14 +225,13 @@ namespace KKMLL
      *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
      *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (TrainingConfiguration2Ptr  _config, 
-                      FeatureVectorListPtr       _trainingExamples,
-                      std::ostream*              _reportFile,
-                      FactoryFVProducerPtr       _fvFactoryProducer,
-                      RunLog&                    _log,
-                      bool                       _featuresAlreadyNormalized,
-                      VolConstBool&              _cancelFlag,
-                      KKStr&                     _statusMessage
+    TrainingProcess2 (TrainingConfiguration2 const *  _config, 
+                      FeatureVectorListPtr            _trainingExamples,
+                      std::ostream*                   _reportFile,
+                      RunLog&                         _log,
+                      bool                            _featuresAlreadyNormalized,
+                      VolConstBool&                   _cancelFlag,
+                      KKStr&                          _statusMessage
                      );
 
     virtual
@@ -373,7 +364,10 @@ namespace KKMLL
     VolConstBool&                cancelFlag;  /**< A calling application can set this to true Training Process will monitor this Flag, if true will terminate. */
 
 
-    TrainingConfiguration2Ptr    config;
+    TrainingConfiguration2Const* config;
+    TrainingConfiguration2*      configOurs;  /**< If we own the instance of 'config' we assign to this member as well as 'config'; the 
+                                               * destructor will delete  'configOurs'  
+                                               */
 
     KKStr                        configFileName;           /**< The directory path where this file is actually located will be added to this name. */
 
@@ -415,7 +409,6 @@ namespace KKMLL
                                                      */
 
     TrainingProcess2ListPtr      subTrainingProcesses;
-    bool                         weOwnConfig;
     bool                         weOwnMLClasses;
     bool                         weOwnTrainingExamples;
   };  /* TrainingProcess2 */

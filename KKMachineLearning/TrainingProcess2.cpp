@@ -46,20 +46,20 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
-                                    FeatureVectorListPtr       _excludeList,
-                                    FactoryFVProducerPtr       _fvFactoryProducer,
-                                    RunLog&                    _log,
-                                    ostream*                   _report,
-                                    bool                       _forceRebuild,
-                                    bool                       _checkForDuplicates,
-                                    VolConstBool&              _cancelFlag,
-                                    KKStr&                     _statusMessage
+TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
+                                    FeatureVectorListPtr          _excludeList,
+                                    RunLog&                       _log,
+                                    ostream*                      _report,
+                                    bool                          _forceRebuild,
+                                    bool                          _checkForDuplicates,
+                                    VolConstBool&                 _cancelFlag,
+                                    KKStr&                        _statusMessage
                                    ):
   abort                     (false),
   buildDateTime             (DateTime (1900, 1, 1, 0, 0, 0)),
   cancelFlag                (_cancelFlag),
   config                    (_config),
+  configOurs                (NULL),
   configFileName            (""),
   configFileNameSpecified   (""),
   duplicateCount            (0),
@@ -67,7 +67,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
   fileDesc                  (NULL),
-  fvFactoryProducer         (_fvFactoryProducer),
+  fvFactoryProducer         (NULL),
   mlClasses                 (NULL),
   log                       (_log),
   model                     (NULL),
@@ -84,6 +84,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
 {
   log.Level (10) << "TrainingProcess2::TrainingProcess2   9 Parameters." << endl;
 
+  fvFactoryProducer = config->FvFactoryProducer ();
   fileDesc = fvFactoryProducer->FileDesc ();
 
   configFileName          = config->FileName ();
@@ -313,27 +314,27 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
 //*   Will build a new model from scratch for the specified class level. Will also remove *
 //*   duplicates.                                                                         *
 //*****************************************************************************************
-TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
-                                    FeatureVectorListPtr       _excludeList,
-                                    FactoryFVProducerPtr       _fvFactoryProducer,
-                                    RunLog&                    _log,
-                                    kkuint32                   _level,
-                                    VolConstBool&              _cancelFlag,
-                                    KKStr&                     _statusMessage
+TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
+                                    FeatureVectorListPtr          _excludeList,
+                                    RunLog&                       _log,
+                                    kkuint32                      _level,
+                                    VolConstBool&                 _cancelFlag,
+                                    KKStr&                        _statusMessage
                                    ):
 
   abort                     (false),
   buildDateTime             (DateTime (1900,1,1,0, 0, 0)),
   cancelFlag                (_cancelFlag),
   config                    (_config),
+  configOurs                (NULL),
   configFileName            (""),
   configFileNameSpecified   (""),
   duplicateCount            (0),
   duplicateDataCount        (0),
   excludeList               (_excludeList),
   featuresAlreadyNormalized (false),
-  fvFactoryProducer         (_fvFactoryProducer),
   fileDesc                  (NULL),
+  fvFactoryProducer         (NULL),
   mlClasses                 (NULL),
   log                       (_log),
   model                     (NULL),
@@ -343,7 +344,6 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
   statusMessage             (_statusMessage),
   subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnConfig               (false),
   weOwnTrainingExamples     (true),
   weOwnMLClasses            (true)
 {
@@ -355,6 +355,8 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
     Abort (true);
     return;
   }
+
+  fvFactoryProducer = config->FvFactoryProducer ();
 
   if  ((!config->FormatGood ()))
   {
@@ -429,7 +431,6 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr  _config,
 
 
 TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
-                                    FactoryFVProducerPtr _fvFactoryProducer,
                                     RunLog&              _log,
                                     bool                 _featuresAlreadyNormalized,
                                     VolConstBool&        _cancelFlag,
@@ -447,7 +448,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   excludeList               (NULL),
   featuresAlreadyNormalized (_featuresAlreadyNormalized),
   fileDesc                  (NULL),
-  fvFactoryProducer         (_fvFactoryProducer),
+  fvFactoryProducer         (NULL),
   mlClasses                 (new MLClassList ()),
   log                       (_log),
   model                     (NULL),
@@ -496,6 +497,8 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
   in.close ();
 
+  fvFactoryProducer = config->FvFactoryProducer ();
+
   log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parms)   Exiting." << endl;
 
   statusMessage = "All Done";
@@ -507,7 +510,6 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
 
 TrainingProcess2::TrainingProcess2 (istream&             _in,
-                                    FactoryFVProducerPtr _fvFactoryProducer,
                                     RunLog&              _log,
                                     bool                 _featuresAlreadyNormalized,
                                     VolConstBool&        _cancelFlag,
@@ -524,7 +526,7 @@ TrainingProcess2::TrainingProcess2 (istream&             _in,
   duplicateDataCount        (0),
   excludeList               (NULL),
   featuresAlreadyNormalized (_featuresAlreadyNormalized),
-  fvFactoryProducer         (_fvFactoryProducer),
+  fvFactoryProducer         (NULL),
   fileDesc                  (NULL),
   mlClasses                 (new MLClassList ()),
   log                       (_log),
@@ -557,6 +559,9 @@ TrainingProcess2::TrainingProcess2 (istream&             _in,
     Abort (true);
   }
 
+  if  (config)
+    fvFactoryProducer = config->FvFactoryProducer ();
+
   log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parms)   Exiting." << endl;
 
   statusMessage = "All Done";
@@ -570,7 +575,6 @@ TrainingProcess2::TrainingProcess2 (istream&             _in,
 TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config, 
                                     FeatureVectorListPtr      _trainingExamples,
                                     ostream*                  _report,
-                                    FactoryFVProducerPtr      _fvFactoryProducer,
                                     RunLog&                   _log,
                                     bool                      _featuresAlreadyNormalized,
                                     VolConstBool&             _cancelFlag,
@@ -589,7 +593,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     excludeList               (NULL),
     featuresAlreadyNormalized (_featuresAlreadyNormalized),
     fileDesc                  (NULL),
-    fvFactoryProducer         (_fvFactoryProducer),
+    fvFactoryProducer         (NULL),
     mlClasses                 (NULL),
     log                       (_log),
     model                     (NULL),
@@ -605,6 +609,8 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
 
 {
   log.Level (20) << "TrainingProcess2::TrainingProcess2" << endl;
+
+  fvFactoryProducer = _config->FvFactoryProducer ();
 
   fileDesc = fvFactoryProducer->FileDesc ();
 
@@ -1467,7 +1473,6 @@ void  TrainingProcess2::LoadSubClassifiers (bool  forceRebuild,
     TrainingConfiguration2Ptr  subClassifier = *idx;
     TrainingProcess2Ptr  tp = new TrainingProcess2 (subClassifier, 
                                                     NULL,     // ExcludeList
-                                                    fvFactoryProducer,
                                                     log,
                                                     NULL,     // reportFile
                                                     forceRebuild,

@@ -234,15 +234,15 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
 
 
 
-void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
-                                      const KKStr&           _fileName,
-                                      const FeatureNumList&  _selFeatures,
-                                      ostream&               _out,
-                                      kkuint32&              _numExamplesWritten,
-                                      VolConstBool&          _cancelFlag,
-                                      bool&                  _successful,
-                                      KKStr&                 _errorMessage,
-                                      RunLog&                _log
+void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
+                                      const KKStr&          _fileName,
+                                      FeatureNumListConst&  _selFeatures,
+                                      ostream&              _out,
+                                      kkuint32&             _numExamplesWritten,
+                                      VolConstBool&         _cancelFlag,
+                                      bool&                 _successful,
+                                      KKStr&                _errorMessage,
+                                      RunLog&               _log
                                      )
 {
   _log.Level (20) << "FeatureFileIOColumn::SaveFile     FileName[" << _fileName << "]." << endl;
@@ -265,18 +265,20 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
     _out << endl;
   }
 
-  kkint32  featureNum = 0;
-  for  (featureNum = 0;  featureNum < (kkint32)fileDesc->NumOfFields ();  featureNum++)
+  kkuint16  idx = 0;
+  for  (idx = 0;  idx < _selFeatures.NumSelFeatures ();  ++idx)
   {
-    kkint32  lineNum = 0;
-
-    while  (lineNum < _data.QueueSize ())
+    kkuint16  featureNum = _selFeatures[idx];
     {
-      if  (lineNum > 0)
-        _out << " ";
-      _out << _data[lineNum].FeatureData (featureNum);
+      FeatureVectorList::const_iterator  idx2 = _data.begin ();
+      ++idx2;
+      _out  << (*idx2)->FeatureData (featureNum);
+      while  (idx2 != _data.end ())
+      {
+        _out  << "\t" << (*idx2)->FeatureData (featureNum);
+        ++idx2;
+      }
     }
-
     _out << endl;
 
     _numExamplesWritten = (kkuint32)((double)(_data.QueueSize ()) * ((double)featureNum / (double)(fileDesc->NumOfFields ())));

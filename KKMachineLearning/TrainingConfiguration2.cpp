@@ -202,7 +202,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   validateDirectories     (false)
 {
   if  (!fvFactoryProducer)
-    fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&_log);
+    fvFactoryProducer =  DefaultFeatureVectorProducer (_log);
   fileDesc = fvFactoryProducer->FileDesc ();
 
   if  (_mlClasses)
@@ -366,7 +366,6 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   case  ModelParam::mptSvmBase:     modelingMethod =   Model::mtSvmBase;    break;
   case  ModelParam::mptUsfCasCor:   modelingMethod =   Model::mtUsfCasCor;  break;
   }
-
 }
   
   
@@ -374,27 +373,27 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   
 TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  tc):
   Configuration (tc),
-  configFileNameSpecified  (tc.configFileNameSpecified),
-  configRootName           (tc.configRootName),
-  fileDesc                 (tc.fileDesc),
-  fvFactoryProducer        (tc.fvFactoryProducer),
-  mlClasses                (NULL),
-  mlClassesWeOwnIt         (false),
-  log                      (tc.log),
-  modelingMethod           (tc.modelingMethod),
-  examplesPerClass         (tc.examplesPerClass),
-  modelParameters          (NULL),
-  noiseGuaranteedSize      (tc.noiseGuaranteedSize),
-  noiseMLClass             (tc.noiseMLClass),
-  noiseTrainingClass       (tc.noiseTrainingClass),
-  normalizationParms       (NULL),
-  otherClass               (tc.otherClass),
-  otherClassLineNum        (tc.otherClassLineNum),
-  rootDir                  (tc.rootDir),
-  rootDirExpanded          (tc.rootDirExpanded),
-  subClassifiers           (NULL),
-  trainingClasses          (tc.rootDir, true),
-  validateDirectories      (tc.validateDirectories)
+  configFileNameSpecified (tc.configFileNameSpecified),
+  configRootName          (tc.configRootName),
+  fileDesc                (tc.fileDesc),
+  fvFactoryProducer       (tc.fvFactoryProducer),
+  mlClasses               (NULL),
+  mlClassesWeOwnIt        (false),
+  log                     (tc.log),
+  modelingMethod          (tc.modelingMethod),
+  examplesPerClass        (tc.examplesPerClass),
+  modelParameters         (NULL),
+  noiseGuaranteedSize     (tc.noiseGuaranteedSize),
+  noiseMLClass            (tc.noiseMLClass),
+  noiseTrainingClass      (tc.noiseTrainingClass),
+  normalizationParms      (NULL),
+  otherClass              (tc.otherClass),
+  otherClassLineNum       (tc.otherClassLineNum),
+  rootDir                 (tc.rootDir),
+  rootDirExpanded         (tc.rootDirExpanded),
+  subClassifiers          (NULL),
+  trainingClasses         (tc.rootDir, true),
+  validateDirectories     (tc.validateDirectories)
 {
   {
     kkint32  x;
@@ -449,6 +448,15 @@ TrainingConfiguration2::~TrainingConfiguration2 ()
   delete  subClassifiers;
   subClassifiers = NULL;
 }
+
+
+
+
+FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunLog&  runLog)
+{
+  return  GrayScaleImagesFVProducerFactory::Factory (&runLog);
+}
+
 
 
 
@@ -1669,7 +1677,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     if  (!fvFactoryProducer)
     {
       log.Level (-1) << "No Feature-Computer Specified;  defaulting to 'GrayScaleImages'." << endl;
-      fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+      fvFactoryProducer = DefaultFeatureVectorProducer (log);
     }
   }
   else
@@ -1677,7 +1685,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     KKStr  defaultName = "None";
     if  (!fvFactoryProducer)
     {
-      fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+      fvFactoryProducer = DefaultFeatureVectorProducer (log);
       defaultName = fvFactoryProducer->Name ();
     }
     FactoryFVProducerPtr  factorySpecified = FactoryFVProducer::LookUpFactory (fvFactoryProducerName);

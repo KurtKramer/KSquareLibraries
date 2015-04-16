@@ -87,7 +87,7 @@ FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&       _fileName,
 
 void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
                                     const KKStr&          _fileName,
-                                    const FeatureNumList& _selFeatures,
+                                    FeatureNumListConst&  _selFeatures,
                                     ostream&              _out,
                                     kkuint32&             _numExamplesWritten,
                                     VolConstBool&         _cancelFlag,

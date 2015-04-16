@@ -64,15 +64,15 @@ FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileName,
-                                                      const FileDescPtr  _fileDesc,
-                                                      MLClassList&       _classes, 
-                                                      istream&           _in,
-                                                      kkint32            _maxCount,    // Maximum # images to load.
-                                                      VolConstBool&      _cancelFlag,
-                                                      bool&              _changesMade,
-                                                      KKStr&             _errorMessage,
-                                                      RunLog&            _log
+FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileName,
+                                                      const FileDescPtr _fileDesc,
+                                                      MLClassList&      _classes, 
+                                                      istream&          _in,
+                                                      kkint32           _maxCount,    // Maximum # images to load.
+                                                      VolConstBool&     _cancelFlag,
+                                                      bool&             _changesMade,
+                                                      KKStr&            _errorMessage,
+                                                      RunLog&           _log
                                                      )
 {
   _log.Level (10) << endl << endl 
@@ -85,15 +85,15 @@ FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileNa
 
 
 
-void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
-                                       const KKStr&           _fileName,
-                                       const FeatureNumList&  _selFeatures,
-                                       ostream&               _out,
-                                       kkuint32&              _numExamplesWritten,
-                                       VolConstBool&          _cancelFlag,
-                                       bool&                  _successful,
-                                       KKStr&                 _errorMessage,
-                                       RunLog&                _log
+void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
+                                       const KKStr&          _fileName,
+                                       FeatureNumListConst&  _selFeatures,
+                                       ostream&              _out,
+                                       kkuint32&             _numExamplesWritten,
+                                       VolConstBool&         _cancelFlag,
+                                       bool&                 _successful,
+                                       KKStr&                _errorMessage,
+                                       RunLog&               _log
                                       )
 {
   _log.Level (20) << "FeatureFileIORoberts::SaveFile    FileName[" << _fileName << "]" << endl;

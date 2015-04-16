@@ -61,13 +61,13 @@ namespace KKMLL
     bool  CanWrite ()  {return  canWrite;}
 
 
-    void   AppendToFile (const KKStr&           _fileName,
-                         const FeatureNumList&  _selFeatures,
-                         FeatureVectorList&     _examples,
-                         kkuint32&              _numExamplesWritten,
-                         VolConstBool&          _cancelFlag,
-                         bool&                  _successful,
-                         RunLog&                log
+    void   AppendToFile (const KKStr&          _fileName,
+                         FeatureNumListConst&  _selFeatures,
+                         FeatureVectorList&    _examples,
+                         kkuint32&             _numExamplesWritten,
+                         VolConstBool&         _cancelFlag,
+                         bool&                 _successful,
+                         RunLog&               log
                         );
 
 
@@ -106,7 +106,7 @@ namespace KKMLL
      */
     virtual
       void  SaveFeatureFile (const KKStr&           _fileName, 
-                             const FeatureNumList&  _selFeatures,
+                             FeatureNumListConst&  _selFeatures,
                              FeatureVectorList&     _examples,
                              kkuint32&              _numExamplesWritten,  /**< caller will be able to monitor this variable. */
                              VolConstBool&          _cancelFlag,
@@ -129,12 +129,12 @@ namespace KKMLL
      *@param[out] _successful False will be returned if the save failed.
      *@param[in]  _log log file to send messages to.
      */
-    void  SaveFeatureFileMultipleParts (const KKStr&           _fileName, 
-                                        const FeatureNumList&  _selFeatures,
-                                        FeatureVectorList&     _examples,
-                                        VolConstBool&          _cancelFlag,
-                                        bool&                  _successful,
-                                        RunLog&                _log
+    void  SaveFeatureFileMultipleParts (const KKStr&          _fileName, 
+                                        FeatureNumListConst&  _selFeatures,
+                                        FeatureVectorList&    _examples,
+                                        VolConstBool&         _cancelFlag,
+                                        bool&                 _successful,
+                                        RunLog&               _log
                                        );
 
 
@@ -268,17 +268,16 @@ namespace KKMLL
      *@param[out] _errorMessage If the save fails (_successful == false)  then a description of the error will be placed here.
      *@param[in]  _log log file to send messages to.
      */
-    virtual  void   SaveFile (FeatureVectorList&      _data,
-                              const KKStr&            _fileName,
-                              const FeatureNumList&   _selFeatures,
-                              std::ostream&           _out,
-                              kkuint32&               _numExamplesWritten,
-                              VolConstBool&           _cancelFlag,
-                              bool&                   _successful,
-                              KKStr&                  _errorMessage,
-                              RunLog&                 _log
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              std::ostream&         _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
+                              bool&                 _successful,
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              ) = 0;
-
 
 
     const  KKStr&   DriverName ()  {return  driverName;}
@@ -341,13 +340,16 @@ namespace KKMLL
                     bool&          _eof
                    );
 
+protected:
+  static void  RegisterDriver (FeatureFileIOPtr  driver);
+
+
   private:
     bool    canRead;
     bool    canWrite;
     KKStr   driverName;
     KKStr   driverNameLower;
 
-    static void  RegisterDriver (FeatureFileIOPtr  driver);
     static void  RegisterAllDrivers ();
     static GoalKeeperPtr  featureFileIOGoalKeeper;
 

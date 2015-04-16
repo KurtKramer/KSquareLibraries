@@ -258,7 +258,6 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   trainer1 = new TrainingProcess2 (config1, 
                                    trainExamples, 
                                    NULL,              /**< _reportFile  */
-                                   NULL,              /**< fvFactoryProducer  */
                                    log,
                                    true,              /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
@@ -299,7 +298,6 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   trainer2 = new TrainingProcess2 (config2, 
                                    trainExamples, 
                                    NULL,             // _reportFile,
-                                   NULL,             /**< fvFactoryProducer  */
                                    log,
                                    true,             /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
@@ -906,7 +904,6 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
       delete  trainer1;     trainer1    = NULL;
 
       trainer1 = new TrainingProcess2 (i,
-                                       NULL,       /**< fvFactoryProducer  */
                                        log,
                                        true,       /**<  'true' = Feature data already normalized. */
                                        cancelFlag, 
@@ -937,7 +934,6 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
       delete  trainer2;     trainer2    = NULL;
 
       trainer2 = new TrainingProcess2 (i,
-                                       NULL,    /**< fvFactoryProducer  */
                                        log,
                                        true,    /**< 'true' = Feature data already normalized.  */
                                        cancelFlag, 

@@ -26,6 +26,7 @@ namespace KKMLL
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif
 
+
   #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
@@ -36,6 +37,13 @@ namespace KKMLL
   class  NormalizationParms;
   typedef  NormalizationParms*  NormalizationParmsPtr;
   #endif
+
+
+  #if !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
 
   class  TrainingConfiguration2List;
   typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
@@ -48,7 +56,8 @@ namespace KKMLL
       
 
     typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
-
+    typedef  TrainingConfiguration2  const  TrainingConfiguration2Const;
+    typedef  TrainingConfiguration2Const*  TrainingConfiguration2ConstPtr;
 
     TrainingConfiguration2 (const KKStr&  _configFileName,
                             bool          _validateDirectories,
@@ -110,6 +119,10 @@ namespace KKMLL
      ~TrainingConfiguration2 ();
 
 
+     virtual
+     FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog);
+
+
     /**
      *@brief  Will create a instance using a sub-directory tree to drive the TraningClassList.
      *@details for each unique sub-directory entry below it that contains 'bmp' files a TrainingClass' 
@@ -163,7 +176,7 @@ namespace KKMLL
     SVM_EncodingMethod     EncodingMethod          () const;
     kkint32                ExamplesPerClass        () const;
     FileDescPtr            FileDesc                () const  {return  fileDesc;}
-    FactoryFVProducerPtr   FvFactoryProducer       () const  {return fvFactoryProducer;}
+    FactoryFVProducerPtr   FvFactoryProducer       () const  {return  fvFactoryProducer;}
     double                 Gamma                   () const;
     kkint32                ImagesPerClass          () const  {return  ExamplesPerClass ();};
     SVM_KernalType         KernalType              () const;
@@ -307,13 +320,12 @@ namespace KKMLL
     static  KKStr          GetEffectiveConfigFileName (const  KKStr&  configFileName);
 
 
-  private:
-
+  protected:
     void                   BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
                                                                          bool&         _successful,
                                                                          KKStr&        _errorMessage
                                                                         );
-
+  private:
     void                   BuildTrainingClassListFromDirectoryEntry (const KKStr&  rootDir,
                                                                      const KKStr&  subDir,
                                                                      bool&         successful,
@@ -429,7 +441,9 @@ namespace KKMLL
 
   #define  _TrainingConfiguration2_Defined_
 
-  typedef  TrainingConfiguration2::TrainingConfiguration2Ptr  TrainingConfiguration2Ptr;
+  typedef  TrainingConfiguration2::TrainingConfiguration2Ptr       TrainingConfiguration2Ptr;
+  typedef  TrainingConfiguration2::TrainingConfiguration2Const     TrainingConfiguration2Const;
+  typedef  TrainingConfiguration2::TrainingConfiguration2ConstPtr  TrainingConfiguration2ConstPtr;
 
 
   KKStr&  operator<< (KKStr&                               left,
