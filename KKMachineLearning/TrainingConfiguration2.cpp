@@ -1633,6 +1633,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
   kkint32  methodLineNum  = 0;
   kkint32  rootDirLineNum = 0;
   kkint32  sectionLineNum = SectionLineNum (sectionNum);
+  kkint32  fvFactoryLineNum = 0;
 
   KKStr  modelingMethodStr  (SettingValue (sectionNum, "MODELING_METHOD", methodLineNum));
   modelingMethodStr.Upper ();
@@ -1654,12 +1655,42 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
   if  (modelingMethod == Model::mtNULL)
   {
     // We have a invalid Modeling Method Parameter.
-    KKStr  errMsg = "Invalid Modeling Methiod[" + modelingMethodStr + "] was specified.";
+    KKStr  errMsg = "Invalid Modeling Method[" + modelingMethodStr + "] was specified.";
     log.Level (-1) << endl 
                    << "ValidateGlobalSection   ***ERROR***    " << errMsg << endl
                    << endl;
     FormatErrorsAdd (methodLineNum, errMsg);
     FormatGood (false);
+  }
+
+  KKStr  fvFactoryProducerName (SettingValue (sectionNum, "FEATURE_COMPUTER", fvFactoryLineNum));
+  if  (fvFactoryLineNum < 0)
+  {
+    if  (!fvFactoryProducer)
+    {
+      log.Level (-1) << "No Feature-Computer Specified;  defaulting to 'GrayScaleImages'." << endl;
+      fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+    }
+  }
+  else
+  {
+    KKStr  defaultName = "None";
+    if  (!fvFactoryProducer)
+    {
+      fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+      defaultName = fvFactoryProducer->Name ();
+    }
+    FactoryFVProducerPtr  factorySpecified = FactoryFVProducer::LookUpFactory (fvFactoryProducerName);
+    if  (!factorySpecified)
+    {
+      log.Level (-1) << endl << "ValidateGlobalSection   ***ERROR***    Factory[" << fvFactoryProducerName << "] on lineNum[" << fvFactoryLineNum << "]  not defined" << endl
+        << "  defaulting to: " << defaultName << endl
+        << endl;
+    }
+    else
+    {
+      fvFactoryProducer = factorySpecified;
+    }
   }
 
   KKStr  rootDirStr  (SettingValue (sectionNum, "ROOT_DIR", rootDirLineNum));
@@ -1919,7 +1950,7 @@ void   TrainingConfiguration2::ValidateConfiguration ()
        }
        else
        {
-         log.Level (-1) << "ValidateConfiguration *** Inavlid Noise Class Definition ***" 
+         log.Level (-1) << "ValidateConfiguration *** Invalid Noise Class Definition ***" 
                         << endl;
          FormatGood (false);
        }
@@ -1948,7 +1979,7 @@ void   TrainingConfiguration2::ValidateConfiguration ()
 
   if  (modelParameters == NULL)
   {
-    log.Level (-1) << "ValidateConfiguration ***ERROR***       SVM Parametres not specified." << endl;
+    log.Level (-1) << "ValidateConfiguration ***ERROR***       SVM Parameters not specified." << endl;
     FormatGood (false);
   }
 
@@ -2032,25 +2063,25 @@ namespace KKMLL
 
 
 /**
- *@brief  Load traning data from the trainig libraries.
+ *@brief  Load training data from the training library directories.
  *@details
  *@code
  **********************************************************************************************  
  * Description:   Loads all the FeatureData from the Training Library.  The images in the     *
- *                subdirectoris sepecified by the 'TrainingClass' entries will be used as the *
+ *                sub-directories specified by the 'TrainingClass' entries will be used as the*
  *                primary source.  Data from existing FeatureData files will be used unless   *
  *                they are out of date.  In that case the data will be recomputed from the    *
  *                original images.                                                            *
  *                                                                                            *
- * ExampleFileName: This field that is in each 'FeatureVector' instance will reflect the sub-   *
- *                directory from where it was retrieved.  Bewteen that and the 'rootDir' field*
+ * ExampleFileName: This field that is in each 'FeatureVector' instance will reflect the sub- *
+ *                directory from where it was retrieved. Between that and the 'rootDir' field *
  *                you will be able to get the full path to then original image.               *
  **********************************************************************************************  
  *@endcode
- *@param[out] latestImageTimeStamp  Timestamp of the most current image loaded.
+ *@param[out] latestImageTimeStamp  Time-stamp of the most current image loaded.
  *@param[out] changesMadeToTrainingLibraries  True if any image needed to have its features recalculated
  *                                            or images were removed or added to a training directory.
- *@param[in]  cancelFlag  Will monitior this flag.  If it gets set to true will terminate the load and return.
+ *@param[in]  cancelFlag  Will monitor this flag.  If it gets set to true will terminate the load and return.
  */
 FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&  latestImageTimeStamp,
                                                                                     bool&      changesMadeToTrainingLibraries,
@@ -2067,8 +2098,8 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
   //****************************************************************************
   // Make sure that there are no existing *.data files that we are going to use.
-  // We need to do this in a seperate pass because more than one entry may refer 
-  // to the same Class and hense the same *.data file.
+  // We need to do this in a separate pass because more than one entry may refer 
+  // to the same Class and hence the same *.data file.
 
 
   //***********************************************************
@@ -2090,7 +2121,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
     if  (!featureDataThisClass)
     {
       log.Level (-1) << endl
-                     << "Error Loading Loading feature data for class[" << trainingClass->Name () << "]." << endl
+                     << "Error Loading Feature data for class[" << trainingClass->Name () << "]." << endl
                      << endl;
       errorOccured = true;
     }
@@ -2188,7 +2219,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                  );
   {
     // We now want to reset the ImageFileNames stored in each 'FeatureVector' instance so that it 
-      // reflects the sub-directory from where it was retrieved.  Bewteen that and the 'rootDir' 
+      // reflects the sub-directory from where it was retrieved. Between that and the 'rootDir' 
     // field you will be able to get the full path to then original image.
 
       KKStr subDirName = trainingClass->Directory (zed);
@@ -2219,7 +2250,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
 
 
 /**
- *@brief  Determine the correct csonfiguration file name.
+ *@brief  Determine the correct configuration file name.
  *@details
  *@code
  *  If  no extension then add ".cfg" to end of file name.
@@ -2230,7 +2261,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
  *  }
  *  else
  *  {
- *     a. If file exists in default directory;  then return name with defalt directory path.
+ *     a. If file exists in default directory;  then return name with default directory path.
  *     b. If file exists in Training Model Directory  $(HomeDir) + "\\DataFiles\\TrainingModels"
  *        then return with Training Model Directory.
  *     c. Since not found then we will return name passed in with extension.
