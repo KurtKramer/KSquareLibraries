@@ -34,7 +34,7 @@ namespace KKMLL
   #endif
 
 
-  #ifndef  _FeatureNumListDefined_
+  #ifndef  _FeatureNumList_Defined_
   class  FeatureNumList;
   typedef  FeatureNumList*  FeatureNumListPtr;
   typedef  FeatureNumList const  FeatureNumListConst;
@@ -438,9 +438,11 @@ namespace KKMLL
     double                 trainingTimeStart;   /**<  Time that the clock for TraininTime was started. */
     KKStr                  name;
     KKB::DateTime          timeSaved;           /**<  Date and Time that this model was saved. */
-  };
+  };  /* Model */
   
   typedef  Model::ModelPtr  ModelPtr;
+
+#define  _Model_Defined_
   
 }  /* namespace MML */
 

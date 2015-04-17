@@ -44,13 +44,13 @@ namespace KKMLL
   #endif
 
 
-  #ifndef  _FeatureVectorDefined_
+  #ifndef  _FeatureVector_Defined_
   class  FeatureVector;
   typedef  FeatureVector*  FeatureVectorPtr;
   #endif
 
 
-  #ifndef  _FeatureVectorListDefined_
+  #ifndef  _FeatureVectorList_Defined_
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif

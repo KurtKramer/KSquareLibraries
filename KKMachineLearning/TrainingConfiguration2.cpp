@@ -555,7 +555,7 @@ MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchia
 
 
 
-TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel (kkuint32 level)
+TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel (kkuint32 level)  const
 {
   log.Level (10) << "TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel  level[" << level << "]" << endl;
   TrainingConfiguration2Ptr  hierarchialConfig = new TrainingConfiguration2 (*this);
@@ -581,7 +581,7 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHier
 
 
 
-void  TrainingConfiguration2::Save (ostream&  o)
+void  TrainingConfiguration2::Save (ostream&  o)  const
 {
   {
     // Global Section
@@ -615,7 +615,7 @@ void  TrainingConfiguration2::Save (ostream&  o)
     o << endl;
   }
 
-  TrainingClassList::iterator tcIDX;
+  TrainingClassList::const_iterator tcIDX;
   for  (tcIDX = trainingClasses.begin ();  tcIDX !=  trainingClasses.end ();  tcIDX++)
   {
     TrainingClassPtr  tc = *tcIDX;
@@ -675,7 +675,7 @@ void  TrainingConfiguration2::Save (ostream&  o)
 
 
 
-void  TrainingConfiguration2::Save (const KKStr& fileName)
+void  TrainingConfiguration2::Save (const KKStr& fileName)  const
 {
   ofstream  o (fileName.Str ());
   Save (o);

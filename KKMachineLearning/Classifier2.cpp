@@ -741,7 +741,7 @@ void  Classifier2::BuildSubClassifierIndex ()
   }
 
   {
-    TrainingConfiguration2Ptr  config = trainingProcess->Config ();
+    TrainingConfiguration2Const*  config = trainingProcess->Config ();
     
     const TrainingClassList&  trainClasses = config->TrainingClasses ();
     TrainingClassList::const_iterator  idx;

@@ -66,7 +66,7 @@ namespace KKMLL
     /**
      *@brief  Constructor that is driven by contents of configuration file.
      *@details  If no changes to config file or training data, will utilize an existing built model
-     *          that was saved to disk earlier;  otherwise will train from data in training library
+     *          that was saved to disk earlier; otherwise will train from data in training library
      *          and save resultant training classifier to disk.
      *
      *@todo  I need to make a structure that would contain variables required to perform prediction 
@@ -227,6 +227,7 @@ namespace KKMLL
      */
     TrainingProcess2 (TrainingConfiguration2 const *  _config, 
                       FeatureVectorListPtr            _trainingExamples,
+                      MLClassListPtr                  _mlClasses,
                       std::ostream*                   _reportFile,
                       RunLog&                         _log,
                       bool                            _featuresAlreadyNormalized,
@@ -244,28 +245,28 @@ namespace KKMLL
     // Access Members
     void  Abort (bool _abort)  {abort = _abort;}
 
-    bool                      Abort                     () const  {return abort;}
-    const KKB::DateTime&      BuildDateTime             () const  {return buildDateTime;}
-    TrainingConfiguration2Ptr Config                    ()        {return config;}    
-    const KKStr&              ConfigFileName            () const  {return configFileName;}
-    VectorKKStr               ConfigFileFormatErrors    () const;
-    kkint32                   DuplicateCount            () const  {return duplicateCount;}
-    kkint32                   DuplicateDataCount        () const  {return duplicateDataCount;}
-    bool                      FeaturesAlreadyNormalized () const  {return featuresAlreadyNormalized;}
-    FeatureVectorListPtr      Images                    ()        {return trainingExamples;}
-    MLClassListPtr            MLClasses                 () const  {return mlClasses;}
-    RunLog&                   Log                       ()        {return log;}
-    Model::ModelTypes         ModelType                 () const;
-    KKStr                     ModelTypeStr              () const;
-    KKStr                     ModelDescription          () const;
-    SVMModelPtr               Model3                    ();
-    kkint32                   NumOfSupportVectors       () const;
-    ModelOldSVMPtr            OldSVMModel               () const;
-    ClassProbList const *     PriorProbability          () const  {return  priorProbability;}
-    ModelParamPtr             Parameters                () const;
-    TrainingProcess2ListPtr   SubTrainingProcesses      () const  {return subTrainingProcesses;}
-    ModelPtr                  TrainedModel              () const  {return model;}
-    double                    TrainingTime              () const;
+    bool                          Abort                     () const  {return abort;}
+    const KKB::DateTime&          BuildDateTime             () const  {return buildDateTime;}
+    TrainingConfiguration2Const*  Config                    ()        {return config;}    
+    const KKStr&                  ConfigFileName            () const  {return configFileName;}
+    VectorKKStr                   ConfigFileFormatErrors    () const;
+    kkint32                       DuplicateCount            () const  {return duplicateCount;}
+    kkint32                       DuplicateDataCount        () const  {return duplicateDataCount;}
+    bool                          FeaturesAlreadyNormalized () const  {return featuresAlreadyNormalized;}
+    FeatureVectorListPtr          Images                    ()        {return trainingExamples;}
+    MLClassListPtr                MLClasses                 () const  {return mlClasses;}
+    RunLog&                       Log                       ()        {return log;}
+    Model::ModelTypes             ModelType                 () const;
+    KKStr                         ModelTypeStr              () const;
+    KKStr                         ModelDescription          () const;
+    SVMModelPtr                   Model3                    ();
+    kkint32                       NumOfSupportVectors       () const;
+    ModelOldSVMPtr                OldSVMModel               () const;
+    ClassProbList const *         PriorProbability          () const  {return  priorProbability;}
+    ModelParamPtr                 Parameters                () const;
+    TrainingProcess2ListPtr       SubTrainingProcesses      () const  {return subTrainingProcesses;}
+    ModelPtr                      TrainedModel              () const  {return model;}
+    double                        TrainingTime              () const;
 
 
 

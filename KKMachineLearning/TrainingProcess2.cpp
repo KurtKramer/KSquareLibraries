@@ -77,10 +77,8 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
   statusMessage             (_statusMessage),
   subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnConfig               (false),
   weOwnTrainingExamples     (true),
   weOwnMLClasses            (true)
-
 {
   log.Level (10) << "TrainingProcess2::TrainingProcess2   9 Parameters." << endl;
 
@@ -228,7 +226,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
 
           trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  log);
 
-          if  (!config->FormatGood ())
+          if  (!config->FormatGood())
           {
             log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl;
             Abort (true);
@@ -406,14 +404,16 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
     newExamples = NULL;
 
     TrainingConfiguration2Ptr  newConfig = config->GenerateAConfiguraionForAHierarchialLevel (_level);
-    if  (weOwnConfig)
-      delete  config;
-    config = newConfig;
+    delete configOurs;
+    configOurs = newConfig;
     newConfig = NULL;
+    config = configOurs;
 
-    delete  mlClasses;
+    if  (weOwnMLClasses)
+      delete  mlClasses;
     mlClasses = config->ExtractClassList ();
     mlClasses->SortByName ();
+    weOwnMLClasses = true;
   }
 
   CreateModelsFromTrainingData ();
@@ -441,6 +441,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   buildDateTime             (DateTime (1900,1,1,0, 0, 0)),
   cancelFlag                (_cancelFlag),
   config                    (NULL),
+  configOurs                (NULL),
   configFileName            (_configFileName),
   configFileNameSpecified   (_configFileName),
   duplicateCount            (0),
@@ -458,7 +459,6 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   statusMessage             (_statusMessage),
   subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnConfig               (true),
   weOwnTrainingExamples     (true),
   weOwnMLClasses            (true)
 
@@ -509,17 +509,18 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 
 
 
-TrainingProcess2::TrainingProcess2 (istream&             _in,
-                                    RunLog&              _log,
-                                    bool                 _featuresAlreadyNormalized,
-                                    VolConstBool&        _cancelFlag,
-                                    KKStr&               _statusMessage
+TrainingProcess2::TrainingProcess2 (istream&       _in,
+                                    RunLog&        _log,
+                                    bool           _featuresAlreadyNormalized,
+                                    VolConstBool&  _cancelFlag,
+                                    KKStr&         _statusMessage
                                    ):
 
   abort                     (false),
   buildDateTime             (DateTime (1900,1,1,0, 0, 0)),
   cancelFlag                (_cancelFlag),
   config                    (NULL),
+  configOurs                (NULL),
   configFileName            (),
   configFileNameSpecified   (),
   duplicateCount            (0),
@@ -537,7 +538,6 @@ TrainingProcess2::TrainingProcess2 (istream&             _in,
   statusMessage             (_statusMessage),
   subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnConfig               (true),
   weOwnTrainingExamples     (true),
   weOwnMLClasses            (true)
 {
@@ -572,13 +572,14 @@ TrainingProcess2::TrainingProcess2 (istream&             _in,
 
 
 
-TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config, 
-                                    FeatureVectorListPtr      _trainingExamples,
-                                    ostream*                  _report,
-                                    RunLog&                   _log,
-                                    bool                      _featuresAlreadyNormalized,
-                                    VolConstBool&             _cancelFlag,
-                                    KKStr&                    _statusMessage
+TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const* _config, 
+                                    FeatureVectorListPtr         _trainingExamples,
+                                    MLClassListPtr               _mlClasses,
+                                    ostream*                     _report,
+                                    RunLog&                      _log,
+                                    bool                         _featuresAlreadyNormalized,
+                                    VolConstBool&                _cancelFlag,
+                                    KKStr&                       _statusMessage
                                    )
 :
 
@@ -586,6 +587,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     buildDateTime             (DateTime (1900,1,1,0, 0, 0)),
     cancelFlag                (_cancelFlag),
     config                    (_config),
+    configOurs                (NULL),
     configFileName            (),
     configFileNameSpecified   (),
     duplicateCount            (0),
@@ -603,10 +605,8 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
     statusMessage             (_statusMessage),
     subTrainingProcesses      (NULL),
     trainingExamples          (_trainingExamples),
-    weOwnConfig               (false),
     weOwnTrainingExamples     (false),
     weOwnMLClasses            (false)
-
 {
   log.Level (20) << "TrainingProcess2::TrainingProcess2" << endl;
 
@@ -632,7 +632,10 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Ptr _config,
   {
     configFileName = config->FileName ();
     configFileNameSpecified = config->ConfigFileNameSpecified ();
-    mlClasses = config->ExtractClassList ();
+    if  (_mlClasses)
+      mlClasses = new MLClassList (*_mlClasses);
+    else
+      mlClasses = config->ExtractClassList ();
     weOwnMLClasses = true;
   }
 }
@@ -654,18 +657,6 @@ TrainingProcess2::~TrainingProcess2 ()
   }
   model = NULL;
 
-  /*
-  if  (subTrainingProcesses)
-  {
-    TrainingProcess2Ptr tp = subTrainingProcesses->PopFromBack ();
-    while  (tp)
-    {
-      delete tp;
-      tp = subTrainingProcesses->PopFromBack ();
-    }
-  }
-  */
-
 
   delete  subTrainingProcesses;  subTrainingProcesses = NULL;
   delete  priorProbability;      priorProbability     = NULL;
@@ -681,11 +672,10 @@ TrainingProcess2::~TrainingProcess2 ()
     delete mlClasses;  mlClasses = NULL;
   }
 
-  if  (weOwnConfig)
-  {
-    delete  config;  config = NULL;
-  }
+  delete  configOurs;
+  configOurs = NULL;
 }
+
 
 
 
@@ -696,8 +686,8 @@ kkint32  TrainingProcess2::MemoryConsumedEstimated ()  const
     +  configFileNameSpecified.MemoryConsumedEstimated ()
     +  savedModelName.MemoryConsumedEstimated ();
 
-  if  (config  &&  weOwnConfig)
-    memoryConsumedEstimated += config->MemoryConsumedEstimated ();
+  if  (configOurs)
+    memoryConsumedEstimated += configOurs->MemoryConsumedEstimated ();
 
   if  (weOwnTrainingExamples  &&  (trainingExamples != NULL))
     memoryConsumedEstimated += trainingExamples->MemoryConsumedEstimated ();
@@ -930,10 +920,9 @@ void  TrainingProcess2::Read (istream&  in,
 
     else
     {
-      if  (weOwnConfig)
-        delete  config;
-      config = new TrainingConfiguration2 (osGetRootName (configFileName), false, log);
-      weOwnConfig = true;
+      delete  configOurs;
+      configOurs = new TrainingConfiguration2 (osGetRootName (configFileName), false, log);
+      config = configOurs;
 
       if  (config->SubClassifiers () != NULL)
         LoadSubClassifiers (false,   // forceRebuild
@@ -1138,8 +1127,8 @@ void  TrainingProcess2::ExtractTrainingClassFeatures (DateTime&  latestImageTime
 
   //****************************************************************************
   // Make sure that there are no existing *.data files that we are going to use.
-  // We need to do this in a seperate pass because more than one entry may refer 
-  // to the same Class and hense the same *.data file.
+  // We need to do this in a separate pass because more than one entry may refer 
+  // to the same Class and hence the same *.data file.
 
 
   //***********************************************************

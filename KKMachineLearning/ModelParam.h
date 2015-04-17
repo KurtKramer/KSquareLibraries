@@ -9,7 +9,7 @@
 
 namespace KKMLL
 {
-  #ifndef _FileDescDefined_
+  #ifndef _FileDesc_Defined_
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif

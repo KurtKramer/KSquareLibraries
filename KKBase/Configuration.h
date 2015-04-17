@@ -55,7 +55,7 @@ namespace KKB
 
     virtual  ~Configuration ();
 
-    bool  FormatGood ()                  {return  formatGood;}
+    bool  FormatGood ()  const  {return  formatGood;}
 
     void  FormatGood (bool _formatGood)  {formatGood = _formatGood;}
 
@@ -147,9 +147,11 @@ namespace KKB
 
   protected:
     RunLog&  log;
-  };
-
+  };  /* Configuration */
 
   typedef  Configuration*  ConfigurationPtr;
+
+#define  _Configuration_Defined_
+
 }
 #endif

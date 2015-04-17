@@ -256,7 +256,8 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   KKStr  statusMsg;
 
   trainer1 = new TrainingProcess2 (config1, 
-                                   trainExamples, 
+                                   trainExamples,
+                                   classes,
                                    NULL,              /**< _reportFile  */
                                    log,
                                    true,              /**< 'true' = Feature data already normalized. */
@@ -296,7 +297,8 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   }
 
   trainer2 = new TrainingProcess2 (config2, 
-                                   trainExamples, 
+                                   trainExamples,
+                                   classes,
                                    NULL,             // _reportFile,
                                    log,
                                    true,             /**< 'true' = Feature data already normalized. */

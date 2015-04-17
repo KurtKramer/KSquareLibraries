@@ -81,7 +81,10 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
   GlobalGoalKeeper::StartBlock ();
 
   if  (!registeredDrivers)
+  {
+    RegisterAllDrivers ();
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
+  }
 
   registeredDrivers->push_back (_driver);
 
@@ -94,13 +97,6 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 void  FeatureFileIO::RegisterAllDrivers ()
 {
   GlobalGoalKeeper::StartBlock ();
-
-  if  (!atExitDefined)
-  {
-    atexit (FeatureFileIO::FinalCleanUp);
-    atExitDefined = true;
-  }
-
   if  (registeredDrivers == NULL)
   {
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
@@ -112,6 +108,7 @@ void  FeatureFileIO::RegisterAllDrivers ()
     registeredDrivers->push_back (new FeatureFileIORoberts ());
     registeredDrivers->push_back (new FeatureFileIOSparse  ());
     registeredDrivers->push_back (new FeatureFileIOUCI     ());
+    atexit (FeatureFileIO::FinalCleanUp);
   }
 
   GlobalGoalKeeper::EndBlock ();

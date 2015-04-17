@@ -306,6 +306,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
 
   TrainingProcess2  trainer (config, 
                              trainingExamples, 
+                             mlClasses,
                              NULL,
                              log,
                              featuresAreAlreadyNormalized,

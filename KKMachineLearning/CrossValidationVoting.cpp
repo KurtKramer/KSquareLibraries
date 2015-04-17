@@ -263,7 +263,8 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
     TrainingConfiguration2Ptr  config = configs->IdxToPtr (idx);
     
     TrainingProcess2Ptr  trainer = new TrainingProcess2 (config, 
-                                                         trainingExamples, 
+                                                         trainingExamples,
+                                                         mlClasses,
                                                          NULL,
                                                          log,
                                                          featuresAreAlreadyNormalized,

@@ -17,17 +17,16 @@
  *                                                                   *
  *    Date     Programmer   Description                              *
  *  ---------- -----------  -----------------------------------------*
- *  2004       Kurt Kramer  Origanol Development.                    *
+ *  2004       Kurt Kramer  Original Development.                    *
  *                                                                   *
  *                                                                   *
  *  2005-01-07 Kurt Kramer  Added classedCorrectly parameter to      *
  *                          CrossValidate. If not null it should     *
  *                          point to an array of bool that has as    *
- *                          many elemenst as there are in the        *
- *                          testImages list. Each element reprsents  *
- *                          weather the coresponding element in      *
+ *                          many elements as there are in the        *
+ *                          testImages list. Each element represents *
+ *                          weather the corresponding element in     *
  *                          testImages was classified correctly.     *
- *                                                                   *
  *********************************************************************
  @endcode
  */
@@ -39,7 +38,7 @@
 
 namespace  KKMLL  
 {
-  #ifndef  _FeatureVectorDefined_
+  #ifndef  _FeatureVector_Defined_
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif

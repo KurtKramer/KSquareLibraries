@@ -264,11 +264,11 @@ namespace KKMLL
 
     MLClassListPtr         ExtractClassList ()  const;          /**< Constructs new list of classes that caller will own. */
 
-    MLClassListPtr         ExtractFullHierachyOfClasses ()  const;  /**< Extracts the list of classes includig ones from Sub-Classifiers */
+    MLClassListPtr         ExtractFullHierachyOfClasses ()  const;  /**< Extracts the list of classes including ones from Sub-Classifiers */
 
-    MLClassListPtr         ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)   const;
+    MLClassListPtr         ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)  const;
 
-    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (kkuint32 level);
+    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (kkuint32 level)  const;
 
     FeatureNumList         GetFeatureNums ()  const;
 
@@ -288,9 +288,9 @@ namespace KKMLL
 
     kkint32                NumOfFeaturesAfterEncoding ()  const;
 
-    virtual void           Save (const KKStr& fileName);
+    virtual void           Save (const KKStr& fileName)  const;
 
-    virtual void           Save (ostream&  o);
+    virtual void           Save (ostream&  o)  const;
 
     void                   SetFeatureNums (const  FeatureNumList&  features);
 

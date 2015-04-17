@@ -354,13 +354,11 @@ protected:
     static GoalKeeperPtr  featureFileIOGoalKeeper;
 
 
-    static  bool  atExitDefined;
     static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
 
     static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
 
-    static
-      FeatureFileIOPtr  LookUpDriver (const KKStr&  _driverName);
+    static  FeatureFileIOPtr    LookUpDriver (const KKStr&  _driverName);
   };  /* FeatureFileIO */
 
 
