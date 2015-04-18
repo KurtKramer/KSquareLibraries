@@ -84,6 +84,8 @@ namespace KKMLL
 
     /**
      *@brief Use this one if you want to create a default Configuration object.
+     *@details We know what the underlying feature data is from _fileDesc but we do not know how they 
+     * are computed; that is why we do not provide a "FactoryFVProducer" instance.
      *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
      *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
      *@param[in]  _parameterStr Sting with Machine Learning Parameters.
@@ -436,7 +438,42 @@ namespace KKMLL
                                                   * section.
                                                   */
 
-    bool                   validateDirectories;
+
+    static  TrainingConfiguration2Ptr  Manufacture 
+                           (const KKStr&  _className,
+                            const KKStr&  _configFileName,
+                            bool          _validateDirectories,
+                            RunLog&       _log
+                           );
+
+   
+    class  Factory
+    {
+    public:
+      Factory ()  {}
+
+      const KKStr&   ClassName ()  {return "TrainingConfiguration2";}
+
+      TrainingConfiguration2Ptr  Manufacture (const KKStr&  _configFileName,
+                                              bool          _validateDirectories,
+                                              RunLog&       _log
+                                            );
+    };
+
+    static  Factory*   factoryInstace;
+
+    static  Factory*   FactoryInstace ();
+
+
+    static void  RegisterFatory (const KKStr&  className,
+                                 Factory*      factory
+                                );
+
+    static map<KKStr,Factory*>*  registeredFactories;
+    
+    static  void  FinalCleanUp ();
+
+
   };  /* TrainingConfiguration2 */
 
   #define  _TrainingConfiguration2_Defined_

@@ -298,7 +298,7 @@ namespace KKMLL
     /**
       *@brief Returns back pointer to 1st classifier of Dual Classifier.
       *@details If not a Dual classifier will return back NULL. Keep in mind that you will
-      *  not own this classifier and that ot can be deleted at any time.
+      *  not own this classifier and that it can be deleted at any time.
       */
     TrainingProcess2Ptr   TrainingProcessLeft ();
 
@@ -344,6 +344,8 @@ namespace KKMLL
     //       Routines for validating Configuration File.         *
     //************************************************************
     FeatureNumListPtr  DeriveFeaturesSelected (kkint32  sectionNum);
+
+    void               LoadConfigurationFile (RunLog&  log);
 
     TrainingClassPtr   ValidateClassConfig (kkint32  sectionNum);
 

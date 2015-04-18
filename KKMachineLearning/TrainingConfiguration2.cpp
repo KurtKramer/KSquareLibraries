@@ -9,6 +9,7 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -2432,3 +2433,103 @@ TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  con
 
 
 
+
+map<KKStr,TrainingConfiguration2::Factory*>*  TrainingConfiguration2::registeredFactories = NULL;
+
+
+TrainingConfiguration2::Factory*   TrainingConfiguration2::factoryInstace = NULL;
+
+
+TrainingConfiguration2::Factory*   TrainingConfiguration2::FactoryInstace ()
+{
+  if  (factoryInstace)
+    return  factoryInstace;
+
+  GlobalGoalKeeper::StartBlock ();
+  factoryInstace = new Factory ();
+  RegisterFatory ("TrainingConfiguration2", factoryInstace );
+  GlobalGoalKeeper::EndBlock ();
+  return  factoryInstace;
+}
+
+
+
+TrainingConfiguration2Ptr  TrainingConfiguration2::Manufacture 
+                                                       (const KKStr&  className,
+                                                        const KKStr&  configFileName,
+                                                        bool          validateDirectories,
+                                                        RunLog&       log
+                                                       )
+{
+  if  (!registeredFactories)
+  {
+    log.Level (-1)  << endl << "TrainingConfiguration2::Manufacture   ***ERROR***   registeredFactories == NULL Will construct default 'TrainingConfiguration2' instance." << endl << endl;
+    return  new TrainingConfiguration2 (configFileName, validateDirectories, log);
+  }
+
+  GlobalGoalKeeper::StartBlock ();
+
+  TrainingConfiguration2Ptr  newInstance = NULL;
+
+  map<KKStr,Factory*>::const_iterator  idx;
+  idx = registeredFactories->find (className);
+  if  (idx == registeredFactories->end ())
+  {
+    log.Level (-1) << endl << "TrainingConfiguration2::Manufacture   Factory: " << className << "  Is not defined;  will return instance of 'TrainingConfiguration2'." << endl << endl;
+    newInstance = new TrainingConfiguration2 (configFileName, validateDirectories, log);
+  }
+  else
+  {
+    newInstance = idx->second->Manufacture (configFileName, validateDirectories, log);
+  }
+
+  GlobalGoalKeeper::EndBlock ();
+  return  newInstance;
+}  /* Manufacture */
+
+
+
+void  TrainingConfiguration2::RegisterFatory (const KKStr&  className,
+                                              Factory*      factory
+                                             )
+{
+  GlobalGoalKeeper::StartBlock ();
+  if  (!registeredFactories)
+  {
+    registeredFactories = new map<KKStr,Factory*> ();
+    atexit (FinalCleanUp);
+  }
+
+  map<KKStr,Factory*>::const_iterator  idx;
+  idx = registeredFactories->find (className);
+  if  (idx == registeredFactories->end ())
+    registeredFactories->insert (pair<KKStr,Factory*> (className, factory));
+  else
+  {
+    cerr << endl << "TrainingConfiguration2::RegisterFatory   ***ERROR***   'TrainingConfiguration2::Factory with same name[" << className << "]" << endl << endl;
+  }
+
+  GlobalGoalKeeper::EndBlock ();
+}
+
+
+
+
+
+TrainingConfiguration2Ptr  TrainingConfiguration2::TrainingConfiguration2::Factory::Manufacture 
+             (const KKStr&  configFileName,
+              bool          validateDirectories,
+              RunLog&       log
+             )
+{
+  return  new TrainingConfiguration2 (configFileName, validateDirectories, log);
+}
+
+
+
+
+void  TrainingConfiguration2::FinalCleanUp ()
+{
+  delete  registeredFactories;
+  registeredFactories = NULL;
+}

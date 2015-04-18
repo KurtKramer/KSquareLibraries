@@ -760,6 +760,14 @@ SVMModelPtr  TrainingProcess2::Model3 ()
 }
 
 
+void  TrainingProcess2::LoadConfigurationFile  (RunLog&  log)
+{
+  delete  configOurs;
+  configOurs = new 
+}  /* LoadConfigurationFile */
+
+
+
 void  TrainingProcess2::WriteXml (ostream&  o)
 {
   log.Level (20) << "TrainingProcess2::WriteXml" << endl;
@@ -848,7 +856,10 @@ void  TrainingProcess2::Read (istream&  in,
     }
 
     else if  (lineName.EqualIgnoreCase ("ConfigFileName"))
+    {
       configFileName = line.ExtractToken2 ("\n\t\r");
+      // KKKK  LoadConfigurationFile
+    }
 
     else if  (lineName.EqualIgnoreCase ("ConfigFileNameSpecified"))
       configFileNameSpecified = line.ExtractToken2 ("\n\t\r");
@@ -892,7 +903,7 @@ void  TrainingProcess2::Read (istream&  in,
       {
         successful = false;
         log.Level (-1) << endl << endl
-          << "TrainingProcess2::Read   ***ERROR***  Exception occurecd reading from file." << endl
+          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
           << "     Exception[" << e.ToString () << "]." << endl
           << endl;
       }
@@ -900,7 +911,7 @@ void  TrainingProcess2::Read (istream&  in,
       {
         successful = false;
         log.Level (-1) << endl << endl
-          << "TrainingProcess2::Read   ***ERROR***  Exception occurecd reading from file." << endl
+          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
           << endl;
       }
     }
@@ -973,7 +984,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
     if  (report)
     {
       *report << endl << endl << endl
-              << "    Images Being Classifed Removed From Training Data"      << endl
+              << "    Images Being Classified Removed From Training Data"      << endl
               << "==========================================================" << endl
               << "No trainingExamples from source directory detected in training data." << endl
               << endl << endl;
@@ -984,7 +995,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
     if  (report)
     {
       *report << endl << endl << endl
-              << "Images Being Classifed Removed From Training Data" << endl
+              << "Images Being Classified Removed From Training Data" << endl
               << "=================================================" << endl;
 
       trainingExamplesToDelete.PrintClassStatistics (*report);
