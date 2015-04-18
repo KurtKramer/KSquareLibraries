@@ -465,8 +465,6 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
 {
   log.Level (20) << "TrainingProcess2::TrainingProcess2     Loading an existing trained model" << endl;
 
-  fileDesc = fvFactoryProducer->FileDesc ();
-
   configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
   savedModelName = osRemoveExtension (configFileName) + ".Save";
   KKB::DateTime  savedModelTimeStamp  = osGetFileDateTime (savedModelName);
@@ -496,8 +494,11 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
   }
 
   in.close ();
-
-  fvFactoryProducer = config->FvFactoryProducer ();
+  if  (config)
+  {
+    fvFactoryProducer = config->FvFactoryProducer ();
+    fileDesc = fvFactoryProducer->FileDesc ();
+  }
 
   log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parms)   Exiting." << endl;
 
