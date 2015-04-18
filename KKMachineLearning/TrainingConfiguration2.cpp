@@ -2515,8 +2515,7 @@ void  TrainingConfiguration2::RegisterFatory (const KKStr&  className,
 
 
 
-
-TrainingConfiguration2Ptr  TrainingConfiguration2::TrainingConfiguration2::Factory::Manufacture 
+TrainingConfiguration2Ptr  TrainingConfiguration2::Factory::Manufacture 
              (const KKStr&  configFileName,
               bool          validateDirectories,
               RunLog&       log

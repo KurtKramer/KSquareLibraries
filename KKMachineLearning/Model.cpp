@@ -624,6 +624,7 @@ void  Model::WriteXML (ostream&  o)
   o << "<Model>" << endl;
   o << "ModelType"          << "\t" << ModelTypeStr ()                                  << endl;
   o << "Name"               << "\t" << Name ()                                          << endl;
+
   o << "RootFileName"       << "\t" << rootFileName                                     << endl;
   o << "Classes"            << "\t" << classes->ToCommaDelimitedStr ()                  << endl;
   if  (classesIndex)

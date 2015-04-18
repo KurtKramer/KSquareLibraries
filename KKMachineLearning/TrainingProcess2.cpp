@@ -776,6 +776,9 @@ void  TrainingProcess2::WriteXml (ostream&  o)
 
   o << "<TrainingProcess2>" << endl;
 
+  if  (config)
+    o << "TrainingConfiguration2FactoryName" << "\t" << config->FactoryName () << endl;
+  
   o << "ConfigFileName"          << "\t" << configFileName                  << endl;
   o << "ConfigFileNameSpecified" << "\t" << configFileNameSpecified         << endl;
   o << "BuildDateTime"           << "\t" << buildDateTime                   << endl;
