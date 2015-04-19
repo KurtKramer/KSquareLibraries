@@ -345,8 +345,6 @@ namespace KKMLL
     //************************************************************
     FeatureNumListPtr  DeriveFeaturesSelected (kkint32  sectionNum);
 
-    void               LoadConfigurationFile (RunLog&  log);
-
     TrainingClassPtr   ValidateClassConfig (kkint32  sectionNum);
 
     void               ValidateTrainingClassConfig (kkint32  sectionNum);

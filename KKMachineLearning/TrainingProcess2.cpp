@@ -760,11 +760,6 @@ SVMModelPtr  TrainingProcess2::Model3 ()
 }
 
 
-void  TrainingProcess2::LoadConfigurationFile  (RunLog&  log)
-{
-  delete  configOurs;
-  configOurs = new 
-}  /* LoadConfigurationFile */
 
 
 
@@ -777,7 +772,7 @@ void  TrainingProcess2::WriteXml (ostream&  o)
   o << "<TrainingProcess2>" << endl;
 
   if  (config)
-    o << "TrainingConfiguration2FactoryName" << "\t" << config->FactoryName () << endl;
+    o << "TrainingConfiguration2" << "\t" << configFileNameSpecified << "\t" << config->FactoryName () << endl;
   
   o << "ConfigFileName"          << "\t" << configFileName                  << endl;
   o << "ConfigFileNameSpecified" << "\t" << configFileNameSpecified         << endl;
@@ -866,6 +861,35 @@ void  TrainingProcess2::Read (istream&  in,
 
     else if  (lineName.EqualIgnoreCase ("ConfigFileNameSpecified"))
       configFileNameSpecified = line.ExtractToken2 ("\n\t\r");
+
+
+    else if  (lineName.EqualIgnoreCase ("TrainingConfiguration2"))
+    {
+      configFileNameSpecified = line.ExtractToken2 ("\t");
+      KKStr  factoryName = line.ExtractToken2 ("\t");
+      delete  configOurs;
+      configOurs = TrainingConfiguration2::Manufacture (factoryName, 
+                                                        configFileNameSpecified, 
+                                                        false,   //  false = DO not Validate Directories.
+                                                        log
+                                                       );
+      if  (!configOurs)
+      {
+        log.Level (-1) << endl 
+            << "TrainingProcess2::Read   ***ERROR**    Could not load TrainingConfiguration for Factory: " << factoryName << "  configName: " << configFileNameSpecified << endl
+            << endl;
+      }
+      else
+      {
+        config = configOurs;
+        fvFactoryProducer = config->FvFactoryProducer ();
+        fileDesc = fvFactoryProducer->FileDesc ();
+      }
+    }
+  
+
+
+
     
     else if  (lineName == "CLASSLIST")
     {

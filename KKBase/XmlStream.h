@@ -36,7 +36,17 @@ namespace  KKB
     KKStr  value;
   };
 
-  typedef  vector<XmlAttribute>  XmlAttributeList;
+
+  class  XmlAttributeList:  public map<KKStr, KKStr>
+  {
+  public:
+    XmlAttributeList ();
+    XmlAttributeList (const XmlAttributeList&  attributes);
+
+    KKStrConstPtr  LookUp (const KKStr&  name) const;
+  };  /* XmlAttributeList */
+
+  typedef  XmlAttributeList*  XmlAttributeListPtr;
 
 
 
@@ -58,10 +68,10 @@ namespace  KKB
     const KKStr&  Name ()           const  {return  name;}
     TagTypes      TagType ()        const  {return  tagType;}
     kkint32       AttributeCount () const  {return  (kkint32)attributes.size ();}
-    const KKStr&  AttributeName  (kkint32 _attributeNum)  const;
-    const KKStr&  AttributeValue (kkint32 _attributeNum)  const;
-    const KKStr&  AttributeValue (const KKStr& attributeName)  const;
-    const KKStr&  AttributeValue (const char*  attributeName)  const;
+    KKStrConstPtr  AttributeName  (kkint32 _attributeNum)  const;
+    KKStrConstPtr  AttributeValue (kkint32 _attributeNum)  const;
+    KKStrConstPtr  AttributeValue (const KKStr& attributeName)  const;
+    KKStrConstPtr  AttributeValue (const char*  attributeName)  const;
 
   private:
     KKStr             name;
@@ -155,7 +165,12 @@ namespace  KKB
 
 
 
-
+class  XmlElement
+{
+public:
+  const KKStr          name;
+  XmlAttributeListPtr  attributes;
+};
 
 
 #endif

@@ -440,15 +440,15 @@ namespace KKMLL
 
     bool                   validateDirectories;
 
+    public:
+      virtual  KKStr  FactoryName () const  {return "TrainingConfiguration2::Factory";}   /**<  The name of the Factory class that produces an instance of this class. */
 
-    virtual  KKStr  FactoryName ()  {return "TrainingConfiguration2::Factory";}
-
-    static  TrainingConfiguration2Ptr  Manufacture 
-                           (const KKStr&  _className,
-                            const KKStr&  _configFileName,
-                            bool          _validateDirectories,
-                            RunLog&       _log
-                           );
+      static  TrainingConfiguration2Ptr  Manufacture 
+                             (const KKStr&  _className,
+                              const KKStr&  _configFileName,
+                              bool          _validateDirectories,
+                              RunLog&       _log
+                             );
 
     class  Factory
     {
@@ -476,11 +476,11 @@ namespace KKMLL
     static void  RegisterFatory (const KKStr&  className,
                                  Factory*      factory
                                 );
-
+  
+  private:
     static map<KKStr,Factory*>*  registeredFactories;
     
     static  void  FinalCleanUp ();
-
 
   };  /* TrainingConfiguration2 */
 

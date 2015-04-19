@@ -26,6 +26,34 @@ using namespace KKB;
 #include "XmlStream.h"
 
 
+
+XmlAttributeList::XmlAttributeList ()
+{
+}
+
+
+XmlAttributeList::XmlAttributeList (const XmlAttributeList&  attributes)
+{
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+    insert (*idx);
+}
+
+
+
+KKStrConstPtr  XmlAttributeList::LookUp (const KKStr&  name)
+{
+  XmlAttributeList::const_iterator  idx;
+  idx = find (name);
+  if  (idx == end ())
+    return NULL;
+  else
+    return &(idx->second);
+}
+
+ 
+
+
 XmlStream::XmlStream (TokenizerPtr _tokenStream):
   tokenStream (_tokenStream)
 {
@@ -180,7 +208,7 @@ XmlTag::XmlTag (istream&  i)
   {
     ExtractAttribute (tagStr, attributeName, attributeValue);
     if  (!attributeName.Empty ())
-      attributes.push_back (XmlAttribute (attributeName, attributeValue));
+      attributes.insert (pair<KKStr, KKStr> (attributeName, attributeValue));
   }
 }
 
@@ -277,7 +305,7 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
         }
       }
 
-      attributes.push_back (XmlAttribute (attrName, attrValue));
+      attributes.insert (pair<KKStr, KKStr> (attrName, attrValue));
     }
 
     if  ((idx < tokens->QueueSize ())  &&  ((*tokens)[idx] == ","))
@@ -290,32 +318,20 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
 
 
 
-const KKStr&  XmlTag::AttributeValue (const KKStr& attributeName)  const
+KKStrConstPtr  XmlTag::AttributeValue (const KKStr& attributeName)  const
 {
-  XmlAttributeList::const_iterator  idx;
-  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
-  {
-    if  (idx->Name ().EqualIgnoreCase (attributeName))
-      return idx->Value ();
-  }
-
-  return KKStr::EmptyStr ();
+  return  attributes.LookUp (attributeName);
 } /* AttributeValue */
 
 
 
 
-const KKStr&  XmlTag::AttributeValue (const char* attributeName)  const
+KKStrConstPtr  XmlTag::AttributeValue (const char* attributeName)  const
 {
-  XmlAttributeList::const_iterator  idx;
-  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
-  {
-    if  (idx->Name ().EqualIgnoreCase (attributeName))
-      return idx->Value ();
-  }
-
-  return KKStr::EmptyStr ();
+  return  attributes.LookUp (attributeName);
 } /* AttributeValue */
+
+
 
 
 
