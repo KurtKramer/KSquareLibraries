@@ -7,6 +7,7 @@
 #include  <map>
 
 #include "KKStr.h"
+#include "RunLog.h"
 #include "Tokenizer.h"
 using namespace KKB;
 
@@ -101,22 +102,27 @@ namespace  KKB
   typedef  XmlToken::XmlTokenPtr  XmlTokenPtr;
 
 
-
   class  XmlElement: public  XmlToken
   {
   public:
     typedef  XmlElement*  XmlElementPtr;
 
-    XmlElement ();
-    XmlElement (TokenizerPtr  _tokenStream);
+    XmlElement (XmlTagPtr  _nameTag,
+                void*      _body
+               );
+                
+    virtual  ~XmlElement ();
 
-    const KKStr&   Name ()  {return (tag != NULL) ? tag->Name () : KKStr::EmptyStr ();}
+    const KKStr&   Name () const;
 
   private:
-    XmlTagPtr  tag;
+    XmlTagPtr  nameTag;
+    void*      body;
+
   };  /* XmlElement */
 
   typedef  XmlElement::XmlElementPtr  XmlElementPtr;
+
 
 
 
@@ -125,11 +131,15 @@ namespace  KKB
   public:
     typedef  XmlContent* XmlContentPtr;
 
-    XmlContent (TokenizerPtr  _tokenStream);
+    XmlContent (const KKStr&  _content): XmlToken (tokContent), content (_content) {}
+
+    const KKStr  Content () const  {return  content;}
 
   private:
     KKStr  content;
   };  /* XmlContent */
+
+  typedef  XmlContent*  XmlContentPtr;
 
 
 
@@ -144,33 +154,46 @@ namespace  KKB
     XmlStream ();
     ~XmlStream ();
 
-    XmlTokenPtr  GetNextToken ();  /**< Will return either a XmlElement or a XmlContent */
+    XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
 
-    typedef  XmlElementPtr  (*XmlElementCreator) (XmlTagPtr  tag, XmlStream& i);
+    XmlElementPtr  GetNextElement ();
 
-    static
-    void   RegisterXmlElementCreator  (const KKStr&       elementName,
-                                       XmlElementCreator  creator
-                                      );
+
+    class  Factory
+    {
+    public:
+      Factory (const KKStr&  _clasName);
+      virtual  const KKStr&  ClassName ()  const  {return className;}
+
+      virtual  void*  ManufatureInstance (const XmlTag&  tag,
+                                          XmlStream&     s,
+                                          RunLog&        log
+                                         ) = 0;
+    private:
+      KKStr  className;  /**< Class that this factory produces instances of. */
+    };
+
+
+
+    static  Factory*  FactoryLookUp (const KKStr&  className);
+
+    /**
+     *@brief  register a instance of a Derives Factory class that is meant to create instances for a  specific class.
+     *@param[in]  factory  The instance that is being registered; factories will take ownership and the method 
+     *  'XmlStream' will be responsible for deleting upon application shutdown.
+     */
+    static  void   RegisterFactory  (Factory*  factory);
+
+    static  map<KKStr, Factory*>*  factories;
+
+    static  void  FinalCleanUp ();
 
   private:
-    XmlElementPtr  ProcessElement ();
-
     TokenizerPtr  tokenStream;
-
-    static  map<KKStr, XmlElementCreator>  xmlElementCreators;
-    static  XmlElementCreator  LookUpXmlElementCreator (const KKStr&  _name);
   };  /* XmlStream */
 }
 
 
-
-class  XmlElement
-{
-public:
-  const KKStr          name;
-  XmlAttributeListPtr  attributes;
-};
 
 
 #endif

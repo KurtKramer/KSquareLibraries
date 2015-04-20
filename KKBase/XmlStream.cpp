@@ -17,6 +17,7 @@ using namespace std;
 
 
 #include "BitString.h"
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "Tokenizer.h"
@@ -289,34 +290,35 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
     delete  t;
     t = NULL;
 
+    KKStrPtr  t1 = tokens->PopFromFront ();
+    KKStrPtr  t2 = tokens->PopFromFront ();
+    KKStrPtr  t3 = tokens->PopFromFront ();
 
     // Everything else should be attribute pairs  (Name = value).
-
-    t = tokens->PopFromBack ();
-    while  (t != NULL)
+    while  (t3 != NULL)
     {
-      KKStrPtr t2 = tokens->PopFromBack ();
-      KKStrPtr t3 = tokens->PopFromBack ();
-      while  ((*t2 != "=")  &&  (t3 != NULL))
+      if  (*t2 != "=")
       {
-        delete t;
-        t = t2;
+        delete  t1;
+        t1 = t2;
         t2 = t3;
-        t3 = tokens->PopFromBack ();
+        t3 = tokens->PopFromFront ();
       }
-
-      if  (t3 != NULL)
+      else
       {
         if  (attributes.LookUp (*t) == NULL)
           attributes.insert (pair<KKStr, KKStr>(*t1, *t3));
+        delete  t1;
+        delete  t2;
+        delete  t3;
+        t1 = tokens->PopFromFront ();
+        t2 = tokens->PopFromFront ();
+        t3 = tokens->PopFromFront ();
       }
-
-      delete  t;   t  = NULL;
-      delete  t2;  t2 = NULL;
-      delete  t3;  t3 = NULL; 
-
-      t = tokens->PopFromBack ();
     }
+    delete  t;   t  = NULL;
+    delete  t2;  t2 = NULL;
+    delete  t3;  t3 = NULL; 
   }
 
   delete  tokens;  tokens = NULL;
@@ -341,50 +343,6 @@ KKStrConstPtr  XmlTag::AttributeValue (const char* attributeName)  const
 
 
 
-
-
-/**  
- *@brief  Will return either a XmlElement or a XmlContent
- */
-XmlTokenPtr  XmlStream::GetNextToken ()  /*!< Will return either a XmlElement or a XmlContent */
-{
-  if  (tokenStream->EndOfFile ())
-    return NULL;
-
-  KKStrConstPtr  tokenStr = tokenStream->Peek (0);
-  if  (tokenStr == NULL)
-    return NULL;
-
-  if  ((*tokenStr) == "<")
-    return  ProcessElement ();
-  else
-    return new XmlContent (tokenStream);
-}  /* GetNextToken */
-
-
-
-
-XmlElementPtr  XmlStream::ProcessElement ()
-{
-  // We are assuming that we are at the very beginning of a new element.  In this case
-  // the very next thing we get should be a tag field.
-
-  XmlTagPtr tag = new XmlTag (tokenStream);
-  if  (!tag)
-    return  NULL;
-
-  XmlElementCreator creator = LookUpXmlElementCreator (tag->Name ());
-  if  (creator)
-    return  creator (tag, *this);
-  else
-    return NULL;
-}  /* ProcessElement */
-
-
-
-
-
-
 XmlToken::XmlToken (TokenTypes  _tokenType):
   tokenType (_tokenType)
 {
@@ -392,78 +350,192 @@ XmlToken::XmlToken (TokenTypes  _tokenType):
 
 
 
+XmlElement::XmlElement (XmlTagPtr  _nameTag,
+                        void*      _body
+                      ):
+  XmlToken (tokElement),
+  nameTag (_nameTag),
+  body    (_body)
+{}
+ 
 
 
-XmlElement::XmlElement ():
-   XmlToken (tokElement)
-{
-}
-
-
-XmlElement::XmlElement (TokenizerPtr  _tokenStream):
-   XmlToken (tokElement)
-{
-}
-
-
-
-XmlContent::XmlContent (TokenizerPtr  _tokenStream):
-   XmlToken (tokContent)
+XmlElement ::~XmlElement ()
 {
 }
 
 
 
-
-
-
-map<KKStr, XmlStream::XmlElementCreator>  XmlStream::xmlElementCreators;
-
-
-
-/**
- @brief Register a 'XmlElementCreator' function with its associated name.
- @details  if you try to register the same function with the same name will generate a warning to 
-           cerr.  If you try and register two different functions with the same name will throw 
-           an exception.
- */
-void   XmlStream::RegisterXmlElementCreator  (const KKStr&       elementName,
-                                              XmlElementCreator  creator
-                                             )
+const KKStr&   XmlElement::Name ()  const 
 {
-  map<KKStr, XmlElementCreator>::iterator  idx;
-  idx = xmlElementCreators.find (elementName);
-  if  (idx != xmlElementCreators.end ())
+  if  (nameTag)
+    return  nameTag->Name ();
+  else
+    return KKStr::EmptyStr ();
+}
+
+
+
+
+
+
+
+
+map<KKStr, XmlStream::Factory*>*  factories = NULL;
+
+
+
+XmlStream::Factory*  XmlStream::FactoryLookUp (const KKStr&  className)
+{
+  GlobalGoalKeeper::StartBlock ();
+  if  (factories == NULL)
   {
-    // A 'XmlElementCreator'  creator already exists with name 'elementName'.
-    if  (idx->second == creator)
-    {
-      // Trying to register the same function,  No harm done.
-      cerr << std::endl
-           << "XmlStream::RegisterXmlElementCreator   ***WARNING***   trying to register[" << elementName << "] Creator more than once." << std::endl
-           << std::endl;
-      return;
-    }
-    else
-    {
-      // Trying to register two different 'XmlElementCreator' functions.  This is VERY VERY bad.
-      KKStr  errMsg = "XmlStream::RegisterXmlElementCreator   ***WARNING***   Trying to register[" + elementName + "] as two different Creator functions.";
-      cerr << std::endl << errMsg << std::endl;
-      throw KKException (errMsg);
-    }
+    factories = new map<KKStr, Factory*> ();
+    atexit (FinalCleanUp);
   }
 
-  xmlElementCreators.insert (pair<KKStr,XmlElementCreator>(elementName, creator));
-}  /* RegisterXmlElementCreator */
+  Factory*  factory = NULL;
+
+  map<KKStr, Factory*>::const_iterator  idx;
+  idx = factories->find (className);
+  if  (idx != factories->end ())
+    factory = idx->second;
+
+  GlobalGoalKeeper::EndBlock ();
+
+  return  factory;
+}  /* FactoryLookUp */
 
 
 
-XmlStream::XmlElementCreator  XmlStream::LookUpXmlElementCreator (const KKStr&  elementName)
+void   XmlStream::RegisterFactory  (Factory*  factory)
 {
-  map<KKStr, XmlElementCreator>::iterator  idx;
-  idx = xmlElementCreators.find (elementName);
-  if  (idx == xmlElementCreators.end ())
-    return NULL;
+  if  (!factory)
+  {
+    KKStr  errMsg = "XmlStream::RegisterFactory   ***ERROR***   (factory == NULL).";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
+
+  GlobalGoalKeeper::StartBlock ();
+  Factory*  existingFactory = FactoryLookUp (factory->ClassName ());
+  if  (existingFactory)
+  {
+    cerr << endl
+         << "XmlStream::RegisterFactory   ***ERROR***   Factory[" << factory->ClassName () << "] already exists." << endl
+         << endl;
+  }
   else
-    return idx->second;
-}  /* LookUpXmlElementCreator */
+  {
+    factories->insert (pair<KKStr, Factory*> (factory->ClassName (), factory));
+  }
+  GlobalGoalKeeper::EndBlock ();
+}
+
+
+
+void  XmlStream::FinalCleanUp ()
+{
+  if  (factories)
+  {
+    map<KKStr, Factory*>::iterator  idx;
+    for  (idx = factories->begin ();  idx != factories->end ();  ++idx)
+      delete  idx->second;
+
+    delete  factories;
+    factories = NULL;
+  }
+}
+
+
+
+XmlStream::Factory::Factory (const KKStr&  _clasName):
+   className (_clasName)
+{
+}
+
+
+
+class  XmlInt32Factory: public XmlStream::Factory
+{
+  XmlInt32Factory (): Factory ("Int32") {}
+
+  void*  ManufatureInstance (const XmlTag&  tag,
+                             XmlStream&     s,
+                             RunLog&        log
+                            )
+  {
+    kkint32 v = 0;
+    KKStrConstPtr  valueStr = tag.AttributeValue ("Value");
+    if  (valueStr)
+      v = valueStr->ToInt32 ();
+
+    if  (tag.TagType () != XmlTag::tagEmpty)
+    {
+
+      XmlTokenPtr t = s.GetNextToken (log);
+      while  (t != NULL)
+      {
+        if  (t->TokenType () == XmlToken::tokContent)
+        {
+          XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+          v = c->Content ().ToInt32 ();
+        }
+      }
+    }
+
+    return new kkint32 (v);
+  }
+
+  static  XmlInt32Factory*  FactoryInstance ();
+  static  XmlInt32Factory*  factoryInstance;
+};
+
+
+
+XmlInt32Factory*  XmlInt32Factory::FactoryInstance ()
+{
+  if  (factoryInstance == NULL)
+  {
+    GlobalGoalKeeper::StartBlock ();
+    if  (!factoryInstance)
+    {
+      factoryInstance = new XmlInt32Factory ();
+      XmlStream::RegisterFactory (factoryInstance);
+    }
+
+    GlobalGoalKeeper::EndBlock ();
+  }
+  return  factoryInstance;
+}
+
+
+XmlInt32Factory*  XmlInt32Factory::factoryInstance = NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
