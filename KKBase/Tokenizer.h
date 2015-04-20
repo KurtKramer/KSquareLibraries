@@ -9,8 +9,8 @@
  *@class  KKB::Tokenizer
  *@brief  Class is meant to break down a stream into a set of logical tokens.
  *@author Kurt Kramer
- *@details  This class was originally created while taking Non Linear Systems.  It breaks up a source 
- *          KKStr or text file into logical tokens.  You can create your own source of characters by
+ *@details  This class was originally created while taking Non Linear Systems. It breaks up a source 
+ *          KKStr or text file into logical tokens. You can create your own source of characters by
  *          creating a Class derived from KKB::TokenBuffer.
  */
 
@@ -33,16 +33,19 @@ namespace  KKB
 
     ~Tokenizer ();
 
-    bool      EndOfFile ();
 
-    KKStrPtr    GetNextToken ();
+    void  DefineOperatorChars (char* const _operatorChars);
+
+    bool  EndOfFile ();
+
+    KKStrPtr   GetNextToken ();
 
     /** 
      *@brief  Returns a list of tokens up to and including the first occurrence of 'delToken'.
      *@details Caller will take ownership of the returned tokens, and be responsible for
      *         deleting them.
      */
-    KKStrListPtr  GetNextTokens (const KKStr& delToken);  
+    KKStrListPtr   GetNextTokens (const KKStr& delToken);  
 
     KKStrConstPtr  Peek (kkuint32 idx);
 
@@ -51,10 +54,12 @@ namespace  KKB
 
   private:
     bool       DelimiterChar (char c)  const;
+    bool       OperatorChar  (char c)  const;
     KKStrPtr   GetNextTokenRaw ();
     char       GetNextChar ();
 
     void       Initialize ();
+    KKStrPtr   ProcessOperatorToken ();
     KKStrPtr   ProcessStringToken  (char strDelChar);
     KKStrPtr   ProcessFieldToken  ();
     void       ReadInNextLogicalToken ();
@@ -63,6 +68,8 @@ namespace  KKB
     bool             atEndOfFile;
     TokenBufferPtr   in;
     bool             secondCharAtEndOfFile;
+
+    char*            operatorChars;
 
     kkint32          tokenListLen;
     KKStrList        tokenList;      /**< @brief Will contain a fixed list of future tokens to read.

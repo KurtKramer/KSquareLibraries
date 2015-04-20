@@ -41,7 +41,7 @@ XmlAttributeList::XmlAttributeList (const XmlAttributeList&  attributes)
 
 
 
-KKStrConstPtr  XmlAttributeList::LookUp (const KKStr&  name)
+KKStrConstPtr  XmlAttributeList::LookUp (const KKStr&  name)  const
 {
   XmlAttributeList::const_iterator  idx;
   idx = find (name);
@@ -225,6 +225,7 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
 
   KKStrPtr t = NULL;
 
+
   if  (tokens->QueueSize () < 1)
   {
     delete  tokens;
@@ -238,78 +239,84 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
     t = NULL;
   }
 
-  // We will assume that we have a start tag unless proven otherwise.
-  tagType = tagStart;
-
-  if  ((tokens->QueueSize () > 0)  &&  (*(tokens->BackOfQueue ()) == ">"))
+  if  (tokens->QueueSize () < 1)
   {
-    t = tokens->PopFromBack ();
-    delete t;
-    t = NULL;
-
-    if  ((tokens->QueueSize () > 0)  &&  (*(tokens->BackOfQueue ()) == "/"))
-    {
-      // We have a Empty tag.
-      tagType = tagEmpty;
-    }
-  }
-
-  if  ((tokens->QueueSize () > 0)  &&  ((*tokens)[0] == "/"))
-  {
-    // We have a Ending Tag
-    tagType = tagEnd;
-    t = tokens->PopFromBack ();
-    delete t;
-    t = NULL;
-
-    if  (tokens->QueueSize () > 0)
-      name = (*tokens)[0];
-
+    // We have a empty tag with no name.
     delete  tokens;
     tokens = NULL;
     return;
   }
 
 
+  if  (*(tokens->BackOfQueue ()) == ">")
+  {
+    t = tokens->PopFromBack ();
+    delete  t;
+    t = NULL;
+  }
+
   if  (tokens->QueueSize () < 1)
   {
+    // We have a empty tag with no name.
     delete  tokens;
+    tokens = NULL;
     return;
   }
 
-
-  // At this point the only thing in tokens should be Attribute Pairs.
-  kkint32  idx = 0;
-  name = (*tokens)[idx];
-  idx++;
-
-  KKStr  attrName = "";
-  KKStr  attrValue = "";
-
-  while  (idx < tokens->QueueSize ())
+  if  (tokens->QueueSize () > 1)
   {
-    attrName = "";
-    attrValue = "";
-
-    attrName = (*tokens)[idx];  idx++;
-
-    if  (idx < tokens->QueueSize ())
+    if  (*(tokens->BackOfQueue ()) == "/")
     {
-      if  ((*tokens)[idx] == "=")
+      tagType = tagEmpty;
+      t = tokens->PopFromBack ();
+      delete  t;
+      t = NULL;
+    }
+  }
+
+  t = tokens->PopFromFront ();
+  if  (*t == "/")
+  {
+    tagType = tagEnd;
+    delete  t;
+    t = tokens->PopFromFront ();
+  }
+
+  if  (t)
+  {
+    // At this point "t" should be the name of the tag.
+    name = *t;
+    delete  t;
+    t = NULL;
+
+
+    // Everything else should be attribute pairs  (Name = value).
+
+    t = tokens->PopFromBack ();
+    while  (t != NULL)
+    {
+      KKStrPtr t2 = tokens->PopFromBack ();
+      KKStrPtr t3 = tokens->PopFromBack ();
+      while  ((*t2 != "=")  &&  (t3 != NULL))
       {
-        idx++;
-        if  (idx < tokens->QueueSize ())
-        {
-          attrValue = (*tokens)[idx];
-          idx++;
-        }
+        delete t;
+        t = t2;
+        t2 = t3;
+        t3 = tokens->PopFromBack ();
       }
 
-      attributes.insert (pair<KKStr, KKStr> (attrName, attrValue));
-    }
+      if  (t3 != NULL)
+      {
+        if  (attributes.LookUp (*t) == NULL)
+          attributes.insert (pair<KKStr, KKStr>(*t1, *t3));
+      }
 
-    if  ((idx < tokens->QueueSize ())  &&  ((*tokens)[idx] == ","))
-      idx++;
+      delete  t;   t  = NULL;
+      delete  t2;  t2 = NULL;
+      delete  t3;  t3 = NULL; 
+
+      t = tokens->PopFromBack ();
+    }
   }
 
   delete  tokens;  tokens = NULL;
