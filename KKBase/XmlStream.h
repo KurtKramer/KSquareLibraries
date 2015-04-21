@@ -35,13 +35,11 @@ namespace  KKB
 
     XmlStream (TokenizerPtr  _tokenStream);
 
-    XmlStream (const XmlStreamPtr  _parentXmlStream,
-               const KKStr&        _endOfElementTagName
+    XmlStream (const KKStr&  _fileName,
+               RunLog&       _log
               );
 
     virtual  ~XmlStream ();
-
-    void  BufferedXmlTag (XmlTagPtr  _bufferedXmlTag)  {bufferedXmlTag = _bufferedXmlTag;}
 
     virtual  XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
 
@@ -51,12 +49,12 @@ namespace  KKB
      */
     kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
 
-    XmlTagPtr     bufferedXmlTag;
-    KKStr         endOfElementTagName;
+    VectorKKStr   endOfElementTagNames;
     bool          endOfElemenReached;
-    XmlStreamPtr  paremtXmlStream;
+    KKStr         fileName;
+    KKStr         nameOfLastEndTag;
     TokenizerPtr  tokenStream;
-
+    bool          weOwnTokenStream;
   };  /* XmlStream */
 
 
@@ -91,6 +89,10 @@ namespace  KKB
     XmlAttributeList (const XmlAttributeList&  attributes);
 
     KKStrConstPtr  LookUp (const KKStr&  name) const;
+
+    void  AddAttribute (const KKStr&  name,
+                        const KKStr&  value
+                       );
   };  /* XmlAttributeList */
 
   typedef  XmlAttributeList*  XmlAttributeListPtr;
@@ -104,6 +106,10 @@ namespace  KKB
     typedef  enum {tagNULL, tagStart, tagEnd, tagEmpty}  TagTypes;
 
     XmlTag (TokenizerPtr  _tokenStream);
+
+    XmlTag (const KKStr&  _name,
+           TagTypes       _tagType
+           );
 
     /**
      *@brief Will construct a generic XML tag from the following characters in the stream.
@@ -119,6 +125,20 @@ namespace  KKB
     KKStrConstPtr  AttributeValue (kkint32 _attributeNum)  const;
     KKStrConstPtr  AttributeValue (const KKStr& attributeName)  const;
     KKStrConstPtr  AttributeValue (const char*  attributeName)  const;
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       const KKStr&  attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       double        attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       kkint32       attributeValue
+                      );
+
+    void  WriteXML (ostream& o);
 
   private:
     KKStr             name;
@@ -294,6 +314,45 @@ namespace  KKB
     KKStrPtr  value;
   };
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
+
+
+
+
+
+
+#define  XmlFactoryMacro(NameOfClass)                                            \
+    class  XmlFactory##NameOfClass: public XmlFactory                             \
+    {                                                                             \
+    public:                                                                       \
+      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
+      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
+                                                               XmlStream&  s,     \
+                                                               RunLog&     log    \
+                                                              )                   \
+      {                                                                           \
+        return new XmlElement##NameOfClass(tag, s, log);                          \
+      }                                                                           \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   factoryInstance;                        \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
+      {                                                                           \
+        if  (factoryInstance == NULL)                                             \
+        {                                                                         \
+          GlobalGoalKeeper::StartBlock ();                                        \
+          if  (!factoryInstance)                                                  \
+          {                                                                       \
+            factoryInstance = new XmlFactory##NameOfClass ();                     \
+            XmlFactory::RegisterFactory (factoryInstance);                        \
+          }                                                                       \
+          GlobalGoalKeeper::EndBlock ();                                          \
+         }                                                                        \
+        return  factoryInstance;                                                  \
+      }                                                                           \
+    };                                                                            \
+                                                                                  \
+    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
+                  = XmlFactory##NameOfClass::FactoryInstance ();
 
 
 

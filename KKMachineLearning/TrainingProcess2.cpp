@@ -761,8 +761,6 @@ SVMModelPtr  TrainingProcess2::Model3 ()
 
 
 
-
-
 void  TrainingProcess2::WriteXml (ostream&  o)
 {
   log.Level (20) << "TrainingProcess2::WriteXml" << endl;

@@ -10,13 +10,26 @@ using namespace  std;
 
 #include "KKBaseTypes.h"
 #include "OSservices.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
 
 #include "TrainingClass.h"
+#include "TrainingConfiguration2.h"
 #include "MLClass.h"
 using namespace  KKMLL;
 
+
+
+TrainingClass::TrainingClass ():
+     directories     (),
+     featureFileName (),
+     weight          (0.0f),
+     countFactor     (0.0f),
+     subClassifier   (NULL),
+     mlClass         (NULL)
+{
+}
 
 
 TrainingClass::TrainingClass (const VectorKKStr&        _directories,
@@ -127,11 +140,110 @@ KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
 
 
 
+
+void  TrainingClass::WriteXML (ostream&  o)
+{
+  XmlTag  t ("TrainingClass", XmlTag::tagEmpty);
+  t.AddAtribute ("MlClass", mlClass->Name ());
+
+  if  (!featureFileName.Empty ())
+    t.AddAtribute ("FeatureFileName", featureFileName);
+
+  if  (weight != 0.0f)
+    t.AddAtribute ("Weight", weight);
+
+  if  (countFactor != 0.0f)
+    t.AddAtribute ("CountFactor", countFactor);
+
+  if  (subClassifier)
+    t.AddAtribute ("SubClassifier", subClassifier->ConfigRootName ());
+
+  kkint32  x = 0;
+  VectorKKStr::const_iterator  idx;
+  for  (idx = directories.begin (); idx != directories.end ();  ++idx)
+  {
+    if  (!idx->Empty ())
+      t.AddAtribute ("Dir_" + StrFormatInt (x, "00"), *idx);
+    ++x;
+  }
+
+  t.WriteXML (o);
+}
+
+
+
+
+
+XmlElementTrainingClass::XmlElementTrainingClass (XmlTagPtr   tag,
+                                                  XmlStream&  s,
+                                                  RunLog&     log
+                                                 ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new TrainingClass ();
+  kkuint32  c = tag->AttributeCount ();
+  for  (kkuint32 x = 0;  x < c;  ++x)
+  {
+    const KKStr&  n = tag->AttributeName (x);
+    const KKStr&  v = tag->AttributeValue (x);
+    if  (n.EqualIgnoreCase ("MlClass"))
+      value->MLClass (MLClass::CreateNewMLClass (n, -1));
+
+    else if  (n.EqualIgnoreCase ("FeatureFileName"))
+      value->FeatureFileName (v);
+
+    else if  (n.EqualIgnoreCase ("Weight"))
+      value->Weight (v.ToFloat ());
+
+    else if  (n.EqualIgnoreCase ("CountFactor"))
+      value->CountFactor (v.ToFloat ());
+
+    else if  (n.EqualIgnoreCase ("SubClassifier"))
+      value->SubClassifierName (v);
+
+    else if  (n.StartsWith ("Dir_"))
+      value->AddDirectory (v);
+  }
+  
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+    t = s.GetNextToken (log);
+}
+
+
+
+XmlElementTrainingClass::~XmlElementTrainingClass ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+
+TrainingClassPtr  XmlElementTrainingClass::Value ()  const
+{
+  return value;
+}
+
+
+TrainingClassPtr  XmlElementTrainingClass::TakeOwnership () 
+{
+  TrainingClassPtr t = value;
+  value = NULL;
+  return t;
+}
+
+
+
+
+
+
 TrainingClassList::TrainingClassList (const KKStr&  _rootDir,
                                       bool          owner
                                      ):
     KKQueue<TrainingClass> (owner),
-             rootDir                (_rootDir)
+    rootDir                (_rootDir)
 {
 }
 
@@ -152,7 +264,6 @@ TrainingClassList::TrainingClassList (const TrainingClassList&  tcl,
            rootDir                (tcl.rootDir)
 {
 }
-
 
 
 
@@ -231,3 +342,103 @@ TrainingClassListPtr   TrainingClassList::DuplicateListAndContents ()  const
 
   return  dupList;
 }  /* TrainingClassListPtr */
+
+
+
+void  TrainingClassList::WriteXML (ostream&      o,
+                                   const KKStr&  name
+                                  )
+{
+  XmlTag  tagStart ("TrainingClassList", XmlTag::tagStart);
+  if  (!name.Empty ())
+    tagStart.AddAtribute ("Name", name);
+  tagStart.AddAtribute ("Count", (kkint32)size ());
+  if  (!rootDir.Empty ())
+    tagStart.AddAtribute ("RootDir", rootDir);
+
+  tagStart.WriteXML (o);
+
+  const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  ++idx)
+  {
+    TrainingClassPtr  tc = *idx;
+    tc->WriteXML (o);
+  }
+
+  XmlTag  tagEnd ("TrainingClassList", XmlTag::tagEnd);
+  tagEnd.WriteXML (o);
+}  /* WriteXML */
+
+
+
+
+
+
+
+XmlElementTrainingClassList::XmlElementTrainingClassList (XmlTagPtr   tag,
+                                                          XmlStream&  s,
+                                                          RunLog&     log
+                                                         ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  KKStr  name;
+  KKStr  rootDir;
+  kkuint32  count = 0;
+  kkuint32  c = tag->AttributeCount ();
+  for  (kkuint32 x = 0;  x < c;  ++x)
+  {
+    const KKStr&  n = tag->AttributeName (x);
+    const KKStr&  v = tag->AttributeValue (x);
+    if  (n.EqualIgnoreCase ("MlClass"))
+      value->MLClass (MLClass::CreateNewMLClass (n, -1));
+
+    else if  (n.EqualIgnoreCase ("FeatureFileName"))
+      value->FeatureFileName (v);
+
+    else if  (n.EqualIgnoreCase ("Weight"))
+      value->Weight (v.ToFloat ());
+
+    else if  (n.EqualIgnoreCase ("CountFactor"))
+      value->CountFactor (v.ToFloat ());
+
+    else if  (n.EqualIgnoreCase ("SubClassifier"))
+      value->SubClassifierName (v);
+
+    else if  (n.StartsWith ("Dir_"))
+      value->AddDirectory (v);
+  }
+  
+
+  value = new TrainingClass ();
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+    t = s.GetNextToken (log);
+}
+
+
+
+XmlElementTrainingClassList::~XmlElementTrainingClassList ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+
+TrainingClassListPtr  XmlElementTrainingClassList::Value ()  const
+{
+  return value;
+}
+
+
+TrainingClassListPtr  XmlElementTrainingClassList::TakeOwnership () 
+{
+  TrainingClassPtr t = value;
+  value = NULL;
+  return t;
+}
+
+
+

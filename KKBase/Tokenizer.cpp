@@ -151,6 +151,12 @@ KKStrListPtr  Tokenizer::GetNextTokens (const KKStr& delToken)
 
 
 
+void  Tokenizer::PushTokenOnFront (KKStrPtr  t)
+{
+  tokenList.PushOnFront (t);
+}
+
+
 
 
 KKStrConstPtr  Tokenizer::Peek (kkuint32 idx)
@@ -247,7 +253,7 @@ bool  Tokenizer::DelimiterChar (char c)  const
 
 bool  Tokenizer::OperatorChar (char c)  const
 {
-  return  (strchr (operatorChars , c) != NULL)
+  return  (strchr (operatorChars, c) != NULL);
 }
 
 

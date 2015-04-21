@@ -49,6 +49,8 @@ namespace  KKB
 
     KKStrConstPtr  Peek (kkuint32 idx);
 
+    void  PushTokenOnFront (KKStrPtr  t);
+
     KKStrConstPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
 
 

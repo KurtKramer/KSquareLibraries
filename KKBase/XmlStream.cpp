@@ -3,16 +3,13 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <string.h>
 #include <string>
 #include <iostream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
@@ -22,44 +19,45 @@ using namespace std;
 #include "KKException.h"
 #include "KKStrParser.h"
 #include "Tokenizer.h"
-
 #include "XmlStream.h"
 using namespace KKB;
 
 
 
 
-
-
 XmlStream::XmlStream (TokenizerPtr _tokenStream):
-    bufferedXmlTag       (NULL),
-    endOfElementTagName  (),
+    endOfElementTagNames (),
     endOfElemenReached   (false),
-    paremtXmlStream      (NULL),
-    tokenStream          (_tokenStream)
+    fileName             (),
+    nameOfLastEndTag     (),
+    tokenStream          (_tokenStream),
+    weOwnTokenStream     (false)
 {
+  tokenStream->DefineOperatorChars ("<>/");
 }
 
 
 
-XmlStream::XmlStream (const XmlStreamPtr  _parentXmlStream,
-                      const KKStr&        _endOfElementTagName
+XmlStream::XmlStream (const KKStr&  _fileName,
+                      RunLog&       _log
                      ):
-
-    bufferedXmlTag       (NULL),
-    endOfElementTagName  (_endOfElementTagName),
+    endOfElementTagNames (),
     endOfElemenReached   (false),
-    paremtXmlStream      (_parentXmlStream),
-    tokenStream          (NULL)
+    fileName             (_fileName),
+    nameOfLastEndTag     (),
+    tokenStream          (NULL),
+    weOwnTokenStream     (false)
 {
+  tokenStream = new Tokenizer (fileName);
+  weOwnTokenStream = true;
+  tokenStream->DefineOperatorChars ("<>/");
 }
+
 
 
 
 XmlStream::~XmlStream ()
 {
-  delete  bufferedXmlTag;
-  bufferedXmlTag = NULL;
 }
 
 
@@ -70,32 +68,6 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     return NULL;
 
   XmlTokenPtr  token = NULL;
-
-  if  (bufferedXmlTag)
-  {
-    endOfElemenReached = true;
-    // We are at a <end-tag />  just need to work our way up the chain of 'XmlStream' instances.
-    if  (bufferedXmlTag->Name ().EqualIgnoreCase (endOfElementTagName))
-    {
-      // We are at the matching XmlStream and can delete the bufferedXmlTag.
-      delete  bufferedXmlTag;
-      bufferedXmlTag = NULL;
-    }
-    else
-    {
-      if  (paremtXmlStream)
-      {
-        paremtXmlStream->BufferedXmlTag (bufferedXmlTag);
-        bufferedXmlTag = NULL;
-      }
-      else
-      {
-        delete bufferedXmlTag;
-        bufferedXmlTag = NULL;
-      }
-    }
-    return NULL;
-  }
 
   KKStrPtr  t = tokenStream->GetNextToken ();
   if  (t == NULL)
@@ -112,10 +84,11 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       if  (!factory)
         factory = XmlElementKKStr::FactoryInstance ();
 
-      XmlStreamPtr  elementSubStream = new XmlStream (*this, tag->Name ());
+      endOfElementTagNames.push_back (tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);
-      delete  elementSubStream;
-      elementSubStream = NULL;
+      KKStr  endTagName = endOfElementTagNames.back ();
+      endOfElementTagNames.pop_back ();
+      endOfElemenReached = false;
     }
 
     else if  (tag->TagType () == XmlTag::tagEmpty)
@@ -123,30 +96,36 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
         factory = XmlElementKKStr::FactoryInstance ();
-      emptyTagInProgress = true;
+      endOfElemenReached = true;
       token = factory->ManufatureXmlElement (tag, *this, log);
-      emptyTagInProgress = false;
+      endOfElemenReached = false;
     }
-    else
+    else if  (tag->TagType () == XmlTag::tagEnd)
     {
-      // We have a end-tags  "Tag"  Its should match the last "Start-Tag"  if not then the xml file is not correctly formatted.
-      // KKKK
-      if  (elementNameStack.size () < 1)
+      if  (endOfElementTagNames.size () < 1)
       {
+        // end tag with no matching start tag.
         log.Level (-1) << endl
-          << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << tag->Name () << ">  with no matching start-tag." << endl
-          << endl;
-        token = GetNextToken (log);
+            << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << tag->Name () << ">  with no matching start-tag." << endl
+            << endl;
       }
-
       else
       {
-        kkint32  zed = FindLastInstanceOnElementNameStack (tag->Name ())
-        while  (zed)
-
-
+        endOfElemenReached = true;
+        nameOfLastEndTag = tag->Name ();
+        if  (!endOfElementTagNames.back ().EqualIgnoreCase (nameOfLastEndTag))
+        {
+          log.Level (-1) << endl
+            << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << nameOfLastEndTag << ">  does not match StartTag <" << endOfElementTagNames.back () << ">." << endl
+            << endl;
+          // </End-Tag>  does not match <Start-Tag>  we will put back on token stream assuming that we are missing a </End-Tag>
+          // We will end the current element here.
+          tokenStream->PushTokenOnFront (new KKStr (">"));
+          tokenStream->PushTokenOnFront (new KKStr (nameOfLastEndTag));
+          tokenStream->PushTokenOnFront (new KKStr ("/"));
+          tokenStream->PushTokenOnFront (new KKStr ("<"));
+        }
       }
-
     }
   }
   else
@@ -157,14 +136,6 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
 }  /* GetNextToken */
 
  
-
-XmlElementPtr  XmlStream::GetNextElement (RunLog&  log)
-{
-}
-
-
-
-
 
 
 
@@ -196,6 +167,20 @@ KKStrConstPtr  XmlAttributeList::LookUp (const KKStr&  name)  const
 }
 
  
+
+
+void  XmlAttributeList::AddAttribute (const KKStr&  name,
+                                      const KKStr&  value
+                                     )
+{
+  XmlAttributeList::iterator  idx;
+  idx = find (name);
+  if  (idx == end ())
+    insert (pair<KKStr,KKStr> (name, value));
+  else
+    idx->second = value;
+}
+
 
 
 
@@ -458,6 +443,52 @@ XmlTag::XmlTag (TokenizerPtr  tokenStream):
 
 
 
+XmlTag::XmlTag (const KKStr&  _name,
+                TagTypes      _tagType
+               ):
+   name    (_name),
+   tagType (_tagType)
+{
+}
+
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           const KKStr&  attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName, attributeValue);
+}
+
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           double        attributeValue
+                          )
+{
+  KKStr  s (12);
+  s << attributeValue;
+  attributes.AddAttribute (attributeName, s);
+}
+
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           kkint32       attributeValue
+                         )
+{
+  attributes.AddAttribute (attributeName, StrFromInt32 (attributeValue));
+}
+
+
+
+
+
+
+
 KKStrConstPtr  XmlTag::AttributeValue (const KKStr& attributeName)  const
 {
   return  attributes.LookUp (attributeName);
@@ -470,6 +501,29 @@ KKStrConstPtr  XmlTag::AttributeValue (const char* attributeName)  const
 {
   return  attributes.LookUp (attributeName);
 } /* AttributeValue */
+
+
+
+
+void  XmlTag::WriteXML (ostream& o)
+{
+  o << "<";
+  
+  if  (tagType == tagEnd)
+    o << "/";
+
+  o << name;
+
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin();  idx != attributes.end ();  ++idx)
+    o << " " << idx->first << "=" << idx->second.QuotedStr ();
+
+  if  (tagType == tagEmpty)
+    o << "/";
+
+   o << ">";
+}  /* WriteXML */
+
 
 
 
@@ -610,8 +664,6 @@ XmlFactory::XmlFactory (const KKStr&  _clasName):
 }
 
 
-
-
 XmlElementInt32::XmlElementInt32 (XmlTagPtr   tag,
                                   XmlStream&  s,
                                   RunLog&     log
@@ -620,63 +672,26 @@ XmlElementInt32::XmlElementInt32 (XmlTagPtr   tag,
 {
   KKStrConstPtr  valueStr = tag->AttributeValue ("Value");
   if  (valueStr)
-    value = valueStr->ToInt32 ();
-
-  if  (tag->TagType () != XmlTag::tagEmpty)
+  value = valueStr->ToInt32 ();
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
   {
-    XmlTokenPtr t = s.GetNextToken (log);
-    while  (t != NULL)
+    if  (t->TokenType () == XmlToken::tokContent)
     {
-      if  (t->TokenType () == XmlToken::tokContent)
-      {
-        XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
-        value = c->Content ().ToInt32 ();
-      }
-
-      delete  t;
-      t = NULL;
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      value = c->Content ()->ToInt32 ();
     }
+    delete  t;
+    t = s.GetNextToken (log);
   }
 }
 
 
 
-class  XmlInt32Factory: public XmlFactory
-{
-  XmlInt32Factory (): XmlFactory ("Int32") {}
 
-  virtual
-  XmlElementInt32Ptr  ManufatureXmlElement (XmlTagPtr   tag,
-                                            XmlStream&  s,
-                                            RunLog&     log
-                                           )
-  {
-    return new XmlElementInt32 (tag, s, log);
-  }
+//XmlFactoryMacro(XmlInt32Factory,XmlElementInt32,"Int32")
+XmlFactoryMacro(Int32)
 
-  static  XmlInt32Factory*  FactoryInstance ();
-  static  XmlInt32Factory*  factoryInstance;
-};
-
-
-
-XmlInt32Factory*  XmlInt32Factory::FactoryInstance ()
-{
-  if  (factoryInstance == NULL)
-  {
-    GlobalGoalKeeper::StartBlock ();
-    if  (!factoryInstance)
-    {
-      factoryInstance = new XmlInt32Factory ();
-      XmlFactory::RegisterFactory (factoryInstance);
-    }
-
-    GlobalGoalKeeper::EndBlock ();
-  }
-  return  factoryInstance;
-}
-
-XmlInt32Factory*  XmlInt32Factory::factoryInstance =  XmlInt32Factory::FactoryInstance ();
 
 
 
@@ -739,92 +754,7 @@ VectorInt32*  XmlElementVectorInt32::TakeOwnership ()
 }
 
 
-
-
-class  XmlVectorInt32Factory: public XmlFactory
-{
-  XmlVectorInt32Factory (): XmlFactory ("VectorInt32") {}
-
-  virtual
-  XmlElementVectorInt32Ptr  ManufatureXmlElement (XmlTagPtr   tag,
-                                                  XmlStream&  s,
-                                                  RunLog&     log
-                                                )
-  {
-    return new XmlElementVectorInt32 (tag, s, log);
-  }
-
-  static  XmlVectorInt32Factory*  FactoryInstance ();
-  static  XmlVectorInt32Factory*  factoryInstance;
-};
-
-
-
-XmlVectorInt32Factory*  XmlVectorInt32Factory::FactoryInstance ()
-{
-  if  (factoryInstance == NULL)
-  {
-    GlobalGoalKeeper::StartBlock ();
-    if  (!factoryInstance)
-    {
-      factoryInstance = new XmlVectorInt32Factory ();
-      XmlFactory::RegisterFactory (factoryInstance);
-    }
-
-    GlobalGoalKeeper::EndBlock ();
-  }
-  return  factoryInstance;
-}
-
-XmlVectorInt32Factory*  XmlVectorInt32Factory::factoryInstance = XmlVectorInt32Factory::FactoryInstance ();
-
-
-
-
-
-
-
-
-
-class  XmlKKStrFactory: public XmlFactory
-{
-public:
-  XmlKKStrFactory (): XmlFactory ("KKStr") {}
-
-  virtual
-  XmlElementKKStrPtr  ManufatureXmlElement (XmlTagPtr   tag,
-                                            XmlStream&  s,
-                                            RunLog&     log
-                                           )
-  {
-    return new XmlElementKKStr (tag, s, log);
-  }
-
-  static  XmlKKStrFactory*  FactoryInstance ();
-  static  XmlKKStrFactory*  factoryInstance;
-};
-
-
-
-XmlKKStrFactory*  XmlKKStrFactory::FactoryInstance ()
-{
-  if  (factoryInstance == NULL)
-  {
-    GlobalGoalKeeper::StartBlock ();
-    if  (!factoryInstance)
-    {
-      factoryInstance = new XmlKKStrFactory ();
-      XmlFactory::RegisterFactory (factoryInstance);
-    }
-
-    GlobalGoalKeeper::EndBlock ();
-  }
-  return  factoryInstance;
-}
-
-XmlKKStrFactory*  XmlKKStrFactory::factoryInstance = XmlKKStrFactory::FactoryInstance ();
-
-
+XmlFactoryMacro(VectorInt32)
 
 
 
@@ -874,10 +804,20 @@ KKStrPtr  XmlElementKKStr::TakeOwnership ()
 }
 
 
+
+
+XmlFactoryMacro(KKStr)
+
+
+
+
 XmlFactoryPtr  XmlElementKKStr::FactoryInstance ()
 {
-  return  XmlKKStrFactory::FactoryInstance ();
+  return  XmlFactoryKKStr::FactoryInstance ();
 }
+
+
+
 
 
 
