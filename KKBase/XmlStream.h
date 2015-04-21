@@ -19,6 +19,45 @@ namespace  KKB
    *        of objects to disk.  Right now it is more of an Idea Generator than anything usable.
    */
 
+  class XmlToken;
+  typedef  XmlToken*  XmlTokenPtr;
+
+  class XmlElement;
+  typedef  XmlElement*  XmlElementPtr;
+
+
+
+
+  class  XmlStream
+  {
+  public:
+    XmlStream (TokenizerPtr  _tokenStream);
+
+    typedef  XmlStream*  XmlStreamPtr;
+
+    XmlStream ();
+    ~XmlStream ();
+
+    XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
+
+    XmlElementPtr  GetNextElement (RunLog&  log);
+
+
+  private:
+    TokenizerPtr  tokenStream;
+  };  /* XmlStream */
+
+  typedef  XmlStream::XmlStreamPtr  XmlStreamPtr;
+
+
+
+
+
+
+
+
+
+
   class  XmlAttribute
   {
   public:
@@ -91,15 +130,16 @@ namespace  KKB
     typedef  XmlToken*  XmlTokenPtr;
     typedef  enum  {tokNULL, tokElement, tokContent}  TokenTypes;
 
-    XmlToken (TokenTypes  _tokenType);
+    XmlToken ();
+    virtual  ~XmlToken ();
 
-    TokenTypes  TokenType ()  {return tokenType;}
+    virtual  TokenTypes  TokenType () = 0;
 
   private:
-    TokenTypes  tokenType;
   };  /* XmlToken */
 
   typedef  XmlToken::XmlTokenPtr  XmlTokenPtr;
+
 
 
   class  XmlElement: public  XmlToken
@@ -107,11 +147,14 @@ namespace  KKB
   public:
     typedef  XmlElement*  XmlElementPtr;
 
-    XmlElement (XmlTagPtr  _nameTag,
-                void*      _body
+    XmlElement (XmlTagPtr   _nameTag,
+                XmlStream&  s,
+                RunLog&     log
                );
                 
     virtual  ~XmlElement ();
+
+    virtual  TokenTypes  TokenType () {return  XmlToken::tokElement;}
 
     const KKStr&   Name () const;
 
@@ -131,12 +174,16 @@ namespace  KKB
   public:
     typedef  XmlContent* XmlContentPtr;
 
-    XmlContent (const KKStr&  _content): XmlToken (tokContent), content (_content) {}
+    XmlContent (KKStrPtr  _content);
+    virtual ~XmlContent ();
 
-    const KKStr  Content () const  {return  content;}
+    virtual  TokenTypes  TokenType () {return  XmlToken::tokContent;}
+
+    KKStrPtr const  Content () const  {return  content;}
+    KKStrPtr        TakeOwnership ();
 
   private:
-    KKStr  content;
+    KKStrPtr  content;
   };  /* XmlContent */
 
   typedef  XmlContent*  XmlContentPtr;
@@ -144,55 +191,107 @@ namespace  KKB
 
 
 
-  class  XmlStream
+
+  class  XmlFactory
   {
   public:
-    XmlStream (TokenizerPtr  _tokenStream);
+    XmlFactory (const KKStr&  _clasName);
 
-    typedef  XmlStream*  XmlStreamPtr;
+    virtual  const KKStr&  ClassName ()  const  {return className;}
 
-    XmlStream ();
-    ~XmlStream ();
-
-    XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
-
-    XmlElementPtr  GetNextElement ();
-
-
-    class  Factory
-    {
-    public:
-      Factory (const KKStr&  _clasName);
-      virtual  const KKStr&  ClassName ()  const  {return className;}
-
-      virtual  void*  ManufatureInstance (const XmlTag&  tag,
-                                          XmlStream&     s,
-                                          RunLog&        log
-                                         ) = 0;
-    private:
-      KKStr  className;  /**< Class that this factory produces instances of. */
-    };
-
-
-
-    static  Factory*  FactoryLookUp (const KKStr&  className);
+    virtual  XmlElementPtr  ManufatureXmlElement (XmlTagPtr   tag,
+                                                  XmlStream&  s,
+                                                  RunLog&     log
+                                                 ) = 0;
+      
+    static  XmlFactory*  FactoryLookUp (const KKStr&  className);
 
     /**
      *@brief  register a instance of a Derives Factory class that is meant to create instances for a  specific class.
      *@param[in]  factory  The instance that is being registered; factories will take ownership and the method 
      *  'XmlStream' will be responsible for deleting upon application shutdown.
      */
-    static  void   RegisterFactory  (Factory*  factory);
+    static  void   RegisterFactory  (XmlFactory*  factory);
 
-    static  map<KKStr, Factory*>*  factories;
+    static  map<KKStr, XmlFactory*>*  factories;
 
     static  void  FinalCleanUp ();
+    private:
+      KKStr  className;  /**< Class that this factory produces instances of. */
+
+  };  /* XmlFactory */
+
+  typedef  XmlFactory*  XmlFactoryPtr;
+  typedef  XmlFactory const *  XmlFactoryConstPtr;
+
+
+
+
+  class  XmlElementInt32:  public  XmlElement
+  {
+  public:
+    XmlElementInt32 (XmlTagPtr   tag,
+                     XmlStream&  s,
+                     RunLog&     log
+                    );
+                
+    virtual  ~XmlElementInt32 ();
+
+    kkint32  Value ()  const;
 
   private:
-    TokenizerPtr  tokenStream;
-  };  /* XmlStream */
-}
+    kkint32  value;
+  };
+  typedef  XmlElementInt32*  XmlElementInt32Ptr;
 
+
+
+  class  XmlElementVectorInt32:  public  XmlElement
+  {
+  public:
+    XmlElementVectorInt32 (XmlTagPtr   tag,
+                           XmlStream&  s,
+                           RunLog&     log
+                          );
+                
+    virtual  ~XmlElementVectorInt32 ();
+
+    VectorInt32*  const  Value ()  const;
+
+    VectorInt32*  TakeOwnership ();
+
+  private:
+    VectorInt32*  value;
+  };
+  typedef  XmlElementVectorInt32*  XmlElementVectorInt32Ptr;
+
+
+
+  class  XmlElementKKStr:  public  XmlElement
+  {
+  public:
+    XmlElementKKStr (XmlTagPtr   tag,
+                     XmlStream&  s,
+                     RunLog&     log
+                    );
+                
+    virtual  ~XmlElementKKStr ();
+
+    KKStrPtr  const  Value ()  const;
+
+    KKStrPtr  TakeOwnership ();
+
+    static  XmlFactoryPtr  FactoryInstance ();
+
+  private:
+    KKStrPtr  value;
+  };
+  typedef  XmlElementKKStr*  XmlElementKKStrPtr;
+
+
+
+
+}  /* KKB */
 
 
 
