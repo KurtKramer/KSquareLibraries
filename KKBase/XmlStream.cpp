@@ -30,8 +30,27 @@ using namespace KKB;
 
 
 
+
 XmlStream::XmlStream (TokenizerPtr _tokenStream):
-  tokenStream (_tokenStream)
+    bufferedXmlTag       (NULL),
+    endOfElementTagName  (),
+    endOfElemenReached   (false),
+    paremtXmlStream      (NULL),
+    tokenStream          (_tokenStream)
+{
+}
+
+
+
+XmlStream::XmlStream (const XmlStreamPtr  _parentXmlStream,
+                      const KKStr&        _endOfElementTagName
+                     ):
+
+    bufferedXmlTag       (NULL),
+    endOfElementTagName  (_endOfElementTagName),
+    endOfElemenReached   (false),
+    paremtXmlStream      (_parentXmlStream),
+    tokenStream          (NULL)
 {
 }
 
@@ -39,37 +58,102 @@ XmlStream::XmlStream (TokenizerPtr _tokenStream):
 
 XmlStream::~XmlStream ()
 {
+  delete  bufferedXmlTag;
+  bufferedXmlTag = NULL;
 }
 
 
 
 XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
 {
+  if  (endOfElemenReached)
+    return NULL;
+
   XmlTokenPtr  token = NULL;
 
-  if  (!tokenStream)
+  if  (bufferedXmlTag)
+  {
+    endOfElemenReached = true;
+    // We are at a <end-tag />  just need to work our way up the chain of 'XmlStream' instances.
+    if  (bufferedXmlTag->Name ().EqualIgnoreCase (endOfElementTagName))
+    {
+      // We are at the matching XmlStream and can delete the bufferedXmlTag.
+      delete  bufferedXmlTag;
+      bufferedXmlTag = NULL;
+    }
+    else
+    {
+      if  (paremtXmlStream)
+      {
+        paremtXmlStream->BufferedXmlTag (bufferedXmlTag);
+        bufferedXmlTag = NULL;
+      }
+      else
+      {
+        delete bufferedXmlTag;
+        bufferedXmlTag = NULL;
+      }
+    }
     return NULL;
+  }
 
   KKStrPtr  t = tokenStream->GetNextToken ();
   if  (t == NULL)
     return NULL;
 
-  if  (*t != "<")
+  if  (*t == "<")
   {
+    delete  t;
+    t = NULL;
     XmlTagPtr  tag = new XmlTag (tokenStream);
-    if  ((tag->TagType () == XmlTag::tagStart)  ||  (tag->TagType () == XmlTag::tagEmpty))
+    if  (tag->TagType () == XmlTag::tagStart)
     {
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
         factory = XmlElementKKStr::FactoryInstance ();
+
+      XmlStreamPtr  elementSubStream = new XmlStream (*this, tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);
+      delete  elementSubStream;
+      elementSubStream = NULL;
+    }
+
+    else if  (tag->TagType () == XmlTag::tagEmpty)
+    {
+      XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
+      if  (!factory)
+        factory = XmlElementKKStr::FactoryInstance ();
+      emptyTagInProgress = true;
+      token = factory->ManufatureXmlElement (tag, *this, log);
+      emptyTagInProgress = false;
     }
     else
     {
-      token = new 
+      // We have a end-tags  "Tag"  Its should match the last "Start-Tag"  if not then the xml file is not correctly formatted.
+      // KKKK
+      if  (elementNameStack.size () < 1)
+      {
+        log.Level (-1) << endl
+          << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << tag->Name () << ">  with no matching start-tag." << endl
+          << endl;
+        token = GetNextToken (log);
+      }
+
+      else
+      {
+        kkint32  zed = FindLastInstanceOnElementNameStack (tag->Name ())
+        while  (zed)
+
+
+      }
 
     }
   }
+  else
+  {
+    token = new XmlContent (t);
+  }
+  return  token;
 }  /* GetNextToken */
 
  
@@ -435,8 +519,6 @@ XmlContent::XmlContent (KKStrPtr  _content):
 
 
 
-
-
 XmlContent::~XmlContent ()
 {
   delete  content;
@@ -444,11 +526,13 @@ XmlContent::~XmlContent ()
 }
 
 
+
 KKStrPtr  XmlContent::TakeOwnership ()
 {
-  KKStrPtr  c = this->content}
-
-
+  KKStrPtr  c = content;
+  content = NULL;
+  return c;
+}
 
 
 

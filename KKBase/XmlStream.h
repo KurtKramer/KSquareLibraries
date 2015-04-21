@@ -31,29 +31,36 @@ namespace  KKB
   class  XmlStream
   {
   public:
-    XmlStream (TokenizerPtr  _tokenStream);
-
     typedef  XmlStream*  XmlStreamPtr;
 
-    XmlStream ();
-    ~XmlStream ();
+    XmlStream (TokenizerPtr  _tokenStream);
 
-    XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
+    XmlStream (const XmlStreamPtr  _parentXmlStream,
+               const KKStr&        _endOfElementTagName
+              );
 
-    XmlElementPtr  GetNextElement (RunLog&  log);
+    virtual  ~XmlStream ();
 
+    void  BufferedXmlTag (XmlTagPtr  _bufferedXmlTag)  {bufferedXmlTag = _bufferedXmlTag;}
+
+    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
 
   private:
+    /**
+     *@brief  returns the index of the latest instance of 'name' pushed onto the stack; if no entry with the same name returns -1.
+     */
+    kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
+
+    XmlTagPtr     bufferedXmlTag;
+    KKStr         endOfElementTagName;
+    bool          endOfElemenReached;
+    XmlStreamPtr  paremtXmlStream;
     TokenizerPtr  tokenStream;
+
   };  /* XmlStream */
 
+
   typedef  XmlStream::XmlStreamPtr  XmlStreamPtr;
-
-
-
-
-
-
 
 
 
