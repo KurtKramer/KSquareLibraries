@@ -27,6 +27,7 @@
 #include <vector>
 #include "KKStr.h"
 #include "KKQueue.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
 
@@ -157,7 +158,50 @@ namespace KKMLL
     std::map<KKStr, AttributePtr>  nameIndex;
   };  /* AttributeList */
 
+
   KKStr  AttributeTypeToStr (AttributeType  type);
+  AttributeType  AttributeTypeFromStr (const KKStr&  s);
+
+
+
+
+
+
+
+
+  class  XmlElementAttribute:  public  XmlElement
+  {
+  public:
+    XmlElementAttribute (XmlTagPtr   tag,
+                         XmlStream&  s,
+                         RunLog&     log
+                        );
+                
+    virtual  ~XmlElementAttribute ();
+
+    AttributePtr  Value ()  const;
+
+    AttributePtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const Attribute&  tc,
+                    const KKStr&      varName,
+                    ostream&          o
+                   );
+  private:
+    AttributePtr  value;
+  };
+  typedef  XmlElementAttribute*  XmlElementAttributePtr;
+
+
+
+
+
+
+
+
+
+
 
 }  /* namespace KKMLL */
 

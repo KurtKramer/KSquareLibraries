@@ -5,6 +5,7 @@
 #include "DateTime.h"
 #include "GoalKeeper.h"
 #include "KKStr.h"
+#include "XmlStream.h"
 
 #include "FileDesc.h"
 #include "FactoryFVProducer.h"
@@ -15,6 +16,7 @@
 #include "ModelParamOldSVM.h"
 #include "SVMparam.h"
 #include "TrainingClass.h"
+
 
 
 namespace KKMLL 

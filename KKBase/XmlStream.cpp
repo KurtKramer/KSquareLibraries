@@ -8,6 +8,7 @@
 #include <string.h>
 #include <string>
 #include <iostream>
+#include <ostream>
 #include <vector>
 #include "MemoryDebug.h"
 using namespace std;
@@ -820,11 +821,160 @@ XmlFactoryPtr  XmlElementKKStr::FactoryInstance ()
 
 
 
+XmlElementVectorKKStr::XmlElementVectorKKStr (XmlTagPtr   tag,
+                                              XmlStream&  s,
+                                              RunLog&     log
+                                             ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new VectorKKStr (10);
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      KKStrParser p (*c->Content ());
+
+      while  (p.MoreTokens ())
+      {
+        KKStr  s = p.GetNextToken (",\t\n\r");
+        value->push_back (s);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
+
+
+
+
+XmlElementVectorKKStr::~XmlElementVectorKKStr ()
+{
+  delete  value;
+  value = NULL;
+}
+
+VectorKKStr*  const  XmlElementVectorKKStr::Value ()  const
+{
+  return  value;
+}
+
+
+VectorKKStr*  XmlElementVectorKKStr::TakeOwnership ()
+{
+  VectorKKStr* v = value;
+  value = NULL;
+  return v;
+}
+
+
+void  XmlElementVectorKKStr::WriteXml (const VectorKKStr&  v,
+                                       const KKStr&        varName,
+                                       ostream&            o
+                                      )
+{
+  XmlTag t ("VectorKKStr", XmlTag::tagStart);
+  if  (!varName.Empty ())
+  t.AddAtribute ("VarName", varName);
+  t.WriteXML (o);
+  VectorKKStr::const_iterator idx;
+  kkint32  c = 0;
+  for  (idx = v.begin (), c= 0;  idx != v.end ();  ++idx, ++c)
+  {
+    if  (c > 0)
+      o << "\t";
+    o << idx->QuotedStr ();
+  }
+
+  XmlTag  endTag ("VectorKKStr", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+}  /* WriteXml */
+
+
+XmlFactoryMacro(VectorKKStr)
 
 
 
 
 
 
+XmlElementKKStrListIndexed::XmlElementKKStrListIndexed (XmlTagPtr   tag,
+                                                        XmlStream&  s,
+                                                        RunLog&     log
+                                                       ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  bool  caseSensative = tag->AttributeValue ("CaseSensative")->ToBool ();
+  value = new KKStrListIndexed (true, caseSensative);
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      KKStrParser p (*c->Content ());
+
+      while  (p.MoreTokens ())
+      {
+        KKStr  s = p.GetNextToken (",\t\n\r");
+        value->Add (s);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
 
 
+
+XmlElementKKStrListIndexed::~XmlElementKKStrListIndexed ()
+{
+  delete  value;
+}
+
+
+KKStrListIndexed*  const  XmlElementKKStrListIndexed::Value ()  const
+{
+  return value;
+}
+
+
+KKStrListIndexed*  XmlElementKKStrListIndexed::TakeOwnership ()
+{
+  KKStrListIndexed*  v = value;
+  value = NULL;
+  return v;
+}
+
+
+void  XmlElementKKStrListIndexed::WriteXml (const KKStrListIndexed& v,
+                                            const KKStr&            varName,
+                                            ostream&                o
+                                           )
+{
+  XmlTag  startTag ("KKStrListIndexed", XmlTag::tagStart);
+
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("CaseSensative", (v.CaseSensative () ? "Yes":"No"));
+  startTag.WriteXML (o);
+
+  kkuint32 n = v.size ();
+  for  (kkuint32 x = 0;  x < n;  ++x)
+  {
+    KKStrConstPtr s = v.LookUp ((kkint32)x);
+    if  (x > 0)
+      o << "\t";
+    o << s->QuotedStr ();
+  }
+
+  XmlTag endTag ("KKStrListIndexed", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+}
+
+
+XmlFactoryMacro(KKStrListIndexed)

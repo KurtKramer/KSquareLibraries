@@ -14,6 +14,7 @@ using namespace std;
 #include "DateTime.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
+#include "KKStrParser.h"
 #include "KKQueue.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -223,6 +224,88 @@ KKStr  Attribute::TypeStr () const
 
 
 
+XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
+                                          XmlStream&  s,
+                                          RunLog&     log
+                                         ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+
+  AttributeType  attributeType = NULLAttribute;
+  kkint32        fieldNum      = 0;
+  KKStr          name          = "";
+
+  kkint32  c = tag->AttributeCount ();
+  for  (kkint32 x = 0;  x < c;  ++x)
+  {
+    KKStrConstPtr n = tag->AttributeName (x);
+    KKStrConstPtr v = tag->AttributeValue (x);
+
+    if  (n->EqualIgnoreCase ("Type"))
+      attributeType = AttributeTypeFromStr (v);
+
+    else if  (n->EqualIgnoreCase ("FieldNum"))
+      fieldNum = v->ToInt32 ();
+
+    else if  (n->EqualIgnoreCase ("Name"))
+      name= v;
+  }
+
+  value = new Attribute (name, attributeType, fieldNum);
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::tokContent)
+    {
+      XmlContentPtr  content = dynamic_cast<XmlContentPtr> (t);
+      KKStrParser p (*content->Content ());
+    }
+  }
+}
+
+
+    virtual  ~XmlElementAttribute ();
+
+    AttributePtr  Value ()  const;
+
+    AttributePtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const Attribute&  tc,
+                    const KKStr&      varName,
+                    ostream&          o
+                   );
+  private:
+    AttributePtr  value;
+  };
+}
+typedef  XmlElementAttribute*  XmlElementAttributePtr;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 AttributeList::AttributeList (bool _owner):
   KKQueue<Attribute> (_owner)
 {
@@ -348,6 +431,32 @@ KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
 
 
 
+
+AttributeType  KKMLL::AttributeTypeFromStr (const KKStr&  s)
+{
+  if  (s.EqualIgnoreCase ("Ignore"))
+    return  IgnoreAttribute;
+
+  else if  (s.EqualIgnoreCase ("Numeric"))
+    return  NumericAttribute;
+
+  else if  (s.EqualIgnoreCase ("Nominal"))
+    return  NominalAttribute;
+
+  else if  (s.EqualIgnoreCase ("Ordinal"))
+    return  OrdinalAttribute;
+
+  else if  (s.EqualIgnoreCase ("Symbolic"))
+    return  SymbolicAttribute;
+
+  else
+    return  NULLAttribute,
+}
+
+
+
+
+
 bool  AttributeList::operator== (const AttributeList&  right)  const
 { 
   if  (size () != right.size ())
@@ -380,6 +489,9 @@ bool  AttributeList::operator!= (const AttributeList&  right)  const
 { 
   return  !(*this == right);
 }  /* operator!= */
+
+
+
 
 
 

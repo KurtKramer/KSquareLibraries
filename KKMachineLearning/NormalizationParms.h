@@ -124,11 +124,12 @@ namespace KKMLL
     const double*  Mean ()  {return  mean;}
     const double*  Sigma () {return  sigma;}
 
+    void  WriteXML (ostream& o);
+
 
   private:
     void  ConstructNormalizeFeatureVector ();
     void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
-
 
     AttributeTypeVector  attriuteTypes;
     FileDescPtr          fileDesc;
@@ -148,7 +149,31 @@ namespace KKMLL
 
   #define  _NormalizationParms_Defined_
 
-}  /* namespace KKMLL { */
+
+  
+  class  XmlElementNormalizationParms:  public  XmlElement
+  {
+  public:
+    XmlElementNormalizationParms (XmlTagPtr   tag,
+                                  XmlStream&  s,
+                                  RunLog&     log
+                                 );
+                
+    virtual  ~XmlElementNormalizationParms ();
+
+    NormalizationParmsPtr  Value ()  const;
+
+    NormalizationParmsPtr  TakeOwnership ();
+    
+  private:
+    NormalizationParmsPtr  value;
+  };
+  typedef  XmlElementNormalizationParms*  XmlElementNormalizationParmsPtr;
+
+
+
+
+}  /* KKMLL */
 
 
 #endif

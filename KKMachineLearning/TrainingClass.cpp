@@ -7,7 +7,7 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "XmlStream.h"
@@ -141,26 +141,31 @@ KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
 
 
 
-void  TrainingClass::WriteXML (ostream&  o)
+void  XmlElementTrainingClass::WriteXML (const TrainingClass&  tc,
+                                         const KKStr&          varName,
+                                         ostream&              o
+                                        )
 {
   XmlTag  t ("TrainingClass", XmlTag::tagEmpty);
-  t.AddAtribute ("MlClass", mlClass->Name ());
+  if  (!varName.Empty ())
+    t.AddAtribute ("VarName", varName);
 
-  if  (!featureFileName.Empty ())
-    t.AddAtribute ("FeatureFileName", featureFileName);
+  t.AddAtribute ("MlClass", tc.MLClass ()->Name ());
 
-  if  (weight != 0.0f)
-    t.AddAtribute ("Weight", weight);
+  if  (!tc.FeatureFileName ().Empty ())
+    t.AddAtribute ("FeatureFileName", tc.FeatureFileName ());
 
-  if  (countFactor != 0.0f)
-    t.AddAtribute ("CountFactor", countFactor);
+  if  (tc.Weight () != 0.0f)
 
-  if  (subClassifier)
-    t.AddAtribute ("SubClassifier", subClassifier->ConfigRootName ());
+  if  (tc.CountFactor () != 0.0f)
+    t.AddAtribute ("CountFactor", tc.CountFactor ());
+
+  if  (tc.SubClassifier ())
+    t.AddAtribute ("SubClassifier", tc.SubClassifier ()->ConfigRootName ());
 
   kkint32  x = 0;
   VectorKKStr::const_iterator  idx;
-  for  (idx = directories.begin (); idx != directories.end ();  ++idx)
+  for  (idx = tc.Directories ().begin (); idx != tc.Directories ().end ();  ++idx)
   {
     if  (!idx->Empty ())
       t.AddAtribute ("Dir_" + StrFormatInt (x, "00"), *idx);
@@ -235,7 +240,7 @@ TrainingClassPtr  XmlElementTrainingClass::TakeOwnership ()
 }
 
 
-
+XmlFactoryMacro(TrainingClass)
 
 
 
@@ -345,31 +350,31 @@ TrainingClassListPtr   TrainingClassList::DuplicateListAndContents ()  const
 
 
 
-void  TrainingClassList::WriteXML (ostream&      o,
-                                   const KKStr&  name
-                                  )
+void  XmlElementTrainingClassList::WriteXML (const TrainingClassList&  tcl,
+                                             const KKStr&              varName,
+                                             ostream&                  o
+                                           ) 
+
 {
   XmlTag  tagStart ("TrainingClassList", XmlTag::tagStart);
-  if  (!name.Empty ())
-    tagStart.AddAtribute ("Name", name);
-  tagStart.AddAtribute ("Count", (kkint32)size ());
-  if  (!rootDir.Empty ())
-    tagStart.AddAtribute ("RootDir", rootDir);
+  if  (!varName.Empty ())
+    tagStart.AddAtribute ("VarName", varName);
+  tagStart.AddAtribute ("Count", (kkint32)tcl.size ());
+  if  (!tcl.RootDir ().Empty ())
+    tagStart.AddAtribute ("RootDir", tcl.RootDir ());
 
   tagStart.WriteXML (o);
 
-  const_iterator  idx;
-  for  (idx = begin ();  idx != end ();  ++idx)
+  TrainingClassList::const_iterator  idx;
+  for  (idx = tcl.begin ();  idx != tcl.end ();  ++idx)
   {
     TrainingClassPtr  tc = *idx;
-    tc->WriteXML (o);
+    XmlElementTrainingClass::WriteXML (*tc, KKStr::EmptyStr (), o);
   }
 
   XmlTag  tagEnd ("TrainingClassList", XmlTag::tagEnd);
   tagEnd.WriteXML (o);
 }  /* WriteXML */
-
-
 
 
 
@@ -390,31 +395,34 @@ XmlElementTrainingClassList::XmlElementTrainingClassList (XmlTagPtr   tag,
   {
     const KKStr&  n = tag->AttributeName (x);
     const KKStr&  v = tag->AttributeValue (x);
-    if  (n.EqualIgnoreCase ("MlClass"))
-      value->MLClass (MLClass::CreateNewMLClass (n, -1));
+    if  (n.EqualIgnoreCase ("Name"))
+      name = v;
 
-    else if  (n.EqualIgnoreCase ("FeatureFileName"))
-      value->FeatureFileName (v);
+    else if  (n.EqualIgnoreCase ("RootDir"))
+      rootDir = v;
 
-    else if  (n.EqualIgnoreCase ("Weight"))
-      value->Weight (v.ToFloat ());
-
-    else if  (n.EqualIgnoreCase ("CountFactor"))
-      value->CountFactor (v.ToFloat ());
-
-    else if  (n.EqualIgnoreCase ("SubClassifier"))
-      value->SubClassifierName (v);
-
-    else if  (n.StartsWith ("Dir_"))
-      value->AddDirectory (v);
+    else if  (n.EqualIgnoreCase ("Count"))
+      count = v.ToUint32 ();
   }
   
-
-  value = new TrainingClass ();
+  value = new TrainingClassList (rootDir, true);
 
   XmlTokenPtr t = s.GetNextToken (log);
   while  (t)
+  {
+    if  (t->TokenType () != XmlToken::tokElement)
+      continue;
+
+    XmlElementTrainingClassPtr tokenTrainingClass = dynamic_cast<XmlElementTrainingClassPtr> (t);
+    TrainingClassPtr  tc = tokenTrainingClass->TakeOwnership ();
+    if  (tc)
+      value->AddTrainingClass (tc);
+    tc = NULL;
+
     t = s.GetNextToken (log);
+  }
+
+  return;
 }
 
 
@@ -435,10 +443,13 @@ TrainingClassListPtr  XmlElementTrainingClassList::Value ()  const
 
 TrainingClassListPtr  XmlElementTrainingClassList::TakeOwnership () 
 {
-  TrainingClassPtr t = value;
+  TrainingClassListPtr t = value;
   value = NULL;
   return t;
 }
+
+
+XmlFactoryMacro(TrainingClassList)
 
 
 

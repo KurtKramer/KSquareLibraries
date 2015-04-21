@@ -14,6 +14,7 @@ using namespace  std;
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
 #include "ModelParam.h"
@@ -738,3 +739,50 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
 
   return result;
 }  /* ToNormalized */
+
+
+
+
+void  NormalizationParms::WriteXML (ostream& o)
+{
+
+  /*
+  
+  AttributeTypeVector  attriuteTypes;
+    FileDescPtr          fileDesc;
+    KKStr                fileName;
+    RunLog&              log;
+    double*              mean;
+    bool*                normalizeFeature;
+    bool                 normalizeNominalFeatures;
+    kkint32              numOfFeatures;
+    float                numOfExamples;
+    double*              sigma;
+
+
+  */
+
+}
+
+
+
+XmlElementNormalizationParms::XmlElementNormalizationParms (XmlTagPtr   tag,
+                                                            XmlStream&  s,
+                                                            RunLog&     log
+                                                           ):
+  XmlElement (tag, s, log),
+  value (NULL),
+{
+
+
+}
+
+
+                
+XmlElementNormalizationParms::~XmlElementNormalizationParms ();
+
+    NormalizationParmsPtr  XmlElementNormalizationParms::Value ()  const;
+
+    NormalizationParmsPtr  XmlElementNormalizationParms::TakeOwnership ();
+    
+

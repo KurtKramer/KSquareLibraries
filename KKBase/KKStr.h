@@ -914,13 +914,15 @@ namespace  KKB
 
     kkint32 Add (const KKStr&  s);
 
+    bool  CaseSensative ()  const  {return caseSensative;}
+
     kkint32 Delete (KKStr&  s);
 
     kkint32 LookUp (const KKStr&  s)  const;
 
     kkint32 LookUp (KKStrPtr s)  const;
 
-    const KKStrConstPtr  LookUp (kkint32 x);
+    KKStrConstPtr  LookUp (kkuint32 x)  const;
 
     kkint32 MemoryConsumedEstimated ()  const;
 

@@ -89,8 +89,6 @@ namespace KKMLL
                            const KKStr&  directory
                           );
 
-    void  WriteXML (ostream&  o);
-
 
   private:
     float            countFactor;    /**<  Used when counting particles,  specifies the impact on the count that this [articular trainingClass has. */
@@ -134,7 +132,7 @@ namespace KKMLL
                       );
 
 
-    const KKStr&      RootDir ()  {return  rootDir;}
+    const KKStr&      RootDir ()  const  {return  rootDir;}
     void              RootDir (const KKStr&  _rootDir)  {rootDir = _rootDir;}
 
     void              AddTrainingClass (TrainingClassPtr  trainingClass);
@@ -148,9 +146,7 @@ namespace KKMLL
 
     TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
 
-    void  WriteXML (ostream&      o,
-                    const KKStr&  name
-                   );
+
 
   private: 
     KKStr   rootDir;
@@ -174,7 +170,12 @@ namespace KKMLL
     TrainingClassPtr  Value ()  const;
 
     TrainingClassPtr  TakeOwnership ();
-    
+
+    static
+    void  WriteXML (const TrainingClass&  tc,
+                    const KKStr&          varName,
+                    ostream&              o
+                   );
   private:
     TrainingClassPtr  value;
   };
@@ -196,7 +197,12 @@ namespace KKMLL
     TrainingClassListPtr  Value ()  const;
 
     TrainingClassListPtr  TakeOwnership ();
-    
+
+    static
+    void  WriteXML (const TrainingClassList&  tc,
+                    const KKStr&              varName,
+                    ostream&                  o
+                   );    
   private:
     TrainingClassListPtr  value;
   };

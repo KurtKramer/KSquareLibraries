@@ -5171,9 +5171,9 @@ kkint32  KKStrListIndexed::LookUp (KKStrPtr s)  const
 
 
 
-const  KKStrConstPtr  KKStrListIndexed::LookUp (kkint32 x)
+KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
 {
-  IndexIndex::iterator  idx;
+  IndexIndex::const_iterator  idx;
   idx = indexIndex.find (x);
   if  (idx == indexIndex.end ())
     return NULL;

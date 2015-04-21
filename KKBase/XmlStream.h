@@ -318,9 +318,69 @@ namespace  KKB
 
 
 
+  class  XmlElementVectorKKStr:  public  XmlElement
+  {
+  public:
+    XmlElementVectorKKStr (XmlTagPtr   tag,
+                           XmlStream&  s,
+                           RunLog&     log
+                         );
+                
+    virtual  ~XmlElementVectorKKStr ();
+
+    VectorKKStr*  const  Value ()  const;
+
+    VectorKKStr*  TakeOwnership ();
+
+    static  XmlFactoryPtr  FactoryInstance ();
+
+    static
+    void  WriteXml (const VectorKKStr& v,
+                    const KKStr&       varName,
+                    ostream&           o
+                   );
+
+  private:
+    VectorKKStr*  value;
+  };
+  typedef  XmlElementVectorKKStr*  XmlElementVectorKKStrPtr;
 
 
-#define  XmlFactoryMacro(NameOfClass)                                            \
+
+
+
+  
+  class  XmlElementKKStrListIndexed:  public  XmlElement
+  {
+  public:
+    XmlElementKKStrListIndexed (XmlTagPtr   tag,
+                                XmlStream&  s,
+                                RunLog&     log
+                              );
+                
+    virtual  ~XmlElementKKStrListIndexed ();
+
+    KKStrListIndexed*  const  Value ()  const;
+
+    KKStrListIndexed*  TakeOwnership ();
+
+    static
+    void  WriteXml (const KKStrListIndexed& v,
+                    const KKStr&            varName,
+                    ostream&                o
+                   );
+
+  private:
+    KKStrListIndexed*  value;
+  };
+  typedef  XmlElementKKStrListIndexed*  XmlElementKKStrListIndexedPtr;
+
+
+
+
+
+
+#define  XmlFactoryMacro(NameOfClass)                                             \
     class  XmlFactory##NameOfClass: public XmlFactory                             \
     {                                                                             \
     public:                                                                       \
