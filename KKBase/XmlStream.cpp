@@ -19,14 +19,14 @@ using namespace std;
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
-#include "Tokenizer.h"
+#include "XmlTokenizer.h"
 #include "XmlStream.h"
 using namespace KKB;
 
 
 
 
-XmlStream::XmlStream (TokenizerPtr _tokenStream):
+XmlStream::XmlStream (XmlTokenizerPtr _tokenStream):
     endOfElementTagNames (),
     endOfElemenReached   (false),
     fileName             (),
@@ -34,7 +34,6 @@ XmlStream::XmlStream (TokenizerPtr _tokenStream):
     tokenStream          (_tokenStream),
     weOwnTokenStream     (false)
 {
-  tokenStream->DefineOperatorChars ("<>/");
 }
 
 
@@ -49,9 +48,8 @@ XmlStream::XmlStream (const KKStr&  _fileName,
     tokenStream          (NULL),
     weOwnTokenStream     (false)
 {
-  tokenStream = new Tokenizer (fileName);
+  tokenStream = new XmlTokenizer (fileName);
   weOwnTokenStream = true;
-  tokenStream->DefineOperatorChars ("<>/");
 }
 
 
@@ -74,11 +72,11 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
   if  (t == NULL)
     return NULL;
 
-  if  (*t == "<")
+  if  (t->FirstChar () == '<')
   {
+    XmlTagPtr  tag = new XmlTag (t);
     delete  t;
     t = NULL;
-    XmlTagPtr  tag = new XmlTag (tokenStream);
     if  (tag->TagType () == XmlTag::tagStart)
     {
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
@@ -235,7 +233,7 @@ void  ExtractAttribute (KKStr&  tagStr,
   attributeName  = "";
   attributeValue = "";
 
-  // Skip over lading spaces
+  // Skip over leading spaces
   while  (startIdx < len)
   {
     if  (strchr ("\n\t\r ", tagStr[startIdx]) == NULL)
@@ -353,113 +351,43 @@ XmlTag::XmlTag (istream&  i)
 
 
 
-XmlTag::XmlTag (TokenizerPtr  tokenStream):
+XmlTag::XmlTag (const KKStrConstPtr  tagStr):
      tagType (tagNULL)
 {
-  // We are assumed to be at the beginning of a new tag.
-  KKStrListPtr  tokens = tokenStream->GetNextTokens (">");
-  if  (!tokens)
-    return;
+  KKStrParser parser(tagStr);
+  parser.TrimWhiteSpace (" ");
 
-  KKStrPtr t = NULL;
+  if  (parser.PeekNextChar () == '<')
+    parser.GetNextChar ();
 
+  if  (parser.PeekLastChar () == '>')
+    parser.GetLastChar ();
 
-  if  (tokens->QueueSize () < 1)
+  if  (parser.PeekNextChar () == '/')
   {
-    delete  tokens;
-    return;
+    parser.GetNextChar ();
+    tagType = XmlTag::tagEnd;
+  }
+  else if  (parser.PeekLastChar () == '/')
+  {
+    parser.GetLastChar ();
+    tagType = XmlTag::tagEmpty;
+  }
+  else
+  {
+    tagType = XmlTag::tagStart;
   }
 
-  if  ((*tokens)[0] == "<")
+  name = parser.GetNextToken ();
+  parser.SkipWhiteSpace ();
+
+  while  (parser.MoreTokens ())
   {
-    t = tokens->PopFromFront ();
-    delete  t;
-    t = NULL;
+    KKStr attributeName  = parser.GetNextToken ("=");
+    KKStr attributeValue = parser.GetNextToken (" \t\n\r");
+    attributes.AddAttribute (attributeName, attributeValue);
   }
-
-  if  (tokens->QueueSize () < 1)
-  {
-    // We have a empty tag with no name.
-    delete  tokens;
-    tokens = NULL;
-    return;
-  }
-
-
-  if  (*(tokens->BackOfQueue ()) == ">")
-  {
-    t = tokens->PopFromBack ();
-    delete  t;
-    t = NULL;
-  }
-
-  if  (tokens->QueueSize () < 1)
-  {
-    // We have a empty tag with no name.
-    delete  tokens;
-    tokens = NULL;
-    return;
-  }
-
-  if  (tokens->QueueSize () > 1)
-  {
-    if  (*(tokens->BackOfQueue ()) == "/")
-    {
-      tagType = tagEmpty;
-      t = tokens->PopFromBack ();
-      delete  t;
-      t = NULL;
-    }
-  }
-
-  t = tokens->PopFromFront ();
-  if  (*t == "/")
-  {
-    tagType = tagEnd;
-    delete  t;
-    t = tokens->PopFromFront ();
-  }
-
-  if  (t)
-  {
-    // At this point "t" should be the name of the tag.
-    name = *t;
-    delete  t;
-    t = NULL;
-
-    KKStrPtr  t1 = tokens->PopFromFront ();
-    KKStrPtr  t2 = tokens->PopFromFront ();
-    KKStrPtr  t3 = tokens->PopFromFront ();
-
-    // Everything else should be attribute pairs  (Name = value).
-    while  (t3 != NULL)
-    {
-      if  (*t2 != "=")
-      {
-        delete  t1;
-        t1 = t2;
-        t2 = t3;
-        t3 = tokens->PopFromFront ();
-      }
-      else
-      {
-        if  (attributes.LookUp (*t) == NULL)
-          attributes.insert (pair<KKStr, KKStr>(*t1, *t3));
-        delete  t1;
-        delete  t2;
-        delete  t3;
-        t1 = tokens->PopFromFront ();
-        t2 = tokens->PopFromFront ();
-        t3 = tokens->PopFromFront ();
-      }
-    }
-    delete  t;   t  = NULL;
-    delete  t2;  t2 = NULL;
-    delete  t3;  t3 = NULL; 
-  }
-
-  delete  tokens;  tokens = NULL;
-}  /* XmlTag::XmlTag (TokenizerPtr  tokenStream) */
+}  /* XmlTag::XmlTag (const KKStrConstPtr  tagStr) */
 
 
 

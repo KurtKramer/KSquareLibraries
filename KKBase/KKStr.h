@@ -555,6 +555,8 @@ namespace  KKB
    
     KKStr     ToUpper ()  const;
 
+    KKStr     ToXmlStr ()  const;
+
     void      Upper ();
 
     bool      ValidInt (kkint32&  value); /**< returns true if KKStr is formated as a valid integer otherwise false.

@@ -8,7 +8,7 @@
 
 #include "KKStr.h"
 #include "RunLog.h"
-#include "Tokenizer.h"
+#include "XmlTokenizer.h"
 using namespace KKB;
 
 namespace  KKB
@@ -34,7 +34,7 @@ namespace  KKB
   public:
     typedef  XmlStream*  XmlStreamPtr;
 
-    XmlStream (TokenizerPtr  _tokenStream);
+    XmlStream (XmlTokenizerPtr  _tokenStream);
 
     XmlStream (const KKStr&  _fileName,
                RunLog&       _log
@@ -57,12 +57,12 @@ namespace  KKB
      */
     kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
 
-    VectorKKStr   endOfElementTagNames;
-    bool          endOfElemenReached;
-    KKStr         fileName;
-    KKStr         nameOfLastEndTag;
-    TokenizerPtr  tokenStream;
-    bool          weOwnTokenStream;
+    VectorKKStr      endOfElementTagNames;
+    bool             endOfElemenReached;
+    KKStr            fileName;
+    KKStr            nameOfLastEndTag;
+    XmlTokenizerPtr  tokenStream;
+    bool             weOwnTokenStream;
   };  /* XmlStream */
 
 
@@ -113,7 +113,7 @@ namespace  KKB
     typedef  XmlTag*  XmlTagPtr;
     typedef  enum {tagNULL, tagStart, tagEnd, tagEmpty}  TagTypes;
 
-    XmlTag (TokenizerPtr  _tokenStream);
+    XmlTag (const KKStrConstPtr  tagStr);
 
     XmlTag (const KKStr&  _name,
            TagTypes       _tagType

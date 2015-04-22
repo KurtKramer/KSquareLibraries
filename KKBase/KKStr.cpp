@@ -2860,6 +2860,46 @@ KKStr  KKStr::QuotedStr ()  const
 
 
 
+KKStr  KKStr::ToXmlStr ()  const
+{
+  if  ((!val)  ||  (len < 1))
+  {
+    return KKStr::EmptyStr ();
+  }
+  
+  KKStr  result (Len () + 5);
+  
+  kkint32  idx = 0;
+  while  (idx < len)
+  {
+    switch  (val[idx])
+    {
+      case  '<' : result.Append ("&lt;");    break;
+      case  '>' : result.Append ("&gt;");    break;
+      case  '&' : result.Append ("&amp;");   break;
+      case  '\"': result.Append ("&quot;");  break;
+      case  '\'': result.Append ("&apos;");  break;
+      case  '\t': result.Append ("\\t");     break;
+      case  '\n': result.Append ("\\n");     break;
+      case  '\r': result.Append ("\\r");     break;
+      case  '\\': result.Append ("\\\\");    break;
+      case     0: result.Append ("\\0");     break;
+         
+      default:   result.Append (val[idx]);   break;
+    }
+
+    idx++;
+  }
+
+  return  result;
+}  /* ToXmlStr */
+
+
+
+
+
+
+
 KKStr  KKStr::ExtractToken (const char* delStr)
 {
   if  (!val)

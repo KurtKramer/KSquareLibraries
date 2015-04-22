@@ -23,7 +23,11 @@ namespace KKB
     KKStrParser (const KKStr&  _str);
     ~KKStrParser ();
 
+    char     GetLastChar        ();
+
     KKStr    GetNextToken       (const char* delStr = "\n\t\r ");
+
+    char     GetNextChar        ();
 
     char     GetNextTokenChar   (const char* delStr = "\n\t\r ");
 
@@ -45,7 +49,13 @@ namespace KKB
  
     KKStr    GetRestOfStr       ();
 
-    bool     MoreTokens ()  const  {return  (nextPos < len);}
+    bool     MoreTokens         ()  const  {return  (nextPos < len);}
+
+    char     PeekLastChar       ()  const;
+
+    char     PeekNextChar       ()  const;
+
+    KKStr    PeekNextToken      (const char* delStr = "\n\t\r ")  const;
 
     void     Reset              ();
 

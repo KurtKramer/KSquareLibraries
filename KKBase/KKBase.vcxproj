@@ -130,6 +130,7 @@
     <ClCompile Include="TokenBuffer.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="XmlStream.cpp" />
+    <ClCompile Include="XmlTokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="TokenBuffer.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="XmlStream.h" />
+    <ClInclude Include="XmlTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

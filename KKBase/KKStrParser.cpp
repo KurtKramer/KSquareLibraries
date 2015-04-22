@@ -127,26 +127,208 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
   kkuint32  startPos = nextPos;
   kkuint32  endPos   = startPos;
 
-  // scan until end of string or next delimiter
-  while  ((endPos < len)  &&  (strchr (delStr, str[endPos]) == NULL))
-    endPos++;
+  char ch = str[endPos];
+  if  ((ch == '\'')  ||  (ch == '"'))
+  {
+    KKStr  token (30);
+    // Token is a string
+    char  quoteChar = ch;
+    // We have a quoted String need to skip to end of quote.
+    ++endPos;
+    while  (endPos < len)
+    {
+      ch = str[endPos];
+      if  (ch == quoteChar)
+      {
+        ++endPos;
+        break;
+      }
 
-  // At this point endPos is either on the next delimiter or past end of str.
-  if  (endPos >= len)
-    nextPos = len;
+      if  ((ch == '\\')  &&  (endPos < (len - 1)))
+      {
+        ++endPos;
+        char  ec = str[endPos];
+        switch  (ec)
+        {
+        case '\\':  ch = '\\';  break;
+        case  '"':  ch = '"';  break;
+        case  'r':  ch = '\r';  break;
+        case  'n':  ch = '\n';  break;
+        case  't':  ch = '\t';  break;
+        }
+      }
+
+      token.Append (ch);
+      ++endPos;
+    }
+    if  (endPos >= len)
+      nextPos = len;
+    else
+      nextPos = endPos + 1;
+    return  token;
+  }
   else
-    nextPos = endPos + 1;
+  {
+    // scan until end of string or next delimiter
+    while  (endPos < len)
+    {
+      ch = str[endPos];
+      if  (strchr (delStr, ch) != NULL)
+        break;
+      ++endPos;
+    }
 
-  endPos--;  // Move endPos back to last character in token.
+    endPos--;  // Move endPos back to last character in token.
+
+    if  (trimWhiteSpace)
+    {
+      while  ((endPos >= startPos)  &&  (strchr (whiteSpace, str[endPos]) != NULL))
+        endPos--;
+    }
+
+    // At this point endPos is either on the next delimiter or past end of str.
+    if  (endPos >= len)
+      nextPos = len;
+    else
+      nextPos = endPos + 1;
+    return KKStr (str, startPos, endPos);
+  }
+}  /* GetNextToken */
+
+
+
+
+/**
+ *@brief  Returns what the next token that 'GetNextToken' will without updating the position in the string buffer.
+ *@details  Allows you to see what the token would be without updating the KKStrParser instance.
+ *@param[in]  delStr List of delimiting characters.
+ *@returns  Next Token to be returned by 'GetNextToken'.
+ */
+KKStr  KKStrParser::PeekNextToken (const char* delStr)  const
+{
+  kkuint32  nextPosP = nextPos;
 
   if  (trimWhiteSpace)
   {
-    while  ((endPos >= startPos)  &&  (strchr (whiteSpace, str[endPos]) != NULL))
-      endPos--;
+    while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPosP]) != NULL))
+      nextPosP++;
   }
 
-  return KKStr (str, startPos, endPos);
-}  /* ExtractToken */
+  if (nextPosP >= len)
+    return KKStr::EmptyStr ();
+
+  kkuint32  startPos = nextPosP;
+  kkuint32  endPos   = startPos;
+
+  char ch = str[endPos];
+  if  ((ch == '\'')  ||  (ch == '"'))
+  {
+    KKStr  token (30);
+    // Token is a string
+    char  quoteChar = ch;
+    // We have a quoted String need to skip to end of quote.
+    ++endPos;
+    while  (endPos < len)
+    {
+      ch = str[endPos];
+      if  (ch == quoteChar)
+      {
+        ++endPos;
+        break;
+      }
+
+      if  ((ch == '\\')  &&  (endPos < (len - 1)))
+      {
+        ++endPos;
+        char  ec = str[endPos];
+        switch  (ec)
+        {
+        case  '"':  ch =  '"';  break;
+        case '\\':  ch = '\\';  break;
+        case  'r':  ch = '\r';  break;
+        case  'n':  ch = '\n';  break;
+        case  't':  ch = '\t';  break;
+        }
+      }
+
+      token.Append (ch);
+      ++endPos;
+    }
+    return  token;
+  }
+  else
+  {
+    // scan until end of string or next delimiter
+    while  (endPos < len)
+    {
+      ch = str[endPos];
+      if  (strchr (delStr, ch) != NULL)
+        break;
+      ++endPos;
+    }
+
+    endPos--;  // Move endPos back to last character in token.
+
+    if  (trimWhiteSpace)
+    {
+      while  ((endPos >= startPos)  &&  (strchr (whiteSpace, str[endPos]) != NULL))
+        endPos--;
+    }
+
+    return KKStr (str, startPos, endPos);
+  }
+}  /* PeekNextToken */
+
+
+
+char  KKStrParser::GetNextChar ()
+{
+  char  nextChar = 0;
+  if  (nextPos < len)
+  {
+    nextChar = str[nextPos];
+    ++nextPos;
+  }
+  return  nextChar;
+}
+
+
+
+char  KKStrParser::GetLastChar ()
+{
+  char  lastChar = 0;
+  if  (nextPos < len)
+  {
+    --len;
+    lastChar = str[len];
+  }
+  return  lastChar;
+}
+
+
+
+char  KKStrParser::PeekNextChar ()  const
+{
+  char  nextChar = 0;
+  if  (nextPos < len)
+  {
+    nextChar = str[nextPos];
+  }
+  return  nextChar;
+}
+
+
+
+char  KKStrParser::PeekLastChar ()  const
+{
+  char  lastChar = 0;
+  if  (nextPos < len)
+  {
+    lastChar = str[len - 1];
+  }
+  return  lastChar;
+}
+
 
 
 
