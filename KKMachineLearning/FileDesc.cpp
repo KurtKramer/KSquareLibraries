@@ -796,3 +796,69 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
   return  GetExistingFileDesc (f);
 }  /* MergeSymbolicFields */
 
+
+
+
+
+
+
+XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
+                                        XmlStream&  s,
+                                        RunLog&     log
+                                       ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+}
+                
+ 
+XmlElementFileDesc::~XmlElementFileDesc ()
+{
+}
+
+ 
+FileDescPtr  XmlElementFileDesc::Value ()  const
+{
+  return  value;
+}
+
+
+FileDescPtr  XmlElementFileDesc::TakeOwnership ()
+{
+  FileDescPtr  v = value;
+  value = NULL;
+  return  v;
+}
+
+
+void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
+                                    const KKStr&     varName,
+                                    ostream&         o
+                                  )
+{
+  XmlTag  startTag ("FileDesc", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  o << endl;
+
+  if  (!fileDesc.FileName ().Empty ())
+    XmlElementKKStr::WriteXML (fileDesc.FileName (), "FileName", o);
+
+  XmlElementAttributeList::WriteXML (fileDesc.Attributes (), "Attributes", o);
+
+  XmlElementVectorInt32::WriteXML (fileDesc.CardinalityVector (), "CardinalityVector", o);
+    
+  XmlElementMLClassNameList::WriteXML (fileDesc.Classes (), "Classes", o);
+
+  if  (!fileDesc.ClassNameAttribute ().Empty ())
+    XmlElementKKStr::WriteXML (fileDesc.ClassNameAttribute (), "ClassNameAttribute", o);
+
+  XmlElementInt32::WriteXML (fileDesc.Version (), "Version", o);
+
+  if  (fileDesc.SparseMinFeatureNum () != 0)
+    XmlElementInt32::WriteXML (fileDesc.SparseMinFeatureNum () , "SparseMinFeatureNum", o);
+  XmlTag
+}  /* WriteXML */
+ 
+
+

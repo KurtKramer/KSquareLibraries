@@ -278,6 +278,12 @@ namespace  KKB
 
     kkint32  Value ()  const;
 
+    static
+    void  WriteXML (const kkint32  i,
+                    const KKStr&   varName,
+                    ostream&       o
+                   );
+
   private:
     kkint32  value;
   };
@@ -298,6 +304,12 @@ namespace  KKB
     VectorInt32*  const  Value ()  const;
 
     VectorInt32*  TakeOwnership ();
+
+    static
+    void  WriteXML (const VectorInt32&  v,
+                    const KKStr&        varName,
+                    ostream&            o
+                   );
 
   private:
     VectorInt32*  value;
@@ -321,6 +333,12 @@ namespace  KKB
     KKStrPtr  TakeOwnership ();
 
     static  XmlFactoryPtr  FactoryInstance ();
+
+    static
+    void  WriteXML (const KKStr&  s,
+                    const KKStr&  varName,
+                    ostream&      o
+                   );
 
   private:
     KKStrPtr  value;

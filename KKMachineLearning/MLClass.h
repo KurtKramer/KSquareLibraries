@@ -565,9 +565,9 @@ namespace KKMLL
     MLClassListPtr  TakeOwnership ();
 
     static
-    void  WriteXML (const MLClass&  mlClassList,
-                    const KKStr&    varName,
-                    ostream&        o
+    void  WriteXML (const MLClassList&  mlClassList,
+                    const KKStr&        varName,
+                    ostream&            o
                    );
   private:
     MLClassListPtr  value;
@@ -585,9 +585,9 @@ namespace KKMLL
   {
   public:
     XmlElementMLClassIndexList (XmlTagPtr   tag,
-                               XmlStream&  s,
-                               RunLog&     log
-                              );
+                                XmlStream&  s,
+                                RunLog&     log
+                               );
                 
     virtual  ~XmlElementMLClassIndexList ();
 

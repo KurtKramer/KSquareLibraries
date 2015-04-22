@@ -626,7 +626,7 @@ XmlElementInt32::XmlElementInt32 (XmlTagPtr   tag,
 {
   KKStrConstPtr  valueStr = tag->AttributeValue ("Value");
   if  (valueStr)
-  value = valueStr->ToInt32 ();
+    value = valueStr->ToInt32 ();
   XmlTokenPtr t = s.GetNextToken (log);
   while  (t != NULL)
   {
@@ -638,6 +638,20 @@ XmlElementInt32::XmlElementInt32 (XmlTagPtr   tag,
     delete  t;
     t = s.GetNextToken (log);
   }
+}
+
+
+void  XmlElementInt32::WriteXML (const kkint32  i,
+                                 const KKStr&   varName,
+                                 ostream&       o
+                               )
+{
+  XmlTag startTag ("Int32", XmlTag::tagEmpty);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Value", i);
+  startTag.WriteXML (o);
+  o << endl;
 }
 
 
@@ -708,6 +722,29 @@ VectorInt32*  XmlElementVectorInt32::TakeOwnership ()
 }
 
 
+void  XmlElementVectorInt32::WriteXML (const VectorInt32&  v,
+                                       const KKStr&        varName,
+                                       ostream&            o
+                                      )
+{
+  XmlTag startTag ("VectorInt32", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+
+  for  (kkuint32 x = 0;  x < v.size ();  ++x)
+  {
+    if  (x > 0)
+      o << "\t";
+    o << v[x];
+  }
+  XmlTag  endTag ("VectorInt32", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+
 XmlFactoryMacro(VectorInt32)
 
 
@@ -758,6 +795,21 @@ KKStrPtr  XmlElementKKStr::TakeOwnership ()
 }
 
 
+
+void  XmlElementKKStr::WriteXML (const KKStr&  s,
+                                 const KKStr&  varName,
+                                 ostream&      o
+                                )
+{
+  XmlTag startTag ("KKStr", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << s.ToXmlStr ();
+  XmlTag  endTag ("KKStr", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
 
 
 XmlFactoryMacro(KKStr)

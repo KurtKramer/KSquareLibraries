@@ -26,18 +26,13 @@
  @endcode
  */
 
-#ifdef  WIN32
 #include "GoalKeeper.h"
-#include "RunLog.h"
 #include "KKStr.h"
-#else
-#include "GoalKeeper.h"
 #include "RunLog.h"
-#include "KKStr.h"
-#endif
+#include "XmlStream.h"
 
-#include  "Attribute.h"
-#include  "MLClass.h"
+#include "Attribute.h"
+#include "MLClass.h"
 
 
 
@@ -281,7 +276,7 @@ namespace KKMLL
     AttributeTypeVector     attributeVector;
     VectorInt32             cardinalityVector;
     MLClassList             classes;
-    KKStr                   classNameAttribute;   /**< Added to support DstWeb files.  The name of the attribute that specifies the className */
+    KKStr                   classNameAttribute;   /**< Added to support DstWeb files; the name of the attribute that specifies the className */
     KKMLL::AttributePtr     curAttribute;
     KKStr                   fileName;
     //RunLog&               log;
@@ -304,6 +299,37 @@ namespace KKMLL
   typedef  FileDesc::FileDescConstPtr   FileDescConstPtr;
 
   #define  _FileDesc_Defined_
+
+
+
+
+class  XmlElementFileDesc:  public  XmlElement
+  {
+  public:
+    XmlElementFileDesc (XmlTagPtr   tag,
+                        XmlStream&  s,
+                        RunLog&     log
+                       );
+                
+    virtual  ~XmlElementFileDesc ();
+
+    FileDescPtr  Value ()  const;
+
+    FileDescPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const FileDesc&  fileDesc,
+                    const KKStr&     varName,
+                    ostream&         o
+                   );
+  private:
+    FileDescPtr  value;
+  };
+  typedef  XmlElementFileDesc*  XmlElementFileDescPtr;
+
+
+
+
 
 }  /* namespace KKMLL  */
 

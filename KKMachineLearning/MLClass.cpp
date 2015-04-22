@@ -1499,18 +1499,19 @@ MLClassListPtr  XmlElementMLClassNameList::TakeOwnership ()
 }
 
 
-void  XmlElementMLClassNameList::WriteXML (const MLClass&  mlClassList,
-                                           const KKStr&    varName,
-                                           ostream&        o
+void  XmlElementMLClassNameList::WriteXML (const MLClassList&  mlClassList,
+                                           const KKStr&        varName,
+                                           ostream&            o
                                           )
 {
   XmlTag  startTag ("MLClassNameList", XmlTag::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
-  o << mlClassList.ToString ();
+  o << mlClassList.ToTabDelimitedStr ();
   XmlTag  endTag ("MLClassNameList", XmlTag::tagEnd);
   endTag.WriteXML (o);
+  o << endl;
 }
  
 
