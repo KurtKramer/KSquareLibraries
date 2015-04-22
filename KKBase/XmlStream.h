@@ -25,7 +25,8 @@ namespace  KKB
   class XmlElement;
   typedef  XmlElement*  XmlElementPtr;
 
-
+  class  XmlContent;
+  typedef  XmlContent*  XmlContentPtr;
 
 
   class  XmlStream
@@ -41,7 +42,14 @@ namespace  KKB
 
     virtual  ~XmlStream ();
 
-    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent */
+    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent which ever is next. 
+                                                         * If we are at the end of the element then NULL will be returned,
+                                                         */
+
+
+    virtual  XmlContentPtr  GetNextContent (RunLog& log);  /**< Will return any content that may exist before the next tag; if 
+                                                            * there is no content before the next tag will return NULL
+                                                            */
 
   private:
     /**
@@ -136,6 +144,10 @@ namespace  KKB
 
     void  AddAtribute (const KKStr&  attributeName,
                        kkint32       attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       bool          attributeValue
                       );
 
     void  WriteXML (ostream& o);

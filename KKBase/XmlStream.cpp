@@ -139,7 +139,28 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
  
 
 
+ XmlContentPtr  XmlStream::GetNextContent (RunLog& log)
+{
+  if  (!tokenStream)
+    return NULL;
 
+  KKStrListPtr  tokens = tokenStream->GetNextTokens ("<");
+  if  (!tokens)
+    return NULL;
+  if  (tokens->QueueSize () < 1)
+  {
+    delete  tokens;
+    return NULL;
+  }
+
+  KKStrPtr  result = new KKStr (100);
+
+  KKStrList::const_iterator  idx;
+  for  (idx = tokens->begin ();  idx != tokens->end ();  ++idx)
+    result->Append (*(*idx));
+
+  return  new XmlContent (result);
+}
 
 
 
@@ -332,7 +353,6 @@ XmlTag::XmlTag (istream&  i)
 
 
 
-
 XmlTag::XmlTag (TokenizerPtr  tokenStream):
      tagType (tagNULL)
 {
@@ -486,7 +506,12 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 
 
 
-
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           bool          attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName, (attributeValue ? "Yes" : "No"));
+}
 
 
 
@@ -960,7 +985,7 @@ void  XmlElementKKStrListIndexed::WriteXml (const KKStrListIndexed& v,
 
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
-  startTag.AddAtribute ("CaseSensative", (v.CaseSensative () ? "Yes":"No"));
+  startTag.AddAtribute ("CaseSensative", v.CaseSensative ());
   startTag.WriteXML (o);
 
   kkuint32 n = v.size ();

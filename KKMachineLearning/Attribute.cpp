@@ -12,13 +12,15 @@ using namespace std;
 
 
 #include "DateTime.h"
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
-#include "KKStrParser.h"
 #include "KKQueue.h"
+#include "KKStr.h"
+#include "KKStrParser.h"
 #include "OSservices.h"
 #include "RunLog.h"
-#include "KKStr.h"
+#include "XmlStream.h"
 using namespace KKB;
 
 #include "Attribute.h"
@@ -152,7 +154,7 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 
 
 
-kkint32 Attribute::Cardinality ()
+kkint32 Attribute::Cardinality ()  const
 {
   if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
     return  nominalValuesUpper->size ();
@@ -231,7 +233,6 @@ XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-
   AttributeType  attributeType = NULLAttribute;
   kkint32        fieldNum      = 0;
   KKStr          name          = "";
@@ -261,24 +262,10 @@ XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
     {
       XmlContentPtr  content = dynamic_cast<XmlContentPtr> (t);
       KKStrParser p (*content->Content ());
+      KKStr  nextName = p.GetNextToken (",\t\n\\r");
+      bool alreadyEixists = false;
+      value->AddANominalValue (nextName, alreadyEixists);
     }
-  }
-}
-
-
-    virtual  ~XmlElementAttribute ();
-
-    AttributePtr  Value ()  const;
-
-    AttributePtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const Attribute&  tc,
-                    const KKStr&      varName,
-                    ostream&          o
-                   );
-  private:
-    AttributePtr  value;
   };
 }
 typedef  XmlElementAttribute*  XmlElementAttributePtr;
@@ -286,17 +273,60 @@ typedef  XmlElementAttribute*  XmlElementAttributePtr;
 
 
 
+XmlElementAttribute::~XmlElementAttribute ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+AttributePtr  XmlElementAttribute::Value ()  const
+{
+  return  value;
+}
+
+
+AttributePtr  XmlElementAttribute::TakeOwnership ()
+{
+  AttributePtr  v = value;
+  value = NULL;
+  return  v;
+}
 
 
 
+void  XmlElementAttribute::WriteXML (const Attribute&  a,
+                                     const KKStr&      varName,
+                                     ostream&          o
+                                    )
+{
+  XmlTag::TagTypes  startTagType = XmlTag::tagEmpty;
+  if  ((a.Type () == KKMLL::NominalAttribute) ||  (a.Type () == KKMLL::SymbolicAttribute))
+    startTagType  = XmlTag::tagStart;
 
+  XmlTag  startTag ("Attribute", startTagType);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Name",a.Name ());
+  startTag.AddAtribute ("Type", a.TypeStr ());
+  startTag.AddAtribute ("FieldNum", a.FieldNum ());
+  startTag.WriteXML (o);
 
+  if  (startTagType == XmlTag::tagStart)
+  {
+    // Need to write the nominal or symbolic fields
+    for  (kkint32  nominalIdx = 0;  nominalIdx < a.Cardinality ();  ++nominalIdx)
+    {
+      if  (nominalIdx > 0)
+        o << "\t";
+      o << a.GetNominalValue (nominalIdx);
+    }
 
-
-
-
-
-
+    XmlTag  endTag ("Attribute", XmlTag::tagEnd);
+    endTag.WriteXML (o);
+  }
+}
+    
 
 
 
@@ -352,22 +382,6 @@ AttributePtr  AttributeList::LookUpByName (const KKStr&  name)  const
   if (p == nameIndex.end ())
     return NULL;
   return p->second;
-/*
-
-  AttributePtr  attribute = NULL;
-  kkint32  idx = 0;
-
-  KKStr  nameUpper = name.ToUpper ();
-
-  while  (idx < QueueSize ())
-  {
-    attribute = IdxToPtr (idx);
-    if  (attribute->NameUpper () == nameUpper)
-      return attribute;
-    idx++;
-  }
-  return NULL;
-*/
 }  /* LookUpByName */
 
 
@@ -408,7 +422,7 @@ AttributeTypeVectorPtr  AttributeList::CreateAttributeTypeVector ()  const
 }  /* CreateAttributeTypeVector */
 
 
-
+XmlFactoryMacro(Attribute)
 
 
 
@@ -450,7 +464,7 @@ AttributeType  KKMLL::AttributeTypeFromStr (const KKStr&  s)
     return  SymbolicAttribute;
 
   else
-    return  NULLAttribute,
+    return  NULLAttribute;
 }
 
 
@@ -493,7 +507,68 @@ bool  AttributeList::operator!= (const AttributeList&  right)  const
 
 
 
+XmlElementAttributeList::XmlElementAttributeList (XmlTagPtr   tag,
+                                                  XmlStream&  s,
+                                                  RunLog&     log
+                                                 ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new AttributeList (true);
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (typeid (*t) == typeid(XmlElementAttribute))
+    {
+      XmlElementAttributePtr  attrToken = dynamic_cast<XmlElementAttributePtr> (t);
+      if  (attrToken->Value ())
+        value->PushOnBack (attrToken->TakeOwnership ());
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
+ 
+
+XmlElementAttributeList::~XmlElementAttributeList ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+AttributeListPtr  XmlElementAttributeList::Value ()  const
+{
+  return  value;
+}
+
+
+AttributeListPtr  XmlElementAttributeList::TakeOwnership ()
+{
+  AttributeListPtr  v = value;
+  value = NULL;
+  return  NULL;
+}
 
 
 
+void  XmlElementAttributeList::WriteXML (const AttributeList&  attributeList,
+                                         const KKStr&          varName,
+                                         ostream&              o
+                                        )
+{
+  XmlTag  startTag ("AttributeList", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  AttributeList::const_iterator  idx;
+  for  (idx = attributeList.begin ();  idx != attributeList.end ();  ++idx)
+  {
+    AttributePtr  attribute = *idx;
+    XmlElementAttribute::WriteXML (*attribute, KKStr::EmptyStr (), o);
+  }
+  XmlTag  endTag ("AttributeList", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+}
 
+
+XmlFactoryMacro(AttributeList)

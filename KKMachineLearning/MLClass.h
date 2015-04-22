@@ -41,9 +41,10 @@
 
 
 #include "GoalKeeper.h"
-#include "RunLog.h"
 #include "KKStr.h"
 #include "KKQueue.h"
+#include "RunLog.h"
+#include "XmlStream.h"
 
 
 namespace KKMLL
@@ -225,7 +226,7 @@ namespace KKMLL
 
     KKStr           upperName;    /**< Upper case version of name;  Used by LookUpByName to assist in performance. */
 
-    bool                unDefined;    /**< A class who's name is "", "UnKnown", "UnDefined", or starts with "Noise_" */
+    bool            unDefined;    /**< A class who's name is "", "UnKnown", "UnDefined", or starts with "Noise_" */
 
   };  /* MLClass */
 
@@ -502,7 +503,7 @@ namespace KKMLL
 
     void  ParseClassIndexList (const KKStr&  s);
 
-    KKStr  ToCommaDelString ();
+    KKStr  ToCommaDelString ()  const;
 
 
   private:
@@ -516,6 +517,104 @@ namespace KKMLL
 
 
   extern  MLClassList  globalClassList;
+
+
+
+
+  class  XmlElementMLClass:  public  XmlElement
+  {
+  public:
+    XmlElementMLClass (XmlTagPtr   tag,
+                       XmlStream&  s,
+                       RunLog&     log
+                      );
+                
+    virtual  ~XmlElementMLClass ();
+
+    MLClassPtr  Value ()  const;
+
+    MLClassPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const MLClass&  mlClass,
+                    const KKStr&    varName,
+                    ostream&        o
+                   );
+  private:
+    MLClassPtr  value;
+  };
+  typedef  XmlElementMLClass*  XmlElementMLClassPtr;
+
+
+
+  /**
+   *@brief  Will only write the ClassName rather than complete MLClass instances
+   */
+  class  XmlElementMLClassNameList:  public  XmlElement
+  {
+  public:
+    XmlElementMLClassNameList (XmlTagPtr   tag,
+                               XmlStream&  s,
+                               RunLog&     log
+                              );
+                
+    virtual  ~XmlElementMLClassNameList ();
+
+    MLClassListPtr  Value ()  const;
+
+    MLClassListPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const MLClass&  mlClassList,
+                    const KKStr&    varName,
+                    ostream&        o
+                   );
+  private:
+    MLClassListPtr  value;
+  };
+  typedef  XmlElementMLClassNameList*  XmlElementMLClassNameListPtr;
+
+
+
+
+  
+  /**
+   *@brief  Will only write the ClassName rather than complete MLClass instances
+   */
+  class  XmlElementMLClassIndexList:  public  XmlElement
+  {
+  public:
+    XmlElementMLClassIndexList (XmlTagPtr   tag,
+                               XmlStream&  s,
+                               RunLog&     log
+                              );
+                
+    virtual  ~XmlElementMLClassIndexList ();
+
+    MLClassIndexListPtr  Value ()  const;
+
+    MLClassIndexListPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const MLClassIndexList&  classIndexList,
+                    const KKStr&             varName,
+                    ostream&                 o
+                   );
+  private:
+    MLClassIndexListPtr  value;
+  };
+  typedef  XmlElementMLClassIndexList*  XmlElementMLClassIndexListPtr;
+
+
+
+
+
+
+
+
+
+
+
 
 }  /* namespace KKMLL */
 

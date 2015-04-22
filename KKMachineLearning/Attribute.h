@@ -79,7 +79,7 @@ namespace KKMLL
      *@details Only  attributes with type NominalAttribute or SymbolicAttribute have a fixed number
      *         of possible values all others will return 999999999.
      */
-    kkint32        Cardinality ();
+    kkint32        Cardinality ()  const;
 
     kkint32        FieldNum ()  const  {return  fieldNum;}
 
@@ -158,12 +158,13 @@ namespace KKMLL
     std::map<KKStr, AttributePtr>  nameIndex;
   };  /* AttributeList */
 
+  typedef  AttributeList*  AttributeListPtr;
+
+  typedef  AttributeList  const *  AttributeListConstPtr;
+
 
   KKStr  AttributeTypeToStr (AttributeType  type);
   AttributeType  AttributeTypeFromStr (const KKStr&  s);
-
-
-
 
 
 
@@ -184,7 +185,7 @@ namespace KKMLL
     AttributePtr  TakeOwnership ();
 
     static
-    void  WriteXML (const Attribute&  tc,
+    void  WriteXML (const Attribute&  attribute,
                     const KKStr&      varName,
                     ostream&          o
                    );
@@ -194,6 +195,32 @@ namespace KKMLL
   typedef  XmlElementAttribute*  XmlElementAttributePtr;
 
 
+
+  
+
+  class  XmlElementAttributeList:  public  XmlElement
+  {
+  public:
+    XmlElementAttributeList (XmlTagPtr   tag,
+                             XmlStream&  s,
+                             RunLog&     log
+                            );
+                
+    virtual  ~XmlElementAttributeList ();
+
+    AttributeListPtr  Value ()  const;
+
+    AttributeListPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const AttributeList&  attributeList,
+                    const KKStr&          varName,
+                    ostream&              o
+                   );
+  private:
+    AttributeListPtr  value;
+  };
+  typedef  XmlElementAttributeList*  XmlElementAttributeListPtr;
 
 
 

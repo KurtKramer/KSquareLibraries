@@ -12,10 +12,13 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
+#include "KKStrParser.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
+
 
 #include "FileDesc.h"
 #include "MLClass.h"
@@ -487,6 +490,104 @@ MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint16 level)  const
   return  MLClass::CreateNewMLClass (fullLevelName);
 }  /* MLClassForGivenHierarchialLevel*/
 
+
+
+
+
+
+XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
+                                      XmlStream&  s,
+                                      RunLog&     log
+                                     ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+
+  KKStrConstPtr  className = tag->AttributeValue ("Name");
+  if  (!className)
+  {
+    // We are missing a mandatory field.
+    value = NULL;
+    return;
+  }
+
+  value = MLClass::CreateNewMLClass (*className);
+
+  kkint32  c = tag->AttributeCount ();
+  for  (kkint32 x = 0;  x < c;  ++x)
+  {
+    KKStrConstPtr n = tag->AttributeName (x);
+    KKStrConstPtr v = tag->AttributeValue (x);
+
+    if  ((n->EqualIgnoreCase ("Parent"))  &&  (v != NULL)  &&  (!v->Empty ()))
+      value->Parent (MLClass::CreateNewMLClass (*v));
+
+    else if  (n->EqualIgnoreCase ("CountFactor"))
+      value->CountFactor (v->ToFloat ());
+
+    else if  (n->EqualIgnoreCase ("Description"))
+      value->Description (*v);
+
+    else if  (n->EqualIgnoreCase ("Mandatory"))
+      value->Mandatory (v->ToBool ());
+
+    else if  (n->EqualIgnoreCase ("StoredOnDataBase"))
+      value->StoredOnDataBase (v->ToBool ());
+
+    else if  (n->EqualIgnoreCase ("Summarize"))
+      value->Summarize (v->ToBool ());
+  }
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+    t = s.GetNextToken (log);
+}
+
+        
+
+XmlElementMLClass::~XmlElementMLClass ()
+{
+  value = NULL;
+}
+
+
+MLClassPtr  XmlElementMLClass::Value ()  const
+{
+  return value;
+}
+
+
+
+void  XmlElementMLClass::WriteXML (const MLClass&  mlClass,
+                                   const KKStr&    varName,
+                                   ostream&        o
+                                  )
+{
+  XmlTag startTag ("MLClass", XmlTag::tagEmpty);
+  if  (!varName.Empty())
+    startTag.AddAtribute ("VarName", varName);
+  
+  startTag.AddAtribute ("Name",             mlClass.Name             ());
+  if  (mlClass.Parent () != NULL)
+    startTag.AddAtribute ("Parent", mlClass.ParentName ());
+
+  if  (mlClass.ClassId () >= 0)
+    startTag.AddAtribute ("ClassId", mlClass.ClassId ());
+
+  if  (mlClass.CountFactor () != 0.0f)
+    startTag.AddAtribute ("CountFactor", mlClass.CountFactor ());
+
+  if  (!mlClass.Description ().Empty ())
+    startTag.AddAtribute ("Description", mlClass.Description ());
+
+  startTag.AddAtribute ("Mandatory",        mlClass.Mandatory        ());
+  startTag.AddAtribute ("StoredOnDataBase", mlClass.StoredOnDataBase ());
+  startTag.AddAtribute ("Summarize",        mlClass.Summarize        ());
+  startTag.WriteXML (o);
+}
+
+
+XmlFactoryMacro(MLClass)
 
 
 
@@ -1341,6 +1442,81 @@ KKStr&  KKMLL::operator<< (      KKStr&            str,
 
 
 
+XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr   tag,
+                                                      XmlStream&  s,
+                                                      RunLog&     log
+                                                     ):
+    XmlElement (tag, s, log),
+    value (NULL)
+{
+  value = new MLClassList ();
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (typeid (*t) == typeid(XmlContent))
+    {
+      XmlContentPtr  contentToken = dynamic_cast<XmlContentPtr> (t);
+      KKStrConstPtr  s = contentToken->Content ();
+      if  (s)
+      {
+        KKStrParser p (*s);
+        while  (p.MoreTokens ())
+        {
+          KKStr className = p.GetNextToken (",\t\n\r");
+          if  (!className.Empty ())
+            value->PushOnBack (MLClass::CreateNewMLClass (className));
+        }
+      }
+    }
+
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
+ 
+
+
+XmlElementMLClassNameList::~XmlElementMLClassNameList ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+
+MLClassListPtr  XmlElementMLClassNameList::Value ()  const
+{
+  return value;
+}
+
+
+
+MLClassListPtr  XmlElementMLClassNameList::TakeOwnership ()
+{
+  MLClassListPtr  v = value;
+  value = NULL;
+  return  v;
+}
+
+
+void  XmlElementMLClassNameList::WriteXML (const MLClass&  mlClassList,
+                                           const KKStr&    varName,
+                                           ostream&        o
+                                          )
+{
+  XmlTag  startTag ("MLClassNameList", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << mlClassList.ToString ();
+  XmlTag  endTag ("MLClassNameList", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+}
+ 
+
+
+XmlFactoryMacro(MLClassNameList)
+
 
 MLClassIndexList::MLClassIndexList ():
    largestIndex (-1)
@@ -1393,8 +1569,8 @@ kkint32  MLClassIndexList::MemoryConsumedEstimated ()  const
 
 
 void  MLClassIndexList::AddClass (MLClassPtr  _ic,
-                                bool&          _dupEntry
-                               )
+                                  bool&       _dupEntry
+                                 )
 {
   _dupEntry = false;
   map<MLClassPtr, kkint16>::iterator p;
@@ -1415,9 +1591,9 @@ void  MLClassIndexList::AddClass (MLClassPtr  _ic,
 
 
 void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
-                                               kkint16    _classIndex,
-                                               bool&      _dupEntry
-                                              )
+                                                 kkint16    _classIndex,
+                                                 bool&      _dupEntry
+                                                )
 {
   _dupEntry = false;
   map<MLClassPtr, kkint16>::iterator p;
@@ -1485,7 +1661,9 @@ void  MLClassIndexList::ParseClassIndexList (const KKStr&  s)
 
 
 
-KKStr  MLClassIndexList::ToCommaDelString ()
+
+
+KKStr  MLClassIndexList::ToCommaDelString ()  const
 {
   KKStr  delStr (255);
   map<kkint16, MLClassPtr>::const_iterator  idx;
@@ -1501,3 +1679,68 @@ KKStr  MLClassIndexList::ToCommaDelString ()
 
 
 
+
+
+
+
+XmlElementMLClassIndexList::XmlElementMLClassIndexList (XmlTagPtr   tag,
+                                                        XmlStream&  s,
+                                                        RunLog&     log
+                                                       ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  XmlContentPtr  content = s.GetNextContent (log);
+  if  (content  &&  content->Content ())
+  {
+    value = new MLClassIndexList ();
+
+    KKStrConstPtr  text = content->Content ();
+    value ->ParseClassIndexList (*text);
+  }
+  delete  content;
+  content = NULL;
+}
+ 
+
+
+XmlElementMLClassIndexList::~XmlElementMLClassIndexList ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+MLClassIndexListPtr  XmlElementMLClassIndexList::Value ()  const
+{
+  return  value;
+}
+
+
+
+MLClassIndexListPtr  XmlElementMLClassIndexList::TakeOwnership ()
+{
+  MLClassIndexListPtr v = value;
+  value = NULL;
+  return v;
+}
+
+
+
+void  XmlElementMLClassIndexList::WriteXML (const MLClassIndexList&  classIndexList,
+                                            const KKStr&             varName,
+                                            ostream&                 o
+                                           )
+{
+  XmlTag  startTag ("MLClassIndexList", XmlTag::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  o << classIndexList.ToCommaDelString ();
+
+  XmlTag  endTag ("MLClassIndexList", XmlTag::tagEnd);
+  endTag.WriteXML (o);
+}
+
+
+XmlFactoryMacro(MLClassIndexList)
