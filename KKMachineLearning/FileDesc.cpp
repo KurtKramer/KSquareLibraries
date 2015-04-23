@@ -249,7 +249,7 @@ void  FileDesc::AddANominalValue (const KKStr&   nominalValue,
   {
     // This should never happen, means that there has not been a nominal feature added yet.
     log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue    *** ERROR ***    No Current Attribute Set." << endl
+                   << "FileDesc::AddANominalValue    ***ERROR***    No Current Attribute Set." << endl
                    << endl;
     osWaitForEnter ();
     exit (-1);
@@ -274,7 +274,7 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
   if  (!curAttribute)
   {
     log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue   *** ERROR ***,   Invalid Attribute[" << attributeName << "]." << endl
+                   << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "]." << endl
                    << endl;
     osWaitForEnter ();
     exit(-1);
@@ -314,7 +314,7 @@ void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
   {
     cerr  << endl
           << endl
-          << "FileDesc::" << funcName << "   *** ERROR ***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
+          << "FileDesc::" << funcName << "   ***ERROR***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
           << endl
           << endl;
     osWaitForEnter ();
@@ -356,8 +356,7 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum,
   if  (!a)
   {
     log.Level (-1) << endl
-                   << endl
-                   << "FileDesc::Cardinality    *** ERROR ***" << endl
+                   << "FileDesc::Cardinality    ***ERROR***" << endl
                    << "                Could not locate attribute[" << fieldNum << "]" << endl
                    << endl;
     osWaitForEnter ();
@@ -620,20 +619,6 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
 
 
 
-FileDescList::FileDescList (bool  _owner):
-  KKQueue<FileDesc> (_owner)
-{
-}
-
-
-
-FileDescList::~FileDescList ()
-{
-}
-
-
-
-
 void FileDesc::DisplayAttributeMappings ( )
 {
   kkuint32 i;
@@ -817,18 +802,15 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 
 
 
-XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
-                                        XmlStream&  s,
-                                        RunLog&     log
-                                       ):
-  XmlElement (tag, s, log),
-  value (NULL)
+void  FileDesc::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
 {
   XmlTokenPtr  t = s.GetNextToken (log);
-  value = new FileDesc ();
   while  (t)
   {
-    if  (t->TokenType () == TokenTypes::tokElement)
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
       const KKStr&  className = e->Name ();
@@ -837,42 +819,42 @@ XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
       {
         XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
         if  (eKKStr)
-          value->FileName (eKKStr->Value ());
+          FileName (*(eKKStr->Value ()));
       }
 
       else if  (varName.EqualIgnoreCase ("Attributes"))
       {
         XmlElementAttributeListPtr  eAttributes = dynamic_cast<XmlElementAttributeListPtr>(e);
         if  (eAttributes  &&  (eAttributes->Value ()))
-          value->AddAttributes (*(eAttributes->Value ()));
+          AddAttributes (*(eAttributes->Value ()));
       }
 
       else if  (varName.EqualIgnoreCase ("Classes"))
       {
         XmlElementMLClassNameListPtr  eCLasses = dynamic_cast<XmlElementMLClassNameListPtr>(e);
         if  (eCLasses  &&  (eCLasses->Value ()))
-          value->AddClasses (*(eCLasses->Value ()));
+          AddClasses (*(eCLasses->Value ()));
       }
 
       else if  (varName.EqualIgnoreCase ("ClassNameAttribute"))
       {
         XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
         if  (eKKStr)
-          value->ClassNameAttribute (*(eKKStr->Value ()));
+          ClassNameAttribute (*(eKKStr->Value ()));
       }
 
       else if  (varName.EqualIgnoreCase ("Version"))
       {
         XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
         if  (eKKInt32)
-          value->Version ((kkint16)eKKInt32->Value ());
+          Version ((kkint16)eKKInt32->Value ());
       }
 
       else if  (varName.EqualIgnoreCase ("SparseMinFeatureNum"))
       {
         XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
         if  (eKKInt32)
-          value->SparseMinFeatureNum (eKKInt32->Value ());
+          SparseMinFeatureNum (eKKInt32->Value ());
       }
       else
       {
@@ -885,10 +867,75 @@ XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
     delete t;
     t = s.GetNextToken (log);
   }
+}  /* ReadXML */
 
+
+
+
+
+void  FileDesc::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
+
+
+{
+  XmlTag  startTag ("FileDesc", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  if  (!fileName.Empty ())
+    XmlElementKKStr::WriteXML (fileName, "FileName", o);
+
+  XmlElementAttributeList::WriteXML (attributes, "Attributes", o);
+
+  XmlElementMLClassNameList::WriteXML (classes, "Classes", o);
+
+  if  (!ClassNameAttribute ().Empty ())
+    XmlElementKKStr::WriteXML (ClassNameAttribute (), "ClassNameAttribute", o);
+
+  XmlElementInt32::WriteXML (version, "Version", o);
+
+  if  (sparseMinFeatureNum  != 0)
+    XmlElementInt32::WriteXML (sparseMinFeatureNum, "SparseMinFeatureNum", o);
+
+  XmlTag  endTag ("FileDesc", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+
+
+
+FileDescList::FileDescList (bool  _owner):
+  KKQueue<FileDesc> (_owner)
+{
+}
+
+
+
+FileDescList::~FileDescList ()
+{
+}
+
+
+
+
+XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
+                                        XmlStream&  s,
+                                        RunLog&     log
+                                       ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new FileDesc ();
+  value->ReadXML (s, tag, log);
   value = FileDesc::GetExistingFileDesc (value);
 }
                 
+
  
 XmlElementFileDesc::~XmlElementFileDesc ()
 {
@@ -911,34 +958,15 @@ FileDescPtr  XmlElementFileDesc::TakeOwnership ()
 }
 
 
+
 void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
                                     const KKStr&     varName,
                                     ostream&         o
                                   )
 {
-  XmlTag  startTag ("FileDesc", XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-  o << endl;
-
-  if  (!fileDesc.FileName ().Empty ())
-    XmlElementKKStr::WriteXML (fileDesc.FileName (), "FileName", o);
-
-  XmlElementAttributeList::WriteXML (fileDesc.Attributes (), "Attributes", o);
-
-  XmlElementMLClassNameList::WriteXML (fileDesc.Classes (), "Classes", o);
-
-  if  (!fileDesc.ClassNameAttribute ().Empty ())
-    XmlElementKKStr::WriteXML (fileDesc.ClassNameAttribute (), "ClassNameAttribute", o);
-
-  XmlElementInt32::WriteXML (fileDesc.Version (), "Version", o);
-
-  if  (fileDesc.SparseMinFeatureNum () != 0)
-    XmlElementInt32::WriteXML (fileDesc.SparseMinFeatureNum () , "SparseMinFeatureNum", o);
-
-  XmlTag  endTag ("FileDesc", XmlTag::TagTypes::tagEnd);
+  fileDesc.WriteXML (varName, o);
 }  /* WriteXML */
- 
+
 
 
 XmlFactoryMacro(FileDesc)

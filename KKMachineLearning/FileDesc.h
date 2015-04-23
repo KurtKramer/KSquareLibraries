@@ -202,6 +202,12 @@ namespace KKMLL
     
     kkuint32                    NumOfFields () const  {return (kkuint32)attributes.size ();}
 
+    void                        ReadXML (XmlStream&      s,
+                                         XmlTagConstPtr  tag,
+                                         RunLog&         log
+                                        );
+
+
     bool                        SameExceptForSymbolicData (const FileDesc&  otherFd,
                                                            RunLog&          log
                                                           )  const;
@@ -245,6 +251,11 @@ namespace KKMLL
                                              const FileDesc&  right,
                                              RunLog&          log
                                             );
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
 
     /** 

@@ -989,6 +989,7 @@ void  XmlElementVectorKKStr::WriteXml (const VectorKKStr&  v,
 
   XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
+  o << endl;
 }  /* WriteXml */
 
 
@@ -1072,6 +1073,7 @@ void  XmlElementKKStrListIndexed::WriteXml (const KKStrListIndexed& v,
 
   XmlTag endTag ("KKStrListIndexed", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
+  o << endl;
 }
 
 

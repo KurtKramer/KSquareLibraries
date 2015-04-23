@@ -619,6 +619,7 @@ void  NormalizationParms::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("NormalizationParms", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
   o << endl;
 
   XmlElementInt32::WriteXML  (numOfFeatures,             "NumOfFeatures",            o);

@@ -78,6 +78,7 @@ namespace KKMLL
                                                  );
 
     void  AddDirectory    (const KKStr&  _directory);
+    void  AddDirectories  (const VectorKKStr&  _directories);
 
     void  CountFactor       (float         _countFactor)       {countFactor       = _countFactor;}
     void  FeatureFileName   (const KKStr&  _featureFileName)   {featureFileName   = _featureFileName;}
@@ -88,6 +89,16 @@ namespace KKMLL
     void  Directory       (kkuint32      idx, 
                            const KKStr&  directory
                           );
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
 
 
   private:
