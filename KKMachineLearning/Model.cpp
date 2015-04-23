@@ -872,7 +872,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
     }
     delete  normParms;
     normParms = new NormalizationParms (*param, *trainExamples, log);
-    normParms->NormalizeExamples (trainExamples);
+    normParms->NormalizeExamples (trainExamples, log);
   }
 
   if  (param->EncodingMethod () == ModelParam::Encoding_NULL)

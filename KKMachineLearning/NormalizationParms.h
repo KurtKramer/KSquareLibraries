@@ -56,6 +56,8 @@ namespace KKMLL
   class  NormalizationParms
   {
   public:
+    NormalizationParms ();
+
     NormalizationParms (bool                _normalizeNominalFeatures,
                         FeatureVectorList&  _examples,
                         RunLog&             _log
@@ -95,7 +97,9 @@ namespace KKMLL
 
     FileDescPtr  FileDesc ()  const  {return fileDesc;}
 
-    void  NormalizeExamples (FeatureVectorListPtr  examples);
+    void  NormalizeExamples (FeatureVectorListPtr  examples,
+                             RunLog&               log
+                            );
 
     void  NormalizeAExample (FeatureVectorPtr  example);
 
@@ -108,30 +112,51 @@ namespace KKMLL
     float   NumOfExamples ()  const {return numOfExamples;}
 
 
-    void  Read (FILE*  i,
-                bool&  sucessful
+    void  Read (FILE*    i,
+                bool&    sucessful,
+                RunLog&  log
                );
 
 
     void  Read (istream&  i,
-                bool&     sucessful
+                bool&     sucessful,
+                RunLog&   log
                );
+
+
+    void  ReadXML (XmlStream&  s,
+                   RunLog&     log
+                  );
 
 
     void  Save (const KKStr&  _fileName,
-                bool&         _successfull
+                bool&         _successfull,
+                RunLog&       _log
                );
 
+    
     void  Write (std::ostream&  o);
 
-    double  Mean (kkint32 i);
-    double  Sigma (kkint32 i);
 
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
+    double  Mean (kkint32  i,
+                  RunLog&  log
+                 );
+
+
+    double  Sigma (kkint32 i,
+                   RunLog&  log
+                  );
+
+    
     const double*  Mean  () const  {return  mean;}
     const double*  Sigma () const  {return  sigma;}
 
-    void  WriteXML (ostream& o);
-
+    
 
   private:
     void  ConstructNormalizeFeatureVector ();
@@ -140,7 +165,6 @@ namespace KKMLL
     AttributeTypeVector  attriuteTypes;
     FileDescPtr          fileDesc;
     KKStr                fileName;
-    RunLog&              log;
     double*              mean;
     bool*                normalizeFeature;
     bool                 normalizeNominalFeatures;

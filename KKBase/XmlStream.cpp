@@ -26,44 +26,6 @@ using namespace KKB;
 
 
 
-
-
-#define  XmlFactoryMacro(NameOfClass)                                             \
-    class  XmlFactory##NameOfClass: public XmlFactory                             \
-    {                                                                             \
-    public:                                                                       \
-      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
-      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
-                                                               XmlStream&  s,     \
-                                                               RunLog&     log    \
-                                                              )                   \
-      {                                                                           \
-        return new XmlElement##NameOfClass(tag, s, log);                          \
-      }                                                                           \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   factoryInstance;                        \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
-      {                                                                           \
-        if  (factoryInstance == NULL)                                             \
-        {                                                                         \
-          GlobalGoalKeeper::StartBlock ();                                        \
-          if  (!factoryInstance)                                                  \
-          {                                                                       \
-            factoryInstance = new XmlFactory##NameOfClass ();                     \
-            XmlFactory::RegisterFactory (factoryInstance);                        \
-          }                                                                       \
-          GlobalGoalKeeper::EndBlock ();                                          \
-         }                                                                        \
-        return  factoryInstance;                                                  \
-      }                                                                           \
-    };                                                                            \
-                                                                                  \
-    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
-                  = XmlFactory##NameOfClass::FactoryInstance ();
-
-
-
 XmlStream::XmlStream (XmlTokenizerPtr _tokenStream):
     endOfElementTagNames (),
     endOfElemenReached   (false),

@@ -20,6 +20,18 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+
+FeatureNumList::FeatureNumList ():
+  featureNums              (NULL),
+  featureNumsAllocatedSize (0),
+  maxFeatureNum            (0),
+  numOfFeatures            (0)
+{
+}
+
+
+
+
 FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
@@ -81,8 +93,8 @@ FeatureNumList::FeatureNumList (const BitString&  bitString):
 
 
 FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
-                                  bool&         _valid
-                                 ):
+                                bool&         _valid
+                               ):
 
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
@@ -109,17 +121,6 @@ FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
   return;
 }
 
-
-
-
-
-FeatureNumList::FeatureNumList ():
-  featureNums              (NULL),
-  featureNumsAllocatedSize (0),
-  maxFeatureNum            (0),
-  numOfFeatures            (0)
-{
-}
 
 
 
@@ -692,6 +693,67 @@ void  FeatureNumList::SaveXML (ostream&  o)
 
 
 
+void  FeatureNumList::WriteXML (const KKStr&  varName,
+                                ostream&      o
+                               )  const
+{
+  XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  o << endl;
+
+  XmlElementInt32::WriteXML (maxFeatureNum, "MaxFeatureNum", o);
+  XmlElementInt32::WriteXML (numOfFeatures, "NumOfFeatures", o);
+  XmlElementArrayUint16::WriteXML (numOfFeatures, featureNums, "FeatureNums", o);
+
+  XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+}
+
+
+
+void  FeatureNumList::ReadXML (XmlStream&      s,
+                               XmlTagConstPtr  tag,
+                               RunLog&         log
+                             )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  className = e->Name ();
+      const KKStr&  varName = e->VarName ();
+      if  (varName.EqualIgnoreCase ("MaxFeatureNum"))
+      {
+        XmlElementInt32Ptr  mfn = dynamic_cast<XmlElementInt32Ptr>(e);
+        maxFeatureNum = mfn->Value ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("NumOfFeatures"))
+      {
+        XmlElementInt32Ptr  nof = dynamic_cast<XmlElementInt32Ptr>(e);
+        numOfFeatures = nof->Value ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("FeatureNums"))
+      {
+        XmlElementArrayUint16Ptr  nof = dynamic_cast<XmlElementArrayUint16Ptr>(e);
+        featureNums = nof->TakeOwnership ();
+        featureNumsAllocatedSize = nof->Count ();
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}
+
+
+
+
 FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 {
   delete featureNums;
@@ -1035,6 +1097,8 @@ XmlElementFeatureNumList::XmlElementFeatureNumList (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
+  value = new FeatureNumList ();
+  value->ReadXML (s, tag, log);
 
 }
  
@@ -1062,22 +1126,5 @@ void  XmlElementFeatureNumList::WriteXML (const FeatureNumList&  fnl,
                                           ostream&               o
                                          )
 {
-  XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-  o << endl;
-
-  XmlElementInt32::WriteXML (fnl.MaxFeatureNum (), "MaxFeatureNum", o);
-  XmlElementInt32::WriteXML (fnl.NumOfFeatures (), "NumOfFeatures", o);
-
-    kkuint16*  featureNums;              /**< @brief The feature numbers in this array are always kept in ascending order.  
-                                          * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
-                                          * indicates the size allocated, if more space is needed you need to call 
-                                          * 'AllocateArraySize' to increase it.
-                                          */
-    kkint32   featureNumsAllocatedSize;
-
-
-
-  XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
+  fnl.WriteXML (varName, o);
 }

@@ -58,6 +58,10 @@ namespace KKMLL
     typedef  FeatureNumList  const  FeatureNumListConst;
     typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 
+    
+    FeatureNumList ();
+
+
     /** @brief  Copy constructor.  */
     FeatureNumList (FeatureNumListConst&  featureNumList);
 
@@ -168,6 +172,11 @@ namespace KKMLL
 
     kkint32  MemoryConsumedEstimated ()  const;
 
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
     /**
      * @brief Generates a new FeatureNumList object that will select at random 'numToKeep' features from this instance.
      * @param[in] numToKeep Number of features to select randomly from existing instance.
@@ -202,6 +211,12 @@ namespace KKMLL
 
     /** @brief Turns off specified feature 'featureNum'; if 'featureNum' is not turned on then nothing happens; same as using 'operator-='.  */
     void   UnSet (kkuint16  featureNum);
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
 
     /**
      *@brief Returns back the selected feature.
@@ -241,12 +256,6 @@ namespace KKMLL
     bool             operator<  (const FeatureNumList&   _features)   const;  /**< @brief  Indicates if the Left FeatureNumList instances is less than the right one.      */
 
   private:
-    /*
-     * @brief  Constructs an instance with no features selected and no associated 'FileDesc' instance.
-     *  This is a private constructor and is used for internal use of 'FeatureNumList only.
-     */
-    FeatureNumList ();
-
     void   AllocateArraySize (kkuint16 size);   /**< @brief  Make sure that FeatureNums is allocated to at least this size. */
 
     static  VectorUint16*  StrToUInt16Vetor (const KKStr&  s);

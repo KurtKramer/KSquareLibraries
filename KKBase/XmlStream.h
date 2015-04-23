@@ -419,6 +419,43 @@ namespace  KKB
 
 
 
+#define  XmlFactoryMacro(NameOfClass)                                             \
+    class  XmlFactory##NameOfClass: public XmlFactory                             \
+    {                                                                             \
+    public:                                                                       \
+      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
+      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
+                                                               XmlStream&  s,     \
+                                                               RunLog&     log    \
+                                                              )                   \
+      {                                                                           \
+        return new XmlElement##NameOfClass(tag, s, log);                          \
+      }                                                                           \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   factoryInstance;                        \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
+      {                                                                           \
+        if  (factoryInstance == NULL)                                             \
+        {                                                                         \
+          GlobalGoalKeeper::StartBlock ();                                        \
+          if  (!factoryInstance)                                                  \
+          {                                                                       \
+            factoryInstance = new XmlFactory##NameOfClass ();                     \
+            XmlFactory::RegisterFactory (factoryInstance);                        \
+          }                                                                       \
+          GlobalGoalKeeper::EndBlock ();                                          \
+         }                                                                        \
+        return  factoryInstance;                                                  \
+      }                                                                           \
+    };                                                                            \
+                                                                                  \
+    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
+                  = XmlFactory##NameOfClass::FactoryInstance ();
+
+
+
+
 
 
 #define  XmlElementIntegralHeader(T,TypeName)          \
@@ -450,6 +487,7 @@ namespace  KKB
 
 
 
+
 #define  XmlElementArrayHeader(T,TypeName,ParserNextTokenMethod)   \
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
@@ -476,8 +514,8 @@ namespace  KKB
   private:                                                         \
     kkuint32  count;                                               \
     T*        value;                                               \
-  };
-
+  };                                                               \
+  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
 
@@ -504,7 +542,8 @@ namespace  KKB
                                                                    \
   private:                                                         \
     VectorInt32*  value;                                           \
-  };
+  };                                                               \
+  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
 
@@ -525,13 +564,13 @@ XmlElementIntegralHeader(double,Double)
 
 
 
-XmlElementArrayHeader(kkuint16, ArrayUint16,   GetNextTokenUint)
+XmlElementArrayHeader(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
 
-XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)
+XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
 
-XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)
+XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)   // XmlElementArrayDouble
 
-XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)
+XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)   // XmlElementArrayFloat
 
 
 XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)
