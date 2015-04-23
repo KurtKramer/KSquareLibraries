@@ -39,7 +39,15 @@ namespace KKMLL
   public:
     typedef  ModelParam*  ModelParamPtr;
 
-    typedef  enum  {mptNULL, mptDual, mptKNN, mptOldSVM, mptSvmBase, mptUsfCasCor}  ModelParamTypes;
+    enum  struct  ModelParamTypes
+                      {mptNULL,
+                       mptDual,
+                       mptKNN,
+                       mptOldSVM,
+                       mptSvmBase,
+                       mptUsfCasCor
+                      };
+
     static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
   

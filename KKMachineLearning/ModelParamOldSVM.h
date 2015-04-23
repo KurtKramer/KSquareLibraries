@@ -50,7 +50,7 @@ namespace KKMLL
     virtual
     ModelParamOldSVMPtr  Duplicate () const;
 
-    virtual ModelParamTypes  ModelParamType () const {return mptOldSVM;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptOldSVM;}
 
     void    ReadSpecificImplementationXML (istream& i,
                                            FileDescPtr  fileDesc

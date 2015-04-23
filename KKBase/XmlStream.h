@@ -89,18 +89,44 @@ namespace  KKB
     KKStr  value;
   };
 
+  typedef  XmlAttribute*  XmlAttributePtr;
+  typedef  XmlAttribute const  XmlAttributeConst;
+  typedef  XmlAttributeConst*  XmlAttributeConstPtr;
 
-  class  XmlAttributeList:  public map<KKStr, KKStr>
+
+
+  class  XmlAttributeList:  public KKQueue<XmlAttribute> 
   {
   public:
-    XmlAttributeList ();
+    XmlAttributeList (bool  _owner);
     XmlAttributeList (const XmlAttributeList&  attributes);
-
-    KKStrConstPtr  LookUp (const KKStr&  name) const;
 
     void  AddAttribute (const KKStr&  name,
                         const KKStr&  value
                        );
+
+    virtual  void  PushOnBack  (XmlAttributePtr a);
+    virtual  void  PushOnFront (XmlAttributePtr a);
+
+    virtual  XmlAttributePtr  PopFromBack ();
+    virtual  XmlAttributePtr  PopFromFromt ();
+
+    XmlAttributePtr  LookUpByName (const KKStr&  name) const;
+
+    KKStrConstPtr  AttributeValueByName  (const KKStr&  name)   const;
+    KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
+    KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;
+
+    const KKStr&   AttributeValueKKStr   (const KKStr&  name)   const;
+    kkint32        AttributeValueInt32   (const KKStr&  name)   const;
+
+
+  private:
+    void  DeleteFromNameIndex (XmlAttributePtr a);
+
+    typedef  multimap<KKStr,XmlAttributePtr>   NameIndex;
+    typedef  pair<KKStr,XmlAttributePtr>       NameIndexPair;
+    NameIndex  nameIndex;
   };  /* XmlAttributeList */
 
   typedef  XmlAttributeList*  XmlAttributeListPtr;
@@ -111,7 +137,7 @@ namespace  KKB
   {
   public:
     typedef  XmlTag*  XmlTagPtr;
-    typedef  enum {tagNULL, tagStart, tagEnd, tagEmpty}  TagTypes;
+    enum  class  TagTypes  {tagNULL, tagStart, tagEnd, tagEmpty};
 
     XmlTag (const KKStrConstPtr  tagStr);
 
@@ -128,11 +154,15 @@ namespace  KKB
 
     const KKStr&  Name ()           const  {return  name;}
     TagTypes      TagType ()        const  {return  tagType;}
-    kkint32       AttributeCount () const  {return  (kkint32)attributes.size ();}
-    KKStrConstPtr  AttributeName  (kkint32 _attributeNum)  const;
-    KKStrConstPtr  AttributeValue (kkint32 _attributeNum)  const;
-    KKStrConstPtr  AttributeValue (const KKStr& attributeName)  const;
-    KKStrConstPtr  AttributeValue (const char*  attributeName)  const;
+
+    kkint32        AttributeCount () const  {return  (kkint32)attributes.size ();}
+
+    KKStrConstPtr  AttributeValueByName  (const KKStr&  name)   const;
+    KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
+    KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;
+
+    const KKStr&   AttributeValueKKStr   (const KKStr&  name)   const;
+    kkint32        AttributeValueInt32   (const KKStr&  attributeName)  const;
 
     void  AddAtribute (const KKStr&  attributeName,
                        const KKStr&  attributeValue
@@ -159,6 +189,8 @@ namespace  KKB
   };  /* XmlTag */
 
   typedef  XmlTag::XmlTagPtr  XmlTagPtr;
+  typedef  XmlTag const  XmlTagConst;
+  typedef  XmlTagConst*  XmlTagConstPtr;
 
 
 
@@ -167,7 +199,7 @@ namespace  KKB
   {
   public:
     typedef  XmlToken*  XmlTokenPtr;
-    typedef  enum  {tokNULL, tokElement, tokContent}  TokenTypes;
+    enum  class  TokenTypes  {tokNULL, tokElement, tokContent};
 
     XmlToken ();
     virtual  ~XmlToken ();
@@ -193,14 +225,19 @@ namespace  KKB
                 
     virtual  ~XmlElement ();
 
-    virtual  TokenTypes  TokenType () {return  XmlToken::tokElement;}
+    virtual  TokenTypes  TokenType () {return  TokenTypes::tokElement;}
 
-    const KKStr&   Name () const;
+    const KKStr&   Name () const;   /**< Comes from 'name' field of XmlTag 'nameTab'. */
+
+    const KKStr&   VarName ()  const;
+
+    XmlTagConstPtr  NameTag () const;
+
+    KKStrConstPtr  AttributeValue (const char*   attributeName);
+    KKStrConstPtr  AttributeValue (const KKStr&  attributeName);
 
   private:
     XmlTagPtr  nameTag;
-    void*      body;
-
   };  /* XmlElement */
 
   typedef  XmlElement::XmlElementPtr  XmlElementPtr;
@@ -216,7 +253,7 @@ namespace  KKB
     XmlContent (KKStrPtr  _content);
     virtual ~XmlContent ();
 
-    virtual  TokenTypes  TokenType () {return  XmlToken::tokContent;}
+    virtual  TokenTypes  TokenType () {return  TokenTypes::tokContent;}
 
     KKStrPtr const  Content () const  {return  content;}
     KKStrPtr        TakeOwnership ();
@@ -265,56 +302,30 @@ namespace  KKB
 
 
 
-
-  class  XmlElementInt32:  public  XmlElement
+  class  XmlElementBool:  public  XmlElement
   {
   public:
-    XmlElementInt32 (XmlTagPtr   tag,
-                     XmlStream&  s,
-                     RunLog&     log
-                    );
+    XmlElementBool (XmlTagPtr   tag,
+                    XmlStream&  s,
+                    RunLog&     log
+                   );
                 
-    virtual  ~XmlElementInt32 ();
+    virtual  ~XmlElementBool ();
 
-    kkint32  Value ()  const;
+    bool  Value ()  const;
 
     static
-    void  WriteXML (const kkint32  i,
-                    const KKStr&   varName,
-                    ostream&       o
+    void  WriteXML (const bool    b,
+                    const KKStr&  varName,
+                    ostream&      o
                    );
 
   private:
-    kkint32  value;
+    bool  value;
   };
-  typedef  XmlElementInt32*  XmlElementInt32Ptr;
+  typedef  XmlElementBool*  XmlElementBoolPtr;
 
 
-
-  class  XmlElementVectorInt32:  public  XmlElement
-  {
-  public:
-    XmlElementVectorInt32 (XmlTagPtr   tag,
-                           XmlStream&  s,
-                           RunLog&     log
-                          );
-                
-    virtual  ~XmlElementVectorInt32 ();
-
-    VectorInt32*  const  Value ()  const;
-
-    VectorInt32*  TakeOwnership ();
-
-    static
-    void  WriteXML (const VectorInt32&  v,
-                    const KKStr&        varName,
-                    ostream&            o
-                   );
-
-  private:
-    VectorInt32*  value;
-  };
-  typedef  XmlElementVectorInt32*  XmlElementVectorInt32Ptr;
 
 
 
@@ -410,41 +421,120 @@ namespace  KKB
 
 
 
-#define  XmlFactoryMacro(NameOfClass)                                             \
-    class  XmlFactory##NameOfClass: public XmlFactory                             \
-    {                                                                             \
-    public:                                                                       \
-      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
-      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
-                                                               XmlStream&  s,     \
-                                                               RunLog&     log    \
-                                                              )                   \
-      {                                                                           \
-        return new XmlElement##NameOfClass(tag, s, log);                          \
-      }                                                                           \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   factoryInstance;                        \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
-      {                                                                           \
-        if  (factoryInstance == NULL)                                             \
-        {                                                                         \
-          GlobalGoalKeeper::StartBlock ();                                        \
-          if  (!factoryInstance)                                                  \
-          {                                                                       \
-            factoryInstance = new XmlFactory##NameOfClass ();                     \
-            XmlFactory::RegisterFactory (factoryInstance);                        \
-          }                                                                       \
-          GlobalGoalKeeper::EndBlock ();                                          \
-         }                                                                        \
-        return  factoryInstance;                                                  \
-      }                                                                           \
-    };                                                                            \
-                                                                                  \
-    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
-                  = XmlFactory##NameOfClass::FactoryInstance ();
+#define  XmlElementIntegralHeader(T,TypeName)          \
+                                                       \
+  class  XmlElement##TypeName:  public  XmlElement     \
+  {                                                    \
+  public:                                              \
+    XmlElement##TypeName (XmlTagPtr   tag,             \
+                          XmlStream&  s,               \
+                          RunLog&     log              \
+                         );                            \
+                                                       \
+    virtual  ~XmlElement##TypeName ();                 \
+                                                       \
+    T  Value ()  const  {return value;}                \
+                                                       \
+    static                                             \
+    void  WriteXML (T             d,                   \
+                    const KKStr&  varName,             \
+                    ostream&      o                    \
+                   );                                  \
+                                                       \
+  private:                                             \
+    T   value;                                         \
+  };                                                   \
+  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 
+
+
+
+#define  XmlElementArrayHeader(T,TypeName,ParserNextTokenMethod)   \
+  class  XmlElement##TypeName:  public  XmlElement                 \
+  {                                                                \
+  public:                                                          \
+    XmlElement##TypeName (XmlTagPtr   tag,                         \
+                          XmlStream&  s,                           \
+                          RunLog&     log                          \
+                         );                                        \
+                                                                   \
+    virtual  ~XmlElement##TypeName ();                             \
+                                                                   \
+    kkuint32  Count ()  const  {return count;}                     \
+    T*        Value ()  const  {return value;}                     \
+                                                                   \
+    T*   TakeOwnership ();                                         \
+                                                                   \
+    static                                                         \
+    void  WriteXML (kkuint32       count,                          \
+                    const T*       d,                              \
+                    const KKStr&   varName,                        \
+                    ostream&       o                               \
+                   );                                              \
+                                                                   \
+  private:                                                         \
+    kkuint32  count;                                               \
+    T*        value;                                               \
+  };
+
+
+
+
+#define  XmlElementVectorHeader(T,TypeName,ParserNextTokenMethod)  \
+  class  XmlElement##TypeName:  public  XmlElement                 \
+  {                                                                \
+  public:                                                          \
+    XmlElement##TypeName (XmlTagPtr   tag,                         \
+                          XmlStream&  s,                           \
+                          RunLog&     log                          \
+                         );                                        \
+                                                                   \
+    virtual  ~XmlElement##TypeName ();                             \
+                                                                   \
+    vector<##T>*  const  Value ()  const {return value;}           \
+                                                                   \
+    vector<##T>*  TakeOwnership ();                                \
+                                                                   \
+    static                                                         \
+    void  WriteXML (const vector<##T>&  d,                         \
+                    const KKStr&        varName,                   \
+                    ostream&            o                          \
+                   );                                              \
+                                                                   \
+  private:                                                         \
+    VectorInt32*  value;                                           \
+  };
+
+
+
+
+XmlElementIntegralHeader(kkint32,Int32)
+//typedef  XmlElementInt32*   XmlElementInt32Ptr;
+
+
+
+XmlElementIntegralHeader(float,Float)
+
+XmlElementIntegralHeader(double,Double)
+
+
+
+
+
+
+
+
+XmlElementArrayHeader(kkuint16, ArrayUint16,   GetNextTokenUint)
+
+XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)
+
+XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)
+
+XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)
+
+
+XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)
 
 
 }  /* KKB */

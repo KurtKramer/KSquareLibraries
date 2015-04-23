@@ -111,7 +111,7 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
   for  (kkint32 fieldNum = featureNumMin;  fieldNum <= featureNumMax;  fieldNum++)
   {
     bool  alreadyExists = false;
-    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), NumericAttribute, alreadyExists);
+    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), AttributeType::NumericAttribute, alreadyExists);
   }
 
   return  fileDesc;

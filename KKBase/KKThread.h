@@ -36,14 +36,14 @@ namespace KKB
                    }
                    ThreadPriority;
 
-    typedef  enum  {tsNULL,
+    enum  class  ThreadStatus: int
+                   {tsNULL,
                     tsNotStarted,
                     tsStarting,
                     tsRunning,
                     tsStopping,
                     tsStopped
-                   } 
-                   ThreadStatus;
+                   };
 
 
     KKThread (const KKStr&        _threadName,

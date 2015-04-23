@@ -23,7 +23,7 @@ namespace KKMLL
     virtual
     ModelParamKnnPtr  Duplicate ()  const;
 
-    virtual ModelParamTypes  ModelParamType () const {return mptKNN;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptKNN;}
 
     virtual
     void    ReadSpecificImplementationXML (istream&     i,

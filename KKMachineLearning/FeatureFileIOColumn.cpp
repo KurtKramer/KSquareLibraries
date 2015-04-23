@@ -112,7 +112,7 @@ FileDescPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
       }
 
 
-      fileDesc->AddAAttribute ("Field_" + StrFormatInt (numOfFeatures, "ZZZZ0"), NumericAttribute, alreadyExists);
+      fileDesc->AddAAttribute ("Field_" + StrFormatInt (numOfFeatures, "ZZZZ0"), AttributeType::NumericAttribute, alreadyExists);
       numOfFeatures++;
     }
   }

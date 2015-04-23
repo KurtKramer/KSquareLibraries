@@ -228,7 +228,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   char  buff[20480];
   KKStr  ln;
 
-  ModelTypes  modelType = mtNULL;
+  ModelTypes  modelType = ModelTypes::mtNULL;
 
 
   // First we need to determine which type of model this is.  We will
@@ -248,7 +248,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
     {
       KKStr  modelTypeStr = ln.ExtractToken2 ("\t");
       modelType = ModelTypeFromStr (modelTypeStr);
-      if  (modelType == mtNULL)
+      if  (modelType == ModelTypes::mtNULL)
       {
         _log.Level (-1) << endl
           << "ModelParam::CreateFromStream  ***ERROR***   Invalid ModelType[" << modelTypeStr << "]." << endl
@@ -258,7 +258,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
     }
   }
 
-  if  (modelType == mtNULL)
+  if  (modelType == ModelTypes::mtNULL)
   {
     // We never found the type of parameter we are looking for.
     _log.Level (-1) << endl
@@ -272,20 +272,11 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   ModelPtr model = NULL;
   switch  (modelType)
   {
-  case  mtKNN:      model = new ModelKnn     (_fileDesc, _cancelFlag, _log);
-                    break;
-
-  case  mtOldSVM:   model = new ModelOldSVM  (_fileDesc, _cancelFlag, _log);
-                    break;
- 
-  case  mtSvmBase:  model = new ModelSvmBase (_fileDesc, _cancelFlag, _log);
-                    break;
-
-  case  mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag, _log);
-                     break;
-
-  case  mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag, _log);
-                     break;
+  case  ModelTypes::mtKNN:       model = new ModelKnn       (_fileDesc, _cancelFlag, _log);  break;
+  case  ModelTypes::mtOldSVM:    model = new ModelOldSVM    (_fileDesc, _cancelFlag, _log);  break;
+  case  ModelTypes::mtSvmBase:   model = new ModelSvmBase   (_fileDesc, _cancelFlag, _log);  break;
+  case  ModelTypes::mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag, _log);  break;
+  case  ModelTypes::mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag, _log);  break;
   }
 
   if  (!model)
@@ -331,26 +322,14 @@ ModelPtr  Model::CreateFromStream (istream&       i,
 
 
 
-KKStr  Model::ModelTypeToStr (ModelTypes   _modelingType)
+KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
 {
-  if  (_modelingType == mtNULL)
-    return "NULL";
-  
-  else if  (_modelingType == mtOldSVM)
-    return "OldSVM";
-
-  else if  (_modelingType == mtSvmBase)
-    return "SvmBase";
-  
-  else if  (_modelingType == mtKNN)
-    return "KNN";
-
-  else if  (_modelingType == mtUsfCasCor)
-    return "UsfCasCor";
-
-  else if  (_modelingType == mtDual)
-    return "Dual";
-  
+  if       (_modelingType == ModelTypes::mtNULL)      return "NULL";
+  else if  (_modelingType == ModelTypes::mtOldSVM)    return "OldSVM";
+  else if  (_modelingType == ModelTypes::mtSvmBase)   return "SvmBase";
+  else if  (_modelingType == ModelTypes::mtKNN)       return "KNN";
+  else if  (_modelingType == ModelTypes::mtUsfCasCor) return "UsfCasCor";
+  else if  (_modelingType == ModelTypes::mtDual)      return "Dual";
   else
     return "NULL";
 }  /* ModelingMethodToStr */
@@ -360,23 +339,15 @@ KKStr  Model::ModelTypeToStr (ModelTypes   _modelingType)
 
 Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 {
-  if  (_modelingTypeStr.EqualIgnoreCase ("OldSVM")  ||  _modelingTypeStr.EqualIgnoreCase ("One_Level"))
-    return mtOldSVM;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))
-    return mtSvmBase;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))
-    return mtKNN;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))
-    return mtUsfCasCor;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))
-    return mtDual;
+  if       (_modelingTypeStr.EqualIgnoreCase ("OldSVM")  ||  
+            _modelingTypeStr.EqualIgnoreCase ("One_Level"))   return ModelTypes::mtOldSVM;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))     return ModelTypes::mtSvmBase;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))         return ModelTypes::mtKNN;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))   return ModelTypes::mtUsfCasCor;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))        return ModelTypes::mtDual;
 
   else
-    return mtNULL;
+    return ModelTypes::mtNULL;
 }  /* ModelingMethodFromStr */
 
 
@@ -395,20 +366,25 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
   {
     switch  (_modelType)
     {
-    case  mtOldSVM:    model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::mtOldSVM:    
+          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag, _log);
+          break;
 
-    case  mtSvmBase:   model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::mtSvmBase:
+          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag, _log);
+          break;
 
-    case  mtKNN:       model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::mtKNN:
+          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag, _log);
+          break;
 
-    case  mtUsfCasCor: model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::mtUsfCasCor:
+          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag, _log);
+          break;
 
-    case  mtDual:      model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::mtDual:
+          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag, _log);
+          break;
     }  /* end of switch */
   }
   catch  (const KKException&  e)

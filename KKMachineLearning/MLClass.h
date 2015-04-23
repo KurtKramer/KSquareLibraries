@@ -3,7 +3,7 @@
 
 /**
  *@class  KKMLL::MLClass
- *@brief  Represents a "Class" in the Machine Learnining Sense.
+ *@brief  Represents a "Class" in the Machine Learning Sense.
  *@author  Kurt Kramer
  *@details
  *@code
@@ -147,7 +147,7 @@ namespace KKMLL
     static MLClassListPtr  BuildListOfDecendents (MLClassPtr  parent);
 
    
-    kkint32         ClassId ()  const  {return classId;}  /**< From MySQL table  Classes, '-1' indicates that not loaded from mydsql table. */
+    kkint32         ClassId ()  const  {return classId;}  /**< From MySQL table  Classes, '-1' indicates that not loaded from mysql table. */
     void            ClassId (kkint32 _classId)  {classId = _classId;}
 
     float           CountFactor () const  {return countFactor;}
@@ -183,8 +183,8 @@ namespace KKMLL
     void            StoredOnDataBase (bool _storedOnDataBase)  {storedOnDataBase = _storedOnDataBase;}
 
     bool            Summarize () const {return summarize;}   /**< Indicates that Classification report should produce a summary 
-                                                              * collumn for the family of classes decendent from this class. 
-                                                              * Example classes that would set ths field true are 'Protist',
+                                                              * column for the family of classes decedent from this class. 
+                                                              * Example classes that would set this field true are 'Protist',
                                                               * 'Phyto',  'Crustacean', etc....
                                                               */
 
@@ -204,7 +204,7 @@ namespace KKMLL
     float           countFactor;  /**< Specifies number to increment count when this class picked;  ex:  Shrinmp_02 would have 2.0. */
     KKStr           description;
 
-    bool            mandatory;    /**< Class nees to be included in Classification Status even if none occurred. */
+    bool            mandatory;    /**< Class needs to be included in Classification Status even if none occurred. */
 
     KKStr           name;         /**< Name of Class.                                                                               */
 
@@ -219,9 +219,9 @@ namespace KKMLL
                                    * table "Classes".
                                    */
 
-    bool            summarize;    /**< Indicates that Classification report should produce a summary collumn 
-                                   * for the family of classes decendent from this class. Example classes that
-                                   * would set ths field true are 'Protist',  'Phyto',  'Crustacean', etc....
+    bool            summarize;    /**< Indicates that Classification report should produce a summary column 
+                                   * for the family of classes decedent from this class. Example classes that
+                                   * would set this field true are 'Protist',  'Phyto',  'Crustacean', etc....
                                    */
 
     KKStr           upperName;    /**< Upper case version of name;  Used by LookUpByName to assist in performance. */
@@ -309,7 +309,7 @@ namespace KKMLL
                                  ) const;
 
     /**
-     *@brief Will generate a HTML formated string that can be used in a HTML table.
+     *@brief Will generate a HTML formatted string that can be used in a HTML table.
      *@details Using the class name's create one header line for a HTML table. The 
      *         underscore character ("_") will be used to separate levels
      */

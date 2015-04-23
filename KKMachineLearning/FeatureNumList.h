@@ -278,8 +278,45 @@ namespace KKMLL
                             const FeatureNumListPtr&  features
                            );
 
-  extern
-  const  char*  FeatureDecriptions[];
+  //extern
+  //const  char*  FeatureDecriptions[];
+
+
+  
+class  XmlElementFeatureNumList:  public  XmlElement
+  {
+  public:
+    XmlElementFeatureNumList (XmlTagPtr   tag,
+                        XmlStream&  s,
+                        RunLog&     log
+                       );
+                
+    virtual  ~XmlElementFeatureNumList ();
+
+    FeatureNumListPtr  Value ()  const;
+
+    FeatureNumListPtr  TakeOwnership ();
+
+    static
+    void  WriteXML (const FeatureNumList&  fnl,
+                    const KKStr&           varName,
+                    ostream&               o
+                   );
+  private:
+    FeatureNumListPtr  value;
+  };
+  typedef  XmlElementFeatureNumList*  XmlElementFeatureNumListPtr;
+
+
+
+
+
+
+
+
+
+
+
 } /* namespace KKMLL */
 
 #endif

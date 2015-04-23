@@ -71,16 +71,18 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     kkint32  srcFeatureNum = srcFeatureNums[x];
     destFeatureNums  [x] = codedNumOfFeatures;
     cardinalityDest  [x] = 1;
-    destWhatToDo     [x] = FeAsIs;
+    destWhatToDo     [x] = FeWhatToDo::FeAsIs;
 
     Attribute  srcAttribute = (fileDesc->Attributes ())[srcFeatureNum];
 
     switch (encodingMethod)
     {
       case  ModelParam::BinaryEncoding:
-        if  ((attributeVector[srcFeatureNum] == NominalAttribute)  || (attributeVector[srcFeatureNum] == SymbolicAttribute))
+        if  ((attributeVector[srcFeatureNum] == AttributeType::NominalAttribute)  ||
+             (attributeVector[srcFeatureNum] == AttributeType::SymbolicAttribute)
+            )
         {
-          destWhatToDo    [x] = FeBinary;
+          destWhatToDo    [x] = FeWhatToDo::FeBinary;
           cardinalityDest [x] = cardinalityVector[srcFeatureNums [x]];
           codedNumOfFeatures   += cardinalityDest[x];
           for  (kkint32 zed = 0;  zed < cardinalityDest[x];  zed++)
@@ -92,7 +94,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
         else
         {
           codedNumOfFeatures++;
-          destWhatToDo [x] = FeAsIs;
+          destWhatToDo [x] = FeWhatToDo::FeAsIs;
           destFieldNames.push_back (srcAttribute.Name ());
         }
         break;
@@ -100,10 +102,12 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
       case  ModelParam::ScaledEncoding:
         codedNumOfFeatures++;
-        if  ((attributeVector[srcFeatureNums[x]] == NominalAttribute)  ||  (attributeVector[srcFeatureNums[x]] == SymbolicAttribute))
-          destWhatToDo [x] = FeScale;
+        if  ((attributeVector[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
+             (attributeVector[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
+            )
+          destWhatToDo [x] = FeWhatToDo::FeScale;
         else
-          destWhatToDo [x] = FeAsIs;
+          destWhatToDo [x] = FeWhatToDo::FeAsIs;
 
         destFieldNames.push_back (srcAttribute.Name ());
         break;
@@ -112,7 +116,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
       case    ModelParam::NoEncoding:
       default:
         codedNumOfFeatures++;
-        destWhatToDo [x] = FeAsIs;
+        destWhatToDo [x] = FeWhatToDo::FeAsIs;
         destFieldNames.push_back (srcAttribute.Name ());
         break;
     }
@@ -236,9 +240,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
 
     switch (destWhatToDo[x])
     {
-    case  FeAsIs:
+    case  FeWhatToDo::FeAsIs:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
@@ -249,13 +253,13 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
       }
       break;
 
-    case  FeBinary:
+    case  FeWhatToDo::FeBinary:
       {
         for  (kkint32 z = 0;  z < cardinalityDest[x];  z++)
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
-          newFileDesc->AddAAttribute (encodedName, NumericAttribute, alreadyExist);
+          newFileDesc->AddAAttribute (encodedName, AttributeType::NumericAttribute, alreadyExist);
           if  (o)
           {
             *o << origFieldDesc << "\t" 
@@ -270,9 +274,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
 
       break;
 
-    case  FeScale:
+    case  FeWhatToDo::FeScale:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc << "\t" 
@@ -311,13 +315,13 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
 
     switch (destWhatToDo[x])
     {
-    case  FeAsIs:
+    case  FeWhatToDo::FeAsIs:
       {
         encodedImage->AddFeatureData (y, featureVal);
       }
       break;
 
-    case  FeBinary:
+    case  FeWhatToDo::FeBinary:
       {
         for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
@@ -329,7 +333,7 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
 
       break;
 
-    case  FeScale:
+    case  FeWhatToDo::FeScale:
       {
         encodedImage->AddFeatureData (y, (featureVal / (float)cardinalityDest[x]));
       }

@@ -98,7 +98,7 @@ Classifier2::Classifier2 (TrainingProcess2Ptr  _trainer,
   noiseMLClass   = mlClasses->GetNoiseClass ();
   unKnownMLClass = mlClasses->GetUnKnownClass ();
 
-  if  (trainedModel->ModelType () == Model::mtOldSVM)
+  if  (trainedModel->ModelType () == Model::ModelTypes::mtOldSVM)
   {
     trainedModelOldSVM = dynamic_cast<ModelOldSVMPtr> (trainedModel);
     if  (trainedModelOldSVM)
@@ -129,7 +129,7 @@ kkint32  Classifier2::MemoryConsumedEstimated ()  const
 SVM_SelectionMethod   Classifier2::SelectionMethod ()  const
 {
   if  (!trainedModelOldSVM)
-    return   SelectionMethod_NULL;
+    return  SVM_SelectionMethod::SelectionMethod_NULL;
   else
     return  trainedModelOldSVM->SelectionMethod ();
 }
@@ -189,7 +189,7 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
   if  (predictedClass == NULL)
   {
     log.Level (-1) << endl << endl 
-                   << "Classifier2::ClassifyAImageOneLevel   The trainedModel returned back a NULL ptr for predicted class" << endl
+                   << "Classifier2::ClassifyAImageOneLevel   The trainedModel returned back a NULL pointer for predicted class" << endl
                    << endl;
     predictedClass = unKnownMLClass;
   }
@@ -203,7 +203,7 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
       double  subProbability = 0.0;
       kkint32 subNumOfWinners = 0;
       double  subBreakTie = 0.0;
-      /**@todo  make sure that the following call does not normalize the featires. */
+      /**@todo  make sure that the following call does not normalize the features. */
       MLClassPtr       subPrediction 
         = subClassifer->ClassifyAImageOneLevel (example, subProbability, subNumOfWinners, knownClassOneOfTheWinners, subBreakTie);
       if  (subPrediction)

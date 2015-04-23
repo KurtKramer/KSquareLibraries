@@ -31,14 +31,14 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
                     ):
 
   binaryParmsList           (NULL),
-  encodingMethod            (NoEncoding),
+  encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
   log                       (_log),
   param                     (),
   probClassPairs             (),
   samplingRate              (0.0f),
   selectedFeatures          (), 
-  selectionMethod           (SelectByVoting),
+  selectionMethod           (SVM_SelectionMethod::SelectByVoting),
   useProbabilityToBreakTies (false),
   validParam                (false)
 {
@@ -54,15 +54,15 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
 SVMparam::SVMparam  (RunLog&  _log):
 
   binaryParmsList           (NULL),
-  encodingMethod            (NoEncoding),
+  encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
   log                       (_log),
-  machineType               (OneVsOne),
+  machineType               (SVM_MachineType::OneVsOne),
   param                     (),
   probClassPairs            (),
   samplingRate              (0.0f),
   selectedFeatures          (NULL), 
-  selectionMethod           (SelectByVoting),
+  selectionMethod           (SVM_SelectionMethod::SelectByVoting),
   useProbabilityToBreakTies (false),
   validParam                (false)
 {
@@ -230,7 +230,7 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   else if  (field == "-MT")
   {
     machineType = MachineTypeFromStr (valueUpper);
-    if  (machineType == MachineType_NULL)
+    if  (machineType == SVM_MachineType::MachineType_NULL)
     {
       _validFormat = false;
       log.Level (-1) << endl 
@@ -243,7 +243,7 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   else if  ((field == "-SM")  ||  (field == "-SELECTIONMETHOD"))
   {
     selectionMethod  = SelectionMethodFromStr (valueUpper);
-    if  (selectionMethod == SelectionMethod_NULL)
+    if  (selectionMethod == SVM_SelectionMethod::SelectionMethod_NULL)
     {
       log.Level (-1) << endl
         << "SVMparam::ParseCmdLineParameter    *** ERROR ***"  << endl
@@ -290,7 +290,7 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
 
   //DecodeParamStr (_cmdLineStr, param);
 
-  machineType = OneVsOne;
+  machineType = SVM_MachineType::OneVsOne;
 
   useProbabilityToBreakTies = false;
 
@@ -374,13 +374,13 @@ KKStr   SVMparam::ToString () const
 
   cmdStr = SvmParamToString (param);
 
-  if  (encodingMethod != NoEncoding)
+  if  (encodingMethod != SVM_EncodingMethod::NoEncoding)
     cmdStr << "  -Encode " + EncodingMethodToStr (encodingMethod);
 
   cmdStr << "  -MT " << MachineTypeToStr (machineType);
   cmdStr << "  -SM " << SelectionMethodToStr (selectionMethod);
 
-  if  (machineType == BoostSVM)
+  if  (machineType == SVM_MachineType::BoostSVM)
   {
     cmdStr << "  -SamplingRate " << samplingRate;
   }
@@ -652,7 +652,7 @@ float   SVMparam::AvgMumOfFeatures (FileDescPtr fileDesc)  const
 {
   float  avgNumOfFeatures = 0.0f;
 
-  if  ((machineType == BinaryCombos)  &&  (binaryParmsList))
+  if  ((machineType == SVM_MachineType::BinaryCombos)  &&  (binaryParmsList))
     avgNumOfFeatures = binaryParmsList->FeatureCountNet (fileDesc);
 
   if  (avgNumOfFeatures == 0.0f)
@@ -680,7 +680,7 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
     // This way we make sure that the variable exists.
     SelectedFeatures (fileDesc);
   }
-  if  (machineType == BinaryCombos)
+  if  (machineType == SVM_MachineType::BinaryCombos)
   {
     kkint32 totalNumFeaturesUsed = 0;
     kkint32 toatlNumExamples     = 0;
@@ -741,19 +741,21 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
 
   switch (EncodingMethod ())
   {
-  case BinaryEncoding:
+  case  SVM_EncodingMethod::BinaryEncoding:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
-      if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
+      if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
+          )
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
       else
         numFeaturesAfterEncoding ++;
     }
     break;
 
-  case ScaledEncoding:
-  case NoEncoding:
+  case SVM_EncodingMethod::ScaledEncoding:
+  case SVM_EncodingMethod::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
     numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
@@ -926,10 +928,10 @@ void  SVMparam::AddBinaryClassParms (MLClassPtr              class1,
 
 KKStr  KKMLL::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
 {
-  if  (encodingMethod == BinaryEncoding)
+  if  (encodingMethod == SVM_EncodingMethod::BinaryEncoding)
     return  "Binary";
 
-  else if  (encodingMethod == ScaledEncoding)
+  else if  (encodingMethod == SVM_EncodingMethod::ScaledEncoding)
     return  "Scale";
 
   else
@@ -943,15 +945,15 @@ SVM_EncodingMethod  KKMLL::EncodingMethodFromStr (const KKStr&  encodingMethodSt
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
   if  ((encodingMethodUpper == "BINARY")  ||  (encodingMethodUpper == "BIN"))
-     return  BinaryEncoding;
+     return  SVM_EncodingMethod::BinaryEncoding;
 
   if  (encodingMethodUpper == "SCALE")
-     return  ScaledEncoding;
+     return  SVM_EncodingMethod::ScaledEncoding;
 
   if  (encodingMethodUpper == "NONE")
-    return  NoEncoding;
+    return  SVM_EncodingMethod::NoEncoding;
 
-  return  Encoding_NULL;
+  return  SVM_EncodingMethod::Encoding_NULL;
 }  /* EncodingMethodFromStr */
 
 
@@ -960,9 +962,9 @@ KKStr  KKMLL::KernalTypeToStr (SVM_KernalType  kernalType)
 {
   switch  (kernalType)
   {
-  case  KT_Linear:      return "Linear";
-  case  KT_Polynomial:  return "Polynomial";
-  case  KT_RBF:         return "RBF";
+  case  SVM_KernalType::KT_Linear:      return "Linear";
+  case  SVM_KernalType::KT_Polynomial:  return "Polynomial";
+  case  SVM_KernalType::KT_RBF:         return "RBF";
   default: return "UnKnown";
   }
 
@@ -980,14 +982,14 @@ SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
        (kernalTypeUpper == "LIN")     ||
        (kernalTypeUpper == "L")
       )
-    return  KT_Linear;
+    return  SVM_KernalType::KT_Linear;
 
   if  ((kernalTypeUpper == "POLYNOMIAL")  ||
        (kernalTypeUpper == "POLY")        ||
        (kernalTypeUpper == "P")           ||
        (kernalTypeUpper == "PN")
        )
-    return  KT_Polynomial;
+    return  SVM_KernalType::KT_Polynomial;
   
 
   if  ((kernalTypeUpper == "RBF")                 ||
@@ -996,9 +998,9 @@ SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
        (kernalTypeUpper == "RADIALBASISFUNC")     ||
        (kernalTypeUpper == "RADIALBASISFUNCTION")
       )
-    return  KT_RBF;
+    return  SVM_KernalType::KT_RBF;
 
-  return  KT_Linear;
+  return  SVM_KernalType::KT_Linear;
 }  /* KernalTypeToStr */
 
 
@@ -1006,16 +1008,16 @@ SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
 
 KKStr  KKMLL::MachineTypeToStr (SVM_MachineType  machineType)
 {
-  if  (machineType == OneVsOne)
+  if  (machineType == SVM_MachineType::OneVsOne)
     return  "OneVsOne";
 
-  else if  (machineType == OneVsAll)
+  else if  (machineType == SVM_MachineType::OneVsAll)
     return  "OneVsAll";
 
-  else if  (machineType == BinaryCombos)
+  else if  (machineType == SVM_MachineType::BinaryCombos)
     return "Binary";
 
-  else if  (machineType == BoostSVM)
+  else if  (machineType == SVM_MachineType::BoostSVM)
     return "BoostSVM";
 
   return "";
@@ -1030,18 +1032,18 @@ SVM_MachineType  KKMLL::MachineTypeFromStr (const KKStr&  machineTypeStr)
   KKStr  machineTypeUpper = machineTypeStr.ToUpper ();
 
   if  (machineTypeUpper == "ONEVSONE")
-    return  OneVsOne;
+    return  SVM_MachineType::OneVsOne;
 
   else  if  (machineTypeUpper == "ONEVSALL")
-    return  OneVsAll;
+    return  SVM_MachineType::OneVsAll;
 
   else  if  (machineTypeUpper == "BINARY")
-    return  BinaryCombos;
+    return  SVM_MachineType::BinaryCombos;
 
   else  if  (machineTypeUpper == "BOOSTSVM")
-    return  BoostSVM;
+    return  SVM_MachineType::BoostSVM;
 
-  return  MachineType_NULL;
+  return  SVM_MachineType::MachineType_NULL;
 }  /* MachineTypeFromStr */
  
 
@@ -1049,10 +1051,10 @@ SVM_MachineType  KKMLL::MachineTypeFromStr (const KKStr&  machineTypeStr)
 
 KKStr  KKMLL::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
 {
-  if  (selectionMethod == SelectByVoting)
+  if  (selectionMethod == SVM_SelectionMethod::SelectByVoting)
     return  "Voting";
 
-  if  (selectionMethod == SelectByProbability)
+  if  (selectionMethod == SVM_SelectionMethod::SelectByProbability)
     return  "Probability";
 
   return "";
@@ -1066,15 +1068,15 @@ SVM_SelectionMethod  KKMLL::SelectionMethodFromStr (const KKStr&  selectionMetho
   KKStr  selectionMethodUpper = selectionMethodStr.ToUpper ();
 
   if  ((selectionMethodUpper == "VOTE")  ||  (selectionMethodUpper == "VOTING"))
-    return  SelectByVoting;
+    return  SVM_SelectionMethod::SelectByVoting;
 
   if  ((selectionMethodUpper == "P")     ||  
        (selectionMethodUpper == "PROB")  ||
        (selectionMethodUpper == "PROBABILITY")
       )
-    return  SelectByProbability;
+    return  SVM_SelectionMethod::SelectByProbability;
 
-  return  SelectionMethod_NULL;
+  return  SVM_SelectionMethod::SelectionMethod_NULL;
 
 }  /* SelectionMethodFromStr */
 

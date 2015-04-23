@@ -294,7 +294,7 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
   KKQueue<FeatureVector> (_owner),
 
   log           (_log),
-  curSortOrder  (IFL_UnSorted),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_fileDesc),
   fileName      (),
   numOfFeatures (0),
@@ -320,7 +320,7 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      KKQueue<FeatureVector> (examples),
 
      log           (examples.log),
-     curSortOrder  (IFL_UnSorted),
+     curSortOrder  (IFL_SortOrder::IFL_UnSorted),
      fileDesc      (examples.fileDesc),
      fileName      (examples.fileName),
      numOfFeatures (examples.numOfFeatures),
@@ -345,7 +345,7 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
    KKQueue<FeatureVector> (examples, _owner),
 
    log           (examples.log),
-   curSortOrder  (IFL_UnSorted),
+   curSortOrder  (IFL_SortOrder::IFL_UnSorted),
    fileDesc      (examples.fileDesc),
    fileName      (examples.fileName),
    numOfFeatures (examples.numOfFeatures),
@@ -373,7 +373,7 @@ FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
   KKQueue<FeatureVector> (false),
 
   log           (_log),
-  curSortOrder  (IFL_UnSorted),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_examples.fileDesc),
   fileName      (_examples.fileName),
   numOfFeatures (_examples.numOfFeatures),
@@ -595,7 +595,7 @@ void  FeatureVectorList::PushOnBack (FeatureVectorPtr  example)
   }
 
   KKQueue<FeatureVector>::PushOnBack (example);
-  curSortOrder = IFL_UnSorted;
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
 }  /* Push On Back */
 
 
@@ -615,7 +615,7 @@ void  FeatureVectorList::PushOnFront (FeatureVectorPtr  example)
   }
 
   KKQueue<FeatureVector>::PushOnFront (example);
-  curSortOrder = IFL_UnSorted;
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
 }  /* PushOnFront */
 
 
@@ -657,7 +657,7 @@ MLClassListPtr  FeatureVectorList::ExtractListOfClasses ()  const
 void  FeatureVectorList::AddSingleExample (FeatureVectorPtr  _imageFeatures)
 {
   PushOnBack (_imageFeatures);
-  curSortOrder = IFL_UnSorted;
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
 }
 
 
@@ -847,7 +847,9 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
 
 FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
-  if  ((curSortOrder != IFL_ByName) && (curSortOrder != IFL_ByRootName))
+  if  ((curSortOrder != IFL_SortOrder::IFL_ByName) &&
+       (curSortOrder != IFL_SortOrder::IFL_ByRootName)
+      )
   {
     cerr << endl
          << "FeatureVectorList::BinarySearchByName    ****  ERROR ****"  << endl
@@ -897,7 +899,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 {
   FeatureVectorPtr  example = NULL;
 
-  if  (curSortOrder != IFL_ByRootName)
+  if  (curSortOrder != IFL_SortOrder::IFL_ByRootName)
   {
     log.Level (-1)  
          << endl
@@ -954,7 +956,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
 FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
-  if  (curSortOrder == IFL_ByName)
+  if  (curSortOrder == IFL_SortOrder::IFL_ByName)
   {
     return  BinarySearchByName (_imageFileName);
   }
@@ -1701,7 +1703,7 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
   for  (fieldNum = 0;  fieldNum < (kkint32)newFileDesc->NumOfFields ();  fieldNum++)
   {
-    if  (newFileDesc->Type (fieldNum) == SymbolicAttribute)
+    if  (newFileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
     {
       symbolicFields.push_back (fieldNum);
       VectorInt  lookUpTable;
@@ -2091,7 +2093,7 @@ void  FeatureVectorList::SortByRootName (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByRootName;
+  curSortOrder = IFL_SortOrder::IFL_ByRootName;
 }  /* SortByRootName */
 
 
@@ -2109,7 +2111,7 @@ void  FeatureVectorList::SortByClass (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByClassName;
+  curSortOrder = IFL_SortOrder::IFL_ByClassName;
 }  /* SortByClass */
 
 
@@ -2129,7 +2131,7 @@ void  FeatureVectorList::SortByProbability (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByProbability;
+  curSortOrder = IFL_SortOrder::IFL_ByProbability;
 }  /* SortByProbability */
 
 
@@ -2148,7 +2150,7 @@ void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByBreakTie;
+  curSortOrder = IFL_SortOrder::IFL_ByBreakTie;
 }  /* SortByProbability */
 
 
@@ -2168,7 +2170,7 @@ void  FeatureVectorList::SortByImageFileName (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByName;
+  curSortOrder = IFL_SortOrder::IFL_ByName;
 }  /* SortByImageFileName */
 
 

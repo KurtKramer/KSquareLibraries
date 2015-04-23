@@ -620,7 +620,7 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                 knownClass              // -1 = Don't know the class otherwise the Number of the Class.
                );
 
-  GreaterVotes ((svmParam.SelectionMethod () == SelectByProbability),
+  GreaterVotes ((svmParam.SelectionMethod () == SVM_SelectionMethod::SelectByProbability),
                 NUMCLASS,
                 votes,
                 probabilities,

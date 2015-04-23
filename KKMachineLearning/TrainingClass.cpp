@@ -146,7 +146,7 @@ void  XmlElementTrainingClass::WriteXML (const TrainingClass&  tc,
                                          ostream&              o
                                         )
 {
-  XmlTag  t ("TrainingClass", XmlTag::tagEmpty);
+  XmlTag  t ("TrainingClass", XmlTag::TagTypes::tagEmpty);
   if  (!varName.Empty ())
     t.AddAtribute ("VarName", varName);
 
@@ -190,25 +190,28 @@ XmlElementTrainingClass::XmlElementTrainingClass (XmlTagPtr   tag,
   kkuint32  c = tag->AttributeCount ();
   for  (kkuint32 x = 0;  x < c;  ++x)
   {
-    const KKStr&  n = tag->AttributeName (x);
-    const KKStr&  v = tag->AttributeValue (x);
-    if  (n.EqualIgnoreCase ("MlClass"))
-      value->MLClass (MLClass::CreateNewMLClass (n, -1));
+    KKStrConstPtr  n = tag->AttributeNameByIndex  (x);
+    KKStrConstPtr  v = tag->AttributeValueByIndex (x);
+    if  ((n != NULL)  &&  (v != NULL))
+    {
+      if  (n->EqualIgnoreCase ("MlClass"))
+        value->MLClass (MLClass::CreateNewMLClass (*v, -1));
 
-    else if  (n.EqualIgnoreCase ("FeatureFileName"))
-      value->FeatureFileName (v);
+      else if  (n->EqualIgnoreCase ("FeatureFileName"))
+        value->FeatureFileName (*v);
 
-    else if  (n.EqualIgnoreCase ("Weight"))
-      value->Weight (v.ToFloat ());
+      else if  (n->EqualIgnoreCase ("Weight"))
+        value->Weight (v->ToFloat ());
 
-    else if  (n.EqualIgnoreCase ("CountFactor"))
-      value->CountFactor (v.ToFloat ());
+      else if  (n->EqualIgnoreCase ("CountFactor"))
+        value->CountFactor (v->ToFloat ());
 
-    else if  (n.EqualIgnoreCase ("SubClassifier"))
-      value->SubClassifierName (v);
+      else if  (n->EqualIgnoreCase ("SubClassifier"))
+        value->SubClassifierName (*v);
 
-    else if  (n.StartsWith ("Dir_"))
-      value->AddDirectory (v);
+      else if  (n->StartsWith ("Dir_"))
+        value->AddDirectory (*v);
+    }
   }
   
   XmlTokenPtr t = s.GetNextToken (log);
@@ -356,7 +359,7 @@ void  XmlElementTrainingClassList::WriteXML (const TrainingClassList&  tcl,
                                            ) 
 
 {
-  XmlTag  tagStart ("TrainingClassList", XmlTag::tagStart);
+  XmlTag  tagStart ("TrainingClassList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     tagStart.AddAtribute ("VarName", varName);
   tagStart.AddAtribute ("Count", (kkint32)tcl.size ());
@@ -372,7 +375,7 @@ void  XmlElementTrainingClassList::WriteXML (const TrainingClassList&  tcl,
     XmlElementTrainingClass::WriteXML (*tc, KKStr::EmptyStr (), o);
   }
 
-  XmlTag  tagEnd ("TrainingClassList", XmlTag::tagEnd);
+  XmlTag  tagEnd ("TrainingClassList", XmlTag::TagTypes::tagEnd);
   tagEnd.WriteXML (o);
 }  /* WriteXML */
 
@@ -393,16 +396,19 @@ XmlElementTrainingClassList::XmlElementTrainingClassList (XmlTagPtr   tag,
   kkuint32  c = tag->AttributeCount ();
   for  (kkuint32 x = 0;  x < c;  ++x)
   {
-    const KKStr&  n = tag->AttributeName (x);
-    const KKStr&  v = tag->AttributeValue (x);
-    if  (n.EqualIgnoreCase ("Name"))
-      name = v;
+    KKStrConstPtr  n = tag->AttributeNameByIndex (x);
+    KKStrConstPtr  v = tag->AttributeValueByIndex (x);
+    if  ((n != NULL)  &&  (v != NULL))
+    {
+      if  (n->EqualIgnoreCase ("Name"))
+        name = *v;
 
-    else if  (n.EqualIgnoreCase ("RootDir"))
-      rootDir = v;
+      else if  (n->EqualIgnoreCase ("RootDir"))
+        rootDir = *v;
 
-    else if  (n.EqualIgnoreCase ("Count"))
-      count = v.ToUint32 ();
+      else if  (n->EqualIgnoreCase ("Count"))
+        count = v->ToUint32 ();
+    }
   }
   
   value = new TrainingClassList (rootDir, true);
@@ -410,7 +416,7 @@ XmlElementTrainingClassList::XmlElementTrainingClassList (XmlTagPtr   tag,
   XmlTokenPtr t = s.GetNextToken (log);
   while  (t)
   {
-    if  (t->TokenType () != XmlToken::tokElement)
+    if  (t->TokenType () != TokenTypes::tokElement)
       continue;
 
     XmlElementTrainingClassPtr tokenTrainingClass = dynamic_cast<XmlElementTrainingClassPtr> (t);

@@ -337,8 +337,8 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 {
   if  (_examples.QueueSize () < 2)
   {
-    log.Level (-1) << endl << endl 
-                   << "SVMModel       **** ERROR ****      NO EXAMPLES TO TRAIN WITH." << endl
+    log.Level (-1) << endl
+                   << "SVMModel  **** ERROR ****      NO EXAMPLES TO TRAIN WITH." << endl
                    << endl;
     validModel = false;
     return;
@@ -361,15 +361,15 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 
   try
   {
-    if  (svmParam.MachineType () == OneVsOne)
+    if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
     {
       ConstructOneVsOneModel (&_examples, prob);
     }
-    else if  (svmParam.MachineType () == OneVsAll)
+    else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
     {
       ConstructOneVsAllModel (&_examples, prob);
     }
-    else if  (svmParam.MachineType () == BinaryCombos) 
+    else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
     {
       ConstructBinaryCombosModel (&_examples);
     }
@@ -582,7 +582,7 @@ void  SVMModel::BuildClassIdxTable ()
   for  (kkint32 classIdx = 0;  classIdx < numOfClasses;  classIdx++)
     classIdxTable[classIdx] = assignments.GetMLClassByIndex (classIdx);
 
-  probabilities = new double[numOfClasses + 2]; // I am add 2 as a deperqate move to deal with some kind ofg memory corruption  kak
+  probabilities = new double[numOfClasses + 2]; // I am add 2 as a desperate move to deal with some kind of memory corruption  kak
   votes         = new kkint32[numOfClasses + 2];    // 
   
   for  (kkint32 x = 0;  x < numOfClasses;  x++)
@@ -813,7 +813,7 @@ void  SVMModel::Write (ostream&      o,
 
   o << "</Header>" << endl;
 
-  if  (svmParam.MachineType () == OneVsOne)
+  if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
   {
     o << "<OneVsOne>" << endl;
 
@@ -826,12 +826,12 @@ void  SVMModel::Write (ostream&      o,
     o << "</OneVsOne>" << endl;
   }
 
-  else if  (svmParam.MachineType () == OneVsAll)
+  else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
   {
     o << "<OneVsAll>" << endl;
 
-    // In the case of One to All there is a one-to-one relationshop between 
-    // assignments[] and models[].  That is for each posible assignment there is
+    // In the case of One to All there is a one-to-one relationship between 
+    // assignments[] and models[].  That is for each possible assignment there is
     // going to be a Support vector Machine.  assignments[i] is a pointer to the 
     // ClassAssignments structure that is used for the SVM that models[i] points 
     // to.
@@ -839,7 +839,7 @@ void  SVMModel::Write (ostream&      o,
     {
       o << "<OneVsAllEntry>" << endl;
 
-      kkint32  assignmentNum = oneVsAllAssignment[assignmentIDX];   // The assignemnt as specified in the config file.
+      kkint32  assignmentNum = oneVsAllAssignment[assignmentIDX];   // The assignment as specified in the config file.
 
       // There can be more than one class with the same assignment, but we will use the 
       // one that 'GetMLClassByIndex' returns.
@@ -870,7 +870,7 @@ void  SVMModel::Write (ostream&      o,
     o << "</OneVsAll>" << endl;
   }
 
-  else if  (svmParam.MachineType () == BinaryCombos)
+  else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     o << "<BinaryCombos>" << endl;
 
@@ -903,15 +903,15 @@ void  SVMModel::Read (istream&  i)
 
   ReadHeader (i);
 
-  if  (svmParam.MachineType () == OneVsOne)
+  if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
   {
     ReadOneVsOne (i);
   }
-  else if  (svmParam.MachineType () == OneVsAll)
+  else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
   {
     ReadOneVsAll (i);
   }
-  else if  (svmParam.MachineType () == BinaryCombos)
+  else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     ReadBinaryCombos (i);
   }
@@ -941,7 +941,7 @@ void  SVMModel::ReadSkipToSection (istream&  i,
   {
     KKStr  ln (buff);
     field = ln.ExtractQuotedStr ("\n\r\t", 
-                                 true      // true = decode escape charaters
+                                 true      // true = decode escape characters
                                 );
     field.Upper ();
     if  (field == sectName)
@@ -979,7 +979,7 @@ void  SVMModel::ReadHeader (istream&  i)
   {
     KKStr  ln (buff);
 
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape charaters
+    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
 
     field.Upper ();
 
@@ -1157,7 +1157,7 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
                                    kkint32  modelIDX
                                   )
 {
-  // If we are gere the header to this sub-section has alreadt been read.
+  // If we are here the header to this sub-section has already been read.
 
   char  buff[20480];
   KKStr  field;
@@ -1201,7 +1201,7 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
   if  (modelFileName.Empty ())
   {
     log.Level (-1) << endl << endl 
-                   << "SVMModel::ReadOneVsAllEntry    *** Model file name not sepcified ***" << endl
+                   << "SVMModel::ReadOneVsAllEntry    *** Model file name not specified ***" << endl
                    << endl;
     validModel = false;
     return;
@@ -1356,7 +1356,7 @@ void  SVMModel::ReadBinaryCombos (istream& i)
   if  ((modelsIDX < numOfModels)  &&  (!cancelFlag))
   {
     log.Level (-1) << endl << endl << endl 
-                   << "SVMModel::ReadBinaryCombos     **** ERROR ****     Less BinaryComboParms were specifued than expected." << endl
+                   << "SVMModel::ReadBinaryCombos     **** ERROR ****     Less BinaryComboParms were specified than expected." << endl
                    << endl;
     validModel = false;
   }
@@ -1370,7 +1370,7 @@ double   SVMModel::DistanceFromDecisionBoundary (FeatureVectorPtr  example,
                                                  MLClassPtr     class2
                                                 )
 {
-  if  (svmParam.MachineType () != BinaryCombos)
+  if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
   {
     log.Level (-1) << endl << endl << "SVMModel::DistanceFromDecisionBoundary   ***ERROR***    This method only works with BinaryCombos." << endl << endl;
     return  0.0;
@@ -1446,7 +1446,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
 {
   InializeProbClassPairs ();
 
-  breakTie = 0.0f;   // expirements.
+  breakTie = 0.0f;   // experiments.
 
   knownClassOneOfTheWinners = false;
 
@@ -1462,7 +1462,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
 
   numOfWinners = 0;
 
-  if  (svmParam.MachineType () == OneVsAll)
+  if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
   {
     EncodeExample (example, predictXSpace);
     PredictOneVsAll (predictXSpace,   //  used to be xSpace,  
@@ -1481,7 +1481,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
     //  free (xSpace);  // We are now allocating only once.
   }
 
-  else if  (svmParam.MachineType () == OneVsOne)
+  else if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
   {  
     EncodeExample (example, predictXSpace);
 
@@ -1529,7 +1529,7 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
   }
 
   
-  else if  (svmParam.MachineType () == BinaryCombos)
+  else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     PredictByBinaryCombos (example, 
                            knownClass,
@@ -1599,7 +1599,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
 
   vector<kkint32>   winningClasses;
 
-  double*  probabilities = new double [numOfModels + 2];  // I am addin 2 as a deperate measure to deal with a memory corruption problem   kak
+  double*  probabilities = new double [numOfModels + 2];  // I am adding 2 as a desperate measure to deal with a memory corruption problem   kak
 
   double  largestLosingProbability    = FLT_MIN;
   kkint32 largestLosingProbabilityIDX = -1;
@@ -1646,7 +1646,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
 
     vector<kkint32>  winners;
 
-    double*  tempProbabilities = new double[numOfClasses + 2];  // kk 2004-12-22     // I am addin 2 as a deperate measure to deal with a memory corruption problem   kak
+    double*  tempProbabilities = new double[numOfClasses + 2];  //  I am adding 2 as a desperate measure to deal with a memory corruption problem   kak
     kkint32* tempVotes         = new kkint32[numOfClasses + 2];
 
     kkint32  predClass1Votes = -1;
@@ -1656,7 +1656,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
                      models[assignmentIDX],
                      xSpace, 
                      tempVotes,
-                     tempProbabilities,    // kk 2004-12-22
+                     tempProbabilities,
                      predClass1Votes,
                      predClass2Votes,
                      knownClassNum,    
@@ -1904,7 +1904,7 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
   for  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
     probabilities[classIDX] = probabilities[classIDX] / totProbability;
 
-  GreaterVotes (svmParam.SelectionMethod () == SelectByProbability,
+  GreaterVotes (svmParam.SelectionMethod () == SVM_SelectionMethod::SelectByProbability,
                 numOfClasses,
                 votes,
                 numOfWinners,
@@ -1948,7 +1948,7 @@ kkint32  SVMModel::NumOfSupportVectors ()  const
   if  (models == NULL)
     return 0;
 
-  if  (svmParam.MachineType () == BinaryCombos)
+  if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     vector<KKStr> svNames = SupportVectorNames ();
     numOfSupportVectors = (kkint32)svNames.size ();
@@ -1974,7 +1974,7 @@ void  SVMModel::SupportVectorStatistics (kkint32&  numSVs,
   if  (models == NULL)
     return;
 
-  if  (svmParam.MachineType () == BinaryCombos)
+  if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     numSVs = NumOfSupportVectors ();
     for  (kkint32 modelIDX = 0;  modelIDX < numOfModels;  modelIDX++)
@@ -1997,28 +1997,9 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
                                       double*                _probabilities
                                      )
 {
-  // KAK 2012-08-02  Decided that since the code will only populate the entries in '_votes'
-  //                 and '_probabilities' based off  the '_mlClasses'  data structure
-  //                 and if a predictedClass is not in '_mlClasses' then it will print 
-  //                 a warning to log file and not corrupt data.  Only problem is that iof 
-  //                 this happens then the sum of '_probabilities' will be less than 1.0.
-  //
-  //if  (_mlClasses.size () != assignments.size ())
-  //{
-  //  log.Level (-1) << endl
-  //                 << endl
-  //                 << "SVMModel::ProbabilitiesByClass    *** ERROR ***" << endl
-  //                 << "                 _mlClasses[" << _mlClasses.QueueSize () << "] and "
-  //                 <<                   "assignments["   << (kkint32)assignments.size ()  << "]." 
-  //                 << "                 ar not the same length."
-  //                 << endl
-  //                 << endl;
-  //  return;
-  //}
-
   InializeProbClassPairs ();
 
-  if  (svmParam.MachineType () == BinaryCombos)
+  if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
     PredictProbabilitiesByBinaryCombos (example, _mlClasses, _votes, _probabilities);
     return;
@@ -2198,7 +2179,7 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
       kkint32  ourIdx = assignments.GetNumForClass (*idx);
       if  ((ourIdx < 0)  ||  (ourIdx >= numOfClasses))
       {
-        // For what ever reason the MLClass instance in '_mlClasses' provoded by caller
+        // For what ever reason the MLClass instance in '_mlClasses' provided by caller
         // is not one of the classes that this model was built for.
         log.Level (-1) << endl 
           << "SVMModel::PredictProbabilitiesByBinaryCombos   ***WARNING***    MLClass[" << (*idx)->Name () << "] is not one of the classes in SVMModel."  << endl
@@ -2235,7 +2216,7 @@ vector<KKStr>  SVMModel::SupportVectorNames (MLClassPtr     c1,
                                             )  const
 {
   vector<KKStr>  results;
-  if  (svmParam.MachineType () != BinaryCombos)
+  if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
     return  results;
 
   // Locate the binary parms in question.
@@ -2275,7 +2256,7 @@ vector<KKStr>  SVMModel::SupportVectorNames (MLClassPtr     c1,
 vector<KKStr>  SVMModel::SupportVectorNames () const
 {
   vector<KKStr>  results;
-  if  (svmParam.MachineType () != BinaryCombos)
+  if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
     return  results;
 
   map<KKStr,KKStr>  names;
@@ -2314,7 +2295,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors (FeatureVectorPtr  examp
                                                         )
 {
   vector<ProbNamePair>  results;
-  if  (svmParam.MachineType () != BinaryCombos)
+  if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
     return  results;
 
   // Locate the binary parms in question.
@@ -2406,7 +2387,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
                                                          )
 {
   vector<ProbNamePair>  results;
-  if  (svmParam.MachineType () != BinaryCombos)
+  if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
     return  results;
 
   // Locate the binary parms in question.
@@ -2534,18 +2515,20 @@ void SVMModel::CalculatePredictXSpaceNeeded ()
 
   switch (svmParam.EncodingMethod())
   {
-  case BinaryEncoding:
+  case SVM_EncodingMethod::BinaryEncoding:
     for  (z = 0;  z < numOfFeaturesSelected;  z++)
     {
-      if  ((type_table[(*selectedFeatures)[z]] == NominalAttribute)  ||  (type_table[(*selectedFeatures)[z]] == SymbolicAttribute))
+      if  ((type_table[(*selectedFeatures)[z]] == AttributeType::NominalAttribute)  ||
+           (type_table[(*selectedFeatures)[z]] == AttributeType::SymbolicAttribute)
+          )
          numFeaturesAfterEncoding += cardinality_table[(*selectedFeatures)[z]];
       else
          numFeaturesAfterEncoding ++;
     }
     break;
 
-  case ScaledEncoding:
-  case NoEncoding:
+  case SVM_EncodingMethod::ScaledEncoding:
+  case SVM_EncodingMethod::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
     numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
@@ -2900,7 +2883,7 @@ FeatureVectorListPtr*   SVMModel::BreakDownExamplesByClass (FeatureVectorListPtr
 
 bool  SVMModel::NormalizeNominalAttributes ()
 {
-  if  (svmParam.EncodingMethod () == NoEncoding)
+  if  (svmParam.EncodingMethod () == SVM_EncodingMethod::NoEncoding)
     return  true;
   else
     return  false;

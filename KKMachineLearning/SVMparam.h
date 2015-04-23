@@ -22,20 +22,41 @@ namespace KKMLL
   typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
   #endif
 
-  typedef  enum  {MachineType_NULL, 
+
+  enum  class SVM_MachineType 
+                 {MachineType_NULL, 
                   OneVsOne, 
                   OneVsAll, 
                   BinaryCombos,
                   BoostSVM
-                 }         
-                  SVM_MachineType;
+                 };
 
-  typedef  enum  {SelectionMethod_NULL, SelectByVoting, SelectByProbability}  SVM_SelectionMethod;
+  enum  class  SVM_SelectionMethod  
+                 {SelectionMethod_NULL, 
+                  SelectByVoting, 
+                  SelectByProbability
+                 };
 
-  typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  SVM_EncodingMethod;
+
+  /***
+   *SVM_EncodingMethod  refers to how Nominal and Symbolic features encoded.
+   *BinaryEncoding   
+   */
+
+  enum  class  SVM_EncodingMethod  
+                 {NoEncoding, 
+                  BinaryEncoding, 
+                  ScaledEncoding, 
+                  Encoding_NULL
+                 };
 
 
-  typedef  enum  {KT_Linear, KT_Polynomial, KT_RBF, KT_NULL}                  SVM_KernalType;
+  enum  class  SVM_KernalType 
+                 {KT_Linear,
+                  KT_Polynomial,
+                  KT_RBF,
+                  KT_NULL
+                 };
 
 
   #if  !defined(_FeatureVectorList_Defined_)
@@ -178,7 +199,7 @@ namespace KKMLL
     void  EncodingMethod     (SVM_EncodingMethod     _encodingMethod)     {encodingMethod    = _encodingMethod;}
     void  Gamma              (double                 _gamma)              {param.Gamma (_gamma);}
     void  Gamma_Param        (double                 _gamma)              {Gamma (_gamma);}
-    void  KernalType         (SVM_KernalType         _kernalType)         {param.KernalType (_kernalType);}
+    void  KernalType         (SVM_KernalType         _kernalType)         {param.KernalType ((int)_kernalType);}
 
     void  MachineType        (SVM_MachineType        _machineType)        {machineType        = _machineType;}
     void  SamplingRate       (float                  _samplingRate)       {samplingRate       = _samplingRate;}

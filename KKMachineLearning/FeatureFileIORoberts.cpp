@@ -125,7 +125,9 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
     {
       kkint32  featureNum = _selFeatures[x];
       AttributePtr  attr = attrTable[featureNum];
-      if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
+      if  ((attr->Type () == AttributeType::NominalAttribute)  ||
+           (attr->Type () == AttributeType::SymbolicAttribute)
+          )
       {
         kkint32 y;
         nf << "discrete"; 
@@ -154,7 +156,9 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
       kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
 
-      if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
+      if  ((attr->Type () == AttributeType::NominalAttribute)  ||
+           (attr->Type () == AttributeType::SymbolicAttribute)
+          )
         _out << attr->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else
         _out << example->FeatureData (featureNum);

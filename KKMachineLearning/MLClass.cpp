@@ -503,7 +503,7 @@ XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
   value (NULL)
 {
 
-  KKStrConstPtr  className = tag->AttributeValue ("Name");
+  KKStrConstPtr  className = tag->AttributeValueByName ("Name");
   if  (!className)
   {
     // We are missing a mandatory field.
@@ -516,8 +516,8 @@ XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
   kkint32  c = tag->AttributeCount ();
   for  (kkint32 x = 0;  x < c;  ++x)
   {
-    KKStrConstPtr n = tag->AttributeName (x);
-    KKStrConstPtr v = tag->AttributeValue (x);
+    KKStrConstPtr n = tag->AttributeNameByIndex (x);
+    KKStrConstPtr v = tag->AttributeValueByIndex (x);
 
     if  ((n->EqualIgnoreCase ("Parent"))  &&  (v != NULL)  &&  (!v->Empty ()))
       value->Parent (MLClass::CreateNewMLClass (*v));
@@ -563,7 +563,7 @@ void  XmlElementMLClass::WriteXML (const MLClass&  mlClass,
                                    ostream&        o
                                   )
 {
-  XmlTag startTag ("MLClass", XmlTag::tagEmpty);
+  XmlTag startTag ("MLClass", XmlTag::TagTypes::tagEmpty);
   if  (!varName.Empty())
     startTag.AddAtribute ("VarName", varName);
   
@@ -1504,12 +1504,12 @@ void  XmlElementMLClassNameList::WriteXML (const MLClassList&  mlClassList,
                                            ostream&            o
                                           )
 {
-  XmlTag  startTag ("MLClassNameList", XmlTag::tagStart);
+  XmlTag  startTag ("MLClassNameList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
   o << mlClassList.ToTabDelimitedStr ();
-  XmlTag  endTag ("MLClassNameList", XmlTag::tagEnd);
+  XmlTag  endTag ("MLClassNameList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }
@@ -1733,13 +1733,13 @@ void  XmlElementMLClassIndexList::WriteXML (const MLClassIndexList&  classIndexL
                                             ostream&                 o
                                            )
 {
-  XmlTag  startTag ("MLClassIndexList", XmlTag::tagStart);
+  XmlTag  startTag ("MLClassIndexList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
   o << classIndexList.ToCommaDelString ();
 
-  XmlTag  endTag ("MLClassIndexList", XmlTag::tagEnd);
+  XmlTag  endTag ("MLClassIndexList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
 }
 

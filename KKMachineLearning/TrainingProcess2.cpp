@@ -191,7 +191,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
     // We are not going to need the training trainingExamples we loaded so we can go ahead and delete them now.
     delete  trainingExamples;  trainingExamples = NULL;
 
-    buildDateTime = savedModelTimeStamp;  // Set to timestamp of save file for now.  Will be overwriiting by the
+    buildDateTime = savedModelTimeStamp;  // Set to timestamp of save file for now.  Will be overwriting by the
                                           // 'BuildDateTime' field in the save file if it exists.
 
     ifstream  in (savedModelName.Str ());
@@ -248,13 +248,13 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
       }
       catch (std::exception e2)
       {
-        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing exisating model." << endl
+        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing existing model." << endl
                        << "   Exception[" << e2.what () << ":]" << endl;
         Abort (true);
       }
       catch (...)
       {
-        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing exisating model." << endl;
+        log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing existing model." << endl;
         Abort (true);
       }
     }
@@ -397,7 +397,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
 
   if  (_level < mlClasses->NumHierarchialLevels ())
   {
-    // We need to build data that is specific to the spcified _level.
+    // We need to build data that is specific to the specified _level.
     FeatureVectorListPtr  newExamples = trainingExamples->ExtractExamplesForHierarchyLevel (_level);
     delete  trainingExamples;
     trainingExamples = newExamples;
@@ -500,7 +500,7 @@ TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
     fileDesc = fvFactoryProducer->FileDesc ();
   }
 
-  log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parms)   Exiting." << endl;
+  log.Level (20) << "TrainingProcess2::TrainingProcess2(5 parameters)   Exiting." << endl;
 
   statusMessage = "All Done";
   return;
@@ -563,7 +563,7 @@ TrainingProcess2::TrainingProcess2 (istream&       _in,
   if  (config)
     fvFactoryProducer = config->FvFactoryProducer ();
 
-  log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parms)   Exiting." << endl;
+  log.Level (20) << "TrainingProcess2::TrainingProcess2(6 parameters)   Exiting." << endl;
 
   statusMessage = "All Done";
   return;
@@ -712,7 +712,7 @@ kkint32  TrainingProcess2::MemoryConsumedEstimated ()  const
 
 ModelOldSVMPtr  TrainingProcess2::OldSVMModel ()  const
 {
-  if  (model->ModelType () == Model::mtOldSVM)
+  if  (model->ModelType () == Model::ModelTypes::mtOldSVM)
     return dynamic_cast<ModelOldSVMPtr> (model);
   else
     return NULL;
@@ -735,7 +735,7 @@ Model::ModelTypes   TrainingProcess2::ModelType ()  const
   if  (model)
     return model->ModelType ();
   else
-    return Model::mtNULL;
+    return Model::ModelTypes::mtNULL;
 }
 
 
@@ -1056,8 +1056,8 @@ void  TrainingProcess2::CheckForDuplicates (bool  allowDupsInSameClass)
        (allowDupsInSameClass  &&  (duplicateCount > 0))
       )
   {
-    log.Level (-1) << endl << endl
-                   << "ConstructOneVsOneModel        *** WARNING ***   Dupliactes Detected in Training Data" << endl
+    log.Level (-1) << endl
+                   << "ConstructOneVsOneModel        *** WARNING ***   Duplicates Detected in Training Data" << endl
                    << "                       DuplicateCount    [" << duplicateCount     << "]" << endl
                    << "                       DuplicateDataCount[" << duplicateDataCount << "]" << endl
                    << endl;
@@ -1114,7 +1114,7 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
     catch (const std::exception&  e1)
     {
       log.Level (-1) << endl
-        << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+        << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
         << e1.what () << endl
         << endl;
       extractedImages = NULL;
@@ -1123,7 +1123,7 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
     catch  (...)
     {
       log.Level (-1) << endl
-        << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+        << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
         << endl;
       extractedImages = NULL;
       Abort (true);
@@ -1302,7 +1302,7 @@ void  TrainingProcess2::CreateModelsFromTrainingData ()
   catch  (const KKException&  e)
   {
     log.Level (-1) << endl << endl
-      << "TrainingProcess2::CreateModelsFromTrainingData   ***ERROR***   Exception occurecd while running 'Model::TrainModel'." << endl
+      << "TrainingProcess2::CreateModelsFromTrainingData   ***ERROR***   Exception occurred while running 'Model::TrainModel'." << endl
       << "     Exception[" << e.ToString () << endl
       << endl;
     Abort (true);
@@ -1310,7 +1310,7 @@ void  TrainingProcess2::CreateModelsFromTrainingData ()
   catch  (...)
   {
     log.Level (-1) << endl << endl
-      << "TrainingProcess2::CreateModelsFromTrainingData   ***ERROR***   Exception occurecd while running 'Model::TrainModel'." << endl
+      << "TrainingProcess2::CreateModelsFromTrainingData   ***ERROR***   Exception occurred while running 'Model::TrainModel'." << endl
       << endl;
     Abort (true);
   }
@@ -1428,7 +1428,7 @@ void  TrainingProcess2::SupportVectorStatistics (kkint32&  numSVs,
 
 TrainingProcess2Ptr   TrainingProcess2::TrainingProcessLeft ()
 {
-  if  ((!model)  ||  (model->ModelType () != Model::mtDual))
+  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::mtDual))
     return NULL;
   return  dynamic_cast<ModelDualPtr>(model)->Trainer1 ();
 }
@@ -1437,7 +1437,7 @@ TrainingProcess2Ptr   TrainingProcess2::TrainingProcessLeft ()
 
 TrainingProcess2Ptr   TrainingProcess2::TrainingProcessRight ()
 {
-  if  ((!model)  ||  (model->ModelType () != Model::mtDual))
+  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::mtDual))
     return NULL;
   return  dynamic_cast<ModelDualPtr>(model)->Trainer2 ();
 }

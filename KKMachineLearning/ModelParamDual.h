@@ -46,7 +46,7 @@ namespace KKMLL
     bool          FullHierarchyMustMatch () const {return fullHierarchyMustMatch;}
     MLClassPtr    OtherClass             () const {return otherClass;}
 
-    virtual ModelParamTypes  ModelParamType () const {return mptDual;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptDual;}
 
     void  OtherClass (MLClassPtr  _otherClass)  {otherClass = _otherClass;}
 

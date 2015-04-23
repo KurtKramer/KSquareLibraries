@@ -198,7 +198,7 @@ FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
   for  (x = 0;  x < attributes.size ();  x++)
   {
     bool  alreadyExists = false;
-    fileDesc->AddAAttribute (attributes[x]->code, NominalAttribute, alreadyExists);
+    fileDesc->AddAAttribute (attributes[x]->code, AttributeType::NominalAttribute, alreadyExists);
     if  (alreadyExists)
     {
       _log.Level (-1) << endl

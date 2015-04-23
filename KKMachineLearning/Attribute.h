@@ -33,7 +33,7 @@ using namespace  KKB;
 
 namespace KKMLL 
 {
-  typedef  enum 
+  enum  class  AttributeType
   {
     NULLAttribute,
     IgnoreAttribute,
@@ -44,8 +44,7 @@ namespace KKMLL
                           * list all possible values.  They have to be determined from
                           * the data file.
                           */
-  } 
-  AttributeType;
+  };
 
   typedef  std::vector<AttributeType>  AttributeTypeVector;
 

@@ -255,14 +255,14 @@ namespace KKMLL
      *@enum IFL_SortOrder
      *@brief  Represents the different orders that a list of FeatureVector instances in a FeatureVectorList object can be in.  
      */
-    typedef  enum {IFL_UnSorted, 
-                   IFL_ByName, 
-                   IFL_ByProbability, 
-                   IFL_ByBreakTie, 
-                   IFL_ByRootName, 
-                   IFL_ByClassName
-                  } 
-                   IFL_SortOrder;
+    enum  class  IFL_SortOrder
+             {IFL_UnSorted, 
+              IFL_ByName, 
+              IFL_ByProbability, 
+              IFL_ByBreakTie, 
+              IFL_ByRootName, 
+              IFL_ByClassName
+             };
 
 
     virtual  ~FeatureVectorList ();

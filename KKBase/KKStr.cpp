@@ -5156,6 +5156,31 @@ kkint32  KKStrListIndexed::Add (KKStrPtr  s)
 
 
 
+/*
+ kkint32  KKStrListIndexed::Add (const KKStr&  s)
+ {
+  StrIndex::iterator  idx;
+  idx = strIndex->find (&s);
+  if  (idx != strIndex->end ())
+    return -1;
+
+  kkint32  index = nextIndex;
+  ++nextIndex;
+
+  KKStrPtr  newS = new KKStr (s);
+
+  strIndex->insert (StrIndexPair (newS, index));
+  indexIndex.insert (IndexIndexPair (index, newS));
+
+  if  (owner)
+    memoryConsumedEstimated += newS->MemoryConsumedEstimated ();
+  memoryConsumedEstimated += 8;
+  return  index;
+ }
+ */
+
+
+
 kkint32   KKStrListIndexed::Delete (KKStr&  s)
 {
   StrIndex::iterator  idx;
@@ -5221,6 +5246,19 @@ KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
     return idx->second;
 }
 
+
+KKStr  KKStrListIndexed::ToTabDelString ()  const
+{
+  KKStr  s (indexIndex.size () * 20);
+  IndexIndex::const_iterator  idx;
+  for  (idx = indexIndex.begin ();  idx != indexIndex.end ();  ++idx)
+  {
+    if (!s.Empty ())
+      s << "\t";
+    s << *(idx->second);
+  }
+  return s;
+}
 
 
 

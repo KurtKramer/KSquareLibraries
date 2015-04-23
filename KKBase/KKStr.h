@@ -912,9 +912,18 @@ namespace  KKB
 
     ~KKStrListIndexed ();
 
+    /**
+     *@details  Note that if 'owner' flag s set to true will take ownership of the strings added to index.
+     *@param[in]  s  Will add 's' into the u=index unless another string with the same value already exists.
+     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
+     */
     kkint32 Add (KKStrPtr  s);
 
-    kkint32 Add (const KKStr&  s);
+    /**
+     *@param[in]  s  Will add a new instance of 's' to the index unless one with the same value already exists.
+     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
+     */
+    //kkint32 Add (const KKStr&  s);
 
     bool  CaseSensative ()  const  {return caseSensative;}
 
@@ -929,6 +938,8 @@ namespace  KKB
     kkint32 MemoryConsumedEstimated ()  const;
 
     kkuint32 size ()  const;
+
+    KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
 
     bool  operator== (const KKStrListIndexed&  right);
 

@@ -43,7 +43,9 @@ Attribute::Attribute (const KKStr&   _name,
 
 {
   nameUpper.Upper ();
-  if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
+  if  ((type == AttributeType::NominalAttribute)  ||  
+       (type == AttributeType::SymbolicAttribute)
+      )
   {
     nominalValuesUpper = new KKStrListIndexed (true,   // true == nominalValuesUpper will own its contents.
                                                false   // false = Not Case Sensitive.
@@ -60,7 +62,9 @@ Attribute::Attribute (const Attribute&  a):
     type               (a.type)
 
 {
-  if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
+  if  ((type == AttributeType::NominalAttribute)  ||  
+       (type == AttributeType::SymbolicAttribute)
+      )
   {
     nominalValuesUpper = new KKStrListIndexed (*(a.nominalValuesUpper));
   }
@@ -91,7 +95,9 @@ kkint32  Attribute::MemoryConsumedEstimated ()  const
 
 void  Attribute::ValidateNominalType (const KKStr&  funcName)  const
 {
-  if  ((type != NominalAttribute)  &&  (type != SymbolicAttribute))
+  if  ((type != AttributeType::NominalAttribute)  &&  
+       (type != AttributeType::SymbolicAttribute)
+      )
   {
     KKStr  msg (80);
     msg <<  "Attribute::ValidateNominalType   Attribute[" << funcName << "] must be a Nominal or Symbolic Type to perform this operation.";
@@ -156,7 +162,9 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 
 kkint32 Attribute::Cardinality ()  const
 {
-  if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
+  if  ((type == AttributeType::NominalAttribute)  ||  
+       (type == AttributeType::SymbolicAttribute)
+      )
     return  nominalValuesUpper->size ();
   else
     return 999999999;
@@ -178,7 +186,9 @@ bool  Attribute::operator== (const Attribute&  rightSide)  const
   if  ((nameUpper != rightSide.nameUpper)  ||  (Type ()   != rightSide.Type ()))
     return false;
 
-  if  ((type == NominalAttribute)  ||  (type == SymbolicAttribute))
+  if  ((type == AttributeType::NominalAttribute)  ||
+       (type == AttributeType::SymbolicAttribute)
+      )
   {
     // Lets make sure that the nominal values are equal.  Not Case sensitive.
     if  ((*nominalValuesUpper) != (*rightSide.nominalValuesUpper))
@@ -233,15 +243,15 @@ XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-  AttributeType  attributeType = NULLAttribute;
+  AttributeType  attributeType = AttributeType::NULLAttribute;
   kkint32        fieldNum      = 0;
   KKStr          name          = "";
 
   kkint32  c = tag->AttributeCount ();
   for  (kkint32 x = 0;  x < c;  ++x)
   {
-    KKStrConstPtr n = tag->AttributeName (x);
-    KKStrConstPtr v = tag->AttributeValue (x);
+    KKStrConstPtr n = tag->AttributeNameByIndex (x);
+    KKStrConstPtr v = tag->AttributeValueByIndex (x);
 
     if  (n->EqualIgnoreCase ("Type"))
       attributeType = AttributeTypeFromStr (v);
@@ -258,7 +268,7 @@ XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
   XmlTokenPtr t = s.GetNextToken (log);
   while  (t)
   {
-    if  (t->TokenType () == XmlToken::tokContent)
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
       XmlContentPtr  content = dynamic_cast<XmlContentPtr> (t);
       KKStrParser p (*content->Content ());
@@ -300,9 +310,11 @@ void  XmlElementAttribute::WriteXML (const Attribute&  a,
                                      ostream&          o
                                     )
 {
-  XmlTag::TagTypes  startTagType = XmlTag::tagEmpty;
-  if  ((a.Type () == KKMLL::NominalAttribute) ||  (a.Type () == KKMLL::SymbolicAttribute))
-    startTagType  = XmlTag::tagStart;
+  XmlTag::TagTypes  startTagType = XmlTag::TagTypes::tagEmpty;
+  if  ((a.Type () == KKMLL::AttributeType::NominalAttribute) ||
+       (a.Type () == KKMLL::AttributeType::SymbolicAttribute)
+      )
+    startTagType  = XmlTag::TagTypes::tagStart;
 
   XmlTag  startTag ("Attribute", startTagType);
   if  (!varName.Empty ())
@@ -312,7 +324,7 @@ void  XmlElementAttribute::WriteXML (const Attribute&  a,
   startTag.AddAtribute ("FieldNum", a.FieldNum ());
   startTag.WriteXML (o);
 
-  if  (startTagType == XmlTag::tagStart)
+  if  (startTagType == XmlTag::TagTypes::tagStart)
   {
     // Need to write the nominal or symbolic fields
     for  (kkint32  nominalIdx = 0;  nominalIdx < a.Cardinality ();  ++nominalIdx)
@@ -322,7 +334,7 @@ void  XmlElementAttribute::WriteXML (const Attribute&  a,
       o << a.GetNominalValue (nominalIdx);
     }
 
-    XmlTag  endTag ("Attribute", XmlTag::tagEnd);
+    XmlTag  endTag ("Attribute", XmlTag::TagTypes::tagEnd);
     endTag.WriteXML (o);
   }
 }
@@ -437,10 +449,10 @@ KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
       "NULL"
     };
 
-  if  ((type < 0)  ||  (type >= NULLAttribute))
+  if  ((type < (AttributeType)0)  ||  (type >= AttributeType::NULLAttribute))
     return  "";
 
-  return AttributeTypeStrings[type];
+  return AttributeTypeStrings[(int)type];
 }  /* TypeStr */
 
 
@@ -449,22 +461,22 @@ KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
 AttributeType  KKMLL::AttributeTypeFromStr (const KKStr&  s)
 {
   if  (s.EqualIgnoreCase ("Ignore"))
-    return  IgnoreAttribute;
+    return  AttributeType::IgnoreAttribute;
 
   else if  (s.EqualIgnoreCase ("Numeric"))
-    return  NumericAttribute;
+    return  AttributeType::NumericAttribute;
 
   else if  (s.EqualIgnoreCase ("Nominal"))
-    return  NominalAttribute;
+    return AttributeType::NominalAttribute;
 
   else if  (s.EqualIgnoreCase ("Ordinal"))
-    return  OrdinalAttribute;
+    return  AttributeType::OrdinalAttribute;
 
   else if  (s.EqualIgnoreCase ("Symbolic"))
-    return  SymbolicAttribute;
+    return  AttributeType::SymbolicAttribute;
 
   else
-    return  NULLAttribute;
+    return  AttributeType::NULLAttribute;
 }
 
 
@@ -557,7 +569,7 @@ void  XmlElementAttributeList::WriteXML (const AttributeList&  attributeList,
                                          ostream&              o
                                         )
 {
-  XmlTag  startTag ("AttributeList", XmlTag::tagStart);
+  XmlTag  startTag ("AttributeList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   AttributeList::const_iterator  idx;
@@ -566,7 +578,7 @@ void  XmlElementAttributeList::WriteXML (const AttributeList&  attributeList,
     AttributePtr  attribute = *idx;
     XmlElementAttribute::WriteXML (*attribute, KKStr::EmptyStr (), o);
   }
-  XmlTag  endTag ("AttributeList", XmlTag::tagEnd);
+  XmlTag  endTag ("AttributeList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
 }
 

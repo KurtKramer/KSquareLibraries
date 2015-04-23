@@ -36,7 +36,7 @@ namespace KKMLL
 
     virtual ModelParamSvmBasePtr  Duplicate () const;
 
-    virtual ModelParamTypes  ModelParamType () const {return mptSvmBase;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptSvmBase;}
 
 
     const SVM289_MFS::svm_parameter&  SvmParam ()  {return svmParam;}

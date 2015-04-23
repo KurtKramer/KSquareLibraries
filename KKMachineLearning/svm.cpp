@@ -1148,9 +1148,9 @@ SVM233::Kernel::Kernel  (kkint32                 l,
                          const svm_parameter&  param
                         )
  :
-   kernel_type      (param.kernel_type), 
-   degree           (param.degree),
-   gamma            (param.gamma), 
+   kernel_type  (param.kernel_type), 
+   degree       (param.degree),
+   gamma        (param.gamma), 
    coef0        (param.coef0)
 
 {

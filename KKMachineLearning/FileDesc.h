@@ -59,10 +59,10 @@ namespace KKMLL
     *
     * Never delete an instance of a FileDesc object.
     *
-    * Only one FileDesc object can exist for any Dataset.  Example the Forest-Cover
-    * dataset.  You can split the data into many files and manage them separately but
+    * Only one FileDesc object can exist for any Dataset. Example the Forest-Cover
+    * dataset. You can split the data into many files and manage them separately but
     * you will only have one instance of a FileDesc object that they will all refer
-    * to.  See "GetExistingFileDesc" method below.  You would initially create an
+    * to. See "GetExistingFileDesc" method below. You would initially create an
     * instance of FileDesc and then use "GetExistingFileDesc" to make sure that it is
     * unique. This typically happens in the FeatureFileIO derived classes.
     *@see GetExistingFileDesc
@@ -122,9 +122,10 @@ namespace KKMLL
     kkint32                      SparseMinFeatureNum ()  const  {return sparseMinFeatureNum;}
     kkint16                      Version             ()  const  {return version;}
 
-    void   SparseMinFeatureNum (kkint32  _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
-    void   Version             (kkint16  _version)              {version             = _version;}
-
+    void   ClassNameAttribute  (const KKStr&  _classNameAttribute)   {classNameAttribute  = _classNameAttribute;}
+    void   FileName            (const KKStr&  _fileName)             {fileName            = _fileName;}
+    void   SparseMinFeatureNum (kkint32       _sparseMinFeatureNum)  {sparseMinFeatureNum = _sparseMinFeatureNum;}
+    void   Version             (kkint16       _version)              {version             = _version;}
 
 
     void  AddAAttribute (const KKB::KKStr&     _name,
@@ -156,6 +157,8 @@ namespace KKMLL
                             bool&         alreadyExist,
                             RunLog&       log
                            );
+
+    void  AddAttributes (const KKMLL::AttributeList&  attributes);
 
 
     kkint32  Cardinality (kkint32  fieldNum,

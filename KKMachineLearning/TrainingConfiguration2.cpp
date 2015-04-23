@@ -60,20 +60,11 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   switch  (modelingMethod)
   {
-  case  Model::mtOldSVM:    modelParameters = new ModelParamOldSVM    (log);
-                            break;
-
-  case  Model::mtSvmBase:   modelParameters = new ModelParamSvmBase   (log);
-                            break;
-
-  case  Model::mtKNN:       modelParameters = new ModelParamKnn       (log);
-                            break;
-
-  case  Model::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (log);
-                            break;
-
-  case  Model::mtDual:      modelParameters = new ModelParamDual      (log);
-                            break;
+  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    (log);  break;
+  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   (log);  break;
+  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       (log);  break;
+  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (log);  break;
+  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      (log);  break;
 
   default:
     log.Level (-1) << endl << endl
@@ -87,7 +78,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
   {  
     bool  validParameterFormat = false;
     // We apply '_selFeatures' first;  this way if features were specified in '_parameterStr'  they
-    // will override what '_selFeatures'.  This is important because qquite often the caller does 
+    // will override what '_selFeatures'.  This is important because quite often the caller does 
     // not know the features so they assume all.
     modelParameters->SelectedFeatures (_selFeatures);
     modelParameters->ParseCmdLine (_parameterStr, validParameterFormat);
@@ -128,13 +119,11 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
-  modelingMethod          (Model::mtNULL),
+  modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
-  noiseGuaranteedSize     (0),
   noiseMLClass            (NULL),
   noiseTrainingClass      (NULL),
-  normalizationParms      (NULL),
   otherClass              (NULL),
   otherClassLineNum       (-1),
   rootDir                 (),
@@ -187,13 +176,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
-  modelingMethod          (Model::mtNULL),
+  modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
-  noiseGuaranteedSize     (0),
   noiseMLClass            (NULL),
   noiseTrainingClass      (NULL),
-  normalizationParms      (NULL),
   otherClass              (NULL),
   otherClassLineNum       (-1),
   rootDir                 (),
@@ -224,8 +211,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
     }
   }
 
-  if  (modelingMethod == Model::mtNULL)
-    modelingMethod = Model::mtOldSVM;
+  if  (modelingMethod == Model::ModelTypes::mtNULL)
+    modelingMethod = Model::ModelTypes::mtOldSVM;
 
   {
     examplesPerClass = int32_max;
@@ -259,13 +246,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
-  modelingMethod          (Model::mtNULL),
+  modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
-  noiseGuaranteedSize     (0),
   noiseMLClass            (NULL),
   noiseTrainingClass      (NULL),
-  normalizationParms      (NULL),
   otherClass              (NULL),
   otherClassLineNum       (-1),
   rootDir                 (),
@@ -292,8 +277,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
     }
   }
 
-  if  (modelingMethod == Model::mtNULL)
-    modelingMethod = Model::mtOldSVM;
+  if  (modelingMethod == Model::ModelTypes::mtNULL)
+    modelingMethod = Model::ModelTypes::mtOldSVM;
 
   {
     examplesPerClass = int32_max;
@@ -327,13 +312,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
   log                     (_log),
-  modelingMethod          (Model::mtNULL),
+  modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (_modelParameters),
-  noiseGuaranteedSize     (0),
   noiseMLClass            (NULL),
   noiseTrainingClass      (NULL),
-  normalizationParms      (NULL),
   otherClass              (NULL),
   otherClassLineNum       (-1),
   rootDir                 (),
@@ -361,11 +344,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 
   switch  (_modelParameters->ModelParamType ())
   {
-  case  ModelParam::mptDual:        modelingMethod =   Model::mtDual;       break;
-  case  ModelParam::mptKNN:         modelingMethod =   Model::mtKNN;        break;
-  case  ModelParam::mptOldSVM:      modelingMethod =   Model::mtOldSVM;     break;
-  case  ModelParam::mptSvmBase:     modelingMethod =   Model::mtSvmBase;    break;
-  case  ModelParam::mptUsfCasCor:   modelingMethod =   Model::mtUsfCasCor;  break;
+  case  ModelParam::ModelParamTypes::mptDual:      modelingMethod = Model::ModelTypes::mtDual;       break;
+  case  ModelParam::ModelParamTypes::mptKNN:       modelingMethod = Model::ModelTypes::mtKNN;        break;
+  case  ModelParam::ModelParamTypes::mptOldSVM:    modelingMethod = Model::ModelTypes::mtOldSVM;     break;
+  case  ModelParam::ModelParamTypes::mptSvmBase:   modelingMethod = Model::ModelTypes::mtSvmBase;    break;
+  case  ModelParam::ModelParamTypes::mptUsfCasCor: modelingMethod = Model::ModelTypes::mtUsfCasCor;  break;
   }
 }
   
@@ -384,10 +367,8 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   modelingMethod          (tc.modelingMethod),
   examplesPerClass        (tc.examplesPerClass),
   modelParameters         (NULL),
-  noiseGuaranteedSize     (tc.noiseGuaranteedSize),
   noiseMLClass            (tc.noiseMLClass),
   noiseTrainingClass      (tc.noiseTrainingClass),
-  normalizationParms      (NULL),
   otherClass              (tc.otherClass),
   otherClassLineNum       (tc.otherClassLineNum),
   rootDir                 (tc.rootDir),
@@ -412,9 +393,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
     mlClassesWeOwnIt = true;
   }
 
-  if  (tc.normalizationParms)
-    normalizationParms  = new NormalizationParms (*tc.normalizationParms);
-
   if  (tc.modelParameters)
     modelParameters  = tc.modelParameters->Duplicate ();
 
@@ -437,7 +415,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
 TrainingConfiguration2::~TrainingConfiguration2 ()
 {
   delete  noiseTrainingClass;  noiseTrainingClass = NULL;
-  delete  normalizationParms;  normalizationParms = NULL;
   delete  modelParameters;     modelParameters    = NULL;
 
   if  (mlClassesWeOwnIt)
@@ -464,7 +441,7 @@ FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunL
 
 ModelParamOldSVMPtr   TrainingConfiguration2::OldSvmParameters ()  const
 {
-  if  (modelParameters  &&  (modelingMethod == Model::mtOldSVM))
+  if  (modelParameters  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
     return  dynamic_cast<ModelParamOldSVMPtr>(modelParameters);
   else
     return NULL;
@@ -606,9 +583,6 @@ void  TrainingConfiguration2::Save (ostream&  o)  const
   if  (noiseTrainingClass)
   {
     o << "[NOISE_IMAGES]" << endl;
-    if (noiseGuaranteedSize > 0)
-      o << "GUARANTEED_SIZE=" << noiseGuaranteedSize << endl;
-
     o << "Class_Name=" << noiseTrainingClass->Name ()  << endl;
     for  (kkuint32 zed = 0;  zed < noiseTrainingClass->DirectoryCount ();  ++zed)
       o << "Dir=" << noiseTrainingClass->Directory (zed) << endl;
@@ -1129,7 +1103,7 @@ void  TrainingConfiguration2::C_Param (double _CCC)
 
 kkint32 TrainingConfiguration2::Number_of_rounds ()  const
 {
-  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::mptUsfCasCor))
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::mptUsfCasCor))
   {
     return  dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds ();
   }
@@ -1143,7 +1117,7 @@ kkint32 TrainingConfiguration2::Number_of_rounds ()  const
 
 void   TrainingConfiguration2::Number_of_rounds (kkint32 _number_of_rounds)
 {
-  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::mptUsfCasCor))
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::mptUsfCasCor))
   {
     dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds (_number_of_rounds);
   }
@@ -1168,7 +1142,7 @@ SVM_MachineType  TrainingConfiguration2::MachineType ()  const
   if  (oldSVMparms)
     return oldSVMparms->MachineType ();
   else
-    return  MachineType_NULL;
+    return  SVM_MachineType::MachineType_NULL;
 }  /* MachineType */
 
 
@@ -1189,7 +1163,7 @@ SVM_SelectionMethod  TrainingConfiguration2::SelectionMethod   ()  const
   if  (oldSVMparms)
     return (SVM_SelectionMethod)oldSVMparms->SelectionMethod ();
   else
-    return SelectionMethod_NULL;
+    return SVM_SelectionMethod::SelectionMethod_NULL;
 }  /* SelectionMethod */
 
 
@@ -1234,7 +1208,7 @@ SVM_EncodingMethod   TrainingConfiguration2::EncodingMethod ()  const
   if  (param)
     return  param->EncodingMethod ();
   else
-    return  NoEncoding;
+    return  SVM_EncodingMethod::NoEncoding;
 }  /* EncodingMethod */
 
 
@@ -1325,7 +1299,7 @@ SVM_KernalType  TrainingConfiguration2::KernalType ()  const
   const SVMparamPtr  param = SVMparamToUse ();
   if  (param)
     return param->KernalType ();
-  return  KT_Linear;
+  return  SVM_KernalType::KT_Linear;
 }  /* KernalType */
 
 
@@ -1661,7 +1635,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     FormatGood (false);
   }
 
-  if  (modelingMethod == Model::mtNULL)
+  if  (modelingMethod == Model::ModelTypes::mtNULL)
   {
     // We have a invalid Modeling Method Parameter.
     KKStr  errMsg = "Invalid Modeling Method[" + modelingMethodStr + "] was specified.";
@@ -1733,10 +1707,10 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
   KKStr  modelParametersStr  = SettingValue (sectionNum, "Parameters",        parametersLineNum);
   KKStr  featuresIncludedStr = SettingValue (sectionNum, "Features_Included", featuresIncludedLineNum);
 
-  if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::mtOldSVM))
+  if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
     modelParametersStr = SettingValue ("Model3", "Parameters", parametersLineNum);
 
-  if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::mtOldSVM))
+  if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
     featuresIncludedStr = SettingValue ("Model3", "Features_Included", featuresIncludedLineNum);
 
   if  (parametersLineNum < 0)
@@ -1769,7 +1743,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     if  (examplesPerClassStr.Empty ())
       examplesPerClassStr = SettingValue (sectionNum, "Images_Per_Class", examplesPerClassLineNum);
 
-    if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::mtOldSVM))
+    if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
     {
       examplesPerClassStr = SettingValue ("Model3", "Examples_Per_Class", examplesPerClassLineNum);
       if  (examplesPerClassStr.Empty ())
@@ -1954,8 +1928,6 @@ void   TrainingConfiguration2::ValidateConfiguration ()
          kkint32  noiseGuaranteedSizeLineNum = -1;
          noiseMLClass = noiseTrainingClass->MLClass ();
          noiseMLClass->UnDefined (true);
-         KKStr   noiseGuaranteedSizeStr (SettingValue (sectionNum, "GUARANTEED_SIZE", noiseGuaranteedSizeLineNum));
-         noiseGuaranteedSize = atoi (noiseGuaranteedSizeStr.Str ());
        }
        else
        {

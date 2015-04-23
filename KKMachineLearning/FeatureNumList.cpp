@@ -323,7 +323,7 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
   const AttributeTypeVector&   attributeTypes = _fileDesc->AttributeVector ();
   for  (kkuint16 fn = 0;  fn <= maxFeatureNum;  ++fn)
   {
-    if  (attributeTypes[fn] != IgnoreAttribute)
+    if  (attributeTypes[fn] != AttributeType::IgnoreAttribute)
       features.AddFeature (fn);
   }
 
@@ -341,7 +341,7 @@ void   FeatureNumList::SetAllFeatures (FileDescPtr  fileDesc)
 {
   for  (kkuint16 x = 0; x <= maxFeatureNum;  ++x)
   {
-    if  (fileDesc->Type (x) != IgnoreAttribute)
+    if  (fileDesc->Type (x) != AttributeType::IgnoreAttribute)
       AddFeature (kkuint16 (x));
   }
   return;
@@ -1024,3 +1024,60 @@ FeatureNumList  FeatureNumList::Complement ()  const
   return  result;
 }  /* Complement */
 
+
+
+
+
+XmlElementFeatureNumList::XmlElementFeatureNumList (XmlTagPtr   tag,
+                                                    XmlStream&  s,
+                                                    RunLog&     log
+                                                   ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+
+}
+ 
+
+
+XmlElementFeatureNumList::~XmlElementFeatureNumList ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+
+FeatureNumListPtr  XmlElementFeatureNumList::TakeOwnership ()
+{
+  FeatureNumListPtr  v = value;
+  value = NULL;
+  return  v;
+}
+
+
+
+void  XmlElementFeatureNumList::WriteXML (const FeatureNumList&  fnl,
+                                          const KKStr&           varName,
+                                          ostream&               o
+                                         )
+{
+  XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  o << endl;
+
+  XmlElementInt32::WriteXML (fnl.MaxFeatureNum (), "MaxFeatureNum", o);
+  XmlElementInt32::WriteXML (fnl.NumOfFeatures (), "NumOfFeatures", o);
+
+    kkuint16*  featureNums;              /**< @brief The feature numbers in this array are always kept in ascending order.  
+                                          * @details There will be 'numOfFeatures' in this array.  'featureNumsAllocatedSize' 
+                                          * indicates the size allocated, if more space is needed you need to call 
+                                          * 'AllocateArraySize' to increase it.
+                                          */
+    kkint32   featureNumsAllocatedSize;
+
+
+
+  XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
+}

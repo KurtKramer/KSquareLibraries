@@ -29,7 +29,7 @@ namespace KKMLL
   public:
     typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
-    typedef  enum  {FeAsIs, FeBinary, FeScale}  FeWhatToDo;
+    enum  class  FeWhatToDo  {FeAsIs, FeBinary, FeScale};
     typedef  FeWhatToDo*  FeWhatToDoPtr;
 
 

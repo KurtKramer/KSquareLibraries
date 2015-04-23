@@ -90,7 +90,7 @@ KKThread::KKThread (const KKStr&        _threadName,
    shutdownFlag          (false),
    shutdownPrerequisites (NULL),
    startPrerequisites    (NULL),
-   status                (tsNotStarted),
+   status                (ThreadStatus::tsNotStarted),
    terminateFlag         (false),
    threadId              (0),
    threadName            (_threadName)
@@ -143,10 +143,10 @@ KKStr  KKThread::threadStatusDescs[] = {"NULL", "Started", "Running", "Stopping"
 
 const KKStr&  KKThread::ThreadStatusToStr (ThreadStatus ts)
 {
-  if  ((ts < 0)  ||  (ts > tsStopped))
+  if  ((ts < ThreadStatus::tsNULL)  ||  (ts > ThreadStatus::tsStopped))
     return KKStr::EmptyStr ();
   else
-    return  threadStatusDescs[ts];
+    return  threadStatusDescs[(int)ts];
 }
 
 
@@ -214,9 +214,9 @@ void  KKThread::TerminateThread ()
 
 bool  KKThread::ThreadStillProcessing ()  const
 {
-  return  ((status == KKThread::tsRunning)   ||  
-           (status == KKThread::tsStarting)  ||
-           (status == KKThread::tsStopping)
+  return  ((status == ThreadStatus::tsRunning)   ||  
+           (status == ThreadStatus::tsStarting)  ||
+           (status == ThreadStatus::tsStopping)
           );
 }
 
@@ -231,9 +231,9 @@ void  KKThread::ShutdownThread ()
 
 void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
 {
-  if  ((status == tsNotStarted)  || 
-       (status == tsStopped)     ||
-       (status == tsNULL)
+  if  ((status == ThreadStatus::tsNotStarted)  || 
+       (status == ThreadStatus::tsStopped)     ||
+       (status == ThreadStatus::tsNULL)
       )
   {
     // Thread is not running;  we can return.
@@ -242,7 +242,7 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
 
   kkuint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
   kkuint32  timeWaitedSoFar = 0;
-  while  ((status == tsRunning)  ||  (status == tsStopping))
+  while  ((status == ThreadStatus::tsRunning)  ||  (status == ThreadStatus::tsStopping))
   {
 	osSleepMiliSecs (50);
     if  (maxTimeToWait > 0)
@@ -255,9 +255,9 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
   }
 
 
-  if  ((status != tsNotStarted)  &&
-       (status != tsStopped)     &&
-       (status != tsNULL)
+  if  ((status != ThreadStatus::tsNotStarted)  &&
+       (status != ThreadStatus::tsStopped)     &&
+       (status != ThreadStatus::tsNULL)
       )
   {
     Kill ();
@@ -274,9 +274,9 @@ extern "C"
   unsigned int ThreadStartCallBack (void* param) 
   {
     KKThreadPtr  tp = (KKThreadPtr)param;
-    tp->Status (KKThread::tsStarting);
+    tp->Status (KKThread::ThreadStatus::tsStarting);
     tp->Run ();
-    tp->Status (KKThread::tsStopped);
+    tp->Status (KKThread::ThreadStatus::tsStopped);
     return 0;
   }
 }
@@ -475,7 +475,7 @@ bool  KKThread::OkToShutdown ()  const
   for  (idx = shutdownPrerequisites->begin ();  idx != shutdownPrerequisites->end ();  ++idx)
   {
     KKThreadPtr  preReq = *idx;
-    if  (preReq->Status () != tsStopped)
+    if  (preReq->Status () != ThreadStatus::tsStopped)
       return false;
   }
   return  true;
@@ -492,7 +492,7 @@ bool  KKThread::OkToStart ()  const
   for  (idx = startPrerequisites->begin ();  idx != startPrerequisites->end ();  ++idx)
   {
     KKThreadPtr  preReq = *idx;
-    if  (preReq->Status () != tsRunning)
+    if  (preReq->Status () != ThreadStatus::tsRunning)
       return false;
   }
   return  true;

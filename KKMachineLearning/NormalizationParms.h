@@ -93,13 +93,19 @@ namespace KKMLL
 
     kkint32 MemoryConsumedEstimated ()  const;
 
+    FileDescPtr  FileDesc ()  const  {return fileDesc;}
+
     void  NormalizeExamples (FeatureVectorListPtr  examples);
 
     void  NormalizeAExample (FeatureVectorPtr  example);
 
+    bool  NormalizeNominalFeatures ()  const  {return normalizeNominalFeatures;}
+
     FeatureVectorPtr  ToNormalized (FeatureVectorPtr  example)  const;
 
-    kkint32 NumOfFeatures ()  {return numOfFeatures;}
+    kkint32 NumOfFeatures ()  const {return numOfFeatures;}
+
+    float   NumOfExamples ()  const {return numOfExamples;}
 
 
     void  Read (FILE*  i,
@@ -121,8 +127,8 @@ namespace KKMLL
     double  Mean (kkint32 i);
     double  Sigma (kkint32 i);
 
-    const double*  Mean ()  {return  mean;}
-    const double*  Sigma () {return  sigma;}
+    const double*  Mean  () const  {return  mean;}
+    const double*  Sigma () const  {return  sigma;}
 
     void  WriteXML (ostream& o);
 
@@ -164,7 +170,12 @@ namespace KKMLL
     NormalizationParmsPtr  Value ()  const;
 
     NormalizationParmsPtr  TakeOwnership ();
-    
+
+    static
+    void  WriteXML (const NormalizationParms&  normParms,
+                    const KKStr&               varName,
+                    ostream&                   o
+                   );
   private:
     NormalizationParmsPtr  value;
   };

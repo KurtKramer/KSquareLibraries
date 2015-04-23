@@ -63,7 +63,7 @@ namespace  SVM289_MFS
                           );
 
   void  multiclass_probability (kkint32   numClasses,     /**< Number of Classes.       */
-                                double**  pairwiseProbs,  /**< Pairwise Probabilities.  */
+                                double**  pairwiseProbs,  /**< Pair-wise Probabilities.  */
                                 double*   classProb       /**< Class Probability        */
                                );
 
@@ -207,8 +207,8 @@ FileDescPtr  SVM289_MFS::svm_problem::FileDesc ()  const
 
 
 SVM289_MFS::svm_parameter::svm_parameter ():
-  svm_type     (C_SVC),
-  kernel_type  (RBF),
+  svm_type     (SVM_Type::C_SVC),
+  kernel_type  (Kernel_Type::RBF),
   degree       (3),
   gamma        (0.0),
   coef0        (0.0),
@@ -263,8 +263,8 @@ SVM289_MFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
 
 
 SVM289_MFS::svm_parameter::svm_parameter (KKStr&  paramStr):
-  svm_type     (C_SVC),
-  kernel_type  (RBF),
+  svm_type     (SVM_Type::C_SVC),
+  kernel_type  (Kernel_Type::RBF),
   degree       (3),
   gamma        (0.0),
   coef0        (0.0),
@@ -348,9 +348,9 @@ KKStr   SVM289_MFS::svm_parameter::ToCmdLineStr ()  const
   if  (probParam > 0.0)
     cmdStr << "-ProbParam " << probParam << "  ";
          
-  cmdStr << "-r " << coef0          << "  "
-         << "-s " << svm_type       << "  "
-         << "-t " << kernel_type    << "  ";
+  cmdStr << "-r " << coef0            << "  "
+         << "-s " << (int)svm_type    << "  "
+         << "-t " << (int)kernel_type << "  ";
 
   return  cmdStr;
 }
@@ -567,22 +567,13 @@ SVM_Type  SVM289_MFS::SVM_Type_FromStr (KKStr  s)
 {
   s.Upper ();
 
-  if  ((s.EqualIgnoreCase ("C_SVC"))       ||  (s == "0"))
-    return C_SVC;
+  if  ((s.EqualIgnoreCase ("C_SVC"))        ||  (s == "0"))  return SVM_Type::C_SVC;
+  if  ((s.EqualIgnoreCase ("NU_SVC"))       ||  (s == "1"))  return SVM_Type::NU_SVC;
+  if  ((s.EqualIgnoreCase ("ONE_CLASS"))    ||  (s == "2"))  return  SVM_Type::ONE_CLASS;
+  if  ((s.EqualIgnoreCase ("EPSILON_SVR"))  ||  (s == "3"))  return  SVM_Type::EPSILON_SVR;
+  if  ((s.EqualIgnoreCase ("NU_SVR"))       ||  (s == "4"))  return  SVM_Type::NU_SVR;
 
-  if  ((s.EqualIgnoreCase ("NU_SVC"))       ||  (s == "1"))
-    return NU_SVC;
-
-  if  ((s.EqualIgnoreCase ("ONE_CLASS"))    ||  (s == "2"))
-    return  ONE_CLASS;
-
-  if  ((s.EqualIgnoreCase ("EPSILON_SVR"))  ||  (s == "3"))
-    return  EPSILON_SVR;
-
-  if  ((s.EqualIgnoreCase ("NU_SVR"))       ||  (s == "4"))
-    return  NU_SVR;
-
-  return  SVM_NULL;
+  return  SVM_Type::SVM_NULL;
 }
 
 
@@ -591,13 +582,13 @@ KKStr  SVM289_MFS::SVM_Type_ToStr (SVM_Type  svmType)
 {
   switch  (svmType)
   {
-  case  C_SVC:        return  "c_svc";
-  case  NU_SVC:       return  "nu_svc";
-  case  ONE_CLASS:    return  "one_class";
-  case  EPSILON_SVR:  return  "epsilon_svr";
-  case  NU_SVR:       return  "nu_svr";
+  case  SVM_Type::C_SVC:        return  "c_svc";
+  case  SVM_Type::NU_SVC:       return  "nu_svc";
+  case  SVM_Type::ONE_CLASS:    return  "one_class";
+  case  SVM_Type::EPSILON_SVR:  return  "epsilon_svr";
+  case  SVM_Type::NU_SVR:       return  "nu_svr";
   }
-  return  SVM_NULL;
+  return  "NULL";
 }
 
 
@@ -605,22 +596,13 @@ KKStr  SVM289_MFS::SVM_Type_ToStr (SVM_Type  svmType)
  Kernel_Type  SVM289_MFS::Kernel_Type_FromStr (KKStr  s)
  {
    s.Upper ();
-   if  ((s.EqualIgnoreCase ("LINEAR"))       ||  (s == "0"))
-     return  LINEAR;
+   if  ((s.EqualIgnoreCase ("LINEAR"))       ||  (s == "0"))                                      return  Kernel_Type::LINEAR;
+   if  ((s.EqualIgnoreCase ("POLYNOMIAL"))   ||  (s.EqualIgnoreCase ("POLY"))  ||  (s == "1"))    return  Kernel_Type::POLY;
+   if  ((s.EqualIgnoreCase ("RBF"))          ||  (s == "2"))                                      return  Kernel_Type::RBF;
+   if  ((s.EqualIgnoreCase ("SIGMOID"))      ||  (s == "3"))                                      return  Kernel_Type::SIGMOID;
+   if  ((s.EqualIgnoreCase ("PRECOMPUTED"))  ||  (s == "4"))                                      return  Kernel_Type::PRECOMPUTED;
 
-   if  ((s.EqualIgnoreCase ("POLYNOMIAL"))   ||  (s.EqualIgnoreCase ("POLY"))  ||  (s == "1"))
-     return  POLY;
-
-   if  ((s.EqualIgnoreCase ("RBF"))          ||  (s == "2"))
-     return  RBF;
-
-   if  ((s.EqualIgnoreCase ("SIGMOID"))      ||  (s == "3"))
-     return  SIGMOID;
-
-   if  ((s.EqualIgnoreCase ("PRECOMPUTED"))  ||  (s == "4"))
-     return  PRECOMPUTED;
-
-   return  Kernel_NULL;
+   return  Kernel_Type::Kernel_NULL;
  }
 
  
@@ -631,11 +613,11 @@ KKStr  SVM289_MFS::Kernel_Type_ToStr (Kernel_Type   kernelType)
 {
   switch  (kernelType)
   {
-  case  LINEAR:       return  "linear";
-  case  POLY:         return  "polynomial";
-  case  RBF:          return  "rbf";
-  case  SIGMOID:      return  "sigmoid";
-  case  PRECOMPUTED:  return  "precomputed";
+  case  Kernel_Type::LINEAR:       return  "linear";
+  case  Kernel_Type::POLY:         return  "polynomial";
+  case  Kernel_Type::RBF:          return  "rbf";
+  case  Kernel_Type::SIGMOID:      return  "sigmoid";
+  case  Kernel_Type::PRECOMPUTED:  return  "precomputed";
   } 
 
   return  "";
@@ -914,19 +896,19 @@ protected:
   double (Kernel::*kernel_function) (kkint32 i, kkint32 j) const;
 
 private:
-  kkint32              l;
-  kkint32              numSelFeatures;
-  kkint32*               selFeatures;
+  kkint32               l;
+  kkint32               numSelFeatures;
+  kkint32*              selFeatures;
   FeatureVectorListPtr  x;
-  double*            x_square;
+  double*               x_square;
 
-  float**            preComputed;
+  float**               preComputed;
 
   // svm_parameter
-  const kkint32       kernel_type;
-  const kkint32       degree;
-  const double      gamma;
-  const double      coef0;
+  const Kernel_Type     kernel_type;
+  const kkint32         degree;
+  const double          gamma;
+  const double          coef0;
 
   double  dot (const FeatureVector&  px, 
                const FeatureVector&  py
@@ -970,10 +952,10 @@ private:
 
 
 SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
-                        const FeatureNumList&     _selFeatures, 
-                        const svm_parameter&      _param,
-                        RunLog&                   _log
-                       ):
+                            const FeatureNumList&     _selFeatures, 
+                            const svm_parameter&      _param,
+                            RunLog&                   _log
+                           ):
 
    coef0          (_param.coef0),
    degree         (_param.degree),
@@ -995,23 +977,12 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
 
   switch  (kernel_type)
   {
-    case LINEAR:
-      kernel_function = &Kernel::kernel_linear;
-      break;
+    case Kernel_Type::LINEAR:         kernel_function = &Kernel::kernel_linear;    break;
+    case Kernel_Type::POLY:           kernel_function = &Kernel::kernel_poly;      break;
+    case Kernel_Type::RBF:            kernel_function = &Kernel::kernel_rbf;       break;
+    case Kernel_Type::SIGMOID:        kernel_function = &Kernel::kernel_sigmoid;   break;
 
-    case POLY:
-      kernel_function = &Kernel::kernel_poly;
-      break;
-
-    case RBF:
-      kernel_function = &Kernel::kernel_rbf;
-      break;
-
-    case SIGMOID:
-      kernel_function = &Kernel::kernel_sigmoid;
-      break;
-
-    case PRECOMPUTED:
+    case Kernel_Type::PRECOMPUTED:
       {
         kkint32  z1 = 0;
         kkint32  z2 = 0;
@@ -1027,7 +998,7 @@ SVM289_MFS::Kernel::Kernel (const FeatureVectorList&  _x,
       break;
   }
 
-  if  (kernel_type == RBF)
+  if  (kernel_type == Kernel_Type::RBF)
   {
     x_square = new double[l];
     for  (kkint32 i = 0;  i < l;  i++)
@@ -1124,13 +1095,13 @@ double  SVM289_MFS::Kernel::k_function  (const FeatureVector&   x,
 {
   switch  (param.kernel_type)
   {
-    case LINEAR:
+    case Kernel_Type::LINEAR:
       return DotStatic(x, y, selFeatures);
 
-    case POLY:
+    case Kernel_Type::POLY:
       return powi (param.gamma * DotStatic (x, y, selFeatures) + param.coef0,param.degree);
 
-    case RBF:
+    case Kernel_Type::RBF:
     {
       kkint32  numSelFeatures = selFeatures.NumSelFeatures ();
       kkint32  fn  = 0;
@@ -1149,10 +1120,10 @@ double  SVM289_MFS::Kernel::k_function  (const FeatureVector&   x,
       return exp (-param.gamma * sum);
     }
 
-    case SIGMOID:
+    case Kernel_Type::SIGMOID:
       return tanh(param.gamma * DotStatic (x, y, selFeatures) + param.coef0);
 
-    case PRECOMPUTED:  //x: test (validation), y: SV
+    case Kernel_Type::PRECOMPUTED:  //x: test (validation), y: SV
       {
         cerr << endl
              << "SVM289_MFS::Kernel::k_function   ***ERROR*** does not support 'PRECOMPUTED'." << endl
@@ -2819,30 +2790,16 @@ decision_function  SVM289_MFS::svm_train_one (const svm_problem&    prob,
 
   switch  (param.svm_type)
   {
-    case C_SVC:
-      solve_c_svc (&prob, &param, alpha, &si, Cp, Cn, _log);
-      break;
-
-    case NU_SVC:
-      solve_nu_svc (&prob, &param, alpha, &si, _log);
-      break;
-
-    case ONE_CLASS:
-      solve_one_class (&prob, &param, alpha, &si, _log);
-      break;
-
-    case EPSILON_SVR:
-      solve_epsilon_svr (&prob, &param, alpha, &si, _log);
-      break;
-
-    case NU_SVR:
-      solve_nu_svr (&prob, &param, alpha, &si, _log);
-      break;
+    case SVM_Type::C_SVC:       solve_c_svc       (&prob, &param, alpha, &si, Cp, Cn, _log);    break;
+    case SVM_Type::NU_SVC:      solve_nu_svc      (&prob, &param, alpha, &si, _log);            break;
+    case SVM_Type::ONE_CLASS:   solve_one_class   (&prob, &param, alpha, &si, _log);            break;
+    case SVM_Type::EPSILON_SVR: solve_epsilon_svr (&prob, &param, alpha, &si, _log);            break;
+    case SVM_Type::NU_SVR:      solve_nu_svr      (&prob, &param, alpha, &si, _log);            break;
 
     default:
       {
         KKStr errMsg = "SVM289_MFS::svm_train_one   ***ERROR***   Invalid Solver Defined.";
-        errMsg << "   Solver[" << param.svm_type << "]";
+        errMsg << "   Solver[" << (int)param.svm_type << "]";
         _log.Level (-1) << endl << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -3431,9 +3388,9 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
 
   model->weOwnSupportVectors = false;
 
-  if  ((param.svm_type == ONE_CLASS)    ||
-       (param.svm_type == EPSILON_SVR)  ||
-       (param.svm_type == NU_SVR)
+  if  ((param.svm_type == SVM_Type::ONE_CLASS)    ||
+       (param.svm_type == SVM_Type::EPSILON_SVR)  ||
+       (param.svm_type == SVM_Type::NU_SVR)
       )
   {
     // regression or one-class-svm
@@ -3444,7 +3401,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
     model->probB    = NULL;
     model->sv_coef  = new double*[1];
 
-    if  (param.probability  &&  (param.svm_type == EPSILON_SVR  ||  param.svm_type == NU_SVR))
+    if  (param.probability  &&  (param.svm_type == SVM_Type::EPSILON_SVR  ||  param.svm_type == SVM_Type::NU_SVR))
     {
       model->probA = new double[1];
       model->probA[0] = svm_svr_probability (prob, param, log);
@@ -3753,7 +3710,7 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
 
   // stratified cv may not give leave-one-out rate
   // Each class to l folds -> some folds may have zero elements
-  if  ((param.svm_type == C_SVC || param.svm_type == NU_SVC)  && 
+  if  ((param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC)  && 
        (nr_fold < numTrainExamples)
       )
   {
@@ -3859,7 +3816,7 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
 
     svm_model*  submodel = svm_train (subprob, param, log);
     if  (param.probability && 
-       (param.svm_type == C_SVC || param.svm_type == NU_SVC))
+       (param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC))
     {
       double *prob_estimates = new double[svm_get_nr_class (submodel)];
       kkint32  *votes          = new kkint32 [svm_get_nr_class (submodel)];
@@ -3895,9 +3852,9 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
 
 
 
-kkint32 svm_get_svm_type(const svm_model *model)
+kkint32  svm_get_svm_type(const svm_model *model)
 {
-  return model->param.svm_type;
+  return  (int)model->param.svm_type;
 }
 
 
@@ -3921,7 +3878,7 @@ void svm_get_labels(const svm_model *model, kkint32* label)
 
 double svm_get_svr_probability (const svm_model *model)
 {
-  if ((model->param.svm_type == EPSILON_SVR || model->param.svm_type == NU_SVR) &&
+  if ((model->param.svm_type == SVM_Type::EPSILON_SVR || model->param.svm_type == SVM_Type::NU_SVR) &&
       model->probA!=NULL)
     return model->probA[0];
   else
@@ -3939,9 +3896,9 @@ void  SVM289_MFS::svm_predict_values (const svm_model*      model,
                                       double*               dec_values
                                      )
 {
-  if  (model->param.svm_type == ONE_CLASS    ||
-       model->param.svm_type == EPSILON_SVR  ||
-       model->param.svm_type == NU_SVR
+  if  (model->param.svm_type == SVM_Type::ONE_CLASS    ||
+       model->param.svm_type == SVM_Type::EPSILON_SVR  ||
+       model->param.svm_type == SVM_Type::NU_SVR
       )
   {
     double *sv_coef = model->sv_coef[0];
@@ -4012,15 +3969,15 @@ double SVM289_MFS::svm_predict (const svm_model*      model,
                                 const FeatureVector&  x
                                )
 {
-  if  ((model->param.svm_type == ONE_CLASS)     ||
-       (model->param.svm_type == EPSILON_SVR)   ||
-       (model->param.svm_type == NU_SVR)
+  if  ((model->param.svm_type == SVM_Type::ONE_CLASS)     ||
+       (model->param.svm_type == SVM_Type::EPSILON_SVR)   ||
+       (model->param.svm_type == SVM_Type::NU_SVR)
       )
   {
     double res;
     svm_predict_values (model, x, &res);
     
-    if  (model->param.svm_type == ONE_CLASS)
+    if  (model->param.svm_type == SVM_Type::ONE_CLASS)
       return (res > 0) ? 1:-1;
     else
       return res;
@@ -4074,7 +4031,7 @@ double  SVM289_MFS::svm_predict_probability (svm_model*             model,
 {
   double  probParam = model->param.probParam;
 
-  if  ((model->param.svm_type == C_SVC  ||  model->param.svm_type == NU_SVC)  &&  
+  if  ((model->param.svm_type == SVM_Type::C_SVC  ||  model->param.svm_type == SVM_Type::NU_SVC)  &&  
        ((model->probA != NULL  &&  model->probB != NULL)  ||  (probParam > 0.0))
       )
   {
@@ -4163,13 +4120,13 @@ kkint32  SVM289_MFS::svm_save_model (const char*      model_file_name,
   fprintf (fp, "svm_type %s\n",    SVM_Type_ToStr    (param.svm_type).Str ());
   fprintf (fp, "kernel_type %s\n", Kernel_Type_ToStr (param.kernel_type).Str ());
 
-  if  (param.kernel_type == POLY)
+  if  (param.kernel_type == Kernel_Type::POLY)
     fprintf(fp,"degree %d\n", param.degree);
 
-  if  (param.kernel_type == POLY || param.kernel_type == RBF || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
     fprintf(fp,"gamma %g\n", param.gamma);
 
-  if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
     fprintf(fp,"coef0 %g\n", param.coef0);
 
   kkint32 nr_class = model->nr_class;
@@ -4231,7 +4188,7 @@ kkint32  SVM289_MFS::svm_save_model (const char*      model_file_name,
     //const svm_node *p = SV[i];
     const FeatureVector&  p = SV[i];
 
-    if  (param.kernel_type == PRECOMPUTED)
+    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
     {
       //fprintf(fp,"0:%d ",(kkint32)(p->value));
       fprintf (fp, "0:%d ", (kkint32)(p.FeatureData (0)));
@@ -4347,7 +4304,7 @@ void  SVM289_MFS::svm_save_model_XML (ostream&          o,
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
         o << "\t" << sv_coef[j][i];
 
-      if  (model.param.kernel_type == PRECOMPUTED)
+      if  (model.param.kernel_type == Kernel_Type::PRECOMPUTED)
       {
         o << "\t" << (kkint32)(p.FeatureData (0));
       }
@@ -4454,7 +4411,7 @@ void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
       }
 
 
-      if  (model.param.kernel_type == PRECOMPUTED)
+      if  (model.param.kernel_type == Kernel_Type::PRECOMPUTED)
       {
         fdStr = osReadNextToken (in, "\t", eof, eol);
         fv->FeatureData (0, (float)fdStr.ToDouble ());
@@ -4978,13 +4935,13 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
   o << "svm_type"    << "\t" << SVM_Type_ToStr    (param.svm_type)    << endl;
   o << "kernel_type" << "\t" << Kernel_Type_ToStr (param.kernel_type) << endl;
   
-  if  (param.kernel_type == POLY)
+  if  (param.kernel_type == Kernel_Type::POLY)
     o << "degree" << "\t" << param.degree << endl;
 
-  if  (param.kernel_type == POLY || param.kernel_type == RBF || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
     o << "gamma" << "\t" << param.gamma << endl;
 
-  if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
     o << "coef0" << "\t" << param.coef0 << endl;
 
   o << "SelFeatures" << "\t" << selFeatures.ToCommaDelStr () << endl;
@@ -5049,7 +5006,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
     //const svm_node *p = SV[i];
     o.precision (8);
 
-    if  (param.kernel_type == PRECOMPUTED)
+    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
     {
       //fprintf(fp,"0:%d ",(kkint32)(p->value));
       o << "\t" << p.FeatureData (0);
@@ -5126,7 +5083,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
     if  (fieldName.EqualIgnoreCase ("svm_type"))
     {
       param.svm_type = SVM_Type_FromStr (line);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  Invalid SVM_Type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
@@ -5139,7 +5096,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
     else if  (fieldName.EqualIgnoreCase ("kernel_type") == 0)
     {    
       param.kernel_type = Kernel_Type_FromStr (line);
-      if  (param.kernel_type == Kernel_NULL)
+      if  (param.kernel_type == Kernel_Type::Kernel_NULL)
       {
         KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  Invalid kernel_type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
@@ -5246,7 +5203,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
       for  (j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
         sv_coef[j][i] = line.ExtractTokenDouble ("\t");
 
-      if  (param.kernel_type == PRECOMPUTED)
+      if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
       {
         log.Level (-1) << endl << endl
                        << "SVM289_MFS::svm_model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
@@ -5369,7 +5326,7 @@ svm_model *svm_load_model (const char*  model_file_name,
       fscanf (fp, "%80s", cmd);
 
       param.svm_type = SVM_Type_FromStr (cmd);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         fprintf (stderr, "unknown svm type.\n");
         delete model;
@@ -5383,7 +5340,7 @@ svm_model *svm_load_model (const char*  model_file_name,
       fscanf (fp, "%80s", cmd);
 
       param.kernel_type = Kernel_Type_FromStr (cmd);
-      if  (param.kernel_type == Kernel_NULL)
+      if  (param.kernel_type == Kernel_Type::Kernel_NULL)
       {
         fprintf(stderr,"unknown kernel function.\n");
         delete  model;
@@ -5589,25 +5546,25 @@ const char *svm_check_parameter (const svm_problem*    prob,
 {
   // svm_type
 
-  kkint32  svm_type = param->svm_type;
+  SVM_Type  svm_type = param->svm_type;
 
-  if  (svm_type != C_SVC        &&
-       svm_type != NU_SVC       &&
-       svm_type != ONE_CLASS    &&
-       svm_type != EPSILON_SVR  &&
-       svm_type != NU_SVR
+  if  (svm_type != SVM_Type::C_SVC        &&
+       svm_type != SVM_Type::NU_SVC       &&
+       svm_type != SVM_Type::ONE_CLASS    &&
+       svm_type != SVM_Type::EPSILON_SVR  &&
+       svm_type != SVM_Type::NU_SVR
       )
     return "unknown svm type";
   
   // kernel_type, degree
   
-  kkint32  kernel_type = param->kernel_type;
+  Kernel_Type  kernel_type = param->kernel_type;
 
-  if  (kernel_type != LINEAR       &&
-       kernel_type != POLY         &&
-       kernel_type != RBF          &&
-       kernel_type != SIGMOID      &&
-       kernel_type != PRECOMPUTED
+  if  (kernel_type != Kernel_Type::LINEAR       &&
+       kernel_type != Kernel_Type::POLY         &&
+       kernel_type != Kernel_Type::RBF          &&
+       kernel_type != Kernel_Type::SIGMOID      &&
+       kernel_type != Kernel_Type::PRECOMPUTED
       )
     return "unknown kernel type";
 
@@ -5622,21 +5579,21 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  (param->eps <= 0)
     return "eps <= 0";
 
-  if  (svm_type == C_SVC       ||
-       svm_type == EPSILON_SVR ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::C_SVC       ||
+       svm_type == SVM_Type::EPSILON_SVR ||
+       svm_type ==SVM_Type:: NU_SVR
       )
     if  (param->C <= 0)
       return "C <= 0";
 
-  if  (svm_type == NU_SVC     ||
-       svm_type == ONE_CLASS  ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::NU_SVC     ||
+       svm_type == SVM_Type::ONE_CLASS  ||
+       svm_type == SVM_Type::NU_SVR
       )
     if  ((param->nu <= 0) || (param->nu > 1))
       return "nu <= 0 or nu > 1";
 
-  if  (svm_type == EPSILON_SVR)
+  if  (svm_type == SVM_Type::EPSILON_SVR)
   {
     if  (param->p < 0)
       return "p < 0";
@@ -5648,13 +5605,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  ((param->probability != 0)  &&  (param->probability != 1))
     return "probability != 0 and probability != 1";
 
-  if  ((param->probability == 1)  &&  (svm_type == ONE_CLASS))
+  if  ((param->probability == 1)  &&  (svm_type == SVM_Type::ONE_CLASS))
     return "one-class SVM probability output not supported yet";
 
 
   // check whether nu-svc is feasible
   
-  if  (svm_type == NU_SVC)
+  if  (svm_type == SVM_Type::NU_SVC)
   {
     kkint32 l = prob->numTrainExamples;
     kkint32 max_nr_class = 16;
@@ -5719,6 +5676,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 kkint32  svm_check_probability_model (const svm_model *model)
 {
-  return ((model->param.svm_type == C_SVC       ||  model->param.svm_type == NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
-         ((model->param.svm_type == EPSILON_SVR ||  model->param.svm_type == NU_SVR) &&  model->probA!=NULL);
+  return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
+         ((model->param.svm_type == SVM_Type::EPSILON_SVR ||  model->param.svm_type == SVM_Type::NU_SVR) &&  model->probA!=NULL);
 }

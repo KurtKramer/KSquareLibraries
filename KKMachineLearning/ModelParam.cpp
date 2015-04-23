@@ -123,7 +123,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   char  buff[20480];
   KKStr  ln;
 
-  ModelParamTypes  modelParamType = mptNULL;
+  ModelParamTypes  modelParamType = ModelParamTypes::mptNULL;
 
 
   // First we need to determine which type of model this is.  We will
@@ -143,7 +143,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
     {
       KKStr  modelParamTypeStr = ln.ExtractToken2 ("\t");
       modelParamType = ModelParamTypeFromStr (modelParamTypeStr);
-      if  (modelParamType == mptNULL)
+      if  (modelParamType == ModelParamTypes::mptNULL)
       {
         _log.Level (-1) << endl
           << "ModelParam::CreateModelParam  ***ERROR***   Invalid ModelParamType[" << modelParamTypeStr << "]." << endl
@@ -154,7 +154,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
     }
   }
 
-  if  (modelParamType == mptNULL)
+  if  (modelParamType == ModelParamTypes::mptNULL)
   {
     // We never found the type of parameter we are looking for.
     _log.Level (-1) << endl
@@ -168,21 +168,11 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   ModelParamPtr modelParam = NULL;
   switch  (modelParamType)
   {
-  case  mptDual:      modelParam = new ModelParamDual      (_log);
-                      break;
-
-  case  mptKNN:       modelParam = new ModelParamKnn       (_log);
-                      break;
-
-  case  mptOldSVM:    modelParam = new ModelParamOldSVM    (_log);
-                      break;
- 
-  case  mptSvmBase:   modelParam = new ModelParamSvmBase   (_log);
-                      break;
-
-  case  mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_log);
-                      break;
-
+  case  ModelParamTypes::mptDual:      modelParam = new ModelParamDual      (_log);  break;
+  case  ModelParamTypes::mptKNN:       modelParam = new ModelParamKnn       (_log);  break;
+  case  ModelParamTypes::mptOldSVM:    modelParam = new ModelParamOldSVM    (_log);  break;
+  case  ModelParamTypes::mptSvmBase:   modelParam = new ModelParamSvmBase   (_log);  break;
+  case  ModelParamTypes::mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_log);  break;
   }
 
   if  (!modelParam)
@@ -198,22 +188,22 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
 
 KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 {
-  if  (_modelParamType == mptNULL)
+  if  (_modelParamType == ModelParamTypes::mptNULL)
     return "NULL";
   
-  else if  (_modelParamType == mptDual)
+  else if  (_modelParamType == ModelParamTypes::mptDual)
     return "ModelParamDual";
 
-  else if  (_modelParamType == mptKNN)
+  else if  (_modelParamType == ModelParamTypes::mptKNN)
     return "ModelParamKnn";
 
-  else if  (_modelParamType == mptOldSVM)
+  else if  (_modelParamType == ModelParamTypes::mptOldSVM)
     return "ModelParamOldSVM";
   
-  else if  (_modelParamType == mptSvmBase)
+  else if  (_modelParamType == ModelParamTypes::mptSvmBase)
     return "ModelParamSvmBase";
 
-  else if  (_modelParamType == mptUsfCasCor)
+  else if  (_modelParamType == ModelParamTypes::mptUsfCasCor)
     return  "UsfCasCor";
 
   else
@@ -225,22 +215,22 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _modelParamTypeStr)
 {
   if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamDual"))
-    return mptDual;
+    return ModelParamTypes::mptDual;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
-    return mptOldSVM;
+    return ModelParamTypes::mptOldSVM;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamSvmBase"))
-    return mptSvmBase;
+    return ModelParamTypes::mptSvmBase;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamKnn"))
-    return mptKNN;
+    return ModelParamTypes::mptKNN;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("UsfCasCor"))
-    return mptUsfCasCor;
+    return ModelParamTypes::mptUsfCasCor;
 
   else
-    return mptNULL;
+    return ModelParamTypes::mptNULL;
 }
 
 
@@ -613,7 +603,9 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
-      if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
+      if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
+          )
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
       else
         numFeaturesAfterEncoding ++;

@@ -54,7 +54,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     destFeatureNums          (NULL),
     destFileDesc             (NULL),
     destWhatToDo             (NULL),
-    encodingMethod           (NoEncoding),
+    encodingMethod           (SVM_EncodingMethod::NoEncoding),
     fileDesc                 (_fileDesc),
     log                      (_log),
     numEncodedFeatures       (0),
@@ -102,8 +102,10 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
 
     switch (encodingMethod)
     {
-      case BinaryEncoding:
-        if  ((attributeTypes[srcFeatureNums[x]] == NominalAttribute)  || (attributeTypes[srcFeatureNums[x]] == SymbolicAttribute))
+      case SVM_EncodingMethod::BinaryEncoding:
+        if  ((attributeTypes[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
+             (attributeTypes[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
+            )
         {
           destWhatToDo    [x] = FeBinary;
           cardinalityDest [x] = cardinalityTable[srcFeatureNums [x]];
@@ -125,10 +127,12 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         break;
 
 
-      case  ScaledEncoding:
+      case  SVM_EncodingMethod::ScaledEncoding:
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
-        if  ((attributeTypes[srcFeatureNums[x]] == NominalAttribute)  ||  (attributeTypes[srcFeatureNums[x]] == SymbolicAttribute))
+        if  ((attributeTypes[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
+             (attributeTypes[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
+            )
           destWhatToDo [x] = FeScale;
         else
           destWhatToDo [x] = FeAsIs;
@@ -137,7 +141,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         break;
 
 
-      case  NoEncoding:
+      case  SVM_EncodingMethod::NoEncoding:
       default:
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
@@ -236,7 +240,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
     {
     case  FeAsIs:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
@@ -253,7 +257,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
-          newFileDesc->AddAAttribute (encodedName, NumericAttribute, alreadyExist);
+          newFileDesc->AddAAttribute (encodedName, AttributeType::NumericAttribute, alreadyExist);
           if  (o)
           {
             *o << origFieldDesc << "\t" 
@@ -270,7 +274,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     case  FeScale:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc           << "\t" 

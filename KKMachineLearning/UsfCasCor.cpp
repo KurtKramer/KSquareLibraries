@@ -45,7 +45,7 @@ using namespace  KKMLL;
       I turned in this implementation as found at USF into a c++ Class and integrated into the Pices
       application.
         1) Restructured code as a c++ class.
-        2) A trained classifier are written to disk and can be reread in ab instance.
+        2) A trained classifier are written to disk and can be reread in a instance.
         3) Integrated into the Pices application.
         4) Primary use will to be used in a Dual classifier setup along with a Support Vector Machine(SVM)(libSVM)
            where both classifiers agree on the prediction will the label be returned otherwise the label
@@ -542,7 +542,7 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
 
   float  totalFeature = example->TotalOfFeatureData ();
 
-  /* Globals must be saved from the last training phase. If they are not  */
+  /* Global's must be saved from the last training phase. If they are not  */
   /* saved then the next unit will be training to correlate with the test */
   /* set error. */
   Boolean old_UC = UseCache;	/* temporarily turn off cache */
@@ -601,7 +601,7 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
   float  totalFeature = example->TotalOfFeatureData ();
   _load_test_data (example);
 
-  /* Globals must be saved from the last training phase. If they are not  */
+  /* Global's must be saved from the last training phase. If they are not  */
   /* saved then the next unit will be training to correlate with the test */
   /* set error. */
   Boolean old_UC  = UseCache;	      /* temporarily turn off cache */
@@ -679,7 +679,7 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
     }
   }
       
-  /* restore globals */
+  /* restore global's */
   UseCache       = old_UC;		
   ScoreThreshold = old_ST;
   TrueError      = old_TE;	
@@ -699,7 +699,7 @@ ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
   float  totalFeature = example->TotalOfFeatureData ();
   _load_test_data (example);
 
-  /* Globals must be saved from the last training phase. If they are not  */
+  /* Global's must be saved from the last training phase. If they are not  */
   /* saved then the next unit will be training to correlate with the test */
   /* set error. */
   Boolean old_UC  = UseCache;	      /* temporarily turn off cache */
@@ -1310,7 +1310,7 @@ void  UsfCasCor::strdncase (char *s)
 
 
 /* Given a keyword string, return the index into the keyword table.
- * Assumes that the keys are in alphabetacal order.  Keyword comparison
+ * Assumes that the keys are in alphabetical order.  Keyword comparison
  * is all lower case.  Return FAILURE when not found.
  */
 int  UsfCasCor::find_key (char *searchkey)
@@ -1343,11 +1343,11 @@ int  UsfCasCor::find_key (char *searchkey)
 
 
 /* Parse a line of input into keyword value pairs and reset the given 
- * parameters to given values.  Comment lines start with the character
- * '#' and are ignored.  If a bad keyword is given a message is printed,
- * but processing continues.  The routine returns a value telling the 
- * calling routine whether to grap another line, read in  the training, 
- * or read in testing data.  The special keywords "Training", and 
+ * parameters to given values. Comment lines start with the character
+ * '#' and are ignored. If a bad keyword is given a message is printed,
+ * but processing continues. The routine returns a value telling the 
+ * calling routine whether to grab another line, read in  the training, 
+ * or read in testing data. The special keywords "Training", and 
  * "Testing" signal the changes in status.
  */
 int   UsfCasCor::process_line (char *line)
@@ -1441,13 +1441,13 @@ int  UsfCasCor::_type_convert (char *input)
   if  (!strcmp (input,"true"))
     return (1);
 
-  else if  (!strcmp (input, "1")) /* allow backward compatiple input */
+  else if  (!strcmp (input, "1")) /* allow backward compatible input */
     return (1);
 
   else if  (!strcmp (input, "false"))
     return (0);
 
-  else if  (!strcmp(input, "0"))  /* allow backward compatiple input */
+  else if  (!strcmp(input, "0"))  /* allow backward compatible input */
     return (0);
 
   else if  (!strcmp (input, "sigmoid"))
@@ -1735,7 +1735,7 @@ void  UsfCasCor::WriteXML (ostream&  o)
   // Goal    is only a pointer to an existing Vector.
   // Values  is only a pointer to an existing Vector.
 
-  // We will only need to alloate these variables not save or load them.
+  // We will only need to allocate these variables not save or load them.
   //        float**  TestInputs;
   //        float**  TestOutputs;
 
@@ -1797,10 +1797,10 @@ void  SkipWhiteSpace (istream& i)
 
 
 /**
- *@details  Will return token less leading and trailing white space.  The chracter in 
- * 'del' that ended the token field will be consumed.  If the start of a tag ('<') is 
+ *@details  Will return token less leading and trailing white space.  The character in 
+ * 'del' that ended the token field will be consumed. If the start of a tag ('<') is 
  * detected will treat as end of line.
- *@returns  The delimiter chracter that terminated the token; or 0 of end of file or
+ *@returns  The delimiter character that terminated the token; or 0 of end of file or
  * start of new tag detected.
  */
 char  ReadNextToken (istream&    i,
@@ -1914,9 +1914,9 @@ void  UsfCasCor::ReadXmlArrayFloat (XmlTagPtr  tag,
 {
   float*  A = NULL;
 
-  const KKStr&  name = tag->AttributeValue ("Name");
+  const KKStr&  name = tag->AttributeValueByName ("Name");
 
-  kkint32  len = tag->AttributeValue ("Len").ToInt32 ();
+  kkint32  len = tag->AttributeValueInt32 ("Len");
   if  ((len < 1)  ||  (len > 100000000))
   {
     log.Level (-1) << endl
@@ -1955,10 +1955,10 @@ void  UsfCasCor::ReadXmlArrayFloat2D (XmlTagPtr  tag,
                                       istream&   i
                                      )
 {
-  const KKStr&  name = tag->AttributeValue ("Name");
+  const KKStr&  name = tag->AttributeValueKKStr ("Name");
 
-  kkint32  height = tag->AttributeValue ("height").ToInt32 ();
-  kkint32  width  = tag->AttributeValue ("width").ToInt32 ();
+  kkint32  height = tag->AttributeValueInt32 ("height");
+  kkint32  width  = tag->AttributeValueInt32 ("width");
   if  ((height < 1)  ||  (height > 100000000))
   {
     log.Level (-1) << endl
@@ -1993,7 +1993,7 @@ void  UsfCasCor::ReadXmlArrayFloat2D (XmlTagPtr  tag,
     }
 
     XmlTagPtr  rowTag = new XmlTag (i);
-    if  ((rowTag->Name ().EqualIgnoreCase ("ArrayFloat2D"))  &&  (rowTag->TagType () == XmlTag::tagEnd))
+    if  ((rowTag->Name ().EqualIgnoreCase ("ArrayFloat2D"))  &&  (rowTag->TagType () == XmlTag::TagTypes::tagEnd))
     {
       // We have reached the end of the 2D Matrix
       delete  rowTag;
@@ -2001,7 +2001,7 @@ void  UsfCasCor::ReadXmlArrayFloat2D (XmlTagPtr  tag,
       break;
     }
 
-    if  ((rowTag->TagType () != XmlTag::tagStart)  ||  (!(rowTag->Name ().EqualIgnoreCase ("Row"))))
+    if  ((rowTag->TagType () != XmlTag::TagTypes::tagStart)  ||  (!(rowTag->Name ().EqualIgnoreCase ("Row"))))
     {
       log.Level (-1) << endl 
         << "UsfCasCor::ReadXmlArrayFloat2D  ***ERROR***  2D Float array not formatted as expected." << endl
@@ -2073,9 +2073,9 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
                                              istream&   i
                                             )
 {
-  const KKStr&  name = tag->AttributeValue ("Name");
+  const KKStr&  name = tag->AttributeValueKKStr ("Name");
 
-  kkint32  height = tag->AttributeValue ("height").ToInt32 ();
+  kkint32  height = tag->AttributeValueInt32 ("height");
   if  ((height < 1)  ||  (height > 100000000))
   {
     log.Level (-1) << endl
@@ -2100,7 +2100,7 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
     }
 
     XmlTagPtr  rowTag = new XmlTag (i);
-    if  ((rowTag->Name ().EqualIgnoreCase ("ArrayFloat2DVarying"))  &&  (rowTag->TagType () == XmlTag::tagEnd))
+    if  ((rowTag->Name ().EqualIgnoreCase ("ArrayFloat2DVarying"))  &&  (rowTag->TagType () == XmlTag::TagTypes::tagEnd))
     {
       // We have reached the end of the 2D Matrix
       delete  rowTag;
@@ -2108,7 +2108,7 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
       break;
     }
 
-    if  ((rowTag->TagType () != XmlTag::tagStart)  ||  (!(rowTag->Name ().EqualIgnoreCase ("Row"))))
+    if  ((rowTag->TagType () != XmlTag::TagTypes::tagStart)  ||  (!(rowTag->Name ().EqualIgnoreCase ("Row"))))
     {
       log.Level (-1) << endl 
         << "UsfCasCor::ReadXmlArrayFloat2D  ***ERROR***  2D Float array not formatted as expected." << endl
@@ -2128,7 +2128,7 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
     }
     else
     {
-      kkint32  width  = rowTag->AttributeValue ("width").ToInt32 ();
+      kkint32  width  = rowTag->AttributeValueInt32 ("width");
       if  ((width < 0)  ||  (width > 100000000))
       {
         log.Level (-1) << endl
@@ -2163,7 +2163,7 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
   else
   {
     log.Level (-1) << endl
-      << "UsfCasCor::ReadXmlArrayFloat2D   ***ERROR***    Unrecognized Rariable Name[" << name << "]" << endl
+      << "UsfCasCor::ReadXmlArrayFloat2D   ***ERROR***    Unrecognized Variable Name[" << name << "]" << endl
       << endl;
     for  (int x = 0;  x < height;  ++x)
       delete A[x];
@@ -2180,8 +2180,8 @@ void  UsfCasCor::ReadXmlArrayInt (XmlTagPtr  tag,
 {
   int*  A = NULL;
 
-  const KKStr&  name = tag->AttributeValue ("Name");
-  kkint32  len = tag->AttributeValue ("Len").ToInt32 ();
+  const KKStr&  name = tag->AttributeValueKKStr ("Name");
+  kkint32  len = tag->AttributeValueInt32 ("Len");
   if  ((len < 1)  ||  (len > 100000000))
   {
     log.Level (-1) << endl
@@ -2218,8 +2218,8 @@ void  UsfCasCor::ReadXmlConnections (XmlTagPtr  tag,
 {
   delete  Connections; Connections = NULL;
 
-  const KKStr&  name = tag->AttributeValue ("Name");
-  kkint32  len = tag->AttributeValue ("Len").ToInt32 ();
+  const KKStr&  name = tag->AttributeValueKKStr ("Name");
+  kkint32  len = tag->AttributeValueInt32 ("Len");
   if  ((len < 1)  ||  (len > 100000000))
   {
     log.Level (-1) << endl
@@ -2409,7 +2409,7 @@ void  UsfCasCor::ReadXml (istream&  i,
 
       else if  (tag->Name ().EqualIgnoreCase ("UsfCasCor"))
       {
-        if  (tag->TagType () == XmlTag::tagEnd)
+        if  (tag->TagType () == XmlTag::TagTypes::tagEnd)
         {
           // We have reached the end of the UsfCasCor part of this stream.
           delete  tag;

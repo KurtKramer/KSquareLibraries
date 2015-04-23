@@ -11,8 +11,9 @@
 using namespace  std;
 
 
-#include "KKBaseTypes.h"
+#include "GlobalGoalKeeper.h"
 #include "DateTime.h"
+#include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "KKQueue.h"
 #include "RunLog.h"
@@ -126,7 +127,7 @@ FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
       if  (seqNum > 0)
         fieldName << "_" << StrFormatInt (seqNum, "000");
 
-      newFileDesc->AddAAttribute (fieldName, NumericAttribute, alreadyExists);
+      newFileDesc->AddAAttribute (fieldName, AttributeType::NumericAttribute, alreadyExists);
       seqNum++;
     }
       while  (alreadyExists);
@@ -143,11 +144,25 @@ void  FileDesc::AddAAttribute (const Attribute&  attribute)
   attributeVector.push_back (attribute.Type ());
 
   kkint32  card = 0;
-  if  (attribute.Type () == NumericAttribute)
+  if  (attribute.Type () == AttributeType::NumericAttribute)
      card = 999999999;
 
   cardinalityVector.push_back (card);
 }  /* AddAAttribute */
+
+
+
+
+
+void  FileDesc::AddAttributes (const KKMLL::AttributeList&  attributes)
+{
+  AttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  {
+    AddAAttribute (**idx);
+  }
+}
+
 
 
 
@@ -171,7 +186,7 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
   attributeVector.push_back (curAttribute->Type ());
 
   kkint32  card = 0;
-  if  (curAttribute->Type () == NumericAttribute)
+  if  (curAttribute->Type () == AttributeType::NumericAttribute)
      card = INT_MAX;
   cardinalityVector.push_back (card);
 }  /* AddAAttribute */
@@ -212,7 +227,9 @@ void  FileDesc::AddANominalValue (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "AddANominalValue");
   AttributeType t = Type (fieldNum);
-  if  ((t == NominalAttribute)  ||  (t = SymbolicAttribute))
+  if  ((t == AttributeType::NominalAttribute)  ||
+       (t == AttributeType::SymbolicAttribute)
+      )
   {
     attributes[fieldNum].AddANominalValue (nominalValue, alreadyExist);
     if  (!alreadyExist)
@@ -268,15 +285,14 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
 
 
 
-
-MLClassPtr       FileDesc::LookUpMLClassByName (const KKStr&  className)
+MLClassPtr  FileDesc::LookUpMLClassByName (const KKStr&  className)
 {
   return  classes.LookUpByName (className);
 }
 
 
 
-MLClassPtr       FileDesc::LookUpUnKnownMLClass ()
+MLClassPtr  FileDesc::LookUpUnKnownMLClass ()
 {
   return  classes.GetUnKnownClass ();
 }
@@ -315,7 +331,9 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "LookUpNominalCode");
   const Attribute& a = attributes[fieldNum];
-  if  ((a.Type () != NominalAttribute)  &&  (a.Type () != SymbolicAttribute))
+  if  ((a.Type () != AttributeType::NominalAttribute)  &&
+       (a.Type () != AttributeType::SymbolicAttribute)
+      )
   {
     return -1;
   }
@@ -348,10 +366,10 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum,
 
   switch  (a->Type ())
   {
-  case  IgnoreAttribute:   return  a->Cardinality ();
-  case  NominalAttribute:  return  a->Cardinality ();
-  case  NumericAttribute:  return  INT_MAX;
-  case  SymbolicAttribute: return  a->Cardinality ();
+  case  AttributeType::IgnoreAttribute:   return  a->Cardinality ();
+  case  AttributeType::NominalAttribute:  return  a->Cardinality ();
+  case  AttributeType::NumericAttribute:  return  INT_MAX;
+  case  AttributeType::SymbolicAttribute: return  a->Cardinality ();
   
   default: return  INT_MAX;
   }
@@ -415,7 +433,7 @@ AttributePtr*  FileDesc::CreateAAttributeTable ()  const
 vector<AttributeType>  FileDesc::CreateAttributeTypeTable ()  const
 {
   kkint32  x;
-  vector<AttributeType>  attributeTypes (attributes.QueueSize (), NULLAttribute);
+  vector<AttributeType>  attributeTypes (attributes.QueueSize (), AttributeType::NULLAttribute);
   for  (x = 0;  x < attributes.QueueSize ();  x++)
     attributeTypes[x] = attributes[x].Type ();
   return attributeTypes;
@@ -627,7 +645,7 @@ void FileDesc::DisplayAttributeMappings ( )
     a = attributes.IdxToPtr (i);
     cout << i << ": ";
 
-    if  (a->Type() == NominalAttribute)
+    if  (a->Type() == AttributeType::NominalAttribute)
     {
       for  (j = 0;  j<a->Cardinality ();  j++)
       {
@@ -639,7 +657,7 @@ void FileDesc::DisplayAttributeMappings ( )
       }
     }
 
-    else if  (a->Type() == SymbolicAttribute)
+    else if  (a->Type() == AttributeType::SymbolicAttribute)
     {
       cout << "Symbolic (";
       for  (j = 0;  j<a->Cardinality ();  j++)
@@ -655,22 +673,22 @@ void FileDesc::DisplayAttributeMappings ( )
     }
 
     
-    else if (a->Type() == IgnoreAttribute)
+    else if (a->Type() == AttributeType::IgnoreAttribute)
     {
       cout << "ignore";
     }
 
-    else if (a->Type() == NumericAttribute)
+    else if (a->Type() == AttributeType::NumericAttribute)
     {
       cout << "numeric";
     }
 
-    else if (a->Type() == OrdinalAttribute)
+    else if (a->Type() == AttributeType::OrdinalAttribute)
     {
       cout << "ordinal";
     }
 
-    else if (a->Type() == NULLAttribute)
+    else if (a->Type() == AttributeType::NULLAttribute)
     {
       cout << "NULL";
     }
@@ -710,7 +728,7 @@ bool  FileDesc::AllFieldsAreNumeric ()  const
   for  (kkint32 fieldNum = 0;  fieldNum < (kkint32)NumOfFields ();  fieldNum++)
   {
     AttributeType  t = Type (fieldNum);
-    if  ((t != NumericAttribute)  &&  (t != IgnoreAttribute))
+    if  ((t != AttributeType::NumericAttribute)  &&  (t != AttributeType::IgnoreAttribute))
       return false;
   }
 
@@ -772,7 +790,7 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
     }
 
     f->AddAAttribute (left.GetAAttribute (fieldNum));
-    if  (lType != SymbolicAttribute)
+    if  (lType != AttributeType::SymbolicAttribute)
     {
       continue;
     }
@@ -799,9 +817,6 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 
 
 
-
-
-
 XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
                                         XmlStream&  s,
                                         RunLog&     log
@@ -809,11 +824,76 @@ XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
+  XmlTokenPtr  t = s.GetNextToken (log);
+  value = new FileDesc ();
+  while  (t)
+  {
+    if  (t->TokenType () == TokenTypes::tokElement)
+    {
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  className = e->Name ();
+      const KKStr&  varName = e->VarName ();
+      if  (varName.EqualIgnoreCase ("FileName"))
+      {
+        XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
+        if  (eKKStr)
+          value->FileName (eKKStr->Value ());
+      }
+
+      else if  (varName.EqualIgnoreCase ("Attributes"))
+      {
+        XmlElementAttributeListPtr  eAttributes = dynamic_cast<XmlElementAttributeListPtr>(e);
+        if  (eAttributes  &&  (eAttributes->Value ()))
+          value->AddAttributes (*(eAttributes->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("Classes"))
+      {
+        XmlElementMLClassNameListPtr  eCLasses = dynamic_cast<XmlElementMLClassNameListPtr>(e);
+        if  (eCLasses  &&  (eCLasses->Value ()))
+          value->AddClasses (*(eCLasses->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("ClassNameAttribute"))
+      {
+        XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
+        if  (eKKStr)
+          value->ClassNameAttribute (*(eKKStr->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("Version"))
+      {
+        XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
+        if  (eKKInt32)
+          value->Version ((kkint16)eKKInt32->Value ());
+      }
+
+      else if  (varName.EqualIgnoreCase ("SparseMinFeatureNum"))
+      {
+        XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
+        if  (eKKInt32)
+          value->SparseMinFeatureNum (eKKInt32->Value ());
+      }
+      else
+      {
+        log.Level (-1) << endl
+          << "XmlElementFileDesc   ***ERROR***   Unexpected Element <" << className << ", VarName=" << varName.QuotedStr () << ">" << endl
+          << endl;
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+
+  value = FileDesc::GetExistingFileDesc (value);
 }
                 
  
 XmlElementFileDesc::~XmlElementFileDesc ()
 {
+  // You can not delete an instance of FileDesc.
+  value = NULL;
 }
 
  
@@ -836,7 +916,7 @@ void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
                                     ostream&         o
                                   )
 {
-  XmlTag  startTag ("FileDesc", XmlTag::tagStart);
+  XmlTag  startTag ("FileDesc", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   o << endl;
@@ -846,8 +926,6 @@ void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
 
   XmlElementAttributeList::WriteXML (fileDesc.Attributes (), "Attributes", o);
 
-  XmlElementVectorInt32::WriteXML (fileDesc.CardinalityVector (), "CardinalityVector", o);
-    
   XmlElementMLClassNameList::WriteXML (fileDesc.Classes (), "Classes", o);
 
   if  (!fileDesc.ClassNameAttribute ().Empty ())
@@ -857,8 +935,10 @@ void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
 
   if  (fileDesc.SparseMinFeatureNum () != 0)
     XmlElementInt32::WriteXML (fileDesc.SparseMinFeatureNum () , "SparseMinFeatureNum", o);
-  XmlTag
+
+  XmlTag  endTag ("FileDesc", XmlTag::TagTypes::tagEnd);
 }  /* WriteXML */
  
 
 
+XmlFactoryMacro(FileDesc)

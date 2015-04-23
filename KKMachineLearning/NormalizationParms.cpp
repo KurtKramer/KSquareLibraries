@@ -11,17 +11,18 @@
 
 using namespace  std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "XmlStream.h"
 using namespace  KKB;
 
-#include "ModelParam.h"
 #include "NormalizationParms.h"
 #include "FeatureNumList.h"
-#include "MLClass.h"
 #include "FeatureVector.h"
+#include "MLClass.h"
+#include "ModelParam.h"
 #include "TrainingConfiguration2.h"
 using namespace  KKMLL;
 
@@ -662,7 +663,9 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 
     else 
     {
-      if  ((attriuteTypes[i] == NominalAttribute)  ||  (attriuteTypes[i] == SymbolicAttribute))
+      if  ((attriuteTypes[i] == AttributeType::NominalAttribute)  ||
+           (attriuteTypes[i] == AttributeType::SymbolicAttribute)
+          )
       {
         normalizeFeature[i] = false;
       }
@@ -771,18 +774,58 @@ XmlElementNormalizationParms::XmlElementNormalizationParms (XmlTagPtr   tag,
                                                             RunLog&     log
                                                            ):
   XmlElement (tag, s, log),
-  value (NULL),
+  value (NULL)
 {
-
-
 }
 
 
                 
-XmlElementNormalizationParms::~XmlElementNormalizationParms ();
+XmlElementNormalizationParms::~XmlElementNormalizationParms ()
+{
+  delete  value;
+  value = NULL;
+}
 
-    NormalizationParmsPtr  XmlElementNormalizationParms::Value ()  const;
 
-    NormalizationParmsPtr  XmlElementNormalizationParms::TakeOwnership ();
+
+NormalizationParmsPtr  XmlElementNormalizationParms::Value ()  const
+{
+  return  value;
+}
+
+
+
+NormalizationParmsPtr  XmlElementNormalizationParms::TakeOwnership ()
+{
+  NormalizationParmsPtr   v = value;
+  value = NULL;
+  return  v;
+}
     
 
+
+
+void  XmlElementNormalizationParms::WriteXML (const NormalizationParms&  normPatms,
+                                              const KKStr&               varName,
+                                              ostream&                  o
+                                             )
+{
+  XmlTag  startTag ("NormalizationParms", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  o << endl;
+
+  kkuint32  numOfFeatures = normPatms.NumOfFeatures ();
+
+  XmlElementInt32::WriteXML       (numOfFeatures,                          "NumOfFeatures",            o);
+  XmlElementDouble::WriteXML      (normPatms.NumOfExamples            (),  "NumOfExamples",            o);
+  XmlElementBool::WriteXML        (normPatms.NormalizeNominalFeatures (),  "NormalizeNominalFeatures", o);
+  XmlElementFileDesc::WriteXML    (*(normPatms.FileDesc               ()), "FileDesc",                 o);
+  XmlElementArrayDouble::WriteXML (numOfFeatures, normPatms.Mean      (),  "Mean",                     o);
+  XmlElementArrayDouble::WriteXML (numOfFeatures, normPatms.Sigma     (),  "sigma",                    o);
+
+  XmlTag  endTag ("NormalizationParms", XmlTag::TagTypes::tagEnd);
+}
+
+
+XmlFactoryMacro(NormalizationParms)

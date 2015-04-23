@@ -80,7 +80,7 @@ namespace KKMLL
   public:
     typedef  Model*  ModelPtr;
 
-    enum  ModelTypes {mtNULL = 0, mtOldSVM = 1, mtSvmBase = 2 , mtKNN= 3, mtUsfCasCor = 4, mtDual = 5};
+    enum  class  ModelTypes {mtNULL = 0, mtOldSVM = 1, mtSvmBase = 2 , mtKNN= 3, mtUsfCasCor = 4, mtDual = 5};
     static KKStr       ModelTypeToStr   (ModelTypes    _modelingType);
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 

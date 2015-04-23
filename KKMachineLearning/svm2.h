@@ -19,7 +19,7 @@ using namespace KKMLL;
 /**
  *@namespace  SVM289_MFS   
  *@brief Namespce used to wrap implementation of libSVM version 2.89.
- *@details  There is more than obe version of libSVM implemented in the library.  To prevent
+ *@details  There is more than one version of libSVM implemented in the library.  To prevent
  * name conflicts between them each one was wrapped in their own namespace.
  *<br/>
  * libSVM is a Support Vector Machine implementation done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
@@ -71,8 +71,8 @@ namespace  SVM289_MFS
 
 
 
-  typedef  enum  { SVM_NULL, C_SVC, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR }  SVM_Type;    /* svm_type */
-  typedef  enum  { Kernel_NULL, LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }     Kernel_Type; /* kernel_type */
+  enum  class  SVM_Type     { SVM_NULL, C_SVC, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR };
+  enum  class  Kernel_Type  { Kernel_NULL, LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
 
 
   SVM_Type  SVM_Type_FromStr (KKStr     s);
@@ -201,7 +201,7 @@ namespace  SVM289_MFS
     FeatureVectorList  SV;         // SVs (SV[l])
     double**           sv_coef;    // coefficients for SVs in decision functions (sv_coef[k-1][l])
     double*            rho;        // constants in decision functions (rho[k*(k-1)/2])
-    double*            probA;      // pari-wise probability information
+    double*            probA;      // pair-wise probability information
     double*            probB;
     FeatureNumList     selFeatures;
 

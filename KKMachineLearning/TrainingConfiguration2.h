@@ -191,7 +191,6 @@ namespace KKMLL
     MLClassPtr             NoiseMLClass            () const  {return  noiseMLClass;}
     const TrainingClassPtr NoiseTrainingClass      () const  {return  noiseTrainingClass;}
 
-    kkint32                NoiseGuaranteedSize     () const  {return  noiseGuaranteedSize;}
     kkint32                NumOfRounds             () const  {return  Number_of_rounds ();}
     kkint32                Number_of_rounds        () const;
     MLClassPtr             OtherClass              () const  {return  otherClass;}
@@ -393,20 +392,14 @@ namespace KKMLL
     FactoryFVProducerPtr   fvFactoryProducer;
     FileDescPtr            fileDesc;
     MLClassListPtr         mlClasses;
-    bool                   mlClassesWeOwnIt;     /**< If we own it we will delete it in the destructor.  */
+    bool                   mlClassesWeOwnIt;      /**< If we own it we will delete it in the destructor.  */
     RunLog&                log;
     ModelTypes             modelingMethod;
     ModelParamPtr          modelParameters;
 
-    kkint32                noiseGuaranteedSize;  /**< Images smaller than this size will be classified as noise and will 
-                                                  * not be used for training purposes.
-                                                  */
-
     MLClassPtr             noiseMLClass;
 
     TrainingClassPtr       noiseTrainingClass;    /**< The specific Training Class that is to be used for noise images. */
-
-    NormalizationParmsPtr  normalizationParms;
 
     MLClassPtr             otherClass;            /**< class that is to be used for "Other" examples when performing
                                                    * adjustment calculations. This was done as part of the Dual Class
@@ -418,7 +411,7 @@ namespace KKMLL
     kkint32                otherClassLineNum;     /**< Line where OtherClass in configuration was defined. */
 
     KKStr                  rootDir;               /**< Common directory that all images for this training
-                                                   * library come from.  This is determined by iterating 
+                                                   * library come from. This is determined by iterating 
                                                    * through all the 'trainingClasses' entries and 
                                                    * looking for the common string that they all start by.
                                                    */
@@ -426,26 +419,26 @@ namespace KKMLL
     KKStr                  rootDirExpanded;       /**< Same as 'rootDir' except environment variables will be expanded. */
 
     TrainingConfiguration2ListPtr
-                           subClassifiers;        /**< Used when implementing a hierarchical classifier.  This list is 
+                           subClassifiers;        /**< Used when implementing a hierarchical classifier. This list is 
                                                    * a consolidated list from the 'TrainingClass'  objects that are 
-                                                   * specified in the configuration file.  Each 'TrainingClass' section 
+                                                   * specified in the configuration file. Each 'TrainingClass' section 
                                                    * can specify a Sub-Classifier that is used to further break down that 
-                                                   * class.  More multiple 'TrainingClass' sections can specify the same 
+                                                   * class. Multiple 'TrainingClass' sections can specify the same 
                                                    * subClasifer; in that case we will want top only maintain one 
                                                    * instance of that classifier.
                                                    */
 
-    TrainingClassList      trainingClasses;      /**< List of  'Training_Class' objects; one for each 'Training_Classe'
-                                                  * section defined in configuration file. Plus one for the 'Noise_Images'
-                                                  * section.
-                                                  */
+    TrainingClassList      trainingClasses;       /**< List of  'Training_Class' objects; one for each 'Training_Classe'
+                                                   * section defined in configuration file. Plus one for the 'Noise_Images'
+                                                   * section.
+                                                   */
 
     bool                   validateDirectories;
 
-    public:
-      virtual  KKStr  FactoryName () const  {return "TrainingConfiguration2::Factory";}   /**<  The name of the Factory class that produces an instance of this class. */
+  public:
+    virtual  KKStr  FactoryName () const  {return "TrainingConfiguration2::Factory";}   /**<  The name of the Factory class that produces an instance of this class. */
 
-      static  TrainingConfiguration2Ptr  Manufacture 
+    static  TrainingConfiguration2Ptr  Manufacture 
                              (const KKStr&  _className,
                               const KKStr&  _configFileName,
                               bool          _validateDirectories,

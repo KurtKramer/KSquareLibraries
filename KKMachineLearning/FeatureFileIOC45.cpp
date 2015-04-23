@@ -303,27 +303,27 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
   typeStr.TrimRight ();
   KKStr  typeStrUpper = typeStr.ToUpper ();
 
-  AttributeType  attributeType = NULLAttribute;
+  AttributeType  attributeType = AttributeType::NULLAttribute;
 
   if  (typeStrUpper == "CONTINUOUS")
   {
-    attributeType = NumericAttribute;
+    attributeType = AttributeType::NumericAttribute;
   }
 
   else if  (typeStrUpper == "IGNORE")
   {
-    attributeType = IgnoreAttribute;
+    attributeType = AttributeType::IgnoreAttribute;
   }
 
   else if  (typeStrUpper == "SYMBOLIC")
   {
-    attributeType = SymbolicAttribute;
+    attributeType = AttributeType::SymbolicAttribute;
   }
 
   else
   {
     // We have a nominal field
-     attributeType = NominalAttribute;
+     attributeType = AttributeType::NominalAttribute;
   }
 
   bool  alreadyExists = false;
@@ -340,7 +340,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
   }
 
 
-  if  (attributeType == NominalAttribute)
+  if  (attributeType == AttributeType::NominalAttribute)
   {
     // Will now parse out the nominal values.
     while  (!typeStr.Empty ())
@@ -788,15 +788,15 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
 
       switch  (attributeTable[fieldNum]->Type ())
       {
-      case IgnoreAttribute:  
+      case AttributeType::IgnoreAttribute:  
         example->AddFeatureData (fieldNum, field.ToFloat ());
         break;
               
-      case NumericAttribute: 
+      case AttributeType::NumericAttribute: 
         example->AddFeatureData (fieldNum, field.ToFloat ());
         break;
 
-      case NominalAttribute: 
+      case AttributeType::NominalAttribute: 
       {
         kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
@@ -825,7 +825,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
       }
         
 
-      case SymbolicAttribute: 
+      case AttributeType::SymbolicAttribute: 
       {
         kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
@@ -1058,7 +1058,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
       kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
       nf << C45AdjName (attr->Name ()) << ": ";
-      if  (attr->Type () == NominalAttribute)
+      if  (attr->Type () == AttributeType::NominalAttribute)
       {
         kkint32 y;
         for  (y = 0;  y < attr->Cardinality ();  y++)
@@ -1068,12 +1068,12 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
         }
       }
 
-      else if  (attr->Type () == SymbolicAttribute)
+      else if  (attr->Type () == AttributeType::SymbolicAttribute)
       {
         nf << "Symbolic";
       }
 
-      else if  (attr->Type () == IgnoreAttribute)
+      else if  (attr->Type () == AttributeType::IgnoreAttribute)
       {
         nf << "ignore";
       }
@@ -1129,7 +1129,9 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
     {
       kkint32  featureNum = _selFeatures[x];
 
-      if  ((attrTable[featureNum]->Type () == NominalAttribute)  ||  (attrTable[featureNum]->Type () == SymbolicAttribute))
+      if  ((attrTable[featureNum]->Type () == AttributeType::NominalAttribute)  ||
+           (attrTable[featureNum]->Type () == AttributeType::SymbolicAttribute)
+          )
       {
         if  (example->FeatureData (featureNum) == -1.0)
         {
