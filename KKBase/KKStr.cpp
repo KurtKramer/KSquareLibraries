@@ -22,6 +22,8 @@ using namespace std;
 #include "KKStr.h"
 #include "KKException.h"
 #include "KKStrParser.h"
+#include "RunLog.h"
+#include "XmlStream.h"
 using namespace KKB;
 
 
@@ -53,6 +55,7 @@ char*  KKB::STRCOPY (char*        dest,
 # endif
   return  dest;
 }  /* STRCOPY */
+
 
 
 
@@ -722,6 +725,7 @@ KKStr::KKStr (const std::string&  s):
     val[x] = s[x];
   val[len] = 0;
 }
+
 
 
 /** @brief  Constructs a KKStr instance from a substr of 'src'.  */
@@ -4312,6 +4316,55 @@ bool  KKStr::StrInStr (const char*  target,
 
 
 
+void  KKStr::WriteXML (const KKStr&  varName,
+                       ostream&      o
+                      )  const
+{
+  XmlTag startTag ("KKStr", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Len", len);
+  startTag.WriteXML (o);
+  o << val;
+  XmlTag  endTag ("KKStr", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  KKStr::ReadXML (XmlStream&      s,
+                      XmlTagConstPtr  tag,
+                      RunLog&         log
+                     )
+{
+  kkuint16  expectedLen = tag->AttributeValueInt32 ("Len");
+  if  (expectedLen > 0)
+    AllocateStrSpace (expectedLen);
+
+  delete  val;
+  val = NULL;
+  allocatedSize = 0;
+  AllocateStrSpace (expectedLen);
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      Append (*(c->Content ()));
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
 
 
 KKStrList::KKStrList (bool   owner):
@@ -4336,10 +4389,6 @@ KKStrList::KKStrList (const char*  s[]):
     ++x;
   }
 }
-
-
-
-
 
 
 

@@ -50,6 +50,22 @@ namespace  KKB
   typedef  std::vector<KKStr>  VectorKKStr;
 
 
+#if  !defined(_RunLog_Defined_)
+  class RunLog;
+#endif
+
+#if  !defined(_XmlStream_Defined_)
+  class  XmlStream;
+#endif
+
+#if  !defined(_XmlTag_Defined_)
+  class  XmlTag;
+  typedef  XmlTag  const *  XmlTagConstPtr;
+#endif
+
+
+
+
   class  KKStr 
   {
   public:
@@ -432,6 +448,13 @@ namespace  KKB
     static
       void  MemSet (void* dest,  kkuint8  byte, kkuint32  size);
 
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
     static
       const char*  Str (const char*  s);
 
@@ -568,7 +591,12 @@ namespace  KKB
 
     bool      ValidNum (double&  value)  const;  /**< Returns true if String is a valid number,  ex 1.0 or -3.123, etc */
 
+
+    void      WriteXML (const KKStr&  varName,
+                        ostream&      o
+                       )  const;
     
+
     //std::string  methods.
     //  These methods are provided for people who are familiar with the stl version of string.
     const char*  c_str ()  {return Str ();}
@@ -688,6 +716,7 @@ namespace  KKB
 
     //friend  KKB::KKStr& endl (KKStr& _s);
     KKStr&  operator<< (std::ostream& (* mf)(std::ostream &));
+
 
 
   private:

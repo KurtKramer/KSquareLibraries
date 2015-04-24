@@ -68,7 +68,7 @@ namespace  KKB
 
   typedef  XmlStream::XmlStreamPtr  XmlStreamPtr;
 
-
+#define  _XmlStream_Defined_
 
 
   class  XmlAttribute
@@ -191,6 +191,8 @@ namespace  KKB
   typedef  XmlTag::XmlTagPtr  XmlTagPtr;
   typedef  XmlTag const  XmlTagConst;
   typedef  XmlTagConst*  XmlTagConstPtr;
+
+#define  _XmlTag_Defined_
 
 
 
@@ -339,7 +341,7 @@ namespace  KKB
                 
     virtual  ~XmlElementKKStr ();
 
-    KKStrPtr  const  Value ()  const;
+    KKStrPtr  const  Value ()  const  {return value;}
 
     KKStrPtr  TakeOwnership ();
 
@@ -376,7 +378,7 @@ namespace  KKB
     static  XmlFactoryPtr  FactoryInstance ();
 
     static
-    void  WriteXml (const VectorKKStr& v,
+    void  WriteXML (const VectorKKStr& v,
                     const KKStr&       varName,
                     ostream&           o
                    );
@@ -406,7 +408,7 @@ namespace  KKB
     KKStrListIndexed*  TakeOwnership ();
 
     static
-    void  WriteXml (const KKStrListIndexed& v,
+    void  WriteXML (const KKStrListIndexed& v,
                     const KKStr&            varName,
                     ostream&                o
                    );

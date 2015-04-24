@@ -90,11 +90,13 @@ namespace KKMLL
                            const KKStr&  directory
                           );
 
+    virtual
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
                    RunLog&         log
                   );
 
+    virtual
     void  WriteXML (const KKStr&  varName,
                     ostream&      o
                    )  const;
@@ -130,6 +132,8 @@ namespace KKMLL
   class  TrainingClassList:  public KKQueue<TrainingClass>
   {
   public:
+    TrainingClassList ();
+
     TrainingClassList (const KKStr&  rootDir,
                        bool          owner
                       );
@@ -157,8 +161,15 @@ namespace KKMLL
 
     TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
 
-
-
+    virtual
+    void                ReadXML (XmlTagPtr   tag,
+                                 XmlStream&  s,
+                                 RunLog&     log
+                                );
+    virtual
+    void                WriteXML (const KKStr&  varName,
+                        ostream&      o
+                       )  const;
   private: 
     KKStr   rootDir;
     
@@ -187,6 +198,7 @@ namespace KKMLL
                     const KKStr&          varName,
                     ostream&              o
                    );
+
   private:
     TrainingClassPtr  value;
   };
@@ -215,6 +227,7 @@ namespace KKMLL
                     ostream&                  o
                    );    
   private:
+    kkuint32              count;
     TrainingClassListPtr  value;
   };
   typedef  XmlElementTrainingClassList*  XmlElementTrainingClassListPtr;

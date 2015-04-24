@@ -2559,33 +2559,19 @@ void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
     XmlElementKKStr::WriteXML (rootDir, "RootDirExpanded", o);
   
   XmlElementBool::WriteXML (validateDirectories, "validateDirectories", o);
+  trainingClasses.WriteXML ("TrainingClasses", o);
 
-  XmlElementTrainingClassList::WriteXML (trainingClasses, "TrainingClasses", o);
-
-    if  (subClassifiers)
+  if  (subClassifiers)
+  {
+    VectorKKStr  subClassifierList;
+    TrainingConfiguration2List::const_iterator  idx;
+    for  (idx = subClassifiers->begin (); idx != subClassifiers->end (); ++idx)
     {
-      TrainingConfiguration2List::const_iterator  idx;
-      kkuint32  x = 0;
-      for  (idx = subClassifiers->begin (), x = 0; idx != subClassifiers->end ();  ++idx, ++x)
-      {
-        TrainingConfiguration2Ptr  sc = *idx;
-        sc->WriteXML ("SubClassifier_" + StrFormatInt (x, "00"), o);
-      }
+      TrainingConfiguration2Ptr  sc = *idx;
+      subClassifierList.push_back (sc->ConfigFileNameSpecified ());
     }
-
-
-
-
-   FileDescPtr            fileDesc;
-    TrainingConfiguration2ListPtr
-                           subClassifiers;        /**< Used when implementing a hierarchical classifier. This list is 
-                                                   * a consolidated list from the 'TrainingClass'  objects that are 
-                                                   * specified in the configuration file. Each 'TrainingClass' section 
-                                                   * can specify a Sub-Classifier that is used to further break down that 
-                                                   * class. Multiple 'TrainingClass' sections can specify the same 
-                                                   * subClasifer; in that case we will want top only maintain one 
-                                                   * instance of that classifier.
-                                                   */
+    XmlElementVectorKKStr::WriteXML (subClassifierList, "subClassifiers", o);
+  }
 
 
   XmlTag  endTag ("TrainingConfiguration2", XmlTag::TagTypes::tagEnd);

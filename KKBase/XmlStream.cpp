@@ -850,7 +850,11 @@ XmlElementKKStr::XmlElementKKStr (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-  value = new KKStr (10);
+  kkuint16  expextedLen = (kkuint16)tag->AttributeValueInt32 ("Len");
+  if  (expextedLen < 1)
+    expextedLen = 10;
+
+  value = new KKStr (expextedLen);
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
@@ -874,12 +878,6 @@ XmlElementKKStr::~XmlElementKKStr ()
 
 
 
-KKStrPtr const  XmlElementKKStr::Value ()  const
-{
-  return value;
-}
-
-
 KKStrPtr  XmlElementKKStr::TakeOwnership ()
 {
   KKStrPtr  v = value;
@@ -894,18 +892,10 @@ void  XmlElementKKStr::WriteXML (const KKStr&  s,
                                  ostream&      o
                                 )
 {
-  XmlTag startTag ("KKStr", XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-  startTag.WriteXML (o);
-  o << s.ToXmlStr ();
-  XmlTag  endTag ("KKStr", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
-  o << endl;
+  s.WriteXML (varName, o);
 }
-
-
 XmlFactoryMacro(KKStr)
+
 
 
 
@@ -969,7 +959,7 @@ VectorKKStr*  XmlElementVectorKKStr::TakeOwnership ()
 }
 
 
-void  XmlElementVectorKKStr::WriteXml (const VectorKKStr&  v,
+void  XmlElementVectorKKStr::WriteXML (const VectorKKStr&  v,
                                        const KKStr&        varName,
                                        ostream&            o
                                       )
@@ -990,7 +980,7 @@ void  XmlElementVectorKKStr::WriteXml (const VectorKKStr&  v,
   XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
-}  /* WriteXml */
+}  /* WriteXML */
 
 
 XmlFactoryMacro(VectorKKStr)
@@ -1050,7 +1040,7 @@ KKStrListIndexed*  XmlElementKKStrListIndexed::TakeOwnership ()
 }
 
 
-void  XmlElementKKStrListIndexed::WriteXml (const KKStrListIndexed& v,
+void  XmlElementKKStrListIndexed::WriteXML (const KKStrListIndexed& v,
                                             const KKStr&            varName,
                                             ostream&                o
                                            )
