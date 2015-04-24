@@ -2883,11 +2883,11 @@ KKStr  KKStr::ToXmlStr ()  const
       case  '&' : result.Append ("&amp;");   break;
       case  '\"': result.Append ("&quot;");  break;
       case  '\'': result.Append ("&apos;");  break;
-      case  '\t': result.Append ("\\t");     break;
-      case  '\n': result.Append ("\\n");     break;
-      case  '\r': result.Append ("\\r");     break;
-      case  '\\': result.Append ("\\\\");    break;
-      case     0: result.Append ("\\0");     break;
+      case  '\t': result.Append ("&tab;");   break;
+      case  '\n': result.Append ("&nl;");    break;
+      case  '\r': result.Append ("&cr;");    break;
+      case  '\\': result.Append ("&bs;");    break;
+      case     0: result.Append ("&null;");  break;
          
       default:   result.Append (val[idx]);   break;
     }
@@ -3158,6 +3158,23 @@ char  KKStr::ExtractChar ()
 
   return  returnChar;
 }  /* ExtractChar */
+
+
+
+char  KKStr::ExtractLastChar ()
+{
+  #ifdef  KKDEBUG
+  ValidateLen ();
+  #endif
+
+  if  ((!val)  ||  (len < 1))
+    return 0;
+
+  --len;
+
+  return val[len];
+}  /* ExtractLastChar */
+
 
 
 
@@ -5041,9 +5058,87 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
   return  *this;
 }
 
-
-
 const  kkuint32  KKB::KKStr::StrIntMax = USHRT_MAX;
+
+
+
+
+
+
+
+
+VectorKKStr::VectorKKStr ():
+  vector<KKStr> ()
+{
+}
+
+
+VectorKKStr::VectorKKStr (const VectorKKStr&  v):
+  vector<KKStr> (v)
+{
+}
+
+
+
+void  VectorKKStr::ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                          )
+{
+  kkuint32  count = (kkuint32)tag->AttributeValueInt32 ("Count");
+
+  clear ();
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr  c = dynamic_cast<XmlContentPtr>(t);
+      if  ((c != NULL)  &&  (c->Content () != NULL))
+      {
+        KKStrParser  parser (*(c->Content ()));
+        parser.TrimWhiteSpace (" ");
+        while  (parser.MoreTokens ())
+        {
+          KKStr field = parser.GetNextToken ("\t");
+          push_back (field);
+        }
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
+void  VectorKKStr::WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const
+{
+  XmlTag  startTag ("VectorKKStr", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)size ());
+  startTag.WriteXML (o);
+
+  const_iterator  idx;
+  kkuint32 x = 0;
+  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  {
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (idx->QuotedStr (), o);
+  }
+  XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
 
 
 

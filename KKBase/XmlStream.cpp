@@ -119,10 +119,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
             << endl;
           // </End-Tag>  does not match <Start-Tag>  we will put back on token stream assuming that we are missing a </End-Tag>
           // We will end the current element here.
-          tokenStream->PushTokenOnFront (new KKStr (">"));
-          tokenStream->PushTokenOnFront (new KKStr (nameOfLastEndTag));
-          tokenStream->PushTokenOnFront (new KKStr ("/"));
-          tokenStream->PushTokenOnFront (new KKStr ("<"));
+          tokenStream->PushTokenOnFront (new KKStr ("<" + tag->Name () + " />"));
         }
       }
     }
@@ -707,6 +704,28 @@ KKStrPtr  XmlContent::TakeOwnership ()
 }
 
 
+void  XmlContent::WriteXml (const KKStr&  s,
+                            ostream&      o
+                           )
+{
+  const char*  str = s.Str ();
+  kkuint32 len = s.Len ();
+
+  for  (kkuint32 x = 0;  x < len;  ++x)
+  {
+    char ch = str[x];
+    switch  (ch)
+    {
+    case  '&':  o << "&amp;";  break;
+    case  '<':  o << "&lt;";   break;
+    case  '>':  o << "&gt;";   break;
+    default:    o << ch;       break;
+    }
+  }
+}  /* WriteXML */
+
+
+
 
 
 map<KKStr, XmlFactory*>*  XmlFactory::factories = NULL;
@@ -841,8 +860,6 @@ XmlFactoryMacro(Bool)
 
 
 
-
-
 XmlElementKKStr::XmlElementKKStr (XmlTagPtr   tag,
                                   XmlStream&  s,
                                   RunLog&     log
@@ -916,7 +933,7 @@ XmlElementVectorKKStr::XmlElementVectorKKStr (XmlTagPtr   tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-  value = new VectorKKStr (10);
+  value = new VectorKKStr ();
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {

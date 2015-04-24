@@ -124,8 +124,10 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
     KKStr  token (30);
     // Token is a string
     char  quoteChar = ch;
+
     // We have a quoted String need to skip to end of quote.
-    ++endPos;
+
+    ++endPos;  // Skipped past initial quote character.
     while  (endPos < len)
     {
       ch = str[endPos];

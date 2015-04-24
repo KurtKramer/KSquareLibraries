@@ -260,6 +260,11 @@ namespace  KKB
     KKStrPtr const  Content () const  {return  content;}
     KKStrPtr        TakeOwnership ();
 
+    static
+    void  WriteXml (const KKStr&  s,
+                    ostream&      o
+                   );
+
   private:
     KKStrPtr  content;
   };  /* XmlContent */

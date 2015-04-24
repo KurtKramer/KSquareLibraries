@@ -81,9 +81,17 @@ XmlTokenizer::~XmlTokenizer ()
 
 
 
-
 void  XmlTokenizer::Initialize ()
 {
+  entityMap.insert (pair<KKStr,char> ("quot",'"'));
+  entityMap.insert (pair<KKStr,char> ("amp", '&'));
+  entityMap.insert (pair<KKStr,char> ("apos",'\''));
+  entityMap.insert (pair<KKStr,char> ("lt",  '<'));
+  entityMap.insert (pair<KKStr,char> ("gt",  '>'));
+  entityMap.insert (pair<KKStr,char> ("tab", '\t'));
+  entityMap.insert (pair<KKStr,char> ("lf",  '\n'));
+  entityMap.insert (pair<KKStr,char> ("cr",  '\r'));
+
   GetNextChar ();
   GetNextChar ();
 
@@ -94,6 +102,19 @@ void  XmlTokenizer::Initialize ()
     ReadInNextLogicalToken ();
   }
 }  /* Initialize */
+
+
+
+
+char  XmlTokenizer::LookUpEntity (const KKStr&  entityName)  const
+{
+  map<KKStr,char>::const_iterator  idx;
+  idx = entityMap.find (entityName);
+  if  (idx == entityMap.end ())
+    return 0;
+  else
+    return idx->second;
+}
 
 
 
@@ -173,38 +194,20 @@ char  XmlTokenizer::GetNextChar ()
 {
   if  (atEndOfFile)
   {
-    firstChar   = 0;
-    secondChar  = 0;
+    firstChar = 0;
   }
-
-  else if  (secondCharAtEndOfFile)
-  {
-    firstChar   = 0;
-    secondChar  = 0;
-    atEndOfFile = true;
-  }
-
   else
   {
-    firstChar  = secondChar;
-    if  (in->EndOfFile ())
+    firstChar = in->GetNextChar ();
+    if  (firstChar == '\r')
     {
-      secondChar = 0;
-      secondCharAtEndOfFile = true;
-    }
-    else
-    {
-      secondChar = in->GetNextChar ();
+      if  (in->PeekNextChar () == '\n')
+        firstChar = in->GetNextChar ();
     }
   }
-
-  if  ((firstChar == '\r')  &&  (secondChar == '\n'))
-  {
-    GetNextChar ();
-  }
-
   return  firstChar;
 }  /* GetNextChar */
+
 
 
 
@@ -268,52 +271,6 @@ KKStrPtr  XmlTokenizer::GetNextTokenRaw ()
 
 
 
-
-
-KKStrPtr  XmlTokenizer::ProcessStringToken (char strDelChar)
-{
-  if  (firstChar  == strDelChar)
-    GetNextChar ();
-
-  KKStr  str (20);
-
-  // Scan until we hit another '"' character,  or end of KKStr.
-  while  (!atEndOfFile)
-  {
-    if (firstChar == strDelChar)
-    {
-      // We reached the end of the string
-      GetNextChar ();
-      break;
-    }
-
-    else if  (firstChar  == '\\')
-    {
-      GetNextChar ();
-      // We have a escape character.
-      switch  (firstChar)
-      {
-      case '\'': str.Append ('\'');  break;
-      case  '"': str.Append ('"');   break;
-      case  't': str.Append ('\t');  break;
-      case  'n': str.Append ('\n');  break;
-      case  'r': str.Append ('\r');  break;
-      default:   str.Append (firstChar); break;
-      } 
-    }
-
-    else
-    {
-      str.Append (firstChar);
-    }
-
-    GetNextChar ();
-  }
-  return new KKStr (str);
-
-}  /* ProcessStringToken */
-
-
 KKStrPtr  XmlTokenizer::ProcessTagToken ()
 {
   KKStrPtr  token = new KKStr(100);
@@ -364,40 +321,55 @@ KKStrPtr  XmlTokenizer::ProcessTagToken ()
 
 
 
+/**
+ *@brief  Processes a XML entity such as "&lt;";  when you encounter a ampersand (&) in the stream you 
+ * call this method; it will scan until it reaches the matching semi colon(';') character. The word
+ * located between the '&' and ';' will be used to look up the appropriate replacement character 
+ * in 'entityMap'.
+ */
+void  XmlTokenizer::ProcessAmpersand ()
+{
+  KKStr  entityName  (10);
+  if  (in->EndOfFile ())
+    return;
+
+  char ch = in->GetNextChar ();
+  while  ((!in->EndOfFile ())  &&  (ch != ';')  &&  (entityName.Len () < 10))
+  {
+    entityName.Append (ch);
+    ch = in->GetNextChar ();
+  }
+
+  if  (ch != ';')
+  {
+    // Name is getting too long; the ampersand is invalid; will return characters as is.
+    while  (entityName.Len () > 0)
+    {
+      char ch = entityName.ExtractLastChar ();
+      in->UnGetNextChar ();
+    }
+  }
+  else
+  {
+    char ch = LookUpEntity (entityName);
+    firstChar = ch;
+  }
+}  /* ProcessAmpersand */
+
+
+
+
+
 KKStrPtr  XmlTokenizer::ProcessBodyToken ()
 {
   KKStrPtr  token = new KKStr(100);
 
   while  ((!atEndOfFile)  &&  (firstChar != '<'))
   {
-    if  ((firstChar == '"')   ||  (firstChar == '\''))
-    {
-      // We are starting a quote;  will scan characters literately until we reach end of quote */
-      char  endingQuoteChar = firstChar;
-      token->Append (firstChar);
-      GetNextChar ();
-
-      while  ((!atEndOfFile)  &&  (firstChar != endingQuoteChar))
-      {
-        if  (firstChar == '\'')
-        {
-          GetNextChar ();
-          token->Append (firstChar);
-        }
-        GetNextChar ();
-      }
-
-      if  (firstChar != endingQuoteChar)
-      {
-        token->Append (firstChar);
-        GetNextChar ();
-      }
-    }
-    else
-    {
-      token->Append (firstChar);
-      GetNextChar ();
-    }
+    if  (firstChar == '&')
+      ProcessAmpersand ();
+    token->Append (firstChar);
+    GetNextChar ();
   }
 
   // At this point we are either at the end of the file or the next character is "<" tart of a tag field.

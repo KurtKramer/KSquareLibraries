@@ -15,8 +15,8 @@
  */
 
 
-#include  <vector>
-#include  "TokenBuffer.h"
+#include <vector>
+#include "TokenBuffer.h"
 
 namespace  KKB
 {
@@ -57,12 +57,15 @@ namespace  KKB
     char       GetNextChar ();
 
     void       Initialize ();
-    KKStrPtr   ProcessStringToken  (char strDelChar);
     KKStrPtr   ProcessTagToken ();
     KKStrPtr   ProcessBodyToken ();
+    void       ProcessAmpersand ();
+
 
     void       ReadInNextLogicalToken ();
     bool       WhiteSpaceChar (char c)  const;
+
+    char       LookUpEntity (const KKStr&  entityName)  const;
 
     bool             atEndOfFile;
     TokenBufferPtr   in;
@@ -78,6 +81,12 @@ namespace  KKB
 
     char             firstChar;
     char             secondChar;
+
+    map<KKStr,char>  entityMap;       /**< @brief Used to maintain a list of valid entities and their respective replacement characters. THese are
+                                       * the name of the xml escape characters,  ex: "quot" = '"',  "lt" = '<'. These are the escape sequences that
+                                       * start with a ampersand(&) and end with a semicolon.
+                                       */
+
   };  /* XmlTokenizer */
 
 

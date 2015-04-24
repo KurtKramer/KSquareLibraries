@@ -19,8 +19,10 @@ namespace  KKB
     virtual 
       bool  Valid () = 0;
 
-    virtual char  GetNextChar () = 0;
-    virtual bool  EndOfFile () = 0;
+    virtual char  GetNextChar   () = 0;
+    virtual bool  EndOfFile     () = 0;
+    virtual char  PeekNextChar  () = 0;
+    virtual void  UnGetNextChar () = 0;
 
   private:
   };  /* TokenBufer */
@@ -42,14 +44,17 @@ namespace  KKB
     virtual 
       bool  Valid ();
 
-    virtual char  GetNextChar ();
     virtual bool  EndOfFile ();
+    virtual char  GetNextChar ();
+    virtual char  PeekNextChar ();
+    virtual void  UnGetNextChar ();
 
   private:
     KKStr  buff;
 
     kkint32  nextCharPos;
   };
+
 
 
   class  TokenBufferStream: public TokenBuffer
@@ -67,6 +72,8 @@ namespace  KKB
 
     virtual char  GetNextChar ();
     virtual bool  EndOfFile ();
+    virtual void  UnGetNextChar ();
+    virtual char  PeekNextChar ();
 
   private:
     bool       endOfFile;

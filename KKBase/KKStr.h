@@ -34,22 +34,6 @@ using namespace  std;
 
 namespace  KKB
 {
-  /**
-   *@class KKStr  KKStr.h
-   *@brief A string class providing safe runtime string management.
-   *@details  This String class was originally developed back in the early 90's.  It is meant to make 
-   *         string management simple and easy.  Strings can dynamically increase in size as needed.  
-   *         All methods make sure that there is no accessing outside of the bounds of the allocated
-   *         string.
-   *@todo Should subclass the class from the stl class 'string'.
-   *@author  Kurt Kramer
-   */
-
-
-  class  KKStr;
-  typedef  std::vector<KKStr>  VectorKKStr;
-
-
 #if  !defined(_RunLog_Defined_)
   class RunLog;
 #endif
@@ -65,6 +49,37 @@ namespace  KKB
 
 
 
+  /**
+   *@class KKStr  KKStr.h
+   *@brief A string class providing safe runtime string management.
+   *@details  This String class was originally developed back in the early 90's.  It is meant to make 
+   *         string management simple and easy.  Strings can dynamically increase in size as needed.  
+   *         All methods make sure that there is no accessing outside of the bounds of the allocated
+   *         string.
+   *@todo Should subclass the class from the stl class 'string'.
+   *@author  Kurt Kramer
+   */
+  class  KKStr;
+
+
+  class  VectorKKStr:  public std::vector<KKStr>
+  {
+  public:
+    VectorKKStr ();
+
+    VectorKKStr (const VectorKKStr&  v);
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+  };
+
+  
 
   class  KKStr 
   {
@@ -269,6 +284,11 @@ namespace  KKB
     char     ExtractChar ();
 
 
+    /**
+     *@brief  Removes the last character from the string and returns it to the caller.
+     *@details  If the String is already empty it will return 0.
+     */
+    char     ExtractLastChar ();
 
     /**
      *@brief  Extracts the next string token; if the string starts with a quote(") will extract until the terminating quote.
