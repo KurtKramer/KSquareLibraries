@@ -322,6 +322,10 @@ namespace KKMLL
 
     static  KKStr          GetEffectiveConfigFileName (const  KKStr&  configFileName);
 
+    void                   WriteXML (const KKStr&  varName,
+                                     ostream&      o
+                                    )  const;
+
 
   protected:
     void                   BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
@@ -477,6 +481,33 @@ namespace KKMLL
     
     static  void  FinalCleanUp ();
 
+
+
+    class  Xml:  public  XmlElement
+    {
+    public:
+      Xml (XmlTagPtr   tag,
+           XmlStream&  s,
+           RunLog&     log
+          );
+                
+      virtual  ~Xml ();
+
+      TrainingConfiguration2Ptr  Value ()  const  {return  value;}
+      
+      TrainingConfiguration2Ptr  TakeOwnership ();
+
+      static
+      void  WriteXML (const TrainingConfiguration2&  tc,
+                      const KKStr&                   varName,
+                      ostream&                       o
+                     );
+    private:
+      TrainingConfiguration2Ptr  value;
+    };
+    typedef  Xml*  XmlPtr;
+
+
   };  /* TrainingConfiguration2 */
 
   #define  _TrainingConfiguration2_Defined_
@@ -516,5 +547,11 @@ namespace KKMLL
 
   #define  _TrainingConfiguration2List_Defined_
 }  /* namespace KKMLL */
+
+
+
+
+
+
 
 #endif

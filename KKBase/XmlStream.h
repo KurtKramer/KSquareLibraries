@@ -456,6 +456,46 @@ namespace  KKB
 
 
 
+// To be used when the XmlElement derived class is defined as a member of the class in question.
+
+#define  XmlFactoryMacro2(NameOfClass)                                            \
+    class  XmlFactory##NameOfClass: public XmlFactory                             \
+    {                                                                             \
+    public:                                                                       \
+      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
+      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
+                                                               XmlStream&  s,     \
+                                                               RunLog&     log    \
+                                                              )                   \
+      {                                                                           \
+        return new ##NameOfClass::Xml (tag, s, log);                              \
+      }                                                                           \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   factoryInstance;                        \
+                                                                                  \
+      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
+      {                                                                           \
+        if  (factoryInstance == NULL)                                             \
+        {                                                                         \
+          GlobalGoalKeeper::StartBlock ();                                        \
+          if  (!factoryInstance)                                                  \
+          {                                                                       \
+            factoryInstance = new XmlFactory##NameOfClass ();                     \
+            XmlFactory::RegisterFactory (factoryInstance);                        \
+          }                                                                       \
+          GlobalGoalKeeper::EndBlock ();                                          \
+         }                                                                        \
+        return  factoryInstance;                                                  \
+      }                                                                           \
+    };                                                                            \
+                                                                                  \
+    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
+                  = XmlFactory##NameOfClass::FactoryInstance ();
+
+
+
+
+
 
 
 #define  XmlElementIntegralHeader(T,TypeName)          \

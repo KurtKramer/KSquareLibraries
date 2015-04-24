@@ -2505,3 +2505,137 @@ void  TrainingConfiguration2::FinalCleanUp ()
   delete  registeredFactories;
   registeredFactories = NULL;
 }
+
+
+
+
+
+
+
+
+
+void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
+                                        ostream&      o
+                                       )  const
+{
+  XmlTag  startTag ("TrainingConfiguration2", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  if  (!configFileNameSpecified.Empty ())
+    XmlElementKKStr::WriteXML (configFileNameSpecified, "ConfigFileNameSpecified", o);
+
+  if  (!configRootName.Empty ())
+    XmlElementKKStr::WriteXML (configFileNameSpecified, "ConfigRootName", o);
+
+  XmlElementInt32::WriteXML (examplesPerClass, "ExamplesPerClass", o);
+
+  if  (fvFactoryProducer)
+    XmlElementKKStr::WriteXML (fvFactoryProducer->Name (), "FvFactoryProducer", o);
+
+  if  (mlClasses)
+    XmlElementMLClassNameList::WriteXML (*mlClasses, "MLClasses", o);
+
+  XmlElementKKStr::WriteXML (Model::ModelTypeToStr (modelingMethod), "ModelingMethod", o);
+
+  if  (modelParameters)
+    modelParameters->WriteXML (o);
+
+  if  (noiseMLClass)
+    XmlElementKKStr::WriteXML (noiseMLClass->Name (), "NoiseMLClass", o);
+
+  if  (noiseTrainingClass)
+      XmlElementTrainingClass::WriteXML (*noiseTrainingClass, "NoiseTrainingClass", o);
+
+   if  (otherClass)
+    XmlElementKKStr::WriteXML (otherClass->Name (), "OtherClass", o);
+
+  if  (!rootDir.Empty ())
+    XmlElementKKStr::WriteXML (rootDir, "RootDir", o);
+
+  if  (!rootDirExpanded.Empty ())
+    XmlElementKKStr::WriteXML (rootDir, "RootDirExpanded", o);
+  
+  XmlElementBool::WriteXML (validateDirectories, "validateDirectories", o);
+
+  XmlElementTrainingClassList::WriteXML (trainingClasses, "TrainingClasses", o);
+
+    if  (subClassifiers)
+    {
+      TrainingConfiguration2List::const_iterator  idx;
+      kkuint32  x = 0;
+      for  (idx = subClassifiers->begin (), x = 0; idx != subClassifiers->end ();  ++idx, ++x)
+      {
+        TrainingConfiguration2Ptr  sc = *idx;
+        sc->WriteXML ("SubClassifier_" + StrFormatInt (x, "00"), o);
+      }
+    }
+
+
+
+
+   FileDescPtr            fileDesc;
+    TrainingConfiguration2ListPtr
+                           subClassifiers;        /**< Used when implementing a hierarchical classifier. This list is 
+                                                   * a consolidated list from the 'TrainingClass'  objects that are 
+                                                   * specified in the configuration file. Each 'TrainingClass' section 
+                                                   * can specify a Sub-Classifier that is used to further break down that 
+                                                   * class. Multiple 'TrainingClass' sections can specify the same 
+                                                   * subClasifer; in that case we will want top only maintain one 
+                                                   * instance of that classifier.
+                                                   */
+
+
+  XmlTag  endTag ("TrainingConfiguration2", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+
+
+
+
+TrainingConfiguration2::Xml::Xml (XmlTagPtr   tag,
+                                  XmlStream&  s,
+                                  RunLog&     log
+                                 ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+}
+
+
+
+TrainingConfiguration2::Xml::~Xml ()
+{
+  delete  value;
+}
+
+
+
+      
+TrainingConfiguration2Ptr  TrainingConfiguration2::Xml::TakeOwnership ()
+{
+  TrainingConfiguration2Ptr v = value;
+  value = NULL;
+  return v;
+}
+
+
+ 
+void  TrainingConfiguration2::Xml::WriteXML (const TrainingConfiguration2&  tc,
+                                             const KKStr&                   varName,
+                                             ostream&                       o
+                                           )
+{
+}
+ 
+
+
+
