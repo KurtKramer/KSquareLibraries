@@ -227,7 +227,7 @@ void  KKThreadManager::StartThreads (bool&  successful)
         if  (thread->OkToStart ())
         {
           bool  successfulStart = false;
-          thread->Start (tpNormal, successfulStart);
+          thread->Start (ThreadPriority::tpNormal, successfulStart);
           if  (!successfulStart)
           {
             allThreadsStarted = false;

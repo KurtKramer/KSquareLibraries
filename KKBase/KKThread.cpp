@@ -86,7 +86,7 @@ KKThread::KKThread (const KKStr&        _threadName,
                    ):
    crashed               (false),
    msgQueue              (_msgQueue),
-   priority              (tpNormal),
+   priority              (ThreadPriority::tpNormal),
    shutdownFlag          (false),
    shutdownPrerequisites (NULL),
    startPrerequisites    (NULL),
@@ -323,16 +323,16 @@ void  KKThread::Start (ThreadPriority  _priority,
 
     switch  (priority)
     {
-    case  tpNULL:
-    case  tpNormal:
+    case  ThreadPriority::tpNULL:
+    case  ThreadPriority::tpNormal:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_BELOW_NORMAL);
       break;
 
-    case  tpLow:
+    case  ThreadPriority::tpLow:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_NORMAL);
       break;
 
-    case  tpHigh:
+    case  ThreadPriority::tpHigh:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_ABOVE_NORMAL);
       break;
     }

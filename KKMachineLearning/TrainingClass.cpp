@@ -141,10 +141,16 @@ KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
     return  directory;
   }
 
-  if  (directory.LocateStr (rootDirWithSlash) == 0)
+  directory = osSubstituteInEnvironmentVariables (directory);
+
+  char  firstChar = directory.FirstChar ();
+  if  ((firstChar == '/')  ||  (firstChar == '\\'))
     return  directory;
-  else
-    return rootDirWithSlash + osSubstituteInEnvironmentVariables (directory);
+
+  if  (directory[1] == ':')
+    return directory;
+
+  return rootDirWithSlash + directory;
 }  /* ExpandedDirectory */
 
 

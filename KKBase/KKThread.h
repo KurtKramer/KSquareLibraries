@@ -29,12 +29,11 @@ namespace KKB
   public:
     typedef  KKThread*  KKThreadPtr;
 
-    typedef  enum  {tpNULL,
+    enum  class  ThreadPriority {tpNULL,
                     tpLow,
                     tpNormal,
                     tpHigh
-                   }
-                   ThreadPriority;
+                   };
 
     enum  class  ThreadStatus: int
                    {tsNULL,

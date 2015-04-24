@@ -33,6 +33,7 @@ using namespace  KKB;
 #include "FeatureFileIO.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
+#include "GrayScaleImagesFVProducer.h"
 #include "MLClass.h"
 #include "ImageFeaturesDataIndexed.h"
 #include "ImageFeaturesNameIndexed.h"
@@ -771,9 +772,13 @@ void  TrainingProcess2::WriteXml (ostream&  o)
 
   if  (config)
     o << "TrainingConfiguration2" << "\t" << configFileNameSpecified << "\t" << config->FactoryName () << endl;
+
+  if  (fvFactoryProducer)
+    o << "fvFactoryProducer" << "\t" << fvFactoryProducer->Name () << endl;
   
   o << "ConfigFileName"          << "\t" << configFileName                  << endl;
   o << "ConfigFileNameSpecified" << "\t" << configFileNameSpecified         << endl;
+
   o << "BuildDateTime"           << "\t" << buildDateTime                   << endl;
   o << "ClassList"               << "\t" << mlClasses->ToTabDelimitedStr () << endl;
 
@@ -802,12 +807,16 @@ void  TrainingProcess2::WriteXml (ostream&  o)
 
 
 
+
+
 void  TrainingProcess2::Read (istream&  in,
                               bool&     successful
                              )
                              
 {
   log.Level (20) << "TrainingProcess2::Read" << endl;
+
+  fvFactoryProducer = NULL;
 
   successful = true;
  
@@ -865,6 +874,14 @@ void  TrainingProcess2::Read (istream&  in,
     {
       configFileNameSpecified = line.ExtractToken2 ("\t");
       KKStr  factoryName = line.ExtractToken2 ("\t");
+
+      if  (!factoryName.Empty ())
+      {
+        fvFactoryProducer = FactoryFVProducer::LookUpFactory (factoryName);
+        if  (fvFactoryProducer)
+          fileDesc = fvFactoryProducer->FileDesc ();
+      }
+
       delete  configOurs;
       configOurs = TrainingConfiguration2::Manufacture (factoryName, 
                                                         configFileNameSpecified, 
@@ -880,15 +897,16 @@ void  TrainingProcess2::Read (istream&  in,
       else
       {
         config = configOurs;
-        fvFactoryProducer = config->FvFactoryProducer ();
-        fileDesc = fvFactoryProducer->FileDesc ();
+
+        if  (!fvFactoryProducer)
+        {
+          fvFactoryProducer = config->FvFactoryProducer ();
+          fileDesc = fvFactoryProducer->FileDesc ();
+        }
       }
     }
   
-
-
-
-    
+        
     else if  (lineName == "CLASSLIST")
     {
       log.Level (20) << "TrainingProcess2::Read    Classes[" << line << "]" << endl;
@@ -913,6 +931,12 @@ void  TrainingProcess2::Read (istream&  in,
 
     else if  (lineName.EqualIgnoreCase ("<Model>"))
     {
+      if  (!fvFactoryProducer)
+      {
+        fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+        fileDesc = fvFactoryProducer->FileDesc ();
+      }
+    
       try
       {
         model = Model::CreateFromStream (in, fileDesc, cancelFlag, log);

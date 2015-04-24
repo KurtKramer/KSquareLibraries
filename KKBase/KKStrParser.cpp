@@ -67,9 +67,7 @@ KKStrParser::~KKStrParser ()
 
 
 
-/**
- @brief   After this call all leading and trailing whitespace will be trimmed from tokens.
- */
+
 void  KKStrParser::TrimWhiteSpace (const char*  _whiteSpace)
 {
   delete  whiteSpace;  
@@ -80,6 +78,8 @@ void  KKStrParser::TrimWhiteSpace (const char*  _whiteSpace)
     whiteSpace = STRDUP (_whiteSpace);
   else
     whiteSpace = STRDUP (" ");
+
+  SkipWhiteSpace (whiteSpace);
 }
 
 
@@ -87,9 +87,7 @@ void  KKStrParser::TrimWhiteSpace (const char*  _whiteSpace)
 void  KKStrParser::SkipWhiteSpace (const char*  whiteSpace)
 {
   while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
-  {
     nextPos++;
-  }
 }  /* SkipWhiteSpce */
 
 
@@ -105,14 +103,7 @@ VectorKKStr  KKStrParser::Split (const char* delStr)
 
 
 
-/**
- *@brief  Extract next Token from string, each delimiter will separate tokens.
- *@details Removes next Token from string. The token will be terminated by end of 
- * string or the first occurrence of a delimiter character. If no more tokens left
- * will return a Empty KKStr.
- *@param[in]  delStr List of delimiting characters.
- *@return  Extracted Token.
- */
+
 KKStr  KKStrParser::GetNextToken (const char* delStr)
 {
   if  (trimWhiteSpace)
@@ -139,10 +130,7 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
     {
       ch = str[endPos];
       if  (ch == quoteChar)
-      {
-        ++endPos;
         break;
-      }
 
       if  ((ch == '\\')  &&  (endPos < (len - 1)))
       {
@@ -161,20 +149,40 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
       token.Append (ch);
       ++endPos;
     }
+
     if  (endPos >= len)
+    {
       nextPos = len;
+    }
     else
-      nextPos = endPos + 1;
+    {
+      nextPos = endPos + 1;  // Setting to character after the ending quote.
+
+      // Now that we are at the end of the quoted String we need set the next character pointer to the next delimiter character.
+      while  (nextPos < len)
+      {
+        ch = str[nextPos];
+        if  (strchr (delStr, ch) != NULL)
+          break;
+        ++endPos;
+      }
+    }  
     return  token;
   }
   else
   {
     // scan until end of string or next delimiter
+    kkuint32  delimeterIdx = 0;
+    bool      delimeterFound = false;
     while  (endPos < len)
     {
       ch = str[endPos];
       if  (strchr (delStr, ch) != NULL)
+      {
+        delimeterFound = true;
+        delimeterIdx = endPos;
         break;
+      }
       ++endPos;
     }
 
@@ -186,11 +194,22 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
         endPos--;
     }
 
-    // At this point endPos is either on the next delimiter or past end of str.
-    if  (endPos >= len)
+
+    if  (delimeterFound)
+      nextPos = delimeterIdx + 1;
+
+    else if  (endPos >= len)
       nextPos = len;
+
     else
       nextPos = endPos + 1;
+
+    if  (trimWhiteSpace)
+    {
+      while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+        ++nextPos;
+    }
+
     return KKStr (str, startPos, endPos);
   }
 }  /* GetNextToken */
@@ -263,7 +282,9 @@ KKStr  KKStrParser::PeekNextToken (const char* delStr)  const
     {
       ch = str[endPos];
       if  (strchr (delStr, ch) != NULL)
+      {
         break;
+      }
       ++endPos;
     }
 

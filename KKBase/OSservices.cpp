@@ -2259,37 +2259,38 @@ KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
 
 
 
-char*  KKB::osReadNextLine (FILE*  in)
+KKStrPtr  KKB::osReadNextLine (FILE*  in)
 {
-  /** @todo  This function has never be properly tested.  Next time we use it we should debug through it to make sure that all is copacetic. */
-  char  buff[1024];
-  buff[0] = 0;
-  kkint32  buffLen = sizeof (buff);
-
-  if  (fgets (buff, buffLen, in) == NULL)
+  if  (feof (in))
     return NULL;
 
-  char*  line = NULL;
-#ifdef WIN32
-  line = _strdup (buff);
-#else
-  line = strdup (buff);
-#endif
+  KKStrPtr  buff = new KKStr (100);
 
-  kkint32  lineLen = (kkint32)strlen (line);
-  while  (line[lineLen - 1] != '\n')
+  while  (true)
   {
-    if  (fgets (buff, buffLen, in) == NULL)
-      return  line;
+    if  (feof (in))
+      break;
 
-    kkint32  additionalCharsRead = (kkint32)strlen (buff);
-    kkint32  newLineLen = lineLen + additionalCharsRead;
-    line = osGrowAllocation (line, lineLen, newLineLen);
-    memcpy (line + lineLen, buff, additionalCharsRead);
-    lineLen = newLineLen;
+    char  ch = fgetc (in);
+    if  (ch == '\r')
+    {
+      if  (!feof (in))
+      {
+        char  nextCh = fgetc (in);
+        if  (nextCh != '\n')
+          ungetc (nextCh, in);
+        break;
+      }
+    }
+    else if  (ch == '\n')
+    {
+      break;
+    }
+
+    buff->Append (ch);
   }
-  
-  return  line;  
+
+  return  buff;
 }  /* osReadNextLine */
 
 

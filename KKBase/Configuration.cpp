@@ -212,7 +212,7 @@ namespace  KKB
       settings.AddSetting (_name, _value, _lineNum);
     }
 
-    KKStrConstPtr   LookUpValue (KKStr  _name, kkint32& lineNum)
+    KKStrConstPtr   LookUpValue (const KKStr&  _name, kkint32& lineNum)
     {
       SettingPtr  setting = settings.LookUp (_name);
       if  (setting)
@@ -221,7 +221,10 @@ namespace  KKB
         return  setting->Value ();
       }
       else
+      {
+        lineNum = -1;
         return NULL;
+      }
     }
 
   private:
@@ -650,11 +653,17 @@ KKStrConstPtr   Configuration::SettingValue (kkint32       sectionNum,
                                             )  const
 
 {
+  KKStrConstPtr  result = NULL;
   ConfSectionPtr  section = sections->IdxToPtr (sectionNum);
   if  (!section)
-    return NULL;
-
-  return section->LookUpValue (settingName, lineNum);
+  {
+    lineNum = -1;
+  }
+  else
+  {
+    result = section->LookUpValue (settingName, lineNum);
+  }
+  return  result;
 }
 
 

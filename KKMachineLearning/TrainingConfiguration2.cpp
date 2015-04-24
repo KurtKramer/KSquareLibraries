@@ -1528,18 +1528,19 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
 
   if  (validateDirectories)
   {
+    KKStr  rootDirExpanded = osSubstituteInEnvironmentVariables (rootDir);
     for  (kkuint32  zed = 0;  zed < tc->DirectoryCount ();  ++zed)
     {
-      KKStr  expandedDir = tc->ExpandedDirectory (rootDir, zed);
-    if  (!osValidDirectory (expandedDir))
-    {
-      KKStr  errMsg = "Invalid Directory Specified[" + expandedDir + "].";
-      log.Level (-1) << endl << "ValidateClassConfig   ***ERROR***  " << errMsg << endl << endl;
-      FormatErrorsAdd (dirLineNum, errMsg);
-      FormatGood (false);
-      delete  tc;  tc = NULL;
-      return NULL;
-    }
+      KKStr  expandedDir = tc->ExpandedDirectory (rootDirExpanded, zed);
+      if  (!osValidDirectory (expandedDir))
+      {
+        KKStr  errMsg = "Invalid Directory Specified[" + expandedDir + "].";
+        log.Level (-1) << endl << "ValidateClassConfig   ***ERROR***  " << errMsg << endl << endl;
+        FormatErrorsAdd (dirLineNum, errMsg);
+        FormatGood (false);
+        delete  tc;  tc = NULL;
+        return NULL;
+      }
     }
   }
 

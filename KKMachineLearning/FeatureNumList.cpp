@@ -106,18 +106,20 @@ FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
   if  (selFeatures == NULL)
   {
     _valid = false;
-    return;
   }
+  else
+  {
+    _valid = true;
+    maxFeatureNum = selFeatures->MaxFeatureNum ();
+    AllocateArraySize (selFeatures->NumOfFeatures ());
+    const kkuint16*  selFeatureNums = selFeatures->FeatureNums ();
 
-  maxFeatureNum = selFeatures->MaxFeatureNum ();
-  AllocateArraySize (selFeatures->NumOfFeatures ());
-  const kkuint16*  selFeatureNums = selFeatures->FeatureNums ();
+    for  (kkuint16 x = 0;  x < selFeatures->NumOfFeatures ();  ++x)
+      AddFeature (selFeatureNums[x]);
 
-  for  (kkuint16 x = 0;  x < selFeatures->NumOfFeatures ();  ++x)
-    AddFeature (selFeatureNums[x]);
-
-  delete  selFeatures;
-  selFeatures = NULL;
+    delete  selFeatures;
+    selFeatures = NULL;
+  }
   return;
 }
 
@@ -482,10 +484,13 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
   VectorUint16*  results = new VectorUint16 ();
 
   KKStrParser parser (s);
+  parser.TrimWhiteSpace (" ");
 
-  KKStr  field = parser.GetNextToken (",\t \n\r");
-  while  (!field.Empty ())
+  while  (parser.MoreTokens ())
   {
+    KKStr  field = parser.GetNextToken (",\t");
+    if  (field.Empty ())
+      continue;
     kkint32 dashPos = field.LocateCharacter ('-');
     if  (dashPos < 0)
     {
@@ -512,7 +517,6 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
       for  (kkuint16 z = startNum;   z <= endNum;  ++z)
         results->push_back (z);
     }
-    field = parser.GetNextToken (",\t \n\r");
   }
 
   if  (!valid)

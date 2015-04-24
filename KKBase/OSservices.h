@@ -409,7 +409,7 @@ namespace KKB
    *@return  A dynamically allocated c-string (NULL Terminated) containing the next
    *         line in the file.  If end-of-file reached will return a NULL pointer.
    */
-  char*        osReadNextLine (FILE*  in);
+  KKStrPtr    osReadNextLine (FILE*  in);
   
   
   

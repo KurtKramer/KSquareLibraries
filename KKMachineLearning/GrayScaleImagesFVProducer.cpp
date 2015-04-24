@@ -560,7 +560,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
   {
     // This part has to be done after 'CalcOrientationAndEigerRatio' is called. That is where the example centroid is calculated.
     //fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);
-    //fv->CentroidRow (initRaster->CentroidRow () * reductionMultiple);
+    //fv->CentroidRow (initRaster->CentroidRow () * reductioqnMultiple);
   }
 
   featureData[ConvexAreaIndex]       = convexf * reductionMultipleSquared;
