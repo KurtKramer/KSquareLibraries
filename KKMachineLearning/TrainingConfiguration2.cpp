@@ -2511,9 +2511,6 @@ void  TrainingConfiguration2::FinalCleanUp ()
 
 
 
-
-
-
 void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
                                         ostream&      o
                                        )  const

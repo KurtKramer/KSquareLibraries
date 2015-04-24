@@ -59,7 +59,8 @@ namespace KKB
     /** 
      *@brief Used to specify that the application is been aborted.
      *@details If you have a reason to abort the processing of this application you would call this method to set the 'abort' 
-     *         flag to true.
+     *         flag to true. It will be the responsibility of the derived class to monitor the 'Abort' flag. If is set to 
+     *         true they should terminate as quickly as they can;  they should also release any resources they have taken.
      *@param[in] _abort  Abort status to set; if set to true you are telling the application that the program needs to be terminated.
      */
     void  Abort (bool _abort)  {abort = _abort;}

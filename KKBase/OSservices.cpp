@@ -2256,16 +2256,12 @@ KKStr  KKB::osCreateUniqueFileName (KKStr  fileName)
 
 
 
-
-
-
 KKStrPtr  KKB::osReadNextLine (FILE*  in)
 {
   if  (feof (in))
     return NULL;
 
   KKStrPtr  buff = new KKStr (100);
-
   while  (true)
   {
     if  (feof (in))
@@ -2288,6 +2284,8 @@ KKStrPtr  KKB::osReadNextLine (FILE*  in)
     }
 
     buff->Append (ch);
+    if  (buff->Len () >= uint16_max)
+      break;
   }
 
   return  buff;
