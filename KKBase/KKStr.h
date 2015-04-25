@@ -136,6 +136,8 @@ namespace  KKB
 
     KKStr&   operator= (const KKStr& src);
 
+    KKStr&   operator= (KKStr&& src);
+
     KKStr&   operator= (const char* src);
 
     KKStr&   operator= (kkint32  right);
@@ -904,7 +906,6 @@ namespace  KKB
     KKStrList (bool owner = false);
 
 
-
     /**
      *@brief  Creates a list from a NULL terminated list of (char*) strings.
      *@details  The last entry in the list has to be NULL.
@@ -928,6 +929,16 @@ namespace  KKB
 
     bool   StringInList (KKStr& str);
 
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
     static
     KKStrListPtr   ParseDelimitedString (const KKStr&  str,

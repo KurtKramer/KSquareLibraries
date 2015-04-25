@@ -376,7 +376,7 @@ namespace  KKB
                 
     virtual  ~XmlElementVectorKKStr ();
 
-    VectorKKStr*  const  Value ()  const;
+    VectorKKStr*  const  Value ()  const  {return value;}
 
     VectorKKStr*  TakeOwnership ();
 
@@ -393,6 +393,36 @@ namespace  KKB
   };
   typedef  XmlElementVectorKKStr*  XmlElementVectorKKStrPtr;
 
+
+
+
+  
+  class  XmlElementKKStrList:  public  XmlElement
+  {
+  public:
+    XmlElementKKStrList (XmlTagPtr   tag,
+                         XmlStream&  s,
+                         RunLog&     log
+                       );
+                
+    virtual  ~XmlElementKKStrList();
+
+    KKStrListPtr  const  Value ()  const  {return value;}
+
+    KKStrListPtr  TakeOwnership ();
+
+    static  XmlFactoryPtr  FactoryInstance ();
+
+    static
+    void  WriteXML (const KKStrList& v,
+                    const KKStr&     varName,
+                    ostream&         o
+                   );
+
+  private:
+    KKStrListPtr  value;
+  };
+  typedef  XmlElementKKStrList*  XmlElementKKStrListPtr;
 
 
 

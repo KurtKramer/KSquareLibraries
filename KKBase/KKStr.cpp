@@ -1378,6 +1378,26 @@ KKStr&  KKStr::operator= (const KKStrConstPtr src)
 
 
 
+KKStr&   KKStr::operator= (KKStr&& src)
+{
+  #ifdef  KKDEBUG
+  ValidateLen ();
+  src.ValidateLen ();
+  #endif
+
+  delete  val;
+  val           = src.val;
+  allocatedSize = src.allocatedSize;
+  len           = src.len;
+  src.val           = NULL;
+  src.allocatedSize = 0;
+  src.len           = 0;
+
+  return *this;
+}
+
+
+
 
 KKStr&  KKStr::operator= (const KKStr&  src)
 {
@@ -4342,12 +4362,11 @@ void  KKStr::WriteXML (const KKStr&  varName,
     startTag.AddAtribute ("VarName", varName);
   startTag.AddAtribute ("Len", len);
   startTag.WriteXML (o);
-  o << val;
+  XmlContent::WriteXml (val, o);
   XmlTag  endTag ("KKStr", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
 
 
 
@@ -4378,9 +4397,6 @@ void  KKStr::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */
-
-
-
 
 
 
@@ -4432,6 +4448,72 @@ bool  KKStrList::StringInList (KKStr& str)
 
   return  found;
 }
+
+
+
+
+void  KKStrList::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         )
+{
+  kkuint32  count = (kkuint32)tag->AttributeValueInt32 ("Count");
+
+  DeleteContents ();
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr  c = dynamic_cast<XmlContentPtr>(t);
+      if  ((c != NULL)  &&  (c->Content () != NULL))
+      {
+        KKStrParser  parser (*(c->Content ()));
+        parser.TrimWhiteSpace (" ");
+        while  (parser.MoreTokens ())
+        {
+          KKStr field = parser.GetNextToken ("\t");
+          PushOnBack (new KKStr (field));
+        }
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
+void  KKStrList::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                         )  const
+{
+  XmlTag  startTag ("KKStrList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)size ());
+  startTag.WriteXML (o);
+
+  const_iterator  idx;
+  kkuint32 x = 0;
+  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  {
+    KKStrPtr  sp = *idx;
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (sp->QuotedStr (), o);
+  }
+  XmlTag  endTag ("KKStrList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
 
 
 

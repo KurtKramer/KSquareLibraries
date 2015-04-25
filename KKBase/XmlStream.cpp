@@ -934,23 +934,7 @@ XmlElementVectorKKStr::XmlElementVectorKKStr (XmlTagPtr   tag,
   value (NULL)
 {
   value = new VectorKKStr ();
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
-  {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
-    {
-      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
-      KKStrParser p (*c->Content ());
-
-      while  (p.MoreTokens ())
-      {
-        KKStr  s = p.GetNextToken (",\t\n\r");
-        value->push_back (s);
-      }
-    }
-    delete  t;
-    t = s.GetNextToken (log);
-  }
+  value->ReadXML (s, tag, log);
 }
 
 
@@ -960,11 +944,6 @@ XmlElementVectorKKStr::~XmlElementVectorKKStr ()
 {
   delete  value;
   value = NULL;
-}
-
-VectorKKStr*  const  XmlElementVectorKKStr::Value ()  const
-{
-  return  value;
 }
 
 
@@ -981,26 +960,62 @@ void  XmlElementVectorKKStr::WriteXML (const VectorKKStr&  v,
                                        ostream&            o
                                       )
 {
-  XmlTag t ("VectorKKStr", XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-  t.AddAtribute ("VarName", varName);
-  t.WriteXML (o);
-  VectorKKStr::const_iterator idx;
-  kkint32  c = 0;
-  for  (idx = v.begin (), c= 0;  idx != v.end ();  ++idx, ++c)
-  {
-    if  (c > 0)
-      o << "\t";
-    o << idx->QuotedStr ();
-  }
-
-  XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
-  o << endl;
+  v.WriteXML (varName, o);
 }  /* WriteXML */
 
 
 XmlFactoryMacro(VectorKKStr)
+
+
+
+
+
+
+  
+XmlElementKKStrList::XmlElementKKStrList (XmlTagPtr   tag,
+                                          XmlStream&  s,
+                                          RunLog&     log
+                                         ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new KKStrList (true);
+  value->ReadXML (s, tag, log);
+}
+                
+
+
+XmlElementKKStrList::~XmlElementKKStrList()
+{
+  delete  value;
+}
+
+
+
+KKStrListPtr  XmlElementKKStrList::TakeOwnership ()
+{
+  KKStrListPtr v = value;
+  value = NULL;
+  return v;
+}
+
+
+
+
+
+void  XmlElementKKStrList::WriteXML (const KKStrList&  v,
+                                     const KKStr&      varName,
+                                     ostream&          o
+                                    )
+{
+  v.WriteXML (varName, o);
+}
+
+
+XmlFactoryMacro(KKStrList)
+
+
+
 
 
 
