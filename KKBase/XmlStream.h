@@ -196,7 +196,9 @@ namespace  KKB
 
 
 
-
+  /**
+   *@brief The parent Class to the two type of tokens,  "XmlElement"  and  "XmlContent"
+   */
   class  XmlToken
   {
   public:
@@ -208,6 +210,14 @@ namespace  KKB
 
     virtual  TokenTypes  TokenType () = 0;
 
+
+    /** If derived class is from the XmlElement family will be the name from the StartTag(XmlTag::Name ()) otherwise KKStr::EmptyStr()  */
+    virtual  const KKStr&  SectionName ()  const  {return  KKStr::EmptyStr ();}
+
+
+    /**  If the derived class is form the 'XmlElement' line will return the 'VarName' from that derived class otherwise it will return back a empty string. */
+    virtual  const KKStr&  VarName ()  const  {return KKStr::EmptyStr ();}
+
   private:
   };  /* XmlToken */
 
@@ -215,6 +225,12 @@ namespace  KKB
 
 
 
+  /**
+   * Parent class for all XmlElements;  when XmlStream encounters the start of a element it looks up the appropriate ElementFactory that 
+   * will create an instance of a XmlElement derived class. The constructor of that class will be provided the XmlTag that starts the element 
+   * plus a pointer to the XmlStream instance that is reading the XML file. The XmlElement derived classes constructor will the be responsible
+   * creating an instance of the class that the XmnlElement wraps.
+   */
   class  XmlElement: public  XmlToken
   {
   public:
@@ -227,11 +243,11 @@ namespace  KKB
                 
     virtual  ~XmlElement ();
 
+    virtual  const KKStr&  SectionName ()  const;
+
     virtual  TokenTypes  TokenType () {return  TokenTypes::tokElement;}
 
-    const KKStr&   Name () const;   /**< Comes from 'name' field of XmlTag 'nameTab'. */
-
-    const KKStr&   VarName ()  const;
+    virtual  const KKStr&   VarName ()  const;
 
     XmlTagConstPtr  NameTag () const;
 
@@ -308,6 +324,55 @@ namespace  KKB
   typedef  XmlFactory const *  XmlFactoryConstPtr;
 
 
+  
+  /**
+   *@brief  To be used for classes that implement that implement default constructor, readXML, and WriteXML.
+   */
+  template<class  T>
+  class  XmlElementTemplate:  public  XmlElement
+  {
+  public:
+    XmlElementTemplate (XmlTagPtr   tag,
+                        XmlStream&  s,
+                        RunLog&     log
+                       ):
+     XmlElement (tag, s, log),
+     value (NULL)
+    {
+      value = new T();
+      value->ReadXML (s, tag, log);
+    }
+
+                
+    ~XmlElementTemplate ()
+    {
+      delete value;
+      value = NULL;
+    }
+
+    T*  const  Value ()  const  {return value;}
+
+    T*  TakeOwnership ()
+    {
+      T* v = value;
+      value = NULL;
+      return  v;
+    }
+
+    static
+    void  WriteXML (const T&      t,
+                    const KKStr&  varName,
+                    ostream&      o
+                   )
+    {
+      t.WriteXML (varName, o);
+    }
+  private:
+    T*  value;
+  };  /* XmlElementTemplate */
+
+
+
 
   class  XmlElementBool:  public  XmlElement
   {
@@ -334,125 +399,22 @@ namespace  KKB
 
 
 
-
-
-  class  XmlElementKKStr:  public  XmlElement
-  {
-  public:
-    XmlElementKKStr (XmlTagPtr   tag,
-                     XmlStream&  s,
-                     RunLog&     log
-                    );
-                
-    virtual  ~XmlElementKKStr ();
-
-    KKStrPtr  const  Value ()  const  {return value;}
-
-    KKStrPtr  TakeOwnership ();
-
-    static  XmlFactoryPtr  FactoryInstance ();
-
-    static
-    void  WriteXML (const KKStr&  s,
-                    const KKStr&  varName,
-                    ostream&      o
-                   );
-
-  private:
-    KKStrPtr  value;
-  };
+  typedef   XmlElementTemplate<KKStr>  XmlElementKKStr;
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
+  XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
 
 
-
-
-  class  XmlElementVectorKKStr:  public  XmlElement
-  {
-  public:
-    XmlElementVectorKKStr (XmlTagPtr   tag,
-                           XmlStream&  s,
-                           RunLog&     log
-                         );
-                
-    virtual  ~XmlElementVectorKKStr ();
-
-    VectorKKStr*  const  Value ()  const  {return value;}
-
-    VectorKKStr*  TakeOwnership ();
-
-    static  XmlFactoryPtr  FactoryInstance ();
-
-    static
-    void  WriteXML (const VectorKKStr& v,
-                    const KKStr&       varName,
-                    ostream&           o
-                   );
-
-  private:
-    VectorKKStr*  value;
-  };
+  typedef  XmlElementTemplate<VectorKKStr>  XmlElementVectorKKStr;
   typedef  XmlElementVectorKKStr*  XmlElementVectorKKStrPtr;
 
 
-
-
-  
-  class  XmlElementKKStrList:  public  XmlElement
-  {
-  public:
-    XmlElementKKStrList (XmlTagPtr   tag,
-                         XmlStream&  s,
-                         RunLog&     log
-                       );
-                
-    virtual  ~XmlElementKKStrList();
-
-    KKStrListPtr  const  Value ()  const  {return value;}
-
-    KKStrListPtr  TakeOwnership ();
-
-    static  XmlFactoryPtr  FactoryInstance ();
-
-    static
-    void  WriteXML (const KKStrList& v,
-                    const KKStr&     varName,
-                    ostream&         o
-                   );
-
-  private:
-    KKStrListPtr  value;
-  };
+  typedef  XmlElementTemplate<KKStrList>  XmlElementKKStrList;
   typedef  XmlElementKKStrList*  XmlElementKKStrListPtr;
-
-
-
-
   
-  class  XmlElementKKStrListIndexed:  public  XmlElement
-  {
-  public:
-    XmlElementKKStrListIndexed (XmlTagPtr   tag,
-                                XmlStream&  s,
-                                RunLog&     log
-                              );
-                
-    virtual  ~XmlElementKKStrListIndexed ();
 
-    KKStrListIndexed*  const  Value ()  const;
-
-    KKStrListIndexed*  TakeOwnership ();
-
-    static
-    void  WriteXML (const KKStrListIndexed& v,
-                    const KKStr&            varName,
-                    ostream&                o
-                   );
-
-  private:
-    KKStrListIndexed*  value;
-  };
+  typedef  XmlElementTemplate<KKStrListIndexed>  XmlElementKKStrListIndexed;
   typedef  XmlElementKKStrListIndexed*  XmlElementKKStrListIndexedPtr;
-
+  
 
 
 
@@ -625,14 +587,9 @@ namespace  KKB
 
 
 
-XmlElementIntegralHeader(kkint32,Int32)
-//typedef  XmlElementInt32*   XmlElementInt32Ptr;
-
-
-
-XmlElementIntegralHeader(float,Float)
-
-XmlElementIntegralHeader(double,Double)
+XmlElementIntegralHeader(kkint32, Int32)
+XmlElementIntegralHeader(float,   Float)
+XmlElementIntegralHeader(double,  Double)
 
 
 

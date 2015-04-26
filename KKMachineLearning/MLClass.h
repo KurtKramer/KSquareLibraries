@@ -199,6 +199,9 @@ namespace KKMLL
 
     void            WriteXML (std::ostream& o)  const;
     
+    void            WriteXML (const KKStr&  varName,
+                              ostream&      o
+                             )  const;
   private:
     kkint32         classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
     float           countFactor;  /**< Specifies number to increment count when this class picked;  ex:  Shrinmp_02 would have 2.0. */
@@ -375,9 +378,9 @@ namespace KKMLL
     void        PushOnFront (MLClassPtr  mlClass);
 
 
-    void            Save (KKStr   _fileName,
-                          bool&   _successfull
-                         );
+    void        Save (KKStr   _fileName,
+                      bool&   _successfull
+                     );
 
     void        SortByName ();
 
@@ -387,8 +390,14 @@ namespace KKMLL
 
     KKStr       ToTabDelimitedStr ()  const;
 
+    KKStr       ToCommaDelimitedQuotedStr ()  const;
+
     void        WriteXML (std::ostream&  o)  const;
 
+    void        WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const;
+    
     bool        operator== (const MLClassList&  right)  const;
 
     bool        operator!= (const MLClassList&  right)  const;
@@ -604,10 +613,6 @@ namespace KKMLL
     MLClassIndexListPtr  value;
   };
   typedef  XmlElementMLClassIndexList*  XmlElementMLClassIndexListPtr;
-
-
-
-
 
 
 

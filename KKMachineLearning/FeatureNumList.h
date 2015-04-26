@@ -58,16 +58,19 @@ namespace KKMLL
     typedef  FeatureNumList  const  FeatureNumListConst;
     typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 
-    
+
     FeatureNumList ();
 
 
     /** @brief  Copy constructor.  */
     FeatureNumList (FeatureNumListConst&  featureNumList);
 
-    /*
-     *@brief  Constructs an instance with no features selected and expecting a maximum of 'maxFeatureNum'.
-     */
+
+    /** @brief  Move constructor.  */
+    FeatureNumList (FeatureNumList  &&featureNumList);
+
+
+    /**  @brief  Constructs an instance with no features selected and expecting a maximum of 'maxFeatureNum'.  */
     FeatureNumList (kkuint32  _maxFeatureNum);
 
 
@@ -242,6 +245,7 @@ namespace KKMLL
     kkuint16  operator[] (kkint32  idx)  const;
 
     FeatureNumList&  operator=  (const FeatureNumList&   _features);
+    FeatureNumList&  operator=  (FeatureNumList&&        _features);
     FeatureNumList&  operator=  (const FeatureNumListPtr _features);
     FeatureNumList   operator+  (const FeatureNumList&   rightSide)   const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
     FeatureNumList   operator+  (kkuint16                rightSide)   const;  /**< @brief Returns new FeatureNumList that is a union of this instance and 'rightSide'.  */
@@ -291,38 +295,8 @@ namespace KKMLL
   //const  char*  FeatureDecriptions[];
 
 
-  
-class  XmlElementFeatureNumList:  public  XmlElement
-  {
-  public:
-    XmlElementFeatureNumList (XmlTagPtr   tag,
-                        XmlStream&  s,
-                        RunLog&     log
-                       );
-                
-    virtual  ~XmlElementFeatureNumList ();
-
-    FeatureNumListPtr  Value ()  const;
-
-    FeatureNumListPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const FeatureNumList&  fnl,
-                    const KKStr&           varName,
-                    ostream&               o
-                   );
-  private:
-    FeatureNumListPtr  value;
-  };
+  typedef  XmlElementTemplate<FeatureNumList>  XmlElementFeatureNumList;
   typedef  XmlElementFeatureNumList*  XmlElementFeatureNumListPtr;
-
-
-
-
-
-
-
-
 
 
 

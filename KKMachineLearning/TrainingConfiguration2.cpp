@@ -1498,7 +1498,6 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
     return  NULL;
   }
 
-
   TrainingConfiguration2Ptr subClassifer = NULL;
   if  (!subClassifierName.Empty ())
   {
@@ -2553,9 +2552,10 @@ void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
     XmlElementKKStr::WriteXML (rootDir, "RootDir", o);
 
   if  (!rootDirExpanded.Empty ())
-    XmlElementKKStr::WriteXML (rootDir, "RootDirExpanded", o);
+    XmlElementKKStr::WriteXML (rootDirExpanded, "RootDirExpanded", o);
   
   XmlElementBool::WriteXML (validateDirectories, "validateDirectories", o);
+
   trainingClasses.WriteXML ("TrainingClasses", o);
 
   if  (subClassifiers)
@@ -2577,11 +2577,192 @@ void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
 }  /* WriteXML */
 
 
+void   TrainingConfiguration2::ReadXML (XmlStream&      s,
+                                        XmlTagConstPtr  tag,
+                                        RunLog&         log
+                                       )
+
+{
+  fileDesc          = NULL;
+  fvFactoryProducer = NULL;
+  if  (mlClassesWeOwnIt)
+    delete  mlClasses;
+  mlClasses = NULL;
+  otherClass = NULL;
+  delete  noiseTrainingClass;  noiseTrainingClass = NULL;
+  delete  subClassifiers;      subClassifiers     = NULL;
+  trainingClasses.DeleteContents ();
+
+  KKStr  fvFactoryProducerStr;
+  KKStr  modelingMethodStr;
+  KKStr  noiseMLClassStr;
+  KKStr  otherClassStr;
+
+  VectorKKStr*  subClassifierNameList = NULL;
 
 
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (e)
+      {
+        KKStr varName = e->VarName ();
+        if  (typeid (*e) == typeid (XmlElementKKStr))
+        {
+          XmlElementKKStrPtr  s = dynamic_cast<XmlElementKKStrPtr> (e);
+          if  (s)
+          {
+            if  (varName.EqualIgnoreCase ("ConfigFileNameSpecified"))
+              configFileNameSpecified = *(s->Value ());
+
+            else if  (varName.EqualIgnoreCase ("configRootName"))
+              configRootName = *(s->Value ());
+
+            else if  (varName.EqualIgnoreCase ("FvFactoryProducer"))
+            {
+              fvFactoryProducerStr = *(s->Value ());
+              fvFactoryProducer = FactoryFVProducer::LookUpFactory (fvFactoryProducerStr);
+            }
+
+            else if  (varName.EqualIgnoreCase ("ModelingMethod"))
+            {
+              modelingMethodStr = *(s->Value ());
+              modelingMethod = Model::ModelTypeFromStr (modelingMethodStr);
+            }
+
+            else if  (varName.EqualIgnoreCase ("NoiseMLClass"))
+            {
+              noiseMLClassStr = *(s->Value ());
+              noiseMLClass = MLClass::CreateNewMLClass (noiseMLClassStr);
+            }
+
+            else if  (varName.EqualIgnoreCase ("otherClass"))
+            {
+              otherClassStr = *(s->Value ());
+              otherClass = MLClass::CreateNewMLClass (otherClassStr);
+            }
+
+            else if  (varName.EqualIgnoreCase ("RootDir"))
+            {
+              rootDir = *(s->Value ());
+            }
+
+            else if  (varName.EqualIgnoreCase ("RootDirExpanded"))
+            {
+              rootDirExpanded = *(s->Value ());
+            }
+          }
+        }
+
+        else if  (varName.EqualIgnoreCase  ("ExamplesPerClass"))
+        {
+          XmlElementInt32Ptr  i = dynamic_cast<XmlElementInt32Ptr> (e);
+          if  (i)
+          {
+            examplesPerClass = i->Value ();
+          }
+        }
 
 
+        else if  (varName.EqualIgnoreCase  ("MLClasses"))
+        {
+          XmlElementMLClassNameListPtr  listOfClasses = dynamic_cast<XmlElementMLClassNameListPtr> (e);
+          if  (listOfClasses)
+          {
+            delete  mlClasses;
+            mlClasses = listOfClasses->TakeOwnership ();
+          }
+        }
 
+        else if  (varName.EqualIgnoreCase  ("ModelParameters"))
+        {
+          /** KKKK
+
+          modelParameters
+
+           ***/
+        }
+
+        else if  (varName.EqualIgnoreCase  ("NoiseTrainingClass"))
+        {
+          XmlElementTrainingClassPtr  ntc = dynamic_cast<XmlElementTrainingClassPtr> (e);
+          if  (ntc)
+          {
+            delete  noiseTrainingClass;
+            noiseTrainingClass = NULL;
+            noiseTrainingClass = ntc->TakeOwnership ();
+          }
+        }
+
+        else if  (varName.EqualIgnoreCase  ("ValidateDirectories"))
+        {
+          XmlElementBoolPtr  vd = dynamic_cast<XmlElementBoolPtr> (e);
+          if  (vd)
+            validateDirectories = vd->Value ();
+        }
+
+        else if  (varName.EqualIgnoreCase  ("TrainingClasses"))
+        {
+          XmlElementTrainingClassListPtr  tcl = dynamic_cast<XmlElementTrainingClassListPtr> (e);
+          if  (tcl)
+          {
+            TrainingClassListPtr  xmlTrainClasses = tcl->TakeOwnership ();
+            if  (xmlTrainClasses)
+            {
+              trainingClasses.DeleteContents ();
+              while  (xmlTrainClasses->QueueSize () > 0)
+              {
+                TrainingClassPtr  tc = xmlTrainClasses->PopFromBack ();
+                trainingClasses.PushOnFront (tc);
+              }
+              delete  xmlTrainClasses;
+              xmlTrainClasses = NULL;
+            }
+          }
+        }
+
+        else if  (varName.EqualIgnoreCase  ("SubClassifiers"))
+        {
+          XmlElementVectorKKStrPtr  sc = dynamic_cast<XmlElementVectorKKStrPtr> (e);
+          if  (sc)
+          {
+            delete subClassifierNameList;
+            subClassifierNameList = sc->TakeOwnership ();
+          }
+        }
+      }
+    }
+
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+  
+  if  (!fvFactoryProducer)
+    fvFactoryProducer = this->DefaultFeatureVectorProducer (log);
+
+  fileDesc = fvFactoryProducer->FileDesc ();
+  
+
+  TrainingClassList::iterator  idx;
+  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  ++idx)
+  {
+    TrainingClassPtr  tc = *idx;
+    if  (!tc->SubClassifierName ().Empty ())
+    {
+      bool  errorsFound = false;
+
+      TrainingConfiguration2Ptr subClassifeir = 
+           ValidateSubClassifier (tc->SubClassifierName (), errorsFound);
+      tc->SubClassifier (subClassifeir);
+    }
+  }
+}  /* ReadXML */
+
+
+  
 
 
 TrainingConfiguration2::Xml::Xml (XmlTagPtr   tag,

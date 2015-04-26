@@ -81,7 +81,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     {
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
-        factory = XmlElementKKStr::FactoryInstance ();
+        factory = XmlElementKKStrFactoryInstance  ();
 
       endOfElementTagNames.push_back (tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);
@@ -94,7 +94,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     {
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
-        factory = XmlElementKKStr::FactoryInstance ();
+        factory = XmlElementKKStrFactoryInstance  ();
       endOfElemenReached = true;
       token = factory->ManufatureXmlElement (tag, *this, log);
       endOfElemenReached = false;
@@ -636,7 +636,7 @@ XmlElement ::~XmlElement ()
 
 
 
-const KKStr&   XmlElement::Name ()  const 
+const KKStr&  XmlElement::SectionName ()  const
 {
   if  (nameTag)
     return  nameTag->Name ();
@@ -857,67 +857,9 @@ void  XmlElementBool::WriteXML (const bool    b,
 
 XmlFactoryMacro(Bool)
 
-
-
-
-XmlElementKKStr::XmlElementKKStr (XmlTagPtr   tag,
-                                  XmlStream&  s,
-                                  RunLog&     log
-                                 ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  kkuint16  expextedLen = (kkuint16)tag->AttributeValueInt32 ("Len");
-  if  (expextedLen < 1)
-    expextedLen = 10;
-
-  value = new KKStr (expextedLen);
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
-  {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
-    {
-      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
-      value->Append (c->Content ());
-    }
-    delete  t;
-    t = s.GetNextToken (log);
-  }
-}
-                
-
-
-XmlElementKKStr::~XmlElementKKStr ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-
-KKStrPtr  XmlElementKKStr::TakeOwnership ()
-{
-  KKStrPtr  v = value;
-  value = NULL;
-  return  v;
-}
-
-
-
-void  XmlElementKKStr::WriteXML (const KKStr&  s,
-                                 const KKStr&  varName,
-                                 ostream&      o
-                                )
-{
-  s.WriteXML (varName, o);
-}
 XmlFactoryMacro(KKStr)
 
-
-
-
-
-XmlFactoryPtr  XmlElementKKStr::FactoryInstance ()
+XmlFactoryPtr  KKB::XmlElementKKStrFactoryInstance ()
 {
   return  XmlFactoryKKStr::FactoryInstance ();
 }
@@ -925,180 +867,8 @@ XmlFactoryPtr  XmlElementKKStr::FactoryInstance ()
 
 
 
-
-XmlElementVectorKKStr::XmlElementVectorKKStr (XmlTagPtr   tag,
-                                              XmlStream&  s,
-                                              RunLog&     log
-                                             ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  value = new VectorKKStr ();
-  value->ReadXML (s, tag, log);
-}
-
-
-
-
-XmlElementVectorKKStr::~XmlElementVectorKKStr ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-VectorKKStr*  XmlElementVectorKKStr::TakeOwnership ()
-{
-  VectorKKStr* v = value;
-  value = NULL;
-  return v;
-}
-
-
-void  XmlElementVectorKKStr::WriteXML (const VectorKKStr&  v,
-                                       const KKStr&        varName,
-                                       ostream&            o
-                                      )
-{
-  v.WriteXML (varName, o);
-}  /* WriteXML */
-
-
 XmlFactoryMacro(VectorKKStr)
-
-
-
-
-
-
-  
-XmlElementKKStrList::XmlElementKKStrList (XmlTagPtr   tag,
-                                          XmlStream&  s,
-                                          RunLog&     log
-                                         ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  value = new KKStrList (true);
-  value->ReadXML (s, tag, log);
-}
-                
-
-
-XmlElementKKStrList::~XmlElementKKStrList()
-{
-  delete  value;
-}
-
-
-
-KKStrListPtr  XmlElementKKStrList::TakeOwnership ()
-{
-  KKStrListPtr v = value;
-  value = NULL;
-  return v;
-}
-
-
-
-
-
-void  XmlElementKKStrList::WriteXML (const KKStrList&  v,
-                                     const KKStr&      varName,
-                                     ostream&          o
-                                    )
-{
-  v.WriteXML (varName, o);
-}
-
-
 XmlFactoryMacro(KKStrList)
-
-
-
-
-
-
-
-
-
-XmlElementKKStrListIndexed::XmlElementKKStrListIndexed (XmlTagPtr   tag,
-                                                        XmlStream&  s,
-                                                        RunLog&     log
-                                                       ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  bool  caseSensative = tag->AttributeValueByName ("CaseSensative")->ToBool ();
-  value = new KKStrListIndexed (true, caseSensative);
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
-  {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
-    {
-      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
-      KKStrParser p (*c->Content ());
-
-      while  (p.MoreTokens ())
-      {
-        KKStr  s = p.GetNextToken (",\t\n\r");
-        value->Add (new KKStr (s));
-      }
-    }
-    delete  t;
-    t = s.GetNextToken (log);
-  }
-}
-
-
-
-XmlElementKKStrListIndexed::~XmlElementKKStrListIndexed ()
-{
-  delete  value;
-}
-
-
-KKStrListIndexed*  const  XmlElementKKStrListIndexed::Value ()  const
-{
-  return value;
-}
-
-
-KKStrListIndexed*  XmlElementKKStrListIndexed::TakeOwnership ()
-{
-  KKStrListIndexed*  v = value;
-  value = NULL;
-  return v;
-}
-
-
-void  XmlElementKKStrListIndexed::WriteXML (const KKStrListIndexed& v,
-                                            const KKStr&            varName,
-                                            ostream&                o
-                                           )
-{
-  XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);
-
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-  startTag.AddAtribute ("CaseSensative", v.CaseSensative ());
-  startTag.WriteXML (o);
-
-  kkuint32 n = v.size ();
-  for  (kkuint32 x = 0;  x < n;  ++x)
-  {
-    KKStrConstPtr s = v.LookUp ((kkint32)x);
-    if  (x > 0)
-      o << "\t";
-    o << s->QuotedStr ();
-  }
-
-  XmlTag endTag ("KKStrListIndexed", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
-  o << endl;
-}
-
-
 XmlFactoryMacro(KKStrListIndexed)
 
 

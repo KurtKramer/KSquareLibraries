@@ -53,6 +53,8 @@ namespace KKMLL
   class  Attribute
   {
   public:
+    Attribute ();
+
     Attribute (const KKStr&   _name,
                AttributeType  _type,
                kkint32        _fieldNum
@@ -101,9 +103,18 @@ namespace KKMLL
     const
     KKStr&         NameUpper () const {return nameUpper;}
   
+    void           ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
     AttributeType  Type () const {return  type;}
 
     KKStr          TypeStr () const;
+
+    void           WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
     Attribute&     operator= (const Attribute&  right);
 
@@ -126,21 +137,39 @@ namespace KKMLL
   class  AttributeList: public KKQueue<Attribute>
   {
   public:
+    AttributeList ();
+
     AttributeList (bool owner);
 
     ~AttributeList ();
 
+
     AttributeTypeVectorPtr  CreateAttributeTypeVector ()  const;
+
 
     const
     AttributePtr  LookUpByName (const KKStr&  attributeName)  const;
 
+
     kkint32 MemoryConsumedEstimated ()  const;
+
 
     void  PushOnBack   (AttributePtr  attribute);
 
+
     void  PushOnFront  (AttributePtr  attribute);
 
+
+    void  ReadXML (XmlStream&      s,
+                  XmlTagConstPtr  tag,
+                  RunLog&         log
+                 );
+
+
+    void  WriteXML (const KKStr&  varName,
+                   ostream&      o
+                  )  const;
+ 
     /**
      *@brief  Determines if two different attribute lists are the same; compares each respective attribute, name and type.                                                
      */
@@ -167,66 +196,13 @@ namespace KKMLL
 
 
 
-
-
-  class  XmlElementAttribute:  public  XmlElement
-  {
-  public:
-    XmlElementAttribute (XmlTagPtr   tag,
-                         XmlStream&  s,
-                         RunLog&     log
-                        );
-                
-    virtual  ~XmlElementAttribute ();
-
-    AttributePtr  Value ()  const;
-
-    AttributePtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const Attribute&  attribute,
-                    const KKStr&      varName,
-                    ostream&          o
-                   );
-  private:
-    AttributePtr  value;
-  };
+  typedef  XmlElementTemplate<Attribute>  XmlElementAttribute;
   typedef  XmlElementAttribute*  XmlElementAttributePtr;
 
 
 
-  
-
-  class  XmlElementAttributeList:  public  XmlElement
-  {
-  public:
-    XmlElementAttributeList (XmlTagPtr   tag,
-                             XmlStream&  s,
-                             RunLog&     log
-                            );
-                
-    virtual  ~XmlElementAttributeList ();
-
-    AttributeListPtr  Value ()  const;
-
-    AttributeListPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const AttributeList&  attributeList,
-                    const KKStr&          varName,
-                    ostream&              o
-                   );
-  private:
-    AttributeListPtr  value;
-  };
+  typedef  XmlElementTemplate<AttributeList>  XmlElementAttributeList;
   typedef  XmlElementAttributeList*  XmlElementAttributeListPtr;
-
-
-
-
-
-
-
 
 
 }  /* namespace KKMLL */

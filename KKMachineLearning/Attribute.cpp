@@ -30,6 +30,16 @@ using namespace KKB;
 using namespace KKMLL;
 
 
+Attribute::Attribute ():
+    fieldNum           (-1),
+    name               (),
+    nameUpper          (),
+    nominalValuesUpper (NULL),
+    type               (AttributeType::NULLAttribute)
+
+{
+}
+
 
 Attribute::Attribute (const KKStr&   _name,
                       AttributeType  _type,
@@ -236,113 +246,78 @@ KKStr  Attribute::TypeStr () const
 
 
 
-XmlElementAttribute::XmlElementAttribute (XmlTagPtr   tag,
-                                          XmlStream&  s,
-                                          RunLog&     log
-                                         ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  AttributeType  attributeType = AttributeType::NULLAttribute;
-  kkint32        fieldNum      = 0;
-  KKStr          name          = "";
-
-  kkint32  c = tag->AttributeCount ();
-  for  (kkint32 x = 0;  x < c;  ++x)
-  {
-    KKStrConstPtr n = tag->AttributeNameByIndex (x);
-    KKStrConstPtr v = tag->AttributeValueByIndex (x);
-
-    if  (n->EqualIgnoreCase ("Type"))
-      attributeType = AttributeTypeFromStr (v);
-
-    else if  (n->EqualIgnoreCase ("FieldNum"))
-      fieldNum = v->ToInt32 ();
-
-    else if  (n->EqualIgnoreCase ("Name"))
-      name= v;
-  }
-
-  value = new Attribute (name, attributeType, fieldNum);
-
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
-  {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
-    {
-      XmlContentPtr  content = dynamic_cast<XmlContentPtr> (t);
-      KKStrParser p (*content->Content ());
-      KKStr  nextName = p.GetNextToken (",\t\n\\r");
-      bool alreadyEixists = false;
-      value->AddANominalValue (nextName, alreadyEixists);
-    }
-  };
-}
-typedef  XmlElementAttribute*  XmlElementAttributePtr;
-
-
-
-
-XmlElementAttribute::~XmlElementAttribute ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-AttributePtr  XmlElementAttribute::Value ()  const
-{
-  return  value;
-}
-
-
-AttributePtr  XmlElementAttribute::TakeOwnership ()
-{
-  AttributePtr  v = value;
-  value = NULL;
-  return  v;
-}
-
-
-
-void  XmlElementAttribute::WriteXML (const Attribute&  a,
-                                     const KKStr&      varName,
-                                     ostream&          o
-                                    )
+void  Attribute::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                          )  const
 {
   XmlTag::TagTypes  startTagType = XmlTag::TagTypes::tagEmpty;
-  if  ((a.Type () == KKMLL::AttributeType::NominalAttribute) ||
-       (a.Type () == KKMLL::AttributeType::SymbolicAttribute)
+  if  ((type == KKMLL::AttributeType::NominalAttribute) ||
+       (type == KKMLL::AttributeType::SymbolicAttribute)
       )
     startTagType  = XmlTag::TagTypes::tagStart;
 
   XmlTag  startTag ("Attribute", startTagType);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
-  startTag.AddAtribute ("Name",a.Name ());
-  startTag.AddAtribute ("Type", a.TypeStr ());
-  startTag.AddAtribute ("FieldNum", a.FieldNum ());
+  startTag.AddAtribute ("Name",     name);
+  startTag.AddAtribute ("Type",     TypeStr ());
+  startTag.AddAtribute ("FieldNum", fieldNum);
   startTag.WriteXML (o);
 
   if  (startTagType == XmlTag::TagTypes::tagStart)
   {
-    // Need to write the nominal or symbolic fields
-    for  (kkint32  nominalIdx = 0;  nominalIdx < a.Cardinality ();  ++nominalIdx)
-    {
-      if  (nominalIdx > 0)
-        o << "\t";
-      o << a.GetNominalValue (nominalIdx);
-    }
+    VectorKKStr  nominalValues;
+    for  (kkint32  nominalIdx = 0;  nominalIdx < Cardinality ();  ++nominalIdx)
+      nominalValues.push_back (GetNominalValue (nominalIdx));
+    nominalValues.WriteXML ("NominalValues", o);
+  }
+  XmlTag  endTag ("Attribute", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+}  /* WriteXML */
 
-    XmlTag  endTag ("Attribute", XmlTag::TagTypes::tagEnd);
-    endTag.WriteXML (o);
+
+
+
+void  Attribute::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         )
+{
+  delete  nominalValuesUpper;
+  nominalValuesUpper = NULL;
+  type = AttributeTypeFromStr (tag->AttributeValueKKStr ("Type"));
+  fieldNum = tag->AttributeValueInt32 ("FieldNum");
+  name = tag->AttributeValueKKStr ("Name");
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  ((t->SectionName ().EqualIgnoreCase ("NominalValues"))  &&  (typeid(*t) == typeid(XmlElementVectorKKStr)))
+    {
+      delete  nominalValuesUpper;
+      nominalValuesUpper = new KKStrListIndexed (true,   // true == nominalValuesUpper will own its contents.
+                                                 false   // false = Not Case Sensitive.
+                                                );
+      XmlElementVectorKKStrPtr v = dynamic_cast<XmlElementVectorKKStrPtr>(t);
+      if  ((v != NULL)  &&  (v->Value () != NULL))
+      {
+        VectorKKStr::const_iterator  idx;
+        bool  alreadyEixists = false;
+        for (idx = v->Value ()->begin ();  idx != v->Value ()->end ();  ++idx)
+          AddANominalValue (*idx, alreadyEixists);
+      }
+    }
   }
 }
-    
 
 
 
 
+
+AttributeList::AttributeList ():
+  KKQueue<Attribute> (true)
+{
+}
 
 
 
@@ -434,8 +409,6 @@ AttributeTypeVectorPtr  AttributeList::CreateAttributeTypeVector ()  const
 }  /* CreateAttributeTypeVector */
 
 
-XmlFactoryMacro(Attribute)
-
 
 
 KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
@@ -518,15 +491,37 @@ bool  AttributeList::operator!= (const AttributeList&  right)  const
 
 
 
-
-XmlElementAttributeList::XmlElementAttributeList (XmlTagPtr   tag,
-                                                  XmlStream&  s,
-                                                  RunLog&     log
-                                                 ):
-  XmlElement (tag, s, log),
-  value (NULL)
+void  AttributeList::WriteXML (const KKStr&  varName,
+                               ostream&      o
+                              )  const
 {
-  value = new AttributeList (true);
+  XmlTag  startTag ("AttributeList",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  AttributeList::const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  ++idx)
+  {
+    AttributePtr  attribute = *idx;
+    attribute->WriteXML ("", o);
+  }
+  XmlTag  endTag ("AttributeList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+
+void  AttributeList::ReadXML (XmlStream&      s,
+                              XmlTagConstPtr  tag,
+                              RunLog&         log
+                             )
+{
+  DeleteContents ();
+  Owner (true);
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
@@ -534,53 +529,15 @@ XmlElementAttributeList::XmlElementAttributeList (XmlTagPtr   tag,
     {
       XmlElementAttributePtr  attrToken = dynamic_cast<XmlElementAttributePtr> (t);
       if  (attrToken->Value ())
-        value->PushOnBack (attrToken->TakeOwnership ());
+        PushOnBack (attrToken->TakeOwnership ());
     }
     delete  t;
     t = s.GetNextToken (log);
   }
 }
- 
-
-XmlElementAttributeList::~XmlElementAttributeList ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-AttributeListPtr  XmlElementAttributeList::Value ()  const
-{
-  return  value;
-}
-
-
-AttributeListPtr  XmlElementAttributeList::TakeOwnership ()
-{
-  AttributeListPtr  v = value;
-  value = NULL;
-  return  NULL;
-}
 
 
 
-void  XmlElementAttributeList::WriteXML (const AttributeList&  attributeList,
-                                         const KKStr&          varName,
-                                         ostream&              o
-                                        )
-{
-  XmlTag  startTag ("AttributeList", XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-  AttributeList::const_iterator  idx;
-  for  (idx = attributeList.begin ();  idx != attributeList.end ();  ++idx)
-  {
-    AttributePtr  attribute = *idx;
-    XmlElementAttribute::WriteXML (*attribute, KKStr::EmptyStr (), o);
-  }
-  XmlTag  endTag ("AttributeList", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
-}
 
-
+XmlFactoryMacro(Attribute)
 XmlFactoryMacro(AttributeList)

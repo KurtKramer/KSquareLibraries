@@ -291,6 +291,11 @@ namespace KKMLL
 
     kkint32                NumOfFeaturesAfterEncoding ()  const;
 
+    virtual void           ReadXML (XmlStream&      s,
+                                    XmlTagConstPtr  tag,
+                                    RunLog&         log
+                                   );
+
     virtual void           Save (const KKStr& fileName)  const;
 
     virtual void           Save (ostream&  o)  const;

@@ -637,6 +637,7 @@ void  NormalizationParms::WriteXML (const KKStr&  varName,
 
 
 void  NormalizationParms::ReadXML (XmlStream&  s,
+                                   XmlTagPtr   tag,
                                    RunLog&     log
                                   )
 {
@@ -647,7 +648,7 @@ void  NormalizationParms::ReadXML (XmlStream&  s,
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-      const KKStr&  className = e->Name ();
+      const KKStr&  className = e->SectionName ();
       const KKStr&  varName = e->VarName ();
       if  (varName.EqualIgnoreCase ("NumOfFeatures"))
       {
@@ -862,54 +863,6 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
   return result;
 }  /* ToNormalized */
 
-
-
-
-
-XmlElementNormalizationParms::XmlElementNormalizationParms (XmlTagPtr   tag,
-                                                            XmlStream&  s,
-                                                            RunLog&     log
-                                                           ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  value = new NormalizationParms ();
-  value->ReadXML (s, log);
-}
-
-
-                
-XmlElementNormalizationParms::~XmlElementNormalizationParms ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-
-NormalizationParmsPtr  XmlElementNormalizationParms::Value ()  const
-{
-  return  value;
-}
-
-
-
-NormalizationParmsPtr  XmlElementNormalizationParms::TakeOwnership ()
-{
-  NormalizationParmsPtr   v = value;
-  value = NULL;
-  return  v;
-}
-    
-
-
-void  XmlElementNormalizationParms::WriteXML (const NormalizationParms&  normPatms,
-                                              const KKStr&               varName,
-                                              ostream&                   o
-                                             )
-{
-  normPatms.WriteXML (varName, o);
-}
 
 
 XmlFactoryMacro(NormalizationParms)

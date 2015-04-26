@@ -125,6 +125,7 @@ namespace KKMLL
 
 
     void  ReadXML (XmlStream&  s,
+                   XmlTagPtr   tag,
                    RunLog&     log
                   );
 
@@ -180,32 +181,9 @@ namespace KKMLL
   #define  _NormalizationParms_Defined_
 
 
-  
-  class  XmlElementNormalizationParms:  public  XmlElement
-  {
-  public:
-    XmlElementNormalizationParms (XmlTagPtr   tag,
-                                  XmlStream&  s,
-                                  RunLog&     log
-                                 );
-                
-    virtual  ~XmlElementNormalizationParms ();
 
-    NormalizationParmsPtr  Value ()  const;
-
-    NormalizationParmsPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const NormalizationParms&  normParms,
-                    const KKStr&               varName,
-                    ostream&                   o
-                   );
-  private:
-    NormalizationParmsPtr  value;
-  };
+  typedef  XmlElementTemplate<NormalizationParms>  XmlElementNormalizationParms;
   typedef  XmlElementNormalizationParms*  XmlElementNormalizationParmsPtr;
-
-
 
 
 }  /* KKMLL */

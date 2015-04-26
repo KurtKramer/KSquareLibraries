@@ -80,11 +80,12 @@ namespace KKMLL
     void  AddDirectory    (const KKStr&  _directory);
     void  AddDirectories  (const VectorKKStr&  _directories);
 
-    void  CountFactor       (float         _countFactor)       {countFactor       = _countFactor;}
-    void  FeatureFileName   (const KKStr&  _featureFileName)   {featureFileName   = _featureFileName;}
-    void  MLClass           (MLClassPtr    _mlClass)           {mlClass           = _mlClass;}
-    void  SubClassifierName (const KKStr& _subClassifierName)  {subClassifierName = _subClassifierName;}
-    void  Weight            (float         _weight)            {weight            = _weight;}
+    void  CountFactor       (float                      _countFactor)        {countFactor       = _countFactor;}
+    void  FeatureFileName   (const KKStr&               _featureFileName)    {featureFileName   = _featureFileName;}
+    void  MLClass           (MLClassPtr                 _mlClass)            {mlClass           = _mlClass;}
+    void  SubClassifier     (TrainingConfiguration2Ptr  _subClassifier)      {subClassifier     = _subClassifier;}
+    void  SubClassifierName (const KKStr&               _subClassifierName)  {subClassifierName = _subClassifierName;}
+    void  Weight            (float                      _weight)             {weight            = _weight;}
 
     void  Directory       (kkuint32      idx, 
                            const KKStr&  directory
@@ -179,61 +180,12 @@ namespace KKMLL
 
 
 
-  class  XmlElementTrainingClass:  public  XmlElement
-  {
-  public:
-    XmlElementTrainingClass (XmlTagPtr   tag,
-                             XmlStream&  s,
-                             RunLog&     log
-                            );
-                
-    virtual  ~XmlElementTrainingClass ();
-
-    TrainingClassPtr  Value ()  const;
-
-    TrainingClassPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const TrainingClass&  tc,
-                    const KKStr&          varName,
-                    ostream&              o
-                   );
-
-  private:
-    TrainingClassPtr  value;
-  };
+  typedef  XmlElementTemplate<TrainingClass>  XmlElementTrainingClass;
   typedef  XmlElementTrainingClass*  XmlElementTrainingClassPtr;
 
 
-
-
-  class  XmlElementTrainingClassList:  public  XmlElement
-  {
-  public:
-    XmlElementTrainingClassList (XmlTagPtr   tag,
-                                 XmlStream&  s,
-                                 RunLog&     log
-                                );
-                
-    virtual  ~XmlElementTrainingClassList ();
-
-    TrainingClassListPtr  Value ()  const;
-
-    TrainingClassListPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const TrainingClassList&  tc,
-                    const KKStr&              varName,
-                    ostream&                  o
-                   );    
-  private:
-    kkuint32              count;
-    TrainingClassListPtr  value;
-  };
+  typedef  XmlElementTemplate<TrainingClassList>  XmlElementTrainingClassList;
   typedef  XmlElementTrainingClassList*  XmlElementTrainingClassListPtr;
-
-
-
 
 }  /* KKMLL */
 

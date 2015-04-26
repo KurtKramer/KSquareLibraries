@@ -8,6 +8,7 @@
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStrParser.h"
@@ -45,6 +46,21 @@ FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
     AddFeature (otherFeatureNums[x]);
 }
 
+
+
+
+FeatureNumList::FeatureNumList (FeatureNumList  &&featureNumList):
+  featureNums               (featureNumList.featureNums),
+  featureNumsAllocatedSize  (featureNumList.featureNumsAllocatedSize),
+  maxFeatureNum             (featureNumList.maxFeatureNum),
+  numOfFeatures             (featureNumList.numOfFeatures)
+
+{
+  featureNumList.featureNums              = NULL;
+  featureNumList.featureNumsAllocatedSize = 0;
+  featureNumList.maxFeatureNum            = 0;
+  featureNumList.numOfFeatures            = 0;
+}
 
 
 
@@ -729,7 +745,7 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-      const KKStr&  className = e->Name ();
+      const KKStr&  className = e->SectionName ();
       const KKStr&  varName = e->VarName ();
       if  (varName.EqualIgnoreCase ("MaxFeatureNum"))
       {
@@ -768,13 +784,34 @@ FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
   maxFeatureNum = _features.MaxFeatureNum ();
   featureNums = new kkuint16[numOfFeatures];
   featureNumsAllocatedSize = numOfFeatures;
-  const kkuint16*  rightFeatureNums = _features.FeatureNums ();
 
   for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
-    featureNums[x] = _features[x];
+    featureNums[x] = _features.featureNums[x];
 
   return  *this;
 }  /* operator= */
+
+
+
+
+
+FeatureNumList&  FeatureNumList::operator=  (FeatureNumList&&  _features)
+{
+  delete featureNums;
+  featureNums              = _features.featureNums;
+  numOfFeatures            = _features.numOfFeatures;
+  maxFeatureNum            = _features.maxFeatureNum;
+  featureNumsAllocatedSize = _features.featureNumsAllocatedSize;
+
+  _features.featureNums              = NULL;
+  _features.numOfFeatures            = 0;
+  _features.maxFeatureNum            = 0;
+  _features.featureNumsAllocatedSize = 0;
+
+  return  *this;
+}
+
+
 
 
 
@@ -1093,43 +1130,5 @@ FeatureNumList  FeatureNumList::Complement ()  const
 
 
 
+XmlFactoryMacro(FeatureNumList)
 
-
-XmlElementFeatureNumList::XmlElementFeatureNumList (XmlTagPtr   tag,
-                                                    XmlStream&  s,
-                                                    RunLog&     log
-                                                   ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-  value = new FeatureNumList ();
-  value->ReadXML (s, tag, log);
-
-}
- 
-
-
-XmlElementFeatureNumList::~XmlElementFeatureNumList ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-
-FeatureNumListPtr  XmlElementFeatureNumList::TakeOwnership ()
-{
-  FeatureNumListPtr  v = value;
-  value = NULL;
-  return  v;
-}
-
-
-
-void  XmlElementFeatureNumList::WriteXML (const FeatureNumList&  fnl,
-                                          const KKStr&           varName,
-                                          ostream&               o
-                                         )
-{
-  fnl.WriteXML (varName, o);
-}

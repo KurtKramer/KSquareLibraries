@@ -107,7 +107,7 @@ namespace  KKB
 
     KKStr (const KKStr&  str);
 
-    //KKStr (KKStr&&  str);  /**< Move Constructor */
+    KKStr (KKStr&&  str);  /**< Move Constructor */
 
     KKStr (KKStrConstPtr str);
 
@@ -221,7 +221,7 @@ namespace  KKB
     kkint32  CompareIgnoreCase (const char* s2)  const;
 
 
-    /**KKStrList
+    /**
      *@brief Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater.
      */
     static  kkint32  CompareStrings (const KKStr&  s1, 
@@ -880,20 +880,6 @@ namespace  KKB
                    );
 
 
-  template<typename T>
-  KKStr  VectorToDelimitedStr (std::vector<T>  v,
-                               char            delimiter
-                              )
-  {
-    KKStr  s (10 * v.size ());
-    for  (kkint32 x = 0;  x < v.size ();  x++)
-    {
-      if  (x > 0)
-        s << ",";
-      s << v[x];
-    }
-    return  s;
-  }  /* VectorToDelimitedStr */
 
 
 
@@ -902,8 +888,9 @@ namespace  KKB
   public:
     typedef  KKStrList*  KKStrListPtr;
 
+    KKStrList ();
 
-    KKStrList (bool owner = false);
+    KKStrList (bool owner);
 
 
     /**
@@ -964,6 +951,8 @@ namespace  KKB
   class  KKStrListIndexed
   {
   public:
+    KKStrListIndexed ();
+
     KKStrListIndexed (bool _owner,
                       bool _caseSensitive
                      );
@@ -989,6 +978,8 @@ namespace  KKB
 
     kkint32 Delete (KKStr&  s);
 
+    void  DeleteContents ();
+
     kkint32 LookUp (const KKStr&  s)  const;
 
     kkint32 LookUp (KKStrPtr s)  const;
@@ -997,9 +988,19 @@ namespace  KKB
 
     kkint32 MemoryConsumedEstimated ()  const;
 
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
     kkuint32 size ()  const;
 
     KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
     bool  operator== (const KKStrListIndexed&  right);
 

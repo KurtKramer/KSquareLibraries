@@ -555,6 +555,8 @@ KKStr::KKStr (const char*  str):
 
 
 
+
+
 /**
  *@brief Copy Constructor.
  */
@@ -593,17 +595,18 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
-/*
+
+
+
  KKStr::KKStr (KKStr&&  str):
     allocatedSize (str.allocatedSize),
-    len           (str.len)
+    len           (str.len),
     val           (str.val)
 {
   str.allocatedSize = 0;
   str.len           = 0;
   str.val           = NULL;
 }
-*/
 
 
 
@@ -4400,6 +4403,13 @@ void  KKStr::ReadXML (XmlStream&      s,
 
 
 
+KKStrList::KKStrList ():
+  KKQueue<KKStr> (false),
+  sorted (false)
+{
+}
+
+
 KKStrList::KKStrList (bool   owner):
   KKQueue<KKStr> (owner),
   sorted (false)
@@ -4705,8 +4715,8 @@ KKStrListPtr  KKStrList::DuplicateListAndContents ()  const
 
 
 kkint32  LocateLastOccurrence (const char*   str,
-                             char          ch
-                            )
+                               char          ch
+                              )
 {
   if  (!str)
     return -1;
@@ -5245,6 +5255,20 @@ bool  KKStrListIndexed::KKStrPtrComp::operator() (const KKStrConstPtr& lhs, cons
 
 
 
+KKStrListIndexed::KKStrListIndexed ():
+  comparator              (true),
+  indexIndex              (),
+  memoryConsumedEstimated (0),
+  nextIndex               (0),
+  owner                   (true),
+  strIndex                (NULL)
+{
+  strIndex = new StrIndex (comparator);
+  memoryConsumedEstimated = sizeof (*this);
+}
+
+
+
 
 KKStrListIndexed::KKStrListIndexed (bool _owner,
                                     bool _caseSensitive
@@ -5287,6 +5311,15 @@ KKStrListIndexed::KKStrListIndexed (const KKStrListIndexed&  list):
 
 KKStrListIndexed::~KKStrListIndexed ()
 {
+  DeleteContents ();
+  indexIndex.clear ();
+  strIndex->clear ();
+}
+
+
+
+void  KKStrListIndexed::DeleteContents ()
+{
   if  (owner)
   {
     StrIndex::iterator  idx;
@@ -5300,6 +5333,7 @@ KKStrListIndexed::~KKStrListIndexed ()
   delete  strIndex;
   strIndex = NULL;
 }
+
 
 
 kkuint32  KKStrListIndexed::size ()  const
@@ -5382,29 +5416,6 @@ kkint32  KKStrListIndexed::Add (KKStrPtr  s)
 
 
 
-/*
- kkint32  KKStrListIndexed::Add (const KKStr&  s)
- {
-  StrIndex::iterator  idx;
-  idx = strIndex->find (&s);
-  if  (idx != strIndex->end ())
-    return -1;
-
-  kkint32  index = nextIndex;
-  ++nextIndex;
-
-  KKStrPtr  newS = new KKStr (s);
-
-  strIndex->insert (StrIndexPair (newS, index));
-  indexIndex.insert (IndexIndexPair (index, newS));
-
-  if  (owner)
-    memoryConsumedEstimated += newS->MemoryConsumedEstimated ();
-  memoryConsumedEstimated += 8;
-  return  index;
- }
- */
-
 
 
 kkint32   KKStrListIndexed::Delete (KKStr&  s)
@@ -5473,6 +5484,36 @@ KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
 }
 
 
+void  KKStrListIndexed::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
+{
+  DeleteContents ();
+  bool  caseSensative = tag->AttributeValueByName ("CaseSensative")->ToBool ();
+  comparator.caseSensitive = caseSensative;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      KKStrParser p (*c->Content ());
+
+      while  (p.MoreTokens ())
+      {
+        KKStr  s = p.GetNextToken (",\t\n\r");
+        Add (new KKStr (s));
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
 KKStr  KKStrListIndexed::ToTabDelString ()  const
 {
   KKStr  s (indexIndex.size () * 20);
@@ -5486,6 +5527,30 @@ KKStr  KKStrListIndexed::ToTabDelString ()  const
   return s;
 }
 
+
+void  KKStrListIndexed::WriteXML (const KKStr&            varName,
+                                  ostream&                o
+                                 )  const
+{
+  XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);
+
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("CaseSensative", caseSensative);
+  startTag.WriteXML (o);
+
+  kkuint32 n = size ();
+  for  (kkuint32 x = 0;  x < n;  ++x)
+  {
+    KKStrConstPtr s = LookUp ((kkint32)x);
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (s->QuotedStr (), o);
+  }
+
+  XmlTag endTag ("KKStrListIndexed", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
 
 
 

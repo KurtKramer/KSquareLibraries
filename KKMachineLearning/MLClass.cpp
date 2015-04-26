@@ -376,26 +376,6 @@ KKStr  MLClass::ToString ()  const
 
 
 
-/*
-void  MLClass::ProcessRawData (KKStr&  _data)
-{
-  name = _data.ExtractToken (" ,\n\t\r");
-  name.TrimRight ();
-  name.TrimLeft ();
-
-  upperName = name;
-  upperName.Upper ();
-
-  unDefined = upperName.Empty ()           ||  
-             (upperName == "UNKNOWN")      ||  
-             (upperName == "UNDEFINED")    ||  
-             (upperName == "NOISE")        ||
-             (upperName == "NONPLANKTON");
-} /// / ProcessRawData 
-*/
-
-
-
 KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
@@ -494,6 +474,38 @@ MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint16 level)  const
 
 
 
+void  MLClass::WriteXML (const KKStr&    varName,
+                         ostream&        o
+                       )  const
+{
+  XmlTag startTag ("MLClass", XmlTag::TagTypes::tagEmpty);
+  if  (!varName.Empty())
+    startTag.AddAtribute ("VarName", varName);
+  
+  startTag.AddAtribute ("Name",  name);
+  if  (parent != NULL)
+    startTag.AddAtribute ("Parent", parent->Name ());
+
+  if  (classId >= 0)
+    startTag.AddAtribute ("ClassId", classId);
+
+  if  (countFactor != 0.0f)
+    startTag.AddAtribute ("CountFactor", countFactor);
+
+  if  (description.Empty ())
+    startTag.AddAtribute ("Description", description);
+
+  startTag.AddAtribute ("Mandatory",        mandatory);
+  startTag.AddAtribute ("StoredOnDataBase", storedOnDataBase);
+  startTag.AddAtribute ("Summarize",        summarize);
+  startTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
 
 XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
                                       XmlStream&  s,
@@ -563,27 +575,7 @@ void  XmlElementMLClass::WriteXML (const MLClass&  mlClass,
                                    ostream&        o
                                   )
 {
-  XmlTag startTag ("MLClass", XmlTag::TagTypes::tagEmpty);
-  if  (!varName.Empty())
-    startTag.AddAtribute ("VarName", varName);
-  
-  startTag.AddAtribute ("Name",             mlClass.Name             ());
-  if  (mlClass.Parent () != NULL)
-    startTag.AddAtribute ("Parent", mlClass.ParentName ());
-
-  if  (mlClass.ClassId () >= 0)
-    startTag.AddAtribute ("ClassId", mlClass.ClassId ());
-
-  if  (mlClass.CountFactor () != 0.0f)
-    startTag.AddAtribute ("CountFactor", mlClass.CountFactor ());
-
-  if  (!mlClass.Description ().Empty ())
-    startTag.AddAtribute ("Description", mlClass.Description ());
-
-  startTag.AddAtribute ("Mandatory",        mlClass.Mandatory        ());
-  startTag.AddAtribute ("StoredOnDataBase", mlClass.StoredOnDataBase ());
-  startTag.AddAtribute ("Summarize",        mlClass.Summarize        ());
-  startTag.WriteXML (o);
+  mlClass.WriteXML (varName, o);
 }
 
 
@@ -1014,6 +1006,23 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
 
 
 
+
+KKStr  MLClassList::ToCommaDelimitedQuotedStr ()  const
+{
+  KKStr s (10 * QueueSize ());
+  for (kkint32 i = 0;  i < QueueSize ();  i++)
+  {
+    if  (i > 0)  s << ",";
+    s << IdxToPtr (i)->Name ().QuotedStr ();
+  }
+
+  return  s;
+}  /* ToCommaDelimitedQuotedStr */
+
+
+
+
+
 MLClassListPtr  MLClassList::ExtractSummarizeClasses ()  const
 {
   MLClassListPtr  result = new MLClassList ();
@@ -1316,6 +1325,30 @@ void   MLClassList::WriteXML (std::ostream&  o)  const
 
 
 
+void  MLClassList::WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const
+{
+  XmlTag startTag ("MLClassList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)size ());
+
+  MLClassList::const_iterator  idx;
+  for  (idx = begin ();  idx != end ();  idx++)
+  {
+    MLClassPtr  c = *idx;
+    c->WriteXML ("", o);
+  }
+
+  XmlTag  endtag ("MLClassList", XmlTag::TagTypes::tagEnd);
+  endtag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
 
 bool  MLClassList::operator== (const MLClassList&  right)  const
 {
@@ -1460,9 +1493,10 @@ XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr   tag,
       if  (s)
       {
         KKStrParser p (*s);
+        p.TrimWhiteSpace (" ");
         while  (p.MoreTokens ())
         {
-          KKStr className = p.GetNextToken (",\t\n\r");
+          KKStr className = p.GetNextToken (",\t");
           if  (!className.Empty ())
             value->PushOnBack (MLClass::CreateNewMLClass (className));
         }
@@ -1508,15 +1542,22 @@ void  XmlElementMLClassNameList::WriteXML (const MLClassList&  mlClassList,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
-  o << mlClassList.ToTabDelimitedStr ();
+
+  XmlContent::WriteXml (mlClassList.ToCommaDelimitedQuotedStr (), o);
+
   XmlTag  endTag ("MLClassNameList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }
  
-
-
 XmlFactoryMacro(MLClassNameList)
+
+
+
+
+
+
+
 
 
 MLClassIndexList::MLClassIndexList ():
