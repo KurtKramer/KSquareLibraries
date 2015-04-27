@@ -392,8 +392,8 @@ void  TrainingClassList::WriteXML (const KKStr&  varName,
 
 
 
-void  TrainingClassList::ReadXML (XmlTagPtr   tag,
-                                  XmlStream&  s,
+void  TrainingClassList::ReadXML (XmlStream&  s,
+                                  XmlTagPtr   tag,
                                   RunLog&     log
                                  )
 {

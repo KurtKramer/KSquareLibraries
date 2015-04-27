@@ -731,7 +731,7 @@ KKStr::KKStr (const std::string&  s):
 
 
 
-/** @brief  Constructs a KKStr instance from a substr of 'src'.  */
+/** @brief  Constructs a KKStr instance from a sub-string of 'src'.  */
 KKStr::KKStr (const char*  src,
               kkuint32     startPos,
               kkuint32     endPos
@@ -1186,7 +1186,7 @@ bool   KKStr::StartsWith (const KKStr& value,
 
 
 bool   KKStr::StartsWith (const char* value,   
-                          bool ignoreCase
+                          bool        ignoreCase
                          )  const
 {
   if  (value == NULL)
@@ -4107,6 +4107,28 @@ KKStr&  KKStr::operator<< (const KKStr&  right)
   Append (right.Str ());
   return  *this;
 }
+
+
+KKStr&  KKStr::operator<< (KKStr&&  right)
+{
+  if  (len < 1)
+  {
+    val           = right.val;
+    len           = right.len;
+    allocatedSize = right.allocatedSize;
+
+    right.val           = NULL;
+    right.len           = 0;
+    right.allocatedSize = 0;
+  }
+  else
+  {
+    Append (right.Str ());
+  }
+  
+  return  *this;
+}
+
 
 
 

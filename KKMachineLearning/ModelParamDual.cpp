@@ -28,8 +28,8 @@ using namespace KKMLL;
 
 
 
-ModelParamDual::ModelParamDual  (RunLog& _log):
-  ModelParam (_log),
+ModelParamDual::ModelParamDual  ():
+  ModelParam (),
   configFileName1        (),
   configFileName2        (),
   fullHierarchyMustMatch (false),
@@ -43,11 +43,10 @@ ModelParamDual::ModelParamDual  (RunLog& _log):
 
 ModelParamDual::ModelParamDual  (const KKStr&  _configFileName1,
                                  const KKStr&  _configFileName2,
-                                 bool          _fullHierarchyMustMatch,
-                                 RunLog&       _log
+                                 bool          _fullHierarchyMustMatch
                                 ):
 
-  ModelParam             (_log),
+  ModelParam             (),
   configFileName1        (_configFileName1),
   configFileName2        (_configFileName2),
   fullHierarchyMustMatch (_fullHierarchyMustMatch),
@@ -125,7 +124,8 @@ ModelParamDualPtr  ModelParamDual::Duplicate ()  const
 
 void  ModelParamDual::ParseCmdLineParameter (const KKStr&  parameter,
                                              const KKStr&  value,
-                                             bool&         parameterUsed
+                                             bool&         parameterUsed,
+                                             RunLog&       log
                                             )
 {
   if  (parameter.EqualIgnoreCase ("-ConfigFileName1") ||
@@ -206,7 +206,7 @@ void  ModelParamDual::ParseCmdLineParameter (const KKStr&  parameter,
 /**
  @brief  // Will get called after the entire parameter string has been processed.
  */
-void   ModelParamDual::ParseCmdLinePost ()
+void   ModelParamDual::ParseCmdLinePost (RunLog&   log)
 {
   if  (configFileName1.Empty ()  ||  configFileName2.Empty ())
   {
@@ -221,7 +221,6 @@ void   ModelParamDual::ParseCmdLinePost ()
 */
 KKStr   ModelParamDual::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParamDual::ToCmdLineStr - Entered." << endl;
   KKStr  cmdStr (300);
   cmdStr = ModelParam::ToCmdLineStr ();
 
@@ -247,8 +246,6 @@ KKStr   ModelParamDual::ToCmdLineStr () const
 
 void  ModelParamDual::WriteSpecificImplementationXML (ostream&  o)  const
 {
-  log.Level (20) << "ModelParamDual::WriteSpecificImplementationXML XML to ostream." << endl;
-
   o << "<ModelParamDual>"  << endl;
   o << "ConfigFileName1"        << "\t" << configFileName1 << endl;
   o << "ConfigFileName2"        << "\t" << configFileName2 << endl;
@@ -262,7 +259,8 @@ void  ModelParamDual::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 void  ModelParamDual::ReadSpecificImplementationXML (istream&     i,
-                                                     FileDescPtr  fileDesc
+                                                     FileDescPtr  fileDesc,
+                                                     RunLog&      log
                                                     )
 {
   log.Level (20) << "ModelParamDual::ReadSpecificImplementationXML from XML file." << endl;
@@ -288,7 +286,7 @@ void  ModelParamDual::ReadSpecificImplementationXML (istream&     i,
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i, fileDesc);
+      ModelParam::ReadXML (i, fileDesc, log);
     }
 
     else if  (field.EqualIgnoreCase ("ConfigFileName1"))
@@ -328,4 +326,65 @@ void  ModelParamDual::ReadSpecificImplementationXML (istream&     i,
 }  /* ReadSpecificImplementationXML */
 
 
+
+
+void  ModelParamDual::WriteXML (const KKStr&  varName,
+                                ostream&      o
+                               )  const
+{
+  XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteXMLFields (o);
+
+  configFileName1.WriteXML ("ConfigFileName1", o);
+  configFileName2.WriteXML ("ConfigFileName1", o);
+
+  XmlElementBool::WriteXML (fullHierarchyMustMatch, "FullHierarchyMustMatch", o);
+  if  (otherClass)
+    otherClass->WriteXML ("OtherClass", o);
+
+  ProbFusionMethodToStr (probFusionMethod).WriteXML ("ProbFusionMethod", o);
+
+  XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelParamDual::ReadXML (XmlStream&      s,
+                               XmlTagConstPtr  tag,
+                               RunLog&         log
+                              )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = XmlProcessToken (t);
+    if  (t)
+    {
+      const KKStr&  varName = t->VarName ();
+
+      if  (varName.EqualIgnoreCase ("ConfigFileName1"))
+        configFileName1 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("ConfigFileName2"))
+        configFileName2 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("FullHierarchyMustMatch"))
+        fullHierarchyMustMatch = dynamic_cast<XmlElementBoolPtr> (t)->Value ();
+
+      else if  (varName.EqualIgnoreCase ("OtherClass"))
+        otherClass = MLClass::CreateNewMLClass (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+
+      else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
+        probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+    }
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
 

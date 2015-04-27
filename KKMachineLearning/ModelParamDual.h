@@ -21,12 +21,11 @@ namespace KKMLL
 
     typedef  enum  {pfmNULL, pfmOr, pfmAnd}  ProbFusionMethodType;
   
-    ModelParamDual  (RunLog& _log);
+    ModelParamDual  ();
   
     ModelParamDual  (const KKStr&  _configFileName1,
                      const KKStr&  _configFileName2,
-                     bool          _fullHierarchyMustMatch,
-                     RunLog&       _log
+                     bool          _fullHierarchyMustMatch
                     );
   
     ModelParamDual  (const ModelParamDual&  _param);
@@ -55,7 +54,8 @@ namespace KKMLL
 
     virtual
     void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc
+                                           FileDescPtr  fileDesc,
+                                           RunLog&      log
                                           );
   
 
@@ -71,15 +71,27 @@ namespace KKMLL
     virtual
     void    WriteSpecificImplementationXML (std::ostream&  o)  const;
   
-  
+
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
   private:
     virtual
-    void   ParseCmdLinePost ();  // Will get called after the entire parameter string has been processed.
+    void   ParseCmdLinePost (RunLog&       log);  // Will get called after the entire parameter string has been processed.
 
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
-                                 bool&         parameterUsed
+                                 bool&         parameterUsed,
+                                 RunLog&       log
                                 );
  
     KKStr                 configFileName1;

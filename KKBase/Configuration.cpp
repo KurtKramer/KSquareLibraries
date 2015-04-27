@@ -295,24 +295,22 @@ Configuration::Configuration (const KKStr&  _fileName,
   formatGood           (true),
   formatErrors         (),
   formatErrorsLineNums (),
-  sections             (NULL),
-  log                  (_log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
-  LoadFile ();
+  LoadFile (_log);
 }
 
 
 
 
-Configuration::Configuration (RunLog&  _log):
+Configuration::Configuration ():
   curSectionName       (),
   fileName             (),
   formatGood           (true),
   formatErrors         (),
   formatErrorsLineNums (),
-  sections             (NULL),
-  log                  (_log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
 }
@@ -326,8 +324,7 @@ Configuration::Configuration (const Configuration&  c):
   formatGood           (c.formatGood),
   formatErrors         (c.formatErrors),
   formatErrorsLineNums (c.formatErrorsLineNums),
-  sections             (NULL),
-  log                  (c.log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
 
@@ -406,7 +403,7 @@ void  Configuration::PrintFormatErrors (ostream& o)
 
 
 
-void  Configuration::LoadFile ()
+void  Configuration::LoadFile (RunLog&  log)
 {
   log.Level (10) << "Configuration::LoadFile: " << fileName << endl;
 

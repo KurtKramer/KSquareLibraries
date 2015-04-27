@@ -152,6 +152,15 @@ namespace KKMLL
 
     KKStr  ToCmdLineStr ()  const;
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
   private:
     virtual

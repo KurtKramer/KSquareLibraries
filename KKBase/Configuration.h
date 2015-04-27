@@ -49,7 +49,7 @@ namespace KKB
                    RunLog&            _log
                   );
 
-    Configuration (RunLog&  _log);
+    Configuration ();
 
     Configuration (const Configuration&  c);
 
@@ -71,7 +71,7 @@ namespace KKB
 
     void  FormatErrorsClear ();  /**< @brief Call this to clear all format error messages. */
 
-    void  LoadFile ();
+    void  LoadFile (RunLog& log);
 
     virtual kkint32 MemoryConsumedEstimated ()  const;
 
@@ -144,9 +144,6 @@ namespace KKB
     VectorKKStr         formatErrors;   /**< Configuration Format Errors will be recorder here. */
     VectorInt           formatErrorsLineNums;
     ConfSectionListPtr  sections; 
-
-  protected:
-    RunLog&  log;
   };  /* Configuration */
 
   typedef  Configuration*  ConfigurationPtr;

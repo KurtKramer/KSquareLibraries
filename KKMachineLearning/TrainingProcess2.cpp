@@ -404,7 +404,7 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
     trainingExamples = newExamples;
     newExamples = NULL;
 
-    TrainingConfiguration2Ptr  newConfig = config->GenerateAConfiguraionForAHierarchialLevel (_level);
+    TrainingConfiguration2Ptr  newConfig = config->GenerateAConfiguraionForAHierarchialLevel (_level, log);
     delete configOurs;
     configOurs = newConfig;
     newConfig = NULL;

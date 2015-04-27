@@ -44,7 +44,8 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
                                                      const FeatureNumList&  _selFeatures,
                                                      kkint32                _sectionLineNum,
                                                      kkint32                _parametersLineNum, 
-                                                     kkint32                _featuresIncludedLineNum
+                                                     kkint32                _featuresIncludedLineNum,
+                                                     RunLog&                _log
                                                     )
 {
   delete  modelParameters;
@@ -53,21 +54,21 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
   if  (_parametersLineNum < 0)
   {
     KKStr errMsg = "'Parameters' setting was not specified.";
-    log.Level (-1) << endl << endl << "CreateModelParameters   ***ERROR***   " << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << "CreateModelParameters   ***ERROR***   " << errMsg << endl << endl;
     FormatErrorsAdd (_sectionLineNum, errMsg);
     FormatGood (false);
   }
 
   switch  (modelingMethod)
   {
-  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    (log);  break;
-  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   (log);  break;
-  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       (log);  break;
-  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (log);  break;
-  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      (log);  break;
+  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    (_log);  break;
+  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   (_log);  break;
+  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       (_log);  break;
+  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (_log);  break;
+  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      (_log);  break;
 
   default:
-    log.Level (-1) << endl << endl
+    _log.Level (-1) << endl << endl
       << "TrainingConfiguration2::CreateModelParameters  ***ERROR***   Invalid modeling method[" 
       << Model::ModelTypeToStr (modelingMethod) << "] selected at this time." << endl
       << endl;
@@ -86,7 +87,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
     if  (!modelParameters->ValidParam ())
     {
       KKStr errMsg = "Parameter setting is invalid";
-      log.Level (-1) << endl 
+      _log.Level (-1) << endl 
                      << "TrainingConfiguration2::CreateModelParameters  ***ERROR***   " << errMsg << endl 
                      << endl;
       FormatErrorsAdd (_parametersLineNum, errMsg);
@@ -102,15 +103,38 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
 
 
+TrainingConfiguration2::TrainingConfiguration2 ():
+ Configuration (),
+
+  configFileNameSpecified (),
+  configRootName          (),
+  fileDesc                (NULL),
+  fvFactoryProducer       (NULL),
+  mlClasses               (NULL),
+  mlClassesWeOwnIt        (false),
+  modelingMethod          (Model::ModelTypes::mtNULL),
+  examplesPerClass        (0),
+  modelParameters         (NULL),
+  noiseMLClass            (NULL),
+  noiseTrainingClass      (NULL),
+  otherClass              (NULL),
+  otherClassLineNum       (-1),
+  rootDir                 (),
+  rootDirExpanded         (),
+  subClassifiers          (NULL),
+  trainingClasses         ("", true),
+  validateDirectories     (true)
+{
+}
 
 
 
 TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName, 
                                                 bool          _validateDirectories,
-                                                RunLog&       _log
+                                                RunLog&       log
                                                ):
 
-  Configuration (GetEffectiveConfigFileName (_configFileName), _log),
+  Configuration (GetEffectiveConfigFileName (_configFileName), log),
 
   configFileNameSpecified (_configFileName),
   configRootName          (KKB::osGetRootName (_configFileName)),
@@ -118,7 +142,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
   fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
-  log                     (_log),
   modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
@@ -143,7 +166,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
   mlClasses = new MLClassList ();
   mlClassesWeOwnIt = true;
 
-  ValidateConfiguration ();
+  ValidateConfiguration (log);
   
   if  (examplesPerClass < 1)
   {
@@ -168,14 +191,13 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
                                                 const KKStr&          _parameterStr,
                                                 RunLog&               _log             
                                                ):
-  Configuration           (_log),
+  Configuration           (),
   configFileNameSpecified (""),
   configRootName          (),
   fileDesc                (NULL),
   fvFactoryProducer       (_fvFactoryProducer),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
-  log                     (_log),
   modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
@@ -218,10 +240,10 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
     examplesPerClass = int32_max;
     FeatureNumList  selectedFeatures (fileDesc);
     selectedFeatures.SetAllFeatures (fileDesc);
-    CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1);
+    CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1, _log);
     if  (!modelParameters  ||  (!modelParameters->ValidParam ()))
     {
-      log.Level (-1) << endl
+      _log.Level (-1) << endl
                      << "TrainingConfiguration2   ***ERROR***   Invalid Parameters." << endl
                      << "    Parameters[" << _parameterStr << "]" << endl
                      << endl;
@@ -238,14 +260,13 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 const KKStr&    _parameterStr,
                                                 RunLog&         _log
                                                ):
-  Configuration           (_log),
+  Configuration           (),
   configFileNameSpecified (""),
   configRootName          (),
   fileDesc                (_fileDesc),
   fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
-  log                     (_log),
   modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (NULL),
@@ -284,13 +305,13 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
     examplesPerClass = int32_max;
     FeatureNumList  selectedFeatures (fileDesc);
     selectedFeatures.SetAllFeatures (fileDesc);
-    CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1);
+    CreateModelParameters (_parameterStr, selectedFeatures, 1, 1, 1, _log);
     if  (!modelParameters  ||  (!modelParameters->ValidParam ()))
     {
-      log.Level (-1) << endl
-                     << "TrainingConfiguration2   ***ERROR***   Invalid Parameters." << endl
-                     << "    Parameters[" << _parameterStr << "]" << endl
-                     << endl;
+      _log.Level (-1) << endl
+                      << "TrainingConfiguration2   ***ERROR***   Invalid Parameters." << endl
+                      << "    Parameters[" << _parameterStr << "]" << endl
+                      << endl;
       FormatGood (false);
     }
   }
@@ -304,14 +325,13 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 ModelParamPtr   _modelParameters,
                                                 RunLog&         _log
                                                ):
-  Configuration           (_log),
+  Configuration           (),
   configFileNameSpecified (""),
   configRootName          (""),
   fileDesc                (_fileDesc),
   fvFactoryProducer       (NULL),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
-  log                     (_log),
   modelingMethod          (Model::ModelTypes::mtNULL),
   examplesPerClass        (0),
   modelParameters         (_modelParameters),
@@ -363,7 +383,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   fvFactoryProducer       (tc.fvFactoryProducer),
   mlClasses               (NULL),
   mlClassesWeOwnIt        (false),
-  log                     (tc.log),
   modelingMethod          (tc.modelingMethod),
   examplesPerClass        (tc.examplesPerClass),
   modelParameters         (NULL),
@@ -533,7 +552,9 @@ MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchia
 
 
 
-TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel (kkuint32 level)  const
+TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel (kkuint32  level,
+                                                                                              RunLog&   log
+                                                                                             )  const
 {
   log.Level (10) << "TrainingConfiguration2::GenerateAConfiguraionForAHierarchialLevel  level[" << level << "]" << endl;
   TrainingConfiguration2Ptr  hierarchialConfig = new TrainingConfiguration2 (*this);
@@ -855,7 +876,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
   config->BuildTrainingClassListFromDirectoryStructure (_subDir,
                                                         _successful, 
-                                                        _errorMessage
+                                                        _errorMessage,
+                                                        _log
                                                        );
 
   if  (config->Gamma () == 0.0)
@@ -871,12 +893,13 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
 void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
                                                                             bool&         _successful,
-                                                                            KKStr&        _errorMessage
+                                                                            KKStr&        _errorMessage,
+                                                                            RunLog&       _log
                                                                            )
 {
-  log.Level (10) << "TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure"  << endl
-                 << "                       Feature Data from SubDir[" << _subDir << "]." << endl
-                 << endl;
+  _log.Level (10) << "TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure"  << endl
+                  << "                       Feature Data from SubDir[" << _subDir << "]." << endl
+                  << endl;
 
   _successful = true;
 
@@ -885,7 +908,7 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
     bool  _validFormat = true;
     KKStr  svmParameterStr = "-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P";
 
-    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM (log);
+    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM (_log);
     oldSVMparameters->ParseCmdLine (svmParameterStr, _validFormat);
     ModelParameters (oldSVMparameters);
     ImagesPerClass (1000);
@@ -907,7 +930,8 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
   BuildTrainingClassListFromDirectoryEntry (_subDir,
                                             subDirUnderRoot,
                                             _successful, 
-                                            _errorMessage
+                                            _errorMessage,
+                                            _log
                                            );
 
   {
@@ -939,7 +963,8 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
 void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryEntry (const KKStr&  rootDir,
                                                                         const KKStr&  subDir,
                                                                         bool&         successful,
-                                                                        KKStr&        errorMessage
+                                                                        KKStr&        errorMessage,
+                                                                        RunLog&       log
                                                                        )
 {
   log.Level (10) << "BuildTrainingClassListFromDirectoryEntry  subDir[" << subDir << "]" << endl;
@@ -973,7 +998,7 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryEntry (const KK
        newDirPath = *subDirName;
     else
        newDirPath = osAddSlash (subDir) + (*subDirName);
-    BuildTrainingClassListFromDirectoryEntry (rootDir, newDirPath, successful, errorMessage);
+    BuildTrainingClassListFromDirectoryEntry (rootDir, newDirPath, successful, errorMessage, log);
   }
   delete  subDirectories;
 }  /* BuildTrainingClassListFromDirectoryEntry */
@@ -1000,18 +1025,18 @@ void   TrainingConfiguration2::AddATrainingClass (MLClassPtr  _newClass)
   VectorKKStr directories;
   TrainingClassPtr  tc 
     = new TrainingClass (directories,
-                                            _newClass->Name (),
-                                            1.0f,                            // Weight given to this Class during training
-                                            1.0f,                            // CountFactor
+                         _newClass->Name (),
+                         1.0f,                            // Weight given to this Class during training
+                         1.0f,                            // CountFactor
                          NULL,               // Sub-Classifier
-                                            *mlClasses
-                                           );
+                         *mlClasses
+                        );
   AddATrainingClass (tc);
 }
 
 
 
-const SVMparam&  TrainingConfiguration2::SVMparamREF ()  const
+const SVMparam&  TrainingConfiguration2::SVMparamREF (RunLog&  log)  const
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
   if  (oldSVMparms)
@@ -1388,7 +1413,8 @@ void  TrainingConfiguration2::SetModelParameters (ModelParamPtr  _svmParanters,
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const KKStr&  subClassifierName,
-                                                                          bool&         errorsFound
+                                                                          bool&         errorsFound,
+                                                                          RunLog&       log
                                                                          )
 {
   errorsFound = false;
@@ -1420,7 +1446,9 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
 
 
 
-TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionNum)
+TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionNum,
+                                                               RunLog&  log
+                                                              )
 {
   kkint32  numOfSettings = NumOfSettings ((kkint32)sectionNum);
 
@@ -1502,7 +1530,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
   if  (!subClassifierName.Empty ())
   {
     bool  errorsFound = false;
-    subClassifer = ValidateSubClassifier (subClassifierName, errorsFound);
+    subClassifer = ValidateSubClassifier (subClassifierName, errorsFound, log);
     if  (errorsFound)
     {
       KKStr  errMsg = "Sub-Classifier [" + (subClassifierName) + "] has a format error: " + subClassifer->FileName ();
@@ -1548,8 +1576,9 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
 
 
 
-void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr       otherClass,
-                                                  kkint32             otherClassLineNum
+void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr  otherClass,
+                                                  kkint32     otherClassLineNum,
+                                                  RunLog&     log
                                                  )
 {
   KKStr  classDirToUse = osAddSlash (rootDir) + otherClass->Name ();
@@ -1565,9 +1594,11 @@ void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr       otherClass,
 
 
 
-void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum)
+void  TrainingConfiguration2::ValidateTrainingClassConfig (kkint32  sectionNum,
+                                                           RunLog&  log
+                                                          )
 {
-  TrainingClassPtr  trainingClass = ValidateClassConfig (sectionNum);
+  TrainingClassPtr  trainingClass = ValidateClassConfig (sectionNum, log);
   if  (trainingClass)
   {
     trainingClasses.AddTrainingClass (trainingClass);
@@ -1611,7 +1642,9 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
 
 
 
-void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
+void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
+                                                      RunLog&  log
+                                                     )
 {
   kkint32  methodLineNum  = 0;
   kkint32  rootDirLineNum = 0;
@@ -1767,7 +1800,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     }
   }
 
-  CreateModelParameters (modelParametersStr, selFeatures, sectionLineNum, parametersLineNum, featuresIncludedLineNum);
+  CreateModelParameters (modelParametersStr, selFeatures, sectionLineNum, parametersLineNum, featuresIncludedLineNum, log);
   if  (modelParameters)
   {
     if  (examplesPerClassLineNum >= 0)
@@ -1788,7 +1821,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
     }
 
     otherClass = MLClass::CreateNewMLClass (otherClassName, -1);
-    ValidateOtherClass (otherClass, otherClassLineNum);
+    ValidateOtherClass (otherClass, otherClassLineNum, log);
   }
 } /* ValidateGlobalSection */
 
@@ -1796,7 +1829,9 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum)
 
 
 
-void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum)
+void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
+                                                           RunLog&  log
+                                                          )
 {
   if  (!modelParameters)
   {
@@ -1902,7 +1937,7 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum)
 
 
 
-void   TrainingConfiguration2::ValidateConfiguration ()
+void   TrainingConfiguration2::ValidateConfiguration (RunLog&  log)
 {
   // Validate TrainingClasses
   
@@ -1917,12 +1952,12 @@ void   TrainingConfiguration2::ValidateConfiguration ()
 
     if  (sectionName == "TRAINING_CLASS")
     {
-      ValidateTrainingClassConfig (sectionNum);
+      ValidateTrainingClassConfig (sectionNum, log);
     }
 
     else if  (sectionName == "NOISE_IMAGES")
     {
-       noiseTrainingClass = ValidateClassConfig (sectionNum);
+       noiseTrainingClass = ValidateClassConfig (sectionNum, log);
        if  (noiseTrainingClass)
        {
          kkint32  noiseGuaranteedSizeLineNum = -1;
@@ -1939,7 +1974,7 @@ void   TrainingConfiguration2::ValidateConfiguration ()
 
     else if  (sectionName == "GLOBAL")
     {
-      ValidateGlobalSection (sectionNum);
+      ValidateGlobalSection (sectionNum, log);
     }
 
     else if  ((sectionName == "TWO_CLASS_PARAMETERS")  ||
@@ -1947,7 +1982,7 @@ void   TrainingConfiguration2::ValidateConfiguration ()
               (sectionName == "TWO_CLASSPARAMETERS")
              )
     {
-      ValidateTwoClassParameters (sectionNum);
+      ValidateTwoClassParameters (sectionNum, log);
     }
   }
 
@@ -2066,7 +2101,8 @@ namespace KKMLL
  */
 FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&  latestImageTimeStamp,
                                                                                     bool&      changesMadeToTrainingLibraries,
-                                                                                    bool&      cancelFlag
+                                                                                    bool&      cancelFlag,
+                                                                                    RunLog&    log
                                                                                    )
 {
   log.Level (10) << "TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries - Starting." << endl;
@@ -2097,7 +2133,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
     log.Level (20) << "LoadFeatureDataFromTrainingLibraries   Starting on Class[" << trainingClass->Name () << "]." << endl;
 
-    FeatureVectorListPtr  featureDataThisClass = ExtractFeatures (trainingClass, latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag);
+    FeatureVectorListPtr  featureDataThisClass = ExtractFeatures (trainingClass, latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag, log);
 
     if  (!featureDataThisClass)
     {
@@ -2124,7 +2160,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
   if  (NoiseTrainingClass ()  &&  (!cancelFlag)  &&  (!errorOccured))
   {
     log.Level (30) << "LoadFeatureDataFromTrainingLibraries  Loading Noise Class [" << NoiseTrainingClass ()->ExpandedDirectory (rootDir, 0) << "]" << endl;
-    FeatureVectorListPtr  noiseFeatureData = ExtractFeatures (NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag);
+    FeatureVectorListPtr  noiseFeatureData = ExtractFeatures (NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag, log);
     if  (!noiseFeatureData)
     {
       log.Level (-1) << endl
@@ -2168,7 +2204,8 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingClassPtr  trainingClass,
                                                                DateTime&               latestTimeStamp,
                                                                bool&                   changesMade,
-                                                               bool&                   cancelFlag
+                                                               bool&                   cancelFlag,
+                                                               RunLog&                 log
                                                               )
 {
   log.Level (30) << "TrainingConfiguration2::ExtractFeatures - Extracting Features For Class["
@@ -2291,7 +2328,6 @@ bool  TrainingConfiguration2::ConfigFileExists (const KKStr& _configFileName)
   KKStr  effectiveName = GetEffectiveConfigFileName (_configFileName);
   return osFileExists (effectiveName);
 }  /* ConfigFileExists */
-
 
 
 
@@ -2755,51 +2791,15 @@ void   TrainingConfiguration2::ReadXML (XmlStream&      s,
       bool  errorsFound = false;
 
       TrainingConfiguration2Ptr subClassifeir = 
-           ValidateSubClassifier (tc->SubClassifierName (), errorsFound);
+           ValidateSubClassifier (tc->SubClassifierName (), errorsFound, log);
       tc->SubClassifier (subClassifeir);
     }
   }
 }  /* ReadXML */
 
 
+
+
+XmlFactoryMacro(TrainingConfiguration2)
+
   
-
-
-TrainingConfiguration2::Xml::Xml (XmlTagPtr   tag,
-                                  XmlStream&  s,
-                                  RunLog&     log
-                                 ):
-  XmlElement (tag, s, log),
-  value (NULL)
-{
-}
-
-
-
-TrainingConfiguration2::Xml::~Xml ()
-{
-  delete  value;
-}
-
-
-
-      
-TrainingConfiguration2Ptr  TrainingConfiguration2::Xml::TakeOwnership ()
-{
-  TrainingConfiguration2Ptr v = value;
-  value = NULL;
-  return v;
-}
-
-
- 
-void  TrainingConfiguration2::Xml::WriteXML (const TrainingConfiguration2&  tc,
-                                             const KKStr&                   varName,
-                                             ostream&                       o
-                                           )
-{
-}
- 
-
-
-

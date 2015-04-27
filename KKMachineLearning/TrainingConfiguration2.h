@@ -61,6 +61,8 @@ namespace KKMLL
     typedef  TrainingConfiguration2  const  TrainingConfiguration2Const;
     typedef  TrainingConfiguration2Const*  TrainingConfiguration2ConstPtr;
 
+    TrainingConfiguration2 ();
+
     TrainingConfiguration2 (const KKStr&  _configFileName,
                             bool          _validateDirectories,
                             RunLog&       _log
@@ -203,7 +205,7 @@ namespace KKMLL
     KKStr                  ModelParameterCmdLine   () const;
     kkuint32               NumHierarchialLevels    () const;  /**< returns back the number of hierarchical levels thereare in the trainingClass that has the most. */
     SVM_SelectionMethod    SelectionMethod         () const;
-    const SVMparam&        SVMparamREF             () const;
+    const SVMparam&        SVMparamREF             (RunLog&  log) const;
 
 
 
@@ -271,7 +273,9 @@ namespace KKMLL
 
     MLClassListPtr         ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)  const;
 
-    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (kkuint32 level)  const;
+    TrainingConfiguration2Ptr  GenerateAConfiguraionForAHierarchialLevel (kkuint32  level,
+                                                                          RunLog&   log
+                                                                         )  const;
 
     FeatureNumList         GetFeatureNums ()  const;
 
@@ -282,7 +286,8 @@ namespace KKMLL
 
     FeatureVectorListPtr   LoadFeatureDataFromTrainingLibraries (KKB::DateTime&  latestImageTimeStamp,
                                                                  bool&           changesMadeToTrainingLibraries,
-                                                                 bool&           cancelFlag
+                                                                 bool&           cancelFlag,
+                                                                 RunLog&         log
                                                                 );
 
     TrainingClassPtr       LocateByMLClassName (const KKStr&  className);
@@ -335,13 +340,16 @@ namespace KKMLL
   protected:
     void                   BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
                                                                          bool&         _successful,
-                                                                         KKStr&        _errorMessage
+                                                                         KKStr&        _errorMessage,
+                                                                         RunLog&       _log
                                                                         );
+
   private:
     void                   BuildTrainingClassListFromDirectoryEntry (const KKStr&  rootDir,
                                                                      const KKStr&  subDir,
                                                                      bool&         successful,
-                                                                     KKStr&        errorMessage
+                                                                     KKStr&        errorMessage,
+                                                                     RunLog&       log
                                                                     );
 
 
@@ -349,7 +357,8 @@ namespace KKMLL
                                                   const FeatureNumList&  _selFeatures,
                                                   kkint32                _sectionLineNum,
                                                   kkint32                _parametersLineNum, 
-                                                  kkint32                _featuresIncludedLineNum
+                                                  kkint32                _featuresIncludedLineNum,
+                                                  RunLog&                _log
                                                  );
 
 
@@ -361,31 +370,42 @@ namespace KKMLL
     FeatureVectorListPtr   ExtractFeatures (const TrainingClassPtr  trainingClass,
                                             KKB::DateTime&          latestTimeStamp,
                                             bool&                   changesMade,
-                                            bool&                   cancelFlag
+                                            bool&                   cancelFlag,
+                                            RunLog&                 log
                                            );
 
     SVMparamPtr            SVMparamToUse ()  const;
 
     void                   SyncronizeMLClassListWithTrainingClassList ();
 
-    TrainingClassPtr       ValidateClassConfig    (kkint32  sectionNum);
+    TrainingClassPtr       ValidateClassConfig    (kkint32  sectionNum,
+                                                   RunLog&  log
+                                                  );
 
-    void                   ValidateConfiguration ();
+    void                   ValidateConfiguration (RunLog&  log);
     
-    void                   ValidateGlobalSection (kkint32  sectionNum);
+    void                   ValidateGlobalSection (kkint32  sectionNum,
+                                                  RunLog&  log
+                                                 );
 
-    void                   ValidateOtherClass (MLClassPtr       otherClass,
-                                               kkint32          otherClassLineNum
+    void                   ValidateOtherClass (MLClassPtr  otherClass,
+                                               kkint32     otherClassLineNum,
+                                               RunLog&     log
                                               );
 
     TrainingConfiguration2Ptr  
                            ValidateSubClassifier (const KKStr&  subClassifierName,
-                                                  bool&         errorsFound
+                                                  bool&         errorsFound,
+                                                  RunLog&       log
                                                  );
 
-    void                   ValidateTrainingClassConfig (kkint32  sectionNum);
+    void                   ValidateTrainingClassConfig (kkint32  sectionNum,
+                                                        RunLog&  log
+                                                       );
 
-    void                   ValidateTwoClassParameters (kkint32  sectionNum);
+    void                   ValidateTwoClassParameters (kkint32  sectionNum,
+                                                       RunLog&  log
+                                                      );
 
 
     ModelParamOldSVMPtr    OldSvmParameters ()  const;
@@ -402,7 +422,6 @@ namespace KKMLL
     FileDescPtr            fileDesc;
     MLClassListPtr         mlClasses;
     bool                   mlClassesWeOwnIt;      /**< If we own it we will delete it in the destructor.  */
-    RunLog&                log;
     ModelTypes             modelingMethod;
     ModelParamPtr          modelParameters;
 
@@ -454,6 +473,11 @@ namespace KKMLL
                               RunLog&       _log
                              );
 
+    /**
+     * Will be one TrainingConfiguration2::Factory derived class for each derived class of "TrainingConfiguration2"; they will be responsible for 
+     * creating an instance of the correct "TrainingConfiguration2" derived instance.  The static member "TrainingConfiguration2::registeredFactories"
+     * will keep track of all instances of the Factory derived class.  
+     */
     class  Factory
     {
     public:
@@ -485,32 +509,6 @@ namespace KKMLL
     static map<KKStr,Factory*>*  registeredFactories;
     
     static  void  FinalCleanUp ();
-
-
-
-    class  Xml:  public  XmlElement
-    {
-    public:
-      Xml (XmlTagPtr   tag,
-           XmlStream&  s,
-           RunLog&     log
-          );
-                
-      virtual  ~Xml ();
-
-      TrainingConfiguration2Ptr  Value ()  const  {return  value;}
-      
-      TrainingConfiguration2Ptr  TakeOwnership ();
-
-      static
-      void  WriteXML (const TrainingConfiguration2&  tc,
-                      const KKStr&                   varName,
-                      ostream&                       o
-                     );
-    private:
-      TrainingConfiguration2Ptr  value;
-    };
-    typedef  Xml*  XmlPtr;
 
 
   };  /* TrainingConfiguration2 */
@@ -551,10 +549,11 @@ namespace KKMLL
   typedef  TrainingConfiguration2List*  TrainingConfiguration2ListPtr;
 
   #define  _TrainingConfiguration2List_Defined_
+
+
+  typedef  XmlElementTemplate<TrainingConfiguration2>  XmlElementTrainingConfiguration2;
+  typedef  XmlElementTrainingConfiguration2*  XmlElementAtXmlElementTrainingConfiguration2PtrtributePtr;
 }  /* namespace KKMLL */
-
-
-
 
 
 

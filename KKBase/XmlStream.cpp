@@ -580,29 +580,36 @@ const KKStr&  XmlTag::AttributeValueKKStr (const KKStr& attributeName)  const
 }
 
 
-
-
-
-void  XmlTag::WriteXML (ostream& o)
+KKStr  XmlTag::ToString ()  const
 {
-  o << "<";
+  KKStr  s (name.Len () + attributes.size () * 30);
+  s << "<";
   
   if  (tagType == TagTypes::tagEnd)
-    o << "/";
+    s << "/";
 
-  o << name;
+  s << name;
 
   XmlAttributeList::const_iterator  idx;
   for  (idx = attributes.begin();  idx != attributes.end ();  ++idx)
   {
     XmlAttributePtr  a = *idx;
-    o << " " <<  a->Name () << "=" << a->Value ().QuotedStr ();
+    s << " " <<  a->Name () << "=" << a->Value ().QuotedStr ();
   }
 
   if  (tagType == TagTypes::tagEmpty)
-    o << "/";
+    s << "/";
 
-   o << ">";
+   s << ">";
+
+   return  s;
+}
+
+
+
+void  XmlTag::WriteXML (ostream& o)
+{
+  o << ToString ();
 }  /* WriteXML */
 
 

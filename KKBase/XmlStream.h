@@ -180,6 +180,8 @@ namespace  KKB
                        bool          attributeValue
                       );
 
+    KKStr  ToString ()  const;
+
     void  WriteXML (ostream& o);
 
   private:
@@ -249,7 +251,7 @@ namespace  KKB
 
     virtual  const KKStr&   VarName ()  const;
 
-    XmlTagConstPtr  NameTag () const;
+    XmlTagConstPtr  NameTag () const   {return nameTag;}
 
     KKStrConstPtr  AttributeValue (const char*   attributeName);
     KKStrConstPtr  AttributeValue (const KKStr&  attributeName);

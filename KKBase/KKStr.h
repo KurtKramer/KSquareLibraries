@@ -714,6 +714,7 @@ namespace  KKB
 
     KKStr&  operator<< (const char*   right);
     KKStr&  operator<< (const KKStr&  right);
+    KKStr&  operator<< (KKStr&&       right);
     KKStr&  operator<< (char          right);
     KKStr&  operator<< (kkint16       right);
     KKStr&  operator<< (kkuint16      right);

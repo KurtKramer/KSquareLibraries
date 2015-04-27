@@ -161,14 +161,14 @@ namespace KKMLL
 
 
     void  ReadXML (XmlStream&      s,
-                  XmlTagConstPtr  tag,
-                  RunLog&         log
-                 );
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
 
 
     void  WriteXML (const KKStr&  varName,
-                   ostream&      o
-                  )  const;
+                    ostream&      o
+                   )  const;
  
     /**
      *@brief  Determines if two different attribute lists are the same; compares each respective attribute, name and type.                                                

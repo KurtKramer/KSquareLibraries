@@ -162,15 +162,14 @@ namespace KKMLL
 
     TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
 
-    virtual
-    void                ReadXML (XmlTagPtr   tag,
-                                 XmlStream&  s,
+    virtual void        ReadXML (XmlStream&  s,
+                                 XmlTagPtr   tag,
                                  RunLog&     log
                                 );
-    virtual
-    void                WriteXML (const KKStr&  varName,
-                        ostream&      o
-                       )  const;
+
+    virtual void        WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const;
   private: 
     KKStr   rootDir;
     

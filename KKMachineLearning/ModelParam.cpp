@@ -7,6 +7,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -27,12 +28,11 @@ using namespace  KKMLL;
 
 
 
-ModelParam::ModelParam  (RunLog&  _log):
+ModelParam::ModelParam  ():
 
   encodingMethod            (NoEncoding),
   examplesPerClass          (int32_max),
   fileName                  (),
-  log                       (_log),
   normalizeNominalFeatures  (false),
   selectedFeatures          (NULL), 
   validParam                (true),
@@ -63,7 +63,6 @@ ModelParam::ModelParam  (const ModelParam&  _param):
   encodingMethod             (_param.encodingMethod),
   examplesPerClass           (_param.examplesPerClass),
   fileName                   (_param.fileName),
-  log                        (_param.log),
   normalizeNominalFeatures   (_param.normalizeNominalFeatures),
   selectedFeatures           (NULL),
   validParam                 (_param.validParam),
@@ -125,7 +124,6 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
 
   ModelParamTypes  modelParamType = ModelParamTypes::mptNULL;
 
-
   // First we need to determine which type of model this is.  We will
   // scan through the file until we locate a ModelParamType field.
   while  (i.getline (buff, sizeof (buff)))
@@ -178,7 +176,7 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   if  (!modelParam)
     return  NULL;
 
-  modelParam->ReadXML (i, fileDesc);
+  modelParam->ReadXML (i, fileDesc, _log);
   return  modelParam;
 }  /* CreateModelParam */
 
@@ -298,8 +296,9 @@ void  ModelParam::Prob (float _prob)
 
 
 
-void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
-                                bool&   _validFormat
+void  ModelParam::ParseCmdLine (KKStr    _cmdLineStr,
+                                bool&    _validFormat,
+                                RunLog&  _log
                                )
 {
   _validFormat = true;
@@ -315,7 +314,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
   {
     if  (field.FirstChar () != '-')
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -364,7 +363,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
       examplesPerClass = value.ToInt ();
       if  (examplesPerClass < 1)
       {
-        log.Level (-1) 
+        _log.Level (-1) 
           << endl << endl
           << "ModelParam::ParseCmdLine ***ERROR***  Invalid '-ExamplsPerClass' parameter specified[" << value << "]" << endl
           << endl;
@@ -397,7 +396,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
       ParseCmdLineParameter (field, value, parameterUsed);
       if  (!parameterUsed)
       {
-        log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
+        _log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
           << field << "]  Value[" << value << "]."
           << endl;
         _validFormat = false;
@@ -408,7 +407,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
     field = _cmdLineStr.ExtractToken (" \t\n\r");
   } 
 
-  ParseCmdLinePost ();
+  ParseCmdLinePost (_log);
 
   validParam = _validFormat;
 }  /* ParseCmdLine */
@@ -421,7 +420,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
  * @details  An example use of this is in 'ModelParamSvmBase' where the local 'ParseCmdLineParameter'
  *           routine processes parameters that 'Model' needs to be aware of.
  */
-void  ModelParam::ParseCmdLinePost ()
+void  ModelParam::ParseCmdLinePost (RunLog&  log)
 {
 }
 
@@ -432,8 +431,6 @@ void  ModelParam::ParseCmdLinePost ()
 */
 KKStr   ModelParam::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParam::ToCmdLineStr - Entered." << endl;
-
   KKStr  cmdStr (300);
 
   if  (selectedFeatures)
@@ -451,7 +448,9 @@ KKStr   ModelParam::ToCmdLineStr () const
 
 
 
-void  ModelParam::WriteXML (ostream&  o)  const
+void  ModelParam::WriteXML (ostream&  o,
+                            RunLog&   log
+                           )  const
 {
   log.Level (20) << "ModelParam::Save to XML to ostream." << endl;
 
@@ -478,7 +477,8 @@ void  ModelParam::WriteXML (ostream&  o)  const
 
 
 void  ModelParam::ReadXML (istream&     i,
-                           FileDescPtr  fileDesc
+                           FileDescPtr  fileDesc,
+                           RunLog&      log
                           )
 {
   log.Level (20) << "ModelParam::Read from XML file." << endl;
@@ -504,7 +504,7 @@ void  ModelParam::ReadXML (istream&     i,
       KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", 
                                              true      // true = decode escape characters
                                             );
-      ParseCmdLine (cmdLine, validFormat);
+      ParseCmdLine (cmdLine, validFormat, log);
     }
 
     else if  (field.EqualIgnoreCase ("EncodingMethod"))
@@ -561,10 +561,11 @@ void  ModelParam::ReadXML (istream&     i,
 
 void  ModelParam::ReadXML (KKStr&       _fileName,
                            FileDescPtr  _fileDesc,
-                           bool&        _successful
+                           bool&        _successful,
+                           RunLog&      _log
                           )
 {
-  log.Level (10) << "ModelParam::ReadXML - File[" << _fileName << "]." << endl;
+  _log.Level (10) << "ModelParam::ReadXML - File[" << _fileName << "]." << endl;
 
   _successful = true;
 
@@ -574,20 +575,22 @@ void  ModelParam::ReadXML (KKStr&       _fileName,
 
   if  (!inputFile.is_open ())
   {
-    log.Level (-1) << "ModelParam::ReadXML      *** ERROR ***" << endl;
-    log.Level (-1) << "                     Could Not Open File[" << fileName << "]." << endl;
+    _log.Level (-1) << "ModelParam::ReadXML      *** ERROR ***" << endl;
+    _log.Level (-1) << "                     Could Not Open File[" << fileName << "]." << endl;
     _successful = false;
     return;
   }
 
-  ReadXML (inputFile, _fileDesc);
+  ReadXML (inputFile, _fileDesc, _log);
    
   inputFile.close ();
 }  /* ReadXML */
 
 
 
-kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
+kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                 RunLog&      log
+                                                )  const
 {
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
@@ -658,4 +661,96 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
   return  Encoding_NULL;
 }  /* EncodingMethodFromStr */
 
+
+
+XmlTokenPtr  ModelParam::XmlProcessToken (XmlTokenPtr  t)
+{
+  bool  tokenFound = true;
+
+  const KKStr&  varName = t->VarName ();
+  if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+  {
+    XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+
+
+    if  (varName.EqualIgnoreCase ("EncodingMethod"))
+    {
+      encodingMethod = EncodingMethodFromStr (dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("ExamplesPerClass"))
+    {
+      examplesPerClass = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("FileName"))
+    {
+      fileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
+    {
+      normalizeNominalFeatures = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("SelectedFeatures"))
+    {
+      selectedFeatures = dynamic_cast<XmlElementFeatureNumListPtr> (e)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Cost"))
+    {
+      cost = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Gamma"))
+    {
+      gamma = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Prob"))
+    {
+      prob = (float)dynamic_cast<XmlElementDoublePtr> (e)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("ValidParam"))
+    {
+      validParam = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
+    }
+    else
+    {
+      tokenFound = false;
+    }
+  }
+
+  if  (tokenFound)
+  {
+    delete t;
+    t = NULL;
+  }
+
+  return  t;
+}  /* ReadXML */
+
+
+
+void  ModelParam::WriteXMLFields (ostream&  o)  const
+
+{
+  EncodingMethodToStr (encodingMethod).WriteXML ("EncodingMethod", o);
+
+  XmlElementInt32::WriteXML (examplesPerClass, "ExamplesPerClass", o);
+
+  fileName.WriteXML ("FileName", o);
+
+  XmlElementBool::WriteXML (normalizeNominalFeatures, "NormalizeNominalFeatures", o);
+
+  if  (selectedFeatures)
+    selectedFeatures->WriteXML ("SelectedFeatures", o);
+
+  XmlElementDouble::WriteXML (cost,       "Cost",       o);
+  XmlElementDouble::WriteXML (gamma,      "Gamma",      o);
+  XmlElementDouble::WriteXML (prob,       "Prob",       o);
+  XmlElementBool::WriteXML   (validParam, "ValidParam", o);
+}  /* WriteXML */
 

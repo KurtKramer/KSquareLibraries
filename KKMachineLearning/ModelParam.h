@@ -53,7 +53,7 @@ namespace KKMLL
   
     typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  EncodingMethodType;
   
-    ModelParam  (RunLog&  _log);
+    ModelParam  ();
   
   
     ModelParam  (const ModelParam&  _param);
@@ -76,29 +76,33 @@ namespace KKMLL
 
 
     virtual
-    void    ParseCmdLine (KKStr  _cmdLineStr,
-                          bool&  _validFormat
+    void    ParseCmdLine (KKStr    _cmdLineStr,
+                          bool&    _validFormat,
+                          RunLog&  _log
                          );
 
 
     virtual
-    void   ParseCmdLinePost ();
+    void   ParseCmdLinePost (RunLog&  log);
 
 
     virtual
     void    ReadXML (KKStr&       _fileName,
                      FileDescPtr  _fileDesc,
-                     bool&        _successful
+                     bool&        _successful,
+                     RunLog&      _log
                     );
   
     virtual
     void    ReadXML (istream&     i,
-                     FileDescPtr  fileDesc
+                     FileDescPtr  fileDesc,
+                     RunLog&      log
                     );
   
     virtual
     void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc
+                                           FileDescPtr  fileDesc,
+                                           RunLog&      log
                                           ) = 0;
   
 
@@ -112,7 +116,9 @@ namespace KKMLL
   
 
     virtual
-    void    WriteXML (std::ostream&  o)  const;
+    void    WriteXML (std::ostream&  o,
+                      RunLog&        log
+                     )  const;
   
     virtual
     void    WriteSpecificImplementationXML (std::ostream&  o)  const = 0;
@@ -154,23 +160,40 @@ namespace KKMLL
     virtual void  Gamma    (double  _gamma);
     virtual void  Prob     (float   _prob);
 
-    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
+    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                 RunLog&      log
+                                                ) const;
 
 
     static  KKStr   EncodingMethodToStr    (EncodingMethodType     encodingMethod);
 
     static  EncodingMethodType     EncodingMethodFromStr    (const KKStr&  encodingMethodStr);
 
-  protected:
-    RunLog&   log;
-  
+
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           ) = 0;
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const = 0;
+
+
+    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
+    XmlTokenPtr  XmlProcessToken (XmlTokenPtr  t);
+
+    void  WriteXMLFields (ostream&  o)  const;
+
 
   private:
  
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
-                                 bool&         parameterUsed
+                                 bool&         parameterUsed,
+                                 RunLog&       log
                                 ) = 0;
 
 
@@ -197,6 +220,8 @@ namespace KKMLL
   };  /* ModelParam */
 
   typedef  ModelParam::ModelParamPtr   ModelParamPtr;
+
+
 
 }  /* namespace KKMLL */
 

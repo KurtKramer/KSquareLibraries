@@ -527,3 +527,77 @@ void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr              class1,
 }  /* AddBinaryClassParms */
 
 
+
+
+
+void  ModelParamOldSVM::WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const
+{
+  XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteXMLFields (o);
+
+  svmParameters->ToString ().WriteXML ("SvmParameters", o);
+
+  XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelParamOldSVM::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = XmlProcessToken (t);
+    if  (t)
+    {
+      if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      {
+        delete  svmParameters;
+        KKStr  svmParameters = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+
+        svmParameters = new  SVMparam  (KKStr&                  _cmdLineStr,
+               FeatureNumListConstPtr  _selectedFeatures,  /**< Will make own instance; caller maintains ownership status. */
+               RunLog&                 _log,
+               bool&                   _validFormat
+              );
+      }
+
+
+
+
+
+
+
+      const KKStr&  varName = t->VarName ();
+
+      if  (varName.EqualIgnoreCase ("ConfigFileName1"))
+        configFileName1 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("ConfigFileName2"))
+        configFileName2 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("FullHierarchyMustMatch"))
+        fullHierarchyMustMatch = dynamic_cast<XmlElementBoolPtr> (t)->Value ();
+
+      else if  (varName.EqualIgnoreCase ("OtherClass"))
+        otherClass = MLClass::CreateNewMLClass (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+
+      else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
+        probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+    }
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+

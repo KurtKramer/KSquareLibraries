@@ -813,7 +813,7 @@ void  FileDesc::ReadXML (XmlStream&      s,
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-      const KKStr&  className = e->Name ();
+      const KKStr&  className = e->SectionName ();
       const KKStr&  varName = e->VarName ();
       if  (varName.EqualIgnoreCase ("FileName"))
       {
