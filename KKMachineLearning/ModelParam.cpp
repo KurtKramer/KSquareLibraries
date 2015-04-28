@@ -166,11 +166,11 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
   ModelParamPtr modelParam = NULL;
   switch  (modelParamType)
   {
-  case  ModelParamTypes::mptDual:      modelParam = new ModelParamDual      (_log);  break;
-  case  ModelParamTypes::mptKNN:       modelParam = new ModelParamKnn       (_log);  break;
-  case  ModelParamTypes::mptOldSVM:    modelParam = new ModelParamOldSVM    (_log);  break;
-  case  ModelParamTypes::mptSvmBase:   modelParam = new ModelParamSvmBase   (_log);  break;
-  case  ModelParamTypes::mptUsfCasCor: modelParam = new ModelParamUsfCasCor (_log);  break;
+  case  ModelParamTypes::mptDual:      modelParam = new ModelParamDual      ();  break;
+  case  ModelParamTypes::mptKNN:       modelParam = new ModelParamKnn       ();  break;
+  case  ModelParamTypes::mptOldSVM:    modelParam = new ModelParamOldSVM    ();  break;
+  case  ModelParamTypes::mptSvmBase:   modelParam = new ModelParamSvmBase   ();  break;
+  case  ModelParamTypes::mptUsfCasCor: modelParam = new ModelParamUsfCasCor ();  break;
   }
 
   if  (!modelParam)
@@ -393,7 +393,7 @@ void  ModelParam::ParseCmdLine (KKStr    _cmdLineStr,
     else
     {
       bool  parameterUsed = false;
-      ParseCmdLineParameter (field, value, parameterUsed);
+      ParseCmdLineParameter (field, value, parameterUsed, _log);
       if  (!parameterUsed)
       {
         _log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
@@ -551,7 +551,7 @@ void  ModelParam::ReadXML (istream&     i,
 
     else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
     {
-      ReadSpecificImplementationXML (i, fileDesc);
+      ReadSpecificImplementationXML (i, fileDesc, log);
     }
   }
 }  /* ReadXML */
@@ -609,7 +609,7 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
       if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
            (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
           )
-        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
+        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else
         numFeaturesAfterEncoding ++;
     }

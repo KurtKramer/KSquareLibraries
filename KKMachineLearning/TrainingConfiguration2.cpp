@@ -61,11 +61,11 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   switch  (modelingMethod)
   {
-  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    (_log);  break;
-  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   (_log);  break;
-  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       (_log);  break;
-  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor (_log);  break;
-  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      (_log);  break;
+  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      ();  break;
+  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       ();  break;
+  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    ();  break;
+  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   ();  break;
+  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor ();  break;
 
   default:
     _log.Level (-1) << endl << endl
@@ -82,7 +82,7 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
     // will override what '_selFeatures'.  This is important because quite often the caller does 
     // not know the features so they assume all.
     modelParameters->SelectedFeatures (_selFeatures);
-    modelParameters->ParseCmdLine (_parameterStr, validParameterFormat);
+    modelParameters->ParseCmdLine (_parameterStr, validParameterFormat, _log);
 
     if  (!modelParameters->ValidParam ())
     {
@@ -908,8 +908,8 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
     bool  _validFormat = true;
     KKStr  svmParameterStr = "-s 0 -n 0.11 -t 2 -g 0.01507  -c 12  -u 100  -up  -mt OneVsOne  -sm P";
 
-    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM (_log);
-    oldSVMparameters->ParseCmdLine (svmParameterStr, _validFormat);
+    ModelParamOldSVMPtr  oldSVMparameters = new ModelParamOldSVM ();
+    oldSVMparameters->ParseCmdLine (svmParameterStr, _validFormat, _log);
     ModelParameters (oldSVMparameters);
     ImagesPerClass (1000);
     delete  oldSVMparameters;
@@ -1355,10 +1355,10 @@ FeatureNumList  TrainingConfiguration2::GetFeatureNums ()  const
 
 
 
-kkint32  TrainingConfiguration2::NumOfFeaturesAfterEncoding ()  const
+kkint32  TrainingConfiguration2::NumOfFeaturesAfterEncoding (RunLog&  log)  const
 {
   if  (modelParameters)
-    return modelParameters->NumOfFeaturesAfterEncoding (fileDesc);
+    return modelParameters->NumOfFeaturesAfterEncoding (fileDesc, log);
   else
     return 0;
 }  /* NumOfFeaturesAfterEncoding */
@@ -2573,7 +2573,7 @@ void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
   XmlElementKKStr::WriteXML (Model::ModelTypeToStr (modelingMethod), "ModelingMethod", o);
 
   if  (modelParameters)
-    modelParameters->WriteXML (o);
+    modelParameters->WriteXML ("ModelParameters", o);
 
   if  (noiseMLClass)
     XmlElementKKStr::WriteXML (noiseMLClass->Name (), "NoiseMLClass", o);

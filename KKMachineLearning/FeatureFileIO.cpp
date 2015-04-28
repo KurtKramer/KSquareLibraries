@@ -622,7 +622,7 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&          _fileNa
 
     while  ((idx != _examples.end ())  &&  (_successful)  &&  (!_cancelFlag))
     {
-      FeatureVectorListPtr  part = new FeatureVectorList (_examples.FileDesc (), false, _log);
+      FeatureVectorListPtr  part = new FeatureVectorList (_examples.FileDesc (), false);
 
       while  ((idx != _examples.end ())  &&  (part->QueueSize () < maxPartSize))
       {

@@ -136,7 +136,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
   KKStr  ln (256);
   bool  eof;
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   GetLine (_in, ln, eof);
   while  (!eof)

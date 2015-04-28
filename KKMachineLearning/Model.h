@@ -89,8 +89,7 @@ namespace KKMLL
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */
     Model (FileDescPtr    _fileDesc,
-           VolConstBool&  _cancelFlag,
-           RunLog&        _log
+           VolConstBool&  _cancelFlag
           );
 
 
@@ -160,7 +159,7 @@ namespace KKMLL
     bool                              AlreadyNormalized          () const {return alreadyNormalized;}
 
     virtual
-    KKStr                    Description ()  const;  /**< Return short user readable description of model. */
+    KKStr                             Description                ()  const;  /**< Return short user readable description of model. */
 
     const FeatureEncoder2&            Encoder                    () const;
 
@@ -210,7 +209,8 @@ namespace KKMLL
 
 
     void  Load (const KKStr& _rootFileName,
-                bool&        _successful
+                bool&        _successful,
+                RunLog&      _log
                );
 
 
@@ -238,20 +238,26 @@ namespace KKMLL
      */
     virtual  
     void  ReadXML (istream&  i,
-                   bool&     _successful
+                   bool&     _successful,
+                   RunLog&   _log
                   ); 
 
     virtual  
-    void  WriteXML (ostream&  o);
+    void  WriteXML (ostream&  o,
+                    RunLog&   log
+                   );
 
 
     void  Save (const KKStr& _rootFileName,
-                bool&        _successful
+                bool&        _successful,
+                RunLog&      _log
                );
   
 
     virtual  
-    void  WriteSpecificImplementationXML (ostream&  o) = 0;
+    void  WriteSpecificImplementationXML (ostream&  o,
+                                          RunLog&   log
+                                         ) = 0;
 
 
     virtual  void  PredictRaw (FeatureVectorPtr  example,
@@ -268,7 +274,9 @@ namespace KKMLL
     //*********************************************************************
 
     virtual
-    MLClassPtr  Predict (FeatureVectorPtr  image) = 0;
+    MLClassPtr  Predict (FeatureVectorPtr  image,
+                         RunLog&           log
+                        ) = 0;
   
     virtual
     void        Predict (FeatureVectorPtr  example,
@@ -282,12 +290,15 @@ namespace KKMLL
                          double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
-                         double&           breakTie
+                         double&           breakTie,
+                         RunLog&           log
                         ) = 0;
 
 
    virtual 
-   ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example) = 0;
+   ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                           RunLog&           log
+                                          ) = 0;
 
 
     /**@brief  Only applied to ModelDual classifier. */
@@ -296,7 +307,8 @@ namespace KKMLL
                                     KKStr&             classifier1Desc,
                                     KKStr&             classifier2Desc,
                                     ClassProbListPtr&  classifier1Results,
-                                    ClassProbListPtr&  classifier2Results
+                                    ClassProbListPtr&  classifier2Results,
+                                    RunLog&            log
                                    );
 
 
@@ -304,7 +316,8 @@ namespace KKMLL
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                ) = 0;
 
     /**
@@ -326,19 +339,22 @@ namespace KKMLL
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                ) = 0;
   
 
     virtual  
     void  ReadSpecificImplementationXML (istream&  i,
-                                         bool&     _successful
+                                         bool&     _successful,
+                                         RunLog&   log
                                         ) = 0; 
 
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                  RunLog&       log
                                  );
 
     /**
@@ -355,7 +371,8 @@ namespace KKMLL
     virtual  
     void  TrainModel (FeatureVectorListPtr  _trainExamples,
                       bool                  _alreadyNormalized,
-                      bool                  _takeOwnership  
+                      bool                  _takeOwnership,
+                      RunLog&               _log
                      );
 
 
@@ -378,10 +395,11 @@ namespace KKMLL
 
     void  ReadSkipToSection (istream& i, 
                              KKStr    sectName,
-                             bool&    sectionFound
+                             bool&    sectionFound,
+                             RunLog&  log
                             );
 
-    void  ReduceTrainExamples ();
+    void  ReduceTrainExamples (RunLog&  log);
 
 
 
@@ -402,8 +420,6 @@ namespace KKMLL
     FeatureEncoder2Ptr     encoder;
 
     FileDescPtr            fileDesc;
-
-    RunLog&                log;
 
     NormalizationParmsPtr  normParms;
 

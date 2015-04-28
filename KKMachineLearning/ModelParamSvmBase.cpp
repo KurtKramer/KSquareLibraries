@@ -7,6 +7,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -19,15 +20,14 @@ using namespace KKB;
 #include "KKMLLTypes.h"
 using namespace KKMLL;
 
-
 #include  "svm2.h"
 using namespace  SVM289_MFS;
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (RunLog&   _log):
+ModelParamSvmBase::ModelParamSvmBase  ():
 
-  ModelParam (_log),
+  ModelParam (),
   svmParam   ()
 {
 }
@@ -38,11 +38,10 @@ ModelParamSvmBase::ModelParamSvmBase  (RunLog&   _log):
 ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
                                        Kernel_Type  _kernelType,
                                        double       _cost,
-                                       double       _gamma,
-                                       RunLog&      _log
+                                       double       _gamma
                                       ):
 
-  ModelParam (log),
+  ModelParam (),
   svmParam   ()
 {
   svmParam.SvmType    (_svm_type);
@@ -104,7 +103,8 @@ double  ModelParamSvmBase::Gamma ()  const
 
 void  ModelParamSvmBase::ParseCmdLineParameter (const KKStr&  parameter,
                                                 const KKStr&  value,
-                                                bool&         parameterUsed
+                                                bool&         parameterUsed,
+                                                RunLog&       log
                                                )
 {
   svmParam.ProcessSvmParameter (parameter, value, parameterUsed);
@@ -130,7 +130,6 @@ void   ModelParamSvmBase::ParseCmdLinePost ()
 */
 KKStr   ModelParamSvmBase::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParamSvmBase::ToCmdLineStr - Entered." << endl;
   KKStr  cmdStr (300);
   cmdStr = ModelParam::ToCmdLineStr () + " " + svmParam.ToCmdLineStr ();
   return  cmdStr;
@@ -141,8 +140,6 @@ KKStr   ModelParamSvmBase::ToCmdLineStr () const
 
 void  ModelParamSvmBase::WriteSpecificImplementationXML (ostream&  o)  const
 {
-  log.Level (20) << "ModelParamSvmBase::WriteSpecificImplementationXML XML to ostream." << endl;
-
   o << "<ModelParamSvmBase>" << endl;
   o << "SvmParam" << "\t" << svmParam.ToTabDelStr () << endl;
   o << "</ModelParamSvmBase>" << endl;
@@ -153,7 +150,8 @@ void  ModelParamSvmBase::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&     i,
-                                                        FileDescPtr  fileDesc
+                                                        FileDescPtr  fileDesc,
+                                                        RunLog&      log
                                                        )
 {
   log.Level (20) << "ModelParamSvmBase::ReadSpecificImplementationXML from XML file." << endl;
@@ -179,7 +177,7 @@ void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&     i,
 
     else if  (field.EqualIgnoreCase ("<ModelParam>"))
     {
-      ModelParam::ReadXML (i, fileDesc);
+      ModelParam::ReadXML (i, fileDesc, log);
     }
 
     else if  (field.EqualIgnoreCase ("SvmParam"))
@@ -196,4 +194,52 @@ void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&     i,
 }  /* ReadSpecificImplementationXML */
 
 
+
+
+void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
+                                   ostream&      o
+                                  )  const
+{
+  XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteXMLFields (o);
+
+
+  svmParam.ToTabDelStr ().WriteXML ("SvmParam", o);
+
+  XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelParamSvmBase::ReadXML (XmlStream&      s,
+                                  XmlTagConstPtr  tag,
+                                  RunLog&         log
+                                 )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = XmlProcessToken (t);
+    if  (t)
+    {
+      if  (t->VarName ().EqualIgnoreCase ("SvmParam"))
+      {
+        svmParam.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+
+  bool  validFormat = false;
+}  /* ReadXML */
+
+ 
+XmlFactoryMacro(ModelParamSvmBase)
 

@@ -180,7 +180,6 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
   crossClassProbTableSize  (0),
   featureEncoder           (NULL),
   fileDesc                 (_fileDesc),
-  log                      (_log),
   models                   (NULL),
   numOfClasses             (0),
   numOfModels              (0),
@@ -191,7 +190,7 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
   probabilities            (NULL),
   rootFileName             (_rootFileName),
   selectedFeatures         (NULL),
-  svmParam                 (_log),
+  svmParam                 (),
   trainingTime             (0.0),
   type_table               (),
   validModel               (true),
@@ -200,9 +199,9 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
   xSpacesTotalAllocated    (0)
 
 {
-  log.Level (20) << "SVMModel::SVMModel - Construction from existing Model File[" 
-                 << _rootFileName  << "]."
-                 << endl;
+  _log.Level (20) << "SVMModel::SVMModel - Construction from existing Model File[" 
+                  << _rootFileName  << "]."
+                  << endl;
 
   _successful = true;
   validModel = true;
@@ -216,11 +215,11 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
   if  (!in.is_open ())
   {
     validModel = false;
-    log.Level (-1) << endl << endl << "SVMModel::SVMModel   ***ERROR*** Could not open file[" << _rootFileName << "]" << endl << endl;
+    _log.Level (-1) << endl << endl << "SVMModel::SVMModel   ***ERROR*** Could not open file[" << _rootFileName << "]" << endl << endl;
   }
   else
   {
-    Read (in);
+    Read (in, _log);
   }
 
   if  ((!validModel)  ||   cancelFlag)
@@ -252,7 +251,6 @@ SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
   crossClassProbTableSize  (0),
   featureEncoder           (NULL),
   fileDesc                 (_fileDesc),
-  log                      (_log),
   models                   (NULL),
   numOfClasses             (0),
   numOfModels              (0),
@@ -263,16 +261,15 @@ SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
   probabilities            (NULL),
   rootFileName             (),
   selectedFeatures         (NULL),
-  svmParam                 (_log),
+  svmParam                 (),
   trainingTime             (0.0),
   type_table               (),
   validModel               (true),
   votes                    (NULL),
   xSpaces                  (NULL),
   xSpacesTotalAllocated    (0)
-
 {
-  log.Level (20) << "SVMModel::SVMModel - Construction from File Stream." << endl;
+  _log.Level (20) << "SVMModel::SVMModel - Construction from File Stream." << endl;
 
   _successful = true;
 
@@ -282,7 +279,7 @@ SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
   type_table        = fileDesc->CreateAttributeTypeTable ( );
   cardinality_table = fileDesc->CreateCardinalityTable ( );
 
-  Read (_in);
+  Read (_in, _log);
 
   if  ((!validModel)  ||   cancelFlag)
   {
@@ -315,7 +312,6 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   crossClassProbTableSize  (0),
   featureEncoder           (NULL),
   fileDesc                 (_fileDesc),
-  log                      (_log),
   models                   (NULL),
   numOfClasses             (0),
   numOfModels              (0),
@@ -337,9 +333,9 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 {
   if  (_examples.QueueSize () < 2)
   {
-    log.Level (-1) << endl
-                   << "SVMModel  **** ERROR ****      NO EXAMPLES TO TRAIN WITH." << endl
-                   << endl;
+    _log.Level (-1) << endl
+                    << "SVMModel  **** ERROR ****      NO EXAMPLES TO TRAIN WITH." << endl
+                    << endl;
     validModel = false;
     return;
   }
@@ -354,29 +350,29 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 
   numOfClasses = (kkint32)assignments.size ();
 
-  log.Level (20) << "SVMModel::SVMModel - Constructing From Training Data." << endl;
+  _log.Level (20) << "SVMModel::SVMModel - Constructing From Training Data." << endl;
 
   // figure out how many features the svm_problem struct will have
-  SetSelectedFeatures (svmParam.SelectedFeatures ());
+  SetSelectedFeatures (svmParam.SelectedFeatures (), _log);
 
   try
   {
     if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
     {
-      ConstructOneVsOneModel (&_examples, prob);
+      ConstructOneVsOneModel (&_examples, prob, _log);
     }
     else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
     {
-      ConstructOneVsAllModel (&_examples, prob);
+      ConstructOneVsAllModel (&_examples, prob, _log);
     }
     else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
     {
-      ConstructBinaryCombosModel (&_examples);
+      ConstructBinaryCombosModel (&_examples, _log);
     }
   }
   catch  (const exception& e)
   {
-    log.Level (-1) << endl
+    _log.Level (-1) << endl
       << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << e.what () << endl
       << endl;
@@ -384,7 +380,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   }
   catch  (...)
   {
-    log.Level (-1) << endl
+    _log.Level (-1) << endl
       << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << endl;
     validModel = false;
@@ -404,8 +400,6 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
 
 SVMModel::~SVMModel ()
 {
-  log.Level (20) << "SVMModel::~SVMModel   Starting Destructor for Model[" << rootFileName << "]" << endl;
-
   kkint32  x;
 
   if  (models)
@@ -601,7 +595,8 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
                                       const MLClassList&    classesThisAssignment,
                                       FeatureEncoderPtr     featureEncoder,
                                       MLClassList&          allClasses,
-                                      ClassAssignmentsPtr&  classAssignments
+                                      ClassAssignmentsPtr&  classAssignments,
+                                      RunLog&               log
                                      )
 { 
   log.Level (20) << "SVMModel::BuildProblemOneVsAll" << endl;
@@ -638,7 +633,8 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
                                           *classAssignments,
                                           xSpace, 
                                           totalxSpaceUsed,
-                                          prob
+                                          prob,
+                                          log
                                          );
 
   xSpacesTotalAllocated += totalxSpaceUsed;
@@ -659,7 +655,8 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
                                           struct svm_problem&   prob, 
                                           XSpacePtr&            xSpace, 
                                           MLClassPtr            class1, 
-                                          MLClassPtr            class2
+                                          MLClassPtr            class2,
+                                          RunLog&               log
                                          )
 { 
   log.Level (10) << "SVMModel::BuildProblemBinaryCombos   Class1[" << class1->Name () << "]  Class2[" << class2->Name () << "]" << endl;
@@ -674,8 +671,7 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
 
   FeatureVectorListPtr  twoClassExamples 
           = new FeatureVectorList (fileDesc, 
-                                   false, 
-                                   log
+                                   false
                                   );
   twoClassExamples->AddQueue (*class1Examples);
   twoClassExamples->AddQueue (*class2Examples);
@@ -685,15 +681,15 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
                                  type_table,
                                  cardinality_table,
                                  class1,
-                                 class2,
-                                 log
+                                 class2
                                 );
   
   _encoder->EncodeIntoSparseMatrix (twoClassExamples,
                                     binaryAssignments,
                                     xSpace,
                                     totalxSpaceUsed,
-                                    prob
+                                    prob,
+                                    log
                                    );
 
   xSpacesTotalAllocated += totalxSpaceUsed;
@@ -769,20 +765,17 @@ FeatureNumListConstPtr  SVMModel::GetFeatureNums (FileDescPtr  fileDesc,
 
 
 void  SVMModel::Save (const KKStr&  _rootFileName,
-                      bool&         _successful
+                      bool&         _successful,
+                      RunLog&       _log
                      )
 {
-  log.Level (20) << "SVMModel::Save  Saving Model in File["
-                 << _rootFileName << "]."
-                 << endl;
-
   rootFileName = _rootFileName;
 
   KKStr  svmModelFileName = rootFileName + ".SVMModel";
 
   ofstream  o (svmModelFileName.Str ());
 
-  Write (o, svmModelFileName, _successful);
+  Write (o, svmModelFileName, _successful, _log);
   o.close ();
 }  /* Save */
 
@@ -791,11 +784,10 @@ void  SVMModel::Save (const KKStr&  _rootFileName,
 
 void  SVMModel::Write (ostream&      o,
                        const KKStr&  rootFileName,
-                       bool&         _successful
+                       bool&         _successful,
+                       RunLog&       log
                       )
 {
-  log.Level (20) << "SVMModel::Write  Saving Model in File." << endl;
-
   o << "<SVMModel>" << endl;
 
   o << "<Header>" << endl;
@@ -897,29 +889,31 @@ void  SVMModel::Write (ostream&      o,
 
 
 
-void  SVMModel::Read (istream&  i)
+void  SVMModel::Read (istream&  i,
+                      RunLog&   log
+                     )
 {
   validModel = true;
 
-  ReadHeader (i);
+  ReadHeader (i, log);
 
   if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
   {
-    ReadOneVsOne (i);
+    ReadOneVsOne (i, log);
   }
   else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
   {
-    ReadOneVsAll (i);
+    ReadOneVsAll (i, log);
   }
   else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
-    ReadBinaryCombos (i);
+    ReadBinaryCombos (i, log);
   }
 
   if  (!cancelFlag)
   {
     bool  sectionFound;
-    ReadSkipToSection (i, "</SVMModel>", sectionFound);
+    ReadSkipToSection (i, "</SVMModel>", sectionFound, log);
   }
 }  /* Read */
 
@@ -927,7 +921,8 @@ void  SVMModel::Read (istream&  i)
 
 void  SVMModel::ReadSkipToSection (istream&  i, 
                                    KKStr     sectName,
-                                   bool&     sectionFound
+                                   bool&     sectionFound,
+                                   RunLog&   log
                                   )
 {
   sectionFound = false;
@@ -962,11 +957,12 @@ void  SVMModel::ReadSkipToSection (istream&  i,
 
 
 
-void  SVMModel::ReadHeader (istream&  i)
+void  SVMModel::ReadHeader (istream&  i,
+                            RunLog&   log
+                           )
 {
-  log.Level (20) << "SVMModel::ReadHeader" << endl;
   bool  sectionFound = false;
-  ReadSkipToSection (i, "<Header>", sectionFound);
+  ReadSkipToSection (i, "<Header>", sectionFound, log);
   if  (!sectionFound)
   {
     validModel = false;
@@ -990,7 +986,7 @@ void  SVMModel::ReadHeader (istream&  i)
 
     if  (field == "TIME")
     {
-      log.Level (20) << "SVMModel::ReadHeader    Time[" << ln << "]" << endl;
+      cout << "SVMModel::ReadHeader    Time[" << ln << "]" << endl;
     }
 
     else if  (field.EqualIgnoreCase ("NUMOFMODELS"))
@@ -1000,7 +996,7 @@ void  SVMModel::ReadHeader (istream&  i)
     {
       KKStr  selectedFeaturesStr = ln.ExtractQuotedStr ("\n\r\t", true);
       FeatureNumListConstPtr  tempFeatures = FeatureNumList::ExtractFeatureNumsFromStr (selectedFeaturesStr);
-      SetSelectedFeatures (tempFeatures);
+      SetSelectedFeatures (tempFeatures, log);
       delete  tempFeatures;
       tempFeatures = NULL;
     }
@@ -1012,19 +1008,19 @@ void  SVMModel::ReadHeader (istream&  i)
       assignments.ParseToString (ln.ExtractQuotedStr ("\n\r\t", true));
 
     else if  (field == "<SVMPARAM>")
-      svmParam.ReadXML (i, fileDesc);
+      svmParam.ReadXML (i, fileDesc, log);
   }
 }  /* ReadHeader */
 
 
 
 
-void  SVMModel::ReadOneVsOne (istream&  i)
+void  SVMModel::ReadOneVsOne (istream&  i,
+                              RunLog&   log
+                             )
 {
-  log.Level (20) << "SVMModel::ReadOneVsOne" << endl;
-
   bool  sectionFound = false;
-  ReadSkipToSection (i, "<OneVsOne>", sectionFound);
+  ReadSkipToSection (i, "<OneVsOne>", sectionFound, log);
   if  (!sectionFound)
   {
     validModel = false;
@@ -1037,8 +1033,7 @@ void  SVMModel::ReadOneVsOne (istream&  i)
                                        type_table,
                                        cardinality_table,
                                        NULL,              // class1, set to NULL because we are dealing with all classes
-                                       NULL,              // class2,     ""          ""            ""            ""
-                                       log
+                                       NULL               // class2,     ""          ""            ""            ""
                                       );
 
   char  buff[20480];
@@ -1088,12 +1083,12 @@ void  SVMModel::ReadOneVsOne (istream&  i)
 
 
 
-void  SVMModel::ReadOneVsAll (istream&  i)
+void  SVMModel::ReadOneVsAll (istream&  i,
+                              RunLog&   log
+                             )
 {
-  log.Level (20) << "SVMModel::ReadOneVsAll" << endl;
-
   bool  sectionFound = false;
-  ReadSkipToSection (i, "<OneVsAll>", sectionFound);
+  ReadSkipToSection (i, "<OneVsAll>", sectionFound, log);
   if  (!sectionFound)
   {
     validModel = false;
@@ -1106,8 +1101,7 @@ void  SVMModel::ReadOneVsAll (istream&  i)
                                        type_table,
                                        cardinality_table,
                                        NULL,              // class1, set to NULL because we are dealing with all classes
-                                       NULL,              // class2,     ""          ""            ""            ""
-                                       log
+                                       NULL               // class2,     ""          ""            ""            ""
                                       );
 
   kkint32  modelIDX = 0;
@@ -1144,7 +1138,7 @@ void  SVMModel::ReadOneVsAll (istream&  i)
 
     if  (field == "<ONEVSALLENTRY>")
     {
-      ReadOneVsAllEntry (i, modelIDX);
+      ReadOneVsAllEntry (i, modelIDX, log);
     }
   }
 
@@ -1153,8 +1147,9 @@ void  SVMModel::ReadOneVsAll (istream&  i)
 
 
 
-void  SVMModel::ReadOneVsAllEntry (istream& i,
-                                   kkint32  modelIDX
+void  SVMModel::ReadOneVsAllEntry (istream&  i,
+                                   kkint32   modelIDX,
+                                   RunLog&   log
                                   )
 {
   // If we are here the header to this sub-section has already been read.
@@ -1200,27 +1195,18 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
 
   if  (modelFileName.Empty ())
   {
-    log.Level (-1) << endl << endl 
-                   << "SVMModel::ReadOneVsAllEntry    *** Model file name not specified ***" << endl
-                   << endl;
     validModel = false;
     return;
   }
 
   if  (!assignment)
   {
-    log.Level (-1) << endl << endl 
-                   << "SVMModel::ReadOneVsAllEntry    *** OneVsAll assignment not specified for ***" << endl
-                   << endl;
     validModel = false;
     return;
   }
 
   if  (!classForOneSide)
   {
-    log.Level (-1) << endl << endl 
-                   << "SVMModel::ReadOneVsAllEntry    *** Class name for one side not specified ***" << endl
-                   << endl;
     validModel = false;
     return;
   }
@@ -1228,9 +1214,6 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
   models[modelIDX] = SvmLoadModel (modelFileName.Str ());
   if  (!models[modelIDX])
   {
-    log.Level (-1) << endl << endl
-                   << "SVMModel::ReadOneVsAllEntry - Error Loading Model File[" << modelFileName << "]" << endl
-               << endl;
     validModel = false;
     return;
   }
@@ -1239,7 +1222,9 @@ void  SVMModel::ReadOneVsAllEntry (istream& i,
 
 
 
-void  SVMModel::ReadBinaryCombos (istream& i)
+void  SVMModel::ReadBinaryCombos (istream&  i,
+                                  RunLog&   log
+                                 )
 {
   log.Level (20) << "SVMModel::ReadBinaryCombos" << endl;
 
@@ -1330,8 +1315,7 @@ void  SVMModel::ReadBinaryCombos (istream& i)
                                     type_table,
                                     cardinality_table,
                                     binClassParms->Class1 (),
-                                    binClassParms->Class2 (),
-                                    log
+                                    binClassParms->Class2 ()
                                    );
       }
 
@@ -1366,13 +1350,13 @@ void  SVMModel::ReadBinaryCombos (istream& i)
 
 
 double   SVMModel::DistanceFromDecisionBoundary (FeatureVectorPtr  example,
-                                                 MLClassPtr     class1,
-                                                 MLClassPtr     class2
+                                                 MLClassPtr        class1,
+                                                 MLClassPtr        class2
                                                 )
 {
   if  (svmParam.MachineType () != SVM_MachineType::BinaryCombos)
   {
-    log.Level (-1) << endl << endl << "SVMModel::DistanceFromDecisionBoundary   ***ERROR***    This method only works with BinaryCombos." << endl << endl;
+    cerr << endl << "SVMModel::DistanceFromDecisionBoundary   ***ERROR***    This method only works with BinaryCombos." << endl << endl;
     return  0.0;
   }
 
@@ -1400,7 +1384,6 @@ double   SVMModel::DistanceFromDecisionBoundary (FeatureVectorPtr  example,
 
   if  (encoder == NULL)
   {
-    log.Level (-1) << endl << endl << "SVMModel::DistanceFromDecisionBoundary   ***ERROR***    Class[" << class1->Name () << "] and Class2[" << class2->Name () << "]  not one of the class pairs." << endl << endl;
     return 0.0;
   }
 
@@ -1548,8 +1531,9 @@ void   SVMModel::Predict (FeatureVectorPtr  example,
     
   else
   {
-    log.Level (-1) << "***ERROR*** SVMModel::Predict Invalid Machine Type Specified."  << endl;
-    exit (-1);
+    KKStr  errMsg = "***ERROR*** SVMModel::Predict   Invalid Machine Type Specified.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   return;
@@ -1864,7 +1848,7 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
       {
         KKStr  errMsg;
         errMsg << "SVMModel::PredictByBinaryCombos   ***ERROR***   No feature encoder for model[" << modelIDX << "]";
-        log.Level (-1) << endl << endl << errMsg << endl << endl;
+        cerr << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
 
@@ -1991,17 +1975,18 @@ void  SVMModel::SupportVectorStatistics (kkint32&  numSVs,
 
 
 
-void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
+void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr    example,
                                       const MLClassList&  _mlClasses,
-                                      kkint32*                 _votes,
-                                      double*                _probabilities
+                                      kkint32*            _votes,
+                                      double*             _probabilities,
+                                      RunLog&             _log
                                      )
 {
   InializeProbClassPairs ();
 
   if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
   {
-    PredictProbabilitiesByBinaryCombos (example, _mlClasses, _votes, _probabilities);
+    PredictProbabilitiesByBinaryCombos (example, _mlClasses, _votes, _probabilities, _log);
     return;
   }
 
@@ -2061,11 +2046,11 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
       y = _mlClasses.PtrToIdx (predictedClass);
       if  ((y < 0)   ||   (y >= numOfClasses))
       {
-        log.Level (-1) << endl << endl
-                       << "SVMModel::ProbabilitiesByClass   ***ERROR***"                                                     << endl
-                       << "                                 Invalid classIdx[" << y                       << "]  Specified." << endl
-                       << "                                 ClassName       [" << predictedClass->Name () << "]"             << endl
-                       << endl;
+        _log.Level (-1) << endl
+                << "SVMModel::ProbabilitiesByClass   ***ERROR***"                                                     << endl
+                << "                                 Invalid classIdx[" << y                       << "]  Specified." << endl
+                << "                                 ClassName       [" << predictedClass->Name () << "]"             << endl
+                << endl;
       }
       else
       {
@@ -2086,10 +2071,11 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr        example,
 
 
 
-void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       example,  
+void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr    example,  
                                                     const MLClassList&  _mlClasses,
-                                                    kkint32*                 _votes,
-                                                    double*                _probabilities
+                                                    kkint32*            _votes,
+                                                    double*             _probabilities,
+                                                    RunLog&             _log
                                                    )
 {
   InializeProbClassPairs ();
@@ -2109,7 +2095,7 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
 
   if  (numOfClasses != crossClassProbTableSize)
   {
-    log.Level (-1) << endl << endl 
+    _log.Level (-1) << endl << endl 
                    << "SVMModel::PredictProbabilitiesByBinaryCombos                     ***ERROR***" << endl
                    << "                      numfClasses != crossClassProbTableSize"                 << endl       
                    << endl;
@@ -2128,7 +2114,7 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
       {
         KKStr  errMsg;
         errMsg << "SVMModel::PredictProbabilitiesByBinaryCombos   ***ERROR***   No feature encoder for model[" << modelIDX << "]";
-        log.Level (-1) << endl << endl << errMsg << endl << endl;
+        _log.Level (-1) << endl << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
 
@@ -2181,7 +2167,7 @@ void  SVMModel::PredictProbabilitiesByBinaryCombos (FeatureVectorPtr       examp
       {
         // For what ever reason the MLClass instance in '_mlClasses' provided by caller
         // is not one of the classes that this model was built for.
-        log.Level (-1) << endl 
+        _log.Level (-1) << endl 
           << "SVMModel::PredictProbabilitiesByBinaryCombos   ***WARNING***    MLClass[" << (*idx)->Name () << "] is not one of the classes in SVMModel."  << endl
           << endl;
         _votes        [callersIdx] = 0;
@@ -2235,9 +2221,9 @@ vector<KKStr>  SVMModel::SupportVectorNames (MLClassPtr     c1,
   if  (modelIDX >= numOfModels)
   {
     // Binary Combo not found.
-    log.Level (-1) << endl << endl
-                   << "SVMModel::SupportVectorNames   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
-                   << endl;
+    cerr << endl
+         << "SVMModel::SupportVectorNames   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
+         << endl;
     return results;
   }
 
@@ -2322,9 +2308,9 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors (FeatureVectorPtr  examp
   if  (modelIDX >= numOfModels)
   {
     // Binary Combo not found.
-    log.Level (-1) << endl << endl
-                   << "SVMModel::FindWorstSupportVectors   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
-                   << endl;
+    cerr << endl
+         << "SVMModel::FindWorstSupportVectors   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
+         << endl;
     return results;
   }
 
@@ -2332,7 +2318,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors (FeatureVectorPtr  examp
   {
     KKStr  errMsg;
     errMsg << "SVMModel::FindWorstSupportVectors   ***ERROR***   No feature encoder for model[" << modelIDX << "]";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -2414,9 +2400,9 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
   if  (modelIDX >= numOfModels)
   {
     // Binary Combo not found.
-    log.Level (-1) << endl << endl
-                   << "SVMModel::FindWorstSupportVectors   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
-                   << endl;
+    cerr << endl
+         << "SVMModel::FindWorstSupportVectors   ***ERROR***  Class1[" << c1->Name () << "]  Class2[" << c2->Name () << "]  not part of model." << endl
+         << endl;
     return results;
   }
 
@@ -2425,7 +2411,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
   {
     KKStr  errMsg;
     errMsg << "SVMModel::FindWorstSupportVectors2   ***ERROR***   No feature encoder for model[" << modelIDX << "]";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -2499,7 +2485,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
 
 
 
-void SVMModel::CalculatePredictXSpaceNeeded ()
+void SVMModel::CalculatePredictXSpaceNeeded (RunLog&  log)
 {
   if  (!selectedFeatures)
   {
@@ -2565,8 +2551,7 @@ kkint32  SVMModel::EncodeExample (FeatureVectorPtr  example,
                                          type_table,
                                          cardinality_table,
                                          NULL,              /**< class1, set to NULL because we are dealing with all classes */
-                                         NULL,              /**< class2,     ""          ""            ""            ""      */
-                                         log
+                                         NULL               /**< class2,     ""          ""            ""            ""      */
                                         );
   }
 
@@ -2578,7 +2563,8 @@ kkint32  SVMModel::EncodeExample (FeatureVectorPtr  example,
 
 
 void SVMModel::ConstructOneVsOneModel (FeatureVectorListPtr  examples,
-                                       svm_problem&          prob
+                                       svm_problem&          prob,
+                                       RunLog&               log
                                       )
 {
   //**** Start of new compression replacement code.
@@ -2603,15 +2589,15 @@ void SVMModel::ConstructOneVsOneModel (FeatureVectorListPtr  examples,
                                        type_table,
                                        cardinality_table,
                                        NULL,              // class1, set to NULL because we are dealing with all classes
-                                       NULL,              // class2,     ""          ""            ""            ""
-                                       log
+                                       NULL               // class2,     ""          ""            ""            ""
                                       );
 
   featureEncoder->EncodeIntoSparseMatrix (examples,
                                           assignments,
                                           xSpaces[0], 
                                           totalxSpaceUsed,
-                                          prob
+                                          prob,
+                                          log
                                          );
   xSpacesTotalAllocated += totalxSpaceUsed;
 
@@ -2638,7 +2624,8 @@ void SVMModel::ConstructOneVsOneModel (FeatureVectorListPtr  examples,
 
 
 void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
-                                       svm_problem&         prob
+                                       svm_problem&         prob,
+                                       RunLog&              log
                                       )
 {
   MLClassListPtr  allClasses = examples->ExtractListOfClasses ();
@@ -2662,10 +2649,8 @@ void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
                                        type_table,
                                        cardinality_table,
                                        NULL,              // class1, set to NULL because we are dealing with all classes
-                                       NULL,              // class2,     ""          ""            ""            ""
-                                       log
+                                       NULL               // class2,     ""          ""            ""            ""
                                       );
-
 
   kkint32  modelIDX = 0;
   kkint32  assignmentIDX;
@@ -2695,7 +2680,8 @@ void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
                           classesThisAssignment, 
                           featureEncoder, 
                           *allClasses, 
-                          oneVsAllClassAssignments [modelIDX]
+                          oneVsAllClassAssignments [modelIDX],
+                          log
                          );
 
     // train the model using the svm_problem built above
@@ -2719,7 +2705,9 @@ void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
 
 
 
-void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr examples)
+void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr  examples,
+                                           RunLog&               log
+                                          )
 {
   log.Level (10) << "SVMModel::ConstructBinaryCombosModel" << endl;
 
@@ -2781,7 +2769,8 @@ void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr examples)
                                 prob, 
                                 xSpaces               [modelIDX], 
                                 class1, 
-                                class2
+                                class2, 
+                                log
                                );
 
       maxXSpaceNeededPerExample = Max (maxXSpaceNeededPerExample, binaryFeatureEncoders [modelIDX]->XSpaceNeededPerExample ());
@@ -2836,7 +2825,7 @@ void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr examples)
   // We need to make sure that 'predictXSpace' is bigger than the worst possible case.
   // When doing the Binary Combo case we will assume that this can be all EncodedFeatures.
   // Since I am really only worried about the BinaryCombo case with Plankton data where there 
-  // is not encded fields the number of attributes in the FileDesc should surfice.
+  // is not encoded fields the number of attributes in the FileDesc should suffice.
   if  (predictXSpaceWorstCase < (fileDesc->NumOfFields () + 10))
     predictXSpaceWorstCase = fileDesc->NumOfFields () + 10;
 
@@ -2856,7 +2845,7 @@ FeatureVectorListPtr*   SVMModel::BreakDownExamplesByClass (FeatureVectorListPtr
 
   FeatureVectorListPtr* examplesByClass = new FeatureVectorListPtr[numOfClasses];
   for  (x = 0;  x < numOfClasses;  x++)
-    examplesByClass[x] = new FeatureVectorList (fileDesc, false, log);
+    examplesByClass[x] = new FeatureVectorList (fileDesc, false);
 
   MLClassPtr  lastMLClass = NULL;
   kkint32     classIdx     = 0;
@@ -2891,27 +2880,32 @@ bool  SVMModel::NormalizeNominalAttributes ()
 
 
 
-void  SVMModel::SetSelectedFeatures (FeatureNumListConst& _selectedFeatures)
+void  SVMModel::SetSelectedFeatures (FeatureNumListConst& _selectedFeatures,
+                                     RunLog&              _log
+                                    )
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (_selectedFeatures);
-  CalculatePredictXSpaceNeeded ();
+  CalculatePredictXSpaceNeeded (_log);
 }  /* SetSelectedFeatures */
 
 
 
-void  SVMModel::SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures)
+void  SVMModel::SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures,
+                                     RunLog&                 _log
+                                    )
 {
   delete  selectedFeatures;
   selectedFeatures = new FeatureNumList (*_selectedFeatures);
-  CalculatePredictXSpaceNeeded ();
+  CalculatePredictXSpaceNeeded (_log);
 }  /* SetSelectedFeatures */
 
 
 
 
 void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
-                                        double**          crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                        double**       crossProbTable,  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                        RunLog&        log
                                        )
 {
   if  (classes.QueueSize () != crossClassProbTableSize)

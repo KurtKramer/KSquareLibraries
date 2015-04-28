@@ -17,15 +17,14 @@ namespace KKMLL
   public:
     typedef  ModelParamUsfCasCor*  ModelParamUsfCasCorPtr;
 
-    ModelParamUsfCasCor  (RunLog&  _log);
+    ModelParamUsfCasCor  ();
      
     ModelParamUsfCasCor  (int      _in_limit,
                           int      _out_limit,
                           int      _number_of_rounds,
                           int      _number_of_trials,
                           kkint64  _random_seed,
-                          bool     _useCache,
-                          RunLog&  _log
+                          bool     _useCache
                          );
   
     virtual ~ModelParamUsfCasCor  ();
@@ -54,7 +53,8 @@ namespace KKMLL
 
 
     virtual void  ReadSpecificImplementationXML (istream&     i,
-                                                 FileDescPtr  fileDesc
+                                                 FileDescPtr  fileDesc,
+                                                 RunLog&      log
                                                 );
 
     virtual void  WriteSpecificImplementationXML (std::ostream&  o)  const;
@@ -67,12 +67,23 @@ namespace KKMLL
     virtual KKStr  ToCmdLineStr ()  const;
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
   private:
     virtual void  ParseCmdLinePost ();  /**< Will get called after the entire parameter string has been processed. */
 
     virtual void  ParseCmdLineParameter (const KKStr&  parameter,
                                          const KKStr&  value,
-                                         bool&         parameterUsed
+                                         bool&         parameterUsed,
+                                         RunLog&       log
                                         );
 
     int      in_limit;
@@ -84,6 +95,9 @@ namespace KKMLL
   };  /* ModelParamUsfCasCor */
 
   typedef  ModelParamUsfCasCor*   ModelParamUsfCasCorPtr;
+
+  typedef  XmlElementTemplate<ModelParamUsfCasCor>  XmlElementModelParamUsfCasCor;
+  typedef  XmlElementModelParamUsfCasCor*  XmlElementModelParamUsfCasCorPtr;
 }  /* namespace KKMLL */
 
 

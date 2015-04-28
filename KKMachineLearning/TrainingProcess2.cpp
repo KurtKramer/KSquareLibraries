@@ -1005,8 +1005,7 @@ void  TrainingProcess2::RemoveExcludeListFromTrainingData ()
 
   FeatureVectorList  trainingExamplesToDelete 
     (fileDesc, 
-     false,    /* owner = false */
-     log
+     false    /* owner = false */
     );
 
   FeatureVectorList::iterator idx;

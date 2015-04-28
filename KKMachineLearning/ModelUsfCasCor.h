@@ -119,7 +119,9 @@ namespace  KKMLL
                               );
 
 
-    virtual  void  WriteSpecificImplementationXML (ostream&  o);
+    virtual  void  WriteSpecificImplementationXML (ostream&  o,
+                                                   RunLog&   log
+                                                  );
 
 
 

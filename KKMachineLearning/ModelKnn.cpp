@@ -35,7 +35,7 @@ ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
                     VolConstBool&  _cancelFlag,
                     RunLog&        _log
                    ):
-  Model (_fileDesc, _cancelFlag, _log),
+  Model (_fileDesc, _cancelFlag),
   param (NULL)
 {
 }
@@ -85,7 +85,9 @@ ModelParamKnnPtr  ModelKnn::Param ()
 }
 
 
-MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example,
+                               RunLog&           log
+                              )
 {
   return NULL;
 }
@@ -103,7 +105,8 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
                          double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
-                         double&           breakTie
+                         double&           breakTie,
+                         RunLog&           log
                         )
 {
 }  /* Predict */
@@ -111,7 +114,9 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
 
 
 
-ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                  RunLog&           log
+                                                 )
 {
   if  (!classesIndex)
   {
@@ -148,7 +153,8 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
                                       const MLClassList&  _mlClasses,
                                       kkint32*            _votes,
-                                      double*             _probabilities
+                                      double*             _probabilities,
+                                      RunLog&             log
                                      )
 {
 }
@@ -156,7 +162,8 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                       const MLClassList&  _mlClasses,
-                                      double*             _probabilities
+                                      double*             _probabilities,
+                                      RunLog&             log
                                      )
 {
 }  /* ProbabilitiesByClass */
@@ -165,7 +172,8 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
-                                               bool&     _successful
+                                               bool&     _successful,
+                                               RunLog&   log
                                               )
 {
   char  buff[20480];
@@ -188,7 +196,7 @@ void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
 
     else if  (field.EqualIgnoreCase ("<Model>"))
     {
-      Model::ReadXML (i, _successful);
+      Model::ReadXML (i, _successful, log);
     }
 
     else
@@ -207,14 +215,15 @@ void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
 
 void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
                             bool                  _alreadyNormalized,
-                            bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                            bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                            RunLog&               _log
                            )
 {
-  log.Level (20) << "ModelKnn::TrainModel    alreadyNormalized[" << _alreadyNormalized << "]  _takeOwnership[" << _takeOwnership << "]." << endl;
+  _log.Level (20) << "ModelKnn::TrainModel    alreadyNormalized[" << _alreadyNormalized << "]  _takeOwnership[" << _takeOwnership << "]." << endl;
 
   try
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
   }
   catch  (const KKException& e)
   {
@@ -225,7 +234,8 @@ void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
-void  ModelKnn::WriteSpecificImplementationXML (ostream&  o)
+void  ModelKnn::WriteSpecificImplementationXML (ostream&  o,
+                                                RunLog&   log)
 {
   log.Level (20) << "ModelKnn::WriteSpecificImplementationXML  Saving Model in File." << endl;
 

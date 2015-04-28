@@ -508,7 +508,6 @@ XmlTag::XmlTag (const KKStr&  _name,
 
 
 
-
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            const KKStr&  attributeValue
                           )
@@ -518,16 +517,12 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 
 
 
-
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
-                           double        attributeValue
+                           bool          attributeValue
                           )
 {
-  KKStr  s (12);
-  s << attributeValue;
-  attributes.AddAttribute (attributeName, s);
+  attributes.AddAttribute (attributeName, (attributeValue ? "Yes" : "No"));
 }
-
 
 
 
@@ -541,12 +536,22 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 
 
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
-                           bool          attributeValue
-                          )
+                           kkint64       attributeValue
+                         )
 {
-  attributes.AddAttribute (attributeName, (attributeValue ? "Yes" : "No"));
+  attributes.AddAttribute (attributeName, StrFromInt64 (attributeValue));
 }
 
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           double        attributeValue
+                          )
+{
+  KKStr  s (12);
+  s << attributeValue;
+  attributes.AddAttribute (attributeName, s);
+}
 
 
 
@@ -1132,6 +1137,8 @@ XmlFactoryMacro(TypeName)
 
 // Integral Types
 XmlElementIntegralBody(kkint32,Int32,ToInt32)  // XmlElementInt32
+
+XmlElementIntegralBody(kkint64,Int64,ToInt64)  // XmlElementInt64
 
 XmlElementIntegralBody(float,Float,ToDouble)   // XmlElementFloat
 

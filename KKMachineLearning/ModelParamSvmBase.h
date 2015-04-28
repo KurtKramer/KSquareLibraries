@@ -20,13 +20,12 @@ namespace KKMLL
   public:
     typedef  ModelParamSvmBase*  ModelParamSvmBasePtr;
   
-    ModelParamSvmBase  (RunLog&  _log);
+    ModelParamSvmBase  ();
   
     ModelParamSvmBase  (SVM_Type     _svm_type,
                         Kernel_Type  _kernelType,
                         double       _cost,
-                        double       _gamma,
-                        RunLog&      _log
+                        double       _gamma
                        );
   
     ModelParamSvmBase  (const ModelParamSvmBase&  _param);
@@ -53,7 +52,8 @@ namespace KKMLL
 
 
     virtual  void    ReadSpecificImplementationXML (istream&     i, 
-                                                    FileDescPtr  fileDesc
+                                                    FileDescPtr  fileDesc,
+                                                    RunLog&      log
                                                    );
   
     virtual  void    WriteSpecificImplementationXML (std::ostream&  o)  const;
@@ -65,13 +65,23 @@ namespace KKMLL
      */
     virtual KKStr   ToCmdLineStr ()  const;
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
   
   private:
     virtual  void   ParseCmdLinePost ();  // Will get called after the entire parameter string has been processed.
 
     virtual  void  ParseCmdLineParameter (const KKStr&  parameter,
                                           const KKStr&  value,
-                                          bool&         parameterUsed
+                                          bool&         parameterUsed,
+                                          RunLog&       log
                                          );
 
     SVM289_MFS::svm_parameter   svmParam;
@@ -80,7 +90,8 @@ namespace KKMLL
   
   typedef  ModelParamSvmBase::ModelParamSvmBasePtr   ModelParamSvmBasePtr;
 
-
+  typedef  XmlElementTemplate<ModelParamSvmBase>  XmlElementModelParamSvmBase;
+  typedef  XmlElementModelParamSvmBase*  XmlElementModelParamSvmBasePtr;
 
 }  /* namespace KKMLL */
 

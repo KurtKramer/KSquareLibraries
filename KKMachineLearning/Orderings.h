@@ -75,7 +75,8 @@ public:
    */
   Orderings (const FeatureVectorListPtr _data,
              kkuint32                   _numOfOrderings,
-             kkuint32                   _numOfFolds
+             kkuint32                   _numOfFolds,
+             RunLog&                    _log
             );
 
 
@@ -116,7 +117,8 @@ public:
   Orderings (const FeatureVectorListPtr  _data,
              const KKStr&                _indexFileName,
              kkuint32                    _numOfOrderings,
-             kkuint32                    _numOfFolds
+             kkuint32                    _numOfFolds,
+             RunLog&                     _log
             );
 
 
@@ -129,7 +131,9 @@ public:
    *        will exist.  The orderings will be loaded from that file.
    *@param[in]  _data  FeatureVectorList that we want different orderings of.
    */
-  Orderings (FeatureVectorListPtr  _data);
+  Orderings (FeatureVectorListPtr  _data,
+             RunLog&               _log
+            );
 
   ~Orderings ();
 
@@ -148,7 +152,8 @@ public:
   static
   OrderingsPtr  CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,
                                                        kkuint32                    _numOfOrderings,
-                                                       kkuint32                    _numOfFolds
+                                                       kkuint32                    _numOfFolds,
+                                                       RunLog&                     _log
                                                       );
 
 
@@ -160,7 +165,6 @@ public:
   const FileDescPtr        FileDesc        ()  const  {return fileDesc;}
   const MLClassListPtr     MLClasses       ()  const  {return mlClasses;}
   const KKStr&             IndexFileName   ()  const  {return indexFileName;}
-  RunLog&                  Log             ()         {return log;}
   kkuint32                 NumOfFolds      ()  const  {return numOfFolds;}
   kkuint32                 NumOfOrderings  ()  const  {return numOfOrderings;}
   kkuint32                 Size            ()  const  {return (kkuint32)orderings.size ();}
@@ -177,16 +181,19 @@ public:
 
   void  Save ();
  
-  void  Save (const KKStr&  _indexFileName);
+  void  Save (const KKStr&  _indexFileName,
+              RunLog&       _log
+             );
 
 
 private:
-  void  CreateOrderings ();
+  void  CreateOrderings (RunLog&  log);
   void  DeleteOrderings ();
-  void  Load ();
+  void  Load (RunLog&  log);
 
   void  Load (const KKStr&  _indexFileName,
-              bool&          successful
+              bool&         successful,
+              RunLog&       log
              );
 
 
@@ -195,7 +202,6 @@ private:
   FileDescPtr                    fileDesc;
   MLClassListPtr                 mlClasses;
   KKStr                          indexFileName;
-  RunLog&                        log;
   kkuint32                       numOfFolds;
   kkuint32                       numOfOrderings;
   vector<FeatureVectorListPtr>   orderings;

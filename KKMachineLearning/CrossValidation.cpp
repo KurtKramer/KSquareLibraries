@@ -51,7 +51,7 @@ CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
    foldCounts                   (),
    confusionMatrix              (NULL),
    cmByNumOfConflicts           (NULL),
-   examples                     (new FeatureVectorList (*_mlClasses, *_examples, _log)),
+   examples                     (new FeatureVectorList (*_mlClasses, *_examples)),
    mlClasses                 (_mlClasses),
    imagesPerClass               (0),
    log                          (_log),
@@ -205,9 +205,9 @@ void  CrossValidation::RunCrossValidation ()
 
     log.Level (20) << "Fold [" << (foldNum + 1) << "]  of  [" << numOfFolds << "]" << endl;
 
-    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true, log);
+    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true);
 
-    FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true, log);
+    FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true);
 
     log.Level (30) << "Fold Num["        << foldNum        << "]   "
                    << "FirstTestImage["  << firstInGroup   << "]   "

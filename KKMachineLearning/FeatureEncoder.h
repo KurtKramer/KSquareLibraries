@@ -47,8 +47,7 @@ namespace KKMLL
                     AttributeTypeVector&  _attributeTypes,   
                     VectorInt32&          _cardinalityTable,
                     MLClassPtr            _class1,
-                    MLClassPtr            _class2,
-                    RunLog&               _log
+                    MLClassPtr            _class2
                    );
     
     
@@ -64,13 +63,13 @@ namespace KKMLL
     /**
      * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
      */
-    void  FeatureEncoder::CompressExamples (FeatureVectorListPtr    srcExamples,
-                                            FeatureVectorListPtr    compressedExamples,
-                                            ClassAssignments&       assignments
-                                           );
+    void  CompressExamples (FeatureVectorListPtr    srcExamples,
+                            FeatureVectorListPtr    compressedExamples,
+                            ClassAssignments&       assignments
+                           );
 
 
-    FileDescPtr       CreateEncodedFileDesc (ostream*  o);
+    FileDescPtr  CreateEncodedFileDesc (ostream*  o);
 
     FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
 
@@ -87,7 +86,8 @@ namespace KKMLL
                                   ClassAssignments&     assignments,
                                   XSpacePtr&            xSpace,
                                   kkint32&              totalxSpaceUsed,
-                                  struct svm_problem&   prob
+                                  struct svm_problem&   prob,
+                                  RunLog&               log
                                  );
 
     XSpacePtr  EncodeAExample (FeatureVectorPtr  example);
@@ -132,7 +132,6 @@ namespace KKMLL
     FeWhatToDoPtr           destWhatToDo;
     SVM_EncodingMethod      encodingMethod;
     FileDescPtr             fileDesc;
-    RunLog&                 log;
     kkint32                 numEncodedFeatures;
     kkint32                 numOfFeatures;
     FeatureNumList          selectedFeatures;

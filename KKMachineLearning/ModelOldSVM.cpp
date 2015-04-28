@@ -192,13 +192,15 @@ SVM_SelectionMethod  ModelOldSVM::SelectionMethod () const
 
 
 
-void  ModelOldSVM::WriteSpecificImplementationXML (ostream& o)
+void  ModelOldSVM::WriteSpecificImplementationXML (ostream&  o,
+                                                   RunLog&   log
+                                                  )
 {
   log.Level (20) << "ModelOldSVM::WriteSpecificImplementationXML  Saving Model in File." << endl;
 
   bool successful = true;
   o << "<ModelOldSVM>" << endl;
-  svmModel->Write (o, rootFileName, successful);
+  svmModel->Write (o, rootFileName, successful, log);
   o << "</ModelOldSVM>" << endl;
 
 } /* WriteSpecificImplementationXML */

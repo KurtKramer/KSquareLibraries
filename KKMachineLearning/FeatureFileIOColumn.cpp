@@ -150,7 +150,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
   // Will initially create empty examples, then populate
   // each feature value as row's are read in.
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   {
     // Read first row to get count of number of examples,

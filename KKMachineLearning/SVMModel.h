@@ -222,7 +222,7 @@ typedef  struct svm_node*     XSpacePtr;
 
 
     /**
-     *@brief  Returns the distance from the decsion border of the SVM.
+     *@brief  Returns the distance from the decision border of the SVM.
      */
     void  PredictRaw (FeatureVectorPtr  example,
                       MLClassPtr     &  predClass,
@@ -243,7 +243,8 @@ typedef  struct svm_node*     XSpacePtr;
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
 
@@ -300,17 +301,20 @@ typedef  struct svm_node*     XSpacePtr;
      *            contain the probability between classes[3] and classes[2].
      */
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable,  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  RunLog&       log
                                  );
 
 
     void  Save (const KKStr&  _rootFileName,
-                bool&         _successful
+                bool&         _successful,
+                RunLog&       _log
                );
 
-    void  Write (ostream&       o,
-                 const KKStr&   rootFileName,
-                 bool&          _successful
+    void  Write (ostream&      o,
+                 const KKStr&  rootFileName,
+                 bool&         _successful,
+                 RunLog&       log
                 );
 
 
@@ -352,7 +356,8 @@ typedef  struct svm_node*     XSpacePtr;
                                 const MLClassList&    classesThisAssignment,
                                 FeatureEncoderPtr     featureEncoder,
                                 MLClassList&          allClasses,
-                                ClassAssignmentsPtr&  classAssignments
+                                ClassAssignmentsPtr&  classAssignments,
+                                RunLog&               log
                                );
 
 
@@ -381,14 +386,16 @@ typedef  struct svm_node*     XSpacePtr;
                                     struct svm_problem&   prob, 
                                     XSpacePtr&            xSpace, 
                                     MLClassPtr            class1, 
-                                    MLClassPtr            class2
+                                    MLClassPtr            class2,
+                                    RunLog&               log
                                    );
 
 
     void  PredictProbabilitiesByBinaryCombos (FeatureVectorPtr    example,  
                                               const MLClassList&  _mlClasses,
                                               kkint32*            _votes,
-                                              double*             _probabilities
+                                              double*             _probabilities,
+                                              RunLog&             _log
                                              );
 
 
@@ -397,7 +404,7 @@ typedef  struct svm_node*     XSpacePtr;
      *@brief  calculates the number of features that will be present after encoding, and allocates
      *        predictedXSpace to accommodate the size.
      */
-    void  CalculatePredictXSpaceNeeded ();
+    void  CalculatePredictXSpaceNeeded (RunLog&  log);
 
 
 
@@ -405,7 +412,9 @@ typedef  struct svm_node*     XSpacePtr;
      *@brief Builds a BinaryCombo svm model
      *@param[in] examples The examples to use when training the new model
      */
-    void ConstructBinaryCombosModel (FeatureVectorListPtr examples);
+    void ConstructBinaryCombosModel (FeatureVectorListPtr  examples,
+                                     RunLog&               log
+                                    );
 
 
     /**
@@ -414,7 +423,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] prob  Data structure used by SvnLib.
      */
     void ConstructOneVsAllModel (FeatureVectorListPtr examples,
-                                 svm_problem&         prob
+                                 svm_problem&         prob,
+                                 RunLog&              log
                                 );
 
 
@@ -424,7 +434,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] prob  Data structure used by SvnLib.
      */
     void ConstructOneVsOneModel (FeatureVectorListPtr  examples,
-                                 svm_problem&          prob
+                                 svm_problem&          prob,
+                                 RunLog&               log
                                 );
 
 
@@ -461,8 +472,13 @@ typedef  struct svm_node*     XSpacePtr;
     void  InializeProbClassPairs ();
 
 
-    void  SetSelectedFeatures (FeatureNumListConst&    _selectedFeatures);
-    void  SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures);
+    void  SetSelectedFeatures (FeatureNumListConst&  _selectedFeatures,
+                               RunLog&               _log
+                              );
+
+    void  SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures,
+                               RunLog&                 _log
+                              );
 
 
     void  PredictOneVsAll (XSpacePtr    xSpace,
@@ -494,20 +510,36 @@ typedef  struct svm_node*     XSpacePtr;
                                 );
 
 
-    void  Read         (istream& i);
-    void  ReadHeader   (istream& i);
-    void  ReadOneVsOne (istream& i);
-    void  ReadOneVsAll (istream& i);
-    void  ReadOneVsAllEntry (istream& i,
-                             kkint32  modelIDX
+    void  Read         (istream&  i,
+                        RunLog&   log
+                       );
+
+    void  ReadHeader   (istream&  i,
+                        RunLog&   log
+                       );
+
+    void  ReadOneVsOne (istream&  i,
+                        RunLog&   log
+                       );
+
+    void  ReadOneVsAll (istream&  i,
+                        RunLog&   log
+                       );
+
+    void  ReadOneVsAllEntry (istream&  i,
+                             kkint32   modelIDX,
+                             RunLog&   log
                             );
  
-    void  ReadBinaryCombos (istream& i);
+    void  ReadBinaryCombos (istream&  i,
+                            RunLog&   log
+                           );
 
 
-    void  ReadSkipToSection (istream&   i, 
-                             KKStr      sectName,
-                             bool&      sectionFound
+    void  ReadSkipToSection (istream&  i, 
+                             KKStr     sectName,
+                             bool&     sectionFound,
+                             RunLog&   log
                             );
 
 
@@ -535,8 +567,6 @@ typedef  struct svm_node*     XSpacePtr;
                                                    * binaryFeatureEncoders.
                                                    */
     FileDescPtr            fileDesc;
-
-    RunLog&                log;
 
     ModelPtr*              models;
 

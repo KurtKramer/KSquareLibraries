@@ -58,7 +58,7 @@ FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     o
                                                                       RunLog&  runLog
                                                                      )
 {
-  return  new FeatureVectorList (FileDesc (), owner, runLog);
+  return  new FeatureVectorList (FileDesc (), owner);
 }
 
 

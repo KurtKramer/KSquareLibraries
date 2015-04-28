@@ -110,7 +110,9 @@ namespace  KKMLL
     ModelParamDualPtr     Param ();
 
     virtual
-    MLClassPtr            Predict (FeatureVectorPtr  image);
+    MLClassPtr            Predict (FeatureVectorPtr  image,
+                                   RunLog&           log
+                                  );
   
     virtual
     void                  Predict (FeatureVectorPtr  example,
@@ -124,11 +126,14 @@ namespace  KKMLL
                                    double&           predClass2Prob,
                                    kkint32&          numOfWinners,
                                    bool&             knownClassOneOfTheWinners,
-                                   double&           breakTie
+                                   double&           breakTie,
+                                   RunLog&           log
                                   );
 
     virtual 
-    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                            RunLog&           log
+                                           );
 
 
     virtual
@@ -136,14 +141,16 @@ namespace  KKMLL
                                     KKStr&             classifier1Desc,
                                     KKStr&             classifier2Desc,
                                     ClassProbListPtr&  classifier1Results,
-                                    ClassProbListPtr&  classifier2Results
+                                    ClassProbListPtr&  classifier2Results,
+                                    RunLog&            log
                                    );
 
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             log
                                );
 
     /**
@@ -164,37 +171,44 @@ namespace  KKMLL
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
   
     virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
+                                                  bool&     _successful,
+                                                  RunLog&   log
                                                  );
 
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize () squared. */
+                                  double**      crossProbTable, /**< two dimension matrix that needs to be classes.QueueSize () squared. */
+                                  RunLog&       log
                                  );
 
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               RunLog&               _log
                               );
 
 
-    virtual  void  WriteSpecificImplementationXML (ostream&  o);
+    virtual  void  WriteSpecificImplementationXML (ostream&  o,
+                                                   RunLog&   log
+                                                  );
 
 
 
   protected:
     void  DeleteExistingClassifiers ();
 
-    MLClassPtr       ReconcilePredictions (MLClassPtr       pred1, 
-                                           MLClassPtr       pred2
-                                          );
+    MLClassPtr  ReconcilePredictions (MLClassPtr  pred1, 
+                                      MLClassPtr  pred2,
+                                      RunLog&     log
+                                     );
 
     void  ReconcileProbAndVotes (Classifier2Ptr    classifier,
                                  MLClassPtr        predClass,

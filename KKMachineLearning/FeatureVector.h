@@ -211,8 +211,7 @@ namespace KKMLL
      *@param[out] _log Log file to send messages to.
      */
     FeatureVectorList (FileDescPtr  _fileDesc,
-                       bool         _owner,
-                       RunLog&      _log
+                       bool         _owner
                       );
 
   private:
@@ -246,8 +245,7 @@ namespace KKMLL
      *@param[out] _log          Log file to send messages to.
     */ 
     FeatureVectorList (MLClassList&        _mlClasses,
-                       FeatureVectorList&  _examples,
-                       RunLog&             _log
+                       FeatureVectorList&  _examples
                       );
 
     
@@ -269,12 +267,12 @@ namespace KKMLL
 
   
     // Access methods.
-    IFL_SortOrder         CurSortOrder    () const  {return curSortOrder;}
-    kkint32               FeatureCount    () const  {return numOfFeatures;}
-    const FileDescPtr     FileDesc        () const  {return fileDesc;}
-    const  KKStr&         FileName        () const  {return fileName;}
-    kkint32               NumOfFeatures   () const  {return numOfFeatures;}
-    kkint16               Version         () const  {return version;}
+    IFL_SortOrder      CurSortOrder    () const  {return curSortOrder;}
+    kkint32            FeatureCount    () const  {return numOfFeatures;}
+    const FileDescPtr  FileDesc        () const  {return fileDesc;}
+    const  KKStr&      FileName        () const  {return fileName;}
+    kkint32            NumOfFeatures   () const  {return numOfFeatures;}
+    kkint16            Version         () const  {return version;}
     //virtual  const char*      UnderlyingClass () const  {return "FeatureVectorList";}
 
 
@@ -394,7 +392,7 @@ namespace KKMLL
 
     kkint32                   GetClassCount (MLClassPtr  c)  const;           /**< @brief Returns number of examples for a specific Class (MLClass).   */
 
-    RunLog&                   Log () {return  log;}
+    //RunLog&                   Log () {return  log;}
 
 
     /**
@@ -430,7 +428,9 @@ namespace KKMLL
      *@param[in]  fileName  Name of file that contains a list of ExampleFileName's  with one entry per line.
      *@returns  A new list of FeatureVector instances in the order dictated by 'fileName'.
      */
-    FeatureVectorListPtr      OrderUsingNamesFromAFile (const KKStr&  fileName);
+    FeatureVectorListPtr      OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                        RunLog&       log
+                                                       );
 
     void                      RemoveDuplicateEntries (bool    allowDupsInSameClass,
                                                       RunLog& runLog
@@ -447,7 +447,9 @@ namespace KKMLL
                                 bool&         successful
                                );
 
-    void  SynchronizeSymbolicData (FeatureVectorList& otherData);
+    void  SynchronizeSymbolicData (FeatureVectorList&  otherData,
+                                   RunLog&             log
+                                  );
 
     void  PrintClassStatistics (std::ostream&  o)  const;
 
@@ -465,7 +467,7 @@ namespace KKMLL
 
     void  ReSyncSymbolicData (FileDescPtr  newFileDesc);
 
-    void  RemoveEntriesWithMissingFeatures ();  /**< Will delete entries from list that have missing data. */
+    void  RemoveEntriesWithMissingFeatures (RunLog&  log);  /**< Will delete entries from list that have missing data. */
 
 
     /**
@@ -474,15 +476,20 @@ namespace KKMLL
      *   field is of the same type and meaning.  This way we can determine if one list contains
      *   Apples while the other contains Oranges.
      */
-    bool  SameExceptForSymbolicData (const FeatureVectorList&  otherData)  const;
+    bool  SameExceptForSymbolicData (const FeatureVectorList&  otherData,
+                                     RunLog&                   log
+                                    )  const;
 
 
-    FeatureVectorListPtr  StratifyAmoungstClasses (kkint32  numOfFolds);
+    FeatureVectorListPtr  StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                   RunLog&  log
+                                                  );
 
 
     FeatureVectorListPtr  StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                    kkint32         maxImagesPerClass,
-                                                   kkint32         numOfFolds
+                                                   kkint32         numOfFolds,
+                                                   RunLog&         log
                                                   );
    
     void  SortByClass         (bool  reversedOrder = false);
@@ -494,9 +501,6 @@ namespace KKMLL
     void  SortByBreakTie      (bool  reversedOrder = false);
 
     void  SortByRootName      (bool  reversedOrder = false);
-   
-    RunLog&        log;
-
 
   private:
     class  BreakTieComparison;

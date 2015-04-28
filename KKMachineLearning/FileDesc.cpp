@@ -14,6 +14,7 @@ using namespace  std;
 #include "GlobalGoalKeeper.h"
 #include "DateTime.h"
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "KKQueue.h"
 #include "RunLog.h"
@@ -112,9 +113,7 @@ kkint32  FileDesc::MemoryConsumedEstimated ()  const
 
 
 
-FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
-                                               VectorKKStr&  _fieldNames
-                                              )
+FileDescPtr   FileDesc::NewContinuousDataOnly (VectorKKStr&  _fieldNames)
 {
   bool  alreadyExists = false;
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -345,9 +344,7 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 
 
 
-kkint32  FileDesc::Cardinality (kkint32  fieldNum,
-                              RunLog&  log
-                             )  const
+kkint32  FileDesc::Cardinality (kkint32  fieldNum)  const
 {
   ValidateFieldNum (fieldNum, "Type");
 
@@ -355,12 +352,10 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum,
 
   if  (!a)
   {
-    log.Level (-1) << endl
-                   << "FileDesc::Cardinality    ***ERROR***" << endl
-                   << "                Could not locate attribute[" << fieldNum << "]" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg;
+    errMsg << "FileDesc::Cardinality    ***ERROR***    Could not locate attribute[" << fieldNum << "]";
+    cerr << errMsg;
+    throw  KKException (errMsg);
   }
 
   switch  (a->Type ())
@@ -783,7 +778,7 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
     // We can merge in Nominal Values for this field.
 
     kkint32  z;
-    for  (z = 0;  z < right.Cardinality (fieldNum, log);  z++)
+    for  (z = 0;  z < right.Cardinality (fieldNum);  z++)
     {
       const KKStr&  rightNomName = right.GetNominalValue (fieldNum, z);
       kkint32  lCode = f->LookUpNominalCode (fieldNum, rightNomName);

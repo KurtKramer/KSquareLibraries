@@ -833,7 +833,7 @@ FeatureVectorListPtr  UsfCasCor::FilterOutExtremeExamples (FeatureVectorListPtr 
   kkint16          numSelFeatures = selectedFeatures->NumOfFeatures ();
   const kkuint16*  selFeatures    = selectedFeatures->FeatureNums ();
  
-  FeatureVectorListPtr result = new FeatureVectorList (trainExamples->FileDesc (), false, log);
+  FeatureVectorListPtr result = new FeatureVectorList (trainExamples->FileDesc (), false);
   FeatureVectorList::iterator  idx;
   for  (idx = trainExamples->begin ();  idx != trainExamples->end ();  ++idx)
   {

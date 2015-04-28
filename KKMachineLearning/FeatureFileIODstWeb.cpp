@@ -268,7 +268,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&  _fileName,
     return  NULL;
   }
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   KKStr  classNameAttributeUpper (_fileDesc->ClassNameAttribute ());
   classNameAttributeUpper.Upper ();

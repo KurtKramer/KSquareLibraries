@@ -39,7 +39,7 @@ namespace KKMLL
     typedef  ModelParamOldSVM*  ModelParamOldSVMPtr;
     typedef  SVM233::svm_parameter   svm_parameter;
 
-    ModelParamOldSVM  (RunLog&  _log);
+    ModelParamOldSVM  ();
   
   
     ModelParamOldSVM  (const ModelParamOldSVM&  _param);
@@ -52,8 +52,9 @@ namespace KKMLL
 
     virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptOldSVM;}
 
-    void    ReadSpecificImplementationXML (istream& i,
-                                           FileDescPtr  fileDesc
+    void    ReadSpecificImplementationXML (istream&     i,
+                                           FileDescPtr  fileDesc,
+                                           RunLog&      log
                                           );
 
     void    WriteSpecificImplementationXML (std::ostream&  o)  const;
@@ -102,7 +103,11 @@ namespace KKMLL
     virtual double                   Gamma                      () const;
     virtual SVM_KernalType           KernalType                 () const;
     virtual SVM_MachineType          MachineType                () const;
-    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
+
+    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                                 RunLog&      log
+                                                                ) const;
+
     virtual const svm_parameter&     Param                      () const;
     virtual float                    SamplingRate               () const;
     virtual FeatureNumListConstPtr   SelectedFeatures           () const;
@@ -144,8 +149,9 @@ namespace KKMLL
                              float                   _weight = -1  /**< -1 Indicates use existing value. */
                             );
 
-    void  ParseCmdLine (KKStr   _cmdLineStr,
-                        bool&   _validFormat
+    void  ParseCmdLine (KKStr    _cmdLineStr,
+                        bool&    _validFormat,
+                        RunLog&  _log
                        );
 
     KKStr  SvmParamToString (const  svm_parameter&  _param)  const;
@@ -166,13 +172,19 @@ namespace KKMLL
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
-                                 bool&         parameterUsed
+                                 bool&         parameterUsed,
+                                 RunLog&       log
                                 );
 
     SVMparamPtr  svmParameters;
   };  /* ModelParamOldSVM */
 
   typedef  ModelParamOldSVM*   ModelParamOldSVMPtr;
+
+
+  typedef  XmlElementTemplate<ModelParamOldSVM>  XmlElementModelParamOldSVM;
+  typedef  XmlElementModelParamOldSVM*  XmlElementModelParamOldSVMPtr;
+
 }  /* namespace KKMLL */
 
 

@@ -120,7 +120,6 @@ namespace  KKB
     const KKStr&   AttributeValueKKStr   (const KKStr&  name)   const;
     kkint32        AttributeValueInt32   (const KKStr&  name)   const;
 
-
   private:
     void  DeleteFromNameIndex (XmlAttributePtr a);
 
@@ -169,7 +168,7 @@ namespace  KKB
                       );
 
     void  AddAtribute (const KKStr&  attributeName,
-                       double        attributeValue
+                       bool          attributeValue
                       );
 
     void  AddAtribute (const KKStr&  attributeName,
@@ -177,7 +176,11 @@ namespace  KKB
                       );
 
     void  AddAtribute (const KKStr&  attributeName,
-                       bool          attributeValue
+                       kkint64       attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&  attributeName,
+                       double        attributeValue
                       );
 
     KKStr  ToString ()  const;
@@ -590,11 +593,9 @@ namespace  KKB
 
 
 XmlElementIntegralHeader(kkint32, Int32)
+XmlElementIntegralHeader(kkint64, Int64)
 XmlElementIntegralHeader(float,   Float)
 XmlElementIntegralHeader(double,  Double)
-
-
-
 
 
 

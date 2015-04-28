@@ -7,6 +7,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -22,12 +23,12 @@ using namespace KKB;
 using namespace KKMLL;
 
 
-ModelParamOldSVM::ModelParamOldSVM  (RunLog&  _log):
+ModelParamOldSVM::ModelParamOldSVM  ():
 
-  ModelParam (_log),
+  ModelParam (),
   svmParameters (NULL)
 {
-  svmParameters = new SVMparam (_log);
+  svmParameters = new SVMparam ();
 }
 
 
@@ -174,9 +175,11 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                      RunLog&      log
+                                                     ) const
 {
-  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc);
+  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc, log);
 }
 
 
@@ -281,8 +284,9 @@ SVM_SelectionMethod ModelParamOldSVM::SelectionMethod () const
 
 
 
-void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
-                                      bool&   _validFormat
+void  ModelParamOldSVM::ParseCmdLine (KKStr    _cmdLineStr,
+                                      bool&    _validFormat,
+                                      RunLog&  _log
                                      )
 {
   _validFormat = true;
@@ -297,7 +301,7 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
   {
     if  (field[0] != '-')  
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -320,10 +324,10 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
 
     bool  parameterUsed = false;
 
-    ParseCmdLineParameter (field, value, parameterUsed);
+    ParseCmdLineParameter (field, value, parameterUsed, _log);
     if  (!parameterUsed)
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
+      _log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
         << field << "]  Value[" << value << "]."
         << endl;
       _validFormat = false;
@@ -350,11 +354,12 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
 
 void  ModelParamOldSVM::ParseCmdLineParameter (const KKStr&  parameter,
                                                const KKStr&  value,
-                                               bool&         parameterUsed
+                                               bool&         parameterUsed,
+                                               RunLog&       log
                                               )
 {
   bool  validFormat = true;
-  svmParameters->ParseCmdLineParameter (parameter, value, parameterUsed, validFormat);
+  svmParameters->ParseCmdLineParameter (parameter, value, parameterUsed, validFormat, log);
   if  (!validFormat)
   {
     log.Level (-1) << endl << endl
@@ -373,8 +378,6 @@ void  ModelParamOldSVM::ParseCmdLineParameter (const KKStr&  parameter,
 */
 KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 {
-  log.Level (60) << "ModelParamOldSVM::SvmParamToString Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr << _param.ToCmdLineStr ();
@@ -390,8 +393,6 @@ KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 */
 KKStr   ModelParamOldSVM::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParamOldSVM::ToCmdLineStr - Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr = svmParameters->ToString ();
@@ -403,7 +404,6 @@ KKStr   ModelParamOldSVM::ToCmdLineStr () const
 
 void  ModelParamOldSVM::WriteSpecificImplementationXML (ostream&  o)  const
 {
-  log.Level (20) << "ModelParamOldSVM::WriteSpecificImplementationXML to XML to ostream." << endl;
   o << "<ModelParamOldSVM>" << std::endl;
   svmParameters->WriteXML (o);
   o << "</ModelParamOldSVM>" << endl;
@@ -414,7 +414,8 @@ void  ModelParamOldSVM::WriteSpecificImplementationXML (ostream&  o)  const
 
 
 void  ModelParamOldSVM::ReadSpecificImplementationXML (istream&     i,
-                                                       FileDescPtr  fileDesc
+                                                       FileDescPtr  fileDesc,
+                                                       RunLog&      log
                                                       )
 {
   log.Level (20) << "ModelParamOldSVM::ReadSpecificImplementationXML file." << endl;
@@ -432,7 +433,7 @@ void  ModelParamOldSVM::ReadSpecificImplementationXML (istream&     i,
 
     if  (field.EqualIgnoreCase ("<SVMparam>"))
     {
-      svmParameters->ReadXML (i, fileDesc);
+      svmParameters->ReadXML (i, fileDesc, log);
     }
   }
 }  /* ReadSpecificImplementationXML */
@@ -556,6 +557,7 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
                                  RunLog&         log
                                 )
 {
+  KKStr  svmParametersStr;
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
@@ -564,40 +566,18 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
     {
       if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
       {
-        delete  svmParameters;
-        KKStr  svmParameters = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
-
-        svmParameters = new  SVMparam  (KKStr&                  _cmdLineStr,
-               FeatureNumListConstPtr  _selectedFeatures,  /**< Will make own instance; caller maintains ownership status. */
-               RunLog&                 _log,
-               bool&                   _validFormat
-              );
+        svmParametersStr = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
       }
-
-
-
-
-
-
-
-      const KKStr&  varName = t->VarName ();
-
-      if  (varName.EqualIgnoreCase ("ConfigFileName1"))
-        configFileName1 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
-
-      else if  (varName.EqualIgnoreCase ("ConfigFileName2"))
-        configFileName2 = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
-
-      else if  (varName.EqualIgnoreCase ("FullHierarchyMustMatch"))
-        fullHierarchyMustMatch = dynamic_cast<XmlElementBoolPtr> (t)->Value ();
-
-      else if  (varName.EqualIgnoreCase ("OtherClass"))
-        otherClass = MLClass::CreateNewMLClass (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
-
-      else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
-        probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
     }
     t = s.GetNextToken (log);
   }
+
+  bool  validFormat = false;
+  delete  svmParameters;
+  svmParameters = new SVMparam  (svmParametersStr, SelectedFeatures (), validFormat, log);
 }  /* ReadXML */
 
+ 
+
+
+XmlFactoryMacro(ModelParamOldSVM)

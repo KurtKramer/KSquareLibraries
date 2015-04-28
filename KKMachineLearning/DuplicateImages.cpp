@@ -255,7 +255,7 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
 
 FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
 {
-  FeatureVectorListPtr  examplesToDelete = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  examplesToDelete = new FeatureVectorList (fileDesc, false);
 
   log.Level (10) << "DuplicateImages::ListOfExamplesToDelete" << endl;
 
@@ -353,7 +353,7 @@ DuplicateImage::DuplicateImage (FileDescPtr       _fileDesc,
                                 RunLog&           _log
                                ):
    fileDesc         (_fileDesc),
-   duplicatedImages (_fileDesc, false, _log),
+   duplicatedImages (_fileDesc, false),
    firstImageAdded  (_image1)
 {
   duplicatedImages.PushOnBack (_image1);

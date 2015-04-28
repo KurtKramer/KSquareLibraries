@@ -177,7 +177,7 @@ SVM289_MFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
                                      ):
   numTrainExamples (0),
   selFeatures      (_selFeatures), 
-  x                (_fileDesc, false, _log),
+  x                (_fileDesc, false),
   y                (NULL)
 {
   kkint32  zed = 87989;
@@ -192,13 +192,6 @@ SVM289_MFS::svm_problem::~svm_problem ()
 
 
     
-RunLog&   SVM289_MFS::svm_problem::Log ()
-{
-  return  x.Log ();
-}
-
-
-
 FileDescPtr  SVM289_MFS::svm_problem::FileDesc ()  const
 {
   return  x.FileDesc ();
@@ -3182,7 +3175,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
     }
 
     {
-      FeatureVectorListPtr  subXX = new FeatureVectorList (prob->x.FileDesc (), false, log);
+      FeatureVectorListPtr  subXX = new FeatureVectorList (prob->x.FileDesc (), false);
       for  (j = 0;  j < k;  j++)
         subXX->PushOnBack (subX[j]);
       subProb = new svm_problem (*subXX, subY, prob->selFeatures);
@@ -3460,7 +3453,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
     kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
     //svm_node **x = Malloc(svm_node *,l);
-    FeatureVectorList x (prob.FileDesc (), false, log);
+    FeatureVectorList x (prob.FileDesc (), false);
 
     kkint32 i;
     for  (i = 0;  i < l;  i++)
@@ -4640,7 +4633,7 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
   param       (_model.param),
   nr_class    (_model.nr_class),
   numSVs      (_model.numSVs),
-  SV          (_fileDesc, false, _log),
+  SV          (_fileDesc, false),
   sv_coef     (NULL),
   rho         (NULL),
   probA       (NULL),
@@ -4727,7 +4720,7 @@ SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc,
    param               (),
    nr_class            (0),
    numSVs              (0),
-   SV                  (_fileDesc, true, _log),
+   SV                  (_fileDesc, true),
    sv_coef             (NULL),
    rho                 (NULL),
    probA               (NULL),
@@ -4751,7 +4744,7 @@ SVM289_MFS::svm_model::svm_model (const svm_parameter&  _param,
    param       (_param),
    nr_class    (0),
    numSVs      (0),
-   SV          (_fileDesc, true, _log),
+   SV          (_fileDesc, true),
    sv_coef     (NULL),
    rho         (NULL),
    probA       (NULL),
@@ -4777,7 +4770,7 @@ SVM289_MFS::svm_model::svm_model (const KKStr&  _fileName,
    param       (),
    nr_class    (0),
    numSVs      (0),
-   SV          (_fileDesc, true, _log),
+   SV          (_fileDesc, true),
    sv_coef     (NULL),
    rho         (NULL),
    probA       (NULL),
@@ -4802,7 +4795,7 @@ SVM289_MFS::svm_model::svm_model (istream&     _in,
    param               (),
    nr_class            (0),
    numSVs              (0),
-   SV                  (_fileDesc, true, _log),
+   SV                  (_fileDesc, true),
    sv_coef             (NULL),
    rho                 (NULL),
    probA               (NULL),

@@ -51,8 +51,6 @@ namespace  SVM289_BFS
 
     ~svm_problem ();
 
-    RunLog&      Log ();
-
     FileDescPtr  FileDesc ()  const;
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}

@@ -149,7 +149,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
   if  (_maxCount < 1)
     _maxCount = int32_max;
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   while  ((!eof)   &&  (!_cancelFlag)  &&  ((kkint32)examples->size () < _maxCount))
   {

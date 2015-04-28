@@ -351,8 +351,7 @@ FeatureVectorPtr  FeatureEncoder2::EncodeAExample (FeatureVectorPtr  src)  const
 FeatureVectorListPtr  FeatureEncoder2::EncodeAllExamples (const FeatureVectorListPtr  srcData)
 {
   FeatureVectorListPtr  encodedExamples = new FeatureVectorList (encodedFileDesc, 
-                                                                  true,                  // Will own the contents 
-                                                                  log
+                                                                  true                  // Will own the contents 
                                                                 );
 
   FeatureVectorList::const_iterator  idx;

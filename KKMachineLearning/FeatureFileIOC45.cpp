@@ -752,7 +752,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
 
   KKStr  imageFileName = "";
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   while  (!eof)
   {

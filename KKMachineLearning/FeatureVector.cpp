@@ -288,12 +288,10 @@ bool FeatureVector::operator== (FeatureVector &other_image)  const
 
 
 FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
-                                      bool         _owner,
-                                      RunLog&      _log
+                                      bool         _owner
                                      ):
   KKQueue<FeatureVector> (_owner),
 
-  log           (_log),
   curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_fileDesc),
   fileName      (),
@@ -302,12 +300,9 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
 {
   if  (!fileDesc)
   {
-    log.Level (-1) << endl
-                   << "FeatureVectorList::FeatureVectorList    *** ERROR ***" << endl
-                   << "                                     FileDesc == NULL" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg = "FeatureVectorList::FeatureVectorList    *** ERROR ***      FileDesc == NULL";
+    cerr << endl << errMsg << endl <<endl;
+    throw KKException (errMsg);
   }
 
   numOfFeatures = fileDesc->NumOfFields ();
@@ -319,7 +314,6 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
 FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      KKQueue<FeatureVector> (examples),
 
-     log           (examples.log),
      curSortOrder  (IFL_SortOrder::IFL_UnSorted),
      fileDesc      (examples.fileDesc),
      fileName      (examples.fileName),
@@ -334,7 +328,7 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
  *@details 
  *@code
  *if (owner == true)  then will also
- *   1) duplicate the cotents. That is each example in the list will be 
+ *   1) duplicate the contents; that is each example in the list will be 
  *      duplicated by calling the copy constructor.
  *   2) And the new list will own these newly created examples.
  *@endcode
@@ -344,7 +338,6 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
                                      ):
    KKQueue<FeatureVector> (examples, _owner),
 
-   log           (examples.log),
    curSortOrder  (IFL_SortOrder::IFL_UnSorted),
    fileDesc      (examples.fileDesc),
    fileName      (examples.fileName),
@@ -367,12 +360,10 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
  *@param[in] _log  Logging file.
  */
 FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
-                                      FeatureVectorList&  _examples,
-                                      RunLog&             _log
+                                      FeatureVectorList&  _examples
                                      ):
   KKQueue<FeatureVector> (false),
 
-  log           (_log),
   curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_examples.fileDesc),
   fileName      (_examples.fileName),
@@ -416,14 +407,16 @@ kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
  *  field is of the same type and meaning. This way we can determine if one list contains
  *  Apples while the other contains Oranges.
  */
-bool  FeatureVectorList::SameExceptForSymbolicData (const FeatureVectorList&  otherData)  const
+bool  FeatureVectorList::SameExceptForSymbolicData (const FeatureVectorList&  otherData,
+                                                    RunLog&                   log
+                                                   )  const
 {
   return  fileDesc->SameExceptForSymbolicData (*(otherData.FileDesc ()), log);
 }
 
 
 
-void  FeatureVectorList::RemoveEntriesWithMissingFeatures ()
+void  FeatureVectorList::RemoveEntriesWithMissingFeatures (RunLog&  log)
 {
   log.Level (50) << "FeatureVectorList::RemoveEntriesWithMissingFeatures" << endl;
 
@@ -458,7 +451,6 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
     // any way.  If missing something has gone very wring.
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "      *** ERROR ***  'fileDesc == NULL'";
-    log.Level (-1) << endl << endl << msg << endl << endl;
     throw KKException (msg);
   }
 
@@ -466,7 +458,6 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   {
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "    *** ERROR ***    FeatureNum[" << fieldNum << "] is out of range.";
-    log.Level (-1) << endl << endl << msg << endl << endl;
     throw KKException (msg);
   }
 } /* ValidateFileDescAndFieldNum */
@@ -509,7 +500,7 @@ KKStr  FeatureVectorList::FeatureTypeStr (kkint32 featureNum) const
 kkint32 FeatureVectorList::FeatureCardinality (kkint32 featureNum)  const
 {
   ValidateFileDescAndFieldNum (featureNum, "FeatureCardinality");
-  return  fileDesc->Cardinality (featureNum, log);
+  return  fileDesc->Cardinality (featureNum);
 }
 
 
@@ -679,7 +670,7 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
     KKStr  errMsg = "FeatureVectorList::AddQueue   ***ERROR***    'examplesToAdd' has different 'NumOfFeatures'.";
     errMsg << endl << "       numOfFeatures              [" << numOfFeatures               << "]" << endl
                    << "       examplesToAdd.numOfFeatures[" << examplesToAdd.numOfFeatures << "]";
-    log.Level (-1) << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw  errMsg;
   }
 
@@ -721,7 +712,7 @@ kkint32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
 
 FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkuint32 level)
 {
-  FeatureVectorListPtr  examples = new FeatureVectorList (fileDesc, true, log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (fileDesc, true);
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
   {
@@ -754,7 +745,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
 
   // Create a new list structure that does not own the Images it contains.  This way when 
   // this structure is deleted.  The example it contains are not deleted.
-  FeatureVectorListPtr  extractedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  extractedImages = new FeatureVectorList (fileDesc, false);
 
   if  (!extractedImages)
   {
@@ -901,8 +892,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
   if  (curSortOrder != IFL_SortOrder::IFL_ByRootName)
   {
-    log.Level (-1)  
-         << endl
+    cerr << endl
          << "FeatureVectorList::LookUpByRootName   ***WARNING***  List is NOT SORTED by RootName."  << endl
          << endl;
 
@@ -982,7 +972,9 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
 
 
 
-FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName)
+FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                                   RunLog&       log
+                                                                  )
 {
   FILE*  in = osFOPEN (fileName.Str (), "r");
   if  (!in)
@@ -995,7 +987,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
   }
 
   FeatureVectorPtr      example = NULL;
-  FeatureVectorListPtr  orderedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  orderedImages = new FeatureVectorList (fileDesc, false);
 
   char buff[1024];
   while  (fgets (buff, sizeof (buff), in))
@@ -1054,10 +1046,6 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
   ofstream o (_fileName.Str ());
   if  (!o.is_open ())
   {
-    log.Level (-1) << endl
-                   << "FeatureVectorList::SaveOrderingOfImages   *** ERROR ***" << endl
-                   << "                       Could not open file[" << _fileName << "]." << endl
-                   << endl;
     _successful = false;
     return;
   }
@@ -1085,12 +1073,12 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
 
 
 /**
- *@brief  Creates a duplicate of list and also dupliactes it contents.
- *@return Duplicated list with hardcopy of its contents.
+ *@brief  Creates a duplicate of list and also duplicates it contents.
+ *@return Duplicated list with hard copy of its contents.
  */
 FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
-  FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true, log);
+  FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true);
 
   for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
@@ -1197,7 +1185,7 @@ ClassProbListPtr  FeatureVectorList::GetClassDistribution () const
 
 FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
-  FeatureVectorListPtr  duplicateList = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  duplicateList = new FeatureVectorList (fileDesc, false);
 
   if  (QueueSize () < 2)
   {
@@ -1302,11 +1290,11 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
   if  ((_featureNum < 0)  ||  (_featureNum >= NumOfFeatures ()))
   {
-    log.Level (-1) << endl
-                   << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
-                   << "                                            FeatureNum   [" << _featureNum      << "]" << endl
-                   << "                                            NumOfFeatures[" << NumOfFeatures () << "]" << endl
-                   << endl;
+    cerr << endl
+         << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
+         << "                                            FeatureNum   [" << _featureNum      << "]" << endl
+         << "                                            NumOfFeatures[" << NumOfFeatures () << "]" << endl
+         << endl;
     _count = -1;
     return;
   }
@@ -1348,11 +1336,13 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
 
 
-FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds)
+FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                                  RunLog&  log
+                                                                 )
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
-  FeatureVectorListPtr stratifiedExamples = StratifyAmoungstClasses (classes, -1, numOfFolds);
+  FeatureVectorListPtr stratifiedExamples = StratifyAmoungstClasses (classes, -1, numOfFolds, log);
   delete  classes;  classes = NULL;
 
   return  stratifiedExamples;
@@ -1363,8 +1353,9 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOf
 
 
 FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                  kkint32            maxImagesPerClass,
-                                                                  kkint32            numOfFolds
+                                                                  kkint32         maxImagesPerClass,
+                                                                  kkint32         numOfFolds,
+                                                                  RunLog&         log
                                                                  )
 {
   log.Level (10) << "FeatureVectorList::StratifyAmoungstClasses" << endl;
@@ -1374,7 +1365,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
 
   FeatureVectorListPtr*  folds = new FeatureVectorListPtr[numOfFolds];
   for  (x = 0; x < numOfFolds; x++)
-    folds[x] = new FeatureVectorList (fileDesc, false, log);
+    folds[x] = new FeatureVectorList (fileDesc, false);
 
   MLClassPtr  mlClass = NULL;
   MLClassList::iterator  icIDX;
@@ -1413,7 +1404,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     imagesInClass = NULL;
   }
 
-  FeatureVectorListPtr stratafiedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr stratafiedImages = new FeatureVectorList (fileDesc, false);
 
   for  (foldNum = 0; foldNum < numOfFolds; foldNum++)
   {
@@ -1622,30 +1613,24 @@ VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percentage,   // 0.0 -> 100.0
-                                                                 kkint32  minClassCount
+FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     percentage,   // 0.0 -> 100.0
+                                                                 kkint32   minClassCount
                                                                 )
 {
 
 
   if  (percentage <= 0.0f)
   {
-    log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  Will return empty list" << endl 
-                   << endl;
     percentage = 0.0f;
   }
 
   if  (percentage > 100.0f)
   {
-    log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  will default it to 1.0f" << endl 
-                   << endl;
     percentage = 1.0f;
   }
 
   kkint32  newSize = (kkint32)(0.5f + (float)QueueSize () * percentage / 100.0f);
-  FeatureVectorListPtr  randomSampled = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  randomSampled = new FeatureVectorList (fileDesc, false);
 
   MLClassListPtr  classes = ExtractListOfClasses ();
   classes->SortByName ();
@@ -1709,20 +1694,16 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
       VectorInt  lookUpTable;
 
       kkint32  x;
-      for  (x = 0;  x < fileDesc->Cardinality (fieldNum, log);  x++)
+      for  (x = 0;  x < fileDesc->Cardinality (fieldNum);  x++)
       {
         const KKStr&  nominalValue = fileDesc->GetNominalValue (fieldNum, x);
         kkint32  newCd = newFileDesc->LookUpNominalCode (fieldNum, nominalValue);
         if  (newCd < 0)
         {
-          log.Level (-1) << endl << endl << endl
-                         << "FeatureVectorList::ReSyncSymbolicData      ***  ERROR  ***" << endl
-                         << endl
-                         << "FieldNum[" << fieldNum << "]  FieldName[" << newFileDesc->FieldName (fieldNum) << "]" << endl
-                         << "Nominal Value[" << nominalValue << "]    is missing." << endl
-                         << endl;
-          osWaitForEnter ();
-          exit (-1);
+          KKStr  errMsg;
+          errMsg << "FeatureVectorList::ReSyncSymbolicData  ***ERROR***    FieldNum[" << fieldNum << "]  FieldName[" << newFileDesc->FieldName (fieldNum) << "]  Nominal Value[" << nominalValue << "]    is missing.";
+          cerr << errMsg;
+          throw KKException (errMsg);
         }
 
         lookUpTable.push_back (newCd);
@@ -1731,7 +1712,6 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
       lookUpTables.push_back (lookUpTable);
     }
   }
-
 
   FeatureVectorList::iterator  idx;
   for  (idx = begin ();  idx !=  end ();  idx++)
@@ -1754,18 +1734,16 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
 
 
-void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList& otherData)
+void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList&  otherData,
+                                                  RunLog&             log
+                                                 )
 {
   if  (!fileDesc->SameExceptForSymbolicData (*(otherData.FileDesc ()), log))
   {
-    log.Level (-1) << endl << endl << endl
-                   << "FeatureVectorList::SynchronizeSymbolicData     *** ERROR ***" << endl
-                   << endl
-                   << "The two datasets have more than SymbolicData differences." << endl
-                   << endl;
-
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg;
+    errMsg = "FeatureVectorList::SynchronizeSymbolicData   ***ERROR***    The two datasets have more than SymbolicData differences.";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   FileDescPtr  newFileDesc = FileDesc::MergeSymbolicFields (*fileDesc, *(otherData.FileDesc ()), log);
@@ -1796,9 +1774,10 @@ KKStr  GetClassNameByHierarchyLevel (KKStr  className,
 }  /* GetClassNameByHierarchyLevel */
 
 
+
 FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  level)
 {
-  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = new FeatureVectorList (fileDesc, true, log);
+  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = new FeatureVectorList (fileDesc, true);
 
   MLClassListPtr  allClasses = ExtractListOfClasses ();
   allClasses->SortByName ();

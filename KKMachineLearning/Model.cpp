@@ -52,7 +52,6 @@ Model::Model (const Model&  _model):
     crossClassProbTableSize (0),
     encoder                 (NULL),
     fileDesc                (_model.fileDesc),
-    log                     (_model.log),
     name                    (_model.name),
     numOfClasses            (_model.numOfClasses),
     normParms               (NULL),
@@ -92,8 +91,7 @@ Model::Model (const Model&  _model):
  *@brief  Use this when you are planning on creating a empty model without parameters.
  */
 Model::Model (FileDescPtr    _fileDesc,
-              VolConstBool&  _cancelFlag,
-              RunLog&        _log
+              VolConstBool&  _cancelFlag
              ):
     alreadyNormalized        (false),
     cancelFlag               (_cancelFlag),
@@ -102,7 +100,6 @@ Model::Model (FileDescPtr    _fileDesc,
     crossClassProbTable      (NULL),
     encoder                  (NULL),
     fileDesc                 (_fileDesc),
-    log                      (_log),
     name                     (),
     normParms                (NULL),
     numOfClasses             (0),
@@ -143,7 +140,6 @@ Model::Model (const KKStr&       _name,
     crossClassProbTable   (NULL),
     encoder               (NULL),
     fileDesc              (_fileDesc),
-    log                   (_log),
     name                  (_name),
     normParms             (NULL),
     numOfClasses          (0),
@@ -161,7 +157,7 @@ Model::Model (const KKStr&       _name,
 {
   param = _param.Duplicate ();
 
-  log.Level (20) << "ModelKnn::ModelKnn - Constructing From Training Data." << endl;
+  _log.Level (20) << "ModelKnn::ModelKnn - Constructing From Training Data." << endl;
 }
 
 
@@ -285,7 +281,7 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   bool  successful = false;
   try
   {
-    model->ReadXML (i, successful);
+    model->ReadXML (i, successful, _log);
   }
   catch  (const KKException& e)
   {
@@ -425,7 +421,7 @@ void  Model::AllocatePredictionVariables ()
 
   if  (classes == NULL)
   {
-    log.Level (-1) << endl << endl 
+    cerr << endl << endl 
       << "Model::AllocatePredictionVariables   ***ERROR***      (classes == NULL)"  << endl
       << endl;
 
@@ -537,22 +533,23 @@ void  Model::TrainingTimeEnd ()
 
 
 void  Model::Load (const KKStr&  _rootFileName,
-                   bool&         _successful
+                   bool&         _successful,
+                   RunLog&       _log
                   )
 {
-  log.Level (10) << "Model::Load  Load Model in File[" << _rootFileName << "]." << endl;
+  _log.Level (10) << "Model::Load  Load Model in File[" << _rootFileName << "]." << endl;
   rootFileName = _rootFileName;
   KKStr  fileName = rootFileName + ".Model";
 
   ifstream  i (fileName.Str (), ios_base::in);
   if  (!i.is_open ())
   {
-    log.Level (-1) << endl << endl << "Model::Load   Failed to open file[" << fileName << "]" << endl;
+    _log.Level (-1) << endl << endl << "Model::Load   Failed to open file[" << fileName << "]" << endl;
     _successful = false;
     return;
   }
 
-  ReadXML (i, _successful);
+  ReadXML (i, _successful, _log);
 
   i.close ();
 }  /* Load */
@@ -561,12 +558,13 @@ void  Model::Load (const KKStr&  _rootFileName,
 
 
 void  Model::Save (const KKStr&  _rootFileName,
-                   bool&         _successful
+                   bool&         _successful,
+                   RunLog&       _log
                   )
 {
-  log.Level (10) << "Model::Save  Saving Model in File["
-                 << _rootFileName << "]."
-                 << endl;
+  _log.Level (10) << "Model::Save  Saving Model in File["
+                  << _rootFileName << "]."
+                  << endl;
 
   _successful = true;
 
@@ -578,12 +576,12 @@ void  Model::Save (const KKStr&  _rootFileName,
   if  (!o.is_open ())
   {
     _successful = false;
-    log.Level (-1) << endl << endl 
+    _log.Level (-1) << endl << endl 
       << "Model::Save    ***ERROR***   Opening[" << fileName << "]." << endl;
     return;
   }
 
-  WriteXML (o);
+  WriteXML (o, _log);
 
   o.close ();
 }  /* Save */
@@ -591,7 +589,9 @@ void  Model::Save (const KKStr&  _rootFileName,
 
 
 
-void  Model::WriteXML (ostream&  o)
+void  Model::WriteXML (ostream&  o,
+                       RunLog&   log
+                      )
 {
   log.Level (20) << "Model::WriteXML  Saving Model [" << Name () << "] in File." << endl;
 
@@ -609,7 +609,7 @@ void  Model::WriteXML (ostream&  o)
   if  (param)
   {
     o << "<Parameters>"  << endl;
-    param->WriteXML (o);
+    param->WriteXML (o, log);
     o << "</Parameters>" << endl;
   }
 
@@ -620,7 +620,7 @@ void  Model::WriteXML (ostream&  o)
     normParms->Write (o);
 
   o << "<SpecificImplementation>"  << endl;
-  WriteSpecificImplementationXML (o);
+  WriteSpecificImplementationXML (o, log);
   o << "</SpecificImplementation>"  << endl;
 
   o << "</Model>" << endl;
@@ -631,7 +631,8 @@ void  Model::WriteXML (ostream&  o)
 
 
 void  Model::ReadXML (istream&  i,
-                      bool&     _successful
+                      bool&     _successful,
+                      RunLog&   log
                      )
 {
   validModel = true;
@@ -777,7 +778,8 @@ void  Model::ReadXML (istream&  i,
 
 void  Model::ReadSkipToSection (istream& i, 
                                 KKStr    sectName,
-                                bool&    sectionFound
+                                bool&    sectionFound,
+                                RunLog&  log
                                )
 {
   sectionFound = false;
@@ -816,24 +818,25 @@ void  Model::ReadSkipToSection (istream& i,
  */
 void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
                          bool                  _alreadyNormalized,
-                         bool                  _takeOwnership  /*!< True = Model will take ownership of these examples */
+                         bool                  _takeOwnership,  /*!< True = Model will take ownership of these examples */
+                         RunLog&               _log
                         )
 {
-  log.Level (10) << "Model::TrainModel   Preparing for training of Model[" << Name () << "]  Examples[" << _trainExamples->QueueSize () << "]" << endl;
+  _log.Level (10) << "Model::TrainModel   Preparing for training of Model[" << Name () << "]  Examples[" << _trainExamples->QueueSize () << "]" << endl;
 
   double  prepStartTime = osGetSystemTimeUsed ();
 
   if  (_trainExamples == NULL)
   {
     KKStr  errMsg = "ModelSvmBase::TrainModel   (_trainExamples == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   if  (_trainExamples->QueueSize () < 2)
   {
     KKStr  errMsg = "ModelSvmBase::TrainModel   (_trainExamples == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -851,7 +854,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
   if  (param->ExamplesPerClass () < int32_max)
-    ReduceTrainExamples ();
+    ReduceTrainExamples (_log);
 
   if  (!_alreadyNormalized)
   {
@@ -871,8 +874,8 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
       trainExamples = temp;
     }
     delete  normParms;
-    normParms = new NormalizationParms (*param, *trainExamples, log);
-    normParms->NormalizeExamples (trainExamples, log);
+    normParms = new NormalizationParms (*param, *trainExamples, _log);
+    normParms->NormalizeExamples (trainExamples, _log);
   }
 
   if  (param->EncodingMethod () == ModelParam::Encoding_NULL)
@@ -884,7 +887,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   if  ((param->EncodingMethod () != ModelParam::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::NoEncoding))
   {
     if  (!encoder)
-      encoder = new FeatureEncoder2 (*param, fileDesc, log);
+      encoder = new FeatureEncoder2 (*param, fileDesc, _log);
 
     FeatureVectorListPtr  encodedImages = encoder->EncodeAllExamples (trainExamples);
     if  (weOwnTrainExamples)
@@ -904,7 +907,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   if  (trianingPrepTime < 0.0)
     trianingPrepTime += (24.0 * 60.0 * 60.0);
 
-  log.Level (40) << "Model::TrainModel   Exiting." << endl;
+  _log.Level (40) << "Model::TrainModel   Exiting." << endl;
 }  /* TrainModel */
 
 
@@ -998,7 +1001,7 @@ void  Model::NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
 /**
  @brief  Reduces the Training Images down to the size dictated by the 'examplesPerClass' parameter.
  */
-void  Model::ReduceTrainExamples ()
+void  Model::ReduceTrainExamples (RunLog&  log)
 {
   kkint32  examplesPerClass = param->ExamplesPerClass ();
   kkuint32  zed = 0;
@@ -1036,8 +1039,8 @@ void  Model::ReduceTrainExamples ()
     return;
   }
 
-  FeatureVectorListPtr  reducedSet = new FeatureVectorList (fileDesc, false, log);
-  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false, log);  // Examples that we do not use will need to be deleted.
+  FeatureVectorListPtr  reducedSet = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false);  // Examples that we do not use will need to be deleted.
   MLClassList::iterator  idx;
 
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
@@ -1105,7 +1108,8 @@ void  Model::ReduceTrainExamples ()
 
 
 void  Model::RetrieveCrossProbTable (MLClassList&   classes,
-                                     double**       crossClassProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                     double**       crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                     RunLog&        log
                                     )
 {
   if  (classes.QueueSize () != crossClassProbTableSize)

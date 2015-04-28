@@ -41,8 +41,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
                                 AttributeTypeVector&  _attributeTypes,
                                 VectorInt32&          _cardinalityTable,
                                 MLClassPtr            _class1,
-                                MLClassPtr            _class2,
-                                RunLog&               _log
+                                MLClassPtr            _class2
                                ):
 
     attributeTypes           (_attributeTypes),
@@ -56,7 +55,6 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     destWhatToDo             (NULL),
     encodingMethod           (SVM_EncodingMethod::NoEncoding),
     fileDesc                 (_fileDesc),
-    log                      (_log),
     numEncodedFeatures       (0),
     numOfFeatures            (0),
     selectedFeatures         (_fileDesc),
@@ -65,8 +63,6 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     xSpaceNeededPerExample   (0)
     
 {
-  log.Level (40) << "FeatureEncoder::FeatureEncoder" << endl;
-
   {
     FeatureNumListConstPtr  temp = NULL;
     if  (class1  &&  class2)
@@ -153,7 +149,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
 
   codedNumOfFeatures = xSpaceNeededPerExample;
 
-  destFileDesc = FileDesc::NewContinuousDataOnly (log, destFieldNames);
+  destFileDesc = FileDesc::NewContinuousDataOnly (destFieldNames);
 
   xSpaceNeededPerExample++;  // Add one more for the terminating (-1)
 }
@@ -199,7 +195,6 @@ kkint32  FeatureEncoder::MemoryConsumedEstimated ()  const
 
 FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 {
-  log.Level (40) << "FeatureEncoder::CreateEncodedFileDesc" << endl;
   FileDescPtr  newFileDesc = new FileDesc ();
 
   if  (o)
@@ -369,10 +364,7 @@ FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorList
 {
   FileDescPtr  encodedFileDesc = CreateEncodedFileDesc (NULL);
 
-  FeatureVectorListPtr  encodedExamples = new FeatureVectorList (encodedFileDesc, 
-                                                                 true,                  // Will own the contents 
-                                                                 log
-                                                                );
+  FeatureVectorListPtr  encodedExamples = new FeatureVectorList (encodedFileDesc, true);
 
   FeatureVectorList::const_iterator  idx;
 
@@ -521,7 +513,8 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
                                 ClassAssignments&      assignments,
                                 XSpacePtr&             xSpace,          
                                 kkint32&               totalxSpaceUsed,
-                                struct svm_problem&    prob
+                                struct svm_problem&    prob,
+                                RunLog&                log
                                )
 
 {
@@ -660,7 +653,7 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
   if  (srcData.AllFieldsAreNumeric ())
     return  srcData.DuplicateListAndContents ();
 
-  FeatureVectorListPtr  encodedFeatureVectorList = new FeatureVectorList (destFileDesc, true, log);
+  FeatureVectorListPtr  encodedFeatureVectorList = new FeatureVectorList (destFileDesc, true);
 
   FeatureVectorList::iterator  idx;
   for  (idx = srcData.begin ();   idx != srcData.end ();  idx++)

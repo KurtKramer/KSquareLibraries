@@ -96,9 +96,7 @@ namespace KKMLL
      @param[in]  _fieldNames Name of fields;  one entry for each field.
      */
     static
-      FileDescPtr   NewContinuousDataOnly (RunLog&       _log,        
-                                           VectorKKStr&  _fieldNames
-                                          );
+      FileDescPtr   NewContinuousDataOnly (VectorKKStr&  _fieldNames);
 
       FileDesc ();
 
@@ -161,9 +159,7 @@ namespace KKMLL
     void  AddAttributes (const KKMLL::AttributeList&  attributes);
 
 
-    kkint32  Cardinality (kkint32  fieldNum,
-                          RunLog&  log
-                         )  const;
+    kkint32  Cardinality (kkint32  fieldNum)  const;
 
     const 
       KKMLL::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */

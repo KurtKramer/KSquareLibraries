@@ -26,14 +26,13 @@ using namespace KKMLL;
 
 SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
                      FeatureNumListConstPtr _selectedFeatures,
-                     RunLog&                _log,
-                     bool&                  _validFormat
+                     bool&                  _validFormat,
+                     RunLog&                _log
                     ):
 
   binaryParmsList           (NULL),
   encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
-  log                       (_log),
   param                     (),
   probClassPairs             (),
   samplingRate              (0.0f),
@@ -44,19 +43,18 @@ SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
 {
   if  (_selectedFeatures)
     selectedFeatures = new FeatureNumList (*_selectedFeatures);
-  ParseCmdLine (_cmdLineStr, _validFormat);
+  ParseCmdLine (_cmdLineStr, _validFormat, _log);
 }
 
 
 
 
 
-SVMparam::SVMparam  (RunLog&  _log):
+SVMparam::SVMparam  ():
 
   binaryParmsList           (NULL),
   encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
-  log                       (_log),
   machineType               (SVM_MachineType::OneVsOne),
   param                     (),
   probClassPairs            (),
@@ -77,7 +75,6 @@ SVMparam::SVMparam  (const SVMparam&  _svmParam):
   binaryParmsList            (NULL),
   encodingMethod             (_svmParam.encodingMethod),
   fileName                   (_svmParam.fileName),
-  log                        (_svmParam.log),
   machineType                (_svmParam.machineType),
   param                      (_svmParam.param),
   probClassPairs             (_svmParam.probClassPairs),
@@ -203,7 +200,8 @@ void  SVMparam::C_Param (double  _CC)
 void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
                                        const KKStr&  value,
                                        bool&         parameterUsed,
-                                       bool&         _validFormat
+                                       bool&         _validFormat,
+                                       RunLog&       log
                                       )
 {
   parameterUsed = true;
@@ -274,14 +272,15 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
-                              bool&   _validFormat
+void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
+                              bool&     _validFormat,
+                              RunLog&   _log
                              )
 {
   _validFormat = true;
 
   {
-    // Will create a svm_parameter object from _cmdLineStr,  the paramters that 
+    // Will create a svm_parameter object from _cmdLineStr,  the parameters that 
     // are not specific to svm_parameter will be left over and then we can 
     // process them.
     svm_parameter  tempParam (_cmdLineStr);
@@ -303,7 +302,7 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
   {
     if  (field[(kkint16)0] != '-')
     {
-      log.Level (-1) << "SVMparam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "SVMparam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -327,10 +326,10 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
     valueUpper.Upper ();
 
     bool  parameterUsed = false;
-    ParseCmdLineParameter (field, value, parameterUsed, _validFormat);
+    ParseCmdLineParameter (field, value, parameterUsed, _validFormat, _log);
     if  (!parameterUsed)
     {
-      log.Level (-1) << "SVMparam::ParseCmdLine - Invalid Parameter["  
+      _log.Level (-1) << "SVMparam::ParseCmdLine - Invalid Parameter["  
         << field << "]  Value[" << value << "]."
         << endl;
       _validFormat = false;
@@ -351,8 +350,6 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
 */
 KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 {
-  log.Level (60) << "SVMparam::SvmParamToString Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr << _param.ToCmdLineStr ();
@@ -368,8 +365,6 @@ KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 */
 KKStr   SVMparam::ToString () const
 {
-  log.Level (60) << "SVMparam::ToString - Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr = SvmParamToString (param);
@@ -400,8 +395,6 @@ void  SVMparam::Save (KKStr&  _fileName,
                       bool&    _successful
                      )
 {
-  log.Level (20) << "SVMparam::Save - File[" << fileName << "]." << endl;
-
   _successful = true;
 
   fileName = _fileName;
@@ -418,8 +411,6 @@ void  SVMparam::Save (KKStr&  _fileName,
 
 void  SVMparam::WriteXML (ostream&  o)  const
 {
-  log.Level (20) << "SVMparam::Save to XML to ostream." << endl;
-
   o << "<SVMparam>" << endl;
 
   o << "<CmdLine>"  << "\t" << ToString ().QuotedStr () << "\t" << "</CmdLine>" << endl;
@@ -436,7 +427,8 @@ void  SVMparam::WriteXML (ostream&  o)  const
 
 
 void  SVMparam::ReadXML (istream&     i,
-                         FileDescPtr  fileDesc
+                         FileDescPtr  fileDesc,
+                         RunLog&      log
                         )
 {
   log.Level (20) << "SVMparam::Read from XML file." << endl;
@@ -460,7 +452,7 @@ void  SVMparam::ReadXML (istream&     i,
       KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", 
                                              true      // true = decode escape characters
                                             );
-      ParseCmdLine (cmdLine, validFormat);
+      ParseCmdLine (cmdLine, validFormat, log);
     }
 
     else if  (field == "<SELECTEDFEATURES>")
@@ -480,7 +472,8 @@ void  SVMparam::ReadXML (istream&     i,
 
 
 void  SVMparam::ReadXML (FILE*        i,
-                         FileDescPtr  fileDesc
+                         FileDescPtr  fileDesc,
+                         RunLog&      log
                         )
 {
   log.Level (20) << "SVMparam::Read from XML file." << endl;
@@ -506,7 +499,7 @@ void  SVMparam::ReadXML (FILE*        i,
     {
       bool  validFormat;
       KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
-      ParseCmdLine (cmdLine, validFormat);
+      ParseCmdLine (cmdLine, validFormat, log);
     }
 
     else if  (field == "<SELECTEDFEATURES>")
@@ -530,10 +523,11 @@ void  SVMparam::ReadXML (FILE*        i,
 void  SVMparam::Load (KKStr&            _fileName,
                       FileDescPtr       _fileDesc,
                       ClassAssignments& _assignments,
-                      bool&             _successful
+                      bool&             _successful,
+                      RunLog&           _log
                      )
 {
-  log.Level (10) << "SVMparam::Load - File[" << _fileName << "]." << endl;
+  _log.Level (10) << "SVMparam::Load - File[" << _fileName << "]." << endl;
 
   _successful = true;
 
@@ -542,13 +536,13 @@ void  SVMparam::Load (KKStr&            _fileName,
 
   if  (!inputFile)
   {
-    log.Level (-1) << "SVMparam::Load      *** ERROR ***" << endl;
-    log.Level (-1) << "                Could Not Open File[" << fileName << "]." << endl;
+    _log.Level (-1) << "SVMparam::Load      *** ERROR ***" << endl;
+    _log.Level (-1) << "                Could Not Open File[" << fileName << "]." << endl;
     _successful = false;
     return;
   }
 
-  this->ReadXML (inputFile, _fileDesc);
+  this->ReadXML (inputFile, _fileDesc, _log);
    
   fclose (inputFile);
 }  /* Load */
@@ -726,7 +720,9 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 
 
 
-kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
+kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                               RunLog&      log
+                                              )  const
 {
   if  (!selectedFeatures)
   {
@@ -748,7 +744,7 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc)  const
       if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
            (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
           )
-        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
+        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else
         numFeaturesAfterEncoding ++;
     }

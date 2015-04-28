@@ -61,8 +61,8 @@ CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
 
 
 CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
-                                        OrderingsPtr             _orderings,
-                                        bool&                    _cancelFlag
+                                        OrderingsPtr              _orderings,
+                                        bool&                     _cancelFlag
                                        ):
 
   cancelFlag           (_cancelFlag),
@@ -199,8 +199,8 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
   {
     FeatureVectorListPtr  data = orderings->Ordering (cvIDX);
 
-    FeatureVectorList  trainingData (fileDesc, false, log);
-    FeatureVectorList  testData     (fileDesc, false, log);
+    FeatureVectorList  trainingData (fileDesc, false);
+    FeatureVectorList  testData     (fileDesc, false);
 
     FeatureVectorList::iterator  fvIDX;
 

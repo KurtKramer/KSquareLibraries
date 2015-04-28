@@ -38,7 +38,9 @@ namespace  KKMLL
 
 
     virtual
-    MLClassPtr  Predict (FeatureVectorPtr  example);
+    MLClassPtr  Predict (FeatureVectorPtr  example,
+                         RunLog&           log
+                        );
   
 
     virtual
@@ -53,18 +55,22 @@ namespace  KKMLL
                          double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
-                         double&           breakTie
+                         double&           breakTie,
+                         RunLog&           log
                         );
 
 
     virtual
-    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                            RunLog&           log
+                                           );
 
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             log
                                );
 
 
@@ -84,22 +90,27 @@ namespace  KKMLL
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
 
     virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
+                                                  bool&     _successful,
+                                                  RunLog&   log
                                                  );
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               RunLog&               _log
                               );
 
 
-    virtual  void  WriteSpecificImplementationXML (ostream&  o);
+    virtual  void  WriteSpecificImplementationXML (ostream&  o,
+                                                   RunLog&   log
+                                                  );
 
 
   private:

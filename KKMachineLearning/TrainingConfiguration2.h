@@ -294,7 +294,7 @@ namespace KKMLL
 
     bool                   NormalizeNominalFeatures ();
 
-    kkint32                NumOfFeaturesAfterEncoding ()  const;
+    kkint32                NumOfFeaturesAfterEncoding (RunLog&  log)  const;
 
     virtual void           ReadXML (XmlStream&      s,
                                     XmlTagConstPtr  tag,

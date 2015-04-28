@@ -76,12 +76,12 @@ namespace KKMLL
   public:
     SVMparam  (KKStr&                  _cmdLineStr,
                FeatureNumListConstPtr  _selectedFeatures,  /**< Will make own instance; caller maintains ownership status. */
-               RunLog&                 _log,
-               bool&                   _validFormat
+               bool&                   _validFormat,
+               RunLog&                 _log
               );
 
 
-    SVMparam  (RunLog&  _log);
+    SVMparam  ();
 
     SVMparam  (const SVMparam&  _svmParam);
 
@@ -91,15 +91,18 @@ namespace KKMLL
     void    Load (KKStr&            _fileName,
                   FileDescPtr       _fileDesc,
                   ClassAssignments& _mlClasses,
-                  bool&             _successful
+                  bool&             _successful,
+                  RunLog&           _log
                  );
 
     void    ReadXML (FILE*        i,
-                     FileDescPtr  fileDesc
+                     FileDescPtr  fileDesc,
+                     RunLog&      log
                     );
 
     void    ReadXML (istream&     i,
-                     FileDescPtr  fileDesc
+                     FileDescPtr  fileDesc,
+                     RunLog&      log
                     );
 
     void    Save (KKStr&  _fileName,
@@ -171,7 +174,9 @@ namespace KKMLL
 
     kkint32                  MemoryConsumedEstimated    () const;
 
-    kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc) const;
+    kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                         RunLog&      log
+                                                        ) const;
 
     const svm_parameter&     Param                      () const {return param;}
 
@@ -235,7 +240,8 @@ namespace KKMLL
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
                                  bool&         parameterUsed,
-                                 bool&         _validFormat
+                                 bool&         _validFormat,
+                                 RunLog&       log
                                 );
 
     void  ProbClassPairsInitialize (const ClassAssignments&  assignments);
@@ -247,8 +253,9 @@ namespace KKMLL
     //                      svm_parameter&  _param
     //                     );
 
-    void  ParseCmdLine (KKStr   _cmdLineStr,
-                        bool&   _validFormat
+    void  ParseCmdLine (KKStr    _cmdLineStr,
+                        bool&    _validFormat,
+                        RunLog&  _log
                        );
 
     BinaryClassParmsListPtr  binaryParmsList;
@@ -256,8 +263,6 @@ namespace KKMLL
     SVM_EncodingMethod       encodingMethod;
 
     KKStr                    fileName;
-
-    RunLog&                  log;
 
     SVM_MachineType          machineType;
 

@@ -37,7 +37,7 @@ ModelDual::ModelDual (FileDescPtr    _fileDesc,
                       VolConstBool&  _cancelFlag,
                       RunLog&        _log
                      ):
-  Model (_fileDesc, _cancelFlag, _log),
+  Model (_fileDesc, _cancelFlag),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),
@@ -162,16 +162,17 @@ void  ModelDual::DeleteExistingClassifiers ()
 
 void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                              bool                  _alreadyNormalized,
-                             bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                             bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                             RunLog&               _log
                             )
 {
-  log.Level (10) << "ModelDual::TrainModel  Model[" << param->FileName () << "]" << endl;
+  _log.Level (10) << "ModelDual::TrainModel  Model[" << param->FileName () << "]" << endl;
 
   if  (param == NULL)
   {
     validModel = false;
     KKStr  errMsg = "ModelDual::TrainModel   (param == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -179,27 +180,27 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
   }
   catch (const KKException&  e)
   {
     validModel = false;
     KKStr  errMsg = "ModelDual::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
     throw  KKException (errMsg, e);
   }
   catch (const exception& e2)
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << e2.what () << endl << endl;
     throw KKException (errMsg, e2);
   }
   catch (...)
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
     
@@ -216,7 +217,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     {
       validModel = false;
       KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Could not find Configuration[" + param->ConfigFileName1 () + "].";
-      log.Level (-1) << endl << endl << errMsg << endl << endl;
+      _log.Level (-1) << endl << errMsg << endl << endl;
       throw KKException (errMsg);
     }
 
@@ -224,32 +225,32 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     {
       validModel = false;
       KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Could not find Configuration[" + param->ConfigFileName2 () + "].";
-      log.Level (-1) << endl << endl << errMsg << endl << endl;
+      _log.Level (-1) << endl << errMsg << endl << endl;
       throw KKException (errMsg);
     }
   }
 
   config1 = new TrainingConfiguration2 (param->ConfigFileName1 (),
                                         false,  // false = Do NOT validate directories.
-                                        log
+                                        _log
                                        );
   if  (!config1->FormatGood ())
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Configuration[" + param->ConfigFileName1 () + "] is not valid.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   config2 = new TrainingConfiguration2 (param->ConfigFileName2 (), 
                                         false,  // false = Do NOT validate directories.
-                                        log
+                                        _log
                                        );
   if  (!config2->FormatGood ())
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Configuration[" + param->ConfigFileName2 () + "] is not valid.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -259,7 +260,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                                    trainExamples,
                                    classes,
                                    NULL,              /**< _reportFile  */
-                                   log,
+                                   _log,
                                    true,              /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
                                    trainer1StatusMsg
@@ -269,7 +270,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -284,7 +285,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer1StatusMsg << "].";
-    log.Level (-1) << endl << endl << errMsg << endl << e.ToString () << endl;
+    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl;
     throw e;
   }
 
@@ -292,7 +293,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer1StatusMsg << "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -300,7 +301,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                                    trainExamples,
                                    classes,
                                    NULL,             // _reportFile,
-                                   log,
+                                   _log,
                                    true,             /**< 'true' = Feature data already normalized. */
                                    cancelFlag,
                                    trainer2StatusMsg
@@ -310,7 +311,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName2 () + "]  Msg[" + statusMsg + "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -319,7 +320,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer2StatusMsg << "].";
-    log.Level (-1) << endl << endl << errMsg << endl << e.ToString () << endl;
+    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl;
     throw e;
   }
 
@@ -327,18 +328,19 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer2StatusMsg << "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
-  classifier1 = new Classifier2 (trainer1, log);
-  classifier2 = new Classifier2 (trainer2, log);
+  classifier1 = new Classifier2 (trainer1, _log);
+  classifier2 = new Classifier2 (trainer2, _log);
 }  /* TrainModel */
 
 
 
-MLClassPtr       ModelDual::ReconcilePredictions (MLClassPtr       pred1, 
-                                                  MLClassPtr       pred2
+MLClassPtr       ModelDual::ReconcilePredictions (MLClassPtr  pred1, 
+                                                  MLClassPtr  pred2,
+                                                  RunLog&     log
                                                  )
 {
   if  (pred1 == pred2)
@@ -446,7 +448,9 @@ void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
 
 
 
-MLClassPtr       ModelDual::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelDual::Predict (FeatureVectorPtr  example,
+                                RunLog&           log
+                               )
 {
   if  ((!classifier1)  ||  (!classifier2))
   {
@@ -470,7 +474,7 @@ MLClassPtr       ModelDual::Predict (FeatureVectorPtr  example)
     encodedExample = NULL;
   }
 
-  return  ReconcilePredictions (pred1, pred2);
+  return  ReconcilePredictions (pred1, pred2, log);
 }  /* Predict */
 
 
@@ -487,7 +491,8 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                           double&           predClass2Prob,
                           kkint32&          numOfWinners,
                           bool&             knownClassOneOfTheWinners,
-                          double&           breakTie
+                          double&           breakTie,
+                          RunLog&           log
                          )
 {
   if  ((!classifier1)  ||  (!classifier2))
@@ -542,8 +547,8 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                                breakTieC2
                               );
 
-  predClass1 = ReconcilePredictions (predClass1C1, predClass1C2);
-  predClass2 = ReconcilePredictions (predClass2C1, predClass2C2);
+  predClass1 = ReconcilePredictions (predClass1C1, predClass1C2, log);
+  predClass2 = ReconcilePredictions (predClass2C1, predClass2C2, log);
 
   if  (predClass1C1 != predClass1C2)
   {
@@ -604,7 +609,9 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
 
 
 
-ClassProbListPtr  ModelDual::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelDual::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                   RunLog&           log
+                                                  )
 {
   if  ((!classifier1)  ||  (!classifier2))
   {
@@ -643,7 +650,8 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
                                            KKStr&             classifier1Desc,
                                            KKStr&             classifier2Desc,
                                            ClassProbListPtr&  classifier1Results,
-                                           ClassProbListPtr&  classifier2Results
+                                           ClassProbListPtr&  classifier2Results,
+                                           RunLog&            log
                                           )
 {
   delete  classifier1Results;  classifier1Results = NULL;
@@ -691,10 +699,11 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
 
 
-void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr         example,
+void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr    example,
                                        const MLClassList&  _mlClasses,
-                                       kkint32*                   _votes,
-                                       double*                  _probabilities
+                                       kkint32*            _votes,
+                                       double*             _probabilities,
+                                       RunLog&             _log
                                       )
 {
   kkint32  numClasses = _mlClasses.QueueSize ();
@@ -706,7 +715,7 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr         example,
 
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    _log.Level (-1) << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -756,9 +765,10 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr         example,
 
 
 
-void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr         _example,
+void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                         const MLClassList&  _mlClasses,
-                                        double*                  _probabilities
+                                        double*             _probabilities,
+                                        RunLog&             _log
                                        )
 {
   kkint32  numClasses = _mlClasses.QueueSize ();
@@ -769,7 +779,7 @@ void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr         _example,
 
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    _log.Level (-1) << endl << "ModelDual::ProbabilitiesByClass   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -815,12 +825,13 @@ void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr         _example,
 
 
 void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
-                                         double**           _crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                         double**      _crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                         RunLog&       _log
                                         )
 {
   if  ((!classifier1)  ||  (!classifier2))
   {
-    log.Level (-1) << endl << endl << "ModelDual::RetrieveCrossProbTable   ***ERROR***      Both Classifiers are not defined." << endl << endl;
+    _log.Level (-1) << endl << "ModelDual::RetrieveCrossProbTable   ***ERROR***      Both Classifiers are not defined." << endl << endl;
     return;
   }
 
@@ -860,7 +871,8 @@ void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
 
 
 void  ModelDual::ReadSpecificImplementationXML (istream&  i,
-                                                bool&     _successful
+                                                bool&     _successful,
+                                                RunLog&   log
                                                )
 {
   param = dynamic_cast<ModelParamDualPtr> (Model::param);
@@ -897,7 +909,7 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
     else if  (field.EqualIgnoreCase ("<Model>"))
     {
-      Model::ReadXML (i, _successful);
+      Model::ReadXML (i, _successful, log);
     }
 
     else if  (field.EqualIgnoreCase ("<TrainingProcess1>"))
@@ -1000,7 +1012,9 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
 
 
-void  ModelDual::WriteSpecificImplementationXML (ostream&  o)
+void  ModelDual::WriteSpecificImplementationXML (ostream&  o,
+                                                 RunLog&   log
+                                                )
 {
   log.Level (20) << "ModelDual::WriteSpecificImplementationXML  Saving Model in File." << endl;
 
