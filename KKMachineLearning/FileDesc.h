@@ -183,8 +183,6 @@ namespace KKMLL
 
     kkint32                     GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
 
-    //RunLog&                   Log () const {return log;}
-
     const
     KKMLL::AttributePtr         LookUpByName (const KKStr&  attributeName)  const;  
 
@@ -289,7 +287,6 @@ namespace KKMLL
     KKStr                   classNameAttribute;   /**< Added to support DstWeb files; the name of the attribute that specifies the className */
     KKMLL::AttributePtr     curAttribute;
     KKStr                   fileName;
-    //RunLog&               log;
     kkint32                 sparseMinFeatureNum;  /**< Used specifically for sparse files.  */
     kkint16                 version;
 

@@ -510,9 +510,35 @@ namespace KKMLL
      */
     MLClassPtr  GetMLClass (kkint16 classIndex);
 
-    void  ParseClassIndexList (const KKStr&  s);
+    
+    void  ParseClassIndexList (const KKStr&  s,
+                               RunLog&       log
+                              );
 
+
+    /** 
+     *@brief Returns string consisting of all contained classes indicating ClassIndex assigned to each class.
+     *@details Each class will be separated by a comma(",") delimiter character and each class will consist of 
+     * "ClassName" and associated "ClassIndex" separated by colon(":") character.  The class names will be 
+     * enclosed in quotes("). The method "ParseClassIndexList" will be able to decode this string to
+     * repopulate an instance of "MLClassIndexList".
+     *@see "KKStr::QuotedStr"
+     * Example String:  "Copepod":1,"Soliolid":2,"Larvacean":3
+     */
     KKStr  ToCommaDelString ()  const;
+
+
+    virtual
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+    virtual
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
 
   private:
@@ -530,6 +556,11 @@ namespace KKMLL
 
 
 
+  /**
+   *@details  
+   * - Because a MLClass instance can only be created through the static method "MLClass::CreateNewMLClass" the "XmlElementTemplate"  
+   * template can not be used.
+   */
   class  XmlElementMLClass:  public  XmlElement
   {
   public:
@@ -553,6 +584,7 @@ namespace KKMLL
     MLClassPtr  value;
   };
   typedef  XmlElementMLClass*  XmlElementMLClassPtr;
+
 
 
 
@@ -586,38 +618,8 @@ namespace KKMLL
 
 
 
-  
-  /**
-   *@brief  Will only write the ClassName rather than complete MLClass instances
-   */
-  class  XmlElementMLClassIndexList:  public  XmlElement
-  {
-  public:
-    XmlElementMLClassIndexList (XmlTagPtr   tag,
-                                XmlStream&  s,
-                                RunLog&     log
-                               );
-                
-    virtual  ~XmlElementMLClassIndexList ();
-
-    MLClassIndexListPtr  Value ()  const;
-
-    MLClassIndexListPtr  TakeOwnership ();
-
-    static
-    void  WriteXML (const MLClassIndexList&  classIndexList,
-                    const KKStr&             varName,
-                    ostream&                 o
-                   );
-  private:
-    MLClassIndexListPtr  value;
-  };
+  typedef  XmlElementTemplate<MLClassIndexList>  XmlElementMLClassIndexList;
   typedef  XmlElementMLClassIndexList*  XmlElementMLClassIndexListPtr;
-
-
-
-
-
 
 
 

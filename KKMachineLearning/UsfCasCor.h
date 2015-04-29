@@ -366,7 +366,7 @@ namespace KKMLL
 
     FeatureVectorListPtr  FilterOutExtremeExamples (FeatureVectorListPtr  trainExamples);
 
-    void  WriteXmlConnections (ostream&  o);
+    void  WriteXmlConnections (ostream&  o)  const;
 
     void  ReadXml (istream&  i,
                    bool&     valid,
@@ -404,6 +404,12 @@ namespace KKMLL
                                );
 
 
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
+
     /* Global variables */
     static  const char*  version;
     static  const char*  release_date;
@@ -412,11 +418,11 @@ namespace KKMLL
     /* Functions */
     char*  parm_to_string (int k);
 
-    char const *  boolean_to_string (Boolean var);
+    char const *  boolean_to_string (Boolean var)  const;
 
     Boolean  string_to_boolean (const char* s);
 
-    const char*  type_to_string (int var);
+    const char*  type_to_string (int var)  const;
 
     int    string_to_type (const char* s);
 

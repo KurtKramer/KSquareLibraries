@@ -40,8 +40,7 @@ namespace KKMLL
      * @param[in] _log A log-file stream. All important events will be output to this stream
      */
     FeatureEncoder2 (const ModelParam& _param,
-                     FileDescPtr       _fileDesc,
-                     RunLog&           _log
+                     FileDescPtr       _fileDesc
                    );
   
     FeatureEncoder2 (const FeatureEncoder2&  _encoder);
@@ -55,7 +54,9 @@ namespace KKMLL
 
     kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
 
-    FileDescPtr       CreateEncodedFileDesc (ostream*  o)  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
+    FileDescPtr       CreateEncodedFileDesc (ostream*  o,
+                                             RunLog&   log
+                                            )  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
 
     FeatureVectorListPtr  EncodedFeatureVectorList (const  FeatureVectorList&  srcData)  const;
 
@@ -82,7 +83,6 @@ namespace KKMLL
     FileDescPtr                       encodedFileDesc;
     ModelParam::EncodingMethodType    encodingMethod;
     FileDescPtr                       fileDesc;
-    RunLog&                           log;
     kkint32                           numOfFeatures;
     kkint32*                          srcFeatureNums;
     const ModelParam&                 param;

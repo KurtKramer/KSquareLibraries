@@ -106,6 +106,8 @@ VectorKKStr  KKStrParser::Split (const char* delStr)
 
 KKStr  KKStrParser::GetNextToken (const char* delStr)
 {
+  lastDelimiter = 0;
+
   if  (trimWhiteSpace)
   {
     while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
@@ -165,7 +167,10 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
       {
         ch = str[nextPos];
         if  (strchr (delStr, ch) != NULL)
+        {
+          lastDelimiter = ch;
           break;
+        }
         ++endPos;
       }
     }  
@@ -181,6 +186,7 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
       ch = str[endPos];
       if  (strchr (delStr, ch) != NULL)
       {
+        lastDelimiter = ch;
         delimeterFound = true;
         delimeterIdx = endPos;
         break;

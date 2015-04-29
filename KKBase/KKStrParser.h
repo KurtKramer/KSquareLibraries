@@ -67,6 +67,8 @@ namespace KKB
  
     KKStr    GetRestOfStr       ();
 
+    char     LastDelimiter      ()  const  {return  lastDelimiter;}
+
     bool     MoreTokens         ()  const  {return  (nextPos < len);}
 
     char     PeekLastChar       ()  const;
@@ -102,6 +104,7 @@ namespace KKB
     void     TrimWhiteSpace     (const char*  _whiteSpace = " ");
 
   private:
+    char         lastDelimiter;  /**< The last delimiter character encountered when calling "GetNextToken". */
     kkuint32     len;
     kkuint32     nextPos;
     const char*  str;

@@ -437,7 +437,7 @@ void  MLClass::WriteXML (ostream& o)  const
     <<   "Name="             << name.QuotedStr ()                             << ","
     <<   "ClassId="          << classId                                       << ","
     <<   "UnDefined="        << (unDefined ? "Y":"N")                         << ","
-    <<   "Paremt="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
+    <<   "Parent="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
     <<   "CountFactor="      << countFactor                                   << ","
     <<   "StoredOnDataBase=" << (storedOnDataBase ? "Y" : "N")                << ","
     <<   "Description="      << description.QuotedStr ()                      << ","
@@ -469,8 +469,6 @@ MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint16 level)  const
 
   return  MLClass::CreateNewMLClass (fullLevelName);
 }  /* MLClassForGivenHierarchialLevel*/
-
-
 
 
 
@@ -612,7 +610,7 @@ MLClassList::MLClassList (const MLClassList&  _mlClasses):
 
 
 MLClassList::MLClassList (const KKStr&  _fileName,
-                          bool&    _successfull
+                          bool&         _successfull
                          ):
      KKQueue<MLClass> (false),
      undefinedLoaded (false)
@@ -705,7 +703,7 @@ kkuint16 MLClassList::NumHierarchialLevels ()  const
 
 
 void  MLClassList::Load (const KKStr&  _fileName,
-                         bool&  _successfull
+                         bool&         _successfull
                         )
 {
   char   buff[20480];
@@ -1268,8 +1266,8 @@ MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkin
 
 
 MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
-                                                   const MLClassList&  list2
-                                                  )
+                                             const MLClassList&  list2
+                                            )
 {
   MLClassListPtr  result = new MLClassList (list1);
   MLClassList::const_iterator idx;
@@ -1291,8 +1289,8 @@ MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
 
 
 MLClassListPtr  MLClassList::BuildListFromDelimtedStr (const KKStr&  s,
-                                                             char          delimiter
-                                                            )
+                                                       char          delimiter
+                                                      )
 {
   VectorKKStr  names = s.Split (',');
   MLClassListPtr  classList = new MLClassList ();
@@ -1682,22 +1680,40 @@ MLClassPtr  MLClassIndexList::GetMLClass (kkint16  classIndex)
 
 
 
-void  MLClassIndexList::ParseClassIndexList (const KKStr&  s)
+
+void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
+                                             RunLog&       log
+                                            )
 {
   Clear ();
-  largestIndex = 0;
-
-  bool   duplicate = false;
-  kkint32  index  = 0;
-  KKStr  name   = "";
-
-  VectorKKStr  pairs = s.Split (",");
-  for  (kkuint16 x = 0;  x < pairs.size ();  x++)
+  largestIndex = -1;
+  KKStrParser  parser (s);
+  parser.TrimWhiteSpace (" ");
+  while  (parser.MoreTokens ())
   {
-    KKStr  pair = pairs[x];
-    name  = pair.ExtractToken2 (":");
-    index = pair.ExtractTokenInt ("\n\t\r");
-    AddClassIndexAssignment (MLClass::CreateNewMLClass (name), index, duplicate);
+    kkint32  classIndex = -1;
+    KKStr className = parser.GetNextToken (",:");
+    if  (parser.LastDelimiter () == ',')
+    {
+      // we should have encountered a ':' character but came across a ',' instead;  we are missing the Index Assignment
+      classIndex = -1;
+      log.Level (-1) << endl 
+        << "MLClassIndexList::ParseClassIndexList   ***ERROR***   Missing index for Class: " << className << endl
+        << endl;
+    }
+    else
+    {
+      classIndex = parser.GetNextToken (",").ToInt16 ();
+    }
+
+    bool  duplicate = false;
+    AddClassIndexAssignment (MLClass::CreateNewMLClass (className), classIndex, duplicate);
+    if  (duplicate)
+    {
+      log.Level (-1) << endl
+        << "MLClassIndexList::ParseClassIndexList   ***ERROR***   Duplicate ClassIndex[" << classIndex << "] specified for class[" << className << "]" << endl
+        << endl;
+    }
   }
 }  /* ParseClassIndexList */
 
@@ -1713,7 +1729,7 @@ KKStr  MLClassIndexList::ToCommaDelString ()  const
   {
     if  (!delStr.Empty ())
       delStr << ",";
-    delStr << idx->second->Name () << ":" << idx->first;
+    delStr << idx->second->Name ().QuotedStr () << ":" << idx->first;
   }
   return  delStr;
 }  /* ToCommaDelString */
@@ -1721,68 +1737,47 @@ KKStr  MLClassIndexList::ToCommaDelString ()  const
 
 
 
-
-
-
-
-XmlElementMLClassIndexList::XmlElementMLClassIndexList (XmlTagPtr   tag,
-                                                        XmlStream&  s,
-                                                        RunLog&     log
-                                                       ):
-  XmlElement (tag, s, log),
-  value (NULL)
+void  MLClassIndexList::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
 {
+  largestIndex = -1;
+  shortIdx.clear ();
+
   XmlContentPtr  content = s.GetNextContent (log);
-  if  (content  &&  content->Content ())
+  while  (content)
   {
-    value = new MLClassIndexList ();
-
-    KKStrConstPtr  text = content->Content ();
-    value ->ParseClassIndexList (*text);
+    if  (content->Content ())
+    {
+      KKStrConstPtr  text = content->Content ();
+      ParseClassIndexList (*text, log);
+    }
+    delete  content;
+    content = s.GetNextContent (log);
   }
-  delete  content;
-  content = NULL;
-}
- 
-
-
-XmlElementMLClassIndexList::~XmlElementMLClassIndexList ()
-{
-  delete  value;
-  value = NULL;
-}
-
-
-MLClassIndexListPtr  XmlElementMLClassIndexList::Value ()  const
-{
-  return  value;
-}
+}  /* ReadXML */
 
 
 
-MLClassIndexListPtr  XmlElementMLClassIndexList::TakeOwnership ()
-{
-  MLClassIndexListPtr v = value;
-  value = NULL;
-  return v;
-}
 
-
-
-void  XmlElementMLClassIndexList::WriteXML (const MLClassIndexList&  classIndexList,
-                                            const KKStr&             varName,
-                                            ostream&                 o
-                                           )
+void  MLClassIndexList::WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const
 {
   XmlTag  startTag ("MLClassIndexList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
-  o << classIndexList.ToCommaDelString ();
+  XmlContent::WriteXml (ToCommaDelString (), o);
 
   XmlTag  endTag ("MLClassIndexList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
+  o << endl;
 }
 
 
+
+
 XmlFactoryMacro(MLClassIndexList)
+

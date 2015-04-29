@@ -668,7 +668,7 @@ void  Model::ReadXML (istream&  i,
     {
       delete  classesIndex;  classesIndex = NULL;
       classesIndex = new MLClassIndexList ();
-      classesIndex->ParseClassIndexList (ln);
+      classesIndex->ParseClassIndexList (ln, log);
     }
 
     else if  (field.EqualIgnoreCase ("Name"))
@@ -884,7 +884,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   if  ((param->EncodingMethod () != ModelParam::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::NoEncoding))
   {
     if  (!encoder)
-      encoder = new FeatureEncoder2 (*param, fileDesc, _log);
+      encoder = new FeatureEncoder2 (*param, fileDesc);
 
     FeatureVectorListPtr  encodedImages = encoder->EncodeAllExamples (trainExamples);
     if  (weOwnTrainExamples)
@@ -958,7 +958,7 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
 
 /**
- * Will normailize probabilites such that the sum of all equal 1.0 and no one probability will be less than 'minProbability'.
+ * Will normalize probabilities such that the sum of all equal 1.0 and no one probability will be less than 'minProbability'.
  */
 void  Model::NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
                                                  double*  probabilities,

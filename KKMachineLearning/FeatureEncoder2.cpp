@@ -28,11 +28,10 @@ using namespace  KKMLL;
   *@brief Constructs a Feature Encoder object.
   *@param[in] _param 
   *@param[in] _fileDesc
-  *@param[in] _log A logfile stream. All important events will be output to this stream
+  *@param[in] _log A log file stream. All important events will be output to this stream
   */
 FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
-                                  FileDescPtr        _fileDesc,
-                                  RunLog&            _log
+                                  FileDescPtr        _fileDesc
                                   ):
     attributeVector     (_fileDesc->AttributeVector ()),
     cardinalityDest     (NULL),
@@ -43,14 +42,11 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     encodedFileDesc     (NULL),
     encodingMethod      (ModelParam::NoEncoding),
     fileDesc            (_fileDesc),
-    log                 (_log),
     numOfFeatures       (0),
     srcFeatureNums      (NULL),
     param               (_param)
     
 {
-  log.Level (40) << "FeatureEncoder2::FeatureEncoder2" << endl;
-
   numOfFeatures = param.SelectedFeatures ()->NumOfFeatures ();
   const kkuint16*  srcFeatureNums = param.SelectedFeatures ()->FeatureNums ();
 
@@ -138,13 +134,10 @@ FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
     encodedFileDesc    (_encoder.encodedFileDesc),
     encodingMethod     (_encoder.encodingMethod),
     fileDesc           (_encoder.fileDesc),
-    log                (_encoder.log),
     numOfFeatures      (_encoder.numOfFeatures),
     srcFeatureNums     (NULL),
     param              (_encoder.param)
 {
-  log.Level (30) << "FeatureEncoder2::FeatureEncoder2" << endl;
-
   cardinalityDest  = new kkint32[numOfFeatures];
   destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
@@ -198,7 +191,9 @@ kkint32  FeatureEncoder2::NumEncodedFeatures ()  const
 
 
 
-FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
+FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
+                                                     RunLog&   log
+                                                    )  const
 {
   log.Level (40) << "FeatureEncoder2::CreateEncodedFileDesc" << endl;
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -206,7 +201,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
   if  (o)
   {
     *o << endl 
-        << "Orig"     << "\t" << "Orig"      << "\t" << "Field" << "\t" << "Encoded"  << "\t" << "Encoded"   << endl;
+        << "Orig"    << "\t" << "Orig"      << "\t" << "Field" << "\t" << "Encoded"  << "\t" << "Encoded"   << endl;
     *o << "FieldNum" << "\t" << "FieldName" << "\t" << "Type"  << "\t" << "FieldNum" << "\t" << "FieldName" << endl;
   }
 
@@ -223,11 +218,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
     {
       log.Level(-1) 
             << endl
-            << endl
-            << "FeatureEncoder2::CreateEncodedFileDesc     *** ERROR ***"          << endl
-            << "             overriding number of encoded features.  This should"  << endl
-            << "             never be able to happen. Something is wrong with"     << endl
-            << "             object."                                              << endl
+            << "FeatureEncoder2::CreateEncodedFileDesc     ***ERROR***"                                   << endl
+            << "             overriding number of encoded features. This should never be able to happen." << endl
+            << "             Something is wrong with object."                                             << endl
             << endl;
       osWaitForEnter ();
       exit (-1);
@@ -237,7 +230,6 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
                             fileDesc->FieldName (srcFeatureNum) + "\t" +
                             fileDesc->TypeStr   (srcFeatureNum);
 
-
     switch (destWhatToDo[x])
     {
     case  FeWhatToDo::FeAsIs:
@@ -246,9 +238,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o)  const
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
-              << y                      << "\t"
-              << fileDesc->FieldName (x)
-              << endl;
+             << y                      << "\t"
+             << fileDesc->FieldName (x)
+             << endl;
         }
       }
       break;

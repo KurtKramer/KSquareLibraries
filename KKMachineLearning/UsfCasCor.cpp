@@ -29,6 +29,7 @@ using namespace  KKB;
 #include "MLClass.h"
 #include "FeatureVector.h"
 #include "ClassProb.h"
+#include "XmlStream.h"
 #include "UsfCasCor.h"
 using namespace  KKMLL;
 
@@ -1219,7 +1220,7 @@ const char *  UsfCasCor::type_strings[]={"SIGMOID","GAUSSIAN", "LINEAR","ASYMSIG
 /* Input of the type variables and return a string showing its value.  This
  * is only used as a output routine for the user's convenience. 
  */
-const char*  UsfCasCor::type_to_string (int var)
+const char*  UsfCasCor::type_to_string (int var)  const
 {
   switch (var) 
   {
@@ -1264,7 +1265,7 @@ const char *  UsfCasCor::boolean_strings[2] = {"False", "True"};
 
 
 
-char const *  UsfCasCor::boolean_to_string (Boolean var)
+char const *  UsfCasCor::boolean_to_string (Boolean var)  const
 {
   switch (var) 
   {
@@ -1628,7 +1629,7 @@ void  WriteXmlArrayInt (const char*  name,
 
 
 
-void  UsfCasCor::WriteXmlConnections (ostream&  o)
+void  UsfCasCor::WriteXmlConnections (ostream&  o)  const
 {
   o << "<Connections len=" << MaxUnits << ">";
   for  (int x = 0;  x < MaxUnits;  ++x)
@@ -4198,4 +4199,134 @@ void  UsfCasCor::_load_test_data (FeatureVectorPtr  example)
   return;
 
 }  /* _load_test_data */
+
+
+
+
+
+
+
+
+
+
+void  UsfCasCor::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                          )  const
+{
+  XmlTag  startTag ("UsfCasCor",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  o << "progname"                << "\t" << progname << endl;
+
+  o << "number_of_classes"       << "\t" << number_of_classes               << endl;
+  o << "classes"                 << "\t" << classes->ToCommaDelimitedStr () << endl;
+  o << "selectedFeatures"        << "\t" << selectedFeatures->ToString ()   << endl;
+
+  o << "MaxUnits"                << "\t" << MaxUnits                << endl
+    << "Nunits"                  << "\t" << Nunits                  << endl
+    << "Ninputs"                 << "\t" << Ninputs                 << endl
+    << "Noutputs"                << "\t" << Noutputs                << endl
+    << "Ncandidates"             << "\t" << Ncandidates             << endl
+    << "MaxCases"                << "\t" << MaxCases                << endl
+    << "Ncases"                  << "\t" << Ncases                  << endl
+    << "FirstCase"               << "\t" << FirstCase               << endl
+    << "line_length"             << "\t" << line_length             << endl
+    << "the_random_seed"         << "\t" << the_random_seed         << endl
+    << "in_limit"                << "\t" << in_limit                << endl
+    << "out_limit"               << "\t" << out_limit               << endl
+    << "number_of_trials"        << "\t" << number_of_trials        << endl
+    << "number_of_rounds"        << "\t" << number_of_rounds        << endl
+    << "normalization_method"    << "\t" << normalization_method    << endl
+    << "my_mpi_rank"             << "\t" << my_mpi_rank             << endl
+    << "NTrainingPatterns"       << "\t" << NTrainingPatterns       << endl
+    << "NTestPatterns"           << "\t" << NTestPatterns           << endl
+    << "ErrorMisclassifications" << "\t" << ErrorMisclassifications << endl
+    << "OutputPatience"          << "\t" << OutputPatience          << endl
+    << "InputPatience"           << "\t" << InputPatience           << endl
+    << "ErrorBits"               << "\t" << ErrorBits               << endl
+    << "BestCandidate"           << "\t" << BestCandidate           << endl
+    << "Epoch"                   << "\t" << Epoch                   << endl
+    << "Trial"                   << "\t" << Trial                   << endl
+    << "NtrainingOutputValues"   << "\t" << NtrainingOutputValues   << endl
+    << "NtestOutputValues"       << "\t" << NtestOutputValues       << endl
+    << "ErrorMeasure"            << "\t" << ErrorMeasure            << endl;
+
+  o << "SigmoidMax"              << "\t" << SigmoidMax              << endl
+    << "WeightRange"             << "\t" << WeightRange             << endl
+    << "SigmoidPrimeOffset"      << "\t" << SigmoidPrimeOffset      << endl
+    << "WeightMultiplier"        << "\t" << WeightMultiplier        << endl
+    << "OutputMu"                << "\t" << OutputMu                << endl
+    << "OutputShrinkFactor"      << "\t" << OutputShrinkFactor      << endl
+    << "OutputEpsilon"           << "\t" << OutputEpsilon           << endl
+    << "OutputDecay"             << "\t" << OutputDecay             << endl
+    << "OutputChangeThreshold"   << "\t" << OutputChangeThreshold   << endl
+    << "InputMu"                 << "\t" << InputMu                 << endl
+    << "InputShrinkFactor"       << "\t" << InputShrinkFactor       << endl
+    << "InputEpsilon"            << "\t" << InputEpsilon            << endl
+    << "InputDecay"              << "\t" << InputDecay              << endl
+    << "InputChangeThreshold"    << "\t" << InputChangeThreshold    << endl
+    << "TrueError"               << "\t" << TrueError               << endl
+    << "ScoreThreshold"          << "\t" << ScoreThreshold          << endl
+    << "SumSqError"              << "\t" << SumSqError              << endl
+    << "BestCandidateScore"      << "\t" << BestCandidateScore      << endl
+    << "TrainingStdDev"          << "\t" << TrainingStdDev          << endl
+    << "TestStdDev"              << "\t" << TestStdDev              << endl
+    << "ErrorIndex"              << "\t" << ErrorIndex              << endl
+    << "ErrorIndexThreshold"     << "\t" << ErrorIndexThreshold     << endl;
+
+  o << "UnitType"                << "\t" << type_to_string (UnitType)   << endl
+    << "OutputType"              << "\t" << type_to_string (OutputType) << endl;
+
+  o << "load_weights"            << "\t" << boolean_to_string (load_weights)            << endl
+    << "UseCache"                << "\t" << boolean_to_string (UseCache)                << endl
+    << "Graphics"                << "\t" << boolean_to_string (Graphics)                << endl
+    << "NonRandomSeed"           << "\t" << boolean_to_string (NonRandomSeed)           << endl
+    << "Test"                    << "\t" << boolean_to_string (Test)                    << endl
+    << "SinglePass"              << "\t" << boolean_to_string (SinglePass)              << endl
+    << "SingleEpoch"             << "\t" << boolean_to_string (SingleEpoch)             << endl
+    << "Step"                    << "\t" << boolean_to_string (Step)                    << endl
+    << "InterruptPending"        << "\t" << boolean_to_string (InterruptPending)        << endl;
+  
+  WriteXmlArrayInt ("feature_type", o, Ninputs, feature_type);
+
+  WriteXmlArrayFloat ("SumErrors",      o, Noutputs, SumErrors);
+  WriteXmlArrayFloat ("DummySumErrors", o, Noutputs, DummySumErrors);
+
+  if  (AllConnections)   WriteXmlArrayInt ("AllConnections", o, MaxUnits, AllConnections);
+  if  (Nconnections)     WriteXmlArrayInt ("Nconnections", o, MaxUnits, Nconnections);
+  WriteXmlConnections (o);
+  WriteXmlArrayFloat2DVarying ("Weights", o, MaxUnits, Nconnections, Weights);
+
+  if  (ExtraValues)       WriteXmlArrayFloat ("ExtraValues",        o, MaxUnits, ExtraValues);
+
+
+  if  (Outputs)           WriteXmlArrayFloat ("Outputs",            o, Noutputs, Outputs);
+
+  if  (OutputWeights)     WriteXmlArrayFloat2D ("OutputWeights",    o, Noutputs, MaxUnits, OutputWeights);
+
+  if  (ExtraErrors)       WriteXmlArrayFloat ("ExtraErrors",        o, Noutputs, ExtraErrors);
+
+  o << "</UsfCasCor>" << endl;
+}  /* WriteXML */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
