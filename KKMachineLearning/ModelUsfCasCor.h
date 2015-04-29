@@ -28,15 +28,13 @@ namespace  KKMLL
 
 
     ModelUsfCasCor (FileDescPtr    _fileDesc,
-                    VolConstBool&  _cancelFlag,
-                    RunLog&        _log
+                    VolConstBool&  _cancelFlag
                   );
 
     ModelUsfCasCor (const KKStr&               _name,
                     const ModelParamUsfCasCor& _param,         // Create new model from
                     FileDescPtr                _fileDesc,
-                    VolConstBool&              _cancelFlag,
-                    RunLog&                    _log
+                    VolConstBool&              _cancelFlag
                    );
   
     ModelUsfCasCor (const ModelUsfCasCor&   _model);
@@ -58,7 +56,9 @@ namespace  KKMLL
     ModelParamUsfCasCorPtr  Param ();
 
     virtual
-    MLClassPtr              Predict (FeatureVectorPtr  example);
+    MLClassPtr              Predict (FeatureVectorPtr  example,
+                                     RunLog&           log
+                                    );
   
     virtual
     void                    Predict (FeatureVectorPtr example,
@@ -72,19 +72,23 @@ namespace  KKMLL
                                      double&          predClass2Prob,
                                      kkint32&         numOfWinners,
                                      bool&            knownClassOneOfTheWinners,
-                                     double&          breakTie
+                                     double&          breakTie,
+                                     RunLog&          log
                                     );
 
 
     virtual
-    ClassProbListPtr    ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr    ProbabilitiesByClass (FeatureVectorPtr  example,
+                                              RunLog&           log
+                                             );
 
 
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                 _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities,
+                                RunLog&             log
                                );
 
     /**
@@ -105,17 +109,20 @@ namespace  KKMLL
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             log
                                );
   
     virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
+                                                  bool&     _successful,
+                                                  RunLog&   log
                                                  );
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               RunLog&               _log
                               );
 
 

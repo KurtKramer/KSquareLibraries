@@ -114,8 +114,7 @@ namespace KKMLL
     typedef  GrayScaleImagesFVList*  GrayScaleImagesFVListPtr;
 
     GrayScaleImagesFVList (FileDescPtr  _fileDesc,
-                           bool         _owner,
-                           RunLog&      _log
+                           bool         _owner
                           );
 
   private:
@@ -145,7 +144,7 @@ namespace KKMLL
      *                        the existing instances and not own the.
      */
     GrayScaleImagesFVList (const GrayScaleImagesFVList&  _examples,
-                             bool                            _owner
+                             bool                        _owner
                             );
 
 
@@ -205,11 +204,9 @@ namespace KKMLL
      *   any the contents only point to the ones already in _examples.
      *@param[in] _mlClasses  List of classes that we are interested in.
      *@param[in] _examples        Source examples that we want to scan.
-     *@param[in] _log           
      */
-    GrayScaleImagesFVList (MLClassList&              _mlClasses,
-                           GrayScaleImagesFVList&  _examples,
-                           RunLog&                   _log
+    GrayScaleImagesFVList (MLClassList&            _mlClasses,
+                           GrayScaleImagesFVList&  _examples
                          );
 
 
@@ -265,22 +262,28 @@ namespace KKMLL
      *@brief  Using list of ImageFileNames in a file('fileName') create a new GrayScaleImagesFVList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    GrayScaleImagesFVListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName);
+    GrayScaleImagesFVListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                         RunLog&       log
+                                                        );
 
     GrayScaleImagesFVPtr       PopFromBack ();
 
     void                       RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
                                                                        const KKStr&          rootDir,
-                                                                       bool&                 successful
+                                                                       bool&                 successful,
+                                                                       RunLog&               log
                                                                       );
 
-    GrayScaleImagesFVListPtr   StratifyAmoungstClasses (kkint32  numOfFolds);
+    GrayScaleImagesFVListPtr   StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                        RunLog&  log
+                                                       );
 
 
     GrayScaleImagesFVListPtr   StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                          kkint32         maxImagesPerClass,
-                                                          kkint32         numOfFolds
-                                                         );
+                                                        kkint32         maxImagesPerClass,
+                                                        kkint32         numOfFolds,
+                                                        RunLog&          log
+                                                       );
 
 
     class  const_iterator
@@ -437,7 +440,8 @@ namespace KKMLL
     void   FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
                               KKStr                 _dirName, 
                               KKStr                 _fileName, 
-                              MLClassPtr            _mlClass
+                              MLClassPtr            _mlClass,
+                              RunLog&               _log
                              );
 
 

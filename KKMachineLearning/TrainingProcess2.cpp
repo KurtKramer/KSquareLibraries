@@ -786,7 +786,7 @@ void  TrainingProcess2::WriteXml (ostream&  o)
   {
     try
     {
-      model->WriteXML (o);
+      model->WriteXML (o, log);
     }
     catch  (KKException e)
     {
@@ -1319,7 +1319,8 @@ void  TrainingProcess2::CreateModelsFromTrainingData ()
   {
     model->TrainModel (trainingExamples, 
                        featuresAlreadyNormalized,
-                       false     // false = 'model' We are not giving ownership of TrainingExdamples to model.
+                       false,     // false = 'model' We are not giving ownership of TrainingExdamples to model.
+                       log
                       );
   }
   catch  (const KKException&  e)
@@ -1380,7 +1381,7 @@ void  TrainingProcess2::SaveResults ()
     model->RootFileName (osGetRootName (this->ConfigFileName ()));
     try
     {
-      model->WriteXML (o);
+      model->WriteXML (o, log);
     }
     catch  (KKException& e)
     {

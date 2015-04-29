@@ -21,8 +21,8 @@ using namespace std;
 using namespace  KKB;
 
 
-#include "ClassProb.h"
 #include "ModelSvmBase.h"
+#include "ClassProb.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "svm2.h"
@@ -31,10 +31,9 @@ using namespace  KKMLL;
 
 
 ModelSvmBase::ModelSvmBase (FileDescPtr    _fileDesc,
-                            VolConstBool&  _cancelFlag,
-                            RunLog&        _log
+                            VolConstBool&  _cancelFlag
                            ):
-  Model (_fileDesc, _cancelFlag, _log),
+  Model (_fileDesc, _cancelFlag),
   param                (NULL),
   svmModel             (NULL)
 {
@@ -45,10 +44,9 @@ ModelSvmBase::ModelSvmBase (FileDescPtr    _fileDesc,
 ModelSvmBase::ModelSvmBase (const KKStr&             _name,
                             const ModelParamSvmBase& _param,         // Create new model from
                             FileDescPtr              _fileDesc,
-                            VolConstBool&            _cancelFlag,
-                            RunLog&                  _log
+                            VolConstBool&            _cancelFlag
                            ):
-  Model (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model (_name, _param, _fileDesc, _cancelFlag),
   param                (NULL),
   svmModel             (NULL)
 {
@@ -66,7 +64,7 @@ ModelSvmBase::ModelSvmBase (const ModelSvmBase&   _model):
   param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
   if  (_model.svmModel)
   {
-    svmModel = new SVM289_MFS::svm_model (*_model.svmModel, fileDesc, log);
+    svmModel = new SVM289_MFS::svm_model (*_model.svmModel, fileDesc);
   }
 }
 
@@ -136,16 +134,17 @@ ModelParamSvmBasePtr   ModelSvmBase::Param ()
 
 void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
                                 bool                  _alreadyNormalized,
-                                bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                                bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                                RunLog&               _log
                                )
 {
-  log.Level (10) << "ModelSvmBase::TrainModel[" << param->FileName () << "]." << endl;
+  _log.Level (10) << "ModelSvmBase::TrainModel[" << param->FileName () << "]." << endl;
 
   if  (param == NULL)
   {
     validModel = false;
     KKStr  errMsg = "ModelSvmBase::TrainModel   (param == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -158,27 +157,27 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
   }
   catch (const KKException&  e)
   {
     validModel = false;
     KKStr  errMsg = "ModelSvmBase::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
     throw  KKException (errMsg, e);
   }
   catch (const exception& e2)
   {
     validModel = false;
     KKStr errMsg = "ModelSvmBase::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << e2.what () << endl << endl;
     throw KKException (errMsg, e2);
   }
   catch (...)
   {
     validModel = false;
     KKStr errMsg = "ModelSvmBase::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
     
@@ -198,7 +197,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
       kkint16  label = classesIndex->GetClassIndex (trainExamples->IdxToPtr (labelIndex)->MLClass ());
       if  (label < 0)
       {
-        log.Level (-1) << endl << " ModelSvmBase::TrainModel   ***ERROR***   Label computed to -1; should not be able to happen." << endl << endl;
+        _log.Level (-1) << endl << " ModelSvmBase::TrainModel   ***ERROR***   Label computed to -1; should not be able to happen." << endl << endl;
       }
       y[labelIndex] = (float)label;
     }
@@ -210,7 +209,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   try
   {
     TrainingTimeStart ();
-    svmModel = SVM289_MFS::svm_train (prob, param->SvmParam (), log);
+    svmModel = SVM289_MFS::svm_train (prob, param->SvmParam (), _log);
     TrainingTimeEnd ();
   }
   catch (const std::exception&  e)
@@ -218,14 +217,14 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
     validModel = false;
     KKStr  errMsg = "ModelSvmBase::TrainModel   ***ERROR*** Exception occurred in 'SVM289_MFS::svm_train' building training model[" + rootFileName + "].";
     errMsg << endl << "        Exception[" << e.what () << "]";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
   catch (...)
   {
     validModel = false;
     KKStr  errMsg = "ModelSvmBase::TrainModel   ***ERROR*** Exception occurred in 'SVM289_MFS::svm_train' building training model[" + rootFileName + "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -233,14 +232,16 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr  errMsg = "ModelSvmBase::TrainModel   ***ERROR*** Building 'LibSVM' training model[" + rootFileName + "].";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 }  /* TrainModel */
 
 
 
-MLClassPtr  ModelSvmBase::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelSvmBase::Predict (FeatureVectorPtr  example,
+                                   RunLog&           log
+                                  )
 {
   if  (!svmModel)
   {
@@ -286,7 +287,8 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
                              double&           predClass2Prob,
                              kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
-                             double&           breakTie
+                             double&           breakTie,
+                             RunLog&           log
                             )
 {
   if  (!svmModel)
@@ -383,7 +385,9 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
 
 
 
-ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                      RunLog&           log
+                                                     )
 {
   if  (!svmModel)
   {
@@ -429,20 +433,21 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example)
 void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
                                           const MLClassList&  _mlClasses,
                                           kkint32*            _votes,
-                                          double*             _probabilities
+                                          double*             _probabilities,
+                                          RunLog&             _log
                                          )
 {
   if  (!svmModel)
   {
     KKStr errMsg = "ModelSvmBase::ProbabilitiesByClass   ***ERROR***      (svmModel == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   if  (!classesIndex)
   {
     KKStr errMsg = "ModelSvmBase::ProbabilitiesByClass   ***ERROR***      (classesIndex == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -466,7 +471,7 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
-      log.Level (-1) << endl << endl << errMsg << endl << endl;
+      _log.Level (-1) << endl << errMsg << endl << endl;
       _votes         [idx] = 0;
       _probabilities [idx] = 0.0f;
     }
@@ -486,20 +491,21 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                            const MLClassList&  _mlClasses,
-                                           double*             _probabilities
+                                           double*             _probabilities,
+                                           RunLog&             _log
                                           )
 {
   if  (!svmModel)
   {
     KKStr errMsg = "ModelSvmBase::ProbabilitiesByClass   ***ERROR***      (svmModel == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   if  (!classesIndex)
   {
     KKStr errMsg = "ModelSvmBase::ProbabilitiesByClass   ***ERROR***      (classesIndex == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -523,7 +529,7 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
     {
       KKStr  errMsg = "ModelSvmBase::Predict  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
-      log.Level (-1) << endl << endl << errMsg << endl << endl;
+      _log.Level (-1) << endl << endl << errMsg << endl << endl;
       _probabilities [idx] = 0.0f;
     }
     else
@@ -539,7 +545,8 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
-                                            double**      _crossProbTable  /**< Two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                            double**      _crossProbTable,  /**< Two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                            RunLog&       _log
                                            )
 {
   kkuint32  idx1, idx2;
@@ -552,7 +559,7 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
     {
       KKStr  errMsg = "ModelSvmBase::RetrieveCrossProbTable  ***ERROR***   ";
       errMsg << "Class[" << ic->Name () << "] was asked for but is not defined in this instance of 'ModelSvmBase'.";
-      log.Level (-1) << endl << endl << errMsg << endl << endl;
+      _log.Level (-1) << endl << endl << errMsg << endl << endl;
       pairWiseIndexes[idx1] = 0;
     }
     else
@@ -589,7 +596,8 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
 
 
 void  ModelSvmBase::ReadSpecificImplementationXML (istream&  i,
-                                                   bool&     _successful
+                                                   bool&     _successful,
+                                                   RunLog&   log
                                                   )
 {
   /**@todo  Make sure that 'param' != NULL */
@@ -623,7 +631,7 @@ void  ModelSvmBase::ReadSpecificImplementationXML (istream&  i,
 
     else if  (field.EqualIgnoreCase ("<Model>"))
     {
-      Model::ReadXML (i, _successful);
+      Model::ReadXML (i, _successful, log);
     }
 
     else if  (field.EqualIgnoreCase ("<LibSvmModel>"))
@@ -655,7 +663,9 @@ void  ModelSvmBase::ReadSpecificImplementationXML (istream&  i,
 
 
 
-void  ModelSvmBase::WriteSpecificImplementationXML (ostream&  o)
+void  ModelSvmBase::WriteSpecificImplementationXML (ostream&  o,
+                                                    RunLog&   log
+                                                   )
 {
   log.Level (20) << "ModelSvmBase::WriteSpecificImplementationXML  Saving Model in File." << endl;
 

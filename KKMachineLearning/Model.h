@@ -104,8 +104,7 @@ namespace KKMLL
     Model (const KKStr&       _name,
            const ModelParam&  _param,         // Create new model from
            FileDescPtr        _fileDesc,
-           VolConstBool&      _cancelFlag,
-           RunLog&            _log
+           VolConstBool&      _cancelFlag
           );
 
   

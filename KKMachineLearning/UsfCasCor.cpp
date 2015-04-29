@@ -237,8 +237,7 @@ const char*  _(const char* str)
 
 
 UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
-                      VolConstBool&  _cancelFlag,
-                      RunLog&        _log
+                      VolConstBool&  _cancelFlag
                      ):
 
   //***************************************************************
@@ -394,8 +393,7 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
   classes                 (NULL),
   fileDesc                (_fileDesc),
   selectedFeatures        (NULL),
-  cancelFlag              (_cancelFlag),
-  log                     (_log)
+  cancelFlag              (_cancelFlag)
 
 {
   ConstructParmTable ();
@@ -770,12 +768,12 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
                                      kkint64                 _the_random_seed,
                                      bool                    _useCache,
                                      FeatureVectorListPtr    _trainData,
-                                     FeatureNumListConstPtr  _selectedFeatures
+                                     FeatureNumListConstPtr  _selectedFeatures,
+                                     RunLog&                 _log
                                     )
 {
-  log.Level (10) << "Cascade Correlation:  Version[" << version << "]" << endl;
-
-
+  _log.Level (10) << "Cascade Correlation:  Version[" << version << "]" << endl;
+  
   if  (_selectedFeatures)
     selectedFeatures = new FeatureNumList (*_selectedFeatures);
   else
@@ -801,9 +799,9 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
     UseCache = False;
 
   /* First, load the data and configuration */
-  setup_network (filteredTrainData);
+  setup_network (filteredTrainData, _log);
 
-  train_network ();
+  train_network (_log);
 
   delete  filteredTrainData;
 }  /* TrainNewClassifier */
@@ -812,13 +810,14 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
 
 
 
-void  UsfCasCor::LoadExistingClassifier (istream&  i,
-                                         bool&     valid
+void  UsfCasCor::LoadExistingClassifier (istream&   i,
+                                         bool&      valid,
+                                         RunLog&    log
                                         )
 {
   log.Level (10) << "UsfCasCor::LoadExistingClassifier   ProgName[" << progname << "]  Version[" << version << "]" << endl;
 
-  this->ReadXml (i, valid);
+  this->ReadXml (i, valid, log);
 }  /* LoadExistingClassifier */
 
 
@@ -862,7 +861,9 @@ FeatureVectorListPtr  UsfCasCor::FilterOutExtremeExamples (FeatureVectorListPtr 
 /*
  *  Get and initialize a network. 
  */
-void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples)
+void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
+                                RunLog&               log
+                               )
 {
   /* 
      There are some required variables, like NInputs,etc
@@ -887,7 +888,7 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples)
   /* Once all arguments have been read and what parameters we
      have, we have -- then, build the network and load the data.
   */
-  allocate_network ();
+  allocate_network (log);
   load_data (trainExamples);
 
   /* Randomization. If not specified on command line and NonRandomSeed
@@ -912,7 +913,7 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples)
 
 
 
-void UsfCasCor::train_network ()
+void UsfCasCor::train_network (RunLog&  log)
 {
   int nhidden;      /* number of hidden units used in run  */
   int vics, defs, i;
@@ -1001,7 +1002,7 @@ void UsfCasCor::train_network ()
 /* Create the network data structures, given the number of input and output
  * units.  Get the MaxUnits value from a variable.
  */
-void  UsfCasCor::allocate_network (void)
+void  UsfCasCor::allocate_network (RunLog&  log)
 {
   int i;
 /***************/
@@ -1350,7 +1351,9 @@ int  UsfCasCor::find_key (char *searchkey)
  * or read in testing data. The special keywords "Training", and 
  * "Testing" signal the changes in status.
  */
-int   UsfCasCor::process_line (char *line)
+int   UsfCasCor::process_line (char*     line,
+                               RunLog&   log
+                              )
 {
   int k = 0;      /* location in ParmTable */
   char *keytok;      /* token pointer */
@@ -1909,7 +1912,8 @@ XmlTagPtr  ReadIntArrayUntilEndTag (istream&  i,
 
 
 void  UsfCasCor::ReadXmlArrayFloat (XmlTagPtr  tag, 
-                                    istream&   i
+                                    istream&   i,
+                                    RunLog&    log
                                    )
 {
   float*  A = NULL;
@@ -2380,7 +2384,8 @@ void  UsfCasCor::ReadXmlNameValueLine (istream&  i)
 
 
 void  UsfCasCor::ReadXml (istream&  i,
-                          bool&     valid
+                          bool&     valid,
+                          RunLog&   log
                          )
 {
   valid = true;

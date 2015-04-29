@@ -142,18 +142,14 @@ namespace  SVM289_MFS
   struct  svm_model
   {
     svm_model (const svm_model&  _model,
-               FileDescPtr       _fileDesc,
-               RunLog&           _log
+               FileDescPtr       _fileDesc
               );
 
-    svm_model (FileDescPtr   _fileDesc,
-               RunLog&       _log
-              );
+    svm_model (FileDescPtr  _fileDesc);
 
     svm_model (const svm_parameter&   _param,
                const FeatureNumList&  _selFeatures,
-               FileDescPtr            _fileDesc,
-               RunLog&                _log
+               FileDescPtr            _fileDesc
               );
 
     svm_model (const KKStr&  _fileName,

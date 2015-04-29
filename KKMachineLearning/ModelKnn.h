@@ -13,15 +13,13 @@ namespace  KKMLL
     typedef  ModelKnn*  ModelKnnPtr;
 
     ModelKnn (FileDescPtr    _fileDesc,
-              VolConstBool&  _cancelFlag,
-              RunLog&        _log
+              VolConstBool&  _cancelFlag
              );
   
     ModelKnn (const KKStr&          _name,
               const ModelParamKnn&  _param,         // Create new model from
               FileDescPtr           _fileDesc,
-              VolConstBool&         _cancelFlag,
-              RunLog&               _log
+              VolConstBool&         _cancelFlag
              );
   
     ModelKnn (const ModelKnn&  _madel);

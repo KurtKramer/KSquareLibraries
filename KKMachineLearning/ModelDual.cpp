@@ -34,8 +34,7 @@ using namespace  KKMLL;
 
 
 ModelDual::ModelDual (FileDescPtr    _fileDesc,
-                      VolConstBool&  _cancelFlag,
-                      RunLog&        _log
+                      VolConstBool&  _cancelFlag
                      ):
   Model (_fileDesc, _cancelFlag),
   param         (NULL),
@@ -52,10 +51,9 @@ ModelDual::ModelDual (FileDescPtr    _fileDesc,
 ModelDual::ModelDual (const KKStr&           _name,
                       const ModelParamDual&  _param,         // Create new model from
                       FileDescPtr            _fileDesc,
-                      VolConstBool&          _cancelFlag,
-                      RunLog&                _log
+                      VolConstBool&          _cancelFlag
                      ):
-  Model (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model (_name, _param, _fileDesc, _cancelFlag),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),

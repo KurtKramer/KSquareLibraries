@@ -27,15 +27,14 @@ namespace  KKMLL
 
 
     ModelSvmBase (FileDescPtr    _fileDesc,
-                  VolConstBool&  _cancelFlag,
-                  RunLog&        _log
+                  VolConstBool&  _cancelFlag
                 );
 
     ModelSvmBase (const KKStr&             _name,
                   const ModelParamSvmBase& _param,         // Create new model from
                   FileDescPtr              _fileDesc,
-                  VolConstBool&            _cancelFlag,
-                  RunLog&                  _log
+                  VolConstBool&            _cancelFlag
+
                  );
   
     ModelSvmBase (const ModelSvmBase&   _model);
@@ -54,7 +53,9 @@ namespace  KKMLL
 
     ModelParamSvmBasePtr  Param ();
 
-    virtual  MLClassPtr   Predict (FeatureVectorPtr  image);
+    virtual  MLClassPtr   Predict (FeatureVectorPtr  image,
+                                   RunLog&           log
+                                  );
   
     virtual
     void                  Predict (FeatureVectorPtr  example,
@@ -68,12 +69,15 @@ namespace  KKMLL
                                    double&           predClass2Prob,
                                    kkint32&          numOfWinners,
                                    bool&             knownClassOneOfTheWinners,
-                                   double&           breakTie
+                                   double&           breakTie,
+                                   RunLog&           log
                                   );
 
 
     virtual 
-    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                            RunLog&           log
+                                           );
 
 
 
@@ -81,7 +85,8 @@ namespace  KKMLL
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
     /**
@@ -102,24 +107,28 @@ namespace  KKMLL
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
   
     virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
+                                                  bool&     _successful,
+                                                  RunLog&   log
                                                  );
 
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable  /**< two dimension matrix that needs to be classes.QueueSize () squared. */
+                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize () squared. */
+                                  RunLog&       log
                                  );
 
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               RunLog&               _log
                               );
 
 

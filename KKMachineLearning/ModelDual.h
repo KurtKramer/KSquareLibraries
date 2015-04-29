@@ -73,15 +73,13 @@ namespace  KKMLL
 
 
     ModelDual (FileDescPtr    _fileDesc,
-               VolConstBool&  _cancelFlag,
-               RunLog&        _log
+               VolConstBool&  _cancelFlag
               );
 
     ModelDual (const KKStr&          _name,
                const ModelParamDual& _param,         // Create new model from
                FileDescPtr           _fileDesc,
-               VolConstBool&         _cancelFlag,
-               RunLog&               _log
+               VolConstBool&         _cancelFlag
               );
   
     ModelDual (const ModelDual&   _model);

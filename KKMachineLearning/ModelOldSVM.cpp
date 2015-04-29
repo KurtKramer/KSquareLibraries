@@ -38,14 +38,13 @@ using namespace KKMLL;
 
 
 ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
-                          VolConstBool&  _cancelFlag,
-                          RunLog&        _log
+                          VolConstBool&  _cancelFlag
                          ):
-  Model (_fileDesc, _cancelFlag, _log),
+  Model (_fileDesc, _cancelFlag),
   assignments (NULL),
   svmModel    (NULL)
 {
-  Model::param = new ModelParamOldSVM (_log);
+  Model::param = new ModelParamOldSVM ();
 }
 
 
@@ -53,11 +52,10 @@ ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
 ModelOldSVM::ModelOldSVM (const KKStr&            _name,
                           const ModelParamOldSVM& _param,         // Create new model from
                           FileDescPtr             _fileDesc,
-                          VolConstBool&           _cancelFlag,
-                          RunLog&                 _log
+                          VolConstBool&           _cancelFlag
                          )
 :
-  Model   (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model   (_name, _param, _fileDesc, _cancelFlag),
   assignments (NULL),
   svmModel    (NULL)
 
@@ -80,8 +78,6 @@ ModelOldSVM::ModelOldSVM (const ModelOldSVM& _model)
 
 ModelOldSVM::~ModelOldSVM ()
 {
-  log.Level (20) << "ModelOldSVM::~ModelOldSVM   Starting Destructor for Model[" << rootFileName << "]" << endl;
-
   delete  svmModel;
   svmModel = NULL;
 
@@ -168,14 +164,14 @@ ModelParamOldSVMPtr   ModelOldSVM::Param () const
   if  (param == NULL)
   {
     KKStr errMsg = "ModelOldSVM::Param   ***ERROR***  param not defined (param == NULL).";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   if  (param->ModelParamType () != ModelParam::ModelParamTypes::mptOldSVM)
   {
     KKStr errMsg = "ModelOldSVM::Param   ***ERROR***  param variable of wrong type.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -210,7 +206,8 @@ void  ModelOldSVM::WriteSpecificImplementationXML (ostream&  o,
 
 
 void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
+                                                  bool&     _successful,
+                                                  RunLog&   log
                                                  )
 {
   log.Level (40) << "ModelOldSVM::ReadSpecificImplementationXML" << endl;
@@ -286,7 +283,8 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
                              double&           predClass2Prob,
                              kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
-                             double&           breakTie
+                             double&           breakTie,
+                             RunLog&           log
                             )
 {
   bool  newExampleCreated = false;
@@ -312,7 +310,9 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
 
 
 
-MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example,
+                                  RunLog&           log
+                                 )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
@@ -344,7 +344,9 @@ void  ModelOldSVM::PredictRaw (FeatureVectorPtr  example,
 
 
 
-ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                     RunLog&           log
+                                                    )
 {
   if  (!svmModel)
   {
@@ -355,7 +357,7 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->ProbabilitiesByClass (encodedExample, *classes, votes, classProbs);
+  svmModel->ProbabilitiesByClass (encodedExample, *classes, votes, classProbs, log);
 
   if  (newExampleCreated)
   {
@@ -385,15 +387,16 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 
 
-void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr       _example,
+void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                          const MLClassList&  _mlClasses,
-                                         double*                _probabilities
+                                         double*             _probabilities,
+                                         RunLog&             _log
                                         )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (_example, newExampleCreated);
 
-  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, votes, _probabilities);
+  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, votes, _probabilities, _log);
   if  (newExampleCreated)
   {
     delete encodedExample;
@@ -406,15 +409,16 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr       _example,
 
 
 
-void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr        example,
+void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    example,
                                          const MLClassList&  _mlClasses,
-                                         kkint32*                 _votes,
-                                         double*                _probabilities
+                                         kkint32*            _votes,
+                                         double*             _probabilities,
+                                         RunLog&             _log
                                         )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, _votes, _probabilities);
+  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, _votes, _probabilities, _log);
   if  (newExampleCreated)
   {
     delete encodedExample;
@@ -490,10 +494,11 @@ bool  ModelOldSVM::NormalizeNominalAttributes ()  const
 
 
 void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
-                                           double**          crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                           double**       crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                           RunLog&        log
                                           )
 {
-  svmModel->RetrieveCrossProbTable (classes, crossProbTable);
+  svmModel->RetrieveCrossProbTable (classes, crossProbTable, log);
   return;
 }  /* RetrieveCrossProbTable */
 
@@ -502,10 +507,11 @@ void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
 
 void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               RunLog&               _log
                               )
 {
-  log.Level (20) << "ModelOldSVM::TrainModel - Constructing From Training Data, Model[" << rootFileName << "]" << endl;
+  _log.Level (20) << "ModelOldSVM::TrainModel - Constructing From Training Data, Model[" << rootFileName << "]" << endl;
   // We do not bother with the base class 'TrainModel' like we do with other models.
   // 'ModelOldSVM' is a special case.  All we are trying to do is create a pass through
   // for 'svmModel'.
@@ -513,7 +519,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   delete  svmModel;
   svmModel = NULL;
 
-  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
   // The "Model::TrainModel" may have manipulated the '_trainExamples'.  It will have also 
   // updated 'Model::trainExamples.  So from this point forward we use 'trainExamples'.
   _trainExamples = NULL;
@@ -524,7 +530,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     validModel = false;
     KKStr errMsg = " ModelOldSVM::TrainModel  ***ERROR***    (svmParam == NULL).";
-    log.Level (-1) << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -534,18 +540,18 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
     classes->SortByName ();
     numOfClasses = classes->QueueSize ();
     delete  assignments;
-    assignments = new ClassAssignments (*classes, log);
+    assignments = new ClassAssignments (*classes, _log);
   }
 
   try
   {
     TrainingTimeStart ();
-    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, log, cancelFlag);
+    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, _log, cancelFlag);
     TrainingTimeEnd ();
   }
   catch (...)
   {
-    log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occurred building training model." << endl << endl;
+    _log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occurred building training model." << endl << endl;
     validModel = false;
     delete  svmModel;
     svmModel = NULL;

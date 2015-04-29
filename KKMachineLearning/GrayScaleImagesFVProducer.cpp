@@ -693,7 +693,7 @@ FeatureVectorListPtr  GrayScaleImagesFVProducer::ManufacturFeatureVectorList (bo
                                                                               RunLog&  runLog
                                                                              )
 {
-  return  new FeatureVectorList (FileDesc (), owner, runLog);
+  return  new FeatureVectorList (FileDesc (), owner);
 }
 
 
@@ -753,7 +753,7 @@ FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorL
                                                                                      RunLog&  runLog
                                                                                     )
 {
-  return new FeatureVectorList (GrayScaleImagesFVProducer::DefineFileDescStatic (), owner, runLog);
+  return new FeatureVectorList (GrayScaleImagesFVProducer::DefineFileDescStatic (), owner);
 }
 
 

@@ -3377,7 +3377,7 @@ svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob,
                                     RunLog&                log
                                    )
 {
-  svm_model*  model = new svm_model (param, prob.SelFeatures (), prob.FileDesc (), log);
+  svm_model*  model = new svm_model (param, prob.SelFeatures (), prob.FileDesc ());
 
   model->weOwnSupportVectors = false;
 
@@ -3839,7 +3839,6 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
   delete perm;        perm       = NULL;
 }  /* svm_cross_validation */
  
-
 
 
 
@@ -4462,7 +4461,7 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
                                             RunLog&      log
                                            )
 {
-  svm_model*  model = new svm_model (fileDesc, log);
+  svm_model*  model = new svm_model (fileDesc);
 
   bool  validModel = true;
 
@@ -4627,8 +4626,7 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
 
 
 SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
-                                  FileDescPtr       _fileDesc,
-                                  RunLog&           _log
+                                  FileDescPtr       _fileDesc
                                  ):
   param       (_model.param),
   nr_class    (_model.nr_class),
@@ -4714,9 +4712,7 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
 
 
 
-SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc,
-                                  RunLog&     _log
-                                 ):
+SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc):
    param               (),
    nr_class            (0),
    numSVs              (0),
@@ -4738,8 +4734,7 @@ SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc,
 
 SVM289_MFS::svm_model::svm_model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
-                                  FileDescPtr           _fileDesc,
-                                  RunLog&               _log
+                                  FileDescPtr           _fileDesc
                                  ):
    param       (_param),
    nr_class    (0),
@@ -5306,7 +5301,7 @@ svm_model *svm_load_model (const char*  model_file_name,
 
   // read parameters
 
-  svm_model *model = new svm_model (fileDesc, log);
+  svm_model *model = new svm_model (fileDesc);
   svm_parameter& param = model->param;
 
   char cmd[82];

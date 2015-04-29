@@ -290,8 +290,7 @@ namespace KKMLL
   {
   public:
     UsfCasCor (FileDescPtr    _fileDesc,
-               VolConstBool&  _cancelFlag,
-               RunLog&        _log
+               VolConstBool&  _cancelFlag
               );
 
     ~UsfCasCor ();
@@ -306,11 +305,13 @@ namespace KKMLL
                               kkint64                 _the_random_seed,
                               bool                    _useCache,
                               FeatureVectorListPtr    _trainData,
-                              FeatureNumListConstPtr  _selectedFeatures
+                              FeatureNumListConstPtr  _selectedFeatures,
+                              RunLog&                 _log
                              );
 
     void  LoadExistingClassifier (istream&  i,
-                                  bool&     valid
+                                  bool&     valid,
+                                  RunLog&   log
                                  );
 
     MLClassPtr  PredictClass (FeatureVectorPtr  example);
@@ -368,12 +369,14 @@ namespace KKMLL
     void  WriteXmlConnections (ostream&  o);
 
     void  ReadXml (istream&  i,
-                   bool&     valid
+                   bool&     valid,
+                   RunLog&   log
                   );
 
 
     void  ReadXmlArrayFloat (XmlTagPtr  tag, 
-                             istream&   i
+                             istream&   i,
+                             RunLog&    log
                             );
 
     void  ReadXmlArrayFloat2D (XmlTagPtr  tag, 
@@ -411,7 +414,9 @@ namespace KKMLL
 
     int    string_to_type (const char* s);
 
-    int    process_line (char *line);
+    int    process_line (char*     line,
+                         RunLog&   log
+                        );
 
     /* Utilities */
     
@@ -429,10 +434,12 @@ namespace KKMLL
     int  normalization_method;
     int  my_mpi_rank;
 
-    void  setup_network (FeatureVectorListPtr  trainExamples);
+    void  setup_network (FeatureVectorListPtr  trainExamples,
+                         RunLog&               log
+                        );
 
-    void  train_network    ();
-    void  allocate_network ();
+    void  train_network    (RunLog&  log);
+    void  allocate_network (RunLog&  log);
 
 
     //****************************************************************
@@ -778,8 +785,6 @@ namespace KKMLL
     FileDescPtr        fileDesc;
 
     FeatureNumListPtr  selectedFeatures;   /**< The selected features that are to be used from the source training data. */
-
-    RunLog&  log;
 
     VolConstBool&  cancelFlag;
 

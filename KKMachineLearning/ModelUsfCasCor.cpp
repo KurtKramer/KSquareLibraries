@@ -34,10 +34,9 @@ using namespace  KKMLL;
 
 
 ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,
-                                VolConstBool&  _cancelFlag,
-                                RunLog&        _log
+                                VolConstBool&  _cancelFlag
                                ):
-  Model (_fileDesc, _cancelFlag, _log),
+  Model (_fileDesc, _cancelFlag),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {
@@ -47,10 +46,8 @@ ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,
 ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 const ModelParamUsfCasCor& _param,         // Create new model from
                                 FileDescPtr                _fileDesc,
-                                VolConstBool&              _cancelFlag,
-                                RunLog&                    _log
-                               ):
-  Model (_name, _param, _fileDesc, _cancelFlag, _log),
+                                VolConstBool&              _cancelFlag                               ):
+  Model (_name, _param, _fileDesc, _cancelFlag),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {
@@ -115,16 +112,17 @@ ModelParamUsfCasCorPtr   ModelUsfCasCor::Param ()
 
 void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
                                   bool                  _alreadyNormalized,
-                                  bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                                  bool                  _takeOwnership, /*!< Model will take ownership of these examples */
+                                  RunLog&               _log
                                  )
 {
-  log.Level (10) << "ModelUsfCasCor::TrainModel[" << Name () << "]." << endl;
+  _log.Level (10) << "ModelUsfCasCor::TrainModel[" << Name () << "]." << endl;
 
   if  (param == NULL)
   {
     validModel = false;
     KKStr  errMsg = "ModelUsfCasCor::TrainModel   (param == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -136,27 +134,27 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
   }
   catch (const KKException&  e)
   {
     validModel = false;
     KKStr  errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl << endl;
     throw  KKException (errMsg, e);
   }
   catch (const exception& e2)
   {
     validModel = false;
     KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << e2.what () << endl << endl;
     throw KKException (errMsg, e2);
   }
   catch (...)
   {
     validModel = false;
     KKStr errMsg = "ModelUsfCasCor::TrainModel  ***ERROR*** Exception occurred calling 'Model::TrainModel'.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -164,12 +162,12 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
   // that needed to be done.  
   // Also the data structures 'classes', 'encoder', and 'fileDesc' will have been built.
   // 'classes' will already be sorted in name order.
-  // The Prediction varaiables 'probabilities', 'votes', and 'crossClassProbTable' will
+  // The Prediction variables 'probabilities', 'votes', and 'crossClassProbTable' will
   // have been built.
 
   TrainingTimeStart ();
 
-  usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag, log);
+  usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag, _log);
 
   usfCasCorClassifier->TrainNewClassifier (param->In_limit         (),
                                            param->Out_limit        (),
@@ -183,13 +181,15 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   TrainingTimeEnd ();
 
-  log.Level (10) << "ModelUsfCasCor::TrainModel  Completed." << endl;
+  _log.Level (10) << "ModelUsfCasCor::TrainModel  Completed." << endl;
 }  /* TrainModel */
 
 
 
 
-MLClassPtr  ModelUsfCasCor::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelUsfCasCor::Predict (FeatureVectorPtr  example,
+                                     RunLog&           log
+                                    )
 {
   if  (!usfCasCorClassifier)
   {
@@ -223,7 +223,8 @@ void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
                                double&          predClass2Prob,
                                kkint32&         numOfWinners,
                                bool&            knownClassOneOfTheWinners,
-                               double&          breakTie
+                               double&          breakTie,
+                               RunLog&          log
                               )
 {
   if  (!usfCasCorClassifier)
@@ -273,7 +274,9 @@ void  ModelUsfCasCor::Predict (FeatureVectorPtr example,
 
 
 
-ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                        RunLog&           log
+                                                       )
 {
   if  (!usfCasCorClassifier)
   {
@@ -301,10 +304,11 @@ ClassProbListPtr  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr  exampl
 
 
 
-void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            example,
+void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    example,
                                             const MLClassList&  _mlClasses,
-                                            kkint32*                      _votes,
-                                            double*                     _probabilities
+                                            kkint32*            _votes,
+                                            double*             _probabilities,
+                                            RunLog&             log
                                            )
 {
   if  (!usfCasCorClassifier)
@@ -377,15 +381,16 @@ void  ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            example,
 
 
 
-void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _example,
+void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                              const MLClassList&  _mlClasses,
-                                             double*                     _probabilities
+                                             double*             _probabilities,
+                                             RunLog&             _log
                                             )
 {
   if  (!usfCasCorClassifier)
   {
     KKStr errMsg = "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***      (usfCasCorClassifier == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -417,7 +422,7 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _exampl
 
   if  (_mlClasses.size () != probabilities.size ())
   {
-    log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
+    _log.Level (-1) << endl << "ModelUsfCasCor::ProbabilitiesByClass   ***ERROR***"  << endl
       << "\"_mlClasses.size () != probabilities.size ()\"   This should not ever be able to happen." << endl
       << endl;
     for  (int x = 0;  x < _mlClasses.QueueSize ();  ++x)
@@ -438,7 +443,8 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr            _exampl
 
 
 void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
-                                                     bool&     _successful
+                                                     bool&     _successful,
+                                                     RunLog&   log
                                                     )
 {
   /**@todo  Make sure that 'param' != NULL */
@@ -472,7 +478,7 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
 
     else if  (field.EqualIgnoreCase ("<Model>"))
     {
-      Model::ReadXML (i, _successful);
+      Model::ReadXML (i, _successful, log);
     }
 
     else if  (field.EqualIgnoreCase ("<UsfCasCor>"))
@@ -501,7 +507,9 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
 
 
 
-void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o)
+void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o,
+                                                      RunLog&   log
+                                                     )
 {
   log.Level (20) << "ModelUsfCasCor::WriteSpecificImplementationXML  Saving Model in File." << endl;
 

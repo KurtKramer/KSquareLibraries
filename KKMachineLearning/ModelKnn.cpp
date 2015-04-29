@@ -32,8 +32,7 @@ using namespace  KKMLL;
 
 
 ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
-                    VolConstBool&  _cancelFlag,
-                    RunLog&        _log
+                    VolConstBool&  _cancelFlag
                    ):
   Model (_fileDesc, _cancelFlag),
   param (NULL)
@@ -46,10 +45,9 @@ ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
                     FileDescPtr           _fileDesc,
-                    VolConstBool&         _cancelFlag,
-                    RunLog&               _log
+                    VolConstBool&         _cancelFlag
                    ):
-  Model (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model (_name, _param, _fileDesc, _cancelFlag),
   param (NULL)
 {
   param = dynamic_cast<ModelParamKnnPtr> (Model::param);

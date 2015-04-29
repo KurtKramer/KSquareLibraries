@@ -130,8 +130,7 @@ Model::Model (FileDescPtr    _fileDesc,
 Model::Model (const KKStr&       _name,
               const ModelParam&  _param,      // Create new model from
               FileDescPtr        _fileDesc,
-              VolConstBool&      _cancelFlag,
-              RunLog&            _log
+              VolConstBool&      _cancelFlag
              ):
     alreadyNormalized     (false),
     cancelFlag            (_cancelFlag),
@@ -156,8 +155,6 @@ Model::Model (const KKStr&       _name,
 
 {
   param = _param.Duplicate ();
-
-  _log.Level (20) << "ModelKnn::ModelKnn - Constructing From Training Data." << endl;
 }
 
 
@@ -268,11 +265,11 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   ModelPtr model = NULL;
   switch  (modelType)
   {
-  case  ModelTypes::mtKNN:       model = new ModelKnn       (_fileDesc, _cancelFlag, _log);  break;
-  case  ModelTypes::mtOldSVM:    model = new ModelOldSVM    (_fileDesc, _cancelFlag, _log);  break;
-  case  ModelTypes::mtSvmBase:   model = new ModelSvmBase   (_fileDesc, _cancelFlag, _log);  break;
-  case  ModelTypes::mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag, _log);  break;
-  case  ModelTypes::mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag, _log);  break;
+  case  ModelTypes::mtKNN:       model = new ModelKnn       (_fileDesc, _cancelFlag);  break;
+  case  ModelTypes::mtOldSVM:    model = new ModelOldSVM    (_fileDesc, _cancelFlag);  break;
+  case  ModelTypes::mtSvmBase:   model = new ModelSvmBase   (_fileDesc, _cancelFlag);  break;
+  case  ModelTypes::mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag);  break;
+  case  ModelTypes::mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag);  break;
   }
 
   if  (!model)
@@ -363,23 +360,23 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
     switch  (_modelType)
     {
     case  ModelTypes::mtOldSVM:    
-          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag, _log);
+          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag);
           break;
 
     case  ModelTypes::mtSvmBase:
-          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag, _log);
+          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag);
           break;
 
     case  ModelTypes::mtKNN:
-          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag, _log);
+          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag);
           break;
 
     case  ModelTypes::mtUsfCasCor:
-          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag, _log);
+          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag);
           break;
 
     case  ModelTypes::mtDual:
-          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag, _log);
+          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag);
           break;
     }  /* end of switch */
   }
@@ -743,7 +740,7 @@ void  Model::ReadXML (istream&  i,
     }
     else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
     {
-      ReadSpecificImplementationXML (i, _successful);
+      ReadSpecificImplementationXML (i, _successful, log);
     }
   }
 
@@ -1185,7 +1182,8 @@ void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
                                        KKStr&             classifier1Desc,
                                        KKStr&             classifier2Desc,
                                        ClassProbListPtr&  classifier1Results,
-                                       ClassProbListPtr&  classifier2Results
+                                       ClassProbListPtr&  classifier2Results,
+                                       RunLog&            log
                                       )
 {
   delete classifier1Results;  classifier1Results = NULL;
@@ -1194,7 +1192,7 @@ void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
   classifier1Desc = Description ();
   classifier2Desc = Description ();
 
-  classifier1Results = ProbabilitiesByClass (example);
+  classifier1Results = ProbabilitiesByClass (example, log);
   if  (classifier1Results)
     classifier2Results = new ClassProbList (*classifier1Results);
 }  /* ProbabilitiesByClassDual */

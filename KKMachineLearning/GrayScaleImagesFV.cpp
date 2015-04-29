@@ -109,11 +109,10 @@ GrayScaleImagesFV::~GrayScaleImagesFV ()
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescPtr  _fileDesc,
-                                                  bool         _owner,
-                                                  RunLog&      _log
-                                                 ):
+                                              bool         _owner
+                                             ):
 
-    FeatureVectorList (_fileDesc, _owner, _log)
+    FeatureVectorList (_fileDesc, _owner)
 {
 
 }
@@ -122,23 +121,23 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescPtr  _fileDesc,
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (FactoryFVProducerPtr  _fvProducerFactory,
-                                                  MLClassPtr            _mlClass,
-                                                  KKStr                 _dirName,
-                                                  KKStr                 _fileName,
-                                                  RunLog&               _log
-                                                 ):
+                                              MLClassPtr           _mlClass,
+                                              KKStr                _dirName,
+                                              KKStr                _fileName,
+                                              RunLog&              _log
+                                             ):
 
-   FeatureVectorList (_fvProducerFactory->FileDesc (), true, _log)
+   FeatureVectorList (_fvProducerFactory->FileDesc (), true)
 
 {
-  FeatureExtraction (_fvProducerFactory, _dirName, _fileName, _mlClass);
+  FeatureExtraction (_fvProducerFactory, _dirName, _fileName, _mlClass, _log);
 }
 
 
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples):
-   FeatureVectorList (examples.FileDesc (), examples.Owner (), examples.log)
+   FeatureVectorList (examples.FileDesc (), examples.Owner ())
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
@@ -155,10 +154,10 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  exam
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples,
-                                                  bool                           _owner
-                                                 ):
+                                              bool                          _owner
+                                             ):
 
-   FeatureVectorList (examples.FileDesc (), _owner, examples.log)
+   FeatureVectorList (examples.FileDesc (), _owner)
 {
   const_iterator  idx;
   for  (idx = examples.begin ();  idx != examples.end ();  idx++)
@@ -173,12 +172,11 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  exam
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList,
-                                                  bool                      _owner
-                                                 ):
+                                              bool                      _owner
+                                             ):
 
   FeatureVectorList (featureVectorList.FileDesc (),
-                     _owner, 
-                     featureVectorList.log
+                     _owner
                     )
 {
   //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
@@ -225,7 +223,7 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
       {
         // ****    ERROR  ****
         KKStr  errMSsg = "GrayScaleImagesFVList   One of the elements in 'featureVectorList' is not of 'GrayScaleImagesFV'  type.";
-        log.Level (-1) << endl << endl << endl
+        cerr << endl
              << "GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList)   ***ERROR***" << endl
              << "        " << errMSsg  << endl
              << "       FileName[" << featureVector->ExampleFileName () << "]"  << endl
@@ -249,11 +247,10 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
 //* The subset will consist of the examples who's mlClass is one of the     *
 //* ones in mlClasses.                                                    *
 //****************************************************************************
-GrayScaleImagesFVList::GrayScaleImagesFVList (MLClassList&     _mlClasses,
-                                      GrayScaleImagesFVList&  _examples,
-                                      RunLog&             _log
-                                     ):
-  FeatureVectorList (_mlClasses, _examples, _log)
+GrayScaleImagesFVList::GrayScaleImagesFVList (MLClassList&            _mlClasses,
+                                              GrayScaleImagesFVList&  _examples
+                                             ):
+  FeatureVectorList (_mlClasses, _examples)
   
 {
 }
@@ -263,8 +260,7 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (MLClassList&     _mlClasses,
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList):
   FeatureVectorList (featureVectorList.FileDesc (),
-                     featureVectorList.Owner (), 
-                     featureVectorList.log
+                     featureVectorList.Owner ()
                     )
 {
   //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
@@ -310,14 +306,12 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
       else
       {
         // ****    ERROR  ****
-        log.Level (-1) << endl << endl << endl
-             << "GrayScaleImagesFVList ::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList)              ***ERROR***" << endl
-             << endl
-             << "One of the elements in 'featureVectorList' is not of 'GrayScaleImagesFV'  type.  We can not  recast this element"
-             << "FileName[" << featureVector->ExampleFileName () << "]"  << endl
-             << endl;
-        osWaitForEnter ();
-        exit (-1);
+        KKStr errMsg;
+        errMsg << "GrayScaleImagesFVList   ***ERROR***   One of the elements in 'featureVectorList' is not of 'GrayScaleImagesFV'  type.  We can not recast this element"
+             << " FileName[" << featureVector->ExampleFileName () << "]";
+
+        cerr << endl << errMsg << endl << endl;
+        throw KKException (errMsg);
       }
     }
   }
@@ -356,12 +350,9 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::BackOfQueue ()
   if  (typeid (*fv) == typeid (GrayScaleImagesFV))
     return  dynamic_cast<GrayScaleImagesFVPtr> (fv);
 
-  
-  log.Level (-1) << endl << endl 
-                 << "GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry at back of Queue is not a 'GrayScaleImagesFV' object." << endl
-                 << endl;
-
-  return NULL;
+  KKStr errMsg = "GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry at back of Queue is not a 'GrayScaleImagesFV' object.";
+  cerr << endl << errMsg << endl << endl;
+  throw  KKException (errMsg);
 }  /* BackOfQueue */
 
 
@@ -375,10 +366,9 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::PopFromBack ()
   //if  (strcmp (fv->UnderlyingClass (), "GrayScaleImagesFV") != 0)
   if  (typeid (*fv) == typeid (GrayScaleImagesFV))
   {
-    log.Level (-1)  << endl << endl 
-                    << "GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry pooped from back of Queue is not a 'GrayScaleImagesFV' object." << endl
-                    << endl;
-    return NULL;
+    KKStr errMsg = "GrayScaleImagesFVList::PopFromBack ()    ***ERROR***        Entry at back of Queue is not a 'GrayScaleImagesFV' object.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   return  dynamic_cast<GrayScaleImagesFVPtr> (FeatureVectorList::PopFromBack ());
@@ -427,9 +417,11 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByImageFileName (const KKStr&
 
 
 
-GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const KKStr&  fileName)
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                                           RunLog&       log
+                                                                          )
 {
-  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName);
+  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName, log);
   examples->Owner (false);
   GrayScaleImagesFVListPtr  orderedImages = new GrayScaleImagesFVList (*examples);
   delete  examples;
@@ -442,15 +434,16 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const
 
 
 void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProducerFactory,
-                                                   KKStr                 _dirName, 
-                                                   KKStr                 _fileName, 
-                                                   MLClassPtr            _mlClass
-                                                  )
+                                                 KKStr                 _dirName, 
+                                                 KKStr                 _fileName, 
+                                                 MLClassPtr            _mlClass,
+                                                 RunLog&               _log
+                                                )
 {
   KKStr  className = _mlClass->Name ();
-  log.Level (10) << "FeatureExtraction,  dirName   [" << _dirName    << "]." << endl;
-  log.Level (10) << "                    fileName  [" << _fileName   << "]." << endl;
-  log.Level (10) << "                    className [" << className   << "]." << endl;
+  _log.Level (10) << "FeatureExtraction,  dirName   [" << _dirName    << "]." << endl;
+  _log.Level (10) << "                    fileName  [" << _fileName   << "]." << endl;
+  _log.Level (10) << "                    className [" << className   << "]." << endl;
 
   bool  cancelFlag  = false;
   bool  successful  = false;
@@ -470,7 +463,7 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
   if  (!fileNameList)
     return;
 
-  FeatureVectorProducerPtr  fvProducer = _fvProducerFactory->ManufactureInstance (log);
+  FeatureVectorProducerPtr  fvProducer = _fvProducerFactory->ManufactureInstance (_log);
 
   KKStrList::iterator  fnIDX = fileNameList->begin ();
 
@@ -493,13 +486,13 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
 
     KKStr  fullFileName = osAddSlash (_dirName) + (*imageFileName);
 
-    FeatureVectorPtr featureVector = fvProducer->ComputeFeatureVectorFromImage (fullFileName, _mlClass, NULL, log);
+    FeatureVectorPtr featureVector = fvProducer->ComputeFeatureVectorFromImage (fullFileName, _mlClass, NULL, _log);
     if  (!featureVector)
     {
       KKStr  msg (100);
       msg << "GrayScaleImagesFVList::FeatureExtraction   ***ERROR***   Could not Allocate GrayScaleImagesFV object" << endl
           << "for FileName[" << fullFileName << "].";
-      cerr << endl << msg << endl << endl;
+      _log.Level (-1) << endl << msg << endl << endl;
     }
     else
     {
@@ -517,7 +510,7 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
       }
 
       larcosFeatureVector->ExampleFileName (*imageFileName);
-      log.Level (30) << larcosFeatureVector->ExampleFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
+      _log.Level (30) << larcosFeatureVector->ExampleFileName () << "  " << larcosFeatureVector->OrigSize () << endl;
       PushOnBack (larcosFeatureVector);
       count++;
     }
@@ -537,7 +530,7 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
                                                 numExamplesWritten,
                                                 cancelFlag,
                                                 successful,
-                                                log
+                                                _log
                                                );
   delete  fileNameList;
   fileNameList = NULL;
@@ -554,7 +547,7 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
  */
 GrayScaleImagesFVListPtr  GrayScaleImagesFVList::DuplicateListAndContents ()  const
 {
-  GrayScaleImagesFVListPtr  copyiedList = new GrayScaleImagesFVList (FileDesc (), true, log);
+  GrayScaleImagesFVListPtr  copyiedList = new GrayScaleImagesFVList (FileDesc (), true);
 
   for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
@@ -573,9 +566,10 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::DuplicateListAndContents ()  co
 
 
 void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVProducerPtr  fvProducerFactory,  
-                                                                       const KKStr&          rootDir,
-                                                                       bool&                 successful
-                                                                      )
+                                                                     const KKStr&          rootDir,
+                                                                     bool&                 successful,
+                                                                     RunLog&               log
+                                                                    )
 {
   log.Level (20) << "RecalcFeatureValuesFromImagesInDirTree   RootDir[" << rootDir << "]." << endl;
 
@@ -690,11 +684,12 @@ GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ExtractImagesForAGivenClass (M
 
 
 GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                              kkint32         maxImagesPerClass,
-                                                                              kkint32         numOfFolds
-                                                                             )
+                                                                          kkint32         maxImagesPerClass,
+                                                                          kkint32         numOfFolds,
+                                                                          RunLog&         log
+                                                                         )
 {
-  FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds);
+  FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (mlClasses, maxImagesPerClass, numOfFolds, log);
   GrayScaleImagesFVListPtr  stratifiedImagefeatures  = new GrayScaleImagesFVList (*stratifiedFeatureVectors);
   stratifiedFeatureVectors->Owner (false);
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
@@ -704,11 +699,13 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (MLClas
 
 
 
-GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (kkint32  numOfFolds)
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                                          RunLog&  log
+                                                                         )
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
-  FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (classes, -1, numOfFolds);
+  FeatureVectorListPtr  stratifiedFeatureVectors = FeatureVectorList::StratifyAmoungstClasses (classes, -1, numOfFolds, log);
   GrayScaleImagesFVListPtr  stratifiedImagefeatures  = new GrayScaleImagesFVList (*stratifiedFeatureVectors);
   
   stratifiedFeatureVectors->Owner (false);
