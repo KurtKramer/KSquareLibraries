@@ -183,7 +183,8 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
                    predictedClass2Prob,
                    numOfWinners,
                    knownClassOneOfTheWinners,
-                   breakTie
+                   breakTie,
+                   log
                    );
 
   if  (predictedClass == NULL)
@@ -300,7 +301,8 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
                          predClass2Prob,
                          numOfWinners,
                          knownClassOneOfTheWiners,
-                         breakTie
+                         breakTie,
+                         log
                         );
 
   if  (!predClass1)
@@ -669,7 +671,7 @@ ClassProbListPtr  Classifier2::ProbabilitiesByClass (FeatureVectorPtr  example)
   if  (!trainedModel)
     return NULL;
 
-  ClassProbListPtr  results = trainedModel->ProbabilitiesByClass (example);
+  ClassProbListPtr  results = trainedModel->ProbabilitiesByClass (example, log);
   if  (!results)
     return NULL;
 
@@ -690,7 +692,7 @@ void  Classifier2::RetrieveCrossProbTable (MLClassList&  classes,
                                           )
 {
   if  (trainedModel)
-    trainedModel->RetrieveCrossProbTable (classes, crossProbTable);
+    trainedModel->RetrieveCrossProbTable (classes, crossProbTable, log);
   }
 
 
@@ -705,7 +707,7 @@ void  Classifier2::ProbabilitiesByClassDual (FeatureVectorPtr   example,
                                             )
 {
   if  (trainedModel)
-    trainedModel->ProbabilitiesByClassDual (example, classifier1Desc, classifier2Desc, classifier1Results, classifier2Results);
+    trainedModel->ProbabilitiesByClassDual (example, classifier1Desc, classifier2Desc, classifier1Results, classifier2Results, log);
 }
 
 

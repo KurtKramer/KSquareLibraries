@@ -75,12 +75,14 @@ namespace KKMLL
                         kkuint32                  _numOfOrderings,
                         kkuint32                  _numOfFolds,
                         FeatureVectorListPtr      _data,
-                        bool&                     _cancelFlag
+                        bool&                     _cancelFlag,
+                        RunLog&                   _log
                        );
 
     CrossValidationMxN (TrainingConfiguration2Ptr _comfig,
                         OrderingsPtr              _data,
-                        bool&                     _cancelFlag
+                        bool&                     _cancelFlag,
+                        RunLog&                   _log
                        );
 
     ~CrossValidationMxN ();
@@ -88,9 +90,11 @@ namespace KKMLL
     const
     ConfusionMatrix2Ptr    ConfussionMatrix ()  const;
 
-    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining);
+    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining,
+                           RunLog&  log
+                          );
 
-    void  RunValidations ();
+    void  RunValidations (RunLog&  log);
 
     // Access Methods
     kkint32               NumOfOrderings       () const {return numOfOrderings;}
@@ -113,19 +117,14 @@ namespace KKMLL
     double                TrainingTimeStdDev   () const {return trainingTimeStdDev;}
 
   private:
-    void  CheckFileDescCopasetic ();
+    void  CheckFileDescCopasetic (RunLog&  log);
 
     void  CleanUpMemory ();
-
-    void  ValidateOrderingIDX (const char*  desc,  
-                               kkuint32     idx
-                              )  const;
 
 
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
     FileDescPtr               fileDesc;
-    RunLog&                   log;
     ConfusionMatrix2Ptr       meanConfusionMatrix;
     kkuint32                  numOfFolds;
     kkuint32                  numOfOrderings;

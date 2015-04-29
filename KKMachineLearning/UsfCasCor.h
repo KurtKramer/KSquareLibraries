@@ -380,22 +380,28 @@ namespace KKMLL
                             );
 
     void  ReadXmlArrayFloat2D (XmlTagPtr  tag, 
-                               istream&   i
+                               istream&   i,
+                               RunLog&    log
                               );
 
     void  ReadXmlArrayFloat2DVarying (XmlTagPtr  tag, 
-                                      istream&   i
+                                      istream&   i,
+                                      RunLog&    log
                                      );
 
     void  ReadXmlArrayInt (XmlTagPtr  tag, 
-                           istream&   i
+                           istream&   i,
+                           RunLog&    log
                           );
 
     void  ReadXmlConnections (XmlTagPtr  tag, 
-                              istream&   i
+                              istream&   i,
+                              RunLog&    log
                              );
 
-    void  ReadXmlNameValueLine (istream& i);
+    void  ReadXmlNameValueLine (istream&  i,
+                                RunLog&   log
+                               );
 
 
     /* Global variables */
@@ -527,7 +533,7 @@ namespace KKMLL
    
     void  INIT_CANDIDATES ();
 
-    void  INSTALL_NEW_UNIT ();
+    void  INSTALL_NEW_UNIT (RunLog&  log);
 
     void  COMPUTE_CORRELATIONS ();
 
@@ -545,12 +551,15 @@ namespace KKMLL
 
     void  LIST_PARAMETERS ();
 
-    int  TRAIN (int  outlimit, 
-                int  inlimit, 
-                int  rounds
+    int  TRAIN (int      outlimit, 
+                int      inlimit, 
+                int      rounds,
+                RunLog&  log
                );
 
-    void  TEST_EPOCH (double test_threshold);
+    void  TEST_EPOCH (double   test_threshold,
+                      RunLog&  log
+                     );
 
     void  OUT_PASS_OUTPUT ();
 
@@ -574,7 +583,9 @@ namespace KKMLL
     //******************************************************************
 
 
-    void  load_data (FeatureVectorListPtr  trainExamples);
+    void  load_data (FeatureVectorListPtr  trainExamples,
+                     RunLog&               log
+                    );
 
     void  _load_training_data (FeatureVectorListPtr  trainExamples);
 

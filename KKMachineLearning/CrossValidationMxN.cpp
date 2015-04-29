@@ -31,13 +31,13 @@ CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
                                         kkuint32                  _numOfOrderings,
                                         kkuint32                  _numOfFolds,
                                         FeatureVectorListPtr      _data,
-                                        bool&                     _cancelFlag
+                                        bool&                     _cancelFlag,
+                                        RunLog&                   _log
                                        ):
 
   cancelFlag           (_cancelFlag),
   config               (_config),
   fileDesc             (_config->FileDesc ()),
-  log                  (_data->Log ()),
   meanConfusionMatrix  (NULL),
   numOfFolds           (_numOfFolds),
   numOfOrderings       (_numOfOrderings),
@@ -52,8 +52,8 @@ CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
   testTimeStdDev       (0.0)
   
 {
-  CheckFileDescCopasetic ();
-  orderings = new Orderings (_data, numOfOrderings, _numOfFolds);
+  CheckFileDescCopasetic (_log);
+  orderings = new Orderings (_data, numOfOrderings, _numOfFolds, _log);
   weOwnOrderings = true;
 }
 
@@ -62,13 +62,13 @@ CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
 
 CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
                                         OrderingsPtr              _orderings,
-                                        bool&                     _cancelFlag
+                                        bool&                     _cancelFlag,
+                                        RunLog&                   _log
                                        ):
 
   cancelFlag           (_cancelFlag),
   config               (_config),
   fileDesc             (_config->FileDesc ()),
-  log                  (_orderings->Log ()),
   meanConfusionMatrix  (NULL),
   numOfFolds           (_orderings->NumOfFolds ()),
   numOfOrderings       (_orderings->NumOfOrderings ()),
@@ -81,7 +81,7 @@ CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
   testTimeMean         (0.0),
   testTimeStdDev       (0.0)
 {
-  CheckFileDescCopasetic ();
+  CheckFileDescCopasetic (_log);
 }
 
 
@@ -98,17 +98,14 @@ CrossValidationMxN::~CrossValidationMxN ()
 
 
 
-void  CrossValidationMxN::CheckFileDescCopasetic ()
+void  CrossValidationMxN::CheckFileDescCopasetic (RunLog&  log)
 {
   if  (config->FileDesc () != orderings->FileDesc ())
   {
     // The Configuration 'fileDesc' is different than the orderings 'FileDesc'.
     // This is a VERY VERY bad situation. Processing needs to stop NOW NOW NOW.
-    log.Level (-1) << endl << endl
-                   << "CrossValidationMxN     *** ERROR ***    File Description Mismatch." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg = "CrossValidationMxN     ***ERROR***    File Description between config and orderings don't match.";
+    throw KKException (errMsg);
   }
 }  /* CheckFileDescCopesetic */
 
@@ -129,11 +126,11 @@ void  CrossValidationMxN::CleanUpMemory ()
 
 
 
-void  CrossValidationMxN::RunValidations ()
+void  CrossValidationMxN::RunValidations (RunLog&  log)
 { 
   CleanUpMemory ();
 
-  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()), log);
+  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()));
 
   kkuint32  cvIDX = 0;
 
@@ -153,7 +150,7 @@ void  CrossValidationMxN::RunValidations ()
                                                   cancelFlag
                                                  );
 
-    cv->RunCrossValidation ();
+    cv->RunCrossValidation (log);
 
     accuracies.push_back    (cv->Accuracy       ());
     supportPoints.push_back ((float)cv->NumOfSupportVectors ());
@@ -185,11 +182,13 @@ void  CrossValidationMxN::RunValidations ()
  *            that are to be used for training, the remaining examples will be 
  *            used as test data.
  */
-void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
+void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining,
+                                           RunLog&  log
+                                          )
 { 
   CleanUpMemory ();
 
-  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()), log);
+  meanConfusionMatrix = new ConfusionMatrix2 (*(orderings->MLClasses ()));
 
   kkuint32  cvIDX = 0;
 
@@ -225,7 +224,8 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
                                                  );
 
     cv->RunValidationOnly (&testData, 
-                           NULL        // No McNemars test going to be performed.
+                           NULL,        // No McNemars test going to be performed.
+                           log
                           );
 
     accuracies.push_back    (cv->Accuracy       ());
@@ -247,34 +247,6 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining)
 
   meanConfusionMatrix->FactorCounts (factor);
 }  /* RunTrainAndTest */
-
-
-
-
-
-void  CrossValidationMxN::ValidateOrderingIDX (const char*  desc,  
-                                               kkuint32     idx
-                                              )  const
-{
-  if  (!orderings)
-  {
-    log.Level (-1) << endl << endl
-                   << desc << "   *** ERROR ***   There is not Orderings structure." 
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  if  (idx >= orderings->Size ())
-  {
-    log.Level (-1) << endl << endl
-                   << desc << "   *** ERROR ***   Orderings Idx[" << idx << "] out of range[" << orderings->Size () << "]." 
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-}  /* ValidateOderingIDX */
-
 
 
 

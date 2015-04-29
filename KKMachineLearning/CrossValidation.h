@@ -88,10 +88,11 @@ namespace  KKMLL
 
     ~CrossValidation ();
     
-    void  RunCrossValidation ();
+    void  RunCrossValidation (RunLog&  log);
 
     void  RunValidationOnly (FeatureVectorListPtr validationData,
-                             bool*                classedCorrectly = NULL
+                             bool*                classedCorrectly,
+                             RunLog&              log
                             );
 
     const
@@ -143,7 +144,8 @@ namespace  KKMLL
     void  CrossValidate (FeatureVectorListPtr   testImages, 
                          FeatureVectorListPtr   trainingExamples,
                          kkint32                foldNum,
-                         bool*                  classedCorrectly = NULL
+                         bool*                  classedCorrectly,
+                         RunLog&                log
                         );
 
     void  DeleteAllocatedMemory ();
@@ -163,7 +165,6 @@ namespace  KKMLL
     FeatureVectorListPtr      examples;
     MLClassListPtr            mlClasses;
     kkint32                   imagesPerClass;
-    RunLog&                   log;
     kkint32                   maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
     kkint32                   numOfFolds;
 

@@ -167,7 +167,7 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   TrainingTimeStart ();
 
-  usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag, _log);
+  usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag);
 
   usfCasCorClassifier->TrainNewClassifier (param->In_limit         (),
                                            param->Out_limit        (),
@@ -176,7 +176,8 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
                                            param->Random_seed      (),
                                            param->UseCache         (),
                                            trainExamples,
-                                           SelectedFeatures ()
+                                           SelectedFeatures (),
+                                           _log
                                           );
 
   TrainingTimeEnd ();
@@ -484,9 +485,9 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
     else if  (field.EqualIgnoreCase ("<UsfCasCor>"))
     {
       delete  usfCasCorClassifier;
-      usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag, log);
+      usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag);
       bool  usfCasCorSuccessful = false;
-      usfCasCorClassifier->LoadExistingClassifier (i, usfCasCorSuccessful);
+      usfCasCorClassifier->LoadExistingClassifier (i, usfCasCorSuccessful, log);
       if  (!usfCasCorSuccessful)
         _successful = false;
     }

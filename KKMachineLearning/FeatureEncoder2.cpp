@@ -122,7 +122,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     }
   }
 
-  encodedFileDesc = FileDesc::NewContinuousDataOnly (log, destFieldNames);
+  encodedFileDesc = FileDesc::NewContinuousDataOnly (destFieldNames);
 }
 
 
@@ -374,7 +374,7 @@ FeatureVectorListPtr  FeatureEncoder2::EncodedFeatureVectorList (const FeatureVe
   if  (srcData.AllFieldsAreNumeric ())
     return  srcData.DuplicateListAndContents ();
 
-  FeatureVectorListPtr  encodedFeatureVectorList = new FeatureVectorList (encodedFileDesc, true, log);
+  FeatureVectorListPtr  encodedFeatureVectorList = new FeatureVectorList (encodedFileDesc, true);
 
   FeatureVectorList::const_iterator  idx;
   for  (idx = srcData.begin ();   idx != srcData.end ();  idx++)

@@ -55,9 +55,7 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,  // Will make 
 
 
 
-ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,
-                                    RunLog&             _log
-                                   ):   // Will make its own copy of list
+ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will make its own copy of list
   bucketSize                  (100),
   classCount                  (0),
   correctByKnownClassByProb   (),
@@ -135,7 +133,7 @@ ConfusionMatrix2::~ConfusionMatrix2 ()
 
 
 void  ConfusionMatrix2::InitializeMemory ()
-    {
+{
   classes.SortByName ();
 
   classCount = classes.QueueSize ();
@@ -3311,7 +3309,7 @@ ConfusionMatrix2Ptr  ConfussionMatrix2List::DeriveAverageConfusionMatrix (RunLog
   const_iterator  cmIDX = begin ();
   const ConfusionMatrix2Ptr  firstCM = *cmIDX;
 
-  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->MLClasses (), log);
+  ConfusionMatrix2Ptr  meanCM = new ConfusionMatrix2 (firstCM->MLClasses ());
 
   for  (cmIDX = begin ();  cmIDX != end ();  cmIDX++)
   {

@@ -889,7 +889,7 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
      have, we have -- then, build the network and load the data.
   */
   allocate_network (log);
-  load_data (trainExamples);
+  load_data (trainExamples, log);
 
   /* Randomization. If not specified on command line and NonRandomSeed
      is not True then seed with time (truly random) */
@@ -946,7 +946,7 @@ void UsfCasCor::train_network (RunLog&  log)
     if  (number_of_trials > 1) 
       log.Level (10) << "train_network  Trial " << Trial << endl;
 
-    switch (TRAIN (out_limit, in_limit, number_of_rounds))
+    switch (TRAIN (out_limit, in_limit, number_of_rounds, log))
     {
      case WIN:
           vics++;
@@ -959,7 +959,7 @@ void UsfCasCor::train_network (RunLog&  log)
 
     /* how did we do? */
     if  (Test)
-      TEST_EPOCH (ScoreThreshold);
+      TEST_EPOCH (ScoreThreshold, log);
 
 #ifdef CONNX
     printf (" Connection Crossings: %d\n\n", conx);
@@ -1956,7 +1956,8 @@ void  UsfCasCor::ReadXmlArrayFloat (XmlTagPtr  tag,
 
 
 void  UsfCasCor::ReadXmlArrayFloat2D (XmlTagPtr  tag, 
-                                      istream&   i
+                                      istream&   i,
+                                      RunLog&    log
                                      )
 {
   const KKStr&  name = tag->AttributeValueKKStr ("Name");
@@ -2074,7 +2075,8 @@ void  UsfCasCor::ReadXmlArrayFloat2D (XmlTagPtr  tag,
 
 
 void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag, 
-                                             istream&   i
+                                             istream&   i,
+                                             RunLog&    log
                                             )
 {
   const KKStr&  name = tag->AttributeValueKKStr ("Name");
@@ -2179,7 +2181,8 @@ void  UsfCasCor::ReadXmlArrayFloat2DVarying (XmlTagPtr  tag,
 
 
 void  UsfCasCor::ReadXmlArrayInt (XmlTagPtr  tag, 
-                                  istream&   i
+                                  istream&   i,
+                                  RunLog&    log
                                  )
 {
   int*  A = NULL;
@@ -2217,7 +2220,8 @@ void  UsfCasCor::ReadXmlArrayInt (XmlTagPtr  tag,
 
 
 void  UsfCasCor::ReadXmlConnections (XmlTagPtr  tag, 
-                                     istream&   i
+                                     istream&   i,
+                                     RunLog&    log
                                     )
 {
   delete  Connections; Connections = NULL;
@@ -2227,7 +2231,7 @@ void  UsfCasCor::ReadXmlConnections (XmlTagPtr  tag,
   if  ((len < 1)  ||  (len > 100000000))
   {
     log.Level (-1) << endl
-      << "UsfCasCor::ReadXmlArrayInt  Invalid Array Len[" << len << "]  for variable[" << name << "]" << endl
+      << "UsfCasCor::ReadXmlConnections  Invalid Array Len[" << len << "]  for variable[" << name << "]" << endl
       << endl;
     return;
   }
@@ -2271,7 +2275,9 @@ void  UsfCasCor::ReadXmlConnections (XmlTagPtr  tag,
 
 
 
-void  UsfCasCor::ReadXmlNameValueLine (istream&  i)
+void  UsfCasCor::ReadXmlNameValueLine (istream&  i,
+                                       RunLog&   log
+                                      )
 {
   bool  eof = false;
   KKStr  line =   osReadRestOfLine (i, eof);
@@ -2398,19 +2404,19 @@ void  UsfCasCor::ReadXml (istream&  i,
       // We have a tag field.
       XmlTagPtr  tag = new XmlTag (i);
       if  (tag->Name ().EqualIgnoreCase ("ArrayFloat"))
-        ReadXmlArrayFloat (tag, i);
+        ReadXmlArrayFloat (tag, i, log);
 
       else if  (tag->Name ().EqualIgnoreCase ("ArrayFloat2D"))
-        ReadXmlArrayFloat2D (tag, i);
+        ReadXmlArrayFloat2D (tag, i, log);
 
       else if  (tag->Name ().EqualIgnoreCase ("ArrayFloat2DVarying"))
-        ReadXmlArrayFloat2DVarying (tag, i);
+        ReadXmlArrayFloat2DVarying (tag, i, log);
 
       else if  (tag->Name ().EqualIgnoreCase ("ArrayInt"))
-        ReadXmlArrayInt (tag, i);
+        ReadXmlArrayInt (tag, i, log);
 
       else if  (tag->Name ().EqualIgnoreCase ("Connections"))
-        ReadXmlConnections (tag, i);
+        ReadXmlConnections (tag, i, log);
 
       else if  (tag->Name ().EqualIgnoreCase ("UsfCasCor"))
       {
@@ -2434,7 +2440,7 @@ void  UsfCasCor::ReadXml (istream&  i,
     else
     {
       // We have a Name/Valure pair line.
-      ReadXmlNameValueLine (i);
+      ReadXmlNameValueLine (i, log);
     }
 
     SkipWhiteSpace (i);
@@ -3174,7 +3180,7 @@ void  UsfCasCor::INIT_CANDIDATES ()
 /* Add the candidate-unit with the best correlation score to the active
  * network.  Then reinitialize the candidate pool.
  */
-void  UsfCasCor::INSTALL_NEW_UNIT ()
+void  UsfCasCor::INSTALL_NEW_UNIT (RunLog&  log)
 {
   int i,o;
   float wm;			/* temporary weight multiplier */
@@ -3555,9 +3561,10 @@ void  UsfCasCor::LIST_PARAMETERS ()
  * number of cycles in the output and input phases.  ROUNDS is an upper
  * limit on the number of unit-installation cycles.
  */
-int  UsfCasCor::TRAIN (int  outlimit, 
-                       int  inlimit, 
-                       int  rounds
+int  UsfCasCor::TRAIN (int      outlimit, 
+                       int      inlimit, 
+                       int      rounds,
+                       RunLog&  log
                       )
 {
   int i,r;
@@ -3605,7 +3612,7 @@ int  UsfCasCor::TRAIN (int  outlimit,
     }
 
     /* DumpWeightsFileforROundx */
-    if  (Test)  TEST_EPOCH(0.49);  /* how are we doing? */
+    if  (Test)  TEST_EPOCH(0.49, log);  /* how are we doing? */
 
     switch  (TRAIN_INPUTS (inlimit))
     {
@@ -3622,7 +3629,7 @@ int  UsfCasCor::TRAIN (int  outlimit,
       break;
     }
 
-    INSTALL_NEW_UNIT(); 
+    INSTALL_NEW_UNIT (log); 
     log.Level (10) << "ADDED UNIT: " << (r + 1) << endl;
   }
 
@@ -3655,7 +3662,9 @@ int  UsfCasCor::TRAIN (int  outlimit,
 /* Perform forward propagation once for each set of weights in the
  * testing vectors, computing errors.  Do not change any weights.
  */
-void  UsfCasCor::TEST_EPOCH (double test_threshold)
+void  UsfCasCor::TEST_EPOCH (double   test_threshold,
+                             RunLog&  log
+                            )
 {
   int i;
 
@@ -4105,7 +4114,9 @@ void UsfCasCor::INITIALIZE_GLOBALS ()
 //******************************************************************
 
 
-void  UsfCasCor::load_data (FeatureVectorListPtr  trainExamples)
+void  UsfCasCor::load_data (FeatureVectorListPtr  trainExamples,
+                            RunLog&               log
+                           )
 {
   _load_training_data (trainExamples);
 
@@ -4134,7 +4145,7 @@ void  UsfCasCor::_load_training_example (FeatureVectorPtr  example,
 {
   if  (Ninputs != selectedFeatures->NumSelFeatures ())
   {
-    log.Level (-1) << endl 
+    cerr << endl 
       << "UsfCasCor::_load_training_example  ***ERROR***  Ninputs[" << Ninputs 
       << "] != selectedFeatures->NumSelFeatures ()[" << selectedFeatures->NumSelFeatures () << "]" << endl 
       << endl;

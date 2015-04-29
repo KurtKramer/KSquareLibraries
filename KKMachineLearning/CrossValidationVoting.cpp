@@ -33,8 +33,7 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
                                               MLClassListPtr                 _mlClasses,
                                               kkint32                        _numOfFolds,
                                               bool                           _featuresAreAlreadyNormalized,
-                                              FileDescPtr                    _fileDesc,
-                                              RunLog&                        _log
+                                              FileDescPtr                    _fileDesc
                                              ):
 
    configs                      (_configs),
@@ -47,7 +46,6 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    examples                     (new FeatureVectorList (*_mlClasses, *_examples)),
    mlClasses                    (_mlClasses),
    examplesPerClass             (0),
-   log                          (_log),
    maxNumOfConflicts            (0),
    numOfFolds                   (_numOfFolds),
    numOfSupportVectors          (0),
@@ -72,11 +70,11 @@ CrossValidationVoting::~CrossValidationVoting ()
   
 
 
-void  CrossValidationVoting::AllocateMemory ()
+void  CrossValidationVoting::AllocateMemory (RunLog&  log)
 {
   maxNumOfConflicts = mlClasses->QueueSize () + 1;
 
-  confusionMatrix    = new ConfusionMatrix2 (*mlClasses, log);
+  confusionMatrix    = new ConfusionMatrix2 (*mlClasses);
   cmByNumOfConflicts = new ConfusionMatrix2Ptr[maxNumOfConflicts];
 
   numOfWinnersCounts          = new kkint32[maxNumOfConflicts];
@@ -87,7 +85,7 @@ void  CrossValidationVoting::AllocateMemory ()
 
   for  (conflictIDX = 0;  conflictIDX < maxNumOfConflicts;  conflictIDX++)
   {
-    cmByNumOfConflicts          [conflictIDX] = new ConfusionMatrix2 (*mlClasses, log);
+    cmByNumOfConflicts          [conflictIDX] = new ConfusionMatrix2 (*mlClasses);
     numOfWinnersCounts          [conflictIDX] = 0;
     numOfWinnersCorrects        [conflictIDX] = 0;
     numOfWinnersOneOfTheWinners [conflictIDX] = 0;
@@ -142,7 +140,7 @@ void  CrossValidationVoting::DeleteAllocatedMemory ()
 
 
 
-void  CrossValidationVoting::RunCrossValidation ()
+void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
 {
   log.Level (10) << "CrossValidationVoting::RunCrossValidationVoting" << endl;
 
@@ -158,7 +156,7 @@ void  CrossValidationVoting::RunCrossValidation ()
   }
 
   DeleteAllocatedMemory ();
-  AllocateMemory ();
+  AllocateMemory (log);
 
   kkint32  imageCount       = examples->QueueSize ();
   kkint32  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
@@ -206,7 +204,7 @@ void  CrossValidationVoting::RunCrossValidation ()
     cout << "Number Of Training Images : " << trainingExamples->QueueSize () << endl;
     cout << "Number Of Test Images     : " << testImages->QueueSize ()     << endl;
 
-    CrossValidate (testImages, trainingExamples, foldNum);
+    CrossValidate (testImages, trainingExamples, foldNum, NULL, log);
 
     delete  trainingExamples;
     delete  testImages;
@@ -218,21 +216,21 @@ void  CrossValidationVoting::RunCrossValidation ()
 
 
 
-void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationData,
-                                                bool*                classedCorrectly
+void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr  validationData,
+                                                bool*                 classedCorrectly,
+                                                RunLog&               log
                                                )
 {
   log.Level (10) << "CrossValidationVoting::RunValidationOnly" << endl;
   DeleteAllocatedMemory ();
-  AllocateMemory ();
-
+  AllocateMemory (log);
 
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
   FeatureVectorListPtr  trainingExamples = examples->DuplicateListAndContents ();
   FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
 
-  CrossValidate (testImages, trainingExamples, 0, classedCorrectly);
+  CrossValidate (testImages, trainingExamples, 0, classedCorrectly, log);
 
   delete  trainingExamples;
   delete  testImages;
@@ -244,7 +242,8 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr validationD
 void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages, 
                                             FeatureVectorListPtr   trainingExamples,
                                             kkint32                foldNum,
-                                            bool*                  classedCorrectly
+                                            bool*                  classedCorrectly,
+                                            RunLog&                log
                                            )
 {
   log.Level (20) << "CrossValidationVoting::CrossValidate   FoldNum[" << foldNum  << "]." << endl;
@@ -504,28 +503,10 @@ KKStr  CrossValidationVoting::FoldAccuracysToStr ()  const
 float  CrossValidationVoting::FoldAccuracy (kkint32 foldNum)  const
 {
   if  (!foldAccuracies)
-  {
-    log.Level (-1) << endl
-                   << endl
-                   << "CrossValidationVoting::FoldAccuracy      *** ERROR ***" << endl
-                   << endl
-                   << "                                   FoldAccuracies not defined." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
+    return 0.0f;
 
   if  ((foldNum < 0)  ||  (foldNum >= numOfFolds))
-  {
-    log.Level (-1) << endl
-                   << endl
-                   << "CrossValidationVoting::FoldAccuracy      *** ERROR ***" << endl
-                   << endl
-                   << "                                   FoldNum[" << foldNum << "] Is Out Of Range." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
+    return 0.0f;
 
   return  foldAccuracies[foldNum];
 }  /* FoldAccuracy */

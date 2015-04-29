@@ -28,16 +28,14 @@ namespace  KKMLL
 
   /// <summary>
   /// A confusion matrix object that is used to record the results from a CrossValidation.
-  /// <seealso cref="CrossValidation"
+  /// <see also cref="CrossValidation"
   /// </summary>
   class  ConfusionMatrix2
   {
   public:
     typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
 
-    ConfusionMatrix2 (const MLClassList&  _classes,  /**< Will make its own copy of '_classes'. */
-                      RunLog&             _log
-                     );
+    ConfusionMatrix2 (const MLClassList&  _classes);
     
     ConfusionMatrix2 (const ConfusionMatrix2&  cm);
 
@@ -47,10 +45,10 @@ namespace  KKMLL
      *@param[in]  _classes  Will make local copy of this instance; this way we know the ordering which represents the numbering can not change behind our back.
      *@param[in]  f   File to write report to.
      *@param[in]  _bucketSize  Will keep statistics by size of particles.
-     *@param[in]  _numOfBuckets Number of Size buckes that will be maintained.
+     *@param[in]  _numOfBuckets Number of Size buckets that will be maintained.
      *@param[in]  _numOfProbBuckets  Maximum number of probability buckets to keep track of, 
      *@param[in]  _probBucketSize  Size of each probability bucket.
-     *@param[in]  _log  Logger where messages are writen to.
+     *@param[in]  _log  Logger where messages are written to.
      */
     ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
                       istream&            f,
@@ -308,9 +306,10 @@ namespace  KKMLL
     vector<double>   countsByKnownClass;
 
     MLClassList  classes;  /**< We will make our own unique copy of the MLClassList.
-                                 * This way we know the ordering which represents the numbering
-                                 * can not change behind our back.
-                                 */
+                            * This way we know the ordering which represents the numbering
+                            * can not change behind our back.
+                            */
+
     kkint32          numOfBuckets;
     kkint32          numOfProbBuckets;
     vector<double*>  predictedCountsCM;
