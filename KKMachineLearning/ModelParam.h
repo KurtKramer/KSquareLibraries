@@ -182,7 +182,7 @@ namespace KKMLL
 
 
     /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
-    XmlTokenPtr  XmlProcessToken (XmlTokenPtr  t);
+    XmlTokenPtr  ReadXMLModelParamToken (XmlTokenPtr  t);
 
     void  WriteXMLFields (ostream&  o)  const;
 

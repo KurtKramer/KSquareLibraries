@@ -283,7 +283,7 @@ void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
-    t = XmlProcessToken (t);
+    t = ReadXMLModelParamToken (t);
     if  ((t != NULL)  &&  (t->TokenType () == XmlToken::TokenTypes::tokElement))
     {
       XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);

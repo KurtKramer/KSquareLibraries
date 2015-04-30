@@ -663,7 +663,7 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
 
 
 
-XmlTokenPtr  ModelParam::XmlProcessToken (XmlTokenPtr  t)
+XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
 {
   bool  tokenFound = true;
 
@@ -730,7 +730,7 @@ XmlTokenPtr  ModelParam::XmlProcessToken (XmlTokenPtr  t)
   }
 
   return  t;
-}  /* ReadXML */
+}  /* ReadXMLModelParamToken */
 
 
 

@@ -375,6 +375,29 @@ namespace KKMLL
                      );
 
 
+    /**
+     *@brief  To be implemented by derived classes;  the parent classes fields will be updated by the 
+     * derived class calling ReadXMLModelToken.  
+     */
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           ) = 0;
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const = 0;
+
+
+    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
+    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t);
+
+    /**
+     *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
+     */
+    void  WriteXMLFields (ostream&  o)  const;
+
   protected:
     void  AllocatePredictionVariables ();
 

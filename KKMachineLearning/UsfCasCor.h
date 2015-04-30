@@ -814,6 +814,13 @@ namespace KKMLL
 
   typedef  UsfCasCor*  UsfCasCorPtr;
 
+  
+  typedef  XmlElementTemplate<UsfCasCor>  XmlElementUsfCasCor;
+  typedef  XmlElementUsfCasCor*  XmlElementUsfCasCorPtr;
+
+
+
+
 } /* KKMLL */
 
 #endif

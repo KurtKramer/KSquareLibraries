@@ -364,7 +364,7 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
-    t = XmlProcessToken (t);
+    t = ReadXMLModelParamToken (t);
     if  (t)
     {
       const KKStr&  varName = t->VarName ();
