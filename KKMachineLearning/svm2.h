@@ -141,6 +141,8 @@ namespace  SVM289_MFS
 
   struct  svm_model
   {
+    svm_model ();
+
     svm_model (const svm_model&  _model,
                FileDescPtr       _fileDesc
               );
@@ -225,8 +227,12 @@ namespace  SVM289_MFS
     double*    dec_values;
     double**   pairwise_prob;
     double*    prob_estimates;
-
   };
+
+  typedef  XmlElementTemplate<svm_model>  XmlElementSvm_model;
+  typedef  XmlElementSvm_model*  XmlElementSvm_modelPtr;
+
+
 
 
   svm_model*  svm_train  (const svm_problem&    prob,
@@ -326,6 +332,10 @@ namespace  SVM289_MFS
   class  ONE_CLASS_Q;
   class  SVR_Q;
   struct decision_function;
+
+
+  typedef  XmlElementTemplate<svm_model>  XmlElementAttribute;
+  typedef  XmlElementAttribute*  XmlElementAttributePtr;
 
 }  /* SVM289_MFS */
 

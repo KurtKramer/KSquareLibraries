@@ -15,14 +15,14 @@
 #include <stdarg.h>
 #include <vector>
 #include <string.h>
-
-
 #include  "MemoryDebug.h"
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKException.h"
 #include "KKStr.h"
+#include "KKStrParser.h"
 #include "OSservices.h"
 using namespace  KKB;
 
@@ -4624,6 +4624,25 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
 } /* svm_load_model_XML */
 
 
+SVM289_MFS::svm_model::svm_model ():
+  param               (),
+  nr_class            (0),
+  numSVs              (0),
+  SV                  (_fileDesc, false),
+  sv_coef             (NULL),
+  rho                 (NULL),
+  probA               (NULL),
+  probB               (NULL),
+  label               (NULL),
+  nSV                 (NULL),     // number of SVs for each class (nSV[k])
+  weOwnSupportVectors (true),
+  selFeatures         (),
+  dec_values          (NULL),
+  pairwise_prob       (NULL),
+  prob_estimates      (NULL)
+{
+}
+
 
 SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
                                   FileDescPtr       _fileDesc
@@ -4917,85 +4936,6 @@ void  SVM289_MFS::svm_model::Save (const KKStr&  fileName,
 
 
 
-
-void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
-                                       ostream&      o
-                                      )  const
-{
-  XmlTag  startTag ("svm_model",  XmlTag::TagTypes::tagStart);
-  if  (!varName.Empty ())
-    startTag.AddAtribute ("VarName", varName);
-
-
-  SVM_Type_ToStr (param.svm_type).WriteXML ("svm_type", o);
-  Kernel_Type_ToStr (param.kernel_type).WriteXML ("kernel_type", o);
-
-  if  (param.kernel_type == Kernel_Type::POLY)
-    XmlElementInt32::WriteXML (param.degree, "degree", o);
-
-  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
-    XmlElementDouble::WriteXML (param.gamma, "gamma", o);
-
-  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
-    XmlElementDouble::WriteXML (param.coef0, "coef0", o);
-
-  selFeatures.WriteXML ("selFeatures", o);
-
-  XmlElementInt32::WriteXML (nr_class, "nr_class", o);
-
-  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
-
-  XmlElementInt32::WriteXML (numSVs, "numSVs", o);
-  
-  XmlElementArrayDouble::WriteXML (numBinaryCombos, rho, "rho", o);
-  
-  XmlElementArrayInt32::WriteXML (nr_class, label, "label", o);
-
-  if  (probA) // regression has probA only
-     XmlElementArrayDouble::WriteXML (numBinaryCombos, probA, "probA", o);
-
-  if  (probB)
-     XmlElementArrayDouble::WriteXML (numBinaryCombos, probB, "probB", o);
-
-  if  (nSV)
-      XmlElementArrayInt32::WriteXML (nr_class, nSV, "nSV", o);
-
-  char buff[128];
-
-  for  (kkint32 i = 0;  i < numSVs;  ++i)
-  {
-    const  FeatureVector&  p = SV[i];
-
-    KKStr  svStr (512);
-    svStr << p.ExampleFileName ();
-    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
-    {
-      SPRINTF (buff, sizeof (buff), "%0.15g", sv_coef[j][i]);
-      svStr << "\t" << buff;
-    }
-
-    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
-    {
-      svStr << "\t" << p.FeatureData (0);
-    }
-    else
-    {
-      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
-        svStr << "\t" << zed << ":" << p.FeatureData (zed);
-    }
-
-    svStr.WriteXML ("SupportVector", o);
-  }
-
-  XmlTag  endTag ("svm_model", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
-  o << endl;
-}  /* WriteXML */
-
-
-
-
-
 void  SVM289_MFS::svm_model::Write (ostream& o)
 {
   o << "<Svm_Model>"  << endl;
@@ -5066,7 +5006,6 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
     o.precision (16);
     for  (kkint32 j = 0;  j < nr_class - 1;  j++)
     {
-      //fprintf (fp, "%.16g ", sv_coef[j][i]);
       o << "\t" << sv_coef[j][i];
     }
 
@@ -5075,7 +5014,6 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
 
     if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
     {
-      //fprintf(fp,"0:%d ",(kkint32)(p->value));
       o << "\t" << p.FeatureData (0);
     }
     else
@@ -5108,6 +5046,8 @@ void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
   Read (in, fileDesc, log);
   in.close ();
 }  /* Load */
+
+
 
 
 
@@ -5295,6 +5235,272 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
   weOwnSupportVectors = true;  // XXX
   SV.Owner (true);
 }  /* Read */
+
+
+
+
+
+
+void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
+                                       ostream&      o
+                                      )  const
+{
+  XmlTag  startTag ("svm_model",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+
+  SVM_Type_ToStr (param.svm_type).WriteXML ("svm_type", o);
+  Kernel_Type_ToStr (param.kernel_type).WriteXML ("kernel_type", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY)
+    XmlElementInt32::WriteXML (param.degree, "degree", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
+    XmlElementDouble::WriteXML (param.gamma, "gamma", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
+    XmlElementDouble::WriteXML (param.coef0, "coef0", o);
+
+  selFeatures.WriteXML ("selFeatures", o);
+
+  XmlElementInt32::WriteXML (nr_class, "nr_class", o);
+
+  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+
+  XmlElementInt32::WriteXML (numSVs, "numSVs", o);
+  
+  XmlElementArrayDouble::WriteXML (numBinaryCombos, rho, "rho", o);
+  
+  XmlElementArrayInt32::WriteXML (nr_class, label, "label", o);
+
+  if  (probA) // regression has probA only
+     XmlElementArrayDouble::WriteXML (numBinaryCombos, probA, "probA", o);
+
+  if  (probB)
+     XmlElementArrayDouble::WriteXML (numBinaryCombos, probB, "probB", o);
+
+  if  (nSV)
+      XmlElementArrayInt32::WriteXML (nr_class, nSV, "nSV", o);
+
+  char buff[128];
+
+  for  (kkint32 i = 0;  i < numSVs;  ++i)
+  {
+    const  FeatureVector&  p = SV[i];
+
+    KKStr  svStr (512);
+    svStr << p.ExampleFileName () << "\t" << p.NumOfFeatures ();
+    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
+    {
+      SPRINTF (buff, sizeof (buff), "%0.15g", sv_coef[j][i]);
+      svStr << "\t" << buff;
+    }
+
+    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
+    {
+      svStr << "\t" << p.FeatureData (0);
+    }
+    else
+    {
+      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
+        svStr << "\t" << zed << ":" << p.FeatureData (zed);
+    }
+
+    svStr.WriteXML ("SupportVector", o);
+  }
+
+  XmlTag  endTag ("svm_model", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
+                                      XmlTagConstPtr  tag,
+                                      RunLog&         log
+                                     )
+{
+  // read parameters
+  delete  rho;    rho   = NULL;
+  delete  probA;  probA = NULL;
+  delete  probB;  probB = NULL;
+  delete  label;  label = NULL;
+  delete  nSV;    nSV   = NULL;
+
+  SV.DeleteContents ();
+
+  kkint32  buffLen = 80 * 1024;
+  char*  buff = new char[buffLen];
+
+  bool  eof = false;
+  bool  eol = false;
+
+  kkint32  numBinaryCombos = 0;
+
+  KKStr  svmParametersStr;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    const KKStr& varName = t->VarName ();
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (e)
+      {
+        KKStr  valueStr;
+        double  valueDouble = 0.0;
+        kkint32  valueInt32 = 0;
+
+        if  (typeid(*e) == typeid(XmlElementKKStr))
+          valueStr = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+
+        else if  (typeid(*e) == typeid(XmlElementInt32))
+          valueInt32 = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+
+        else if  (typeid(*e) == typeid(XmlElementDouble))
+          valueDouble = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
+
+        if  (varName.EqualIgnoreCase ("svm_type"))
+        {
+        }
+
+        else if  (varName.EqualIgnoreCase ("kernel_type"))
+          param.kernel_type = Kernel_Type_FromStr (valueStr);
+
+        else if  (varName.EqualIgnoreCase ("degree"))
+          param.degree = valueInt32;
+
+        else if  (varName.EqualIgnoreCase ("gamma"))
+          param.gamma = valueDouble;
+
+        else if  (varName.EqualIgnoreCase ("coef0"))
+          param.coef0 = valueDouble;
+
+        else if  (varName.EqualIgnoreCase ("selFeatures"))
+          selFeatures = *(dynamic_cast<XmlElementFeatureNumListPtr> (e)->Value ());
+
+        else if  (varName.EqualIgnoreCase ("nr_class"))
+          nr_class = valueInt32;
+        
+        else if  (varName.EqualIgnoreCase ("nr_class"))
+        {
+          nr_class = valueInt32;
+          numBinaryCombos = nr_class * (nr_class - 1) / 2;
+        }
+
+        else if  (varName.EqualIgnoreCase ("numSVs"))
+          numSVs = valueInt32;
+
+        else if  (varName.EqualIgnoreCase ("rho"))
+        {
+          delete  rho;
+          rho = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();
+          numSVs = valueInt32;
+        }
+
+        else if  (varName.EqualIgnoreCase ("label"))
+        {
+          delete  label;
+          label = dynamic_cast<XmlElementArrayInt32Ptr> (e)->TakeOwnership ();
+        }
+
+        else if  (varName.EqualIgnoreCase ("probA"))
+        {
+          delete  probA;
+          probA = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();   // numBinaryCombos
+        }  
+
+        else if  (varName.EqualIgnoreCase ("probB"))
+        {
+          delete  probB;
+          probB = dynamic_cast<XmlElementArrayDoublePtr> (e)->TakeOwnership ();   // numBinaryCombos
+        }
+
+        else if  (varName.EqualIgnoreCase ("nSV"))
+        {
+          delete nSV;
+          nSV = dynamic_cast<XmlElementArrayInt32Ptr> (e)->TakeOwnership ();   // numBinaryCombos
+        }
+
+        else if  (varName.EqualIgnoreCase ("SupportVector"))
+        {
+          kkint32 m = nr_class - 1;
+          kkint32 i, j;
+
+          if  (!sv_coef)
+          {
+            sv_coef = new double*[m];
+            for  (i = 0;  i < m;  i++)
+            {
+              sv_coef[i] = new double[numSVs];
+              for  (j = 0;  j < numSVs;  j++)
+                sv_coef[i][j] = 0.0;
+            }
+          }
+
+          if  (SV.QueueSize () >= numSVs)
+          {
+            KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
+            log.Level (-1) << endl << errorMsg << endl << endl;
+            delete  buff;
+            throw  errorMsg;
+          }
+          else
+          {
+            KKStrParser p (valueStr);
+            KKStr    imageFileName = p.GetNextToken ("\t");
+            kkint32  numOffeatures  = p.GetNextTokenInt ("\t");
+
+            FeatureVectorPtr  fv = new FeatureVector (numOffeatures);
+
+            for  (kkint32  j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
+              sv_coef[j][i] = p.GetNextTokenDouble ("\t");
+
+            if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
+            {
+              log.Level (-1) << endl << endl
+                             << "SVM289_MFS::svm_model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
+                             << endl;
+            }
+            else
+            {
+              for  (kkint32 zed = 0;  (zed < numOffeatures)  &&  (p.MoreTokens ());  ++zed)
+              {
+                KKStr  featureField = p.GetNextToken ("\t");
+                kkint32 featureNumber = featureField.ExtractTokenInt (":");
+                double  featureValue = featureField.ExtractTokenDouble ("\t");
+                fv->FeatureData (featureNumber, (float)featureValue);
+              }
+            }
+
+            SV.PushOnBack (fv);
+          }
+        }
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5746,3 +5952,10 @@ kkint32  svm_check_probability_model (const svm_model *model)
   return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
          ((model->param.svm_type == SVM_Type::EPSILON_SVR ||  model->param.svm_type == SVM_Type::NU_SVR) &&  model->probA!=NULL);
 }
+
+
+
+XmlFactoryMacro(svm_model)
+
+
+
