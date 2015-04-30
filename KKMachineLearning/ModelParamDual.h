@@ -104,9 +104,10 @@ namespace KKMLL
 
   };  /* ModelParamDual */
   
+
   typedef  ModelParamDual::ModelParamDualPtr   ModelParamDualPtr;
 
-  typedef  XmlElementTemplate<ModelParamDual>  XmlElementModelParamDual;
+  typedef  XmlElementModelParamTemplate<ModelParamDual>  XmlElementModelParamDual;
   typedef  XmlElementModelParamDual*  XmlElementModelParamDualPtr;
 
 }  /* namespace KKMLL */

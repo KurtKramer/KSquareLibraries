@@ -96,7 +96,7 @@ namespace KKMLL
 
   typedef  ModelParamUsfCasCor*   ModelParamUsfCasCorPtr;
 
-  typedef  XmlElementTemplate<ModelParamUsfCasCor>  XmlElementModelParamUsfCasCor;
+  typedef  XmlElementModelParamTemplate<ModelParamUsfCasCor>  XmlElementModelParamUsfCasCor;
   typedef  XmlElementModelParamUsfCasCor*  XmlElementModelParamUsfCasCorPtr;
 }  /* namespace KKMLL */
 

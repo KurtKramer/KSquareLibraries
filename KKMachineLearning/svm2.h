@@ -189,6 +189,18 @@ namespace  SVM289_MFS
     void  NormalizeProbability ();
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
+
     svm_parameter      param;      // parameter
     kkint32            nr_class;   // number of classes, = 2 in regression/one class svm
     kkint32            numSVs;     /**< total #SV  */

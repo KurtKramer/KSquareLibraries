@@ -11,15 +11,15 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKB;
 
 
-
 #include "ModelParamDual.h"
-
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "KKMLLTypes.h"

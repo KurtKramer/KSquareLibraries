@@ -8,6 +8,7 @@
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 using namespace KKB;
 
@@ -186,4 +187,7 @@ void  ModelParamKnn::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */
+
+XmlFactoryMacro(ModelParamKnn)
+
 

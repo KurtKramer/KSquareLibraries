@@ -223,6 +223,93 @@ namespace KKMLL
 
 
 
+
+
+
+  class   XmlElementModelParam:  public  XmlElement
+  {
+  public:
+    XmlElementModelParam (XmlTagPtr   tag,
+                          XmlStream&  s,
+                          RunLog&     log
+                         ):
+     XmlElement (tag, s, log),
+     value (NULL)
+    {
+    }
+
+                
+    ~XmlElementModelParam ()
+    {
+      delete value;
+      value = NULL;
+    }
+
+
+    virtual
+    ModelParam*  const  Value ()  const  {return value;}
+
+    virtual 
+    ModelParam*  TakeOwnership ()
+    {
+      ModelParam* v = value;
+      value = NULL;
+      return  v;
+    }
+
+  protected:
+    ModelParam*  value;
+  };  /* XmlElementModelParam */
+
+
+
+
+
+
+
+  /**
+   *@brief  To be used for classes that implement that implement default constructor, readXML, and WriteXML.
+   */
+  template<class  T>
+  class  XmlElementModelParamTemplate:  public  XmlElementModelParam
+  {
+  public:
+    XmlElementModelParamTemplate (XmlTagPtr   tag,
+                                  XmlStream&  s,
+                                  RunLog&     log
+                                 ):
+    XmlElementModelParam (tag, s, log)
+    {
+      value = new T();
+      value->ReadXML (s, tag, log);
+    }
+
+                
+    ~XmlElementModelParamTemplate ()
+    {
+    }
+
+    T*  const  Value ()  const  {return dynamic_cast<T*> (value);}
+    
+    T*  TakeOwnership ()
+    {
+      T* v = dynamic_cast<T*> (value);
+      value = NULL;
+      return  v;
+    }
+
+    static
+    void  WriteXML (const T&      t,
+                    const KKStr&  varName,
+                    ostream&      o
+                   )
+    {
+      dynamic_cast<T>(t).WriteXML (varName, o);
+    }
+  private:
+  };  /* XmlElementModelParamTemplate */
+
+
 }  /* namespace KKMLL */
 
 

@@ -182,7 +182,7 @@ namespace KKMLL
   typedef  ModelParamOldSVM*   ModelParamOldSVMPtr;
 
 
-  typedef  XmlElementTemplate<ModelParamOldSVM>  XmlElementModelParamOldSVM;
+  typedef  XmlElementModelParamTemplate<ModelParamOldSVM>  XmlElementModelParamOldSVM;
   typedef  XmlElementModelParamOldSVM*  XmlElementModelParamOldSVMPtr;
 
 }  /* namespace KKMLL */

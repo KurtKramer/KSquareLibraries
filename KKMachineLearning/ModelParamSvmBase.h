@@ -90,7 +90,7 @@ namespace KKMLL
   
   typedef  ModelParamSvmBase::ModelParamSvmBasePtr   ModelParamSvmBasePtr;
 
-  typedef  XmlElementTemplate<ModelParamSvmBase>  XmlElementModelParamSvmBase;
+  typedef  XmlElementModelParamTemplate<ModelParamSvmBase>  XmlElementModelParamSvmBase;
   typedef  XmlElementModelParamSvmBase*  XmlElementModelParamSvmBasePtr;
 
 }  /* namespace KKMLL */

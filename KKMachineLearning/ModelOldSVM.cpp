@@ -365,7 +365,6 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
     encodedExample = NULL;
   }
   
-
   ClassProbListPtr  results = new ClassProbList ();
   kkint32 idx = 0;
   for  (idx = 0;  idx < numOfClasses;  idx++)

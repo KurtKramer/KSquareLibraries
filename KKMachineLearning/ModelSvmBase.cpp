@@ -692,3 +692,59 @@ kkint32  ModelSvmBase::NumOfSupportVectors ()  const
 
 
 
+
+
+void  ModelSvmBase::WriteXML (const KKStr&  varName,
+                              ostream&      o
+                             )  const
+{
+  XmlTag  startTag ("ModelSvmBase",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+
+  WriteXMLFields (o);
+
+  if  (svmModel)
+
+
+  svmModel->
+    ModelParamSvmBasePtr    param;  
+
+  svmParameters->ToString ().WriteXML ("SvmParameters", o);
+
+  XmlTag  endTag ("ModelSvmBase", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelSvmBase::ReadXML (XmlStream&      s,
+                             XmlTagConstPtr  tag,
+                             RunLog&         log
+                            )
+{
+  KKStr  svmParametersStr;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelParamToken (t);
+    if  (t)
+    {
+      if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      {
+        svmParametersStr = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+
+  bool  validFormat = false;
+  delete  svmParameters;
+  svmParameters = new SVMparam  (svmParametersStr, SelectedFeatures (), validFormat, log);
+}  /* ReadXML */
+
+ 

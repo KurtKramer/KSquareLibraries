@@ -137,16 +137,27 @@ namespace  KKMLL
                                                   );
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
 
   protected:
     SVM289_MFS::svm_model*  svmModel;
     ModelParamSvmBasePtr    param;   /*!<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
   };  /* ModelSvmBase */
+  
+  typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
 
-
-
-typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
-
+  typedef  XmlElementModelParamTemplate<ModelSvmBase>  XmlElementModelModelSvmBase;
+  typedef  XmlElementModelModelSvmBase*  XmlElementModelModelSvmBasePtr;
 } /* namespace  KKMLL */
 
 #endif

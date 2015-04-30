@@ -4917,6 +4917,85 @@ void  SVM289_MFS::svm_model::Save (const KKStr&  fileName,
 
 
 
+
+void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
+                                       ostream&      o
+                                      )  const
+{
+  XmlTag  startTag ("svm_model",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+
+  SVM_Type_ToStr (param.svm_type).WriteXML ("svm_type", o);
+  Kernel_Type_ToStr (param.kernel_type).WriteXML ("kernel_type", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY)
+    XmlElementInt32::WriteXML (param.degree, "degree", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::RBF || param.kernel_type == Kernel_Type::SIGMOID)
+    XmlElementDouble::WriteXML (param.gamma, "gamma", o);
+
+  if  (param.kernel_type == Kernel_Type::POLY || param.kernel_type == Kernel_Type::SIGMOID)
+    XmlElementDouble::WriteXML (param.coef0, "coef0", o);
+
+  selFeatures.WriteXML ("selFeatures", o);
+
+  XmlElementInt32::WriteXML (nr_class, "nr_class", o);
+
+  kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
+
+  XmlElementInt32::WriteXML (numSVs, "numSVs", o);
+  
+  XmlElementArrayDouble::WriteXML (numBinaryCombos, rho, "rho", o);
+  
+  XmlElementArrayInt32::WriteXML (nr_class, label, "label", o);
+
+  if  (probA) // regression has probA only
+     XmlElementArrayDouble::WriteXML (numBinaryCombos, probA, "probA", o);
+
+  if  (probB)
+     XmlElementArrayDouble::WriteXML (numBinaryCombos, probB, "probB", o);
+
+  if  (nSV)
+      XmlElementArrayInt32::WriteXML (nr_class, nSV, "nSV", o);
+
+  char buff[128];
+
+  for  (kkint32 i = 0;  i < numSVs;  ++i)
+  {
+    const  FeatureVector&  p = SV[i];
+
+    KKStr  svStr (512);
+    svStr << p.ExampleFileName ();
+    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
+    {
+      SPRINTF (buff, sizeof (buff), "%0.15g", sv_coef[j][i]);
+      svStr << "\t" << buff;
+    }
+
+    if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
+    {
+      svStr << "\t" << p.FeatureData (0);
+    }
+    else
+    {
+      for  (kkint32 zed = 0;  zed < p.NumOfFeatures ();  zed++)
+        svStr << "\t" << zed << ":" << p.FeatureData (zed);
+    }
+
+    svStr.WriteXML ("SupportVector", o);
+  }
+
+  XmlTag  endTag ("svm_model", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
 void  SVM289_MFS::svm_model::Write (ostream& o)
 {
   o << "<Svm_Model>"  << endl;

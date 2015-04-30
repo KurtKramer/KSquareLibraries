@@ -391,7 +391,9 @@ namespace KKMLL
 
 
     /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
-    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t);
+    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t,
+                                    RunLog&      log
+                                   );
 
     /**
      *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
@@ -399,6 +401,10 @@ namespace KKMLL
     void  WriteXMLFields (ostream&  o)  const;
 
   protected:
+    void  AddErrorMsg (const KKStr&  errMsg,
+                       kkint32       lineNum
+                      );
+
     void  AllocatePredictionVariables ();
 
 
@@ -441,6 +447,8 @@ namespace KKMLL
 
     FeatureEncoder2Ptr     encoder;
 
+    VectorKKStr            errors;
+
     FileDescPtr            fileDesc;
 
     NormalizationParmsPtr  normParms;
@@ -481,7 +489,14 @@ namespace KKMLL
   typedef  Model::ModelPtr  ModelPtr;
 
 #define  _Model_Defined_
+
   
+  
+
+
+
+
+
 }  /* namespace MML */
 
 #endif

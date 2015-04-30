@@ -71,7 +71,12 @@ namespace KKMLL
   };  /* ModelParamKnn */
 
   typedef  ModelParamKnn::ModelParamKnnPtr  ModelParamKnnPtr;
+
+  typedef  XmlElementModelParamTemplate<ModelParamKnn>  XmlElementModelParamKnn;
+  typedef  XmlElementModelParamKnn*  XmlElementModelParamKnnPtr;
 }
+
+
 
 
 #endif
