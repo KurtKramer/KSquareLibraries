@@ -404,6 +404,54 @@ namespace  KKB
 
 
 
+
+
+
+
+
+  class  XmlElementArrayFloat2DVarying: public XmlElement
+  {
+  public:
+    XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
+                                   XmlStream&  s,           
+                                   RunLog&     log          
+                                  );
+
+    virtual  ~XmlElementArrayFloat2DVarying ();
+
+    kkuint32   Height ()  const  {return height;}     
+     
+    float**    Value  ()  const  {return value;}
+
+    kkuint32*  Widths ()  const  {return widths;}
+
+    float**   TakeOwnership ();
+
+    kkuint32*   TakeOwnershipWidths ();
+
+    static                                         
+    void  WriteXML (kkuint32        height,
+                    const kkint32*  widths,      /**< Each entry in array defines the length of the corresponding row in 'mat'.  */ 
+                    float** const   mat,
+                    const KKStr&    varName,
+                    ostream&        o 
+                   );
+
+
+    private:
+      kkuint32   height;
+      float**    value;
+      kkuint32*  widths;
+  };
+
+  typedef  XmlElementArrayFloat2DVarying*   XmlElementArrayFloat2DVaryingPtr;
+
+
+
+
+
+
+
   typedef   XmlElementTemplate<KKStr>  XmlElementKKStr;
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
   XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
@@ -563,6 +611,45 @@ namespace  KKB
 
 
 
+#define  XmlElementArray2DHeader(T,TypeName,XmlElementToUse)       \
+  class  XmlElement##TypeName:  public  XmlElement                 \
+  {                                                                \
+  public:                                                          \
+    XmlElement##TypeName (XmlTagPtr   tag,                         \
+                          XmlStream&  s,                           \
+                          RunLog&     log                          \
+                         );                                        \
+                                                                   \
+    virtual  ~XmlElement##TypeName ();                             \
+                                                                   \
+    kkuint32   Height ()  const  {return height;}                  \
+    T**        Value  ()  const  {return value;}                   \
+    kkuint32   Width  ()  const  {return width;}                   \
+                                                                   \
+    T**   TakeOwnership ();                                        \
+                                                                   \
+    static                                                         \
+    void  WriteXML (kkuint32      height,                          \
+                    kkuint32      width,                           \
+                    T** const     mat,                             \
+                    const KKStr&  varName,                         \
+                    ostream&      o                                \
+                   );                                              \
+                                                                   \
+  private:                                                         \
+    kkuint32  height;                                              \
+    T**       value;                                               \
+    kkuint32  width;                                               \
+  };                                                               \
+  typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
+
+
+
+
+
+
+
+
 #define  XmlElementVectorHeader(T,TypeName,ParserNextTokenMethod)  \
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
@@ -608,6 +695,10 @@ XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlEleme
 XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)   // XmlElementArrayDouble
 
 XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)   // XmlElementArrayFloat
+
+
+XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
+
 
 
 XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)

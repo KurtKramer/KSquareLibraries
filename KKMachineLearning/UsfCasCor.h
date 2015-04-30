@@ -187,13 +187,7 @@
 #endif
 
 
-
-
-#ifndef _BOOLEAN_TYPE_
-#define _BOOLEAN_TYPE_
-typedef enum {False, True} Boolean;
-#endif
-
+typedef  bool  Boolean;
 
 #define LINELEN   1024
 
@@ -331,6 +325,17 @@ namespace KKMLL
     ClassProbListPtr  PredictClassConfidences (FeatureVectorPtr  example);
 
     void  WriteXML (ostream&  o);
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    float*  ReadXMLArrayFloat (XmlTokenPtr  t,
+                               kkuint32     expectedSize,
+                               RunLog&      log
+                              );
+
 
   private:
     void  CleanUpMemory ();

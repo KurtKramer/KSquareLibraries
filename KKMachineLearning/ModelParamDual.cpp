@@ -388,3 +388,7 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
   }
 }  /* ReadXML */
 
+
+
+XmlFactoryMacro(ModelParamDual)
+

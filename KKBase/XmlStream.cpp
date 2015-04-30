@@ -869,6 +869,137 @@ void  XmlElementBool::WriteXML (const bool    b,
 
 XmlFactoryMacro(Bool)
 
+
+
+
+
+
+
+XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
+                                                              XmlStream&  s,           
+                                                              RunLog&     log          
+                                                            ):
+    XmlElement (tag, s, log),
+    height (0),
+    widths (NULL),
+    value  (NULL)
+{
+  height = tag->AttributeValueInt32 ("Height");
+  if  (height < 1)
+  {
+    log.Level (-1) << endl 
+      << "XmlElementArrayFloat2DVarying   ***ERROR***   Height[" << height << "] must be greater than 0." << endl 
+      << endl;
+    height = 0;
+    return;
+  }
+  value  = new float*[height];
+  widths = new kkuint32[height];
+
+  XmlTokenPtr  tok = s.GetNextToken (log);
+  kkuint32  rowCount = 0;
+  while  (tok)
+  {
+    if  (typeid(*tok) == typeid(XmlElementArrayFloat))
+    {
+      if  (rowCount >= height)
+      {
+        log.Level (-1) << endl
+          << "XmlElementArrayFloat2DVarying   ***ERROR***   Number of defined rows exceeds defined Height[" << height << "]" << endl
+          << endl;
+      }
+      else
+      {
+        XmlElementArrayFloatPtr f = dynamic_cast<XmlElementArrayFloatPtr>(tok);
+        value[rowCount] = f->TakeOwnership ();
+      }
+    }
+    ++rowCount;
+    delete  tok;
+    tok = s.GetNextToken (log);
+  }
+  while  (rowCount < height)
+  {
+    value[rowCount] = NULL;
+    ++rowCount;
+  }
+}
+
+
+
+XmlElementArrayFloat2DVarying::~XmlElementArrayFloat2DVarying ()
+{
+  if  (value)
+  {
+    for  (kkuint32 x = 0;  x < height;  ++x)
+    {
+      delete value[x];
+      value[x] = NULL;
+    }
+  }
+  delete  value;   value  = NULL;
+  delete  widths;  widths = NULL;
+}
+
+
+
+
+float**   XmlElementArrayFloat2DVarying::TakeOwnership ()
+{
+  float** v = value;
+  value = NULL;
+  return v;
+}
+
+
+kkuint32*   XmlElementArrayFloat2DVarying::TakeOwnershipWidths ()
+{
+  kkuint32* w = widths;
+  widths = NULL;
+  return w;
+}
+
+
+                                      
+void  XmlElementArrayFloat2DVarying::WriteXML (kkuint32        height,
+                const kkint32*  widths,      /**< Each entry in array defines the length of the corresponding row in 'mat'.  */ 
+                float** const   mat,
+                const KKStr&    varName,
+                ostream&        o 
+                )
+{
+  XmlTag startTag ("ArrayFloat2DVarying", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Height", (kkint32)height);
+  startTag.WriteXML (o);
+  o << endl;
+
+  for  (kkuint32 r = 0;  r < height;  ++r)
+  {
+    KKStr rowName = "Row_" + StrFormatInt (r, "000");
+    XmlElementArrayFloat::WriteXML (widths[r], mat[r], rowName, o);
+  }
+
+  XmlTag  endTag ("ArrayFloat2DVarying", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(ArrayFloat2DVarying)
+
+
+
+
+
+
+
+
+
+
+
+
 XmlFactoryMacro(KKStr)
 
 XmlFactoryPtr  KKB::XmlElementKKStrFactoryInstance ()
@@ -1055,6 +1186,157 @@ XmlFactoryMacro(TypeName)
 
 
 
+
+
+/**
+ *@param  T  the integral type examples: float, kkint32, double, ...
+ *@param  TypeName  The name we give the type  ex:  "Int32", "Float", ....
+ *@param  XmlElementToUse  the XmlElement derived class that will be used to process each row in the matrix.
+ */
+#define  XmlElementArray2DBody(T,TypeName,XmlElementToUse)                    \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
+                                            XmlStream&  s,                    \
+                                            RunLog&     log                   \
+                                          ):                                  \
+      XmlElement (tag, s, log),                                               \
+      height (0),                                                             \
+      value (NULL),                                                           \
+      width (0)                                                               \
+{                                                                             \
+  height = tag->AttributeValueInt32 ("Height");                               \
+  if  (height <= 0)                                                           \
+  {                                                                           \
+    log.Level (-1) << endl                                                    \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Height["    \
+      << height << "] must be a positive value; will set array to NULL."      \
+      << endl << endl;                                                        \
+      height = 0;                                                             \
+  }                                                                           \
+                                                                              \
+  width = tag->AttributeValueInt32 ("Width");                                 \
+  if  (width <= 0)                                                            \
+  {                                                                           \
+    log.Level (-1) << endl                                                    \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Width["     \
+      << width << "] must be a positive value; will set array to NULL."       \
+      << endl << endl;                                                        \
+    width = 0;                                                                \
+  }                                                                           \
+                                                                              \
+  if  ((height <= 0)  || (width <= 0))                                        \
+  {                                                                           \
+    value = NULL;                                                             \
+    height = 0;                                                               \
+    width = 0;                                                                \
+  }                                                                           \
+  else                                                                        \
+  {                                                                           \
+    value = new T*[width];                                                    \
+  }                                                                           \
+                                                                              \
+  kkuint32  rowCount = 0;                                                     \
+  XmlTokenPtr  tok = s.GetNextToken (log);                                    \
+  while  (tok)                                                                \
+  {                                                                           \
+    if  (typeid(*tok) != typeid(XmlElementToUse))                              \
+    {                                                                          \
+       log.Level (-1) << endl                                                  \
+         << "XmlElement" << #TypeName << "   ***ERROR***   Element: "          \
+         <<  tok->SectionName ()  << "  unexpected."                           \
+         << endl << endl;                                                      \
+    }                                                                          \
+    else                                                                       \
+    {                                                                          \
+      XmlElementToUse*  row = dynamic_cast<XmlElementToUse*> (tok);            \
+      if  (row->Count () != width)                                             \
+      {                                                                        \
+        log.Level (-1) << endl                                                 \
+          << "XmlElement" << #TypeName << "   ***ERROR***   Row Count[ "       \
+          <<  row->Count () << " not equal to Width[" << width << "]."         \
+          << endl << endl;                                                     \
+      }                                                                        \
+      else                                                                     \
+      {                                                                        \
+        if  (rowCount < height)                                                \
+          value[rowCount] = row->TakeOwnership ();                             \
+        ++rowCount;                                                            \
+      }                                                                        \
+    }                                                                          \
+    delete  tok;                                                               \
+    tok = s.GetNextToken (log);                                                \
+  }                                                                            \
+                                                                               \
+  if  (rowCount != height)                                                     \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   RowCount[ "            \
+      << rowCount << "]  differs from specified height[" << height << "]."     \
+      << endl << endl;                                                         \
+  }                                                                            \
+  while  (rowCount < height)                                                   \
+  {                                                                            \
+    value[rowCount] = new T[width];                                            \
+    for (kkuint32 x = 0; x < width;  ++x)                                      \
+        value[rowCount][x] = (T)0;                                             \
+    ++rowCount;                                                                \
+  }                                                                            \
+}                                                                              \
+                                                                               \
+                                                                               \
+XmlElement##TypeName::~XmlElement##TypeName ()                                 \
+{                                                                              \
+  if  (value)                                                                  \
+  {                                                                            \
+    for  (kkuint32 x = 0;  x < height;  ++x)                                   \
+      delete value[x];                                                         \
+  }                                                                            \
+  delete  value;                                                               \
+  value = NULL;                                                                \
+}                                                                              \
+                                                                               \
+                                                                               \
+T**   XmlElement##TypeName::TakeOwnership ()                                   \
+{                                                                              \
+  T** v = value;                                                               \
+  value = NULL;                                                                \
+  return v;                                                                    \
+}                                                                              \
+                                                                               \
+                                                                               \
+void  XmlElement##TypeName::WriteXML (kkuint32      height,                    \
+                                      kkuint32      width,                     \
+                                      T** const     mat,                       \
+                                      const KKStr&  varName,                   \
+                                      ostream&       o                         \
+                                     )                                         \
+{                                                                              \
+  XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                     \
+  if  (!varName.Empty ())                                                      \
+    startTag.AddAtribute ("VarName", varName);                                 \
+  startTag.AddAtribute ("Height", (kkint32)height);                            \
+  startTag.AddAtribute ("Width",  (kkint32)width);                             \
+  startTag.WriteXML (o);                                                       \
+                                                                               \
+  for  (kkuint32 r = 0;  r < height;  ++r)                                     \
+  {                                                                            \
+    KKStr vn = "Row_" + StrFormatInt (r, "0000");                              \
+    XmlElementToUse::WriteXML (width, mat[r], vn, o);                          \
+  }                                                                            \
+  XmlTag  endTag (#TypeName, XmlTag::TagTypes::tagEnd);                        \
+  endTag.WriteXML (o);                                                         \
+  o << endl;                                                                   \
+}                                                                              \
+                                                                               \
+XmlFactoryMacro(TypeName)
+
+
+
+
+
+
+
+
+
 #define  XmlElementVectorBody(T,TypeName,ParserNextTokenMethod)            \
 XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
                                             XmlStream&  s,                 \
@@ -1156,6 +1438,10 @@ XmlElementArrayBody(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElement
 XmlElementArrayBody(double,   ArrayDouble,   GetNextTokenDouble)   
 
 XmlElementArrayBody(float,    ArrayFloat,    GetNextTokenDouble)
+
+
+XmlElementArray2DBody(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
+
 
 
 // Vectors

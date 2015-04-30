@@ -20,6 +20,7 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "XmlStream.h"
@@ -77,7 +78,7 @@ using namespace  KKMLL;
 
    All other parameters that could be specified in the .net file are
    specified as
-     -O option=value    (e.g. -O UseCache=True)
+     -O option=value    (e.g. -O UseCache=true)
 
  - Defaults are used for parameters, in case someone starts it without
    any...
@@ -259,7 +260,7 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
 
   the_random_seed         (0),
 
-  load_weights            (False),
+  load_weights            (false),
 
   UnitType                (SIGMOID),
   OutputType              (SIGMOID),
@@ -294,14 +295,14 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
 
 
   /* These variables and switches control the simulation and display.    */
-  UseCache                (False),
+  UseCache                (false),
   Epoch                   (0),        
-  Graphics                (False),
-  NonRandomSeed           (False),
-  Test                    (True),
-  SinglePass              (False),
-  SingleEpoch             (False),
-  Step                    (False),
+  Graphics                (false),
+  NonRandomSeed           (false),
+  Test                    (true),
+  SinglePass              (false),
+  SingleEpoch             (false),
+  Step                    (false),
   Trial                   (0),
 
   /* The sets of training inputs and outputs. */
@@ -389,7 +390,7 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
   /* Save and plot file related variables                                    */
   /***************************************************************************/
   WeightFile              (NULL),
-  InterruptPending        (False),
+  InterruptPending        (false),
   Nparameters             (0),
   classes                 (NULL),
   fileDesc                (_fileDesc),
@@ -551,7 +552,7 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
   float old_SSE = SumSqError;	/* save global */
 
   //ScoreThreshold = test_threshold;
-  UseCache = False;
+  UseCache = false;
 
   Values = ExtraValues;
   Errors = ExtraErrors;
@@ -610,7 +611,7 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
   float   old_SSE = SumSqError;     /* save global */
 
   //ScoreThreshold = test_threshold;
-  UseCache = False;
+  UseCache = false;
 
   Values = ExtraValues;
   Errors = ExtraErrors;
@@ -708,7 +709,7 @@ ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
   float   old_SSE = SumSqError;     /* save global */
 
   //ScoreThreshold = test_threshold;
-  UseCache = False;
+  UseCache = false;
 
   Values = ExtraValues;
   Errors = ExtraErrors;
@@ -795,9 +796,9 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
   number_of_trials = _number_of_trials;
   the_random_seed  = _the_random_seed;
   if  (_useCache)
-    UseCache = True;
+    UseCache = true;
   else
-    UseCache = False;
+    UseCache = false;
 
   /* First, load the data and configuration */
   setup_network (filteredTrainData, _log);
@@ -893,7 +894,7 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
   load_data (trainExamples, log);
 
   /* Randomization. If not specified on command line and NonRandomSeed
-     is not True then seed with time (truly random) */
+     is not true then seed with time (truly random) */
   if  (NonRandomSeed) 
      the_random_seed = 1;
 
@@ -1156,7 +1157,7 @@ void CHECK_INTERRUPT (void)
 void TRAP_CONTROL_C(int sig)
 {
   /* 
-  InterruptPending = True;
+  InterruptPending = true;
   signal(SIGINT, TRAP_CONTROL_C);
   */
 }
@@ -1242,6 +1243,9 @@ const char*  UsfCasCor::type_to_string (int var)  const
 
 
 
+
+
+
 int  UsfCasCor::string_to_type (const char* s)
 {
   if  (STRICMP (s, type_strings[ 0]) == 0)  return SIGMOID;
@@ -1261,7 +1265,7 @@ int  UsfCasCor::string_to_type (const char* s)
 
 
 
-const char *  UsfCasCor::boolean_strings[2] = {"False", "True"};
+const char *  UsfCasCor::boolean_strings[2] = {"false", "true"};
 
 
 
@@ -1269,9 +1273,8 @@ char const *  UsfCasCor::boolean_to_string (Boolean var)  const
 {
   switch (var) 
   {
-    case False:  return(boolean_strings[0]);
-    case True:   return(boolean_strings[1]);
-    default: return  boolean_strings[0];
+    case false:  return(boolean_strings[0]);
+    case true:   return(boolean_strings[1]);
  }
 }  /* boolean_to_string */
 
@@ -1280,14 +1283,14 @@ char const *  UsfCasCor::boolean_to_string (Boolean var)  const
 
 Boolean  UsfCasCor::string_to_boolean (const char* s)
 {
-  if  ((STRICMP (s, "True") == 0)  ||
+  if  ((STRICMP (s, "true") == 0)  ||
        (STRICMP (s, "T")    == 0)  ||
        (STRICMP (s, "yes")  == 0)  ||
        (STRICMP (s, "on")   == 0)
        )
-    return True;
+    return true;
   else
-    return False;
+    return false;
 }
 
 
@@ -1488,12 +1491,12 @@ Boolean  UsfCasCor::_boolean_convert (char *input)
        !strcmp (input, "1")    ||
        !strcmp (input, "t")
       )
-    return True;
+    return true;
 
   if  (!strcmp (input, "false") || !strcmp(input,"0"))
-    return False;
+    return false;
 
-  return False;
+  return false;
 }  /* _boolean_convert */
  
 
@@ -2430,7 +2433,7 @@ void  UsfCasCor::ReadXml (istream&  i,
         }
         else
         {
-          log.Level (-1) << endl << "UsfCasCor::ReadXml   ***ERROR***   Impropper formated file." << endl;
+          log.Level (-1) << endl << "UsfCasCor::ReadXml   ***ERROR***   Improper formatted file." << endl;
           valid = false;
         }
       }
@@ -3034,7 +3037,7 @@ void  UsfCasCor::TRAIN_OUTPUTS_EPOCH ()
       Errors = ExtraErrors;
       FULL_FORWARD_PASS(TrainingInputs[i]);
     }
-    COMPUTE_ERRORS (Goal, True, True, i);
+    COMPUTE_ERRORS (Goal, true, true, i);
   }
  
   switch (ErrorMeasure)
@@ -3079,7 +3082,7 @@ int  UsfCasCor::TRAIN_OUTPUTS (int max_epochs)
   int retval = TIMEOUT;	  /* will be reset within loop for other conditions */
   float last_error = 0.0;
   int quit_epoch = Epoch + OutputPatience;
-  Boolean first_time = True;
+  Boolean first_time = true;
 /********/
 
   for(i = 0;  (i < max_epochs)  &&  (!cancelFlag);  ++i)
@@ -3103,7 +3106,7 @@ int  UsfCasCor::TRAIN_OUTPUTS (int max_epochs)
     
     else if  (first_time)
     {
-      first_time = False;
+      first_time = false;
       last_error = TrueError;
     }
 
@@ -3424,7 +3427,7 @@ void  UsfCasCor::TRAIN_INPUTS_EPOCH ()
       Values = ExtraValues;
       Errors = ExtraErrors;
       FULL_FORWARD_PASS(TrainingInputs[i]);
-      COMPUTE_ERRORS (Goal, False, False, i);
+      COMPUTE_ERRORS (Goal, false, false, i);
      }
     COMPUTE_SLOPES();
   }
@@ -3464,7 +3467,7 @@ void  UsfCasCor::CORRELATIONS_EPOCH ()
       Values = ExtraValues;
       Errors = ExtraErrors;
       FULL_FORWARD_PASS(TrainingInputs[i]);
-      COMPUTE_ERRORS(Goal, False, False, i);
+      COMPUTE_ERRORS(Goal, false, false, i);
     }
     COMPUTE_CORRELATIONS();
   }
@@ -3488,7 +3491,7 @@ int  UsfCasCor::TRAIN_INPUTS (int max_epochs)
   int i;
   float last_score = 0.0;
   int quit = max_epochs;
-  Boolean first_time = True;
+  Boolean first_time = true;
 /**********/
 
   for(i=0; i<Noutputs; i++)	/* Convert to the average error for use in */
@@ -3502,7 +3505,7 @@ int  UsfCasCor::TRAIN_INPUTS (int max_epochs)
     if(InputPatience == 0)
       continue;			/* continue training until victory */
     else if(first_time){
-      first_time = False;
+      first_time = false;
       last_score = BestCandidateScore;
     }
     else if(fabs(BestCandidateScore - last_score) > /* still getting better */
@@ -3682,7 +3685,7 @@ void  UsfCasCor::TEST_EPOCH (double   test_threshold,
     cerr << endl << "UsfCasCor::TEST_EPOCH    test_threshold[" << test_threshold << "]  has exceeded capacity of a float variabnle." << endl << endl;
 
   ScoreThreshold = (float)test_threshold;
-  UseCache = False;
+  UseCache = false;
 
   Values = ExtraValues;
   Errors = ExtraErrors;
@@ -3706,7 +3709,7 @@ void  UsfCasCor::TEST_EPOCH (double   test_threshold,
   {
     Goal = TrainingOutputs[i];
     FULL_FORWARD_PASS (TrainingInputs[i]);
-    COMPUTE_ERRORS (Goal, False, True, -1);
+    COMPUTE_ERRORS (Goal, false, true, -1);
   } 
 
   if  (ErrorMeasure == INDEX)
@@ -4139,6 +4142,7 @@ void  UsfCasCor::_load_training_data (FeatureVectorListPtr  trainExamples)
 
 
 
+
 /* Build the next NTrainingPattern example from 'example'. */
 void  UsfCasCor::_load_training_example (FeatureVectorPtr  example,
                                          int               i
@@ -4217,107 +4221,443 @@ void  UsfCasCor::WriteXML (const KKStr&  varName,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
-  o << "progname"                << "\t" << progname << endl;
+  XmlElementInt32::WriteXML (number_of_classes, "number_of_classes", o);
+  XmlElementMLClassNameList::WriteXML (*classes, "Classes", o);
+  selectedFeatures->WriteXML ("SelectedFeatures", o);
 
-  o << "number_of_classes"       << "\t" << number_of_classes               << endl;
-  o << "classes"                 << "\t" << classes->ToCommaDelimitedStr () << endl;
-  o << "selectedFeatures"        << "\t" << selectedFeatures->ToString ()   << endl;
+  // kkint32 variables
+  XmlElementInt32::WriteXML (MaxUnits,                "MaxUnits",                o);
+  XmlElementInt32::WriteXML (Ninputs,                 "Ninputs",                 o);
+  XmlElementInt32::WriteXML (Noutputs,                "Noutputs",                o);
+  XmlElementInt32::WriteXML (Nunits,                  "Nunits",                  o);
+  XmlElementInt32::WriteXML (Ncandidates ,            "Ncandidates",             o);
+  XmlElementInt32::WriteXML (MaxCases,                "MaxCases",                o);
+  XmlElementInt32::WriteXML (Ncases,                  "Ncases",                  o);
+  XmlElementInt32::WriteXML (FirstCase,               "FirstCase",               o);
+  XmlElementInt32::WriteXML (line_length,             "line_length",             o);
+  XmlElementInt64::WriteXML (the_random_seed,         "the_random_seed",         o);
+  XmlElementInt32::WriteXML (in_limit,                "in_limit",                o);
+  XmlElementInt32::WriteXML (out_limit,               "out_limit",               o);
+  XmlElementInt32::WriteXML (number_of_trials,        "number_of_trials",        o);
+  XmlElementInt32::WriteXML (number_of_rounds,        "number_of_rounds",        o);
+  XmlElementInt32::WriteXML (normalization_method,    "normalization_method",    o);
+  XmlElementInt32::WriteXML (my_mpi_rank,             "my_mpi_rank",             o);
+  XmlElementInt32::WriteXML (NTrainingPatterns,       "NTrainingPatterns",       o);
+  XmlElementInt32::WriteXML (NTestPatterns,           "NTestPatterns",           o);
+  XmlElementInt32::WriteXML (ErrorMisclassifications, "ErrorMisclassifications", o);
+  XmlElementInt32::WriteXML (OutputPatience,          "OutputPatience",          o);
+  XmlElementInt32::WriteXML (InputPatience,           "InputPatience",           o);
+  XmlElementInt32::WriteXML (ErrorBits,               "ErrorBits",               o);
+  XmlElementInt32::WriteXML (BestCandidate,           "BestCandidate",           o);
+  XmlElementInt32::WriteXML (Epoch,                   "Epoch",                   o);
+  XmlElementInt32::WriteXML (Trial,                   "Trial",                   o);
+  XmlElementInt32::WriteXML (NtrainingOutputValues,   "NtrainingOutputValues",   o);
+  XmlElementInt32::WriteXML (NtestOutputValues,       "NtestOutputValues",       o);
+  XmlElementInt32::WriteXML (ErrorMeasure,            "ErrorMeasure",            o);
 
-  o << "MaxUnits"                << "\t" << MaxUnits                << endl
-    << "Nunits"                  << "\t" << Nunits                  << endl
-    << "Ninputs"                 << "\t" << Ninputs                 << endl
-    << "Noutputs"                << "\t" << Noutputs                << endl
-    << "Ncandidates"             << "\t" << Ncandidates             << endl
-    << "MaxCases"                << "\t" << MaxCases                << endl
-    << "Ncases"                  << "\t" << Ncases                  << endl
-    << "FirstCase"               << "\t" << FirstCase               << endl
-    << "line_length"             << "\t" << line_length             << endl
-    << "the_random_seed"         << "\t" << the_random_seed         << endl
-    << "in_limit"                << "\t" << in_limit                << endl
-    << "out_limit"               << "\t" << out_limit               << endl
-    << "number_of_trials"        << "\t" << number_of_trials        << endl
-    << "number_of_rounds"        << "\t" << number_of_rounds        << endl
-    << "normalization_method"    << "\t" << normalization_method    << endl
-    << "my_mpi_rank"             << "\t" << my_mpi_rank             << endl
-    << "NTrainingPatterns"       << "\t" << NTrainingPatterns       << endl
-    << "NTestPatterns"           << "\t" << NTestPatterns           << endl
-    << "ErrorMisclassifications" << "\t" << ErrorMisclassifications << endl
-    << "OutputPatience"          << "\t" << OutputPatience          << endl
-    << "InputPatience"           << "\t" << InputPatience           << endl
-    << "ErrorBits"               << "\t" << ErrorBits               << endl
-    << "BestCandidate"           << "\t" << BestCandidate           << endl
-    << "Epoch"                   << "\t" << Epoch                   << endl
-    << "Trial"                   << "\t" << Trial                   << endl
-    << "NtrainingOutputValues"   << "\t" << NtrainingOutputValues   << endl
-    << "NtestOutputValues"       << "\t" << NtestOutputValues       << endl
-    << "ErrorMeasure"            << "\t" << ErrorMeasure            << endl;
 
-  o << "SigmoidMax"              << "\t" << SigmoidMax              << endl
-    << "WeightRange"             << "\t" << WeightRange             << endl
-    << "SigmoidPrimeOffset"      << "\t" << SigmoidPrimeOffset      << endl
-    << "WeightMultiplier"        << "\t" << WeightMultiplier        << endl
-    << "OutputMu"                << "\t" << OutputMu                << endl
-    << "OutputShrinkFactor"      << "\t" << OutputShrinkFactor      << endl
-    << "OutputEpsilon"           << "\t" << OutputEpsilon           << endl
-    << "OutputDecay"             << "\t" << OutputDecay             << endl
-    << "OutputChangeThreshold"   << "\t" << OutputChangeThreshold   << endl
-    << "InputMu"                 << "\t" << InputMu                 << endl
-    << "InputShrinkFactor"       << "\t" << InputShrinkFactor       << endl
-    << "InputEpsilon"            << "\t" << InputEpsilon            << endl
-    << "InputDecay"              << "\t" << InputDecay              << endl
-    << "InputChangeThreshold"    << "\t" << InputChangeThreshold    << endl
-    << "TrueError"               << "\t" << TrueError               << endl
-    << "ScoreThreshold"          << "\t" << ScoreThreshold          << endl
-    << "SumSqError"              << "\t" << SumSqError              << endl
-    << "BestCandidateScore"      << "\t" << BestCandidateScore      << endl
-    << "TrainingStdDev"          << "\t" << TrainingStdDev          << endl
-    << "TestStdDev"              << "\t" << TestStdDev              << endl
-    << "ErrorIndex"              << "\t" << ErrorIndex              << endl
-    << "ErrorIndexThreshold"     << "\t" << ErrorIndexThreshold     << endl;
-
-  o << "UnitType"                << "\t" << type_to_string (UnitType)   << endl
-    << "OutputType"              << "\t" << type_to_string (OutputType) << endl;
-
-  o << "load_weights"            << "\t" << boolean_to_string (load_weights)            << endl
-    << "UseCache"                << "\t" << boolean_to_string (UseCache)                << endl
-    << "Graphics"                << "\t" << boolean_to_string (Graphics)                << endl
-    << "NonRandomSeed"           << "\t" << boolean_to_string (NonRandomSeed)           << endl
-    << "Test"                    << "\t" << boolean_to_string (Test)                    << endl
-    << "SinglePass"              << "\t" << boolean_to_string (SinglePass)              << endl
-    << "SingleEpoch"             << "\t" << boolean_to_string (SingleEpoch)             << endl
-    << "Step"                    << "\t" << boolean_to_string (Step)                    << endl
-    << "InterruptPending"        << "\t" << boolean_to_string (InterruptPending)        << endl;
+  // Float Variables
+  XmlElementFloat::WriteXML (SigmoidMax,             "SigmoidMax",             o);
+  XmlElementFloat::WriteXML (WeightRange,            "WeightRange",            o);
+  XmlElementFloat::WriteXML (SigmoidPrimeOffset,     "SigmoidPrimeOffset",     o);
+  XmlElementFloat::WriteXML (WeightMultiplier,       "WeightMultiplier",       o);
+  XmlElementFloat::WriteXML (OutputMu,               "OutputMu",               o);
+  XmlElementFloat::WriteXML (OutputShrinkFactor,     "OutputShrinkFactor",     o);
+  XmlElementFloat::WriteXML (OutputEpsilon,          "OutputEpsilon",          o);
+  XmlElementFloat::WriteXML (OutputDecay,            "OutputDecay",            o);
+  XmlElementFloat::WriteXML (OutputChangeThreshold,  "OutputChangeThreshold",  o);
+  XmlElementFloat::WriteXML (InputMu,                "InputMu",                o);
+  XmlElementFloat::WriteXML (InputShrinkFactor,      "InputShrinkFactor",      o);
+  XmlElementFloat::WriteXML (InputEpsilon,           "InputEpsilon",           o);
+  XmlElementFloat::WriteXML (InputDecay,             "InputDecay",             o);
+  XmlElementFloat::WriteXML (InputChangeThreshold,   "InputChangeThreshold",   o);
+  XmlElementFloat::WriteXML (TrueError,              "TrueError",              o);
+  XmlElementFloat::WriteXML (ScoreThreshold,         "ScoreThreshold",         o);
+  XmlElementFloat::WriteXML (SumSqError,             "SumSqError",             o);
+  XmlElementFloat::WriteXML (BestCandidateScore,     "BestCandidateScore",     o);
+  XmlElementFloat::WriteXML (TrainingStdDev,         "TrainingStdDev",         o);
+  XmlElementFloat::WriteXML (TestStdDev,             "TestStdDev",             o);
+  XmlElementFloat::WriteXML (ErrorIndex,             "ErrorIndex",             o);
+  XmlElementFloat::WriteXML (ErrorIndexThreshold,    "ErrorIndexThreshold",    o);
   
-  WriteXmlArrayInt ("feature_type", o, Ninputs, feature_type);
+  XmlElementKKStr::WriteXML (type_to_string (UnitType),   "UnitType",   o);
+  XmlElementKKStr::WriteXML (type_to_string (OutputType), "OutputType", o);
 
-  WriteXmlArrayFloat ("SumErrors",      o, Noutputs, SumErrors);
-  WriteXmlArrayFloat ("DummySumErrors", o, Noutputs, DummySumErrors);
+  XmlElementBool::WriteXML (load_weights,     "load_weights",     o);
+  XmlElementBool::WriteXML (UseCache,         "UseCache",         o);
+  XmlElementBool::WriteXML (Graphics,         "Graphics",         o);
+  XmlElementBool::WriteXML (NonRandomSeed,    "NonRandomSeed",    o);
+  XmlElementBool::WriteXML (Test,             "Test",             o);
+  XmlElementBool::WriteXML (SinglePass,       "SinglePass",       o);
+  XmlElementBool::WriteXML (SingleEpoch,      "SingleEpoch",      o);
+  XmlElementBool::WriteXML (Step,             "Step",             o);
+  XmlElementBool::WriteXML (InterruptPending, "InterruptPending", o);
 
-  if  (AllConnections)   WriteXmlArrayInt ("AllConnections", o, MaxUnits, AllConnections);
-  if  (Nconnections)     WriteXmlArrayInt ("Nconnections", o, MaxUnits, Nconnections);
-  WriteXmlConnections (o);
-  WriteXmlArrayFloat2DVarying ("Weights", o, MaxUnits, Nconnections, Weights);
+  XmlElementArrayInt32::WriteXML (Ninputs, feature_type, "feature_type", o);
+  
+  XmlElementArrayFloat::WriteXML (Noutputs, SumErrors,      "SumErrors",      o);
+  XmlElementArrayFloat::WriteXML (Noutputs, DummySumErrors, "DummySumErrors", o);
 
-  if  (ExtraValues)       WriteXmlArrayFloat ("ExtraValues",        o, MaxUnits, ExtraValues);
+  if  (AllConnections)  XmlElementArrayInt32::WriteXML (MaxUnits, AllConnections, "AllConnections", o);
+  if  (Nconnections)    XmlElementArrayInt32::WriteXML (MaxUnits, Nconnections,   "Nconnections",   o);
 
+  {
+    VectorKKStr  connectionsVector;
+    for  (int x = 0;  x < MaxUnits;  ++x)
+    {
+      if  (Connections[x] == NULL)
+        connectionsVector.push_back ("NULL");
 
-  if  (Outputs)           WriteXmlArrayFloat ("Outputs",            o, Noutputs, Outputs);
+      else if  (Connections[x] == AllConnections)
+        connectionsVector.push_back ("AC");
 
-  if  (OutputWeights)     WriteXmlArrayFloat2D ("OutputWeights",    o, Noutputs, MaxUnits, OutputWeights);
+      else
+        connectionsVector.push_back ("Other");
+     }
+    connectionsVector.WriteXML ("Connections", o);
+  }
 
-  if  (ExtraErrors)       WriteXmlArrayFloat ("ExtraErrors",        o, Noutputs, ExtraErrors);
+  {
+    XmlElementArrayFloat2DVarying::WriteXML (MaxUnits, Nconnections, Weights, "Weights", o);
+  }
 
-  o << "</UsfCasCor>" << endl;
+  if  (ExtraValues)    XmlElementArrayFloat::WriteXML (MaxUnits, ExtraValues, "ExtraValues", o);
+  if  (Outputs)        XmlElementArrayFloat::WriteXML (Noutputs, Outputs,     "Outputs",     o);
+
+  if  (OutputWeights)
+    XmlElementArrayFloat2D::WriteXML (Noutputs, MaxUnits, OutputWeights, "OutputWeights", o);
+
+  if  (ExtraErrors) XmlElementArrayFloat::WriteXML (Noutputs, ExtraErrors, "ExtraErrors", o);
+
+  XmlTag  endTag ("UsfCasCor", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+
 }  /* WriteXML */
 
 
 
+float*  UsfCasCor::ReadXMLArrayFloat (XmlTokenPtr  t,
+                                      kkuint32     expectedSize,
+                                      RunLog&      log
+                                     )
+{
+  if  (typeid (*t) != typeid (XmlElementArrayFloat))
+  {
+    log.Level (-1) << endl
+      << "UsfCasCor::ReadXMLArrayFloat   ***ERROR***   Variable[" <<  t->VarName () << "]  not 'XmlElementArrayFloat' will set to NULL." << endl
+      << endl;
+    return NULL;
+  }
+
+  XmlElementArrayFloatPtr fa = dynamic_cast<XmlElementArrayFloatPtr> (t);
+  if  (fa->Count () != expectedSize)
+  {
+    log.Level (-1) << endl
+      << "UsfCasCor::ReadXMLArrayFloat   ***ERROR***   Variable[" <<  t->VarName () << "]  NOT Expected Size[" << expectedSize << "]  Found[" << fa->Count () << "]" << endl
+      << endl;
+    return NULL;
+  }
+
+  return fa->TakeOwnership ();
+}  /* ReadXMLArrayFloat */
 
 
 
+void  UsfCasCor::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         )
+{
+  if  (Weights)
+    Delete2DArray (Weights, MaxUnits);
+
+  if  (OutputWeights)
+    Delete2DArray (OutputWeights, Noutputs);
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    bool  tokenProcessed = false;
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      tokenProcessed = true;
+
+      const KKStr&  varName = t->VarName ();
+
+      kkint32  valueInt32 = 0;
+      float    valueFloat = 0.0f;
+
+      if  (typeid (*t) == typeid (XmlElementInt32))
+        valueInt32 = dynamic_cast<XmlElementInt32Ptr> (t)->Value ();
+
+      if  (typeid (*t) == typeid (XmlElementFloat))
+        valueFloat = dynamic_cast<XmlElementFloatPtr> (t)->Value ();
+
+      if  (varName.EqualIgnoreCase ("number_of_classes"))  number_of_classes = valueInt32;
+
+      if  (varName.EqualIgnoreCase ("Classes"))
+      {
+        delete  classes;
+        classes = dynamic_cast<XmlElementMLClassNameListPtr> (t)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("SelectedFeatures"))
+      {
+        delete selectedFeatures;
+        selectedFeatures = dynamic_cast<XmlElementFeatureNumListPtr> (t)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("MaxUnits"))                 MaxUnits                = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Ninputs"))                  Ninputs                 = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Noutputs"))                 Noutputs                = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Nunits"))                   Nunits                  = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Ncandidates"))              Ncandidates             = valueInt32;
+      else if  (varName.EqualIgnoreCase ("MaxCases"))                 MaxCases                = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Ncases"))                   Ncases                  = valueInt32;
+      else if  (varName.EqualIgnoreCase ("FirstCase"))                FirstCase               = valueInt32;
+      else if  (varName.EqualIgnoreCase ("line_length"))              line_length             = valueInt32;
+      else if  (varName.EqualIgnoreCase ("the_random_seed"))          the_random_seed         = valueInt32;
+      else if  (varName.EqualIgnoreCase ("in_limit"))                 in_limit                = valueInt32;
+      else if  (varName.EqualIgnoreCase ("out_limit"))                out_limit               = valueInt32;
+      else if  (varName.EqualIgnoreCase ("number_of_trials"))         number_of_trials        = valueInt32;
+      else if  (varName.EqualIgnoreCase ("number_of_rounds"))         number_of_rounds        = valueInt32;
+      else if  (varName.EqualIgnoreCase ("normalization_method"))     normalization_method    = valueInt32;
+      else if  (varName.EqualIgnoreCase ("my_mpi_rank"))              my_mpi_rank             = valueInt32;
+      else if  (varName.EqualIgnoreCase ("NTrainingPatterns"))        NTrainingPatterns       = valueInt32;
+      else if  (varName.EqualIgnoreCase ("NTestPatterns"))            NTestPatterns           = valueInt32;
+      else if  (varName.EqualIgnoreCase ("ErrorMisclassifications"))  ErrorMisclassifications = valueInt32;
+      else if  (varName.EqualIgnoreCase ("OutputPatience"))           OutputPatience          = valueInt32;
+      else if  (varName.EqualIgnoreCase ("InputPatience"))            InputPatience           = valueInt32;
+      else if  (varName.EqualIgnoreCase ("ErrorBits"))                ErrorBits               = valueInt32;
+      else if  (varName.EqualIgnoreCase ("BestCandidate"))            BestCandidate           = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Epoch"))                    Epoch                   = valueInt32;
+      else if  (varName.EqualIgnoreCase ("Trial"))                    Trial                   = valueInt32;
+      else if  (varName.EqualIgnoreCase ("NtrainingOutputValues"))    NtrainingOutputValues   = valueInt32;
+      else if  (varName.EqualIgnoreCase ("NtestOutputValues"))        NtestOutputValues       = valueInt32;
+      else if  (varName.EqualIgnoreCase ("NtestOutputValues"))        NtestOutputValues       = valueInt32;
+      else if  (varName.EqualIgnoreCase ("ErrorMeasure"))             ErrorMeasure            = valueInt32;
+
+      else if  (varName.EqualIgnoreCase ("SigmoidMax"))               SigmoidMax              = valueFloat;
+      else if  (varName.EqualIgnoreCase ("WeightRange"))              WeightRange             = valueFloat;
+      else if  (varName.EqualIgnoreCase ("SigmoidPrimeOffset"))       SigmoidPrimeOffset      = valueFloat;
+      else if  (varName.EqualIgnoreCase ("WeightMultiplier"))         WeightMultiplier        = valueFloat;
+      else if  (varName.EqualIgnoreCase ("OutputMu"))                 OutputMu                = valueFloat;
+      else if  (varName.EqualIgnoreCase ("OutputShrinkFactor"))       OutputShrinkFactor      = valueFloat;
+      else if  (varName.EqualIgnoreCase ("OutputEpsilon"))            OutputEpsilon           = valueFloat;
+      else if  (varName.EqualIgnoreCase ("OutputDecay"))              OutputDecay             = valueFloat;
+      else if  (varName.EqualIgnoreCase ("OutputChangeThreshold"))    OutputChangeThreshold   = valueFloat;
+      else if  (varName.EqualIgnoreCase ("InputMu"))                  InputMu                 = valueFloat;
+      else if  (varName.EqualIgnoreCase ("InputShrinkFactor"))        InputShrinkFactor       = valueFloat;
+      else if  (varName.EqualIgnoreCase ("InputEpsilon"))             InputEpsilon            = valueFloat;
+      else if  (varName.EqualIgnoreCase ("InputDecay"))               InputDecay              = valueFloat;
+      else if  (varName.EqualIgnoreCase ("InputChangeThreshold"))     InputChangeThreshold    = valueFloat;
+      else if  (varName.EqualIgnoreCase ("TrueError"))                TrueError               = valueFloat;
+      else if  (varName.EqualIgnoreCase ("ScoreThreshold"))           ScoreThreshold          = valueFloat;
+      else if  (varName.EqualIgnoreCase ("SumSqError"))               SumSqError              = valueFloat;
+      else if  (varName.EqualIgnoreCase ("BestCandidateScore"))       BestCandidateScore      = valueFloat;
+      else if  (varName.EqualIgnoreCase ("TrainingStdDev"))           TrainingStdDev          = valueFloat;
+      else if  (varName.EqualIgnoreCase ("TestStdDev"))               TestStdDev              = valueFloat;
+      else if  (varName.EqualIgnoreCase ("ErrorIndex"))               ErrorIndex              = valueFloat;
+      else if  (varName.EqualIgnoreCase ("ErrorIndexThreshold"))      ErrorIndexThreshold     = valueFloat;
+
+      else if  (varName.EqualIgnoreCase ("UnitType"))     UnitType   = string_to_type (dynamic_cast<XmlElementKKStrPtr> (t)->Value ()->Str ());
+      else if  (varName.EqualIgnoreCase ("OutputType"))   OutputType = string_to_type (dynamic_cast<XmlElementKKStrPtr> (t)->Value ()->Str ());
+
+      else if  (typeid (*t) == typeid(XmlElementBool))
+      {
+        XmlElementBoolPtr b = dynamic_cast<XmlElementBoolPtr> (t);
+        if  (b)
+        {
+          bool  valueBool = b->Value ();
+          if  (varName.EqualIgnoreCase ("load_weights"))           load_weights     = valueBool;
+          else if  (varName.EqualIgnoreCase ("UseCache"))          UseCache         = valueBool;
+          else if  (varName.EqualIgnoreCase ("Graphics"))          Graphics         = valueBool;
+          else if  (varName.EqualIgnoreCase ("NonRandomSeed"))     NonRandomSeed    = valueBool;
+          else if  (varName.EqualIgnoreCase ("Test"))              Test             = valueBool;
+          else if  (varName.EqualIgnoreCase ("SinglePass"))        SinglePass       = valueBool;
+          else if  (varName.EqualIgnoreCase ("SingleEpoch"))       SingleEpoch      = valueBool;
+          else if  (varName.EqualIgnoreCase ("Step"))              Step             = valueBool;
+          else if  (varName.EqualIgnoreCase ("InterruptPending"))  InterruptPending = valueBool;
+          else
+            tokenProcessed = false;
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("feature_type"))
+      {
+        delete  feature_type;
+        feature_type = dynamic_cast<XmlElementArrayInt32Ptr> (t)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("SumErrors"))
+      {
+        delete  SumErrors;
+        SumErrors = ReadXMLArrayFloat (t, Noutputs, log);
+      }
+
+      else if  (varName.EqualIgnoreCase ("DummySumErrors"))
+      {
+        delete  DummySumErrors;
+        DummySumErrors =  ReadXMLArrayFloat (t, Noutputs, log);
+      }
+
+      else if  (varName.EqualIgnoreCase ("AllConnections"))
+      {
+        delete  AllConnections;
+        AllConnections = dynamic_cast<XmlElementArrayInt32Ptr> (t)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("Nconnections"))
+      {
+        delete  Nconnections;
+        Nconnections = dynamic_cast<XmlElementArrayInt32Ptr> (t)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("Connections"))
+      {
+        VectorKKStr*  connectionsStr = dynamic_cast<XmlElementVectorKKStrPtr> (t)->TakeOwnership ();
+        if  (connectionsStr)
+        {
+          kkuint32  count = connectionsStr->size ();
+          Connections = new int*[];
+          for  (kkuint32 x = 0;  x < count;  ++x)
+          {
+            if  ((*connectionsStr)[x] == "NULL")
+              Connections[x] = NULL;
+            else if  ((*connectionsStr)[x] == "AC")
+              Connections[x] = AllConnections;
+            else
+              Connections[x] = NULL;
+          }
+        }
+        delete  connectionsStr;
+        connectionsStr = NULL;
+      }
+
+      if  (varName.EqualIgnoreCase ("Weights"))
+      {
+        if  (typeid (*t) == typeid (XmlElementArrayFloat2DVarying))
+        {
+          XmlElementArrayFloat2DVaryingPtr w = dynamic_cast<XmlElementArrayFloat2DVaryingPtr> (t);
+          if  (w->Height () != MaxUnits)
+          {
+            log.Level (-1) << endl 
+              << "UsfCasCor::ReadXML   ***ERROR***   Height[" << w->Height () << "] of Weights array does not MaxUnits[" << MaxUnits << "]." << endl
+              << endl;
+          }
+          else
+          {
+            Weights = w->TakeOwnership ();
+          }
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("ExtraValues"))
+      {
+        delete  ExtraValues;
+        ExtraValues =  ReadXMLArrayFloat (t, MaxUnits, log);
+      }
+
+      else if  (varName.EqualIgnoreCase ("Outputs"))
+      {
+        delete  Outputs;
+        Outputs =  ReadXMLArrayFloat (t, Noutputs, log);
+      }
+
+      else if  (varName.EqualIgnoreCase ("OutputWeights"))
+      {
+        if  (typeid (*t) == typeid (XmlElementArrayFloat2D))
+        {
+          XmlElementArrayFloat2DPtr  ow = dynamic_cast<XmlElementArrayFloat2DPtr> (t);
+          if  (ow)
+          {
+            kkuint32  owHeight = ow->Height ();
+            kkuint32  owWidth  = ow->Width  ();
+            if  ((owHeight != Noutputs)  ||  (owWidth != MaxUnits))
+            {
+              log.Level (-1) << endl
+                << endl << "UsfCasCor::ReadXML   ***ERROR***  OutputWeights read Dimensions[" << owHeight <<", " << owWidth << "] not the expected "
+                << "[" << Noutputs << ", " << MaxUnits << "]."
+                << endl << endl;
+            }
+            else
+            {
+              OutputWeights = ow->TakeOwnership ();
+            }
+          }
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("ExtraErrors"))
+      {
+        delete  ExtraErrors;
+        ExtraErrors =  ReadXMLArrayFloat (t, Noutputs, log);
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
 
 
+  // We are done reading the XML data;  now we must build our dynamic memory structures.
 
+
+  if  (NTestPatterns > 0)
+  {
+    TestInputs  = new float*[NTestPatterns];
+    TestOutputs = new float*[NTestPatterns];
+    for  (int z = 0; z < NTestPatterns; ++z)
+    {
+      TestInputs[z]  = new float[Ninputs];
+      TestOutputs[z] = new float[Noutputs];
+    }
+  }
+  else
+  {
+    TestInputs  = TrainingInputs;
+    TestOutputs = TrainingOutputs;
+  }
+
+  if  (!ExtraValues)
+    ExtraValues = new float[MaxUnits];
+
+  if  (!Values)
+    Values = ExtraValues;
+
+
+  if  (UseCache) 
+  {
+     /* Odd error check. If usecache was specified in file, but not on
+      * command line, then Cache was not allocated. We look for NULL
+      * value and allocate storage here. 
+      */
+     if  (ValuesCache == NULL )
+     {
+       ValuesCache = new float*[MaxCases];     //(float **)CALLOC(MaxCases, sizeof(float *));
+       ErrorsCache = new float*[MaxCases];
+
+       for  (kkint32 i = 0;  i < MaxCases;  i++)
+       {
+         ValuesCache[i] = new float[MaxUnits];
+         ErrorsCache[i] = new float[Noutputs];
+       }
+     }
+
+
+    for  (kkint32 i = 0;  i < NTrainingPatterns;  i++)
+    {
+      Values = ValuesCache[i];
+      
+      /* Unit values must be calculated in order because the activations */
+      /* cascade down through the hidden layers */
+      for  (kkint32 j = 1 + Ninputs;  j < Nunits;  j++) 
+         COMPUTE_UNIT_VALUE(j);
+    }
+  }
+
+}  /* ReadXML */
 
 
 
