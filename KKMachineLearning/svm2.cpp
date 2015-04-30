@@ -5093,9 +5093,9 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
 
 
 void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
-                               FileDescPtr   fileDesc,
-                               RunLog&       log
-                              )
+                                   FileDescPtr   fileDesc,
+                                   RunLog&       log
+                                  )
 {
   ifstream  in (fileName.Str ());
   if  (!in.is_open ())
@@ -5113,9 +5113,9 @@ void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
 
 
 void  SVM289_MFS::svm_model::Read (istream&     in, 
-                               FileDescPtr  fileDesc,
-                               RunLog&      log
-                              )
+                                   FileDescPtr  fileDesc,
+                                   RunLog&      log
+                                  )
 {
   // read parameters
   delete  rho;    rho   = NULL;
