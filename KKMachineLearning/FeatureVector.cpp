@@ -286,6 +286,17 @@ bool FeatureVector::operator== (FeatureVector &other_image)  const
 
 
 
+FeatureVectorList::FeatureVectorList ():
+  KKQueue<FeatureVector> (true),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
+  fileDesc      (NULL),
+  fileName      (),
+  numOfFeatures (0),
+  version       (-1)
+{
+}
+
+
 
 FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
                                       bool         _owner

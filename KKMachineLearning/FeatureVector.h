@@ -202,6 +202,12 @@ namespace KKMLL
   public: 
     typedef  FeatureVectorList*  FeatureVectorListPtr;
 
+    /**
+     * When you use this constructor you need to define immediately provide the appropriate FileDesc instance via
+     * calling "ResetFileDesc" method.
+     */
+    FeatureVectorList ();
+
 
     /**
      *@brief Will create a new empty list of FeatureVector's.
@@ -358,7 +364,7 @@ namespace KKMLL
 
     /**
      *@brief  Will return a random sampling by class of our FeatureVector's; with a minimum per class of 'minClassCount'.
-     *@param[in] percentage  Percentage between 0.0 and 100.0 of each class to randomly sample.
+     *@param[in] percentage  The percentage between 0.0 and 100.0 of each class to randomly sample.
      *@param[in] minClassCount The minimum per class to keep.
      */
     FeatureVectorListPtr  ExtractRandomSampling (float    percentage,    /**<  A percentage between 0.0 and 100.0 */
