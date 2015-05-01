@@ -459,7 +459,7 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   if  (!fileDesc)
   {
     // This should never ever be able to happen,  but will check 
-    // any way.  If missing something has gone very wring.
+    // any way.  If missing something has gone very wrong.
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "      *** ERROR ***  'fileDesc == NULL'";
     throw KKException (msg);

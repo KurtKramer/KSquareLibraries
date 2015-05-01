@@ -4625,6 +4625,7 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
 
 
 SVM289_MFS::svm_model::svm_model ():
+  fileDesc            (NULL),
   param               (),
   nr_class            (0),
   numSVs              (0),
@@ -4647,21 +4648,22 @@ SVM289_MFS::svm_model::svm_model ():
 SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
                                   FileDescPtr       _fileDesc
                                  ):
-  param       (_model.param),
-  nr_class    (_model.nr_class),
-  numSVs      (_model.numSVs),
-  SV          (),
-  sv_coef     (NULL),
-  rho         (NULL),
-  probA       (NULL),
-  probB       (NULL),
-  label       (NULL),
-  nSV         (NULL),     // number of SVs for each class (nSV[k])
+  fileDesc            (_fileDesc),
+  param               (_model.param),
+  nr_class            (_model.nr_class),
+  numSVs              (_model.numSVs),
+  SV                  (),
+  sv_coef             (NULL),
+  rho                 (NULL),
+  probA               (NULL),
+  probB               (NULL),
+  label               (NULL),
+  nSV                 (NULL),     // number of SVs for each class (nSV[k])
   weOwnSupportVectors (_model.weOwnSupportVectors),
-  selFeatures (_model.selFeatures),
-  dec_values     (NULL),
-  pairwise_prob  (NULL),
-  prob_estimates (NULL)
+  selFeatures         (_model.selFeatures),
+  dec_values          (NULL),
+  pairwise_prob       (NULL),
+  prob_estimates      (NULL)
 
 {
   kkint32  m = nr_class - 1;
@@ -4732,6 +4734,7 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
 
 
 SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc):
+   fileDesc            (_fileDesc),
    param               (),
    nr_class            (0),
    numSVs              (0),
@@ -4755,21 +4758,22 @@ SVM289_MFS::svm_model::svm_model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
                                   FileDescPtr           _fileDesc
                                  ):
-   param       (_param),
-   nr_class    (0),
-   numSVs      (0),
-   SV          (_fileDesc, true),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   fileDesc            (_fileDesc),
+   param               (_param),
+   nr_class            (0),
+   numSVs              (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_selFeatures),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_selFeatures),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 
 {
 }
@@ -4781,21 +4785,22 @@ SVM289_MFS::svm_model::svm_model (const KKStr&  _fileName,
                                   FileDescPtr   _fileDesc,
                                   RunLog&       _log
                                  ):
-   param       (),
-   nr_class    (0),
-   numSVs      (0),
-   SV          (_fileDesc, true),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   fileDesc            (_fileDesc),
+   param               (),
+   nr_class            (0),
+   numSVs              (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Load (_fileName, _fileDesc, _log);
 }
@@ -4829,6 +4834,12 @@ SVM289_MFS::svm_model::svm_model (istream&     _in,
 
 
 SVM289_MFS::svm_model::~svm_model ()
+{
+  CleanUpMemory ();
+}
+
+
+void SVM289_MFS::svm_model::CleanUpMemory ()
 {
   if  (weOwnSupportVectors)
     SV.Owner (true);
@@ -4866,7 +4877,7 @@ SVM289_MFS::svm_model::~svm_model ()
   dec_values = NULL;
   delete  prob_estimates;
   prob_estimates = NULL;
-}
+}  /* CleanUpMemory */
 
 
 
@@ -4875,15 +4886,15 @@ kkint32  SVM289_MFS::svm_model::MemoryConsumedEstimated ()  const
   kkint32  numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
   kkint32  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
 
-  if  (sv_coef)         memoryConsumedEstimated += sizeof (double) * (nr_class - 1) * numSVs;    // sv_coef
-  if  (rho)             memoryConsumedEstimated += sizeof (double) * numBinaryClassCombos;  // rho
-  if  (probA)           memoryConsumedEstimated += sizeof (double) * numBinaryClassCombos;  // probA
-  if  (probB)           memoryConsumedEstimated += sizeof (double) * numBinaryClassCombos;  // probB
-  if  (label)           memoryConsumedEstimated += sizeof (kkint32)    * nr_class;
-  if  (nSV)             memoryConsumedEstimated += sizeof (kkint32)    * nr_class;
+  if  (sv_coef)         memoryConsumedEstimated += sizeof (double)  * (nr_class - 1) * numSVs;    // sv_coef
+  if  (rho)             memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;  // rho
+  if  (probA)           memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;  // probA
+  if  (probB)           memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;  // probB
+  if  (label)           memoryConsumedEstimated += sizeof (kkint32) * nr_class;
+  if  (nSV)             memoryConsumedEstimated += sizeof (kkint32) * nr_class;
   if  (pairwise_prob)   memoryConsumedEstimated += sizeof (double*) * nr_class + sizeof (double) * nr_class * nr_class;
-  if  (dec_values)      memoryConsumedEstimated += sizeof (double) * numBinaryClassCombos;
-  if  (prob_estimates)  memoryConsumedEstimated += sizeof (double) * nr_class;
+  if  (dec_values)      memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;
+  if  (prob_estimates)  memoryConsumedEstimated += sizeof (double)  * nr_class;
   return  memoryConsumedEstimated;
 }  /* svm_model::MemoryConsumedEstimated */
 
@@ -4960,7 +4971,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
   
   {
     o << "rho";
-    for  (kkint32 i = 0;  numBinaryCombos;  i++)
+    for  (kkint32 i = 0;  i < numBinaryCombos;  i++)
       o << "\t" << rho[i];
     o << endl;
   }
@@ -5046,8 +5057,6 @@ void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
   Read (in, fileDesc, log);
   in.close ();
 }  /* Load */
-
-
 
 
 
@@ -5249,8 +5258,10 @@ void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
+  fileDesc->WriteXML ("FileDesc", o);
 
   SVM_Type_ToStr (param.svm_type).WriteXML ("svm_type", o);
+
   Kernel_Type_ToStr (param.kernel_type).WriteXML ("kernel_type", o);
 
   if  (param.kernel_type == Kernel_Type::POLY)
@@ -5318,25 +5329,18 @@ void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
 
 
 
+/**
+ *@details  Reading in all the info needed to build the svm_model data structure including allocating needed memory.
+ */
+
 void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
                                       XmlTagConstPtr  tag,
                                       RunLog&         log
                                      )
 {
-  // read parameters
-  delete  rho;    rho   = NULL;
-  delete  probA;  probA = NULL;
-  delete  probB;  probB = NULL;
-  delete  label;  label = NULL;
-  delete  nSV;    nSV   = NULL;
-
-  SV.DeleteContents ();
-
-  kkint32  buffLen = 80 * 1024;
-  char*  buff = new char[buffLen];
-
-  bool  eof = false;
-  bool  eol = false;
+  CleanUpMemory ();
+  SV.Owner (true);
+  weOwnSupportVectors = true;
 
   kkint32  numBinaryCombos = 0;
 
@@ -5363,9 +5367,14 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
         else if  (typeid(*e) == typeid(XmlElementDouble))
           valueDouble = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
 
-        if  (varName.EqualIgnoreCase ("svm_type"))
+        if  (varName.EqualIgnoreCase ("FileDesc"))
         {
+          fileDesc = dynamic_cast<XmlElementFileDescPtr> (e)->Value ();
+          SV.ResetFileDesc (fileDesc);
         }
+
+        else if  (varName.EqualIgnoreCase ("svm_type"))
+          param.svm_type = SVM_Type_FromStr (valueStr);
 
         else if  (varName.EqualIgnoreCase ("kernel_type"))
           param.kernel_type = Kernel_Type_FromStr (valueStr);
@@ -5382,9 +5391,6 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
         else if  (varName.EqualIgnoreCase ("selFeatures"))
           selFeatures = *(dynamic_cast<XmlElementFeatureNumListPtr> (e)->Value ());
 
-        else if  (varName.EqualIgnoreCase ("nr_class"))
-          nr_class = valueInt32;
-        
         else if  (varName.EqualIgnoreCase ("nr_class"))
         {
           nr_class = valueInt32;
@@ -5445,18 +5451,17 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
           {
             KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
             log.Level (-1) << endl << errorMsg << endl << endl;
-            delete  buff;
-            throw  errorMsg;
           }
           else
           {
             KKStrParser p (valueStr);
+            p.TrimWhiteSpace (" ");
             KKStr    imageFileName = p.GetNextToken ("\t");
             kkint32  numOffeatures  = p.GetNextTokenInt ("\t");
 
             FeatureVectorPtr  fv = new FeatureVector (numOffeatures);
 
-            for  (kkint32  j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
+            for  (kkint32  j = 0;  (j < (nr_class - 1))  &&  p.MoreTokens ();  ++j)
               sv_coef[j][i] = p.GetNextTokenDouble ("\t");
 
             if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
@@ -5475,7 +5480,6 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
                 fv->FeatureData (featureNumber, (float)featureValue);
               }
             }
-
             SV.PushOnBack (fv);
           }
         }
@@ -5484,22 +5488,6 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

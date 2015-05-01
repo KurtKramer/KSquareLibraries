@@ -166,6 +166,8 @@ namespace  SVM289_MFS
 
     ~svm_model ();
 
+    void  CleanUpMemory ();
+
     double*  DecValues     ();
     double*  ProbEstimates ();
     double** PairwiseProb  ();
@@ -202,7 +204,7 @@ namespace  SVM289_MFS
                             )  const;
 
 
-
+    FileDescPtr        fileDesc;
     svm_parameter      param;      // parameter
     kkint32            nr_class;   // number of classes, = 2 in regression/one class svm
     kkint32            numSVs;     /**< total #SV  */
