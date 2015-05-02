@@ -69,7 +69,7 @@ namespace  SVM289_MFS
 
   void  svm_load_model_XML_SupportVectorSection (istream&     in,
                                                  FileDescPtr  fileDesc,
-                                                 svm_model&   model,
+                                                 Svm_Model&   model,
                                                  bool&        valid,
                                                  RunLog&      log
                                                 );
@@ -3223,7 +3223,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
       subparam.weight_label[1]=-1;
       subparam.weight[0]=Cp;
       subparam.weight[1]=Cn;
-      svm_model* submodel = svm_train (*subProb, subparam, log);
+      Svm_Model* submodel = svm_train (*subProb, subparam, log);
 
       for  (j = begin;  j < end;  j++)
       {
@@ -3372,12 +3372,12 @@ void  svm_group_classes (const svm_problem*  prob,
 //
 // Interface functions
 //
-svm_model*  SVM289_MFS::svm_train  (const svm_problem&     prob, 
+Svm_Model*  SVM289_MFS::svm_train  (const svm_problem&     prob, 
                                     const svm_parameter&   param,
                                     RunLog&                log
                                    )
 {
-  svm_model*  model = new svm_model (param, prob.SelFeatures (), prob.FileDesc ());
+  Svm_Model*  model = new Svm_Model (param, prob.SelFeatures (), prob.FileDesc ());
 
   model->weOwnSupportVectors = false;
 
@@ -3807,7 +3807,7 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
       ++k;
     }
 
-    svm_model*  submodel = svm_train (subprob, param, log);
+    Svm_Model*  submodel = svm_train (subprob, param, log);
     if  (param.probability && 
        (param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC))
     {
@@ -3844,14 +3844,14 @@ void  SVM289_MFS::svm_cross_validation (const svm_problem&    prob,
 
 
 
-kkint32  svm_get_svm_type(const svm_model *model)
+kkint32  svm_get_svm_type(const Svm_Model *model)
 {
   return  (int)model->param.svm_type;
 }
 
 
 
-kkint32  SVM289_MFS::svm_get_nr_class(const svm_model *model)
+kkint32  SVM289_MFS::svm_get_nr_class(const Svm_Model *model)
 {
   return model->nr_class;
 }
@@ -3859,7 +3859,7 @@ kkint32  SVM289_MFS::svm_get_nr_class(const svm_model *model)
 
 
 
-void svm_get_labels(const svm_model *model, kkint32* label)
+void svm_get_labels(const Svm_Model *model, kkint32* label)
 {
   if (model->label != NULL)
     for(kkint32 i=0;i<model->nr_class;i++)
@@ -3868,7 +3868,7 @@ void svm_get_labels(const svm_model *model, kkint32* label)
 
 
 
-double svm_get_svr_probability (const svm_model *model)
+double svm_get_svr_probability (const Svm_Model *model)
 {
   if ((model->param.svm_type == SVM_Type::EPSILON_SVR || model->param.svm_type == SVM_Type::NU_SVR) &&
       model->probA!=NULL)
@@ -3883,7 +3883,7 @@ double svm_get_svr_probability (const svm_model *model)
 
 
 
-void  SVM289_MFS::svm_predict_values (const svm_model*      model, 
+void  SVM289_MFS::svm_predict_values (const Svm_Model*      model, 
                                       const FeatureVector&  x, 
                                       double*               dec_values
                                      )
@@ -3957,7 +3957,7 @@ void  SVM289_MFS::svm_predict_values (const svm_model*      model,
 
 
 
-double SVM289_MFS::svm_predict (const svm_model*      model, 
+double SVM289_MFS::svm_predict (const Svm_Model*      model, 
                                 const FeatureVector&  x
                                )
 {
@@ -4015,7 +4015,7 @@ double SVM289_MFS::svm_predict (const svm_model*      model,
 
 
 
-double  SVM289_MFS::svm_predict_probability (svm_model*             model, 
+double  SVM289_MFS::svm_predict_probability (Svm_Model*             model, 
                                              const FeatureVector&   x, 
                                              double*                classProbabilities,
                                              kkint32*                 votes
@@ -4100,7 +4100,7 @@ double  SVM289_MFS::svm_predict_probability (svm_model*             model,
 
 
 kkint32  SVM289_MFS::svm_save_model (const char*      model_file_name, 
-                                   const svm_model* model
+                                   const Svm_Model* model
                                   )
 {
   FILE *fp = osFOPEN (model_file_name,"w");
@@ -4211,7 +4211,7 @@ kkint32  SVM289_MFS::svm_save_model (const char*      model_file_name,
 
 
 void  SVM289_MFS::svm_save_model_XML (ostream&          o, 
-                                      const svm_model&  model
+                                      const Svm_Model&  model
                                      )
 {
   kkint32  origPrecision = (kkint32)o.precision ();
@@ -4325,7 +4325,7 @@ void  SVM289_MFS::svm_save_model_XML (ostream&          o,
 
 void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
                                                            FileDescPtr  fileDesc,
-                                                           svm_model&   model,
+                                                           Svm_Model&   model,
                                                            bool&        valid,
                                                            RunLog&      log
                                                           )
@@ -4456,12 +4456,12 @@ void  SVM289_MFS::svm_load_model_XML_SupportVectorSection (istream&     in,
     
 
 
-svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
+Svm_Model*  SVM289_MFS::svm_load_model_XML (istream&     in,
                                             FileDescPtr  fileDesc,
                                             RunLog&      log
                                            )
 {
-  svm_model*  model = new svm_model (fileDesc);
+  Svm_Model*  model = new Svm_Model (fileDesc);
 
   bool  validModel = true;
 
@@ -4624,7 +4624,9 @@ svm_model*  SVM289_MFS::svm_load_model_XML (istream&     in,
 } /* svm_load_model_XML */
 
 
-SVM289_MFS::svm_model::svm_model ():
+
+
+SVM289_MFS::Svm_Model::Svm_Model ():
   fileDesc            (NULL),
   param               (),
   nr_class            (0),
@@ -4645,7 +4647,7 @@ SVM289_MFS::svm_model::svm_model ():
 }
 
 
-SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
+SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
                                   FileDescPtr       _fileDesc
                                  ):
   fileDesc            (_fileDesc),
@@ -4733,7 +4735,7 @@ SVM289_MFS::svm_model::svm_model (const svm_model&  _model,
 
 
 
-SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc):
+SVM289_MFS::Svm_Model::Svm_Model (FileDescPtr _fileDesc):
    fileDesc            (_fileDesc),
    param               (),
    nr_class            (0),
@@ -4754,7 +4756,7 @@ SVM289_MFS::svm_model::svm_model (FileDescPtr _fileDesc):
 }
 
 
-SVM289_MFS::svm_model::svm_model (const svm_parameter&  _param,
+SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
                                   FileDescPtr           _fileDesc
                                  ):
@@ -4781,7 +4783,7 @@ SVM289_MFS::svm_model::svm_model (const svm_parameter&  _param,
 
 
 
-SVM289_MFS::svm_model::svm_model (const KKStr&  _fileName,
+SVM289_MFS::Svm_Model::Svm_Model (const KKStr&  _fileName,
                                   FileDescPtr   _fileDesc,
                                   RunLog&       _log
                                  ):
@@ -4807,7 +4809,7 @@ SVM289_MFS::svm_model::svm_model (const KKStr&  _fileName,
 
 
 
-SVM289_MFS::svm_model::svm_model (istream&     _in,
+SVM289_MFS::Svm_Model::Svm_Model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
                                  ):
@@ -4833,13 +4835,13 @@ SVM289_MFS::svm_model::svm_model (istream&     _in,
 
 
 
-SVM289_MFS::svm_model::~svm_model ()
+SVM289_MFS::Svm_Model::~Svm_Model ()
 {
   CleanUpMemory ();
 }
 
 
-void SVM289_MFS::svm_model::CleanUpMemory ()
+void SVM289_MFS::Svm_Model::CleanUpMemory ()
 {
   if  (weOwnSupportVectors)
     SV.Owner (true);
@@ -4881,7 +4883,7 @@ void SVM289_MFS::svm_model::CleanUpMemory ()
 
 
 
-kkint32  SVM289_MFS::svm_model::MemoryConsumedEstimated ()  const
+kkint32  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
 {
   kkint32  numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
   kkint32  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
@@ -4896,11 +4898,11 @@ kkint32  SVM289_MFS::svm_model::MemoryConsumedEstimated ()  const
   if  (dec_values)      memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;
   if  (prob_estimates)  memoryConsumedEstimated += sizeof (double)  * nr_class;
   return  memoryConsumedEstimated;
-}  /* svm_model::MemoryConsumedEstimated */
+}  /* Svm_Model::MemoryConsumedEstimated */
 
 
 
-double*  SVM289_MFS::svm_model::DecValues () 
+double*  SVM289_MFS::Svm_Model::DecValues () 
 {
   if  (!dec_values)
     dec_values = new double[nr_class * (nr_class - 1) / 2];
@@ -4908,7 +4910,7 @@ double*  SVM289_MFS::svm_model::DecValues ()
 }
 
 
-double*  SVM289_MFS::svm_model::ProbEstimates () 
+double*  SVM289_MFS::Svm_Model::ProbEstimates () 
 {
   if  (!prob_estimates)
     prob_estimates = new double[nr_class];
@@ -4916,7 +4918,7 @@ double*  SVM289_MFS::svm_model::ProbEstimates ()
 }
 
 
-double** SVM289_MFS::svm_model::PairwiseProb  () 
+double** SVM289_MFS::Svm_Model::PairwiseProb  () 
 {
   if  (!pairwise_prob)
   {
@@ -4928,14 +4930,14 @@ double** SVM289_MFS::svm_model::PairwiseProb  ()
 }
 
 
-void  SVM289_MFS::svm_model::Save (const KKStr&  fileName,
+void  SVM289_MFS::Svm_Model::Save (const KKStr&  fileName,
                                RunLog&       log
                               )
 {
   ofstream  o (fileName.Str ());
   if  (!o.is_open ())
   {
-    KKStr  errorMsg = "SVM289_MFS::svm_model::Save   ***ERROR***   Could not open File[" + fileName + "].";
+    KKStr  errorMsg = "SVM289_MFS::Svm_Model::Save   ***ERROR***   Could not open File[" + fileName + "].";
     log.Level (-1) << endl << endl << errorMsg << endl << endl;
     throw  errorMsg;
   }
@@ -4947,7 +4949,7 @@ void  SVM289_MFS::svm_model::Save (const KKStr&  fileName,
 
 
 
-void  SVM289_MFS::svm_model::Write (ostream& o)
+void  SVM289_MFS::Svm_Model::Write (ostream& o)
 {
   o << "<Svm_Model>"  << endl;
   o << "svm_type"    << "\t" << SVM_Type_ToStr    (param.svm_type)    << endl;
@@ -5041,7 +5043,7 @@ void  SVM289_MFS::svm_model::Write (ostream& o)
 
 
 
-void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
+void  SVM289_MFS::Svm_Model::Load (const KKStr&  fileName,
                                    FileDescPtr   fileDesc,
                                    RunLog&       log
                                   )
@@ -5049,7 +5051,7 @@ void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
   ifstream  in (fileName.Str ());
   if  (!in.is_open ())
   {
-    KKStr  errorMsg = "SVM289_MFS::svm_model::Load   ***ERROR***   Could not open File[" + fileName + "].";
+    KKStr  errorMsg = "SVM289_MFS::Svm_Model::Load   ***ERROR***   Could not open File[" + fileName + "].";
     log.Level (-1) << endl << endl << errorMsg << endl << endl;
     throw  errorMsg;
   }
@@ -5061,7 +5063,7 @@ void  SVM289_MFS::svm_model::Load (const KKStr&  fileName,
 
 
 
-void  SVM289_MFS::svm_model::Read (istream&     in, 
+void  SVM289_MFS::Svm_Model::Read (istream&     in, 
                                    FileDescPtr  fileDesc,
                                    RunLog&      log
                                   )
@@ -5101,7 +5103,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
       param.svm_type = SVM_Type_FromStr (line);
       if  (param.svm_type == SVM_Type::SVM_NULL)
       {
-        KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  Invalid SVM_Type[" + line + "].";
+        KKStr errorMsg = "SVM289_MFS::Svm_Model::Read   ***ERROR***  Invalid SVM_Type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete  buff;
         buff = NULL;
@@ -5114,7 +5116,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
       param.kernel_type = Kernel_Type_FromStr (line);
       if  (param.kernel_type == Kernel_Type::Kernel_NULL)
       {
-        KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  Invalid kernel_type[" + line + "].";
+        KKStr errorMsg = "SVM289_MFS::Svm_Model::Read   ***ERROR***  Invalid kernel_type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete  buff;  buff = NULL;
         throw  errorMsg;
@@ -5201,7 +5203,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
 
       if  (SV.QueueSize () >= numSVs)
       {
-        KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
+        KKStr errorMsg = "SVM289_MFS::Svm_Model::Read   ***ERROR***  To many Support Vector's Defined.";
         log.Level (-1) << endl << errorMsg << endl << endl;
         delete  buff;
         throw  errorMsg;
@@ -5222,7 +5224,7 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
       if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
       {
         log.Level (-1) << endl << endl
-                       << "SVM289_MFS::svm_model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
+                       << "SVM289_MFS::Svm_Model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
                        << endl;
       }
       else
@@ -5250,11 +5252,11 @@ void  SVM289_MFS::svm_model::Read (istream&     in,
 
 
 
-void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
+void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
                                        ostream&      o
                                       )  const
 {
-  XmlTag  startTag ("svm_model",  XmlTag::TagTypes::tagStart);
+  XmlTag  startTag ("Svm_Model",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
@@ -5321,7 +5323,7 @@ void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
     svStr.WriteXML ("SupportVector", o);
   }
 
-  XmlTag  endTag ("svm_model", XmlTag::TagTypes::tagEnd);
+  XmlTag  endTag ("Svm_Model", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
@@ -5330,10 +5332,10 @@ void  SVM289_MFS::svm_model::WriteXML (const KKStr&  varName,
 
 
 /**
- *@details  Reading in all the info needed to build the svm_model data structure including allocating needed memory.
+ *@details  Reading in all the info needed to build the Svm_Model data structure including allocating needed memory.
  */
 
-void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
+void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
                                       XmlTagConstPtr  tag,
                                       RunLog&         log
                                      )
@@ -5449,7 +5451,7 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
 
           if  (SV.QueueSize () >= numSVs)
           {
-            KKStr errorMsg = "SVM289_MFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
+            KKStr errorMsg = "SVM289_MFS::Svm_Model::Read   ***ERROR***  To many Support Vector's Defined.";
             log.Level (-1) << endl << errorMsg << endl << endl;
           }
           else
@@ -5467,7 +5469,7 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
             if  (param.kernel_type == Kernel_Type::PRECOMPUTED)
             {
               log.Level (-1) << endl << endl
-                             << "SVM289_MFS::svm_model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
+                             << "SVM289_MFS::Svm_Model::Read  ***ERROR***    PRECOMPUTED   Can not Handle." << endl
                              << endl;
             }
             else
@@ -5493,7 +5495,7 @@ void  SVM289_MFS::svm_model::ReadXML (XmlStream&      s,
 
 
 /** @brief Derives multi-class probability. */
-void  SVM289_MFS::svm_model::NormalizeProbability ()
+void  SVM289_MFS::Svm_Model::NormalizeProbability ()
 {
   // Make sure that the ProbEstimates array exists.
   ProbEstimates ();
@@ -5559,7 +5561,7 @@ void  SVM289_MFS::readline (FILE*    input,
 
 
 
-svm_model *svm_load_model (const char*  model_file_name,
+Svm_Model *svm_load_model (const char*  model_file_name,
                            FileDescPtr  fileDesc,
                            RunLog&      log
                           )
@@ -5574,7 +5576,7 @@ svm_model *svm_load_model (const char*  model_file_name,
 
   // read parameters
 
-  svm_model *model = new svm_model (fileDesc);
+  Svm_Model *model = new Svm_Model (fileDesc);
   svm_parameter& param = model->param;
 
   char cmd[82];
@@ -5776,7 +5778,7 @@ svm_model *svm_load_model (const char*  model_file_name,
 
 
 
-void  SVM289_MFS::svm_destroy_model (svm_model*&  model)
+void  SVM289_MFS::svm_destroy_model (Svm_Model*&  model)
 {
   //if  (model->weOwnSupportVectors  &&  (model->l > 0))
   //  free ((void *)(model->SV[0]));
@@ -5935,7 +5937,7 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 
 
-kkint32  svm_check_probability_model (const svm_model *model)
+kkint32  svm_check_probability_model (const Svm_Model *model)
 {
   return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
          ((model->param.svm_type == SVM_Type::EPSILON_SVR ||  model->param.svm_type == SVM_Type::NU_SVR) &&  model->probA!=NULL);
@@ -5943,7 +5945,7 @@ kkint32  svm_check_probability_model (const svm_model *model)
 
 
 
-XmlFactoryMacro(svm_model)
+XmlFactoryMacro(Svm_Model)
 
 
 

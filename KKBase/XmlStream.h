@@ -476,6 +476,7 @@ namespace  KKB
     {                                                                             \
     public:                                                                       \
       XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
+                                                                                  \
       virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
                                                                XmlStream&  s,     \
                                                                RunLog&     log    \

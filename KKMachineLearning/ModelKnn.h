@@ -12,6 +12,8 @@ namespace  KKMLL
   public:
     typedef  ModelKnn*  ModelKnnPtr;
 
+    ModelKnn ();
+
     ModelKnn (FileDescPtr    _fileDesc,
               VolConstBool&  _cancelFlag
              );
@@ -111,11 +113,29 @@ namespace  KKMLL
                                                   );
 
 
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
   private:
     ModelParamKnnPtr   param;   /**<   We will NOT own this instance; it will point to same instance defined in parent class Model.  */
   };  /* ModelKnn */
 
   typedef  ModelKnn::ModelKnnPtr  ModelKnnPtr;
+
+
+
+  typedef  XmlElementTemplate<ModelKnn>  XmlElementModelKnn;
+  typedef  XmlElementModelKnn*  XmlElementModelKnnPtr;
+
+
 }
 
 

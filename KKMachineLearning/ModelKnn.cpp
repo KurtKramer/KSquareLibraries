@@ -14,6 +14,7 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -30,6 +31,12 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+
+ModelKnn::ModelKnn ():
+  Model (),
+  param (NULL)
+{
+}
 
 ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
                     VolConstBool&  _cancelFlag
@@ -241,3 +248,64 @@ void  ModelKnn::WriteSpecificImplementationXML (ostream&  o,
 
   o << "</ModelKnn>" << endl;
 }  /* WriteSpecificImplementationXML */
+
+
+
+
+
+
+
+void  ModelKnn::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
+{
+  XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteXMLFields (o);
+  if  (param)
+    param->WriteXML ("Param", o);
+
+  XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelKnn::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);
+    if  (t)
+    {
+      const KKStr&  varName = t->VarName ();
+
+      if  ((varName.EqualIgnoreCase ("Param"))  &&  (typeid (*t) == typeid (XmlElementModelParamKnn)))
+      {
+        delete  param;
+        param = dynamic_cast<XmlElementModelParamKnnPtr> (t)->TakeOwnership ();
+      }
+      else
+      {
+        KKStr  errMsg (256);
+        errMsg << "Invalid XmlElement Encountered:  Section: " << t->SectionName () << "  VarName: " << varName;
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(ModelKnn)

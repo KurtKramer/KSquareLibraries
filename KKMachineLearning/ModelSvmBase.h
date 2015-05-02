@@ -150,7 +150,7 @@ namespace  KKMLL
 
 
   protected:
-    SVM289_MFS::svm_model*  svmModel;
+    SVM289_MFS::Svm_Model*  svmModel;
     ModelParamSvmBasePtr    param;   /*!<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
   };  /* ModelSvmBase */
   

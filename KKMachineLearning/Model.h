@@ -85,6 +85,8 @@ namespace KKMLL
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 
 
+    Model ();
+
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */

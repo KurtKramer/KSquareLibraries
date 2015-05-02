@@ -139,32 +139,32 @@ namespace  SVM289_MFS
 
 
 
-  struct  svm_model
+  struct  Svm_Model
   {
-    svm_model ();
+    Svm_Model ();
 
-    svm_model (const svm_model&  _model,
+    Svm_Model (const Svm_Model&  _model,
                FileDescPtr       _fileDesc
               );
 
-    svm_model (FileDescPtr  _fileDesc);
+    Svm_Model (FileDescPtr  _fileDesc);
 
-    svm_model (const svm_parameter&   _param,
+    Svm_Model (const svm_parameter&   _param,
                const FeatureNumList&  _selFeatures,
                FileDescPtr            _fileDesc
               );
 
-    svm_model (const KKStr&  _fileName,
+    Svm_Model (const KKStr&  _fileName,
                FileDescPtr   _fileDesc,
                RunLog&       _log
               );
 
-    svm_model (istream&     _fileName,
+    Svm_Model (istream&     _fileName,
                FileDescPtr  _fileDesc,
                RunLog&      _log
               );
 
-    ~svm_model ();
+    ~Svm_Model ();
 
     void  CleanUpMemory ();
 
@@ -221,8 +221,8 @@ namespace  SVM289_MFS
     kkint32*  nSV;     // number of SVs for each class (nSV[k])
     // nSV[0] + nSV[1] + ... + nSV[k-1] = l
     // XXX
-    bool  weOwnSupportVectors;    // 1 if svm_model is created by svm_load_model
-    // 0 if svm_model is created by svm_train
+    bool  weOwnSupportVectors;    // 1 if Svm_Model is created by svm_load_model
+    // 0 if Svm_Model is created by svm_train
 
 
     // Support Prediction Calculations
@@ -231,61 +231,61 @@ namespace  SVM289_MFS
     double*    prob_estimates;
   };
 
-  typedef  XmlElementTemplate<svm_model>  XmlElementSvm_model;
-  typedef  XmlElementSvm_model*  XmlElementSvm_modelPtr;
+  typedef  XmlElementTemplate<Svm_Model>  XmlElementSvm_Model;
+  typedef  XmlElementSvm_Model*  XmlElementSvm_ModelPtr;
 
 
 
 
-  svm_model*  svm_train  (const svm_problem&    prob,
+  Svm_Model*  svm_train  (const svm_problem&    prob,
                           const svm_parameter&  param,
                           RunLog&               log
                          );
 
   kkint32  svm_save_model (const char*              model_file_name, 
-                           const struct svm_model*  model
+                           const struct Svm_Model*  model
                           );
 
   void  svm_save_model_XML (ostream&          o, 
-                            const svm_model&  model
+                            const Svm_Model&  model
                            );
 
-  svm_model*  svm_load_model (const char *model_file_name);
+  Svm_Model*  svm_load_model (const char *model_file_name);
 
-  svm_model*  svm_load_model_XML (istream&     i,
+  Svm_Model*  svm_load_model_XML (istream&     i,
                                   FileDescPtr  fileDesc,
                                   RunLog&      log
                                  );
 
-  kkint32  svm_get_svm_type (const struct svm_model *model);
+  kkint32  svm_get_svm_type (const struct Svm_Model *model);
 
-  kkint32  svm_get_nr_class (const struct svm_model *model);
+  kkint32  svm_get_nr_class (const struct Svm_Model *model);
 
-  void  svm_get_labels  (const struct svm_model*  model, 
+  void  svm_get_labels  (const struct Svm_Model*  model, 
                          kkint32*                 label
                         );
 
-  double  svm_get_svr_probability (const struct svm_model *model);
+  double  svm_get_svr_probability (const struct Svm_Model *model);
 
 
-  void  svm_predict_values  (const svm_model*      model, 
+  void  svm_predict_values  (const Svm_Model*      model, 
                              const FeatureVector&  x,
                              double*               dec_values
                             );
 
 
-  double  svm_predict  (const struct svm_model*  model, 
+  double  svm_predict  (const struct Svm_Model*  model, 
                         const FeatureVector&     x
                        );
 
 
-  double svm_predict_probability (      svm_model*      model, 
+  double svm_predict_probability (      Svm_Model*      model, 
                                   const FeatureVector&  x, 
                                   double*               prob_estimates,
                                   kkint32*              votes
                                  );
 
-  void svm_destroy_model (struct svm_model*&  model);
+  void svm_destroy_model (struct Svm_Model*&  model);
 
 
   void svm_destroy_param (struct svm_parameter*&  param);
@@ -296,7 +296,7 @@ namespace  SVM289_MFS
                                   );
 
 
-  kkint32 svm_check_probability_model(const struct svm_model *model);
+  kkint32 svm_check_probability_model(const struct Svm_Model *model);
 
   extern void (*svm_print_string) (const char *);
 
@@ -336,7 +336,7 @@ namespace  SVM289_MFS
   struct decision_function;
 
 
-  typedef  XmlElementTemplate<svm_model>  XmlElementAttribute;
+  typedef  XmlElementTemplate<Svm_Model>  XmlElementAttribute;
   typedef  XmlElementAttribute*  XmlElementAttributePtr;
 
 }  /* SVM289_MFS */

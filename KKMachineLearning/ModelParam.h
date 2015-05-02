@@ -261,6 +261,7 @@ namespace KKMLL
     ModelParam*  value;
   };  /* XmlElementModelParam */
 
+  typedef  XmlElementModelParam*  XmlElementModelParamPtr;
 
 
 

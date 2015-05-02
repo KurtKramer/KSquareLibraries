@@ -41,6 +41,31 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+Model::Model ():
+    alreadyNormalized        (false),
+    cancelFlag               (),
+    classes                  (NULL),
+    classesIndex             (NULL),
+    classProbs               (NULL),
+    crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
+    encoder                  (NULL),
+    fileDesc                 (NULL),
+    name                     (),
+    normParms                (NULL),
+    numOfClasses             (0),
+    param                    (NULL),
+    rootFileName             (),
+    trainExamples            (NULL),
+    trianingPrepTime         (0.0),
+    trainingTime             (0.0),
+    trainingTimeStart        (0.0),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false)
+{
+}
+
 
 Model::Model (const Model&  _model):
     alreadyNormalized       (false),
@@ -53,17 +78,17 @@ Model::Model (const Model&  _model):
     encoder                 (NULL),
     fileDesc                (_model.fileDesc),
     name                    (_model.name),
-    numOfClasses            (_model.numOfClasses),
     normParms               (NULL),
+    numOfClasses            (_model.numOfClasses),
     param                   (NULL),
     rootFileName            (_model.rootFileName),
     trainExamples           (NULL),
-    validModel              (_model.validModel),
-    votes                   (NULL),
-    weOwnTrainExamples      (false),
     trianingPrepTime        (0.0),
     trainingTime            (_model.trainingTime),
-    trainingTimeStart       (_model.trainingTime)
+    trainingTimeStart       (_model.trainingTime),
+    validModel              (_model.validModel),
+    votes                   (NULL),
+    weOwnTrainExamples      (false)
 {
   numOfClasses = 0;
   if  (_model.param != NULL)
@@ -97,14 +122,15 @@ Model::Model (FileDescPtr    _fileDesc,
     cancelFlag               (_cancelFlag),
     classes                  (NULL),
     classesIndex             (NULL),
+    classProbs               (NULL),
     crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
     encoder                  (NULL),
     fileDesc                 (_fileDesc),
     name                     (),
     normParms                (NULL),
     numOfClasses             (0),
     param                    (NULL),
-    classProbs               (NULL),
     rootFileName             (),
     trainExamples            (NULL),
     trianingPrepTime         (0.0),
@@ -132,27 +158,27 @@ Model::Model (const KKStr&       _name,
               FileDescPtr        _fileDesc,
               VolConstBool&      _cancelFlag
              ):
-    alreadyNormalized     (false),
-    cancelFlag            (_cancelFlag),
-    classes               (NULL),
-    classesIndex          (NULL),
-    crossClassProbTable   (NULL),
-    encoder               (NULL),
-    fileDesc              (_fileDesc),
-    name                  (_name),
-    normParms             (NULL),
-    numOfClasses          (0),
-    param                 (NULL),
-    classProbs            (NULL),
-    rootFileName          (),
-    trainExamples         (NULL),
-    trianingPrepTime      (0.0),
-    trainingTime          (0.0),
-    trainingTimeStart     (0.0),
-    validModel            (true),
-    votes                 (NULL),
-    weOwnTrainExamples    (false)
-
+    alreadyNormalized        (false),
+    cancelFlag               (_cancelFlag),
+    classes                  (NULL),
+    classesIndex             (NULL),
+    classProbs               (NULL),
+    crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
+    encoder                  (NULL),
+    fileDesc                 (_fileDesc),
+    name                     (_name),
+    normParms                (NULL),
+    numOfClasses             (0),
+    param                    (NULL),
+    rootFileName             (),
+    trainExamples            (NULL),
+    trianingPrepTime         (0.0),
+    trainingTime             (0.0),
+    trainingTimeStart        (0.0),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false)
 {
   param = _param.Duplicate ();
 }
@@ -1227,228 +1253,73 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
 
     const KKStr&  varName = e->VarName ();
 
-    if  (typeid (*e) == typeid (XmlElementKKStr))
+    KKStrConstPtr   valueStr = NULL;
+    kkint32         valueInt32  = 0;
+    double          valueDouble = 0.0;
+
+    valueStr = &KKStr::EmptyStr ();
+
+    if  (typeid (*this) == typeid (XmlElementKKStr))
+      valueStr = dynamic_cast<XmlElementKKStrPtr> (e)->Value ();
+
+    else if  (typeid (*this) == typeid (XmlElementInt32))
+      valueInt32 = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+
+    else if  (typeid (*this) == typeid (XmlElementInt32))
+      valueDouble = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
+
+    if  (varName.EqualIgnoreCase ("ModelType"))
     {
-      XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (e);
-      if  (varName.EqualIgnoreCase ("ModelType"))
+      if  (ModelType ()  != Model::ModelTypeFromStr (*valueStr))
       {
-        if  (ModelType ()  != Model::ModelTypeFromStr (*(s->Value ())))
-        {
-          KKStr errMsg (128);
-          errMsg << "Model::ReadXMLModelToken   ***ERROR***   Wrong ModelType encountered;  Expected[" << ModelTypeStr () << "] "
-                 << "ModelType Specified[" << *(s->Value ()) << "].";
+        KKStr errMsg (128);
+        errMsg << "Model::ReadXMLModelToken   ***ERROR***   Wrong ModelType encountered;  Expected[" << ModelTypeStr () << "] "
+               << "ModelType Specified[" << *(valueStr) << "].";
 
-          log.Level (-1) << endl << errMsg << endl << endl;
-          AddErrorMsg (errMsg, 0);
-        }
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
       }
-
-      else if  (varName.EqualIgnoreCase ("Name"))
-        name = *(s->Value ());
-
-      else if  (varName.EqualIgnoreCase ("RootFileName"))
-        rootFileName = *(s->Value ());
-
-      else
-        tokenFound = false;
     }
 
-    else if  (varName.EqualIgnoreCase ("Classes"))
+    else if  (varName.EqualIgnoreCase ("Name"))
+      name = *(valueStr);
+
+    else if  (varName.EqualIgnoreCase ("RootFileName"))
+      rootFileName = *(valueStr);
+
+    else if  ((varName.EqualIgnoreCase ("Classes"))  &&  (typeid(*e) == typeid (XmlElementMLClassNameList)))
     {
       delete classes;
       classes = dynamic_cast<XmlElementMLClassNameListPtr> (t)->TakeOwnership ();
     }
 
-    else if  (varName.EqualIgnoreCase ("ClassesIndex"))
+    else if  (varName.EqualIgnoreCase ("ClassesIndex")  &&  (typeid(*e) == typeid (XmlElementMLClassNameList)))
     {
       delete classesIndex;
       classesIndex = dynamic_cast<XmlElementMLClassIndexListPtr>(t)->TakeOwnership ();
     }
 
-    else if  (varName.EqualIgnoreCase ("Param"))
+    else if  ((varName.EqualIgnoreCase ("Param"))  &&  (typeid(*e) == typeid (XmlElementModelParam)))
     {
       delete param;
-      param = dynamic_cast<XmlElementModelParam
+      param = dynamic_cast<XmlElementModelParamPtr> (t)->TakeOwnership ();
     }
 
+    else if  (varName.EqualIgnoreCase ("TimeSaved"))
+      timeSaved = DateTime (*valueStr);
 
-  if  (param)
-    param->WriteXML ("Param", o);
+    else if  (varName.EqualIgnoreCase ("TrainingTime"))
+      trainingTime = valueDouble;
 
-  timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
-  XmlElementDouble::WriteXML (trainingTime, "trainingTime", o);
-  XmlElementBool::WriteXML (alreadyNormalized, "alreadyNormalized");
-  if  (normParms)
-    normParms->WriteXML ("NormParms", o);  
-  
-  
-  
+    else if  ((varName.EqualIgnoreCase ("AlreadyNormalized"))  &&  (typeid (*e) == typeid (XmlElementBool)))
+      alreadyNormalized = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
 
-
-  validModel = true;
-  delete  normParms;
-  normParms = NULL;
-  _successful = true;
-
-  delete  classesIndex;
-  classesIndex = NULL;
-
-
-  char  buff[40960];
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.Empty ())
-      continue;
-
-    if  (field.EqualIgnoreCase ("</Model>"))
-      break;
-
-    if  (field.EqualIgnoreCase ("CLASSES"))
-    {
-      delete  classes;
-      classes = MLClassList::BuildListFromDelimtedStr (ln, ',');
-      delete  classesIndex;
-      classesIndex = new MLClassIndexList (*classes);
-    }
-
-    else if  (field.EqualIgnoreCase ("ClassesIndex"))
-    {
-      delete  classesIndex;  classesIndex = NULL;
-      classesIndex = new MLClassIndexList ();
-      classesIndex->ParseClassIndexList (ln, log);
-    }
-
-    else if  (field.EqualIgnoreCase ("Name"))
-    {
-      name = ln.ExtractToken2 ("\n\r\t");
-    }
-
-    else if  (field.EqualIgnoreCase ("TimeSaved"))
-    {
-      KKStr  timeSavedStr = ln.ExtractToken2 ("\t");
-      timeSaved = DateTime (timeSavedStr);
-    }
-
-    else if  (field.EqualIgnoreCase ("<Parameters>"))
-    {
-      delete  param;
-      param = NULL;
-
-      try
-      {
-        param = ModelParam::CreateModelParam (i, fileDesc, log);
-      }
-      catch  (const exception&  e)
-      {
-        _successful = false;
-        validModel = false;
-        KKStr  errMsg;
-        errMsg << "Exception executing function 'ModelParam::CreateModelParam'.  Exception[" << e.what () << "]";
-        log.Level (-1) << endl << "Model::ReadXML    ***ERROR***    "  << errMsg << endl << endl;
-        throw KKException (errMsg);
-      }
-
-      if  (!param)
-      {
-        _successful = false;
-        validModel = false;
-        KKStr  errMsg = "Model::ReadXML    ***ERROR***    (param == NULL)";
-        log.Level (-1) << errMsg << endl;
-      }
-
-      else if  (!param->ValidParam ())
-      {
-        _successful = false;
-        validModel = false;
-        log.Level (-1) << endl << endl << "Model::ReadXML   ***ERROR***   <ModelParam>  was invalid." << endl << endl;
-      }
-    }
-
-    else if  (field == "TRAININGTIME")
-      trainingTime = ln.ExtractTokenDouble ("\n\r\t");
-
-    else if  (field.EqualIgnoreCase ("AlreadyNormalized"))
-      alreadyNormalized = ln.ExtractTokenBool ("\t");
-
-    else if  (field.EqualIgnoreCase ("<NormalizationParms>"))
+    else if  ((varName.EqualIgnoreCase ("NormParms"))  &&  (typeid (*e) == typeid (XmlElementNormalizationParms)))
     {
       delete  normParms;
-      normParms = NULL;
-      _successful = true;
-      normParms = new NormalizationParms (fileDesc, i, _successful, log);
-      if  (!_successful)
-      {
-        KKStr  errMsg = "Model::ReadXML    ***ERROR***     Reading in <NormalizationParms>";
-        log.Level (-1) << endl << endl
-                       << errMsg << endl
-                       << endl;
-        throw KKException (errMsg);
-      }
+      normParms = dynamic_cast<XmlElementNormalizationParmsPtr> (e)->TakeOwnership ();
     }
-    else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
-    {
-      ReadSpecificImplementationXML (i, _successful, log);
-    }
-  }
 
-  if  (classes == NULL)
-  {
-    _successful = false;
-    log.Level (-1) << endl << endl 
-                   << "Model::ReadXML    Class List was not defined." << endl
-                   << endl;
-  }
-
-  else if  ((normParms == NULL)  &&  (!alreadyNormalized))
-  {
-    _successful = false;
-    log.Level (-1) << endl << endl 
-                   << "Model::ReadXML    Normalization Parameters was not defined." << endl
-                   << endl;
-  }
-
-  else
-  {
-    numOfClasses = classes->QueueSize ();
-    AllocatePredictionVariables ();
-  }
-
-  log.Level (10) << "Model::ReadXML   Model[" << Name () << "]  Done Loading." << endl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
     else
     {
       tokenFound = false;
@@ -1485,23 +1356,10 @@ void  Model::WriteXMLFields (ostream&  o)  const
 
   timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
   XmlElementDouble::WriteXML (trainingTime, "trainingTime", o);
-  XmlElementBool::WriteXML (alreadyNormalized, "alreadyNormalized");
+  XmlElementBool::WriteXML (alreadyNormalized, "alreadyNormalized", o);
   if  (normParms)
     normParms->WriteXML ("NormParms", o);
 } /* WriteXMLFields */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
