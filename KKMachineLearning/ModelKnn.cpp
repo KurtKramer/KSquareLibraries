@@ -32,8 +32,8 @@ using namespace  KKMLL;
 
 
 
-ModelKnn::ModelKnn ():
-  Model (),
+ModelKnn::ModelKnn (VolConstBool&  _cancelFlag):
+  Model (_cancelFlag),
   param (NULL)
 {
 }

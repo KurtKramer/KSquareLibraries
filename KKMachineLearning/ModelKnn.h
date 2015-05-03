@@ -12,7 +12,7 @@ namespace  KKMLL
   public:
     typedef  ModelKnn*  ModelKnnPtr;
 
-    ModelKnn ();
+    ModelKnn (VolConstBool&  _cancelFlag);
 
     ModelKnn (FileDescPtr    _fileDesc,
               VolConstBool&  _cancelFlag

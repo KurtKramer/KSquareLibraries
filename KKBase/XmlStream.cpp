@@ -965,6 +965,146 @@ XmlFactoryMacro(Bool)
 
 
 
+
+
+
+XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
+                                                  XmlStream&  s,
+                                                  RunLog&     log
+                                                 ):
+    XmlElement (tag, s, log),
+    value (false)
+{
+  value = new vector<pair<KKStr,KKStr> > ();
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c)
+      {
+        KKStrParser p (c->Content ());
+        p.TrimWhiteSpace (" ");
+        
+        while  (p.MoreTokens ())
+        {
+          KKStr  key = p.GetNextToken ("\t\n");
+          if  (p.LastDelimiter () == '\n')
+            value->push_back (pair<KKStr,KKStr> (key, ""));
+          else
+            value->push_back (pair<KKStr,KKStr> (key, p.GetRestOfLine ()));
+        }
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
+
+
+XmlElementKeyValuePairs::~XmlElementKeyValuePairs ()
+{
+  delete  value;
+  value = NULL;
+}
+
+
+vector<pair<KKStr,KKStr> >*  XmlElementKeyValuePairs::TakeOwnership ()
+{
+  vector<pair<KKStr,KKStr> >* v = value;
+  value = NULL;
+  return  v;
+}
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    const KKStr&  v
+                                   )
+{
+  value->push_back (pair<KKStr,KKStr> (key, v));
+}
+
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    kkint32       v
+                                   )
+{
+  Add (key, KKB::StrFromInt32 (v));
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    float         v
+                                   )
+{
+  Add (key, KKB::StrFromFloat (v));
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    bool          v
+                                   )
+{
+  KKStr  vStr = "False";
+  if  (v)  vStr = "True";
+  Add (key, vStr);
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&          key,
+                                    const KKB::DateTime&  v
+                                   )
+{
+  Add (key, v.YYYY_MM_DD_HH_MM_SS ());
+}
+
+
+
+void  XmlElementKeyValuePairs::WriteXML (const KKStr&  varName,
+                                         ostream&      o
+                                        )
+{
+  XmlTag  startTag ("KeyValuePairs",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  vector<pair<KKStr,KKStr> >::const_iterator  idx;
+  for  (idx = value->begin ();  idx != value->end ();  ++idx)
+  {
+    XmlContent::WriteXml (idx->first,  o);
+    o << "\t";
+    XmlContent::WriteXml (idx->second, o);
+    o << endl;
+  }
+
+  XmlTag  endTag ("KeyValuePairs", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(KeyValuePairs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
                                                               XmlStream&  s,           
                                                               RunLog&     log          
@@ -1051,7 +1191,8 @@ kkuint32*   XmlElementArrayFloat2DVarying::TakeOwnershipWidths ()
 
 
                                       
-void  XmlElementArrayFloat2DVarying::WriteXML (kkuint32        height,
+void  XmlElementArrayFloat2DVarying::WriteXML 
+               (kkuint32        height,
                 const kkint32*  widths,      /**< Each entry in array defines the length of the corresponding row in 'mat'.  */ 
                 float** const   mat,
                 const KKStr&    varName,
@@ -1112,8 +1253,10 @@ XmlFactoryMacro(KKStrListIndexed)
 
 
 
-
-#define  XmlElementIntegralBody(T,TypeName,ParseMethod)           \
+/**
+ * Works with matching Marco (XmlElementBuiltInTypeHeader) defined in XmlStream.h  
+ */
+#define  XmlElementBuiltInTypeBody(T,TypeName,ParseMethod)        \
  XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,     \
                                              XmlStream&  s,       \
                                              RunLog&     log      \
@@ -1279,55 +1422,56 @@ XmlFactoryMacro(TypeName)
 
 
 /**
- *@param  T  the integral type examples: float, kkint32, double, ...
+ *@details  Works with corresponding macro (XmlElementArray2DHeader) defined in header file "XmlStream.h"
+ *@param  T  The Built-In type,  examples: float, kkint32, double, ...
  *@param  TypeName  The name we give the type  ex:  "Int32", "Float", ....
  *@param  XmlElementToUse  the XmlElement derived class that will be used to process each row in the matrix.
  */
-#define  XmlElementArray2DBody(T,TypeName,XmlElementToUse)                    \
-XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
-                                            XmlStream&  s,                    \
-                                            RunLog&     log                   \
-                                          ):                                  \
-      XmlElement (tag, s, log),                                               \
-      height (0),                                                             \
-      value (NULL),                                                           \
-      width (0)                                                               \
-{                                                                             \
-  height = tag->AttributeValueInt32 ("Height");                               \
-  if  (height <= 0)                                                           \
-  {                                                                           \
-    log.Level (-1) << endl                                                    \
-      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Height["    \
-      << height << "] must be a positive value; will set array to NULL."      \
-      << endl << endl;                                                        \
-      height = 0;                                                             \
-  }                                                                           \
-                                                                              \
-  width = tag->AttributeValueInt32 ("Width");                                 \
-  if  (width <= 0)                                                            \
-  {                                                                           \
-    log.Level (-1) << endl                                                    \
-      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Width["     \
-      << width << "] must be a positive value; will set array to NULL."       \
-      << endl << endl;                                                        \
-    width = 0;                                                                \
-  }                                                                           \
-                                                                              \
-  if  ((height <= 0)  || (width <= 0))                                        \
-  {                                                                           \
-    value = NULL;                                                             \
-    height = 0;                                                               \
-    width = 0;                                                                \
-  }                                                                           \
-  else                                                                        \
-  {                                                                           \
-    value = new T*[width];                                                    \
-  }                                                                           \
-                                                                              \
-  kkuint32  rowCount = 0;                                                     \
-  XmlTokenPtr  tok = s.GetNextToken (log);                                    \
-  while  (tok)                                                                \
-  {                                                                           \
+#define  XmlElementArray2DBody(T,TypeName,XmlElementToUse)                     \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                   \
+                                            XmlStream&  s,                     \
+                                            RunLog&     log                    \
+                                          ):                                   \
+      XmlElement (tag, s, log),                                                \
+      height (0),                                                              \
+      value (NULL),                                                            \
+      width (0)                                                                \
+{                                                                              \
+  height = tag->AttributeValueInt32 ("Height");                                \
+  if  (height <= 0)                                                            \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Height["     \
+      << height << "] must be a positive value; will set array to NULL."       \
+      << endl << endl;                                                         \
+      height = 0;                                                              \
+  }                                                                            \
+                                                                               \
+  width = tag->AttributeValueInt32 ("Width");                                  \
+  if  (width <= 0)                                                             \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Width["      \
+      << width << "] must be a positive value; will set array to NULL."        \
+      << endl << endl;                                                         \
+    width = 0;                                                                 \
+  }                                                                            \
+                                                                               \
+  if  ((height <= 0)  || (width <= 0))                                         \
+  {                                                                            \
+    value = NULL;                                                              \
+    height = 0;                                                                \
+    width = 0;                                                                 \
+  }                                                                            \
+  else                                                                         \
+  {                                                                            \
+    value = new T*[width];                                                     \
+  }                                                                            \
+                                                                               \
+  kkuint32  rowCount = 0;                                                      \
+  XmlTokenPtr  tok = s.GetNextToken (log);                                     \
+  while  (tok)                                                                 \
+  {                                                                            \
     if  (typeid(*tok) != typeid(XmlElementToUse))                              \
     {                                                                          \
        log.Level (-1) << endl                                                  \
@@ -1508,13 +1652,13 @@ XmlFactoryMacro(TypeName)
 
 
 // Integral Types
-XmlElementIntegralBody(kkint32,Int32,ToInt32)  // XmlElementInt32
+XmlElementBuiltInTypeBody(kkint32,Int32,ToInt32)  // XmlElementInt32
 
-XmlElementIntegralBody(kkint64,Int64,ToInt64)  // XmlElementInt64
+XmlElementBuiltInTypeBody(kkint64,Int64,ToInt64)  // XmlElementInt64
 
-XmlElementIntegralBody(float,Float,ToDouble)   // XmlElementFloat
+XmlElementBuiltInTypeBody(float,Float,ToDouble)   // XmlElementFloat
 
-XmlElementIntegralBody(double,Double,ToDouble) // XmlElementDouble
+XmlElementBuiltInTypeBody(double,Double,ToDouble) // XmlElementDouble
 
 
 

@@ -1054,6 +1054,9 @@ namespace  KKB
   KKStr StrFromUint32 (kkuint32 ui);
   KKStr StrFromInt64  (kkint64  i);
   KKStr StrFromUint64 (kkuint64 ui);
+  KKStr StrFromFloat  (float    f);
+  KKStr StrFromDouble (double   d);
+
 }  /* namespace KKB; */
 
 #endif

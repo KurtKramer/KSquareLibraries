@@ -395,7 +395,7 @@ namespace  KKB
 
   
   /**
-   *@brief  To be used for classes that implement that implement default constructor, readXML, and WriteXML.
+   *@brief  To be used for classes that implement default constructor, ReadXML, and WriteXML.
    */
   template<class  T>
   class  XmlElementTemplate:  public  XmlElement
@@ -468,6 +468,48 @@ namespace  KKB
 
 
 
+
+  class  XmlElementKeyValuePairs:  public  XmlElement
+  {
+  public:
+    XmlElementKeyValuePairs (XmlTagPtr   tag,
+                             XmlStream&  s,
+                             RunLog&     log
+                            );
+                
+    virtual  ~XmlElementKeyValuePairs ();
+
+    vector<pair<KKStr,KKStr> >*  Value ()  const  {return value;}
+
+    vector<pair<KKStr,KKStr> >*  TakeOwnership ();
+
+    void  Add (const KKStr&  key,
+               const KKStr&  v
+              );
+
+    void  Add (const KKStr&  key,
+               kkint32       v
+              );
+
+    void  Add (const KKStr&  key,
+               float         v
+              );
+
+    void  Add (const KKStr&  key,
+               bool          v
+              );
+
+    void  Add (const KKStr&          key,
+               const KKB::DateTime&  v
+              );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   );
+
+  private:
+    vector<pair<KKStr,KKStr> >*  value;
+  };  /* XmlElementKeyValuePairs */
 
 
 
@@ -615,7 +657,7 @@ namespace  KKB
 
 
 
-#define  XmlElementIntegralHeader(T,TypeName)          \
+#define  XmlElementBuiltInTypeHeader(T,TypeName)       \
                                                        \
   class  XmlElement##TypeName:  public  XmlElement     \
   {                                                    \
@@ -744,10 +786,10 @@ namespace  KKB
 
 
 
-XmlElementIntegralHeader(kkint32, Int32)
-XmlElementIntegralHeader(kkint64, Int64)
-XmlElementIntegralHeader(float,   Float)
-XmlElementIntegralHeader(double,  Double)
+XmlElementBuiltInTypeHeader(kkint32, Int32)
+XmlElementBuiltInTypeHeader(kkint64, Int64)
+XmlElementBuiltInTypeHeader(float,   Float)
+XmlElementBuiltInTypeHeader(double,  Double)
 
 
 

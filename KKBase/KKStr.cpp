@@ -5164,6 +5164,31 @@ KKStr  KKB::StrFromUint64 (kkuint64 ul)
 
 
 
+KKStr  KKB::StrFromFloat (float f)
+{
+  char  buff[50];
+  SPRINTF (buff, sizeof (buff), "%f", f);
+  KKStr s (buff);
+  return  s;
+}  /* StrFromFloat */
+
+
+
+KKStr  KKB::StrFromDouble (double  d)
+{
+  char  buff[50];
+  SPRINTF (buff, sizeof (buff), "%g", d);
+  KKStr s (buff);
+  return  s;
+}  /* StrFromFloat */
+
+
+
+
+
+
+
+
 KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 {
   ostringstream  o;
@@ -5171,6 +5196,9 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
   Append (o.str ().c_str ());
   return  *this;
 }
+
+
+
 
 const  kkuint32  KKB::KKStr::StrIntMax = USHRT_MAX;
 
