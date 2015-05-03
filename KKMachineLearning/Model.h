@@ -85,7 +85,7 @@ namespace KKMLL
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 
 
-    Model ();
+    Model (VolConstBool&  _cancelFlag);
 
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
@@ -494,8 +494,68 @@ namespace KKMLL
 
   
   
+  /**
+   *@brief  The base class to be used for the manufacturing if "Model" derived classes.
+   */
+  class  XmlElementModel:  public  XmlElement
+  {
+  public:
+    XmlElementModel (XmlTagPtr      tag,
+                     XmlStream&     s,
+                     VolConstBool&  _cancelFlag,
+                     RunLog&        log
+                    );
+                
+    virtual  ~XmlElementModel ()
+    {
+      delete  value;
+      value = NULL;
+    }
+
+    ModelPtr  Value ()  const   {return value;}
+
+    ModelPtr  TakeOwnership ()
+    {
+      ModelPtr v = value;
+      value = NULL;
+      return v;
+    }
+
+  protected:
+    ModelPtr  value;
+  };
+  typedef  XmlElementModel*  XmlElementModelPtr;
 
 
+
+
+  /**
+   *@brief  Abstract base class for all Factories for the Model derived classes.
+   *@details Classes such as "ModelDual", "ModelKnn", "ModelOldSVM", "ModelSvmBase", and "ModelUsfCasCor" will 
+   * all need to implement their own versions of "XmlFactoryModel".  Instances of these classes will need to be 
+   * registered by "XmlElementTrainingProcess2" constructor. Needs to be done this way because we need to pass
+   * the reference to cancelFlag to all the classes listed above.
+   */
+
+  class  XmlFactoryModel: public XmlFactory
+  {
+  public:
+    XmlFactoryModel (const KKStr&   _className,
+                     VolConstBool&  _cancelFlag
+                    ): 
+      XmlFactory (_className),
+      cancelFlag (_cancelFlag)
+    {}
+
+
+    virtual  XmlElementModelPtr  ManufatureXmlElement (XmlTagPtr   tag,
+                                                        XmlStream&  s,
+                                                        RunLog&     log
+                                                      )  = 0;
+
+  protected:
+    VolConstBool&  cancelFlag;
+  }; /* XmlFactoryModel */
 
 
 

@@ -16,7 +16,7 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "KKStr.h"
@@ -431,11 +431,11 @@ TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
 
 
 
-TrainingProcess2::TrainingProcess2 (const KKStr&         _configFileName,
-                                    RunLog&              _log,
-                                    bool                 _featuresAlreadyNormalized,
-                                    VolConstBool&        _cancelFlag,
-                                    KKStr&               _statusMessage
+TrainingProcess2::TrainingProcess2 (const KKStr&   _configFileName,
+                                    RunLog&        _log,
+                                    bool           _featuresAlreadyNormalized,
+                                    VolConstBool&  _cancelFlag,
+                                    KKStr&         _statusMessage
                                    ):
 
   abort                     (false),
@@ -774,7 +774,7 @@ void  TrainingProcess2::WriteXml (ostream&  o)
     o << "TrainingConfiguration2" << "\t" << configFileNameSpecified << "\t" << config->FactoryName () << endl;
 
   if  (fvFactoryProducer)
-    o << "fvFactoryProducer" << "\t" << fvFactoryProducer->Name () << endl;
+    o << "fvFactoryProducer"     << "\t" << fvFactoryProducer->Name () << endl;
   
   o << "ConfigFileName"          << "\t" << configFileName                  << endl;
   o << "ConfigFileNameSpecified" << "\t" << configFileNameSpecified         << endl;
@@ -1573,4 +1573,6 @@ kkint32 TrainingProcess2List::MemoryConsumedEstimated ()  const
 }
 
 
+
+XmlFactoryMacro(TrainingProcess2)
 

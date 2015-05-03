@@ -41,9 +41,9 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-Model::Model ():
+Model::Model (VolConstBool&  _cancelFlag):
     alreadyNormalized        (false),
-    cancelFlag               (),
+    cancelFlag               (_cancelFlag),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),

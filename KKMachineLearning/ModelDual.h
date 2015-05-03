@@ -72,6 +72,8 @@ namespace  KKMLL
     typedef  ModelDual*  ModelDualPtr;
 
 
+    ModelDual (VolConstBool&  _cancelFlag);
+
     ModelDual (FileDescPtr    _fileDesc,
                VolConstBool&  _cancelFlag
               );
@@ -198,6 +200,15 @@ namespace  KKMLL
                                                    RunLog&   log
                                                   );
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
 
   protected:
@@ -231,8 +242,71 @@ namespace  KKMLL
   };  /* ModelDual */
 
 
-
 typedef  ModelDual::ModelDualPtr  ModelDualPtr;
+
+
+
+
+  /**
+   * XmlElement derived class specialized for creating instances of "ModelDual".
+   */
+  class  XmlElementModelDual:  public  XmlElementModel
+  {
+  public:
+    XmlElementModelDual (XmlTagPtr      tag,
+                         XmlStream&     s,
+                         VolConstBool&  _cancelFlag,
+                         RunLog&        log
+                        ):
+        XmlElementModel (tag, s, _cancelFlag, log)
+    {
+      value = new ModelDual (_cancelFlag);
+      value->ReadXML (s, tag, log);
+    }
+                
+
+
+    virtual  ~XmlElementModelDual ()
+    {
+    }
+
+    
+    ModelDualPtr  Value ()  const   {return dynamic_cast<ModelDualPtr> (value);}
+
+
+    ModelDualPtr  TakeOwnership ()
+    {
+      return  dynamic_cast<ModelDualPtr> (XmlElementModel::TakeOwnership ());
+    }
+
+  private:
+  };
+  typedef  XmlElementModelDual*  XmlElementModelDualPtr;
+
+
+
+
+  /**
+   *@brief  Derived class for manufacturing XmlElementModelDual classes.
+   */
+  class  XmlFactoryModelDual:  public  XmlFactoryModel
+  {
+  public:
+    XmlFactoryModelDual (VolConstBool&  _cancelFlag): 
+      XmlFactoryModel ("ModelDual", _cancelFlag)
+    {}
+
+
+    virtual  XmlElementModelDualPtr  ManufatureXmlElement (XmlTagPtr   tag,
+                                                           XmlStream&  s,
+                                                           RunLog&     log
+                                                          )
+    {
+      return new XmlElementModelDual (tag, s, cancelFlag, log);
+    }
+  }; /* XmlFactoryModel */
+
+
 
 } /* namespace  KKMLL */
 

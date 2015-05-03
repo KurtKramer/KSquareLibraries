@@ -3,6 +3,8 @@
 
 #include <ostream>
 
+#include "XmlStream.h"
+
 #include "Model.h"
 #include "SVMModel.h"
 #include "TrainingConfiguration2.h"
@@ -314,6 +316,17 @@ namespace KKMLL
     void  WriteXml (ostream&  o);
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
   private:
     void    AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
                                        FeatureVectorList&  examplesToAdd
@@ -391,7 +404,7 @@ namespace KKMLL
 
     MLClassListPtr               mlClasses; /**< List of all classes that are to be processed. There will be one entry for each MLClass,
                                              * Including one for noise trainingExamples(unknown trainingExamples).
-                                            */
+                                             */
 
     RunLog&                      log;
 
@@ -432,6 +445,11 @@ namespace KKMLL
 
 #define  _TrainingProcess2List_Defined_
 
+
+  // XlmStream  instances.
+
+  typedef  XmlElementTemplate<TrainingProcess2>  XmlElementTrainingProcess2;
+  typedef  XmlElementTrainingProcess2*  XmlElementTrainingProcess2Ptr;
 
 } /* namespace KKMLL */
 

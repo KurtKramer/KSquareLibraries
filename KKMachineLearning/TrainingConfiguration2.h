@@ -552,7 +552,7 @@ namespace KKMLL
 
 
   typedef  XmlElementTemplate<TrainingConfiguration2>  XmlElementTrainingConfiguration2;
-  typedef  XmlElementTrainingConfiguration2*  XmlElementAtXmlElementTrainingConfiguration2PtrtributePtr;
+  typedef  XmlElementTrainingConfiguration2*  XmlElementTrainingConfiguration2Ptr;
 }  /* namespace KKMLL */
 
 

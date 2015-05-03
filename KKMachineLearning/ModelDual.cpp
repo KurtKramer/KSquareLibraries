@@ -33,6 +33,23 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+
+
+ModelDual::ModelDual (VolConstBool&  _cancelFlag):
+  Model (_cancelFlag),
+  param         (NULL),
+  config1       (NULL),
+  config2       (NULL),
+  trainer1      (NULL),
+  trainer2      (NULL),
+  classifier1   (NULL),
+  classifier2   (NULL)
+{
+}
+
+
+
+
 ModelDual::ModelDual (FileDescPtr    _fileDesc,
                       VolConstBool&  _cancelFlag
                      ):
@@ -1061,3 +1078,88 @@ kkint32 ModelDual::NumOfSupportVectors ()  const
     return 0;
 
 }  /* NumOfSupportVectors */
+
+
+
+
+
+void  ModelDual::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                          )  const
+{
+  XmlTag  startTag ("ModelDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteXMLFields (o);
+
+  config1->WriteXML ("config1", o);
+  config2->WriteXML ("config2", o);
+
+  trainer1->WriteXML ("trainer1", o);
+  trainer2->WriteXML ("trainer2", o);
+
+  XmlTag  endTag ("ModelDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelDual::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         )
+{
+  delete  config1;  config1 = NULL;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);
+    if  ((t != NULL)  &&  (t->TokenType () == XmlToken::TokenTypes::tokElement))
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (e)
+      {
+        const KKStr&  varName     = e->VarName();
+        const KKStr&  sectionName = e->SectionName ();
+
+        if  ((varName.EqualIgnoreCase ("config1"))  &&  (typeid (*e) == typeid (XmlElementTrainingConfiguration2)))
+        {
+          delete config1;
+          config1 = dynamic_cast<XmlElementTrainingConfiguration2Ptr>(e)->TakeOwnership ();
+        }
+
+        else if  ((varName.EqualIgnoreCase ("config2"))  &&  (typeid (*e) == typeid (XmlElementTrainingConfiguration2)))
+        {
+          delete config2;
+          config2 = dynamic_cast<XmlElementTrainingConfiguration2Ptr>(e)->TakeOwnership ();
+        }
+      
+        else if  ((varName.EqualIgnoreCase ("trainer1"))  &&  (typeid (*e) == typeid (XmlElementTrainingProcess2)))
+        {
+          delete trainer1;
+          trainer1 = dynamic_cast<XmlElementTrainingProcess2Ptr>(e)->TakeOwnership ();
+        }
+      
+        else if  ((varName.EqualIgnoreCase ("trainer2"))  &&  (typeid (*e) == typeid (XmlElementTrainingProcess2)))
+        {
+          delete trainer2;
+          trainer2 = dynamic_cast<XmlElementTrainingProcess2Ptr>(e)->TakeOwnership ();
+        }
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+
+  if  (validModel)
+  {
+    delete  classifier1;   classifier1 = new Classifier2 (trainer1, log);
+    delete  classifier2;   classifier2 = new Classifier2 (trainer2, log);
+  }
+
+}  /* ReadXML */
+
