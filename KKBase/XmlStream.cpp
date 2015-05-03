@@ -60,6 +60,46 @@ XmlStream::~XmlStream ()
 }
 
 
+void  XmlStream::RegisterFactory (XmlFactoryPtr  factory)
+{
+
+}  /* RegisterFactory */
+
+
+
+void  XmlStream::PushXmlElementLevel (const KKStr&  sectionName)
+{
+  endOfElementTagNames.push_back (sectionName);
+  factoryManagers.push_back (new XmlFactoryManager (sectionName));
+}  /* PushNewXmlElementLevel */
+
+
+
+void  XmlStream::PopXmlElementLevel ()
+{
+   endOfElementTagNames.pop_back ();
+   XmlFactoryManagerPtr  fm = factoryManagers.back ();
+   factoryManagers.pop_back ();
+   delete  fm;
+   fm = NULL;
+}
+
+
+XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
+{
+  XmlFactory*  result = NULL;
+  kkuint32  level = factoryManagers.size ();
+  do  
+  {
+    --level;
+    result = factoryManagers[level]->FactoryLookUp (sectionName);
+  }  while  ((level > 0)  &&  (result == NULL));
+
+  if  (result == NULL)
+    result = XmlFactory::FactoryLookUp (sectionName);
+  return  result;
+}
+
 
 XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
 {
@@ -79,14 +119,14 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     t = NULL;
     if  (tag->TagType () == XmlTag::TagTypes::tagStart)
     {
-      XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
+      XmlFactoryPtr  factory = TrackDownFactory (tag->Name ());
       if  (!factory)
         factory = XmlElementKKStrFactoryInstance  ();
 
-      endOfElementTagNames.push_back (tag->Name ());
+      PushXmlElementLevel (tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);
       KKStr  endTagName = endOfElementTagNames.back ();
-      endOfElementTagNames.pop_back ();
+      PopXmlElementLevel ();
       endOfElemenReached = false;
     }
 
@@ -95,10 +135,13 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
         factory = XmlElementKKStrFactoryInstance  ();
+      PushXmlElementLevel (tag->Name ());
       endOfElemenReached = true;
       token = factory->ManufatureXmlElement (tag, *this, log);
       endOfElemenReached = false;
+      PopXmlElementLevel ();
     }
+
     else if  (tag->TagType () == XmlTag::TagTypes::tagEnd)
     {
       if  (endOfElementTagNames.size () < 1)
@@ -738,26 +781,20 @@ void  XmlContent::WriteXml (const KKStr&  s,
 
 
 
+XmlFactoryManagerPtr   XmlFactory::globalXmlFactoryManager = NULL;
 
-
-map<KKStr, XmlFactory*>*  XmlFactory::factories = NULL;
 
 
 XmlFactory*  XmlFactory::FactoryLookUp (const KKStr&  className)
 {
   GlobalGoalKeeper::StartBlock ();
-  if  (factories == NULL)
+  if  (globalXmlFactoryManager == NULL)
   {
-    factories = new map<KKStr, XmlFactory*> ();
+    globalXmlFactoryManager = new XmlFactoryManager ("globalXmlFactoryManager");
     atexit (FinalCleanUp);
   }
 
-  XmlFactory*  factory = NULL;
-
-  map<KKStr, XmlFactory*>::const_iterator  idx;
-  idx = factories->find (className);
-  if  (idx != factories->end ())
-    factory = idx->second;
+  XmlFactory*  factory = globalXmlFactoryManager->FactoryLookUp (className);
 
   GlobalGoalKeeper::EndBlock ();
 
@@ -776,17 +813,15 @@ void   XmlFactory::RegisterFactory  (XmlFactory*  factory)
   }
 
   GlobalGoalKeeper::StartBlock ();
-  XmlFactory*  existingFactory = FactoryLookUp (factory->ClassName ());
-  if  (existingFactory)
+
+  if  (!globalXmlFactoryManager)
   {
-    cerr << endl
-         << "XmlStream::RegisterFactory   ***ERROR***   Factory[" << factory->ClassName () << "] already exists." << endl
-         << endl;
+    globalXmlFactoryManager = new XmlFactoryManager ("globalXmlFactoryManager");
+    atexit (FinalCleanUp);
   }
-  else
-  {
-    factories->insert (pair<KKStr, XmlFactory*> (factory->ClassName (), factory));
-  }
+
+  globalXmlFactoryManager->RegisterFactory (factory);
+
   GlobalGoalKeeper::EndBlock ();
 }
 
@@ -794,16 +829,11 @@ void   XmlFactory::RegisterFactory  (XmlFactory*  factory)
 
 void  XmlFactory::FinalCleanUp ()
 {
-  if  (factories)
-  {
-    map<KKStr, XmlFactory*>::iterator  idx;
-    for  (idx = factories->begin ();  idx != factories->end ();  ++idx)
-      delete  idx->second;
-
-    delete  factories;
-    factories = NULL;
-  }
+  if  (globalXmlFactoryManager)
+    delete  globalXmlFactoryManager;
+  globalXmlFactoryManager = NULL;
 }
+
 
 
 
@@ -812,6 +842,66 @@ XmlFactory::XmlFactory (const KKStr&  _clasName):
 {
 }
 
+
+
+
+XmlFactoryManager::XmlFactoryManager (const KKStr&  _name):
+  factories (),
+  name      (_name)
+{
+}
+
+
+XmlFactoryManager::~XmlFactoryManager ()
+{
+  map<KKStr, XmlFactory*>::iterator  idx;
+  for  (idx = factories.begin ();  idx != factories.end ();  ++idx)
+  {
+    XmlFactory*  f = idx->second;
+    delete  f;
+  }
+  factories.clear ();
+}
+
+
+
+void   XmlFactoryManager::RegisterFactory  (XmlFactory*  factory)
+{
+  GlobalGoalKeeper::StartBlock ();
+  XmlFactory*  existingFactory = FactoryLookUp (factory->ClassName ());
+  if  (existingFactory)
+  {
+    GlobalGoalKeeper::EndBlock ();
+    KKStr  errMsg (200);
+    errMsg << "XmlFactoryManager::RegisterFactory  FactoryManager[" << name << "]  Factory[" << factory->ClassName () << "] already exists." ;
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
+  else
+  {
+    factories.insert (pair<KKStr, XmlFactory*> (factory->ClassName (), factory));
+  }
+  GlobalGoalKeeper::EndBlock ();
+}
+      
+
+
+
+XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
+{
+  GlobalGoalKeeper::StartBlock ();
+  XmlFactory*  result = NULL;
+
+  map<KKStr, XmlFactory*>::const_iterator  idx;
+  idx = factories.find (className);
+  if  (idx == factories.end ())
+    result =  NULL;
+  else
+    result = idx->second;
+
+  GlobalGoalKeeper::EndBlock ();
+  return  result;
+}  /* FactoryLookUp */
 
 
 

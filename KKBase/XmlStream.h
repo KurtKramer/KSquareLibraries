@@ -19,14 +19,21 @@ namespace  KKB
    *        of objects to disk.  Right now it is more of an Idea Generator than anything usable.
    */
 
-  class XmlToken;
+  class  XmlToken;
   typedef  XmlToken*  XmlTokenPtr;
 
-  class XmlElement;
+  class  XmlElement;
   typedef  XmlElement*  XmlElementPtr;
 
   class  XmlContent;
   typedef  XmlContent*  XmlContentPtr;
+
+  class  XmlFactory;
+  typedef  XmlFactory*  XmlFactoryPtr;
+
+  class  XmlFactoryManager;
+  typedef  XmlFactoryManager*  XmlFactoryManagerPtr;
+
 
 
   class  XmlStream
@@ -42,14 +49,17 @@ namespace  KKB
 
     virtual  ~XmlStream ();
 
-    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);  /**< Will return either a XmlElement or a XmlContent which ever is next. 
-                                                         * If we are at the end of the element then NULL will be returned,
-                                                         */
+    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);     /**< Will return either a XmlElement or a XmlContent which ever is next. 
+                                                            * If we are at the end of the element then NULL will be returned,
+                                                            */
 
 
     virtual  XmlContentPtr  GetNextContent (RunLog& log);  /**< Will return any content that may exist before the next tag; if 
                                                             * there is no content before the next tag will return NULL
                                                             */
+
+    void  RegisterFactory (XmlFactoryPtr  factory);        /** Registers factory with the highest level FactoryManager in 'factoryManagers'. */
+
 
   private:
     /**
@@ -57,7 +67,30 @@ namespace  KKB
      */
     kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
 
-    VectorKKStr      endOfElementTagNames;
+
+    void  PushXmlElementLevel (const KKStr&  sectionName);
+
+    void  PopXmlElementLevel ();
+
+    XmlFactoryPtr  TrackDownFactory (const KKStr&  sectionName);     /** Will search for the factory starting at the highest level of 'factoryManagers'
+                                                                      * the working down the stack; if not found there will then look at the 
+                                                                      'XmlFactory::globalXmlFactoryManager'
+                                                                      */
+
+
+    /**
+     * When we start a new element the name of the Section is pushed on the back  of 'endOfElementTagNames'.  This
+     * is how we keep track of the End tag that we are looking for to close out the current element.  The member
+     * 'factoryManagers' works in synchronization with endOfElementTagNames.  That is when we start a new Element
+     * we push an empty 'XmlFactoryManager' instance onto 'factoryManagers'. This will allow XmlElement derived 
+     * classes to specify 'XmlFactory' derived instances that are specific to their universe.  An example use would
+     * be the 'TrainingProcess2' class requiring to add a XmlElement factory for 'Model' derived classes. These 
+     * Factory derived classes would contain a cancelFlag reference that they pass in the constructor to all 
+     */
+    VectorKKStr                    endOfElementTagNames;
+    vector<XmlFactoryManagerPtr>   factoryManagers;
+
+
     bool             endOfElemenReached;
     KKStr            fileName;
     KKStr            nameOfLastEndTag;
@@ -293,6 +326,35 @@ namespace  KKB
   typedef  XmlContent*  XmlContentPtr;
 
 
+  
+
+
+
+  class  XmlFactoryManager
+  {
+  public:
+    XmlFactoryManager (const KKStr&  _name);
+
+    ~XmlFactoryManager ();
+ 
+
+    /**
+     *@brief  Give the FactoryManager instance ownership of this factory;  the name of the factory must be 
+     * unique.
+     */
+    void   RegisterFactory  (XmlFactory*  factory);
+      
+    XmlFactory*  FactoryLookUp (const KKStr&  className)  const;
+
+  private:
+    map<KKStr, XmlFactory*>  factories;
+    KKStr                    name;
+  };  /* XmlFactoryManager */
+
+  typedef  XmlFactoryManager*  XmlFactoryManagerPtr;
+
+
+
 
 
 
@@ -311,13 +373,13 @@ namespace  KKB
     static  XmlFactory*  FactoryLookUp (const KKStr&  className);
 
     /**
-     *@brief  register a instance of a Derives Factory class that is meant to create instances for a  specific class.
+     *@brief  register a instance of a Derives Factory class for the Global XmlFactoryManager.
      *@param[in]  factory  The instance that is being registered; factories will take ownership and the method 
      *  'XmlStream' will be responsible for deleting upon application shutdown.
      */
     static  void   RegisterFactory  (XmlFactory*  factory);
 
-    static  map<KKStr, XmlFactory*>*  factories;
+    static  XmlFactoryManagerPtr  globalXmlFactoryManager;
 
     static  void  FinalCleanUp ();
     private:
@@ -327,6 +389,8 @@ namespace  KKB
 
   typedef  XmlFactory*  XmlFactoryPtr;
   typedef  XmlFactory const *  XmlFactoryConstPtr;
+
+
 
 
   
@@ -684,8 +748,6 @@ XmlElementIntegralHeader(kkint32, Int32)
 XmlElementIntegralHeader(kkint64, Int64)
 XmlElementIntegralHeader(float,   Float)
 XmlElementIntegralHeader(double,  Double)
-
-
 
 
 
