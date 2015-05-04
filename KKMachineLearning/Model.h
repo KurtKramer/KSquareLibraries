@@ -400,7 +400,7 @@ namespace KKMLL
     /**
      *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
      */
-    void  WriteXMLFields (ostream&  o)  const;
+    void  WriteModelXMLFields (ostream&  o)  const;
 
   protected:
     void  AddErrorMsg (const KKStr&  errMsg,
@@ -529,6 +529,31 @@ namespace KKMLL
 
 
 
+
+  template<class ModelType>
+  class  XmlElementModelTemplate:  public  XmlElementModel
+  {
+  public:
+    XmlElementModelTemplate (XmlTagPtr      tag,
+                             XmlStream&     s,
+                             VolConstBool&  _cancelFlag,
+                             RunLog&        log
+                            ):
+      XmlElementModel (tag, s, _cancelFlag, log)
+    {}
+                
+    virtual  ~XmlElementModelTemplate ()
+    {
+    }
+
+    ModelType*  Value ()  const   {return dynamic_cast<ModelType*>(value);}
+
+
+    ModelType*  TakeOwnership ()  {return dynamic_cast<ModelType*> (XmlElementModel::TakeOwnership ());}
+  };  /* XmlElementModelTemplate */
+
+  
+
   /**
    *@brief  Abstract base class for all Factories for the Model derived classes.
    *@details Classes such as "ModelDual", "ModelKnn", "ModelOldSVM", "ModelSvmBase", and "ModelUsfCasCor" will 
@@ -556,6 +581,33 @@ namespace KKMLL
   protected:
     VolConstBool&  cancelFlag;
   }; /* XmlFactoryModel */
+
+
+
+
+  template<class  XmlElementModelType>
+  class  XmlFactoryModelTemplate: public  XmlFactoryModel
+  {
+  public:
+    XmlFactoryModelTemplate (const KKStr&   _className,
+                             VolConstBool&  _cancelFlag
+                            ):
+      XmlFactoryModel (_className, _cancelFlag)
+    {}
+
+
+    virtual  XmlElementModelType*  ManufatureXmlElement (XmlTagPtr   tag,
+                                                         XmlStream&  s,
+                                                         RunLog&     log
+                                                       )
+    {
+      return new XmlElementModelType (tag, s, log);
+    }
+
+  protected:
+  }; /* XmlFactoryModelTemplate */
+
+
 
 
 

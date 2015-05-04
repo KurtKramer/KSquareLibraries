@@ -336,8 +336,8 @@ namespace  SVM289_MFS
   struct decision_function;
 
 
-  typedef  XmlElementTemplate<Svm_Model>  XmlElementAttribute;
-  typedef  XmlElementAttribute*  XmlElementAttributePtr;
+  typedef  XmlElementTemplate<Svm_Model>  XmlElementSvm_Model;
+  typedef  XmlElementSvm_Model*  XmlElementSvm_ModelPtr;
 
 }  /* SVM289_MFS */
 

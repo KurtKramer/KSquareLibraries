@@ -156,8 +156,12 @@ namespace  KKMLL
   
   typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
 
-  typedef  XmlElementModelParamTemplate<ModelSvmBase>  XmlElementModelModelSvmBase;
-  typedef  XmlElementModelModelSvmBase*  XmlElementModelModelSvmBasePtr;
+
+  typedef  XmlElementModelTemplate<ModelSvmBase>  XmlElementModelSvmBase;
+  typedef  XmlElementModelSvmBase*  XmlElementModelSvmBasePtr;
+
+  typedef  XmlFactoryModelTemplate<XmlElementModelSvmBase>  XmlFactoryModelSvmBase;
+  typedef  XmlFactoryModelSvmBase*  XmlFactoryModelSvmBasePtr;
 } /* namespace  KKMLL */
 
 #endif

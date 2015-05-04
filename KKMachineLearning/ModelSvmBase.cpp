@@ -64,7 +64,7 @@ ModelSvmBase::ModelSvmBase (const ModelSvmBase&   _model):
   param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
   if  (_model.svmModel)
   {
-    svmModel = new SVM289_MFS::svm_model (*_model.svmModel, fileDesc);
+    svmModel = new SVM289_MFS::Svm_Model (*_model.svmModel, fileDesc);
   }
 }
 
@@ -92,7 +92,7 @@ ModelSvmBase::~ModelSvmBase ()
 kkint32  ModelSvmBase::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
-                                 sizeof (SVM289_MFS::svm_model*)   + 
+                                 sizeof (SVM289_MFS::Svm_Model*)   + 
                                  sizeof (ModelParamSvmBasePtr);
 
   if  (svmModel)
@@ -701,17 +701,16 @@ void  ModelSvmBase::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelSvmBase",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
 
-
-  WriteXMLFields (o);
+  WriteModelXMLFields (o);  // Write the PArent class fields 1st.
 
   if  (svmModel)
+    svmModel->WriteXML ("SvmModel", o);
 
-
-  svmModel->
-    ModelParamSvmBasePtr    param;  
-
-  svmParameters->ToString ().WriteXML ("SvmParameters", o);
+  //  Turns out the base class "Model" owns this data field and will also be writing it
+  // out so no point in re-reading again.
+  //if  (param)  param->WriteXML ("Param", o);
 
   XmlTag  endTag ("ModelSvmBase", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
@@ -727,24 +726,50 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
                              RunLog&         log
                             )
 {
-  KKStr  svmParametersStr;
+  delete  svmModel;
+  svmModel = NULL;
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
-    t = ReadXMLModelParamToken (t);
+    t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
     if  (t)
     {
-      if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSvm_Model)))
       {
-        svmParametersStr = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+        delete  svmModel;
+        svmModel = dynamic_cast<XmlElementSvm_ModelPtr> (t)->TakeOwnership ();
+      }
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
+        AddErrorMsg (errMsg, 0);
+        log.Level (-1) << endl << errMsg << endl << endl;
       }
     }
     t = s.GetNextToken (log);
   }
 
-  bool  validFormat = false;
-  delete  svmParameters;
-  svmParameters = new SVMparam  (svmParametersStr, SelectedFeatures (), validFormat, log);
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamSvmBase))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
+  }
 }  /* ReadXML */
 
  

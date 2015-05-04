@@ -1091,7 +1091,7 @@ void  ModelDual::WriteXML (const KKStr&  varName,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
-  WriteXMLFields (o);
+  WriteModelXMLFields (o);  // Write the base class data fields 1st.
 
   config1->WriteXML ("config1", o);
   config2->WriteXML ("config2", o);

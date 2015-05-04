@@ -274,6 +274,14 @@ namespace KKMLL
 
 
   typedef  ModelOldSVM::ModelOldSVMPtr  ModelOldSVMPtr;
+
+
+  typedef  XmlElementModelTemplate<ModelOldSVM>  XmlElementModelOldSVM;
+  typedef  XmlElementModelOldSVM*  XmlElementModelOldSVMPtr;
+
+  typedef  XmlFactoryModelTemplate<XmlElementModelOldSVM>  XmlFactoryModelOldSVM;
+  typedef  XmlFactoryModelOldSVM*  XmlFactoryModelOldSVMPtr;
+
 } /* namespace KKMLL */
 
 

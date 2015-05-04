@@ -263,7 +263,7 @@ void  ModelKnn::WriteXML (const KKStr&  varName,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
 
-  WriteXMLFields (o);
+  WriteModelXMLFields (o); // Write the base class datafields 1st.
   if  (param)
     param->WriteXML ("Param", o);
 
@@ -308,4 +308,4 @@ void  ModelKnn::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
-XmlFactoryMacro(ModelKnn)
+

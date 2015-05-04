@@ -1341,7 +1341,7 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
 
 
 
-void  Model::WriteXMLFields (ostream&  o)  const
+void  Model::WriteModelXMLFields (ostream&  o)  const
 {
   //timeSaved = osGetLocalDateTime ();
   ModelTypeStr ().WriteXML ("ModelType", o);
@@ -1359,7 +1359,7 @@ void  Model::WriteXMLFields (ostream&  o)  const
   XmlElementBool::WriteXML (alreadyNormalized, "alreadyNormalized", o);
   if  (normParms)
     normParms->WriteXML ("NormParms", o);
-} /* WriteXMLFields */
+} /* WriteModelXMLFields */
 
 
 

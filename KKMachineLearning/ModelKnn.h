@@ -132,12 +132,14 @@ namespace  KKMLL
 
 
 
-  typedef  XmlElementTemplate<ModelKnn>  XmlElementModelKnn;
+
+  typedef  XmlElementModelTemplate<ModelKnn>  XmlElementModelKnn;
   typedef  XmlElementModelKnn*  XmlElementModelKnnPtr;
 
+  typedef  XmlFactoryModelTemplate<XmlElementModelKnn>  XmlFactoryModelKnn;
+  typedef  XmlFactoryModelKnn*  XmlFactoryModelKnnPtr;
 
 }
-
 
 
 #endif
