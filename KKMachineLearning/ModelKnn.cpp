@@ -305,6 +305,28 @@ void  ModelKnn::ReadXML (XmlStream&      s,
     delete  t;
     t = s.GetNextToken (log);
   }
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamKnn))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamKnnPtr> (Model::param);
+  }
+
 }  /* ReadXML */
 
 

@@ -59,7 +59,7 @@ namespace KKMLL
 
     MLClassPtr      GetMLClassByIndex (size_t idx);
 
-    MLClassPtr           GetMLClass    (kkint16 num)  const;
+    MLClassPtr      GetMLClass    (kkint16 num)  const;
 
     MLClassList     GetMLClasses (kkint16 num)  const;
 

@@ -508,6 +508,114 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
 
 
 
+
+void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
+                                ostream&      o
+                               )  const
+{
+  XmlTag  startTag ("ModelDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  WriteModelXMLFields (o);  // Write the base class data fields 1st.
+
+  usfCasCorClassifier->WriteXML ("UsfCasCorClassifier", o);
+
+  XmlTag  endTag ("ModelDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelUsfCasCor::ReadXML (XmlStream&      s,
+                               XmlTagConstPtr  tag,
+                               RunLog&         log
+                              )
+{
+  delete  usfCasCorClassifier;
+  usfCasCorClassifier = NULL;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);
+    if  (t)
+    {
+      if  (t->VarName ().EqualIgnoreCase ("UsfCasCorClassifier")  &&  (typeid (*t) == typeid(XmlElementUsfCasCor)))
+      {
+        delete usfCasCorClassifier;
+        usfCasCorClassifier = dynamic_cast<XmlElementUsfCasCorPtr>(t)->TakeOwnership ();
+      }
+      else
+      {
+        KKStr  errMsg (128);
+        errMsg << "ModelUsfCasCor::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamUsfCasCor))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
+  }
+
+
+}  /* ReadXML */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o,
                                                       RunLog&   log
                                                      )

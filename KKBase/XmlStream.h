@@ -6,6 +6,7 @@
 #define  _XMLSTREAM_
 #include  <map>
 
+#include "DateTime.h"
 #include "KKStr.h"
 #include "RunLog.h"
 #include "XmlTokenizer.h"

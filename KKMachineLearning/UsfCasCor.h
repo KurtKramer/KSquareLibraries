@@ -326,6 +326,12 @@ namespace KKMLL
 
     void  WriteXML (ostream&  o);
 
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
                    RunLog&         log
@@ -407,12 +413,6 @@ namespace KKMLL
     void  ReadXmlNameValueLine (istream&  i,
                                 RunLog&   log
                                );
-
-
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
-                   )  const;
-
 
 
     /* Global variables */

@@ -592,3 +592,101 @@ FeatureVectorPtr  ModelOldSVM::PrepExampleForPrediction (FeatureVectorPtr  fv,
   return  fv;
 }  /* PrepExampleForPrediction */
 
+
+
+
+
+
+void  ModelOldSVM::WriteXML (const KKStr&  varName,
+                              ostream&      o
+                             )  const
+{
+  XmlTag  startTag ("ModelOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+
+  WriteModelXMLFields (o);  // Write the PArent class fields 1st.
+
+
+  if  (assignments)
+    assignments->ToString ().WriteXML ("Assignments", o);
+
+  //if  (svmModel)
+  //  svmModel->WriteXML ("svmModel", o)
+
+  ///
+  ///   Fill in code here,
+  ///
+
+
+
+  XmlTag  endTag ("ModelOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelOldSVM::ReadXML (XmlStream&      s,
+                             XmlTagConstPtr  tag,
+                             RunLog&         log
+                            )
+{
+  delete  svmModel;
+  svmModel = NULL;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
+    if  (t)
+    {
+      if  ((t->VarName ().EqualIgnoreCase ("Assignments"))  &&  (typeid(*t) == typeid(XmlElementKKStr)))
+      {
+        XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
+        delete  assignments;
+        assignments = new ClassAssignments (log);
+        assignments->ParseToString (*(s->Value ()));
+      }
+
+      ///TODO    Need to implement ReadXML and WriteXML on SVMModel.
+      ///else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
+      ///{
+      ///  delete  svmModel;
+      ///  svmModel = dynamic_cast<XmlElementSVMModel> (t)->TakeOwnership ();
+      ///}
+
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
+        AddErrorMsg (errMsg, 0);
+        log.Level (-1) << endl << errMsg << endl << endl;
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamOldSVM))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
+  }
+}  /* ReadXML */

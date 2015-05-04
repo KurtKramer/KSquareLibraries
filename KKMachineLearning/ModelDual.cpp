@@ -1119,10 +1119,15 @@ void  ModelDual::ReadXML (XmlStream&      s,
   while  (t)
   {
     t = ReadXMLModelToken (t, log);
+    bool tokenFound = true;
     if  ((t != NULL)  &&  (t->TokenType () == XmlToken::TokenTypes::tokElement))
     {
       XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
-      if  (e)
+      if  (!e)
+      {
+        tokenFound = false;
+      }
+      else
       {
         const KKStr&  varName     = e->VarName();
         const KKStr&  sectionName = e->SectionName ();
@@ -1150,8 +1155,20 @@ void  ModelDual::ReadXML (XmlStream&      s,
           delete trainer2;
           trainer2 = dynamic_cast<XmlElementTrainingProcess2Ptr>(e)->TakeOwnership ();
         }
+        else
+        {
+          tokenFound = false;
+        }
       }
     }
+    if  (!tokenFound)
+    {
+      KKStr  errMsg (128);
+        errMsg << "ModelDual::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+    }
+
     t = s.GetNextToken (log);
   }
 
@@ -1159,6 +1176,27 @@ void  ModelDual::ReadXML (XmlStream&      s,
   {
     delete  classifier1;   classifier1 = new Classifier2 (trainer1, log);
     delete  classifier2;   classifier2 = new Classifier2 (trainer2, log);
+  }
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamDual))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamDualPtr> (Model::param);
   }
 
 }  /* ReadXML */

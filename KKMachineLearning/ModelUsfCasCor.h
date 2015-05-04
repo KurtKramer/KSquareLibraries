@@ -131,15 +131,33 @@ namespace  KKMLL
                                                   );
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
   protected:
     UsfCasCorPtr              usfCasCorClassifier;
     ModelParamUsfCasCorPtr    param;                  /**<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
   };  /* ModelUsfCasCor */
 
+  typedef  ModelUsfCasCor::ModelUsfCasCorPtr  ModelUsfCasCorPtr;
+
+#define  _ModelUsfCasCor_Defined_
 
 
-typedef  ModelUsfCasCor::ModelUsfCasCorPtr  ModelUsfCasCorPtr;
+
+  typedef  XmlElementModelTemplate<ModelUsfCasCor>  XmlElementModelUsfCasCor;
+  typedef  XmlElementModelUsfCasCor*  XmlElementModelUsfCasCorPtr;
+
+  typedef  XmlFactoryModelTemplate<XmlElementModelUsfCasCor>  XmlFactoryModelUsfCasCor;
+  typedef  XmlFactoryModelUsfCasCor*  XmlFactoryModelUsfCasCorPtr;
+
 
 } /* namespace  KKMLL */
 
