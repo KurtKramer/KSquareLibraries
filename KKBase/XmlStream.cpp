@@ -720,6 +720,16 @@ XmlElement ::~XmlElement ()
 
 
 
+KKStr  XmlElement::NameTagStr ()  const
+{
+  if  (!nameTag)
+    return KKStr::EmptyStr ();
+  else
+    return nameTag->ToString ();
+}
+
+
+
 const KKStr&  XmlElement::SectionName ()  const
 {
   if  (nameTag)

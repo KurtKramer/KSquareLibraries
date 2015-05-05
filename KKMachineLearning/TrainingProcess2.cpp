@@ -1609,6 +1609,18 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
   if  (priorProbability)
     priorProbability->WriteXML (o, "PriorProbability");
 
+  if  (subTrainingProcesses)
+  {
+    VectorKKStr  subProcessorsNameList;
+    for  (auto idx:  *subTrainingProcesses)
+    {
+      subProcessorsNameList.push_back (osGetRootName (idx->ConfigFileName ()));
+    }
+
+    XmlElementVectorKKStr::WriteXML (subProcessorsNameList, "SubTrainingProcesses", o);
+  }
+
+
   XmlTag  endTag ("TrainingProcess2", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
@@ -1625,6 +1637,7 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 {
   log.Level (20) << "TrainingProcess2::ReadXML" << endl;
 
+  VectorKKStr*  subProcessorsNameList = NULL;
 
   delete  configOurs;
   configOurs = NULL;
@@ -1651,6 +1664,8 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
     delete  trainingExamples;
   trainingExamples = NULL;
 
+  bool  errorsFound = false;
+
 
   while  (t = s.GetNextToken (log))
   {
@@ -1674,6 +1689,11 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
         delete  configOurs;
         configOurs = dynamic_cast<XmlElementTrainingConfiguration2Ptr> (e)->TakeOwnership ();
         config = configOurs;
+        if  ((config != NULL)  &&  (fvFactoryProducer == NULL))
+        {
+          fvFactoryProducer = config->FvFactoryProducer ();
+          fileDesc = fvFactoryProducer->FileDesc ();
+        }
       }
 
       else if  (varName.EqualIgnoreCase ("FvFactoryProducer")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
@@ -1698,6 +1718,13 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
       {
         delete  model;
         model = dynamic_cast<XmlElementModelPtr> (e)->TakeOwnership ();
+        if  (!model->ValidModel ())
+        {
+          errorsFound = true;
+          log.Level (-1) << endl
+            << "TrainingProcess2::ReadXML   ***ERROR***    Loaded Model is Invalid" << endl
+            << endl;
+        }
       }
 
       else if  (varName.EqualIgnoreCase ("PriorProbability")  &&  (typeid (*e) == typeid (XmlElementClassProbList)))
@@ -1705,198 +1732,38 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
         delete  priorProbability;
         priorProbability = dynamic_cast<XmlElementClassProbListPtr> (e)->TakeOwnership ();
       }
-    }
-    delete  t;
-  }
 
-
-    else if  (lineName == "BUILDDATETIME")
-    {
-      line.TrimRight (" \n\r\t");
-      buildDateTime = DateTime (line);
-    }
-
-    else if  (lineName.EqualIgnoreCase ("ConfigFileName"))
-    {
-      configFileName = line.ExtractToken2 ("\n\t\r");
-      // KKKK  LoadConfigurationFile
-    }
-
-    else if  (lineName.EqualIgnoreCase ("ConfigFileNameSpecified"))
-      configFileNameSpecified = line.ExtractToken2 ("\n\t\r");
-
-
-    else if  (lineName.EqualIgnoreCase ("TrainingConfiguration2"))
-    {
-      configFileNameSpecified = line.ExtractToken2 ("\t");
-      KKStr  factoryName = line.ExtractToken2 ("\t");
-
-      if  (!factoryName.Empty ())
+      else if  (varName.EqualIgnoreCase ("SubTrainingProcesses")  &&  (typeid (*e) == typeid (XmlElementVectorKKStr)))
       {
-        fvFactoryProducer = FactoryFVProducer::LookUpFactory (factoryName);
-        if  (fvFactoryProducer)
-          fileDesc = fvFactoryProducer->FileDesc ();
-      }
-
-      delete  configOurs;
-      configOurs = TrainingConfiguration2::Manufacture (factoryName, 
-                                                        configFileNameSpecified, 
-                                                        false,   //  false = DO not Validate Directories.
-                                                        log
-                                                       );
-      if  (!configOurs)
-      {
-        log.Level (-1) << endl 
-            << "TrainingProcess2::Read   ***ERROR**    Could not load TrainingConfiguration for Factory: " << factoryName << "  configName: " << configFileNameSpecified << endl
-            << endl;
+        delete  subProcessorsNameList;
+        subProcessorsNameList = dynamic_cast<XmlElementVectorKKStrPtr> (e)->TakeOwnership ();
       }
       else
       {
-        config = configOurs;
-
-        if  (!fvFactoryProducer)
-        {
-          fvFactoryProducer = config->FvFactoryProducer ();
-          fileDesc = fvFactoryProducer->FileDesc ();
-        }
-      }
-    }
-  
-        
-    else if  (lineName == "CLASSLIST")
-    {
-      log.Level (20) << "TrainingProcess2::Read    Classes[" << line << "]" << endl;
-
-      if  (weOwnMLClasses)
-        delete  mlClasses;
-      mlClasses = new MLClassList ();
-      weOwnMLClasses = true;
-      while  (!line.Empty ())
-      {
-        KKStr  className = line.ExtractToken2 ("\t\n\r");
-        MLClassPtr  c = MLClass::CreateNewMLClass (className);
-        mlClasses->PushOnBack (c);
-      }
-    }
-
-    else if  (lineName.SubStrPart (0, 13).EqualIgnoreCase ("<ClassProbList"))
-    {
-      delete  priorProbability;
-      priorProbability = ClassProbList::CreateFromXMLStream (in);
-    }
-
-    else if  (lineName.EqualIgnoreCase ("<Model>"))
-    {
-      if  (!fvFactoryProducer)
-      {
-        fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
-        fileDesc = fvFactoryProducer->FileDesc ();
-      }
-    
-      try
-      {
-        model = Model::CreateFromStream (in, fileDesc, cancelFlag, log);
-        if  (model == NULL)
-        {
-          successful = false;
-          log.Level (-1) << endl << endl
-            << "TrainingProcess2::Read   ***ERROR***  Could not create model from stream." << endl
-            << endl;
-        }
-      }
-      catch  (const KKException&  e)
-      {
-        successful = false;
-        log.Level (-1) << endl << endl
-          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
-          << "     Exception[" << e.ToString () << "]." << endl
+        log.Level (-1) << endl
+          << "TrainingProcess2::ReadXML   ***ERROR***  Unrecognized Element Section: " << e->NameTagStr () << endl
           << endl;
       }
-      catch  (...)
-      {
-        successful = false;
-        log.Level (-1) << endl << endl
-          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
-          << endl;
-      }
-    }
-  }
-
-  if  (successful)
-  {
-    if  (mlClasses == NULL)
-    {
-      log.Level (-1) << endl
-                     << endl
-                     << "    **** ERROR ****" << endl
-                     << endl
-                     << "TrainingProcess2::Read  - ClassList were not defined." << endl
-                     << endl;
-      successful = false;
-    }
-
-    else
-    {
-      delete  configOurs;
-      configOurs = new TrainingConfiguration2 (osGetRootName (configFileName), false, log);
-      config = configOurs;
-
-      if  (config->SubClassifiers () != NULL)
-        LoadSubClassifiers (false,   // forceRebuild
-                            true,    // CheckForDuplicates
-                            log
-                           );
-    }
-  }
-
-  log.Level (20) << "TrainingProcess2::Read    Done Reading in existing model." << endl;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     delete  t;
-    t = s.GetNextToken (log);
   }
+
+
+
+  if  (mlClasses == NULL)
+  {
+    log.Level (-1) << endl
+      << "TrainingProcess2::ReadXML   ***ERROR***   MLClasses was not defined." << endl
+      << endl;
+    errorsFound = true;
+  }
+
+  if (!errorsFound)
+  {
+
+  }
+
+  log.Level (20) << "TrainingProcess2::ReadXML    Exiting!" << endl;
 
 }  /* ReadXML */
 

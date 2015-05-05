@@ -293,13 +293,15 @@ namespace  KKB
                 
     virtual  ~XmlElement ();
 
+    XmlTagConstPtr  NameTag () const   {return nameTag;}
+
+    KKStr           NameTagStr ()  const;  /**< The initial start tag with its attributes that started the element. */
+
     virtual  const KKStr&  SectionName ()  const;
 
     virtual  TokenTypes  TokenType () {return  TokenTypes::tokElement;}
 
     virtual  const KKStr&   VarName ()  const;
-
-    XmlTagConstPtr  NameTag () const   {return nameTag;}
 
     KKStrConstPtr  AttributeValue (const char*   attributeName);
     KKStrConstPtr  AttributeValue (const KKStr&  attributeName);
