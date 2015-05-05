@@ -729,6 +729,7 @@ void  FeatureNumList::WriteXML (const KKStr&  varName,
 
   XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
+  o << endl
 }
 
 

@@ -4213,6 +4213,8 @@ void  UsfCasCor::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("UsfCasCor",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   XmlElementInt32::WriteXML (number_of_classes, "number_of_classes", o);
   XmlElementMLClassNameList::WriteXML (*classes, "Classes", o);

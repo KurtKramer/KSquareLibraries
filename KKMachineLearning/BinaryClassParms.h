@@ -182,6 +182,20 @@ namespace KKMLL
     void  WriteXML (ostream&  o)  const;
 
 
+
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
+
+
   private:
      struct  KeyField
      {
@@ -202,6 +216,10 @@ namespace KKMLL
 
 
   typedef  BinaryClassParmsList::BinaryClassParmsListPtr  BinaryClassParmsListPtr;
+
+  typedef  XmlElementTemplate<BinaryClassParmsList>  XmlElementBinaryClassParmsList;
+  typedef  XmlElementBinaryClassParmsList*  XmlElementBinaryClassParmsListPtr;
+
 
 }  /* namespace KKMLL */
 

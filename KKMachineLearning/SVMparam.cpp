@@ -7,6 +7,8 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -922,14 +924,6 @@ void  SVMparam::AddBinaryClassParms (MLClassPtr              class1,
 
 
 
-
-
-
-
-
-
-
-
 void  SVMparam::WriteXML (const KKStr&  varName,
                           ostream&      o
                          )  const
@@ -964,9 +958,7 @@ void  SVMparam::WriteXML (const KKStr&  varName,
 
   XmlElementVectorFloat::WriteXML (probClassPairs, "probClassPairs", o);
 
-  binaryParmsList->WriteXML (o);
-
-
+  binaryParmsList->WriteXML ("binaryParmsList", o);
 
   XmlTag  endTag ("SVMModel", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
@@ -1006,40 +998,13 @@ void  SVMparam::ReadXML (XmlStream&      s,
         rootFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */
 
 
-XmlFactoryMacro(SVMModel)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+XmlFactoryMacro(SVMparam)
 
 
 

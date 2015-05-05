@@ -6,8 +6,10 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
+#include "KKStrParser.h"
 #include "OSservices.h"
 using namespace  KKB;
 
@@ -398,4 +400,79 @@ ClassProbListPtr  ClassProbList::CreateFromXMLStream (istream& i)
 
   return result;
 }  /* CreateFromXMLStream */
+
+
+
+
+
+
+
+
+void  ClassProbList::WriteXML (const KKStr&  varName,
+                               ostream&      o
+                              )  const
+{
+  XmlTag  startTag ("ClassProbList",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  for  (auto idx:  *this)
+  {
+    ClassProbPtr  cp = idx;
+    o << cp->classLabel->Name () << "\t" << cp->probability << "\t" << cp->votes << endl;
+  }
+  
+  XmlTag  endTag ("ClassProbList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ClassProbList::ReadXML (XmlStream&      s,
+                              XmlTagConstPtr  tag,
+                              RunLog&         log
+                             )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
+      if  (!content)
+        continue;
+      if  (content->Content ()->Empty ())
+        continue;
+
+      KKStrParser p (content->Content ());
+      p.TrimWhiteSpace (" ");
+      KKStr    className = p.GetNextToken ("\t");
+      double   probability = p.GetNextTokenDouble ("\t");
+      float    votes = p.GetNextTokenFloat ("\t");
+      if  (className.Empty ())
+        continue;
+
+      if  ((probability < 0.0f)  ||  (probability > 1.0f))
+      {
+        log.Level (-1)
+          << "ClassProbList::ReadXML  ***ERROR***   Probability: " << probability << "  is out of range for Class: " << className << endl
+          << endl;
+      }
+
+      PushOnBack (new ClassProb (MLClass::CreateNewMLClass (className), probability, votes));
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+}  /* ReadXML */
+
+
+
+XmlFactoryMacro(ClassProbList)
 

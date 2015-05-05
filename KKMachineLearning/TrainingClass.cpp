@@ -163,6 +163,7 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
+  o << endl;
 
   if  (mlClass)
     mlClass->Name ().WriteXML ("MLClass", o);

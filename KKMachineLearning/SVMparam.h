@@ -295,8 +295,6 @@ namespace KKMLL
   };  /* SVMparam */
 
 
-
-
   typedef  SVMparam*   SVMparamPtr;
 
 
@@ -311,6 +309,10 @@ namespace KKMLL
   SVM_MachineType        MachineTypeFromStr       (const KKStr&  machineTypeStr);
   SVM_SelectionMethod    SelectionMethodFromStr   (const KKStr&  selectionMethodStr);
 
+
+
+  typedef  XmlElementTemplate<SVMparam>  XmlElementSVMparam;
+  typedef  XmlElementSVMparam*  XmlElementSVMparamPtr;
 
 }  /* namespace KKMLL */
 

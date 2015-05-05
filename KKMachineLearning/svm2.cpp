@@ -5272,6 +5272,8 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("Svm_Model",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   fileDesc->WriteXML ("FileDesc", o);
 
@@ -5500,6 +5502,7 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
         }
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */

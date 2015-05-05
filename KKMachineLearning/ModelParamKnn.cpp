@@ -150,6 +150,8 @@ void  ModelParamKnn::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   WriteXMLFields (o);
 
@@ -184,6 +186,8 @@ void  ModelParamKnn::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("fileName"))
         fileName = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
     }
+
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */

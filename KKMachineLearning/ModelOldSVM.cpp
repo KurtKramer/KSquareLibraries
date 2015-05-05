@@ -619,28 +619,22 @@ FeatureVectorPtr  ModelOldSVM::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
 
 void  ModelOldSVM::WriteXML (const KKStr&  varName,
-                              ostream&      o
-                             )  const
+                             ostream&      o
+                            )  const
 {
   XmlTag  startTag ("ModelOldSVM",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
+  o << endl;
 
   WriteModelXMLFields (o);  // Write the PArent class fields 1st.
-
 
   if  (assignments)
     assignments->ToString ().WriteXML ("Assignments", o);
 
-  //if  (svmModel)
-  //  svmModel->WriteXML ("svmModel", o)
-
-  ///
-  ///   Fill in code here,
-  ///
-
-
+  if  (svmModel)
+    svmModel->WriteXML ("svmModel", o);
 
   XmlTag  endTag ("ModelOldSVM", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
@@ -652,9 +646,9 @@ void  ModelOldSVM::WriteXML (const KKStr&  varName,
 
 
 void  ModelOldSVM::ReadXML (XmlStream&      s,
-                             XmlTagConstPtr  tag,
-                             RunLog&         log
-                            )
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           )
 {
   delete  svmModel;
   svmModel = NULL;
@@ -672,12 +666,11 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
         assignments->ParseToString (*(s->Value ()));
       }
 
-      ///TODO    Need to implement ReadXML and WriteXML on SVMModel.
-      ///else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
-      ///{
-      ///  delete  svmModel;
-      ///  svmModel = dynamic_cast<XmlElementSVMModel> (t)->TakeOwnership ();
-      ///}
+      else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
+      {
+        delete  svmModel;
+        svmModel = dynamic_cast<XmlElementSVMModelPtr> (t)->TakeOwnership ();
+      }
 
       else
       {
@@ -687,6 +680,7 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
         log.Level (-1) << endl << errMsg << endl << endl;
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 

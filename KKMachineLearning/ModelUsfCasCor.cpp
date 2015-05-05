@@ -557,6 +557,8 @@ void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelDual",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   WriteModelXMLFields (o);  // Write the base class data fields 1st.
 
@@ -598,6 +600,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
         AddErrorMsg (errMsg, 0);
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 

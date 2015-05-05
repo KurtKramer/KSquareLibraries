@@ -7,6 +7,7 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -471,6 +472,69 @@ bool  BinaryClassParmsList::KeyField::operator< (const KeyField& p2) const
 }
 
 
+
+
+
+
+
+
+
+
+void  BinaryClassParmsList::WriteXML (const KKStr&  varName,
+                                      ostream&      o
+                                     )  const
+{
+  XmlTag  startTag ("BinaryClassParmsList",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  for  (auto  idx : *this)
+  {
+    XmlContent::WriteXml (idx->ToTabDelString, o);
+    o << endl;
+  }
+
+
+  XmlTag  endTag ("BinaryClassParmsList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  BinaryClassParmsList::ReadXML (XmlStream&      s,
+                                     XmlTagConstPtr  tag,
+                                     RunLog&         log
+                                    )
+{
+  DeleteContents ();
+  classIndex.clear ();
+
+  bool  errorsFound = false;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t  &&  !errorsFound)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
+      if  (!content)
+        continue;
+
+      BinaryClassParmsPtr  bcp = BinaryClassParms::CreateFromTabDelStr (*(content->Content ()), log);
+      if  (bcp)
+        PushOnBack (bcp);
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(BinaryClassParmsList)
 
 
 

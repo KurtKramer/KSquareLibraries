@@ -335,6 +335,9 @@ void  ModelParamDual::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
 
   WriteXMLFields (o);
 

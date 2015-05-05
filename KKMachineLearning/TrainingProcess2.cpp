@@ -1507,7 +1507,7 @@ double   TrainingProcess2::TrainingTime ()  const
 
 
 
-MLClassListPtr    TrainingProcess2::ExtractFullHierachyOfClasses ()  const
+MLClassListPtr  TrainingProcess2::ExtractFullHierachyOfClasses ()  const
 {
   if  (config)
     return config->ExtractFullHierachyOfClasses ();
@@ -1571,6 +1571,120 @@ void  TrainingProcess2::LoadSubClassifiers (bool     forceRebuild,
     }
   }
 }  /* LoadSubClassifiers */
+
+
+
+
+
+
+
+
+void  TrainingProcess2::WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const
+{
+  XmlTag  startTag ("TrainingProcess2",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  configFileNameSpecified.WriteXML ("ConfigFileNameSpecified", 0);
+  configFileName.WriteXML ("ConfigFileName", o);
+
+  XmlElementBool::WriteXML (featuresAlreadyNormalized, "FeaturesAlreadyNormalized", o);
+  if  (fvFactoryProducer)
+    fvFactoryProducer->Name ().WriteXML ("FvFactoryProducer", o);
+
+  buildDateTime.YYYY_MM_DD_HH_MM_SS ().WriteXML ("buildDateTime", o);
+
+  XmlElementMLClassNameList::WriteXML (*mlClasses, "MlClasses", o);
+
+  if  (model)
+    model->WriteXML ("Model", o);
+
+  if  (priorProbability)
+    priorProbability->WriteXML (o, "PriorProbability");
+
+  XmlTag  endTag ("TrainingProcess2", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  TrainingProcess2::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
+{
+  delete  svmModel;
+  svmModel = NULL;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
+    if  (t)
+    {
+      if  ((t->VarName ().EqualIgnoreCase ("Assignments"))  &&  (typeid(*t) == typeid(XmlElementKKStr)))
+      {
+        XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
+        delete  assignments;
+        assignments = new ClassAssignments (log);
+        assignments->ParseToString (*(s->Value ()));
+      }
+
+      else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
+      {
+        delete  svmModel;
+        svmModel = dynamic_cast<XmlElementSVMModelPtr> (t)->TakeOwnership ();
+      }
+
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
+        AddErrorMsg (errMsg, 0);
+        log.Level (-1) << endl << errMsg << endl << endl;
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamOldSVM))
+  {
+    KKStr errMsg (128);
+    errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(TrainingProcess2)
+
+
+
+
+
+
+
 
 
 

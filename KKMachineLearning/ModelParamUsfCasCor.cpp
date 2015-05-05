@@ -257,6 +257,8 @@ void  ModelParamUsfCasCor::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   WriteXMLFields (o);
 
@@ -311,6 +313,7 @@ void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
           << endl;
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 

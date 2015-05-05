@@ -6,9 +6,12 @@
  *@author  Kurt Kramer
  */
 
+#include "XmlStream.h"
 #include "KKBaseTypes.h"
 #include "KKQueue.h"
 #include "KKStr.h"
+
+using namespace KKB;
 
 
 namespace KKMLL
@@ -117,6 +120,18 @@ namespace KKMLL
                    )
                    const;
 
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
+
     static
       ClassProbListPtr  CreateFromXMLStream (istream& i);
 
@@ -135,6 +150,9 @@ namespace KKMLL
 
 #define  _ClassProbList_Defined_
 
-}  /* namespace MML */
+
+  typedef  XmlElementTemplate<ClassProbList>  XmlElementClassProbList;
+  typedef  XmlElementClassProbList*  XmlElementClassProbListPtr;
+}  /* namespace KKMLL */
 
 #endif

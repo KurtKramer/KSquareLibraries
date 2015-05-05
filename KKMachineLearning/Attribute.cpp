@@ -263,6 +263,7 @@ void  Attribute::WriteXML (const KKStr&  varName,
   startTag.AddAtribute ("Type",     TypeStr ());
   startTag.AddAtribute ("FieldNum", fieldNum);
   startTag.WriteXML (o);
+  o << endl;
 
   if  (startTagType == XmlTag::TagTypes::tagStart)
   {
@@ -270,9 +271,10 @@ void  Attribute::WriteXML (const KKStr&  varName,
     for  (kkint32  nominalIdx = 0;  nominalIdx < Cardinality ();  ++nominalIdx)
       nominalValues.push_back (GetNominalValue (nominalIdx));
     nominalValues.WriteXML ("NominalValues", o);
+    XmlTag  endTag ("Attribute", XmlTag::TagTypes::tagEnd);
+    endTag.WriteXML (o);
+    o << endl;
   }
-  XmlTag  endTag ("Attribute", XmlTag::TagTypes::tagEnd);
-  endTag.WriteXML (o);
 }  /* WriteXML */
 
 
@@ -498,6 +500,8 @@ void  AttributeList::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("AttributeList",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   AttributeList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

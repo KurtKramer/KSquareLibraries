@@ -3200,6 +3200,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
         }
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */

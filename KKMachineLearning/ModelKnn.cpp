@@ -272,8 +272,10 @@ void  ModelKnn::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
-  WriteModelXMLFields (o); // Write the base class datafields 1st.
+  WriteModelXMLFields (o); // Write the base class data fields 1st.
   if  (param)
     param->WriteXML ("Param", o);
 

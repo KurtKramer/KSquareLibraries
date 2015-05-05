@@ -764,6 +764,8 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
         log.Level (-1) << endl << errMsg << endl << endl;
       }
     }
+
+    delete  t;
     t = s.GetNextToken (log);
   }
 

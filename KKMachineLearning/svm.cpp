@@ -51,6 +51,8 @@ void  SvmModel233::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("SvmModel233",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
 

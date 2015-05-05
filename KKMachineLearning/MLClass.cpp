@@ -1768,6 +1768,7 @@ void  MLClassIndexList::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("MLClassIndexList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
 
   XmlContent::WriteXml (ToCommaDelString (), o);
 

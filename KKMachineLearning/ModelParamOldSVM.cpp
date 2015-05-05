@@ -538,6 +538,8 @@ void  ModelParamOldSVM::WriteXML (const KKStr&  varName,
   XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
   WriteXMLFields (o);
 
@@ -569,6 +571,7 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
         svmParametersStr = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
       }
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 
