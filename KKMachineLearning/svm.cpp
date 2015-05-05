@@ -165,6 +165,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
       if  (varName.EqualIgnoreCase ("Param")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
       {
         param.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
+
       }
 
       else if  (varName.EqualIgnoreCase ("nr_class")  &&  (typeid (*e) == typeid (XmlElementInt32)))
@@ -337,7 +338,8 @@ void  SvmModel233::ReadXML (XmlStream&      s,
 
       numSVsLoaded++;
     }
-   
+
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */

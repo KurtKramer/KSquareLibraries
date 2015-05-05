@@ -147,12 +147,13 @@ namespace  KKB
 
     XmlAttributePtr  LookUpByName (const KKStr&  name) const;
 
-    KKStrConstPtr  AttributeValueByName  (const KKStr&  name)   const;
-    KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
-    KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;
+    KKStrConstPtr  AttributeValueByName   (const KKStr&  name)   const;
+    KKStrConstPtr  AttributeValueByIndex  (kkuint32      index)  const;
+    KKStrConstPtr  AttributeNameByIndex   (kkuint32      index)  const;
 
-    const KKStr&   AttributeValueKKStr   (const KKStr&  name)   const;
-    kkint32        AttributeValueInt32   (const KKStr&  name)   const;
+    const KKStr&   AttributeValueKKStr    (const KKStr&  name)   const;
+    kkint32        AttributeValueInt32    (const KKStr&  name)   const;
+    DateTime       AttributeValueDateTime (const KKStr&  name)   const;
 
   private:
     void  DeleteFromNameIndex (XmlAttributePtr a);
@@ -194,8 +195,10 @@ namespace  KKB
     KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
     KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;
 
-    const KKStr&   AttributeValueKKStr   (const KKStr&  name)   const;
-    kkint32        AttributeValueInt32   (const KKStr&  attributeName)  const;
+    const KKStr&   AttributeValueKKStr    (const KKStr&  name)   const;
+    kkint32        AttributeValueInt32    (const KKStr&  attributeName)  const;
+    DateTime       AttributeValueDateTime (const KKStr&  attributeName)  const;
+
 
     void  AddAtribute (const KKStr&  attributeName,
                        const KKStr&  attributeValue
@@ -215,6 +218,10 @@ namespace  KKB
 
     void  AddAtribute (const KKStr&  attributeName,
                        double        attributeValue
+                      );
+
+    void  AddAtribute (const KKStr&     attributeName,
+                       const DateTime&  attributeValue
                       );
 
     KKStr  ToString ()  const;
@@ -448,6 +455,8 @@ namespace  KKB
 
 
 
+
+  /****************************************************************************/
   class  XmlElementBool:  public  XmlElement
   {
   public:
@@ -474,6 +483,43 @@ namespace  KKB
 
 
 
+
+
+  /****************************************************************************/
+  class  XmlElementDateTime:  public  XmlElement
+  {
+  public:
+    XmlElementDateTime (XmlTagPtr   tag,
+                        XmlStream&  s,
+                        RunLog&     log
+                       );
+                
+    virtual  ~XmlElementDateTime ();
+
+    DateTime  Value ()  const   {return  value;}
+
+    static
+    void  WriteXML (const DateTime&  d,
+                    const KKStr&     varName,
+                    ostream&         o
+                   );
+
+  private:
+    DateTime  value;
+  };
+  typedef  XmlElementDateTime*  XmlElementDateTimePtr;
+
+
+
+
+
+
+
+
+
+
+
+  /****************************************************************************/
   class  XmlElementKeyValuePairs:  public  XmlElement
   {
   public:

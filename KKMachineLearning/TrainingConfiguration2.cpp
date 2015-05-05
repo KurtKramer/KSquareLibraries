@@ -17,7 +17,6 @@ using namespace  std;
 using namespace  KKB;
 
 
-
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
 #include "FactoryFVProducer.h"

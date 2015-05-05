@@ -320,6 +320,20 @@ kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
 
 
 
+DateTime  XmlAttributeList::AttributeValueDateTime  (const KKStr&  name)   const
+{
+  KKStrConstPtr s = AttributeValueByName (name);
+  if  (s)
+    return  DateTime ();
+  
+  DateTime  dt (*s);
+  return  dt;
+}
+
+
+
+
+
 void  XmlAttributeList::AddAttribute (const KKStr&  name,
                                       const KKStr&  value
                                      )
@@ -594,6 +608,15 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
   KKStr  s (12);
   s << attributeValue;
   attributes.AddAttribute (attributeName, s);
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&     attributeName,
+                           const DateTime&  attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName,  attributeValue.YYYY_MM_DD_HH_MM_SS ());
 }
 
 
@@ -964,6 +987,48 @@ void  XmlElementBool::WriteXML (const bool    b,
 }
 
 XmlFactoryMacro(Bool)
+
+
+
+
+
+
+XmlElementDateTime::XmlElementDateTime (XmlTagPtr   tag,
+                                        XmlStream&  s,
+                                        RunLog&     log
+                                       ):
+    XmlElement (tag, s, log),
+    value ()
+{
+  value = tag->AttributeValueDateTime ("Value");
+}
+
+
+
+                
+XmlElementDateTime::~XmlElementDateTime ()  
+{
+}
+
+
+
+
+
+void  XmlElementDateTime::WriteXML (const DateTime&  d,
+                                    const KKStr&     varName,
+                                    ostream&         o
+                                   )
+{
+  XmlTag startTag ("DateTime", XmlTag::TagTypes::tagEmpty);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Value", d.YYYY_MM_DD_HH_MM_SS ());
+  startTag.WriteXML (o);
+}
+
+
+XmlFactoryMacro(DateTime)
+
 
 
 

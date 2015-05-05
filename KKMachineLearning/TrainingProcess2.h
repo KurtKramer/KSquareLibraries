@@ -378,7 +378,7 @@ namespace KKMLL
     kkint32                      duplicateCount;
     kkint32                      duplicateDataCount;
 
-    FeatureVectorListPtr         excludeList;  /**< If != NULL then list of trainingExamples that need to be eliminated from training data.
+    FeatureVectorList const *    excludeList;  /**< If != NULL then list of trainingExamples that need to be eliminated from training data.
                                                 * This would be used when classifying trainingExamples that might already contain training
                                                 * data. If you wish to grade the results it would only be fare to delete these trainingExamples.
                                                 */

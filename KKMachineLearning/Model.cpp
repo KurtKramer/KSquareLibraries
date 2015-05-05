@@ -1294,6 +1294,11 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
       classesIndex = dynamic_cast<XmlElementMLClassIndexListPtr>(t)->TakeOwnership ();
     }
 
+    else if  (varName.EqualIgnoreCase ("FileDesc")  &&  (typeid(*e) == typeid (XmlElementFileDesc)))
+    {
+      fileDesc = dynamic_cast<XmlElementFileDescPtr>(t)->Value ();
+    }
+
     else if  ((varName.EqualIgnoreCase ("Param"))  &&  (typeid(*e) == typeid (XmlElementModelParam)))
     {
       delete param;
@@ -1346,12 +1351,15 @@ void  Model::WriteModelXMLFields (ostream&  o)  const
   if  (classesIndex)
     classesIndex->WriteXML ("classesIndex", o);
 
+  if  (fileDesc)
+    fileDesc->WriteXML ("FileDesc", o);
+
   if  (param)
     param->WriteXML ("Param", o);
 
   timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
-  XmlElementDouble::WriteXML (trainingTime, "trainingTime", o);
-  XmlElementBool::WriteXML (alreadyNormalized, "alreadyNormalized", o);
+  XmlElementDouble::WriteXML (trainingTime, "TrainingTime", o);
+  XmlElementBool::WriteXML (alreadyNormalized, "AlreadyNormalized", o);
   if  (normParms)
     normParms->WriteXML ("NormParms", o);
 } /* WriteModelXMLFields */

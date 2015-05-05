@@ -1589,14 +1589,17 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
   startTag.WriteXML (o);
   o << endl;
 
-  configFileNameSpecified.WriteXML ("ConfigFileNameSpecified", 0);
+  XmlElementDateTime::WriteXML (buildDateTime, "BuildDateTime", o);
+
+  configFileNameSpecified.WriteXML ("ConfigFileNameSpecified", o);
   configFileName.WriteXML ("ConfigFileName", o);
+
+  if  (config)
+    config->WriteXML ("Config", o);
 
   XmlElementBool::WriteXML (featuresAlreadyNormalized, "FeaturesAlreadyNormalized", o);
   if  (fvFactoryProducer)
     fvFactoryProducer->Name ().WriteXML ("FvFactoryProducer", o);
-
-  buildDateTime.YYYY_MM_DD_HH_MM_SS ().WriteXML ("buildDateTime", o);
 
   XmlElementMLClassNameList::WriteXML (*mlClasses, "MlClasses", o);
 
@@ -1620,60 +1623,281 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
                                  RunLog&         log
                                 )
 {
-  delete  svmModel;
-  svmModel = NULL;
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  log.Level (20) << "TrainingProcess2::ReadXML" << endl;
+
+
+  delete  configOurs;
+  configOurs = NULL;
+  
+  config = NULL;
+  fileDesc = NULL;
+  fvFactoryProducer = NULL;
+
+  excludeList = NULL;
+
+  if  (weOwnMLClasses)
   {
-    t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
-    if  (t)
+    delete  mlClasses;
+    mlClasses = NULL;
+  }
+
+  delete  model;             model            = NULL;
+  delete  priorProbability;  priorProbability = NULL;
+
+  delete  subTrainingProcesses;
+  subTrainingProcesses = NULL;
+
+  if  (weOwnTrainingExamples)
+    delete  trainingExamples;
+  trainingExamples = NULL;
+
+
+  while  (t = s.GetNextToken (log))
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
-      if  ((t->VarName ().EqualIgnoreCase ("Assignments"))  &&  (typeid(*t) == typeid(XmlElementKKStr)))
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  varName = e->VarName ();
+      const KKStr&  sectionName = e->SectionName ();
+
+      if  (varName.EqualIgnoreCase ("BuildDateTime")  &&  (typeid (*e) == typeid (XmlElementDateTime)))
+        buildDateTime = dynamic_cast<XmlElementDateTimePtr> (e)->Value ();
+
+      else if  (varName.EqualIgnoreCase ("ConfigFileNameSpecified")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+        configFileNameSpecified = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("ConfigFileName")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+        configFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+
+      else if  (varName.EqualIgnoreCase ("Config"))
       {
-        XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
-        delete  assignments;
-        assignments = new ClassAssignments (log);
-        assignments->ParseToString (*(s->Value ()));
+        delete  configOurs;
+        configOurs = dynamic_cast<XmlElementTrainingConfiguration2Ptr> (e)->TakeOwnership ();
+        config = configOurs;
       }
 
-      else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
+      else if  (varName.EqualIgnoreCase ("FvFactoryProducer")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
       {
-        delete  svmModel;
-        svmModel = dynamic_cast<XmlElementSVMModelPtr> (t)->TakeOwnership ();
+        fvFactoryProducer = FactoryFVProducer::LookUpFactory (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
+        if  (fvFactoryProducer)
+          fileDesc = fvFactoryProducer->FileDesc ();
       }
 
+      else if  (varName.EqualIgnoreCase ("FeaturesAlreadyNormalized")  &&  (typeid (*e) == typeid (XmlElementBool)))
+        featuresAlreadyNormalized = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
+
+      else if  (varName.EqualIgnoreCase ("MlClasses")  &&  (typeid (*e) == typeid (XmlElementMLClassNameList)))
+      {
+        if  (weOwnMLClasses)
+          delete  mlClasses;
+        mlClasses = dynamic_cast<XmlElementMLClassNameListPtr> (e)->TakeOwnership ();
+        weOwnMLClasses= true;
+      }
+
+      else if  (varName.EqualIgnoreCase ("Model")  &&  (typeid (*e) == typeid (XmlElementModel)))
+      {
+        delete  model;
+        model = dynamic_cast<XmlElementModelPtr> (e)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("PriorProbability")  &&  (typeid (*e) == typeid (XmlElementClassProbList)))
+      {
+        delete  priorProbability;
+        priorProbability = dynamic_cast<XmlElementClassProbListPtr> (e)->TakeOwnership ();
+      }
+    }
+    delete  t;
+  }
+
+
+    else if  (lineName == "BUILDDATETIME")
+    {
+      line.TrimRight (" \n\r\t");
+      buildDateTime = DateTime (line);
+    }
+
+    else if  (lineName.EqualIgnoreCase ("ConfigFileName"))
+    {
+      configFileName = line.ExtractToken2 ("\n\t\r");
+      // KKKK  LoadConfigurationFile
+    }
+
+    else if  (lineName.EqualIgnoreCase ("ConfigFileNameSpecified"))
+      configFileNameSpecified = line.ExtractToken2 ("\n\t\r");
+
+
+    else if  (lineName.EqualIgnoreCase ("TrainingConfiguration2"))
+    {
+      configFileNameSpecified = line.ExtractToken2 ("\t");
+      KKStr  factoryName = line.ExtractToken2 ("\t");
+
+      if  (!factoryName.Empty ())
+      {
+        fvFactoryProducer = FactoryFVProducer::LookUpFactory (factoryName);
+        if  (fvFactoryProducer)
+          fileDesc = fvFactoryProducer->FileDesc ();
+      }
+
+      delete  configOurs;
+      configOurs = TrainingConfiguration2::Manufacture (factoryName, 
+                                                        configFileNameSpecified, 
+                                                        false,   //  false = DO not Validate Directories.
+                                                        log
+                                                       );
+      if  (!configOurs)
+      {
+        log.Level (-1) << endl 
+            << "TrainingProcess2::Read   ***ERROR**    Could not load TrainingConfiguration for Factory: " << factoryName << "  configName: " << configFileNameSpecified << endl
+            << endl;
+      }
       else
       {
-        KKStr errMsg (128);
-        errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
-        AddErrorMsg (errMsg, 0);
-        log.Level (-1) << endl << errMsg << endl << endl;
+        config = configOurs;
+
+        if  (!fvFactoryProducer)
+        {
+          fvFactoryProducer = config->FvFactoryProducer ();
+          fileDesc = fvFactoryProducer->FileDesc ();
+        }
       }
+    }
+  
+        
+    else if  (lineName == "CLASSLIST")
+    {
+      log.Level (20) << "TrainingProcess2::Read    Classes[" << line << "]" << endl;
+
+      if  (weOwnMLClasses)
+        delete  mlClasses;
+      mlClasses = new MLClassList ();
+      weOwnMLClasses = true;
+      while  (!line.Empty ())
+      {
+        KKStr  className = line.ExtractToken2 ("\t\n\r");
+        MLClassPtr  c = MLClass::CreateNewMLClass (className);
+        mlClasses->PushOnBack (c);
+      }
+    }
+
+    else if  (lineName.SubStrPart (0, 13).EqualIgnoreCase ("<ClassProbList"))
+    {
+      delete  priorProbability;
+      priorProbability = ClassProbList::CreateFromXMLStream (in);
+    }
+
+    else if  (lineName.EqualIgnoreCase ("<Model>"))
+    {
+      if  (!fvFactoryProducer)
+      {
+        fvFactoryProducer = GrayScaleImagesFVProducerFactory::Factory (&log);
+        fileDesc = fvFactoryProducer->FileDesc ();
+      }
+    
+      try
+      {
+        model = Model::CreateFromStream (in, fileDesc, cancelFlag, log);
+        if  (model == NULL)
+        {
+          successful = false;
+          log.Level (-1) << endl << endl
+            << "TrainingProcess2::Read   ***ERROR***  Could not create model from stream." << endl
+            << endl;
+        }
+      }
+      catch  (const KKException&  e)
+      {
+        successful = false;
+        log.Level (-1) << endl << endl
+          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
+          << "     Exception[" << e.ToString () << "]." << endl
+          << endl;
+      }
+      catch  (...)
+      {
+        successful = false;
+        log.Level (-1) << endl << endl
+          << "TrainingProcess2::Read   ***ERROR***  Exception occurred reading from file." << endl
+          << endl;
+      }
+    }
+  }
+
+  if  (successful)
+  {
+    if  (mlClasses == NULL)
+    {
+      log.Level (-1) << endl
+                     << endl
+                     << "    **** ERROR ****" << endl
+                     << endl
+                     << "TrainingProcess2::Read  - ClassList were not defined." << endl
+                     << endl;
+      successful = false;
+    }
+
+    else
+    {
+      delete  configOurs;
+      configOurs = new TrainingConfiguration2 (osGetRootName (configFileName), false, log);
+      config = configOurs;
+
+      if  (config->SubClassifiers () != NULL)
+        LoadSubClassifiers (false,   // forceRebuild
+                            true,    // CheckForDuplicates
+                            log
+                           );
+    }
+  }
+
+  log.Level (20) << "TrainingProcess2::Read    Done Reading in existing model." << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
     delete  t;
     t = s.GetNextToken (log);
   }
 
-  if  (Model::param == NULL)
-  {
-    KKStr errMsg (128);
-    errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
-
-  else if  (typeid (*Model::param) != typeid(ModelParamOldSVM))
-  {
-    KKStr errMsg (128);
-    errMsg << "TrainingProcess2::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
-
-  else
-  {
-    param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
-  }
 }  /* ReadXML */
 
 

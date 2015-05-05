@@ -492,7 +492,7 @@ void  BinaryClassParmsList::WriteXML (const KKStr&  varName,
 
   for  (auto  idx : *this)
   {
-    XmlContent::WriteXml (idx->ToTabDelString, o);
+    XmlContent::WriteXml (idx->ToTabDelString (), o);
     o << endl;
   }
 
