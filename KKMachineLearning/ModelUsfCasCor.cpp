@@ -1,5 +1,4 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <string>
 #include <iostream>
@@ -10,13 +9,11 @@
 #include <iomanip>
 #include <set>
 #include <vector>
-
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -33,10 +30,18 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,
-                                VolConstBool&  _cancelFlag
-                               ):
-  Model (_fileDesc, _cancelFlag),
+
+ModelUsfCasCor::ModelUsfCasCor ():
+  Model (),
+  param               (NULL),
+  usfCasCorClassifier (NULL)
+{
+}
+
+
+
+ModelUsfCasCor::ModelUsfCasCor (FileDescPtr  _fileDesc):
+  Model (_fileDesc),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {
@@ -45,9 +50,9 @@ ModelUsfCasCor::ModelUsfCasCor (FileDescPtr    _fileDesc,
 
 ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 const ModelParamUsfCasCor& _param,         // Create new model from
-                                FileDescPtr                _fileDesc,
-                                VolConstBool&              _cancelFlag                               ):
-  Model (_name, _param, _fileDesc, _cancelFlag),
+                                FileDescPtr                _fileDesc
+                               ):
+  Model (_name, _param, _fileDesc),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {
@@ -94,6 +99,17 @@ kkint32  ModelUsfCasCor::MemoryConsumedEstimated ()  const
     memoryConsumedEstimated += usfCasCorClassifier->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
+
+
+
+void   ModelUsfCasCor::CancelFlag (bool  _cancelFlag)
+{
+  Model::CancelFlag (_cancelFlag);
+  if  (usfCasCorClassifier)
+    usfCasCorClassifier->CancelFlag (_cancelFlag);
+}
+
+
 
 
 ModelUsfCasCorPtr  ModelUsfCasCor::Duplicate ()  const
@@ -167,7 +183,7 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   TrainingTimeStart ();
 
-  usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag);
+  usfCasCorClassifier = new UsfCasCor ();
 
   usfCasCorClassifier->TrainNewClassifier (param->In_limit         (),
                                            param->Out_limit        (),
@@ -485,7 +501,7 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
     else if  (field.EqualIgnoreCase ("<UsfCasCor>"))
     {
       delete  usfCasCorClassifier;
-      usfCasCorClassifier = new UsfCasCor (fileDesc, cancelFlag);
+      usfCasCorClassifier = new UsfCasCor ();
       bool  usfCasCorSuccessful = false;
       usfCasCorClassifier->LoadExistingClassifier (i, usfCasCorSuccessful, log);
       if  (!usfCasCorSuccessful)
@@ -503,6 +519,31 @@ void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
 
   return;
 }  /* ReadSpecificImplementationXML */
+
+
+
+
+void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o,
+                                                      RunLog&   log
+                                                     )
+{
+  log.Level (20) << "ModelUsfCasCor::WriteSpecificImplementationXML  Saving Model in File." << endl;
+
+  o << "<ModelUsfCasCor>" << endl;
+
+  if  (usfCasCorClassifier)
+    usfCasCorClassifier->WriteXML (o);
+
+  o << "</ModelUsfCasCor>" << endl;
+} /* WriteSpecificImplementationXML */
+
+
+
+
+kkint32  ModelUsfCasCor::NumOfSupportVectors ()  const
+{
+  return  0;
+}  /* NumOfSupportVectors */
 
 
 
@@ -585,58 +626,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o,
-                                                      RunLog&   log
-                                                     )
-{
-  log.Level (20) << "ModelUsfCasCor::WriteSpecificImplementationXML  Saving Model in File." << endl;
-
-  o << "<ModelUsfCasCor>" << endl;
-
-  if  (usfCasCorClassifier)
-    usfCasCorClassifier->WriteXML (o);
-
-  o << "</ModelUsfCasCor>" << endl;
-} /* WriteSpecificImplementationXML */
-
-
-
-
-kkint32  ModelUsfCasCor::NumOfSupportVectors ()  const
-{
-  return  0;
-}  /* NumOfSupportVectors */
+XmlFactoryMacro(ModelUsfCasCor)
 
 
 

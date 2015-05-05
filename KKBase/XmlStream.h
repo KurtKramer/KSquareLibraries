@@ -275,6 +275,10 @@ namespace  KKB
   public:
     typedef  XmlElement*  XmlElementPtr;
 
+    XmlElement (const KKStr&      sectionName,
+                XmlTag::TagTypes  tagType
+               );
+
     XmlElement (XmlTagPtr   _nameTag,
                 XmlStream&  s,
                 RunLog&     log
@@ -473,6 +477,17 @@ namespace  KKB
   class  XmlElementKeyValuePairs:  public  XmlElement
   {
   public:
+
+    /**
+     *@brief  Used to construct an instance that will be written out to a XML file.
+     */
+    XmlElementKeyValuePairs ();
+    
+
+    /**
+     * Used while from XmlStream  while reading file;  everytime it comes across a new Section(Start-Tag) 
+     * a new instance of this class will be instantiated.
+     */
     XmlElementKeyValuePairs (XmlTagPtr   tag,
                              XmlStream&  s,
                              RunLog&     log
@@ -497,6 +512,10 @@ namespace  KKB
               );
 
     void  Add (const KKStr&  key,
+               double        v
+              );
+
+    void  Add (const KKStr&  key,
                bool          v
               );
 
@@ -511,6 +530,8 @@ namespace  KKB
   private:
     vector<pair<KKStr,KKStr> >*  value;
   };  /* XmlElementKeyValuePairs */
+
+  typedef  XmlElementKeyValuePairs*  XmlElementKeyValuePairsPtr;
 
 
 
@@ -769,9 +790,9 @@ namespace  KKB
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \
                                                                    \
-    vector<##T>*  const  Value ()  const {return value;}           \
+    vector<T>*  const  Value ()  const {return value;}             \
                                                                    \
-    vector<##T>*  TakeOwnership ();                                \
+    vector<T>*  TakeOwnership ();                                  \
                                                                    \
     static                                                         \
     void  WriteXML (const vector<##T>&  d,                         \
@@ -780,7 +801,7 @@ namespace  KKB
                    );                                              \
                                                                    \
   private:                                                         \
-    VectorInt32*  value;                                           \
+    vector<T>*  value;                                             \
   };                                                               \
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
@@ -808,6 +829,8 @@ XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlEleme
 
 
 XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)
+XmlElementVectorHeader(float,    VectorFloat,  GetNextTokenFloat)
+
 
 
 }  /* KKB */

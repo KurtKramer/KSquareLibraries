@@ -65,6 +65,15 @@ namespace KKMLL
     typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
 
+
+    /**
+     *@brief  The default constructor; What will be used when creating an instance whil ereading in
+     * from a XML Stream file.  All members will be set to default values.  The XMLRead methid 
+     */
+    TrainingProcess2 ();
+
+
+
     /**
      *@brief  Constructor that is driven by contents of configuration file.
      *@details  If no changes to config file or training data, will utilize an existing built model
@@ -99,20 +108,13 @@ namespace KKMLL
      *                                the same class then all but one will be removes.  If they are
      *                                in more then one class then they will both be removed.
      *
-     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
-     *                        to caller as soon as convenient.
-     *
-     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
-     *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (TrainingConfiguration2 const*  _config,
-                      FeatureVectorListPtr           _excludeList,
-                      RunLog&                        _log,
-                      ostream*                       _report,
-                      bool                           _forceRebuild,
-                      bool                           _checkForDuplicates,
-                      VolConstBool&                  _cancelFlag,
-                      KKStr&                         _statusMessage
+    TrainingProcess2 (TrainingConfiguration2Const*  _config,
+                      FeatureVectorListPtr          _excludeList,
+                      RunLog&                       _log,
+                      ostream*                      _report,
+                      bool                          _forceRebuild,
+                      bool                          _checkForDuplicates
                      );
 
 
@@ -138,19 +140,11 @@ namespace KKMLL
      *@param[in] _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
      *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
      *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
-     *
-     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
-     *                        to caller as soon as convenient.
-     *
-     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
-     *                            the user as a way of letting them know what is happening.
      */
     TrainingProcess2 (TrainingConfiguration2 const *  _config,
                       FeatureVectorListPtr            _excludeList,
                       RunLog&                         _log,
-                      kkuint32                        _level,
-                      VolConstBool&                   _cancelFlag, 
-                      KKStr&                          _statusMessage
+                      kkuint32                        _level
                      );
 
    
@@ -169,18 +163,10 @@ namespace KKMLL
      *
      *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
      *                                       training data are normalized.
-     *
-     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
-     *                        to caller as soon as convenient.
-     *
-     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
-     *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (const KKStr&   _configFileName,
-                      RunLog&        _log,
-                      bool           _featuresAlreadyNormalized,
-                      VolConstBool&  _cancelFlag,
-                      KKStr&         _statusMessage
+    TrainingProcess2 (const KKStr&  _configFileName,
+                      RunLog&       _log,
+                      bool          _featuresAlreadyNormalized
                      );
 
 
@@ -196,18 +182,10 @@ namespace KKMLL
      *
      *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
      *                                       training data are normalized.
-     *
-     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
-     *                        to caller as soon as convenient.
-     *
-     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
-     *                            the user as a way of letting them know what is happening.
      */
-    TrainingProcess2 (istream&       _in,
-                      RunLog&        _log,
-                      bool           _featuresAlreadyNormalized,
-                      VolConstBool&  _cancelFlag,
-                      KKStr&         _statusMessage
+    TrainingProcess2 (istream&  _in,
+                      RunLog&   _log,
+                      bool      _featuresAlreadyNormalized
                      );
 
 
@@ -222,25 +200,26 @@ namespace KKMLL
      *@param[in,out]  _log   Logging file.
      *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
      *                                       training data are normalized.
-     *@param[in] _cancelFlag  Will be monitored by training process.  If this flag turns true will return
-     *                        to caller as soon as convenient.
-     *@param[out] _statusMessage  Caller can monitor this field for messages that can be displayed to 
-     *                            the user as a way of letting them know what is happening.
      */
     TrainingProcess2 (TrainingConfiguration2 const *  _config, 
                       FeatureVectorListPtr            _trainingExamples,
                       MLClassListPtr                  _mlClasses,
                       std::ostream*                   _reportFile,
                       RunLog&                         _log,
-                      bool                            _featuresAlreadyNormalized,
-                      VolConstBool&                   _cancelFlag,
-                      KKStr&                          _statusMessage
+                      bool                            _featuresAlreadyNormalized
                      );
 
     virtual
     ~TrainingProcess2 ();
 
     kkint32  MemoryConsumedEstimated ()  const;
+
+
+    /**
+     * Sets the cancelFlag and then lets any objects that it owns that the cancelFlagstatus has changed 
+     * by calling the their version of "CancelFlag"
+     */
+    void  CancelFlag (bool  _cancelFlag);
 
 
 
@@ -257,7 +236,6 @@ namespace KKMLL
     bool                          FeaturesAlreadyNormalized () const  {return featuresAlreadyNormalized;}
     FeatureVectorListPtr          Images                    ()        {return trainingExamples;}
     MLClassListPtr                MLClasses                 () const  {return mlClasses;}
-    RunLog&                       Log                       ()        {return log;}
     Model::ModelTypes             ModelType                 () const;
     KKStr                         ModelTypeStr              () const;
     KKStr                         ModelDescription          () const;
@@ -272,13 +250,14 @@ namespace KKMLL
 
 
 
-    void  CreateModelsFromTrainingData ();
+    void  CreateModelsFromTrainingData (RunLog&  log);
 
     /**@brief Extracts the list of classes including ones from Sub-Classifiers */
     MLClassListPtr  ExtractFullHierachyOfClasses ()  const;  
 
     void  ExtractTrainingClassFeatures (KKB::DateTime&  latestImageTimeStamp,
-                                        bool&           changesMadeToTrainingLibraries
+                                        bool&           changesMadeToTrainingLibraries,
+                                        RunLog&         log
                                        );
 
     void  LoadPrevTrainedOtherwiseRebuild (bool  _forceRebuild,
@@ -286,12 +265,13 @@ namespace KKMLL
                                           );
 
     void  Read (istream&  in,
-                bool&     successful
+                bool&     successful,
+                RunLog&   log
                );
 
     void  ReportTraningClassStatistics (std::ostream&  report);
 
-    void  SaveResults ();
+    void  SaveResults (RunLog&  log);
 
     void  SupportVectorStatistics (kkint32&  numSVs,
                                    kkint32&  totalNumSVs
@@ -313,7 +293,9 @@ namespace KKMLL
 
     void  ValidateConfiguration ();
 
-    void  WriteXml (ostream&  o);
+    void  WriteXml (ostream&  o,
+                    RunLog&   log
+                   );
 
 
     virtual  void  ReadXML (XmlStream&      s,
@@ -329,15 +311,19 @@ namespace KKMLL
 
   private:
     void    AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
-                                       FeatureVectorList&  examplesToAdd
+                                       FeatureVectorList&  examplesToAdd,
+                                       RunLog&             log
                                       );
 
     void    BuildModel3 ();
 
-    void    CheckForDuplicates (bool  allowDupsInSameClass);
+    void    CheckForDuplicates (bool     allowDupsInSameClass,
+                                RunLog&  log
+                               );
 
-    void    LoadSubClassifiers (bool  forceRebuild,
-                                bool  checkForDuplicates
+    void    LoadSubClassifiers (bool     forceRebuild,
+                                bool     checkForDuplicates,
+                                RunLog&  log
                                );
 
     void    RemoveExcludeListFromTrainingData ();
@@ -349,7 +335,8 @@ namespace KKMLL
     //************************************************************
     void  ExtractFeatures (const TrainingClassPtr  trainingClass,
                            KKB::DateTime&          latestTimeStamp,
-                           bool&                   changesMade
+                           bool&                   changesMade,
+                           RunLog&                 log
                           );
 
 
@@ -375,7 +362,7 @@ namespace KKMLL
 
     KKB::DateTime                buildDateTime;
 
-    VolConstBool&                cancelFlag;  /**< A calling application can set this to true Training Process will monitor this Flag, if true will terminate. */
+    volatile bool                cancelFlag;  /**< A calling application can set this to true Training Process will monitor this Flag, if true will terminate. */
 
 
     TrainingConfiguration2Const* config;
@@ -406,8 +393,6 @@ namespace KKMLL
                                              * Including one for noise trainingExamples(unknown trainingExamples).
                                              */
 
-    RunLog&                      log;
-
     ModelPtr                     model;
 
     ClassProbListPtr             priorProbability;  /**< Based on Training example distribution.  */
@@ -415,8 +400,6 @@ namespace KKMLL
     std::ostream*                report;
 
     KKStr                        savedModelName;
-
-    KKStr&                       statusMessage; /**< A means of communicating back to calling function in a multi threaded environment. */
 
     FeatureVectorListPtr         trainingExamples;  /**< All Images Loaded. Own's all trainingExamples. All other ImageList's will only point to
                                                      * these trainingExamples.

@@ -922,6 +922,131 @@ void  SVMparam::AddBinaryClassParms (MLClassPtr              class1,
 
 
 
+
+
+
+
+
+
+
+
+void  SVMparam::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
+{
+  XmlTag  startTag ("SVMModel",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  {
+    XmlElementKeyValuePairs*   headerFields = new XmlElementKeyValuePairs ();
+
+    headerFields->Add ("EncodingMethod",             EncodingMethodToStr (encodingMethod));
+    headerFields->Add ("FileName",                   fileName);
+    headerFields->Add ("MachineType",                MachineTypeToStr (machineType));
+    if  (selectedFeatures)
+      headerFields->Add ("SelectedFeatures",         selectedFeatures->ToString ());
+    headerFields->Add ("param",                      param.ToTabDelStr ());
+
+    headerFields->Add ("samplingRate",               samplingRate);
+    headerFields->Add ("selectionMethod",            SelectionMethodToStr (selectionMethod));
+
+
+    headerFields->Add ("useProbabilityToBreakTies",  useProbabilityToBreakTies);
+
+
+    headerFields->WriteXML ("HeaderFields", o);
+    delete  headerFields;
+    headerFields = NULL;
+  }
+
+  XmlElementVectorFloat::WriteXML (probClassPairs, "probClassPairs", o);
+
+  binaryParmsList->WriteXML (o);
+
+
+
+  XmlTag  endTag ("SVMModel", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  SVMparam::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+
+
+
+  bool  errorsFound = false;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t  &&  !errorsFound)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (!e)
+        continue;
+
+      const KKStr&  varName = e->VarName ();
+
+      if  (varName.EqualIgnoreCase ("HeaderFields")  &&  (typeid (*e) == typeid (XmlElementKeyValuePairs)))
+      {
+      }
+
+      else if  (varName.EqualIgnoreCase ("RootFileName")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+      {
+        rootFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(SVMModel)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 KKStr  KKMLL::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
 {
   if  (encodingMethod == SVM_EncodingMethod::BinaryEncoding)
@@ -1075,4 +1200,10 @@ SVM_SelectionMethod  KKMLL::SelectionMethodFromStr (const KKStr&  selectionMetho
   return  SVM_SelectionMethod::SelectionMethod_NULL;
 
 }  /* SelectionMethodFromStr */
+
+
+
+
+
+
 

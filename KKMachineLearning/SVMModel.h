@@ -12,13 +12,13 @@
 //***********************************************************************
 
 
-#include  "KKStr.h"
-#include  "ClassAssignments.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "FeatureVector.h"
-#include  "svm.h"
-#include  "SVMparam.h"
+#include "KKStr.h"
+#include "ClassAssignments.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "FeatureVector.h"
+#include "svm.h"
+#include "SVMparam.h"
 
 
 
@@ -83,13 +83,11 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
      *@param[in]  _fileDesc A description of the training data that was used to train the classifier.
      *@param[in]  _log A LogFile stream. All important events will be output to this stream
-     *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
      */
-    SVMModel (const KKStr&   _rootFileName,   
-              bool&          _successful,
-              FileDescPtr    _fileDesc,
-              RunLog&        _log,
-              VolConstBool&  _cancelFlag
+    SVMModel (const KKStr&  _rootFileName,   
+              bool&         _successful,
+              FileDescPtr   _fileDesc,
+              RunLog&       _log
              );
   
 
@@ -103,13 +101,11 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
      *@param[in]  _fileDesc A description of the data file. I'm not sure this is needed for this function.
      *@param[in]  _log A log-file stream. All important events will be output to this stream
-     *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
-     */
-    SVMModel (istream&       _in,   // Create from existing Model on Disk.
-              bool&          _successful,
-              FileDescPtr    _fileDesc,
-              RunLog&        _log,
-              VolConstBool&  _cancelFlag
+    */
+    SVMModel (istream&     _in,   // Create from existing Model on Disk.
+              bool&        _successful,
+              FileDescPtr  _fileDesc,
+              RunLog&      _log
              );
 
 
@@ -128,15 +124,12 @@ typedef  struct svm_node*     XSpacePtr;
      *            then be used to map back-to the correct class.
      *@param[in] _fileDesc  File-Description that describes the training data.
      *@param[out] _log Log file to log messages to.
-     *@param[in]  _cancelFlag  The training process will monitor this flag; if it goes true it
-     *            return to caller.
      */
     SVMModel (SVMparam&           _svmParam,
               FeatureVectorList&  _examples,
               ClassAssignments&   _assignments,
               FileDescPtr         _fileDesc,
-              RunLog&             _log,
-              VolConstBool&       _cancelFlag
+              RunLog&             _log
              );
 
 
@@ -144,6 +137,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@brief Frees any memory allocated by, and owned by the SVMModel
      */
     virtual ~SVMModel ();
+
+    virtual  void   CancelFlag (bool  _cancelFlag);
 
     FeatureNumListConstPtr   GetFeatureNums ()  const;
 
@@ -252,7 +247,7 @@ typedef  struct svm_node*     XSpacePtr;
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
-     *          time and recompute the decision boundary and probability.  It will then
+     *          time and re-compute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  The Example that was classified incorrectly.
@@ -318,9 +313,19 @@ typedef  struct svm_node*     XSpacePtr;
                 );
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
 
   private:
-    typedef  struct svm_model**   ModelPtr;
+    typedef  struct SvmModel233**   ModelPtr;
 
     FeatureVectorListPtr*   BreakDownExamplesByClass (FeatureVectorListPtr  examples);
 
@@ -550,7 +555,7 @@ typedef  struct svm_node*     XSpacePtr;
     BinaryClassParmsPtr*   binaryParameters;      /**< only used when doing Classification with diff Feature 
                                                    * Selection by 2 class combo's
                                                    */
-    VolConstBool&          cancelFlag;
+    volatile bool          cancelFlag;
 
     VectorInt32            cardinality_table;
 
@@ -578,18 +583,18 @@ typedef  struct svm_node*     XSpacePtr;
 
     kkuint32               predictXSpaceWorstCase;
 
-    XSpacePtr              predictXSpace;  /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
+    XSpacePtr              predictXSpace;         /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
 
     double*                probabilities;
 
-    KKStr                  rootFileName;   /**< This is the root name to be used by all component 
-                                             * objects; such as svm_model, mlClasses, and
-                                             * svmParam(including selected features).  Each one
-                                             * will have the same rootName with a different Suffix
-                                             *     mlClasses  "<rootName>.example_classes"
-                                             *     svmParam   "<rootName>.svm_parm"
-                                             *     model      "<rootName>"
-                                             */
+    KKStr                  rootFileName;          /**< This is the root name to be used by all component 
+                                                    * objects; such as SvmModel233, mlClasses, and
+                                                    * svmParam(including selected features).  Each one
+                                                    * will have the same rootName with a different Suffix
+                                                    *     mlClasses  "<rootName>.example_classes"
+                                                    *     svmParam   "<rootName>.svm_parm"
+                                                    *     model      "<rootName>"
+                                                    */
 
     FeatureNumListPtr      selectedFeatures;
 
@@ -611,12 +616,17 @@ typedef  struct svm_node*     XSpacePtr;
     kkint32                xSpacesTotalAllocated;
   };
 
-
-
   typedef  SVMModel*  SVMModelPtr;
 
 
+
+  typedef  XmlElementTemplate<SVMModel>  XmlElementSVMModel;
+  typedef  XmlElementSVMModel*  XmlElementSVMModelPtr;
+
+
+
 } /* namespace KKMLL */
+
 
 
 #endif

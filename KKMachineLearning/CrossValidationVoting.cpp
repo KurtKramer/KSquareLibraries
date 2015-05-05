@@ -266,12 +266,10 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
                                                          mlClasses,
                                                          NULL,
                                                          log,
-                                                         featuresAreAlreadyNormalized,
-                                                         cancelFlag,
-                                                         statusMessage
+                                                         featuresAreAlreadyNormalized
                                                         );
 
-    trainer->CreateModelsFromTrainingData ();
+    trainer->CreateModelsFromTrainingData (log);
 
     trainingTime         += trainer->TrainingTime ();
     numOfSupportVectors  += trainer->NumOfSupportVectors ();

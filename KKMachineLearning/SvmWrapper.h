@@ -11,27 +11,27 @@ namespace KKMLL
   typedef  std::vector<float>    Fvector;
   typedef  std::vector<double>   Dvector;
 
-  void    SvmSaveModel (ostream&            o,
-                        struct svm_model**  model
+  void    SvmSaveModel (ostream&              o,
+                        struct SvmModel233**  model
                        );
 
 
-  void    SvmSaveModel (struct svm_model**  subModel,
-                        const char*         fileName,
-                        bool&               successfull
+  void    SvmSaveModel (struct SvmModel233**  subModel,
+                        const char*           fileName,
+                        bool&                 successfull
                        );
 
 
-  struct  svm_model**   SvmLoadModel (const char* fileName);
+  struct  SvmModel233**   SvmLoadModel (const char* fileName);
 
-  struct  svm_model**   SvmLoadModel (istream&  f,
-                                      RunLog&   log
-                                     );
+  struct  SvmModel233**   SvmLoadModel (istream&  f,
+                                        RunLog&   log
+                                       );
 
 
-  struct  svm_model**   SvmTrainModel (const struct svm_parameter&  param,
-                                       struct svm_problem&          subprob
-                                      );
+  struct  SvmModel233**   SvmTrainModel (const struct svm_parameter&  param,
+                                         struct svm_problem&          subprob
+                                        );
 
   void  EncodeProblem (const struct svm_paramater&  param, 
                        struct svm_problem&          prob_in,
@@ -64,7 +64,7 @@ namespace KKMLL
    *@param[in] breakTie  The difference in probability between the two most likely classes.
    */
   void   SvmPredictClass (SVMparam&               svmParam,
-                          struct svm_model**      subModel,
+                          struct SvmModel233**      subModel,
                           const struct svm_node*  unknownClassFeatureData, 
                           kkint32*                votes,
                           double*                 probabilities,
@@ -84,7 +84,7 @@ namespace KKMLL
 
 
   kkint32  SvmPredictTwoClass (const struct svm_parameter&   param,
-                               svm_model**                   submodel, 
+                               SvmModel233**                   submodel, 
                                const svm_node*               unKnownData, 
                                kkint32                       desired, 
                                double&                       dist,
@@ -93,14 +93,14 @@ namespace KKMLL
                               );
 
 
-void     SvmPredictRaw (svm_model**      submodel, 
+void     SvmPredictRaw (SvmModel233**      submodel, 
                         const svm_node*  unKnownData,
                         double&          label,
                         double&          dist
                        );
 
                            
-  void   SvmDestroyModel (struct svm_model**  subModel);
+  void   SvmDestroyModel (struct SvmModel233**  subModel);
 
 }  /* namespace KKMLL */
 

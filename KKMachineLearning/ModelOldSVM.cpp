@@ -13,6 +13,8 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
+
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -36,11 +38,19 @@ using namespace KKMLL;
 
 
 
+ModelOldSVM::ModelOldSVM ():
+  Model (),
+  assignments (NULL),
+  svmModel    (NULL)
+{
+  Model::param = new ModelParamOldSVM ();
+}
 
-ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
-                          VolConstBool&  _cancelFlag
-                         ):
-  Model (_fileDesc, _cancelFlag),
+
+
+
+ModelOldSVM::ModelOldSVM (FileDescPtr  _fileDesc):
+  Model (_fileDesc),
   assignments (NULL),
   svmModel    (NULL)
 {
@@ -51,11 +61,9 @@ ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
 
 ModelOldSVM::ModelOldSVM (const KKStr&            _name,
                           const ModelParamOldSVM& _param,         // Create new model from
-                          FileDescPtr             _fileDesc,
-                          VolConstBool&           _cancelFlag
-                         )
+                          FileDescPtr             _fileDesc                         )
 :
-  Model   (_name, _param, _fileDesc, _cancelFlag),
+  Model   (_name, _param, _fileDesc),
   assignments (NULL),
   svmModel    (NULL)
 
@@ -96,6 +104,19 @@ kkint32  ModelOldSVM::MemoryConsumedEstimated ()  const
   if  (svmModel)      memoryConsumedEstimated += svmModel->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
+
+
+
+
+void   ModelOldSVM::CancelFlag (bool  _cancelFlag)
+{
+  Model::CancelFlag (_cancelFlag);
+  if  (svmModel)  
+      svmModel->CancelFlag (_cancelFlag);
+}
+
+
+
 
 
 ModelOldSVMPtr  ModelOldSVM::Duplicate ()  const
@@ -235,7 +256,7 @@ void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
 
       try
       {
-        svmModel = new SVMModel (i, _successful, fileDesc, log, cancelFlag);
+        svmModel = new SVMModel (i, _successful, fileDesc, log);
       }
       catch (...)
       {
@@ -545,7 +566,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   try
   {
     TrainingTimeStart ();
-    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, _log, cancelFlag);
+    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, _log);
     TrainingTimeEnd ();
   }
   catch (...)
@@ -690,3 +711,6 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
     param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
   }
 }  /* ReadXML */
+
+
+XmlFactoryMacro(ModelOldSVM)

@@ -14,6 +14,7 @@
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -35,8 +36,8 @@ using namespace  KKMLL;
 
 
 
-ModelDual::ModelDual (VolConstBool&  _cancelFlag):
-  Model (_cancelFlag),
+ModelDual::ModelDual ():
+  Model (),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),
@@ -50,10 +51,8 @@ ModelDual::ModelDual (VolConstBool&  _cancelFlag):
 
 
 
-ModelDual::ModelDual (FileDescPtr    _fileDesc,
-                      VolConstBool&  _cancelFlag
-                     ):
-  Model (_fileDesc, _cancelFlag),
+ModelDual::ModelDual (FileDescPtr    _fileDesc):
+  Model (_fileDesc),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),
@@ -67,10 +66,9 @@ ModelDual::ModelDual (FileDescPtr    _fileDesc,
 
 ModelDual::ModelDual (const KKStr&           _name,
                       const ModelParamDual&  _param,         // Create new model from
-                      FileDescPtr            _fileDesc,
-                      VolConstBool&          _cancelFlag
+                      FileDescPtr            _fileDesc
                      ):
-  Model (_name, _param, _fileDesc, _cancelFlag),
+  Model (_name, _param, _fileDesc),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),
@@ -127,6 +125,15 @@ kkint32 ModelDual::MemoryConsumedEstimated ()  const
   if  (classifier1) memoryConsumedEstimated += classifier1->MemoryConsumedEstimated ();
   if  (classifier2) memoryConsumedEstimated += classifier2->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
+}
+
+
+
+void    ModelDual::CancelFlag (bool  _cancelFlag)
+{
+  Model::CancelFlag (_cancelFlag);
+  if  (trainer1)  trainer1->CancelFlag (_cancelFlag);
+  if  (trainer2)  trainer2->CancelFlag (_cancelFlag);
 }
 
 
@@ -276,9 +283,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                                    classes,
                                    NULL,              /**< _reportFile  */
                                    _log,
-                                   true,              /**< 'true' = Feature data already normalized. */
-                                   cancelFlag,
-                                   trainer1StatusMsg
+                                   true              /**< 'true' = Feature data already normalized. */
                                   );
 
   if  (trainer1->Abort ())
@@ -292,7 +297,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
   try  
   {
     TrainingTimeStart ();
-    trainer1->CreateModelsFromTrainingData ();
+    trainer1->CreateModelsFromTrainingData (_log);
     TrainingTimeEnd ();
   }
   
@@ -317,9 +322,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                                    classes,
                                    NULL,             // _reportFile,
                                    _log,
-                                   true,             /**< 'true' = Feature data already normalized. */
-                                   cancelFlag,
-                                   trainer2StatusMsg
+                                   true             /**< 'true' = Feature data already normalized. */
                                   );
 
   if  (trainer2->Abort ())
@@ -330,7 +333,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     throw KKException (errMsg);
   }
 
-  try  {trainer2->CreateModelsFromTrainingData ();}
+  try  {trainer2->CreateModelsFromTrainingData (_log);}
   catch (const KKException&  e)
   {
     validModel = false;
@@ -934,9 +937,7 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
       trainer1 = new TrainingProcess2 (i,
                                        log,
-                                       true,       /**<  'true' = Feature data already normalized. */
-                                       cancelFlag, 
-                                       trainer1StatusMsg
+                                       true       /**<  'true' = Feature data already normalized. */
                                       );
       if  (trainer1->Abort ())
       {
@@ -964,9 +965,7 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
       trainer2 = new TrainingProcess2 (i,
                                        log,
-                                       true,    /**< 'true' = Feature data already normalized.  */
-                                       cancelFlag, 
-                                       trainer2StatusMsg
+                                       true    /**< 'true' = Feature data already normalized.  */
                                       );
 
       if  (trainer2->Abort ())
@@ -1038,14 +1037,14 @@ void  ModelDual::WriteSpecificImplementationXML (ostream&  o,
   if  (trainer1)
   {
     o << "<TrainingProcess1>" << endl;
-    trainer1->WriteXml (o);
+    trainer1->WriteXml (o, log);
     o << "</TrainingProcess1>" << endl;
   }
 
   if  (trainer2)
   {
     o << "<TrainingProcess2>" << endl;
-    trainer2->WriteXml (o);
+    trainer2->WriteXml (o, log);
     o << "</TrainingProcess2>" << endl;
   }
 
@@ -1201,3 +1200,6 @@ void  ModelDual::ReadXML (XmlStream&      s,
 
 }  /* ReadXML */
 
+
+
+XmlFactoryMacro(ModelDual)

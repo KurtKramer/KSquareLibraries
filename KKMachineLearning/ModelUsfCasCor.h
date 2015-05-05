@@ -27,20 +27,22 @@ namespace  KKMLL
     typedef  ModelUsfCasCor*  ModelUsfCasCorPtr;
 
 
-    ModelUsfCasCor (FileDescPtr    _fileDesc,
-                    VolConstBool&  _cancelFlag
-                  );
+    ModelUsfCasCor ();
+
+    ModelUsfCasCor (FileDescPtr  _fileDesc);
 
     ModelUsfCasCor (const KKStr&               _name,
                     const ModelParamUsfCasCor& _param,         // Create new model from
-                    FileDescPtr                _fileDesc,
-                    VolConstBool&              _cancelFlag
+                    FileDescPtr                _fileDesc
                    );
   
     ModelUsfCasCor (const ModelUsfCasCor&   _model);
 
+
     virtual
     ~ModelUsfCasCor ();
+
+    virtual  void           CancelFlag (bool  _cancelFlag);
 
     virtual
     kkint32                 MemoryConsumedEstimated ()  const;
@@ -151,14 +153,8 @@ namespace  KKMLL
 #define  _ModelUsfCasCor_Defined_
 
 
-
   typedef  XmlElementModelTemplate<ModelUsfCasCor>  XmlElementModelUsfCasCor;
   typedef  XmlElementModelUsfCasCor*  XmlElementModelUsfCasCorPtr;
-
-  typedef  XmlFactoryModelTemplate<XmlElementModelUsfCasCor>  XmlFactoryModelUsfCasCor;
-  typedef  XmlFactoryModelUsfCasCor*  XmlFactoryModelUsfCasCorPtr;
-
-
 } /* namespace  KKMLL */
 
 #endif

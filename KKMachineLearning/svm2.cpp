@@ -4627,6 +4627,7 @@ Svm_Model*  SVM289_MFS::svm_load_model_XML (istream&     in,
 
 
 SVM289_MFS::Svm_Model::Svm_Model ():
+  cancelFlag          (false),
   fileDesc            (NULL),
   param               (),
   nr_class            (0),
@@ -4650,6 +4651,7 @@ SVM289_MFS::Svm_Model::Svm_Model ():
 SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
                                   FileDescPtr       _fileDesc
                                  ):
+  cancelFlag          (false),
   fileDesc            (_fileDesc),
   param               (_model.param),
   nr_class            (_model.nr_class),
@@ -4736,6 +4738,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
 
 
 SVM289_MFS::Svm_Model::Svm_Model (FileDescPtr _fileDesc):
+   cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (),
    nr_class            (0),
@@ -4760,6 +4763,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
                                   FileDescPtr           _fileDesc
                                  ):
+   cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (_param),
    nr_class            (0),
@@ -4787,6 +4791,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const KKStr&  _fileName,
                                   FileDescPtr   _fileDesc,
                                   RunLog&       _log
                                  ):
+   cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (),
    nr_class            (0),
@@ -4813,6 +4818,7 @@ SVM289_MFS::Svm_Model::Svm_Model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
                                  ):
+   cancelFlag          (false),
    param               (),
    nr_class            (0),
    numSVs              (0),
@@ -4880,6 +4886,13 @@ void SVM289_MFS::Svm_Model::CleanUpMemory ()
   delete  prob_estimates;
   prob_estimates = NULL;
 }  /* CleanUpMemory */
+
+
+
+void  SVM289_MFS::Svm_Model::CancelFlag (bool  _cancelFlag)
+{
+  cancelFlag = _cancelFlag;
+}
 
 
 

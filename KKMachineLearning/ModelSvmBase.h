@@ -26,20 +26,20 @@ namespace  KKMLL
     typedef  ModelSvmBase*  ModelSvmBasePtr;
 
 
-    ModelSvmBase (FileDescPtr    _fileDesc,
-                  VolConstBool&  _cancelFlag
-                );
+    ModelSvmBase ();
+
+    ModelSvmBase (FileDescPtr _fileDesc);
 
     ModelSvmBase (const KKStr&             _name,
                   const ModelParamSvmBase& _param,         // Create new model from
-                  FileDescPtr              _fileDesc,
-                  VolConstBool&            _cancelFlag
-
+                  FileDescPtr              _fileDesc
                  );
   
     ModelSvmBase (const ModelSvmBase&   _model);
 
     virtual  ~ModelSvmBase ();
+
+    virtual  void  CancelFlag (bool  _cancelFlag);
 
     virtual  KKStr        Description ()  const;
 
@@ -159,9 +159,6 @@ namespace  KKMLL
 
   typedef  XmlElementModelTemplate<ModelSvmBase>  XmlElementModelSvmBase;
   typedef  XmlElementModelSvmBase*  XmlElementModelSvmBasePtr;
-
-  typedef  XmlFactoryModelTemplate<XmlElementModelSvmBase>  XmlFactoryModelSvmBase;
-  typedef  XmlFactoryModelSvmBase*  XmlFactoryModelSvmBasePtr;
 } /* namespace  KKMLL */
 
 #endif

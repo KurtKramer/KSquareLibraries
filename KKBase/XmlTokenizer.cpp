@@ -362,9 +362,9 @@ void  XmlTokenizer::ProcessAmpersand ()
 
 KKStrPtr  XmlTokenizer::ProcessBodyToken ()
 {
-  KKStrPtr  token = new KKStr(100);
+  KKStrPtr  token = new KKStr(512);
 
-  while  ((!atEndOfFile)  &&  (firstChar != '<'))
+  while  ((!atEndOfFile)  &&  (firstChar != '<')  &&  (firstChar != '\n'))
   {
     if  (firstChar == '&')
       ProcessAmpersand ();
@@ -372,7 +372,14 @@ KKStrPtr  XmlTokenizer::ProcessBodyToken ()
     GetNextChar ();
   }
 
-  // At this point we are either at the end of the file or the next character is "<" tart of a tag field.
+  if  ((firstChar == '\n')  &&  (!atEndOfFile))
+  {
+    // Since we are end of line we will add the '\n' character to the token and move on one more chracter.
+    token->Append (firstChar);
+    GetNextChar ();
+  }
+
+  // At this point we are either at end-of-file, end-of-line,  or the next character is "<" start of a tag field.
   return  token;
 }  /* ProcessTagToken */
 

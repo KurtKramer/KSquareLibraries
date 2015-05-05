@@ -168,6 +168,8 @@ namespace  SVM289_MFS
 
     void  CleanUpMemory ();
 
+    void  CancelFlag (bool  cancelFlag);
+
     double*  DecValues     ();
     double*  ProbEstimates ();
     double** PairwiseProb  ();
@@ -204,6 +206,7 @@ namespace  SVM289_MFS
                             )  const;
 
 
+    volatile bool      cancelFlag;
     FileDescPtr        fileDesc;
     svm_parameter      param;      // parameter
     kkint32            nr_class;   // number of classes, = 2 in regression/one class svm

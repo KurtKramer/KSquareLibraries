@@ -16,10 +16,11 @@
 using namespace std;
 
 
-#include  "KKBaseTypes.h"
-#include  "KKException.h"
+#include "GlobalGoalKeeper.h"
+#include "KKBaseTypes.h"
+#include "KKException.h"
 #include "KKStrParser.h"
-#include  "OSservices.h"
+#include "OSservices.h"
 using namespace KKB;
 
 
@@ -37,6 +38,317 @@ using namespace KKMLL;
 // Forward defining several functions.
 namespace  SVM233
 {
+
+
+
+
+
+
+void  SvmModel233::WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const
+{
+  XmlTag  startTag ("SvmModel233",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+
+  kkint32 numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
+
+  kkint32  origPrecision = (kkint32)o.precision ();
+  o.precision (14);
+
+  param.ToTabDelStr ().WriteXML ("Param", o);
+
+  XmlElementInt32::WriteXML (nr_class, "nr_class", o);
+
+  kkint32 totalNumSVs = l;
+
+  XmlElementInt32::WriteXML (totalNumSVs, "totalNumSVs", o);
+
+  XmlElementArrayDouble::WriteXML (numberOfBinaryClassifiers, rho, "rho", o);
+
+  if  (margin)
+  {
+    kkint32  oldPrecision = (kkint32)o.precision ();
+    o.precision (9);
+    XmlElementArrayDouble::WriteXML (numberOfBinaryClassifiers, margin, "margin", o);
+    o.precision (oldPrecision);
+  }
+
+  if (label)
+    XmlElementArrayInt32::WriteXML (nr_class, label, "label", o);
+
+  if  (nSV)
+    XmlElementArrayInt32::WriteXML (nr_class, nSV, "nSV", o);
+
+  {
+    // Determine total number of elements
+    kkint32  totalNumOfElements = 0;
+    for  (kkint32 i = 0;  i < totalNumSVs;  i++)
+    {
+      const svm_node *p = SV[i];
+      while  (p->index != -1)
+      {
+        totalNumOfElements++;
+        p++;
+      }
+
+      totalNumOfElements++;  // Add one for terminating node
+    }
+
+    XmlElementInt32::WriteXML (totalNumOfElements, "totalNumOfElements", o);
+  }
+
+  // The Support Vector Information will be written in the Contents portion of SvmModel233
+  for  (kkint32 i = 0;  i < totalNumSVs;  i++)
+  {
+    if  ((kkint32)exampleNames.size () > i)
+      o << "SuportVectorNamed"  << "\t" << exampleNames[i];
+    else
+      o << "SuportVector";
+
+    o.precision (16);
+    for (kkint32 j = 0;  j < nr_class - 1;  j++)
+      o << "\t" << sv_coef[j][i];
+
+    const svm_node *p = SV[i];
+    while  (p->index != -1)
+    {
+      o << "\t" << p->index << ":" << p->value;
+      p++;
+    }
+
+    o << endl;
+  }
+
+   o.precision (origPrecision);
+
+  XmlTag  endTag ("SvmModel233", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  SvmModel233::ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           )
+{
+  exampleNames.clear ();
+  kkint32 numberOfBinaryClassifiers = 0;
+  kkint32 numElementsLoaded         = 0;
+  kkint32 totalNumSVs               = 0;
+  kkint32 totalNumOfElements        = 0;
+  kkint32 numSVsLoaded              = 0;
+  delete  rho;      rho     = NULL;
+  delete  margin;   margin  = NULL;
+  delete  nSV;      nSV     = NULL;
+  delete  label;    label   = NULL;
+  delete  SV;       SV      = NULL;
+
+  bool  errorsFound = false;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t  &&  (!errorsFound))
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  varName = e->VarName ();
+      const KKStr&  sectionName = e->SectionName ();
+
+      if  (varName.EqualIgnoreCase ("Param")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+      {
+        param.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("nr_class")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      {
+        nr_class = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+        numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
+      }
+
+      else if  (varName.EqualIgnoreCase ("totalNumSVs")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      {
+         totalNumSVs = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+         l = totalNumSVs;
+      }
+
+      else if  (varName.EqualIgnoreCase ("rho")  &&  (typeid (*e) == typeid (XmlElementArrayDouble)))
+      {
+        delete  rho;  rho = NULL;
+        XmlElementArrayDoublePtr rhoArray = dynamic_cast<XmlElementArrayDoublePtr> (e);
+        if  (rhoArray->Count () != numberOfBinaryClassifiers)
+        {
+          log.Level (-1) << endl
+            << "SvmModel233::ReadXML   ***ERROR***   'rho' array incorrect length: expected: " 
+            << numberOfBinaryClassifiers << "  found: " << rhoArray->Count () << " elements"
+            << endl <<endl;
+          errorsFound = true;
+        }
+        else
+        {
+          rho = rhoArray->TakeOwnership ();
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("margin")  &&  (typeid (*e) == typeid (XmlElementArrayDouble)))
+      {
+        delete  margin;  margin = NULL;
+        XmlElementArrayDoublePtr marginArray = dynamic_cast<XmlElementArrayDoublePtr> (e);
+        if  (marginArray->Count () != numberOfBinaryClassifiers)
+        {
+          log.Level (-1) << endl
+            << "SvmModel233::ReadXML   ***ERROR***   'margin' array incorrect length: expected: " 
+            << numberOfBinaryClassifiers << "  found: " << marginArray->Count () << " elements"
+            << endl <<endl;
+          errorsFound = true;
+        }
+        else
+        {
+          margin = marginArray->TakeOwnership ();
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("label")  &&  (typeid (*e) == typeid (XmlElementArrayInt32)))
+      {
+        delete  label;  label = NULL;
+        XmlElementArrayInt32Ptr labelArray = dynamic_cast<XmlElementArrayInt32Ptr> (e);
+        if  (labelArray->Count () != nr_class)
+        {
+          log.Level (-1) << endl
+            << "SvmModel233::ReadXML   ***ERROR***   'label' array incorrect length: expected: " 
+            << nr_class << "  found: " << labelArray->Count () << " elements"
+            << endl <<endl;
+          errorsFound = true;
+        }
+        else
+        {
+          label = labelArray->TakeOwnership ();
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("nSV")  &&  (typeid (*e) == typeid (XmlElementArrayInt32)))
+      {
+        delete  nSV;  nSV = NULL;
+        XmlElementArrayInt32Ptr nSVArray = dynamic_cast<XmlElementArrayInt32Ptr> (e);
+        if  (nSVArray->Count () != nr_class)
+        {
+          log.Level (-1) << endl
+            << "SvmModel233::ReadXML   ***ERROR***   'nSV' array incorrect length: expected: " 
+            << nr_class << "  found: " << nSVArray->Count () << " elements"
+            << endl <<endl;
+          errorsFound = true;
+        }
+        else
+        {
+          nSV = nSVArray->TakeOwnership ();
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("totalNumOfElements")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      {
+        totalNumOfElements = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+        if  (totalNumOfElements < 1)
+        {
+          log.Level (-1) << endl 
+            << "SvmModel233::ReadXML   ***ERROR***   Invalid  totalNumOfElements: " << totalNumOfElements << endl
+            << endl;
+          errorsFound = true;
+          continue;
+        }
+
+        kkint32 m = nr_class - 1;
+        // kint32 l = model->l;
+        
+        delete  sv_coef;
+        sv_coef = new double*[l];
+        for (kkint32 i = 0;  i < m;  i++)
+          sv_coef[i] = new double[l];
+
+        SV = new svm_node*[l];
+        xSpace = new svm_node[totalNumOfElements];
+        weOwnXspace = true;
+      }
+    }
+    else
+    {
+      XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
+      if  (!content)
+        continue;
+
+      KKStrParser p (content->Content ());
+      p.TrimWhiteSpace (" ");
+
+      KKStr  lineName = p.GetNextToken ("\t");
+      if  (!lineName.EqualIgnoreCase ("SuportVectorNamed")  ||  !lineName.EqualIgnoreCase ("SuportVector"))
+      {
+        log.Level (-1) << endl
+          << "SvmModel233::ReadXML   ***ERROR***   Invalid Content: " << lineName << endl
+          << endl;
+        errorsFound = true;
+        continue;
+      }
+
+      if  (numSVsLoaded >= totalNumSVs)
+      {
+        log.Level (-1) << endl << endl << endl
+             << "SvmModel233::ReadXML     ***ERROR***  More 'SupportVector' defined were specified." << endl
+             << endl;
+        errorsFound = true;
+        continue;
+      }
+
+      if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
+      {
+        exampleNames.push_back (p.GetNextToken ("\t"));
+      }
+      
+      for (kkint32 j = 0;  j < nr_class - 1;  j++)
+        sv_coef[j][numSVsLoaded] = p.GetNextTokenDouble ("\t");
+
+      SV[numSVsLoaded] = &(xSpace[numElementsLoaded]);
+
+
+      while  ((p.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
+      {
+        xSpace[numElementsLoaded].index = p.GetNextTokenInt (":");
+        xSpace[numElementsLoaded].value = p.GetNextTokenDouble ("\t");
+        numElementsLoaded++;
+      }
+
+      if  (numElementsLoaded >= totalNumOfElements)
+      {
+        log.Level (-1) << endl
+             << "SvmModel233::ReadXML   ***ERROR***   'numElementsLoaded'  is greater than what was defined by 'totalNumOfElements'." << endl
+             << endl;
+        errorsFound = true;
+        continue;
+      }
+
+      xSpace[numElementsLoaded].index = -1;
+      xSpace[numElementsLoaded].value = 0.0;
+      numElementsLoaded++;
+
+      numSVsLoaded++;
+    }
+   
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+XmlFactoryMacro(SvmModel233)
+
+
+
+
+
+
   // Generalized SMO+SVMlight algorithm
   // Solves:
   //
@@ -2810,14 +3122,14 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
 // Interface functions
 //
 
-svm_model* SVM233::svm_train (const svm_problem*    prob,
+SvmModel233* SVM233::svm_train (const svm_problem*    prob,
                               const svm_parameter*  param
                              )
 {
-  //svm_model *model = Malloc(svm_model,1);
+  //SvmModel233 *model = Malloc(SvmModel233,1);
 
-  svm_model *model = new svm_model();
-  //memset(model, 0, sizeof(svm_model)); - KNS
+  SvmModel233 *model = new SvmModel233();
+  //memset(model, 0, sizeof(SvmModel233)); - KNS
   model->param = *param;
   model->dim =0;
 
@@ -3206,14 +3518,14 @@ svm_model* SVM233::svm_train (const svm_problem*    prob,
 
 
 
-kkint32 svm_get_nr_class(const svm_model *model)
+kkint32 svm_get_nr_class(const SvmModel233 *model)
 {
   return model->nr_class;
 }
 
 
 
-void svm_get_labels(const svm_model *model, kkint32* label)
+void svm_get_labels(const SvmModel233 *model, kkint32* label)
 {
   for  (kkint32 i = 0;  i < model->nr_class;  i++)
     label[i] = model->label[i];
@@ -3240,7 +3552,7 @@ const char *kernel_type_table[]=
 
 
 
-kkint32 SVM233::svm_save_model (const char *model_file_name, const svm_model *model)
+kkint32 SVM233::svm_save_model (const char *model_file_name, const SvmModel233 *model)
 {
   FILE *fp = fopen (model_file_name, "w");
   if  (fp==NULL) return -1;
@@ -3314,8 +3626,8 @@ kkint32 SVM233::svm_save_model (const char *model_file_name, const svm_model *mo
 
 
 
-void  SVM233::Svm_Save_Model (ostream&         o, 
-                              const svm_model* model
+void  SVM233::Svm_Save_Model (ostream&           o, 
+                              const SvmModel233* model
                              )
 {
   const svm_parameter&  param = model->param;
@@ -3418,11 +3730,11 @@ void  SVM233::Svm_Save_Model (ostream&         o,
 
 
 
-struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
+struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
                                            RunLog&   log
                                           )
 {
-  svm_model*  model = new svm_model ();
+  SvmModel233*  model = new SvmModel233 ();
 
   kkint32 bullAllocSize = 500000;
   char* buff = new char[bullAllocSize];
@@ -3437,7 +3749,7 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
   bool  validFormat = true;
 
-  KKStr  line (1024);  // Preallocating to at least 1024 chracters.
+  KKStr  line (1024);  // Preallocating to at least 1024 characters.
 
   // Get first non blank line.  It had better contain "<Smv239>"  otherwise we will consider this
   // an invalid Training Model.
@@ -3550,7 +3862,7 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
       model->SV = Malloc (svm_node*, l);
       x_space = new svm_node[totalNumOfElements];
       model->xSpace      = x_space;
-      model->weOwnXspace = true;   // 'model'  owns 'x_space'  and will be responsable for deleting it.
+      model->weOwnXspace = true;   // 'model'  owns 'x_space'  and will be responsible for deleting it.
     }
 
     else if  (lineName.EqualIgnoreCase ("SUPORTVECTOR")  ||  lineName.EqualIgnoreCase ("SuportVectorNamed"))
@@ -3658,7 +3970,7 @@ struct svm_model*  SVM233::Svm_Load_Model (istream&  f,
 
 
 
-svm_model*  SVM233::svm_load_model (const char *model_file_name)
+SvmModel233*  SVM233::svm_load_model (const char *model_file_name)
 {
   FILE *fp = fopen (model_file_name, "rb");
   if  (fp == NULL) 
@@ -3666,7 +3978,7 @@ svm_model*  SVM233::svm_load_model (const char *model_file_name)
 
   // read parameters
 
-  svm_model *model = new svm_model ();
+  SvmModel233 *model = new SvmModel233 ();
   svm_parameter& param = model->param;
   model->rho   = NULL;
   model->label = NULL;
@@ -3858,7 +4170,7 @@ out2:
 
 
 /****************************************************************************************/
-double  SVM233::svm_predict (const svm_model*      model,
+double  SVM233::svm_predict (const SvmModel233*      model,
                              const svm_node*       x,
                              std::vector<double>&  dist,
                              std::vector<kkint32>&   winners,
@@ -4034,7 +4346,7 @@ double  SVM233::svm_predict (const svm_model*      model,
 
 
 /****************************************************************************************/
-double  SVM233::svm_predictTwoClasses (const svm_model*  model,
+double  SVM233::svm_predictTwoClasses (const SvmModel233*  model,
                                        const svm_node*   x,
                                        double&           dist,
                                        kkint32           excludeSupportVectorIDX
@@ -4172,7 +4484,7 @@ double  SVM233::svm_predictTwoClasses (const svm_model*  model,
 
 
 /****************************************************************************************/
-svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model,
+svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const SvmModel233*    model,
                                                        kkint32               excludeSupportVectorIDX  /*!<  Specify index of a S/V to remove from computation. */
                                                       )
 {
@@ -4258,7 +4570,7 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const svm_model*    model
 
 
 
-void  SVM233::svm_destroy_model  (svm_model*  model)
+void  SVM233::svm_destroy_model  (SvmModel233*  model)
 {
   model->Dispose ();
   delete model;
@@ -4378,7 +4690,7 @@ const char*  SVM233::svm_check_parameter (const svm_problem *prob, const svm_par
 //luo add compute the distance of the data to the decision boundary, given the
 //model and the input, Now it is only work for the binary case.
 /*
-double SVM233::svm_dist (const svm_model*  model, 
+double SVM233::svm_dist (const SvmModel233*  model, 
                          const svm_node*   x
                         )
 {
@@ -4466,7 +4778,7 @@ double SVM233::svm_dist (const svm_model*  model,
 
 
 
-void  SVM233::svm_margin (svm_model *model)
+void  SVM233::svm_margin (SvmModel233 *model)
 //modify: model
 //effects: if classification, model->margin[nr_class*(nr_class-1)/2] is computed
 //      else if regression, doing nothing
@@ -4587,12 +4899,12 @@ void  SVM233::svm_margin (svm_model *model)
 
 
 /**
- *@brief  Extract Suport Vector statistics .
- *@param[in]   model         Traing Support Vector Machine.
+ *@brief  Extract Support Vector statistics .
+ *@param[in]   model         Training Support Vector Machine.
  *@param[out]  numSVs        The number of training examples selected as Support Vectors.
  *@param[out]  totalNumSVs   Total number of SVs used by all the binary classifiers.
  */
-void  SVM233::svm_GetSupportVectorStatistics (const struct svm_model*  model,
+void  SVM233::svm_GetSupportVectorStatistics (const struct SvmModel233*  model,
                                               kkint32&                   numSVs,         // The number of training examp
                                               kkint32&                   totalNumSVs
                                              )

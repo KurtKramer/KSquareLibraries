@@ -12,21 +12,22 @@ namespace  KKMLL
   public:
     typedef  ModelKnn*  ModelKnnPtr;
 
-    ModelKnn (VolConstBool&  _cancelFlag);
+    ModelKnn ();
 
-    ModelKnn (FileDescPtr    _fileDesc,
-              VolConstBool&  _cancelFlag
-             );
+    ModelKnn (FileDescPtr  _fileDesc);
   
     ModelKnn (const KKStr&          _name,
               const ModelParamKnn&  _param,         // Create new model from
-              FileDescPtr           _fileDesc,
-              VolConstBool&         _cancelFlag
+              FileDescPtr           _fileDesc
              );
   
     ModelKnn (const ModelKnn&  _madel);
 
     virtual ~ModelKnn();
+
+
+    virtual  void  CancelFlag (bool  _cancelFlag);
+
 
     virtual
     ModelKnnPtr  Duplicate ()  const;
@@ -131,14 +132,8 @@ namespace  KKMLL
   typedef  ModelKnn::ModelKnnPtr  ModelKnnPtr;
 
 
-
-
   typedef  XmlElementModelTemplate<ModelKnn>  XmlElementModelKnn;
   typedef  XmlElementModelKnn*  XmlElementModelKnnPtr;
-
-  typedef  XmlFactoryModelTemplate<XmlElementModelKnn>  XmlFactoryModelKnn;
-  typedef  XmlFactoryModelKnn*  XmlFactoryModelKnnPtr;
-
 }
 
 

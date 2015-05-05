@@ -309,13 +309,11 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
                              mlClasses,
                              NULL,
                              log,
-                             featuresAreAlreadyNormalized,
-                             cancelFlag,
-                             statusMessage
+                             featuresAreAlreadyNormalized
                             );
   try
   {
-    trainer.CreateModelsFromTrainingData ();
+    trainer.CreateModelsFromTrainingData (log);
   }
   catch  (const std::exception  e)
   {

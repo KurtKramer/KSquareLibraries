@@ -7,9 +7,10 @@
 #include <set>
 #include <vector>
 
-#include  "KKException.h"
-#include  "KKStr.h"
-#include  "RunLog.h"
+#include "KKException.h"
+#include "KKStr.h"
+#include "RunLog.h"
+#include "XmlStream.h"
 
 /**
  *@namespace  SVM233   
@@ -129,9 +130,9 @@ namespace  SVM233
 
 
 //
-// svm_model
+// SvmModel233
 //
-struct svm_model
+struct SvmModel233
 {
   svm_parameter param;        // parameter
   kkint32       nr_class;     // number of classes, = 2 in regression/one class svm
@@ -166,7 +167,7 @@ struct svm_model
   svm_node*          xSpace;    // Needed when we load from data file.
   bool               weOwnXspace;
 
-  svm_model ()
+  SvmModel233 ()
   {
     margin        = NULL;
     featureWeight = NULL;
@@ -187,14 +188,16 @@ struct svm_model
   }
 
 
-  svm_model (const svm_model& _model)
+  SvmModel233 (const SvmModel233& _model)
   {
-    throw KKException ("svm_model::svm_model (const   svm_model& _model)  ***ERROR***  Not Supported");
+    throw KKException ("SvmModel233::SvmModel233 (const   SvmModel233& _model)  ***ERROR***  Not Supported");
   }
+
+
 
   kkint32  MemoryConsumedEstimated ()  const
   {
-    kkint32  memoryConsumedEstimated = sizeof (svm_model)
+    kkint32  memoryConsumedEstimated = sizeof (SvmModel233)
       +  param.MemoryConsumedEstimated ()
       +  (kkint32)exampleNames.size () * 40;
 
@@ -252,6 +255,7 @@ struct svm_model
     }
   }
 
+
   KKStr  SupportVectorName (kkint32 svIDX)
   {
     if  (svIDX < (kkint32)exampleNames.size ())
@@ -259,47 +263,63 @@ struct svm_model
     else
       return  "SV" + StrFormatInt (svIDX, "ZZZ#");
   }
-};
+
+
+  virtual  void  ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         );
+
+
+  virtual  void  WriteXML (const KKStr&  varName,
+                           ostream&      o
+                          )  const;
+
+};  /* SvmModel233 */
+
+
+typedef  XmlElementTemplate<SvmModel233>  XmlElementSvmModel233;
+typedef  XmlElementSvmModel233*  XmlElementSvmModel233Ptr;
 
 
 
 
-struct svm_model*  svm_train  (const struct svm_problem*   prob, 
-                               const struct svm_parameter* param
-                              );
+struct SvmModel233*  svm_train  (const struct svm_problem*   prob, 
+                                 const struct svm_parameter* param
+                                );
 
 
-struct svm_model*  svm_load_model (const char*  model_file_name);
+struct SvmModel233*  svm_load_model (const char*  model_file_name);
 
 
-struct svm_model*  Svm_Load_Model (istream&  f,
+struct SvmModel233*  Svm_Load_Model (istream&  f,
                                    RunLog&   log
                                   );
 
 
 kkint32 svm_save_model (const char*              model_file_name, 
-                        const struct svm_model*  model
+                        const struct SvmModel233*  model
                        );
 
 void    Svm_Save_Model (std::ostream&      o, 
-                        const svm_model*   model
+                        const SvmModel233*   model
                        );
 
 
-kkint32 svm_get_nr_class  (const struct svm_model*  model);
+kkint32 svm_get_nr_class  (const struct SvmModel233*  model);
 
 
-void    svm_get_labels    (const struct svm_model*  model, 
+void    svm_get_labels    (const struct SvmModel233*  model, 
                            kkint32*                 label
                           );
 
-void    svm_GetSupportVectorStatistics (const struct svm_model*  model,
+void    svm_GetSupportVectorStatistics (const struct SvmModel233*  model,
                                         kkint32&                 numSVs,         // The number of training examp
                                         kkint32&                 totalNumSVs
                                        );
 
 
-double  svm_predict  (const struct svm_model*  model, 
+double  svm_predict  (const struct SvmModel233*  model, 
                       const struct svm_node*   x
                      );
 
@@ -316,7 +336,7 @@ double  svm_predict  (const struct svm_model*  model,
  *                    be ignored; this would be the same index specified when trainig the model to ignore.
  *@returns The predicted class; the won that won the most amount of votes; if there is a tie the 1st one will be returned.
  */
-double  svm_predict  (const struct svm_model*  model, 
+double  svm_predict  (const struct SvmModel233*  model, 
                       const svm_node*          x, 
                       std::vector<double>&     dist,
                       std::vector<kkint32>&    winners,
@@ -331,25 +351,25 @@ double  svm_predict  (const struct svm_model*  model,
  *@excludeSupportVectorIDX[in]  Index of support vector that should be excluded form computation; if less than zero will be ignored.
  *@returns The predicted class; Zero(0) or One(1);  if (dist <= 0)  the class Zero otherwise class One.
  */
-double  svm_predictTwoClasses (const svm_model*  model,
+double  svm_predictTwoClasses (const SvmModel233*  model,
                                const svm_node*   x,
                                double&           dist,
                                kkint32           excludeSupportVectorIDX
                               );
 
-svm_problem*  svm_BuildProbFromTwoClassModel (const svm_model*  model,
+svm_problem*  svm_BuildProbFromTwoClassModel (const SvmModel233*  model,
                                               kkint32           excludeSupportVectorIDX
                                              );
 
 
-void          svm_destroy_model   (struct svm_model *model);
+void          svm_destroy_model   (struct SvmModel233 *model);
 
 const char*   svm_check_parameter (const struct svm_problem *prob, const struct svm_parameter *param);
 
 
 //luo add
-void     svm_margin (svm_model *model); // compute the margin
-//double   svm_dist   (const svm_model* model, 
+void     svm_margin (SvmModel233 *model); // compute the margin
+//double   svm_dist   (const SvmModel233* model, 
 //                     const svm_node  *x
 //                    ); // compute the normalized distance
 //luo

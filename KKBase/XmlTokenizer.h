@@ -36,19 +36,30 @@ namespace  KKB
 
     bool  EndOfFile ();
 
-    KKStrPtr   GetNextToken ();
+
+    /**
+     *@brief Will retrieve the next token in the stream which will be either a tag token or up to
+     * one line of the content part of an element. If it is a content token it may end with a '\n'
+     * character.  The idea is tat when reading content we will never return more than one line of
+     * text at a time.
+     */
+    KKStrPtr  GetNextToken ();
+
 
     /** 
      *@brief  Returns a list of tokens up to and including the first occurrence of 'delToken'.
      *@details Caller will take ownership of the returned tokens, and be responsible for
      *         deleting them.
      */
-    KKStrListPtr   GetNextTokens (const KKStr& delToken);  
+    KKStrListPtr  GetNextTokens (const KKStr&  delToken);  
+
 
     KKStrConstPtr  Peek (kkuint32 idx);
 
+    
     void  PushTokenOnFront (KKStrPtr  t);
 
+    
     KKStrConstPtr  operator[](kkuint32 idx); /**< Returns pointers to following Tokens in the stream where idx==0 indicates the next token. */
 
 
@@ -62,7 +73,10 @@ namespace  KKB
     void       ProcessAmpersand ();
 
 
-    void       ReadInNextLogicalToken ();
+    void       ReadInNextLogicalToken ();  /**  Will retrieve the next token in the stream which will be either a tag token
+                                            * or up to one line of the content part of an element.
+                                            */
+
     bool       WhiteSpaceChar (char c)  const;
 
     char       LookUpEntity (const KKStr&  entityName)  const;

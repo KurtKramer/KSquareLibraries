@@ -238,9 +238,7 @@ const char*  _(const char* str)
 
 
 
-UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
-                      VolConstBool&  _cancelFlag
-                     ):
+UsfCasCor::UsfCasCor ():
 
   //***************************************************************
   //*                            usfcascor                        *
@@ -393,9 +391,8 @@ UsfCasCor::UsfCasCor (FileDescPtr    _fileDesc,
   InterruptPending        (false),
   Nparameters             (0),
   classes                 (NULL),
-  fileDesc                (_fileDesc),
   selectedFeatures        (NULL),
-  cancelFlag              (_cancelFlag)
+  cancelFlag              (false)
 
 {
   ConstructParmTable ();
@@ -1203,7 +1200,7 @@ char*  UsfCasCor::parm_to_string (int k)
 
   case BOOLE: case BOOLE_NO:
     sprintf(parm_string, "%s=%s\n", ParmTable[k].keyword, 
-      boolean_to_string(*(Boolean *)ParmTable[k].varptr));
+      boolean_to_string(*(bool*)ParmTable[k].varptr));
     break;
 
   default:
@@ -1265,17 +1262,13 @@ int  UsfCasCor::string_to_type (const char* s)
 
 
 
-const char *  UsfCasCor::boolean_strings[2] = {"false", "true"};
 
-
-
-char const *  UsfCasCor::boolean_to_string (Boolean var)  const
+char const *  UsfCasCor::boolean_to_string (bool var)  const
 {
-  switch (var) 
-  {
-    case false:  return(boolean_strings[0]);
-    case true:   return(boolean_strings[1]);
- }
+  if  (var)
+    return "true";
+  else
+    return "false";
 }  /* boolean_to_string */
 
 

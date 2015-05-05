@@ -14,11 +14,13 @@
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
+#include "KKStr.h"
 #include "OSservices.h"
 #include "RunLog.h"
-#include "KKStr.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
 
@@ -166,15 +168,14 @@ void  SVMModel::GreaterVotes (bool     useProbability,
 SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Model on Disk.
                     bool&          _successful,
                     FileDescPtr    _fileDesc,
-                    RunLog&        _log,
-                    VolConstBool&  _cancelFlag
+                    RunLog&        _log
                    )
 :  
   assignments              (_log),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
   cardinality_table        (),
-  cancelFlag               (_cancelFlag),
+  cancelFlag               (false),
   classIdxTable            (NULL),
   crossClassProbTable      (NULL),
   crossClassProbTableSize  (0),
@@ -234,17 +235,16 @@ SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Mode
 }
 
 
-SVMModel::SVMModel (istream&       _in,   // Create from existing Model on Disk.
-                    bool&          _successful,
-                    FileDescPtr    _fileDesc,
-                    RunLog&        _log,
-                    VolConstBool&  _cancelFlag
+SVMModel::SVMModel (istream&     _in,   // Create from existing Model on Disk.
+                    bool&        _successful,
+                    FileDescPtr  _fileDesc,
+                    RunLog&      _log
                    )
 :  
   assignments              (_log),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
-  cancelFlag               (_cancelFlag),
+  cancelFlag               (false),
   cardinality_table        (),
   classIdxTable            (NULL),
   crossClassProbTable      (NULL),
@@ -298,14 +298,13 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
                     FeatureVectorList&  _examples,      // Training data.
                     ClassAssignments&   _assignmnets,
                     FileDescPtr         _fileDesc,
-                    RunLog&             _log,
-                    VolConstBool&       _cancelFlag
+                    RunLog&             _log
                    )
 :
   assignments              (_assignmnets),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
-  cancelFlag               (_cancelFlag),
+  cancelFlag               (false),
   cardinality_table        (),
   classIdxTable            (NULL),
   crossClassProbTable      (NULL),
@@ -564,6 +563,14 @@ kkint32  SVMModel::MemoryConsumedEstimated ()  const
 }  /* MemoryConsumedEstimated */
 
 
+
+
+
+
+void   SVMModel::CancelFlag (bool  _cancelFlag)
+{
+  cancelFlag = _cancelFlag;
+}
 
 
 
@@ -2439,7 +2446,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
     svm_parameter  parameters = models[modelIDX][0]->param;
     parameters.nr_class = 2;
 
-    svm_model*  subSetModel = svm_train  (subSetProb, &parameters);
+    SvmModel233*  subSetModel = svm_train  (subSetProb, &parameters);
 
     svm_predictTwoClasses (subSetModel, predictXSpace, distance, -1);
     probabilityC1 = ((1.0 / (1.0 + exp (-1.0 * (parms->Param ().A) * distance))));
@@ -2455,7 +2462,7 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
     svm_parameter  parameters = models[modelIDX][0]->param;
     parameters.nr_class = 2;
 
-    svm_model*  subSetModel = svm_train  (subSetProb, &parameters);
+    SvmModel233*  subSetModel = svm_train  (subSetProb, &parameters);
 
     svm_predictTwoClasses (subSetModel, predictXSpace, distance, -1);
     probabilityC1 = ((1.0 / (1.0 + exp (-1.0 * (parms->Param ().A) * distance))));
@@ -2792,7 +2799,7 @@ void SVMModel::ConstructBinaryCombosModel (FeatureVectorListPtr  examples,
 
         {
           FILE*  xxx = fopen ("c:\\Temp\\testModel.txt", "r");
-          svm_model **  m = SvmLoadModel (xxx);
+          SvmModel233 **  m = SvmLoadModel (xxx);
           fclose (xxx);
         }
       }
@@ -2973,3 +2980,230 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
   delete  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
+
+
+
+
+
+void  SVMModel::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
+{
+  XmlTag  startTag ("SVMModel",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  {
+    XmlElementKeyValuePairs*   headerFields = new XmlElementKeyValuePairs ();
+
+    headerFields->Add ("RootFileName",      rootFileName);
+    headerFields->Add ("Time",              osGetLocalDateTime ());
+    headerFields->Add ("NumOfModels",       numOfModels);
+    if  (selectedFeatures)
+      headerFields->Add ("SelectedFeatures", selectedFeatures->ToString ());
+
+    headerFields->Add ("TrainingTime",      trainingTime);
+    headerFields->Add ("MachineType",       MachineTypeToStr (svmParam.MachineType ()));
+    headerFields->Add ("ClassAssignments",  assignments.ToString ().QuotedStr ());
+    headerFields->WriteXML ("HeaderFields", o);
+    delete  headerFields;
+    headerFields = NULL;
+  }
+  svmParam.WriteXML (o);
+
+  if  (svmParam.MachineType () == SVM_MachineType::OneVsOne)
+  {
+    //  "<OneVsOne>"
+    rootFileName.WriteXML ("rootFileName", o);
+    models[0][0]->WriteXML ("OneVsOneModel", o);
+  }
+
+  else if  (svmParam.MachineType () == SVM_MachineType::OneVsAll)
+  {
+    // Not Supported
+  }
+
+  else if  (svmParam.MachineType () == SVM_MachineType::BinaryCombos)
+  {
+    kkint32  modelsIDX = 0;
+
+    for  (modelsIDX = 0;  modelsIDX < numOfModels;  modelsIDX++)
+    {
+      BinaryClassParmsPtr  binClassParms = binaryParameters[modelsIDX];
+      KKStr  binaryClassNames (256);
+      binaryClassNames << modelsIDX << "\t" << binClassParms->Class1Name () << "\t"  << binClassParms->Class2Name ();
+      binaryClassNames.WriteXML ("BinaryCombo", o);
+      KKStr  binaryComboModelName = "BinaryComboModel_" + StrFormatInt (modelsIDX, "000");
+      models[modelsIDX][0]->WriteXML (binaryComboModelName, o);
+    }
+  }
+
+
+  XmlTag  endTag ("SVMModel", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  SVMModel::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+  kkint32  numModeLoaded = 0;
+  KKStr    lastBinaryClass1Name = "";
+  KKStr    lastBinaryClass2Name = "";
+  kkint32  lastModelIdx = -1;
+
+  delete  binaryParameters;       binaryParameters      = NULL;
+  delete  models;                 models                = NULL;
+  delete  binaryFeatureEncoders;  binaryFeatureEncoders = NULL;
+
+  numOfModels = 0;
+
+
+  bool  errorsFound = false;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t  &&  !errorsFound)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (!e)
+        continue;
+
+      const KKStr&  varName = e->VarName ();
+
+      if  (varName.EqualIgnoreCase ("HeaderFields")  &&  (typeid (*e) == typeid (XmlElementKeyValuePairs)))
+      {
+        XmlElementKeyValuePairsPtr hf = dynamic_cast<XmlElementKeyValuePairsPtr> (e);
+        if  (!hf)
+          continue;
+
+        for  (auto  idx: *hf->Value ())
+        {
+          if  (idx.first.EqualIgnoreCase ("RootFileName"))
+            rootFileName = idx.second;
+
+          else if  (idx.first.EqualIgnoreCase ("NumOfModels"))
+            numOfModels = idx.second.ToInt32 ();
+
+          else if  (idx.first.EqualIgnoreCase ("SelectedFeatures"))
+          {
+            delete  selectedFeatures;
+            bool  validFeatures = false;
+            selectedFeatures  = new FeatureNumList (idx.second, validFeatures);
+          }
+
+          else if  (idx.first.EqualIgnoreCase ("TrainingTime"))
+            trainingTime = idx.second.ToDouble ();
+
+          else if  (idx.first.EqualIgnoreCase ("MachineType"))
+            svmParam.MachineType (MachineTypeFromStr (idx.second));
+
+          else if  (idx.first.EqualIgnoreCase ("ClassAssignments"))
+            assignments.ParseToString (idx.second);
+
+          else
+          {
+            log.Level (-1) << endl
+              << "SVMModel::ReadXM   ***ERROR***   Unrecognized Header Field: " << idx.first << endl
+              << endl;
+            errorsFound = true;
+          }
+        }
+
+
+        if  (numOfModels < 1)
+        {
+          log.Level (-1) << endl
+            << "SVMModel::ReadXM   ***ERROR***   numOfModels: " << numOfModels << " Is invalid." << endl
+            << endl;
+          errorsFound = true;
+          continue;
+        }
+
+        binaryParameters       = new BinaryClassParmsPtr [numOfModels];
+        models                 = new ModelPtr            [numOfModels];
+        binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
+
+        for  (kkint32 x = 0;  x < numOfModels;  x++)
+        {
+          models                 [x] = NULL;
+          binaryParameters       [x] = NULL;
+          binaryFeatureEncoders  [x] = NULL;
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("RootFileName")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+      {
+        rootFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+      }
+
+      else if  (varName.EqualIgnoreCase ("OneVsOneModel")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
+      {
+        delete   models[0][0];
+        models[0][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("BinaryCombo")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+      {
+        KKStr s = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+        lastModelIdx = s.ExtractTokenInt ("\t");
+        lastBinaryClass1Name = s.ExtractToken2 ("\t");
+        lastBinaryClass2Name = s.ExtractToken2 ("\t");
+      }
+
+      else if  (varName.StartsWith ("BinaryComboModel_")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
+      {
+        if  (numModeLoaded >= numOfModels)
+        {
+          log.Level (-1) << endl
+            << "SVMModel::ReadXM   ***ERROR***   Number of models being loaded exceeds what was expected." << endl
+            << endl;
+          errorsFound = true;
+        }
+        else
+        {
+          MLClassPtr  class1 = MLClass::CreateNewMLClass (lastBinaryClass1Name);
+          MLClassPtr  class2 = MLClass::CreateNewMLClass (lastBinaryClass2Name);
+
+          log.Level (10) << "SVMModel::ReadXM     Class1[" << lastBinaryClass1Name << "]  Class2[" << class2Name << "]" << endl;
+
+          BinaryClassParmsPtr  binClassParms = svmParam.GetParamtersToUseFor2ClassCombo (class1, class2);
+          if  (!binClassParms)
+          {
+            log.Level (-1) << endl
+              << "SVMModel::ReadXM    ***ERROR***   Binary Class Parms are missing for classes " << lastBinaryClass1Name << " and " << lastBinaryClass2Name << endl
+              << endl;
+            errorsFound = true;
+            continue;
+          }
+
+          delete  models[numModeLoaded][0];
+          models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
+
+          binaryFeatureEncoders[numModeLoaded] 
+              = new FeatureEncoder (svmParam, 
+                                    fileDesc,
+                                    type_table,
+                                    cardinality_table,
+                                    binClassParms->Class1 (),
+                                    binClassParms->Class2 ()
+                                   );
+          ++numModeLoaded;
+        }
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(SVMModel)
+

@@ -674,6 +674,12 @@ XmlToken::~XmlToken ()
 }
 
 
+XmlElement::XmlElement (const KKStr&      sectionName,
+                        XmlTag::TagTypes  tagType
+                       ):
+  nameTag (new XmlTag (sectionName, tagType))
+{}
+ 
 
 
 XmlElement::XmlElement (XmlTagPtr   _nameTag,
@@ -963,7 +969,11 @@ XmlFactoryMacro(Bool)
 
 
 
-
+XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
+    XmlElement ("KeyValuePairs", XmlTag::TagTypes::tagStart),
+    value (NULL)
+{
+}
 
 
 
@@ -973,7 +983,7 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
                                                   RunLog&     log
                                                  ):
     XmlElement (tag, s, log),
-    value (false)
+    value (NULL)
 {
   value = new vector<pair<KKStr,KKStr> > ();
 
@@ -1044,6 +1054,17 @@ void  XmlElementKeyValuePairs::Add (const KKStr&  key,
 {
   Add (key, KKB::StrFromFloat (v));
 }
+
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    double        v
+                                   )
+{
+  Add (key, KKB::StrFromDouble (v));
+}
+
 
 
 
@@ -1681,3 +1702,4 @@ XmlElementArray2DBody(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElement
 // Vectors
 
 XmlElementVectorBody(kkint32,  VectorInt32,  GetNextTokenInt)
+XmlElementVectorBody(float,    VectorFloat,  GetNextTokenFloat)

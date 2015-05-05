@@ -72,16 +72,13 @@ namespace  KKMLL
     typedef  ModelDual*  ModelDualPtr;
 
 
-    ModelDual (VolConstBool&  _cancelFlag);
+    ModelDual ();
 
-    ModelDual (FileDescPtr    _fileDesc,
-               VolConstBool&  _cancelFlag
-              );
+    ModelDual (FileDescPtr    _fileDesc);
 
     ModelDual (const KKStr&          _name,
                const ModelParamDual& _param,         // Create new model from
-               FileDescPtr           _fileDesc,
-               VolConstBool&         _cancelFlag
+               FileDescPtr           _fileDesc
               );
   
     ModelDual (const ModelDual&   _model);
@@ -91,6 +88,8 @@ namespace  KKMLL
 
     virtual
     kkint32               MemoryConsumedEstimated ()  const;
+
+    virtual void          CancelFlag (bool  _cancelFlag);
 
     virtual
     KKStr                 Description ()  const;  /**< Return short user readable description of model. */
@@ -242,17 +241,11 @@ namespace  KKMLL
   };  /* ModelDual */
 
 
-typedef  ModelDual::ModelDualPtr  ModelDualPtr;
+  typedef  ModelDual::ModelDualPtr  ModelDualPtr;
 
 
-
-typedef  XmlElementModelTemplate<ModelDual>  XmlElementModelDual;
-typedef  XmlElementModelDual*  XmlElementModelDualPtr;
-
-typedef  XmlFactoryModelTemplate<XmlElementModelDual>  XmlFactoryModelDual;
-typedef  XmlFactoryModelDual*  XmlFactoryModelDualPtr;
-
-
+  typedef  XmlElementModelTemplate<ModelDual>  XmlElementModelDual;
+  typedef  XmlElementModelDual*  XmlElementModelDualPtr;
 
 } /* namespace  KKMLL */
 

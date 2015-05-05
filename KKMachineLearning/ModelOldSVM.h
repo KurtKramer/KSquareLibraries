@@ -47,27 +47,27 @@ namespace KKMLL
   public:
     typedef  ModelOldSVM*  ModelOldSVMPtr;
 
-    ModelOldSVM (FileDescPtr    _fileDesc,
-                 VolConstBool&  _cancelFlag
-                );
+    ModelOldSVM ();
+
+    ModelOldSVM (FileDescPtr  _fileDesc);
 
     /**
      *@brief Creates a new svm model from the provided example (example) data
      *@param[in] _name  
      *@param[in] _param The parameters for the svm, and for creating the model.
      *@param[in] _fileDesc A description of the data file.
-     *@param[in] _cancelFlag  If you want this instance to stop processing set this field to true in another thread.
      *@param[in] _log A log-file stream. All important events will be output to this stream
      */
     ModelOldSVM (const KKStr&             _name,
                  const ModelParamOldSVM&  _param,         // Create new model from
-                 FileDescPtr              _fileDesc,
-                 VolConstBool&            _cancelFlag
+                 FileDescPtr              _fileDesc
                 );
   
     ModelOldSVM (const ModelOldSVM&   _madel);
   
     virtual ~ModelOldSVM ();
+
+    virtual  void  CancelFlag (bool  _cancelFlag);
 
     virtual
     ModelOldSVMPtr  Duplicate ()  const;
@@ -287,9 +287,6 @@ namespace KKMLL
 
   typedef  XmlElementModelTemplate<ModelOldSVM>  XmlElementModelOldSVM;
   typedef  XmlElementModelOldSVM*  XmlElementModelOldSVMPtr;
-
-  typedef  XmlFactoryModelTemplate<XmlElementModelOldSVM>  XmlFactoryModelOldSVM;
-  typedef  XmlFactoryModelOldSVM*  XmlFactoryModelOldSVMPtr;
 
 } /* namespace KKMLL */
 

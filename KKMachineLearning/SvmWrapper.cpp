@@ -540,11 +540,11 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
 
 
 
-struct svm_model**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
+struct SvmModel233**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
                                                       struct       svm_problem&    subprob
                                                      )
 { 
-  struct svm_model **submodel;
+  struct SvmModel233 **submodel;
 
   kkint32 numSVM = param.numSVM;
   kkint32 sample = (kkint32) (param.sample);
@@ -571,7 +571,7 @@ struct svm_model**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
   else
     learnType=BAGGING;
 
-  submodel = new svm_model* [numSVM];
+  submodel = new SvmModel233* [numSVM];
   submodel[0] = svm_train (&subprob,  &param);
 
   return  submodel;
@@ -583,7 +583,7 @@ struct svm_model**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
 
 
 void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
-                               struct svm_model**      subModel,
+                               struct SvmModel233**      subModel,
                                const struct svm_node*  unknownClassFeatureData, 
                                kkint32*                votes,
                                double*                 probabilities,
@@ -651,7 +651,7 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
 
 
 kkint32  KKMLL::SvmPredictTwoClass (const svm_parameter&  param,
-                                    svm_model**           submodel, 
+                                    SvmModel233**           submodel, 
                                     const svm_node*       unKnownData, 
                                     kkint32               desired, 
                                     double&               dist,
@@ -681,7 +681,7 @@ kkint32  KKMLL::SvmPredictTwoClass (const svm_parameter&  param,
 
 
 
-void  KKMLL::SvmPredictRaw (svm_model**      submodel, 
+void  KKMLL::SvmPredictRaw (SvmModel233**      submodel, 
                             const svm_node*  unKnownData,
                             double&          label,
                             double&          dist
@@ -709,10 +709,10 @@ void  KKMLL::SvmPredictRaw (svm_model**      submodel,
 
 
 
-void  KKMLL::SvmSaveModel (struct svm_model**  subModel,
-                                       const char*         fileName,
-                                       bool&               successfull
-                                      )
+void  KKMLL::SvmSaveModel (struct SvmModel233**  subModel,
+                           const char*         fileName,
+                           bool&               successfull
+                          )
 {
   successfull = true;
 
@@ -723,7 +723,7 @@ void  KKMLL::SvmSaveModel (struct svm_model**  subModel,
 
 
 void  KKMLL::SvmSaveModel (ostream&             o,
-                         struct  svm_model**  model
+                         struct  SvmModel233**  model
                         )
 {
    Svm_Save_Model (o, model[0]);
@@ -733,9 +733,9 @@ void  KKMLL::SvmSaveModel (ostream&             o,
 
 
 
-struct svm_model**   KKMLL::SvmLoadModel (const char* fileName)
+struct SvmModel233**   KKMLL::SvmLoadModel (const char* fileName)
 {
-  svm_model**  models = new svm_model*[1];
+  SvmModel233**  models = new SvmModel233*[1];
   models[0] = svm_load_model(fileName);
 
   if  (models[0] == NULL)
@@ -748,11 +748,11 @@ struct svm_model**   KKMLL::SvmLoadModel (const char* fileName)
 
 
 
-struct svm_model**   KKMLL::SvmLoadModel (istream&  f,
+struct SvmModel233**   KKMLL::SvmLoadModel (istream&  f,
                                         RunLog&   log
                                        )
 {
-  svm_model**  models = new svm_model*[1];
+  SvmModel233**  models = new SvmModel233*[1];
   models[0] = Svm_Load_Model (f, log);
 
   if  (models[0] == NULL)
@@ -768,7 +768,7 @@ struct svm_model**   KKMLL::SvmLoadModel (istream&  f,
 
 
 
-void   KKMLL::SvmDestroyModel (struct svm_model**  subModel)
+void   KKMLL::SvmDestroyModel (struct SvmModel233**  subModel)
 {
   svm_destroy_model (subModel[0]);
 }

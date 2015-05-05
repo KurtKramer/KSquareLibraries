@@ -247,6 +247,16 @@ namespace KKMLL
     void  ProbClassPairsInitialize (const ClassAssignments&  assignments);
 
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
 
   private:
     //void  DecodeParamStr (KKStr&         _paramStr,

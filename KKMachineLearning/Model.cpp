@@ -41,9 +41,9 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-Model::Model (VolConstBool&  _cancelFlag):
+Model::Model ():
     alreadyNormalized        (false),
-    cancelFlag               (_cancelFlag),
+    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -115,11 +115,9 @@ Model::Model (const Model&  _model):
 /**
  *@brief  Use this when you are planning on creating a empty model without parameters.
  */
-Model::Model (FileDescPtr    _fileDesc,
-              VolConstBool&  _cancelFlag
-             ):
+Model::Model (FileDescPtr    _fileDesc):
     alreadyNormalized        (false),
-    cancelFlag               (_cancelFlag),
+    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -149,17 +147,14 @@ Model::Model (FileDescPtr    _fileDesc,
  *@param[in] _name
  *@param[in] _param Will make own local copy.
  *@param[in] _fileDesc A description of the data file.
- *@param[in] _cancelFlag  This field will be monitored and if it goes true then any processing 
- *           going on will quit and exit back to caller.
  *@param[in] _log A log-file stream. All important events will be output to this stream
  */
 Model::Model (const KKStr&       _name,
               const ModelParam&  _param,      // Create new model from
-              FileDescPtr        _fileDesc,
-              VolConstBool&      _cancelFlag
+              FileDescPtr        _fileDesc
              ):
     alreadyNormalized        (false),
-    cancelFlag               (_cancelFlag),
+    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -300,11 +295,11 @@ ModelPtr  Model::CreateFromStream (istream&       i,
   ModelPtr model = NULL;
   switch  (modelType)
   {
-  case  ModelTypes::mtKNN:       model = new ModelKnn       (_fileDesc, _cancelFlag);  break;
-  case  ModelTypes::mtOldSVM:    model = new ModelOldSVM    (_fileDesc, _cancelFlag);  break;
-  case  ModelTypes::mtSvmBase:   model = new ModelSvmBase   (_fileDesc, _cancelFlag);  break;
-  case  ModelTypes::mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc, _cancelFlag);  break;
-  case  ModelTypes::mtDual:      model = new ModelDual      (_fileDesc, _cancelFlag);  break;
+  case  ModelTypes::mtKNN:       model = new ModelKnn       (_fileDesc);  break;
+  case  ModelTypes::mtOldSVM:    model = new ModelOldSVM    (_fileDesc);  break;
+  case  ModelTypes::mtSvmBase:   model = new ModelSvmBase   (_fileDesc);  break;
+  case  ModelTypes::mtUsfCasCor: model = new ModelUsfCasCor (_fileDesc);  break;
+  case  ModelTypes::mtDual:      model = new ModelDual      (_fileDesc);  break;
   }
 
   if  (!model)
@@ -395,23 +390,23 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
     switch  (_modelType)
     {
     case  ModelTypes::mtOldSVM:    
-          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag);
+          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc);
           break;
 
     case  ModelTypes::mtSvmBase:
-          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag);
+          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc);
           break;
 
     case  ModelTypes::mtKNN:
-          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag);
+          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc);
           break;
 
     case  ModelTypes::mtUsfCasCor:
-          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag);
+          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc);
           break;
 
     case  ModelTypes::mtDual:
-          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc, _cancelFlag);
+          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc);
           break;
     }  /* end of switch */
   }

@@ -32,16 +32,16 @@ using namespace  KKMLL;
 
 
 
-ModelKnn::ModelKnn (VolConstBool&  _cancelFlag):
-  Model (_cancelFlag),
+ModelKnn::ModelKnn ():
+  Model (),
   param (NULL)
 {
 }
 
-ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
-                    VolConstBool&  _cancelFlag
-                   ):
-  Model (_fileDesc, _cancelFlag),
+
+
+ModelKnn::ModelKnn (FileDescPtr  _fileDesc):
+  Model (_fileDesc),
   param (NULL)
 {
 }
@@ -51,10 +51,9 @@ ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
 
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
-                    FileDescPtr           _fileDesc,
-                    VolConstBool&         _cancelFlag
+                    FileDescPtr           _fileDesc
                    ):
-  Model (_name, _param, _fileDesc, _cancelFlag),
+  Model (_name, _param, _fileDesc),
   param (NULL)
 {
   param = dynamic_cast<ModelParamKnnPtr> (Model::param);
@@ -71,10 +70,21 @@ ModelKnn::ModelKnn (const ModelKnn&   _model):
 }
 
 
+
 ModelKnn::~ModelKnn ()
 {
 
 }
+
+
+
+
+void    ModelKnn::CancelFlag (bool  _cancelFlag)
+{
+  Model::CancelFlag (_cancelFlag);
+}
+
+
 
 
 
@@ -329,5 +339,8 @@ void  ModelKnn::ReadXML (XmlStream&      s,
 
 }  /* ReadXML */
 
+
+
+XmlFactoryMacro(ModelKnn)
 
 

@@ -283,13 +283,13 @@ namespace KKMLL
   class  UsfCasCor
   {
   public:
-    UsfCasCor (FileDescPtr    _fileDesc,
-               VolConstBool&  _cancelFlag
-              );
+    UsfCasCor ();
 
     ~UsfCasCor ();
 
     kkint32  MemoryConsumedEstimated ()  const;
+
+    void  CancelFlag  (bool  _cancelFlag)  {cancelFlag = _cancelFlag;}
 
 
     void  TrainNewClassifier (kkint32                 _in_limit,
@@ -423,7 +423,7 @@ namespace KKMLL
     /* Functions */
     char*  parm_to_string (int k);
 
-    char const *  boolean_to_string (Boolean var)  const;
+    char const *  boolean_to_string (bool var)  const;
 
     Boolean  string_to_boolean (const char* s);
 
@@ -804,11 +804,9 @@ namespace KKMLL
 
     MLClassListPtr  classes;            /**<  Classes that the training data consisted of.  */
 
-    FileDescPtr        fileDesc;
-
     FeatureNumListPtr  selectedFeatures;   /**< The selected features that are to be used from the source training data. */
 
-    VolConstBool&  cancelFlag;
+    volatile bool      cancelFlag;
 
   };  /* UsfCasCor */
 

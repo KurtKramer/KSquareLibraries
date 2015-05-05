@@ -13,6 +13,7 @@
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -30,12 +31,19 @@ using namespace  KKMLL;
 
 
 
-ModelSvmBase::ModelSvmBase (FileDescPtr    _fileDesc,
-                            VolConstBool&  _cancelFlag
-                           ):
-  Model (_fileDesc, _cancelFlag),
-  param                (NULL),
-  svmModel             (NULL)
+
+ModelSvmBase::ModelSvmBase ():
+  Model (),
+  param     (NULL),
+  svmModel  (NULL)
+{
+}
+
+
+ModelSvmBase::ModelSvmBase (FileDescPtr _fileDesc):
+  Model (_fileDesc),
+  param     (NULL),
+  svmModel  (NULL)
 {
 }
 
@@ -43,12 +51,11 @@ ModelSvmBase::ModelSvmBase (FileDescPtr    _fileDesc,
 
 ModelSvmBase::ModelSvmBase (const KKStr&             _name,
                             const ModelParamSvmBase& _param,         // Create new model from
-                            FileDescPtr              _fileDesc,
-                            VolConstBool&            _cancelFlag
+                            FileDescPtr              _fileDesc
                            ):
-  Model (_name, _param, _fileDesc, _cancelFlag),
-  param                (NULL),
-  svmModel             (NULL)
+  Model (_name, _param, _fileDesc),
+  param     (NULL),
+  svmModel  (NULL)
 {
   param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
 }
@@ -58,8 +65,8 @@ ModelSvmBase::ModelSvmBase (const KKStr&             _name,
 
 ModelSvmBase::ModelSvmBase (const ModelSvmBase&   _model):
   Model (_model),
-  param                (NULL),
-  svmModel             (NULL)
+  param     (NULL),
+  svmModel  (NULL)
 {
   param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
   if  (_model.svmModel)
@@ -99,6 +106,16 @@ kkint32  ModelSvmBase::MemoryConsumedEstimated ()  const
     memoryConsumedEstimated += svmModel->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
+
+
+
+
+void  ModelSvmBase::CancelFlag (bool  _cancelFlag)
+{
+  Model::CancelFlag (_cancelFlag);
+  svmModel->CancelFlag (_cancelFlag);
+}
+
 
 
 ModelSvmBasePtr  ModelSvmBase::Duplicate ()  const
@@ -773,3 +790,5 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
  
+
+XmlFactoryMacro(ModelSvmBase)

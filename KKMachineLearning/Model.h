@@ -85,14 +85,12 @@ namespace KKMLL
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 
 
-    Model (VolConstBool&  _cancelFlag);
+    Model ();
 
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */
-    Model (FileDescPtr    _fileDesc,
-           VolConstBool&  _cancelFlag
-          );
+    Model (FileDescPtr  _fileDesc);
 
 
     /**
@@ -105,8 +103,7 @@ namespace KKMLL
      */
     Model (const KKStr&       _name,
            const ModelParam&  _param,         // Create new model from
-           FileDescPtr        _fileDesc,
-           VolConstBool&      _cancelFlag
+           FileDescPtr        _fileDesc
           );
 
   
@@ -116,6 +113,15 @@ namespace KKMLL
     Model (const Model&   _madel);
 
     virtual  ~Model ();
+
+
+    /**
+     * Any derived classes must implement this method and:
+     *  1) Call the base class method "Model::CAncelFlag".
+     *  2) let other objects that they may own that also monitor the cancelFlag know 
+     *     that the status of cancelFlag has changed
+     */
+    virtual  void    CancelFlag  (bool  _cancelFlag)  {cancelFlag = _cancelFlag;}
 
 
     /**
@@ -435,7 +441,7 @@ namespace KKMLL
 
     bool                   alreadyNormalized;
 
-    VolConstBool&          cancelFlag;
+    volatile bool          cancelFlag;
 
     MLClassListPtr         classes;
 
@@ -500,10 +506,9 @@ namespace KKMLL
   class  XmlElementModel:  public  XmlElement
   {
   public:
-    XmlElementModel (XmlTagPtr      tag,
-                     XmlStream&     s,
-                     VolConstBool&  _cancelFlag,
-                     RunLog&        log
+    XmlElementModel (XmlTagPtr   tag,
+                     XmlStream&  s,
+                     RunLog&     log
                     );
                 
     virtual  ~XmlElementModel ()
@@ -528,18 +533,15 @@ namespace KKMLL
 
 
 
-
-
   template<class ModelType>
   class  XmlElementModelTemplate:  public  XmlElementModel
   {
   public:
     XmlElementModelTemplate (XmlTagPtr      tag,
                              XmlStream&     s,
-                             VolConstBool&  _cancelFlag,
                              RunLog&        log
                             ):
-      XmlElementModel (tag, s, _cancelFlag, log)
+      XmlElementModel (tag, s, log)
     {}
                 
     virtual  ~XmlElementModelTemplate ()
@@ -553,63 +555,6 @@ namespace KKMLL
   };  /* XmlElementModelTemplate */
 
   
-
-  /**
-   *@brief  Abstract base class for all Factories for the Model derived classes.
-   *@details Classes such as "ModelDual", "ModelKnn", "ModelOldSVM", "ModelSvmBase", and "ModelUsfCasCor" will 
-   * all need to implement their own versions of "XmlFactoryModel".  Instances of these classes will need to be 
-   * registered by "XmlElementTrainingProcess2" constructor. Needs to be done this way because we need to pass
-   * the reference to cancelFlag to all the classes listed above.
-   */
-
-  class  XmlFactoryModel: public XmlFactory
-  {
-  public:
-    XmlFactoryModel (const KKStr&   _className,
-                     VolConstBool&  _cancelFlag
-                    ): 
-      XmlFactory (_className),
-      cancelFlag (_cancelFlag)
-    {}
-
-
-    virtual  XmlElementModelPtr  ManufatureXmlElement (XmlTagPtr   tag,
-                                                        XmlStream&  s,
-                                                        RunLog&     log
-                                                      )  = 0;
-
-  protected:
-    VolConstBool&  cancelFlag;
-  }; /* XmlFactoryModel */
-
-
-
-
-  template<class  XmlElementModelType>
-  class  XmlFactoryModelTemplate: public  XmlFactoryModel
-  {
-  public:
-    XmlFactoryModelTemplate (const KKStr&   _className,
-                             VolConstBool&  _cancelFlag
-                            ):
-      XmlFactoryModel (_className, _cancelFlag)
-    {}
-
-
-    virtual  XmlElementModelType*  ManufatureXmlElement (XmlTagPtr   tag,
-                                                         XmlStream&  s,
-                                                         RunLog&     log
-                                                       )
-    {
-      return new XmlElementModelType (tag, s, log);
-    }
-
-  protected:
-  }; /* XmlFactoryModelTemplate */
-
-
-
-
 
 }  /* namespace MML */
 
