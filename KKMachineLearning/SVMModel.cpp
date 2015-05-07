@@ -3066,7 +3066,6 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
   numOfModels = 0;
 
-
   bool  errorsFound = false;
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t  &&  !errorsFound)
@@ -3125,18 +3124,19 @@ void  SVMModel::ReadXML (XmlStream&      s,
             << "SVMModel::ReadXM   ***ERROR***   numOfModels: " << numOfModels << " Is invalid." << endl
             << endl;
           errorsFound = true;
-          continue;
         }
-
-        binaryParameters       = new BinaryClassParmsPtr [numOfModels];
-        models                 = new ModelPtr            [numOfModels];
-        binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
-
-        for  (kkint32 x = 0;  x < numOfModels;  x++)
+        else
         {
-          models                 [x] = NULL;
-          binaryParameters       [x] = NULL;
-          binaryFeatureEncoders  [x] = NULL;
+          binaryParameters       = new BinaryClassParmsPtr [numOfModels];
+          models                 = new ModelPtr            [numOfModels];
+          binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
+
+          for  (kkint32 x = 0;  x < numOfModels;  x++)
+          {
+            models                 [x] = NULL;
+            binaryParameters       [x] = NULL;
+            binaryFeatureEncoders  [x] = NULL;
+          }
         }
       }
 
@@ -3173,7 +3173,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           MLClassPtr  class1 = MLClass::CreateNewMLClass (lastBinaryClass1Name);
           MLClassPtr  class2 = MLClass::CreateNewMLClass (lastBinaryClass2Name);
 
-          log.Level (10) << "SVMModel::ReadXM     Class1[" << lastBinaryClass1Name << "]  Class2[" << class2Name << "]" << endl;
+          log.Level (10) << "SVMModel::ReadXM     Class1[" << lastBinaryClass1Name << "]  Class2[" << lastBinaryClass2Name << "]" << endl;
 
           BinaryClassParmsPtr  binClassParms = svmParam.GetParamtersToUseFor2ClassCombo (class1, class2);
           if  (!binClassParms)
@@ -3182,21 +3182,22 @@ void  SVMModel::ReadXML (XmlStream&      s,
               << "SVMModel::ReadXM    ***ERROR***   Binary Class Parms are missing for classes " << lastBinaryClass1Name << " and " << lastBinaryClass2Name << endl
               << endl;
             errorsFound = true;
-            continue;
           }
+          else
+          {
+            delete  models[numModeLoaded][0];
+            models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
 
-          delete  models[numModeLoaded][0];
-          models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
-
-          binaryFeatureEncoders[numModeLoaded] 
-              = new FeatureEncoder (svmParam, 
-                                    fileDesc,
-                                    type_table,
-                                    cardinality_table,
-                                    binClassParms->Class1 (),
-                                    binClassParms->Class2 ()
-                                   );
-          ++numModeLoaded;
+            binaryFeatureEncoders[numModeLoaded] 
+                = new FeatureEncoder (svmParam, 
+                                      fileDesc,
+                                      type_table,
+                                      cardinality_table,
+                                      binClassParms->Class1 (),
+                                      binClassParms->Class2 ()
+                                     );
+            ++numModeLoaded;
+          }
         }
       }
     }

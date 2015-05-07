@@ -1666,8 +1666,8 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 
   bool  errorsFound = false;
 
-
-  while  (t = s.GetNextToken (log))
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
@@ -1746,9 +1746,8 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
+    t = s.GetNextToken (log);
   }
-
-
 
   if  (mlClasses == NULL)
   {
@@ -1760,8 +1759,20 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 
   if (!errorsFound)
   {
-
+    if  (config)
+    {
+      if  (config->SubClassifiers () != NULL)
+      {
+        LoadSubClassifiers (false,   // forceRebuild
+                            true,    // CheckForDuplicates
+                            log
+                           );
+      }
+    }
   }
+
+  delete  subProcessorsNameList;
+  subProcessorsNameList = NULL;
 
   log.Level (20) << "TrainingProcess2::ReadXML    Exiting!" << endl;
 
@@ -1769,9 +1780,6 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(TrainingProcess2)
-
-
-
 
 
 
@@ -1806,8 +1814,4 @@ kkint32 TrainingProcess2List::MemoryConsumedEstimated ()  const
   }
   return memoryConsumedEstimated;
 }
-
-
-
-XmlFactoryMacro(TrainingProcess2)
 

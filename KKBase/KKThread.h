@@ -103,6 +103,13 @@ namespace KKB
 
     void  TerminateThread ();         /**< Call this method to have its thread stop right away and exit. */
 
+    /**
+     *@brief  Will be called whenever the value of 'terminateFlag' is changed; derived classes should override this method if
+     * they need to be aware that the terminaeFlag has changed.  This give them a chance to let other objects/methods know that
+     * the flag has changed.
+     */
+    virtual  void  TerminateFlagChanged ();
+
     void  ShutdownThread ();          /**< Call this method to have its thread finish what ever is in the queue and then exit. */
 
     /**

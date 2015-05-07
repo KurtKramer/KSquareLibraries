@@ -33,12 +33,12 @@ namespace KKMLL
   public:
     ImageFeaturesDataIndexed ();
 
-    ImageFeaturesDataIndexed (FeatureVectorList&  images);
+    ImageFeaturesDataIndexed (const FeatureVectorList&  examples);
 
 
-    void              RBInsert (FeatureVectorPtr  image);
+    void              RBInsert (FeatureVectorPtr  example);
 
-    FeatureVectorPtr  GetEqual (FeatureVectorPtr  image);
+    FeatureVectorPtr  GetEqual (FeatureVectorPtr  example);
 
   private:
   };
@@ -54,17 +54,17 @@ namespace KKMLL
   class ImageFeaturesNodeKey
   {
   public:
-    ImageFeaturesNodeKey (FeatureVectorPtr  _image);
+    ImageFeaturesNodeKey (FeatureVectorPtr  _example);
 
     bool  operator== (const ImageFeaturesNodeKey& rightNode)  const;
     bool  operator<  (const ImageFeaturesNodeKey& rightNode)  const;
     bool  operator>  (const ImageFeaturesNodeKey& rightNode)  const;
 
-    kkint32  CompareTwoImages (const FeatureVectorPtr i1,
-                           const FeatureVectorPtr i2
-                          )  const;
+    kkint32  CompareTwoExamples (const FeatureVectorPtr i1,
+                                 const FeatureVectorPtr i2
+                              )  const;
 
-    FeatureVectorPtr  image;
+    FeatureVectorPtr  example;
   };  /* ImageFeaturesNodeKey */
 
 
@@ -73,15 +73,15 @@ namespace KKMLL
   class  ImageDataTreeEntry
   {
   public:
-    ImageDataTreeEntry (FeatureVectorPtr  _image);
+    ImageDataTreeEntry (FeatureVectorPtr  _example);
 
     const ImageFeaturesNodeKey&  NodeKey () const  {return  nodeKey;}
 
-    FeatureVectorPtr  Image ()  {return  image;}
+    FeatureVectorPtr  Example ()  {return  example;}
 
 
   private:
-    FeatureVectorPtr      image;
+    FeatureVectorPtr      example;
     ImageFeaturesNodeKey  nodeKey;
   };
 

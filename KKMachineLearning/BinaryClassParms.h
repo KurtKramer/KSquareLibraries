@@ -127,6 +127,8 @@ namespace KKMLL
   public:
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
 
+    BinaryClassParmsList ();
+
     BinaryClassParmsList (bool  _owner);
     
 

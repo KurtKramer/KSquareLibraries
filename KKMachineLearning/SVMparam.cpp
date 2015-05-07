@@ -974,28 +974,49 @@ void  SVMparam::ReadXML (XmlStream&      s,
                          RunLog&         log
                         )
 {
-
-
-
-  bool  errorsFound = false;
   XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t  &&  !errorsFound)
+  while  (t)
   {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    const KKStr&  varName = t->VarName ();
+
+    if  (varName.EqualIgnoreCase ("HeaderFields")  &&  (typeid (*t) == typeid (XmlElementKeyValuePairs)))
     {
-      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
-      if  (!e)
-        continue;
-
-      const KKStr&  varName = e->VarName ();
-
-      if  (varName.EqualIgnoreCase ("HeaderFields")  &&  (typeid (*e) == typeid (XmlElementKeyValuePairs)))
+      XmlElementKeyValuePairsPtr  kvp = dynamic_cast<XmlElementKeyValuePairsPtr> (t);
+      if  (kvp  &&  (kvp->Value() != NULL))
       {
-      }
+        for  (auto idx: *(kvp->Value ()))
+        {
+          if  (idx.first.EqualIgnoreCase ("EncodingMethod"))
+            encodingMethod = EncodingMethodFromStr (idx.second);
 
-      else if  (varName.EqualIgnoreCase ("RootFileName")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
-      {
-        rootFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
+          else if  (idx.first.EqualIgnoreCase ("FileName"))
+            fileName = idx.second;
+
+          else if  (idx.first.EqualIgnoreCase ("MachineType"))
+            machineType = MachineTypeFromStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("SelectedFeatures"))
+          {
+            bool  successful = false;
+            selectedFeatures = new FeatureNumList (idx.second, successful);
+          }
+
+          else if  (idx.first.EqualIgnoreCase ("SamplingRate"))
+            samplingRate = idx.second.ToFloat ();
+
+          else if  (idx.first.EqualIgnoreCase ("SelectionMethod"))
+            selectionMethod = SelectionMethodFromStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("UseProbabilityToBreakTies"))
+            useProbabilityToBreakTies = idx.second.ToBool ();
+
+          else
+          {
+            log.Level (-1) << endl
+              << "SVMparam::ReadXML   ***ERROR***   UnRecognozed Header Field: " << idx.first << ":" << idx.second << endl
+              << endl;
+          }
+        }
       }
     }
     delete  t;

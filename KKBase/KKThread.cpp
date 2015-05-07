@@ -208,8 +208,14 @@ KKStrListPtr  KKThread::GetMsgs ()
 void  KKThread::TerminateThread ()
 {
   terminateFlag = true;
+  TerminateFlagChanged ();
 }
 
+
+
+void  KKThread::TerminateFlagChanged ()
+{
+}
 
 
 bool  KKThread::ThreadStillProcessing ()  const

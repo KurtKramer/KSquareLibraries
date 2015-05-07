@@ -78,6 +78,12 @@ typedef  struct svm_node*     XSpacePtr;
   {
   public:
     /**
+     *@brief Default constructor used by XmlElementSVMModel to create and load a new instance from a XML Stream.
+     */
+    SVMModel ();
+  
+
+    /**
      *@brief Loads an SVM model from disk
      *@param[in]  _rootFileName The filename for the model; without an extension.
      *@param[out] _successful Set to true if the model is successfully loaded, false otherwise

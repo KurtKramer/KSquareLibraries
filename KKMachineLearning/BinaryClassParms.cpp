@@ -194,6 +194,13 @@ kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
 
 
 
+BinaryClassParmsList::BinaryClassParmsList ():
+        KKQueue<BinaryClassParms> (true)
+{
+}
+
+
+
 BinaryClassParmsList::BinaryClassParmsList (bool  _owner):
         KKQueue<BinaryClassParms> (_owner)
 {

@@ -21,15 +21,15 @@ namespace KKMLL
 
 
 
-  class  ExtractImageFileName;
+  class  ExtractExampleFileName;
 
 
-  class  ImageFeaturesNameIndexed: public  RBTree<FeatureVector, ExtractImageFileName, KKStr>
+  class  ImageFeaturesNameIndexed: public  RBTree<FeatureVector, ExtractExampleFileName, KKStr>
   {
   public:
     ImageFeaturesNameIndexed ();
 
-    ImageFeaturesNameIndexed (FeatureVectorList&  images);
+    ImageFeaturesNameIndexed (const FeatureVectorList&  images);
 
   private:
   };
@@ -41,10 +41,10 @@ namespace KKMLL
 
 
 
-  class  ExtractImageFileName
+  class  ExtractExampleFileName
   {
   public:
-     KKStr  ExtractKey (FeatureVectorPtr  image);
+     KKStr  ExtractKey (FeatureVectorPtr  example);
   };
 
 }  /* namespace KKMLL */

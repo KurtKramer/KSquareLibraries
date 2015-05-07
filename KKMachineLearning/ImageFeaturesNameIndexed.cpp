@@ -26,27 +26,25 @@ using namespace  KKMLL;
 
 
 
-ExtractImageFileName  extractImageFileName;
+ExtractExampleFileName  extractImageFileName;
 
 
 
 ImageFeaturesNameIndexed::ImageFeaturesNameIndexed ():
-   RBTree<FeatureVector, ExtractImageFileName, KKStr> (extractImageFileName, false)
+   RBTree<FeatureVector, ExtractExampleFileName, KKStr> (extractImageFileName, false)
 {
 }
 
 
 
-ImageFeaturesNameIndexed::ImageFeaturesNameIndexed (FeatureVectorList&  images):
-   RBTree<FeatureVector, ExtractImageFileName, KKStr> (extractImageFileName, false)
+ImageFeaturesNameIndexed::ImageFeaturesNameIndexed (const FeatureVectorList&  examples):
+   RBTree<FeatureVector, ExtractExampleFileName, KKStr> (extractImageFileName, false)
 {
-  FeatureVectorPtr  image = NULL;
-
-  FeatureVectorList::iterator  idx;
-  for  (idx = images.begin ();  idx != images.end ();  idx++)
+  FeatureVectorPtr  example = NULL;
+  for  (auto idx:  examples)
   {
-    image = *idx;
-    RBInsert (image);
+    example = idx;
+    RBInsert (example);
   }
 }
 
@@ -54,7 +52,7 @@ ImageFeaturesNameIndexed::ImageFeaturesNameIndexed (FeatureVectorList&  images):
 
 
 
-KKStr  ExtractImageFileName::ExtractKey (FeatureVectorPtr  image)
+KKStr  ExtractExampleFileName::ExtractKey (FeatureVectorPtr  example)
 {
-  return  osGetRootName (image->ExampleFileName ());
+  return  osGetRootName (example->ExampleFileName ());
 }
