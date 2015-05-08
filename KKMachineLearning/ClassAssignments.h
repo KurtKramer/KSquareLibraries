@@ -38,7 +38,7 @@ namespace KKMLL
   class  ClassAssignments: public  std::multimap<kkint16, MLClassPtr>
   {
   public:
-    ClassAssignments (RunLog&  _log);
+    ClassAssignments ();
 
 
     /**
@@ -48,13 +48,12 @@ namespace KKMLL
     *@param[in] classes, List of classes to make assignments for.
     *@param[in,out] _log, Run log to write messages to
     */
-    ClassAssignments (const MLClassList&  classes,
-                      RunLog&             _log
-                     );
+    ClassAssignments (const MLClassList&  classes);
 
 
     void  AddMLClass (MLClassPtr  mlClass,
-                      kkint16     num
+                      kkint16     num,
+                      RunLog&     log
                      );
 
     MLClassPtr      GetMLClassByIndex (size_t idx);
@@ -68,7 +67,8 @@ namespace KKMLL
     VectorShort     GetUniqueListOfAssignments ()  const;
 
     void            Load (const KKStr&  fileName,
-                          bool&         successful
+                          bool&         successful,
+                          RunLog&       log
                          );
 
     kkint32         MemoryConsumedEstimated ()  const;
@@ -78,7 +78,9 @@ namespace KKMLL
     *@param[in] _toString,  KKStr containing class assignments info, will expect to be formated
     *                       the way ToString() creates them.
     */
-    void            ParseToString (const KKStr&  _toString);
+    void            ParseToString (const KKStr&  _toString,
+                                   RunLog&       _log
+                                  );
 
 
     void            Save (const KKStr&  fileName,
@@ -92,7 +94,6 @@ namespace KKMLL
     typedef  ClassLookUp::iterator          ClassLookUpIterator;
 
     ClassLookUp  classLookUp;
-    RunLog&      log;
   };  /* ClassAssignments */;
 
 

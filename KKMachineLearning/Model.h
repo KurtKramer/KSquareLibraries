@@ -509,7 +509,9 @@ namespace KKMLL
     XmlElementModel (XmlTagPtr   tag,
                      XmlStream&  s,
                      RunLog&     log
-                    );
+                    ):
+        XmlElement (tag, s, log)
+    {}
                 
     virtual  ~XmlElementModel ()
     {

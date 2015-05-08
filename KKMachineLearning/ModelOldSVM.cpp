@@ -560,7 +560,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
     classes->SortByName ();
     numOfClasses = classes->QueueSize ();
     delete  assignments;
-    assignments = new ClassAssignments (*classes, _log);
+    assignments = new ClassAssignments (*classes);
   }
 
   try
@@ -662,8 +662,8 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
       {
         XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
         delete  assignments;
-        assignments = new ClassAssignments (log);
-        assignments->ParseToString (*(s->Value ()));
+        assignments = new ClassAssignments ();
+        assignments->ParseToString (*(s->Value ()), log);
       }
 
       else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))

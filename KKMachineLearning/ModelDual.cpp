@@ -937,7 +937,8 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
       trainer1 = new TrainingProcess2 (i,
                                        log,
-                                       true       /**<  'true' = Feature data already normalized. */
+                                       true,      /**<  'true' = Feature data already normalized. */
+                                       100
                                       );
       if  (trainer1->Abort ())
       {
@@ -965,7 +966,8 @@ void  ModelDual::ReadSpecificImplementationXML (istream&  i,
 
       trainer2 = new TrainingProcess2 (i,
                                        log,
-                                       true    /**< 'true' = Feature data already normalized.  */
+                                       true,    /**< 'true' = Feature data already normalized.  */
+                                       100
                                       );
 
       if  (trainer2->Abort ())

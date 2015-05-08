@@ -22,19 +22,15 @@ using namespace  KKMLL;
 
 
 
-ClassAssignments::ClassAssignments (RunLog&  _log):
-    multimap<kkint16, MLClassPtr> (),
-    log (_log)
+ClassAssignments::ClassAssignments ():
+    multimap<kkint16, MLClassPtr> ()
 {
 }
 
 
 
-ClassAssignments::ClassAssignments (const MLClassList&  classes,
-                                    RunLog&             _log
-                                   ):
-    multimap<kkint16, MLClassPtr> (),
-    log (_log)
+ClassAssignments::ClassAssignments (const MLClassList&  classes):
+    multimap<kkint16, MLClassPtr> ()
 {
   kkint32  x = 0;
   for  (MLClassList::const_iterator idx = classes.begin ();  idx != classes.end ();  idx++)
@@ -58,7 +54,8 @@ kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
 
 
 void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
-                                    kkint16     num
+                                    kkint16     num,
+                                    RunLog&     log
                                    )
 {
   ClassLookUpIterator  idx;
@@ -153,8 +150,7 @@ MLClassPtr  ClassAssignments::GetMLClassByIndex (size_t idx)
          << "ClassAssignments::GetMLClassByIndex   *** ERROR ***" << endl
          << "                                        idx[" << idx << "] is out of range." << endl
          << endl;
-    osWaitForEnter ();
-    exit (-1);
+    return NULL;
   }
 
   iterator i = begin ();
@@ -184,7 +180,8 @@ kkint16  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
 
 
 void  ClassAssignments::Load (const KKStr&  fileName,
-                              bool&          successful
+                              bool&         successful,
+                              RunLog&       log
                              )
 {
   log.Level (10) << "ClassAssignments::Load -  File[" << fileName << "]." << endl;
@@ -228,7 +225,7 @@ void  ClassAssignments::Load (const KKStr&  fileName,
     }
     else
     {
-      AddMLClass (mlClass, classNum);
+      AddMLClass (mlClass, classNum, log);
     }
   }
 
@@ -242,8 +239,6 @@ void  ClassAssignments::Save (const KKStr&  fileName,
                               bool&          successful
                              )
 {
-  log.Level (20) << "ClassAssignments::Save - Writing Out ClassAssignments File[" << fileName << "]." << endl;
-
   ofstream outFile (fileName.Str ());
 
   for  (iterator  idx = begin (); idx != end ();  idx++)
@@ -282,7 +277,9 @@ KKStr  ClassAssignments::ToString ()  const
 * @param[in] _toString,  KKStr containing class assignments info, will expect to be formated
 *                        the way ToString() creates them.
 */
-void   ClassAssignments::ParseToString (const KKStr&  _toString)
+void   ClassAssignments::ParseToString (const KKStr&  _toString,
+                                        RunLog&       _log
+                                       )
 {
   erase (begin (), end ());
 
@@ -299,7 +296,7 @@ void   ClassAssignments::ParseToString (const KKStr&  _toString)
     if  (!className.Empty ())
     {
       MLClassPtr  mlClass = MLClass::CreateNewMLClass (className);
-      AddMLClass (mlClass, assignmentNum);
+      AddMLClass (mlClass, assignmentNum, _log);
     }
   }
 }  /* ParseToString */

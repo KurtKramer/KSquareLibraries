@@ -185,7 +185,8 @@ namespace KKMLL
      */
     TrainingProcess2 (istream&  _in,
                       RunLog&   _log,
-                      bool      _featuresAlreadyNormalized
+                      bool      _featuresAlreadyNormalized,
+                      int       zzzzzm
                      );
 
 

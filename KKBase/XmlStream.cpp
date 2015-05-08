@@ -319,7 +319,6 @@ kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
 
 
 
-
 DateTime  XmlAttributeList::AttributeValueDateTime  (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
@@ -642,6 +641,12 @@ KKStrConstPtr  XmlTag::AttributeNameByIndex  (kkuint32  index)  const
 kkint32  XmlTag::AttributeValueInt32 (const KKStr& attributeName)  const
 {
  return  this->attributes.AttributeValueInt32  (attributeName);
+}
+
+
+DateTime  XmlTag::AttributeValueDateTime (const KKStr&  attributeName)   const
+{
+ return  this->attributes.AttributeValueDateTime  (attributeName);
 }
 
 

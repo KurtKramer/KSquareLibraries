@@ -165,13 +165,46 @@ void  SVMModel::GreaterVotes (bool     useProbability,
 
 
 
+     
+SVMModel::SVMModel ():
+  assignments              (),
+  binaryFeatureEncoders    (NULL),
+  binaryParameters         (NULL),
+  cardinality_table        (),
+  cancelFlag               (false),
+  classIdxTable            (NULL),
+  crossClassProbTable      (NULL),
+  crossClassProbTableSize  (0),
+  featureEncoder           (NULL),
+  fileDesc                 (NULL),
+  models                   (NULL),
+  numOfClasses             (0),
+  numOfModels              (0),
+  oneVsAllAssignment       (),
+  oneVsAllClassAssignments (NULL),
+  predictXSpace            (NULL),
+  predictXSpaceWorstCase   (0),
+  probabilities            (NULL),
+  rootFileName             (),
+  selectedFeatures         (NULL),
+  svmParam                 (),
+  trainingTime             (0.0),
+  type_table               (),
+  validModel               (true),
+  votes                    (NULL),
+  xSpaces                  (NULL),
+  xSpacesTotalAllocated    (0)
+{
+}
+
+
 SVMModel::SVMModel (const KKStr&   _rootFileName,   // Create from existing Model on Disk.
                     bool&          _successful,
                     FileDescPtr    _fileDesc,
                     RunLog&        _log
                    )
 :  
-  assignments              (_log),
+  assignments              (),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
   cardinality_table        (),
@@ -241,7 +274,7 @@ SVMModel::SVMModel (istream&     _in,   // Create from existing Model on Disk.
                     RunLog&      _log
                    )
 :  
-  assignments              (_log),
+  assignments              (),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
   cancelFlag               (false),
@@ -615,7 +648,7 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
 
   MLClassPtr     mlClass = NULL;
   delete  classAssignments;
-  classAssignments = new ClassAssignments (log);
+  classAssignments = new ClassAssignments ();
 
   MLClassList::const_iterator  idx;
 
@@ -625,12 +658,12 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
     if  (classesThisAssignment.PtrToIdx (mlClass) >= 0)
     {
       // We are looking at a class that is to be treated logically as the 'one' class in 'One-vs-All'
-      classAssignments->AddMLClass (mlClass, 0);
+      classAssignments->AddMLClass (mlClass, 0, log);
     }
     else
     {
       // We are looking at a class that is to be treated logically as one of the 'all' classes in 'One-vs-All'
-      classAssignments->AddMLClass (mlClass, 1);
+      classAssignments->AddMLClass (mlClass, 1, log);
     }
   }
   
@@ -670,9 +703,9 @@ void  SVMModel::BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples,
 
   kkint32  totalxSpaceUsed = 0;
 
-  ClassAssignments  binaryAssignments (log);
-  binaryAssignments.AddMLClass (class1, 0);
-  binaryAssignments.AddMLClass (class2, 1);
+  ClassAssignments  binaryAssignments;
+  binaryAssignments.AddMLClass (class1, 0, log);
+  binaryAssignments.AddMLClass (class2, 1, log);
 
   _twoClassParms = _svmParam.GetParamtersToUseFor2ClassCombo (class1, class2);
 
@@ -1012,7 +1045,7 @@ void  SVMModel::ReadHeader (istream&  i,
       trainingTime = ln.ExtractTokenDouble ("\n\r\t");
 
     else if  (field == "CLASSASSIGNMENTS")
-      assignments.ParseToString (ln.ExtractQuotedStr ("\n\r\t", true));
+      assignments.ParseToString (ln.ExtractQuotedStr ("\n\r\t", true), log);
 
     else if  (field == "<SVMPARAM>")
       svmParam.ReadXML (i, fileDesc, log);
@@ -1194,8 +1227,8 @@ void  SVMModel::ReadOneVsAllEntry (istream&  i,
 
     else if  (field == "CLASSASSIGNMENTS")
     {
-      assignment = new ClassAssignments (log);
-      assignment->ParseToString(value);
+      assignment = new ClassAssignments ();
+      assignment->ParseToString(value, log);
       oneVsAllClassAssignments[modelIDX] = assignment;
     }
   }
@@ -3064,7 +3097,8 @@ void  SVMModel::ReadXML (XmlStream&      s,
   delete  models;                 models                = NULL;
   delete  binaryFeatureEncoders;  binaryFeatureEncoders = NULL;
 
-  numOfModels = 0;
+  numOfClasses = 0;
+  numOfModels  = 0;
 
   bool  errorsFound = false;
   XmlTokenPtr  t = s.GetNextToken (log);
@@ -3106,7 +3140,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
             svmParam.MachineType (MachineTypeFromStr (idx.second));
 
           else if  (idx.first.EqualIgnoreCase ("ClassAssignments"))
-            assignments.ParseToString (idx.second);
+            assignments.ParseToString (idx.second, log);
 
           else
           {
@@ -3204,6 +3238,14 @@ void  SVMModel::ReadXML (XmlStream&      s,
     delete  t;
     t = s.GetNextToken (log);
   }
+
+  if  (!errorsFound)
+  {
+    numOfClasses = (kkint32)assignments.size ();
+    BuildClassIdxTable ();
+    BuildCrossClassProbTable ();
+  }
+
 }  /* ReadXML */
 
 
