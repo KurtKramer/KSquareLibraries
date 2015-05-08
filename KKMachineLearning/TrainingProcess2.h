@@ -64,11 +64,22 @@ namespace KKMLL
   public:
     typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
+    enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
+
+
+    static
+    TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  _config,
+                                                FeatureVectorListPtr          _excludeList,
+                                                bool                          _checkForDuplicates,
+                                                WhenToRebuild                 _whenToRebuild,
+                                                RunLog&                       _log
+                                               );
+         
 
 
     /**
-     *@brief  The default constructor; What will be used when creating an instance whil ereading in
-     * from a XML Stream file.  All members will be set to default values.  The XMLRead methid 
+     *@brief  The default constructor; What will be used when creating an instance while reading in
+     * from a XML Stream file.  All members will be set to default values.  The XMLRead method 
      */
     TrainingProcess2 ();
 
@@ -107,7 +118,6 @@ namespace KKMLL
      *                                ExampleFileName or the save Feature Values.  If duplicates are in 
      *                                the same class then all but one will be removes.  If they are
      *                                in more then one class then they will both be removed.
-     *
      */
     TrainingProcess2 (TrainingConfiguration2Const*  _config,
                       FeatureVectorListPtr          _excludeList,
@@ -390,9 +400,9 @@ namespace KKMLL
 
     FactoryFVProducerPtr         fvFactoryProducer;
 
-    MLClassListPtr               mlClasses; /**< List of all classes that are to be processed. There will be one entry for each MLClass,
-                                             * Including one for noise trainingExamples(unknown trainingExamples).
-                                             */
+    MLClassListPtr               mlClasses;    /**< List of all classes that are to be processed. There will be one entry for each MLClass,
+                                                * Including one for noise trainingExamples(unknown trainingExamples).
+                                                */
 
     ModelPtr                     model;
 

@@ -81,6 +81,298 @@ TrainingProcess2::TrainingProcess2 ():
 
 
 
+
+
+TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess 
+                                   (TrainingConfiguration2Const*  config,
+                                    FeatureVectorListPtr          excludeList,
+                                    bool                          checkForDuplicates,
+                                    WhenToRebuild                 whenToRebuild,
+                                    RunLog&                       log
+                                   )
+{
+  log.Level (10) << "TrainingProcess2::CreateTrainingProcess." << endl;
+
+  bool  shouldWerebuil = false;
+
+  if  (whenToRebuild == TrainingProcess2::WhenToRebuild::AlwaysRebuild)
+    shouldWerebuil = true;
+
+  else
+  {
+    KKStr  configFileName = config->FileName ();
+    configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
+    KKStr  savedModelName = osRemoveExtension (configFileName) + ".Save";
+
+    if  (!osFileExists (savedModelName))
+    {
+      if  (whenToRebuild == TrainingProcess2::WhenToRebuild::NeverRebuild)
+      {
+        log.Level (-1) << endl
+          << "TrainingProcess2::CreateTrainingProcess   ***ERROR***   Saved Model[" << savedModelName << "]  does not exist." << endl
+          << endl;
+        return NULL;
+      }
+      else
+      {
+        log.Level (10) << endl
+          << "TrainingProcess2::CreateTrainingProcess      Saved Model[" << savedModelName << "]  does not exist; will need to build." << endl
+          << endl;
+        shouldWerebuil= true;
+      }
+    }
+    else
+    {
+      XmlStreamPtr  stream = new XmlStream (savedModelName, log);
+
+      XmlTokenPtr  t = stream->GetNextToken (log);
+      while  (t  &&  (typeid (*t)  !=  typeid (XmlElementTrainingProcess2)))
+      {
+       t = stream->GetNextToken (log);
+      }
+
+
+
+
+      delete  stream;
+    }
+      
+    
+
+  }
+
+
+    enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
+
+
+
+
+  fvFactoryProducer = config->FvFactoryProducer ();
+  fileDesc = fvFactoryProducer->FileDesc ();
+
+  configFileName          = config->FileName ();
+  configFileNameSpecified = config->ConfigFileNameSpecified ();
+  trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  _log);
+
+  configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
+
+  savedModelName = osRemoveExtension (configFileName) + ".Save";
+
+  bool      changesMadeToTrainingLibrary = false;
+  DateTime  configTimeStamp;
+  DateTime  savedModelTimeStamp;
+  DateTime  latestTrainingImageTimeStamp;
+
+  bool  useExistingSavedModel = true;
+  if  (_forceRebuild)
+  {
+    useExistingSavedModel = false;
+    savedModelTimeStamp = osGetLocalDateTime ();
+  }
+
+  else if  (osFileExists (savedModelName))
+  {
+    savedModelTimeStamp   = osGetFileDateTime (savedModelName);
+  }
+
+  else
+  {
+    // Setting 'savedModelTimeStamp' to current time,  so later in function when trying to determine if 
+    // it is ok to use saved version, it will fail test and rebuild new model.
+    savedModelTimeStamp = osGetLocalDateTime ();
+    useExistingSavedModel = false;
+  }
+
+  if  (!config->FormatGood ())
+  {
+    if  (report)
+    {
+      *report << endl << endl
+              << "****** Invalid Configuration File[" << configFileName << "]  ******" << endl
+              << endl;
+    }
+
+    _log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl
+      << endl
+      << config->FormatErrors () << endl
+      << endl;
+
+    Abort (true);
+    return;
+  }
+
+  if  (weOwnMLClasses)
+    delete  mlClasses;
+  mlClasses = config->ExtractClassList ();
+  weOwnMLClasses = true;
+  mlClasses->SortByName ();
+
+  configTimeStamp = osGetFileDateTime (configFileName);
+  if  (configTimeStamp > savedModelTimeStamp)
+    useExistingSavedModel = false;
+
+  cout  << "*PHASE_MSG* Extracting Training Class Data" << endl;
+
+  try
+  {ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, _log);}
+  catch (std::exception& e1)
+  {
+    _log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred calling 'ExtractTrainingClassFeatures'." << endl
+                   << "   Exception[" << e1.what () << "]" << endl;
+    Abort (true);
+  }
+  catch (...)
+  {
+    _log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred calling 'ExtractTrainingClassFeatures'." << endl;
+    Abort (true);
+  }
+
+  if  (cancelFlag)
+    Abort (true);
+
+  if  (Abort ())
+  {
+    _log.Level (-1) << "TrainingProcess2    *** Aborted During Feature Extraction ***" << endl;
+    return;
+  }
+
+  if  ((latestTrainingImageTimeStamp > savedModelTimeStamp)  ||  (changesMadeToTrainingLibrary))
+    useExistingSavedModel = false;
+
+  if  (excludeList)
+  {
+    useExistingSavedModel = false;
+
+    kkint32  origSizeOfExamples = trainingExamples->QueueSize ();
+    RemoveExcludeListFromTrainingData ();
+    if  (origSizeOfExamples != trainingExamples->QueueSize ())
+       useExistingSavedModel = false;
+  }
+
+  if  (useExistingSavedModel)
+  {
+    _log.Level (10) << "Loading existing trained model[" <<  osGetRootNameWithExtension (savedModelName) << "]" << endl;
+
+    // We are not going to need the training trainingExamples we loaded so we can go ahead and delete them now.
+    delete  trainingExamples;  trainingExamples = NULL;
+
+    buildDateTime = savedModelTimeStamp;  // Set to timestamp of save file for now.  Will be overwriting by the
+                                          // 'BuildDateTime' field in the save file if it exists.
+
+    ifstream  in (savedModelName.Str ());
+    if  (!in.is_open ())
+    {
+      _log.Level (-1) << endl << endl 
+                     << "TrainingProcess2    ***ERROR***    Could not existing Training Model[" << savedModelName << "]" << endl
+                     << endl;
+
+      useExistingSavedModel = false;
+    }
+    else
+    {
+      try
+      {
+        bool  successful = false;
+        Read (in, successful, _log);
+        if  (!successful)
+        {
+          _log.Level (-1) << endl 
+              << "TrainingProcess2   ***ERROR***   Invalid Format in SaveFile[" << savedModelName << "]  we will have to rebuild model." << endl
+              << endl;
+
+          useExistingSavedModel = false;
+          delete  model;             model            = NULL;
+          delete  trainingExamples;  trainingExamples = NULL;
+          if  (weOwnMLClasses)
+          {
+            delete  mlClasses;
+            mlClasses = NULL;
+          }
+
+          trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true,  _log);
+
+          if  (!config->FormatGood())
+          {
+            _log.Level (-1) << "TrainingProcess2  Invalid Configuration File Specified." << endl;
+            Abort (true);
+            return;
+          }
+
+          if  (weOwnMLClasses)
+            delete  mlClasses;
+          mlClasses = config->ExtractClassList ();
+          mlClasses->SortByName ();
+          weOwnMLClasses = true;
+
+          ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, _log);
+          if  (cancelFlag)
+            Abort (true);
+        }
+
+        in.close ();
+      }
+      catch (std::exception e2)
+      {
+        _log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing existing model." << endl
+                       << "   Exception[" << e2.what () << ":]" << endl;
+        Abort (true);
+      }
+      catch (...)
+      {
+        _log.Level (-1) << "TrainingProcess2    *** EXCEPTION *** occurred while processing existing model." << endl;
+        Abort (true);
+      }
+    }
+  }
+
+  if  ((!useExistingSavedModel)  &&  (!cancelFlag))
+  {
+    _log.Level (20) << "TrainingProcess2   Building Support Vector Machine";
+
+    if  (_checkForDuplicates)
+      CheckForDuplicates (true, _log);
+
+    // trainer->ReportTraningClassStatistics (*report);
+    CreateModelsFromTrainingData (_log);
+    if  (Abort ())
+    {
+      _log.Level (-1) << "TrainingProcess2    *** Aborted During Model Creation ***" << endl;
+      return;
+    }
+
+    if  (!excludeList)
+    {
+      SaveResults (_log);
+      if  (Abort ())
+      {
+        _log.Level (-1) << "TrainingProcess2    *** Aborted ***" << endl;
+        return;
+      }
+    }
+  }
+
+  if  (false)
+  {
+    kkuint32  numExamplesWritten = 0;
+    bool  successful = false;
+    KKStr  fn = "C:\\Larcos\\Classifier\\TrainingModels\\TrainingData\\" + KKB::osGetRootName (configFileName) + ".data";
+
+    FeatureFileIOPtr  driver = NULL;
+    if  (fvFactoryProducer)
+      driver = fvFactoryProducer->DefaultFeatureFileIO ();
+
+    if  (driver)
+      driver->SaveFeatureFile (fn, trainingExamples->AllFeatures (), *trainingExamples, numExamplesWritten, cancelFlag, successful, _log);
+  }
+
+  //  At this point we should no longer need the training trainingExamples.  
+  delete  trainingExamples;  trainingExamples = NULL;
+
+  _log.Level (20) << "TrainingProcess2::TrainingProcess2  Exiting Constructor" << endl;
+} /* CreateTrainingProcess */
+
+
+
 TrainingProcess2::TrainingProcess2 (TrainingConfiguration2Const*  _config,
                                     FeatureVectorListPtr          _excludeList,
                                     RunLog&                       _log,
