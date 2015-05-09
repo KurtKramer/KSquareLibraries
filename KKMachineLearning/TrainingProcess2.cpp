@@ -93,10 +93,12 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
 {
   log.Level (10) << "TrainingProcess2::CreateTrainingProcess." << endl;
 
-  bool  shouldWerebuil = false;
+  bool  weShouldRebuild = false;
+  TrainingProcess2Ptr trainer = NULL;
+  FeatureVectorListPtr  trainingExamples = NULL;
 
   if  (whenToRebuild == TrainingProcess2::WhenToRebuild::AlwaysRebuild)
-    shouldWerebuil = true;
+    weShouldRebuild = true;
 
   else
   {
@@ -106,6 +108,47 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
 
     if  (!osFileExists (savedModelName))
     {
+      weShouldRebuild = true;
+    }
+    else
+    {
+      XmlStreamPtr  stream = new XmlStream (savedModelName, log);
+      XmlTokenPtr  t = stream->GetNextToken (log);
+      while  (t  &&  (typeid (*t)  !=  typeid (XmlElementTrainingProcess2)))
+      {
+       t = stream->GetNextToken (log);
+      }
+
+      if  (!t)
+        weShouldRebuild = true;
+      else
+      {
+        trainer = dynamic_cast<XmlElementTrainingProcess2Ptr> (t)->TakeOwnership ();
+        if  (!trainer)
+          weShouldRebuild = true;
+     
+        delete  t;
+        t = NULL;
+      }
+      
+      delete  stream;
+      stream = NULL;
+    }
+  }
+
+  if  (whenToRebuild != TrainingProcess2::WhenToRebuild::NeverRebuild)
+  {
+    DateTime  latestTrainingImageTimeStamp;
+    bool      changesMadeToTrainingLibrary = true;
+    trainingExamples = ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, log);}
+
+
+
+  }
+
+
+
+
       if  (whenToRebuild == TrainingProcess2::WhenToRebuild::NeverRebuild)
       {
         log.Level (-1) << endl
@@ -120,29 +163,15 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
           << endl;
         shouldWerebuil= true;
       }
-    }
-    else
-    {
-      XmlStreamPtr  stream = new XmlStream (savedModelName, log);
 
-      XmlTokenPtr  t = stream->GetNextToken (log);
-      while  (t  &&  (typeid (*t)  !=  typeid (XmlElementTrainingProcess2)))
-      {
-       t = stream->GetNextToken (log);
-      }
-
-
-
-
-      delete  stream;
-    }
-      
-    
-
-  }
-
-
-    enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
+  
+  
+  
+  
+  
+  
+  
+  enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
 
 
 
