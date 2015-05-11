@@ -72,6 +72,7 @@ namespace KKMLL
                                                 FeatureVectorListPtr          _excludeList,
                                                 bool                          _checkForDuplicates,
                                                 WhenToRebuild                 _whenToRebuild,
+                                                VolConstBool&                 _cancelFlag,
                                                 RunLog&                       _log
                                                );
          
@@ -266,10 +267,13 @@ namespace KKMLL
     /**@brief Extracts the list of classes including ones from Sub-Classifiers */
     MLClassListPtr  ExtractFullHierachyOfClasses ()  const;  
 
-    void  ExtractTrainingClassFeatures (KKB::DateTime&  latestImageTimeStamp,
-                                        bool&           changesMadeToTrainingLibraries,
-                                        RunLog&         log
-                                       );
+    static
+    FeatureVectorListPtr  ExtractTrainingClassFeatures (TrainingConfiguration2ConstPtr  config,
+                                                        KKB::DateTime&                  latestImageTimeStamp,
+                                                        bool&                           changesMadeToTrainingLibraries,
+                                                        VolConstBool&                   cancelFlag,
+                                                        RunLog&                         log
+                                                       );
 
     void  LoadPrevTrainedOtherwiseRebuild (bool  _forceRebuild,
                                            bool  _checkForDuplicates
@@ -341,14 +345,15 @@ namespace KKMLL
 
 
 
-    //************************************************************
-    //             Routines for Extracting Features              *
-    //************************************************************
-    void  ExtractFeatures (const TrainingClassPtr  trainingClass,
-                           KKB::DateTime&          latestTimeStamp,
-                           bool&                   changesMade,
-                           RunLog&                 log
-                          );
+    static
+    FeatureVectorListPtr  ExtractFeatures (TrainingConfiguration2Ptr  config,
+                                           MLClassList&               mlClasses,
+                                           const TrainingClassPtr     trainingClass,
+                                           KKB::DateTime&             latestTimeStamp,
+                                           bool&                      changesMade,
+                                           VolConstBool&              cancelFlag,
+                                           RunLog&                    log
+                                          );
 
 
     //************************************************************

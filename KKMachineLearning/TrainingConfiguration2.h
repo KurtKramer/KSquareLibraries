@@ -187,6 +187,7 @@ namespace KKMLL
     kkint32                ImagesPerClass          () const  {return  ExamplesPerClass ();};
     SVM_KernalType         KernalType              () const;
     SVM_MachineType        MachineType             () const;
+    MLClassListPtr         MlClasses               () const  {return  mlClasses;}
     Model::ModelTypes      ModelingMethod          () const  {return  modelingMethod;}
     Model::ModelTypes      ModelType               () const  {return  modelingMethod;}
     KKStr                  ModelTypeStr            () const  {return  Model::ModelTypeToStr (modelingMethod);}

@@ -88,6 +88,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
                                     FeatureVectorListPtr          excludeList,
                                     bool                          checkForDuplicates,
                                     WhenToRebuild                 whenToRebuild,
+                                    VolConstBool&                 cancelFlag,
                                     RunLog&                       log
                                    )
 {
@@ -140,7 +141,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
   {
     DateTime  latestTrainingImageTimeStamp;
     bool      changesMadeToTrainingLibrary = true;
-    trainingExamples = ExtractTrainingClassFeatures (latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, log);}
+    trainingExamples = ExtractTrainingClassFeatures (config, latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, cancelFlag, log);
 
 
 
@@ -1447,38 +1448,41 @@ void  TrainingProcess2::CheckForDuplicates (bool     allowDupsInSameClass,
 
 
 
-void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
-                                         DateTime&               latestTimeStamp,
-                                         bool&                   changesMade,
-                                         RunLog&                 log
-                                        )
+FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2Ptr  config,
+                                                         MLClassList&               mlClasses,
+                                                         const TrainingClassPtr     trainingClass,
+                                                         DateTime&                  latestTimeStamp,
+                                                         bool&                      changesMade,
+                                                         VolConstBool&              cancelFlag,
+                                                         RunLog&                    log
+                                                        )
 {
+  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer ();
+
+  FeatureFileIOPtr      driver           = fvFactoryProducer->DefaultFeatureFileIO ();
+  FeatureVectorListPtr  trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
+
+  bool  abort = false;
+
   for  (kkuint32 dirIdx = 0;  dirIdx < trainingClass->DirectoryCount ();  ++dirIdx)
   {
     KKStr  expDirName = trainingClass->ExpandedDirectory (config->RootDir (), dirIdx);
 
-    log.Level (30) << "TrainingProcess2::ExtractFeatures - Extracting Features Directory["
-                   << expDirName                          << "], file["
-                   << trainingClass->FeatureFileName   () << "]."
-                   << endl;
+    log.Level (30) << "TrainingProcess2::ExtractFeatures - Extracting Features Directory[" << expDirName << "], file[" << trainingClass->FeatureFileName () << "]."  << endl;
 
     KKStr  featureFileName = osMakeFullFileName (expDirName, trainingClass->FeatureFileName ());
 
-    FeatureFileIOPtr  driver = NULL;
-    if  (fvFactoryProducer)
-      driver = fvFactoryProducer->DefaultFeatureFileIO ();
-
-    FeatureVectorListPtr  extractedImages = NULL; 
+    FeatureVectorListPtr  extractedExamples = NULL; 
 
     try
     {
-      extractedImages = driver->FeatureDataReSink 
+      extractedExamples = driver->FeatureDataReSink 
                                   (fvFactoryProducer,
                                    expDirName,
                                    trainingClass->FeatureFileName (),
                                    trainingClass->MLClass (),
                                    true,   //  Make all entries in this directory 'trainingClass->MLClass ()'
-                                   *mlClasses,
+                                   mlClasses,
                                    cancelFlag,
                                    changesMade,
                                    latestTimeStamp,
@@ -1491,29 +1495,29 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
         << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
         << e1.what () << endl
         << endl;
-      extractedImages = NULL;
-      Abort (true);
+      extractedExamples = NULL;
+      abort = true;
     }
     catch  (...)
     {
       log.Level (-1) << endl
         << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
         << endl;
-      extractedImages = NULL;
-      Abort (true);
+      extractedExamples = NULL;
+      abort = true;
     }
 
-    if  ((extractedImages == NULL)  ||  (extractedImages->QueueSize () < 1))
+    if  ((extractedExamples == NULL)  ||  (extractedExamples->QueueSize () < 1))
     {
       log.Level (-1) << endl
                      << "ExtractFeatures    *** No Training Examples Found ***"   
                      << "                 Class    [" << trainingClass->Name () << "]"
                      << "                 Directory[" << expDirName             << "]"
                      << endl;
-      Abort (true);
+      abort = true;
     }
 
-    if  (extractedImages)
+    if  (extractedExamples)
     {
       trainingExamples->AddQueue (*extractedImages);
       extractedImages->Owner (false);
@@ -1523,19 +1527,34 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
   }
 
   log.Level (30) << "TrainingProcess2::ExtractFeatures  Exiting" << endl;
+
+  if  (abort)
+  {
+    delete  trainingExamples;
+    trainingExamples = NULL;
+  }
+
+  return  trainingExamples;
 }  /* ExtractFeatures */
 
 
 
 
-void  TrainingProcess2::ExtractTrainingClassFeatures (DateTime&  latestImageTimeStamp,
-                                                      bool&      changesMadeToTrainingLibraries,
-                                                      RunLog&    log
-                                                     )
+FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingConfiguration2ConstPtr  config,
+                                                                      DateTime&                       latestImageTimeStamp,
+                                                                      bool&                           changesMadeToTrainingLibraries,
+                                                                      VolConstBool&                   cancelFlag,
+                                                                      RunLog&                         log
+                                                                     )
 {
-  log.Level (20) << "TrainingProcess2::ExtractTraingClassFeatures - Starting." << endl;
+  log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures - Starting." << endl;
 
   changesMadeToTrainingLibraries = false;
+  bool   abort = false;
+
+  FactoryFVProducerPtr  fvFactoryProdcer = config->FvFactoryProducer ();
+
+  FeatureVectorListPtr  trainingExamples = fvFactoryProdcer->ManufacturFeatureVectorList (true, log);
 
   //****************************************************************************
   // Make sure that there are no existing *.data files that we are going to use.
@@ -1547,33 +1566,51 @@ void  TrainingProcess2::ExtractTrainingClassFeatures (DateTime&  latestImageTime
   //  We will first extract the Raw features from each Class 
 
   const TrainingClassList&   trainingClasses = config->TrainingClasses ();
-  TrainingClassList::const_iterator  tcIDX;
+
+  bool  weOwnMlClasses = false; 
+  MLClassListPtr mlClasses = config->MlClasses ();
+  if  (!mlClasses)
+  {
+    mlClasses = new MLClassList ();
+    weOwnMlClasses = true;
+  }
+
 
   DateTime  latestTimeStamp;
-  bool      changesMadeToThisTrainingClass;
+  bool      changesMadeToThisTrainingClass = false;
 
-  for  (tcIDX = trainingClasses.begin ();  ((tcIDX != trainingClasses.end ())  &&  (!cancelFlag)  &&  (!Abort ()));  tcIDX++)
+  for  (auto  tcIDX: trainingClasses)
   {
+    if  (cancelFlag ||  abort)
+      break;
+
     const TrainingClassPtr trainingClass = *tcIDX;
 
-    log.Level (20) << "TrainingProcess2::ExtractTraingClassFeatures Starting on Class[" 
-                   << trainingClass->Name () << "]."
-                   << endl;
+    log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures Starting on Class[" << trainingClass->Name () << "]." << endl;
 
-    ExtractFeatures (trainingClass, latestTimeStamp, changesMadeToThisTrainingClass, log);
+    FeatureVectorListPtr  examplesThisClass = ExtractFeatures (trainingClass, latestTimeStamp, changesMadeToThisTrainingClass, log);
     if  (latestTimeStamp > latestImageTimeStamp)
       latestImageTimeStamp = latestTimeStamp;
 
     if  (changesMadeToThisTrainingClass)
       changesMadeToTrainingLibraries = true;
+
+    if  (!examplesThisClass)
+    {
+      abort = true;
+      log.Level (-1) << "TrainingProcess2::ExtractTrainingClassFeatures   ***ERROR***   No examples returned by 'ExtractTrainingClassFeatures'." << endl;
+    }
+    else
+    {
+      trainingExamples->AddQueue (*examplesThisClass);
+    }
   }
 
   // DONE Extracting Raw features from All classes.
-  if  ((!Abort ())  &&  (!cancelFlag))
+  if  ((!abort)  &&  (!cancelFlag))
   {
     if  (config->NoiseTrainingClass ())
     {
-      cout  << "*PHASE_MSG2* Training Class[" << config->NoiseTrainingClass ()->Name () << "]" << endl;
       ExtractFeatures (config->NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass, log);
       if  (latestTimeStamp > latestImageTimeStamp)
         latestImageTimeStamp = latestTimeStamp;
@@ -1585,7 +1622,15 @@ void  TrainingProcess2::ExtractTrainingClassFeatures (DateTime&  latestImageTime
 
   trainingExamples->RandomizeOrder ();
 
+  if  (weOwnMlClasses)
+  {
+    delete  mlClasses;
+    mlClasses = NULL;
+  }
+
+
   log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures   Exiting" << endl;
+  return  trainingExamples;
 }  /*  ExtractTrainingClassFeatures */
 
 
