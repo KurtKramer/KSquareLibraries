@@ -370,7 +370,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   catch  (const exception& e)
   {
     log.Level (-1) << endl
-      << "SVMModel  ***ERROR***   Exception occured constructing model." << endl
+      << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << e.what () << endl
       << endl;
     validModel = false;
@@ -378,7 +378,7 @@ SVMModel::SVMModel (SVMparam&           _svmParam,      // Create new model from
   catch  (...)
   {
     log.Level (-1) << endl
-      << "SVMModel  ***ERROR***   Exception occured constructing model." << endl
+      << "SVMModel  ***ERROR***   Exception occurred constructing model." << endl
       << endl;
     validModel = false;
   }

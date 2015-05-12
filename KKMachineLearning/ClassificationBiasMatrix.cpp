@@ -74,7 +74,7 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (const KKStr&  _configFileNam
   catch (...)
   {
     valid = false;
-    errMsgs.push_back ("ClassificationBiasMatrix    Exception occured reading XML File");
+    errMsgs.push_back ("ClassificationBiasMatrix    Exception occurred reading XML File");
   }
   sr.close ();
 }

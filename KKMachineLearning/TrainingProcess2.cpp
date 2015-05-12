@@ -848,7 +848,7 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
   catch (const std::exception&  e1)
   {
     log.Level (-1) << endl
-      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
       << e1.what () << endl
       << endl;
     extractedImages = NULL;
@@ -857,7 +857,7 @@ void  TrainingProcess2::ExtractFeatures (const TrainingClassPtr  trainingClass,
   catch  (...)
   {
     log.Level (-1) << endl
-      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occured calling 'FeatureDataReSink'" << endl
+      << "TrainingProcess2::ExtractFeatures  ***ERROR***   Exception occurred calling 'FeatureDataReSink'" << endl
       << endl;
     extractedImages = NULL;
     Abort (true);
