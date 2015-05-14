@@ -186,48 +186,6 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 
-void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
-                                               bool&     _successful,
-                                               RunLog&   log
-                                              )
-{
-  char  buff[20480];
-  KKStr  field;
-
-  KKStr  modelFileName;
-
-  kkint32  numOfModels = 0;
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelKnn>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<Model>"))
-    {
-      Model::ReadXML (i, _successful, log);
-    }
-
-    else
-    {
-      // Add code to deal with items that are specific to 'ModelSvmBase'
-    }
-  }
-
-  if  (!_successful)
-    validModel = false;
-
-  return;
-}  /* ReadSpecificImplementationXML */
-
-
-
 void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
                             bool                  _alreadyNormalized,
                             bool                  _takeOwnership,  /**< Model will take ownership of these examples */
@@ -246,22 +204,6 @@ void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
     throw e;
   }
 }  /* TrainModel */
-
-
-
-void  ModelKnn::WriteSpecificImplementationXML (ostream&  o,
-                                                RunLog&   log)
-{
-  log.Level (20) << "ModelKnn::WriteSpecificImplementationXML  Saving Model in File." << endl;
-
-  o << "<ModelKnn>" << endl;
-
-  o << "</ModelKnn>" << endl;
-}  /* WriteSpecificImplementationXML */
-
-
-
-
 
 
 

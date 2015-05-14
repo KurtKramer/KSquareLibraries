@@ -250,7 +250,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
   kkint32  numOfClasses = mlClasses->QueueSize ();
 
-  bool    cancelFlag = false;
+  bool   cancelFlag = false;
   KKStr  statusMessage;
 
   vector<TrainingProcess2Ptr>  trainers;
@@ -261,15 +261,15 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
   {
     TrainingConfiguration2Ptr  config = configs->IdxToPtr (idx);
     
-    TrainingProcess2Ptr  trainer = new TrainingProcess2 (config, 
-                                                         trainingExamples,
-                                                         mlClasses,
-                                                         NULL,
-                                                         log,
-                                                         featuresAreAlreadyNormalized
-                                                        );
-
-    trainer->CreateModelsFromTrainingData (log);
+    TrainingProcess2Ptr  trainer = 
+      TrainingProcess2::CreateTrainingProcessFromTrainingExamples 
+                                      (config,
+                                       trainingExamples,
+                                       false,
+                                       featuresAreAlreadyNormalized,
+                                       cancelFlag,
+                                       log
+                                      );
 
     trainingTime         += trainer->TrainingTime ();
     numOfSupportVectors  += trainer->NumOfSupportVectors ();

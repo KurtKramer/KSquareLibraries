@@ -459,86 +459,6 @@ void   ModelUsfCasCor::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 
-void  ModelUsfCasCor::ReadSpecificImplementationXML (istream&  i,
-                                                     bool&     _successful,
-                                                     RunLog&   log
-                                                    )
-{
-  /**@todo  Make sure that 'param' != NULL */
-
-  if  (param == NULL)
-  {
-    param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
-  }
-  else
-  {
-    log.Level (20) << "ModelUsfCasCor::ReadSpecificImplementationXML    param != NULL." << endl;
-  }
-
-  char  buff[20480];
-  KKStr  field;
-
-  KKStr  modelFileName;
-
-  kkint32  numOfModels = 0;
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelUsfCasCor>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<Model>"))
-    {
-      Model::ReadXML (i, _successful, log);
-    }
-
-    else if  (field.EqualIgnoreCase ("<UsfCasCor>"))
-    {
-      delete  usfCasCorClassifier;
-      usfCasCorClassifier = new UsfCasCor ();
-      bool  usfCasCorSuccessful = false;
-      usfCasCorClassifier->LoadExistingClassifier (i, usfCasCorSuccessful, log);
-      if  (!usfCasCorSuccessful)
-        _successful = false;
-    }
-
-    else
-    {
-      // Add code to deal with items that are specific to 'ModelUsfCasCor'
-    }
-  }
-
-  if  (!_successful)
-    validModel = false;
-
-  return;
-}  /* ReadSpecificImplementationXML */
-
-
-
-
-void  ModelUsfCasCor::WriteSpecificImplementationXML (ostream&  o,
-                                                      RunLog&   log
-                                                     )
-{
-  log.Level (20) << "ModelUsfCasCor::WriteSpecificImplementationXML  Saving Model in File." << endl;
-
-  o << "<ModelUsfCasCor>" << endl;
-
-  if  (usfCasCorClassifier)
-    usfCasCorClassifier->WriteXML (o);
-
-  o << "</ModelUsfCasCor>" << endl;
-} /* WriteSpecificImplementationXML */
-
-
-
 
 kkint32  ModelUsfCasCor::NumOfSupportVectors ()  const
 {
@@ -624,8 +544,6 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
   {
     param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
   }
-
-
 }  /* ReadXML */
 
 

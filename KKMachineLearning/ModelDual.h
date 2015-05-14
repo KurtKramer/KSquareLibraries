@@ -173,11 +173,6 @@ namespace  KKMLL
                                 double*             _probabilities,
                                 RunLog&             _log
                                );
-  
-    virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful,
-                                                  RunLog&   log
-                                                 );
 
 
     virtual  

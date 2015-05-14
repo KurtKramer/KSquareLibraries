@@ -278,74 +278,40 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   KKStr  statusMsg;
 
-  trainer1 = new TrainingProcess2 (config1, 
-                                   trainExamples,
-                                   classes,
-                                   NULL,              /**< _reportFile  */
-                                   _log,
-                                   true              /**< 'true' = Feature data already normalized. */
-                                  );
+  TrainingTimeStart ();
+  trainer1 = TrainingProcess2::CreateTrainingProcessFromTrainingExamples 
+                          (config1, 
+                           trainExamples, 
+                           false,         /**< false = DON'T take ownership of 'trainExamples'. */
+                           true,          /**< true = Features are already normalized.  */
+                           cancelFlag,
+                           _log
+                          );
+  TrainingTimeEnd ();
 
-  if  (trainer1->Abort ())
+  if  ((!trainer1)  ||  trainer1->Abort ())
   {
     validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "].";
+    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName1 () + "].";
     _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
-  try  
-  {
-    TrainingTimeStart ();
-    trainer1->CreateModelsFromTrainingData (_log);
-    TrainingTimeEnd ();
-  }
-  
-  catch (const KKException&  e)
+  TrainingTimeStart ();
+  trainer2 = TrainingProcess2::CreateTrainingProcessFromTrainingExamples 
+                          (config2, 
+                           trainExamples, 
+                           false,         /**< false = DON'T take ownership of 'trainExamples'. */
+                           true,          /**< true = Features are already normalized.  */
+                           cancelFlag,
+                           _log
+                          );
+  TrainingTimeEnd ();
+
+  if  ((!trainer2)  ||  trainer2->Abort ())
   {
     validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer1StatusMsg << "].";
-    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl;
-    throw e;
-  }
-
-  catch (...)
-  {
-    validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer1StatusMsg << "].";
-    _log.Level (-1) << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
-
-  trainer2 = new TrainingProcess2 (config2, 
-                                   trainExamples,
-                                   classes,
-                                   NULL,             // _reportFile,
-                                   _log,
-                                   true             /**< 'true' = Feature data already normalized. */
-                                  );
-
-  if  (trainer2->Abort ())
-  {
-    validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName2 () + "]  Msg[" + statusMsg + "].";
-    _log.Level (-1) << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
-
-  try  {trainer2->CreateModelsFromTrainingData (_log);}
-  catch (const KKException&  e)
-  {
-    validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer2StatusMsg << "].";
-    _log.Level (-1) << endl << errMsg << endl << e.ToString () << endl;
-    throw e;
-  }
-
-  catch (...)
-  {
-    validModel = false;
-    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error creating models from training data  Config[" + param->ConfigFileName1 () + "]  Msg[" + statusMsg + "]  Msg[" << trainer2StatusMsg << "].";
+    KKStr errMsg = "ModelDual::TrainModel  ***ERROR***  Error building TrainingProcess for [" + param->ConfigFileName1 () + "].";
     _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
@@ -356,10 +322,10 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
-MLClassPtr       ModelDual::ReconcilePredictions (MLClassPtr  pred1, 
-                                                  MLClassPtr  pred2,
-                                                  RunLog&     log
-                                                 )
+MLClassPtr  ModelDual::ReconcilePredictions (MLClassPtr  pred1, 
+                                             MLClassPtr  pred2,
+                                             RunLog&     log
+                                            )
 {
   if  (pred1 == pred2)
     return pred1;
@@ -885,173 +851,6 @@ void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
   delete  crossProbTableC2;  crossProbTableC2 = NULL;
 
 }  /* RetrieveCrossProbTable */
-
-
-
-void  ModelDual::ReadSpecificImplementationXML (istream&  i,
-                                                bool&     _successful,
-                                                RunLog&   log
-                                               )
-{
-  param = dynamic_cast<ModelParamDualPtr> (Model::param);
-
-  if  (param == NULL)
-  {
-    log.Level (-1) << "ModelDual::ReadSpecificImplementationXML   ***ERROR***   (param == NULL);  this should not ne able to happen." << endl;
-    validModel = false;
-    return;
-  }
-
-  char  buff[20480];
-  KKStr  field;
-
-  KKStr  modelFileName;
-
-  kkint32 numOfModels = 0;
-
-  delete  classifier1;  classifier1 = NULL;
-  delete  classifier2;  classifier2 = NULL;
-  delete  trainer1;     trainer1    = NULL;
-  delete  trainer2;     trainer2    = NULL;
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelDual>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<Model>"))
-    {
-      Model::ReadXML (i, _successful, log);
-    }
-
-    else if  (field.EqualIgnoreCase ("<TrainingProcess1>"))
-    {
-      delete  classifier1;  classifier1 = NULL;
-      delete  trainer1;     trainer1    = NULL;
-
-      trainer1 = new TrainingProcess2 (i,
-                                       log,
-                                       true,      /**<  'true' = Feature data already normalized. */
-                                       100
-                                      );
-      if  (trainer1->Abort ())
-      {
-        log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  Could not load classifier1." << endl << endl;
-        delete  trainer1;
-        trainer1 = NULL;
-        validModel = false;
-        _successful = false;
-      }
-
-      else if  (osGetRootName (trainer1->ConfigFileName ()) != osGetRootName (param->ConfigFileName1 ()))
-      {
-        log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  Could not load classifier1." << endl << endl;
-        delete  trainer1;  
-        trainer1 = NULL;  
-        validModel = false;
-        _successful = false;
-      }
-    }
-
-    else if  (field.EqualIgnoreCase ("<TrainingProcess2>"))
-    {
-      delete  classifier2;  classifier2 = NULL;
-      delete  trainer2;     trainer2    = NULL;
-
-      trainer2 = new TrainingProcess2 (i,
-                                       log,
-                                       true,    /**< 'true' = Feature data already normalized.  */
-                                       100
-                                      );
-
-      if  (trainer2->Abort ())
-      {
-        log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  Could not load classifier2." << endl << endl;
-        delete  trainer2;
-        trainer2 = NULL;
-        validModel = false;
-        _successful = false;
-      }
-
-      if  (trainer2 && (osGetRootName (trainer2->ConfigFileName ()) != osGetRootName (param->ConfigFileName2 ())))
-      {
-        log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  Could not load classifier2." << endl << endl;
-        delete  trainer2;  
-        trainer2 = NULL;  
-        validModel = false;
-        _successful = false;
-      }
-    }
-
-    else
-    {
-      // Add code to deal with items that are specific to 'ModelDual'
-    }
-  }
-
-  if  (_successful)
-  {
-    if  (!trainer1)
-    {
-      log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  The first classifier[" << param->ConfigFileName1 () << "] was not provided." << endl << endl;
-      validModel = false;
-      _successful = false;
-    }
-
-    if  (!trainer2)
-    {
-      log.Level (-1) << endl << endl << "ModelDual::ReadSpecificImplementationXML   ***ERROR***  The first classifier[" << param->ConfigFileName2 () << "] was not provided." << endl << endl;
-      validModel = false;
-      _successful = false;
-    }
-  }
-
-
-  if  (!_successful)
-    validModel = false;
-  else
-  {
-    classifier1 = new Classifier2 (trainer1, log);
-    classifier2 = new Classifier2 (trainer2, log);
-  }
-
-  return;
-}  /* ReadSpecificImplementationXML */
-
-
-
-
-
-void  ModelDual::WriteSpecificImplementationXML (ostream&  o,
-                                                 RunLog&   log
-                                                )
-{
-  log.Level (20) << "ModelDual::WriteSpecificImplementationXML  Saving Model in File." << endl;
-
-  o << "<ModelDual>" << endl;
-
-  if  (trainer1)
-  {
-    o << "<TrainingProcess1>" << endl;
-    trainer1->WriteXml (o, log);
-    o << "</TrainingProcess1>" << endl;
-  }
-
-  if  (trainer2)
-  {
-    o << "<TrainingProcess2>" << endl;
-    trainer2->WriteXml (o, log);
-    o << "</TrainingProcess2>" << endl;
-  }
-
-  o << "</ModelDual>" << endl;
-} /* WriteSpecificImplementationXML */
 
 
 

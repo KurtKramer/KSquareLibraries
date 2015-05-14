@@ -243,11 +243,6 @@ namespace KKMLL
                                  );
 
 
-    virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful,
-                                                  RunLog&   log
-                                                 );
-
     /**
      * @brief Use given training data to create a trained Model that can be used for classifying examples.
      * @param[in] _trainExamples      The example data we will be building the model from.
@@ -259,11 +254,6 @@ namespace KKMLL
                                bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
                                RunLog&               _log
                               );
-
-
-    virtual  void  WriteSpecificImplementationXML (ostream&  o,
-                                                   RunLog&   log
-                                                  );
 
 
     virtual  void  ReadXML (XmlStream&      s,

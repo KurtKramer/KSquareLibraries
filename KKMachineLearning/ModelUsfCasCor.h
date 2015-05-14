@@ -114,11 +114,6 @@ namespace  KKMLL
                                 double*             _probabilities,
                                 RunLog&             log
                                );
-  
-    virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful,
-                                                  RunLog&   log
-                                                 );
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
@@ -126,11 +121,6 @@ namespace  KKMLL
                                bool                  _takeOwnership,  /**< Model will take ownership of these examples */
                                RunLog&               _log
                               );
-
-
-    virtual  void  WriteSpecificImplementationXML (ostream&  o,
-                                                   RunLog&   log
-                                                  );
 
 
     virtual  void  ReadXML (XmlStream&      s,

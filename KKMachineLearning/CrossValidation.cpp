@@ -302,50 +302,33 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
 {
   log.Level (20) << "CrossValidation::CrossValidate   FoldNum[" << foldNum  << "]." << endl;
 
+  bool  cancelFlag = false;
+
   KKStr  statusMessage;
 
-  TrainingProcess2  trainer (config, 
+  TrainingProcess2Ptr  trainer = TrainingProcess2::CreateTrainingProcessFromTrainingExamples  
+                            (config, 
                              trainingExamples, 
-                             mlClasses,
-                             NULL,
-                             log,
-                             featuresAreAlreadyNormalized
+                             false,      /**<  false = DON'T take ownership of 'trainingExamples'. */
+                             featuresAreAlreadyNormalized,
+                             cancelFlag,
+                             log
                             );
-  try
-  {
-    trainer.CreateModelsFromTrainingData (log);
-  }
-  catch  (const std::exception  e)
-  {
-    log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidate  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
-      << "            Exception[" << e.what () << "]" << endl
-      << endl;
-    trainer.Abort (true);
-  }
-  catch (...)
-  {
-    log.Level (-1) << endl << endl
-      << "CrossValidation::CrossValidate  ***ERROR***  Exception Occurred in 'CreateModelsFromTrainingData'"  << endl
-      << endl;
-    trainer.Abort (true);
-  }
-
-  if  (trainer.Abort ())
+  if  (trainer->Abort ())
     return;
 
-  duplicateTrainDataCount += trainer.DuplicateDataCount ();
-  trainingTime            += trainer.TrainingTime ();
+  duplicateTrainDataCount += trainer->DuplicateDataCount ();
+  trainingTime            += trainer->TrainingTime ();
 
   kkint32  foldNumSVs = 0;
   kkint32  foldTotalNumSVs = 0;
-  trainer.SupportVectorStatistics (foldNumSVs, foldTotalNumSVs);
+  trainer->SupportVectorStatistics (foldNumSVs, foldTotalNumSVs);
   numSVs      += foldNumSVs;
   totalNumSVs += foldTotalNumSVs;
     
   log.Level (20) << "CrossValidate   Creating Classification Object" << endl;
 
-  Classifier2  classifier (&trainer, log);
+  Classifier2  classifier (trainer, log);
   {
     // Make sure that a Noise class exists
     mlClasses->GetNoiseClass ();
@@ -460,9 +443,12 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   foldAccuracies.push_back  (foldAccuracy);
   foldCounts.push_back      (foldCount);
  
-  supportPoints.push_back   ((float)trainer.NumOfSupportVectors ());
-  trainTimes.push_back      (trainer.TrainingTime ());
+  supportPoints.push_back   ((float)trainer->NumOfSupportVectors ());
+  trainTimes.push_back      (trainer->TrainingTime ());
   testTimes.push_back       (testTimeThisFold);
+
+  delete  trainer;
+  trainer = NULL;
 
   log.Level (20) << "CrossValidation::CrossValidate - Done." << endl;
 }  /* CrossValidate */

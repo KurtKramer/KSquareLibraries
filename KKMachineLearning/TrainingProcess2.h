@@ -67,67 +67,36 @@ namespace KKMLL
     enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
 
 
-    static
-    TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  _config,
-                                                FeatureVectorListPtr          _excludeList,
-                                                bool                          _checkForDuplicates,
-                                                WhenToRebuild                 _whenToRebuild,
-                                                VolConstBool&                 _cancelFlag,
-                                                RunLog&                       _log
-                                               );
-         
-
-
     /**
-     *@brief  The default constructor; What will be used when creating an instance while reading in
-     * from a XML Stream file.  All members will be set to default values.  The XMLRead method 
-     */
-    TrainingProcess2 ();
-
-
-
-    /**
-     *@brief  Constructor that is driven by contents of configuration file.
-     *@details  If no changes to config file or training data, will utilize an existing built model
-     *          that was saved to disk earlier; otherwise will train from data in training library
-     *          and save resultant training classifier to disk.
-     *
-     *@todo  I need to make a structure that would contain variables required to perform prediction 
-     *       The idea is that we should only need to create one instance of "TrainingProcess2" for 
-     *       use by multiple threads.  Since different classifiers will require different structures
-     *       "TrainingProcess2" will have a factory method for creating instances of these structures.
-     *       These structures would then have their own predict methods.
-     *
+     *@brief  Creates a TrainingPorcess based off a specified configuration; depending on the '_whenToRebuild' parameter
+     * and the current status of the corresponding "save" file will either load existing trained classifier or build a 
+     * new one from scratch.
      *@param[in]  _config  A previously loaded configuration file that specifies directories where 
      *                     example images for each class can be found.  Caller will still own 'config'
      *                     and be responsible for deleting it.
      *
-     *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-     *                          If will check by both ExampleFileName and FeatureValues. If this parameter
-     *                          is not equal to NULL then will not save the Training model.  Will
-     *                          NOT take ownership of list or its contents.  Caller still owns it.
-     *
-     *@param[in,out]  _log   Logging file.
-     *
-     *@param[in] _report  if not set to NULL will write statistics of the training process to stream.
-     *
-     *@param[in] _forceRebuild  If set to true will ignore existing training model and rebuild and
-     *                          save new one.
-     * 
      *@param[in] _checkForDuplicates  If set to true will look for duplicates in the training data. Two
      *                                FeatureVectors will be considered duplicate if they have the Same
      *                                ExampleFileName or the save Feature Values.  If duplicates are in 
      *                                the same class then all but one will be removes.  If they are
      *                                in more then one class then they will both be removed.
+     *@param[in]  _whenToRebuild
+     *
+     *@param[in]  _saveTrainedModel   Specifies whether to the TrainingPorcess if it needs to be trained.
+     *
+     *@param[in]  _cancelFlag
+     *
+     *@param[in]  _log   Logging file.
      */
-    TrainingProcess2 (TrainingConfiguration2Const*  _config,
-                      FeatureVectorListPtr          _excludeList,
-                      RunLog&                       _log,
-                      ostream*                      _report,
-                      bool                          _forceRebuild,
-                      bool                          _checkForDuplicates
-                     );
-
+    static
+    TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  config,
+                                                bool                          checkForDuplicates,
+                                                WhenToRebuild                 whenToRebuild,
+                                                bool                          saveTrainedModel,
+                                                VolConstBool&                 cancelFlag,
+                                                RunLog&                       log
+                                               );
+    
 
 
     /**
@@ -141,90 +110,80 @@ namespace KKMLL
      *@param[in]  _config  Configuration that will provide parameters such as classes and their related 
      *                     directories where training examples are found.
      *
-     *@param[in]  _excludeList  List of Feature Vectors that are to be excluded from the TrainingData.
-     *                          If will check by both ExampleFileName and FeatureValues. If this parameter
-     *                          is not equal to NULL then will not save the Training model.  Will
-     *                          NOT take ownership of list or its contents.  Caller still owns it.
-     *
-     *@param[in,out]  _log   Logging file.
-     *
-     *@param[in] _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
+     *@param[in]  _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
      *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
      *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
+     *
+     *@param[in]  _log  Logging file.
+     *
      */
-    TrainingProcess2 (TrainingConfiguration2 const *  _config,
-                      FeatureVectorListPtr            _excludeList,
-                      RunLog&                         _log,
-                      kkuint32                        _level
-                     );
-
-   
-   
-    /**
-     *@brief  Constructor Will use existing built model; will not check to see if it is up-to-date.
-     *@details  If no changes to config file or training data, will utilize an existing built model
-     *          that was saved to disk earlier;  otherwise will train from data in training library
-     *          and save resultant training classifier to disk.
-     *
-     *@param[in]  _configFileName  Configuration file name where classes and SVM parameters are
-     *                             specified.  The directories where example images for each class
-     *                             will be specified.
-     *
-     *@param[in,out]  _log   Logging file.
-     *
-     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
-     *                                       training data are normalized.
-     */
-    TrainingProcess2 (const KKStr&  _configFileName,
-                      RunLog&       _log,
-                      bool          _featuresAlreadyNormalized
-                     );
-
-
-    /**
-     *@brief  Constructor Will read existing built model from provided input stream.
-     *
-     *@param[in]  _in  Input stream that contains trainingProcess instance;  will process until 
-     *                 first line containing "</TrainingProcess2>" is encountered.
-     *
-     *@param[in]  _fvFactoryProducer  
-     *
-     *@param[in,out]  _log   Logging file.
-     *
-     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
-     *                                       training data are normalized.
-     */
-    TrainingProcess2 (istream&  _in,
-                      RunLog&   _log,
-                      bool      _featuresAlreadyNormalized,
-                      int       zzzzzm
-                     );
-
+    static
+    TrainingProcess2Ptr  CreateTrainingProcessForLevel (TrainingConfiguration2Const*  config,
+                                                        kkuint32                      level,
+                                                        VolConstBool&                 cancelFlag,
+                                                        RunLog&                       log
+                                                       );
 
 
     /**
      *@brief  Constructor that gets its training data from a list of examples provided in one of the parameters.
      *@param[in]  _config  A configuration that is already loaded in memory.
      *@param[in]  _trainingExamples  Training data to train classifier with.
-     *@param[in]  _mlClasses  Class list.
-     *@param[in]  _reportFile  if not set to NULL will write statistics of the training process to stream.
-     *@param[in]  _fvFactoryProducer  
-     *@param[in,out]  _log   Logging file.
-     *@param[in] _featuresAlreadyNormalized  If set to true will assume that all features in the
+     *@param[in]  _featuresAlreadyNormalized  If set to true will assume that all features in the
      *                                       training data are normalized.
+     *@param[in]  _log   Logging file.
      */
-    TrainingProcess2 (TrainingConfiguration2 const *  _config, 
-                      FeatureVectorListPtr            _trainingExamples,
-                      MLClassListPtr                  _mlClasses,
-                      std::ostream*                   _reportFile,
-                      RunLog&                         _log,
-                      bool                            _featuresAlreadyNormalized
-                     );
+    static
+    TrainingProcess2Ptr  CreateTrainingProcessFromTrainingExamples (TrainingConfiguration2Const* config, 
+                                                                    FeatureVectorListPtr         trainingExamples,
+                                                                    bool                         takeOwnershipOfTrainingExamples,
+                                                                    bool                         featuresAlreadyNormalized,
+                                                                    VolConstBool&                cancelFlag,
+                                                                    RunLog&                      log
+                                                                   );
+
+
+
+    static
+    TrainingProcess2Ptr  LoadExistingTrainingProcess (const KKStr&   configRootName,
+                                                      VolConstBool&  cancelFlag,
+                                                      RunLog&        log
+                                                     );
+
+
+
+    /**
+     *@brief  The default constructor; What will be used when creating an instance while reading in
+     * from a XML Stream file.  All members will be set to default values.  The XMLRead method 
+     */
+    TrainingProcess2 ();
+
 
     virtual
     ~TrainingProcess2 ();
 
     kkint32  MemoryConsumedEstimated ()  const;
+
+
+
+    /**
+     *@brief Call this method just after you construct a new instance of "TrainingProcess2"
+     *@param[in]  _config
+     *@param[in]  _whenToRebuild     Used for any sub classifiers that this instance of TrainingProcess2 might need to build.
+     *@param[in]  _trainingExamples  
+     *@param[in]  _takeOwnerShipOfTrainingExamples  If true this instance of 'TrainingProcess2' will take ownership of '_trainingExamples' and delete it when done with them.
+     *@param[in]  _checkForDuplicates  If true will remove duplicate examples from '_trainingExamples'.
+     *@param[in]  _cancelFlag   
+     *@param[in]  _log
+     */
+    void  BuildTrainingProcess (TrainingConfiguration2Const*  _config,
+                                WhenToRebuild                 _whenToRebuild,
+                                FeatureVectorListPtr          _trainingExamples,
+                                bool                          _takeOwnerShipOfTrainingExamples,
+                                bool                          _checkForDuplicates,
+                                VolConstBool&                 _cancelFlag,
+                                RunLog&                       _log
+                               );
 
 
     /**
@@ -262,7 +221,14 @@ namespace KKMLL
 
 
 
-    void  CreateModelsFromTrainingData (RunLog&  log);
+    void  FeaturesAlreadyNormalized (bool _featuresAlreadyNormalized)  {featuresAlreadyNormalized = _featuresAlreadyNormalized;}
+
+
+    void  CreateModelsFromTrainingData (WhenToRebuild   whenToRebuild,
+                                        VolConstBool&   cancelFlag,
+                                        RunLog&         log
+                                       );
+
 
     /**@brief Extracts the list of classes including ones from Sub-Classifiers */
     MLClassListPtr  ExtractFullHierachyOfClasses ()  const;  
@@ -279,14 +245,12 @@ namespace KKMLL
                                            bool  _checkForDuplicates
                                           );
 
-    void  Read (istream&  in,
-                bool&     successful,
-                RunLog&   log
-               );
-
     void  ReportTraningClassStatistics (std::ostream&  report);
 
-    void  SaveResults (RunLog&  log);
+    /**
+     * @brief  Saves the built training model into the Save file in Xml Format.
+     */
+    void  SaveTrainingProcess (RunLog&  log);
 
     void  SupportVectorStatistics (kkint32&  numSVs,
                                    kkint32&  totalNumSVs
@@ -305,13 +269,7 @@ namespace KKMLL
       */
     TrainingProcess2Ptr   TrainingProcessRight ();
 
-
     void  ValidateConfiguration ();
-
-    void  WriteXml (ostream&  o,
-                    RunLog&   log
-                   );
-
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
@@ -336,37 +294,23 @@ namespace KKMLL
                                 RunLog&  log
                                );
 
-    void    LoadSubClassifiers (bool     forceRebuild,
-                                bool     checkForDuplicates,
-                                RunLog&  log
+    void    LoadSubClassifiers (WhenToRebuild  whenToRebuild,
+                                bool           checkForDuplicates,
+                                VolConstBool&  cancelFlag,
+                                RunLog&        log
                                );
-
-    void    RemoveExcludeListFromTrainingData ();
-
 
 
     static
-    FeatureVectorListPtr  ExtractFeatures (TrainingConfiguration2Ptr  config,
-                                           MLClassList&               mlClasses,
-                                           const TrainingClassPtr     trainingClass,
-                                           KKB::DateTime&             latestTimeStamp,
-                                           bool&                      changesMade,
-                                           VolConstBool&              cancelFlag,
-                                           RunLog&                    log
+    FeatureVectorListPtr  ExtractFeatures (TrainingConfiguration2ConstPtr  config,
+                                           MLClassList&                    mlClasses,
+                                           const TrainingClassPtr          trainingClass,
+                                           KKB::DateTime&                  latestTimeStamp,
+                                           bool&                           changesMade,
+                                           VolConstBool&                   cancelFlag,
+                                           RunLog&                         log
                                           );
 
-
-    //************************************************************
-    //       Routines for validating Configuration File.         *
-    //************************************************************
-    FeatureNumListPtr  DeriveFeaturesSelected (kkint32  sectionNum);
-
-    TrainingClassPtr   ValidateClassConfig (kkint32  sectionNum);
-
-    void               ValidateTrainingClassConfig (kkint32  sectionNum);
-
-    void               ValidateModel3Section (kkint32 sectionNum);
- 
 
 
 
@@ -377,9 +321,6 @@ namespace KKMLL
     bool                         abort;       /**< If problem building a model or loading will be set to True. */
 
     KKB::DateTime                buildDateTime;
-
-    volatile bool                cancelFlag;  /**< A calling application can set this to true Training Process will monitor this Flag, if true will terminate. */
-
 
     TrainingConfiguration2Const* config;
     TrainingConfiguration2*      configOurs;  /**< If we own the instance of 'config' we assign to this member as well as 'config'; the 
@@ -393,11 +334,6 @@ namespace KKMLL
 
     kkint32                      duplicateCount;
     kkint32                      duplicateDataCount;
-
-    FeatureVectorList const *    excludeList;  /**< If != NULL then list of trainingExamples that need to be eliminated from training data.
-                                                * This would be used when classifying trainingExamples that might already contain training
-                                                * data. If you wish to grade the results it would only be fare to delete these trainingExamples.
-                                                */
 
     bool                         featuresAlreadyNormalized;
 

@@ -143,21 +143,7 @@ namespace KKMLL
                               RunLog&            _log
                              );
   
-    /**
-     *@brief  A factory method that will instantiate the appropriate class of training model based off the contents of the istream "i".
-     *@details  This method is used to construct a model that has already been built and saved to disk.
-     *@param[in] i  Input stream where previously built model has been saved.
-     *@param[in] _param  Parameters used to drive the creating of the model.
-     *@param[in] _fileDesc Description of the dataset that will be used to train the classifier and examples that will be classified.
-     *@param[in]  _cancelFlag  Will monitor; if at any point it turns true this instance is to terminate and return to caller.
-     *@param[in,out]  _log  Logging file.
-     */
-    static
-      ModelPtr  CreateFromStream (istream&       i,
-                                  FileDescPtr    _fileDesc,
-                                  VolConstBool&  _cancelFlag,
-                                  RunLog&        _log
-                                 );
+
     virtual
     ModelPtr                 Duplicate () const = 0;
 
@@ -215,12 +201,6 @@ namespace KKMLL
 
 
 
-    void  Load (const KKStr& _rootFileName,
-                bool&        _successful,
-                RunLog&      _log
-               );
-
-
     /**
      *@brief  Every prediction  method in every class that is inherited from this class should call
      *        this method before performing there prediction.  Such things as Normalization and
@@ -231,40 +211,9 @@ namespace KKMLL
      *             a new instance which the caller will have to delete will be returned.
      */
     virtual
-    FeatureVectorPtr         PrepExampleForPrediction (FeatureVectorPtr  fv,
-                                                       bool&             newExampleCreated
-                                                      );
-
-
-    /**
-     * @brief  Expects to read in the entire contents of a previously trained model into
-     *  this instance. One of the first lines to be read will contain the specific
-     *  type of model to be read.  To update the fields that are particular to
-     *  the specialized class the method 'ReadSpecificImplementationXML' will be
-     *  called.
-     */
-    virtual  
-    void  ReadXML (istream&  i,
-                   bool&     _successful,
-                   RunLog&   _log
-                  ); 
-
-    virtual  
-    void  WriteXML (ostream&  o,
-                    RunLog&   log
-                   );
-
-
-    void  Save (const KKStr& _rootFileName,
-                bool&        _successful,
-                RunLog&      _log
-               );
-  
-
-    virtual  
-    void  WriteSpecificImplementationXML (ostream&  o,
-                                          RunLog&   log
-                                         ) = 0;
+    FeatureVectorPtr  PrepExampleForPrediction (FeatureVectorPtr  fv,
+                                                bool&             newExampleCreated
+                                               );
 
 
     virtual  void  PredictRaw (FeatureVectorPtr  example,
@@ -352,13 +301,6 @@ namespace KKMLL
   
 
     virtual  
-    void  ReadSpecificImplementationXML (istream&  i,
-                                         bool&     _successful,
-                                         RunLog&   log
-                                        ) = 0; 
-
-
-    virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
                                   double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                   RunLog&       log
@@ -424,16 +366,6 @@ namespace KKMLL
                                               double   minProbability
                                              );
 
-
-    void  Read         (istream& i,
-                        bool&    _successful
-                       );
-
-    void  ReadSkipToSection (istream& i, 
-                             KKStr    sectName,
-                             bool&    sectionFound,
-                             RunLog&  log
-                            );
 
     void  ReduceTrainExamples (RunLog&  log);
 
