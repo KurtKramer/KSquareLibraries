@@ -560,21 +560,6 @@ void  TrainingProcess2::SaveTrainingProcess (RunLog&  log)
 
 
 
-void  TrainingProcess2::CancelFlag (bool  _cancelFlag)
-{
-  if  (model)
-    model->CancelFlag (_cancelFlag);
-
-  if  (subTrainingProcesses)
-  {
-    for  (auto& idx : *subTrainingProcesses)
-      idx->CancelFlag (_cancelFlag);
-  }
-
-}  /* CancelFlag */
-
-
-
 ModelOldSVMPtr  TrainingProcess2::OldSVMModel ()  const
 {
   if  (model->ModelType () == Model::ModelTypes::mtOldSVM)
@@ -933,6 +918,7 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
     model->TrainModel (trainingExamples, 
                        featuresAlreadyNormalized,
                        false,     // false = 'model' We are not giving ownership of TrainingExdamples to model.
+                       cancelFlag,
                        log
                       );
   }

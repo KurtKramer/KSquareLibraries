@@ -102,15 +102,6 @@ kkint32  ModelUsfCasCor::MemoryConsumedEstimated ()  const
 
 
 
-void   ModelUsfCasCor::CancelFlag (bool  _cancelFlag)
-{
-  Model::CancelFlag (_cancelFlag);
-  if  (usfCasCorClassifier)
-    usfCasCorClassifier->CancelFlag (_cancelFlag);
-}
-
-
-
 
 ModelUsfCasCorPtr  ModelUsfCasCor::Duplicate ()  const
 {
@@ -129,6 +120,7 @@ ModelParamUsfCasCorPtr   ModelUsfCasCor::Param ()
 void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
                                   bool                  _alreadyNormalized,
                                   bool                  _takeOwnership, /*!< Model will take ownership of these examples */
+                                  VolConstBool&         _cancelFlag,
                                   RunLog&               _log
                                  )
 {
@@ -150,7 +142,7 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
   catch (const KKException&  e)
   {
@@ -193,6 +185,7 @@ void  ModelUsfCasCor::TrainModel (FeatureVectorListPtr  _trainExamples,
                                            param->UseCache         (),
                                            trainExamples,
                                            SelectedFeatures (),
+                                           _cancelFlag,
                                            _log
                                           );
 

@@ -193,14 +193,6 @@ namespace KKMLL
                                );
 
 
-    /**
-     * Sets the cancelFlag and then lets any objects that it owns that the cancelFlagstatus has changed 
-     * by calling the their version of "CancelFlag"
-     */
-    void  CancelFlag (bool  _cancelFlag);
-
-
-
     // Access Members
     void  Abort (bool _abort)  {abort = _abort;}
 

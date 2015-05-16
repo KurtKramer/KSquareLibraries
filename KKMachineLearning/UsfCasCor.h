@@ -289,8 +289,6 @@ namespace KKMLL
 
     kkint32  MemoryConsumedEstimated ()  const;
 
-    void  CancelFlag  (bool  _cancelFlag)  {cancelFlag = _cancelFlag;}
-
 
     void  TrainNewClassifier (kkint32                 _in_limit,
                               kkint32                 _out_limit,
@@ -300,6 +298,7 @@ namespace KKMLL
                               bool                    _useCache,
                               FeatureVectorListPtr    _trainData,
                               FeatureNumListConstPtr  _selectedFeatures,
+                              VolConstBool&           _cancelFlag,
                               RunLog&                 _log
                              );
 
@@ -455,7 +454,10 @@ namespace KKMLL
                          RunLog&               log
                         );
 
-    void  train_network    (RunLog&  log);
+    void  train_network    (VolConstBool&  cancelFlag,
+                            RunLog&        log
+                           );
+
     void  allocate_network (RunLog&  log);
 
 
@@ -540,7 +542,9 @@ namespace KKMLL
 
     void  TRAIN_OUTPUTS_EPOCH ();
 
-    int  TRAIN_OUTPUTS (int max_epochs);
+    int  TRAIN_OUTPUTS (int            max_epochs,
+                        VolConstBool&  cancelFlag
+                       );
    
     void  INIT_CANDIDATES ();
 
@@ -562,10 +566,11 @@ namespace KKMLL
 
     void  LIST_PARAMETERS ();
 
-    int  TRAIN (int      outlimit, 
-                int      inlimit, 
-                int      rounds,
-                RunLog&  log
+    int  TRAIN (int            outlimit, 
+                int            inlimit, 
+                int            rounds,
+                VolConstBool&  cancelFlag,
+                RunLog&        log
                );
 
     void  TEST_EPOCH (double   test_threshold,
@@ -805,9 +810,6 @@ namespace KKMLL
     MLClassListPtr  classes;            /**<  Classes that the training data consisted of.  */
 
     FeatureNumListPtr  selectedFeatures;   /**< The selected features that are to be used from the source training data. */
-
-    volatile bool      cancelFlag;
-
   };  /* UsfCasCor */
 
   typedef  UsfCasCor*  UsfCasCorPtr;

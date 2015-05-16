@@ -129,14 +129,6 @@ kkint32 ModelDual::MemoryConsumedEstimated ()  const
 
 
 
-void    ModelDual::CancelFlag (bool  _cancelFlag)
-{
-  Model::CancelFlag (_cancelFlag);
-  if  (trainer1)  trainer1->CancelFlag (_cancelFlag);
-  if  (trainer2)  trainer2->CancelFlag (_cancelFlag);
-}
-
-
 
 KKStr   ModelDual::Description ()  const
 {
@@ -185,6 +177,7 @@ void  ModelDual::DeleteExistingClassifiers ()
 void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                              bool                  _alreadyNormalized,
                              bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                             VolConstBool&         _cancelFlag,
                              RunLog&               _log
                             )
 {
@@ -202,7 +195,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
   catch (const KKException&  e)
   {
@@ -284,7 +277,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                            trainExamples, 
                            false,         /**< false = DON'T take ownership of 'trainExamples'. */
                            true,          /**< true = Features are already normalized.  */
-                           cancelFlag,
+                           _cancelFlag,
                            _log
                           );
   TrainingTimeEnd ();
@@ -303,7 +296,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                            trainExamples, 
                            false,         /**< false = DON'T take ownership of 'trainExamples'. */
                            true,          /**< true = Features are already normalized.  */
-                           cancelFlag,
+                           _cancelFlag,
                            _log
                           );
   TrainingTimeEnd ();

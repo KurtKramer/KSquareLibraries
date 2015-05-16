@@ -110,14 +110,6 @@ kkint32  ModelSvmBase::MemoryConsumedEstimated ()  const
 
 
 
-void  ModelSvmBase::CancelFlag (bool  _cancelFlag)
-{
-  Model::CancelFlag (_cancelFlag);
-  svmModel->CancelFlag (_cancelFlag);
-}
-
-
-
 ModelSvmBasePtr  ModelSvmBase::Duplicate ()  const
 {
   return new ModelSvmBase (*this);
@@ -152,6 +144,7 @@ ModelParamSvmBasePtr   ModelSvmBase::Param ()
 void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
                                 bool                  _alreadyNormalized,
                                 bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                                VolConstBool&         _cancelFlag,
                                 RunLog&               _log
                                )
 {
@@ -174,7 +167,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try 
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
   catch (const KKException&  e)
   {

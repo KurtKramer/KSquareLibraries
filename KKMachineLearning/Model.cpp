@@ -43,7 +43,6 @@ using namespace  KKMLL;
 
 Model::Model ():
     alreadyNormalized        (false),
-    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -69,7 +68,6 @@ Model::Model ():
 
 Model::Model (const Model&  _model):
     alreadyNormalized       (false),
-    cancelFlag              (_model.cancelFlag),
     classes                 (NULL),
     classesIndex            (NULL),
     classProbs              (NULL),
@@ -117,7 +115,6 @@ Model::Model (const Model&  _model):
  */
 Model::Model (FileDescPtr    _fileDesc):
     alreadyNormalized        (false),
-    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -154,7 +151,6 @@ Model::Model (const KKStr&       _name,
               FileDescPtr        _fileDesc
              ):
     alreadyNormalized        (false),
-    cancelFlag               (false),
     classes                  (NULL),
     classesIndex             (NULL),
     classProbs               (NULL),
@@ -462,6 +458,7 @@ void  Model::TrainingTimeEnd ()
 void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
                          bool                  _alreadyNormalized,
                          bool                  _takeOwnership,  /*!< True = Model will take ownership of these examples */
+                         VolConstBool&         _cancelFlag,
                          RunLog&               _log
                         )
 {

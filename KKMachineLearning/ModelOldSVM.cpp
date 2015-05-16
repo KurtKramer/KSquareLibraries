@@ -108,17 +108,6 @@ kkint32  ModelOldSVM::MemoryConsumedEstimated ()  const
 
 
 
-void   ModelOldSVM::CancelFlag (bool  _cancelFlag)
-{
-  Model::CancelFlag (_cancelFlag);
-  if  (svmModel)  
-      svmModel->CancelFlag (_cancelFlag);
-}
-
-
-
-
-
 ModelOldSVMPtr  ModelOldSVM::Duplicate ()  const
 {
   return new ModelOldSVM (*this);
@@ -444,6 +433,7 @@ void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
 void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
                                RunLog&               _log
                               )
 {
@@ -455,7 +445,7 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   delete  svmModel;
   svmModel = NULL;
 
-  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
+  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   // The "Model::TrainModel" may have manipulated the '_trainExamples'.  It will have also 
   // updated 'Model::trainExamples.  So from this point forward we use 'trainExamples'.
   _trainExamples = NULL;

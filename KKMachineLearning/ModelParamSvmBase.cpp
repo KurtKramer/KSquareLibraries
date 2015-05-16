@@ -138,63 +138,6 @@ KKStr   ModelParamSvmBase::ToCmdLineStr () const
 
 
 
-void  ModelParamSvmBase::WriteSpecificImplementationXML (ostream&  o)  const
-{
-  o << "<ModelParamSvmBase>" << endl;
-  o << "SvmParam" << "\t" << svmParam.ToTabDelStr () << endl;
-  o << "</ModelParamSvmBase>" << endl;
-}  /* WriteXML */
-
-
-
-
-
-void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&     i,
-                                                        FileDescPtr  fileDesc,
-                                                        RunLog&      log
-                                                       )
-{
-  log.Level (20) << "ModelParamSvmBase::ReadSpecificImplementationXML from XML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    if  ((ln.Len () < 1)  || (ln.SubStrPart (0, 1) == "//"))
-      continue;
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true); // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("<ModelParamSvmBase>"))
-      continue;
-
-    if  (field.EqualIgnoreCase ("</ModelParamSvmBase>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<ModelParam>"))
-    {
-      ModelParam::ReadXML (i, fileDesc, log);
-    }
-
-    else if  (field.EqualIgnoreCase ("SvmParam"))
-    {
-      svmParam.ParseTabDelStr (ln);
-    }
-
-    else
-    {
-      log.Level (-1) << endl << endl << "ModelParamSvmBase::ReadSpecificImplementationXML   ***ERROR**  Invalid Parameter[" << field << "]" << endl << endl;
-      ValidParam (false);
-    }
-  }
-}  /* ReadSpecificImplementationXML */
-
-
-
 
 void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
                                    ostream&      o

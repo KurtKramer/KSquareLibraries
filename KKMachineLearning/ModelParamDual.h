@@ -52,12 +52,6 @@ namespace KKMLL
     virtual
     ModelParamDualPtr  Duplicate () const;
 
-    virtual
-    void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc,
-                                           RunLog&      log
-                                          );
-  
 
     /**
      *@brief Creates a Command Line String that represents these parameters.
@@ -66,10 +60,6 @@ namespace KKMLL
      */
     virtual
     KKStr   ToCmdLineStr ()  const;
-  
-
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const;
   
 
     virtual  void  ReadXML (XmlStream&      s,

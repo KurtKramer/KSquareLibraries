@@ -79,15 +79,6 @@ ModelKnn::~ModelKnn ()
 
 
 
-void    ModelKnn::CancelFlag (bool  _cancelFlag)
-{
-  Model::CancelFlag (_cancelFlag);
-}
-
-
-
-
-
 ModelKnnPtr  ModelKnn::Duplicate ()  const
 {
   return  new ModelKnn (*this);
@@ -189,6 +180,7 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
 void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
                             bool                  _alreadyNormalized,
                             bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                            VolConstBool&         _cancelFlag,
                             RunLog&               _log
                            )
 {
@@ -196,7 +188,7 @@ void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
 
   try
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _log);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
   catch  (const KKException& e)
   {

@@ -67,7 +67,6 @@ namespace KKMLL
   
     virtual ~ModelOldSVM ();
 
-    virtual  void  CancelFlag (bool  _cancelFlag);
 
     virtual
     ModelOldSVMPtr  Duplicate ()  const;
@@ -186,7 +185,7 @@ namespace KKMLL
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
-     *          time and recompute the decision boundary and probability.  It will then
+     *          time and re-compute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  Example that was classified incorrectly.
@@ -252,6 +251,7 @@ namespace KKMLL
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
                                RunLog&               _log
                               );
 

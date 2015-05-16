@@ -51,13 +51,6 @@ namespace KKMLL
     virtual SVM_Type     SvmType    ()  const {return  svmParam.SvmType    ();}
 
 
-    virtual  void    ReadSpecificImplementationXML (istream&     i, 
-                                                    FileDescPtr  fileDesc,
-                                                    RunLog&      log
-                                                   );
-  
-    virtual  void    WriteSpecificImplementationXML (std::ostream&  o)  const;
- 
     /**
      *@brief Creates a Command Line String that represents these parameters.
      *@details  All derived classes should implement this method. They should first call this method and

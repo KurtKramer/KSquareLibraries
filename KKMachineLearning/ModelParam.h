@@ -61,11 +61,7 @@ namespace KKMLL
     virtual
     ~ModelParam  ();
 
-    static 
-    ModelParamPtr  CreateModelParam (istream&     i,
-                                     FileDescPtr  fileDesc,
-                                     RunLog&      _log
-                                    );
+
 
     virtual
     ModelParamPtr  Duplicate () const = 0;
@@ -86,26 +82,8 @@ namespace KKMLL
     void   ParseCmdLinePost (RunLog&  log);
 
 
-    virtual
-    void    ReadXML (KKStr&       _fileName,
-                     FileDescPtr  _fileDesc,
-                     bool&        _successful,
-                     RunLog&      _log
-                    );
-  
-    virtual
-    void    ReadXML (istream&     i,
-                     FileDescPtr  fileDesc,
-                     RunLog&      log
-                    );
-  
-    virtual
-    void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc,
-                                           RunLog&      log
-                                          ) = 0;
-  
 
+  
     /**
      *@brief Creates a a Command Line String that represents these parameters.
      *@details  All derived classes should implement this method. They should first call this method and
@@ -115,15 +93,7 @@ namespace KKMLL
     KKStr   ToCmdLineStr ()  const;
   
 
-    virtual
-    void    WriteXML (std::ostream&  o,
-                      RunLog&        log
-                     )  const;
-  
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const = 0;
-
-
+ 
     // Member access methods
 
     virtual ModelParamTypes          ModelParamType             () const = 0;

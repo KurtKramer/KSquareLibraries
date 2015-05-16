@@ -402,44 +402,6 @@ KKStr   ModelParamOldSVM::ToCmdLineStr () const
 
 
 
-void  ModelParamOldSVM::WriteSpecificImplementationXML (ostream&  o)  const
-{
-  o << "<ModelParamOldSVM>" << std::endl;
-  svmParameters->WriteXML (o);
-  o << "</ModelParamOldSVM>" << endl;
-}  /* WriteSpecificImplementationXML */
-
-
-
-
-
-void  ModelParamOldSVM::ReadSpecificImplementationXML (istream&     i,
-                                                       FileDescPtr  fileDesc,
-                                                       RunLog&      log
-                                                      )
-{
-  log.Level (20) << "ModelParamOldSVM::ReadSpecificImplementationXML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelParamOldSVM>"))
-      break;
-
-    if  (field.EqualIgnoreCase ("<SVMparam>"))
-    {
-      svmParameters->ReadXML (i, fileDesc, log);
-    }
-  }
-}  /* ReadSpecificImplementationXML */
-
-
-
 BinaryClassParmsPtr   ModelParamOldSVM::GetBinaryClassParms (MLClassPtr       class1,
                                                              MLClassPtr       class2
                                                             )  const

@@ -52,13 +52,6 @@ namespace KKMLL
 
     virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptOldSVM;}
 
-    void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc,
-                                           RunLog&      log
-                                          );
-
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const;
-
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
     void    AddBinaryClassParms (MLClassPtr              class1,

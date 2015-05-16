@@ -26,9 +26,6 @@ namespace  KKMLL
     virtual ~ModelKnn();
 
 
-    virtual  void  CancelFlag (bool  _cancelFlag);
-
-
     virtual
     ModelKnnPtr  Duplicate ()  const;
 
@@ -99,6 +96,7 @@ namespace  KKMLL
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
                                RunLog&               _log
                               );
 

@@ -42,8 +42,6 @@ namespace  KKMLL
     virtual
     ~ModelUsfCasCor ();
 
-    virtual  void           CancelFlag (bool  _cancelFlag);
-
     virtual
     kkint32                 MemoryConsumedEstimated ()  const;
 
@@ -119,6 +117,7 @@ namespace  KKMLL
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
                                RunLog&               _log
                               );
 

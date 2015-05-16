@@ -115,14 +115,6 @@ namespace KKMLL
     virtual  ~Model ();
 
 
-    /**
-     * Any derived classes must implement this method and:
-     *  1) Call the base class method "Model::CAncelFlag".
-     *  2) let other objects that they may own that also monitor the cancelFlag know 
-     *     that the status of cancelFlag has changed
-     */
-    virtual  void    CancelFlag  (bool  _cancelFlag)  {cancelFlag = _cancelFlag;}
-
 
     /**
      *@brief  A factory method that will instantiate the appropriate class of training model based off '_modelType'.
@@ -321,6 +313,7 @@ namespace KKMLL
     void  TrainModel (FeatureVectorListPtr  _trainExamples,
                       bool                  _alreadyNormalized,
                       bool                  _takeOwnership,
+                      VolConstBool&         _cancelFlag,
                       RunLog&               _log
                      );
 
@@ -372,8 +365,6 @@ namespace KKMLL
 
 
     bool                   alreadyNormalized;
-
-    volatile bool          cancelFlag;
 
     MLClassListPtr         classes;
 

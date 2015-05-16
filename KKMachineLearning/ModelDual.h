@@ -89,8 +89,6 @@ namespace  KKMLL
     virtual
     kkint32               MemoryConsumedEstimated ()  const;
 
-    virtual void          CancelFlag (bool  _cancelFlag);
-
     virtual
     KKStr                 Description ()  const;  /**< Return short user readable description of model. */
 
@@ -186,13 +184,10 @@ namespace  KKMLL
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
                                RunLog&               _log
                               );
 
-
-    virtual  void  WriteSpecificImplementationXML (ostream&  o,
-                                                   RunLog&   log
-                                                  );
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,

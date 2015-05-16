@@ -25,20 +25,12 @@ namespace KKMLL
 
     virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptKNN;}
 
-    virtual
-    void    ReadSpecificImplementationXML (istream&     i,
-                                           FileDescPtr  fileDesc,
-                                           RunLog&       log
-                                          );
-
     /*! 
      @brief Creates a Command Line String that represents these parameters.
      */
     virtual
     KKStr   ToCmdLineStr (RunLog&  log)  const;
 
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const;
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,

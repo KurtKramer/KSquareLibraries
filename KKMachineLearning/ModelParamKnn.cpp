@@ -91,57 +91,6 @@ void  ModelParamKnn::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-void    ModelParamKnn::WriteSpecificImplementationXML (std::ostream&  o)  const
-{
-  o << "<ModelParamKnn>"  << std::endl;
-  o << "K" << "\t" << k << endl;
-  o << "</ModelParamKnn>" << std::endl;
-}
-
-
-
-void    ModelParamKnn::ReadSpecificImplementationXML (istream&     i, 
-                                                      FileDescPtr  fileDesc,
-                                                      RunLog&      log
-                                                     )
-{
-  log.Level (20) << "ModelParamKnn::ReadSpecificImplementationXML from XML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelParamKnn>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<ModelParam>"))
-    {
-      ModelParam::ReadXML (i, fileDesc, log);
-    }
-
-    else if  (field.EqualIgnoreCase ("K"))
-    {
-      KKStr  kStr = ln.ExtractToken2 ("\t");
-      k = kStr.ToInt ();
-      if  ((k < 1)  ||  (k > 1000))
-      {
-        log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K parameter[" << kStr << "]" << endl;
-        validParam = false;
-      }
-    }
-  }
-}  /* ReadSpecificImplementationXML */
-
-
-
-
-
 
 void  ModelParamKnn::WriteXML (const KKStr&  varName,
                                ostream&      o

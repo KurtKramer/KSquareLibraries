@@ -391,8 +391,7 @@ UsfCasCor::UsfCasCor ():
   InterruptPending        (false),
   Nparameters             (0),
   classes                 (NULL),
-  selectedFeatures        (NULL),
-  cancelFlag              (false)
+  selectedFeatures        (NULL)
 
 {
   ConstructParmTable ();
@@ -768,6 +767,7 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
                                      bool                    _useCache,
                                      FeatureVectorListPtr    _trainData,
                                      FeatureNumListConstPtr  _selectedFeatures,
+                                     VolConstBool&           _cancelFlag,
                                      RunLog&                 _log
                                     )
 {
@@ -800,7 +800,7 @@ void  UsfCasCor::TrainNewClassifier (kkint32                 _in_limit,
   /* First, load the data and configuration */
   setup_network (filteredTrainData, _log);
 
-  train_network (_log);
+  train_network (_cancelFlag, _log);
 
   delete  filteredTrainData;
 }  /* TrainNewClassifier */
@@ -912,7 +912,9 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
 
 
 
-void UsfCasCor::train_network (RunLog&  log)
+void UsfCasCor::train_network (VolConstBool&  cancelFlag,
+                               RunLog&        log
+                              )
 {
   int nhidden;      /* number of hidden units used in run  */
   int vics, defs, i;
@@ -945,7 +947,7 @@ void UsfCasCor::train_network (RunLog&  log)
     if  (number_of_trials > 1) 
       log.Level (10) << "train_network  Trial " << Trial << endl;
 
-    switch (TRAIN (out_limit, in_limit, number_of_rounds, log))
+    switch (TRAIN (out_limit, in_limit, number_of_rounds, cancelFlag, log))
     {
      case WIN:
           vics++;
@@ -3069,7 +3071,9 @@ void  UsfCasCor::TRAIN_OUTPUTS_EPOCH ()
  * or until max_epochs is used up.
  */
 
-int  UsfCasCor::TRAIN_OUTPUTS (int max_epochs)
+int  UsfCasCor::TRAIN_OUTPUTS (int            max_epochs,
+                               VolConstBool&  cancelFlag
+                              )
 {
   int i;
   int retval = TIMEOUT;	  /* will be reset within loop for other conditions */
@@ -3558,10 +3562,11 @@ void  UsfCasCor::LIST_PARAMETERS ()
  * number of cycles in the output and input phases.  ROUNDS is an upper
  * limit on the number of unit-installation cycles.
  */
-int  UsfCasCor::TRAIN (int      outlimit, 
-                       int      inlimit, 
-                       int      rounds,
-                       RunLog&  log
+int  UsfCasCor::TRAIN (int            outlimit, 
+                       int            inlimit, 
+                       int            rounds,
+                       VolConstBool&  cancelFlag,
+                       RunLog&        log
                       )
 {
   int i,r;
@@ -3581,7 +3586,8 @@ int  UsfCasCor::TRAIN (int      outlimit,
   for  (r = 0;  (r < rounds)  &&  (!cancelFlag);  r++)
   {
     log.Level (10) << "TRAIN  Round " << r << endl;
-    switch(TRAIN_OUTPUTS(outlimit)){
+    switch  (TRAIN_OUTPUTS (outlimit, cancelFlag))
+    {
     case WIN:
       LIST_PARAMETERS();
       log.Level (10) << "Victory at " 
@@ -3632,7 +3638,7 @@ int  UsfCasCor::TRAIN (int      outlimit,
 
   LIST_PARAMETERS ();
 
-  switch (TRAIN_OUTPUTS (outlimit))
+  switch (TRAIN_OUTPUTS (outlimit, cancelFlag))
   {
     case WIN:
       log.Level (10) << "TRAIN   Victory at " << Epoch  << " epochs, " << Nunits << " units, " << (Nunits - Ninputs - 1) << " hidden, Error " << TrueError << " EI " << ErrorIndex << endl;
