@@ -124,6 +124,13 @@ namespace KKMLL
                                                         RunLog&                       log
                                                        );
 
+    static
+    TrainingProcess2Ptr  CreateTrainingProcessForLevel (const KKStr&   configFileName,
+                                                        kkuint32       level,
+                                                        VolConstBool&  cancelFlag,
+                                                        RunLog&        log
+                                                       );
+
 
     /**
      *@brief  Constructor that gets its training data from a list of examples provided in one of the parameters.

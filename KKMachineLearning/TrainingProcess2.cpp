@@ -302,6 +302,37 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
 
 
 
+TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (const KKStr&   configFileName,
+                                                                      kkuint32       level,
+                                                                      VolConstBool&  cancelFlag,
+                                                                      RunLog&        log
+                                                                     )
+{
+  log.Level (20) << "TrainingProcess2::CreateTrainingProcessForLevel  configFileName: " << configFileName << endl;
+
+  TrainingProcess2Ptr trainer = NULL;
+
+  TrainingConfiguration2Ptr  config = new TrainingConfiguration2 (configFileName, true, log);
+  if  (!config->FormatGood ())
+  {
+    log.Level (-1) << endl 
+      << "TrainingProcess2::CreateTrainingProcessForLevel   ***ERROR***    Config File[" << configFileName << "]  Format is invalid." << endl
+      << endl;
+  }
+  else
+  {
+    trainer = CreateTrainingProcessForLevel (config, level, cancelFlag, log);
+  }
+  delete  config;
+  config = NULL;
+
+  return  trainer;
+}  /* CreateTrainingProcessForLevel */
+
+
+
+
+
 
 
 
