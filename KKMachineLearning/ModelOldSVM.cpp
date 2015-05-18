@@ -450,6 +450,8 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   // updated 'Model::trainExamples.  So from this point forward we use 'trainExamples'.
   _trainExamples = NULL;
 
+  if  ((!fileDesc)  &&  trainExamples)
+    fileDesc = trainExamples->FileDesc ();
 
   SVMparamPtr svmParam = Param ()->SvmParameters ();
   if  (!svmParam)
@@ -490,8 +492,6 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
     trainExamples = NULL;
   }
 }  /* TrainModel */
-
-
 
 
 
@@ -610,7 +610,45 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
   {
     param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
   }
+
+  ReadXMLModelPost (log);
 }  /* ReadXML */
 
 
-XmlFactoryMacro(ModelOldSVM)
+
+
+class  XmlFactoryModelOldSVM: public XmlFactory                           
+{                                                                         
+public:                                                                   
+  XmlFactoryModelOldSVM (): XmlFactory ("ModelOldSVM") {}                  
+                                                                          
+  virtual  XmlElementModelOldSVM*  ManufatureXmlElement (XmlTagPtr   tag, 
+                                                         XmlStream&  s, 
+                                                         RunLog&     log 
+                                                        )                
+  {                                                                        
+    return new XmlElementModelOldSVM(tag, s, log);                         
+  }                                                                        
+                                                                           
+  static   XmlFactoryModelOldSVM*   factoryInstance;                       
+                                                                           
+  static   XmlFactoryModelOldSVM*   FactoryInstance ()                     
+  {                                                                        
+    if  (factoryInstance == NULL)                                          
+    {                                                                      
+      GlobalGoalKeeper::StartBlock ();                                     
+      if  (!factoryInstance)                                               
+      {                                                                    
+        factoryInstance = new XmlFactoryModelOldSVM ();                    
+        XmlFactory::RegisterFactory (factoryInstance);                     
+      }                                                                    
+      GlobalGoalKeeper::EndBlock ();                                       
+     }                                                                     
+    return  factoryInstance;                                               
+  }                                                                        
+};                                                                         
+                                                                           
+XmlFactoryModelOldSVM*   XmlFactoryModelOldSVM::factoryInstance 
+              = XmlFactoryModelOldSVM::FactoryInstance ();
+
+

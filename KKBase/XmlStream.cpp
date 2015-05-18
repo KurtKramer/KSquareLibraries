@@ -122,7 +122,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     {
       XmlFactoryPtr  factory = TrackDownFactory (tag->Name ());
       if  (!factory)
-        factory = XmlElementKKStrFactoryInstance  ();
+        factory = XmlElementUnKnownFactoryInstance  ();
       else
         int zed =100;
       log.Level (10) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
@@ -138,7 +138,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
     {
       XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
       if  (!factory)
-        factory = XmlElementKKStrFactoryInstance  ();
+        factory = XmlElementUnKnownFactoryInstance  ();
       PushXmlElementLevel (tag->Name ());
       endOfElemenReached = true;
       token = factory->ManufatureXmlElement (tag, *this, log);
@@ -1008,6 +1008,54 @@ void  XmlElementBool::WriteXML (const bool    b,
 XmlFactoryMacro(Bool)
 
 
+
+
+
+
+XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr   tag,
+                                      XmlStream&  s,
+                                      RunLog&     log
+                                     ):
+    XmlElement (tag, s, log),
+    value (new deque<XmlTokenPtr> ())
+{
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
+  {
+    value->push_back (t);
+    t = s.GetNextToken (log);
+  }
+}
+                
+
+
+XmlElementUnKnown::~XmlElementUnKnown ()
+{
+  if  (value)
+  {
+    for  (auto idx: *value)
+      delete  idx;
+    delete  value;
+    value = NULL;
+  }
+}
+
+
+
+deque<XmlTokenPtr>*  XmlElementUnKnown::TakeOwnership ()
+{
+  deque<XmlTokenPtr>* v = value;
+  value = NULL;
+  return v;
+}
+
+
+XmlFactoryMacro(UnKnown)
+
+XmlFactoryPtr  KKB::XmlElementUnKnownFactoryInstance ()
+{
+  return  XmlFactoryUnKnown::FactoryInstance ();
+}
 
 
 

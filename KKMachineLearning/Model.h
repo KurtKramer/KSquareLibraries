@@ -333,11 +333,6 @@ namespace KKMLL
                             )  const = 0;
 
 
-    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
-    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t,
-                                    RunLog&      log
-                                   );
-
     /**
      *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
      */
@@ -359,6 +354,12 @@ namespace KKMLL
                                               double   minProbability
                                              );
 
+    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
+    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t,
+                                    RunLog&      log
+                                   );
+
+    void  ReadXMLModelPost (RunLog&  log);
 
     void  ReduceTrainExamples (RunLog&  log);
 
@@ -467,7 +468,10 @@ namespace KKMLL
                              RunLog&        log
                             ):
       XmlElementModel (tag, s, log)
-    {}
+    {
+      value = new ModelType();
+      value->ReadXML (s, tag, log);
+    }
                 
     virtual  ~XmlElementModelTemplate ()
     {

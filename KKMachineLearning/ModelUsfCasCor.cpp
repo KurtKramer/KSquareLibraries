@@ -537,6 +537,8 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
   {
     param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
   }
+
+  ReadXMLModelPost (log);
 }  /* ReadXML */
 
 

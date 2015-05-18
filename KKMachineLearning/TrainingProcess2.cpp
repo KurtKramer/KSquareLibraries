@@ -123,7 +123,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
     return trainer;
   }
 
-
   FeatureVectorListPtr  trainingExamples = NULL;
   KKStr  configRootName = config->ConfigRootName ();
   KKStr  configFileFullName = TrainingConfiguration2::GetEffectiveConfigFileName (configRootName);
@@ -151,7 +150,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
                                    cancelFlag,
                                    log
                                   );
-    if  (saveTrainedModel &&  (!trainer->Abort ()))
+    if  (saveTrainedModel  &&   (!cancelFlag)  && (!trainer->Abort ()))
     {
       trainer->SaveTrainingProcess (log);
     }
@@ -160,12 +159,11 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
   }
 
   trainer = LoadExistingTrainingProcess (config->ConfigRootName (), cancelFlag, log);
-  if  (trainer->Abort ())
+  if  ((trainer)  &&  (trainer->Abort ()))
   {
     delete  trainer;
     trainer = NULL;
   }
-
 
   if  (trainer  &&  (whenToRebuild == TrainingProcess2::WhenToRebuild::NotValid))
   {
@@ -174,43 +172,33 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
     return  trainer;
   }
 
+  bool  rebuildTrainingProcess = false;
   if  (!trainer)
-  {
-    trainer = new TrainingProcess2 ();
-    trainer->BuildTrainingProcess (config,
-                                   whenToRebuild,
-                                   trainingExamples,
-                                   true,                 /**<  true = Take ownership of 'trainingExamples'. */
-                                   checkForDuplicates,
-                                   cancelFlag,
-                                   log
-                                  );
-    return trainer;
-  }
+    rebuildTrainingProcess = true;
 
-
-  trainingExamples = ExtractTrainingClassFeatures (config, latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, cancelFlag, log);
-  if  (!trainingExamples)
-  {
-    log.Level (-1) << endl
-      << "TrainingProcess2::CreateTrainingProcess   ***ERROR***  Failed to load training data." << endl
-      << endl;
-    delete trainer;
-    trainer = NULL;
-    return NULL;
-  }
-
-
-  // At this point we have a loaded valid TrainingProcess instance; we just need to make sure that it is up-to-date.
-  if  ((trainer->BuildDateTime () < configFileTimeStamp)  ||
-       (trainer->BuildDateTime () < latestTrainingImageTimeStamp)
-      )
+  else if  ((trainer->BuildDateTime () < configFileTimeStamp)  ||
+            (trainer->BuildDateTime () < latestTrainingImageTimeStamp)
+           )
   {
     log.Level (-1) << endl
       << "TrainingProcess2::CreateTrainingProcess   ***WARNING***  Saved model was not up to date;  we will rebuild." << endl
       << endl;
+    rebuildTrainingProcess = true;
+  }
 
-    delete  trainer;
+  if  (rebuildTrainingProcess)
+  {
+    delete trainer;
+    trainer = NULL;
+    trainingExamples = ExtractTrainingClassFeatures (config, latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, cancelFlag, log);
+    if  (!trainingExamples)
+    {
+      log.Level (-1) << endl
+        << "TrainingProcess2::CreateTrainingProcess   ***ERROR***  Failed to load training data." << endl
+        << endl;
+      return NULL;
+    }
+
     trainer = new TrainingProcess2 ();
     trainer->BuildTrainingProcess (config,
                                    whenToRebuild,
@@ -220,14 +208,18 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
                                    cancelFlag,
                                    log
                                   );
+    // Since 'trainer' now has ownership to 'trainingExamples' we will set 'trainingExamples' to NULL
     trainingExamples = NULL;
     return trainer;
   }
+
   else
   {
     // The model that we loaded is valid and up-to-date; we can use as is and discard the training data we just loaded.
     delete  trainingExamples;
     trainingExamples = NULL;
+
+    log.Level (10) << "TrainingProcess2::CreateTrainingProcess    Existing saved model["  << trainer->ConfigFileName () << "]." << endl;
     return  trainer;
   }
 } /* CreateTrainingProcess */
@@ -942,6 +934,12 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
   {
     Abort (true);
   }
+
+  else if  (cancelFlag)
+  {
+    Abort (true);
+  }
+
   else
   {
     // Need to LOad Sub Processors.
@@ -1060,18 +1058,31 @@ void  TrainingProcess2::LoadSubClassifiers (WhenToRebuild  whenToRebuild,
                                             RunLog&        log
                                            )
 {
-  if  ((config == NULL)  ||  (config->SubClassifiers () == NULL))
+  if  (!config)
+  {
+    log.Level (-1) << endl << "TrainingProcess2::LoadSubClassifiers   ***ERROR***   'config' is not defines!!!!" << endl;
+    Abort (true);
     return;
+  }
+
+  TrainingConfiguration2ListPtr  subClassifiers = config->SubClassifiers ();
+  if  (!subClassifiers)
+  {
+    log.Level (10) << "TrainingProcess2::LoadSubClassifiers    NO Sub-classifiers requested in 'config'." << endl;
+    return;
+  }
 
   delete  subTrainingProcesses;
   subTrainingProcesses = new TrainingProcess2List (true);
 
-
-  TrainingConfiguration2ListPtr  subClassifiers = config->SubClassifiers ();
-  TrainingConfiguration2List::const_iterator idx;
-  for  (idx = subClassifiers->begin ();  idx != subClassifiers->end ();  ++idx)
+  for  (auto  idx:  *subClassifiers)
   {
-    TrainingConfiguration2Ptr  subClassifier = *idx;
+    TrainingConfiguration2Ptr  subClassifier = idx;
+
+    KKStr  subClassifierName = subClassifier->ConfigRootName ();
+
+    log.Level (20) << "TrainingProcess2::LoadSubClassifiers    Loading TrainingProcess2[" << subClassifierName << "]" << endl;
+
     TrainingProcess2Ptr  tp = 
       TrainingProcess2::CreateTrainingProcess (subClassifier, 
                                                checkForDuplicates, 
@@ -1079,22 +1090,25 @@ void  TrainingProcess2::LoadSubClassifiers (WhenToRebuild  whenToRebuild,
                                                true,                /**<  true = saveTrainedModel  when model has to be trained. */
                                                cancelFlag,
                                                log
-                                              );
+                                             );
     subTrainingProcesses->PushOnBack (tp);
     if  (tp->Abort ())
     {
       log.Level (-1) << endl 
-        << "TrainingProcess2::LoadSubClassifiers   ***ERROR***   Loading SubClassifier[" << subClassifier->ConfigRootName () << "]." << endl
+        << "TrainingProcess2::LoadSubClassifiers   ***ERROR***   Loading SubClassifier[" << subClassifierName << "]." << endl
         << endl;
+      Abort (true);
+      break;
+    }
+
+    else if  (cancelFlag)
+    {
+      log.Level (-1) << "TrainingProcess2::LoadSubClassifiers   Building of sub-classifiers canceled." << endl;
       Abort (true);
       break;
     }
   }
 }  /* LoadSubClassifiers */
-
-
-
-
 
 
 
@@ -1121,7 +1135,8 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
   if  (fvFactoryProducer)
     fvFactoryProducer->Name ().WriteXML ("FvFactoryProducer", o);
 
-  XmlElementMLClassNameList::WriteXML (*mlClasses, "MlClasses", o);
+  if  (mlClasses)
+    XmlElementMLClassNameList::WriteXML (*mlClasses, "MlClasses", o);
 
   if  (model)
     model->WriteXML ("Model", o);

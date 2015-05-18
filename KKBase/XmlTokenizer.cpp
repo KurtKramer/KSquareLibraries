@@ -140,6 +140,10 @@ KKStrPtr  XmlTokenizer::GetNextToken ()
 
   logger2 << "GetNextToken size[" << s << "] :" << (t ? (*t) : "NULL") << endl;
   logger2.flush ();
+
+  if  (*t == "<ModelOldSVM>")
+    logger2 << "GetNextToken   At Break Point." << endl;
+
   return  t;
 }  /* GetNextToken */
 
@@ -347,6 +351,10 @@ KKStrPtr  XmlTokenizer::ProcessTagToken ()
   {
     token->Append (firstChar);
     GetNextChar ();
+
+    // If there is a trailing carriage-return line-feed or just line-feed;  we want to skip past them.
+    if  (firstChar == '\r')  GetNextChar ();
+    if  (firstChar == '\n')  GetNextChar ();
   }
 
   return  token;
@@ -411,8 +419,8 @@ KKStrPtr  XmlTokenizer::ProcessBodyToken ()
 
   if  ((firstChar == '\n')  &&  (!atEndOfFile))
   {
-    // Since we are end of line we will add the '\n' character to the token and move on one more chracter.
-    token->Append (firstChar);
+    // Since we are end of line we will add the '\n' character to the token and move on one more character.
+    //token->Append (firstChar);
     GetNextChar ();
   }
 

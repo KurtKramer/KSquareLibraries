@@ -947,7 +947,43 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
 
 
 
+void  Model::ReadXMLModelPost (RunLog&  log)
+{
+  if  (!param)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'param' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
 
+  else if  (!param->ValidParam ())
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'Param' is NOT Valid .";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (!classes)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'classes' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (!fileDesc)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'fileDesc' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (errors.size () > 0)
+  {
+    log.Level (-1) << "Model::ReadXMLModelPost    Errors were detected;  model is INVALID." << endl;
+    validModel = false;
+  }
+
+}  /* ReadXMLModelPost */
 
 
 

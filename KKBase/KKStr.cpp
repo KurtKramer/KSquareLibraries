@@ -5578,8 +5578,8 @@ KKStr  KKStrListIndexed::ToTabDelString ()  const
 }
 
 
-void  KKStrListIndexed::WriteXML (const KKStr&            varName,
-                                  ostream&                o
+void  KKStrListIndexed::WriteXML (const KKStr&  varName,
+                                  ostream&      o
                                  )  const
 {
   XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);

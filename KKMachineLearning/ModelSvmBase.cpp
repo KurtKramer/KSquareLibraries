@@ -696,6 +696,8 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
   {
     param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
   }
+
+  ReadXMLModelPost (log);
 }  /* ReadXML */
 
  

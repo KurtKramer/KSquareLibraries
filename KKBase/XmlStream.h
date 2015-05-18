@@ -457,6 +457,36 @@ namespace  KKB
 
 
 
+  
+
+  /****************************************************************************/
+  /**
+   *@brief  XmlElement derived class that will be used when there is no Factory defined for the element.
+   *@details All sub-elements and content will be saved in value which will be a list of XmlEemenst and 
+   * content .
+   */
+  class  XmlElementUnKnown:  public  XmlElement
+  {
+  public:
+    XmlElementUnKnown (XmlTagPtr   tag,
+                       XmlStream&  s,
+                       RunLog&     log
+                     );
+                
+    virtual  ~XmlElementUnKnown ();
+
+    deque<XmlTokenPtr>*  Value () const  {return  value;}
+
+    deque<XmlTokenPtr>*  TakeOwnership ();
+
+
+  private:
+    deque<XmlTokenPtr>*  value;  
+  };
+  typedef  XmlElementUnKnown*  XmlElementUnKnownPtr;
+
+  XmlFactoryPtr  XmlElementUnKnownFactoryInstance ();
+
 
   /****************************************************************************/
   class  XmlElementBool:  public  XmlElement

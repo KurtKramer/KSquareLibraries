@@ -273,6 +273,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
     param = dynamic_cast<ModelParamKnnPtr> (Model::param);
   }
 
+  ReadXMLModelPost (log);
 }  /* ReadXML */
 
 

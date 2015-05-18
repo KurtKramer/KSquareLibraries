@@ -995,6 +995,7 @@ void  ModelDual::ReadXML (XmlStream&      s,
     param = dynamic_cast<ModelParamDualPtr> (Model::param);
   }
 
+  ReadXMLModelPost (log);
 }  /* ReadXML */
 
 
