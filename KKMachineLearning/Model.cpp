@@ -849,11 +849,11 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
                                        RunLog&      log
                                       )
 {
-  bool  tokenFound = true;
-
   const KKStr&  varName = t->VarName ();
   if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
   {
+    bool  tokenFound = true;
+
     XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
 
     const KKStr&  varName = e->VarName ();
@@ -934,12 +934,12 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
     {
       tokenFound = false;
     }
-  }
 
-  if  (tokenFound)
-  {
-    delete t;
-    t = NULL;
+    if  (tokenFound)
+    {
+      delete t;
+      t = NULL;
+    }
   }
 
   return  t;

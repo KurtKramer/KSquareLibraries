@@ -21,6 +21,8 @@ namespace KKB
     KKStrParser (const KKStrParser&  _strParser);
     KKStrParser (const char*   _str);
     KKStrParser (const KKStr&  _str);
+    KKStrParser (KKStr&&  _str);
+
     ~KKStrParser ();
 
     char     GetLastChar        ();
@@ -109,6 +111,7 @@ namespace KKB
     kkuint32     nextPos;
     const char*  str;
     bool         trimWhiteSpace;
+    bool         weOwnStr;
     char*        whiteSpace;
   };
 }  /* KKB*/

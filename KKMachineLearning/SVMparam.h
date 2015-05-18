@@ -186,7 +186,7 @@ namespace KKMLL
 
     FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
 
-    FeatureNumListConstPtr    SelectedFeatures           (FileDescPtr  fileDesc)  const;
+    FeatureNumListConstPtr   SelectedFeatures           (FileDescPtr  fileDesc)  const;
 
     SVM_SelectionMethod      SelectionMethod            () const {return selectionMethod;}
 

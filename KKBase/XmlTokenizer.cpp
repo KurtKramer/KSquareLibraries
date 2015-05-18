@@ -21,11 +21,12 @@ using namespace KKB;
 
 XmlTokenizer::XmlTokenizer (TokenBufferPtr  _in):
 
-  atEndOfFile           (false),
-  in                    (_in),
-  secondCharAtEndOfFile (false),
-  tokenList             (true),
-  weOwnTokenBuffer      (false)
+  atEndOfFile      (false),
+  in               (_in),
+  tokenList        (),
+  weOwnTokenBuffer (false),
+  logger1          ("C:\\Temp\\XmlTokenizer-1.txt"),
+  logger2          ("C:\\Temp\\XmlTokenizer-2.txt")
 {
   Initialize ();
 }
@@ -34,11 +35,12 @@ XmlTokenizer::XmlTokenizer (TokenBufferPtr  _in):
 
 XmlTokenizer::XmlTokenizer (const KKStr&  _str):
 
-  atEndOfFile           (false),
-  in                    (NULL),
-  secondCharAtEndOfFile (false),
-  tokenList             (true),
-  weOwnTokenBuffer      (false)
+  atEndOfFile       (false),
+  in                (NULL),
+  tokenList         (),
+  weOwnTokenBuffer  (false),
+  logger1           ("C:\\Temp\\XmlTokenizer-1.txt"),
+  logger2           ("C:\\Temp\\XmlTokenizer-2.txt")
 {
   in = new TokenBufferStr (_str);
   weOwnTokenBuffer = true;
@@ -51,11 +53,12 @@ XmlTokenizer::XmlTokenizer (const KKStr&  _fileName,
                             bool&         _fileOpened
                            ):
 
-  atEndOfFile           (false),
-  in                    (NULL),
-  secondCharAtEndOfFile (false),
-  tokenList             (true),
-  weOwnTokenBuffer      (false)
+  atEndOfFile       (false),
+  in                (NULL),
+  tokenList         (),
+  weOwnTokenBuffer  (false),
+  logger1           ("C:\\Temp\\XmlTokenizer-1.txt"),
+  logger2           ("C:\\Temp\\XmlTokenizer-2.txt")
 {
   in = new TokenBufferStream (_fileName);
   _fileOpened = (in->Valid ());
@@ -93,11 +96,10 @@ void  XmlTokenizer::Initialize ()
   entityMap.insert (pair<KKStr,char> ("cr",  '\r'));
 
   GetNextChar ();
-  GetNextChar ();
 
   tokenListLen = 10;
 
-  while  (tokenList.QueueSize () < tokenListLen)
+  while  ((tokenList.size () < tokenListLen)  &&  (!atEndOfFile))
   {
     ReadInNextLogicalToken ();
   }
@@ -121,10 +123,23 @@ char  XmlTokenizer::LookUpEntity (const KKStr&  entityName)  const
 
 KKStrPtr  XmlTokenizer::GetNextToken ()
 {
-  while  (tokenList.QueueSize () < 1)
+  while  ((tokenList.size () < 1)  && (!atEndOfFile))
     ReadInNextLogicalToken ();
 
-  KKStrPtr t = tokenList.PopFromFront ();
+  if  (tokenList.size () < 1)
+  {
+    logger2 << "GetNextToken    return NULL" << endl;
+    logger2.flush ();
+    return NULL;
+  }
+
+  kkuint32 s = tokenList.size ();
+
+  KKStrPtr t = tokenList.front ();
+  tokenList.pop_front ();
+
+  logger2 << "GetNextToken size[" << s << "] :" << (t ? (*t) : "NULL") << endl;
+  logger2.flush ();
   return  t;
 }  /* GetNextToken */
 
@@ -159,7 +174,7 @@ KKStrListPtr  XmlTokenizer::GetNextTokens (const KKStr& delToken)
 
 void  XmlTokenizer::PushTokenOnFront (KKStrPtr  t)
 {
-  tokenList.PushOnFront (t);
+  tokenList.push_front (t);
 }
 
 
@@ -167,13 +182,18 @@ void  XmlTokenizer::PushTokenOnFront (KKStrPtr  t)
 
 KKStrConstPtr  XmlTokenizer::Peek (kkuint32 idx)
 {
-  while  ((tokenList.QueueSize () < (kkint32)(idx + 1))  &&  !atEndOfFile)
+  while  ((tokenList.size () < (idx + 1))  &&  !atEndOfFile)
     ReadInNextLogicalToken ();
 
   if  (idx >= tokenList.size ())
+  {
+    logger2 << "Peek  idx[" << idx << "]   returning NULL" << endl;
     return NULL;
+  }
 
-  return  tokenList.IdxToPtr ((kkint32)idx);
+  logger2 << "Peek  idx[" << idx << "]  :" << *(tokenList[idx]) << endl;
+
+  return  tokenList[idx];
 }  /* Peek */
 
 
@@ -182,10 +202,10 @@ bool  XmlTokenizer::EndOfFile ()
 {
 //  if  (tokenList.QueueSize () == 0)
 //    return true;
-  while  ((tokenList.QueueSize () < 1)  &&  (!atEndOfFile))
+  while  ((tokenList.size () < 1)  &&  (!atEndOfFile))
     ReadInNextLogicalToken ();
 
-  return  (tokenList.QueueSize () < 1);
+  return  (tokenList.size () < 1);
 }  /* EndOfFile */
 
 
@@ -196,15 +216,25 @@ char  XmlTokenizer::GetNextChar ()
   {
     firstChar = 0;
   }
+  else if  (in->EndOfFile ())
+  {
+    atEndOfFile = true;
+    firstChar = 0;
+    logger1 << endl << "GetNextChar  atEndOfFile = true;" << endl;
+  }
   else
   {
     firstChar = in->GetNextChar ();
+    logger1 << firstChar;
     if  (firstChar == '\r')
     {
       if  (in->PeekNextChar () == '\n')
         firstChar = in->GetNextChar ();
     }
   }
+
+  logger1.flush ();
+
   return  firstChar;
 }  /* GetNextChar */
 
@@ -215,14 +245,18 @@ char  XmlTokenizer::GetNextChar ()
 void  XmlTokenizer::ReadInNextLogicalToken ()
 {
   KKStrPtr  t = GetNextTokenRaw ();
+
   if  (t == NULL)
   {
     //tokenList.PushOnBack (new Token (tokEndOfFile, "EndOfFile"));
   }
   else
   {
-    tokenList.PushOnBack (t);
+    tokenList.push_back (t);
   }
+
+  logger2 << "ReadInNextLogicalToken size[" << tokenList.size () << "]  :" << (t ? (*t) : "NULL RETURNED") << endl;
+  logger2.flush ();
 }  /* ReadInNextLogicalToken */
 
 
@@ -266,7 +300,7 @@ KKStrPtr  XmlTokenizer::GetNextTokenRaw ()
 
 
   return  nextRawToken;
-}  /* Get Next Token */
+}  /* GetNextTokenRaw */
 
 
 
@@ -331,7 +365,10 @@ void  XmlTokenizer::ProcessAmpersand ()
 {
   KKStr  entityName  (10);
   if  (in->EndOfFile ())
+  {
+    atEndOfFile = true;
     return;
+  }
 
   char ch = in->GetNextChar ();
   while  ((!in->EndOfFile ())  &&  (ch != ';')  &&  (entityName.Len () < 10))

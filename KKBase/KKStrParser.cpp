@@ -30,6 +30,7 @@ KKStrParser::KKStrParser (const KKStrParser&  _strParser):
     nextPos        (_strParser.nextPos),
     str            (_strParser.str),
     trimWhiteSpace (_strParser.trimWhiteSpace),
+    weOwnStr       (false),
     whiteSpace     (NULL)
 {
   if  (_strParser.whiteSpace)
@@ -43,9 +44,11 @@ KKStrParser::KKStrParser (const KKStr&  _str):
     nextPos        (0),
     str            (_str.Str ()),
     trimWhiteSpace (false),
+    weOwnStr       (false),
     whiteSpace     (NULL)
 {
 }
+
 
 
 KKStrParser::KKStrParser (const char*  _str):
@@ -53,9 +56,25 @@ KKStrParser::KKStrParser (const char*  _str):
     nextPos        (0),
     str            (_str),
     trimWhiteSpace (false),
+    weOwnStr       (false),
     whiteSpace     (NULL)
 {
 }
+
+
+
+KKStrParser::KKStrParser (KKStr&&  _str):
+    len            (_str.Len ()),
+    nextPos        (0),
+    str            (_str.Str ()),
+    trimWhiteSpace (false),
+    weOwnStr       (true),
+    whiteSpace     (NULL)
+{
+  str = KKB::STRDUP (_str.Str ());
+  weOwnStr = true;
+}
+
 
 
 
@@ -63,6 +82,11 @@ KKStrParser::KKStrParser (const char*  _str):
 KKStrParser::~KKStrParser ()
 {
   delete  whiteSpace;
+  if  (weOwnStr)
+  {
+    delete str;
+    str = NULL;
+  }
 }
 
 

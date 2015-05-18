@@ -48,7 +48,8 @@ XmlStream::XmlStream (const KKStr&  _fileName,
     tokenStream          (NULL),
     weOwnTokenStream     (false)
 {
-  tokenStream = new XmlTokenizer (fileName);
+  bool fileOpened = false;
+  tokenStream = new XmlTokenizer (fileName, fileOpened);
   weOwnTokenStream = true;
 }
 
@@ -89,11 +90,11 @@ XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
 {
   XmlFactory*  result = NULL;
   kkuint32  level = factoryManagers.size ();
-  do  
+  while  ((level > 0)  &&  (result == NULL))
   {
     --level;
     result = factoryManagers[level]->FactoryLookUp (sectionName);
-  }  while  ((level > 0)  &&  (result == NULL));
+  }
 
   if  (result == NULL)
     result = XmlFactory::FactoryLookUp (sectionName);
@@ -108,7 +109,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
 
   XmlTokenPtr  token = NULL;
 
-  KKStrPtr  t = tokenStream->GetNextToken ();
+  KKStrPtr   t = tokenStream->GetNextToken ();
   if  (t == NULL)
     return NULL;
 
@@ -122,6 +123,9 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       XmlFactoryPtr  factory = TrackDownFactory (tag->Name ());
       if  (!factory)
         factory = XmlElementKKStrFactoryInstance  ();
+      else
+        int zed =100;
+      log.Level (10) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
 
       PushXmlElementLevel (tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);
@@ -300,7 +304,7 @@ KKStrConstPtr  XmlAttributeList::AttributeNameByIndex  (kkuint32  index)  const
 const KKStr&   XmlAttributeList::AttributeValueKKStr   (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
-  if  (s)
+  if  (!s)
     return  *s;
   else
     return KKStr::EmptyStr ();
@@ -311,7 +315,7 @@ const KKStr&   XmlAttributeList::AttributeValueKKStr   (const KKStr&  name)   co
 kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
-  if  (s)
+  if  (!s)
     return  0;
   else
     return s->ToInt32 ();
@@ -322,7 +326,7 @@ kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
 DateTime  XmlAttributeList::AttributeValueDateTime  (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
-  if  (s)
+  if  (!s)
     return  DateTime ();
   
   DateTime  dt (*s);
@@ -515,7 +519,7 @@ XmlTag::XmlTag (const KKStrConstPtr  tagStr):
    name       (),
    tagType    (TagTypes::tagNULL)
 {
-  KKStrParser parser(tagStr);
+  KKStrParser parser(*tagStr);
   parser.TrimWhiteSpace (" ");
 
   if  (parser.PeekNextChar () == '<')

@@ -459,13 +459,12 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
 
 XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
 {
-  bool  tokenFound = true;
-
   const KKStr&  varName = t->VarName ();
   if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
   {
     XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
 
+    bool  tokenFound = true;
 
     if  (varName.EqualIgnoreCase ("EncodingMethod"))
     {
@@ -515,16 +514,17 @@ XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
     {
       tokenFound = false;
     }
-  }
 
-  if  (tokenFound)
-  {
-    delete t;
-    t = NULL;
+    if  (tokenFound)
+    {
+      delete t;
+      t = NULL;
+    }
   }
 
   return  t;
 }  /* ReadXMLModelParamToken */
+
 
 
 

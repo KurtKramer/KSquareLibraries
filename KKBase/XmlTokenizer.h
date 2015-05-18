@@ -15,6 +15,7 @@
  */
 
 
+#include <deque>
 #include <vector>
 #include "TokenBuffer.h"
 
@@ -83,10 +84,9 @@ namespace  KKB
 
     bool             atEndOfFile;
     TokenBufferPtr   in;
-    bool             secondCharAtEndOfFile;
 
-    kkint32          tokenListLen;
-    KKStrList        tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
+    kkuint32         tokenListLen;
+    deque<KKStrPtr>  tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
                                       * As end of stream is approached will fill with end of file
                                       * Tokens as a flag.
                                       */
@@ -94,12 +94,14 @@ namespace  KKB
     bool             weOwnTokenBuffer; /**< @brief Set to true indicates that we need to call the destructor on the TokenBuffer 'in' that we are processing. */
 
     char             firstChar;
-    char             secondChar;
 
     map<KKStr,char>  entityMap;       /**< @brief Used to maintain a list of valid entities and their respective replacement characters. THese are
                                        * the name of the xml escape characters,  ex: "quot" = '"',  "lt" = '<'. These are the escape sequences that
                                        * start with a ampersand(&) and end with a semicolon.
                                        */
+
+    ofstream logger1;
+    ofstream logger2;
 
   };  /* XmlTokenizer */
 

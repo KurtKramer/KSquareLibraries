@@ -206,7 +206,10 @@ void  ModelParamOldSVM::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 
 FeatureNumListConstPtr   ModelParamOldSVM::SelectedFeatures () const
 {
-  return svmParameters->SelectedFeatures ();
+  if  (svmParameters)
+    return svmParameters->SelectedFeatures ();
+  else
+    return NULL;
 }
 
 
@@ -537,9 +540,13 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
+  FeatureNumListConstPtr  selectedFeatures = SelectedFeatures ();
+
   bool  validFormat = false;
   delete  svmParameters;
-  svmParameters = new SVMparam  (svmParametersStr, SelectedFeatures (), validFormat, log);
+  svmParameters = NULL;
+
+  svmParameters = new SVMparam  (svmParametersStr, selectedFeatures, validFormat, log);
 }  /* ReadXML */
 
  
