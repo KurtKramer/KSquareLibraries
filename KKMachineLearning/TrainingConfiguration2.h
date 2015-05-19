@@ -345,6 +345,19 @@ namespace KKMLL
                                                                          RunLog&       _log
                                                                         );
 
+    XmlTokenPtr            ReadXMLBaseToken (XmlTokenPtr  t,
+                                             RunLog&      log
+                                            );
+
+    void                   ReadXMLPost (RunLog&  log);
+
+    /**
+     *@brief  To be used by both Base Class and Derived classes to write fields that are 
+     specific to 'TrainingConfiguration2'.
+     */
+    void                   WriteXMLFields (ostream& o)  const;
+
+
   private:
     void                   BuildTrainingClassListFromDirectoryEntry (const KKStr&  rootDir,
                                                                      const KKStr&  subDir,
@@ -408,7 +421,6 @@ namespace KKMLL
                                                        RunLog&  log
                                                       );
 
-
     ModelParamOldSVMPtr    OldSvmParameters ()  const;
 
 
@@ -456,6 +468,8 @@ namespace KKMLL
                                                    * subClasifer; in that case we will want top only maintain one 
                                                    * instance of that classifier.
                                                    */
+
+    VectorKKStr*           subClassifierNameList; /**< Used to communicate between by ReadXML, ReadXMLBaseToken, and ReadXMLPost */
 
     TrainingClassList      trainingClasses;       /**< List of  'Training_Class' objects; one for each 'Training_Classe'
                                                    * section defined in configuration file. Plus one for the 'Noise_Images'
