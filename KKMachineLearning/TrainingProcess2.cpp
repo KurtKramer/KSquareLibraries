@@ -243,7 +243,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
 
   DateTime  latestTrainingImageTimeStamp;
   bool  changesMadeToTrainingLibrary = false;
-  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer ();
+  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer (log);
 
   FeatureVectorListPtr  trainingExamples 
     = ExtractTrainingClassFeatures (config, latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, cancelFlag, log);
@@ -643,7 +643,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2C
                                                          RunLog&                         log
                                                         )
 {
-  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer ();
+  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer (log);
 
   FeatureFileIOPtr      driver           = fvFactoryProducer->DefaultFeatureFileIO ();
   FeatureVectorListPtr  trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
@@ -738,7 +738,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
   changesMadeToTrainingLibraries = false;
   bool   abort = false;
 
-  FactoryFVProducerPtr  fvFactoryProdcer = config->FvFactoryProducer ();
+  FactoryFVProducerPtr  fvFactoryProdcer = config->FvFactoryProducer (log);
 
   FeatureVectorListPtr  trainingExamples = fvFactoryProdcer->ManufacturFeatureVectorList (true, log);
 
@@ -1224,7 +1224,7 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
         config = configOurs;
         if  ((config != NULL)  &&  (fvFactoryProducer == NULL))
         {
-          fvFactoryProducer = config->FvFactoryProducer ();
+          fvFactoryProducer = config->FvFactoryProducer (log);
           fileDesc = fvFactoryProducer->FileDesc ();
         }
       }

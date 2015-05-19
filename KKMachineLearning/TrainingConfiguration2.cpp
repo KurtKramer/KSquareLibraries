@@ -105,25 +105,26 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 TrainingConfiguration2::TrainingConfiguration2 ():
  Configuration (),
 
-  configFileNameSpecified (),
-  configRootName          (),
-  fileDesc                (NULL),
-  fvFactoryProducer       (NULL),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (Model::ModelTypes::mtNULL),
-  examplesPerClass        (0),
-  modelParameters         (NULL),
-  noiseMLClass            (NULL),
-  noiseTrainingClass      (NULL),
-  otherClass              (NULL),
-  otherClassLineNum       (-1),
-  rootDir                 (),
-  rootDirExpanded         (),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         ("", true),
-  validateDirectories     (true)
+  configFileNameSpecified    (),
+  configRootName             (),
+  fileDesc                   (NULL),
+  fvFactoryProducer          (NULL),
+  fvFactoryProducerSpecified (false),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  modelingMethod             (Model::ModelTypes::mtNULL),
+  examplesPerClass           (0),
+  modelParameters            (NULL),
+  noiseMLClass               (NULL),
+  noiseTrainingClass         (NULL),
+  otherClass                 (NULL),
+  otherClassLineNum          (-1),
+  rootDir                    (),
+  rootDirExpanded            (),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            ("", true),
+  validateDirectories        (true)
 {
 }
 
@@ -136,25 +137,26 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
 
   Configuration (GetEffectiveConfigFileName (_configFileName), log),
 
-  configFileNameSpecified (_configFileName),
-  configRootName          (KKB::osGetRootName (_configFileName)),
-  fileDesc                (NULL),
-  fvFactoryProducer       (NULL),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (Model::ModelTypes::mtNULL),
-  examplesPerClass        (0),
-  modelParameters         (NULL),
-  noiseMLClass            (NULL),
-  noiseTrainingClass      (NULL),
-  otherClass              (NULL),
-  otherClassLineNum       (-1),
-  rootDir                 (),
-  rootDirExpanded         (),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         ("", true),
-  validateDirectories     (_validateDirectories)
+  configFileNameSpecified    (_configFileName),
+  configRootName             (KKB::osGetRootName (_configFileName)),
+  fileDesc                   (NULL),
+  fvFactoryProducer          (NULL),
+  fvFactoryProducerSpecified (false),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  modelingMethod             (Model::ModelTypes::mtNULL),
+  examplesPerClass           (0),
+  modelParameters            (NULL),
+  noiseMLClass               (NULL),
+  noiseTrainingClass         (NULL),
+  otherClass                 (NULL),
+  otherClassLineNum          (-1),
+  rootDir                    (),
+  rootDirExpanded            (),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            ("", true),
+  validateDirectories        (_validateDirectories)
 {
   if  (!FormatGood ())
   {
@@ -192,26 +194,27 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
                                                 const KKStr&          _parameterStr,
                                                 RunLog&               _log             
                                                ):
-  Configuration           (),
-  configFileNameSpecified (""),
-  configRootName          (),
-  fileDesc                (NULL),
-  fvFactoryProducer       (_fvFactoryProducer),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (Model::ModelTypes::mtNULL),
-  examplesPerClass        (0),
-  modelParameters         (NULL),
-  noiseMLClass            (NULL),
-  noiseTrainingClass      (NULL),
-  otherClass              (NULL),
-  otherClassLineNum       (-1),
-  rootDir                 (),
-  rootDirExpanded         (),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         ("", true),
-  validateDirectories     (false)
+  Configuration              (),
+  configFileNameSpecified    (""),
+  configRootName             (),
+  fileDesc                   (NULL),
+  fvFactoryProducer          (_fvFactoryProducer),
+  fvFactoryProducerSpecified (true),
+  modelingMethod             (Model::ModelTypes::mtNULL),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  examplesPerClass           (0),
+  modelParameters            (NULL),
+  noiseMLClass               (NULL),
+  noiseTrainingClass         (NULL),
+  otherClass                 (NULL),
+  otherClassLineNum          (-1),
+  rootDir                    (),
+  rootDirExpanded            (),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            ("", true),
+  validateDirectories        (false)
 {
   if  (!fvFactoryProducer)
     fvFactoryProducer =  DefaultFeatureVectorProducer (_log);
@@ -262,26 +265,27 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 const KKStr&    _parameterStr,
                                                 RunLog&         _log
                                                ):
-  Configuration           (),
-  configFileNameSpecified (""),
-  configRootName          (),
-  fileDesc                (_fileDesc),
-  fvFactoryProducer       (NULL),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (Model::ModelTypes::mtNULL),
-  examplesPerClass        (0),
-  modelParameters         (NULL),
-  noiseMLClass            (NULL),
-  noiseTrainingClass      (NULL),
-  otherClass              (NULL),
-  otherClassLineNum       (-1),
-  rootDir                 (),
-  rootDirExpanded         (),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         ("", true),
-  validateDirectories     (false)
+  Configuration              (),
+  configFileNameSpecified    (""),
+  configRootName             (),
+  fileDesc                   (_fileDesc),
+  fvFactoryProducer          (NULL),
+  fvFactoryProducerSpecified (false),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  modelingMethod             (Model::ModelTypes::mtNULL),
+  examplesPerClass           (0),
+  modelParameters            (NULL),
+  noiseMLClass               (NULL),
+  noiseTrainingClass         (NULL),
+  otherClass                 (NULL),
+  otherClassLineNum          (-1),
+  rootDir                    (),
+  rootDirExpanded            (),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            ("", true),
+  validateDirectories        (false)
 {
   if  (_mlClasses)
     mlClasses = new MLClassList (*_mlClasses);
@@ -328,26 +332,27 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 ModelParamPtr   _modelParameters,
                                                 RunLog&         _log
                                                ):
-  Configuration           (),
-  configFileNameSpecified (""),
-  configRootName          (""),
-  fileDesc                (_fileDesc),
-  fvFactoryProducer       (NULL),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (Model::ModelTypes::mtNULL),
-  examplesPerClass        (0),
-  modelParameters         (_modelParameters),
-  noiseMLClass            (NULL),
-  noiseTrainingClass      (NULL),
-  otherClass              (NULL),
-  otherClassLineNum       (-1),
-  rootDir                 (),
-  rootDirExpanded         (),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         ("", true),
-  validateDirectories     (false)
+  Configuration              (),
+  configFileNameSpecified    (""),
+  configRootName             (""),
+  fileDesc                   (_fileDesc),
+  fvFactoryProducer          (NULL),
+  fvFactoryProducerSpecified (false),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  modelingMethod             (Model::ModelTypes::mtNULL),
+  examplesPerClass           (0),
+  modelParameters            (_modelParameters),
+  noiseMLClass               (NULL),
+  noiseTrainingClass         (NULL),
+  otherClass                 (NULL),
+  otherClassLineNum          (-1),
+  rootDir                    (),
+  rootDirExpanded            (),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            ("", true),
+  validateDirectories        (false)
 {
   if  (_mlClasses)
     mlClasses = new MLClassList (*_mlClasses);
@@ -381,25 +386,26 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   
 TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  tc):
   Configuration (tc),
-  configFileNameSpecified (tc.configFileNameSpecified),
-  configRootName          (tc.configRootName),
-  fileDesc                (tc.fileDesc),
-  fvFactoryProducer       (tc.fvFactoryProducer),
-  mlClasses               (NULL),
-  mlClassesWeOwnIt        (false),
-  modelingMethod          (tc.modelingMethod),
-  examplesPerClass        (tc.examplesPerClass),
-  modelParameters         (NULL),
-  noiseMLClass            (tc.noiseMLClass),
-  noiseTrainingClass      (tc.noiseTrainingClass),
-  otherClass              (tc.otherClass),
-  otherClassLineNum       (tc.otherClassLineNum),
-  rootDir                 (tc.rootDir),
-  rootDirExpanded         (tc.rootDirExpanded),
-  subClassifiers          (NULL),
-  subClassifierNameList   (NULL),
-  trainingClasses         (tc.rootDir, true),
-  validateDirectories     (tc.validateDirectories)
+  configFileNameSpecified    (tc.configFileNameSpecified),
+  configRootName             (tc.configRootName),
+  fileDesc                   (tc.fileDesc),
+  fvFactoryProducer          (tc.fvFactoryProducer),
+  fvFactoryProducerSpecified (tc.fvFactoryProducerSpecified),
+  mlClasses                  (NULL),
+  mlClassesWeOwnIt           (false),
+  modelingMethod             (tc.modelingMethod),
+  examplesPerClass           (tc.examplesPerClass),
+  modelParameters            (NULL),
+  noiseMLClass               (tc.noiseMLClass),
+  noiseTrainingClass         (tc.noiseTrainingClass),
+  otherClass                 (tc.otherClass),
+  otherClassLineNum          (tc.otherClassLineNum),
+  rootDir                    (tc.rootDir),
+  rootDirExpanded            (tc.rootDirExpanded),
+  subClassifiers             (NULL),
+  subClassifierNameList      (NULL),
+  trainingClasses            (tc.rootDir, true),
+  validateDirectories        (tc.validateDirectories)
 {
   {
     kkint32  x;
@@ -453,7 +459,18 @@ TrainingConfiguration2::~TrainingConfiguration2 ()
 
 
 
-FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunLog&  runLog)
+FactoryFVProducerPtr  TrainingConfiguration2::FvFactoryProducer (RunLog&  log) const  
+{
+  if  (!fvFactoryProducerSpecified)
+    return  DefaultFeatureVectorProducer (log);
+  else
+    return  fvFactoryProducer;
+}
+
+
+
+
+FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunLog&  runLog)  const
 {
   return  GrayScaleImagesFVProducerFactory::Factory (&runLog);
 }
@@ -1686,6 +1703,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
   KKStr  fvFactoryProducerName (SettingValue (sectionNum, "FEATURE_COMPUTER", fvFactoryLineNum));
   if  (fvFactoryLineNum < 0)
   {
+    fvFactoryProducerSpecified = false;
     if  (!fvFactoryProducer)
     {
       log.Level (-1) << "No Feature-Computer Specified;  defaulting to 'GrayScaleImages'." << endl;
@@ -1706,10 +1724,12 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
       log.Level (-1) << endl << "ValidateGlobalSection   ***ERROR***    Factory[" << fvFactoryProducerName << "] on lineNum[" << fvFactoryLineNum << "]  not defined" << endl
         << "  defaulting to: " << defaultName << endl
         << endl;
+      fvFactoryProducerSpecified = false;
     }
     else
     {
       fvFactoryProducer = factorySpecified;
+      fvFactoryProducerSpecified = true;
     }
   }
 
@@ -2561,6 +2581,8 @@ void  TrainingConfiguration2::WriteXMLFields (ostream& o)  const
   if  (fvFactoryProducer)
     XmlElementKKStr::WriteXML (fvFactoryProducer->Name (), "FvFactoryProducer", o);
 
+  XmlElementBool::WriteXML (fvFactoryProducerSpecified, "FvFactoryProducerSpecified", o);
+
   if  (mlClasses)
     XmlElementMLClassNameList::WriteXML (*mlClasses, "MLClasses", o);
 
@@ -2709,6 +2731,13 @@ XmlTokenPtr  TrainingConfiguration2::ReadXMLBaseToken (XmlTokenPtr  t,
         noiseTrainingClass = NULL;
         noiseTrainingClass = ntc->TakeOwnership ();
       }
+    }
+
+    else if  (varName.EqualIgnoreCase  ("FvFactoryProducerSpecified"))
+    {
+      XmlElementBoolPtr  vBool = dynamic_cast<XmlElementBoolPtr> (e);
+      if  (vBool)
+        fvFactoryProducerSpecified = vBool->Value ();
     }
 
     else if  (varName.EqualIgnoreCase  ("ValidateDirectories"))

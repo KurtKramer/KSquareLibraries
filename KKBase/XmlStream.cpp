@@ -1103,7 +1103,7 @@ XmlFactoryMacro(DateTime)
 
 XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
     XmlElement ("KeyValuePairs", XmlTag::TagTypes::tagStart),
-    value (NULL)
+    value (new vector<pair<KKStr,KKStr> > ())
 {
 }
 

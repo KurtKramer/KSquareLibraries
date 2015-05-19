@@ -126,7 +126,7 @@ namespace KKMLL
 
 
      virtual
-     FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog);
+     FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog)  const;
 
 
     /**
@@ -182,7 +182,8 @@ namespace KKMLL
     SVM_EncodingMethod     EncodingMethod          () const;
     kkint32                ExamplesPerClass        () const;
     FileDescPtr            FileDesc                () const  {return  fileDesc;}
-    FactoryFVProducerPtr   FvFactoryProducer       () const  {return  fvFactoryProducer;}
+    FactoryFVProducerPtr   FvFactoryProducer       (RunLog&  log) const;
+    bool                   FvFactoryProducerSpecified ()  const {return fvFactoryProducerSpecified;}
     double                 Gamma                   () const;
     kkint32                ImagesPerClass          () const  {return  ExamplesPerClass ();};
     SVM_KernalType         KernalType              () const;
@@ -432,6 +433,7 @@ namespace KKMLL
 
     kkint32                examplesPerClass;
     FactoryFVProducerPtr   fvFactoryProducer;
+    bool                   fvFactoryProducerSpecified;  /**< Indicates that a valid 'fvFactoryProducer' was specified in the configuration file. */
     FileDescPtr            fileDesc;
     MLClassListPtr         mlClasses;
     bool                   mlClassesWeOwnIt;      /**< If we own it we will delete it in the destructor.  */
