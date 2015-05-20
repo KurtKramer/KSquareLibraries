@@ -191,6 +191,8 @@ namespace  KKB
 
     kkint32        AttributeCount () const  {return  (kkint32)attributes.size ();}
 
+    const XmlAttributeList&   Attributes ()  const {return attributes;}
+
     KKStrConstPtr  AttributeValueByName  (const KKStr&  name)   const;
     KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
     KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;

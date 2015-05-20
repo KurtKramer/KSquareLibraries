@@ -276,7 +276,7 @@ KKStrConstPtr  XmlAttributeList::AttributeValueByName  (const KKStr&  name)   co
 {
   XmlAttributePtr  a = LookUpByName (name);
   if  (a)
-    return &(a->Name ());
+    return &(a->Value ());
   else
     return NULL;
 }
@@ -561,8 +561,8 @@ XmlTag::XmlTag (const KKStr&  _name,
                 TagTypes      _tagType
                ):
    attributes (true),
-   name       (),
-   tagType    (TagTypes::tagNULL)
+   name       (_name),
+   tagType    (_tagType)
 {
 }
 
@@ -1091,6 +1091,7 @@ void  XmlElementDateTime::WriteXML (const DateTime&  d,
     startTag.AddAtribute ("VarName", varName);
   startTag.AddAtribute ("Value", d.YYYY_MM_DD_HH_MM_SS ());
   startTag.WriteXML (o);
+  o << endl;
 }
 
 

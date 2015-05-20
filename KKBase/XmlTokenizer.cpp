@@ -157,11 +157,14 @@ KKStrListPtr  XmlTokenizer::GetNextTokens (const KKStr& delToken)
   if  (delToken.Empty ())
     return NULL;
 
-  KKStrListPtr  tokens = new KKStrList (true);
+  if  (atEndOfFile  &&  (tokenList.size () < 1))
+    return NULL;
+
   KKStrPtr  t = GetNextToken ();
   if  (t == NULL)
     return NULL;
 
+  KKStrListPtr  tokens = new KKStrList (true);
   while  ((t != NULL)  &&  (*t != delToken))
   {
     tokens->PushOnBack (t);
@@ -326,15 +329,24 @@ KKStrPtr  XmlTokenizer::ProcessTagToken ()
 
       while  ((!atEndOfFile)  &&  (firstChar != endingQuoteChar))
       {
-        if  (firstChar == '\'')
+        if  (firstChar == '\\')
         {
           GetNextChar ();
-          token->Append (firstChar);
+          switch  (firstChar)
+          {
+          case   't':  firstChar = '\t';  break;
+          case   'n':  firstChar = '\n';  break;
+          case   'r':  firstChar = '\r';  break;
+          case   '0':  firstChar = '\0';  break;
+          case  '\\':  firstChar = '\\';  break;
+          case   '"':  firstChar = '"';   break;
+          }
         }
+        token->Append (firstChar);
         GetNextChar ();
       }
 
-      if  (firstChar != endingQuoteChar)
+      if  (firstChar == endingQuoteChar)
       {
         token->Append (firstChar);
         GetNextChar ();

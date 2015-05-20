@@ -413,19 +413,19 @@ AttributeTypeVectorPtr  AttributeList::CreateAttributeTypeVector ()  const
 
 
 
-KKStr  KKMLL::AttributeTypeToStr (AttributeType  type)
+const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
 {
-  static const char* AttributeTypeStrings[] = 
+  static vector<KKStr> AttributeTypeStrings = 
     {
+      "Null",
       "Ignore",
       "Numeric",
       "Nominal",
-      "Ordinal",
-      "NULL"
+      "Ordinal"
     };
 
-  if  ((type < (AttributeType)0)  ||  (type >= AttributeType::NULLAttribute))
-    return  "";
+  if  ((type < (AttributeType)0)  ||  ((kkuint32)type >= AttributeTypeStrings.size ()))
+    return  KKStr::EmptyStr ();
 
   return AttributeTypeStrings[(int)type];
 }  /* TypeStr */

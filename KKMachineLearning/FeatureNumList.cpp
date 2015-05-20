@@ -326,6 +326,9 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
     }
   }
 
+  if  (featureNum > maxFeatureNum)
+    maxFeatureNum = featureNum;
+
   return;
 }  /* AddFeature */
 
@@ -717,15 +720,35 @@ void  FeatureNumList::WriteXML (const KKStr&  varName,
                                 ostream&      o
                                )  const
 {
+  bool  doOnOneLine = true;
+  if  (numOfFeatures > 20)
+    doOnOneLine = false;
+
   XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("MaxFeatureNum", maxFeatureNum);
+  startTag.AddAtribute ("NumOfFeatures", numOfFeatures);
   startTag.WriteXML (o);
-  o << endl;
+  if  (!doOnOneLine)
+    o << endl;
 
-  XmlElementInt32::WriteXML (maxFeatureNum, "MaxFeatureNum", o);
-  XmlElementInt32::WriteXML (numOfFeatures, "NumOfFeatures", o);
-  XmlElementArrayUint16::WriteXML (numOfFeatures, featureNums, "FeatureNums", o);
+  bool  newLine = true;
+  for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
+  {
+    if  (((x + 1) % 100) == 0)
+    {
+      o << endl;
+      newLine = true;
+    }
+
+    if  (!newLine)
+      o << "\t";
+    o << featureNums[x];
+    newLine = false;
+  }
+  if  (!doOnOneLine)
+    o << endl;
 
   XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
@@ -739,39 +762,49 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
                                RunLog&         log
                              )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
+  maxFeatureNum = tag->AttributeValueInt32 ("MaxFeatureNum");
+  kkuint32 expectedNumOfFeatures = tag->AttributeValueInt32 ("NumOfFeatures");
+  numOfFeatures = 0;
 
+  delete  featureNums;
+  featureNums = new kkuint16[expectedNumOfFeatures];
+  featureNumsAllocatedSize = expectedNumOfFeatures;
+  for  (kkuint32 x = 0;  x < expectedNumOfFeatures;  ++x)
+    featureNums[x] = 0;
+
+  kkuint32 featureCountRead = 0;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
   {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    if  (typeid (*t) == typeid(XmlContent))
     {
-      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-      const KKStr&  className = e->SectionName ();
-      const KKStr&  varName = e->VarName ();
-      if  (varName.EqualIgnoreCase ("MaxFeatureNum"))
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c  &&  (c->Content ()))
       {
-        XmlElementInt32Ptr  mfn = dynamic_cast<XmlElementInt32Ptr>(e);
-        maxFeatureNum = mfn->Value ();
-      }
+        KKStrParser p (*(c->Content ()));
+        p.TrimWhiteSpace (" ");
+        while  (p.MoreTokens ())
+        {
+          kkint32  fn = p.GetNextTokenUint ("\t");
 
-      else if  (varName.EqualIgnoreCase ("NumOfFeatures"))
-      {
-        XmlElementInt32Ptr  nof = dynamic_cast<XmlElementInt32Ptr>(e);
-        numOfFeatures = nof->Value ();
-      }
-
-      else if  (varName.EqualIgnoreCase ("FeatureNums"))
-      {
-        XmlElementArrayUint16Ptr  nof = dynamic_cast<XmlElementArrayUint16Ptr>(e);
-        featureNums = nof->TakeOwnership ();
-        featureNumsAllocatedSize = nof->Count ();
+          if  (fn > maxFeatureNum)
+            maxFeatureNum = fn;
+          AddFeature (fn);
+        }
       }
     }
-
-    delete t;
     t = s.GetNextToken (log);
   }
-}
+
+  if  (expectedNumOfFeatures != numOfFeatures)
+  {
+    log.Level (-1) << endl
+      << "FeatureNumList::ReadXML   ***ERROR***   expectedNumOfFeatures["  << expectedNumOfFeatures << "]  not equal  numOfFeatures[" << numOfFeatures << "]" << endl
+      << endl;
+  }
+
+}  /* ReadXML */
 
 
 

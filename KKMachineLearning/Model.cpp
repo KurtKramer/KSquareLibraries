@@ -220,6 +220,17 @@ kkint32  Model::MemoryConsumedEstimated ()  const
 
 
 
+MLClassListPtr  Model::MLClassesNewInstance () const
+{
+  if  (classes)
+    return new MLClassList (*classes);
+  else
+    return NULL;
+}  /* MLClassesNewInstance */
+
+
+
+
 void  Model::AddErrorMsg (const KKStr&  errMsg,
                           kkint32       lineNum
                          )

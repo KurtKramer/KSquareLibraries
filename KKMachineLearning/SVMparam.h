@@ -87,31 +87,6 @@ namespace KKMLL
 
     ~SVMparam  ();
 
-
-    void    Load (KKStr&            _fileName,
-                  FileDescPtr       _fileDesc,
-                  ClassAssignments& _mlClasses,
-                  bool&             _successful,
-                  RunLog&           _log
-                 );
-
-    void    ReadXML (FILE*        i,
-                     FileDescPtr  fileDesc,
-                     RunLog&      log
-                    );
-
-    void    ReadXML (istream&     i,
-                     FileDescPtr  fileDesc,
-                     RunLog&      log
-                    );
-
-    void    Save (KKStr&  _fileName,
-                  bool&   _successful
-                 );
-
-    void    WriteXML (std::ostream&  o)  const;
-
-
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
     void    AddBinaryClassParms (MLClassPtr              class1,

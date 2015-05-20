@@ -505,6 +505,10 @@ void  TrainingProcess2::BuildTrainingProcess (TrainingConfiguration2Const*  _con
   configOurs = new TrainingConfiguration2 (*_config);
   config = configOurs;
 
+  configFileName = config->ConfigFileNameSpecified ();
+
+  fvFactoryProducer = _config->FvFactoryProducer (_log);
+
   trainingExamples = _trainingExamples;
   weOwnTrainingExamples = _takeOwnerShipOfTrainingExamples;
 
@@ -530,7 +534,7 @@ void  TrainingProcess2::BuildTrainingProcess (TrainingConfiguration2Const*  _con
 
 void  TrainingProcess2::SaveTrainingProcess (RunLog&  log)
 {
-  configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (configFileName);
+  configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (config->ConfigFileNameSpecified ());
   savedModelName = osRemoveExtension (configFileName) + ".Save";
   log.Level (20) << "TrainingProcess2::SaveTrainingProcess  Saving trained model: " << savedModelName << endl;
 
@@ -893,6 +897,12 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
     return;
   }
 
+  if  (!fvFactoryProducer)
+    fvFactoryProducer = config->FvFactoryProducer (log);
+
+  if  (!fileDesc)
+    fileDesc = fvFactoryProducer->FileDesc ();
+
   delete  priorProbability;
   priorProbability = trainingExamples->GetClassDistribution ();
 
@@ -942,6 +952,9 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
 
   else
   {
+    delete  mlClasses;
+    mlClasses = model->MLClassesNewInstance ();
+
     // Need to LOad Sub Processors.
     LoadSubClassifiers (whenToRebuild,
                         false,          /**< false = DON'T check for duplicates. */
@@ -1136,13 +1149,13 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
     fvFactoryProducer->Name ().WriteXML ("FvFactoryProducer", o);
 
   if  (mlClasses)
-    XmlElementMLClassNameList::WriteXML (*mlClasses, "MlClasses", o);
+    mlClasses->WriteXML ("MlClasses", o);
 
   if  (model)
     model->WriteXML ("Model", o);
 
   if  (priorProbability)
-    priorProbability->WriteXML (o, "PriorProbability");
+    priorProbability->WriteXML ("PriorProbability", o);
 
   if  (subTrainingProcesses)
   {
@@ -1282,12 +1295,31 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
+  if  (!model)
+  {
+    log.Level (-1) << endl
+      << "TrainingProcess2::ReadXML   ***ERROR***   'model' was not defined." << endl
+      << endl;
+    errorsFound = true;
+  }
+
   if  (mlClasses == NULL)
   {
     log.Level (-1) << endl
-      << "TrainingProcess2::ReadXML   ***ERROR***   MLClasses was not defined." << endl
+      << "TrainingProcess2::ReadXML   ***ERROR***   'mlClasses' was not defined." << endl
       << endl;
     errorsFound = true;
+  }
+
+  if  (model  &&  (model->MLClasses ())  &&  mlClasses)
+  {
+    if  (*mlClasses != *(model->MLClasses ()))
+    {
+      log.Level (-1) << endl
+        << "TrainingProcess2::ReadXML   ***ERROR***   TrainingProcess2::mlClasses  does not agree with model->MlClasses" << endl
+        << endl;
+      errorsFound = true;
+    }
   }
 
   if (!errorsFound)
@@ -1309,8 +1341,10 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
   delete  subProcessorsNameList;
   subProcessorsNameList = NULL;
 
-  log.Level (20) << "TrainingProcess2::ReadXML    Exiting!" << endl;
+  if  (errorsFound)
+    Abort (true);
 
+  log.Level (20) << "TrainingProcess2::ReadXML    Exiting!" << endl;
 }  /* ReadXML */
 
 

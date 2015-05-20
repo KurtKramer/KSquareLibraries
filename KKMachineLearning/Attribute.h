@@ -191,7 +191,7 @@ namespace KKMLL
   typedef  AttributeList  const *  AttributeListConstPtr;
 
 
-  KKStr  AttributeTypeToStr (AttributeType  type);
+  const KKStr&  AttributeTypeToStr (AttributeType  type);
   AttributeType  AttributeTypeFromStr (const KKStr&  s);
 
 

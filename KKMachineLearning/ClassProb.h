@@ -115,12 +115,6 @@ namespace KKMLL
      */
     void  NormalizeToOne ();
 
-    void  WriteXML (ostream&      o, 
-                    const KKStr&  name
-                   )
-                   const;
-
-
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
                    RunLog&         log

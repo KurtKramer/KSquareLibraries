@@ -16,6 +16,7 @@
 
 
 #include <deque>
+#include <fstream>
 #include <vector>
 #include "TokenBuffer.h"
 

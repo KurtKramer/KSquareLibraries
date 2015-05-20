@@ -351,24 +351,6 @@ void  ClassProbList::NormalizeToOne ()
 
 
 
-void  ClassProbList::WriteXML (ostream&      o, 
-                               const KKStr&  name
-                              )
-                             const
-{
-  o << "<ClassProbList,name=\"" << name << "\">" << endl;
-  
-  ClassProbList::const_iterator  idx;
-  for  (idx = begin ();  idx != end ();  ++idx)
-  {
-    ClassProbPtr  cp = *idx;
-    o << cp->classLabel->Name () << "\t" << cp->probability << "\t" << cp->votes << endl;
-  }
-  o << "</ClassProbList>" << endl;
-}  /* WriteXML */
-
-
-
 
 ClassProbListPtr  ClassProbList::CreateFromXMLStream (istream& i)
 {

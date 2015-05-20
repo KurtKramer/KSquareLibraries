@@ -152,6 +152,10 @@ namespace KKMLL
 
     virtual kkint32                   MemoryConsumedEstimated    () const;
 
+    MLClassListPtr                    MLClasses                  () const  {return  classes;}
+
+    MLClassListPtr                    MLClassesNewInstance       () const;  /**< Returns a new instances of 'classes' by calling copy constructor. */
+
     virtual ModelTypes                ModelType                  () const = 0;
 
     virtual KKStr                     ModelTypeStr               () const  {return ModelTypeToStr (ModelType ());}
@@ -171,7 +175,7 @@ namespace KKMLL
 
     double                            TrainingTime               () const {return trainingTime;}
 
-    double                            TrianingPrepTime           () const {return trianingPrepTime;}  //*< Time ins secs spent preparing training data in Model::TrainModel */
+    double                            TrianingPrepTime           () const {return trianingPrepTime;}  //*< Time ins sec's spent preparing training data in Model::TrainModel */
 
     bool                              ValidModel                 () const {return validModel;}
 

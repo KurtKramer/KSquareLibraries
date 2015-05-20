@@ -84,39 +84,6 @@ typedef  struct svm_node*     XSpacePtr;
   
 
     /**
-     *@brief Loads an SVM model from disk
-     *@param[in]  _rootFileName The filename for the model; without an extension.
-     *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
-     *@param[in]  _fileDesc A description of the training data that was used to train the classifier.
-     *@param[in]  _log A LogFile stream. All important events will be output to this stream
-     */
-    SVMModel (const KKStr&  _rootFileName,   
-              bool&         _successful,
-              FileDescPtr   _fileDesc,
-              RunLog&       _log
-             );
-  
-
-    /**
-     *@brief Loads an SVM model from disk.
-     *@details  The '_cancelFlag' parameter is meant to allow another thread to cancel processing 
-     *          by a different thread in SVMmodel.  Ex:  If one thread is building a new SVM for
-     *          this instance of SVMmodel, that thread will periodically monitor '_cancelFlag', if
-     *          it is set to true it will terminate its processing.
-     *@param[in]  _in A file stream to read and build SVMModel from.
-     *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
-     *@param[in]  _fileDesc A description of the data file. I'm not sure this is needed for this function.
-     *@param[in]  _log A log-file stream. All important events will be output to this stream
-    */
-    SVMModel (istream&     _in,   // Create from existing Model on Disk.
-              bool&        _successful,
-              FileDescPtr  _fileDesc,
-              RunLog&      _log
-             );
-
-
-
-    /**
      *@brief  Constructor that will create a svmlib training model using the 
      *        features and classes for training purposes.
      *@param[in]  _svmParam  Specifies the parameters to be used for training.  These
@@ -305,18 +272,6 @@ typedef  struct svm_node*     XSpacePtr;
                                   double**      crossProbTable,  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                   RunLog&       log
                                  );
-
-
-    void  Save (const KKStr&  _rootFileName,
-                bool&         _successful,
-                RunLog&       _log
-               );
-
-    void  Write (ostream&      o,
-                 const KKStr&  rootFileName,
-                 bool&         _successful,
-                 RunLog&       log
-                );
 
 
     virtual  void  ReadXML (XmlStream&      s,
@@ -519,39 +474,6 @@ typedef  struct svm_node*     XSpacePtr;
                                  kkint32&          numOfWinners,
                                  bool&             knownClassOneOfTheWinners
                                 );
-
-
-    void  Read         (istream&  i,
-                        RunLog&   log
-                       );
-
-    void  ReadHeader   (istream&  i,
-                        RunLog&   log
-                       );
-
-    void  ReadOneVsOne (istream&  i,
-                        RunLog&   log
-                       );
-
-    void  ReadOneVsAll (istream&  i,
-                        RunLog&   log
-                       );
-
-    void  ReadOneVsAllEntry (istream&  i,
-                             kkint32   modelIDX,
-                             RunLog&   log
-                            );
- 
-    void  ReadBinaryCombos (istream&  i,
-                            RunLog&   log
-                           );
-
-
-    void  ReadSkipToSection (istream&  i, 
-                             KKStr     sectName,
-                             bool&     sectionFound,
-                             RunLog&   log
-                            );
 
 
     ClassAssignments       assignments;

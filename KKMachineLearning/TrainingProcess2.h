@@ -329,7 +329,8 @@ namespace KKMLL
     KKStr                        configFileName;           /**< The directory path where this file is actually located will be added to this name. */
 
     KKStr                        configFileNameSpecified;  /**< This will be the ConfigFileName specified by caller before the directory
-                                                          * that is added for actual location of config file. */
+                                                            * that is added for actual location of config file.
+                                                            */
 
     kkint32                      duplicateCount;
     kkint32                      duplicateDataCount;
@@ -352,11 +353,12 @@ namespace KKMLL
 
     KKStr                        savedModelName;
 
+    TrainingProcess2ListPtr      subTrainingProcesses;
+
     FeatureVectorListPtr         trainingExamples;  /**< All Images Loaded. Own's all trainingExamples. All other ImageList's will only point to
                                                      * these trainingExamples.
                                                      */
 
-    TrainingProcess2ListPtr      subTrainingProcesses;
     bool                         weOwnMLClasses;
     bool                         weOwnTrainingExamples;
   };  /* TrainingProcess2 */
