@@ -165,8 +165,6 @@ namespace  KKB
 
   typedef  XmlAttributeList*  XmlAttributeListPtr;
 
-
-
   class  XmlTag
   {
   public:

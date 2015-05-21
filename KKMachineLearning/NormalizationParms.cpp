@@ -632,6 +632,7 @@ void  NormalizationParms::WriteXML (const KKStr&  varName,
 
   XmlTag  endTag ("NormalizationParms", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
+  o << endl;
 }
 
 

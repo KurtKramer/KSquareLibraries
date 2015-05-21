@@ -175,7 +175,9 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
   {
     if  (idx.StartsWith (rootDir))
     {
-      tempDirectories.push_back (idx.SubStrPart (rootDir.Len ()));
+      KKStr  rootPart = idx.SubStrPart (rootDir.Len ());
+      rootPart.ChopFirstChar ();
+      tempDirectories.push_back (rootPart);
     }
     else
     {

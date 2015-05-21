@@ -195,7 +195,7 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
           lastDelimiter = ch;
           break;
         }
-        ++endPos;
+        ++nextPos;
       }
     }  
     return  token;

@@ -716,10 +716,20 @@ KKStr  XmlTag::ToString ()  const
 }
 
 
+kkint32  xmlLevel = 0;
+
 
 void  XmlTag::WriteXML (ostream& o)
 {
+  if  (TagType () == TagTypes::tagEnd)
+    --xmlLevel;
+
+  for  (kkint32 x = 0;  x < xmlLevel;  ++x)
+    o << "  ";
   o << ToString ();
+
+  if  (this->TagType () == TagTypes::tagStart)
+    ++xmlLevel;
 }  /* WriteXML */
 
 
