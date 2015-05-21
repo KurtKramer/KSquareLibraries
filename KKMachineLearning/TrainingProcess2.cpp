@@ -155,6 +155,8 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
       trainer->SaveTrainingProcess (log);
     }
 
+    trainingExamples = NULL;
+
     return trainer;
   }
 
@@ -287,6 +289,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
 
   delete  levelSpecificConfig;
   levelSpecificConfig = NULL;
+  trainingExamples = NULL;
 
   return  trainer;
 }  /* CreateTrainingProcessForLevel */
@@ -411,11 +414,6 @@ TrainingProcess2::TrainingProcess2 ():
 
 
 
-
-
-
-
-
 TrainingProcess2::~TrainingProcess2 ()
 {
   cout << "TrainingProcess2::~TrainingProcess2  for Config[" << configFileName << "]" << endl;
@@ -502,7 +500,13 @@ void  TrainingProcess2::BuildTrainingProcess (TrainingConfiguration2Const*  _con
 
   _log.Level (20) << "TrainingProcess2   Building Support Vector Machine";
 
-  configOurs = new TrainingConfiguration2 (*_config);
+  if  (weOwnTrainingExamples)
+  {
+    delete  trainingExamples;
+    trainingExamples = NULL;
+  }
+
+  configOurs = _config->Duplicate ();
   config = configOurs;
 
   configFileName = config->ConfigFileNameSpecified ();
@@ -781,7 +785,6 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
     FeatureVectorListPtr  examplesThisClass 
       = ExtractFeatures (config, *mlClasses, trainingClass, latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag, log);
 
-
     if  (latestTimeStamp > latestImageTimeStamp)
       latestImageTimeStamp = latestTimeStamp;
 
@@ -796,6 +799,9 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
     else
     {
       trainingExamples->AddQueue (*examplesThisClass);
+      examplesThisClass->Owner (false);
+      delete  examplesThisClass;
+      examplesThisClass = NULL;
     }
   }
 
@@ -1149,7 +1155,7 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
     fvFactoryProducer->Name ().WriteXML ("FvFactoryProducer", o);
 
   if  (mlClasses)
-    mlClasses->WriteXML ("MlClasses", o);
+    XmlElementMLClassNameList::WriteXML (*mlClasses, "MLClasses", o);
 
   if  (model)
     model->WriteXML ("Model", o);
@@ -1230,27 +1236,31 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("ConfigFileName")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
         configFileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
 
-      else if  (varName.EqualIgnoreCase ("Config"))
+      else if  (varName.EqualIgnoreCase ("Config") )
       {
         delete  configOurs;
-        configOurs = dynamic_cast<XmlElementTrainingConfiguration2Ptr> (e)->TakeOwnership ();
-        config = configOurs;
-        if  ((config != NULL)  &&  (fvFactoryProducer == NULL))
+        XmlElementTrainingConfiguration2Ptr  xmlConfigElement = dynamic_cast<XmlElementTrainingConfiguration2Ptr> (e);
+        if  (xmlConfigElement)
         {
-          fvFactoryProducer = config->FvFactoryProducer (log);
-          fileDesc = fvFactoryProducer->FileDesc ();
+          configOurs = xmlConfigElement->TakeOwnership ();
+          config = configOurs;
+          if  ((config != NULL)  &&  (fvFactoryProducer == NULL))
+          {
+            fvFactoryProducer = config->FvFactoryProducer (log);
+            fileDesc = fvFactoryProducer->FileDesc ();
+          }
         }
       }
 
-      else if  (varName.EqualIgnoreCase ("FvFactoryProducer")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
+      else if  (varName.EqualIgnoreCase ("FvFactoryProducer"))
       {
-        fvFactoryProducer = FactoryFVProducer::LookUpFactory (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
+        fvFactoryProducer = FactoryFVProducer::LookUpFactory (e->ToKKStr ());
         if  (fvFactoryProducer)
           fileDesc = fvFactoryProducer->FileDesc ();
       }
 
-      else if  (varName.EqualIgnoreCase ("FeaturesAlreadyNormalized")  &&  (typeid (*e) == typeid (XmlElementBool)))
-        featuresAlreadyNormalized = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
+      else if  (varName.EqualIgnoreCase ("FeaturesAlreadyNormalized"))
+        featuresAlreadyNormalized = e->ToBool ();
 
       else if  (varName.EqualIgnoreCase ("MlClasses")  &&  (typeid (*e) == typeid (XmlElementMLClassNameList)))
       {
@@ -1260,16 +1270,20 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
         weOwnMLClasses= true;
       }
 
-      else if  (varName.EqualIgnoreCase ("Model")  &&  (typeid (*e) == typeid (XmlElementModel)))
+      else if  (varName.EqualIgnoreCase ("Model"))
       {
         delete  model;
-        model = dynamic_cast<XmlElementModelPtr> (e)->TakeOwnership ();
-        if  (!model->ValidModel ())
+        XmlElementModelPtr  xmlElementModel = dynamic_cast<XmlElementModelPtr> (e);
+        if  (xmlElementModel)
         {
-          errorsFound = true;
-          log.Level (-1) << endl
-            << "TrainingProcess2::ReadXML   ***ERROR***    Loaded Model is Invalid" << endl
-            << endl;
+          model = xmlElementModel->TakeOwnership ();
+          if  (!model->ValidModel ())
+          {
+            errorsFound = true;
+            log.Level (-1) << endl
+              << "TrainingProcess2::ReadXML   ***ERROR***    Loaded Model is Invalid" << endl
+              << endl;
+          }
         }
       }
 

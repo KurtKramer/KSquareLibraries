@@ -159,18 +159,39 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
                                ostream&      o
                               )  const
 {
+  WriteXML (varName, "", o);
+}
+
+void  TrainingClass::WriteXML (const KKStr&  varName,
+                               const KKStr&  rootDir,
+                               ostream&      o
+                              )  const
+{
   bool  noDirectories = false;
   bool  onlyOneDirectory = false;
 
-  if  (directories.size () == 1)  
+  VectorKKStr  tempDirectories;
+  for  (auto  idx: directories)
   {
-    if  ((directories[0].EqualIgnoreCase (mlClass->Name ()))  ||  (directories[0].Empty ()))
+    if  (idx.StartsWith (rootDir))
+    {
+      tempDirectories.push_back (idx.SubStrPart (rootDir.Len ()));
+    }
+    else
+    {
+      tempDirectories.push_back (idx);
+    }
+  }
+
+  if  (tempDirectories.size () == 1)  
+  {
+    if  ((tempDirectories[0].EqualIgnoreCase (mlClass->Name ()))  ||  (tempDirectories[0].Empty ()))
       noDirectories = true;
     else
       onlyOneDirectory = true;
   }
 
-  else  if  (directories.size () < 1)
+  else  if  (tempDirectories.size () < 1)
     noDirectories = true;
 
   XmlTag::TagTypes  startTagType = XmlTag::TagTypes::tagEmpty;
@@ -201,7 +222,7 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
 
   if  (startTagType == XmlTag::TagTypes::tagStart)
   {
-    for  (auto idx: directories)
+    for  (auto idx: tempDirectories)
       idx.WriteXML ("Directory", o);
 
     XmlTag  endTag ("TrainingClass", XmlTag::TagTypes::tagEnd);
@@ -387,11 +408,14 @@ void  TrainingClassList::WriteXML (const KKStr&  varName,
   if  (!rootDir.Empty ())
     rootDir.WriteXML ("RootDir", o);
 
+  KKStr  rootDirExpanded = osSubstituteInEnvironmentVariables (rootDir);
+
   TrainingClassList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     TrainingClassPtr  tc = *idx;
-    XmlElementTrainingClass::WriteXML (*tc, KKStr::EmptyStr (), o);
+    tc->WriteXML ("TrainingClass", rootDirExpanded, o);
+    //XmlElementTrainingClass::WriteXML (*tc, KKStr::EmptyStr (), o);
   }
 
   XmlTag  tagEnd ("TrainingClassList", XmlTag::TagTypes::tagEnd);

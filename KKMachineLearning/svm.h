@@ -167,26 +167,9 @@ struct SvmModel233
   svm_node*          xSpace;    // Needed when we load from data file.
   bool               weOwnXspace;
 
-  SvmModel233 ()
-  {
-    margin        = NULL;
-    featureWeight = NULL;
-    SVIndex       = NULL;
-    nonSVIndex    = NULL;
-    label         = NULL;
-    nSV           = NULL;
-    SV            = NULL;
-    sv_coef       = NULL;
-    rho           = NULL;
-    kValueTable   = NULL;
-    nr_class      = -1;
-    l             = -1;
-    numNonSV      = -1;
-    weight        = -1;
-    dim           = -1;
-    weOwnXspace = false;
-  }
+  SvmModel233 ();
 
+  ~SvmModel233 ();
 
   SvmModel233 (const SvmModel233& _model)
   {
@@ -194,75 +177,10 @@ struct SvmModel233
   }
 
 
+  kkint32  MemoryConsumedEstimated ()  const;
+  
 
-  kkint32  MemoryConsumedEstimated ()  const
-  {
-    kkint32  memoryConsumedEstimated = sizeof (SvmModel233)
-      +  param.MemoryConsumedEstimated ()
-      +  (kkint32)exampleNames.size () * 40;
-
-    if  (SV)             memoryConsumedEstimated  += sizeof (svm_node*) * l;
-    if  (sv_coef)        memoryConsumedEstimated  += (nr_class - 1) * sizeof (double*) + l * (nr_class - 1) * sizeof (double);
-    if  (rho)            memoryConsumedEstimated  += l * sizeof (double);
-    if  (label)          memoryConsumedEstimated  += nr_class * sizeof (kkint32);
-    if  (nSV)            memoryConsumedEstimated  += nr_class * sizeof (kkint32);
-    if  (featureWeight)  memoryConsumedEstimated  += dim * sizeof (double);
-    if  (kValueTable)    memoryConsumedEstimated  += sizeof (double) * l;
-    if  ((xSpace != NULL) &&  weOwnXspace)  
-      memoryConsumedEstimated  += sizeof (svm_node) * l;
-
-    return  memoryConsumedEstimated;
-  }
-
-
-  void  Dispose ()
-  {
-    if  (weOwnXspace)
-    {
-      delete  xSpace;  
-      xSpace = NULL;
-    }
-
-    if  (sv_coef)
-    {
-      for  (kkint32 i = 0;  i < (nr_class - 1);  i++)
-      {
-        free (sv_coef[i]);
-        sv_coef[i] = NULL;
-      }
-    }
-
-    free (SV);       SV      = NULL;
-    free (sv_coef);  sv_coef = NULL;
-    free (rho);      rho     = NULL;
-    free (label);    label   = NULL;
-    free (nSV);      nSV     = NULL;
-
-    //luo add
-    if  (dim > 0 )
-    {
-      delete[] (featureWeight);
-      featureWeight = NULL;
-    }
-
-    free (SVIndex);     SVIndex    = NULL;
-    free (nonSVIndex);  nonSVIndex = NULL;
-    delete[]  margin;   margin     = NULL;
-
-    if  (kValueTable)
-    {
-      delete[]  kValueTable;  kValueTable = NULL;
-    }
-  }
-
-
-  KKStr  SupportVectorName (kkint32 svIDX)
-  {
-    if  (svIDX < (kkint32)exampleNames.size ())
-      return  exampleNames[svIDX];
-    else
-      return  "SV" + StrFormatInt (svIDX, "ZZZ#");
-  }
+  KKStr  SupportVectorName (kkint32 svIDX);
 
 
   virtual  void  ReadXML (XmlStream&      s,
@@ -275,6 +193,9 @@ struct SvmModel233
                            ostream&      o
                           )  const;
 
+
+private:
+  void  Dispose ();
 };  /* SvmModel233 */
 
 

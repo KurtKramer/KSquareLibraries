@@ -125,6 +125,11 @@ namespace KKMLL
      ~TrainingConfiguration2 ();
 
 
+
+     virtual
+    TrainingConfiguration2Ptr  Duplicate ()  const;
+
+
      virtual
      FactoryFVProducerPtr   DefaultFeatureVectorProducer (RunLog&  runLog)  const;
 

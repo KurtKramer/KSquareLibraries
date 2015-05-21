@@ -291,6 +291,12 @@ typedef  struct svm_node*     XSpacePtr;
     FeatureVectorListPtr*   BreakDownExamplesByClass (FeatureVectorListPtr  examples);
 
 
+    void  DeleteModels ();
+    void  DeleteXSpaces ();
+
+    void  AllocateModels ();
+    void  AllocateXSpaces ();
+
     void  BuildClassIdxTable ();
 
 

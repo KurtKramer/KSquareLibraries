@@ -306,38 +306,8 @@ SVMModel::~SVMModel ()
 {
   kkint32  x;
 
-  if  (models)
-  {
-    for  (x = 0;  x < numOfModels;  x++)
-    {
-      if  (models[x] != NULL)
-      {
-        SvmDestroyModel (models[x]);
-   	    delete  [] models[x];
-        models[x] = NULL;
-      }
-    }
-
-    delete[]  models;
-    models = NULL;
-  }
-
-  if  (xSpaces)
-  {
-    for  (kkint32 x = 0;  x < numOfModels;  x++)
-    {
-      if  (xSpaces[x] != NULL)
-      {
-        free (xSpaces[x]);
-        xSpaces[x] = NULL;
-      }
-    }
-
-    delete[]  xSpaces;
-    xSpaces = NULL;
-    xSpacesTotalAllocated = 0;
-  }
-
+  DeleteModels ();
+  DeleteXSpaces ();
 
   if  (oneVsAllClassAssignments)
   {
@@ -352,7 +322,6 @@ SVMModel::~SVMModel ()
     delete  oneVsAllClassAssignments;
     oneVsAllClassAssignments = NULL;
   }
-
 
   delete  featureEncoder;  featureEncoder = NULL;
 
@@ -393,6 +362,71 @@ SVMModel::~SVMModel ()
   delete  [] predictXSpace;         predictXSpace        = NULL;
   delete  [] probabilities;         probabilities        = NULL;
   delete  [] votes;                 votes                = NULL;
+}
+
+
+
+void  SVMModel::DeleteModels ()
+{
+  if  (models)
+  {
+    for  (kkint32  x = 0;  x < numOfModels;  x++)
+    {
+      if  (models[x] != NULL)
+      {
+        SvmDestroyModel (models[x]);
+   	    delete  [] models[x];
+        models[x] = NULL;
+      }
+    }
+
+    delete[]  models;
+    models = NULL;
+  }
+}
+
+
+void  SVMModel::DeleteXSpaces ()
+{
+  if  (xSpaces)
+  {
+    for  (kkint32 x = 0;  x < numOfModels;  x++)
+    {
+      if  (xSpaces[x] != NULL)
+      {
+        free (xSpaces[x]);
+        xSpaces[x] = NULL;
+      }
+    }
+
+    delete[]  xSpaces;
+    xSpaces = NULL;
+    xSpacesTotalAllocated = 0;
+  }
+}
+
+
+
+
+
+
+void  SVMModel::AllocateModels ()
+{
+  models = new ModelPtr  [numOfModels];
+  {
+    for  (kkint32 x = 0;  x < numOfModels;  x++)
+      models[x]  = NULL;
+  }
+}
+
+
+void  SVMModel::AllocateXSpaces ()
+{
+  xSpaces = new XSpacePtr [numOfModels];
+  {
+    for  (kkint32 x = 0;  x < numOfModels;  x++)
+      xSpaces[x] = NULL;
+  }
 }
 
 
@@ -466,6 +500,9 @@ kkint32  SVMModel::MemoryConsumedEstimated ()  const
 
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
+
+
+
 
 
 
@@ -1810,10 +1847,8 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
     KKStr  svName = models[modelIDX][0]->SupportVectorName (svIDX);
     candidates.push_back (ProbNamePair (svName, deltaProb));
 
-    subSetModel->Dispose ();
-
     delete  subSetModel;  subSetModel = NULL;
-    delete  subSetProb;   subSetProb = NULL;
+    delete  subSetProb;   subSetProb  = NULL;
   }
 
   sort (candidates.begin (), candidates.end (), PairCompareOperator);
@@ -2376,7 +2411,6 @@ void  SVMModel::WriteXML (const KKStr&  varName,
     }
   }
 
-
   XmlTag  endTag ("SVMModel", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
@@ -2400,8 +2434,13 @@ void  SVMModel::ReadXML (XmlStream&      s,
   delete  models;                 models                = NULL;
   delete  binaryFeatureEncoders;  binaryFeatureEncoders = NULL;
 
+  DeleteModels ();
+  DeleteXSpaces ();
+
   numOfClasses = 0;
   numOfModels  = 0;
+
+  DateTime  timeSaved;
 
   bool  errorsFound = false;
   XmlTokenPtr  t = s.GetNextToken (log);
@@ -2425,6 +2464,9 @@ void  SVMModel::ReadXML (XmlStream&      s,
         {
           if  (idx.first.EqualIgnoreCase ("RootFileName"))
             rootFileName = idx.second;
+
+          else if  (idx.first.EqualIgnoreCase ("Time"))
+            timeSaved = DateTime (idx.second);
 
           else if  (idx.first.EqualIgnoreCase ("NumOfModels"))
             numOfModels = idx.second.ToInt32 ();
@@ -2454,7 +2496,6 @@ void  SVMModel::ReadXML (XmlStream&      s,
           }
         }
 
-
         if  (numOfModels < 1)
         {
           log.Level (-1) << endl
@@ -2464,6 +2505,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
         }
         else
         {
+          DeleteModels ();
           binaryParameters       = new BinaryClassParmsPtr [numOfModels];
           models                 = new ModelPtr            [numOfModels];
           binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
@@ -2484,7 +2526,8 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
       else if  (varName.EqualIgnoreCase ("OneVsOneModel")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
-        delete   models[0][0];
+        DeleteModels ();
+        AllocateModels ();
         models[0][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
       }
 

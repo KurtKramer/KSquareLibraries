@@ -766,7 +766,7 @@ void  SVMparam::WriteXML (const KKStr&  varName,
                           ostream&      o
                          )  const
 {
-  XmlTag  startTag ("SVMModel",  XmlTag::TagTypes::tagStart);
+  XmlTag  startTag ("SVMparam",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
@@ -796,9 +796,10 @@ void  SVMparam::WriteXML (const KKStr&  varName,
 
   XmlElementVectorFloat::WriteXML (probClassPairs, "probClassPairs", o);
 
-  binaryParmsList->WriteXML ("binaryParmsList", o);
+  if  (binaryParmsList)
+    binaryParmsList->WriteXML ("binaryParmsList", o);
 
-  XmlTag  endTag ("SVMModel", XmlTag::TagTypes::tagEnd);
+  XmlTag  endTag ("SVMparam", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */

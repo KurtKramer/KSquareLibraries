@@ -79,6 +79,8 @@ ModelParam::ModelParam  (const ModelParam&  _param):
 
 ModelParam::~ModelParam  ()
 {
+  delete  selectedFeatures;
+  selectedFeatures = NULL;
 }
 
 

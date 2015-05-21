@@ -39,8 +39,104 @@ using namespace KKMLL;
 namespace  SVM233
 {
 
+SvmModel233::SvmModel233 ()
+{
+  margin        = NULL;
+  featureWeight = NULL;
+  SVIndex       = NULL;
+  nonSVIndex    = NULL;
+  label         = NULL;
+  nSV           = NULL;
+  SV            = NULL;
+  sv_coef       = NULL;
+  rho           = NULL;
+  kValueTable   = NULL;
+  nr_class      = -1;
+  l             = -1;
+  numNonSV      = -1;
+  weight        = -1;
+  dim           = -1;
+  weOwnXspace = false;
+}
 
 
+SvmModel233::~SvmModel233 ()
+{
+  Dispose ();
+}
+
+
+kkint32  SvmModel233::MemoryConsumedEstimated ()  const
+{
+  kkint32  memoryConsumedEstimated = sizeof (SvmModel233)
+    +  param.MemoryConsumedEstimated ()
+    +  (kkint32)exampleNames.size () * 40;
+
+  if  (SV)             memoryConsumedEstimated  += sizeof (svm_node*) * l;
+  if  (sv_coef)        memoryConsumedEstimated  += (nr_class - 1) * sizeof (double*) + l * (nr_class - 1) * sizeof (double);
+  if  (rho)            memoryConsumedEstimated  += l * sizeof (double);
+  if  (label)          memoryConsumedEstimated  += nr_class * sizeof (kkint32);
+  if  (nSV)            memoryConsumedEstimated  += nr_class * sizeof (kkint32);
+  if  (featureWeight)  memoryConsumedEstimated  += dim * sizeof (double);
+  if  (kValueTable)    memoryConsumedEstimated  += sizeof (double) * l;
+  if  ((xSpace != NULL) &&  weOwnXspace)  
+    memoryConsumedEstimated  += sizeof (svm_node) * l;
+
+  return  memoryConsumedEstimated;
+}
+
+
+
+
+void  SvmModel233::Dispose ()
+{
+  if  (weOwnXspace)
+  {
+    delete  xSpace;  
+    xSpace = NULL;
+  }
+
+  if  (sv_coef)
+  {
+    for  (kkint32 i = 0;  i < (nr_class - 1);  i++)
+    {
+      free (sv_coef[i]);
+      sv_coef[i] = NULL;
+    }
+  }
+
+  free (SV);       SV      = NULL;
+  free (sv_coef);  sv_coef = NULL;
+  free (rho);      rho     = NULL;
+  free (label);    label   = NULL;
+  free (nSV);      nSV     = NULL;
+
+  //luo add
+  if  (dim > 0 )
+  {
+    delete[] (featureWeight);
+    featureWeight = NULL;
+  }
+
+  free (SVIndex);     SVIndex    = NULL;
+  free (nonSVIndex);  nonSVIndex = NULL;
+  delete[]  margin;   margin     = NULL;
+
+  if  (kValueTable)
+  {
+    delete[]  kValueTable;  kValueTable = NULL;
+  }
+}
+
+
+
+KKStr  SvmModel233::SupportVectorName (kkint32 svIDX)
+{
+  if  (svIDX < (kkint32)exampleNames.size ())
+    return  exampleNames[svIDX];
+  else
+    return  "SV" + StrFormatInt (svIDX, "ZZZ#");
+}
 
 
 
@@ -287,7 +383,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
       p.TrimWhiteSpace (" ");
 
       KKStr  lineName = p.GetNextToken ("\t");
-      if  (!lineName.EqualIgnoreCase ("SuportVectorNamed")  ||  !lineName.EqualIgnoreCase ("SuportVector"))
+      if  (!lineName.EqualIgnoreCase ("SuportVectorNamed")  &&  !lineName.EqualIgnoreCase ("SuportVector"))
       {
         log.Level (-1) << endl
           << "SvmModel233::ReadXML   ***ERROR***   Invalid Content: " << lineName << endl
@@ -3954,7 +4050,6 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
   {
     if  (model)
     {
-      model->Dispose ();
       delete  model;
       model = NULL;
     }
@@ -4576,8 +4671,8 @@ svm_problem*  SVM233::svm_BuildProbFromTwoClassModel  (const SvmModel233*    mod
 
 void  SVM233::svm_destroy_model  (SvmModel233*  model)
 {
-  model->Dispose ();
   delete model;
+  model = NULL;
 }
 
 

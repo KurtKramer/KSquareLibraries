@@ -622,9 +622,9 @@ void  NormalizationParms::WriteXML (const KKStr&  varName,
   startTag.WriteXML (o);
   o << endl;
 
-  XmlElementInt32::WriteXML  (numOfFeatures,             "NumOfFeatures",            o);
-  XmlElementDouble::WriteXML (numOfExamples,             "NumOfExamples",            o);
-  XmlElementBool::WriteXML   (normalizeNominalFeatures,  "NormalizeNominalFeatures", o);
+  XmlElementInt32::WriteXML (numOfFeatures,             "NumOfFeatures",            o);
+  XmlElementFloat::WriteXML (numOfExamples,             "NumOfExamples",            o);
+  XmlElementBool::WriteXML  (normalizeNominalFeatures,  "NormalizeNominalFeatures", o);
 
   if  (fileDesc)   XmlElementFileDesc::WriteXML    (*fileDesc,             "FileDesc", o);
   if  (mean)       XmlElementArrayDouble::WriteXML (numOfFeatures, mean,   "Mean",     o);
@@ -651,28 +651,13 @@ void  NormalizationParms::ReadXML (XmlStream&  s,
       const KKStr&  className = e->SectionName ();
       const KKStr&  varName = e->VarName ();
       if  (varName.EqualIgnoreCase ("NumOfFeatures"))
-      {
-        XmlElementInt32Ptr  nf = dynamic_cast<XmlElementInt32Ptr>(e);
-        numOfFeatures = nf->Value ();
-      }
+        numOfFeatures = e->ToInt32 ();
 
       else if  (varName.EqualIgnoreCase ("NumOfExamples"))
-      {
-        XmlElementFloatPtr  noe = dynamic_cast<XmlElementFloatPtr>(e);
-        numOfExamples = noe->Value ();
-      }
-
-      else if  (varName.EqualIgnoreCase ("NumOfExamples"))
-      {
-        XmlElementFloatPtr  noe = dynamic_cast<XmlElementFloatPtr>(e);
-        numOfExamples = noe->Value ();
-      }
+        numOfExamples = e->ToFloat ();
 
       else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
-      {
-        XmlElementBoolPtr  b = dynamic_cast<XmlElementBoolPtr>(e);
-        normalizeNominalFeatures = b->Value ();
-      }
+        normalizeNominalFeatures - e->ToBool ();
 
       else if  (varName.EqualIgnoreCase ("FileDesc"))
       {

@@ -431,26 +431,6 @@ kkuint16 MLClass::NumHierarchialLevels ()  const
 
 
 
-void  MLClass::WriteXML (ostream& o)  const
-{
-  o << "<MLClass "
-    <<   "Name="             << name.QuotedStr ()                             << ","
-    <<   "ClassId="          << classId                                       << ","
-    <<   "UnDefined="        << (unDefined ? "Y":"N")                         << ","
-    <<   "Parent="           << ((parent == NULL) ? "\"\"" : parent->Name ()) << ","
-    <<   "CountFactor="      << countFactor                                   << ","
-    <<   "StoredOnDataBase=" << (storedOnDataBase ? "Y" : "N")                << ","
-    <<   "Description="      << description.QuotedStr ()                      << ","
-    <<   "Mandatory="        << (mandatory  ? "Y" :"N")                       << ","
-    <<   "Summarize="        << (summarize  ? "Y" :"N")
-    << " />"
-    << endl;
-}  /* WriteXML */
-
-
-
-
-
 MLClassPtr   MLClass::MLClassForGivenHierarchialLevel (kkuint16 level)  const
 {
   VectorKKStr  levelNames = name.Split ('_');
@@ -1306,23 +1286,6 @@ MLClassListPtr  MLClassList::BuildListFromDelimtedStr (const KKStr&  s,
 
 
 
-void   MLClassList::WriteXML (std::ostream&  o)  const
-{
-  o << "<MLClassList  NumOfClasses=" << QueueSize () << " >" << endl;
-
-  MLClassList::const_iterator  idx;
-  for  (idx = begin ();  idx != end ();  idx++)
-  {
-    MLClassPtr       ic = *idx;
-    ic->WriteXML (o);
-  }
-
-  o << "</MLClassList>" << endl;
-}  /* WriteXML */
-
-
-
-
 void  MLClassList::WriteXML (const KKStr&  varName,
                              ostream&      o
                             )  const
@@ -1331,6 +1294,8 @@ void  MLClassList::WriteXML (const KKStr&  varName,
   if  (!varName.Empty())
     startTag.AddAtribute ("VarName", varName);
   startTag.AddAtribute ("Count", (kkint32)size ());
+  startTag.WriteXML (o);
+  o << endl;
 
   MLClassList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
@@ -1745,16 +1710,21 @@ void  MLClassIndexList::ReadXML (XmlStream&      s,
   largestIndex = -1;
   shortIdx.clear ();
 
-  XmlContentPtr  content = s.GetNextContent (log);
-  while  (content)
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
   {
-    if  (content->Content ())
+    if  (typeid (*t) == typeid (XmlContent))
     {
-      KKStrConstPtr  text = content->Content ();
-      ParseClassIndexList (*text, log);
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c  &&  c->Content ())
+      {
+        KKStrConstPtr  text = c->Content ();
+        ParseClassIndexList (*text, log);
+      }
     }
-    delete  content;
-    content = s.GetNextContent (log);
+
+    delete  t;
+    t = s.GetNextToken (log);
   }
 }  /* ReadXML */
 

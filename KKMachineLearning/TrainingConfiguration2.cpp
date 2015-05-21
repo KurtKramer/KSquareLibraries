@@ -458,6 +458,12 @@ TrainingConfiguration2::~TrainingConfiguration2 ()
 
 
 
+TrainingConfiguration2Ptr  TrainingConfiguration2::Duplicate ()  const
+{
+  return new TrainingConfiguration2 (*this);
+}
+
+
 
 FactoryFVProducerPtr  TrainingConfiguration2::FvFactoryProducer (RunLog&  log) const  
 {

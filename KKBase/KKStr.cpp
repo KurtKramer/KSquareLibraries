@@ -1828,9 +1828,9 @@ void  KKStr::Append (const char* buff)
 
 
 
-void  KKStr::Append (const char*   buff,
-                           kkuint32  buffLen
-                    )
+void  KKStr::Append (const char*  buff,
+                     kkuint32     buffLen
+                   )
 {
   #ifdef  KKDEBUG
   ValidateLen ();
@@ -2261,8 +2261,8 @@ void  KKStr::RightPad (kkint32  width,
       if  (neededSpace >= StrIntMax)
       {
         cerr << std::endl 
-             << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
-             << "                neededSpace[" << neededSpace << "]" << std::endl
+             << "KKStr::RightPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
+             << "                  neededSpace[" << neededSpace << "]" << std::endl
              << std::endl;
         return;
       }
@@ -2311,8 +2311,8 @@ void  KKStr::LeftPad (kkint32 width,
     if  (neededSpace >= StrIntMax)
     {
       cerr << std::endl 
-           << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
-           << "                neededSpace[" << neededSpace << "]" << std::endl
+           << "KKStr::LeftPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
+           << "                 neededSpace[" << neededSpace << "]" << std::endl
            << std::endl;
       return;
     }
@@ -4402,6 +4402,9 @@ void  KKStr::ReadXML (XmlStream&      s,
                      )
 {
   kkuint16  expectedLen = tag->AttributeValueInt32 ("Len");
+  delete val;
+  val = NULL;
+  allocatedSize = 0;
   if  (expectedLen > 0)
     AllocateStrSpace (expectedLen);
 

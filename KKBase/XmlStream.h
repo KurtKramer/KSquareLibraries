@@ -308,6 +308,13 @@ namespace  KKB
     KKStrConstPtr  AttributeValue (const char*   attributeName);
     KKStrConstPtr  AttributeValue (const KKStr&  attributeName);
 
+    // derived classes may choose to implement any of the following as per what makes sense.
+    virtual  bool     ToBool   () const {return  false;}
+    virtual  KKStr    ToKKStr  () const {return  nameTag->ToString ();}
+    virtual  double   ToDouble () const {return  0.0;}
+    virtual  float    ToFloat  () const {return  0.0f;}
+    virtual  kkint32  ToInt32  () const {return  0;}
+
   private:
     XmlTagPtr  nameTag;
   };  /* XmlElement */
@@ -452,6 +459,7 @@ namespace  KKB
     {
       t.WriteXML (varName, o);
     }
+
   private:
     T*  value;
   };  /* XmlElementTemplate */
@@ -509,6 +517,12 @@ namespace  KKB
                     ostream&      o
                    );
 
+    virtual  bool     ToBool   () const {return  value;}
+    virtual  KKStr    ToKKStr  () const {return  value ? "True" : "False";}
+    virtual  double   ToDouble () const {return  (double)value;}
+    virtual  float    ToFloat  () const {return  (float)value;}
+    virtual  kkint32  ToInt32  () const {return  (kkint32)value;}
+
   private:
     bool  value;
   };
@@ -538,15 +552,16 @@ namespace  KKB
                     ostream&         o
                    );
 
+    virtual  bool     ToBool   () const {return  (value.Seconds () > 0);}
+    virtual  KKStr    ToKKStr  () const {return  value.YYYY_MM_DD_HH_MM_SS ();}
+    virtual  double   ToDouble () const {return  (double)value.Seconds ();}
+    virtual  float    ToFloat  () const {return  (float)value.Seconds ();}
+    virtual  kkint32  ToInt32  () const {return  (kkint32)value.ToDays ();}
+    
   private:
     DateTime  value;
   };
   typedef  XmlElementDateTime*  XmlElementDateTimePtr;
-
-
-
-
-
 
 
 
@@ -658,9 +673,22 @@ namespace  KKB
 
 
 
+  class  XmlElementKKStr: public  XmlElementTemplate<KKStr>
+  {
+  public:
+    XmlElementKKStr (XmlTagPtr   tag,
+                     XmlStream&  s,
+                     RunLog&     log
+                    ):
+      XmlElementTemplate<KKStr> (tag, s, log)
+    {}
 
-
-  typedef   XmlElementTemplate<KKStr>  XmlElementKKStr;
+    virtual  bool     ToBool   () const {return  (Value () ? Value ()->ToBool () : false);}
+    virtual  KKStr    ToKKStr  () const {return  (Value () ? *Value () : KKStr::EmptyStr ());}
+    virtual  double   ToDouble () const {return  (Value () ? Value ()->ToDouble () : 0.0);}
+    virtual  float    ToFloat  () const {return  (Value () ? Value ()->ToFloat ()  : 0.0f);}
+    virtual  kkint32  ToInt32  () const {return  (Value () ? Value ()->ToInt32 ()  : 0);}
+  };
   typedef  XmlElementKKStr*  XmlElementKKStrPtr;
   XmlFactoryPtr  XmlElementKKStrFactoryInstance ();
 
@@ -759,29 +787,34 @@ namespace  KKB
 
 
 
-#define  XmlElementBuiltInTypeHeader(T,TypeName)       \
-                                                       \
-  class  XmlElement##TypeName:  public  XmlElement     \
-  {                                                    \
-  public:                                              \
-    XmlElement##TypeName (XmlTagPtr   tag,             \
-                          XmlStream&  s,               \
-                          RunLog&     log              \
-                         );                            \
-                                                       \
-    virtual  ~XmlElement##TypeName ();                 \
-                                                       \
-    T  Value ()  const  {return value;}                \
-                                                       \
-    static                                             \
-    void  WriteXML (T             d,                   \
-                    const KKStr&  varName,             \
-                    ostream&      o                    \
-                   );                                  \
-                                                       \
-  private:                                             \
-    T   value;                                         \
-  };                                                   \
+#define  XmlElementBuiltInTypeHeader(T,TypeName)            \
+                                                            \
+  class  XmlElement##TypeName:  public  XmlElement          \
+  {                                                         \
+  public:                                                   \
+    XmlElement##TypeName (XmlTagPtr   tag,                  \
+                          XmlStream&  s,                    \
+                          RunLog&     log                   \
+                         );                                 \
+                                                            \
+    virtual  ~XmlElement##TypeName ();                      \
+                                                            \
+    T  Value ()  const  {return value;}                     \
+                                                            \
+    static                                                  \
+    void  WriteXML (T             d,                        \
+                    const KKStr&  varName,                  \
+                    ostream&      o                         \
+                   );                                       \
+                                                            \
+    virtual  bool     ToBool   () const;                    \
+    virtual  KKStr    ToKKStr  () const;                    \
+    virtual  double   ToDouble () const;                    \
+    virtual  float    ToFloat  () const;                    \
+    virtual  kkint32  ToInt32  () const;                    \
+  private:                                                  \
+    T   value;                                              \
+  };                                                        \
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 
 

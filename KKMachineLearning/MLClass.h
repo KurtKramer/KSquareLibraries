@@ -197,8 +197,6 @@ namespace KKMLL
     bool            UnDefined ()  const  {return  unDefined;}
     void            UnDefined (bool _unDefined)  {unDefined = _unDefined;}
 
-    void            WriteXML (std::ostream& o)  const;
-    
     void            WriteXML (const KKStr&  varName,
                               ostream&      o
                              )  const;
@@ -391,8 +389,6 @@ namespace KKMLL
     KKStr       ToTabDelimitedStr ()  const;
 
     KKStr       ToCommaDelimitedQuotedStr ()  const;
-
-    void        WriteXML (std::ostream&  o)  const;
 
     void        WriteXML (const KKStr&  varName,
                           ostream&      o

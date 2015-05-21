@@ -5,21 +5,18 @@
 
 /*  Originally developed in Borland Pascal 1986;  converted to c++ in 1995 */
 
-#include  "FirstIncludes.h"
-
-#include  <iostream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "KKBaseTypes.h"
-#include  "KKStrParser.h"
+#include "KKBaseTypes.h"
+#include "KKStrParser.h"
 using namespace KKB;
 
-
-#include  "DateTime.h"
+#include "DateTime.h"
 
 
 const char*  DateType::monthlyNames[] = 
