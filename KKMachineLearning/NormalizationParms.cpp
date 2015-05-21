@@ -657,7 +657,7 @@ void  NormalizationParms::ReadXML (XmlStream&  s,
         numOfExamples = e->ToFloat ();
 
       else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
-        normalizeNominalFeatures - e->ToBool ();
+        normalizeNominalFeatures = e->ToBool ();
 
       else if  (varName.EqualIgnoreCase ("FileDesc"))
       {

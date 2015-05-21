@@ -375,7 +375,7 @@ void  SVMModel::DeleteModels ()
       if  (models[x] != NULL)
       {
         SvmDestroyModel (models[x]);
-   	    delete  [] models[x];
+   	    delete[] models[x];
         models[x] = NULL;
       }
     }
@@ -415,7 +415,7 @@ void  SVMModel::AllocateModels ()
   models = new ModelPtr  [numOfModels];
   {
     for  (kkint32 x = 0;  x < numOfModels;  x++)
-      models[x]  = NULL;
+      models[x]  = new SvmModel233*[1];
   }
 }
 

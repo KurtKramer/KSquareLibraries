@@ -413,43 +413,39 @@ void  ClassProbList::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  ClassProbList::ReadXML (XmlStream&      s,
                               XmlTagConstPtr  tag,
                               RunLog&         log
                              )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = NULL;
+  while  (true)
   {
-    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
-    {
-      XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
-      if  (!content)
-        continue;
-      if  (content->Content ()->Empty ())
-        continue;
-
-      KKStrParser p (content->Content ());
-      p.TrimWhiteSpace (" ");
-      KKStr    className = p.GetNextToken ("\t");
-      double   probability = p.GetNextTokenDouble ("\t");
-      float    votes = p.GetNextTokenFloat ("\t");
-      if  (className.Empty ())
-        continue;
-
-      if  ((probability < 0.0f)  ||  (probability > 1.0f))
-      {
-        log.Level (-1)
-          << "ClassProbList::ReadXML  ***ERROR***   Probability: " << probability << "  is out of range for Class: " << className << endl
-          << endl;
-      }
-
-      PushOnBack (new ClassProb (MLClass::CreateNewMLClass (className), probability, votes));
-    }
     delete  t;
-    t = s.GetNextToken (log);
+    XmlTokenPtr  t = s.GetNextToken (log);
+    if  (!t)  break;
+    if  (typeid (*t) != typeid (XmlContent))
+      continue;
+    XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
+    if  ((content == NULL)  ||  (content->Content () == NULL)  ||  (content->Content ()->Empty ()))
+      continue;
+
+    KKStrParser p (*(content->Content ()));
+    p.TrimWhiteSpace (" ");
+    KKStr   className   = p.GetNextToken       ("\t");
+    double  probability = p.GetNextTokenDouble ("\t");
+    float   votes       = p.GetNextTokenFloat  ("\t");
+    if  (className.Empty ())
+      continue;
+
+    if  ((probability < 0.0f)  ||  (probability > 1.0f))
+    {
+      log.Level (-1)
+        << "ClassProbList::ReadXML  ***ERROR***   Probability: " << probability << "  is out of range for Class: " << className << endl
+        << endl;
+    }
+
+    PushOnBack (new ClassProb (MLClass::CreateNewMLClass (className), probability, votes));
   }
 
 }  /* ReadXML */

@@ -463,12 +463,54 @@ void  TrainingClassList::ReadXML (XmlStream&  s,
       }
     }
 
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */
 
 
-XmlFactoryMacro(TrainingClass)
+  class  XmlFactoryTrainingClass: public XmlFactory
+  {
+  public:
+    XmlFactoryTrainingClass (): XmlFactory ("TrainingClass") {}
+
+    virtual  XmlElementTrainingClass*  ManufatureXmlElement (XmlTagPtr   tag,
+                                                             XmlStream&  s,
+                                                             RunLog&     log
+                                                            )
+    {
+      return new XmlElementTrainingClass(tag, s, log);
+    }
+
+    static   XmlFactoryTrainingClass*   factoryInstance;
+
+    static   XmlFactoryTrainingClass*   FactoryInstance ()
+    {
+      if  (factoryInstance == NULL)
+      {                            
+        GlobalGoalKeeper::StartBlock ();
+        if  (!factoryInstance)
+        {
+          factoryInstance = new XmlFactoryTrainingClass ();
+          XmlFactory::RegisterFactory (factoryInstance);   
+        }                                                  
+        GlobalGoalKeeper::EndBlock ();                     
+       }                                                   
+      return  factoryInstance;                             
+    }                                                      
+  };                                                       
+                                                             
+  XmlFactoryTrainingClass*   XmlFactoryTrainingClass::factoryInstance
+                  = XmlFactoryTrainingClass::FactoryInstance ();
+
+
+
+
+
+
+
+
+
 XmlFactoryMacro(TrainingClassList)
 
 

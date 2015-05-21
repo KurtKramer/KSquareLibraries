@@ -192,6 +192,8 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
           tokenStream->PushTokenOnFront (new KKStr ("<" + tag->Name () + " />"));
         }
       }
+      delete  tag;
+      tag = NULL;
     }
   }
   else
@@ -590,6 +592,11 @@ XmlTag::XmlTag (const KKStr&  _name,
 }
 
 
+XmlTag::~XmlTag ()
+{
+}
+
+
 
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            const KKStr&  attributeValue
@@ -958,8 +965,6 @@ void   XmlFactoryManager::RegisterFactory  (XmlFactory*  factory)
 }
       
 
-
-
 XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
 {
   GlobalGoalKeeper::StartBlock ();
@@ -1003,11 +1008,9 @@ XmlElementBool::XmlElementBool (XmlTagPtr   tag,
 }
 
 
-
 XmlElementBool::~XmlElementBool ()
 {
 }
-
 
 
 bool  XmlElementBool::Value ()  const
@@ -1033,10 +1036,6 @@ void  XmlElementBool::WriteXML (const bool    b,
 XmlFactoryMacro(Bool)
 
 
-
-
-
-
 XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr   tag,
                                       XmlStream&  s,
                                       RunLog&     log
@@ -1053,7 +1052,6 @@ XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr   tag,
 }
                 
 
-
 XmlElementUnKnown::~XmlElementUnKnown ()
 {
   if  (value)
@@ -1064,7 +1062,6 @@ XmlElementUnKnown::~XmlElementUnKnown ()
     value = NULL;
   }
 }
-
 
 
 deque<XmlTokenPtr>*  XmlElementUnKnown::TakeOwnership ()
@@ -1083,8 +1080,6 @@ XmlFactoryPtr  KKB::XmlElementUnKnownFactoryInstance ()
 }
 
 
-
-
 XmlElementDateTime::XmlElementDateTime (XmlTagPtr   tag,
                                         XmlStream&  s,
                                         RunLog&     log
@@ -1095,15 +1090,10 @@ XmlElementDateTime::XmlElementDateTime (XmlTagPtr   tag,
   value = tag->AttributeValueDateTime ("Value");
 }
 
-
-
-                
+               
 XmlElementDateTime::~XmlElementDateTime ()  
 {
 }
-
-
-
 
 
 void  XmlElementDateTime::WriteXML (const DateTime&  d,
@@ -1134,8 +1124,6 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
 }
 
 
-
-
 XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
                                                   XmlStream&  s,
                                                   RunLog&     log
@@ -1153,7 +1141,7 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
       if  (c)
       {
-        KKStrParser p (c->Content ());
+        KKStrParser p (*(c->Content ()));
         p.TrimWhiteSpace (" ");
         
         while  (p.MoreTokens ())
@@ -1277,10 +1265,6 @@ XmlFactoryMacro(KeyValuePairs)
 
 
 
-
-
-
-
 XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
                                                               XmlStream&  s,           
                                                               RunLog&     log          
@@ -1317,6 +1301,7 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
       else
       {
         XmlElementArrayFloatPtr f = dynamic_cast<XmlElementArrayFloatPtr>(tok);
+        widths[rowCount] = f->Count ();
         value[rowCount] = f->TakeOwnership ();
       }
     }
@@ -1526,7 +1511,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
     {                                                                         \
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                    \
                                                                               \
-      KKStrParser p (c->Content ());                                          \
+      KKStrParser p (*(c->Content ()));                                       \
                                                                               \
       while  (p.MoreTokens ())                                                \
       {                                                                       \
@@ -1770,7 +1755,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
     {                                                                      \
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                 \
                                                                            \
-      KKStrParser p (c->Content ());                                       \
+      KKStrParser p (*(c->Content ()));                                    \
                                                                            \
       while  (p.MoreTokens ())                                             \
       {                                                                    \

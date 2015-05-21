@@ -176,8 +176,10 @@ namespace  KKB
     XmlTag (const KKStrConstPtr  tagStr);
 
     XmlTag (const KKStr&  _name,
-           TagTypes       _tagType
+            TagTypes      _tagType
            );
+
+    virtual  ~XmlTag ();
 
     /**
      *@brief Will construct a generic XML tag from the following characters in the stream.
@@ -785,8 +787,6 @@ namespace  KKB
 
 
 
-
-
 #define  XmlElementBuiltInTypeHeader(T,TypeName)            \
                                                             \
   class  XmlElement##TypeName:  public  XmlElement          \
@@ -943,8 +943,6 @@ XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlEleme
 
 XmlElementVectorHeader(kkint32,  VectorInt32,  GetNextTokenInt)
 XmlElementVectorHeader(float,    VectorFloat,  GetNextTokenFloat)
-
-
 
 }  /* KKB */
 

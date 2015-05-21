@@ -249,9 +249,25 @@ void  SvmModel233::ReadXML (XmlStream&      s,
 
   bool  errorsFound = false;
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t  &&  (!errorsFound))
+  XmlTokenPtr  t = NULL;
+  while  (!errorsFound)
   {
+    if  (t != NULL)
+    {
+      if  (typeid (*t) == typeid (XmlContent))
+      {
+        XmlContentPtr cp = dynamic_cast<XmlContentPtr> (t);
+        delete  cp;  cp = NULL;  t = NULL;
+      }
+      else
+      {
+        delete t;
+      }
+    }
+
+    t = s.GetNextToken (log);
+    if  (!t)  break;
+
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
@@ -261,18 +277,17 @@ void  SvmModel233::ReadXML (XmlStream&      s,
       if  (varName.EqualIgnoreCase ("Param")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
       {
         param.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (e)->Value ()));
-
       }
 
-      else if  (varName.EqualIgnoreCase ("nr_class")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      else if  (varName.EqualIgnoreCase ("nr_class"))
       {
-        nr_class = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+        nr_class = e->ToInt32 ();
         numberOfBinaryClassifiers = nr_class * (nr_class - 1) / 2;
       }
 
-      else if  (varName.EqualIgnoreCase ("totalNumSVs")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      else if  (varName.EqualIgnoreCase ("totalNumSVs"))
       {
-         totalNumSVs = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+         totalNumSVs = e->ToInt32 ();
          l = totalNumSVs;
       }
 
@@ -348,38 +363,36 @@ void  SvmModel233::ReadXML (XmlStream&      s,
         }
       }
 
-      else if  (varName.EqualIgnoreCase ("totalNumOfElements")  &&  (typeid (*e) == typeid (XmlElementInt32)))
+      else if  (varName.EqualIgnoreCase ("totalNumOfElements"))
       {
-        totalNumOfElements = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
+        totalNumOfElements = e->ToInt32 ();
         if  (totalNumOfElements < 1)
         {
           log.Level (-1) << endl 
             << "SvmModel233::ReadXML   ***ERROR***   Invalid  totalNumOfElements: " << totalNumOfElements << endl
             << endl;
           errorsFound = true;
-          continue;
         }
-
-        kkint32 m = nr_class - 1;
-        // kint32 l = model->l;
+        else
+        {
+          kkint32 m = nr_class - 1;
+          // kint32 l = model->l;
         
-        delete  sv_coef;
-        sv_coef = new double*[l];
-        for (kkint32 i = 0;  i < m;  i++)
-          sv_coef[i] = new double[l];
+          delete  sv_coef;
+          sv_coef = new double*[l];
+          for (kkint32 i = 0;  i < m;  i++)
+            sv_coef[i] = new double[l];
 
-        SV = new svm_node*[l];
-        xSpace = new svm_node[totalNumOfElements];
-        weOwnXspace = true;
+          SV = new svm_node*[l];
+          xSpace = new svm_node[totalNumOfElements];
+          weOwnXspace = true;
+        }
       }
     }
-    else
+    else if  (typeid (*t) == typeid (XmlContent))
     {
       XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
-      if  (!content)
-        continue;
-
-      KKStrParser p (content->Content ());
+      KKStrParser p (*(content->Content ()));
       p.TrimWhiteSpace (" ");
 
       KKStr  lineName = p.GetNextToken ("\t");
@@ -389,54 +402,58 @@ void  SvmModel233::ReadXML (XmlStream&      s,
           << "SvmModel233::ReadXML   ***ERROR***   Invalid Content: " << lineName << endl
           << endl;
         errorsFound = true;
-        continue;
       }
 
-      if  (numSVsLoaded >= totalNumSVs)
+      else if  (numSVsLoaded >= totalNumSVs)
       {
         log.Level (-1) << endl << endl << endl
              << "SvmModel233::ReadXML     ***ERROR***  More 'SupportVector' defined were specified." << endl
              << endl;
         errorsFound = true;
-        continue;
       }
 
-      if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
+      if  (errorsFound)
       {
-        exampleNames.push_back (p.GetNextToken ("\t"));
-      }
+        if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
+        {
+          exampleNames.push_back (p.GetNextToken ("\t"));
+        }
       
-      for (kkint32 j = 0;  j < nr_class - 1;  j++)
-        sv_coef[j][numSVsLoaded] = p.GetNextTokenDouble ("\t");
+        for (kkint32 j = 0;  j < nr_class - 1;  j++)
+          sv_coef[j][numSVsLoaded] = p.GetNextTokenDouble ("\t");
 
-      SV[numSVsLoaded] = &(xSpace[numElementsLoaded]);
+        SV[numSVsLoaded] = &(xSpace[numElementsLoaded]);
 
 
-      while  ((p.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
-      {
-        xSpace[numElementsLoaded].index = p.GetNextTokenInt (":");
-        xSpace[numElementsLoaded].value = p.GetNextTokenDouble ("\t");
-        numElementsLoaded++;
+        while  ((p.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
+        {
+          xSpace[numElementsLoaded].index = p.GetNextTokenInt (":");
+          xSpace[numElementsLoaded].value = p.GetNextTokenDouble ("\t");
+          numElementsLoaded++;
+        }
+
+        if  (numElementsLoaded >= totalNumOfElements)
+        {
+          log.Level (-1) << endl
+               << "SvmModel233::ReadXML   ***ERROR***   'numElementsLoaded'  is greater than what was defined by 'totalNumOfElements'." << endl
+               << endl;
+          errorsFound = true;
+        }
+        else
+        {
+          xSpace[numElementsLoaded].index = -1;
+          xSpace[numElementsLoaded].value = 0.0;
+          numElementsLoaded++;
+          numSVsLoaded++;
+        }
       }
-
-      if  (numElementsLoaded >= totalNumOfElements)
-      {
-        log.Level (-1) << endl
-             << "SvmModel233::ReadXML   ***ERROR***   'numElementsLoaded'  is greater than what was defined by 'totalNumOfElements'." << endl
-             << endl;
-        errorsFound = true;
-        continue;
-      }
-
-      xSpace[numElementsLoaded].index = -1;
-      xSpace[numElementsLoaded].value = 0.0;
-      numElementsLoaded++;
-
-      numSVsLoaded++;
+    }
+    else
+    {
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = NULL;
   }
 }  /* ReadXML */
 
@@ -3223,8 +3240,8 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
 //
 
 SvmModel233* SVM233::svm_train (const svm_problem*    prob,
-                              const svm_parameter*  param
-                             )
+                                const svm_parameter*  param
+                               )
 {
   //SvmModel233 *model = Malloc(SvmModel233,1);
 

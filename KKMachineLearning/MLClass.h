@@ -479,6 +479,8 @@ namespace KKMLL
     MLClassIndexList (const MLClassIndexList&  _list);
     MLClassIndexList (const MLClassList&  _classes);
 
+    virtual   ~MLClassIndexList ()  {}
+
     kkint32  MemoryConsumedEstimated ()  const;
 
     virtual
