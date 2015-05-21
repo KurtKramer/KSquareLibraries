@@ -160,7 +160,10 @@ char  TokenBufferStream::GetNextChar ()
 
   c = in->get ();
   if  (in->eof())
+  {
     endOfFile = true;
+    c = 0;
+  }
   return c;
 }  /* GetNextChar */
 

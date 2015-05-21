@@ -232,11 +232,20 @@ char  XmlTokenizer::GetNextChar ()
   else
   {
     firstChar = in->GetNextChar ();
-    logger1 << firstChar;
-    if  (firstChar == '\r')
+    if  (in->EndOfFile ())
     {
-      if  (in->PeekNextChar () == '\n')
-        firstChar = in->GetNextChar ();
+      atEndOfFile = true;
+      firstChar = 0;
+      logger1 << endl << "GetNextChar  atEndOfFile = true;" << endl;
+    }
+    else
+    {
+      logger1 << firstChar;
+      if  (firstChar == '\r')
+      {
+        if  (in->PeekNextChar () == '\n')
+          firstChar = in->GetNextChar ();
+      }
     }
   }
 

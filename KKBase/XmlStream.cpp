@@ -55,14 +55,23 @@ XmlStream::XmlStream (const KKStr&  _fileName,
 
 
 
-
 XmlStream::~XmlStream ()
 {
+  delete tokenStream;
+  tokenStream = NULL;
 }
 
 
+
+/**
+ *@brief  Registers a Factory at the current hierarchy that is being processed.
+ */
 void  XmlStream::RegisterFactory (XmlFactoryPtr  factory)
 {
+  if  (factoryManagers.size () > 0)
+    factoryManagers.back ()->RegisterFactory (factory);
+  else
+    XmlFactory::RegisterFactory (factory);
 
 }  /* RegisterFactory */
 
@@ -145,6 +154,17 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       PushXmlElementLevel (tag->Name ());
       endOfElemenReached = true;
       token = factory->ManufatureXmlElement (tag, *this, log);
+      if  ((!endOfElemenReached)  &&  (tag->TagType () == XmlTag::TagTypes::tagStart))
+      {
+        //  The element that we just read did not finish consuming all its components.
+        log.Level (-1) << "XmlStream::GetNextToken   ***WARNING***   The element just read[" << tag->Name () << "]  Did not consume all its elements." << endl;
+        XmlTokenPtr  t = GetNextToken (log);
+        while  (t)
+        {
+          delete t;
+          t = GetNextToken (log);
+        }
+      }
       endOfElemenReached = false;
       PopXmlElementLevel ();
     }
@@ -611,7 +631,7 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            double        attributeValue
                           )
 {
-  KKStr  s (12);
+  KKStr  s (20);
   s << attributeValue;
   attributes.AddAttribute (attributeName, s);
 }
