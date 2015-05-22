@@ -101,7 +101,7 @@ namespace KKMLL
      *    "1,2,3,10,20"    Selects [1,2,3,10, 20].
      *    "1,4-7,9-12,13"  Selects [1,4,,5,6,7,9,10,11,12,13]
      * @endcode
-     * @see ExtractFeatureNumsFromStr
+     * @see ParseToString
      * @param[in]  _featureListStr  Comma separated string that contains list of selected features; a range of
      *             features can be specified using the dash('-') character.  ex:  The string "1,3,5-7,9" indicates
      *             that features 1,3,5,6,7,9 are selected.
@@ -113,7 +113,6 @@ namespace KKMLL
 
 
     ~FeatureNumList ();   
-
 
 
     // Access Methods.
@@ -148,6 +147,12 @@ namespace KKMLL
      */
     kkuint16*  CreateFeatureNumArray ()  const;
 
+    bool  IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
+    
+    bool  InList (kkuint16 featureNum)  const;    /**< @brief returns true if '_featureNum' is one of the selected features. */
+
+    kkint32  MemoryConsumedEstimated ()  const;
+
 
     /**
      * @brief   Will select the features specified in "featureListStr".
@@ -161,19 +166,9 @@ namespace KKMLL
      *                          flagged as 'IgnoreAttribute' in the associated FileDesc instance.
      * @endcode
      */
-    static
-    FeatureNumListPtr  ExtractFeatureNumsFromStr (const KKStr&  featureListStr);
-
-    bool  IsSubSet (const FeatureNumList&  z);    /**< @brief  Returns true if 'z' is a subset of this instance. */
-    
-    bool  InList (kkuint16 featureNum)  const;    /**< @brief returns true if '_featureNum' is one of the selected features. */
-
-    void  Load (const KKStr&  _fileName,
-                bool&         _successful,
-                RunLog&       _log
-               );
-
-    kkint32  MemoryConsumedEstimated ()  const;
+    void  ParseToString (const KKStr&  _str,
+                         bool&         _valid
+                        );
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
@@ -186,10 +181,6 @@ namespace KKMLL
      * @return Dynamically allocated instance of a ImageFeaturesList with randomly selected features.
      */
     FeatureNumListPtr  RandomlySelectFeatures (kkint32  numToKeep)  const;
-
-    void  Save (const KKStr&  fileName);
-   
-    void  SaveXML (std::ostream&  o);
 
     void  SetAllFeatures (FileDescPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
 

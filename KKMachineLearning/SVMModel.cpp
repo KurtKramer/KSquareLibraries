@@ -394,7 +394,7 @@ void  SVMModel::DeleteXSpaces ()
     {
       if  (xSpaces[x] != NULL)
       {
-        free (xSpaces[x]);
+        delete (xSpaces[x]);
         xSpaces[x] = NULL;
       }
     }
@@ -2408,6 +2408,25 @@ void  SVMModel::WriteXML (const KKStr&  varName,
       binaryClassNames.WriteXML ("BinaryCombo", o);
       KKStr  binaryComboModelName = "BinaryComboModel_" + StrFormatInt (modelsIDX, "000");
       models[modelsIDX][0]->WriteXML (binaryComboModelName, o);
+
+      if  (binaryFeatureEncoders[modelsIDX])
+        binaryFeatureEncoders[modelsIDX]->WriteXML ("BinaryFeatureEncoders", o);
+
+
+      KKKK
+
+
+
+
+
+
+  models                 = new ModelPtr            [numOfModels];
+  xSpaces                = new XSpacePtr           [numOfModels];
+  binaryParameters       = new BinaryClassParmsPtr [numOfModels];
+  binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
+
+
+
     }
   }
 

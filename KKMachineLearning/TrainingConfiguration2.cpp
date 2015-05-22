@@ -1053,9 +1053,9 @@ void   TrainingConfiguration2::AddATrainingClass (MLClassPtr  _newClass)
   TrainingClassPtr  tc 
     = new TrainingClass (directories,
                          _newClass->Name (),
-                         1.0f,                            // Weight given to this Class during training
-                         1.0f,                            // CountFactor
-                         NULL,               // Sub-Classifier
+                         1.0f,                /**< Weight given to this Class during training  */
+                         1.0f,                /**< CountFactor.                                */
+                         NULL,                /**< Sub-Classifier.                             */
                          *mlClasses
                         );
   AddATrainingClass (tc);
@@ -1654,7 +1654,8 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
 
   else 
   {
-    selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (includedFeaturesStr);
+    bool valid = false;
+    selectedFeatures = new FeatureNumList (includedFeaturesStr, valid);
   }
 
   if  (!selectedFeatures)
@@ -2716,8 +2717,10 @@ XmlTokenPtr  TrainingConfiguration2::ReadXMLBaseToken (XmlTokenPtr  t,
       XmlElementMLClassNameListPtr  listOfClasses = dynamic_cast<XmlElementMLClassNameListPtr> (e);
       if  (listOfClasses)
       {
-        delete  mlClasses;
+        if  (mlClassesWeOwnIt)
+          delete  mlClasses;
         mlClasses = listOfClasses->TakeOwnership ();
+        mlClassesWeOwnIt = true;
       }
     }
 

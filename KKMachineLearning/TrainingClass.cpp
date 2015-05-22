@@ -22,12 +22,12 @@ using namespace  KKMLL;
 
 
 TrainingClass::TrainingClass ():
+     countFactor     (0.0f),
      directories     (),
      featureFileName (),
-     weight          (0.0f),
-     countFactor     (0.0f),
+     mlClass         (NULL),
      subClassifier   (NULL),
-     mlClass         (NULL)
+     weight          (0.0f)
 {
 }
 
@@ -39,12 +39,12 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
                               TrainingConfiguration2Ptr _subClassifier,
                               MLClassList&              _mlClasses
                              ):
+                countFactor     (_countFactor),
                 directories     (_directories),
                 featureFileName (_name),
+                mlClass         (NULL),
                 weight          (_weight),
-                countFactor     (_countFactor),
-                subClassifier   (_subClassifier),
-                mlClass         (NULL)
+                subClassifier   (_subClassifier)
 {
   featureFileName << ".data";   // Will be equal to ClassName + ".data".     ex:  "Copepods.data"
 
@@ -55,6 +55,7 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
 
 
 TrainingClass::TrainingClass (const TrainingClass&  tc): 
+    countFactor     (tc.countFactor),
     directories     (tc.directories),
     featureFileName (tc.featureFileName),
     mlClass         (tc.mlClass),

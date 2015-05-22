@@ -163,7 +163,8 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
 
     else if  (field == "SELECTEDFEATURES")
     {
-      selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (value);
+      bool  valid = false;
+      selectedFeatures = new FeatureNumList (value, valid);
     }
 
     else if  (field == "WEIGHT")
@@ -528,12 +529,12 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
       XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
-      if  (!content)
-        continue;
-
-      BinaryClassParmsPtr  bcp = BinaryClassParms::CreateFromTabDelStr (*(content->Content ()), log);
-      if  (bcp)
-        PushOnBack (bcp);
+      if  (content  &&  (content->Content ()))
+      {
+        BinaryClassParmsPtr  bcp = BinaryClassParms::CreateFromTabDelStr (*(content->Content ()), log);
+        if  (bcp)
+          PushOnBack (bcp);
+      }
     }
     delete  t;
     t = s.GetNextToken (log);

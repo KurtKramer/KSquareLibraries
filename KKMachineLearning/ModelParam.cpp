@@ -276,7 +276,7 @@ void  ModelParam::ParseCmdLine (KKStr    _cmdLineStr,
     {
       delete  selectedFeatures;
       bool  valid = true;
-      selectedFeatures = FeatureNumList::ExtractFeatureNumsFromStr (value);
+      selectedFeatures = new FeatureNumList (value, valid);
       if  (!selectedFeatures)
         _validFormat= false;
     }

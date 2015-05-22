@@ -422,7 +422,7 @@ void  ClassProbList::ReadXML (XmlStream&      s,
   while  (true)
   {
     delete  t;
-    XmlTokenPtr  t = s.GetNextToken (log);
+    t = s.GetNextToken (log);
     if  (!t)  break;
     if  (typeid (*t) != typeid (XmlContent))
       continue;

@@ -556,13 +556,11 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
-  FeatureNumListConstPtr  selectedFeatures = SelectedFeatures ();
+  FeatureNumListConstPtr  selFeatures = ModelParam::SelectedFeatures ();
 
   bool  validFormat = false;
   delete  svmParameters;
-  svmParameters = NULL;
-
-  svmParameters = new SVMparam  (svmParametersStr, selectedFeatures, validFormat, log);
+  svmParameters = new SVMparam  (svmParametersStr, selFeatures, validFormat, log);
 }  /* ReadXML */
 
  

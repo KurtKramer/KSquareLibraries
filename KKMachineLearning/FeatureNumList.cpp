@@ -118,24 +118,7 @@ FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
   numOfFeatures            (0)
 
 {
-  FeatureNumListPtr  selFeatures = ExtractFeatureNumsFromStr (_featureListStr);
-  if  (selFeatures == NULL)
-  {
-    _valid = false;
-  }
-  else
-  {
-    _valid = true;
-    maxFeatureNum = selFeatures->MaxFeatureNum ();
-    AllocateArraySize (selFeatures->NumOfFeatures ());
-    const kkuint16*  selFeatureNums = selFeatures->FeatureNums ();
-
-    for  (kkuint16 x = 0;  x < selFeatures->NumOfFeatures ();  ++x)
-      AddFeature (selFeatureNums[x]);
-
-    delete  selFeatures;
-    selFeatures = NULL;
-  }
+  ParseToString (_featureListStr, _valid);
   return;
 }
 
@@ -157,6 +140,7 @@ kkint32  FeatureNumList::MemoryConsumedEstimated ()  const
 
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
+
 
 
 
@@ -194,6 +178,7 @@ void  FeatureNumList::AllocateArraySize (kkuint16 size)
     featureNumsAllocatedSize = size;
   }
 }  /* AllocateArraySize */
+
 
 
 
@@ -331,6 +316,8 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
 
   return;
 }  /* AddFeature */
+
+
 
 
 /**
@@ -553,166 +540,45 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
 
 
 
-/**
- *@brief  A static method that will return a new instance 'FeatureNum2List' where the features listed in
- * '_featureListStr' will be turned on.  'maxFeatureNum' will be set to the highest feature number listed in 
- * '_featureListStr'.
- */
-FeatureNumListPtr  FeatureNumList::ExtractFeatureNumsFromStr (const KKStr&  _featureListStr)  
+
+
+
+void  FeatureNumList::ParseToString (const KKStr&  _str,
+                                     bool&         _valid
+                                    )  
 {
   bool  valid = true;
-
-  if  (_featureListStr.EqualIgnoreCase ("NONE"))
-    return new FeatureNumList (1);
-
-  VectorUint16*  list = StrToUInt16Vetor (_featureListStr);
-  if  (!list)
-  {
-    delete  list;
-    list= NULL;
-    return NULL;
-  }
-
-  if  (list->size () < 1)
-  {
-    delete  list;
-    list = NULL;
-    return new FeatureNumList (1);
-  }
-
-  kkuint16  firstNum = (*list)[0];
-  kkuint16  lastNum  = (*list)[list->size () - 1];
-
-  FeatureNumListPtr  result = new FeatureNumList (lastNum);
-  VectorUint16::const_iterator  idx;
-  for  (idx = list->begin ();  idx != list->end ();  ++idx)
-    result->AddFeature (*idx);
-
-  delete  list;
-  list = NULL;
-  return  result;
-}  /* ExtractFeatureNumsFromStr */
-
-
-
-
-
-
-void  FeatureNumList::Load (const KKStr&  _fileName,
-                             bool&         _successful,
-                             RunLog&       _log
-                            )
-{
-  _log.Level (20) << "FeatureNumList::Load - File[" << _fileName << "]." << endl;
-
   delete  featureNums;
-  featureNums = NULL;
+
   featureNumsAllocatedSize = 0;
-  numOfFeatures = 0;
-  maxFeatureNum = 0;
+  maxFeatureNum            = 0;
+  numOfFeatures            = 0;
+  featureNums              = NULL;
 
-  FILE*  inputFile = osFOPEN (_fileName.Str (), "r");
-  if  (!inputFile)
+  if  (_str.EqualIgnoreCase ("NONE"))
   {
-    _log.Level (-1) << endl << "FeatureNumList::Load      ***ERROR***  Could Not Open File[" << _fileName << "]." << endl << endl;
-    _successful = false;
+    maxFeatureNum = 1;
+    AllocateArraySize (maxFeatureNum + 1);
     return;
   }
 
-  kkuint16  mfn = 0;
-  kkuint16  nof = 0;
-  KKStr     featureNumStr = "";
-
-  kkint32 fileDescNumOfFields = 0;
-  char  buff [102400];
-
-  while  (fgets (buff, sizeof (buff), inputFile))
+  VectorUint16*  list = StrToUInt16Vetor (_str);
+  if  (list)
   {
-    KKStr  line (buff);
-    KKStr  fieldName = line.ExtractToken2 ("\n\t\r").Trim ();
-
-    if  (fieldName.EqualIgnoreCase ("MaxFeatureNum"))
-      mfn = (kkuint16)line.ExtractTokenUint ("\t\n\r");
-
-    else if  (fieldName.EqualIgnoreCase ("NumOfFeatures"))
-      nof = (kkuint16)line.ExtractTokenUint ("\t\n\r");
-
-    else if  (fieldName.EqualIgnoreCase ("FeatureNums"))
-      featureNumStr = (kkuint16)line.ExtractTokenUint ("\t\n\r");
+    sort(list->begin (), list->end ());
+    maxFeatureNum = list->back ();
+    AllocateArraySize (list->size ());
+    for  (auto idx: *list)
+      AddFeature (idx);
   }
-
-  fclose (inputFile);
-  
-  if  (mfn < 1)
+  else
   {
-    _log.Level (-1) << endl << "FeatureNumList::Load   ***ERROR***   'maxFeatureNum'  was not defined."  << endl << endl;
-    _successful = false;
-  }
-
-  if  (featureNumStr.Empty ())
-  {
-    _log.Level (-1) << endl << "FeatureNumList::Load   ***ERROR***   'featureNums'  was not specified."  << endl << endl;
-    _successful = false;
-    return;
-  }
-
-  VectorUint16*  list = StrToUInt16Vetor (featureNumStr);
-  if  (!list)
-  {
-    _log.Level (-1) << endl << "FeatureNumList::Load   ***ERROR***   'featureNums'  included invalid features."  << endl << endl;
-    _successful = false;
-    return;
-  }
-
-  kkuint16  firstNum = (*list)[0];
-  kkuint16  lastNum  = (*list)[list->size () - 1];
-  if  (lastNum > mfn)
-  {
-    _log.Level (-1) << endl << "FeatureNumList::Load   ***ERROR***   'featureNums'  included features[" << lastNum << "]  which is larger than maxFeaureNum[" << maxFeatureNum << "]" << endl << endl;
-    _successful = false;
-  }
-
-  else if  (list->size () != nof)
-  {
-    _log.Level (-1) << endl << "FeatureNumList::Load   ***ERROR***   numOfFeatures[" << nof << "] did not agree with number of features specified in FeatureNums" << endl << endl;
-    _successful = false;
-  }
-
-  if  (_successful)
-  {
-    maxFeatureNum = mfn;
-    AllocateArraySize (nof + 1);
-    VectorUint16::const_iterator  idx;
-    for  (idx = list->begin ();  idx != list->end ();  ++idx)
-      AddFeature (*idx);
+    _valid = false;
   }
   delete  list;
   list = NULL;
-  return;
-}  /* Load */
+}  /* ParseToString */
 
-
-
-void  FeatureNumList::Save (const KKStr&  fileName)
-{
-  ofstream outFile (fileName.Str ());
-  outFile << "MaxFeatureNum" << "\t" << maxFeatureNum << endl;
-  outFile << "NumOfFeatures" << "\t" << numOfFeatures << endl;
-  outFile << "FeatureNums"   << "\t" << ToString ()   << endl;
-  outFile.close ();
-}  /* Save */
-
-
-
-
-void  FeatureNumList::SaveXML (ostream&  o)
-{
-  o << "<FeatureNumList>" << "\t"
-    << "MaxFeatureNum"    << "\t"  << maxFeatureNum << "\t"
-    << "NumOfFeatures"    << "\t"  << numOfFeatures << "\t"
-    << "FeatureNums"      << "\t"  << ToString ()
-    << "</FeatureNumList>";
-}  /* Save */
 
 
 
@@ -720,35 +586,14 @@ void  FeatureNumList::WriteXML (const KKStr&  varName,
                                 ostream&      o
                                )  const
 {
-  bool  doOnOneLine = true;
-  if  (numOfFeatures > 20)
-    doOnOneLine = false;
-
   XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.AddAtribute ("MaxFeatureNum", maxFeatureNum);
   startTag.AddAtribute ("NumOfFeatures", numOfFeatures);
   startTag.WriteXML (o);
-  if  (!doOnOneLine)
-    o << endl;
 
-  bool  newLine = true;
-  for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
-  {
-    if  (((x + 1) % 100) == 0)
-    {
-      o << endl;
-      newLine = true;
-    }
-
-    if  (!newLine)
-      o << "\t";
-    o << featureNums[x];
-    newLine = false;
-  }
-  if  (!doOnOneLine)
-    o << endl;
+  o << ToString ();
 
   XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
@@ -766,12 +611,6 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
   kkuint32 expectedNumOfFeatures = tag->AttributeValueInt32 ("NumOfFeatures");
   numOfFeatures = 0;
 
-  delete  featureNums;
-  featureNums = new kkuint16[expectedNumOfFeatures];
-  featureNumsAllocatedSize = expectedNumOfFeatures;
-  for  (kkuint32 x = 0;  x < expectedNumOfFeatures;  ++x)
-    featureNums[x] = 0;
-
   kkuint32 featureCountRead = 0;
 
   XmlTokenPtr  t = s.GetNextToken (log);
@@ -782,18 +621,12 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
       if  (c  &&  (c->Content ()))
       {
-        KKStrParser p (*(c->Content ()));
-        p.TrimWhiteSpace (" ");
-        while  (p.MoreTokens ())
-        {
-          kkint32  fn = p.GetNextTokenUint ("\t");
-
-          if  (fn > maxFeatureNum)
-            maxFeatureNum = fn;
-          AddFeature (fn);
-        }
+        bool  valid = false;
+        ParseToString (*(c->Content ()), valid);
       }
     }
+
+    delete  t;
     t = s.GetNextToken (log);
   }
 
@@ -803,7 +636,6 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
       << "FeatureNumList::ReadXML   ***ERROR***   expectedNumOfFeatures["  << expectedNumOfFeatures << "]  not equal  numOfFeatures[" << numOfFeatures << "]" << endl
       << endl;
   }
-
 }  /* ReadXML */
 
 
