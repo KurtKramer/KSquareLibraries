@@ -854,6 +854,33 @@ void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
 
 
+void  Model::WriteModelXMLFields (ostream&  o)  const
+{
+  //timeSaved = osGetLocalDateTime ();
+  ModelTypeStr ().WriteXML ("ModelType", o);
+  Name ().WriteXML ("Name", o);
+  rootFileName.WriteXML ("RootFileName", o);
+  XmlElementMLClassNameList::WriteXML (*classes, "classes", o);
+  if  (classesIndex)
+    classesIndex->WriteXML ("ClassesIndex", o);
+
+  if  (fileDesc)
+    fileDesc->WriteXML ("FileDesc", o);
+
+  if  (param)
+    param->WriteXML ("Param", o);
+
+  timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
+  XmlElementDouble::WriteXML (trainingTime, "TrainingTime", o);
+  XmlElementBool::WriteXML (alreadyNormalized, "AlreadyNormalized", o);
+  if  (normParms)
+    normParms->WriteXML ("NormParms", o);
+} /* WriteModelXMLFields */
+
+
+
+
+
 
 
 XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
@@ -869,28 +896,13 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
 
     const KKStr&  varName = e->VarName ();
 
-    KKStrConstPtr   valueStr = NULL;
-    kkint32         valueInt32  = 0;
-    double          valueDouble = 0.0;
-
-    valueStr = &KKStr::EmptyStr ();
-
-    if  (typeid (*this) == typeid (XmlElementKKStr))
-      valueStr = dynamic_cast<XmlElementKKStrPtr> (e)->Value ();
-
-    else if  (typeid (*this) == typeid (XmlElementInt32))
-      valueInt32 = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
-
-    else if  (typeid (*this) == typeid (XmlElementInt32))
-      valueDouble = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
-
     if  (varName.EqualIgnoreCase ("ModelType"))
     {
-      if  (ModelType ()  != Model::ModelTypeFromStr (*valueStr))
+      if  (ModelType ()  != Model::ModelTypeFromStr (e->ToKKStr ()))
       {
         KKStr errMsg (128);
         errMsg << "Model::ReadXMLModelToken   ***ERROR***   Wrong ModelType encountered;  Expected[" << ModelTypeStr () << "] "
-               << "ModelType Specified[" << *(valueStr) << "].";
+               << "ModelType Specified[" << e->ToKKStr () << "].";
 
         log.Level (-1) << endl << errMsg << endl << endl;
         AddErrorMsg (errMsg, 0);
@@ -898,10 +910,10 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
     }
 
     else if  (varName.EqualIgnoreCase ("Name"))
-      name = *(valueStr);
+      name = e->ToKKStr ();
 
     else if  (varName.EqualIgnoreCase ("RootFileName"))
-      rootFileName = *(valueStr);
+      rootFileName = e->ToKKStr ();
 
     else if  ((varName.EqualIgnoreCase ("Classes"))  &&  (typeid(*e) == typeid (XmlElementMLClassNameList)))
     {
@@ -909,7 +921,7 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
       classes = dynamic_cast<XmlElementMLClassNameListPtr> (t)->TakeOwnership ();
     }
 
-    else if  (varName.EqualIgnoreCase ("ClassesIndex")  &&  (typeid(*e) == typeid (XmlElementMLClassNameList)))
+    else if  (varName.EqualIgnoreCase ("ClassesIndex")  &&  (typeid(*e) == typeid (XmlElementMLClassIndexList)))
     {
       delete classesIndex;
       classesIndex = dynamic_cast<XmlElementMLClassIndexListPtr>(t)->TakeOwnership ();
@@ -920,20 +932,31 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
       fileDesc = dynamic_cast<XmlElementFileDescPtr>(t)->Value ();
     }
 
-    else if  ((varName.EqualIgnoreCase ("Param"))  &&  (typeid(*e) == typeid (XmlElementModelParam)))
+    else if  (varName.EqualIgnoreCase ("Param")) 
     {
-      delete param;
-      param = dynamic_cast<XmlElementModelParamPtr> (t)->TakeOwnership ();
+      XmlElementModelParamPtr  xmlParameterElement = dynamic_cast<XmlElementModelParamPtr> (e);
+      if  (xmlParameterElement)
+      {
+        delete param;
+        param = xmlParameterElement->TakeOwnership ();
+      }
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "Model::ReadXMLModelToken   ***ERROR***   ModelParam variable 'param' not defined correctly.";
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
     }
 
     else if  (varName.EqualIgnoreCase ("TimeSaved"))
-      timeSaved = DateTime (*valueStr);
+      timeSaved = DateTime (e->ToKKStr ());
 
     else if  (varName.EqualIgnoreCase ("TrainingTime"))
-      trainingTime = valueDouble;
+      trainingTime = e->ToDouble ();
 
-    else if  ((varName.EqualIgnoreCase ("AlreadyNormalized"))  &&  (typeid (*e) == typeid (XmlElementBool)))
-      alreadyNormalized = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
+    else if  (varName.EqualIgnoreCase ("AlreadyNormalized"))
+      alreadyNormalized = e->ToBool ();
 
     else if  ((varName.EqualIgnoreCase ("NormParms"))  &&  (typeid (*e) == typeid (XmlElementNormalizationParms)))
     {
@@ -995,32 +1018,5 @@ void  Model::ReadXMLModelPost (RunLog&  log)
   }
 
 }  /* ReadXMLModelPost */
-
-
-
-void  Model::WriteModelXMLFields (ostream&  o)  const
-{
-  //timeSaved = osGetLocalDateTime ();
-  ModelTypeStr ().WriteXML ("ModelType", o);
-  Name ().WriteXML ("Name", o);
-  rootFileName.WriteXML ("RootFileName", o);
-  XmlElementMLClassNameList::WriteXML (*classes, "classes", o);
-  if  (classesIndex)
-    classesIndex->WriteXML ("classesIndex", o);
-
-  if  (fileDesc)
-    fileDesc->WriteXML ("FileDesc", o);
-
-  if  (param)
-    param->WriteXML ("Param", o);
-
-  timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
-  XmlElementDouble::WriteXML (trainingTime, "TrainingTime", o);
-  XmlElementBool::WriteXML (alreadyNormalized, "AlreadyNormalized", o);
-  if  (normParms)
-    normParms->WriteXML ("NormParms", o);
-} /* WriteModelXMLFields */
-
-
 
 

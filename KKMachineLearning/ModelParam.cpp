@@ -459,75 +459,6 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
 
 
 
-XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
-{
-  const KKStr&  varName = t->VarName ();
-  if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
-  {
-    XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-
-    bool  tokenFound = true;
-
-    if  (varName.EqualIgnoreCase ("EncodingMethod"))
-    {
-      encodingMethod = EncodingMethodFromStr (dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
-    }
-
-    else if  (varName.EqualIgnoreCase ("ExamplesPerClass"))
-    {
-      examplesPerClass = dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("FileName"))
-    {
-      fileName = *(dynamic_cast<XmlElementKKStrPtr> (e)->Value ());
-    }
-
-    else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
-    {
-      normalizeNominalFeatures = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("SelectedFeatures"))
-    {
-      selectedFeatures = dynamic_cast<XmlElementFeatureNumListPtr> (e)->TakeOwnership ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("Cost"))
-    {
-      cost = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("Gamma"))
-    {
-      gamma = dynamic_cast<XmlElementDoublePtr> (e)->Value ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("Prob"))
-    {
-      prob = (float)dynamic_cast<XmlElementDoublePtr> (e)->Value ();
-    }
-
-    else if  (varName.EqualIgnoreCase ("ValidParam"))
-    {
-      validParam = dynamic_cast<XmlElementBoolPtr> (e)->Value ();
-    }
-    else
-    {
-      tokenFound = false;
-    }
-
-    if  (tokenFound)
-    {
-      delete t;
-      t = NULL;
-    }
-  }
-
-  return  t;
-}  /* ReadXMLModelParamToken */
-
-
 
 
 void  ModelParam::WriteXMLFields (ostream&  o)  const
@@ -549,4 +480,76 @@ void  ModelParam::WriteXMLFields (ostream&  o)  const
   XmlElementDouble::WriteXML (prob,       "Prob",       o);
   XmlElementBool::WriteXML   (validParam, "ValidParam", o);
 }  /* WriteXML */
+
+
+
+
+XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
+{
+  const KKStr&  varName = t->VarName ();
+  if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+  {
+    XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+
+    bool  tokenFound = true;
+
+    if  (varName.EqualIgnoreCase ("EncodingMethod"))
+    {
+      encodingMethod = EncodingMethodFromStr (e->ToKKStr ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("ExamplesPerClass"))
+    {
+      examplesPerClass = e->ToInt32 ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("FileName"))
+    {
+      fileName = e->ToKKStr ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
+    {
+      normalizeNominalFeatures = e->ToBool ();;
+    }
+
+    else if  ((varName.EqualIgnoreCase ("SelectedFeatures"))  &&  (typeid (*e) == typeid (XmlElementFeatureNumList)))
+    {
+      selectedFeatures = dynamic_cast<XmlElementFeatureNumListPtr> (e)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Cost"))
+    {
+      cost = e->ToDouble ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Gamma"))
+    {
+      gamma = e->ToDouble ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Prob"))
+    {
+      prob = (float)(e->ToDouble ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("ValidParam"))
+    {
+      validParam = e->ToBool ();
+    }
+    else
+    {
+      tokenFound = false;
+    }
+
+    if  (tokenFound)
+    {
+      delete t;
+      t = NULL;
+    }
+  }
+
+  return  t;
+}  /* ReadXMLModelParamToken */
+
 

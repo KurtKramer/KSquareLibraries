@@ -1258,7 +1258,7 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
         if  (fvFactoryProducer)
           fileDesc = fvFactoryProducer->FileDesc ();
       }
-
+      
       else if  (varName.EqualIgnoreCase ("FeaturesAlreadyNormalized"))
         featuresAlreadyNormalized = e->ToBool ();
 

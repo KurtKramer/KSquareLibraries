@@ -532,9 +532,24 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
     t = ReadXMLModelParamToken (t);
     if  (t)
     {
-      if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      const KKStr& varName = t->VarName ();
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (!e)
       {
-        svmParametersStr = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
+        log.Level (-1) << endl
+          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected content: " << endl
+          << endl;
+      }
+      else if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      {
+        svmParametersStr = e->ToKKStr ();
+      }
+
+      else
+      {
+        log.Level (-1) << endl
+          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected Element: " << e->NameTagStr () << endl
+          << endl;
       }
     }
     delete  t;

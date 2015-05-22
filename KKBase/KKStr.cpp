@@ -4424,6 +4424,8 @@ void  KKStr::ReadXML (XmlStream&      s,
     delete  t;
     t = s.GetNextToken (log);
   }
+
+  TrimRight (" \r\n");
 }  /* ReadXML */
 
 
