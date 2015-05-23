@@ -159,12 +159,12 @@ namespace KKMLL
     void  AddAttributes (const KKMLL::AttributeList&  attributes);
 
 
-    kkint32  Cardinality (kkint32  fieldNum)  const;
+    kkint32                     Cardinality (kkint32  fieldNum)  const;
 
     const 
       KKMLL::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
 
-    KKMLL::AttributeTypeVector  CreateAttributeTypeTable ()  const;
+    AttributeTypeVector         CreateAttributeTypeTable ()  const;
     
     VectorInt32                 CreateCardinalityTable ()  const;
 
@@ -237,7 +237,7 @@ namespace KKMLL
      * @brief  Merges the Symbolic fields of two different 'FileDesc' instances producing a new instance of 'FileDesc'.
      * @details This method will only work if both instances have the same number of fields, their names must be
      *  the same(NOT case sensitive), and each field in both instances must be the same type.  If all these conditions
-     *  are not 'true' will return NULL.  The fields that are of 'SymbolicAttribute' will have their values merged
+     *  are not 'true' will return NULL.  The fields that are of 'Symbolic' will have their values merged
      *  together.
      *@see KKMLL:Attribute
      */

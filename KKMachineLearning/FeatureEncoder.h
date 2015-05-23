@@ -14,6 +14,7 @@
 //*                                                                     *
 //***********************************************************************
 #include "RunLog.h"
+#include "XmlStream.h"
 
 #include "Attribute.h"
 #include "FeatureVector.h"
@@ -42,12 +43,14 @@ namespace KKMLL
   class  FeatureEncoder
   {
   public:
-    FeatureEncoder (const SVMparam&       _svmParam,
-                    FileDescPtr           _fileDesc,
-                    AttributeTypeVector&  _attributeTypes,   
-                    VectorInt32&          _cardinalityTable,
-                    MLClassPtr            _class1,
-                    MLClassPtr            _class2
+    FeatureEncoder ();
+
+    FeatureEncoder (FileDescPtr            _fileDesc,
+                    MLClassPtr             _class1,
+                    MLClassPtr             _class2,
+                    const FeatureNumList&  _selectedFeatures,
+                    SVM_EncodingMethod     _encodingMethod,
+                    double                 _c_Param
                    );
     
     
@@ -63,9 +66,9 @@ namespace KKMLL
     /**
      * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
      */
-    void  CompressExamples (FeatureVectorListPtr    srcExamples,
-                            FeatureVectorListPtr    compressedExamples,
-                            ClassAssignments&       assignments
+    void  CompressExamples (FeatureVectorListPtr  srcExamples,
+                            FeatureVectorListPtr  compressedExamples,
+                            ClassAssignments&     assignments
                            );
 
 
@@ -81,6 +84,7 @@ namespace KKMLL
      *@param[in]  xSpace           will allocate enough xSpace nodes and place compressed results in this structure.
      *@param[out] totalxSpaceUsed  number nodes used in xSpace</param>
      *@param[out] prob             Data Structure that is used by SVMLib
+     *@param[in]  log
      */
     void  EncodeIntoSparseMatrix (FeatureVectorListPtr  src,
                                   ClassAssignments&     assignments,
@@ -106,9 +110,20 @@ namespace KKMLL
                                       FeatureVectorPtr  src
                                      );
 
-    kkint32           MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
-    kkint32           XSpaceNeededPerExample ()  {return xSpaceNeededPerExample;}
+    virtual
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    virtual  
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+    kkint32  XSpaceNeededPerExample ()  {return xSpaceNeededPerExample;}
 
 
   private:
@@ -121,23 +136,22 @@ namespace KKMLL
 
 
 
-    AttributeTypeVector&    attributeTypes;     /**< Will not own, passed in by creator. */
-    kkint32*                cardinalityDest;
-    VectorInt32&            cardinalityTable;   /**< Will not own, passed in by creator. */
-    MLClassPtr              class1;
-    MLClassPtr              class2;
-    kkint32                 codedNumOfFeatures;
-    kkint32*                destFeatureNums;
-    FileDescPtr             destFileDesc;
-    FeWhatToDoPtr           destWhatToDo;
-    SVM_EncodingMethod      encodingMethod;
-    FileDescPtr             fileDesc;
-    kkint32                 numEncodedFeatures;
-    kkint32                 numOfFeatures;
-    FeatureNumList          selectedFeatures;
-    kkint32*                srcFeatureNums;
-    const SVMparam&         svmParam;
-    kkint32                 xSpaceNeededPerExample;
+    kkint32*              cardinalityDest;
+    MLClassPtr            class1;
+    MLClassPtr            class2;
+    kkint32               codedNumOfFeatures;
+    double                c_Param;
+    kkint32*              destFeatureNums;
+    FileDescPtr           destFileDesc;
+    FeWhatToDoPtr         destWhatToDo;
+    SVM_EncodingMethod    encodingMethod;
+    FileDescPtr           fileDesc;
+    kkint32               numEncodedFeatures;
+    kkint32               numOfFeatures;
+    FeatureNumList        selectedFeatures;
+    kkint32*              srcFeatureNums;
+    SVMparam const *      svmParam;
+    kkint32               xSpaceNeededPerExample;
   };  /* FeatureEncoder */
 
 

@@ -98,7 +98,7 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[in] _fileDesc  File-Description that describes the training data.
      *@param[out] _log Log file to log messages to.
      */
-    SVMModel (SVMparam&           _svmParam,
+    SVMModel (const SVMparam&     _svmParam,
               FeatureVectorList&  _examples,
               ClassAssignments&   _assignments,
               FileDescPtr         _fileDesc,
@@ -140,12 +140,12 @@ typedef  struct svm_node*     XSpacePtr;
                                                 kkint32& totalNumSVs
                                                );
 
-    const SVMparam&    SVMParameters           () const {return svmParam;}
+    SVMparam const *   SVMParameters           () const {return svmParam;}
 
     const KKStr&       RootFileName            () const {return rootFileName;}
 
 
-    SVM_SelectionMethod   SelectionMethod      () const {return svmParam.SelectionMethod ();}
+    SVM_SelectionMethod   SelectionMethod      () const {return svmParam->SelectionMethod ();}
 
     double             TrainingTime            () const {return trainingTime;}
 
@@ -352,7 +352,6 @@ typedef  struct svm_node*     XSpacePtr;
      */ 
     void  BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples, 
                                     FeatureVectorListPtr  class2Examples, 
-                                    SVMparam&             _svmParam,
                                     BinaryClassParmsPtr&  _twoClassParms,
                                     FeatureEncoderPtr&    _encoder,
                                     struct svm_problem&   prob, 
@@ -532,7 +531,7 @@ typedef  struct svm_node*     XSpacePtr;
 
     FeatureNumListPtr      selectedFeatures;
 
-    SVMparam               svmParam;
+    SVMparamPtr            svmParam;
 
     double                 trainingTime;
 

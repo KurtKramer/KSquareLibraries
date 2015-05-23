@@ -74,8 +74,8 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     switch (encodingMethod)
     {
       case  ModelParam::BinaryEncoding:
-        if  ((attributeVector[srcFeatureNum] == AttributeType::NominalAttribute)  ||
-             (attributeVector[srcFeatureNum] == AttributeType::SymbolicAttribute)
+        if  ((attributeVector[srcFeatureNum] == AttributeType::Nominal)  ||
+             (attributeVector[srcFeatureNum] == AttributeType::Symbolic)
             )
         {
           destWhatToDo    [x] = FeWhatToDo::FeBinary;
@@ -98,8 +98,8 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
       case  ModelParam::ScaledEncoding:
         codedNumOfFeatures++;
-        if  ((attributeVector[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
-             (attributeVector[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
+        if  ((attributeVector[srcFeatureNums[x]] == AttributeType::Nominal)  ||
+             (attributeVector[srcFeatureNums[x]] == AttributeType::Symbolic)
             )
           destWhatToDo [x] = FeWhatToDo::FeScale;
         else
@@ -234,7 +234,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
     {
     case  FeWhatToDo::FeAsIs:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
@@ -251,7 +251,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
-          newFileDesc->AddAAttribute (encodedName, AttributeType::NumericAttribute, alreadyExist);
+          newFileDesc->AddAAttribute (encodedName, AttributeType::Numeric, alreadyExist);
           if  (o)
           {
             *o << origFieldDesc << "\t" 
@@ -268,7 +268,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
 
     case  FeWhatToDo::FeScale:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc << "\t" 

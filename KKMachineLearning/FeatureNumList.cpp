@@ -321,7 +321,7 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
 
 
 /**
- *@details  A static method that will return a instance of 'FeatureNumList' that will have all non 'IgnoreAttribute' features 
+ *@details  A static method that will return a instance of 'FeatureNumList' that will have all non 'Ignore' features 
  * in '_fileDesc' selected.
  */
 FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
@@ -332,7 +332,7 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
   const AttributeTypeVector&   attributeTypes = _fileDesc->AttributeVector ();
   for  (kkuint16 fn = 0;  fn <= maxFeatureNum;  ++fn)
   {
-    if  (attributeTypes[fn] != AttributeType::IgnoreAttribute)
+    if  (attributeTypes[fn] != AttributeType::Ignore)
       features.AddFeature (fn);
   }
 
@@ -344,13 +344,13 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
 
 /**
  *@details  Using 'fileDesc' as the guide as to how many features there are and which ones are to 
- * be ignored will set all features that are not 'IgnoreAttribute' to on.
+ * be ignored will set all features that are not 'Ignore' to on.
  */
 void   FeatureNumList::SetAllFeatures (FileDescPtr  fileDesc)
 {
   for  (kkuint16 x = 0; x <= maxFeatureNum;  ++x)
   {
-    if  (fileDesc->Type (x) != AttributeType::IgnoreAttribute)
+    if  (fileDesc->Type (x) != AttributeType::Ignore)
       AddFeature (kkuint16 (x));
   }
   return;

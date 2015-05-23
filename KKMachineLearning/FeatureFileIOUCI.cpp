@@ -102,7 +102,7 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
 
   for  (fieldNum = 0;  fieldNum < numOfFields;  fieldNum++)
   {
-    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), AttributeType::NumericAttribute, alreadyExists);
+    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), AttributeType::Numeric, alreadyExists);
   }
 
   return  fileDesc;

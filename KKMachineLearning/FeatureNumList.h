@@ -19,7 +19,7 @@
  * The list can consist of single features and/or ranges of features. Ranges of
  * features are specified by using the dash('-') character between two numbers.
  * The comma(',') character will be used as a separator.  "All" specifies all are
- * to be selected except those that are flagged as  'IgnoreAttribute' in the 
+ * to be selected except those that are flagged as  'Ignore' in the 
  * associated FileDesc instance. The list should be in ascending order.
  *
  *@code
@@ -27,7 +27,7 @@
  *    "1,2,3,10,20"    Selects [1,2,3,10, 20].
  *    "1,4-7,9-12,13"  Selects [1,4,,5,6,7,9,10,11,12,13]
  *    "All"            Selects all features that '_fileDesc' includes accept
- *                     those that are flagged as 'IgnoreAttribute' in the 
+ *                     those that are flagged as 'Ignore' in the 
  *                     associated FileDesc instance.
  *@endcode
  */
@@ -132,7 +132,7 @@ namespace KKMLL
     /** @brief Returns true if all features are selected. */
     bool    AllFeaturesSelected (FileDescPtr  fileDesc)  const;
 
-    /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
+    /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as Ignore in '__fileDesc'. */
     static  FeatureNumList   AllFeatures (FileDescPtr  fileDesc);
 
     /** @brief Compare with another featureNumList returning -1, 0, and 1 indicating less_than, equal, or greater_than. */
@@ -157,13 +157,13 @@ namespace KKMLL
     /**
      * @brief   Will select the features specified in "featureListStr".
      * @details The format is a comma delimited string, where each number represents a feature, ranges can be specified with
-     * a dash("-").  "All" will select all features that are not flagged as a 'IgnoreAttribute'  in the associated FileDesc instance.
+     * a dash("-").  "All" will select all features that are not flagged as a 'Ignore'  in the associated FileDesc instance.
      * @code
      *  ex's:   String          Selected Features
      *         "1,2,3,10,20"    [1,2,3,10, 20].
      *         "1,4-7,9-12,23"  [1,4,5,6,7,9,10,11,12,23]
      *         "All"            Selects all features that '_fileDesc' includes accept those that are
-     *                          flagged as 'IgnoreAttribute' in the associated FileDesc instance.
+     *                          flagged as 'Ignore' in the associated FileDesc instance.
      * @endcode
      */
     void  ParseToString (const KKStr&  _str,
@@ -182,7 +182,7 @@ namespace KKMLL
      */
     FeatureNumListPtr  RandomlySelectFeatures (kkint32  numToKeep)  const;
 
-    void  SetAllFeatures (FileDescPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
+    void  SetAllFeatures (FileDescPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'Ignore' in the associated FileDesc. */
 
     bool  Test (kkuint16 _featureNum)  const;       /**< @brief Indicates whether feature '_featureNum' is selected. */
 

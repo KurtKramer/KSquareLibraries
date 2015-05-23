@@ -402,8 +402,8 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
-      if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
-           (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
+      if  ((fileDesc->Type (fieldNum) == AttributeType::Nominal)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::Symbolic)
           )
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else

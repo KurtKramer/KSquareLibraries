@@ -767,8 +767,8 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 
     else 
     {
-      if  ((attriuteTypes[i] == AttributeType::NominalAttribute)  ||
-           (attriuteTypes[i] == AttributeType::SymbolicAttribute)
+      if  ((attriuteTypes[i] == AttributeType::Nominal)  ||
+           (attriuteTypes[i] == AttributeType::Symbolic)
           )
       {
         normalizeFeature[i] = false;

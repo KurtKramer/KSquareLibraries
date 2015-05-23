@@ -120,9 +120,9 @@ KKStr  ModelOldSVM::Description ()  const
 
   if  (svmModel)
   {
-    const SVMparam&  p = svmModel->SVMParameters ();
-    result << " " << MachineTypeToStr (p.MachineType ())
-           << " " << SelectionMethodToStr (p.SelectionMethod ());
+    SVMparam const *  p = svmModel->SVMParameters ();
+    result << " " << MachineTypeToStr (p->MachineType ())
+           << " " << SelectionMethodToStr (p->SelectionMethod ());
   }
   return  result;
 }
@@ -299,7 +299,7 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
   }
 
-  if  (svmModel->SVMParameters ().SelectionMethod () == SVM_SelectionMethod::SelectByVoting)
+  if  (svmModel->SVMParameters ()->SelectionMethod () == SVM_SelectionMethod::SelectByVoting)
     results->SortByVotes (true);
   else
     results->SortByProbability (true);

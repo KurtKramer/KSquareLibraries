@@ -126,7 +126,7 @@ FileDescPtr   FileDesc::NewContinuousDataOnly (VectorKKStr&  _fieldNames)
       if  (seqNum > 0)
         fieldName << "_" << StrFormatInt (seqNum, "000");
 
-      newFileDesc->AddAAttribute (fieldName, AttributeType::NumericAttribute, alreadyExists);
+      newFileDesc->AddAAttribute (fieldName, AttributeType::Numeric, alreadyExists);
       seqNum++;
     }
       while  (alreadyExists);
@@ -143,7 +143,7 @@ void  FileDesc::AddAAttribute (const Attribute&  attribute)
   attributeVector.push_back (attribute.Type ());
 
   kkint32  card = 0;
-  if  (attribute.Type () == AttributeType::NumericAttribute)
+  if  (attribute.Type () == AttributeType::Numeric)
      card = 999999999;
 
   cardinalityVector.push_back (card);
@@ -185,7 +185,7 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
   attributeVector.push_back (curAttribute->Type ());
 
   kkint32  card = 0;
-  if  (curAttribute->Type () == AttributeType::NumericAttribute)
+  if  (curAttribute->Type () == AttributeType::Numeric)
      card = INT_MAX;
   cardinalityVector.push_back (card);
 }  /* AddAAttribute */
@@ -226,8 +226,8 @@ void  FileDesc::AddANominalValue (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "AddANominalValue");
   AttributeType t = Type (fieldNum);
-  if  ((t == AttributeType::NominalAttribute)  ||
-       (t == AttributeType::SymbolicAttribute)
+  if  ((t == AttributeType::Nominal)  ||
+       (t == AttributeType::Symbolic)
       )
   {
     attributes[fieldNum].AddANominalValue (nominalValue, alreadyExist);
@@ -330,8 +330,8 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "LookUpNominalCode");
   const Attribute& a = attributes[fieldNum];
-  if  ((a.Type () != AttributeType::NominalAttribute)  &&
-       (a.Type () != AttributeType::SymbolicAttribute)
+  if  ((a.Type () != AttributeType::Nominal)  &&
+       (a.Type () != AttributeType::Symbolic)
       )
   {
     return -1;
@@ -360,10 +360,10 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum)  const
 
   switch  (a->Type ())
   {
-  case  AttributeType::IgnoreAttribute:   return  a->Cardinality ();
-  case  AttributeType::NominalAttribute:  return  a->Cardinality ();
-  case  AttributeType::NumericAttribute:  return  INT_MAX;
-  case  AttributeType::SymbolicAttribute: return  a->Cardinality ();
+  case  AttributeType::Ignore:   return  a->Cardinality ();
+  case  AttributeType::Nominal:  return  a->Cardinality ();
+  case  AttributeType::Numeric:  return  INT_MAX;
+  case  AttributeType::Symbolic: return  a->Cardinality ();
   
   default: return  INT_MAX;
   }
@@ -422,12 +422,10 @@ AttributePtr*  FileDesc::CreateAAttributeTable ()  const
 }  /* CreateAAttributeTable */
 
 
-
-
-vector<AttributeType>  FileDesc::CreateAttributeTypeTable ()  const
+AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
 {
   kkint32  x;
-  vector<AttributeType>  attributeTypes (attributes.QueueSize (), AttributeType::NULLAttribute);
+  AttributeTypeVector  attributeTypes (attributes.size (), AttributeType::NULLAttribute);
   for  (x = 0;  x < attributes.QueueSize ();  x++)
     attributeTypes[x] = attributes[x].Type ();
   return attributeTypes;
@@ -625,7 +623,7 @@ void FileDesc::DisplayAttributeMappings ( )
     a = attributes.IdxToPtr (i);
     cout << i << ": ";
 
-    if  (a->Type() == AttributeType::NominalAttribute)
+    if  (a->Type() == AttributeType::Nominal)
     {
       for  (j = 0;  j<a->Cardinality ();  j++)
       {
@@ -637,7 +635,7 @@ void FileDesc::DisplayAttributeMappings ( )
       }
     }
 
-    else if  (a->Type() == AttributeType::SymbolicAttribute)
+    else if  (a->Type() == AttributeType::Symbolic)
     {
       cout << "Symbolic (";
       for  (j = 0;  j<a->Cardinality ();  j++)
@@ -653,17 +651,17 @@ void FileDesc::DisplayAttributeMappings ( )
     }
 
     
-    else if (a->Type() == AttributeType::IgnoreAttribute)
+    else if (a->Type() == AttributeType::Ignore)
     {
       cout << "ignore";
     }
 
-    else if (a->Type() == AttributeType::NumericAttribute)
+    else if (a->Type() == AttributeType::Numeric)
     {
       cout << "numeric";
     }
 
-    else if (a->Type() == AttributeType::OrdinalAttribute)
+    else if (a->Type() == AttributeType::Ordinal)
     {
       cout << "ordinal";
     }
@@ -708,7 +706,7 @@ bool  FileDesc::AllFieldsAreNumeric ()  const
   for  (kkint32 fieldNum = 0;  fieldNum < (kkint32)NumOfFields ();  fieldNum++)
   {
     AttributeType  t = Type (fieldNum);
-    if  ((t != AttributeType::NumericAttribute)  &&  (t != AttributeType::IgnoreAttribute))
+    if  ((t != AttributeType::Numeric)  &&  (t != AttributeType::Ignore))
       return false;
   }
 
@@ -770,7 +768,7 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
     }
 
     f->AddAAttribute (left.GetAAttribute (fieldNum));
-    if  (lType != AttributeType::SymbolicAttribute)
+    if  (lType != AttributeType::Symbolic)
     {
       continue;
     }

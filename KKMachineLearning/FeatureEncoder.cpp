@@ -28,53 +28,59 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+FeatureEncoder::FeatureEncoder ():
+    cardinalityDest          (NULL),
+    class1                   (NULL),
+    class2                   (NULL),
+    codedNumOfFeatures       (0),
+    c_Param                  (1.0),
+    destFeatureNums          (NULL),
+    destFileDesc             (NULL),
+    destWhatToDo             (NULL),
+    encodingMethod           (SVM_EncodingMethod::NoEncoding),
+    fileDesc                 (NULL),
+    numEncodedFeatures       (0),
+    numOfFeatures            (0),
+    selectedFeatures         (),
+    srcFeatureNums           (NULL),
+    xSpaceNeededPerExample   (0)
+{
+}
+
+
+
 /**
  * @brief Constructs a Feature Encoder object.
- * @param[in] _svmParam 
  * @param[in] _fileDesc 
  * @param[in] _class1 
  * @param[in] _class2 
  * @param[in] _log A log-file stream. All important events will be output to this stream
  */
-FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
-                                FileDescPtr           _fileDesc,
-                                AttributeTypeVector&  _attributeTypes,
-                                VectorInt32&          _cardinalityTable,
-                                MLClassPtr            _class1,
-                                MLClassPtr            _class2
+FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
+                                MLClassPtr             _class1,
+                                MLClassPtr             _class2,
+                                const FeatureNumList&  _selectedFeatures,
+                                SVM_EncodingMethod     _encodingMethod,
+                                double                 _c_Param
                                ):
 
-    attributeTypes           (_attributeTypes),
     cardinalityDest          (NULL),
-    cardinalityTable         (_cardinalityTable),
     class1                   (_class1),
     class2                   (_class2),
     codedNumOfFeatures       (0),
+    c_Param                  (_c_Param),
     destFeatureNums          (NULL),
     destFileDesc             (NULL),
     destWhatToDo             (NULL),
-    encodingMethod           (SVM_EncodingMethod::NoEncoding),
+    encodingMethod           (_encodingMethod),
     fileDesc                 (_fileDesc),
     numEncodedFeatures       (0),
     numOfFeatures            (0),
-    selectedFeatures         (_fileDesc),
+    selectedFeatures         (_selectedFeatures),
     srcFeatureNums           (NULL),
-    svmParam                 (_svmParam),
     xSpaceNeededPerExample   (0)
-    
 {
-  {
-    FeatureNumListConstPtr  temp = NULL;
-    if  (class1  &&  class2)
-      temp = svmParam.GetFeatureNums (fileDesc, class1, class2);
-    else
-      temp = svmParam.GetFeatureNums ();
-    selectedFeatures = FeatureNumList (*temp);
-  }
-  
-  numOfFeatures = selectedFeatures.NumOfFeatures ();
-
-  encodingMethod    = svmParam.EncodingMethod ();
+  numOfFeatures   = selectedFeatures.NumOfFeatures ();
 
   xSpaceNeededPerExample = 0;
   srcFeatureNums   = new kkint32[numOfFeatures];
@@ -94,22 +100,22 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
     cardinalityDest [x] = 1;
     destWhatToDo    [x] = FeAsIs;
 
-    Attribute  srcAttribute = (fileDesc->Attributes ())[srcFeatureNum];
+    const Attribute&  attribute = fileDesc->GetAAttribute (srcFeatureNum);
+    AttributeType  attributeType = attribute.Type ();
+    kkint32        cardinality   = attribute.Cardinality ();
 
     switch (encodingMethod)
     {
       case SVM_EncodingMethod::BinaryEncoding:
-        if  ((attributeTypes[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
-             (attributeTypes[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
-            )
+        if  ((attributeType == AttributeType::Nominal)  ||  (attributeType == AttributeType::Symbolic))
         {
           destWhatToDo    [x] = FeBinary;
-          cardinalityDest [x] = cardinalityTable[srcFeatureNums [x]];
+          cardinalityDest [x] = cardinality;
           xSpaceNeededPerExample += cardinalityDest[x];
           numEncodedFeatures   += cardinalityDest[x];
           for  (kkint32 zed = 0;  zed < cardinalityDest[x];  zed++)
           {
-            KKStr  fieldName = srcAttribute.Name () + "_" + srcAttribute.GetNominalValue (zed);
+            KKStr  fieldName = attribute.Name () + "_" + attribute.GetNominalValue (zed);
             destFieldNames.push_back (fieldName);
           }
         }
@@ -118,7 +124,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
           xSpaceNeededPerExample++;
           numEncodedFeatures++;
           destWhatToDo [x] = FeAsIs;
-          destFieldNames.push_back (srcAttribute.Name ());
+          destFieldNames.push_back (attribute.Name ());
         }
         break;
 
@@ -126,14 +132,14 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
       case  SVM_EncodingMethod::ScaledEncoding:
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
-        if  ((attributeTypes[srcFeatureNums[x]] == AttributeType::NominalAttribute)  ||
-             (attributeTypes[srcFeatureNums[x]] == AttributeType::SymbolicAttribute)
+        if  ((attributeType == AttributeType::Nominal)  ||
+             (attributeType == AttributeType::Symbolic)
             )
           destWhatToDo [x] = FeScale;
         else
           destWhatToDo [x] = FeAsIs;
 
-        destFieldNames.push_back (srcAttribute.Name ());
+        destFieldNames.push_back (attribute.Name ());
         break;
 
 
@@ -142,7 +148,7 @@ FeatureEncoder::FeatureEncoder (const SVMparam&       _svmParam,
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
         destWhatToDo [x] = FeAsIs;
-        destFieldNames.push_back (srcAttribute.Name ());
+        destFieldNames.push_back (attribute.Name ());
         break;
     }
   }
@@ -176,7 +182,6 @@ FeatureEncoder::~FeatureEncoder ()
 kkint32  FeatureEncoder::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (FeatureEncoder) 
-    + attributeTypes.size () * sizeof (AttributeType)
     + selectedFeatures.MemoryConsumedEstimated ()
     + numOfFeatures * sizeof (kkint32);
 
@@ -235,7 +240,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
     {
     case  FeAsIs:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc          << "\t" 
@@ -252,7 +257,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
         {
           KKStr  nominalValue = fileDesc->GetNominalValue (srcFeatureNums[x], z);
           KKStr  encodedName  = fileDesc->FieldName (x) + "_" + nominalValue;
-          newFileDesc->AddAAttribute (encodedName, AttributeType::NumericAttribute, alreadyExist);
+          newFileDesc->AddAAttribute (encodedName, AttributeType::Numeric, alreadyExist);
           if  (o)
           {
             *o << origFieldDesc << "\t" 
@@ -269,7 +274,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     case  FeScale:
       {
-        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::NumericAttribute, alreadyExist);
+        newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
         {
           *o << origFieldDesc           << "\t" 
@@ -291,8 +296,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
 
 /**
- * @brief Converts a single example into the svm_problem format, using the method specified 
- * by the EncodingMethod() value returned by svmParam
+ * @brief Converts a single example into the svm_problem format
  * @param[in] example That we're converting
  */
 XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
@@ -382,8 +386,7 @@ FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorList
 
 
 /**
- * @brief Converts a single example into the svm_problem format, using the method specified 
- * by the EncodingMethod() value returned by svmParam
+ * @brief Converts a single example into the svm_problem format.
  * @param[in] The example That we're converting
  * @param[in] The row kkint32 he svm_problem structure that the converted data will be stored
  */
@@ -586,14 +589,14 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
     if  (prob.W)
     {
-      prob.W[i] = example->TrainWeight () * svmParam.C_Param ();
+      prob.W[i] = example->TrainWeight () * c_Param;
       if  (example->TrainWeight () <= 0.0f)
       {
         log.Level (-1) << endl 
                        << "FeatureEncoder::EncodeIntoSparseMatrix    ***ERROR***   Example[" << example->ExampleFileName () << "]" << endl
                        << "      has a TrainWeight value of 0 or less defaulting to 1.0" << endl
                        << endl;
-        prob.W[i] = 1.0 * svmParam.C_Param ();
+        prob.W[i] = 1.0 * c_Param;
       }
     }
 
@@ -678,3 +681,87 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
 
   return  encodedFeatureVectorList;
 }  /* CreateEncodedFeatureVector */
+
+
+
+
+void  FeatureEncoder::WriteXML (const KKStr&  varName,
+                                ostream&      o
+                               )  const
+{
+  XmlTag  tagStart ("TrainingClassList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    tagStart.AddAtribute ("VarName", varName);
+
+  tagStart.WriteXML (o);
+  o << endl;
+
+  XmlElementInt32::WriteXML (numEncodedFeatures,     "NumEncodedFeatures",     o);
+  XmlElementInt32::WriteXML (numOfFeatures,          "NumOfFeatures",          o);
+  XmlElementInt32::WriteXML (xSpaceNeededPerExample, "xSpaceNeededPerExample", o);
+
+  if  (cardinalityDest)
+    XmlElementArrayInt32::WriteXML (numOfFeatures, cardinalityDest, "CardinalityDest", o);
+
+  if  (class1)  class1->Name ().WriteXML ("Class1", o);
+  if  (class2)  class2->Name ().WriteXML ("Class2", o);
+  XmlElementInt32::WriteXML (codedNumOfFeatures, "CodedNumOfFeatures", o);
+  if  (destFeatureNums)
+    XmlElementArrayInt32::WriteXML (numOfFeatures, destFeatureNums, "DestFeatureNums", o);
+  if  (destFileDesc)
+    destFileDesc->WriteXML ("DestFileDesc", o);
+
+  if  (destWhatToDo)
+  {
+    VectorInt32  v;
+    for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
+      v.push_back ((kkint32)(destWhatToDo[x]));
+    XmlElementVectorInt32::WriteXML (v, "DestWhatToDo", o);
+  }
+
+  EncodingMethodToStr (encodingMethod).WriteXML ("EncodingMethod", o);
+  if  (fileDesc)
+    fileDesc->WriteXML ("FileDesc", o);
+
+  selectedFeatures.WriteXML ("selectedFeatures", o);
+
+  if  (srcFeatureNums)
+    XmlElementArrayInt32::WriteXML (numOfFeatures, srcFeatureNums, "SrcFeatureNums", o);
+ 
+  XmlTag  tagEnd ("TrainingClassList", XmlTag::TagTypes::tagEnd);
+  tagEnd.WriteXML (o);
+  o << endl;
+}
+
+
+
+void  FeatureEncoder::ReadXML (XmlStream&      s,
+                               XmlTagConstPtr  tag,
+                               RunLog&         log
+                              )
+{
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (e)
+      {
+        KKStr varName = e->VarName ();
+        if  (true)
+        {
+        }
+
+        else
+        {
+          log.Level (-1) << "XmlElementTrainingClassList   ***ERROR***   Un-expected Section Element[" << e->SectionName () << "]" << endl;
+        }
+      }
+    }
+
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+

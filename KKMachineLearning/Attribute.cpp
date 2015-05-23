@@ -53,8 +53,8 @@ Attribute::Attribute (const KKStr&   _name,
 
 {
   nameUpper.Upper ();
-  if  ((type == AttributeType::NominalAttribute)  ||  
-       (type == AttributeType::SymbolicAttribute)
+  if  ((type == AttributeType::Nominal)  ||  
+       (type == AttributeType::Symbolic)
       )
   {
     nominalValuesUpper = new KKStrListIndexed (true,   // true == nominalValuesUpper will own its contents.
@@ -72,8 +72,8 @@ Attribute::Attribute (const Attribute&  a):
     type               (a.type)
 
 {
-  if  ((type == AttributeType::NominalAttribute)  ||  
-       (type == AttributeType::SymbolicAttribute)
+  if  ((type == AttributeType::Nominal)  ||  
+       (type == AttributeType::Symbolic)
       )
   {
     nominalValuesUpper = new KKStrListIndexed (*(a.nominalValuesUpper));
@@ -105,8 +105,8 @@ kkint32  Attribute::MemoryConsumedEstimated ()  const
 
 void  Attribute::ValidateNominalType (const KKStr&  funcName)  const
 {
-  if  ((type != AttributeType::NominalAttribute)  &&  
-       (type != AttributeType::SymbolicAttribute)
+  if  ((type != AttributeType::Nominal)  &&  
+       (type != AttributeType::Symbolic)
       )
   {
     KKStr  msg (80);
@@ -172,8 +172,8 @@ KKStr&  Attribute::GetNominalValue (kkint32 code)  const
 
 kkint32 Attribute::Cardinality ()  const
 {
-  if  ((type == AttributeType::NominalAttribute)  ||  
-       (type == AttributeType::SymbolicAttribute)
+  if  ((type == AttributeType::Nominal)  ||  
+       (type == AttributeType::Symbolic)
       )
     return  nominalValuesUpper->size ();
   else
@@ -196,8 +196,8 @@ bool  Attribute::operator== (const Attribute&  rightSide)  const
   if  ((nameUpper != rightSide.nameUpper)  ||  (Type ()   != rightSide.Type ()))
     return false;
 
-  if  ((type == AttributeType::NominalAttribute)  ||
-       (type == AttributeType::SymbolicAttribute)
+  if  ((type == AttributeType::Nominal)  ||
+       (type == AttributeType::Symbolic)
       )
   {
     // Lets make sure that the nominal values are equal.  Not Case sensitive.
@@ -251,8 +251,8 @@ void  Attribute::WriteXML (const KKStr&  varName,
                           )  const
 {
   XmlTag::TagTypes  startTagType = XmlTag::TagTypes::tagEmpty;
-  if  ((type == KKMLL::AttributeType::NominalAttribute) ||
-       (type == KKMLL::AttributeType::SymbolicAttribute)
+  if  ((type == KKMLL::AttributeType::Nominal) ||
+       (type == KKMLL::AttributeType::Symbolic)
       )
     startTagType  = XmlTag::TagTypes::tagStart;
 
@@ -436,24 +436,23 @@ const KKStr&  KKMLL::AttributeTypeToStr (AttributeType  type)
 AttributeType  KKMLL::AttributeTypeFromStr (const KKStr&  s)
 {
   if  (s.EqualIgnoreCase ("Ignore"))
-    return  AttributeType::IgnoreAttribute;
+    return  AttributeType::Ignore;
 
   else if  (s.EqualIgnoreCase ("Numeric"))
-    return  AttributeType::NumericAttribute;
+    return  AttributeType::Numeric;
 
   else if  (s.EqualIgnoreCase ("Nominal"))
-    return AttributeType::NominalAttribute;
+    return AttributeType::Nominal;
 
   else if  (s.EqualIgnoreCase ("Ordinal"))
-    return  AttributeType::OrdinalAttribute;
+    return  AttributeType::Ordinal;
 
   else if  (s.EqualIgnoreCase ("Symbolic"))
-    return  AttributeType::SymbolicAttribute;
+    return  AttributeType::Symbolic;
 
   else
     return  AttributeType::NULLAttribute;
 }
-
 
 
 
@@ -541,7 +540,104 @@ void  AttributeList::ReadXML (XmlStream&      s,
 }
 
 
+AttributeTypeVector:: AttributeTypeVector ():
+   vector<AttributeType> ()
+{
+}
+
+
+AttributeTypeVector::AttributeTypeVector (kkuint32       initialSize,  
+                                          AttributeType  initialValue
+                                         ):
+   vector<AttributeType> (initialSize, initialValue)
+{
+}
+
+
+AttributeType  KKMLL::operator++(AttributeType  zed)
+{
+  return  (AttributeType)((int)zed + 1);
+}  /* operator++ */
+
+
+void  AttributeTypeVector::WriteXML (const KKStr&  varName,
+                                     ostream&      o
+                                    )  const
+{
+  XmlTag  tagStart ("AttributeTypeVector", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    tagStart.AddAtribute ("VarName", varName);
+  tagStart.AddAtribute ("Size", (kkint32)size ());
+  tagStart.WriteXML (o);
+  o << endl;
+
+  o << "CodeTable";
+  for  (AttributeType  zed = AttributeType::NULLAttribute;  zed <= AttributeType::Symbolic;  ++zed)
+    o << "\t" << AttributeTypeToStr (zed);
+  o << endl;
+
+  o << "CodedAttributeValues";
+  for  (auto  idx: *this)
+    o << "\t" << (int)idx;
+  o << endl;
+
+  XmlTag  tagEnd ("AttributeTypeVector", XmlTag::TagTypes::tagEnd);
+  tagEnd.WriteXML (o);
+  o << endl;
+}
+
+
+void  AttributeTypeVector::ReadXML (XmlStream&      s,
+                                    XmlTagConstPtr  tag,
+                                    RunLog&         log
+                                   )
+{
+  clear ();
+
+  kkuint32  expectedLen = (kkuint32)tag->AttributeValueInt32 ("Size");
+  AttributeTypeVector decodeTable;
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (typeid (*t) == typeid (XmlContent))
+    {
+      KKStrParser p (*(dynamic_cast<XmlContentPtr> (t)->Content ()));
+      p.TrimWhiteSpace (" ");
+      KKStr  lineName =p.GetNextToken ();
+      if  (lineName.EqualIgnoreCase ("CodeTable"))
+      {
+        KKStr  fieldName = p.GetNextToken ();
+        while  (p.MoreTokens ())
+        {
+          if  (!fieldName.Empty ())
+            decodeTable.push_back (AttributeTypeFromStr (fieldName));
+          fieldName = p.GetNextToken ();
+        }
+      }
+
+      else if  (lineName.EqualIgnoreCase ("CodedAttributeValues"))
+      {
+        kkint32 x = p.GetNextTokenInt ();
+        if  ((x < 0)  ||  (x >= (kkint32)decodeTable.size ()))
+        {
+          log.Level (-1) << endl << "AttributeTypeVector::ReadXML   ***ERROR***    Invalid Code Value[" << x << "]" << endl  << endl;
+          push_back (AttributeType::NULLAttribute);
+        }
+        else
+        {
+          push_back ((AttributeType)x);
+        }
+        
+      }
+    }
+    t = s.GetNextToken (log);
+  }
+}
+
+
 
 
 XmlFactoryMacro(Attribute)
 XmlFactoryMacro(AttributeList)
+XmlFactoryMacro(AttributeTypeVector)

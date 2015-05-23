@@ -507,13 +507,6 @@ void  TrainingClassList::ReadXML (XmlStream&  s,
                   = XmlFactoryTrainingClass::FactoryInstance ();
 
 
-
-
-
-
-
-
-
 XmlFactoryMacro(TrainingClassList)
 
 

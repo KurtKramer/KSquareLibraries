@@ -1699,7 +1699,7 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
   for  (fieldNum = 0;  fieldNum < (kkint32)newFileDesc->NumOfFields ();  fieldNum++)
   {
-    if  (newFileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
+    if  (newFileDesc->Type (fieldNum) == AttributeType::Symbolic)
     {
       symbolicFields.push_back (fieldNum);
       VectorInt  lookUpTable;

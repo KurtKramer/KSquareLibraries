@@ -33,20 +33,40 @@ using namespace  KKB;
 
 namespace KKMLL 
 {
-  enum  class  AttributeType
+  enum  class  AttributeType: int
   {
     NULLAttribute,
-    IgnoreAttribute,
-    NumericAttribute,
-    NominalAttribute,
-    OrdinalAttribute,
-    SymbolicAttribute    /**< Same as NominalAttribute, except the names file does not
-                          * list all possible values.  They have to be determined from
-                          * the data file.
-                          */
+    Ignore,
+    Numeric,
+    Nominal,
+    Ordinal,
+    Symbolic    /**< Same as Nominal, except the names file does not
+                 * list all possible values.  They have to be determined from
+                 * the data file.
+                 */
   };
 
-  typedef  std::vector<AttributeType>  AttributeTypeVector;
+  AttributeType  operator++(AttributeType  zed);
+
+
+  class  AttributeTypeVector: public  vector<AttributeType>
+  {
+  public:
+    AttributeTypeVector ();
+    AttributeTypeVector (kkuint32  initialSize,  AttributeType  initialValue);
+
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+  };  /* AttributeTypeVector */
+
 
   typedef  AttributeTypeVector*        AttributeTypeVectorPtr;
 
@@ -77,7 +97,7 @@ namespace KKMLL
 
     /**
      *@brief Returns back the cardinality of the attribute; the number of possible values it can take.
-     *@details Only  attributes with type NominalAttribute or SymbolicAttribute have a fixed number
+     *@details Only  attributes with type Nominal or Symbolic have a fixed number
      *         of possible values all others will return 999999999.
      */
     kkint32        Cardinality ()  const;
@@ -88,7 +108,7 @@ namespace KKMLL
 
     /**
      *@brief  Returns the nominal value for the given ordinal value.
-     *@details For example: you could have a Attribute called DayOfTheWeek that would be type 'NominalAttribute'
+     *@details For example: you could have a Attribute called DayOfTheWeek that would be type 'Nominal'
      *  where its possible values  are "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", and "Sat". In this case a call
      *  to this method where 'code' == 3 would return "Wed".
      */
@@ -196,9 +216,12 @@ namespace KKMLL
 
 
 
+  typedef  XmlElementTemplate<AttributeTypeVector>  XmlElementAttributeTypeVector;
+  typedef  XmlElementAttributeTypeVector*  XmlElementAttributeTypeVectorPtr;
+
+
   typedef  XmlElementTemplate<Attribute>  XmlElementAttribute;
   typedef  XmlElementAttribute*  XmlElementAttributePtr;
-
 
 
   typedef  XmlElementTemplate<AttributeList>  XmlElementAttributeList;

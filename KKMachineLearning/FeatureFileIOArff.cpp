@@ -142,8 +142,8 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
            << attr->Name ()
            << " ";
 
-      if  ((attr->Type () == AttributeType::NominalAttribute)   ||
-           (attr->Type () == AttributeType::SymbolicAttribute)
+      if  ((attr->Type () == AttributeType::Nominal)   ||
+           (attr->Type () == AttributeType::Symbolic)
           )
       {
         _out << "(";
@@ -193,8 +193,8 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     {
       kkint32  featureNum = _selFeatures[x];
 
-      if  ((attrTable[featureNum]->Type () == AttributeType::NominalAttribute)  ||
-           (attrTable[featureNum]->Type () == AttributeType::SymbolicAttribute)
+      if  ((attrTable[featureNum]->Type () == AttributeType::Nominal)  ||
+           (attrTable[featureNum]->Type () == AttributeType::Symbolic)
           )
         _out << attrTable[featureNum]->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else

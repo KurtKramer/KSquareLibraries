@@ -581,8 +581,8 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
-      if  ((fileDesc->Type (fieldNum) == AttributeType::NominalAttribute)  ||
-           (fileDesc->Type (fieldNum) == AttributeType::SymbolicAttribute)
+      if  ((fileDesc->Type (fieldNum) == AttributeType::Nominal)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::Symbolic)
           )
         numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else
@@ -707,9 +707,6 @@ void  SVMparam::C_Param (MLClassPtr  class1,
     binaryParms->C (cParam);
   }
 }  /* C_Param */
-
-
-
 
 
 
@@ -839,6 +836,9 @@ void  SVMparam::ReadXML (XmlStream&      s,
             bool  successful = false;
             selectedFeatures = new FeatureNumList (idx.second, successful);
           }
+
+          else if  (idx.first.EqualIgnoreCase ("Param"))
+            param.ParseTabDelStr (idx.second);
 
           else if  (idx.first.EqualIgnoreCase ("SamplingRate"))
             samplingRate = idx.second.ToFloat ();

@@ -673,7 +673,7 @@ FileDescPtr  GrayScaleImagesFVProducer::DefineFileDescStatic ()
     FileDescPtr  tempFileDesc = new KKMLL::FileDesc ();
     for  (kkint32 fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
     {
-      tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::NumericAttribute, alreadyExists);
+      tempFileDesc->AddAAttribute (featureNames[fieldNum], AttributeType::Numeric, alreadyExists);
     }
     tempFileDesc->Version (_GrayScaleImagesFVProducer_VersionNum_);
 
