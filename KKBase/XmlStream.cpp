@@ -137,7 +137,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
         factory = XmlElementUnKnownFactoryInstance  ();
       else
         int zed =100;
-      log.Level (10) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
+      log.Level (50) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
 
       PushXmlElementLevel (tag->Name ());
       token = factory->ManufatureXmlElement (tag, *this, log);

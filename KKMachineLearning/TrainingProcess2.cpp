@@ -794,7 +794,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
     if  (!examplesThisClass)
     {
       abort = true;
-      log.Level (-1) << "TrainingProcess2::ExtractTrainingClassFeatures   ***ERROR***   No examples returned by 'ExtractTrainingClassFeatures'." << endl;
+      log.Level (-1) << "TrainingProcess2::ExtractTrainingClassFeatures   ***ERROR***   No examples returned by 'ExtractTrainingClassFeatures': " << trainingClass->Name ()  << endl;
     }
     else
     {
@@ -808,27 +808,58 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
   // DONE Extracting Raw features from All classes.
   if  ((!abort)  &&  (!cancelFlag))
   {
-    if  (config->NoiseTrainingClass ())
+    const TrainingClassPtr  noiseTC = config->NoiseTrainingClass ();
+    if  (noiseTC)
     {
-      ExtractFeatures (config, *mlClasses, config->NoiseTrainingClass (), latestTimeStamp, changesMadeToThisTrainingClass, cancelFlag, log);
+      FeatureVectorListPtr  examplesThisClass  = 
+            ExtractFeatures (config, 
+                             *mlClasses, 
+                             noiseTC,
+                             latestTimeStamp,
+                             changesMadeToThisTrainingClass,
+                             cancelFlag,
+                             log
+                            );
       if  (latestTimeStamp > latestImageTimeStamp)
         latestImageTimeStamp = latestTimeStamp;
 
       if  (changesMadeToThisTrainingClass)
         changesMadeToTrainingLibraries = true;
+      if  (!examplesThisClass)
+      {
+        log.Level (-1) << endl
+          << "TrainingProcess2::ExtractTrainingClassFeatures   ***ERROR***   Loading NoiseClass[" << noiseTC->Name () << "]." << endl
+          << endl;
+        abort = true;
+      }
+      else
+      {
+        trainingExamples->AddQueue (*examplesThisClass);
+        examplesThisClass->Owner (false);
+        delete  examplesThisClass;
+        examplesThisClass = NULL;
+      }
+    }
+
+    trainingExamples->RandomizeOrder ();
+
+    if  (weOwnMlClasses)
+    {
+      delete  mlClasses;
+      mlClasses = NULL;
     }
   }
 
-  trainingExamples->RandomizeOrder ();
-
-  if  (weOwnMlClasses)
+  if  (abort)
   {
-    delete  mlClasses;
-    mlClasses = NULL;
+    delete  trainingExamples;
+    trainingExamples = NULL;
+    log.Level (10) << "TrainingProcess2::ExtractTrainingClassFeatures   Loading of training data failed." << endl;
   }
-
-
-  log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures   Exiting" << endl;
+  else
+  {
+    log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures   Exiting" << endl;
+  }
   return  trainingExamples;
 }  /*  ExtractTrainingClassFeatures */
 

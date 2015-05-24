@@ -551,7 +551,12 @@ void  SVMModel::BuildProblemOneVsAll (FeatureVectorList&    examples,
   log.Level (20) << "SVMModel::BuildProblemOneVsAll" << endl;
 
   if  (!selectedFeatures)
-    selectedFeatures = new FeatureNumList (examples.FileDesc ());
+  {
+    FeatureNumListPtr tempFeatures = new FeatureNumList (examples.FileDesc ());
+    SetSelectedFeatures (tempFeatures, log);
+    delete  tempFeatures;
+    tempFeatures = NULL;
+  }
 
   kkint32  numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
@@ -2650,6 +2655,8 @@ void  SVMModel::ReadXML (XmlStream&      s,
     numOfClasses = (kkint32)assignments.size ();
     BuildClassIdxTable ();
     BuildCrossClassProbTable ();
+
+    CalculatePredictXSpaceNeeded (log);
 
     if  ((svmParam->MachineType () ==  SVM_MachineType::OneVsOne)  ||  (svmParam->MachineType () == SVM_MachineType::OneVsAll))
     {

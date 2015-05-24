@@ -151,7 +151,7 @@ KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
   if  (directory[1] == ':')
     return directory;
 
-  return rootDirWithSlash + directory;
+  return osSubstituteInEnvironmentVariables (rootDirWithSlash + directory);
 }  /* ExpandedDirectory */
 
 
