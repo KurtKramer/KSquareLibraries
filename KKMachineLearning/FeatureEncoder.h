@@ -150,7 +150,6 @@ namespace KKMLL
     kkint32               numOfFeatures;
     FeatureNumList        selectedFeatures;
     kkint32*              srcFeatureNums;
-    SVMparam const *      svmParam;
     kkint32               xSpaceNeededPerExample;
   };  /* FeatureEncoder */
 

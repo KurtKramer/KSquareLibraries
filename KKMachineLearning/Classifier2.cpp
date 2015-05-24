@@ -514,6 +514,8 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
       probabilities[x] = cp->probability;
     }
   }
+  delete  predictions;
+  predictions= NULL;
 }  /* ProbabilitiesByClass */
 
 

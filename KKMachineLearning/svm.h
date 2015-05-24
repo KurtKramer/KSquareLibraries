@@ -165,6 +165,9 @@ struct SvmModel233
   double*            kValueTable;
 
   svm_node*          xSpace;    // Needed when we load from data file.
+
+  bool               valid;     /**< Set to false if model is InValid;  example look at ReadXML */
+
   bool               weOwnXspace;
 
   SvmModel233 ();

@@ -2449,7 +2449,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
       const KKStr&  varName = e->VarName ();
 
-      if  (varName.EqualIgnoreCase ("FiledDesc")  &&  (typeid (*e) == typeid (XmlElementFileDesc)))
+      if  (varName.EqualIgnoreCase ("FileDesc")  &&  (typeid (*e) == typeid (XmlElementFileDesc)))
       {
         fileDesc = dynamic_cast<XmlElementFileDescPtr> (e)->Value ();
       }
@@ -2533,9 +2533,24 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
       else if  (varName.EqualIgnoreCase ("OneVsOneModel")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
-        DeleteModels ();
-        AllocateModels ();
-        models[0][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
+        XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
+        SvmModel233* m = xmlElementModel->Value ();
+        if  (m)
+        {
+          if  (!m->valid)
+          {
+            log.Level (-1) << endl
+              << "SVMModel::ReadXM   ***ERROR***   'OneVsOneModel'  is invalid." << endl
+              << endl;
+          }
+          else
+          {
+            DeleteModels ();
+            AllocateModels ();
+            models[0][0] = xmlElementModel->TakeOwnership ();
+            ++numModeLoaded;
+          }
+        }
       }
 
       else if  (varName.EqualIgnoreCase ("BinaryCombo")  &&  (typeid (*e) == typeid (XmlElementKKStr)))
@@ -2548,7 +2563,17 @@ void  SVMModel::ReadXML (XmlStream&      s,
 
       else if  (varName.StartsWith ("BinaryComboModel_")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
-        if  (numModeLoaded >= numOfModels)
+        XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
+        SvmModel233* m = xmlElementModel->Value ();
+        if  ((!m)  ||  (!m->valid))
+        {
+          log.Level (-1) << endl
+            << "SVMModel::ReadXM   ***ERROR***  SvmModel233[" << varName << "] is invalid." << endl
+            << endl;
+          errorsFound = true;
+        }
+
+        else if  (numModeLoaded >= numOfModels)
         {
           log.Level (-1) << endl
             << "SVMModel::ReadXM   ***ERROR***   Number of models being loaded exceeds what was expected." << endl
@@ -2573,6 +2598,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           else
           {
             delete  models[numModeLoaded][0];
+
             models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
 
             binaryFeatureEncoders[numModeLoaded] 
@@ -2608,6 +2634,14 @@ void  SVMModel::ReadXML (XmlStream&      s,
     errorsFound = true;
   }
 
+  if  (!svmParam)
+  {
+   log.Level (-1) << endl 
+     << "SVMModel::ReadXM   ***ERROR***   'svmParam' is not defined." << endl
+     << endl;
+    errorsFound = true;
+  }
+
   if  (!errorsFound)
   {
     type_table        = fileDesc->CreateAttributeTypeTable ( );
@@ -2616,6 +2650,18 @@ void  SVMModel::ReadXML (XmlStream&      s,
     numOfClasses = (kkint32)assignments.size ();
     BuildClassIdxTable ();
     BuildCrossClassProbTable ();
+
+    if  ((svmParam->MachineType () ==  SVM_MachineType::OneVsOne)  ||  (svmParam->MachineType () == SVM_MachineType::OneVsAll))
+    {
+      delete  featureEncoder;
+      featureEncoder = new FeatureEncoder (fileDesc,
+                                           NULL,              // class1, set to NULL because we are dealing with all classes
+                                           NULL,              // class2,     ""          ""            ""            ""
+                                           *selectedFeatures,
+                                           svmParam->EncodingMethod (),
+                                           svmParam->C_Param ()
+                                          );
+    }
   }
 
   validModel = !errorsFound;

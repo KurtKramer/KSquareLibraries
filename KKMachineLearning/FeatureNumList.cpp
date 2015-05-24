@@ -547,7 +547,7 @@ void  FeatureNumList::ParseToString (const KKStr&  _str,
                                      bool&         _valid
                                     )  
 {
-  bool  valid = true;
+  _valid = true;
   delete  featureNums;
 
   featureNumsAllocatedSize = 0;

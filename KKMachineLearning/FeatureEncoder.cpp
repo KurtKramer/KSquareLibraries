@@ -696,20 +696,22 @@ void  FeatureEncoder::WriteXML (const KKStr&  varName,
   tagStart.WriteXML (o);
   o << endl;
 
-  XmlElementInt32::WriteXML (numEncodedFeatures,     "NumEncodedFeatures",     o);
-  XmlElementInt32::WriteXML (numOfFeatures,          "NumOfFeatures",          o);
-  XmlElementInt32::WriteXML (xSpaceNeededPerExample, "xSpaceNeededPerExample", o);
+  XmlElementInt32::WriteXML  (codedNumOfFeatures,     "CodedNumOfFeatures",     o);
+  XmlElementDouble::WriteXML (c_Param,                "c_Param",                o);
+  XmlElementInt32::WriteXML  (numEncodedFeatures,     "NumEncodedFeatures",     o);
+  XmlElementInt32::WriteXML  (numOfFeatures,          "NumOfFeatures",          o);
+  XmlElementInt32::WriteXML  (xSpaceNeededPerExample, "xSpaceNeededPerExample", o);
 
   if  (cardinalityDest)
     XmlElementArrayInt32::WriteXML (numOfFeatures, cardinalityDest, "CardinalityDest", o);
 
   if  (class1)  class1->Name ().WriteXML ("Class1", o);
   if  (class2)  class2->Name ().WriteXML ("Class2", o);
-  XmlElementInt32::WriteXML (codedNumOfFeatures, "CodedNumOfFeatures", o);
   if  (destFeatureNums)
     XmlElementArrayInt32::WriteXML (numOfFeatures, destFeatureNums, "DestFeatureNums", o);
-  if  (destFileDesc)
-    destFileDesc->WriteXML ("DestFileDesc", o);
+
+  if  (fileDesc)      fileDesc->WriteXML     ("FileDesc",     o);
+  if  (destFileDesc)  destFileDesc->WriteXML ("DestFileDesc", o);
 
   if  (destWhatToDo)
   {
@@ -720,8 +722,6 @@ void  FeatureEncoder::WriteXML (const KKStr&  varName,
   }
 
   EncodingMethodToStr (encodingMethod).WriteXML ("EncodingMethod", o);
-  if  (fileDesc)
-    fileDesc->WriteXML ("FileDesc", o);
 
   selectedFeatures.WriteXML ("selectedFeatures", o);
 
@@ -749,9 +749,90 @@ void  FeatureEncoder::ReadXML (XmlStream&      s,
       if  (e)
       {
         KKStr varName = e->VarName ();
-        if  (true)
+
+        if  (varName.EqualIgnoreCase ("CodedNumOfFeatures"))
+          codedNumOfFeatures= e->ToInt32 ();
+
+        else if  (varName.EqualIgnoreCase ("C_Param"))
+          c_Param = e->ToDouble ();
+
+        else if  (varName.EqualIgnoreCase ("NumEncodedFeatures"))
+          numEncodedFeatures = e->ToInt32 ();
+
+        else if  (varName.EqualIgnoreCase ("NumOfFeatures"))
+          numOfFeatures = e->ToInt32 ();
+
+        else if  (varName.EqualIgnoreCase ("xSpaceNeededPerExample"))
+          xSpaceNeededPerExample = e->ToInt32 ();
+
+        else if  (typeid (*e) == typeid (XmlElementArrayInt32))
         {
+          XmlElementArrayInt32Ptr xmlArray = dynamic_cast<XmlElementArrayInt32Ptr> (e);
+          kkuint32 count = xmlArray->Count ();
+          if  (count != numOfFeatures)
+          {
+            log.Level (-1) << endl
+              << "FeatureEncoder::ReadXML   ***ERROR***  Variable[" << varName << "]  Invalid Length[" << count << "]  Expected[" << numOfFeatures << "]" << endl
+              << endl;
+          }
+          else
+          {
+            if  (varName.EqualIgnoreCase ("CardinalityDest"))
+            {
+              delete  cardinalityDest;
+              cardinalityDest = xmlArray->TakeOwnership ();
+            }
+
+            else if  (varName.EqualIgnoreCase ("DestFeatureNums"))
+            {
+              delete  destFeatureNums;
+              destFeatureNums = xmlArray->TakeOwnership ();
+            }
+
+            else if  (varName.EqualIgnoreCase ("SrcFeatureNums"))
+            {
+              delete  srcFeatureNums;
+              srcFeatureNums = xmlArray->TakeOwnership ();
+            }
+          }
         }
+
+        else if  (varName.EqualIgnoreCase ("Class1"))
+          class1 = MLClass::CreateNewMLClass (e->ToKKStr (), -1);
+
+        else if  (varName.EqualIgnoreCase ("Class2"))
+          class2 = MLClass::CreateNewMLClass (e->ToKKStr (), -1);
+
+        else if  (varName.EqualIgnoreCase ("FileDesc")  &&  (typeid (*e) == typeid (XmlElementFileDesc)))
+          fileDesc = dynamic_cast<XmlElementFileDescPtr> (e)->Value ();
+
+        else if  (varName.EqualIgnoreCase ("DestFileDesc")  &&  (typeid (*e) == typeid (XmlElementFileDesc)))
+          destFileDesc = dynamic_cast<XmlElementFileDescPtr> (e)->Value ();
+
+        else if  (varName.EqualIgnoreCase ("DestWhatToDo")  &&  (typeid (*e) == typeid (XmlElementVectorInt32)))
+        {
+          XmlElementVectorInt32Ptr  xmlVect = dynamic_cast<XmlElementVectorInt32Ptr> (e);
+          if  (xmlVect  &&  xmlVect->Value ())
+          {
+            const VectorInt32&  v = *(xmlVect->Value ());
+            if  (v.size () != numOfFeatures)
+            {
+              log.Level (-1) << endl
+                << "FeatureEncoder::ReadXML   ***ERROR***   Variable[" << varName << "]  Invalid Size[" << v.size () << "]  Expected[" << numOfFeatures << "]." << endl
+                << endl;
+            }
+            else
+            {
+              delete  destWhatToDo;
+              destWhatToDo = new FeWhatToDo[v.size ()];
+              for  (kkuint32 x = 0;  x < v.size ();  ++x)
+                destWhatToDo[x] = (FeWhatToDo)v[x];
+            }
+          }
+        }
+
+        else if  (varName.EqualIgnoreCase ("EncodingMethod"))
+          encodingMethod = EncodingMethodFromStr (e->ToKKStr ());
 
         else
         {

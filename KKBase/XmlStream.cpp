@@ -329,7 +329,7 @@ KKStrConstPtr  XmlAttributeList::AttributeNameByIndex  (kkuint32  index)  const
 const KKStr&   XmlAttributeList::AttributeValueKKStr   (const KKStr&  name)   const
 {
   KKStrConstPtr s = AttributeValueByName (name);
-  if  (!s)
+  if  (s)
     return  *s;
   else
     return KKStr::EmptyStr ();

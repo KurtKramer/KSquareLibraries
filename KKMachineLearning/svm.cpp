@@ -56,7 +56,8 @@ SvmModel233::SvmModel233 ()
   numNonSV      = -1;
   weight        = -1;
   dim           = -1;
-  weOwnXspace = false;
+  valid         = true;
+  weOwnXspace   = false;
 }
 
 
@@ -248,6 +249,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
   delete  SV;       SV      = NULL;
 
   bool  errorsFound = false;
+  valid = true;
 
   XmlTokenPtr  t = NULL;
   while  (!errorsFound)
@@ -406,13 +408,10 @@ void  SvmModel233::ReadXML (XmlStream&      s,
 
       else if  (numSVsLoaded >= totalNumSVs)
       {
-        log.Level (-1) << endl << endl << endl
-             << "SvmModel233::ReadXML     ***ERROR***  More 'SupportVector' defined were specified." << endl
-             << endl;
-        errorsFound = true;
+        log.Level (-1) << "SvmModel233::ReadXML  ***ERROR***  Exceeding expected number of Support Vectors." << endl;
       }
 
-      if  (errorsFound)
+      if  (!errorsFound)
       {
         if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
         {
@@ -450,11 +449,34 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     }
     else
     {
+      log.Level (-1) << endl
+        << "SvmModel233::ReadXML   ***ERROR***  Unexpected Token[" << t->SectionName () << "  " << t->VarName () << "]" << endl
+        << endl;
+      errorsFound = true;
     }
 
     delete  t;
     t = NULL;
   }
+
+  if  (!errorsFound)
+  {
+    if  (numSVsLoaded != totalNumSVs)
+    {
+      log.Level (-1) << endl
+        << "SvmModel233::ReadXML   ***ERROR***   numSVsLoaded[" << numSVsLoaded << "] does not match totalNumSVs[" << totalNumSVs << "]." << endl
+        << endl;
+      errorsFound= true;
+    }
+
+    else
+    {
+      delete  kValueTable;
+      kValueTable = new double[l];
+    }
+  }
+
+  valid = !errorsFound;
 }  /* ReadXML */
 
 

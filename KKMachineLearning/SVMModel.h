@@ -149,6 +149,8 @@ typedef  struct svm_node*     XSpacePtr;
 
     double             TrainingTime            () const {return trainingTime;}
 
+    bool               ValidModel              () const {return validModel;}
+
 
     double   DistanceFromDecisionBoundary (FeatureVectorPtr  example,
                                            MLClassPtr        class1,

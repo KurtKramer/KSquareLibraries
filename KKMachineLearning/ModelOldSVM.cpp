@@ -606,6 +606,14 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
     log.Level (-1) << endl << errMsg << endl << endl;
   }
 
+  if  ((!svmModel)  ||  (!svmModel->ValidModel ()))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  'SvmModel' was not defined or is not valid.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
   else
   {
     param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);

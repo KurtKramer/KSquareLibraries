@@ -290,6 +290,7 @@ void  Attribute::ReadXML (XmlStream&      s,
   type = AttributeTypeFromStr (tag->AttributeValueKKStr ("Type"));
   fieldNum = tag->AttributeValueInt32 ("FieldNum");
   name = tag->AttributeValueKKStr ("Name");
+  nameUpper = name.ToUpper ();
 
   XmlTokenPtr t = s.GetNextToken (log);
   while  (t)

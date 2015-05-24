@@ -1016,6 +1016,10 @@ void  Model::ReadXMLModelPost (RunLog&  log)
     log.Level (-1) << "Model::ReadXMLModelPost    Errors were detected;  model is INVALID." << endl;
     validModel = false;
   }
+  else
+  {
+    AllocatePredictionVariables ();
+  }
 
 }  /* ReadXMLModelPost */
 

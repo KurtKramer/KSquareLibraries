@@ -53,8 +53,15 @@ ClassProbList::ClassProbList (bool owner):
 
 
 ClassProbList::ClassProbList (const ClassProbList&  pairList):
-   KKQueue<ClassProb>  (pairList)
+   KKQueue<ClassProb>  (pairList.Owner ())
 {
+  for  (auto idx: pairList)
+  {
+    if  (Owner ())
+      PushOnBack (new ClassProb (*idx));
+    else
+      PushOnBack (idx);
+  }
 }
  
 
