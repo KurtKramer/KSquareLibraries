@@ -1491,7 +1491,7 @@ TrainingClassPtr  TrainingConfiguration2::ValidateClassConfig (kkint32  sectionN
   KKStr        className;
   KKStr        subClassifierName;
   float        weight = 1.0f;
-  float        countFactor = 1.0f;
+  float        countFactor = 0.0f;
 
   for  (kkint32 settingNum = 0;  settingNum < numOfSettings;  ++settingNum)
   {
