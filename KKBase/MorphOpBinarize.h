@@ -30,7 +30,7 @@ namespace  KKB
     
     virtual ~MorphOpBinarize ();
 
-    virtual  OperationType   Operation ()  const  {return  moBinarize;}
+    virtual  OperationType   Operation ()  const  {return  OperationType::Binarize;}
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 

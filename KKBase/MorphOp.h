@@ -37,17 +37,17 @@ namespace  KKB
   class  MorphOp
   {
   public:
-    typedef  enum
+    enum  class  OperationType
     {
       moNULL,
-      moBinarize,
-      moBmiFiltering,
-      moConvexHull,
-      moDilation,
-      moErosion,
-      moMaskExclude,
-      moStretcher
-    }  OperationType;
+      Binarize,
+      BmiFiltering,
+      ConvexHull,
+      Dilation,
+      Erosion,
+      MaskExclude,
+      Stretcher
+    };
 
     KKB::KKStr       OperationTypeToStr   (OperationType      _operation);
     OperationType    OperationTypeFromStr (const KKB::KKStr&  _operationStr);

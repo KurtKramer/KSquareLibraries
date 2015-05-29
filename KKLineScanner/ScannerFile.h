@@ -48,13 +48,14 @@ namespace  KKLSC
   public:
     typedef  ScannerFile*  ScannerFilePtr;
 
-    typedef  enum  {sfSimple,
+    enum  class  Format
+                   {sfSimple,
                     sf2BitEncoded,
                     sf3BitEncoded,
                     sf4BitEncoded,
                     sfZlib3BitEncoded,
                     sfUnKnown
-                   }  ScannerFileFormat;
+                   };
 
     typedef  enum  {ioRead,  ioWrite}  IOMode;
 
@@ -75,7 +76,7 @@ namespace  KKLSC
 
     virtual  kkint32  MemoryConsumedEstimated ()  const;
 
-    virtual  ScannerFileFormat  FileFormat ()  const  {return sfUnKnown;}
+    virtual  Format  FileFormat ()  const  {return Format::sfUnKnown;}
 
     KKStr   FileFormatStr      ()  const;
 
@@ -84,7 +85,7 @@ namespace  KKLSC
     virtual  void  Flush ();
 
     static
-      const  uchar*  ConpensationTable (ScannerFileFormat  format);
+      const  uchar*  ConpensationTable (Format  format);
   
     bool                    BuildFrameOffsetsRunning  ()  const {return  frameOffsetsBuildRunning;}
     kkint64                 ByteOffsetScanLineZero    ()  const {return  byteOffsetScanLineZero;}  /**< Byte offset of 1st scan line after header field.                */
@@ -162,7 +163,7 @@ namespace  KKLSC
      *@details  It would be best to call this method using a separate thread.  The method will utilize synchronization code
      *  to prevent interference with the other access methods such as 'GetNextLine', 'FrameRead', etc.  The idea is that
      *  it will not interfere with file positioning.
-     *@param[in]  cancelFlag  This boolean variable will be monitored by the method; if it turns true it will terminate 
+     *@param[in]  cancelFlag  This Boolean variable will be monitored by the method; if it turns true it will terminate 
      *                        and return immediately.
      */
     void  BuildFrameOffsets (const volatile bool&  cancelFlag);
@@ -237,9 +238,9 @@ namespace  KKLSC
 
 
     static
-    ScannerFileFormat  GuessFormatOfFile (const KKStr&  _fileName,
-                                          RunLog&       _log
-                                         );
+    Format  GuessFormatOfFile (const KKStr&  _fileName,
+                               RunLog&       _log
+                              );
   
     static
     ScannerFilePtr  CreateScannerFile (KKStr    _fileName,
@@ -247,11 +248,11 @@ namespace  KKLSC
                                       );
 
     static  
-    ScannerFilePtr  CreateScannerFileForOutput (const KKStr&       _fileName,
-                                                ScannerFileFormat  _format,
-                                                kkuint32           _pixelsPerScanLine,
-                                                kkuint32           _frameHeight,
-                                                RunLog&            _log
+    ScannerFilePtr  CreateScannerFileForOutput (const KKStr&  _fileName,
+                                                Format        _format,
+                                                kkuint32      _pixelsPerScanLine,
+                                                kkuint32      _frameHeight,
+                                                RunLog&       _log
                                                );
   
     static  
@@ -264,10 +265,10 @@ namespace  KKLSC
   
 
     static
-    const KKStr&  ScannerFileFormatToStr (ScannerFileFormat  fileFormat);
+    const KKStr&  ScannerFileFormatToStr (Format  fileFormat);
     
     static
-    ScannerFileFormat  ScannerFileFormatFromStr (const KKStr&  fileFormatStr);
+    Format  ScannerFileFormatFromStr (const KKStr&  fileFormatStr);
 
 
     /**
@@ -288,7 +289,7 @@ namespace  KKLSC
     static
     void   GetScannerFileParameters (const KKStr&             _scannerFileName,
                                      ScannerHeaderFieldsPtr&  _headerFields,
-                                     ScannerFileFormat&       _scannerFileFormat,
+                                     Format&                  _scannerFileFormat,
                                      kkint32&                 _frameHeight,
                                      kkint32&                 _frameWidth,
                                      float&                   _scanRate,

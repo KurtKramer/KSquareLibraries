@@ -67,22 +67,22 @@ MorphOp::~MorphOp ()
 
 KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
 {
-  if  (_operation == moStretcher)
+  if  (_operation == OperationType::Stretcher)
     return "Stretcher";
 
-  else if  (_operation == moBmiFiltering)
+  else if  (_operation == OperationType::BmiFiltering)
     return "BmiFiltering";
 
-  else if  (_operation == moConvexHull)
+  else if  (_operation == OperationType::ConvexHull)
     return "ConvexHull";
 
-  else if  (_operation == moDilation)
+  else if  (_operation == OperationType::Dilation)
     return "Dilation";
 
-  else if  (_operation == moErosion)
+  else if  (_operation == OperationType::Erosion)
     return "Erosion";
 
-  else if  (_operation == moMaskExclude)
+  else if  (_operation == OperationType::MaskExclude)
     return "MaskExclude";
 
   else
@@ -94,25 +94,25 @@ KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
 MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _operationStr)
 {
   if  (_operationStr.EqualIgnoreCase ("Stretcher"))
-    return  moStretcher;
+    return  OperationType::Stretcher;
 
   else if  (_operationStr.EqualIgnoreCase ("Binarize"))
-    return  moBinarize;
+    return  OperationType::Binarize;
 
   else if  (_operationStr.EqualIgnoreCase ("BmiFiltering"))
-    return  moBmiFiltering;
+    return  OperationType::BmiFiltering;
 
   else if  (_operationStr.EqualIgnoreCase ("ConvexHull"))
-    return  moConvexHull;
+    return  OperationType::ConvexHull;
 
   else if  (_operationStr.EqualIgnoreCase ("Erosion"))
-    return  moErosion;
+    return  OperationType::Erosion;
 
   else if  (_operationStr.EqualIgnoreCase ("MaskExclude"))
-    return  moMaskExclude;
+    return  OperationType::MaskExclude;
 
   else
-    return  moNULL;
+    return  OperationType::moNULL;
 }
 
 

@@ -46,7 +46,7 @@ namespace KKB
 
     virtual  ~ConvexHull ();
 
-    virtual  OperationType   Operation ()  const  {return moConvexHull;}
+    virtual  OperationType   Operation ()  const  {return OperationType::ConvexHull;}
 
     virtual  RasterPtr  PerformOperation (RasterConstPtr  _image);
 

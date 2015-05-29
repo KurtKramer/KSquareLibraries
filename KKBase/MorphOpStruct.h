@@ -30,7 +30,7 @@ namespace  KKB
     
     virtual ~MorphOpStruct ();
 
-    virtual  OperationType   Operation ()  const  {return  moErosion;}
+    virtual  OperationType   Operation ()  const  {return  OperationType::Erosion;}
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image) = 0;
 

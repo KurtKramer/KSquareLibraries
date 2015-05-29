@@ -30,7 +30,7 @@ namespace  KKB
     
     virtual ~MorphOpDilation ();
 
-    virtual  OperationType   Operation ()  const  {return  moDilation;}
+    virtual  OperationType   Operation ()  const  {return  OperationType::Dilation;}
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
