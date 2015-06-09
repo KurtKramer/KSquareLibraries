@@ -619,7 +619,7 @@ void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVPr
     }
     else
     {
-      FeatureVectorPtr fv = fvProducer->ComputeFeatureVector (*raster, example->MLClass (), NULL, log);
+      FeatureVectorPtr fv = fvProducer->ComputeFeatureVector (*raster, example->MLClass (), NULL, 1.0f, log);
       if  (fv)
       {
         kkint32  x;

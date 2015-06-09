@@ -316,6 +316,7 @@ void  GrayScaleImagesFVProducer::BinarizeImageByThreshold (uchar          lower,
 FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&     srcImage,
                                                                    const MLClassPtr  knownClass,
                                                                    RasterListPtr     intermediateImages,
+                                                                   float             priorReductionFactor,
                                                                    RunLog&           runLog
                                                                   )
                                                                   
@@ -357,6 +358,9 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
   }
 
   kkint32  reductionMultipleSquared = reductionMultiple * reductionMultiple;
+
+  float    totalReductionMultiple = priorReductionFactor * reductionMultiple;
+  float    totalReductionMultipleSquared = totalReductionMultiple * totalReductionMultiple;
 
   delete  workRaster1Rows;  workRaster1Rows = new uchar*[reducedHeight];
   delete  workRaster2Rows;  workRaster2Rows = new uchar*[reducedHeight];
@@ -506,7 +510,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
 
   {
-    featureData[SizeIndex]    = float (areaBeforeReduction);
+    featureData[SizeIndex]    = float (areaBeforeReduction * priorReductionFactor);
     featureData[Moment1Index] = float (centralMoments[1]);
     featureData[Moment2Index] = float (centralMoments[2]);
     featureData[Moment3Index] = float (centralMoments[3]);
@@ -516,7 +520,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     featureData[Moment7Index] = float (centralMoments[7]);
     featureData[Moment8Index] = float (centralMoments[8]);
 
-    featureData[WeighedMoment0Index] = centralMomentsWeighted[0];
+    featureData[WeighedMoment0Index] = centralMomentsWeighted[0] * totalReductionMultiple;
     featureData[WeighedMoment1Index] = centralMomentsWeighted[1];
     featureData[WeighedMoment2Index] = centralMomentsWeighted[2];
     featureData[WeighedMoment3Index] = centralMomentsWeighted[3];
@@ -526,7 +530,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     featureData[WeighedMoment7Index] = centralMomentsWeighted[7];
     featureData[WeighedMoment8Index] = centralMomentsWeighted[8];
 
-    featureData[EdgeSizeIndex]    = (float)edgeMomentf[0];
+    featureData[EdgeSizeIndex]    = (float)edgeMomentf[0] * totalReductionMultiple;
     featureData[EdgeMoment1Index] = (float)edgeMomentf[1];
     featureData[EdgeMoment2Index] = (float)edgeMomentf[2];
     featureData[EdgeMoment3Index] = (float)edgeMomentf[3];
@@ -537,9 +541,9 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     featureData[EdgeMoment8Index] = (float)edgeMomentf[8];
 
     // Need to adjust for any reduction in Image Size
-    featureData[SizeIndex]           = float (areaBeforeReduction);
-    featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));
-    featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
+    //featureData[SizeIndex]           = float (areaBeforeReduction);
+    //featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));
+    //featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
   }
 
 
@@ -563,7 +567,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     //fv->CentroidRow (initRaster->CentroidRow () * reductioqnMultiple);
   }
 
-  featureData[ConvexAreaIndex]       = convexf * reductionMultipleSquared;
+  featureData[ConvexAreaIndex]       = convexf * totalReductionMultipleSquared;
   featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
   featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
 

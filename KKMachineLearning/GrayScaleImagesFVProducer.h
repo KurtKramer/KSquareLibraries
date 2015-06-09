@@ -27,9 +27,9 @@ namespace KKMLL
     virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&     srcImage,
                                                      const MLClassPtr  knownClass,
                                                      RasterListPtr     intermediateImages,
+                                                     float             priorReductionFactor,
                                                      RunLog&           runLog
                                                     );
-
 
     static FileDescPtr  DefineFileDescStatic ();
 

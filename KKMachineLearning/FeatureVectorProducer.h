@@ -68,9 +68,22 @@ namespace KKMLL
 
     virtual ~FeatureVectorProducer ();
 
+
+    /**
+     *@brief  Compute a FeatureVector for the supplied 'image'.
+     *@param[in] image
+     *@param[in] knownClass  The class label that will be assigned to this Feature vector.
+     *@param[in,out] intermediateImages  If not NULL will save a copy of the intermediate images created during Feature Computation; the call will own the list and its contents.
+     *@param[in] priorReductionFactor  The reduction that was done to the image prior to calling this routine; if no size change was made then set this field to 1.0. The 
+     *                                 FeaureVector computation routines will use this field to adjust SizeDependent features appropriately. the value of this parameter represents 
+     *                                 the number of pixels that were reduced to 1 pixel. A value of 3 indicates (3 x 3) pixels were reduced to 1 pixel.
+     *@param[in] log Logging file.
+     *@returns The resultant Feature vector computed.
+     */
     virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&     image,
                                                      const MLClassPtr  knownClass,
                                                      RasterListPtr     intermediateImages,
+                                                     float             priorReductionFactor,
                                                      RunLog&           runLog
                                                     ) = 0;
 

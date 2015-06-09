@@ -204,6 +204,7 @@ namespace KKMLL
     kkint32                       DuplicateCount            () const  {return duplicateCount;}
     kkint32                       DuplicateDataCount        () const  {return duplicateDataCount;}
     bool                          FeaturesAlreadyNormalized () const  {return featuresAlreadyNormalized;}
+    FactoryFVProducerPtr          FvFactoryProducer         () const  {return fvFactoryProducer;}
     FeatureVectorListPtr          Images                    ()        {return trainingExamples;}
     MLClassListPtr                MLClasses                 () const  {return mlClasses;}
     Model::ModelTypes             ModelType                 () const;

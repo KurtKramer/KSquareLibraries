@@ -60,7 +60,7 @@ FeatureVectorPtr  FeatureVectorProducer::ComputeFeatureVectorFromImage (const KK
   }
   else
   {
-    fv = ComputeFeatureVector (*i, knownClass, intermediateImages, runLog);
+    fv = ComputeFeatureVector (*i, knownClass, intermediateImages, 1.0f, runLog);
     delete  i;
     i = NULL;
   }

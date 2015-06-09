@@ -966,7 +966,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       {
         RasterPtr image = ReadImage (fullFileName);
         if  (image)
-          fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
+          fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, 1.0f, _log);
         delete image;
         image = NULL;
         if  (fv)
