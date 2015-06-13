@@ -51,8 +51,6 @@ namespace KKMLL
 {
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
-  typedef  MLClass  const  MLClassConst;
-  typedef  MLClassConst*  MLClassConstPtr;
 
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
