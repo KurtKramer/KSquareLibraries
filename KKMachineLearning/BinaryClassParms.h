@@ -35,7 +35,6 @@ namespace KKMLL
   #if  !defined (_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
-  typedef  MLClass const * MLClassConstPtr;
   #endif
 
 

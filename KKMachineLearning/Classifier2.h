@@ -34,8 +34,6 @@ typedef  FeatureVectorList*  FeatureVectorListPtr;
 #if   !defined(_MLCLASS_)
 class  MLClass;
 typedef  MLClass*  MLClassPtr;
-typedef  const  MLClass  MLClassConst;
-typedef  MLClassConst*  MLClassConstPtr;
 
 class  MLClassList;
 typedef  MLClassList*  MLClassListPtr;
