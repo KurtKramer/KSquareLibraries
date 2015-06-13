@@ -59,6 +59,8 @@ namespace KKMLL
   class  FeatureVector 
   {
   public:
+    typedef  float  FVFloat;
+
     FeatureVector (kkint32  _numOfFeatures);
 
     FeatureVector (const FeatureVector&  _example);
@@ -199,7 +201,9 @@ namespace KKMLL
    */
   class  FeatureVectorList:  public KKQueue<FeatureVector>
   {
-  public: 
+  public:
+    typedef  float  FVFloat;
+
     typedef  FeatureVectorList*  FeatureVectorListPtr;
 
     /**
