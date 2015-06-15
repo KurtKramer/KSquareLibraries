@@ -15,7 +15,7 @@ namespace  KKB
 {
   /**
    *@brief  Creates a index of all images in a specified directory structure.
-   *@details  Given a SubDirectory Starting Point.  Will create a list of all image files in the sub directory 
+   *@details  Given a SubDirectory Starting Point. Will create a list of all image files in the sub directory 
    * tree.  This will allow us to quickly locate a image file by name. Originally developed it to help in the
    * recalculation of feature data.  Used in ImageFeaturesList.
    */

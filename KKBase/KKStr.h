@@ -111,7 +111,7 @@ namespace  KKB
 
     KKStr (KKStrConstPtr str);
 
-    KKStr (kkint32  size);     /**< @brief Creates a KKStr object that preallocates space for 'size' characters. */
+    KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
     /** Initializes the string with a displayable version of 'd' with 'precision' decimal points. */
     KKStr (double  d,

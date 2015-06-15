@@ -41,7 +41,7 @@ const KKStr&  KKMLVariables::MachineLearningHomeDir ()
       machineLearningHomeDir = "/KKMLL";
     #endif
 
-    KKStrPtr  homeDir = osGetEnvVariable ("KKMLModeDir");
+    KKStrPtr  homeDir = osGetEnvVariable ("KKMLModelDir");
     if (homeDir == NULL)
       homeDir = osGetEnvVariable ("KKMLL");
     if (homeDir == NULL)
@@ -49,6 +49,9 @@ const KKStr&  KKMLVariables::MachineLearningHomeDir ()
 
     if  (homeDir)
       machineLearningHomeDir = *homeDir;
+
+    delete  homeDir;
+    homeDir = NULL;
   }
   return  machineLearningHomeDir;
 }  /* MachineLearningHomeDir */

@@ -80,13 +80,15 @@ namespace KKB
   /**
    *@class Raster 
    *@brief  A class that is used by to represent a single image in memory.  
-   *@details  It supports morphological operations and other tasks.  It can handle either 
-   *          Gray-scale or Color.  By default it will use Gray-scale unless specified 
-   *          otherwise.  It will allocate one continuous block of memory for each 
-   *          channel (RGB).  If the image is only gray-scale the Green Channel (G) will 
-   *          be used leaving the Red and Blue channels set to NULL.  You can access
-   *          Individual pixels through access methods that will ensure memory integrity
-   *          or you can also access the pixel data directly in memory.
+   *@details  This class supports morphological operations and other tasks and can handle either 
+   *          Gray-scale or Color. The default is Gray-scale unless otherwise specified. Each color channel will be
+   *          allocated as one continuous block of memory.  If the image is only gray-scale the Green Channel (G) will 
+   *          be used leaving the Red and Blue channels set to NULL. Access to individual pixels through is through 
+   *          methods that will ensure memory integrity. If required can also access the pixel data directly in memory.
+   *          Each channel can be accessed as a one or two dimensional array. For example the green channel can be 
+   *          accesses as either "GreenArea ()" which returns a pointer to a one dimensional array or "Green ()" which
+   *          returns a two dimensional array. The imagery is stored in the one dimensional array while the two 
+   *          dimensional is a list of pointers to the beginning of each row.
    *@see Blob
    *@see ContourFollower
    *@see ConvexHull
@@ -160,10 +162,10 @@ namespace KKB
      *@param[in]  _col  Starting column where image data is to be extracted from.
      *@see MaskTypes
      */
-    Raster (const Raster&   _raster,
-            MaskTypes       _mask,
-            kkint32         _row,
-            kkint32         _col
+    Raster (const Raster&  _raster,
+            MaskTypes      _mask,
+            kkint32        _row,
+            kkint32        _col
            );
 
     /**
@@ -244,7 +246,7 @@ namespace KKB
      *@param[in] _width  Image Width.
      *@param[in] _Data The raster data that is to be used by this instance of 'Raster'; it should 
      *           be continuous data, Row Major, of length (_height * _width).
-     *@param[in] _Rows  Two dimensional accessors to '_Data'; each entry will point to the
+     *@param[in] _Rows  Two dimensional assessors to '_Data'; each entry will point to the
      *           respective row in '_Data' that contains that row.
      *@param[in] _takeOwnership Indicates whether this instance of 'Raster' will own the memory pointed
      *           to by '_Data' and '_Rows'; if set to true will delete them in the
@@ -270,11 +272,11 @@ namespace KKB
      *@param[in] _height Image Height.
      *@param[in] _width  Image Width.
      *@param[in] _redArea The raster data representing the red channel.
-     *@param[in] _red  Two dimensional accessors to '_redArea'.
+     *@param[in] _red  Two dimensional accessor to '_redArea'.
      *@param[in] _greenArea  The raster data representing the green channel.
-     *@param[in] _green  Two dimensional accessors to '_greenArea'.
+     *@param[in] _green  Two dimensional accessor to '_greenArea'.
      *@param[in] _blueArea  The raster data representing the blue channel.
-     *@param[in] _blue  Two dimensional accessors to '_blueArea'.
+     *@param[in] _blue  Two dimensional accessor to '_blueArea'.
      *@param[in] _takeOwnership  Indicates whether this instance of 'Raster' will own the supplied raster data.
      */
     void  Initialize (kkint32  _height,
@@ -290,7 +292,7 @@ namespace KKB
 
 
     /**
-     *@brief  Will take ownership of 'otherRaster' rasters dynamically allocated data and copy its non dynamically allocated data.
+     *@brief  Will take ownership of 'otherRaster' raster dynamically allocated data and copy its non dynamically allocated data.
      *@details  Dynamic structures for Fourier Transform and BlobId's will be set to NULL on the 'otherRaster' instance.
      */
     void  TakeOwnershipOfAnotherRastersData (Raster&  otherRaster);
@@ -630,12 +632,12 @@ namespace KKB
     RasterPtr     CreateGrayScale ()  const;
 
     /**
-     *@brief Creates a  image using a KLT Transform with the goal of weighting in favor the color
+     *@brief Creates a image using a KLT Transform with the goal of weighting in favor the color
      * channels with greatest amount of variance.
-     *@details The idea is to weight each color channel by the amount of variance.  This is accomplished by
+     *@details The idea is to weight each color channel by the amount of variance. This is accomplished by
      *  producing a covariance matrix of the three color channels and then taking the Eigen-Vector with the
      *  largest eigen value and using its components to derive weights for each channel for the conversion 
-     *  from RGB to .
+     *  from RGB to grayscale.
      */
     RasterPtr     CreateGrayScaleKLT ()  const;
 

@@ -61,7 +61,7 @@ namespace  KKB
 
 
     StructureType  structure;
-    kkint32        backgroundCountTH;  /**<  If greater than zero; then pixel must have at leat that many neighbors to be considered a fit. */
+    kkint32        backgroundCountTH;  /**<  If greater than zero; then pixel must have at least that many neighbors to be considered a fit. */
     kkint32        foregroundCountTH;
     kkuint16       structureSize;
 

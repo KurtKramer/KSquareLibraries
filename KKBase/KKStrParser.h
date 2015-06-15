@@ -34,9 +34,9 @@ namespace KKB
      * occurrence of a delimiter character. If no more tokens left will return a Empty KKStr. If you want 
      * to remove leading and trailing whitespace characters you need to call the "TrimWhiteSpace" method. 
      *
-     * Quoted Strings will be treated differently.  If the first character in the token is a quote(") or 
+     * Quoted Strings will be treated differently. If the first character in the token is a quote(") or 
      * apostrophe(') character then the token will include all characters until the matching quote 
-     * character.  The quote characters will be included in the token as the 1st and last characters.
+     * character. The quote characters will be included in the token as the 1st and last characters.
      * the next character pointer will be set to the following delimiter character. The quote characters
      * must match. That is if the first quote character was (')  then the terminating quote character 
      * also be ('). The special escape sequences ("\t", "\n", "\r", "\\", '\"', and "\'" will be 
