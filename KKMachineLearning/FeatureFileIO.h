@@ -156,7 +156,7 @@ namespace KKMLL
      *             feature file 'fileName'.  If set to false, then no changes were made.
      *@param[out] _timeStamp of feature file.
      *@param[in]  _log where to send diagnostic messages to.
-     *@returnz  A FeatureVectorList derived instance ; This object will own all the examples loaded
+     *@returns  A FeatureVectorList derived instance ; This object will own all the examples loaded
      *
      * A change in feature file version number would also cause all entries in the feature
      * file to be recomputed.  The feature file version number gets incremented whenever we change
@@ -174,6 +174,7 @@ namespace KKMLL
                                              KKB::DateTime&        _timeStamp,
                                              RunLog&               _log
                                             );
+
 
 
     /**                       LoadInSubDirectoryTree

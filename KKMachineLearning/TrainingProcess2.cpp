@@ -696,6 +696,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2C
                                    latestTimeStamp,
                                    log
                                   );
+
     }
     catch (const std::exception&  e1)
     {
