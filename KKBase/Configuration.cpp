@@ -302,8 +302,6 @@ Configuration::Configuration (const KKStr&  _fileName,
 }
 
 
-
-
 Configuration::Configuration ():
   curSectionName       (),
   fileName             (),
@@ -400,6 +398,17 @@ void  Configuration::PrintFormatErrors (ostream& o)
     o << idx << "\t" << formatErrorsLineNums[idx]  << "\t"  << formatErrors[idx] << endl;
   }
 }  /* PrintFormatErrors */
+
+
+
+
+void  Configuration::Load (const KKB::KKStr&  _fileName,
+                           RunLog&            _log
+                          )
+{
+  fileName = _fileName;
+  LoadFile (_log);
+}
 
 
 

@@ -130,34 +130,19 @@ TrainingConfiguration2::TrainingConfiguration2 ():
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName, 
-                                                bool          _validateDirectories,
-                                                RunLog&       log
-                                               ):
 
-  Configuration (GetEffectiveConfigFileName (_configFileName), log),
-
-  configFileNameSpecified    (_configFileName),
-  configRootName             (KKB::osGetRootName (_configFileName)),
-  fileDesc                   (NULL),
-  fvFactoryProducer          (NULL),
-  fvFactoryProducerSpecified (false),
-  mlClasses                  (NULL),
-  mlClassesWeOwnIt           (false),
-  modelingMethod             (Model::ModelTypes::mtNULL),
-  examplesPerClass           (0),
-  modelParameters            (NULL),
-  noiseMLClass               (NULL),
-  noiseTrainingClass         (NULL),
-  otherClass                 (NULL),
-  otherClassLineNum          (-1),
-  rootDir                    (),
-  rootDirExpanded            (),
-  subClassifiers             (NULL),
-  subClassifierNameList      (NULL),
-  trainingClasses            ("", true),
-  validateDirectories        (_validateDirectories)
+void  TrainingConfiguration2::Load (const KKStr&  _configFileName, 
+                                    bool          _validateDirectories,
+                                    RunLog&       log
+                                   )
 {
+  KKStr  effectiveConfigName = GetEffectiveConfigFileName (_configFileName);
+
+  Configuration::Load (effectiveConfigName, log);
+
+  configFileNameSpecified  = _configFileName;
+  configRootName           = KKB::osGetRootName (_configFileName);
+  validateDirectories = _validateDirectories;
   if  (!FormatGood ())
   {
     log.Level (-1) << endl 
@@ -169,9 +154,8 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
   mlClasses = new MLClassList ();
   mlClassesWeOwnIt = true;
 
-  ValidateConfiguration (log);
-  
-  if  (examplesPerClass < 1)
+ ValidateConfiguration (log);
+ if  (examplesPerClass < 1)
   {
     log.Level (10) << "TrainingConfiguration2 - examplesPerClass not specified.  Defaulting to 1300." << endl;
     examplesPerClass = 1300;
@@ -184,7 +168,10 @@ TrainingConfiguration2::TrainingConfiguration2 (const KKStr&  _configFileName,
 
   else if  (rootDir.Empty ())
     DetermineWhatTheRootDirectoryIs ();
-}
+
+}  /* Load */
+
+
 
 
 
@@ -859,10 +846,11 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
   {
     if  (osFileExists (_existingConfigFileName))
     {
-      config = new TrainingConfiguration2 (_existingConfigFileName, 
-                                           false,         //  false = DO NOT Validate Directories.
-                                           _log
-                                          );
+      config = _fvFactoryProducer->ManufacturTrainingConfiguration ();
+      config->Load (_existingConfigFileName, 
+                    false,  //  false = DO NOT Validate Directories.
+                    _log
+                   );
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
       {
@@ -876,10 +864,12 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
   {
     if  (osFileExists (directoryConfigFileName))
     {
-      config = new TrainingConfiguration2 (directoryConfigFileName,
-                                           false,  // false = Do Not Validate Directories.
-                                           _log 
-                                          );
+      config = _fvFactoryProducer->ManufacturTrainingConfiguration ();
+      config->Load (directoryConfigFileName,
+                    false,  // false = Do Not Validate Directories.
+                    _log 
+                   );
+
       config->RootDir (_subDir);
       if  (!(config->FormatGood ()))
       {
@@ -1452,7 +1442,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
   TrainingConfiguration2Ptr config = subClassifiers->LookUp (subClassifierName);
   if  (!config)
   {
-    config = new TrainingConfiguration2 (subClassifierName, true, log);
+    config = fvFactoryProducer->ManufacturTrainingConfiguration ();
+    config->Load (subClassifierName, true, log);
     subClassifiers->PushOnBack (config);
     if  (!config->FormatGood ())
     {
@@ -2503,7 +2494,9 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::Manufacture
   if  (!registeredFactories)
   {
     log.Level (-1)  << endl << "TrainingConfiguration2::Manufacture   ***ERROR***   registeredFactories == NULL Will construct default 'TrainingConfiguration2' instance." << endl << endl;
-    return  new TrainingConfiguration2 (configFileName, validateDirectories, log);
+    TrainingConfiguration2Ptr  config = new TrainingConfiguration2 ();
+    config->Load (configFileName, validateDirectories, log);
+    return  config;
   }
 
   GlobalGoalKeeper::StartBlock ();
@@ -2515,7 +2508,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::Manufacture
   if  (idx == registeredFactories->end ())
   {
     log.Level (-1) << endl << "TrainingConfiguration2::Manufacture   Factory: " << className << "  Is not defined;  will return instance of 'TrainingConfiguration2'." << endl << endl;
-    newInstance = new TrainingConfiguration2 (configFileName, validateDirectories, log);
+    newInstance = new TrainingConfiguration2 ();
+    newInstance->Load (configFileName, validateDirectories, log);
   }
   else
   {
@@ -2560,7 +2554,9 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::Factory::Manufacture
               RunLog&       log
              )
 {
-  return  new TrainingConfiguration2 (configFileName, validateDirectories, log);
+  TrainingConfiguration2Ptr  config = new TrainingConfiguration2 ();
+  config->Load (configFileName, validateDirectories, log);
+  return  config;
 }
 
 

@@ -17,6 +17,7 @@ using namespace std;
 #include "TokenBuffer.h"
 using namespace KKB;
 
+//#define  _LogStream_
 
 
 XmlTokenizer::XmlTokenizer (TokenBufferPtr  _in):
@@ -24,9 +25,13 @@ XmlTokenizer::XmlTokenizer (TokenBufferPtr  _in):
   atEndOfFile      (false),
   in               (_in),
   tokenList        (),
-  weOwnTokenBuffer (false),
+  weOwnTokenBuffer (false)
+  
+#if  defined(_LogStream_)
+  ,
   logger1          ("C:\\Temp\\XmlTokenizer-1.txt"),
   logger2          ("C:\\Temp\\XmlTokenizer-2.txt")
+#endif
 {
   Initialize ();
 }
@@ -38,9 +43,12 @@ XmlTokenizer::XmlTokenizer (const KKStr&  _str):
   atEndOfFile       (false),
   in                (NULL),
   tokenList         (),
-  weOwnTokenBuffer  (false),
+  weOwnTokenBuffer  (false)
+#if  defined(_LogStream_)
+  ,
   logger1           ("C:\\Temp\\XmlTokenizer-1.txt"),
   logger2           ("C:\\Temp\\XmlTokenizer-2.txt")
+#endif
 {
   in = new TokenBufferStr (_str);
   weOwnTokenBuffer = true;
@@ -56,9 +64,12 @@ XmlTokenizer::XmlTokenizer (const KKStr&  _fileName,
   atEndOfFile       (false),
   in                (NULL),
   tokenList         (),
-  weOwnTokenBuffer  (false),
+  weOwnTokenBuffer  (false)
+#if  defined(_LogStream_)
+  ,
   logger1           ("C:\\Temp\\XmlTokenizer-1.txt"),
   logger2           ("C:\\Temp\\XmlTokenizer-2.txt")
+#endif
 {
   in = new TokenBufferStream (_fileName);
   _fileOpened = (in->Valid ());
@@ -128,8 +139,10 @@ KKStrPtr  XmlTokenizer::GetNextToken ()
 
   if  (tokenList.size () < 1)
   {
+    #if  defined(_LogStream_)
     logger2 << "GetNextToken    return NULL" << endl;
     logger2.flush ();
+    #endif
     return NULL;
   }
 
@@ -138,11 +151,10 @@ KKStrPtr  XmlTokenizer::GetNextToken ()
   KKStrPtr t = tokenList.front ();
   tokenList.pop_front ();
 
+  #if  defined(_LogStream_)
   logger2 << "GetNextToken size[" << s << "] :" << (t ? (*t) : "NULL") << endl;
   logger2.flush ();
-
-  if  (*t == "<ModelOldSVM>")
-    logger2 << "GetNextToken   At Break Point." << endl;
+  #endif
 
   return  t;
 }  /* GetNextToken */
@@ -194,11 +206,15 @@ KKStrConstPtr  XmlTokenizer::Peek (kkuint32 idx)
 
   if  (idx >= tokenList.size ())
   {
+    #if  defined(_LogStream_)
     logger2 << "Peek  idx[" << idx << "]   returning NULL" << endl;
+    #endif
     return NULL;
   }
 
+  #if  defined(_LogStream_)
   logger2 << "Peek  idx[" << idx << "]  :" << *(tokenList[idx]) << endl;
+  #endif
 
   return  tokenList[idx];
 }  /* Peek */
@@ -227,7 +243,9 @@ char  XmlTokenizer::GetNextChar ()
   {
     atEndOfFile = true;
     firstChar = 0;
+    #if  defined(_LogStream_)
     logger1 << endl << "GetNextChar  atEndOfFile = true;" << endl;
+    #endif
   }
   else
   {
@@ -236,11 +254,15 @@ char  XmlTokenizer::GetNextChar ()
     {
       atEndOfFile = true;
       firstChar = 0;
+      #if  defined(_LogStream_)
       logger1 << endl << "GetNextChar  atEndOfFile = true;" << endl;
+      #endif
     }
     else
     {
+      #if  defined(_LogStream_)
       logger1 << firstChar;
+      #endif
       if  (firstChar == '\r')
       {
         if  (in->PeekNextChar () == '\n')
@@ -249,7 +271,9 @@ char  XmlTokenizer::GetNextChar ()
     }
   }
 
+  #if  defined(_LogStream_)
   logger1.flush ();
+  #endif
 
   return  firstChar;
 }  /* GetNextChar */
@@ -271,8 +295,10 @@ void  XmlTokenizer::ReadInNextLogicalToken ()
     tokenList.push_back (t);
   }
 
+  #if  defined(_LogStream_)
   logger2 << "ReadInNextLogicalToken size[" << tokenList.size () << "]  :" << (t ? (*t) : "NULL RETURNED") << endl;
   logger2.flush ();
+  #endif
 }  /* ReadInNextLogicalToken */
 
 

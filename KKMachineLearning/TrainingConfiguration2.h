@@ -63,11 +63,6 @@ namespace KKMLL
 
     TrainingConfiguration2 ();
 
-    TrainingConfiguration2 (const KKStr&  _configFileName,
-                            bool          _validateDirectories,
-                            RunLog&       _log
-                           );
-
 
     TrainingConfiguration2 (const TrainingConfiguration2&  tc);
 
@@ -119,6 +114,12 @@ namespace KKMLL
                            );
 
 
+
+    virtual
+    void  Load (const KKStr&  _configFileName, 
+                bool          _validateDirectories,
+                RunLog&       log
+               );
 
 
      virtual    

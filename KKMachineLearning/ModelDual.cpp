@@ -245,10 +245,11 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     }
   }
 
-  config1 = new TrainingConfiguration2 (param->ConfigFileName1 (),
-                                        false,  // false = Do NOT validate directories.
-                                        _log
-                                       );
+  config1 = new TrainingConfiguration2 ();
+  config1->Load (param->ConfigFileName1 (),
+                 false,  // false = Do NOT validate directories.
+                 _log
+                );
   if  (!config1->FormatGood ())
   {
     validModel = false;
@@ -257,10 +258,11 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     throw KKException (errMsg);
   }
 
-  config2 = new TrainingConfiguration2 (param->ConfigFileName2 (), 
-                                        false,  // false = Do NOT validate directories.
-                                        _log
-                                       );
+  config2 = new TrainingConfiguration2 ();
+  config2->Load (param->ConfigFileName2 (), 
+                 false,  // false = Do NOT validate directories.
+                 _log
+                );
   if  (!config2->FormatGood ())
   {
     validModel = false;
@@ -959,9 +961,9 @@ void  ModelDual::ReadXML (XmlStream&      s,
     if  (!tokenFound)
     {
       KKStr  errMsg (128);
-        errMsg << "ModelDual::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
-        log.Level (-1) << endl << errMsg << endl << endl;
-        AddErrorMsg (errMsg, 0);
+      errMsg << "ModelDual::ReadXML   ***ERROR***   Unexpected Element: Section: " << t->SectionName () << " VarName:" << t->VarName ();
+      log.Level (-1) << endl << errMsg << endl << endl;
+      AddErrorMsg (errMsg, 0);
     }
 
     delete  t;
@@ -970,8 +972,28 @@ void  ModelDual::ReadXML (XmlStream&      s,
 
   if  (validModel)
   {
-    delete  classifier1;   classifier1 = new Classifier2 (trainer1, log);
-    delete  classifier2;   classifier2 = new Classifier2 (trainer2, log);
+    if  (!trainer1)
+    {
+      validModel = false;
+      KKStr  errMsg = "ModelDual::ReadXML   ***ERROR***   trainer1 not loaded!!!";
+      log.Level (-1) << endl << errMsg << endl << endl;
+      AddErrorMsg (errMsg, 0);
+    }
+
+    if  (!trainer2)
+    {
+      validModel = false;
+      KKStr  errMsg = "ModelDual::ReadXML   ***ERROR***   trainer2 not loaded!!!";
+      log.Level (-1) << endl << errMsg << endl << endl;
+      AddErrorMsg (errMsg, 0);
+    }
+
+
+    if  (validModel)
+    {
+      delete  classifier1;   classifier1 = new Classifier2 (trainer1, log);
+      delete  classifier2;   classifier2 = new Classifier2 (trainer2, log);
+    }
   }
 
   if  (Model::param == NULL)

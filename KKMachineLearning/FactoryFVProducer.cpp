@@ -19,6 +19,7 @@ using namespace  KKB;
 #include "FeatureVector.h"
 #include "FeatureVectorProducer.h"
 #include "FeatureFileIO.h"
+#include "TrainingConfiguration2.h"
 
 #include "FactoryFVProducer.h"
 using namespace  KKMLL;
@@ -60,6 +61,14 @@ FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     o
 {
   return  new FeatureVectorList (FileDesc (), owner);
 }
+
+
+
+TrainingConfiguration2Ptr  FactoryFVProducer::ManufacturTrainingConfiguration ()
+{
+  return  new TrainingConfiguration2 ();
+}
+
 
 
 FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  name,

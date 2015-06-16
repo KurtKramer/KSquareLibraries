@@ -38,6 +38,12 @@ namespace KKMLL
 #endif
 
 
+#if  !defined(_TrainingConfiguration2_Defined_)
+  class  TrainingConfiguration2;
+  typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
+#endif
+
+
   /**
    *@class  FactoryFVProducer
    *@brief  Responsible for creating a FeatureFectorProducer instance.
@@ -116,6 +122,12 @@ namespace KKMLL
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
                                                                );
+
+
+    /**
+     *@brief  Returns a 'TrainingConfiguration2'  derived instance.
+     */
+    virtual  TrainingConfiguration2Ptr  ManufacturTrainingConfiguration ();
 
 
     /**

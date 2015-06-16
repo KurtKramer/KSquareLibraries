@@ -48,8 +48,6 @@ using namespace  KKMLL;
 
 
 
-
-
 TrainingProcess2Ptr  TrainingProcess2::LoadExistingTrainingProcess (const KKStr&   configRootName,
                                                                     VolConstBool&  cancelFlag,
                                                                     RunLog&        log
@@ -141,18 +139,24 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
       return NULL;
     }
 
-    trainer = new TrainingProcess2 ();
-    trainer->BuildTrainingProcess (config,
-                                   whenToRebuild,
-                                   trainingExamples,
-                                   true,                 /**<  true = Take ownership of 'trainingExamples'. */
-                                   checkForDuplicates,
-                                   cancelFlag,
-                                   log
-                                  );
-    if  (saveTrainedModel  &&   (!cancelFlag)  && (!trainer->Abort ()))
+    if  (cancelFlag)
     {
-      trainer->SaveTrainingProcess (log);
+      delete trainingExamples;
+      trainingExamples = NULL;
+    }
+    else
+    {
+      trainer = new TrainingProcess2 ();
+      trainer->BuildTrainingProcess (config,
+                                     whenToRebuild,
+                                     trainingExamples,
+                                     true,                 /**<  true = Take ownership of 'trainingExamples'. */
+                                     checkForDuplicates,
+                                     cancelFlag,
+                                     log
+                                    );
+      if  (saveTrainedModel  &&   (!cancelFlag)  &&  (!trainer->Abort ()))
+        trainer->SaveTrainingProcess (log);
     }
 
     trainingExamples = NULL;
@@ -198,6 +202,14 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
       log.Level (-1) << endl
         << "TrainingProcess2::CreateTrainingProcess   ***ERROR***  Failed to load training data." << endl
         << endl;
+      return NULL;
+    }
+
+    if  (cancelFlag)
+    {
+      log.Level (-1) << "TrainingProcess2::CreateTrainingProcess   Canceled !!!" << endl;
+      delete  trainingExamples;
+      trainingExamples = NULL;
       return NULL;
     }
 
@@ -307,7 +319,8 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (const KKSt
 
   TrainingProcess2Ptr trainer = NULL;
 
-  TrainingConfiguration2Ptr  config = new TrainingConfiguration2 (configFileName, true, log);
+  TrainingConfiguration2Ptr  config = new TrainingConfiguration2 ();
+  config->Load (configFileName, true, log);
   if  (!config->FormatGood ())
   {
     log.Level (-1) << endl 
@@ -651,6 +664,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2C
                                                          RunLog&                         log
                                                         )
 {
+  log.Level (10) << "TrainingProcess2::ExtractFeatures   ClassName: " << trainingClass->Name () << endl;
   FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer (log);
 
   FeatureFileIOPtr      driver           = fvFactoryProducer->DefaultFeatureFileIO ();
@@ -741,7 +755,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
                                                                       RunLog&                         log
                                                                      )
 {
-  log.Level (20) << "TrainingProcess2::ExtractTrainingClassFeatures - Starting." << endl;
+  log.Level (10) << "TrainingProcess2::ExtractTrainingClassFeatures - Starting." << endl;
 
   changesMadeToTrainingLibraries = false;
   bool   abort = false;

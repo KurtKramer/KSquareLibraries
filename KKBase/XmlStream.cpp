@@ -1307,6 +1307,8 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
         log.Level (-1) << endl
           << "XmlElementArrayFloat2DVarying   ***ERROR***   Number of defined rows exceeds defined Height[" << height << "]" << endl
           << endl;
+        widths[rowCount] = 0;
+        value[rowCount]  = NULL;
       }
       else
       {
@@ -1314,8 +1316,8 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
         widths[rowCount] = f->Count ();
         value[rowCount] = f->TakeOwnership ();
       }
+      ++rowCount;
     }
-    ++rowCount;
     delete  tok;
     tok = s.GetNextToken (log);
   }

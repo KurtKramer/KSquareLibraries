@@ -55,6 +55,12 @@ namespace KKB
 
     virtual  ~Configuration ();
 
+    virtual
+    void  Load (const KKB::KKStr&  _fileName,
+                RunLog&            _log
+               );
+
+
     bool  FormatGood ()  const  {return  formatGood;}
 
     void  FormatGood (bool _formatGood)  {formatGood = _formatGood;}
