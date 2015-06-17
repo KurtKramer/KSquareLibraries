@@ -29,11 +29,11 @@ namespace  KKMLL
 
     ModelUsfCasCor ();
 
-    ModelUsfCasCor (FileDescPtr  _fileDesc);
+    ModelUsfCasCor (FactoryFVProducerPtr  _factoryFVProducer);
 
     ModelUsfCasCor (const KKStr&               _name,
                     const ModelParamUsfCasCor& _param,         // Create new model from
-                    FileDescPtr                _fileDesc
+                    FactoryFVProducerPtr       _factoryFVProducer
                    );
   
     ModelUsfCasCor (const ModelUsfCasCor&   _model);

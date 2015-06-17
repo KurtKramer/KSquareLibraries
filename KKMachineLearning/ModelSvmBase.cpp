@@ -40,8 +40,8 @@ ModelSvmBase::ModelSvmBase ():
 }
 
 
-ModelSvmBase::ModelSvmBase (FileDescPtr _fileDesc):
-  Model (_fileDesc),
+ModelSvmBase::ModelSvmBase (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   param     (NULL),
   svmModel  (NULL)
 {
@@ -51,9 +51,9 @@ ModelSvmBase::ModelSvmBase (FileDescPtr _fileDesc):
 
 ModelSvmBase::ModelSvmBase (const KKStr&             _name,
                             const ModelParamSvmBase& _param,         // Create new model from
-                            FileDescPtr              _fileDesc
+                            FactoryFVProducerPtr     _factoryFVProducer
                            ):
-  Model (_name, _param, _fileDesc),
+  Model (_name, _param, _factoryFVProducer),
   param     (NULL),
   svmModel  (NULL)
 {

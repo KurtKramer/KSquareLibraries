@@ -240,6 +240,10 @@ namespace KKMLL
 
     GrayScaleImagesFVPtr       BinarySearchByName (const KKStr&  _imageFileName)  const;
 
+    virtual
+    GrayScaleImagesFVListPtr   Duplicate (bool _owner)  const;
+
+    virtual
     GrayScaleImagesFVListPtr   DuplicateListAndContents ()  const;
 
     GrayScaleImagesFVListPtr   ExtractDuplicatesByRootImageFileName ();
@@ -256,6 +260,8 @@ namespace KKMLL
 
     GrayScaleImagesFVPtr       LookUpByRootName (const KKStr&  _rootName);
 
+    virtual
+    GrayScaleImagesFVListPtr   ManufactureEmptyList (bool _owner)  const;
 
     
     /**

@@ -73,6 +73,14 @@ namespace KKMLL
 
 
 
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
+
+
+
   class  Model
   {
   public:
@@ -88,7 +96,7 @@ namespace KKMLL
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */
-    Model (FileDescPtr  _fileDesc);
+    Model (FactoryFVProducerPtr  _factoryFVProducer);
 
 
     /**
@@ -99,9 +107,9 @@ namespace KKMLL
      *@param[in]  _cancelFlag  Will monitor; if at any point it turns true this instance is to terminate and return to caller.
      *@param[in,out]  _log  Logging file.
      */
-    Model (const KKStr&       _name,
-           const ModelParam&  _param,         // Create new model from
-           FileDescPtr        _fileDesc
+    Model (const KKStr&          _name,
+           const ModelParam&     _param,         // Create new model from
+           FactoryFVProducerPtr  _factoryFVProducer
           );
 
   
@@ -125,12 +133,12 @@ namespace KKMLL
      *@param[in,out]  _log  Logging file.
      */
     static 
-      ModelPtr  CreateAModel (ModelTypes         _modelType,
-                              const KKStr&       _name,
-                              const ModelParam&  _param,      /**< Will make a duplicate copy of */
-                              FileDescPtr        _fileDesc,
-                              VolConstBool&      _cancelFlag,
-                              RunLog&            _log
+      ModelPtr  CreateAModel (ModelTypes            _modelType,
+                              const KKStr&          _name,
+                              const ModelParam&     _param,      /**< Will make a duplicate copy of */
+                              FactoryFVProducerPtr  _factoryFVProducer,
+                              VolConstBool&         _cancelFlag,
+                              RunLog&               _log
                              );
   
 
@@ -142,9 +150,11 @@ namespace KKMLL
     bool                              AlreadyNormalized          () const {return alreadyNormalized;}
 
     virtual
-    KKStr                             Description                ()  const;  /**< Return short user readable description of model. */
+    KKStr                             Description                () const;  /**< Return short user readable description of model. */
 
     const FeatureEncoder2&            Encoder                    () const;
+
+    FactoryFVProducerPtr              FactoryFVProducer          () const  {return factoryFVProducer;}
 
     virtual FeatureNumListConstPtr    GetFeatureNums             () const;
 
@@ -382,6 +392,8 @@ namespace KKMLL
     FeatureEncoder2Ptr     encoder;
 
     VectorKKStr            errors;
+
+    FactoryFVProducerPtr   factoryFVProducer;
 
     FileDescPtr            fileDesc;
 

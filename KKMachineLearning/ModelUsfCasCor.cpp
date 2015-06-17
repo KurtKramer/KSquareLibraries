@@ -40,8 +40,8 @@ ModelUsfCasCor::ModelUsfCasCor ():
 
 
 
-ModelUsfCasCor::ModelUsfCasCor (FileDescPtr  _fileDesc):
-  Model (_fileDesc),
+ModelUsfCasCor::ModelUsfCasCor (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {
@@ -50,9 +50,9 @@ ModelUsfCasCor::ModelUsfCasCor (FileDescPtr  _fileDesc):
 
 ModelUsfCasCor::ModelUsfCasCor (const KKStr&               _name,
                                 const ModelParamUsfCasCor& _param,         // Create new model from
-                                FileDescPtr                _fileDesc
+                                FactoryFVProducerPtr       _factoryFVProducer
                                ):
-  Model (_name, _param, _fileDesc),
+  Model (_name, _param, _factoryFVProducer),
   param               (NULL),
   usfCasCorClassifier (NULL)
 {

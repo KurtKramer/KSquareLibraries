@@ -49,8 +49,8 @@ ModelOldSVM::ModelOldSVM ():
 
 
 
-ModelOldSVM::ModelOldSVM (FileDescPtr  _fileDesc):
-  Model (_fileDesc),
+ModelOldSVM::ModelOldSVM (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   assignments (NULL),
   svmModel    (NULL)
 {
@@ -61,12 +61,12 @@ ModelOldSVM::ModelOldSVM (FileDescPtr  _fileDesc):
 
 ModelOldSVM::ModelOldSVM (const KKStr&            _name,
                           const ModelParamOldSVM& _param,         // Create new model from
-                          FileDescPtr             _fileDesc                         )
+                          FactoryFVProducerPtr    _factoryFVProducer
+                         )
 :
-  Model   (_name, _param, _fileDesc),
+  Model   (_name, _param, _factoryFVProducer),
   assignments (NULL),
   svmModel    (NULL)
-
 {
 }
 

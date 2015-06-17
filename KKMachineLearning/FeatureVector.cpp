@@ -412,6 +412,21 @@ kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
 
 
 
+
+FeatureVectorListPtr  FeatureVectorList::Duplicate (bool _owner)  const
+{
+  return new FeatureVectorList (*this, _owner);
+}
+
+
+
+FeatureVectorListPtr  FeatureVectorList::ManufactureEmptyList (bool _owner)  const
+{
+  return new FeatureVectorList (fileDesc, _owner);
+}
+
+
+
 /**
  *@details   
  *  Determines if the other FeatreVectorList has the same underlining layout;  that is each
@@ -723,7 +738,7 @@ kkint32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
 
 FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkuint32 level)
 {
-  FeatureVectorListPtr  examples = new FeatureVectorList (fileDesc, true);
+  FeatureVectorListPtr  examples = ManufactureEmptyList (true);
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
   {
@@ -756,7 +771,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
 
   // Create a new list structure that does not own the Images it contains.  This way when 
   // this structure is deleted.  The example it contains are not deleted.
-  FeatureVectorListPtr  extractedImages = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr  extractedImages = this->ManufactureEmptyList (false);
 
   if  (!extractedImages)
   {
@@ -998,7 +1013,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
   }
 
   FeatureVectorPtr      example = NULL;
-  FeatureVectorListPtr  orderedImages = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr  orderedImages = ManufactureEmptyList (false);
 
   char buff[1024];
   while  (fgets (buff, sizeof (buff), in))
@@ -1089,8 +1104,7 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
  */
 FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
-  FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true);
-
+  FeatureVectorListPtr  copyiedList = ManufactureEmptyList (true);
   for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     FeatureVectorPtr  curImage = IdxToPtr (idx);
@@ -1196,7 +1210,7 @@ ClassProbListPtr  FeatureVectorList::GetClassDistribution () const
 
 FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
-  FeatureVectorListPtr  duplicateList = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr  duplicateList = this->ManufactureEmptyList (false);
 
   if  (QueueSize () < 2)
   {
@@ -1376,7 +1390,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
 
   FeatureVectorListPtr*  folds = new FeatureVectorListPtr[numOfFolds];
   for  (x = 0; x < numOfFolds; x++)
-    folds[x] = new FeatureVectorList (fileDesc, false);
+    folds[x] =  ManufactureEmptyList (false);
 
   MLClassPtr  mlClass = NULL;
   MLClassList::iterator  icIDX;
@@ -1415,7 +1429,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     imagesInClass = NULL;
   }
 
-  FeatureVectorListPtr stratafiedImages = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr stratafiedImages = ManufactureEmptyList (false);
 
   for  (foldNum = 0; foldNum < numOfFolds; foldNum++)
   {
@@ -1641,7 +1655,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     perce
   }
 
   kkint32  newSize = (kkint32)(0.5f + (float)QueueSize () * percentage / 100.0f);
-  FeatureVectorListPtr  randomSampled = new FeatureVectorList (fileDesc, false);
+  FeatureVectorListPtr  randomSampled = ManufactureEmptyList (false);
 
   MLClassListPtr  classes = ExtractListOfClasses ();
   classes->SortByName ();
@@ -1788,7 +1802,7 @@ KKStr  GetClassNameByHierarchyLevel (KKStr  className,
 
 FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  level)
 {
-  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = new FeatureVectorList (fileDesc, true);
+  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = ManufactureEmptyList (true);
 
   MLClassListPtr  allClasses = ExtractListOfClasses ();
   allClasses->SortByName ();

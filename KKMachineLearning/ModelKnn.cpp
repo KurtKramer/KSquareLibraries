@@ -40,8 +40,8 @@ ModelKnn::ModelKnn ():
 
 
 
-ModelKnn::ModelKnn (FileDescPtr  _fileDesc):
-  Model (_fileDesc),
+ModelKnn::ModelKnn (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   param (NULL)
 {
 }
@@ -51,9 +51,9 @@ ModelKnn::ModelKnn (FileDescPtr  _fileDesc):
 
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
-                    FileDescPtr           _fileDesc
+                    FactoryFVProducerPtr  _factoryFVProducer
                    ):
-  Model (_name, _param, _fileDesc),
+  Model (_name, _param, _factoryFVProducer),
   param (NULL)
 {
   param = dynamic_cast<ModelParamKnnPtr> (Model::param);

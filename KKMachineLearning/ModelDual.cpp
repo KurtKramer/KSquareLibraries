@@ -51,8 +51,8 @@ ModelDual::ModelDual ():
 
 
 
-ModelDual::ModelDual (FileDescPtr    _fileDesc):
-  Model (_fileDesc),
+ModelDual::ModelDual (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),
@@ -66,9 +66,9 @@ ModelDual::ModelDual (FileDescPtr    _fileDesc):
 
 ModelDual::ModelDual (const KKStr&           _name,
                       const ModelParamDual&  _param,         // Create new model from
-                      FileDescPtr            _fileDesc
+                      FactoryFVProducerPtr   _factoryFVProducer
                      ):
-  Model (_name, _param, _fileDesc),
+  Model (_name, _param, _factoryFVProducer),
   param         (NULL),
   config1       (NULL),
   config2       (NULL),

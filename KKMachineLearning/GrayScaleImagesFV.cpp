@@ -320,12 +320,16 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
 
 
 
-
 GrayScaleImagesFVList::~GrayScaleImagesFVList ()
 {
 }
 
 
+
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::Duplicate (bool _owner)  const
+{
+  return new GrayScaleImagesFVList (*this, _owner);
+}
 
 
 
@@ -413,6 +417,13 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByImageFileName (const KKStr&
   return  (GrayScaleImagesFVPtr)FeatureVectorList::LookUpByImageFileName (_imageFileName);
 }  /* LookUpByImageFileName */
 
+
+
+
+GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ManufactureEmptyList (bool _owner)  const
+{
+  return new GrayScaleImagesFVList (FileDesc (), _owner);
+}
 
 
 

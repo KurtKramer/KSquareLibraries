@@ -28,11 +28,11 @@ namespace  KKMLL
 
     ModelSvmBase ();
 
-    ModelSvmBase (FileDescPtr _fileDesc);
+    ModelSvmBase (FactoryFVProducerPtr  _factoryFVProducer);
 
     ModelSvmBase (const KKStr&             _name,
                   const ModelParamSvmBase& _param,         // Create new model from
-                  FileDescPtr              _fileDesc
+                  FactoryFVProducerPtr     _factoryFVProducer
                  );
   
     ModelSvmBase (const ModelSvmBase&   _model);

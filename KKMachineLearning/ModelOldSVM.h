@@ -49,7 +49,7 @@ namespace KKMLL
 
     ModelOldSVM ();
 
-    ModelOldSVM (FileDescPtr  _fileDesc);
+    ModelOldSVM (FactoryFVProducerPtr  _factoryFVProducer);
 
     /**
      *@brief Creates a new svm model from the provided example (example) data
@@ -60,7 +60,7 @@ namespace KKMLL
      */
     ModelOldSVM (const KKStr&             _name,
                  const ModelParamOldSVM&  _param,         // Create new model from
-                 FileDescPtr              _fileDesc
+                 FactoryFVProducerPtr     _factoryFVProducer
                 );
   
     ModelOldSVM (const ModelOldSVM&   _madel);

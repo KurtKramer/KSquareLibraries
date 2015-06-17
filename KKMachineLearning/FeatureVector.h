@@ -342,9 +342,17 @@ namespace KKMLL
 
 
     /**
+     *@brief  Creates a duplicate of list using the same container.
+     */
+    virtual
+    FeatureVectorListPtr  Duplicate (bool _owner)  const;
+
+
+    /**
      *@brief  Creates a duplicate of list and also duplicates it contents.
      *@return Duplicated list with hard-copy of its contents.
      */
+    virtual
     FeatureVectorListPtr  DuplicateListAndContents ()  const;
 
     KKStrListPtr   ExtractDuplicatesByExampleFileName ();
@@ -424,6 +432,12 @@ namespace KKMLL
     // void                  Sort (FeatureVectorComparison   comparison);
 
     float                     MajorityClassFraction () const; /**< Return's the fraction that the majority class makes up in this list. */
+
+    /**
+     *@brief Creates an instance of a Empty FeatureVectorList
+     */
+    virtual
+    FeatureVectorListPtr      ManufactureEmptyList (bool _owner)  const;
 
     virtual
     kkint32                   MemoryConsumedEstimated ()  const;

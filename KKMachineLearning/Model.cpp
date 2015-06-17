@@ -31,6 +31,7 @@ using namespace  KKB;
 
 
 #include "ClassProb.h"
+#include "FactoryFVProducer.h"
 #include "FeatureEncoder2.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
@@ -49,6 +50,7 @@ Model::Model ():
     crossClassProbTable      (NULL),
     crossClassProbTableSize  (0),
     encoder                  (NULL),
+    factoryFVProducer        (NULL),
     fileDesc                 (NULL),
     name                     (),
     normParms                (NULL),
@@ -74,6 +76,7 @@ Model::Model (const Model&  _model):
     crossClassProbTable     (NULL),
     crossClassProbTableSize (0),
     encoder                 (NULL),
+    factoryFVProducer       (_model.factoryFVProducer),
     fileDesc                (_model.fileDesc),
     name                    (_model.name),
     normParms               (NULL),
@@ -113,7 +116,7 @@ Model::Model (const Model&  _model):
 /**
  *@brief  Use this when you are planning on creating a empty model without parameters.
  */
-Model::Model (FileDescPtr    _fileDesc):
+Model::Model (FactoryFVProducerPtr  _factoryFVProducer):
     alreadyNormalized        (false),
     classes                  (NULL),
     classesIndex             (NULL),
@@ -121,7 +124,8 @@ Model::Model (FileDescPtr    _fileDesc):
     crossClassProbTable      (NULL),
     crossClassProbTableSize  (0),
     encoder                  (NULL),
-    fileDesc                 (_fileDesc),
+    factoryFVProducer        (_factoryFVProducer),
+    fileDesc                 (NULL),
     name                     (),
     normParms                (NULL),
     numOfClasses             (0),
@@ -135,6 +139,7 @@ Model::Model (FileDescPtr    _fileDesc):
     votes                    (NULL),
     weOwnTrainExamples       (false)
 {
+  fileDesc = factoryFVProducer->FileDesc ();
 }
 
     
@@ -146,9 +151,9 @@ Model::Model (FileDescPtr    _fileDesc):
  *@param[in] _fileDesc A description of the data file.
  *@param[in] _log A log-file stream. All important events will be output to this stream
  */
-Model::Model (const KKStr&       _name,
-              const ModelParam&  _param,      // Create new model from
-              FileDescPtr        _fileDesc
+Model::Model (const KKStr&          _name,
+              const ModelParam&     _param,      // Create new model from
+              FactoryFVProducerPtr  _factoryFVProducer
              ):
     alreadyNormalized        (false),
     classes                  (NULL),
@@ -157,7 +162,8 @@ Model::Model (const KKStr&       _name,
     crossClassProbTable      (NULL),
     crossClassProbTableSize  (0),
     encoder                  (NULL),
-    fileDesc                 (_fileDesc),
+    factoryFVProducer        (_factoryFVProducer),
+    fileDesc                 (NULL),
     name                     (_name),
     normParms                (NULL),
     numOfClasses             (0),
@@ -171,6 +177,7 @@ Model::Model (const KKStr&       _name,
     votes                    (NULL),
     weOwnTrainExamples       (false)
 {
+  fileDesc = factoryFVProducer->FileDesc ();
   param = _param.Duplicate ();
 }
 
@@ -279,12 +286,12 @@ Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 
 
 
-ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
-                               const KKStr&      _name,
-                               const ModelParam& _param,  
-                               FileDescPtr       _fileDesc,
-                               VolConstBool&     _cancelFlag,
-                               RunLog&           _log
+ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
+                               const KKStr&          _name,
+                               const ModelParam&     _param,  
+                               FactoryFVProducerPtr  _factoryFVProducer,
+                               VolConstBool&         _cancelFlag,
+                               RunLog&               _log
                               )
 {
   ModelPtr  model = NULL;
@@ -293,23 +300,23 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
     switch  (_modelType)
     {
     case  ModelTypes::mtOldSVM:    
-          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc);
+          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _factoryFVProducer);
           break;
 
     case  ModelTypes::mtSvmBase:
-          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc);
+          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _factoryFVProducer);
           break;
 
     case  ModelTypes::mtKNN:
-          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc);
+          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _factoryFVProducer);
           break;
 
     case  ModelTypes::mtUsfCasCor:
-          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc);
+          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _factoryFVProducer);
           break;
 
     case  ModelTypes::mtDual:
-          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _fileDesc);
+          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _factoryFVProducer);
           break;
     }  /* end of switch */
   }
@@ -503,7 +510,6 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   delete  classesIndex;
   classesIndex = new MLClassIndexList (*classes);
 
-
   if  (param->ExamplesPerClass () < int32_max)
     ReduceTrainExamples (_log);
 
@@ -511,15 +517,15 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   {
     if  (!weOwnTrainExamples)
     {
-      // Since we do not own the We will have to duplicate the trainExamples list and its contents before we normalize the data.
-      FeatureVectorListPtr  temp = new FeatureVectorList (*trainExamples, true);
+      // Since we do not own the WE will have to duplicate the trainExamples list and its contents before we normalize the data.
+      FeatureVectorListPtr  temp = trainExamples->Duplicate (true);
       weOwnTrainExamples = true;
       trainExamples = temp;
     }
     else if  (!trainExamples->Owner ())
     {
       // Even though we own 'trainExamples' we do not own its contents; so we will need to create a new list and own those contents.
-      FeatureVectorListPtr  temp = new FeatureVectorList (*trainExamples, true);
+      FeatureVectorListPtr  temp = trainExamples->Duplicate (true);
       weOwnTrainExamples = true;
       delete  trainExamples;
       trainExamples = temp;
@@ -687,8 +693,8 @@ void  Model::ReduceTrainExamples (RunLog&  log)
     return;
   }
 
-  FeatureVectorListPtr  reducedSet = new FeatureVectorList (fileDesc, false);
-  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false);  // Examples that we do not use will need to be deleted.
+  FeatureVectorListPtr  reducedSet = trainExamples->ManufactureEmptyList (false);
+  FeatureVectorListPtr  deleteSet  = trainExamples->ManufactureEmptyList (false);  // Examples that we do not use will need to be deleted.
   MLClassList::iterator  idx;
 
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
@@ -864,6 +870,10 @@ void  Model::WriteModelXMLFields (ostream&  o)  const
   if  (classesIndex)
     classesIndex->WriteXML ("ClassesIndex", o);
 
+
+  if  (factoryFVProducer)
+    XmlElementKKStr::WriteXML (factoryFVProducer->Name (), "FvFactoryProducer", o);
+
   if  (fileDesc)
     fileDesc->WriteXML ("FileDesc", o);
 
@@ -876,9 +886,6 @@ void  Model::WriteModelXMLFields (ostream&  o)  const
   if  (normParms)
     normParms->WriteXML ("NormParms", o);
 } /* WriteModelXMLFields */
-
-
-
 
 
 
@@ -925,6 +932,11 @@ XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
     {
       delete classesIndex;
       classesIndex = dynamic_cast<XmlElementMLClassIndexListPtr>(t)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("FvFactoryProducer"))
+    {
+      factoryFVProducer = FactoryFVProducer::LookUpFactory (e->ToKKStr ());
     }
 
     else if  (varName.EqualIgnoreCase ("FileDesc")  &&  (typeid(*e) == typeid (XmlElementFileDesc)))

@@ -14,11 +14,11 @@ namespace  KKMLL
 
     ModelKnn ();
 
-    ModelKnn (FileDescPtr  _fileDesc);
+    ModelKnn (FactoryFVProducerPtr  _factoryFVProducer);
   
     ModelKnn (const KKStr&          _name,
               const ModelParamKnn&  _param,         // Create new model from
-              FileDescPtr           _fileDesc
+              FactoryFVProducerPtr  _factoryFVProducer
              );
   
     ModelKnn (const ModelKnn&  _madel);

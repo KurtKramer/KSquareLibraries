@@ -222,6 +222,9 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
                                    cancelFlag,
                                    log
                                   );
+    if  (saveTrainedModel  &&   (!cancelFlag)  &&  (!trainer->Abort ()))
+      trainer->SaveTrainingProcess (log);
+
     // Since 'trainer' now has ownership to 'trainingExamples' we will set 'trainingExamples' to NULL
     trainingExamples = NULL;
     return trainer;
@@ -962,7 +965,7 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
   model = Model::CreateAModel (config->ModelingMethod (),
                                osGetRootName (configFileName),
                                *(config->ModelParameters ()), 
-                               fileDesc, 
+                               fvFactoryProducer, 
                                cancelFlag, 
                                log
                               );
