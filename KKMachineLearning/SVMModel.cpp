@@ -355,10 +355,10 @@ SVMModel::~SVMModel ()
   }
 
 
-  delete  [] classIdxTable;         classIdxTable        = NULL;
-  delete  [] predictXSpace;         predictXSpace        = NULL;
-  delete  [] probabilities;         probabilities        = NULL;
-  delete  [] votes;                 votes                = NULL;
+  delete  [] classIdxTable;   classIdxTable   = NULL;
+  delete  [] predictXSpace;   predictXSpace   = NULL;
+  delete  [] probabilities;   probabilities   = NULL;
+  delete  [] votes;           votes           = NULL;
 
   delete  selectedFeatures;  selectedFeatures = NULL;
   delete  svmParam;          svmParam         = NULL;
@@ -2425,12 +2425,12 @@ void  SVMModel::ReadXML (XmlStream&      s,
   KKStr    lastBinaryClass2Name = "";
   kkint32  lastModelIdx = -1;
 
+  DeleteModels ();
+  DeleteXSpaces ();
+
   delete  binaryParameters;       binaryParameters      = NULL;
   delete  models;                 models                = NULL;
   delete  binaryFeatureEncoders;  binaryFeatureEncoders = NULL;
-
-  DeleteModels ();
-  DeleteXSpaces ();
 
   numOfClasses = 0;
   numOfModels  = 0;
@@ -2508,13 +2508,12 @@ void  SVMModel::ReadXML (XmlStream&      s,
         else
         {
           DeleteModels ();
+          AllocateModels ();
           binaryParameters       = new BinaryClassParmsPtr [numOfModels];
-          models                 = new ModelPtr            [numOfModels];
           binaryFeatureEncoders  = new FeatureEncoderPtr   [numOfModels];
 
           for  (kkint32 x = 0;  x < numOfModels;  x++)
           {
-            models                 [x] = NULL;
             binaryParameters       [x] = NULL;
             binaryFeatureEncoders  [x] = NULL;
           }
@@ -2550,10 +2549,17 @@ void  SVMModel::ReadXML (XmlStream&      s,
           }
           else
           {
-            DeleteModels ();
-            AllocateModels ();
-            models[0][0] = xmlElementModel->TakeOwnership ();
-            ++numModeLoaded;
+            if  (!models)
+            {
+              log.Level (-1) << endl
+                << "SVMModel::ReadXM   ***ERROR***   'OneVsOneModel'   models was not defined/allocated." << endl
+                << endl;
+            }
+            else
+            {
+              models[0][0] = xmlElementModel->TakeOwnership ();
+              ++numModeLoaded;
+            }
           }
         }
       }
@@ -2585,6 +2591,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
             << endl;
           errorsFound = true;
         }
+
         else
         {
           MLClassPtr  class1 = MLClass::CreateNewMLClass (lastBinaryClass1Name);
@@ -2602,8 +2609,6 @@ void  SVMModel::ReadXML (XmlStream&      s,
           }
           else
           {
-            delete  models[numModeLoaded][0];
-
             models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
 
             binaryFeatureEncoders[numModeLoaded] 
