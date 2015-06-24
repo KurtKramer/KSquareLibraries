@@ -297,8 +297,8 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("FullHierarchyMustMatch"))
         fullHierarchyMustMatch = dynamic_cast<XmlElementBoolPtr> (t)->Value ();
 
-      else if  (varName.EqualIgnoreCase ("OtherClass"))
-        otherClass = MLClass::CreateNewMLClass (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+      else if  ((varName.EqualIgnoreCase ("OtherClass"))  &&  (typeid (*t) == typeid (XmlElementMLClass)))
+        otherClass = dynamic_cast<XmlElementMLClassPtr> (t)->Value ();
 
       else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
         probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));

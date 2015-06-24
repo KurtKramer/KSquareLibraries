@@ -247,11 +247,9 @@ void  FileDesc::AddANominalValue (const KKStr&   nominalValue,
   if  (!curAttribute)
   {
     // This should never happen, means that there has not been a nominal feature added yet.
-    log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue    ***ERROR***    No Current Attribute Set." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg = "FileDesc::AddANominalValue    ***ERROR***    No Current Attribute Set.";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
   
   alreadyExist = false;
@@ -272,11 +270,10 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
   curAttribute = attributes.LookUpByName (attributeName);
   if  (!curAttribute)
   {
-    log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "]." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit(-1);
+    KKStr  errMsg (128);
+    errMsg << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "].";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   AddANominalValue (nominalValue, alreadyExist, log);
@@ -311,13 +308,10 @@ void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
 {
   if  ((fieldNum < 0)  ||  (fieldNum >= attributes.QueueSize ()))
   {
-    cerr  << endl
-          << endl
-          << "FileDesc::" << funcName << "   ***ERROR***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
-          << endl
-          << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (128);
+    errMsg << "FileDesc::" << funcName << "   ***ERROR***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined.";
+    cerr  << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 }  /* ValidateFieldNum */
 

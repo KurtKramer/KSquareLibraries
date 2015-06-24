@@ -245,7 +245,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     }
   }
 
-  config1 = new TrainingConfiguration2 ();
+  config1 = factoryFVProducer->ManufacturTrainingConfiguration ();
   config1->Load (param->ConfigFileName1 (),
                  false,  // false = Do NOT validate directories.
                  _log
@@ -258,7 +258,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
     throw KKException (errMsg);
   }
 
-  config2 = new TrainingConfiguration2 ();
+  config2 = factoryFVProducer->ManufacturTrainingConfiguration ();
   config2->Load (param->ConfigFileName2 (), 
                  false,  // false = Do NOT validate directories.
                  _log
@@ -670,10 +670,6 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
 
   return;
 }  /* ProbabilitiesByClass */
-
-
-
-
 
 
 

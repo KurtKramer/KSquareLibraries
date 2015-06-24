@@ -1704,8 +1704,8 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
     fvFactoryProducerSpecified = false;
     if  (!fvFactoryProducer)
     {
-      log.Level (-1) << "No Feature-Computer Specified;  defaulting to 'GrayScaleImages'." << endl;
       fvFactoryProducer = DefaultFeatureVectorProducer (log);
+      log.Level (-1) << "No Feature-Computer Specified;  defaulting to '" << fvFactoryProducer->Name () << "'." << endl;
     }
   }
   else

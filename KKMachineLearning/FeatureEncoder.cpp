@@ -220,14 +220,13 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     if  (y >= numEncodedFeatures)
     {
+      KKStr  errMsg (128);
+      errMsg << "FeatureEncoder::CreateEncodedFileDesc  numEncodedFeatures [" << numEncodedFeatures << "]  exceeded.";
       cerr << endl
-           << endl
            << "FeatureEncoder::CreateEncodedFileDesc     *** ERROR ***"           << endl
-           << "             overriding number of encoded features.  This should"  << endl
-           << "             never be able to happen. Something is wrong with"     << endl
-           << "             object."                                              << endl
+           << "             " << errMsg << endl
            << endl;
-      osWaitForEnter ();
+      throw KKException (errMsg);
       exit (-1);
     }
 
@@ -407,13 +406,13 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
 
     if  (y >= xSpaceNeededPerExample)
     {
+      KKStr  errMsg (128);
+      errMsg << "FeatureEncoder::EncodeAExample  ***ERROR***   xSpaceNeededPerExample[" << xSpaceNeededPerExample << "].";
       cerr << endl
-           << endl
            << "FeatureEncoder::EncodeAExample     *** ERROR ***"  << endl
-           << "             We are overwriting end of xSpace"      << endl
+           << "             " << errMsg                           << endl
            << endl;
-      osWaitForEnter ();
-      exit (-1);
+      throw KKException (errMsg);
     }
 
     switch (destWhatToDo[x])
