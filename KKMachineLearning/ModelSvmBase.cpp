@@ -676,6 +676,9 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
+  if  (!param)
+    param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
+
   if  (Model::param == NULL)
   {
     KKStr errMsg (128);
@@ -687,7 +690,7 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
   else if  (typeid (*Model::param) != typeid(ModelParamSvmBase))
   {
     KKStr errMsg (128);
-    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
   }

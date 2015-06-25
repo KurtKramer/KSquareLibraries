@@ -252,6 +252,9 @@ void  ModelKnn::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
+  if  (!param)
+    param = dynamic_cast<ModelParamKnnPtr> (Model::param);
+
   if  (Model::param == NULL)
   {
     KKStr errMsg (128);
@@ -263,7 +266,7 @@ void  ModelKnn::ReadXML (XmlStream&      s,
   else if  (typeid (*Model::param) != typeid(ModelParamKnn))
   {
     KKStr errMsg (128);
-    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
   }

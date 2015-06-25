@@ -992,6 +992,9 @@ void  ModelDual::ReadXML (XmlStream&      s,
     }
   }
 
+  if  (!param)
+    param = dynamic_cast<ModelParamDualPtr> (Model::param);
+
   if  (Model::param == NULL)
   {
     KKStr errMsg (128);
@@ -1003,7 +1006,7 @@ void  ModelDual::ReadXML (XmlStream&      s,
   else if  (typeid (*Model::param) != typeid(ModelParamDual))
   {
     KKStr errMsg (128);
-    errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    errMsg << "ModelDual::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
   }

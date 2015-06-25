@@ -467,7 +467,7 @@ void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
                                 ostream&      o
                                )  const
 {
-  XmlTag  startTag ("ModelDual",  XmlTag::TagTypes::tagStart);
+  XmlTag  startTag ("ModelUsfCasCor",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
@@ -477,7 +477,7 @@ void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
 
   usfCasCorClassifier->WriteXML ("UsfCasCorClassifier", o);
 
-  XmlTag  endTag ("ModelDual", XmlTag::TagTypes::tagEnd);
+  XmlTag  endTag ("ModelUsfCasCor", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
@@ -517,6 +517,9 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
     t = s.GetNextToken (log);
   }
 
+  if  (!param)
+    param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
+
   if  (Model::param == NULL)
   {
     KKStr errMsg (128);
@@ -528,7 +531,7 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
   else if  (typeid (*Model::param) != typeid(ModelParamUsfCasCor))
   {
     KKStr errMsg (128);
-    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << param->ModelParamTypeStr ();
+    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
     AddErrorMsg (errMsg, 0);
     log.Level (-1) << endl << errMsg << endl << endl;
   }

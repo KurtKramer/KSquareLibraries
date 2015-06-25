@@ -14,8 +14,8 @@
         1) Restructured code as a c++ class.
         2) A trained classifier is written to disk and can be reread at a later time.
         3) Integrated into the Pices application.
-        4) Primary use will to be used in a Dual classifer setup along with a Support Vector Machine(SVM)(libSVM)
-           where both classifiers agree on the prediction will the lable be returned otherwise the label
+        4) Primary use will to be used in a Dual classifier setup along with a Support Vector Machine(SVM)(libSVM)
+           where both classifiers agree on the prediction will the label be returned otherwise the label
            "UnKnown" will be returned.  User will have option to have the common part of the prediction in the 
            class hierarchy returned instead.
         5) Added predicted confidence values for each class.
@@ -426,9 +426,9 @@ namespace KKMLL
 
     Boolean  string_to_boolean (const char* s);
 
-    const char*  type_to_string (int var)  const;
+    const KKStr&  type_to_string (int var)  const;
 
-    int    string_to_type (const char* s);
+    int    string_to_type (const KKStr&  s);
 
     int    process_line (char*     line,
                          RunLog&   log
@@ -464,7 +464,7 @@ namespace KKMLL
     //****************************************************************
     //*                            'parms.c'                         *
     //****************************************************************
-    static  const char*  type_strings[];
+    static  const KKStr  type_strings[];
     static  const char*  boolean_strings[2];
 
     char parm_string[LINELEN];

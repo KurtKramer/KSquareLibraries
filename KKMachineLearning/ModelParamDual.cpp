@@ -303,6 +303,7 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
         probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
     }
+    delete  t;
     t = s.GetNextToken (log);
   }
 }  /* ReadXML */

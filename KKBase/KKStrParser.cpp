@@ -184,17 +184,17 @@ KKStr  KKStrParser::GetNextToken (const char* delStr)
     }
     else
     {
-      nextPos = endPos + 1;  // Setting to character after the ending quote.
-
-      // Now that we are at the end of the quoted String we need set the next character pointer to the next delimiter character.
-      while  (nextPos < len)
+      // Now that we are at the end of the quoted String we need set the next character pointer to just past the following delimiter character.
+      nextPos = endPos + 1;
+      if  (trimWhiteSpace)
       {
-        ch = str[nextPos];
-        if  (strchr (delStr, ch) != NULL)
-        {
-          lastDelimiter = ch;
-          break;
-        }
+        while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+          nextPos++;
+      }
+
+      if  ((nextPos < len)  &&  (strchr (delStr, str[nextPos]) != NULL))
+      {
+        lastDelimiter =  str[nextPos];
         ++nextPos;
       }
     }  

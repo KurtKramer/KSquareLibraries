@@ -36,11 +36,11 @@ namespace KKB
      *
      * Quoted Strings will be treated differently. If the first character in the token is a quote(") or 
      * apostrophe(') character then the token will include all characters until the matching quote 
-     * character. The quote characters will be included in the token as the 1st and last characters.
-     * the next character pointer will be set to the following delimiter character. The quote characters
-     * must match. That is if the first quote character was (')  then the terminating quote character 
-     * also be ('). The special escape sequences ("\t", "\n", "\r", "\\", '\"', and "\'" will be 
-     * translated  into (tab), (line-feed), (carriage-return), (back-slash), (quote), and (apostrophe).
+     * character. The quote characters will be NOT be included in the token. The next character pointer will 
+     * be set to the following delimiter character. The quote characters must match. That is if the first 
+     * quote character was (')  then the terminating quote character also be ('). The special escape sequences
+     * ("\t", "\n", "\r", "\\", '\"', and "\'" will be translated  into (tab), (line-feed), (carriage-return), 
+     * (back-slash), (quote), and (apostrophe).
      *
      *@param[in]  delStr List of delimiter characters.
      *@return  Extracted Token.

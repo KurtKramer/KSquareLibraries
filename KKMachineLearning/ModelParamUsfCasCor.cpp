@@ -163,7 +163,7 @@ void  ModelParamUsfCasCor::WriteXML (const KKStr&  varName,
                                      ostream&      o
                                     )  const
 {
-  XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
+  XmlTag  startTag ("ModelParamUsfCasCor",  XmlTag::TagTypes::tagStart);
   if  (!varName.Empty ())
     startTag.AddAtribute ("VarName", varName);
   startTag.WriteXML (o);
@@ -177,7 +177,7 @@ void  ModelParamUsfCasCor::WriteXML (const KKStr&  varName,
   XmlElementInt64::WriteXML (random_seed,       "random_seed",      o);
   XmlElementBool::WriteXML  (useCache,          "useCache",         o);
   
-  XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);
+  XmlTag  endTag ("ModelParamUsfCasCor", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */

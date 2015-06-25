@@ -1214,13 +1214,13 @@ char*  UsfCasCor::parm_to_string (int k)
 }
 
 
-const char *  UsfCasCor::type_strings[]={"SIGMOID","GAUSSIAN", "LINEAR","ASYMSIGMOID","VARSIGMOID","WIN","STAGNANT","TIMEOUT","LOSE","BITS","INDEX","Bad Type"};
+const KKStr  UsfCasCor::type_strings[]={"SIGMOID","GAUSSIAN", "LINEAR","ASYMSIGMOID","VARSIGMOID","WIN","STAGNANT","TIMEOUT","LOSE","BITS","INDEX","Bad Type"};
 
 
 /* Input of the type variables and return a string showing its value.  This
  * is only used as a output routine for the user's convenience. 
  */
-const char*  UsfCasCor::type_to_string (int var)  const
+const KKStr&  UsfCasCor::type_to_string (int var)  const
 {
   switch (var) 
   {
@@ -1245,19 +1245,40 @@ const char*  UsfCasCor::type_to_string (int var)  const
 
 
 
-int  UsfCasCor::string_to_type (const char* s)
+int  UsfCasCor::string_to_type (const KKStr& s)
 {
-  if  (STRICMP (s, type_strings[ 0]) == 0)  return SIGMOID;
-  if  (STRICMP (s, type_strings[ 1]) == 0)  return GAUSSIAN;
-  if  (STRICMP (s, type_strings[ 2]) == 0)  return LINEAR;
-  if  (STRICMP (s, type_strings[ 3]) == 0)  return ASYMSIGMOID;
-  if  (STRICMP (s, type_strings[ 4]) == 0)  return VARSIGMOID;
-  if  (STRICMP (s, type_strings[ 5]) == 0)  return WIN;
-  if  (STRICMP (s, type_strings[ 6]) == 0)  return STAGNANT;
-  if  (STRICMP (s, type_strings[ 7]) == 0)  return TIMEOUT;
-  if  (STRICMP (s, type_strings[ 8]) == 0)  return LOSE;
-  if  (STRICMP (s, type_strings[ 9]) == 0)  return BITS;
-  if  (STRICMP (s, type_strings[10]) == 0)  return INDEX;
+  if  (s.EqualIgnoreCase (type_strings[0]))
+    return SIGMOID;
+
+  else if  (s.EqualIgnoreCase (type_strings[1]))
+    return GAUSSIAN;
+
+  else if  (s.EqualIgnoreCase (type_strings[2]))
+    return LINEAR;
+
+  else if  (s.EqualIgnoreCase (type_strings[3]))   
+    return ASYMSIGMOID;
+
+  else if  (s.EqualIgnoreCase (type_strings[4]))
+    return VARSIGMOID;
+
+  else if  (s.EqualIgnoreCase (type_strings[5]))
+    return WIN;
+
+  else if  (s.EqualIgnoreCase (type_strings[6]))
+    return STAGNANT;
+
+  else if  (s.EqualIgnoreCase (type_strings[7]))
+    return TIMEOUT;
+
+  else if  (s.EqualIgnoreCase (type_strings[8]))
+    return LOSE;
+
+  else if  (s.EqualIgnoreCase (type_strings[9]))
+    return BITS;
+
+  else if  (s.EqualIgnoreCase (type_strings[10]))
+    return INDEX;
 
   return -1;
 } /* string_to_type */
@@ -4333,7 +4354,6 @@ void  UsfCasCor::WriteXML (const KKStr&  varName,
   XmlTag  endTag ("UsfCasCor", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
-
 }  /* WriteXML */
 
 
@@ -4382,22 +4402,20 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
     bool  tokenProcessed = false;
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
       tokenProcessed = true;
 
-      const KKStr&  varName = t->VarName ();
+      const KKStr&  varName = e->VarName ();
 
-      kkint32  valueInt32 = 0;
-      float    valueFloat = 0.0f;
+      kkint32  valueInt32 = e->ToInt32 ();
+      float    valueFloat = e->ToFloat ();
 
-      if  (typeid (*t) == typeid (XmlElementInt32))
-        valueInt32 = dynamic_cast<XmlElementInt32Ptr> (t)->Value ();
+      if  (varName.EqualIgnoreCase ("number_of_classes"))  
+      {
+        number_of_classes = valueInt32;
+      }
 
-      if  (typeid (*t) == typeid (XmlElementFloat))
-        valueFloat = dynamic_cast<XmlElementFloatPtr> (t)->Value ();
-
-      if  (varName.EqualIgnoreCase ("number_of_classes"))  number_of_classes = valueInt32;
-
-      if  (varName.EqualIgnoreCase ("Classes"))
+      else if  (varName.EqualIgnoreCase ("Classes")  ||  (typeid (*e) == typeid (XmlElementMLClassNameList)))
       {
         delete  classes;
         classes = dynamic_cast<XmlElementMLClassNameListPtr> (t)->TakeOwnership ();
@@ -4462,8 +4480,15 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("ErrorIndex"))               ErrorIndex              = valueFloat;
       else if  (varName.EqualIgnoreCase ("ErrorIndexThreshold"))      ErrorIndexThreshold     = valueFloat;
 
-      else if  (varName.EqualIgnoreCase ("UnitType"))     UnitType   = string_to_type (dynamic_cast<XmlElementKKStrPtr> (t)->Value ()->Str ());
-      else if  (varName.EqualIgnoreCase ("OutputType"))   OutputType = string_to_type (dynamic_cast<XmlElementKKStrPtr> (t)->Value ()->Str ());
+      else if  (varName.EqualIgnoreCase ("UnitType"))
+      {
+        UnitType = string_to_type (e->ToKKStr ());
+      }
+
+      else if  (varName.EqualIgnoreCase ("OutputType"))
+      {
+        OutputType = string_to_type (e->ToKKStr ());
+      }
 
       else if  (typeid (*t) == typeid(XmlElementBool))
       {
@@ -4521,7 +4546,9 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
         if  (connectionsStr)
         {
           kkuint32  count = connectionsStr->size ();
-          Connections = new int*[];
+          delete  Connections;
+          Connections = new int*[MaxUnits];
+
           for  (kkuint32 x = 0;  x < count;  ++x)
           {
             if  ((*connectionsStr)[x] == "NULL")
@@ -4536,7 +4563,7 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
         connectionsStr = NULL;
       }
 
-      if  (varName.EqualIgnoreCase ("Weights"))
+      else if  (varName.EqualIgnoreCase ("Weights"))
       {
         if  (typeid (*t) == typeid (XmlElementArrayFloat2DVarying))
         {
@@ -4554,46 +4581,40 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
         }
       }
 
-      else if  (varName.EqualIgnoreCase ("ExtraValues"))
+      else if  ((varName.EqualIgnoreCase ("ExtraValues"))  &&  (typeid (*t) == typeid (XmlElementArrayFloat)))
       {
         delete  ExtraValues;
-        ExtraValues =  ReadXMLArrayFloat (t, MaxUnits, log);
+        ExtraValues = dynamic_cast<XmlElementArrayFloatPtr> (t)->TakeOwnership ();
       }
 
-      else if  (varName.EqualIgnoreCase ("Outputs"))
+      else if  ((varName.EqualIgnoreCase ("Outputs"))  &&  (typeid (*t) == typeid (XmlElementArrayFloat)))
       {
         delete  Outputs;
-        Outputs =  ReadXMLArrayFloat (t, Noutputs, log);
+        Outputs = dynamic_cast<XmlElementArrayFloatPtr> (t)->TakeOwnership ();
       }
 
-      else if  (varName.EqualIgnoreCase ("OutputWeights"))
-      {
-        if  (typeid (*t) == typeid (XmlElementArrayFloat2D))
-        {
-          XmlElementArrayFloat2DPtr  ow = dynamic_cast<XmlElementArrayFloat2DPtr> (t);
-          if  (ow)
-          {
-            kkuint32  owHeight = ow->Height ();
-            kkuint32  owWidth  = ow->Width  ();
-            if  ((owHeight != Noutputs)  ||  (owWidth != MaxUnits))
-            {
-              log.Level (-1) << endl
-                << endl << "UsfCasCor::ReadXML   ***ERROR***  OutputWeights read Dimensions[" << owHeight <<", " << owWidth << "] not the expected "
-                << "[" << Noutputs << ", " << MaxUnits << "]."
-                << endl << endl;
-            }
-            else
-            {
-              OutputWeights = ow->TakeOwnership ();
-            }
-          }
-        }
-      }
-
-      else if  (varName.EqualIgnoreCase ("ExtraErrors"))
+      else if  ((varName.EqualIgnoreCase ("ExtraErrors"))  &&  (typeid (*t) == typeid (XmlElementArrayFloat)))
       {
         delete  ExtraErrors;
-        ExtraErrors =  ReadXMLArrayFloat (t, Noutputs, log);
+        ExtraErrors = dynamic_cast<XmlElementArrayFloatPtr> (t)->TakeOwnership ();
+      }
+
+      else if  ((varName.EqualIgnoreCase ("OutputWeights"))  &&  (typeid (*t) == typeid (XmlElementArrayFloat2D)))
+      {
+        XmlElementArrayFloat2DPtr array2D = dynamic_cast<XmlElementArrayFloat2DPtr> (t);
+        kkuint32  owHeight = array2D->Height ();
+        kkuint32  owWidth  = array2D->Width  ();
+        if  ((owHeight != Noutputs)  ||  (owWidth != MaxUnits))
+        {
+          log.Level (-1) << endl
+              << "UsfCasCor::ReadXML   ***ERROR***  OutputWeights read Dimensions[" << owHeight << ", " << owWidth << "] not the expected [" << Noutputs << ", " << MaxUnits << "]."
+              << endl;
+        }
+        else
+        {
+          delete  OutputWeights;
+          OutputWeights = array2D->TakeOwnership ();
+        }
       }
     }
 
