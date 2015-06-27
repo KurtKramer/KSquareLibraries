@@ -1270,6 +1270,8 @@ namespace KKB
                            float& m01
                           )  const;
 
+
+
     /**
      *@brief  Computes two sets of moments;  Black and White  and  Weighted.
      *@details  The Black and white are only concerned weather the pixels are Foreground while the weighted 

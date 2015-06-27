@@ -252,7 +252,7 @@ namespace KKMLL
     void  Number_of_rounds   (kkint32                _number_of_rounds);
     void  NumOfRounds        (kkint32                _numOfRounds)     {Number_of_rounds  (_numOfRounds);}
     void  RootDir            (const KKStr&           _rootDir);
-    void SelectionMethod     (SVM_SelectionMethod    _selectionMethod);
+    void  SelectionMethod    (SVM_SelectionMethod    _selectionMethod);
 
     /**
      *@brief Adds specified Training Class to list taking ownership of it.

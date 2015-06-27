@@ -4240,12 +4240,14 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
           float  colPow2 = deltaCol * deltaCol;
           float  colPow3 = colPow2  * deltaCol;
 
-          cm20 += colPow2 * rowPow0;
-          cm02 += colPow0 * rowPow2;
-          cm30 += colPow3 * rowPow0;
-          cm03 += colPow0 * rowPow3;
-          cm12 += colPow1 * rowPow2;
-          cm21 += colPow2 * rowPow1;
+          float  pvFloat = (float)pv;
+
+          cm20 += pvFloat * colPow2 * rowPow0;
+          cm02 += pvFloat * colPow0 * rowPow2;
+          cm30 += pvFloat * colPow3 * rowPow0;
+          cm03 += pvFloat * colPow0 * rowPow3;
+          cm12 += pvFloat * colPow1 * rowPow2;
+          cm21 += pvFloat * colPow2 * rowPow1;
         }
       }
     }
@@ -4357,7 +4359,6 @@ void  Raster::MomentWeighted (float& m00,
 
   return;
 }  /* MomentWeighted */
-
 
 
 
