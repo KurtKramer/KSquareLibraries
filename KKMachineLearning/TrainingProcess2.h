@@ -13,12 +13,6 @@
 
 namespace KKMLL 
 {
-  #if  !defined(_DataBase_Defined_)
-  class  DataBase;
-  typedef  DataBase*  DataBasePtr;
-  #endif
-
-
   #if  !defined(_FEATUREVECTOR_)
   class  FeatureVector;
   typedef  FeatureVector*  FeatureVectorPtr;

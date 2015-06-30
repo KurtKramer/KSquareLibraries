@@ -17,6 +17,7 @@ using namespace  std;
 using namespace  KKB;
 
 
+
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
 #include "FactoryFVProducer.h"
@@ -2096,6 +2097,46 @@ namespace KKMLL
     return os;
   }
 }
+
+
+
+FeatureVectorListPtr   TrainingConfiguration2::LoadOtherClasssExamples (RunLog&  runLog)
+{
+  if  (!otherClass)
+    return NULL;
+
+  KKStr otherClassDirName = "";
+
+  if  (rootDir.Empty ())
+    otherClassDirName = otherClass->Name ();
+  else
+    otherClassDirName = osAddSlash (rootDir) + otherClass->Name ();
+
+  otherClassDirName = osSubstituteInEnvironmentVariables (otherClassDirName);
+
+  MLClassList  tempClasses;
+  bool  cancelFlag  = false;
+  bool  changesMade = false;
+  DateTime  latestTimeStamp;
+
+  FeatureVectorListPtr  otherClassExamples = fvFactoryProducer->DefaultFeatureFileIO ()->FeatureDataReSink 
+                                (fvFactoryProducer, 
+                                 otherClassDirName,
+                                 otherClass->Name () + ".data",
+                                 otherClass,
+                                 true,   //  true = Use-Directory-name-For-Class-Name (otherClass->Name ())
+                                 tempClasses,
+                                 cancelFlag,
+                                 changesMade,
+                                 latestTimeStamp,
+                                 runLog
+                                );
+
+  return  otherClassExamples;
+}  /* LoadOtherClasssExamples */
+
+
+
 
 
 

@@ -756,7 +756,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                                        kkint32     _maxToExtract,
                                                                        float       _minSize
                                                                       )  const
@@ -775,7 +775,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
 
   if  (!extractedImages)
   {
-    KKStr  err = "***ERROR***, ExtractImagesForAGivenClass,  Could not allocate more space.";
+    KKStr  err = "***ERROR***, ExtractExamplesForAGivenClass,  Could not allocate more space.";
     cerr << endl << err << endl;
     osDisplayWarning (err);
     exit (-1);
@@ -799,8 +799,21 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
   extractedImages->Compress ();
 
   return  extractedImages;
-}  /*  ExtractImagesForAGivenClass  */
+}  /*  ExtractExamplesForAGivenClass  */
 
+
+
+FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForClassList (MLClassListPtr  classes)
+{
+  FeatureVectorListPtr  subSetForClassList = this->ManufactureEmptyList (false);
+  for  (auto idx: *classes)
+  {
+    FeatureVectorListPtr  examplesForClass = ExtractExamplesForAGivenClass (idx);
+    if  (examplesForClass)
+      subSetForClassList->AddQueue (*examplesForClass);
+  }
+  return  subSetForClassList;
+}  /* ExtractExamplesForClassList */
 
 
 
@@ -1398,7 +1411,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
   for  (icIDX = mlClasses->begin ();  icIDX != mlClasses->end ();  ++icIDX)
   {
     mlClass = *icIDX;
-    FeatureVectorListPtr  imagesInClass = ExtractImagesForAGivenClass (mlClass);
+    FeatureVectorListPtr  imagesInClass = ExtractExamplesForAGivenClass (mlClass);
 
     if  (imagesInClass->QueueSize () < numOfFolds)
     {
@@ -1579,7 +1592,7 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
   for  (cIDX = mlClasses->begin ();  cIDX != mlClasses->end ();  cIDX++)
   {
     MLClassPtr  mlClass = *cIDX;
-    FeatureVectorListPtr  imagesThisClass = ExtractImagesForAGivenClass (mlClass);
+    FeatureVectorListPtr  imagesThisClass = ExtractExamplesForAGivenClass (mlClass);
       
     kkint32  featureNum;
     for  (featureNum = 0;  featureNum < imagesThisClass->NumOfFeatures ();  featureNum++)
@@ -1663,7 +1676,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     perce
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
   {
     MLClassPtr ic = *idx;
-    FeatureVectorListPtr  examplesThisClass = ExtractImagesForAGivenClass (ic);
+    FeatureVectorListPtr  examplesThisClass = ExtractExamplesForAGivenClass (ic);
     examplesThisClass->RandomizeOrder ();
 
     kkint32  numExamplesThisClass = Max (minClassCount, ((kkint32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
@@ -1827,7 +1840,7 @@ FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  leve
       while  ((idx != allClasses->end ())  &&  (nextClassForThisLevel == curClassForThisLevel))
       {
         {
-          FeatureVectorListPtr  examplesForCurClass = ExtractImagesForAGivenClass (curClass);
+          FeatureVectorListPtr  examplesForCurClass = ExtractExamplesForAGivenClass (curClass);
           FeatureVectorListPtr  reLabeledExamples = examplesForCurClass->DuplicateListAndContents ();
           delete  examplesForCurClass;  examplesForCurClass = NULL;
 

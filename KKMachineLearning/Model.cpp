@@ -700,7 +700,7 @@ void  Model::ReduceTrainExamples (RunLog&  log)
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    FeatureVectorListPtr  examplesThisClass = trainExamples->ExtractImagesForAGivenClass (ic);
+    FeatureVectorListPtr  examplesThisClass = trainExamples->ExtractExamplesForAGivenClass (ic);
     if  ((!examplesThisClass)  ||  (examplesThisClass->size () < 1))
     {
       log.Level (-1) << endl

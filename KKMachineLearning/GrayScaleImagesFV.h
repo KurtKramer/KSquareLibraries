@@ -248,7 +248,7 @@ namespace KKMLL
 
     GrayScaleImagesFVListPtr   ExtractDuplicatesByRootImageFileName ();
 
-    GrayScaleImagesFVListPtr   ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+    GrayScaleImagesFVListPtr   ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                             kkint32     _maxToExtract = -1,
                                                             float       _minSize      = -1.0f
                                                            )  const;

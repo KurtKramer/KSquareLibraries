@@ -292,6 +292,9 @@ namespace KKMLL
                                            MLClassPtr  class2
                                           );
 
+
+    FeatureVectorListPtr   LoadOtherClasssExamples (RunLog&  runLog);
+
     FeatureVectorListPtr   LoadFeatureDataFromTrainingLibraries (KKB::DateTime&  latestImageTimeStamp,
                                                                  bool&           changesMadeToTrainingLibraries,
                                                                  bool&           cancelFlag,

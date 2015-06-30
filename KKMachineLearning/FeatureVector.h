@@ -366,10 +366,12 @@ namespace KKMLL
     FeatureVectorListPtr  ExtractDuplicatesByRootImageFileName ();
 
 
-    FeatureVectorListPtr  ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                       kkint32     _maxToExtract = -1,
-                                                       float       _minSize      = -1.0f
-                                                      )  const;
+    FeatureVectorListPtr  ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+                                                         kkint32     _maxToExtract = -1,
+                                                         float       _minSize      = -1.0f
+                                                        )  const;
+
+    FeatureVectorListPtr  ExtractExamplesForClassList (MLClassListPtr  classes);
 
     VectorDouble   ExtractMeanFeatureValues ();
 
