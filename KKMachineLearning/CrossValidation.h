@@ -59,6 +59,14 @@ namespace  KKMLL
   #endif
 
 
+
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
+
+
   #ifndef  _TrainingConfiguration2_Defined_
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
@@ -154,6 +162,7 @@ namespace  KKMLL
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
     kkint32                   duplicateTrainDataCount;
+    FactoryFVProducerPtr      fvProducerFactory;
     bool                      featuresAreAlreadyNormalized;
     FileDescPtr               fileDesc;
     VectorFloat               foldAccuracies;

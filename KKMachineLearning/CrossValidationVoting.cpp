@@ -43,7 +43,7 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    foldCounts                   (NULL),
    confusionMatrix              (NULL),
    cmByNumOfConflicts           (NULL),
-   examples                     (new FeatureVectorList (*_mlClasses, *_examples)),
+   examples                     (NULL),
    mlClasses                    (_mlClasses),
    examplesPerClass             (0),
    maxNumOfConflicts            (0),
@@ -56,6 +56,7 @@ CrossValidationVoting::CrossValidationVoting (TrainingConfiguration2ListPtr  _co
    trainingTime                 (0.0)
  
 {
+  examples = _examples->ExtractExamplesForClassList (mlClasses);
   examplesPerClass = 999999;
 }
 
@@ -178,9 +179,8 @@ void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
 
     cout << "Fold [" << (foldNum + 1) << "]  of  [" << numOfFolds << "]" << endl;
 
-    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true);
-
-    FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true);
+    FeatureVectorListPtr  trainingExamples = examples->ManufactureEmptyList (true);
+    FeatureVectorListPtr  testImages       = examples->ManufactureEmptyList (true);
 
     log.Level (30) << "Fold Num["        << foldNum        << "]   "
                    << "FirstTestImage["  << firstInGroup   << "]   "
@@ -189,16 +189,11 @@ void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
 
     for  (kkint32  x = 0; x < imageCount; x++)
     {
-      FeatureVectorPtr  newImage = new FeatureVector (*(examples->IdxToPtr (x)));
-
+      FeatureVectorPtr  newImage = examples->IdxToPtr (x)->Duplicate ();
       if  ((x >= firstInGroup)  &&  (x <= lastInGroup))
-      {
         testImages->PushOnBack (newImage);
-      }
       else
-      {
         trainingExamples->PushOnBack (newImage);
-      }
     }
 
     cout << "Number Of Training Images : " << trainingExamples->QueueSize () << endl;
@@ -206,8 +201,8 @@ void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
 
     CrossValidate (testImages, trainingExamples, foldNum, NULL, log);
 
-    delete  trainingExamples;
-    delete  testImages;
+    delete  trainingExamples;  trainingExamples = NULL;
+    delete  testImages;        testImages       = NULL;
     firstInGroup = firstInGroup + numImagesPerFold;
   }
 }  /* RunCrossValidationVoting */
@@ -228,7 +223,7 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr  validation
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
   FeatureVectorListPtr  trainingExamples = examples->DuplicateListAndContents ();
-  FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
+  FeatureVectorListPtr  testImages       = validationData->DuplicateListAndContents ();
 
   CrossValidate (testImages, trainingExamples, 0, classedCorrectly, log);
 

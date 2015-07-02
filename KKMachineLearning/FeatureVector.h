@@ -60,12 +60,15 @@ namespace KKMLL
   {
   public:
     typedef  float  FVFloat;
+    typedef  FeatureVector*  FeatureVectorPtr;
 
     FeatureVector (kkint32  _numOfFeatures);
 
     FeatureVector (const FeatureVector&  _example);
 
     virtual  ~FeatureVector ();
+
+    virtual  FeatureVectorPtr  Duplicate ()  const;
 
     void  BreakTie         (float         _breakTie)        {breakTie         = _breakTie;}         /**< @brief Update the BreakTie value. */
     void  MLClass          (MLClassPtr    _mlClass)         {mlClass          = _mlClass;}          /**< @brief Assign a class to this example. */

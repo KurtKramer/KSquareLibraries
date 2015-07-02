@@ -103,6 +103,10 @@ GrayScaleImagesFV::~GrayScaleImagesFV ()
 
 
 
+GrayScaleImagesFVPtr  GrayScaleImagesFV::Duplicate ()  const
+{
+  return new GrayScaleImagesFV (*this);
+}
 
 
 

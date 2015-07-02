@@ -78,7 +78,7 @@ FeatureVector::~FeatureVector ()
 
 
 
-kkint32 FeatureVector::MemoryConsumedEstimated ()  const
+kkint32  FeatureVector::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (FeatureVector)
     +  exampleFileName.MemoryConsumedEstimated ();
@@ -88,6 +88,14 @@ kkint32 FeatureVector::MemoryConsumedEstimated ()  const
   
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
+
+
+
+FeatureVectorPtr  FeatureVector::Duplicate ()  const
+{
+  return new FeatureVector (*this);
+}
+
 
 
 
@@ -381,13 +389,14 @@ FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
   numOfFeatures (_examples.numOfFeatures),
   version       (_examples.version)
 {
-  FeatureVectorList::const_iterator  idx;
-  for  (idx = _examples.begin ();  idx != _examples.end ();  ++idx)
+  MLClassIndexListPtr  classIdx = new MLClassIndexList (_mlClasses);
+  for  (auto idx:  _examples)
   {
-    FeatureVectorPtr  example = *idx;
-    if  (_mlClasses.PtrToIdx (example->MLClass ()) >= 0)
-      AddSingleExample (example);
+    if  (classIdx->GetClassIndex (idx->MLClass ()) >= 0)
+      PushOnBack (idx);
   }
+  delete  classIdx;
+  classIdx = NULL;
 }
 
 
@@ -805,7 +814,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForAGivenClass (MLClass
 
 FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForClassList (MLClassListPtr  classes)
 {
-  FeatureVectorListPtr  subSetForClassList = this->ManufactureEmptyList (false);
+  FeatureVectorListPtr  subSetForClassList =  ManufactureEmptyList (false);
   for  (auto idx: *classes)
   {
     FeatureVectorListPtr  examplesForClass = ExtractExamplesForAGivenClass (idx);

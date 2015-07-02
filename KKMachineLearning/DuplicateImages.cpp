@@ -286,7 +286,7 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
 
   DuplicateImageList::iterator  dIDX = dupExamples->begin ();
 
-  for  (dIDX = dupExamples->begin ();   dIDX != dupExamples->end ();  dIDX++)
+  for  (dIDX = dupExamples->begin ();   dIDX != dupExamples->end ();  ++dIDX)
   {
     DuplicateImagePtr dupSet = *dIDX;
 
@@ -302,7 +302,7 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
     
     FeatureVectorList::iterator iIDX = examplesInSet->begin ();
 
-    for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  iIDX++)
+    for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  ++iIDX)
     {
       FeatureVectorPtr example = *iIDX;
 
@@ -329,20 +329,17 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
   o << "Number of Duplicate Groups [" << dupExamples->QueueSize () << "]" << endl;
   kkint32  groupNum = 0;
 
-  for  (DuplicateImageList::iterator  idx = dupExamples->begin ();  idx != dupExamples->end ();  idx++)
+  //for  (DuplicateImageList::iterator  idx = dupExamples->begin ();  idx != dupExamples->end ();  idx++)
+  for  (auto  dupExampleSet:  *dupExamples)
   {
-    DuplicateImagePtr dupExampleSet = *idx;
-
     const FeatureVectorListPtr  dupList = dupExampleSet->DuplicatedImages ();
 
     o << "Group[" << groupNum << "] Contains [" << dupList->QueueSize () << "] Duplicates." << endl;
 
     kkint32  numOnLine = 0;
-    FeatureVectorList::const_iterator  fvIDX;
-    for  (fvIDX = dupList->begin ();  fvIDX != dupList->end ();  ++fvIDX)
+    //FeatureVectorList::const_iterator  fvIDX;
+    for  (auto fvIDX: *dupList)   //  = dupList->begin ();  fvIDX != dupList->end ();  ++fvIDX)
     {
-      FeatureVectorPtr  i = *fvIDX;
-
       if  (numOnLine > 8)
       {
         o << endl;
@@ -351,7 +348,7 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
 
       if  (numOnLine > 0)
         o << "\t";
-      o << i->ExampleFileName () << "[" << i->MLClassName () << "]";
+      o << fvIDX->ExampleFileName () << "[" << fvIDX->MLClassName () << "]";
 
       numOnLine++;
     }

@@ -80,6 +80,7 @@ namespace KKMLL
 
     virtual  ~GrayScaleImagesFV ();
 
+    virtual  GrayScaleImagesFVPtr  Duplicate ()  const;
 
     // Access Methods.
     void  CentroidCol      (float    _centroidCol)      {centroidCol      = _centroidCol;}

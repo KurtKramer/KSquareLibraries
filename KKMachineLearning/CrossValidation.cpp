@@ -1,15 +1,11 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <iomanip>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
- 
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
@@ -18,10 +14,11 @@ using namespace std;
 #include "RunLog.h"
 using namespace KKB;
 
-#include "CrossValidation.h"
 
+#include "CrossValidation.h"
 #include "Classifier2.h"
 #include "ConfusionMatrix2.h"
+#include "FactoryFVProducer.h"
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
@@ -49,9 +46,10 @@ CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
    fileDesc                     (_fileDesc),
    foldAccuracies               (),
    foldCounts                   (),
+   fvProducerFactory            (NULL),
    confusionMatrix              (NULL),
    cmByNumOfConflicts           (NULL),
-   examples                     (new FeatureVectorList (*_mlClasses, *_examples)),
+   examples                     (NULL),
    mlClasses                    (_mlClasses),
    imagesPerClass               (0),
    maxNumOfConflicts            (0),
@@ -85,6 +83,8 @@ CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
    weOwnConfusionMatrix         (false)
 
 {
+  fvProducerFactory = config->FvFactoryProducer (_log);
+  examples = _examples->ExtractExamplesForClassList (mlClasses);
   if  (config)
     imagesPerClass = config->ExamplesPerClass ();
   else
@@ -203,9 +203,8 @@ void  CrossValidation::RunCrossValidation (RunLog&  log)
 
     log.Level (20) << "Fold [" << (foldNum + 1) << "]  of  [" << numOfFolds << "]" << endl;
 
-    FeatureVectorListPtr  trainingExamples = new FeatureVectorList (fileDesc, true);
-
-    FeatureVectorListPtr  testImages     = new FeatureVectorList (fileDesc, true);
+    FeatureVectorListPtr  trainingExamples = examples->ManufactureEmptyList (true);
+    FeatureVectorListPtr  testImages       = examples->ManufactureEmptyList (true);
 
     log.Level (30) << "Fold Num["        << foldNum        << "]   "
                    << "FirstTestImage["  << firstInGroup   << "]   "
@@ -214,8 +213,7 @@ void  CrossValidation::RunCrossValidation (RunLog&  log)
 
     for  (kkint32  x = 0; (x < imageCount)  &&  (!cancelFlag); x++)
     {
-      FeatureVectorPtr  newImage = new FeatureVector (*(examples->IdxToPtr (x)));
-
+      FeatureVectorPtr  newImage = examples->IdxToPtr (x)->Duplicate ();
       if  ((x >= firstInGroup)  &&  (x <= lastInGroup))
       {
         testImages->PushOnBack (newImage);
@@ -234,8 +232,9 @@ void  CrossValidation::RunCrossValidation (RunLog&  log)
     
     CrossValidate (testImages, trainingExamples, foldNum, NULL, log);
 
-    delete  trainingExamples;
-    delete  testImages;
+    delete  trainingExamples;  trainingExamples = NULL;
+    delete  testImages;        testImages       = NULL;
+
     firstInGroup = firstInGroup + numImagesPerFold;
   }
 
@@ -268,7 +267,7 @@ void  CrossValidation::RunValidationOnly (FeatureVectorListPtr validationData,
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
   FeatureVectorListPtr  trainingExamples = examples->DuplicateListAndContents ();
-  FeatureVectorListPtr  testImages     = validationData->DuplicateListAndContents ();
+  FeatureVectorListPtr  testImages       = validationData->DuplicateListAndContents ();
 
   CrossValidate (testImages, trainingExamples, 0, classedCorrectly, log);
 
@@ -386,7 +385,6 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
   double  endClassificationTime = osGetSystemTimeUsed ();
   double  testTimeThisFold = (endClassificationTime - startClassificationTime);
   testTime += testTimeThisFold;
-
 
   // lets update statistics
   foldCount = 0;
