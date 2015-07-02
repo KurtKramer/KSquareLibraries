@@ -1261,7 +1261,7 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
   for  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
     probabilities[classIDX] = probabilities[classIDX] / totProbability;
 
-  GreaterVotes (svmParam->SelectionMethod () == SVM_SelectionMethod::SelectByProbability,
+  GreaterVotes (svmParam->SelectionMethod () == SVM_SelectionMethod::Probability,
                 numOfClasses,
                 votes,
                 numOfWinners,
@@ -1872,7 +1872,7 @@ void SVMModel::CalculatePredictXSpaceNeeded (RunLog&  log)
 
   switch (svmParam->EncodingMethod())
   {
-  case SVM_EncodingMethod::BinaryEncoding:
+  case SVM_EncodingMethod::Binary:
     for  (z = 0;  z < numOfFeaturesSelected;  z++)
     {
       if  ((type_table[(*selectedFeatures)[z]] == AttributeType::Nominal)  ||
@@ -1884,7 +1884,7 @@ void SVMModel::CalculatePredictXSpaceNeeded (RunLog&  log)
     }
     break;
 
-  case SVM_EncodingMethod::ScaledEncoding:
+  case SVM_EncodingMethod::Scaled:
   case SVM_EncodingMethod::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );

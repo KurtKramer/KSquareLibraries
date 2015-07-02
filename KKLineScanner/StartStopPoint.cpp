@@ -26,24 +26,24 @@ using  namespace  KKLSC;
 
 
 
-KKB::KKStr                      StartStopPoint::startStopPointStrs [] = {KKStr ("NULL"),  KKStr ("StartPoint"),  KKStr ("Start"),  KKStr ("StopPoint"),  KKStr ("Stop"),  KKStr ("Invalid"), ""};
-StartStopPoint::StartStopType   StartStopPoint::startStopPointTypes[] = {sspNULL,         sspStartPoint,         sspStartPoint,    sspStopPoint,         sspStopPoint,    sspInvalid};
+KKB::KKStr                      StartStopPoint::startStopPointStrs [] = {"NULL",               "StartPoint",               "Start",                   "StopPoint",               "Stop",                    "Invalid",                 ""};
+StartStopPoint::StartStopType   StartStopPoint::startStopPointTypes[] = {StartStopType::Null,  StartStopType::StartPoint,  StartStopType::StartPoint, StartStopType::StopPoint,  StartStopType::StopPoint,  StartStopType::Invalid};
 
 const KKStr&  StartStopPoint::StartStopTypeToStr (StartStopType  t)
 {
-  if  (t <= sspNULL)     return (startStopPointStrs[sspNULL]);
-  if  (t >= sspInvalid)  return (startStopPointStrs[sspInvalid]);
-  return  (startStopPointStrs[t]);
+  if  (t <= StartStopType::Null)     return (startStopPointStrs[(int)StartStopType::Null]);
+  if  (t >= StartStopType::Invalid)  return (startStopPointStrs[(int)StartStopType::Invalid]);
+  return  (startStopPointStrs[(int)t]);
 }
 
 
 
 StartStopPoint::StartStopType  StartStopPoint::StartStopTypeFromStr (const KKStr&   s)
 {
-  for  (kkint32 x = 0;  x < sspInvalid;  ++x)
+  for  (int x = (int)StartStopType::Null;  x < (int)StartStopType::Invalid;  ++x)
     if  (s.EqualIgnoreCase (startStopPointStrs[x]))
       return  (StartStopType)x;
-  return  sspNULL;
+  return  StartStopType::Null;
 }
 
 
@@ -67,7 +67,7 @@ StartStopPoint::StartStopPoint (const StartStopPoint&  entry):
 
    StartStopPoint::StartStopPoint (const KKStr&  s):
    scanLineNum (-1),
-   type        (sspInvalid)
+   type        (StartStopType::Invalid)
 {
   ParseTabDelStr (s);
 }
@@ -400,7 +400,7 @@ StartStopRegionList::StartStopRegionList (const StartStopPointList&  startStopPo
   else
   {
     kkint32  prevLineNum = 0;
-    StartStopPoint::StartStopType  prevType = StartStopPoint::sspStartPoint;
+    StartStopPoint::StartStopType  prevType = StartStopPoint::StartStopType::StartPoint;
 
     StartStopPointList::const_iterator  idx = startStopPoints.begin ();
     while  (idx != startStopPoints.end ())
@@ -408,9 +408,9 @@ StartStopRegionList::StartStopRegionList (const StartStopPointList&  startStopPo
       kkint32  nextLineNum = (*idx)->ScanLineNum ();
       StartStopPoint::StartStopType  nextType = (*idx)->Type ();
 
-      if  (prevType == StartStopPoint::sspStartPoint)
+      if  (prevType == StartStopPoint::StartStopType::StartPoint)
       {
-        if  (nextType == StartStopPoint::sspStopPoint)
+        if  (nextType == StartStopPoint::StartStopType::StopPoint)
         {
           PushOnBack (new StartStopRegion (prevLineNum, nextLineNum));
           prevType = nextType;
@@ -424,7 +424,7 @@ StartStopRegionList::StartStopRegionList (const StartStopPointList&  startStopPo
       else
       {
         // previous point was StopPoint.
-        if  (nextType == StartStopPoint::sspStopPoint)
+        if  (nextType == StartStopPoint::StartStopType::StopPoint)
         {
           // We have two stop points in a row;  will ignore
         }
@@ -439,7 +439,7 @@ StartStopRegionList::StartStopRegionList (const StartStopPointList&  startStopPo
       ++idx;
     }
 
-    if  (prevType == StartStopPoint::sspStartPoint)
+    if  (prevType == StartStopPoint::StartStopType::StartPoint)
     {
       PushOnBack (new StartStopRegion (prevLineNum, int32_max));
     }

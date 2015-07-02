@@ -178,7 +178,7 @@ ModelParamOldSVMPtr   ModelOldSVM::Param () const
     throw KKException (errMsg);
   }
 
-  if  (param->ModelParamType () != ModelParam::ModelParamTypes::mptOldSVM)
+  if  (param->ModelParamType () != ModelParam::ModelParamTypes::OldSVM)
   {
     KKStr errMsg = "ModelOldSVM::Param   ***ERROR***  param variable of wrong type.";
     cerr << endl << errMsg << endl << endl;
@@ -299,7 +299,7 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
   }
 
-  if  (svmModel->SVMParameters ()->SelectionMethod () == SVM_SelectionMethod::SelectByVoting)
+  if  (svmModel->SVMParameters ()->SelectionMethod () == SVM_SelectionMethod::Voting)
     results->SortByVotes (true);
   else
     results->SortByProbability (true);

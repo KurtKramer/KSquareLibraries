@@ -39,7 +39,7 @@ namespace  KKB
   public:
     enum  class  OperationType
     {
-      moNULL,
+      Null,
       Binarize,
       BmiFiltering,
       ConvexHull,
@@ -53,15 +53,15 @@ namespace  KKB
     OperationType    OperationTypeFromStr (const KKB::KKStr&  _operationStr);
 
 
-    typedef  enum
+    enum class  StructureType: int
     {
-       stNULL,
+       Null,
        stCross,
        stSquare
-    }  
-      StructureType;
+    };
 
-    typedef  enum  
+    
+    enum class  MaskTypes: int
     {
       CROSS3   = 0,
       CROSS5   = 1,
@@ -70,7 +70,7 @@ namespace  KKB
       SQUARE7  = 4,
       SQUARE9  = 5,
       SQUARE11 = 6
-    }  MaskTypes;
+    };
 
 
     MorphOp ();
@@ -81,6 +81,9 @@ namespace  KKB
 
 
     virtual  RasterPtr  PerformOperation (Raster const* _image) = 0;
+
+    static  kkint32        Biases     (MaskTypes  mt);
+    static  StructureType  MaskShapes (MaskTypes  mt);
 
   protected:
 
@@ -118,8 +121,8 @@ namespace  KKB
     kkint32          srcHeight;
     kkint32          srcWidth;
 
-    static  kkint32  biases[];
-    static  kkint32  maskShapes[];
+    static  kkint32        biases[];
+    static  StructureType  maskShapes[];
 
   private:
   };  /* MorphOp */

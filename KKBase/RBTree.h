@@ -27,7 +27,7 @@
 
 namespace  KKB
 {
-  typedef  enum  {Red, Black}  RBcolor;
+  enum class  RBcolor {Red, Black};
 
   template <class Entry>
   class  RBnode
@@ -37,11 +37,11 @@ namespace  KKB
     typedef  RBnode*  RBnodePtr;
 
   public:
-    RBnode (RBnodePtr   _parent,
-            RBnodePtr   _left,
-            RBnodePtr   _right,
-            RBcolor     _color,
-            EntryPtr    _entry
+    RBnode (RBnodePtr  _parent,
+            RBnodePtr  _left,
+            RBnodePtr  _right,
+            RBcolor    _color,
+            EntryPtr   _entry
            );
 
     RBcolor    Color  ()  {return  color;}
@@ -307,7 +307,7 @@ KKB::RBTree<Entry,CompareNodes,KeyType>::RBTree (CompareNodes&  _comparator,
    numOfIterators(0),
    iterators     (NULL)
 {
-  nil = new RBnode<Entry> (NULL, NULL, NULL, Black, NULL);
+  nil = new RBnode<Entry> (NULL, NULL, NULL, RBcolor::Black, NULL);
   root    = nil;
   curNode = nil;
 }
@@ -795,7 +795,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Insert (EntryPtr  
 
   if  (root == nil)
   {
-    newNode = new RBnode<Entry> (nil, nil, nil, Red, _entry);
+    newNode = new RBnode<Entry> (nil, nil, nil, RBcolor::Red, _entry);
     root = newNode;
   }
   else
@@ -823,7 +823,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::Insert (EntryPtr  
       }
     }
 
-    newNode = new RBnode<Entry> (last, nil, nil, Red, _entry);
+    newNode = new RBnode<Entry> (last, nil, nil, RBcolor::Red, _entry);
 
     if  (lastBranch < 0)
     {
@@ -1015,7 +1015,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::LeftRotate (NodePt
 
   NodePtr  y = x->Right ();  // Set Y.
 
-  x->Right (y->Left ());     // Turn y's left Sub-Tree into x's Right subtree
+  x->Right (y->Left ());     // Turn y's left Sub-Tree into x's Right sub-tree
 
   if  (y->Left () != nil)
      y->Left ()->Parent (x);
@@ -1076,7 +1076,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::RightRotate (NodeP
 
   NodePtr  y = x->Left ();   // Set Y.
 
-  x->Left (y->Right ());     // Turn y's left Sub-Tree into x's Right subtree
+  x->Left (y->Right ());     // Turn y's left Sub-Tree into x's Right sub-tree
 
   if  (y->Right () != nil)
      y->Right ()->Parent (x);
@@ -1116,20 +1116,20 @@ KKB::RBnode<Entry>*    KKB::RBTree<Entry,CompareNodes,KeyType>::RBInsert (EntryP
 
   NodePtr  y = NULL;
 
-  x->Color (Red);
+  x->Color (RBcolor::Red);
 
-  while  ((x != root)  &&  (x->Parent ()->Color () == Red))
+  while  ((x != root)  &&  (x->Parent ()->Color () == RBcolor::Red))
   {
     if  (x->Parent () == x->Parent ()->Parent ()->Left ())
     {
       y = x->Parent ()->Parent ()->Right ();
 
-      if  (y->Color () == Red)
+      if  (y->Color () == RBcolor::Red)
       {
-        x->Parent ()->Color (Black);              // Case 1
-        y->Color (Black);                         // Case 1
-        x->Parent ()->Parent ()->Color (Red);     // Case 1
-        x = x->Parent ()->Parent ();              // Case 1
+        x->Parent ()->Color (RBcolor::Black);          // Case 1
+        y->Color (RBcolor::Black);                     // Case 1
+        x->Parent ()->Parent ()->Color (RBcolor::Red); // Case 1
+        x = x->Parent ()->Parent ();                   // Case 1
       }
 
       else
@@ -1140,9 +1140,9 @@ KKB::RBnode<Entry>*    KKB::RBTree<Entry,CompareNodes,KeyType>::RBInsert (EntryP
           LeftRotate (x);                         // Case 2
         }
 
-        x->Parent ()->Color (Black);              // Case 3
-        x->Parent ()->Parent ()->Color (Red);     // Case 3
-        RightRotate (x->Parent ()->Parent ());    // Case 3
+        x->Parent ()->Color (RBcolor::Black);          // Case 3
+        x->Parent ()->Parent ()->Color (RBcolor::Red); // Case 3
+        RightRotate (x->Parent ()->Parent ());         // Case 3
       }
     }
 
@@ -1150,11 +1150,11 @@ KKB::RBnode<Entry>*    KKB::RBTree<Entry,CompareNodes,KeyType>::RBInsert (EntryP
     {
       y = x->Parent ()->Parent ()->Left ();
 
-      if  (y->Color () == Red)
+      if  (y->Color () == RBcolor::Red)
       {
-        x->Parent ()->Color (Black);
-        y->Color (Black);
-        x->Parent ()->Parent ()->Color (Red);
+        x->Parent ()->Color (RBcolor::Black);
+        y->Color (RBcolor::Black);
+        x->Parent ()->Parent ()->Color (RBcolor::Red);
         x = x->Parent ()->Parent ();
       }
 
@@ -1166,15 +1166,15 @@ KKB::RBnode<Entry>*    KKB::RBTree<Entry,CompareNodes,KeyType>::RBInsert (EntryP
           RightRotate (x);
         }
 
-        x->Parent ()->Color (Black);
-        x->Parent ()->Parent ()->Color (Red);
+        x->Parent ()->Color (RBcolor::Black);
+        x->Parent ()->Parent ()->Color (RBcolor::Red);
         LeftRotate (x->Parent ()->Parent ());
       }
     }
   }
 
 
-  root->Color (Black);
+  root->Color (RBcolor::Black);
   return  newNode;
 }  /* RBInsert */
 
@@ -1543,7 +1543,7 @@ kkint32  KKB::RBTree<Entry,CompareNodes,KeyType>::ValidateSubTree (NodePtr      
     std::cerr << std::endl;
     std::cerr << "*** ERROR *** Node[" << subTree->Data ()->ToString () 
                            << "]  Child[" << linkDescription << "]"
-                           << " not Pointing yo Its Parent[" 
+                           << " not Pointing to Its Parent[" 
                            << theParent->Data ()->ToString () 
                            << "]." 
                            << std::endl;

@@ -98,7 +98,7 @@ FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
     srcFeatureNums  [x] = srcFeatureNum;
     destFeatureNums [x] = xSpaceNeededPerExample;
     cardinalityDest [x] = 1;
-    destWhatToDo    [x] = FeAsIs;
+    destWhatToDo    [x] = FeWhatToDo::FeAsIs;
 
     const Attribute&  attribute = fileDesc->GetAAttribute (srcFeatureNum);
     AttributeType  attributeType = attribute.Type ();
@@ -106,10 +106,10 @@ FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
 
     switch (encodingMethod)
     {
-      case SVM_EncodingMethod::BinaryEncoding:
+      case SVM_EncodingMethod::Binary:
         if  ((attributeType == AttributeType::Nominal)  ||  (attributeType == AttributeType::Symbolic))
         {
-          destWhatToDo    [x] = FeBinary;
+          destWhatToDo    [x] = FeWhatToDo::FeBinary;
           cardinalityDest [x] = cardinality;
           xSpaceNeededPerExample += cardinalityDest[x];
           numEncodedFeatures   += cardinalityDest[x];
@@ -123,21 +123,21 @@ FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
         {
           xSpaceNeededPerExample++;
           numEncodedFeatures++;
-          destWhatToDo [x] = FeAsIs;
+          destWhatToDo [x] = FeWhatToDo::FeAsIs;
           destFieldNames.push_back (attribute.Name ());
         }
         break;
 
 
-      case  SVM_EncodingMethod::ScaledEncoding:
+      case  SVM_EncodingMethod::Scaled:
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
         if  ((attributeType == AttributeType::Nominal)  ||
              (attributeType == AttributeType::Symbolic)
             )
-          destWhatToDo [x] = FeScale;
+          destWhatToDo [x] = FeWhatToDo::FeScale;
         else
-          destWhatToDo [x] = FeAsIs;
+          destWhatToDo [x] = FeWhatToDo::FeAsIs;
 
         destFieldNames.push_back (attribute.Name ());
         break;
@@ -147,7 +147,7 @@ FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
       default:
         xSpaceNeededPerExample++;
         numEncodedFeatures++;
-        destWhatToDo [x] = FeAsIs;
+        destWhatToDo [x] = FeWhatToDo::FeAsIs;
         destFieldNames.push_back (attribute.Name ());
         break;
     }
@@ -237,7 +237,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
     switch (destWhatToDo[x])
     {
-    case  FeAsIs:
+    case  FeWhatToDo::FeAsIs:
       {
         newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
@@ -250,7 +250,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
       }
       break;
 
-    case  FeBinary:
+    case  FeWhatToDo::FeBinary:
       {
         for  (kkint32 z = 0;  z < cardinalityDest[x];  z++)
         {
@@ -271,7 +271,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
       break;
 
-    case  FeScale:
+    case  FeWhatToDo::FeScale:
       {
         newFileDesc->AddAAttribute (fileDesc->FieldName (x), AttributeType::Numeric, alreadyExist);
         if  (o)
@@ -330,13 +330,13 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
 
     switch (destWhatToDo[x])
     {
-    case  FeAsIs:
+    case  FeWhatToDo::FeAsIs:
       {
         encodedExample->AddFeatureData (y, featureVal);
       }
       break;
 
-    case  FeBinary:
+    case  FeWhatToDo::FeBinary:
       {
         for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
@@ -348,7 +348,7 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
 
       break;
 
-    case  FeScale:
+    case  FeWhatToDo::FeScale:
       {
         encodedExample->AddFeatureData (y, (featureVal / (float)cardinalityDest[x]));
       }
@@ -417,7 +417,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
 
     switch (destWhatToDo[x])
     {
-    case  FeAsIs:
+    case  FeWhatToDo::FeAsIs:
       {
         if  (featureVal != 0.0)
         {
@@ -428,7 +428,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
       }
       break;
 
-    case  FeBinary:
+    case  FeWhatToDo::FeBinary:
       {
         for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
@@ -445,7 +445,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
 
       break;
 
-    case  FeScale:
+    case  FeWhatToDo::FeScale:
       {
         if  (featureVal != (float)0.0)
         {
@@ -481,12 +481,12 @@ kkint32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPt
   
       switch (destWhatToDo[x])
       {
-      case  FeAsIs:
+      case  FeWhatToDo::FeAsIs:
         if  (featureVal != 0.0)
           xSpaceNodesNeeded++;
         break;
 
-      case  FeBinary:
+      case  FeWhatToDo::FeBinary:
         for  (kkint32 z = 0; z < cardinalityDest[x]; z++)
         {
           float  bVal = ((kkint32)featureVal == z);
@@ -496,7 +496,7 @@ kkint32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPt
          }
          break;
 
-      case  FeScale:
+      case  FeWhatToDo::FeScale:
          if  (featureVal != (float)0.0)
            xSpaceNodesNeeded++;
          break;

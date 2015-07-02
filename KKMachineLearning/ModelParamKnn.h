@@ -23,7 +23,7 @@ namespace KKMLL
     virtual
     ModelParamKnnPtr  Duplicate ()  const;
 
-    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptKNN;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::KNN;}
 
     /*! 
      @brief Creates a Command Line String that represents these parameters.

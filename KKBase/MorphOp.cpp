@@ -31,14 +31,43 @@ kkint32  MorphOp::biases[] = {1,  // CROSS3
                              };
 
 
-kkint32  MorphOp::maskShapes[] = {stCross,   // CROSS3 
-                                  stCross,   // CROSS5
-                                  stSquare,  // SQUARE3
-                                  stSquare,  // SQUARE5
-                                  stSquare,  // SQUARE7
-                                  stSquare,  // SQUARE9
-                                  stSquare   // SQUARE11
-                                 };
+StructureType  MorphOp::maskShapes[] = {StructureType::stCross,   // CROSS3 
+                                        StructureType::stCross,   // CROSS5
+                                        StructureType::stSquare,  // SQUARE3
+                                        StructureType::stSquare,  // SQUARE5
+                                        StructureType::stSquare,  // SQUARE7
+                                        StructureType::stSquare,  // SQUARE9
+                                        StructureType::stSquare   // SQUARE11
+                                       };
+
+
+kkint32   MorphOp::Biases (MaskTypes  mt)
+{
+  if  (mt < MaskTypes::CROSS3)
+    mt = MaskTypes::CROSS3;
+
+  else if  (mt > MaskTypes::SQUARE9)
+    mt = MaskTypes::SQUARE9;
+
+  return  biases[(int)mt];
+}
+
+
+
+StructureType  MorphOp::MaskShapes (MaskTypes  mt)
+{
+  if  (mt < MaskTypes::CROSS3)
+    mt = MaskTypes::CROSS3;
+
+  else if  (mt > MaskTypes::SQUARE9)
+    mt = MaskTypes::SQUARE9;
+
+  return  maskShapes[(int)mt];
+}
+
+
+
+
 
 
 MorphOp::MorphOp ():
@@ -112,7 +141,7 @@ MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _ope
     return  OperationType::MaskExclude;
 
   else
-    return  OperationType::moNULL;
+    return  OperationType::Null;
 }
 
 

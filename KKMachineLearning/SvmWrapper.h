@@ -5,7 +5,15 @@
 
 namespace KKMLL 
 {
-  typedef enum {NORMAL, BAGGING, BOOSTING, SUBSPACE, SAMPLESV} Learn_Type;
+  //typedef enum {NORMAL, BAGGING, BOOSTING, SUBSPACE, SAMPLESV} LearnType;
+  enum class  LearnType
+  {
+    NORMAL, 
+    BAGGING,
+    BOOSTING,
+    SUBSPACE,
+    SAMPLESV
+  };
 
   typedef  std::vector<kkint32>  Ivector;
   typedef  std::vector<float>    Fvector;

@@ -61,7 +61,12 @@ namespace KKB
   typedef  MorphOp::StructureType  StructureType;
 
 
-  typedef  enum  {RedChannel, GreenChannel, BlueChannel}  ColorChannels;
+  enum class  ColorChannels
+  {
+    Red,
+    Green,
+    Blue
+  };
 
 
   class  RasterList;

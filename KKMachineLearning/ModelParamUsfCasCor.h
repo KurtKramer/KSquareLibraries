@@ -31,7 +31,7 @@ namespace KKMLL
   
     virtual ModelParamUsfCasCorPtr  Duplicate () const;
 
-    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptUsfCasCor;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::UsfCasCor;}
 
 
     // Member access methods

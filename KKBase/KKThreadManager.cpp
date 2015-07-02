@@ -118,21 +118,21 @@ void  KKThreadManager::ShutdownProcessing (kkint32  miliSecsToWait)
 
       switch  (thread->Status ())
       {
-      case  KKThread::ThreadStatus::tsNULL:
+      case  KKThread::ThreadStatus::Null:
     	break;
 
-      case  KKThread::ThreadStatus::tsNotStarted:
-      case  KKThread::ThreadStatus::tsStopped:
+      case  KKThread::ThreadStatus::NotStarted:
+      case  KKThread::ThreadStatus::Stopped:
         // Nothing to do;  this thread is not running,
         ++numThreadsStopped;
         break;
 
-      case  KKThread::ThreadStatus::tsStopping:
+      case  KKThread::ThreadStatus::Stopping:
         allTreadsAreShutdown = false;
         ++numThreadsRunning;
         break;
 
-      case  KKThread::ThreadStatus::tsRunning:
+      case  KKThread::ThreadStatus::Running:
         {
           allTreadsAreShutdown = false;
           if  (!(thread->ShutdownFlag ()))
@@ -147,7 +147,7 @@ void  KKThreadManager::ShutdownProcessing (kkint32  miliSecsToWait)
         }
         break;
 
-      case  KKThread::ThreadStatus::tsStarting:
+      case  KKThread::ThreadStatus::Starting:
         // Have to let it finish starting before we can flag it to shutdown.
         ++numThreadsRunning;
         break;
@@ -222,12 +222,12 @@ void  KKThreadManager::StartThreads (bool&  successful)
         break;
       }
 
-      if  (thread->Status () == KKThread::ThreadStatus::tsNotStarted)
+      if  (thread->Status () == KKThread::ThreadStatus::NotStarted)
       {
         if  (thread->OkToStart ())
         {
           bool  successfulStart = false;
-          thread->Start (ThreadPriority::tpNormal, successfulStart);
+          thread->Start (ThreadPriority::Normal, successfulStart);
           if  (!successfulStart)
           {
             allThreadsStarted = false;
@@ -287,7 +287,7 @@ bool  KKThreadManager::AllThreadsTerminated ()
     for  (idx = threads->begin ();  idx != threads->end ();  ++idx)
     {
       KKThreadPtr  t = *idx;
-      if  (t->Status () != KKThread::ThreadStatus::tsStopped)
+      if  (t->Status () != KKThread::ThreadStatus::Stopped)
       {
         allThreadsTerminated = false;
         break;

@@ -143,31 +143,31 @@ void  Raster::PrintOutListOfAllocatedrasterInstances ()
 
 
 
-typedef  enum  
-{
-  Cross,
-  Square
-}  MaskShapes;
+//typedef  enum  
+//{
+//  Cross,
+//  Square
+//}  MaskShapes;
 
 
-kkint32  biases[] = {1,  // CROSS3 
-                     2,  // CROSS5
-                     1,  // SQUARE3
-                     2,  // SQUARE5
-                     3,  // SQUARE7
-                     4,  // SQUARE9
-                     5   // SQUARE11
-                    };
+//kkint32  biases[] = {1,  // CROSS3 
+//                     2,  // CROSS5
+//                     1,  // SQUARE3
+//                     2,  // SQUARE5
+//                     3,  // SQUARE7
+//                     4,  // SQUARE9
+//                     5   // SQUARE11
+//                    };
 
 
-kkint32  maskShapes[] = {Cross,   // CROSS3 
-                         Cross,   // CROSS5
-                         Square,  // SQUARE3
-                         Square,  // SQUARE5
-                         Square,  // SQUARE7
-                         Square,  // SQUARE9
-                         Square   // SQUARE11
-                        };
+//kkint32  maskShapes[] = {Cross,   // CROSS3 
+//                         Cross,   // CROSS5
+//                         Square,  // SQUARE3
+//                         Square,  // SQUARE5
+//                         Square,  // SQUARE7
+//                         Square,  // SQUARE9
+//                         Square   // SQUARE11
+//                        };
 
 
 
@@ -553,12 +553,12 @@ Raster::Raster (const Raster& _raster,
   foregroundPixelValue (_raster.foregroundPixelValue),
   fourierMag           (NULL),
   fourierMagArea       (NULL),
-  height               (biases[_mask] * 2 + 1),
+  height               (MorphOp::Biases (_mask) * 2 + 1),
   maxPixVal            (0),
   title                (),
   totPixels            (0),
   weOwnRasterData      (true),
-  width                (biases[_mask] * 2 + 1),
+  width                (MorphOp::Biases (_mask) * 2 + 1),
 
   redArea   (NULL),
   greenArea (NULL),
@@ -573,8 +573,8 @@ Raster::Raster (const Raster& _raster,
 
   totPixels = height * width;
 
-  kkint32  r = _row - biases[_mask];
-  kkint32  c = _col - biases[_mask];
+  kkint32  r = _row - MorphOp::Biases (_mask);
+  kkint32  c = _col - MorphOp::Biases (_mask);
 
   green = _raster.GetSubSet (_raster.green, r, c, height, width);  
   greenArea = green[0];
@@ -773,7 +773,7 @@ Raster::Raster (kkint32       _height,
   if  ((!_redChannel)  ||  (!_greenChannel)  ||  (!_blueChannel))
   {
     KKB::KKStr errMsg;
-    errMsg << "Raster::Raster    ***ERROR***   One of the provided channels is 'NULL'.";
+    errMsg << "Raster::Raster   ***ERROR***   One of the provided channels is 'NULL'.";
     cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
     throw KKException (errMsg);
   }
@@ -839,15 +839,15 @@ kkint32  Raster::MemoryConsumedEstimated ()  const
     pixelMem = pixelMem * 3;
 
   kkint32  memoryConsumedEstimated =
-    sizeof (uchar)    * 4   +
-    sizeof (float)    * 2   +
-    sizeof (bool)     * 2   +
-    sizeof (kkint32)    * 4   +
-    sizeof (kkint32**)  * 1   +
-    sizeof (uchar*)   * 3   + 
-    sizeof (uchar**)  * 3   +
-    sizeof (float*)   * 1   +
-    sizeof (float**)  * 1   +
+    sizeof (uchar)     * 4   +
+    sizeof (float)     * 2   +
+    sizeof (bool)      * 2   +
+    sizeof (kkint32)   * 4   +
+    sizeof (kkint32**) * 1   +
+    sizeof (uchar*)    * 3   + 
+    sizeof (uchar**)   * 3   +
+    sizeof (float*)    * 1   +
+    sizeof (float**)   * 1   +
     fileName.MemoryConsumedEstimated () +
     blobIdsMem                          +
     fourierMem                          +
@@ -1332,7 +1332,7 @@ uchar  Raster::GetPixelValue (ColorChannels  channel,
     exit (-1);
   }
 
-  if  (channel == GreenChannel)
+  if  (channel == ColorChannels::Green)
     return  green [row][col];
 
   if  (!color)
@@ -1341,7 +1341,7 @@ uchar  Raster::GetPixelValue (ColorChannels  channel,
     exit (-1);
   }
 
-  if  (channel == RedChannel)
+  if  (channel == ColorChannels::Red)
     return red [row][col];
   else
     return blue[row][col];
@@ -1456,7 +1456,7 @@ void  Raster::SetPixelValue (ColorChannels  channel,
     return;
   }
 
-  if  (channel == GreenChannel)
+  if  (channel == ColorChannels::Green)
   {
     green[row][col] = pixVal;
     return;
@@ -1467,7 +1467,7 @@ void  Raster::SetPixelValue (ColorChannels  channel,
     cerr << "***ERROR*** Raster::SetPixelValue   *** ERROR ***,  Not a Color Raster."  << std::endl;
   }
 
-  if  (channel == RedChannel)
+  if  (channel == ColorChannels::Red)
     red  [row][col]  = pixVal;
   else
     blue [row][col] = pixVal;
@@ -2259,7 +2259,7 @@ void  Raster::Erosion (MaskTypes  mask)
   kkint32  r;
   kkint32  c;
 
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
 
   kkint32  maskRowStart = 0 - bias;
   kkint32  maskRowEnd   = 0 + bias;
@@ -2273,7 +2273,7 @@ void  Raster::Erosion (MaskTypes  mask)
   Raster  tempRaster (*this);
   uchar**     tempGreen = tempRaster.Green ();
   uchar*      tempRowData = NULL;
-  MaskShapes  m = (MaskShapes)maskShapes[mask];
+  StructureType  m = MorphOp::MaskShapes (mask);
 
   for  (r = 0;  r < height;  r++)
   {
@@ -2290,7 +2290,7 @@ void  Raster::Erosion (MaskTypes  mask)
         if  ((maskRowStart < 0)  || (maskRowEnd >= height)  ||  (maskColStart < 0) ||  (maskColStart >= width))
           fit = false;
 
-        else if  (m == Square)
+        else if  (m == StructureType::stSquare)
         {
           for  (maskRow = maskRowStart;  ((maskRow <= maskRowEnd)  &&  fit);  maskRow++)
           {
@@ -2519,14 +2519,14 @@ void  Raster::Erosion (RasterPtr  dest,
 
 
 void  Raster::ErosionChanged (MaskTypes  mask, 
-                              kkint32      row, 
-                              kkint32      col
+                              kkint32    row, 
+                              kkint32    col
                              )
 {
   kkint32  r;
   kkint32  c;
 
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
 
   kkint32  maskRowStart ;
   kkint32  maskRowEnd  ; 
@@ -2545,7 +2545,7 @@ void  Raster::ErosionChanged (MaskTypes  mask,
   Raster      tempRaster (*this);
   uchar**     tempGreen = tempRaster.Green ();
   uchar*      tempRowData = NULL;
-  MaskShapes  m = (MaskShapes)maskShapes[mask];
+  StructureType  m = MorphOp::MaskShapes (mask);
 
   for  (r = row- 150;  r < row+150;  r++)
   { 
@@ -2574,7 +2574,7 @@ void  Raster::ErosionChanged (MaskTypes  mask,
           fit = false;
         }
 
-        else if  (m == Square)
+        else if  (m == StructureType::stSquare)
         {
           for  (maskRow = row - 150;  ((maskRow <= row + 150)  &&  fit);  maskRow++)
           {
@@ -2632,14 +2632,14 @@ void  Raster::ErosionChanged (MaskTypes  mask,
 
 
 void  Raster::ErosionChanged1 (MaskTypes  mask, 
-                               kkint32      row, 
-                               kkint32      col
+                               kkint32    row, 
+                               kkint32    col
                               )
 {
   kkint32  r;
   kkint32  c;
 
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
 
   kkint32  maskRowStart = 0;
   kkint32  maskRowEnd   = 0; 
@@ -2661,7 +2661,7 @@ void  Raster::ErosionChanged1 (MaskTypes  mask,
 
   uchar**     tempGreen   = tempRaster.Green ();
   uchar*      tempRowData = NULL;
-  MaskShapes  m           = (MaskShapes)maskShapes[mask];
+  StructureType  m = MorphOp::MaskShapes (mask);
 
   for  (r = row- 20;  r < row+20;  r++)
   { 
@@ -2691,7 +2691,7 @@ void  Raster::ErosionChanged1 (MaskTypes  mask,
           fit = false;
         }
 
-        else if  (m == Square)
+        else if  (m == StructureType::stSquare)
         {
           for  (maskRow = row - 20;  ((maskRow <= row + 20)  &&  fit);  maskRow++)
           {
@@ -2757,7 +2757,7 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
   kkint32  r;
   kkint32  c;
 
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
 
   kkint32  maskRowStart = 0 - bias;
   kkint32  maskRowEnd   = 0 + bias;
@@ -2774,7 +2774,7 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
   uchar**     tempGreen   = tempRaster.Green ();
   uchar*      tempRowData = NULL;
 
-  MaskShapes  m = (MaskShapes)maskShapes[mask];
+  StructureType  m = MorphOp::MaskShapes (mask);
 
   for  (r = 0;  r < height;  r++)
   {
@@ -2807,7 +2807,7 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
             fit = false;
           }
 
-          else if  (m == Square)
+          else if  (m == StructureType::stSquare)
           {
             for  (maskRow = maskRowStart;  ((maskRow <= maskRowEnd)  &&  fit);  maskRow++)
             {
@@ -3128,9 +3128,9 @@ kkint32  Raster::NearestNeighborUpperLeft (kkint32 row,
 
 inline
 kkint32  Raster::NearestNeighborUpperRight (kkint32 row,
-                                          kkint32 col,
-                                          kkint32 dist
-                                         )
+                                            kkint32 col,
+                                            kkint32 dist
+                                           )
 {
   kkint32  nearestBlob = -1;
   kkint32 r, c, endCol, blobID;
@@ -4702,7 +4702,7 @@ bool  Raster::Fit (MaskTypes  mask,
                    kkint32    col
                   )  const
 {
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
   kkint32  r, c;
   kkint32  rStart = row - bias;
   kkint32  rEnd   = row + bias;
@@ -4714,7 +4714,7 @@ bool  Raster::Fit (MaskTypes  mask,
   if  (cStart  < 0)        cStart = 0;
   if  (cEnd    >= width)   cEnd = width - 1;
 
-  if  (maskShapes[mask] == Square)
+  if  (MorphOp::MaskShapes (mask) == StructureType::stSquare)
   {
     for  (r = rStart;  r <= rEnd;  r++)
     {
@@ -4760,7 +4760,7 @@ bool  Raster::IsThereANeighbor (MaskTypes  mask,
                                 kkint32    col
                                )  const
 {
-  kkint32  bias = biases[mask];
+  kkint32  bias = MorphOp::Biases (mask);
   kkint32  r, c;
   kkint32  rStart = row - bias;
   kkint32  rEnd   = row + bias;
@@ -4772,7 +4772,7 @@ bool  Raster::IsThereANeighbor (MaskTypes  mask,
   if  (cStart  < 0)        cStart = 0;
   if  (cEnd    >= width)   cEnd = width - 1;
 
-  if  (maskShapes[mask] == Square)
+  if  (MorphOp::MaskShapes (mask) == StructureType::stSquare)
   {
     for  (r = rStart;  r <= rEnd;  r++)
     {
@@ -4816,10 +4816,11 @@ uchar  Raster::Hit  (MaskTypes  mask,
                      kkint32    col
                     )  const
 {
-  if ((row                < biases[mask])   || 
-      (row + biases[mask] >= height)        ||
-      (col                < biases[mask])   || 
-      (col + biases[mask] >= width))
+  kkint32  maskBias = MorphOp::Biases (mask);
+  if ((row            <  maskBias)   || 
+      (row + maskBias >= height)        ||
+      (col            <  maskBias)   || 
+      (col + maskBias >= width))
   {
     //return 0;
   }
@@ -4828,14 +4829,14 @@ uchar  Raster::Hit  (MaskTypes  mask,
   kkint32  totPixVal = 0;
   kkint16  numOfHits = 0;
 
-  kkint32  startRow = Max (row - biases[mask], (kkint32)0);
-  kkint32  endRow   = Min (row + biases[mask], height - 1);
-  kkint32  startCol = Max (col - biases[mask], (kkint32)0);
-  kkint32  endCol   = Min (col + biases[mask], width - 1);
+  kkint32  startRow = Max (row - maskBias, (kkint32)0);
+  kkint32  endRow   = Min (row + maskBias, height - 1);
+  kkint32  startCol = Max (col - maskBias, (kkint32)0);
+  kkint32  endCol   = Min (col + maskBias, width - 1);
 
   kkint32  r, c;
 
-  if  (maskShapes[mask] == Square)
+  if  (MorphOp::MaskShapes (mask) == StructureType::stSquare)
   {
     for  (r = startRow; r <= endRow; r++)
     {
@@ -6060,9 +6061,9 @@ HistogramPtr  Raster::Histogram (ColorChannels  channel)  const
   {
     switch  (channel)
     {
-    case  RedChannel:   data = redArea;    break;
-    case  GreenChannel: data = greenArea;  break;
-    case  BlueChannel:  data = blueArea;   break;
+    case  ColorChannels::Red:   data = redArea;    break;
+    case  ColorChannels::Green: data = greenArea;  break;
+    case  ColorChannels::Blue:  data = blueArea;   break;
     }
   }
 
@@ -7279,8 +7280,8 @@ RasterPtr  Raster::HalfSize ()
       halfSize->SetPixelValue (hRow, hCol, green[row][col]);
       if  (color)
       {
-        halfSize->SetPixelValue (RedChannel,  hRow, hCol, red [row][col]);
-        halfSize->SetPixelValue (BlueChannel, hRow, hCol, blue[row][col]);
+        halfSize->SetPixelValue (ColorChannels::Red,  hRow, hCol, red [row][col]);
+        halfSize->SetPixelValue (ColorChannels::Blue, hRow, hCol, blue[row][col]);
       }
 
       col += 2;
@@ -7663,13 +7664,13 @@ RasterPtr  Raster::ExtractChannel (ColorChannels  channel)
 
   KKStr  rootName = osGetRootName (FileName ());
 
-  if  (channel == RedChannel)
+  if  (channel == ColorChannels::Red)
   {
     r->FileName (rootName + "_Red.bmp") ;
     src = RedArea ();
   }
 
-  else if  (channel == GreenChannel)
+  else if  (channel == ColorChannels::Green)
   {
     r->FileName (rootName + "_Green.bmp") ;
     src = GreenArea ();
@@ -7787,9 +7788,9 @@ RasterPtr   Raster::SegmentImage (bool  save)
   {
     gsImage = CreateGrayScale ();
 
-    RasterPtr  redPart    = ExtractChannel (RedChannel);
-    RasterPtr  greenPart  = ExtractChannel (GreenChannel);
-    RasterPtr  bluePart   = ExtractChannel (BlueChannel);
+    RasterPtr  redPart    = ExtractChannel (ColorChannels::Red);
+    RasterPtr  greenPart  = ExtractChannel (ColorChannels::Green);
+    RasterPtr  bluePart   = ExtractChannel (ColorChannels::Blue);
 
     delete  redPart;
     delete  greenPart;
@@ -9864,9 +9865,9 @@ PointListPtr  Raster::DeriveImageLength () const
   float  eigenRatio;
   float  orientationAngle;
 
-  RasterPtr  workRaster = CreateErodedImage(MorphOp::SQUARE3);
+  RasterPtr  workRaster = CreateErodedImage(MorphOp::MaskTypes::SQUARE3);
   workRaster->FillHole ();
-  workRaster->Erosion(MorphOp::SQUARE7);
+  workRaster->Erosion(MorphOp::MaskTypes::SQUARE7);
   workRaster->ConnectedComponent (1);
   workRaster->CalcOrientationAndEigerRatio (eigenRatio,
                                             orientationAngle

@@ -112,7 +112,7 @@ uchar  DateType::MonthFromStr (const KKStr&  monthStr)
 
 
 uchar  DateType::DaysInTheMonth (kkint32 year, 
-                                 uchar month
+                                 uchar   month
                                 )
 {
   if  ((month < 1)  ||  (month > 12))
@@ -130,7 +130,7 @@ uchar  DateType::DaysInTheMonth (kkint32 year,
 
 
 kkint32  DateType::DaysYTDforMonth (kkint32 year,
-                                    uchar month
+                                    uchar   month
                                    )
 {
   if  ((month < 1)  ||  (month > 12))

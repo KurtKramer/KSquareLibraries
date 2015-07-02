@@ -30,7 +30,7 @@ using namespace  KKMLL;
 
 ModelParam::ModelParam  ():
 
-  encodingMethod            (NoEncoding),
+  encodingMethod            (EncodingMethodType::NoEncoding),
   examplesPerClass          (int32_max),
   fileName                  (),
   normalizeNominalFeatures  (false),
@@ -121,22 +121,22 @@ void  ModelParam::SelectedFeatures   (FeatureNumListConst&  _selectedFeatures)
 
 KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 {
-  if  (_modelParamType == ModelParamTypes::mptNULL)
+  if  (_modelParamType == ModelParamTypes::Null)
     return "NULL";
   
-  else if  (_modelParamType == ModelParamTypes::mptDual)
+  else if  (_modelParamType == ModelParamTypes::Dual)
     return "ModelParamDual";
 
-  else if  (_modelParamType == ModelParamTypes::mptKNN)
+  else if  (_modelParamType == ModelParamTypes::KNN)
     return "ModelParamKnn";
 
-  else if  (_modelParamType == ModelParamTypes::mptOldSVM)
+  else if  (_modelParamType == ModelParamTypes::OldSVM)
     return "ModelParamOldSVM";
   
-  else if  (_modelParamType == ModelParamTypes::mptSvmBase)
+  else if  (_modelParamType == ModelParamTypes::SvmBase)
     return "ModelParamSvmBase";
 
-  else if  (_modelParamType == ModelParamTypes::mptUsfCasCor)
+  else if  (_modelParamType == ModelParamTypes::UsfCasCor)
     return  "UsfCasCor";
 
   else
@@ -148,22 +148,22 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _modelParamTypeStr)
 {
   if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamDual"))
-    return ModelParamTypes::mptDual;
+    return ModelParamTypes::Dual;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
-    return ModelParamTypes::mptOldSVM;
+    return ModelParamTypes::OldSVM;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamSvmBase"))
-    return ModelParamTypes::mptSvmBase;
+    return ModelParamTypes::SvmBase;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamKnn"))
-    return ModelParamTypes::mptKNN;
+    return ModelParamTypes::KNN;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("UsfCasCor"))
-    return ModelParamTypes::mptUsfCasCor;
+    return ModelParamTypes::UsfCasCor;
 
   else
-    return ModelParamTypes::mptNULL;
+    return ModelParamTypes::Null;
 }
 
 
@@ -374,7 +374,7 @@ KKStr   ModelParam::ToCmdLineStr () const
   if  (examplesPerClass < int32_max)
     cmdStr << "  -EPC " << examplesPerClass;
 
-  if  (encodingMethod != NoEncoding)
+  if  (encodingMethod != EncodingMethodType::NoEncoding)
     cmdStr << "  -Encode " + EncodingMethodToStr (encodingMethod);
 
   return  cmdStr;
@@ -398,7 +398,7 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
 
   switch (EncodingMethod ())
   {
-  case BinaryEncoding:
+  case EncodingMethodType::BinaryEncoding:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
@@ -411,8 +411,8 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
     }
     break;
 
-  case ScaledEncoding:
-  case NoEncoding:
+  case EncodingMethodType::ScaledEncoding:
+  case EncodingMethodType::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
     numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
@@ -427,10 +427,10 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
 
 KKStr  ModelParam::EncodingMethodToStr (EncodingMethodType  encodingMethod)
 {
-  if  (encodingMethod == BinaryEncoding)
+  if  (encodingMethod == EncodingMethodType::BinaryEncoding)
     return  "Binary";
 
-  else if  (encodingMethod == ScaledEncoding)
+  else if  (encodingMethod == EncodingMethodType::ScaledEncoding)
     return  "Scale";
 
   else
@@ -446,15 +446,15 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
   if  ((encodingMethodUpper == "BINARY")  ||  (encodingMethodUpper == "BIN"))
-     return  BinaryEncoding;
+     return  EncodingMethodType::BinaryEncoding;
 
   if  (encodingMethodUpper == "SCALE")
-     return  ScaledEncoding;
+     return  EncodingMethodType::ScaledEncoding;
 
   if  (encodingMethodUpper == "NONE")
-    return  NoEncoding;
+    return  EncodingMethodType::NoEncoding;
 
-  return  Encoding_NULL;
+  return  EncodingMethodType::Encoding_NULL;
 }  /* EncodingMethodFromStr */
 
 

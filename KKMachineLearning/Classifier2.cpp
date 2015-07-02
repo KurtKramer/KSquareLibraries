@@ -129,7 +129,7 @@ kkint32  Classifier2::MemoryConsumedEstimated ()  const
 SVM_SelectionMethod   Classifier2::SelectionMethod ()  const
 {
   if  (!trainedModelOldSVM)
-    return  SVM_SelectionMethod::SelectionMethod_NULL;
+    return  SVM_SelectionMethod::Null;
   else
     return  trainedModelOldSVM->SelectionMethod ();
 }

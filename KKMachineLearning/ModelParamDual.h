@@ -19,8 +19,14 @@ namespace KKMLL
   public:
     typedef  ModelParamDual*  ModelParamDualPtr;
 
-    typedef  enum  {pfmNULL, pfmOr, pfmAnd}  ProbFusionMethodType;
+    enum class  ProbFusionMethod
+    {
+      Null,
+      Or,
+      And
+    };
   
+
     ModelParamDual  ();
   
     ModelParamDual  (const KKStr&  _configFileName1,
@@ -34,10 +40,10 @@ namespace KKMLL
     ~ModelParamDual  ();
 
     static
-      ProbFusionMethodType  ProbFusionMethodFromStr (const KKStr& s);
+      ProbFusionMethod  ProbFusionMethodFromStr (const KKStr& s);
 
     static
-      KKStr  ProbFusionMethodToStr (ProbFusionMethodType  pfm);
+      KKStr  ProbFusionMethodToStr (ProbFusionMethod  pfm);
 
 
     const KKStr&  ConfigFileName1        () const {return configFileName1;}
@@ -45,7 +51,7 @@ namespace KKMLL
     bool          FullHierarchyMustMatch () const {return fullHierarchyMustMatch;}
     MLClassPtr    OtherClass             () const {return otherClass;}
 
-    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptDual;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::Dual;}
 
     void  OtherClass (MLClassPtr  _otherClass)  {otherClass = _otherClass;}
 
@@ -75,7 +81,7 @@ namespace KKMLL
 
   private:
     virtual
-    void   ParseCmdLinePost (RunLog&       log);  // Will get called after the entire parameter string has been processed.
+    void   ParseCmdLinePost (RunLog&  log);  // Will get called after the entire parameter string has been processed.
 
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
@@ -84,14 +90,11 @@ namespace KKMLL
                                  RunLog&       log
                                 );
  
-    KKStr                 configFileName1;
-    KKStr                 configFileName2;
-    bool                  fullHierarchyMustMatch;
-    MLClassPtr            otherClass;
-    ProbFusionMethodType  probFusionMethod;
-
-
-
+    KKStr             configFileName1;
+    KKStr             configFileName2;
+    bool              fullHierarchyMustMatch;
+    MLClassPtr        otherClass;
+    ProbFusionMethod  probFusionMethod;
   };  /* ModelParamDual */
   
 

@@ -34,7 +34,7 @@ ModelParamDual::ModelParamDual  ():
   configFileName2        (),
   fullHierarchyMustMatch (false),
   otherClass             (NULL),
-  probFusionMethod       (pfmOr)
+  probFusionMethod       (ProbFusionMethod::Or)
 {
 }
 
@@ -51,7 +51,7 @@ ModelParamDual::ModelParamDual  (const KKStr&  _configFileName1,
   configFileName2        (_configFileName2),
   fullHierarchyMustMatch (_fullHierarchyMustMatch),
   otherClass             (NULL),
-  probFusionMethod       (pfmOr)
+  probFusionMethod       (ProbFusionMethod::Or)
 {
 }
 
@@ -79,31 +79,31 @@ ModelParamDual::~ModelParamDual  ()
 }
 
 
-ModelParamDual::ProbFusionMethodType  ModelParamDual::ProbFusionMethodFromStr (const KKStr& s)
+ModelParamDual::ProbFusionMethod  ModelParamDual::ProbFusionMethodFromStr (const KKStr& s)
 {
   if  (s.EqualIgnoreCase ("And"))
-    return pfmAnd;
+    return ProbFusionMethod::And;
 
   else if  (s.EqualIgnoreCase ("Or"))
-    return pfmOr;
+    return ProbFusionMethod::Or;
 
   else
-    return pfmNULL;
+    return ProbFusionMethod::Null;
 }
 
 
-KKStr  ModelParamDual::ProbFusionMethodToStr (ProbFusionMethodType  pfm)
+KKStr  ModelParamDual::ProbFusionMethodToStr (ProbFusionMethod  pfm)
 {
-  if  ((pfm <  0)  ||  (pfm > 2))
+  if  ((pfm <   ProbFusionMethod::Null)  ||  (pfm > ProbFusionMethod::And))
     return KKStr::EmptyStr ();
 
   switch  (pfm)
   {
-    case  pfmAnd:
+  case  ProbFusionMethod::And:
       return "And";
       break;
 
-    case  pfmOr:
+    case  ProbFusionMethod::Or:
      return  "Or";
      break;
   }
@@ -156,7 +156,7 @@ void  ModelParamDual::ParseCmdLineParameter (const KKStr&  parameter,
     parameterUsed = true;
     if  (!TrainingConfiguration2::ConfigFileExists (configFileName2))
     {
-      log.Level (-1) << "ModelParamDual::ParseCmdLineParameter   ***ERROR***  Cinfiguration File2[" << configFileName2 << "]  Does not exist." << endl;
+      log.Level (-1) << "ModelParamDual::ParseCmdLineParameter   ***ERROR***  Configuration File2[" << configFileName2 << "]  Does not exist." << endl;
       ValidParam (false);
     }
   }

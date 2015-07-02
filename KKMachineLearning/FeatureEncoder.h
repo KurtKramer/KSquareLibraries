@@ -36,7 +36,8 @@ namespace KKMLL
   typedef  struct svm_node*     XSpacePtr;
 
 
-  typedef  enum  {FeAsIs, FeBinary, FeScale}  FeWhatToDo;
+  enum class  FeWhatToDo  {FeAsIs, FeBinary, FeScale};
+
   typedef  FeWhatToDo*  FeWhatToDoPtr;
 
 

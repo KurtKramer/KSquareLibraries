@@ -288,9 +288,9 @@ void  ComputeProbForVoting  (kkint32          numClasses,             /**< Numbe
                              float            A,                      /**< probability parameter */
                              vector<double>&  dist,                   /**< Distances for each binary classifier from decision boundary. */
                              double**         crossClassProbTable,    /**< Two dimensional array that is 'numClass' by 'numClass';  will receive the probabilities between classes. */
-                             kkint32*           votes,                  /**< Array 'numClasses' in length that will receive the number of Votes each class won. */
+                             kkint32*         votes,                  /**< Array 'numClasses' in length that will receive the number of Votes each class won. */
                              double*          probabilities,          /**< Array 'numClasses' in length that will receive the computed Probability for Each Class */
-                             kkint32          knownClassNum,          /**< The Class that we knoe th eexampl eto be. */
+                             kkint32          knownClassNum,          /**< The Class that we know the example to be. */
                              double           confidence,             /**< Used for calculating 'compact'  probability must exceed this.  */
                              double&          compact                 /**< 'knownClassNum'  and  'confidence'  need to be provided. */
                             )
@@ -554,22 +554,22 @@ struct SvmModel233**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
   kkint32  boosting   = param.boosting;
   kkint32  dimSelect  = param.dimSelect;
 
-  Learn_Type learnType;
+  LearnType learnType;
 
   if  ((numSVM == 1)  &&  (sample == 100))
-    learnType= NORMAL;
+    learnType= LearnType::NORMAL;
 
   else if  (dimSelect > 0)
-    learnType = SUBSPACE;
+    learnType = LearnType::SUBSPACE;
 
   else if (boosting != 0)
-    learnType=BOOSTING;
+    learnType=LearnType::BOOSTING;
 
   else if(sampleSV!=0)
-    learnType=SAMPLESV;
+    learnType=LearnType::SAMPLESV;
 
   else
-    learnType=BAGGING;
+    learnType=LearnType::BAGGING;
 
   submodel = new SvmModel233* [numSVM];
   submodel[0] = svm_train (&subprob,  &param);
@@ -583,7 +583,7 @@ struct SvmModel233**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
 
 
 void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
-                               struct SvmModel233**      subModel,
+                               struct SvmModel233**    subModel,
                                const struct svm_node*  unknownClassFeatureData, 
                                kkint32*                votes,
                                double*                 probabilities,
@@ -620,7 +620,7 @@ void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
                 knownClass              // -1 = Don't know the class otherwise the Number of the Class.
                );
 
-  GreaterVotes ((svmParam.SelectionMethod () == SVM_SelectionMethod::SelectByProbability),
+  GreaterVotes ((svmParam.SelectionMethod () == SVM_SelectionMethod::Probability),
                 NUMCLASS,
                 votes,
                 probabilities,

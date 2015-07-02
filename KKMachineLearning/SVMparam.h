@@ -23,18 +23,18 @@ namespace KKMLL
   #endif
 
 
-  enum  class SVM_MachineType 
-                 {MachineType_NULL, 
+  enum class  SVM_MachineType: int
+                 {Null, 
                   OneVsOne, 
                   OneVsAll, 
                   BinaryCombos,
                   BoostSVM
                  };
 
-  enum  class  SVM_SelectionMethod  
-                 {SelectionMethod_NULL, 
-                  SelectByVoting, 
-                  SelectByProbability
+  enum class  SVM_SelectionMethod: int
+                 {Null, 
+                  Voting,
+                  Probability
                  };
 
 
@@ -43,19 +43,19 @@ namespace KKMLL
    *BinaryEncoding   
    */
 
-  enum  class  SVM_EncodingMethod  
-                 {NoEncoding, 
-                  BinaryEncoding, 
-                  ScaledEncoding, 
-                  Encoding_NULL
+  enum  class  SVM_EncodingMethod: int
+                 {Null,
+                  NoEncoding, 
+                  Binary, 
+                  Scaled
                  };
 
 
-  enum  class  SVM_KernalType 
-                 {KT_Linear,
-                  KT_Polynomial,
-                  KT_RBF,
-                  KT_NULL
+  enum  class  SVM_KernalType: int
+                 {Null,
+                  Linear,
+                  Polynomial,
+                  RBF
                  };
 
 

@@ -361,11 +361,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 
   switch  (_modelParameters->ModelParamType ())
   {
-  case  ModelParam::ModelParamTypes::mptDual:      modelingMethod = Model::ModelTypes::mtDual;       break;
-  case  ModelParam::ModelParamTypes::mptKNN:       modelingMethod = Model::ModelTypes::mtKNN;        break;
-  case  ModelParam::ModelParamTypes::mptOldSVM:    modelingMethod = Model::ModelTypes::mtOldSVM;     break;
-  case  ModelParam::ModelParamTypes::mptSvmBase:   modelingMethod = Model::ModelTypes::mtSvmBase;    break;
-  case  ModelParam::ModelParamTypes::mptUsfCasCor: modelingMethod = Model::ModelTypes::mtUsfCasCor;  break;
+  case  ModelParam::ModelParamTypes::Dual:      modelingMethod = Model::ModelTypes::mtDual;       break;
+  case  ModelParam::ModelParamTypes::KNN:       modelingMethod = Model::ModelTypes::mtKNN;        break;
+  case  ModelParam::ModelParamTypes::OldSVM:    modelingMethod = Model::ModelTypes::mtOldSVM;     break;
+  case  ModelParam::ModelParamTypes::SvmBase:   modelingMethod = Model::ModelTypes::mtSvmBase;    break;
+  case  ModelParam::ModelParamTypes::UsfCasCor: modelingMethod = Model::ModelTypes::mtUsfCasCor;  break;
   }
 }
   
@@ -1146,7 +1146,7 @@ void  TrainingConfiguration2::C_Param (double _CCC)
 
 kkint32 TrainingConfiguration2::Number_of_rounds ()  const
 {
-  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::mptUsfCasCor))
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::UsfCasCor))
   {
     return  dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds ();
   }
@@ -1160,7 +1160,7 @@ kkint32 TrainingConfiguration2::Number_of_rounds ()  const
 
 void   TrainingConfiguration2::Number_of_rounds (kkint32 _number_of_rounds)
 {
-  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::mptUsfCasCor))
+  if  (modelParameters  &&  (modelParameters->ModelParamType () == ModelParam::ModelParamTypes::UsfCasCor))
   {
     dynamic_cast<ModelParamUsfCasCor*>(modelParameters)->Number_of_rounds (_number_of_rounds);
   }
@@ -1185,7 +1185,7 @@ SVM_MachineType  TrainingConfiguration2::MachineType ()  const
   if  (oldSVMparms)
     return oldSVMparms->MachineType ();
   else
-    return  SVM_MachineType::MachineType_NULL;
+    return  SVM_MachineType::Null;
 }  /* MachineType */
 
 
@@ -1206,7 +1206,7 @@ SVM_SelectionMethod  TrainingConfiguration2::SelectionMethod   ()  const
   if  (oldSVMparms)
     return (SVM_SelectionMethod)oldSVMparms->SelectionMethod ();
   else
-    return SVM_SelectionMethod::SelectionMethod_NULL;
+    return SVM_SelectionMethod::Null;
 }  /* SelectionMethod */
 
 
@@ -1342,7 +1342,7 @@ SVM_KernalType  TrainingConfiguration2::KernalType ()  const
   const SVMparamPtr  param = SVMparamToUse ();
   if  (param)
     return param->KernalType ();
-  return  SVM_KernalType::KT_Linear;
+  return  SVM_KernalType::Linear;
 }  /* KernalType */
 
 

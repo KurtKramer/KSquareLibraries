@@ -18,7 +18,7 @@ namespace KKB
   {
   public:
     typedef  HTMLReport*  HTMLReportPtr;
-    typedef  enum  {Left, Center, Right}  AlignmentType;
+    enum  class  AlignmentType  {Left, Center, Right};
 
     HTMLReport (KKStr          _fileName,
                 KKStr          _title,

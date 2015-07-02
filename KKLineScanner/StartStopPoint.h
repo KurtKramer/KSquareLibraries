@@ -30,7 +30,12 @@ namespace  KKLSC
   public:
     typedef  StartStopPoint*  StartStopPointPtr;
 
-    typedef  enum  {sspNULL,  sspStartPoint, sspStopPoint, sspInvalid}  StartStopType;
+    enum  class  StartStopType: int 
+                 {Null,
+                  StartPoint,
+                  StopPoint,
+                  Invalid
+                 };
     static  const KKStr&   StartStopTypeToStr   (StartStopType  t);
 
     static  StartStopType  StartStopTypeFromStr (const KKStr&   s);

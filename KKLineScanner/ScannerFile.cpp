@@ -354,16 +354,16 @@ void  ScannerFile::AddStartStopEntryToIndexFile (kkint32                        
 
 void  ScannerFile::AddStartPoint (kkint32  _scanLineNum)
 {
-  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStartPoint);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStartPoint, false);
+  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::StartStopType::StartPoint);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StartPoint, false);
 }
 
 
 
 void  ScannerFile::AddStopPoint (kkint32  _scanLineNum)
 {
-  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStopPoint);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, false);
+  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::StartStopType::StopPoint);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StopPoint, false);
 }
 
 
@@ -371,7 +371,7 @@ void  ScannerFile::AddStopPoint (kkint32  _scanLineNum)
 void  ScannerFile::StartStopPointDelete (kkint32 _scanLineNum)
 {
   startStopPoints.DeleteEntry (_scanLineNum);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, true);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StopPoint, true);
 }
 
 
@@ -1363,7 +1363,7 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
     else if  (lineName.EqualIgnoreCase ("StartStopPoint"))
     {
       StartStopPointPtr  entry = new StartStopPoint (ln);
-      if  (entry->Type () == StartStopPoint::sspInvalid)
+      if  (entry->Type () == StartStopPoint::StartStopType::Invalid)
       {
         delete  entry;
         entry = NULL;

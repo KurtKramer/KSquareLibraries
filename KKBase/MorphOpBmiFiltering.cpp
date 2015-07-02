@@ -49,7 +49,7 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
   connectedImage->ConnectedComponent (2);
 
   erodedImage = connectedImage->BinarizeByThreshold (minBackgroundTH, 255);
-  erodedImage->Opening (SQUARE3);
+  erodedImage->Opening (MaskTypes::SQUARE3);
   uchar*  xxx = erodedImage->GreenArea ();
   uchar*  yyy = srcRaster->GreenArea ();
   kkint32  totPixels = srcRaster->TotPixels ();
@@ -196,7 +196,7 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
 
   RasterPtr  rotatedImage = NULL;
 
-  // 1) Remove Apendages.
+  // 1) Remove Appendages.
   // 2) Perform Length vs Width
 
   uchar  binarizeTHmin = srcRaster->BackgroundPixelTH () + 1;
@@ -213,7 +213,7 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
   {
     if  ((rectangularAreaMax / rectangularAreaMin) > 0.90)
     {
-      // Not a significant amount of low intensity forround pixels.
+      // Not a significant amount of low intensity foreground pixels.
       delete  rotatedImage;
       rotatedImage = ProcessBmi (binarizeTHmin);
       return  rotatedImage;

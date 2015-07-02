@@ -434,7 +434,7 @@ bool  Model::NormalizeNominalAttributes ()  const
   if  (!param)
     throw KKException ("Model::NormalizeNominalAttributes  'param == NULL'.");
 
-  if  (param->EncodingMethod () == ModelParam::NoEncoding)
+  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::NoEncoding)
     return  true;
   else
     return  false;
@@ -535,13 +535,13 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
     normParms->NormalizeExamples (trainExamples, _log);
   }
 
-  if  (param->EncodingMethod () == ModelParam::Encoding_NULL)
+  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::Encoding_NULL)
   {
     // There is nothing for us to do.
     return;
   }
 
-  if  ((param->EncodingMethod () != ModelParam::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::NoEncoding))
+  if  ((param->EncodingMethod () != ModelParam::EncodingMethodType::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::EncodingMethodType::NoEncoding))
   {
     if  (!encoder)
       encoder = new FeatureEncoder2 (*param, fileDesc);

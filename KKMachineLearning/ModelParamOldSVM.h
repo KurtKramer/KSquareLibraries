@@ -50,7 +50,7 @@ namespace KKMLL
     virtual
     ModelParamOldSVMPtr  Duplicate () const;
 
-    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::mptOldSVM;}
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::OldSVM;}
 
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 

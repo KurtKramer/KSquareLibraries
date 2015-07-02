@@ -39,19 +39,25 @@ namespace KKMLL
   public:
     typedef  ModelParam*  ModelParamPtr;
 
-    enum  struct  ModelParamTypes
-                      {mptNULL,
-                       mptDual,
-                       mptKNN,
-                       mptOldSVM,
-                       mptSvmBase,
-                       mptUsfCasCor
+    enum  class  ModelParamTypes
+                      {Null,
+                       Dual,
+                       KNN,
+                       OldSVM,
+                       SvmBase,
+                       UsfCasCor
                       };
 
     static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
   
-    typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  EncodingMethodType;
+    enum class  EncodingMethodType 
+    {
+      NoEncoding,
+      BinaryEncoding,
+      ScaledEncoding,
+      Encoding_NULL
+    };
   
     ModelParam  ();
   

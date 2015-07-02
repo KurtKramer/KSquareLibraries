@@ -61,7 +61,7 @@ bool  MorphOpStruct::Fit (kkint32  row,
   if  (cStart  < 0)           cStart = 0;
   if  (cEnd    >= srcWidth)   cEnd = srcWidth - 1;
 
-  if  (structure == stSquare)
+  if  (structure == StructureType::stSquare)
   {
     for  (r = rStart;  r <= rEnd;  r++)
     {
@@ -113,7 +113,7 @@ bool  MorphOpStruct::FitBackgroundCount (kkint32  row,
 
   int  backgroundCount = 0;
 
-  if  (structure == stSquare)
+  if  (structure == StructureType::stSquare)
   {
     for  (r = rStart;  r <= rEnd;  r++)
     {
@@ -167,7 +167,7 @@ uchar  MorphOpStruct::HitForegroundCount (kkint32  row,
   kkint32  pixelValueTotal = 0;
   kkint32  neighborCount = 0;
 
-  if  (structure == stSquare)
+  if  (structure == StructureType::stSquare)
   {
     for  (r = rStart;  r <= rEnd;  r++)
     {

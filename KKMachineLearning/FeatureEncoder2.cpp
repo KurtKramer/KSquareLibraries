@@ -40,7 +40,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     destFeatureNums     (NULL),
     destWhatToDo        (NULL),
     encodedFileDesc     (NULL),
-    encodingMethod      (ModelParam::NoEncoding),
+    encodingMethod      (ModelParam::EncodingMethodType::NoEncoding),
     fileDesc            (_fileDesc),
     numOfFeatures       (0),
     srcFeatureNums      (NULL),
@@ -73,7 +73,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
     switch (encodingMethod)
     {
-      case  ModelParam::BinaryEncoding:
+      case  ModelParam::EncodingMethodType::BinaryEncoding:
         if  ((attributeVector[srcFeatureNum] == AttributeType::Nominal)  ||
              (attributeVector[srcFeatureNum] == AttributeType::Symbolic)
             )
@@ -96,7 +96,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
         break;
 
 
-      case  ModelParam::ScaledEncoding:
+      case  ModelParam::EncodingMethodType::ScaledEncoding:
         codedNumOfFeatures++;
         if  ((attributeVector[srcFeatureNums[x]] == AttributeType::Nominal)  ||
              (attributeVector[srcFeatureNums[x]] == AttributeType::Symbolic)
@@ -109,7 +109,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
         break;
 
 
-      case    ModelParam::NoEncoding:
+      case    ModelParam::EncodingMethodType::NoEncoding:
       default:
         codedNumOfFeatures++;
         destWhatToDo [x] = FeWhatToDo::FeAsIs;
