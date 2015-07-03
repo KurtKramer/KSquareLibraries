@@ -47,13 +47,14 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
     param               (_param)
     
 {
+  FeatureNumListConstPtr  selectedFeatures = param.SelectedFeatures ();
   numOfFeatures = param.SelectedFeatures ()->NumOfFeatures ();
-  const kkuint16*  srcFeatureNums = param.SelectedFeatures ()->FeatureNums ();
 
   encodingMethod   = param.EncodingMethod ();
 
-  cardinalityDest  = new kkint32[numOfFeatures];
-  destFeatureNums  = new kkint32[numOfFeatures];
+  srcFeatureNums   = new kkuint16  [numOfFeatures];
+  cardinalityDest  = new kkint32   [numOfFeatures];
+  destFeatureNums  = new kkint32   [numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
 
   VectorKKStr   destFieldNames;
@@ -62,9 +63,8 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
   for  (x = 0;  x < numOfFeatures;  x++)
   {
-    //kkint32  srcFeatureNum = selectedFeatures[x];
-    //srcFeatureNums   [x] = srcFeatureNum;
-    kkint32  srcFeatureNum = srcFeatureNums[x];
+    kkuint16  srcFeatureNum = (*selectedFeatures)[x];
+    srcFeatureNums   [x] = srcFeatureNum;
     destFeatureNums  [x] = codedNumOfFeatures;
     cardinalityDest  [x] = 1;
     destWhatToDo     [x] = FeWhatToDo::FeAsIs;
@@ -141,7 +141,7 @@ FeatureEncoder2::FeatureEncoder2 (const FeatureEncoder2&  _encoder):
   cardinalityDest  = new kkint32[numOfFeatures];
   destFeatureNums  = new kkint32[numOfFeatures];
   destWhatToDo     = new FeWhatToDo[numOfFeatures];
-  srcFeatureNums   = new kkint32[numOfFeatures];
+  srcFeatureNums   = new kkuint16[numOfFeatures];
 
   kkint32  x;
   for  (x = 0;  x < numOfFeatures;  x++)
@@ -174,9 +174,10 @@ kkint32  FeatureEncoder2::MemoryConsumedEstimated ()  const
     +  attributeVector.size ()   * sizeof (AttributeType)
     +  cardinalityVector.size () * sizeof (kkint32);
 
-  if  (cardinalityDest)   memoryConsumedEstimated += 3 * numOfFeatures * sizeof (kkint32);  // For 'cardinalityDest', 'destFeatureNums', and 'srcFeatureNums'
+  if  (cardinalityDest)   memoryConsumedEstimated += 2 * numOfFeatures * sizeof (kkint32);  // For 'cardinalityDest', 'destFeatureNums'
   if  (destFeatureNums)   memoryConsumedEstimated += numOfFeatures * sizeof (kkint32);
   if  (destWhatToDo)      memoryConsumedEstimated += numOfFeatures * sizeof (FeWhatToDo);
+  if  (srcFeatureNums)    memoryConsumedEstimated += numOfFeatures * sizeof (kkuint16);
   
   return  memoryConsumedEstimated;
 }
@@ -211,7 +212,7 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
   
   for  (x = 0;  x < numOfFeatures; x++)
   {
-    kkint32  srcFeatureNum = srcFeatureNums[x];
+    kkuint16  srcFeatureNum = srcFeatureNums[x];
     kkint32  y = destFeatureNums[x];
 
     if  (y >= codedNumOfFeatures)

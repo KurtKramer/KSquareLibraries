@@ -84,7 +84,7 @@ namespace KKMLL
     ModelParam::EncodingMethodType    encodingMethod;
     FileDescPtr                       fileDesc;
     kkint32                           numOfFeatures;
-    kkint32*                          srcFeatureNums;
+    kkuint16*                         srcFeatureNums;
     const ModelParam&                 param;
 
     struct  FeatureVar2;

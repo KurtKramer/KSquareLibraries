@@ -27,7 +27,7 @@ KKMLVariables::~KKMLVariables ()
 
 
 
-KKStr  KKMLVariables::machineLearningHomeDir = "";
+KKStr  KKMLVariables::machineLearningHomeDir;
 
 
 
