@@ -103,12 +103,10 @@ void  FeatureVector::ResetNumOfFeatures (kkint32  newNumOfFeatures)
 {
   if  (newNumOfFeatures < 1)  
   {
-    cerr << endl
-         << "FeatureVector::ResetNumOfFeatures    *** ERROR ***" << endl
-         << "                                     NewNumOfFeatures[" << newNumOfFeatures << "] is invalid." << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg (128);
+    errMsg << "FeatureVector::ResetNumOfFeatures   ***ERROR***   NewNumOfFeatures[" << newNumOfFeatures << "] is invalid.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   kkint32  x;
@@ -216,19 +214,15 @@ KKStr&   FeatureVector::ClassName ()  const
 
 
 void  FeatureVector::AddFeatureData (kkint32  _featureNum,
-                                     float  _featureData
+                                     float    _featureData
                                     )
 {
   if  ((_featureNum < 0)  ||  (_featureNum >= numOfFeatures))
   {
-    cerr << endl
-         << "AddFeatureData  *** ERROR ***  FeatureNum[" 
-         << _featureNum << "] exceeds maximum allowed Feature Number["
-         << numOfFeatures << "]."
-         << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg (128);
+    errMsg << "FeatureVector::AddFeatureData   ***ERROR***   FeatureNum[" << _featureNum << "] exceeds maximum allowed Feature Number["<< numOfFeatures << "].";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   featureData[_featureNum] = _featureData;
@@ -585,12 +579,9 @@ void  FeatureVectorList::ResetFileDesc (FileDescPtr  newFileDesc)
 {
   if  (!newFileDesc)
   {
-    cerr << endl
-         << "FeatureVectorList::ResetFileDesc   *** ERROR ***" << endl
-         << "                  newFileDesc == NULL"            << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg = "FeatureVector::ResetFileDesc   ***ERROR***   newFileDesc == NULL.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   fileDesc = newFileDesc;
@@ -611,13 +602,10 @@ void  FeatureVectorList::PushOnBack (FeatureVectorPtr  example)
 {
   if  (example->NumOfFeatures () != numOfFeatures)
   {
-    cerr << endl
-         << "FeatureVectorList::PushOnBack      *** ERROR ***  numOfFeatures mismatch"
-         << "                         numOfFeatures        [" << numOfFeatures           << "]" << endl
-         << "                         example->NumOfFeaturess[" << example->NumOfFeatures () << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (150);
+    errMsg  << "FeatureVectorList::PushOnBack   ***ERROR***   Mismatch numOfFeatures[" << numOfFeatures << "] example->NumOfFeaturess[" << example->NumOfFeatures () << "]";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   KKQueue<FeatureVector>::PushOnBack (example);
@@ -631,13 +619,10 @@ void  FeatureVectorList::PushOnFront (FeatureVectorPtr  example)
 {
   if  (example->NumOfFeatures () != numOfFeatures)
   {
-    cerr << endl
-         << "FeatureVectorList::PushOnFront     *** ERROR ***  numOfFeatures mismatch"
-         << "                         numOfFeatures        [" << numOfFeatures           << "]" << endl
-         << "                         example->NumOfFeaturess[" << example->NumOfFeatures () << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (150);
+    errMsg  << "FeatureVectorList::PushOnFront   ***ERROR***   Mismatch numOfFeatures[" << numOfFeatures << "] example->NumOfFeaturess[" << example->NumOfFeatures () << "]";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   KKQueue<FeatureVector>::PushOnFront (example);
