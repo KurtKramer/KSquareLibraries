@@ -69,9 +69,26 @@ namespace  SVM289_MFS
 
 
 
-  enum  class  SVM_Type     { SVM_NULL, C_SVC, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR };
+  enum class  SVM_Type     
+  {
+    SVM_NULL,
+    C_SVC,
+    NU_SVC,
+    ONE_CLASS,
+    EPSILON_SVR,
+    NU_SVR
+  };
 
-  enum  class  Kernel_Type  { Kernel_NULL, LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }; /* kernel_type */
+
+  enum class  Kernel_Type
+  {
+    Kernel_NULL,
+    LINEAR,
+    POLY,
+    RBF,
+    SIGMOID,
+    PRECOMPUTED
+  };
 
 
   SVM_Type  SVM_Type_FromStr (KKStr     s);

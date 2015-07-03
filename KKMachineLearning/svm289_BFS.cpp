@@ -191,7 +191,7 @@ FileDescPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 
 
 SVM289_BFS::svm_parameter::svm_parameter ():
-  svm_type     (C_SVC),
+  svm_type     (SVM_Type::C_SVC),
   kernel_type  (RBF),
   degree       (3),
   gamma        (0.0),
@@ -247,7 +247,7 @@ SVM289_BFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
 
 
 SVM289_BFS::svm_parameter::svm_parameter (KKStr&  paramStr):
-  svm_type     (C_SVC),
+  svm_type     (SVM_Type::C_SVC),
   kernel_type  (RBF),
   degree       (3),
   gamma        (0.0),
@@ -552,21 +552,21 @@ SVM_Type  SVM289_BFS::SVM_Type_FromStr (KKStr  s)
   s.Upper ();
 
   if  ((s.EqualIgnoreCase ("C_SVC"))       ||  (s == "0"))
-    return C_SVC;
+    return SVM_Type::C_SVC;
 
   if  ((s.EqualIgnoreCase ("NU_SVC"))       ||  (s == "1"))
-    return NU_SVC;
+    return SVM_Type::NU_SVC;
 
   if  ((s.EqualIgnoreCase ("ONE_CLASS"))    ||  (s == "2"))
-    return  ONE_CLASS;
+    return  SVM_Type::ONE_CLASS;
 
   if  ((s.EqualIgnoreCase ("EPSILON_SVR"))  ||  (s == "3"))
-    return  EPSILON_SVR;
+    return  SVM_Type::EPSILON_SVR;
 
   if  ((s.EqualIgnoreCase ("NU_SVR"))       ||  (s == "4"))
-    return  NU_SVR;
+    return  SVM_Type::NU_SVR;
 
-  return  SVM_NULL;
+  return  SVM_Type::SVM_NULL;
 }
 
 
@@ -575,13 +575,13 @@ KKStr  SVM289_BFS::SVM_Type_ToStr (SVM_Type  svmType)
 {
   switch  (svmType)
   {
-  case  C_SVC:        return  "c_svc";
-  case  NU_SVC:       return  "nu_svc";
-  case  ONE_CLASS:    return  "one_class";
-  case  EPSILON_SVR:  return  "epsilon_svr";
-  case  NU_SVR:       return  "nu_svr";
+  case  SVM_Type::C_SVC:        return  "c_svc";
+  case  SVM_Type::NU_SVC:       return  "nu_svc";
+  case  SVM_Type::ONE_CLASS:    return  "one_class";
+  case  SVM_Type::EPSILON_SVR:  return  "epsilon_svr";
+  case  SVM_Type::NU_SVR:       return  "nu_svr";
   }
-  return  SVM_NULL;
+  return  "";
 }
 
 
@@ -2804,30 +2804,30 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
   switch  (param.svm_type)
   {
-    case C_SVC:
+    case SVM_Type::C_SVC:
       solve_c_svc (&prob, &param, alpha, &si, Cp, Cn, _log);
       break;
 
-    case NU_SVC:
+    case SVM_Type::NU_SVC:
       solve_nu_svc (&prob, &param, alpha, &si, _log);
       break;
 
-    case ONE_CLASS:
+    case SVM_Type::ONE_CLASS:
       solve_one_class (&prob, &param, alpha, &si, _log);
       break;
 
-    case EPSILON_SVR:
+    case SVM_Type::EPSILON_SVR:
       solve_epsilon_svr (&prob, &param, alpha, &si, _log);
       break;
 
-    case NU_SVR:
+    case SVM_Type::NU_SVR:
       solve_nu_svr (&prob, &param, alpha, &si, _log);
       break;
 
     default:
       {
         KKStr errMsg = "SVM289_BFS::svm_train_one   ***ERROR***   Invalid Solver Defined.";
-        errMsg << "   Solver[" << param.svm_type << "]";
+        errMsg << "   Solver[" << (int)param.svm_type << "]";
         _log.Level (-1) << endl << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -3405,9 +3405,9 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
 
   model->weOwnSupportVectors = false;  // XXX
 
-  if  ((param.svm_type == ONE_CLASS)    ||
-       (param.svm_type == EPSILON_SVR)  ||
-       (param.svm_type == NU_SVR)
+  if  ((param.svm_type == SVM_Type::ONE_CLASS)    ||
+       (param.svm_type == SVM_Type::EPSILON_SVR)  ||
+       (param.svm_type == SVM_Type::NU_SVR)
       )
   {
     // regression or one-class-svm
@@ -3418,7 +3418,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     model->probB    = NULL;
     model->sv_coef  = new double*[1];
 
-    if  (param.probability  &&  (param.svm_type == EPSILON_SVR  ||  param.svm_type == NU_SVR))
+    if  (param.probability  &&  (param.svm_type == SVM_Type::EPSILON_SVR  ||  param.svm_type == SVM_Type::NU_SVR))
     {
       model->probA = new double[1];
       model->probA[0] = svm_svr_probability (prob, param, log);
@@ -3727,7 +3727,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
   // stratified cv may not give leave-one-out rate
   // Each class to l folds -> some folds may have zero elements
-  if  ((param.svm_type == C_SVC || param.svm_type == NU_SVC)  && 
+  if  ((param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC)  && 
        (nr_fold < l)
       )
   {
@@ -3833,7 +3833,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
     svm_model*  submodel = svm_train (subprob, param, log);
     if  (param.probability && 
-       (param.svm_type == C_SVC || param.svm_type == NU_SVC))
+       (param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC))
     {
       double *prob_estimates = new double[svm_get_nr_class (submodel)];
       kkint32  *votes          = new kkint32 [svm_get_nr_class (submodel)];
@@ -3867,8 +3867,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
 
 
-
-kkint32 svm_get_svm_type(const svm_model *model)
+SVM_Type  svm_get_svm_type (const svm_model *model)
 {
   return model->param.svm_type;
 }
@@ -3896,7 +3895,7 @@ void svm_get_labels(const svm_model*  model,
 
 double svm_get_svr_probability (const svm_model *model)
 {
-  if ((model->param.svm_type == EPSILON_SVR || model->param.svm_type == NU_SVR) &&
+  if ((model->param.svm_type == SVM_Type::EPSILON_SVR || model->param.svm_type == SVM_Type::NU_SVR) &&
       model->probA!=NULL)
     return model->probA[0];
   else
@@ -3914,9 +3913,9 @@ void  SVM289_BFS::svm_predict_values (const svm_model*      model,
                                       double*               dec_values
                                      )
 {
-  if  (model->param.svm_type == ONE_CLASS    ||
-       model->param.svm_type == EPSILON_SVR  ||
-       model->param.svm_type == NU_SVR
+  if  (model->param.svm_type == SVM_Type::ONE_CLASS    ||
+       model->param.svm_type == SVM_Type::EPSILON_SVR  ||
+       model->param.svm_type == SVM_Type::NU_SVR
       )
   {
     double *sv_coef = model->sv_coef[0];
@@ -3987,15 +3986,15 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
                                 const FeatureVector&  x
                                )
 {
-  if  ((model->param.svm_type == ONE_CLASS)     ||
-       (model->param.svm_type == EPSILON_SVR)   ||
-       (model->param.svm_type == NU_SVR)
+  if  ((model->param.svm_type == SVM_Type::ONE_CLASS)     ||
+       (model->param.svm_type == SVM_Type::EPSILON_SVR)   ||
+       (model->param.svm_type == SVM_Type::NU_SVR)
       )
   {
     double res;
     svm_predict_values (model, x, &res);
     
-    if  (model->param.svm_type == ONE_CLASS)
+    if  (model->param.svm_type == SVM_Type::ONE_CLASS)
       return (res > 0) ? 1:-1;
     else
       return res;
@@ -4049,7 +4048,7 @@ double  SVM289_BFS::svm_predict_probability (svm_model*            model,
 {
   double  probParam = model->param.probParam;
 
-  if  ((model->param.svm_type == C_SVC  ||  model->param.svm_type == NU_SVC)  &&  
+  if  ((model->param.svm_type == SVM_Type::C_SVC  ||  model->param.svm_type == SVM_Type::NU_SVC)  &&  
        ((model->probA != NULL  &&  model->probB != NULL)  ||  (probParam > 0.0))
       )
   {
@@ -5080,7 +5079,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     if  (fieldName.EqualIgnoreCase ("svm_type"))
     {
       param.svm_type = SVM_Type_FromStr (line);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  Invalid SVM_Type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
@@ -5322,7 +5321,7 @@ svm_model *svm_load_model (const char*  model_file_name,
       fscanf (fp, "%80s", cmd);
 
       param.svm_type = SVM_Type_FromStr (cmd);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         fprintf (stderr, "unknown svm type.\n");
         delete model;
@@ -5542,13 +5541,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
 {
   // svm_type
 
-  kkint32  svm_type = param->svm_type;
+  SVM_Type  svm_type = param->svm_type;
 
-  if  (svm_type != C_SVC        &&
-       svm_type != NU_SVC       &&
-       svm_type != ONE_CLASS    &&
-       svm_type != EPSILON_SVR  &&
-       svm_type != NU_SVR
+  if  (svm_type != SVM_Type::C_SVC        &&
+       svm_type != SVM_Type::NU_SVC       &&
+       svm_type != SVM_Type::ONE_CLASS    &&
+       svm_type != SVM_Type::EPSILON_SVR  &&
+       svm_type != SVM_Type::NU_SVR
       )
     return "unknown svm type";
   
@@ -5575,21 +5574,21 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  (param->eps <= 0)
     return "eps <= 0";
 
-  if  (svm_type == C_SVC       ||
-       svm_type == EPSILON_SVR ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::C_SVC       ||
+       svm_type == SVM_Type::EPSILON_SVR ||
+       svm_type == SVM_Type::NU_SVR
       )
     if  (param->C <= 0)
       return "C <= 0";
 
-  if  (svm_type == NU_SVC     ||
-       svm_type == ONE_CLASS  ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::NU_SVC     ||
+       svm_type == SVM_Type::ONE_CLASS  ||
+       svm_type == SVM_Type::NU_SVR
       )
     if  ((param->nu <= 0) || (param->nu > 1))
       return "nu <= 0 or nu > 1";
 
-  if  (svm_type == EPSILON_SVR)
+  if  (svm_type == SVM_Type::EPSILON_SVR)
   {
     if  (param->p < 0)
       return "p < 0";
@@ -5601,13 +5600,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  ((param->probability != 0)  &&  (param->probability != 1))
     return "probability != 0 and probability != 1";
 
-  if  ((param->probability == 1)  &&  (svm_type == ONE_CLASS))
+  if  ((param->probability == 1)  &&  (svm_type == SVM_Type::ONE_CLASS))
     return "one-class SVM probability output not supported yet";
 
 
   // check whether nu-svc is feasible
   
-  if  (svm_type == NU_SVC)
+  if  (svm_type == SVM_Type::NU_SVC)
   {
     kkint32 l = prob->l;
     kkint32 max_nr_class = 16;
@@ -5672,6 +5671,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 kkint32  svm_check_probability_model (const svm_model *model)
 {
-  return ((model->param.svm_type == C_SVC       ||  model->param.svm_type == NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
-         ((model->param.svm_type == EPSILON_SVR ||  model->param.svm_type == NU_SVR) &&  model->probA!=NULL);
+  return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
+         ((model->param.svm_type == SVM_Type::EPSILON_SVR ||  model->param.svm_type == SVM_Type::NU_SVR) &&  model->probA!=NULL);
 }

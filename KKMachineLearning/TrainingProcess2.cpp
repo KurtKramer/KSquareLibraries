@@ -16,6 +16,7 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
+
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"

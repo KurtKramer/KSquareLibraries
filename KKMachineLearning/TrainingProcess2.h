@@ -56,7 +56,13 @@ namespace KKMLL
   public:
     typedef  TrainingProcess2*  TrainingProcess2Ptr;
 
-    enum  class  WhenToRebuild  {AlwaysRebuild, NotUpToDate, NotValid, NeverRebuild};
+    enum class  WhenToRebuild
+    {
+      AlwaysRebuild,
+      NotUpToDate,
+      NotValid,
+      NeverRebuild
+    };
 
 
     /**
