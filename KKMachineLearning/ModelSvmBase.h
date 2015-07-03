@@ -45,7 +45,7 @@ namespace  KKMLL
 
     virtual  kkint32      MemoryConsumedEstimated ()  const;
 
-    virtual ModelTypes    ModelType () const  {return ModelTypes::mtSvmBase;}
+    virtual ModelTypes    ModelType () const  {return ModelTypes::SvmBase;}
 
     virtual  kkint32      NumOfSupportVectors () const;
 

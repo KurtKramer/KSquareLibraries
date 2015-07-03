@@ -71,7 +71,7 @@ namespace KKMLL
     virtual
     ModelOldSVMPtr  Duplicate ()  const;
 
-    virtual ModelTypes       ModelType () const  {return ModelTypes::mtOldSVM;}
+    virtual ModelTypes       ModelType () const  {return ModelTypes::OldSVM;}
 
     const ClassAssignments&  Assignments () const;
 

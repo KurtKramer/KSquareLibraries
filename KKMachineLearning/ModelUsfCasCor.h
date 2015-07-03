@@ -45,7 +45,7 @@ namespace  KKMLL
     virtual
     kkint32                 MemoryConsumedEstimated ()  const;
 
-    virtual ModelTypes      ModelType () const  {return ModelTypes::mtUsfCasCor;}
+    virtual ModelTypes      ModelType () const  {return ModelTypes::UsfCasCor;}
 
     virtual
     kkint32                 NumOfSupportVectors () const;

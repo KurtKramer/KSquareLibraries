@@ -29,7 +29,7 @@ namespace  KKMLL
     virtual
     ModelKnnPtr  Duplicate ()  const;
 
-    virtual ModelTypes   ModelType ()  const  {return ModelTypes::mtKNN;}
+    virtual ModelTypes   ModelType ()  const  {return ModelTypes::KNN;}
 
 
     ModelParamKnnPtr   Param ();

@@ -86,7 +86,16 @@ namespace KKMLL
   public:
     typedef  Model*  ModelPtr;
 
-    enum  class  ModelTypes {mtNULL = 0, mtOldSVM = 1, mtSvmBase = 2 , mtKNN= 3, mtUsfCasCor = 4, mtDual = 5};
+    enum  class  ModelTypes: int 
+    {
+      Null      = 0,
+      OldSVM    = 1,
+      SvmBase   = 2,
+      KNN       = 3,
+      UsfCasCor = 4,
+      Dual      = 5
+    };
+
     static KKStr       ModelTypeToStr   (ModelTypes    _modelingType);
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 

@@ -578,7 +578,7 @@ void  TrainingProcess2::SaveTrainingProcess (RunLog&  log)
 
 ModelOldSVMPtr  TrainingProcess2::OldSVMModel ()  const
 {
-  if  (model->ModelType () == Model::ModelTypes::mtOldSVM)
+  if  (model->ModelType () == Model::ModelTypes::OldSVM)
     return dynamic_cast<ModelOldSVMPtr> (model);
   else
     return NULL;
@@ -601,7 +601,7 @@ Model::ModelTypes   TrainingProcess2::ModelType ()  const
   if  (model)
     return model->ModelType ();
   else
-    return Model::ModelTypes::mtNULL;
+    return Model::ModelTypes::Null;
 }
 
 
@@ -1067,7 +1067,7 @@ void  TrainingProcess2::SupportVectorStatistics (kkint32&  numSVs,
 
 TrainingProcess2Ptr   TrainingProcess2::TrainingProcessLeft ()
 {
-  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::mtDual))
+  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::Dual))
     return NULL;
   return  dynamic_cast<ModelDualPtr>(model)->Trainer1 ();
 }
@@ -1076,7 +1076,7 @@ TrainingProcess2Ptr   TrainingProcess2::TrainingProcessLeft ()
 
 TrainingProcess2Ptr   TrainingProcess2::TrainingProcessRight ()
 {
-  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::mtDual))
+  if  ((!model)  ||  (model->ModelType () != Model::ModelTypes::Dual))
     return NULL;
   return  dynamic_cast<ModelDualPtr>(model)->Trainer2 ();
 }

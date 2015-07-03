@@ -90,7 +90,7 @@ namespace  KKMLL
     virtual
     KKStr                 Description ()  const;  /**< Return short user readable description of model. */
 
-    virtual ModelTypes    ModelType () const  {return ModelTypes::mtDual;}
+    virtual ModelTypes    ModelType () const  {return ModelTypes::Dual;}
 
     virtual
     kkint32               NumOfSupportVectors () const;

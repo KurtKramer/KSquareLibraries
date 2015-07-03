@@ -61,11 +61,11 @@ void  TrainingConfiguration2::CreateModelParameters (const KKStr&           _par
 
   switch  (modelingMethod)
   {
-  case  Model::ModelTypes::mtDual:      modelParameters = new ModelParamDual      ();  break;
-  case  Model::ModelTypes::mtKNN:       modelParameters = new ModelParamKnn       ();  break;
-  case  Model::ModelTypes::mtOldSVM:    modelParameters = new ModelParamOldSVM    ();  break;
-  case  Model::ModelTypes::mtSvmBase:   modelParameters = new ModelParamSvmBase   ();  break;
-  case  Model::ModelTypes::mtUsfCasCor: modelParameters = new ModelParamUsfCasCor ();  break;
+  case  Model::ModelTypes::Dual:      modelParameters = new ModelParamDual      ();  break;
+  case  Model::ModelTypes::KNN:       modelParameters = new ModelParamKnn       ();  break;
+  case  Model::ModelTypes::OldSVM:    modelParameters = new ModelParamOldSVM    ();  break;
+  case  Model::ModelTypes::SvmBase:   modelParameters = new ModelParamSvmBase   ();  break;
+  case  Model::ModelTypes::UsfCasCor: modelParameters = new ModelParamUsfCasCor ();  break;
 
   default:
     _log.Level (-1) << endl << endl
@@ -113,7 +113,7 @@ TrainingConfiguration2::TrainingConfiguration2 ():
   fvFactoryProducerSpecified (false),
   mlClasses                  (NULL),
   mlClassesWeOwnIt           (false),
-  modelingMethod             (Model::ModelTypes::mtNULL),
+  modelingMethod             (Model::ModelTypes::Null),
   examplesPerClass           (0),
   modelParameters            (NULL),
   noiseMLClass               (NULL),
@@ -188,7 +188,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   fileDesc                   (NULL),
   fvFactoryProducer          (_fvFactoryProducer),
   fvFactoryProducerSpecified (true),
-  modelingMethod             (Model::ModelTypes::mtNULL),
+  modelingMethod             (Model::ModelTypes::Null),
   mlClasses                  (NULL),
   mlClassesWeOwnIt           (false),
   examplesPerClass           (0),
@@ -226,8 +226,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
     }
   }
 
-  if  (modelingMethod == Model::ModelTypes::mtNULL)
-    modelingMethod = Model::ModelTypes::mtOldSVM;
+  if  (modelingMethod == Model::ModelTypes::Null)
+    modelingMethod = Model::ModelTypes::OldSVM;
 
   {
     examplesPerClass = int32_max;
@@ -261,7 +261,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   fvFactoryProducerSpecified (false),
   mlClasses                  (NULL),
   mlClassesWeOwnIt           (false),
-  modelingMethod             (Model::ModelTypes::mtNULL),
+  modelingMethod             (Model::ModelTypes::Null),
   examplesPerClass           (0),
   modelParameters            (NULL),
   noiseMLClass               (NULL),
@@ -293,8 +293,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
     }
   }
 
-  if  (modelingMethod == Model::ModelTypes::mtNULL)
-    modelingMethod = Model::ModelTypes::mtOldSVM;
+  if  (modelingMethod == Model::ModelTypes::Null)
+    modelingMethod = Model::ModelTypes::OldSVM;
 
   {
     examplesPerClass = int32_max;
@@ -328,7 +328,7 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   fvFactoryProducerSpecified (false),
   mlClasses                  (NULL),
   mlClassesWeOwnIt           (false),
-  modelingMethod             (Model::ModelTypes::mtNULL),
+  modelingMethod             (Model::ModelTypes::Null),
   examplesPerClass           (0),
   modelParameters            (_modelParameters),
   noiseMLClass               (NULL),
@@ -361,11 +361,11 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 
   switch  (_modelParameters->ModelParamType ())
   {
-  case  ModelParam::ModelParamTypes::Dual:      modelingMethod = Model::ModelTypes::mtDual;       break;
-  case  ModelParam::ModelParamTypes::KNN:       modelingMethod = Model::ModelTypes::mtKNN;        break;
-  case  ModelParam::ModelParamTypes::OldSVM:    modelingMethod = Model::ModelTypes::mtOldSVM;     break;
-  case  ModelParam::ModelParamTypes::SvmBase:   modelingMethod = Model::ModelTypes::mtSvmBase;    break;
-  case  ModelParam::ModelParamTypes::UsfCasCor: modelingMethod = Model::ModelTypes::mtUsfCasCor;  break;
+  case  ModelParam::ModelParamTypes::Dual:      modelingMethod = Model::ModelTypes::Dual;       break;
+  case  ModelParam::ModelParamTypes::KNN:       modelingMethod = Model::ModelTypes::KNN;        break;
+  case  ModelParam::ModelParamTypes::OldSVM:    modelingMethod = Model::ModelTypes::OldSVM;     break;
+  case  ModelParam::ModelParamTypes::SvmBase:   modelingMethod = Model::ModelTypes::SvmBase;    break;
+  case  ModelParam::ModelParamTypes::UsfCasCor: modelingMethod = Model::ModelTypes::UsfCasCor;  break;
   }
 }
   
@@ -475,7 +475,7 @@ FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunL
 
 ModelParamOldSVMPtr   TrainingConfiguration2::OldSvmParameters ()  const
 {
-  if  (modelParameters  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
+  if  (modelParameters  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     return  dynamic_cast<ModelParamOldSVMPtr>(modelParameters);
   else
     return NULL;
@@ -1688,7 +1688,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
     FormatGood (false);
   }
 
-  if  (modelingMethod == Model::ModelTypes::mtNULL)
+  if  (modelingMethod == Model::ModelTypes::Null)
   {
     // We have a invalid Modeling Method Parameter.
     KKStr  errMsg = "Invalid Modeling Method[" + modelingMethodStr + "] was specified.";
@@ -1763,10 +1763,10 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
   KKStr  modelParametersStr  = SettingValue (sectionNum, "Parameters",        parametersLineNum);
   KKStr  featuresIncludedStr = SettingValue (sectionNum, "Features_Included", featuresIncludedLineNum);
 
-  if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
+  if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     modelParametersStr = SettingValue ("Model3", "Parameters", parametersLineNum);
 
-  if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
+  if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     featuresIncludedStr = SettingValue ("Model3", "Features_Included", featuresIncludedLineNum);
 
   if  (parametersLineNum < 0)
@@ -1799,7 +1799,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
     if  (examplesPerClassStr.Empty ())
       examplesPerClassStr = SettingValue (sectionNum, "Images_Per_Class", examplesPerClassLineNum);
 
-    if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::mtOldSVM))
+    if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     {
       examplesPerClassStr = SettingValue ("Model3", "Examples_Per_Class", examplesPerClassLineNum);
       if  (examplesPerClassStr.Empty ())

@@ -98,7 +98,7 @@ Classifier2::Classifier2 (TrainingProcess2Ptr  _trainer,
   noiseMLClass   = mlClasses->GetNoiseClass ();
   unKnownMLClass = mlClasses->GetUnKnownClass ();
 
-  if  (trainedModel->ModelType () == Model::ModelTypes::mtOldSVM)
+  if  (trainedModel->ModelType () == Model::ModelTypes::OldSVM)
   {
     trainedModelOldSVM = dynamic_cast<ModelOldSVMPtr> (trainedModel);
     if  (trainedModelOldSVM)

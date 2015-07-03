@@ -22,19 +22,17 @@ using namespace  std;
 using namespace  KKB;
 
 
+#include "ClassProb.h"
+#include "FactoryFVProducer.h"
+#include "FeatureEncoder2.h"
+#include "FeatureNumList.h"
+#include "FeatureVector.h"
 #include "Model.h"
 #include "ModelOldSVM.h"
 #include "ModelSvmBase.h"
 #include "ModelKnn.h"
 #include "ModelUsfCasCor.h"
 #include "ModelDual.h"
-
-
-#include "ClassProb.h"
-#include "FactoryFVProducer.h"
-#include "FeatureEncoder2.h"
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
 #include "ModelParam.h"
 #include "ModelParamDual.h"
 #include "ModelParamOldSVM.h"
@@ -257,12 +255,12 @@ KKStr  Model::Description ()  const
 
 KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
 {
-  if       (_modelingType == ModelTypes::mtNULL)      return "NULL";
-  else if  (_modelingType == ModelTypes::mtOldSVM)    return "OldSVM";
-  else if  (_modelingType == ModelTypes::mtSvmBase)   return "SvmBase";
-  else if  (_modelingType == ModelTypes::mtKNN)       return "KNN";
-  else if  (_modelingType == ModelTypes::mtUsfCasCor) return "UsfCasCor";
-  else if  (_modelingType == ModelTypes::mtDual)      return "Dual";
+  if       (_modelingType == ModelTypes::Null)      return "NULL";
+  else if  (_modelingType == ModelTypes::OldSVM)    return "OldSVM";
+  else if  (_modelingType == ModelTypes::SvmBase)   return "SvmBase";
+  else if  (_modelingType == ModelTypes::KNN)       return "KNN";
+  else if  (_modelingType == ModelTypes::UsfCasCor) return "UsfCasCor";
+  else if  (_modelingType == ModelTypes::Dual)      return "Dual";
   else
     return "NULL";
 }  /* ModelingMethodToStr */
@@ -273,14 +271,14 @@ KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
 Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 {
   if       (_modelingTypeStr.EqualIgnoreCase ("OldSVM")  ||  
-            _modelingTypeStr.EqualIgnoreCase ("One_Level"))   return ModelTypes::mtOldSVM;
-  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))     return ModelTypes::mtSvmBase;
-  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))         return ModelTypes::mtKNN;
-  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))   return ModelTypes::mtUsfCasCor;
-  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))        return ModelTypes::mtDual;
+            _modelingTypeStr.EqualIgnoreCase ("One_Level"))   return ModelTypes::OldSVM;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))     return ModelTypes::SvmBase;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))         return ModelTypes::KNN;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))   return ModelTypes::UsfCasCor;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))        return ModelTypes::Dual;
 
   else
-    return ModelTypes::mtNULL;
+    return ModelTypes::Null;
 }  /* ModelingMethodFromStr */
 
 
@@ -299,23 +297,23 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
   {
     switch  (_modelType)
     {
-    case  ModelTypes::mtOldSVM:    
+    case  ModelTypes::OldSVM:    
           model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _factoryFVProducer);
           break;
 
-    case  ModelTypes::mtSvmBase:
+    case  ModelTypes::SvmBase:
           model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _factoryFVProducer);
           break;
 
-    case  ModelTypes::mtKNN:
+    case  ModelTypes::KNN:
           model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _factoryFVProducer);
           break;
 
-    case  ModelTypes::mtUsfCasCor:
+    case  ModelTypes::UsfCasCor:
           model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _factoryFVProducer);
           break;
 
-    case  ModelTypes::mtDual:
+    case  ModelTypes::Dual:
           model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _factoryFVProducer);
           break;
     }  /* end of switch */

@@ -1,13 +1,10 @@
 #include "FirstIncludes.h"
-
 #include <vector>
 #include <map>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
