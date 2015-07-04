@@ -2610,6 +2610,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
           else
           {
             models[numModeLoaded][0] = dynamic_cast<XmlElementSvmModel233Ptr> (e)->TakeOwnership ();
+            binaryParameters[numModeLoaded] = binClassParms;
 
             binaryFeatureEncoders[numModeLoaded] 
                 = new FeatureEncoder (fileDesc,

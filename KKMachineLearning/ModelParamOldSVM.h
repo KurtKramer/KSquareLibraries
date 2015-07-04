@@ -129,6 +129,12 @@ namespace KKMLL
     virtual void  SelectionMethod    (SVM_SelectionMethod   _selectionMethod);
 
 
+    /**
+     *@brief  converts Encoding variables from  "SVM_EncodingMethod"  to  "ModelParam::EncodingMethodType"
+     */
+    EncodingMethodType  SVM_EncodingMethodToModelParamEncodingMethodType (SVM_EncodingMethod  _encodingMethod);
+
+
     void  SetBinaryClassFields (MLClassPtr               class1,
                                 MLClassPtr               class2,
                                 const svm_parameter&     _param,

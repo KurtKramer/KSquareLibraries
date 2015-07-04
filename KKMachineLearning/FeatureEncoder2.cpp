@@ -73,7 +73,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
 
     switch (encodingMethod)
     {
-      case  ModelParam::EncodingMethodType::BinaryEncoding:
+      case  ModelParam::EncodingMethodType::Binary:
         if  ((attributeVector[srcFeatureNum] == AttributeType::Nominal)  ||
              (attributeVector[srcFeatureNum] == AttributeType::Symbolic)
             )
@@ -96,7 +96,7 @@ FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
         break;
 
 
-      case  ModelParam::EncodingMethodType::ScaledEncoding:
+      case  ModelParam::EncodingMethodType::Scaled:
         codedNumOfFeatures++;
         if  ((attributeVector[srcFeatureNums[x]] == AttributeType::Nominal)  ||
              (attributeVector[srcFeatureNums[x]] == AttributeType::Symbolic)

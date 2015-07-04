@@ -40,7 +40,7 @@
        names as predictions (from a .test file).
      -N      normalize features to 0-1
      -f filestem   Filestem for data
-     -R      use training set (resubstitution)
+     -R      use training set (re-substitution)
 
    All other parameters that could be specified in the .net file are
    specified as
@@ -275,7 +275,6 @@ namespace KKMLL
    *
    *  TrainNewClassifier        Trains a new classier from training examples.
    *  WriteXML                  Saves a trained classifier to a output stream in the form of a XML object.
-   *  LoadExistingClassifier    Retrieves a previously trained classifier from the provided istream.
    *  PredictClass              Returns back predicted class for a given Feature vector.
    *  PredictClassConfidences   Prediction that returns back confidence values for each class rather than a single class prediction.
    */
@@ -302,11 +301,6 @@ namespace KKMLL
                               RunLog&                 _log
                              );
 
-    void  LoadExistingClassifier (istream&  i,
-                                  bool&     valid,
-                                  RunLog&   log
-                                 );
-
     MLClassPtr  PredictClass (FeatureVectorPtr  example);
 
     void  PredictConfidences (FeatureVectorPtr    example,
@@ -323,8 +317,6 @@ namespace KKMLL
 
     ClassProbListPtr  PredictClassConfidences (FeatureVectorPtr  example);
 
-    void  WriteXML (ostream&  o);
-
 
     void  WriteXML (const KKStr&  varName,
                     ostream&      o
@@ -335,11 +327,6 @@ namespace KKMLL
                    XmlTagConstPtr  tag,
                    RunLog&         log
                   );
-
-    float*  ReadXMLArrayFloat (XmlTokenPtr  t,
-                               kkuint32     expectedSize,
-                               RunLog&      log
-                              );
 
 
   private:
@@ -376,52 +363,12 @@ namespace KKMLL
 
     FeatureVectorListPtr  FilterOutExtremeExamples (FeatureVectorListPtr  trainExamples);
 
-    void  WriteXmlConnections (ostream&  o)  const;
-
-    void  ReadXml (istream&  i,
-                   bool&     valid,
-                   RunLog&   log
-                  );
-
-
-    void  ReadXmlArrayFloat (XmlTagPtr  tag, 
-                             istream&   i,
-                             RunLog&    log
-                            );
-
-    void  ReadXmlArrayFloat2D (XmlTagPtr  tag, 
-                               istream&   i,
-                               RunLog&    log
-                              );
-
-    void  ReadXmlArrayFloat2DVarying (XmlTagPtr  tag, 
-                                      istream&   i,
-                                      RunLog&    log
-                                     );
-
-    void  ReadXmlArrayInt (XmlTagPtr  tag, 
-                           istream&   i,
-                           RunLog&    log
-                          );
-
-    void  ReadXmlConnections (XmlTagPtr  tag, 
-                              istream&   i,
-                              RunLog&    log
-                             );
-
-    void  ReadXmlNameValueLine (istream&  i,
-                                RunLog&   log
-                               );
-
 
     /* Global variables */
     static  const char*  version;
     static  const char*  release_date;
     static  const char*  progname;
     
-    /* Functions */
-    char*  parm_to_string (int k);
-
     char const *  boolean_to_string (bool var)  const;
 
     Boolean  string_to_boolean (const char* s);
@@ -429,10 +376,6 @@ namespace KKMLL
     const KKStr&  type_to_string (int var)  const;
 
     int    string_to_type (const KKStr&  s);
-
-    int    process_line (char*     line,
-                         RunLog&   log
-                        );
 
     /* Utilities */
     
@@ -470,8 +413,6 @@ namespace KKMLL
     char parm_string[LINELEN];
 
     void     strdncase (char *s);
-
-    int      find_key (char *searchkey);
 
     int      _type_convert (char *input);
 
@@ -733,9 +674,9 @@ namespace KKMLL
     int      Nunits;              /**<  Total number of active units in net */
     int      Ninputs;             /**< Number of input units */
     int      Noutputs;            /**< Number of output units */
-    int      Ncandidates;	      /**< Number of candidate units trained at once. */
-    int      MaxCases;		      /**< Maxi mum number of training cases that can be accommodated by the current data structures.  */
-    int      Ncases;		      /**< Number  of training cases currently in use. Assume a contiguous block beginning with   */
+    int      Ncandidates;	        /**< Number of candidate units trained at once. */
+    int      MaxCases;		        /**< Maxi mum number of training cases that can be accommodated by the current data structures.  */
+    int      Ncases;		          /**< Number  of training cases currently in use. Assume a contiguous block beginning with   */
     int      FirstCase;	          /**< Address of the first training case in the currently active set.  Usually zero, but may
                                    *  differ if we are training on different chunks of the training set at different times.       
                                    */
@@ -801,11 +742,7 @@ namespace KKMLL
     /***************************************************************************/
     FILE*    WeightFile;	             /**< Contains weights from the current net. */
 
-    int      Nparameters;
     Boolean  InterruptPending;         /**< TRUE => user has pressed Control-C */
-    PARMS    ParmTable[37];
-
-    void   ConstructParmTable ();
 
     MLClassListPtr  classes;            /**<  Classes that the training data consisted of.  */
 

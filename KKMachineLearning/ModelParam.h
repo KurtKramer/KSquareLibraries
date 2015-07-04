@@ -51,12 +51,16 @@ namespace KKMLL
     static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
   
+
+    /**
+     * Needs to be synchronized with SVMparam::SVM_EncodingMethod
+     */
     enum class  EncodingMethodType 
     {
+      Null,
       NoEncoding,
-      BinaryEncoding,
-      ScaledEncoding,
-      Encoding_NULL
+      Binary,
+      Scaled
     };
   
     ModelParam  ();

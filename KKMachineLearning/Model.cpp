@@ -533,13 +533,13 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
     normParms->NormalizeExamples (trainExamples, _log);
   }
 
-  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::Encoding_NULL)
+  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::Null)
   {
     // There is nothing for us to do.
     return;
   }
 
-  if  ((param->EncodingMethod () != ModelParam::EncodingMethodType::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::EncodingMethodType::NoEncoding))
+  if  ((param->EncodingMethod () != ModelParam::EncodingMethodType::Null)  &&   (param->EncodingMethod () != ModelParam::EncodingMethodType::NoEncoding))
   {
     if  (!encoder)
       encoder = new FeatureEncoder2 (*param, fileDesc);

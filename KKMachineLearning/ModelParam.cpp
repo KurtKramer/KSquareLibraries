@@ -398,7 +398,7 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
 
   switch (EncodingMethod ())
   {
-  case EncodingMethodType::BinaryEncoding:
+  case EncodingMethodType::Binary:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
       kkint32  fieldNum = (*selectedFeatures)[z];
@@ -411,7 +411,7 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
     }
     break;
 
-  case EncodingMethodType::ScaledEncoding:
+  case EncodingMethodType::Scaled:
   case EncodingMethodType::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
@@ -427,10 +427,10 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
 
 KKStr  ModelParam::EncodingMethodToStr (EncodingMethodType  encodingMethod)
 {
-  if  (encodingMethod == EncodingMethodType::BinaryEncoding)
+  if  (encodingMethod == EncodingMethodType::Binary)
     return  "Binary";
 
-  else if  (encodingMethod == EncodingMethodType::ScaledEncoding)
+  else if  (encodingMethod == EncodingMethodType::Scaled)
     return  "Scale";
 
   else
@@ -446,15 +446,15 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
   if  ((encodingMethodUpper == "BINARY")  ||  (encodingMethodUpper == "BIN"))
-     return  EncodingMethodType::BinaryEncoding;
+     return  EncodingMethodType::Binary;
 
   if  (encodingMethodUpper == "SCALE")
-     return  EncodingMethodType::ScaledEncoding;
+     return  EncodingMethodType::Scaled;
 
   if  (encodingMethodUpper == "NONE")
     return  EncodingMethodType::NoEncoding;
 
-  return  EncodingMethodType::Encoding_NULL;
+  return  EncodingMethodType::Null;
 }  /* EncodingMethodFromStr */
 
 

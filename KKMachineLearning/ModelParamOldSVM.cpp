@@ -344,7 +344,7 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr    _cmdLineStr,
 
   // Since this class is a special case that handles the old SvmParam paradigm we need
   // to update the local Model:: parameters with those that were updated in 'SvmParam'.
-  ModelParam::EncodingMethod ((ModelParam::EncodingMethodType)svmParameters->EncodingMethod     ());
+  ModelParam::EncodingMethod (SVM_EncodingMethodToModelParamEncodingMethodType (svmParameters->EncodingMethod ()));
   
   ModelParam::A_Param  (svmParameters->A_Param ());
   ModelParam::C_Param  (svmParameters->C_Param ());
@@ -353,6 +353,20 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr    _cmdLineStr,
   ValidParam (_validFormat);
 }  /* ParseCmdLine */
 
+
+
+
+ModelParam::EncodingMethodType  ModelParamOldSVM::SVM_EncodingMethodToModelParamEncodingMethodType (SVM_EncodingMethod  _encodingMethod)
+{
+  switch  (_encodingMethod)
+  {
+  case  SVM_EncodingMethod::Null:        return ModelParam::EncodingMethodType::Null;
+  case  SVM_EncodingMethod::NoEncoding:  return ModelParam::EncodingMethodType::NoEncoding;
+  case  SVM_EncodingMethod::Binary:      return ModelParam::EncodingMethodType::Binary;
+  case  SVM_EncodingMethod::Scaled:      return ModelParam::EncodingMethodType::Scaled;
+  }
+  return ModelParam::EncodingMethodType::Null;;
+}
 
 
 
