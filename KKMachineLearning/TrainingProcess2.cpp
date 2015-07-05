@@ -328,7 +328,7 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (const KKSt
   if  (!config->FormatGood ())
   {
     log.Level (-1) << endl 
-      << "TrainingProcess2::CreateTrainingProcessForLevel   ***ERROR***    Config File[" << configFileName << "]  Format is invalid." << endl
+      << "TrainingProcess2::CreateTrainingProcessForLevel   ***ERROR***   Config File[" << configFileName << "]  Format is invalid." << endl
       << endl;
   }
   else
@@ -1413,8 +1413,6 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(TrainingProcess2)
-
-
 
 
 
