@@ -138,7 +138,7 @@ namespace KKMLL
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               ) = 0;
+                                                               ) const = 0;
 
 
   protected:

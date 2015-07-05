@@ -696,6 +696,7 @@ FileDescPtr  GrayScaleImagesFVProducer::DefineFileDescStatic ()
 FeatureVectorListPtr  GrayScaleImagesFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                               RunLog&  runLog
                                                                              )
+                                                                             const
 {
   return  new FeatureVectorList (FileDesc (), owner);
 }
@@ -756,6 +757,7 @@ GrayScaleImagesFVProducerPtr  GrayScaleImagesFVProducerFactory::ManufactureInsta
 FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                      RunLog&  runLog
                                                                                     )
+                                                                                    const
 {
   return new FeatureVectorList (GrayScaleImagesFVProducer::DefineFileDescStatic (), owner);
 }

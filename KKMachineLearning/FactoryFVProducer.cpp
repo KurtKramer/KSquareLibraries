@@ -58,13 +58,14 @@ FeatureVectorPtr  FactoryFVProducer::ManufacturFeatureVector (kkint32  numOfFeat
 FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                       RunLog&  runLog
                                                                      )
+                                                                     const
 {
   return  new FeatureVectorList (FileDesc (), owner);
 }
 
 
 
-TrainingConfiguration2Ptr  FactoryFVProducer::ManufacturTrainingConfiguration ()
+TrainingConfiguration2Ptr  FactoryFVProducer::ManufacturTrainingConfiguration ()  const
 {
   return  new TrainingConfiguration2 ();
 }

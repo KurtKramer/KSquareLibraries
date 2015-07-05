@@ -121,13 +121,14 @@ namespace KKMLL
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               );
+                                                               )
+                                                               const;
 
 
     /**
      *@brief  Returns a 'TrainingConfiguration2'  derived instance.
      */
-    virtual  TrainingConfiguration2Ptr  ManufacturTrainingConfiguration ();
+    virtual  TrainingConfiguration2Ptr  ManufacturTrainingConfiguration ()  const;
 
 
     /**

@@ -6,36 +6,30 @@
  *@brief  Represents a "Class" in the Machine Learning Sense.
  *@author  Kurt Kramer
  *@details
- *@code
- **********************************************************************
- **                            MLClass                                *
- **                                                                   *
- **  Each instance of this class represents a single Class as used in *
- **  Machine Learning sense.  Each instance of 'FeatureVector' class  *
- **  will point to an instance of this class.  There can only be one  *
- **  instance of each Class in memory.  Specifically the 'name' field *
- **  will be unique.  This is enforced by making the constructor and  *
- **  destructor private.  The only way to create a new instance of a  *
- **  'MLClass' object is to call one of the static methods of         *
- **  'CreateNewMLClass'.  These methods will look for a instance of   *
- **  'MLClass' that already exists.  If one does not they will then   *
- **  create a new one.                                                *
- **                                                                   *
- **  Please refer to MLClassList at bottom of file.  That class is    *
- **  the object you will most be using when dealing with Images.      *
- **  classes.                                                         *
- **                                                                   *
- **  UmiClass  and PicesClass                                         *
- **  There is a special relationship between this class  and a class  *
- **  called 'UmiClass' and 'PicesClass in the 'UnManagedInterface'    *
- **  and PicesInterface libraries, ".net' Managed libraries'.  These  *
- **  managed c++ versions of this class.  There is a one-to-one       *
- **  correspondence between the two classes.  When ever a instance    *
- **  of 'UmiClass' or 'PicesClass' get created they  will automatic-  *
- **  ally call the static method 'MLClass::CreateNewMLClass' to get   *
- **  the unmanaged version of the class.                              *
- **********************************************************************
- *@endcode
+ *  Each instance of this class represents a single Class as used in
+ *  Machine Learning sense.  Each instance of 'FeatureVector' class
+ *  will point to an instance of this class.  There can only be one
+ *  instance of each Class in memory.  Specifically the 'name' field
+ *  will be unique.  This is enforced by making the constructor and
+ *  destructor private.  The only way to create a new instance of a
+ *  'MLClass' object is to call one of the static methods of
+ *  'CreateNewMLClass'.  These methods will look for a instance of
+ *  'MLClass' that already exists.  If one does not they will then
+ *  create a new one.
+ *
+ *  Please refer to MLClassList at bottom of file. That class is
+ *  the object you will most be using when dealing with Images.
+ *  classes.
+ *
+ *  UmiClass  and PicesClass
+ *  There is a special relationship between this class  and a class
+ *  called 'UmiClass' and 'PicesClass in the 'UnManagedInterface'
+ *  and PicesInterface libraries, ".net' Managed libraries'. These
+ *  managed c++ versions of this class.  There is a one-to-one
+ *  correspondence between the two classes.  When ever a instance
+ *  of 'UmiClass' or 'PicesClass' get created they  will automatic-
+ *  ally call the static method 'MLClass::CreateNewMLClass' to get
+ *  the unmanaged version of the class.
  *@see KKMLL::MLClassList, KKMLL::FeatureVector, UnManagedInterface::UmiClass, MLL::PicesClass
  */
 
@@ -71,18 +65,13 @@ namespace KKMLL
     /**
      *@brief  Static method used to create a new instance of a MLClass object.
      *@details
-     *@code
-     ************************************************************************
-     ** Used to get pointer to existing MLClass object that already exists  *
-     ** in 'existingMLClasses'.  If one does not exist then a new MLClass   *
-     ** object with this name will be created.                              *
-     **                                                                     *
-     ** This is the only method that can actually create a MLClass instance.*
-     ** The idea is that there is only one MLClass object ever created for  *
-     ** each class.  All MLClassList container objects will point to        *
-     ** instances that are in 'existingMLClasses.                           *
-     ************************************************************************
-     *@endcode
+     * Used to get pointer to existing MLClass object that already exists
+     * in 'existingMLClasses'. If one does not exist then a new MLClass
+     * object with this name will be created.
+     *
+     * This is the only method that can actually create a MLClass instance.
+     * The idea is that there is only one MLClass object ever created for
+     * each class.  All MLClassList container objects will point to
      *@param[in]  _name   Name of class to be created.
      *@return  Pointer to an instance of 'MLClass' that will have the name '_name'.
      */
@@ -103,11 +92,10 @@ namespace KKMLL
      * and update all existing 'MLClassList' instances 'nameIndex' structures.
      *
      *@param[in,out] mlClass Class having its name changed; upon entry should contain its original name; if
-     *                          no other class already has its name it will be updated to the value in 
-     *                          'newName'.
+     *  no other class already has its name it will be updated to the value in 'newName'.
      *@param[in] newName  The new name that 'mlClass' is to receive.
      *@param[out] changeSuccessful Returns 'true' if name was changed; if set to false then the 'name' field in 'mlClass'
-     *                       will not be changed.
+     *  will not be changed.
      */
     static  void  ChangeNameOfClass (MLClassPtr    mlClass,
                                      const KKStr&  newName,
@@ -459,6 +447,7 @@ namespace KKMLL
 
 
   /**
+   *@class  MLClassIndexList
    *@brief  Maintains a list of classes and their associated integer index.  
    *@details 
    *  Multiple Classes can have the same index but a class may only appear once in the list.  The primary purpose
@@ -519,7 +508,7 @@ namespace KKMLL
      * enclosed in quotes("). The method "ParseClassIndexList" will be able to decode this string to
      * repopulate an instance of "MLClassIndexList".
      *@see "KKStr::QuotedStr"
-     * Example String:  "Copepod":1,"Soliolid":2,"Larvacean":3
+     * Example String:  "Copepod":1,"Doliolid":2,"Larvacean":3
      */
     KKStr  ToCommaDelString ()  const;
 

@@ -43,7 +43,8 @@ namespace KKMLL
 
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               );
+                                                               )
+                                                               const;
 
     virtual  kkint16  Version ()  const {return _GrayScaleImagesFVProducer_VersionNum_;}
 
@@ -192,7 +193,8 @@ namespace KKMLL
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               );
+                                                               )
+                                                               const;
 
     /**
      *@brief  Returns instance of "GrayScaleImagesFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".
