@@ -256,15 +256,15 @@ double  svm_predict  (const struct SvmModel233*  model,
  *@param[out] dist    Entry for each class-pair indicating the distance from the decision boundary.
  *@param[out] winners A list of one or more classes that won the highest number of votes; that is for each pair of classes 
  *                    there is a vote and it is possible for there t be a tie for winner.
- *@excludeSupportVectorIDX[in]  Index of training example that should be excluded from computation; if less than zero will 
+ *@param[in]  excludeSupportVectorIDX  Index of training example that should be excluded from computation; if less than zero will 
  *                    be ignored; this would be the same index specified when training the model to ignore.
  *@returns The predicted class; the won that won the most amount of votes; if there is a tie the 1st one will be returned.
  */
 double  svm_predict  (const struct SvmModel233*  model, 
-                      const svm_node*          x, 
-                      std::vector<double>&     dist,
-                      std::vector<kkint32>&    winners,
-                      kkint32                  excludeSupportVectorIDX
+                      const svm_node*            x, 
+                      std::vector<double>&       dist,
+                      std::vector<kkint32>&      winners,
+                      kkint32                    excludeSupportVectorIDX
                      );
 
 
@@ -272,7 +272,7 @@ double  svm_predict  (const struct SvmModel233*  model,
  *@param[in]  model   A previously trained model.
  *@param[in]  x       Example that we want to make prediction on.
  *@param[out] dist    Distance from decision boundary.
- *@excludeSupportVectorIDX[in]  Index of support vector that should be excluded form computation; if less than zero will be ignored.
+ *@param[in]  excludeSupportVectorIDX  Index of support vector that should be excluded form computation; if less than zero will be ignored.
  *@returns The predicted class; Zero(0) or One(1);  if (dist <= 0)  the class Zero otherwise class One.
  */
 double  svm_predictTwoClasses (const SvmModel233*  model,

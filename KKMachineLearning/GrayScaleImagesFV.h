@@ -2,7 +2,7 @@
 #define  _LASRCOSFEATUREVECTOR_
 
 /**
- *@class LarcosCounterUnManaged::GrayScaleImagesFV
+ *@class KKMLL::GrayScaleImagesFV
  *@brief  Specialized version of KKMLL::FeatureVector that will be used 
  *to represent the features of a Shrimp.
  *@author  Kurt Kramer

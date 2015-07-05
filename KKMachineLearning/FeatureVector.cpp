@@ -339,12 +339,10 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
 /**
  *@brief  Constructor that create a duplicate list of FeatureVectors;  
  *@details 
- *@code
  *if (owner == true)  then will also
- *   1) duplicate the contents; that is each example in the list will be 
+ *   -# duplicate the contents; that is each example in the list will be 
  *      duplicated by calling the copy constructor.
- *   2) And the new list will own these newly created examples.
- *@endcode
+ *   -# And the new list will own these newly created examples.
  */
 FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
                                       bool                      _owner

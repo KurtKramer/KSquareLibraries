@@ -4483,7 +4483,6 @@ double  SVM233::svm_predict (const SvmModel233*      model,
 
 
 
-/****************************************************************************************/
 double  SVM233::svm_predictTwoClasses (const SvmModel233*  model,
                                        const svm_node*   x,
                                        double&           dist,

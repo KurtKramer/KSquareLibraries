@@ -165,7 +165,7 @@ namespace KKB
      *@param[in]  _mask  Used to derive height and with of resultant image.
      *@param[in]  _row  Starting row where image data is to be extracted from.
      *@param[in]  _col  Starting column where image data is to be extracted from.
-     *@see MaskTypes
+     *@see MorphOp::MaskTypes
      */
     Raster (const Raster&  _raster,
             MaskTypes      _mask,
