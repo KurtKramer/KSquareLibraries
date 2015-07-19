@@ -267,7 +267,7 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
 
 
 
-void  Classifier2::ClassifyAImage (FeatureVector&  example,
+void  Classifier2::ClassifyAExample (FeatureVector&  example,
                                    MLClassPtr&     predClass1,
                                    MLClassPtr&     predClass2,
                                    kkint32&        predClass1Votes,
@@ -324,7 +324,7 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
       kkint32          subNumOfWinners    = 0;
       double           subBreakTie        = 0.0;
 
-      subClassifer->ClassifyAImage (example, subPredClass1, subPredClass2, 
+      subClassifer->ClassifyAExample (example, subPredClass1, subPredClass2, 
                                     subPredClass1Votes, subPredClass2Votes, subKnownClassProb,
                                     subPredClass1Prob,  subPredClass2Prob,  subNumOfWinners,
                                     subBreakTie
@@ -350,7 +350,7 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
       kkint32          subNumOfWinners    = 0;
       double           subBreakTie        = 0.0;
 
-      subClassifer->ClassifyAImage (example, subPredClass1, subPredClass2, 
+      subClassifer->ClassifyAExample (example, subPredClass1, subPredClass2, 
                                     subPredClass1Votes, subPredClass2Votes, subKnownClassProb,
                                     subPredClass1Prob,  subPredClass2Prob,  subNumOfWinners,
                                     subBreakTie        
@@ -364,13 +364,13 @@ void  Classifier2::ClassifyAImage (FeatureVector&  example,
   example.MLClass (predClass1);
 
   return;
-}  /* ClassifyAImage */
+}  /* ClassifyAExample */
 
 
 
 
 
-MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
+MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
                                          double&         probability,
                                          kkint32&        numOfWinners,
                                          bool&           knownClassOneOfTheWinners,
@@ -388,12 +388,12 @@ MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
                                            breakTie
                                           );
   return  predictedClass;
-}  /* ClassifyAImage */
+}  /* ClassifyAExample */
 
 
 
 
-MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
+MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
                                          kkint32&        numOfWinners,
                                          bool&           knownClassOneOfTheWinners
                                         )
@@ -405,16 +405,16 @@ MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example,
   predictedClass = ClassifyAImageOneLevel (example, numOfWinners, knownClassOneOfTheWinners);
 
   return  predictedClass;
-} /* ClassifyAImage */
+} /* ClassifyAExample */
 
 
 
 
-MLClassPtr  Classifier2::ClassifyAImage (FeatureVector&  example)
+MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example)
 {
   kkint32 numOfWinners = 0;
   bool   knownClassOneOfTheWinners = false;
-  return  ClassifyAImage (example, numOfWinners, knownClassOneOfTheWinners);
+  return  ClassifyAExample (example, numOfWinners, knownClassOneOfTheWinners);
 }
 
 

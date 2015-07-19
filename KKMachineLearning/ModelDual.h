@@ -105,7 +105,7 @@ namespace  KKMLL
     ModelParamDualPtr     Param ();
 
     virtual
-    MLClassPtr            Predict (FeatureVectorPtr  image,
+    MLClassPtr            Predict (FeatureVectorPtr  example,
                                    RunLog&           log
                                   );
   
@@ -155,7 +155,7 @@ namespace  KKMLL
      *         probabilities for any given index in '_probabilities' will be for the class
      *         specified in the same index in '_mlClasses'.
      *@param[in]  _example    FeatureVector object to calculate predicted probabilities for.
-     *@param[in]  _mlClasses  List image classes that caller is aware of. This should be the
+     *@param[in]  _mlClasses  List of classes that caller is aware of. This should be the
      *            same list that was used when constructing this Model object. The list must
      *            be the same but not necessarily in the same order as when Model was 1st
      *            constructed.

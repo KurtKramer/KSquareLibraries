@@ -312,7 +312,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
     for  (idx = 0;  idx < (kkint32)classifiers.size ();  idx++)
     {
       classifier = classifiers[idx];
-      predictedClass =  classifier->ClassifyAImage (*(*imageIDX), 
+      predictedClass =  classifier->ClassifyAExample (*(*imageIDX), 
                                                     probability, 
                                                     numOfWinners,
                                                     knownClassOneOfTheWinners,

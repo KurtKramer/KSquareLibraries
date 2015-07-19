@@ -75,9 +75,9 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
     const KKStr&          ConfigRootName  ()  const  {return configRootName;}
     SVM_SelectionMethod   SelectionMethod ()  const;
 
-    MLClassPtr            ClassifyAImage    (FeatureVector&  example);
+    MLClassPtr            ClassifyAExample    (FeatureVector&  example);
 
-    void  ClassifyAImage (FeatureVector&  example,
+    void  ClassifyAExample (FeatureVector&  example,
                           MLClassPtr&     predClass1,
                           MLClassPtr&     predClass2,
                           kkint32&        predClass1Votes,
@@ -89,12 +89,12 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
                           double&         breakTie
                          );
  
-    MLClassPtr  ClassifyAImage (FeatureVector&  example,
+    MLClassPtr  ClassifyAExample (FeatureVector&  example,
                                 kkint32&        numOfWinners,
                                 bool&           knownClassOneOfTheWinners
                                );
 
-    MLClassPtr  ClassifyAImage (FeatureVector&  example,
+    MLClassPtr  ClassifyAExample (FeatureVector&  example,
                                 double&         probability,
                                 kkint32&        numOfWinners,
                                 bool&           knownClassOneOfTheWinners,

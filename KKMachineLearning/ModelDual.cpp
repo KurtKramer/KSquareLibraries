@@ -444,8 +444,8 @@ MLClassPtr  ModelDual::Predict (FeatureVectorPtr  example,
 
   /**@todo   ModelDual::Predict    Make sure that the call to the first classifier does not modify the encodedExample. */
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  pred1 = classifier1->ClassifyAImage (*encodedExample);
-  pred2 = classifier2->ClassifyAImage (*encodedExample);
+  pred1 = classifier1->ClassifyAExample (*encodedExample);
+  pred2 = classifier2->ClassifyAExample (*encodedExample);
 
   if  (newExampleCreated)
   {
@@ -506,9 +506,9 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
 
-  /**@todo   Make sure that 'classifier1->ClassifyAImage' does not modify the feature data. */
+  /**@todo   Make sure that 'classifier1->ClassifyAExample' does not modify the feature data. */
 
-  classifier1->ClassifyAImage (*encodedExample, 
+  classifier1->ClassifyAExample (*encodedExample, 
                                predClass1C1,       predClass2C1, 
                                predClass1VotesC1,  predClass2VotesC1,
                                probOfKnownClassC1,
@@ -517,7 +517,7 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
                                breakTieC1
                               );
 
-  classifier2->ClassifyAImage (*encodedExample, 
+  classifier2->ClassifyAExample (*encodedExample, 
                                predClass1C2,       predClass2C2, 
                                predClass1VotesC2,  predClass2VotesC2,
                                probOfKnownClassC2,

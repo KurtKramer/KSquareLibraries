@@ -365,7 +365,7 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
 
     knownClass = example->MLClass ();
 
-    predictedClass =  classifier.ClassifyAImage (*example, 
+    predictedClass =  classifier.ClassifyAExample (*example, 
                                                  probability, 
                                                  numOfWinners,
                                                  knownClassOneOfTheWinners,
