@@ -907,6 +907,10 @@ void  ModelDual::ReadXML (XmlStream&      s,
                          )
 {
   delete  config1;  config1 = NULL;
+  delete  config2;  config2 = NULL;
+
+  KKStr  config1Name = "";
+  KKStr  config2Name = "";
 
   XmlTokenPtr  t = s.GetNextToken (log);
   while  (t)
@@ -929,12 +933,23 @@ void  ModelDual::ReadXML (XmlStream&      s,
         {
           delete config1;
           config1 = dynamic_cast<XmlElementTrainingConfiguration2Ptr>(e)->TakeOwnership ();
+          config1Name = config1->ConfigRootName ();
+
+          /**@todo   I need the Config1 configuration read from the XML file to be correct;  but to deal with this problem for now; will reload the original. */
+          delete  config1;
+          config1 = new TrainingConfiguration2 ();
+          config1 ->Load (config1Name, false, log);
         }
 
         else if  ((varName.EqualIgnoreCase ("config2"))  &&  (typeid (*e) == typeid (XmlElementTrainingConfiguration2)))
         {
           delete config2;
           config2 = dynamic_cast<XmlElementTrainingConfiguration2Ptr>(e)->TakeOwnership ();
+          config2Name = config1->ConfigRootName ();
+          /**@todo   I need the Config1 configuration read from the XML file to be correct;  but to deal with this problem for now; will reload the original. */
+          delete  config2;
+          config2 = new TrainingConfiguration2 ();
+          config2 ->Load (config2Name, false, log);
         }
       
         else if  ((varName.EqualIgnoreCase ("trainer1"))  &&  (typeid (*e) == typeid (XmlElementTrainingProcess2)))
