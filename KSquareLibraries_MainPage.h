@@ -5,14 +5,16 @@
  *@section  KSquare-Introduction  "Introduction to KSquare Libraries"
  * The libraries with their included functions/classes are the accumulation of work 
  *that I have built up over the last several years, mostly during my graduate program.  
- *This has become a useful tool-kit for several projects that I have worked on.  The 
- *code is meant to be O/S neutral such that it can be compiled and used in either Windows or Linux.
+ *This has become a useful tool-kit for several projects that I have worked on. The 
+ *code is meant to be O/S neutral such that it can be compiled and used in either Windows 
+ *or Linux.
  *
  *@section KKBase  
  *Functionality that is common to other libraries and applications. Some examples 
- *includes string management, Matrix operations, Image Processing, Token Parsing, 
- *Statistics, Histogramming, and common operating system routines.  Most O/S specific 
- *code is implemented in the module "osServices.cpp".
+ *includes @link KKB::KKStr string management @endlink, @link KKB::Matrix Matrix @endlik operations, 
+ *@link KKB::Raster Image Processing @endlink, @link KKB::Tokenizer Token Parsing @endlink, 
+ *@link StatisticalFunctions.h Statistics @endlink, Histogramming, and common operating system routines.  
+ * Most O/S specific code is implemented in the module @link OSservices.h "osServices.cpp" @endlink.
  *
  *@section KKLineScanner  "Line Scanner"
  *Routines to support Line-Scan camera imagery files. Classes and code that support 
@@ -23,11 +25,11 @@
  *@section  KKMachineLearning "Machine Learning"
  *Classes and Code that support Machine-Learning implementations. 
  *Examples:
- * - FeatureFileIO  several common feature data file formats are support.  (sparse, arff, c45, etc...)
- * - Training-Model-Configuration  class and routines that maintain classifier parameters; such as classifier type.
- * - Machine Learning Classes (MLClass)  and containers for tracking lists of classes.
+ * - @link KKML::FeatureFileIO FeatureFileIO @endlink several common feature data file formats are support.  (sparse, arff, c45, etc...)
+ * - @link KKML::TrainingConfiguration2 Training-Model-Configuration @endlink  class and routines that maintain classifier parameters; such as classifier type.
+ * - Machine Learning Classes (@link KKML::MLClass MLClass @endlink )  and containers for tracking @link KKML::MLClassList lists of classes @endlink.
  * - Hierarchical Class naming is supported.
- * - Containers for Feature Data "FeatureVector", "FeatureVectorList",  stratifying by class.
+ * - Containers for Feature Data @link KKML::FeatureVector "FeatureVector" @endlink, @link KKML::FeatureVectorList "FeatureVectorList" @endlink, stratifying by class.
  * - Feature data normalization routines.
  * - Confusion-Matrix
  * - CrossValidation - Example 10 fold CV; also (N x X) cross Validation; typically used by grading a classifier.

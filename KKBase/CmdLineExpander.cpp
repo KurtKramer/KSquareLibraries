@@ -16,7 +16,6 @@
 
 #include "MemoryDebug.h"
 
-#include <sys/types.h>
 #ifdef  WIN32
 #include <io.h>
 #include <windows.h>
@@ -24,6 +23,8 @@
 //#include  <sys/loadavg.h>
 #include <unistd.h>
 #endif
+
+#include <sys/types.h>
 
 using namespace std;
 

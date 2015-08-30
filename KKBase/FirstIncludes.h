@@ -2,6 +2,11 @@
 #define  _NO_MEMORY_LEAK_CHECK_
 #endif
 
+#ifndef  WIN32
+#define WIN32
+#endif
+
+
 #if  defined(WIN32)
 #define  OS_WINDOWS
 #include <windows.h>
