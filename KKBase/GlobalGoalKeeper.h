@@ -10,7 +10,7 @@
 
 namespace  KKB
 {
-  #if  !defined(_KKU_GOALKEEPER_)
+  #if  !defined(_GoalKeeper_Defined_)
   class  GoalKeeper;
   typedef  GoalKeeper*  GoalKeeperPtr;
   #endif

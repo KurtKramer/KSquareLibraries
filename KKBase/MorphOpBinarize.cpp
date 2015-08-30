@@ -8,10 +8,10 @@
 #include <iostream>
 #include <map>
 #include <vector>
-
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "KKBaseTypes.h"
 #include "MorphOp.h"
 #include "MorphOpBinarize.h"
 #include "Raster.h"

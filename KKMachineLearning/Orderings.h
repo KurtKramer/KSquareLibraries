@@ -127,7 +127,8 @@ public:
    *        'indexFileName' using the 'FileName' method from FeatureVectorList.  It is expected 
    *        that a separate index file by the name osDeletExtention (FeatureFileName) + ".idx" 
    *        will exist.  The orderings will be loaded from that file.
-   *@param[in]  _data  FeatureVectorList that we want different orderings of.
+   *@param[in] _data  FeatureVectorList that we want different orderings of.
+   *@param[in] _log  Logger.
    */
   Orderings (FeatureVectorListPtr  _data,
              RunLog&               _log
@@ -146,6 +147,7 @@ public:
    *@param[in]  _data  FeatureVectorList that we want different orderings of.
    *@param[in]  _numOfOrderings  Expected number of orderings.
    *@param[in]  _numOfFolds  Number of folds each ordering should be stratified by.
+   *@param[in]  _log  Logger.
    */
   static
   OrderingsPtr  CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,

@@ -788,8 +788,6 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForAGivenClass (MLClass
     }
   }
 
-  extractedImages->Compress ();
-
   return  extractedImages;
 }  /*  ExtractExamplesForAGivenClass  */
 
@@ -1444,8 +1442,6 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     delete  folds[foldNum];
     folds[foldNum] = NULL;
   }
-
-  stratafiedImages->Compress ();
 
   delete  folds;
   folds = NULL;

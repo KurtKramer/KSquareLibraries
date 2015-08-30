@@ -1,19 +1,17 @@
-#include  "FirstIncludes.h"
-
-#include  <stdlib.h>
-#include  <memory.h>
-#include  <math.h>
-
-#include  <map>
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
+#include "FirstIncludes.h"
+#include <stdlib.h>
+#include <memory.h>
+#include <math.h>
+#include <map>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
-#include  "MemoryDebug.h"
 
-#include  "KKBaseTypes.h"
+#include "KKBaseTypes.h"
 using namespace  KKB;
 
 #include "ScannerFileSipper3.h"

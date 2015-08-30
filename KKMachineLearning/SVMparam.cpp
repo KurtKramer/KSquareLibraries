@@ -604,8 +604,8 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
 
 
 
-void  SVMparam::SetFeatureNums (MLClassPtr              class1,
-                                MLClassPtr              class2,
+void  SVMparam::SetFeatureNums (MLClassPtr              _class1,
+                                MLClassPtr              _class2,
                                 FeatureNumListConstPtr  _features,
                                 float                   _weight
                                )
@@ -614,11 +614,11 @@ void  SVMparam::SetFeatureNums (MLClassPtr              class1,
   {
     if  (_weight < 0)
       _weight = 1;
-    AddBinaryClassParms (class1, class2, param, _features, _weight);
+    AddBinaryClassParms (_class1, _class2, param, _features, _weight);
   }
   else
   {
-    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (class1, class2);
+    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (_class1, _class2);
     if  (binaryParms)
     {
       if  (_weight < 0)
@@ -629,7 +629,7 @@ void  SVMparam::SetFeatureNums (MLClassPtr              class1,
     {
       if  (_weight < 0)
         _weight = 1.0f;
-      AddBinaryClassParms (class1, class2, param, _features, _weight);
+      AddBinaryClassParms (_class1, _class2, param, _features, _weight);
     }
   }
 }  /* SetFeatureNums */
@@ -711,8 +711,8 @@ void  SVMparam::C_Param (MLClassPtr  class1,
 
 
 
-void  SVMparam::SetBinaryClassFields (MLClassPtr              class1,
-                                      MLClassPtr              class2,
+void  SVMparam::SetBinaryClassFields (MLClassPtr              _class1,
+                                      MLClassPtr              _class2,
                                       const svm_parameter&    _param,
                                       FeatureNumListConstPtr  _features,
                                       float                   _weight
@@ -720,11 +720,11 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr              class1,
 {
   if  (!binaryParmsList)
   {
-    AddBinaryClassParms (class1, class2, _param, _features, _weight);
+    AddBinaryClassParms (_class1, _class2, _param, _features, _weight);
   }
   else
   {
-    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (class1, class2);
+    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (_class1, _class2);
     if  (binaryParms)
     {
       binaryParms->Param            (_param); 
@@ -733,7 +733,7 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr              class1,
     }
     else
     {
-      AddBinaryClassParms (class1, class2, _param, _features, _weight);
+      AddBinaryClassParms (_class1, _class2, _param, _features, _weight);
     }
   }
 }  /* SetBinaryClassFields */
@@ -746,14 +746,14 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr              class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  SVMparam::AddBinaryClassParms (MLClassPtr              class1,
-                                     MLClassPtr              class2,
+void  SVMparam::AddBinaryClassParms (MLClassPtr              _class1,
+                                     MLClassPtr              _class2,
                                      const svm_parameter&    _param,
                                      FeatureNumListConstPtr  _selectedFeatures,  /**< We will NOT be taking ownership; we will make our own copy. */
                                      float                   _weight
                                     )
 {
-  AddBinaryClassParms (new BinaryClassParms (class1, class2, _param, _selectedFeatures, _weight));
+  AddBinaryClassParms (new BinaryClassParms (_class1, _class2, _param, _selectedFeatures, _weight));
 }  /* AddBinaryClassParms */
 
 

@@ -87,6 +87,15 @@ namespace KKMLL
                                                      RunLog&           runLog
                                                     ) = 0;
 
+
+    /**
+     *@brief  Compute a FeatureVector from the image file specified by 'fileName'
+     *@param[in] image
+     *@param[in] knownClass  The class label that will be assigned to this Feature vector.
+     *@param[in,out] intermediateImages  If not NULL will save a copy of the intermediate images created during Feature Computation; the call will own the list and its contents.
+     *@param[in] log Logging file.
+     *@returns The resultant Feature vector computed.
+     */
     virtual  FeatureVectorPtr  ComputeFeatureVectorFromImage (const KKStr&      fileName,
                                                               const MLClassPtr  knownClass,
                                                               RasterListPtr     intermediateImages,
@@ -97,6 +106,7 @@ namespace KKMLL
 
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FeatureVectorProducer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
+
 
     /** 
      *@brief Returns the 'type_info' of the FeatureVectorList derived class that can contain instances in 'FeatureVector' 
@@ -111,13 +121,13 @@ namespace KKMLL
     /** @brief  Returns pointer to factory that instantiated this instance */
     FactoryFVProducerPtr  Factory ()  const  {return factory;}
 
+
     /**  
      *@brief  Returns back a "FileDesc" instance that describes the features that this instance of 'FeatureVectorProducer' creates.
      * The class derived form this class is responsible for creating the FileDesc instance.  When this method is called if "fileDesc" 
      * equals NULL  then will call "DefineFileDesc", which is a pure virtual method that will be implemented by the derived class, to 
      * instantiate a new instance.
      */
-
     FileDescConstPtr  FileDesc ()  const;
 
 
@@ -128,9 +138,12 @@ namespace KKMLL
     //  Feature description related methods.
     kkuint32  FeatureCount ()  const;
 
+
     const KKStr&  FeatureName (kkuint32  fieldNum)  const;
 
+
     kkuint32  MaxNumOfFeatures ()     {return  FeatureCount ();}  /**<  Same as FeatureCount  */
+
 
     /**
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
@@ -157,7 +170,5 @@ namespace KKMLL
 #define  _FeatureVectorProducer_Defined_
 
 }  /* KKMLL */
-
-
 
 #endif

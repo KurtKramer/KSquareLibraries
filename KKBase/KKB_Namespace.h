@@ -1,6 +1,7 @@
 namespace  KKB
 {
 /**
+ *@defgroup KKBDocs "KSquare Base"
  *@namespace  KKB  
  *@brief KKB The namespace for KKBaseLibrary supporting general functionality needed by almost any application. 
  *@section  Introduction   Introduction

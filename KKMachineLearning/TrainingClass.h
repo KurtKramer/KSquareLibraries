@@ -44,10 +44,12 @@ namespace KKMLL
      *@brief  Constructor,  Creates a new instance of TrainingClass and populates
      *fields with respective data from parameters.
      *@param[in] _directories A list of directories where training examples for class '_name' can be found.
-     *@param[in] _weight 
-     *@param[in] _countFactor
-     *@param[in] _subClassifier  If not NULL points to the configuration that is to be used if this class is predicted.
-     *@param[in,out] mlClasses List of classes.
+     *@param[in] _name The name of the class that this'TrainingClass' instance will be pointing to.
+     *@param[in] _weight You can give extra weight to a class with this parameter; its impact/use varies with particular algorithm(Model) used.
+     *@param[in] _countFactor 
+     *@param[in] _subClassifier  If not NULL points to the configuration that is to be used if this class 
+     *                           is predicted. This is how multi-level classifier is implemented.
+     *@param[in,out] _mlClasses List of classes.
      */
     TrainingClass (const VectorKKStr&         _directories,
                    KKStr                      _name,

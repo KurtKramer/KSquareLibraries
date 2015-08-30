@@ -89,11 +89,14 @@ namespace KKMLL
 
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
-    void    AddBinaryClassParms (MLClassPtr              class1,
-                                 MLClassPtr              class2,
-                                 const svm_parameter&    _param,
-                                 FeatureNumListConstPtr  _selectedFeatures,  /**< We will make our own copy; caller will retain ownership status.  */
-                                 float                   _weight
+    /**@brief Adding parameters that are specific to a class pair; this is used when using the BFS version of SVM. */
+    void    AddBinaryClassParms (MLClassPtr              _class1,            /**< First of two classes that is being added to this model.  */
+                                 MLClassPtr              _class2,            /**< Second of two classes that is being added to this model. */
+                                 const svm_parameter&    _param,             /**< Parameters that are to be used by two-class classifier.  */
+                                 FeatureNumListConstPtr  _selectedFeatures,  /**< makes own copy; caller will retain ownership status.     */
+                                 float                   _weight             /**< You can specify the weight that you want to give to this
+                                                                              * binary-class SVM when voting or computing probability.
+                                                                              */
                                 );
 
     float   AvgMumOfFeatures (FileDescPtr fileDesc) const;
@@ -187,20 +190,29 @@ namespace KKMLL
     void  SelectedFeatures   (FeatureNumListConstPtr  _selectedFeatures);
 
 
-    void  SetBinaryClassFields (MLClassPtr              class1,
-                                MLClassPtr              class2,
-                                const svm_parameter&    _param,
-                                FeatureNumListConstPtr  _features,
-                                float                   _weight
+
+    void  SetBinaryClassFields (MLClassPtr              _class1,      /**< First of two classes that is being added to this model.  */
+                                MLClassPtr              _class2,      /**< Second of two classes that is being added to this model. */
+                                const svm_parameter&    _param,       /**< Parameters that are to be used by two-class classifier.  */
+                                FeatureNumListConstPtr  _features,    /**< makes own copy; caller will retain ownership status.     */
+                                float                   _weight       /**< You can specify the weight that you want to give to this
+                                                                       * binary-class SVM when voting or computing probability.
+                                                                       */
                                );
 
     void  SetFeatureNums (FeatureNumListConstPtr  _features);
+
     void  SetFeatureNums (FeatureNumListConst&    _features);
 
-    void  SetFeatureNums    (MLClassPtr              class1,
-                             MLClassPtr              class2,
-                             FeatureNumListConstPtr  _features,
-                             float                   _weight = -1  /**< -1 Indicates use existing value.  */
+
+    /** 
+     *@brief Sets the selected Features and Weight for the binary class SVM specified by _class1 and _class2.
+     *@details If this pair has not been defined yet will create a new entry and add to list of Binary-Class-Pair's. 
+     */
+    void  SetFeatureNums    (MLClassPtr              _class1,      /**< First of two classes  to set features for.           */
+                             MLClassPtr              _class2,      /**< Second of two classes to set features for.           */
+                             FeatureNumListConstPtr  _features,    /**< Makes own copy; caller will retain ownership status. */
+                             float                   _weight = -1  /**< -1 Indicates use existing value.                     */
                             );
 
     void  SelectionMethod   (SVM_SelectionMethod   _selectionMethod)  {selectionMethod  = _selectionMethod;}

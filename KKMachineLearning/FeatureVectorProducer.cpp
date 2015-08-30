@@ -2,7 +2,6 @@
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>

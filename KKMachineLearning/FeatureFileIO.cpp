@@ -509,7 +509,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
   }
   else
   {
-    examples->Compress ();
     _successful = true;
   }
 

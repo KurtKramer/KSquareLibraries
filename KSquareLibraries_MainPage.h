@@ -2,7 +2,7 @@
 /**
  *@mainpage  KSquareLibraries
  *
- *@section  Introduction
+ *@section  KSquare-Introduction  "Introduction to KSquare Libraries"
  * The libraries with their included functions/classes are the accumulation of work 
  *that I have built up over the last several years, mostly during my graduate program.  
  *This has become a useful tool-kit for several projects that I have worked on.  The 
@@ -14,24 +14,24 @@
  *Statistics, Histogramming, and common operating system routines.  Most O/S specific 
  *code is implemented in the module "osServices.cpp".
  *
- *@section KKLineScanner 
+ *@section KKLineScanner  "Line Scanner"
  *Routines to support Line-Scan camera imagery files. Classes and code that support 
  * the processing of data from line-scan cameras. Support for Dynamic-Flat-Field 
  *correction. Storage and retrieval of imagery data in 2,3,4, and 8 bit-depth 
  *gray-scale with support for embedding instrumentation data as well as text. 
  *
- *@section  KKMachineLearning
+ *@section  KKMachineLearning "Machine Learning"
  *Classes and Code that support Machine-Learning implementations. 
  *Examples:
- * - FeatureFileIO  several comman feature data file formats are support.  (sparse, arff, c45, etc...)
- * - Training-Model-Configuration  class and routines that maintanin classifier parameters; such as classifer type.
+ * - FeatureFileIO  several common feature data file formats are support.  (sparse, arff, c45, etc...)
+ * - Training-Model-Configuration  class and routines that maintain classifier parameters; such as classifier type.
  * - Machine Learning Classes (MLClass)  and containers for tracking lists of classes.
- * - Hierarchial Class naming is supported.
+ * - Hierarchical Class naming is supported.
  * - Containers for Feature Data "FeatureVector", "FeatureVectorList",  stratifying by class.
- * - Feature data normailization routines.
+ * - Feature data normalization routines.
  * - Confusion-Matrix
- * - CrossValidation - Example 10 fold CV; also (N x X) cross Validation; typicacly used by grading a classifier.
- * - Implementations of Classifoers.
+ * - CrossValidation - Example 10 fold CV; also (N x X) cross Validation; typically used by grading a classifier.
+ * - Implementations of Classifiers'.
  *    -# Pair-Wise Feature selected SVM (Unique set of features for each pair of classes).
  *    -# Common Features SVM (One set of features for all class pairs).
  *    -# USF Cascading correlation neural networks (USF-Cas-Cor).
@@ -39,9 +39,9 @@
  *
  *
  *@section  KKJobManager
- *Framework that assists in implementing background processes runmning on multiple cpu's.
+ *Framework that assists in implementing background processes running on multiple cpu's.
  * 
- *@section  OutsideLibraries 
+ *@section  OutsideLibrariesUsed  "Outside Libraries"
  *External libraries required for full functionality. That is libraries and code from other 
  *sources.  Outside Libraries FFTW and ZLIB To use all the classes in this Library you will 
  *need the libraries fftw and lib123.  "fftw" stands for "Fastest Fourier Transform in The West".  

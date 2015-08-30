@@ -161,7 +161,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
   }
   else
   {
-    examples->Compress ();
     _successful = true;
   }
 

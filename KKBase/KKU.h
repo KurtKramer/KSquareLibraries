@@ -21,7 +21,7 @@
   Author
   Kurt Kramer
   kurtkramer@gmail.com
-/*
+*/
 
 /**
  @namespace KKB  Kurt Kramer Utilities

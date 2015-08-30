@@ -2,29 +2,13 @@
 #define  _MODELOLDSVM_
 
 
-/**
- *@class KKMLL::ModelOldSVM
- *@browse
- *@details
- *@code
- ************************************************************************
- **                           ModelOldSVM                               *
- **                                                                     *
- **  This is a specialization of 'Model'.  It is meant to Wrap the      *
- **  original version of 'SvmModel'.  This class will allow us to use   *
- **  the original implementation using version 2.39 of LibSVM.          *
- **                                                                     *
- ************************************************************************
- *@endcode
- */
 
+#include "RunLog.h"
+#include "KKStr.h"
 
-#include  "RunLog.h"
-#include  "KKStr.h"
-
-#include  "svm.h"
-#include  "Model.h"
-#include  "SVMModel.h"
+#include "svm.h"
+#include "Model.h"
+#include "SVMModel.h"
 
 
 
@@ -42,6 +26,11 @@ namespace KKMLL
 #endif
 
 
+ /**
+  *@class  ModelOldSVM
+  *@brief A specialization of 'Model'; meant to Wrap the original version of 'SvmModel' class. 
+  *  It will allow us to use the original implementation using version 2.39 of LibSVM.
+  */
   class  ModelOldSVM:  public Model
   {
   public:
@@ -55,8 +44,7 @@ namespace KKMLL
      *@brief Creates a new svm model from the provided example (example) data
      *@param[in] _name  
      *@param[in] _param The parameters for the svm, and for creating the model.
-     *@param[in] _fileDesc A description of the data file.
-     *@param[in] _log A log-file stream. All important events will be output to this stream
+     *@param[in] _factoryFVProducer Describes the FeactureVectorProducer, FileDesc, and FeatureVectorList derived classes needed.
      */
     ModelOldSVM (const KKStr&             _name,
                  const ModelParamOldSVM&  _param,         // Create new model from
@@ -152,6 +140,7 @@ namespace KKMLL
       *@param[out] _votes          Number of votes for each class
       *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+      *@param[in]  log             Logger.
       */
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
@@ -163,15 +152,15 @@ namespace KKMLL
 
 
      /**
-      ******************************************************************************************************************
-      *@brief  Will get the probabilities assigned to each class.
-      *@param[in]  example unknown example that we want to get predicted probabilities for. 
-      *@param[in]  _ImageClasses  List classes that caller is aware of.  This should be the same list that 
-      *                           was used when constructing this ModelOldSVM object.  The list must be the
+      *@brief  Retrieves probabilities assigned to each class.
+      *@param[in]  _example unknown example that we want to get predicted probabilities for. 
+      *@param[in]  _ImageClasses  List classes that caller is aware of. This should be the same list that 
+      *                           was used when constructing this ModelOldSVM object. The list must be the
       *                           same but not necessarily in the same order as when ModelOldSVM was 1st
       *                           constructed.
       *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+      *@param[in]  _log  Logger to send messages to.
       */
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
@@ -247,7 +236,8 @@ namespace KKMLL
      * @param[in] _trainExamples      The example data we will be building the model from.
      * @param[in] _alreadyNormalized  Specifies weather the training data has already been normalized.
      * @param[in] _takeOwnership      If true this instance will take ownership of '_trainExamples' and delete it when done with it.
-     */
+     * @param[in] _cancelFlag         Monitored; when set to True will end processing and return to caller.
+     * @param[in] _log                Logger to send messages to.     */
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
                                bool                  _takeOwnership,  /*!< Model will take ownership of these examples */

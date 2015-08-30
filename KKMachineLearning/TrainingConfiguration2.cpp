@@ -2138,29 +2138,22 @@ FeatureVectorListPtr   TrainingConfiguration2::LoadOtherClasssExamples (RunLog& 
 
 
 
-
-
-
 /**
  *@brief  Load training data from the training library directories.
- *@details
- *@code
- **********************************************************************************************  
- * Description:   Loads all the FeatureData from the Training Library.  The images in the     *
- *                sub-directories specified by the 'TrainingClass' entries will be used as the*
- *                primary source.  Data from existing FeatureData files will be used unless   *
- *                they are out of date.  In that case the data will be recomputed from the    *
- *                original images.                                                            *
- *                                                                                            *
- * ExampleFileName: This field that is in each 'FeatureVector' instance will reflect the sub- *
- *                directory from where it was retrieved. Between that and the 'rootDir' field *
- *                you will be able to get the full path to then original image.               *
- **********************************************************************************************  
- *@endcode
+ *@details Loads all the FeatureData from the Training Library.  The images in the sub-directories 
+ * specified by the 'TrainingClass' entries will be used as the primary source.  Data from existing 
+ * FeatureData files will be used unless they are out of date.  In that case the data will be 
+ * recomputed from the original images.<p>
+ *
+ * The 'ExampleFileName' A field that is in each 'FeatureVector' instance will reflect the sub-directory 
+ * from where it was retrieved. Between that and the 'rootDir' field you will be able to get the full 
+ * path to then original image.
+ *
  *@param[out] latestImageTimeStamp  Time-stamp of the most current image loaded.
  *@param[out] changesMadeToTrainingLibraries  True if any image needed to have its features recalculated
  *                                            or images were removed or added to a training directory.
- *@param[in]  cancelFlag  Will monitor this flag.  If it gets set to true will terminate the load and return.
+ *@param[in]  cancelFlag  Will monitor this flag; if turns true will terminate the load and return.
+ *@param[in]  log Logging File.
  */
 FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&  latestImageTimeStamp,
                                                                                     bool&      changesMadeToTrainingLibraries,

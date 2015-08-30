@@ -11,6 +11,7 @@
 
 
 
+
 namespace KKMLL 
 {
   #if  !defined(_FEATUREVECTOR_)
@@ -51,6 +52,30 @@ namespace KKMLL
   typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
 
+  /**
+   *@class TrainingProcess2  TrainingProcess2.h  "KSquareLibraries\KKMachineLearning\TrainingProcess2.h"
+   *@brief Manages the creation and loading of training models.
+   *@details A trained model can either be built from scratch using specified training data or a persistent instance 
+   * can be loaded from a XMLStream. There are several static methods that are best used to manage the various situations
+   * such as "CreateTrainingProcess", "CreateTrainingProcessForLevel", "CreateTrainingProcessFromTrainingExamples",
+   * "LoadExistingTrainingProcess".  The result of any of these methods is a TrainigProcess2 instance that you
+   * use to create a Classifier instance.<p>
+   *
+   * Supporting Classes:
+   *  - TrainingConfiguration2  Manages defines the parameters of a classifier such as:
+   *    -# Type of algorithm
+   *    -# List Classes of and where training examples can be loaded from.
+   *    -# Sub-Classifiers that is for any given class another "TrainingConfiguration2" can be specified indicating another 
+   *       classifier to be used when that class is predicted.
+   *    -# Class Weights
+   *
+   *  - Model  Base class for all algorithms.  SupportVectorMachine(SVM), USFCasCor, BFS-SVM, etc ....
+   *
+   *  - Classifier2 You construct an instance from a 'TrainingProcess2' instance;  this is the class that manages predictions.
+   *
+   * Sub-Classifiers:  For each sub-classifiers specified in the "TrainingConfiguration2" another instance of "TrainingProcess2" 
+   * will be created. Data member "subTrainingProcesses" will keep a list of these "TrainingProcess2" instances.
+   */  
   class  TrainingProcess2
   {
   public:
@@ -69,22 +94,23 @@ namespace KKMLL
      *@brief  Creates a TrainingPorcess based off a specified configuration; depending on the '_whenToRebuild' parameter
      * and the current status of the corresponding "save" file will either load existing trained classifier or build a 
      * new one from scratch.
-     *@param[in]  _config  A previously loaded configuration file that specifies directories where 
+     *@param[in]  config  A previously loaded configuration file that specifies directories where 
      *                     example images for each class can be found.  Caller will still own 'config'
      *                     and be responsible for deleting it.
      *
-     *@param[in] _checkForDuplicates  If set to true will look for duplicates in the training data. Two
+     *@param[in]  checkForDuplicates  If set to true will look for duplicates in the training data. Two
      *                                FeatureVectors will be considered duplicate if they have the Same
      *                                ExampleFileName or the save Feature Values.  If duplicates are in 
      *                                the same class then all but one will be removes.  If they are
      *                                in more then one class then they will both be removed.
-     *@param[in]  _whenToRebuild
      *
-     *@param[in]  _saveTrainedModel   Specifies whether to the TrainingPorcess if it needs to be trained.
+     *@param[in]  whenToRebuild      Specify when to rebuild the Models; see definition of enumerator WhenToRebuild.
      *
-     *@param[in]  _cancelFlag
+     *@param[in]  saveTrainedModel   Specifies whether to the TrainingPorcess if it needs to be trained.
      *
-     *@param[in]  _log   Logging file.
+     *@param[in]  cancelFlag         Will monitor; if it ever is set to true stop processing at earliest convenience and return to caller.
+     *
+     *@param[in]  log   Logging file.
      */
     static
     TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  config,
@@ -98,22 +124,24 @@ namespace KKMLL
 
 
     /**
-     *@brief  Build a new model from scratch for the specified class level. Will also remove duplicates.
+     *@brief  Build a new model from scratch for the specified class level removing duplicate training examples.
      *
-     *@details  Using the parameter '_level' will construct a classifier that groups classes together
-     *          by group.  Underscore characters in the class name will be used to differentiate group
-     *          levels.  Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
+     *@details  Using the parameter level will construct a classifier that groups classes together
+     *          by group hierarchy. Underscore characters in the class name will be used to differentiate group
+     *          levels. Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
      *          belongs to level 1.
      *
-     *@param[in]  _config  Configuration that will provide parameters such as classes and their related 
-     *                     directories where training examples are found.
+     *@param[in]  config  Configuration that will provide parameters such as classes and their related 
+     *                    directories where training examples are found and sub-classifiers.
      *
-     *@param[in]  _level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
+     *@param[in]  level  The grouping level to build a classifier for. Ex: if _level = 2 is specified
      *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
      *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
      *
-     *@param[in]  _log  Logging file.
+     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
+     *                        and return to caller.
      *
+     *@param[in]  log  Logging file.
      */
     static
     TrainingProcess2Ptr  CreateTrainingProcessForLevel (TrainingConfiguration2Const*  config,
@@ -122,6 +150,28 @@ namespace KKMLL
                                                         RunLog&                       log
                                                        );
 
+
+    /**
+     *@brief  Build a new model from scratch for the specified class level removing duplicate training examples.
+     *
+     *@details  Using the parameter level will construct a classifier that groups classes together
+     *          by group hierarchy. Underscore characters in the class name will be used to differentiate group
+     *          levels. Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
+     *          belongs to level 1.
+     *
+     *@param[in]  configFileName  Name of Configuration file that is to be used to construct instance of TrainingConfiguration2. 
+     *                    Will provide parameters such as classes and their related directories where training examples 
+     *                    are found and sub-classifiers.
+     *
+     *@param[in]  level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
+     *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
+     *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
+     *
+     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
+     *                        and return to caller.
+     *
+     *@param[in]  log  Logging file.
+     */
     static
     TrainingProcess2Ptr  CreateTrainingProcessForLevel (const KKStr&   configFileName,
                                                         kkuint32       level,
@@ -131,12 +181,20 @@ namespace KKMLL
 
 
     /**
-     *@brief  Constructor that gets its training data from a list of examples provided in one of the parameters.
-     *@param[in]  _config  A configuration that is already loaded in memory.
-     *@param[in]  _trainingExamples  Training data to train classifier with.
-     *@param[in]  _featuresAlreadyNormalized  If set to true will assume that all features in the
-     *                                       training data are normalized.
-     *@param[in]  _log   Logging file.
+     *@brief  Will Construct an instance using provided list of examples rather than loading from training library.
+     *@details Training examples are typically loaded from a training library as specified in the TrainingConfiguration2
+     * structure. Rather than loading and/or computing feature data it will utilize the feature-vectors provided by the
+     * 'trainingExamples' parameter.
+     *@param[in]  config  A configuration that is already loaded in memory.
+     *@param[in]  trainingExamples  Training data to train classifier with.
+     *@param[in]  takeOwnershipOfTrainingExamples If set to true then we will take ownership of the feature-vectors in 
+     *                                            'trainingExamples'. This means we are free to modify or delete them as needed.
+     *                                             If this flag is set to false will make duplicate copy of the feature-vectors
+     *                                             if it is required to modify them; such as normalize them.
+     *@param[in]  featuresAlreadyNormalized  If set to true will assume that all features in the training data are normalized.
+     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
+     *                        and return to caller.
+     *@param[in]  log   Logging file.
      */
     static
     TrainingProcess2Ptr  CreateTrainingProcessFromTrainingExamples (TrainingConfiguration2Const* config, 
@@ -149,6 +207,13 @@ namespace KKMLL
 
 
 
+    /**
+     *@brief  Loads an existing TrainingProcess; if one does not exist will return NULL.
+     *@param[in]  configRootName  Root name of training model; 
+     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
+     *                        and return to caller.
+     *@param[in]  log   Logging file.
+     */
     static
     TrainingProcess2Ptr  LoadExistingTrainingProcess (const KKStr&   configRootName,
                                                       VolConstBool&  cancelFlag,

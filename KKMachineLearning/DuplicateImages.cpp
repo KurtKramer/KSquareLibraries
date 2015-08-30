@@ -1,15 +1,10 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <vector>
 #include <iostream>
 #include <fstream>
-
 #include "MemoryDebug.h"
-
 using namespace std;
-
-
 
 #include "KKBaseTypes.h"
 #include "OSservices.h"

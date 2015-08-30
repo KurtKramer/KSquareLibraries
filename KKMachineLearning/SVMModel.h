@@ -208,7 +208,8 @@ typedef  struct svm_node*     XSpacePtr;
      *                          constructed.
      *@param[out] _votes  An array that must be as big as the number of classes in _mlClasses.
      *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
-     *            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+     *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+     *@param[in]  _log Logging file.  
      */
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
@@ -269,6 +270,7 @@ typedef  struct svm_node*     XSpacePtr;
      *            the list of classes in 'classes'.  'crossProbTable' will be a two dimension square matrix 
      *            size will be dictated by the number of classes in 'classes'.  Ex:  Entry[3][2] will have the 
      *            contain the probability between classes[3] and classes[2].
+     *@param[in]  log Logging file.  
      */
     void  RetrieveCrossProbTable (MLClassList&  classes,
                                   double**      crossProbTable,  // two dimension matrix that needs to be classes.QueueSize ()  squared.

@@ -30,12 +30,19 @@
  * <a href="http://figment.cse.usf.edu/~kkramer/">Kurt Kramer.</a><br>
  * ( mail : <a href="mailto:kurtkramer@gmail.com">kurtkramer@gmail.com</a> )<br>
  */
+
+//#define WIN32
+
 #if  defined(WIN32) || defined(WIN64)
+
 #include <windows.h>
 #include "FLOAT.H"
+
 #else
+
 #include <inttypes.h>
 #include "float.h"
+
 #endif
 
 #include <limits>

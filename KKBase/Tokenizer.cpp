@@ -11,7 +11,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "KKBaseTypes.h"
 #include "Tokenizer.h"
 #include "KKStr.h"
 #include "TokenBuffer.h"

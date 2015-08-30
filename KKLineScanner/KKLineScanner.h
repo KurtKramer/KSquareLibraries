@@ -26,7 +26,7 @@
   Author
   Kurt Kramer
   kurtkramer@gmail.com
-/*
+*/
 
 /**
  @namespace KKLSC  Kurt Kramer Line Scan Camera routines.

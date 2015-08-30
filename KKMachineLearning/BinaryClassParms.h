@@ -52,9 +52,9 @@ namespace KKMLL
 
     /** 
      *@brief  Constructor for 'BinaryClassParms' where caller supplies the two classes and parameters for that specific class pair. 
-     *@param[in]  _class1
-     *@param[in]  _class2
-     *@param[in]  _param
+     *@param[in] _class1
+     *@param[in] _class2
+     *@param[in] _param
      *@param[in] _selectedFeatures  Will create a duplicate instance; caller will still have same ownership status.
      *@param[in] _weight
      */

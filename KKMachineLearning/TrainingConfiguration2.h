@@ -85,10 +85,10 @@ namespace KKMLL
      *@brief Use this one if you want to create a default Configuration object.
      *@details We know what the underlying feature data is from _fileDesc but we do not know how they 
      * are computed; that is why we do not provide a "FactoryFVProducer" instance.
-     *@param[in]  _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
-     *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
-     *@param[in]  _parameterStr Sting with Machine Learning Parameters.
-     *@param[in]  _log  Where to send logging messages to.
+     *@param[in] _mlClasses  Will make copy of list of MLClasses and NOT take ownership.
+     *@param[in] _fileDesc Description of the Feature-Vector fields.
+     *@param[in] _parameterStr Sting with Machine Learning Parameters.
+     *@param[in] _log  Where to send logging messages to.
      */
     TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                             FileDescPtr     _fileDesc,
@@ -103,7 +103,7 @@ namespace KKMLL
      *@details  For each class specified in '_mlClasses' a 'TrainingClass' instance will be created. 
      * All feature-numbers will be assumed to be selected and unlimited examples per class will be allowed.
      *@param[in] _mlClasses
-     *@param[in]  _fvFactoryProducer  If NULL will default to "GrayScaleImagesFVProducerFactory".
+     *@param[in] _fileDesc Description of the Feature-Vector fields.
      *@param[in] _modelParameters  Will take ownership of this instance.
      *@param[in] _log
      */
