@@ -11,7 +11,7 @@
  *
  *@section KKBase  
  *Functionality that is common to other libraries and applications. Some examples 
- *includes @link KKB::KKStr string management @endlink, @link KKB::Matrix Matrix @endlik operations, 
+ *includes @link KKB::KKStr string management @endlink, @link KKB::Matrix Matrix @endlink operations, 
  *@link KKB::Raster Image Processing @endlink, @link KKB::Tokenizer Token Parsing @endlink, 
  *@link StatisticalFunctions.h Statistics @endlink, Histogramming, and common operating system routines.  
  * Most O/S specific code is implemented in the module @link OSservices.h "osServices.cpp" @endlink.
@@ -25,11 +25,11 @@
  *@section  KKMachineLearning "Machine Learning"
  *Classes and Code that support Machine-Learning implementations. 
  *Examples:
- * - @link KKML::FeatureFileIO FeatureFileIO @endlink several common feature data file formats are support.  (sparse, arff, c45, etc...)
- * - @link KKML::TrainingConfiguration2 Training-Model-Configuration @endlink  class and routines that maintain classifier parameters; such as classifier type.
- * - Machine Learning Classes (@link KKML::MLClass MLClass @endlink )  and containers for tracking @link KKML::MLClassList lists of classes @endlink.
+ * - @link KKMLL::FeatureFileIO FeatureFileIO @endlink several common feature data file formats are support.  (sparse, arff, c45, etc...)
+ * - @link KKMLL::TrainingConfiguration2 Training-Model-Configuration @endlink  class and routines that maintain classifier parameters; such as classifier type.
+ * - Machine Learning Classes (@link KKMLL::MLClass MLClass @endlink )  and containers for tracking @link KKMLL::MLClassList lists of classes @endlink.
  * - Hierarchical Class naming is supported.
- * - Containers for Feature Data @link KKML::FeatureVector "FeatureVector" @endlink, @link KKML::FeatureVectorList "FeatureVectorList" @endlink, stratifying by class.
+ * - Containers for Feature Data @link KKMLL::FeatureVector "FeatureVector" @endlink, @link KKMLL::FeatureVectorList "FeatureVectorList" @endlink, stratifying by class.
  * - Feature data normalization routines.
  * - Confusion-Matrix
  * - CrossValidation - Example 10 fold CV; also (N x X) cross Validation; typically used by grading a classifier.
