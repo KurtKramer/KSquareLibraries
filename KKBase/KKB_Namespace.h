@@ -1,11 +1,10 @@
 namespace  KKB
 {
 /**
- *@defgroup KKBDocs "KSquare Base"
  *@namespace  KKB  
- *@brief KKB The namespace for KKBaseLibrary supporting general functionality needed by almost any application. 
+ *@brief KKB The namespace for KKBase Library supporting general functionality needed by almost any application. 
  *@section  Introduction   Introduction
- * The KKBaseLibrery is my tool box of handy objects that I have been building since 1994.  
+ * The KKBase Librery is my tool box of handy objects that I have been building since 1994.  
  * It contains classes for string management(KKStr), Floating point Matrix operations, 
  * Image Processing Routines, common operating system routines, Statistics, Histogramming,
  * etc. These classes are meant to be Operating System(OS) neutral in that from the outside 
@@ -48,5 +47,12 @@ namespace  KKB
  * as well as Connected Component Analysis, Fourier transform, etc.  Other classes that work
  * with Raster are Blob, BMPheader, BMPheader.h, ContourFollower, Histogram, ImageIO.h, 
  * PixelValue, Point, and Sobel.
+ *
+ *@section  Application  Base class for applications.
+ * Contains basic support for applications such as @link KKB::CmdLineExpander command-line @endlink processing and logging. 
+ * There is logic to process specified text files for additional parameters. A RunLog instance will be created and
+ * inherited by all derived classes; the command line will process and -Log parameter specified.  Derived classes can intercept 
+ * command line parameters simple y implementing the virtual method 
+ * @link Application::ProcessCmdLineParameter ProcessCmdLineParameter @endlink
  */
 }

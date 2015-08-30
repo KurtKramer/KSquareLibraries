@@ -13,8 +13,9 @@ namespace KKB
 {
   /**
    *@class  Point  Point.h
-   *@brief  Used by Raster class methods to denote a single pixel location in Raster image.
+   *@brief  Used by Raster class and MorphOp derived classes to denote a single pixel location in Raster image.
    *@see Raster
+   *@see MorphOp
    */
   class  Point
   {

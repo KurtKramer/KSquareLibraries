@@ -38,7 +38,7 @@ PROJECT_NAME           = KSquareLibraries
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = 1.38
+PROJECT_NUMBER         = 1.36
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -412,7 +412,7 @@ TYPEDEF_HIDES_STRUCT   = NO
 # the optimal cache size from a speed point of view.
 # Minimum value: 0, maximum value: 9, default value: 0.
 
-LOOKUP_CACHE_SIZE      = 4
+LOOKUP_CACHE_SIZE      = 0
 
 #---------------------------------------------------------------------------
 # Build related configuration options
@@ -778,8 +778,7 @@ WARN_LOGFILE           =
 INPUT                  = ../KKBase \
                          ../KKLineScanner \
                          ../KKMachineLearning \
-                         ../KSquareLibraries_MainPage.h \
-                         ../JobManager
+                         ../KSquareLibraries_MainPage.h
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1066,11 +1065,12 @@ CLANG_ASSISTED_PARSING = YES
 # specified with INPUT and INCLUDE_PATH.
 # This tag requires that the tag CLANG_ASSISTED_PARSING is set to YES.
 
-CLANG_OPTIONS          = "/I C:\Users\kkramer\GitHub\OutsidePackages\fftw-3.3.2" \
+CLANG_OPTIONS          = "/I C:\Users\kurtk_000\GitHub\OutsidePackages\fftw-3.3.2" \
+                         "/I C:\Users\kurtk_000\GitHub\OutsidePackages\MySQL\include" \
                          "/D WIN32" \
                          "/D NDEBUG" \
                          "/D FFTW_AVAILABLE" \
-                         "/I C:\Users\kkramer\GitHub\OutsidePackages\zlib123"
+                         "/D ZLIB_AVAILABLE"
 
 #---------------------------------------------------------------------------
 # Configuration options related to the alphabetical class index
