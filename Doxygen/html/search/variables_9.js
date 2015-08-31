@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['id',['id',['../class_k_k_b_1_1_blob.html#af752299192d447637bd6c56d4b1e0660',1,'KKB::Blob']]],
+  ['idnum',['idNum',['../struct_scanner_file4_bit_encoded_1_1_op_rec_instrument_data_word1.html#a9a5f21560b2ab1da27c5bb49bde94c10',1,'ScannerFile4BitEncoded::OpRecInstrumentDataWord1']]],
+  ['idx',['idx',['../struct_feature_encoder2_1_1_feature_var2.html#aed5328bcecddd127ab569227fcf7a754',1,'FeatureEncoder2::FeatureVar2']]],
+  ['imageioatexitdefined',['imageIoAtExitDefined',['../namespace_k_k_b.html#a5623f4480489ffc80054153dff49013d',1,'KKB']]],
+  ['index',['index',['../struct_s_v_m233_1_1svm__node.html#a3c4e097d4f2ba8091128a9b605fcaa12',1,'SVM233::svm_node::index()'],['../struct_s_v_m233_1_1svm__problem.html#a4769752a28a7f99fa469fed248762504',1,'SVM233::svm_problem::index()']]],
+  ['indexfile',['indexFile',['../class_k_k_l_s_c_1_1_scanner_file.html#a73be49b9d451d436a51b52ecbcf57e8f',1,'KKLSC::ScannerFile']]],
+  ['indexfilename',['indexFileName',['../class_k_k_l_s_c_1_1_scanner_file.html#a3ef604628bb0a487663326f93845c10e',1,'KKLSC::ScannerFile']]],
+  ['indigo',['Indigo',['../class_k_k_b_1_1_pixel_value.html#a4019d9eba808e36449e32bdfdf1a4c38',1,'KKB::PixelValue']]],
+  ['instrumentdataword1',['instrumentDataWord1',['../union_scanner_file4_bit_encoded_1_1_op_rec.html#aeee50b40e1ed660888405fbffcb33057',1,'ScannerFile4BitEncoded::OpRec']]],
+  ['int32',['Int32',['../_xml_stream_8cpp.html#a15d224ac622f0875e3b3ea68ab6233d0',1,'XmlStream.cpp']]],
+  ['intbyte0',['intByte0',['../struct_scanner_file_z_lib3_bit_encoded_1_1_three_byte_rec.html#a84d0925c968995056b307bdbe227bf4f',1,'KKLSC::ScannerFileZLib3BitEncoded::ThreeByteRec::intByte0()'],['../struct_scanner_file_z_lib3_bit_encoded_1_1_four_byte_rec.html#a50cf781c81df78a7ab8fa5e52c3d692a',1,'KKLSC::ScannerFileZLib3BitEncoded::FourByteRec::intByte0()']]],
+  ['intbyte1',['intByte1',['../struct_scanner_file_z_lib3_bit_encoded_1_1_three_byte_rec.html#a139e021b8cd18a8f472e72f221ab16c9',1,'KKLSC::ScannerFileZLib3BitEncoded::ThreeByteRec::intByte1()'],['../struct_scanner_file_z_lib3_bit_encoded_1_1_four_byte_rec.html#a42a681d34b2965abf567474f3037c41f',1,'KKLSC::ScannerFileZLib3BitEncoded::FourByteRec::intByte1()']]],
+  ['intbyte2',['intByte2',['../struct_scanner_file_z_lib3_bit_encoded_1_1_three_byte_rec.html#a560d7834042684c35d5c21cdcf52f0ad',1,'KKLSC::ScannerFileZLib3BitEncoded::ThreeByteRec::intByte2()'],['../struct_scanner_file_z_lib3_bit_encoded_1_1_four_byte_rec.html#abf5bcff1858c0b968a235d41ad17ee51',1,'KKLSC::ScannerFileZLib3BitEncoded::FourByteRec::intByte2()']]],
+  ['intbyte3',['intByte3',['../struct_scanner_file_z_lib3_bit_encoded_1_1_four_byte_rec.html#a7c3dd7d17e447bfe315ae19f7197e7dc',1,'ScannerFileZLib3BitEncoded::FourByteRec']]],
+  ['inthi',['intHi',['../struct_scanner_file_z_lib3_bit_encoded_1_1_two_byte_rec.html#a49ceea0decbf0885121c22257505e226',1,'ScannerFileZLib3BitEncoded::TwoByteRec']]],
+  ['intlo',['intLo',['../struct_scanner_file_z_lib3_bit_encoded_1_1_two_byte_rec.html#af747516492678adfa78692c53c91487c',1,'ScannerFileZLib3BitEncoded::TwoByteRec']]],
+  ['iomode',['ioMode',['../class_k_k_l_s_c_1_1_scanner_file.html#a27ace8affebc2688586de9b72dd0de87',1,'KKLSC::ScannerFile']]]
+];

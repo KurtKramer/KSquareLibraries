@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['name',['name',['../class_k_k_m_l_l_1_1_prob_name_pair.html#a4b5ae078560911240aa6a38128440089',1,'KKMLL::ProbNamePair::name()'],['../class_size_distribution_1_1_class_totals.html#a7653b3388a786c26c3ece3f5f92aabec',1,'KKMLL::SizeDistribution::ClassTotals::name()']]],
+  ['nameupper',['nameUpper',['../class_size_distribution_1_1_class_totals.html#a1115a9dcf8c7f776eda20e95d27e83fa',1,'SizeDistribution::ClassTotals']]],
+  ['nextscanline',['nextScanLine',['../class_k_k_l_s_c_1_1_scanner_file.html#a8175e689d6539881903c75244ae1b73e',1,'KKLSC::ScannerFile']]],
+  ['nonsvindex',['nonSVIndex',['../struct_s_v_m233_1_1_svm_model233.html#a4dad3a53f8d437a2f6964fd350910210',1,'SVM233::SvmModel233']]],
+  ['normparms',['normParms',['../class_k_k_m_l_l_1_1_model.html#a48d8d3c4865176a24cee0b2b733da058',1,'KKMLL::Model']]],
+  ['nr_5fclass',['nr_class',['../struct_s_v_m233_1_1svm__parameter.html#a6fa48dd0b10a8f9cbbc8c0d571404345',1,'SVM233::svm_parameter::nr_class()'],['../struct_s_v_m233_1_1_svm_model233.html#a55a9d2b4d87f50f14dfdcc1afc65b47b',1,'SVM233::SvmModel233::nr_class()'],['../struct_s_v_m289___m_f_s_1_1_svm___model.html#a0cf11115996187369bc6152f30f6e64c',1,'SVM289_MFS::Svm_Model::nr_class()'],['../struct_s_v_m289___b_f_s_1_1svm__model.html#af8462268ac97b24a8d96f07874522cfb',1,'SVM289_BFS::svm_model::nr_class()']]],
+  ['nr_5fweight',['nr_weight',['../struct_s_v_m233_1_1svm__parameter.html#a57a427d9f5046cc6ebd4f67a34c7204a',1,'SVM233::svm_parameter::nr_weight()'],['../struct_s_v_m289___m_f_s_1_1svm__parameter.html#a7c87bf61e72f27b04efe132672b432a1',1,'SVM289_MFS::svm_parameter::nr_weight()'],['../struct_s_v_m289___b_f_s_1_1svm__parameter.html#aa0f9140ef46b5f6ead1976985039bd3b',1,'SVM289_BFS::svm_parameter::nr_weight()']]],
+  ['nsv',['nSV',['../struct_s_v_m233_1_1_svm_model233.html#a4f2e1cae54d713246c1c7b63a5b30136',1,'SVM233::SvmModel233::nSV()'],['../struct_s_v_m289___m_f_s_1_1_svm___model.html#a99c49e2824661c212c1599dcd636d2c0',1,'SVM289_MFS::Svm_Model::nSV()'],['../struct_s_v_m289___b_f_s_1_1svm__model.html#a4bb18b0f8425add0fd0cede41fac9d00',1,'SVM289_BFS::svm_model::nSV()']]],
+  ['nu',['nu',['../struct_s_v_m233_1_1svm__parameter.html#af40906fef0d3c731d1eb69b80d568f30',1,'SVM233::svm_parameter::nu()'],['../struct_s_v_m289___m_f_s_1_1svm__parameter.html#a51d3d06c7a7a38a8c315092f14c3029c',1,'SVM289_MFS::svm_parameter::nu()'],['../struct_s_v_m289___b_f_s_1_1svm__parameter.html#a6f25339a407582eca1800e6561b24ebc',1,'SVM289_BFS::svm_parameter::nu()']]],
+  ['num4blackouts',['num4BlackOuts',['../struct_scanner_file3_bit_encoded_1_1_op_rec_black_outs.html#af8ee06cfb18cead735b49c186c851769',1,'ScannerFile3BitEncoded::OpRecBlackOuts']]],
+  ['num4spaces',['num4Spaces',['../struct_scanner_file3_bit_encoded_1_1_op_rec_spaces.html#a02cd8c9ab9c259c880cee43e42191ad8',1,'ScannerFile3BitEncoded::OpRecSpaces']]],
+  ['numnonsv',['numNonSV',['../struct_s_v_m233_1_1_svm_model233.html#ac47eca978ebd760afbb5a2e72bfff274',1,'SVM233::SvmModel233']]],
+  ['numofclasses',['numOfClasses',['../class_k_k_m_l_l_1_1_model.html#ad41340e916a5ccdae7ed38d9546a8445',1,'KKMLL::Model']]],
+  ['numofdefineddefaultcolors',['numOfDefinedDefaultColors',['../_chart_8cpp.html#ace2863c7ae333a80d068ec9a8c0255f8',1,'Chart.cpp']]],
+  ['numoffeatures',['numOfFeatures',['../class_k_k_m_l_l_1_1_feature_vector.html#a90af0bdb76783c1aa52d616dbf46e9e4',1,'KKMLL::FeatureVector']]],
+  ['numporcessesallowed',['numPorcessesAllowed',['../class_k_k_job_managment_1_1_k_k_job.html#aac8edcaac05b4e6f9511a3f1dff7e0a8',1,'KKJobManagment::KKJob']]],
+  ['numprocessors',['numProcessors',['../class_k_k_job_managment_1_1_k_k_job.html#a828964b409f07218424024e972d7d4ef',1,'KKJobManagment::KKJob']]],
+  ['numsvm',['numSVM',['../struct_s_v_m233_1_1svm__parameter.html#aac6ce26b15ecd7ce74d86a06982fae07',1,'SVM233::svm_parameter']]],
+  ['numsvs',['numSVs',['../struct_s_v_m289___m_f_s_1_1_svm___model.html#a9d1cb317006096158440daf45c809f0c',1,'SVM289_MFS::Svm_Model']]],
+  ['numtrainexamples',['numTrainExamples',['../struct_s_v_m289___m_f_s_1_1svm__problem.html#a16d137e053c79776e064691a20fa80ee',1,'SVM289_MFS::svm_problem']]]
+];
