@@ -1,88 +1,34 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
+#include "KKStrParser.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
 
-
-#include "FeatureNumList.h"
 #include "FileDesc.h"
-using namespace  KKMachineLearning;
+#include "FeatureNumList.h"
+using namespace  KKMLL;
 
 
 
-FeatureNumList::FeatureNumList (FileDescPtr _fileDesc):
-
+FeatureNumList::FeatureNumList ():
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
-  fileDesc                 (_fileDesc),
+  maxFeatureNum            (0),
   numOfFeatures            (0)
 {
-  if  (!fileDesc)
-  {
-    cerr << endl
-         << "FeatureNumList::FeatureNumList    *** ERROR ***    fileDesc = NULL" << endl
-         << endl;
-    osWaitForEnter ();
-  }
-
-  AllocateArraySize (fileDesc->NumOfFields ());
 }
-
-
-
-FeatureNumList::FeatureNumList (FileDescPtr       _fileDesc,
-                                const BitString&  bitString
-                               ):
-  featureNums              (NULL),
-  featureNumsAllocatedSize (0),
-  fileDesc                 (_fileDesc),
-  numOfFeatures            (0)
-
-{
-  if  (!fileDesc)
-  {
-    cerr << endl
-         << "FeatureNumList    *** ERROR ***        No 'FileDesc' object provided." << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  if  (fileDesc->NumOfFields () != kkint32 (bitString.BitLen ()))
-  {
-    cerr << endl
-         << "FeatureNumList    *** ERROR ***"  << endl
-         << endl
-         << "    BitString.Len[" << bitString.BitLen () << "]  is different than FileDesc.NumOfFields[" << fileDesc->NumOfFields () << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  VectorUint16  listOfBits;
-  bitString.ListOfSetBits16 (listOfBits);
-
-  if  (kkuint32 (featureNumsAllocatedSize) < listOfBits.size ())
-    AllocateArraySize ((kkint32)listOfBits.size ());
-
-  for  (kkuint32 x = 0;  x < listOfBits.size ();  x++)
-    AddFeature (listOfBits[x]);
-}
-
 
 
 
@@ -90,126 +36,90 @@ FeatureNumList::FeatureNumList (FileDescPtr       _fileDesc,
 FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
-  fileDesc                 (_featureNumList.fileDesc),
-  numOfFeatures            (_featureNumList.NumOfFeatures ())
+  maxFeatureNum            (_featureNumList.MaxFeatureNum ()),
+  numOfFeatures            (0)
 {
-  if  (fileDesc == NULL)
-  {
-    cerr << endl
-         << "FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList)" << endl
-         << "                    fileDesc == NULL" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  if  ((numOfFeatures < 0)  ||  (numOfFeatures > (kkint32)fileDesc->NumOfFields ()))
-  {
-    cerr << endl
-         << "FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList)" << endl
-         << "                    numOfFeatures[" << numOfFeatures << "]  is out of range of fileDesc" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  featureNums = new kkuint16[numOfFeatures + 1];
-  featureNumsAllocatedSize = numOfFeatures + 1;
-  for  (kkint32 x = 0; x < numOfFeatures; x++)
-    featureNums[x] = _featureNumList[x];
+  kkuint16*  otherFeatureNums   = _featureNumList.featureNums;
+  kkuint16   otherNumOfFeatures = _featureNumList.numOfFeatures;
+  AllocateArraySize (_featureNumList.numOfFeatures + 1);
+  for  (kkuint16 x = 0;  x < otherNumOfFeatures; x++)
+    AddFeature (otherFeatureNums[x]);
 }
 
 
 
 
-FeatureNumList::FeatureNumList (FileDescPtr   _fileDesc,
-                                const KKStr&  _featureListStr,
+FeatureNumList::FeatureNumList (FeatureNumList  &&featureNumList):
+  featureNums               (featureNumList.featureNums),
+  featureNumsAllocatedSize  (featureNumList.featureNumsAllocatedSize),
+  maxFeatureNum             (featureNumList.maxFeatureNum),
+  numOfFeatures             (featureNumList.numOfFeatures)
+
+{
+  featureNumList.featureNums              = NULL;
+  featureNumList.featureNumsAllocatedSize = 0;
+  featureNumList.maxFeatureNum            = 0;
+  featureNumList.numOfFeatures            = 0;
+}
+
+
+
+FeatureNumList::FeatureNumList (kkuint32  _maxFeatureNum):
+
+  featureNums              (NULL),
+  featureNumsAllocatedSize (0),
+  maxFeatureNum            (_maxFeatureNum),
+  numOfFeatures            (0)
+{
+  AllocateArraySize (_maxFeatureNum + 1);
+}
+
+
+
+FeatureNumList::FeatureNumList (FileDescPtr  _fileDesc):
+  featureNums              (NULL),
+  featureNumsAllocatedSize (0),
+  maxFeatureNum            (0),
+  numOfFeatures            (0)
+{
+  if  (_fileDesc)
+    maxFeatureNum = _fileDesc->NumOfFields () - 1;
+  AllocateArraySize (10);
+}
+
+
+
+FeatureNumList::FeatureNumList (const BitString&  bitString):
+  featureNums              (NULL),
+  featureNumsAllocatedSize (0),
+  maxFeatureNum            (0),
+  numOfFeatures            (0)
+
+{
+  maxFeatureNum = bitString.BitLen () - 1;
+
+  VectorUint16  listOfSelectedFeatures;
+  bitString.ListOfSetBits16 (listOfSelectedFeatures);
+  AllocateArraySize ((kkint32)listOfSelectedFeatures.size ());
+  for  (kkuint32 x = 0;  x < listOfSelectedFeatures.size ();  x++)
+    AddFeature (listOfSelectedFeatures[x]);
+}
+
+
+
+
+FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
                                 bool&         _valid
                                ):
 
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
-  fileDesc                 (_fileDesc),
+  maxFeatureNum            (0),
   numOfFeatures            (0)
 
 {
-  if  (!fileDesc)
-  {
-    cerr << endl
-         << endl
-         << "FeatureNumList::FeatureNumList    *** ERROR ***    fileDesc = NULL" << endl
-         << endl;
-    osWaitForEnter ();
-  }
-
-  AllocateArraySize (fileDesc->NumOfFields ());
-
-  ExtractFeatureNumsFromStr (_featureListStr, _valid);
-}
-
-
-
-
-
-FeatureNumList::FeatureNumList (FileDescPtr           _fileDesc,
-                                FeatureSelectionType  _selectionType,
-                                const KKStr&          _featureListStr,
-                                bool&                 _valid
-                               ):
-  featureNums              (NULL),
-  featureNumsAllocatedSize (0),
-  fileDesc                 (_fileDesc),
-  numOfFeatures            (0)
-
-{
-  if  (!fileDesc)
-  {
-    cerr << endl
-         << endl
-         << "FeatureNumList::FeatureNumList    *** ERROR ***    fileDesc = NULL" << endl
-         << endl;
-    osWaitForEnter ();
-  }
-
-  AllocateArraySize (fileDesc->NumOfFields ());
-
-  switch  (_selectionType)
-  {
-    case  IncludeFeatureNums:
-       ExtractFeatureNumsFromStr (_featureListStr, _valid);
-       break;
-    
-    
-    case  ExcludeFeatureNums:
-       FeatureNumList  excludedFeatures (fileDesc, _featureListStr, _valid);
-
-       numOfFeatures = fileDesc->NumOfFields () - excludedFeatures.NumOfFeatures ();
-       featureNums = new kkuint16[numOfFeatures];
-       featureNumsAllocatedSize = numOfFeatures;
-
-       kkint32  y = 0;
-       for  (kkuint16 x = 0; x < fileDesc->NumOfFields (); x++)
-       {
-         if  (!excludedFeatures.InList (x))
-         {
-           featureNums[y] = x;
-           y++;
-         }
-       }
-       break;
-
-  }  /* End Of Switch */
-}
-
-
-
-
-FeatureNumList::FeatureNumList ():
-  featureNums              (NULL),
-  featureNumsAllocatedSize (0),
-  fileDesc                 (NULL),
-  numOfFeatures            (0)
-{
+  ParseToString (_featureListStr, _valid);
+  return;
 }
 
 
@@ -234,7 +144,7 @@ kkint32  FeatureNumList::MemoryConsumedEstimated ()  const
 
 
 
-void  FeatureNumList::AllocateArraySize (kkint32 size)
+void  FeatureNumList::AllocateArraySize (kkuint16 size)
 {
   if  (featureNumsAllocatedSize >= size)
   {
@@ -246,7 +156,7 @@ void  FeatureNumList::AllocateArraySize (kkint32 size)
   {
     featureNums = new kkuint16[size];
     featureNumsAllocatedSize = size;
-    for  (kkint32 x = 0;  x < size;  x++)
+    for  (kkuint16 x = 0;  x < size;  ++x)
       featureNums[x] = 0;
   }
 
@@ -254,20 +164,21 @@ void  FeatureNumList::AllocateArraySize (kkint32 size)
   {
     kkuint16*  newFeatureNums = new kkuint16[size];
 
-    kkint32  x;
+    kkuint16  x;
 
-    for  (x = 0;  x < numOfFeatures; x++)
+    for  (x = 0;  x < numOfFeatures;  ++x)
       newFeatureNums[x] = featureNums[x];
 
-    for  (x = numOfFeatures;  x < size;  x++)
+    for  (x = numOfFeatures;  x < size;  ++x)
       newFeatureNums[x] = 0;
-
 
     delete  [] featureNums;
     featureNums = newFeatureNums;
+    newFeatureNums = NULL;
     featureNumsAllocatedSize = size;
   }
 }  /* AllocateArraySize */
+
 
 
 
@@ -282,7 +193,6 @@ void   FeatureNumList::ToBitString (BitString&  bitStr)  const
 
 
 
-
 kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
 {
   kkuint16*  newList = new kkuint16[numOfFeatures];
@@ -293,8 +203,7 @@ kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
 
 
 
-
-bool    FeatureNumList::AllFeaturesSelected ()  const
+bool  FeatureNumList::AllFeaturesSelected (FileDescPtr  fileDesc)  const
 {
   if  (numOfFeatures >= (kkint32)fileDesc->NumOfFields ())
     return true;
@@ -352,28 +261,25 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
     featureNumsAllocatedSize = 10;
   }
 
-  if  (featureNum >= fileDesc->NumOfFields ())
-  {
-    KKStr  errMsg =  "FeatureNumList::AddFeature  ***ERROR***   exceeded MaxNumOfFeatures.";
-    errMsg << endl
-           << "    FeastureNum[" << featureNum << "]  MaxNumOfFeatures[" << fileDesc->NumOfFields () << "]";
-
-    cerr << std::endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
-
-  else if  (numOfFeatures >= featureNumsAllocatedSize)
+  if  (numOfFeatures >= featureNumsAllocatedSize)
   {
     // Expand the featureNums array
-    kkint32 newNumOfFeatures = numOfFeatures + 10;
-    kkuint16*  newFeatureNums = new kkuint16[newNumOfFeatures];
+    kkint32  newFeatureNumsAllocatedSize = numOfFeatures + 10;
+    kkuint16*  newFeatureNums = new kkuint16[newFeatureNumsAllocatedSize];
 
-    for  (kkint32 x = 0;  x < numOfFeatures; x++)
+    kkint32 x = 0;
+    for  (x = 0;  x < numOfFeatures;  ++x)
       newFeatureNums[x] = featureNums[x];
+
+    while  (x < newFeatureNumsAllocatedSize)
+    {
+      newFeatureNums[x] = 0;
+      ++x;
+    }
 
     delete  [] featureNums;
     featureNums = newFeatureNums;
-    featureNumsAllocatedSize = newNumOfFeatures;
+    featureNumsAllocatedSize = newFeatureNumsAllocatedSize;
   }
   
   if  (numOfFeatures == 0)
@@ -405,34 +311,56 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
     }
   }
 
+  if  (featureNum > maxFeatureNum)
+    maxFeatureNum = featureNum;
+
   return;
 }  /* AddFeature */
 
 
 
 
+/**
+ *@details  A static method that will return a instance of 'FeatureNumList' that will have all non 'Ignore' features 
+ * in '_fileDesc' selected.
+ */
 FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
 {
-  bool  valid;
-  FeatureNumList  features (_fileDesc, "All", valid);
+  kkuint16  maxFeatureNum = _fileDesc->NumOfFields () - 1;
+  FeatureNumList  features (maxFeatureNum);
+
+  const AttributeTypeVector&   attributeTypes = _fileDesc->AttributeVector ();
+  for  (kkuint16 fn = 0;  fn <= maxFeatureNum;  ++fn)
+  {
+    if  (attributeTypes[fn] != AttributeType::Ignore)
+      features.AddFeature (fn);
+  }
+
   return  features;
 }  /* AllFeatures */
 
 
 
 
-void   FeatureNumList::SetAllFeatures ()
+/**
+ *@details  Using 'fileDesc' as the guide as to how many features there are and which ones are to 
+ * be ignored will set all features that are not 'Ignore' to on.
+ */
+void   FeatureNumList::SetAllFeatures (FileDescPtr  fileDesc)
 {
-  for  (kkuint32 x = 0; x < fileDesc->NumOfFields (); x++)
+  for  (kkuint16 x = 0; x <= maxFeatureNum;  ++x)
   {
-    if  (fileDesc->Type (x) != IgnoreAttribute)
+    if  (fileDesc->Type (x) != AttributeType::Ignore)
       AddFeature (kkuint16 (x));
   }
   return;
 }  /* SetAllFeatures */
 
+
+
+
 /**
- *brief  Returns true if 'z' is a subset of myself.
+ *@brief  Returns true if the FeatureNumList instance 'z' is a subset of this instance.
  */
 bool  FeatureNumList::IsSubSet (const FeatureNumList&  z)
 {
@@ -467,10 +395,6 @@ bool  FeatureNumList::InList (kkuint16 _featureNum)  const
 
 
 
-
-/**
- @brief Indicates whether feature '_featureNum' is selected.
- */
 bool  FeatureNumList::Test (kkuint16 _featureNum)  const
 {
   return InList (_featureNum);
@@ -478,17 +402,14 @@ bool  FeatureNumList::Test (kkuint16 _featureNum)  const
 
 
 
-
-
 kkuint16  FeatureNumList::operator[] (kkint32  _idx)  const
 {
   if  (_idx >= numOfFeatures)
   {
-    cerr << endl << endl << endl
-         << "FeatureNumList::operator[]  Invalid Index[" << _idx << "] requested." << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (100);
+    errMsg << "FeatureNumList::operator[]  ***ERROR***   Invalid Index[" << _idx << "] requested.";
+    cerr << endl << errMsg << endl << endl;
+    throw  KKException (errMsg);
   }
   else
   {
@@ -546,6 +467,15 @@ KKStr  FeatureNumList::ToString ()  const
 
 KKStr   FeatureNumList::ToHexString ()  const
 {
+  BitString  bs (maxFeatureNum + 1);
+  ToBitString (bs);
+  return  bs.HexStr ();
+}  /* ToHexString */
+
+
+
+KKStr   FeatureNumList::ToHexString (FileDescPtr  fileDesc)  const
+{
   BitString  bs (fileDesc->NumOfFields ());
   ToBitString (bs);
   return  bs.HexStr ();
@@ -554,203 +484,200 @@ KKStr   FeatureNumList::ToHexString ()  const
 
 
 
-void  FeatureNumList::ExtractFeatureNumsFromStr (KKStr   _featureListStr,
-                                                 bool&   _valid
-                                                )
+VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
 {
-  _valid = true;
+  bool  valid = true;
+  VectorUint16*  results = new VectorUint16 ();
 
-  KKStr     field;
-  kkuint16  featureNum;
+  KKStrParser parser (s);
+  parser.TrimWhiteSpace (" ");
 
-  _featureListStr.Upper ();
-
-  numOfFeatures = 0;
-
-  if  (_featureListStr == "NONE")
+  while  (parser.MoreTokens ())
   {
-    return;
-  }
-  if  (_featureListStr == "ALL")
-  {
-    SetAllFeatures ();
-    return;
-  }
-
-  field = _featureListStr.ExtractToken (", \n\r\t");
-  while  (!field.Empty ())
-  {
-    _featureListStr.TrimLeft ();
-   
+    KKStr  field = parser.GetNextToken (",\t");
+    if  (field.Empty ())
+      continue;
     kkint32 dashPos = field.LocateCharacter ('-');
     if  (dashPos < 0)
     {
-      // This is not a range
-
-      featureNum = kkuint16 (atoi (field.Str ()));
-      //if  (field.ValidInt (featureNum))
+      kkint32 n = field.ToInt32 ();
+      if  ((n < 0)  ||  (n > uint16_max))
       {
-        if  (featureNum >= fileDesc->NumOfFields ())
-        {
-          _valid = false;
-          return;
-        }
-        else
-        {
-          bool  alreadyInList = InList (featureNum);
-          if  (!alreadyInList)
-            AddFeature (featureNum);
-        }
+        valid = false;
+        break;
       }
+      results->push_back (n);
     }
     else
     {
       // We are looking at a range
-      kkuint16 startFeatureNum = kkuint16 (field.ExtractTokenInt (" -"));
-      kkuint16 endFeatureNum   = kkuint16 (field.ExtractTokenInt (" -"));
+      kkint32  startNum = field.SubStrPart (0, dashPos - 1).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
 
-      if  ((startFeatureNum >= fileDesc->NumOfFields ())  ||
-           (endFeatureNum   >= fileDesc->NumOfFields ())  ||
-           (startFeatureNum > endFeatureNum)
-          )
+      if  ((startNum > endNum)  ||  (startNum < 0)  ||  (endNum > uint16_max))
       {
-         _valid = false;
+        valid = false;
+        break;
       }
-      else
-      {
-        for  (featureNum = startFeatureNum; featureNum <= endFeatureNum;  featureNum++)
-        {
-          bool  alreadyInList = InList (featureNum);
-          if  (!alreadyInList)
-            AddFeature (featureNum);
-        }
-      }
+
+      for  (kkuint16 z = startNum;   z <= endNum;  ++z)
+        results->push_back (z);
     }
-    field = _featureListStr.ExtractToken (", \n\r\t");
   }
 
-}  /* ExtractFeatureNumsFromStr */
-
-
-
-void  FeatureNumList::Load (const KKStr&  _fileName,
-                            bool&         _successful,
-                            RunLog&       _log
-                           )
-{
-  _log.Level (20) << "FeatureNumList::Load - File["
-                  << _fileName << "]."
-                  << endl;
-
-  FILE*  inputFile = osFOPEN (_fileName.Str (), "r");
-  if  (!inputFile)
+  if  (!valid)
   {
-    _log.Level (-1) << "FeatureNumList::Load      *** ERROR ***" << endl;
-    _log.Level (-1) << "                 Could Not Open File[" << _fileName << "]." << endl;
-    _successful = false;
-  }
-
-  char  buff [102400];
-
-  if  (fgets (buff, sizeof (buff), inputFile))
-  {
-    KKStr  firstLine (buff);
-    kkint32 fileDescNumOfFields = atoi (firstLine.Str ());
-    if  ((kkint32)(fileDesc->NumOfFields ()) != fileDescNumOfFields)
-    {
-      _log.Level (-1) << endl
-                      << "FeatureNumList::Load      *** ERROR ***" << endl
-                      << "                Mismatch in field count" << endl
-                      << "                FileDesc->NumOfFields[" << fileDesc->NumOfFields () << "]" << endl
-                      << "                From File            [" << fileDescNumOfFields      << "]" << endl
-                      << endl;
-      _successful = false;
-      fclose (inputFile);
-      return;
-    }
+    delete  results;
+    results = NULL;
   }
   else
   {
-    _log.Level (-1) << endl
-                    << "FeatureNumList::Load      *** ERROR ***" << endl
-                    << "                Missing Data from File" << endl
-                    << endl;
-    _successful = false;
-    fclose (inputFile);
+    sort (results->begin (), results->end ());
+  }
+
+  return  results;
+}  /* StrToUInt16Vetor */
+
+
+
+
+
+
+void  FeatureNumList::ParseToString (const KKStr&  _str,
+                                     bool&         _valid
+                                    )  
+{
+  _valid = true;
+  delete  featureNums;
+
+  featureNumsAllocatedSize = 0;
+  maxFeatureNum            = 0;
+  numOfFeatures            = 0;
+  featureNums              = NULL;
+
+  if  (_str.EqualIgnoreCase ("NONE"))
+  {
+    maxFeatureNum = 1;
+    AllocateArraySize (maxFeatureNum + 1);
     return;
   }
 
-  if  (fgets (buff, sizeof (buff), inputFile))
+  VectorUint16*  list = StrToUInt16Vetor (_str);
+  if  (list)
   {
-    _log.Level (50) << "Load - FeatureList = [" << buff << "]." << endl;
-    bool  valid;
-    ExtractFeatureNumsFromStr (buff, valid);
-    if  (!valid)
-      _successful = false;
+    sort(list->begin (), list->end ());
+    maxFeatureNum = list->back ();
+    AllocateArraySize (list->size ());
+    for  (auto idx: *list)
+      AddFeature (idx);
   }
   else
   {
-    _log.Level (-1) << "FeatureNumList::Load      *** ERROR ***" << endl;
-    _log.Level (-1) << "                No Data in File[" << _fileName << "]." << endl;
-    _successful = false;
+    _valid = false;
+  }
+  delete  list;
+  list = NULL;
+}  /* ParseToString */
+
+
+
+
+void  FeatureNumList::WriteXML (const KKStr&  varName,
+                                ostream&      o
+                               )  const
+{
+  XmlTag  startTag ("FeatureNumList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("MaxFeatureNum", maxFeatureNum);
+  startTag.AddAtribute ("NumOfFeatures", numOfFeatures);
+  startTag.WriteXML (o);
+
+  o << ToString ();
+
+  XmlTag  endTag ("FeatureNumList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+
+void  FeatureNumList::ReadXML (XmlStream&      s,
+                               XmlTagConstPtr  tag,
+                               RunLog&         log
+                             )
+{
+  maxFeatureNum = tag->AttributeValueInt32 ("MaxFeatureNum");
+  kkuint32 expectedNumOfFeatures = tag->AttributeValueInt32 ("NumOfFeatures");
+  numOfFeatures = 0;
+
+  kkuint32 featureCountRead = 0;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (typeid (*t) == typeid(XmlContent))
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c  &&  (c->Content ()))
+      {
+        bool  valid = false;
+        ParseToString (*(c->Content ()), valid);
+      }
+    }
+
+    delete  t;
+    t = s.GetNextToken (log);
   }
 
+  if  (expectedNumOfFeatures != numOfFeatures)
+  {
+    log.Level (-1) << endl
+      << "FeatureNumList::ReadXML   ***ERROR***   expectedNumOfFeatures["  << expectedNumOfFeatures << "]  not equal  numOfFeatures[" << numOfFeatures << "]" << endl
+      << endl;
+  }
+}  /* ReadXML */
 
-  fclose (inputFile);
-  _successful = true;
-}  /* Load */
-
-
-
-
-void  FeatureNumList::Save (const KKStr&  _fileName,
-                            bool&         _successful,
-                            RunLog&       _log
-                           )
-{
-  _log.Level (20) << "FeatureNumList::Save - File["
-                  << _fileName << "]."
-                  << endl;
-
-  _successful = true;
-
-  ofstream outFile (_fileName.Str ());
-
-  outFile << fileDesc->NumOfFields () << endl;
-  outFile << ToString ()              << endl;
-
-  outFile.close ();
-}  /* Save */
-
-
-
-
-void  FeatureNumList::Save (ostream&  o)
-{
-  o << "<FeatureNumList>" << "\t"
-    << "NumOfFeatures"    << "\t"  << numOfFeatures
-    << "FeatureNums"      << "\t"  << ToString ()
-    << "</FeatureNumList>";
-}  /* Save */
 
 
 
 FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 {
-  if  (featureNums)
-    delete  [] featureNums;
+  delete featureNums;
+  featureNums = NULL;
 
-  fileDesc      = _features.fileDesc;
   numOfFeatures = _features.NumOfFeatures ();
-
+  maxFeatureNum = _features.MaxFeatureNum ();
   featureNums = new kkuint16[numOfFeatures];
   featureNumsAllocatedSize = numOfFeatures;
 
-  for  (kkint32 fn = 0;  fn < numOfFeatures;  fn++)
-    featureNums[fn] = _features[fn];
+  for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
+    featureNums[x] = _features.featureNums[x];
 
   return  *this;
 }  /* operator= */
+
+
+
+
+
+FeatureNumList&  FeatureNumList::operator=  (FeatureNumList&&  _features)
+{
+  delete featureNums;
+  featureNums              = _features.featureNums;
+  numOfFeatures            = _features.numOfFeatures;
+  maxFeatureNum            = _features.maxFeatureNum;
+  featureNumsAllocatedSize = _features.featureNumsAllocatedSize;
+
+  _features.featureNums              = NULL;
+  _features.numOfFeatures            = 0;
+  _features.maxFeatureNum            = 0;
+  _features.featureNumsAllocatedSize = 0;
+
+  return  *this;
+}
+
+
 
 
 
@@ -759,7 +686,6 @@ FeatureNumList&  FeatureNumList::operator=  (const FeatureNumListPtr  _features)
   *this = *_features;
   return  *this;
 }
-
 
 
 
@@ -789,7 +715,7 @@ kkint32  FeatureNumList::Compare (const FeatureNumList&  _features)  const
 
 
 
-/**  @brief  Indicates if the two FeatureNumLiost instances have the same features selected. */
+/**  @brief  Indicates if the two FeatureNumList instances have the same features selected. */
 bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 {
   if  (numOfFeatures != _features.numOfFeatures)
@@ -811,7 +737,7 @@ bool  FeatureNumList::operator== (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) < 0;
-}  /* operator== */
+}  /* operator< */
 
 
 
@@ -822,11 +748,11 @@ bool  FeatureNumList::operator< (const FeatureNumList&  _features)  const
 bool  FeatureNumList::operator> (const FeatureNumList&  _features)  const
 {
   return  Compare (_features) > 0;
-}  /* operator== */
+}  /* operator> */
 
 
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
   ostream& operator<< (      ostream&          os, 
                        const FeatureNumList&   features
@@ -849,23 +775,16 @@ namespace  KKMachineLearning
 
 
 /**
- * @brief Performs a logical 'AND' operation on the two FeatureNumList instances.
- * @details Will return a new FeatureNumList instance that will consist of a list of features that are selected in both the left and right FeatureNumList
- *  instances.  Both FeatureNumList objects must be referencing the same FileDesc instance otherwise an exception will be thrown.
+ *@brief Returns the intersection of the two FeatureNumList instances.
+ *@details Will return a new FeatureNumList instance that will consist of a list of features that are selected in both the left and right FeatureNumList
+ * instances.
  */
 FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  const
 {
-  if  (fileDesc != rightSide.FileDesc ())
-  {
-    KKStr errMsg = "FeatureNumList::operator*  ***ERROR***   Incompatible FileDesc's";
-    errMsg << endl
-           << "      The associated FileDesc instances are not the same.";
-    cerr << endl << endl << errMsg << endl <<endl;
-    throw KKException (errMsg);
-  }
-
-  FeatureNumList  result (fileDesc);
-  result.AllocateArraySize (numOfFeatures);
+  kkuint16 mfn = Max (maxFeatureNum, rightSide.MaxFeatureNum ());
+  kkuint16 bestCaseNof = Min (numOfFeatures, rightSide.NumOfFeatures ());
+  FeatureNumList  result (mfn);
+  result.AllocateArraySize (bestCaseNof);
 
   kkint32  l = 0;
   kkint32  r = 0;
@@ -873,14 +792,10 @@ FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  c
   while  ((l < numOfFeatures)  &&  (r < rightSide.numOfFeatures))
   {
     if  (featureNums[l] < rightSide.featureNums[r])
-    {
       l++;
-    }
 
     else if  (featureNums[l] > rightSide.featureNums[r])
-    {
       r++;
-    }
 
     else
     {
@@ -921,61 +836,11 @@ FeatureNumList  FeatureNumList::operator+ (const FeatureNumList&  rightSide) con
  */
 FeatureNumList&  FeatureNumList::operator+= (const FeatureNumList&  rightSide)
 {
-  kkint32    newFeatureNumsAllocatedSize = Min (numOfFeatures + rightSide.numOfFeatures, (kkint32)fileDesc->NumOfFields ());
-  kkuint16*  newFeatureNums = new kkuint16[newFeatureNumsAllocatedSize];
-  kkint32    newNumOfFeatures = 0;
+  const kkuint16*  rightFeatureNums = rightSide.FeatureNums ();
+  kkuint16  rightNumOfFeatures = rightSide.NumOfFeatures ();
 
-  kkuint16* leftFeatureNums    = featureNums;
-  kkint32   leftNumOfFeatures  = numOfFeatures;
-  kkuint16* rightFeatureNums   = rightSide.featureNums;
-  kkint32   rightNumOfFeatures = rightSide.numOfFeatures;
-
-  kkint32  l = 0;
-  kkint32  r = 0;
-
-  while  ((l < leftNumOfFeatures)  &&  (r < rightNumOfFeatures))
-  {
-    if  (leftFeatureNums[l] < rightFeatureNums[r])
-    {
-      newFeatureNums[newNumOfFeatures] = leftFeatureNums[l];
-      newNumOfFeatures++;
-      l++;
-    }
-
-    else if  (leftFeatureNums[l] > rightFeatureNums[r])
-    {
-      newFeatureNums[newNumOfFeatures] = rightFeatureNums[r];
-      newNumOfFeatures++;
-      r++;
-    }
-
-    else
-    {
-      newFeatureNums[newNumOfFeatures] = rightFeatureNums[r];
-      newNumOfFeatures++;
-      l++;
-      r++;
-    }
-  }
-
-  while  (l < leftNumOfFeatures)
-  {
-    newFeatureNums[newNumOfFeatures] = leftFeatureNums[l];
-    newNumOfFeatures++;
-    l++;
-  }
-
-  while  (r < rightNumOfFeatures)
-  {
-    newFeatureNums[newNumOfFeatures] = rightFeatureNums[r];
-    newNumOfFeatures++;
-    r++;
-  }
-
-  delete  [] featureNums;
-  featureNums = newFeatureNums;
-  featureNumsAllocatedSize = newFeatureNumsAllocatedSize;
-  numOfFeatures = newNumOfFeatures;
+  for  (kkuint16  x = 0;  x < rightNumOfFeatures;  ++x)
+    AddFeature (rightFeatureNums[x]);
 
   return  *this;
 }  /* operator+= */
@@ -997,14 +862,6 @@ FeatureNumList&  FeatureNumList::operator+= (kkuint16  featureNum)
 /** @brief Returns a new FeatureNumList instance that will consists of the left FeatureNumList instance with 'rightSide' feature added in. */
 FeatureNumList  FeatureNumList::operator+ (kkuint16  rightSide) const
 {
-  if  (kkint32 (rightSide) >= fileDesc->NumOfFields ())
-  {
-    KKStr errMsg = "FeatureNumList::operator+  ***ERROR***";
-    errMsg <<" Feature[" << rightSide << "]  is too large.";
-    cerr << endl << endl << errMsg << endl <<endl;
-    throw KKException (errMsg);
-  }
-  
   FeatureNumList  result (*this);
   result.AddFeature (rightSide);
   return  result;
@@ -1016,21 +873,10 @@ FeatureNumList  FeatureNumList::operator+ (kkuint16  rightSide) const
 /** @brief Returns a new FeatureNumList instance that will consists of the left FeatureNumList instance with 'rightSide' removed from it. */
 FeatureNumList  FeatureNumList::operator-  (kkuint16  rightSide) const
 {
-  if  (rightSide >= fileDesc->NumOfFields ())
-  {
-    KKStr errMsg = "FeatureNumList::operator-  ***ERROR***";
-    errMsg <<" Feature[" << rightSide << "]  is too large.";
-    cerr << endl << endl << errMsg << endl <<endl;
-    throw KKException (errMsg);
-  }
-
   FeatureNumList  result (*this);
   result.UnSet (rightSide);
-
   return  result;
 }  /* operator- */
-
-
 
 
 
@@ -1042,19 +888,28 @@ FeatureNumList  FeatureNumList::operator-  (kkuint16  rightSide) const
  */
 FeatureNumList  FeatureNumList::operator- (const FeatureNumList&  rightSide) const
 {
-  if  (fileDesc != rightSide.FileDesc ())
-  {
-    KKStr errMsg = "FeatureNumList::operator-  ***ERROR***   Incomparable FileDesc's";
-    errMsg << endl
-           << "      The associated FileDesc instances are not the same.";
-    cerr << endl << endl << errMsg << endl <<endl;
-    throw KKException (errMsg);
-  }
+  FeatureNumList  result (maxFeatureNum);
 
-  FeatureNumList  result (*this);
-  kkint32  x;
-  for  (x = 0;  x < rightSide.NumOfFeatures ();  x++)
-    result.UnSet (rightSide[x]);
+  kkint32  l = 0;
+  kkint32  r = 0;
+
+  while  ((l < numOfFeatures)  &&  (r < rightSide.numOfFeatures))
+  {
+    if  (featureNums[l] < rightSide.featureNums[r])
+    {
+      result.AddFeature (featureNums[l]);
+      l++;
+    }
+
+    else if  (featureNums[l] > rightSide.featureNums[r])
+      r++;
+
+    else
+    {
+      l++;
+      r++;
+    }
+  }
 
   return  result;
 }  /* operator- */
@@ -1068,8 +923,6 @@ FeatureNumList&  FeatureNumList::operator-= (kkuint16  rightSide)
   UnSet (rightSide);
   return  *this;
 }  /* operator-= */
-
-
 
 
 
@@ -1087,7 +940,7 @@ FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (kkint32  numToKeep) 
     numToKeep = numOfFeatures;
   }
 
-  FeatureNumListPtr  randomlySelectedFeatures = new FeatureNumList (fileDesc);
+  FeatureNumListPtr  randomlySelectedFeatures = new FeatureNumList (maxFeatureNum);
 
   kkint32 x, y, z;
 
@@ -1118,45 +971,30 @@ FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (kkint32  numToKeep) 
 
 
 
-AttributeType  FeatureNumList::FeatureAttributeType (kkint32 idx)  const
-{
-  if  ((idx < 0)  ||  (idx >= numOfFeatures))
-  {
-    cerr << endl << endl
-         << "FeatureNumList::AttributeType       *** ERROR ***"  << endl
-         << endl
-         << "                Invalid Index[" << idx << "]  Valid Range (0.." << (numOfFeatures - 1) << ")" << endl
-         << endl;
-
-    return  NULLAttribute;
-  }
-
-  if  (!fileDesc)
-  {
-    KKStr errMsg = "FeatureNumList::AttributeType   ***ERROR***  'fileDesc == NULL'   There is a major programing flaw.";
-    cerr << endl << endl << errMsg << endl << endl;
-    throw KKException (errMsg);
-  }
-
-  return  fileDesc->Type (featureNums[idx]);
-}  /* FeatureAttributeType */
-
-
-
-
-
 FeatureNumList  FeatureNumList::Complement ()  const
 {
-  kkuint16  x;
-
-  FeatureNumList  result;
-
-  for  (x = 0;  x < kkuint16 (fileDesc->NumOfFields ());  x++)
+  FeatureNumList  result (maxFeatureNum);
+  kkuint16  x = 0;
+  kkuint16  fni = 0;
+  while  (fni < numOfFeatures)
   {
-    if  (!InList (x))
+    while  (x < featureNums[fni])
+    {
       result.AddFeature (x);
+      ++x;
+    }
+    ++fni;
   }
 
+  while  (x < maxFeatureNum)
+  {
+    result.AddFeature (x);
+    ++x;
+  }
   return  result;
 }  /* Complement */
+
+
+
+XmlFactoryMacro(FeatureNumList)
 

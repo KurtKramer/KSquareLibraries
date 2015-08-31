@@ -1,13 +1,13 @@
 ========================================================================
-    STATIC LIBRARY : KKMachineLearning Project Overview
+    STATIC LIBRARY : KKMLL Project Overview
 ========================================================================
 
-AppWizard has created this KKMachineLearning library project for you.
+AppWizard has created this KKMLL library project for you.
 
 No source files were created as part of your project.
 
 
-KKMachineLearning.vcproj
+KKMLL.vcproj
     This is the main project file for VC++ projects generated using an Application Wizard.
     It contains information about the version of Visual C++ that generated the file, and
     information about the platforms, configurations, and project features selected with the

@@ -354,16 +354,16 @@ void  ScannerFile::AddStartStopEntryToIndexFile (kkint32                        
 
 void  ScannerFile::AddStartPoint (kkint32  _scanLineNum)
 {
-  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStartPoint);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStartPoint, false);
+  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::StartStopType::StartPoint);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StartPoint, false);
 }
 
 
 
 void  ScannerFile::AddStopPoint (kkint32  _scanLineNum)
 {
-  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::sspStopPoint);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, false);
+  startStopPoints.AddEntry (_scanLineNum, StartStopPoint::StartStopType::StopPoint);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StopPoint, false);
 }
 
 
@@ -371,7 +371,7 @@ void  ScannerFile::AddStopPoint (kkint32  _scanLineNum)
 void  ScannerFile::StartStopPointDelete (kkint32 _scanLineNum)
 {
   startStopPoints.DeleteEntry (_scanLineNum);
-  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::sspStopPoint, true);
+  AddStartStopEntryToIndexFile (_scanLineNum, StartStopPoint::StartStopType::StopPoint, true);
 }
 
 
@@ -726,15 +726,15 @@ void   ScannerFile::WriteInstrumentDataWord (uchar             idNum,
 
 
 
-ScannerFile::ScannerFileFormat  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
-                                                                RunLog&       _log
-                                                               )
+ScannerFile::Format  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
+                                                     RunLog&       _log
+                                                    )
 {
   // Will guess what file format by trying to open each one until one is considered valid.
 
   FILE*  f = osFOPEN (_fileName.Str (), "rb");
   if  (!f)
-    return sfUnKnown;
+    return Format::sfUnKnown;
 
   bool  endOfText = false;
   KKStr ln (100);
@@ -743,7 +743,7 @@ ScannerFile::ScannerFileFormat  ScannerFile::GuessFormatOfFile (const KKStr&  _f
 
   KKStr fieldName = ln.ExtractToken2 ("\t");
   if  (!fieldName.EqualIgnoreCase ("ScannerFile"))
-    return sfUnKnown;
+    return Format::sfUnKnown;
 
   KKStr  scannerFileFormatStr = ln.ExtractToken2 ("\t");
   return  ScannerFileFormatFromStr (scannerFileFormatStr);
@@ -753,7 +753,7 @@ ScannerFile::ScannerFileFormat  ScannerFile::GuessFormatOfFile (const KKStr&  _f
 
 void   ScannerFile::GetScannerFileParameters (const KKStr&             _scannerFileName,
                                               ScannerHeaderFieldsPtr&  _headerFields,
-                                              ScannerFileFormat&       _scannerFileFormat,
+                                              Format&                  _scannerFileFormat,
                                               kkint32&                 _frameHeight,
                                               kkint32&                 _frameWidth,
                                               float&                   _scanRate,
@@ -788,23 +788,23 @@ ScannerFilePtr  ScannerFile::CreateScannerFile (KKStr    _fileName,
                                                 RunLog&  _log
                                                )
 {
-  ScannerFileFormat  format = GuessFormatOfFile (_fileName, _log);
-  if  (format == sfUnKnown)
+  Format  format = GuessFormatOfFile (_fileName, _log);
+  if  (format == Format::sfUnKnown)
     return NULL;
 
-  if  (format == sfSimple)
+  if  (format == Format::sfSimple)
     return new ScannerFileSimple (_fileName, _log);
 
-  if  (format == sf2BitEncoded)
+  if  (format == Format::sf2BitEncoded)
     return new ScannerFile2BitEncoded (_fileName, _log);
 
-  if  (format == sf3BitEncoded)
+  if  (format == Format::sf3BitEncoded)
     return new ScannerFile3BitEncoded (_fileName, _log);
 
-  if  (format == sf4BitEncoded)
+  if  (format == Format::sf4BitEncoded)
     return new ScannerFile4BitEncoded (_fileName, _log);
 
-  if  (format == sfZlib3BitEncoded)
+  if  (format == Format::sfZlib3BitEncoded)
     return new ScannerFileZLib3BitEncoded (_fileName, _log);
 
   return NULL;
@@ -813,30 +813,30 @@ ScannerFilePtr  ScannerFile::CreateScannerFile (KKStr    _fileName,
 
 
 
-const uchar*  ScannerFile::ConpensationTable (ScannerFileFormat  format)
+const uchar*  ScannerFile::ConpensationTable (Format  format)
 {
   const uchar*  result = NULL;
 
   switch  (format)
   {
-  case  sfSimple:      
+  case  Format::sfSimple:      
     result = ScannerFileSimple::CompensationTable ();
     break;
 
-  case  sf2BitEncoded:
+  case  Format::sf2BitEncoded:
     result = ScannerFile2BitEncoded::CompensationTable ();
     break;
 
-  case  sf3BitEncoded:
+  case  Format::sf3BitEncoded:
     result = ScannerFile3BitEncoded::CompensationTable ();
     break;
 
-  case  sf4BitEncoded:
+  case  Format::sf4BitEncoded:
     result = ScannerFile4BitEncoded::CompensationTable ();
     break;
 
-  case  sfUnKnown:
-  case  sfZlib3BitEncoded:
+  case  Format::sfUnKnown:
+  case  Format::sfZlib3BitEncoded:
     result = NULL;
     break;
   }
@@ -845,11 +845,11 @@ const uchar*  ScannerFile::ConpensationTable (ScannerFileFormat  format)
 
 
 
-ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&       _fileName,
-                                                         ScannerFileFormat  _format,
-                                                         kkuint32           _pixelsPerScanLine,
-                                                         kkuint32           _frameHeight,
-                                                         RunLog&            _log
+ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&  _fileName,
+                                                         Format        _format,
+                                                         kkuint32      _pixelsPerScanLine,
+                                                         kkuint32      _frameHeight,
+                                                         RunLog&       _log
                                                         )
 {
   ScannerFilePtr  scannerFile = NULL;
@@ -863,27 +863,27 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&       _fil
   {
     switch  (_format)
     {
-    case  sfSimple:      
+    case  Format::sfSimple:      
       scannerFile = new ScannerFileSimple (_fileName, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
-    case  sf2BitEncoded:
+    case  Format::sf2BitEncoded:
       scannerFile = new ScannerFile2BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
-    case  sf3BitEncoded:
+    case  Format::sf3BitEncoded:
       scannerFile = new ScannerFile3BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
-    case  sf4BitEncoded:
+    case  Format::sf4BitEncoded:
       scannerFile = new ScannerFile4BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
-    case  sfZlib3BitEncoded:
+    case  Format::sfZlib3BitEncoded:
       scannerFile = new ScannerFileZLib3BitEncoded (_fileName, _pixelsPerScanLine, _frameHeight, _log);
       break;
 
-    case  sfUnKnown:
+    case  Format::sfUnKnown:
       scannerFile = NULL;
       break;
 
@@ -912,15 +912,15 @@ ScannerFilePtr  ScannerFile::CreateScannerFileForOutput (const KKStr&   _fileNam
 {
   ScannerFilePtr  scannerFile = NULL;
 
-  ScannerFileFormat  format = ScannerFileFormatFromStr (_formatStr);
-  if  (format == sfUnKnown)
+  Format  format = ScannerFileFormatFromStr (_formatStr);
+  if  (format == Format::sfUnKnown)
   {
     _log.Level (-1) << endl << endl << "ScannerFile::CreateScannerFileForOutput  ***ERROR***   Invalid Format[" << _formatStr << "]" << endl << endl;
   }
   else
   {
     scannerFile = ScannerFile::CreateScannerFileForOutput
-    		(_fileName, (ScannerFileFormat)format, _pixelsPerScanLine, _frameHeight, _log);
+    		(_fileName, (Format)format, _pixelsPerScanLine, _frameHeight, _log);
   }
 
   return  scannerFile;
@@ -940,12 +940,12 @@ const  KKStr  ScannerFile::fileFormatOptions[]
       };
 
 
-const KKStr&  ScannerFile::ScannerFileFormatToStr (ScannerFileFormat  fileFormat)
+const KKStr&  ScannerFile::ScannerFileFormatToStr (Format  fileFormat)
 {
-  if  ((fileFormat < 0)  ||  (fileFormat >= sfUnKnown))
-    return fileFormatOptions[sfUnKnown];
+  if  (((int)fileFormat < 0)  ||  (fileFormat >= Format::sfUnKnown))
+    return fileFormatOptions[(int)Format::sfUnKnown];
   else
-    return fileFormatOptions[fileFormat];
+    return fileFormatOptions[(int)fileFormat];
 }  /* ScannerFileFormatToStr */
 
 
@@ -958,17 +958,17 @@ KKStr  ScannerFile::FileFormatStr ()  const
 
 
 
-ScannerFile::ScannerFileFormat  ScannerFile::ScannerFileFormatFromStr (const KKStr&  fileFormatStr)
+ScannerFile::Format  ScannerFile::ScannerFileFormatFromStr (const KKStr&  fileFormatStr)
 {
   kkint32  x = 0;
-  while  (x < (kkint32)sfUnKnown)
+  while  (x < (kkint32)Format::sfUnKnown)
   {
     if  (fileFormatStr.EqualIgnoreCase (fileFormatOptions[x]))
-      return (ScannerFileFormat)x;
+      return (Format)x;
     ++x;
   }
 
-  return  sfUnKnown;
+  return  Format::sfUnKnown;
 }  /* ScannerFileFormatFromStr */
 
 
@@ -1363,7 +1363,7 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
     else if  (lineName.EqualIgnoreCase ("StartStopPoint"))
     {
       StartStopPointPtr  entry = new StartStopPoint (ln);
-      if  (entry->Type () == StartStopPoint::sspInvalid)
+      if  (entry->Type () == StartStopPoint::StartStopType::Invalid)
       {
         delete  entry;
         entry = NULL;

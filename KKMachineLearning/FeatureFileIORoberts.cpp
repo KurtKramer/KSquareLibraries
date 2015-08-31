@@ -26,7 +26,7 @@ using namespace  KKB;
 #include "FeatureFileIORoberts.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 FeatureFileIORoberts  FeatureFileIORoberts::driver;
@@ -64,15 +64,15 @@ FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileName,
-                                                      const FileDescPtr  _fileDesc,
-                                                      MLClassList&       _classes, 
-                                                      istream&           _in,
-                                                      kkint32            _maxCount,    // Maximum # images to load.
-                                                      VolConstBool&      _cancelFlag,
-                                                      bool&              _changesMade,
-                                                      KKStr&             _errorMessage,
-                                                      RunLog&            _log
+FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileName,
+                                                      const FileDescPtr _fileDesc,
+                                                      MLClassList&      _classes, 
+                                                      istream&          _in,
+                                                      kkint32           _maxCount,    // Maximum # images to load.
+                                                      VolConstBool&     _cancelFlag,
+                                                      bool&             _changesMade,
+                                                      KKStr&            _errorMessage,
+                                                      RunLog&           _log
                                                      )
 {
   _log.Level (10) << endl << endl 
@@ -85,15 +85,15 @@ FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&       _fileNa
 
 
 
-void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
-                                       const KKStr&           _fileName,
-                                       const FeatureNumList&  _selFeatures,
-                                       ostream&               _out,
-                                       kkuint32&              _numExamplesWritten,
-                                       VolConstBool&          _cancelFlag,
-                                       bool&                  _successful,
-                                       KKStr&                 _errorMessage,
-                                       RunLog&                _log
+void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
+                                       const KKStr&          _fileName,
+                                       FeatureNumListConst&  _selFeatures,
+                                       ostream&              _out,
+                                       kkuint32&             _numExamplesWritten,
+                                       VolConstBool&         _cancelFlag,
+                                       bool&                 _successful,
+                                       KKStr&                _errorMessage,
+                                       RunLog&               _log
                                       )
 {
   _log.Level (20) << "FeatureFileIORoberts::SaveFile    FileName[" << _fileName << "]" << endl;
@@ -118,13 +118,16 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
       nf << classes->IdxToPtr (x)->Name ();
     }
     delete  classes;
+    classes = NULL;
     nf << endl << endl;
 
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
       AttributePtr  attr = attrTable[featureNum];
-      if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
+      if  ((attr->Type () == AttributeType::Nominal)  ||
+           (attr->Type () == AttributeType::Symbolic)
+          )
       {
         kkint32 y;
         nf << "discrete"; 
@@ -153,7 +156,9 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&     _data,
       kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
 
-      if  ((attr->Type () == NominalAttribute)  ||  (attr->Type () == SymbolicAttribute))
+      if  ((attr->Type () == AttributeType::Nominal)  ||
+           (attr->Type () == AttributeType::Symbolic)
+          )
         _out << attr->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else
         _out << example->FeatureData (featureNum);

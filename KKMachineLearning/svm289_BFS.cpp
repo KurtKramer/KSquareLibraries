@@ -25,8 +25,8 @@ using namespace  std;
 using namespace  KKB;
 
 
-#include  "FeatureVector.h"
-using namespace  KKMachineLearning;
+#include "FeatureVector.h"
+using namespace  KKMLL;
 
 #include "svm289_BFS.h"
 using  namespace  SVM289_BFS;
@@ -102,15 +102,6 @@ namespace  SVM289_BFS
   }  /* GrowAllocation */
 
 
-  double Min (double  x,  double   y) {return (x < y) ? x : y;}
-  kkint32  Min (kkint32 x,  kkint32  y) {return (x < y) ? x : y;}
-  float  Min (float   x,  float    y) {return (x < y) ? x : y;}
-  kkuint32 Min (kkuint32  x,  kkuint32 y) {return (x < y) ? x : y;}
-
-  kkint32  Max (kkint32 x,  kkint32  y) {return (x > y) ? x : y;}
-  double Max (double  x,  double   y) {return (x > y) ? x : y;}
-  float  Max (float   x,  float    y) {return (x > y) ? x : y;}
-  kkuint32 Max (kkuint32  x,  kkuint32 y) {return (x > y) ? x : y;}
 
   inline double  powi (double base, kkint32 times)
   {
@@ -136,10 +127,11 @@ namespace  SVM289_BFS
 
 
 SVM289_BFS::svm_problem::svm_problem (const svm_problem&  _prob):
-      l                  (_prob.l),
-      selFeatures        (_prob.selFeatures),
-      x                  (_prob.x, false),
-      y                  (NULL)
+      fileDesc     (_prob.fileDesc),
+      l            (_prob.l),
+      selFeatures  (_prob.selFeatures),
+      x            (_prob.x, false),
+      y            (NULL)
 
 {
   clone (y, _prob.y, l);
@@ -152,6 +144,8 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
                                       const float*              _y,
                                       const FeatureNumList&     _selFeatures
                                      ):
+  fileDesc    (x.FileDesc ()),
+  l           (0),
   selFeatures (_selFeatures), 
   x           (_x, false),
   y           (NULL)
@@ -167,11 +161,13 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
 
 
 SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
+                                      FileDescPtr            _fileDesc,
                                       RunLog&                _log
                                      ):
+  fileDesc    (_fileDesc),
   l           (0),
   selFeatures (_selFeatures), 
-  x           (_selFeatures.FileDesc (), false, _log),
+  x           (_fileDesc, false),
   y           (NULL)
 {
   kkint32  zed = 87989;
@@ -186,12 +182,6 @@ SVM289_BFS::svm_problem::~svm_problem ()
 
 
     
-RunLog&   SVM289_BFS::svm_problem::Log ()
-{
-  return  x.Log ();
-}
-
-
 
 FileDescPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 {
@@ -201,7 +191,7 @@ FileDescPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 
 
 SVM289_BFS::svm_parameter::svm_parameter ():
-  svm_type     (C_SVC),
+  svm_type     (SVM_Type::C_SVC),
   kernel_type  (RBF),
   degree       (3),
   gamma        (0.0),
@@ -257,7 +247,7 @@ SVM289_BFS::svm_parameter::svm_parameter (const svm_parameter&  _param):
 
 
 SVM289_BFS::svm_parameter::svm_parameter (KKStr&  paramStr):
-  svm_type     (C_SVC),
+  svm_type     (SVM_Type::C_SVC),
   kernel_type  (RBF),
   degree       (3),
   gamma        (0.0),
@@ -343,8 +333,8 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
     cmdStr << "-ProbParam " << probParam << "  ";
          
   cmdStr << "-r " << coef0                 << "  "
-         << "-s " << (kkint32)svm_type       << "  "
-         << "-t " << (kkint32)kernel_type    << "  ";
+         << "-s " << (kkint32)svm_type     << "  "
+         << "-t " << (kkint32)kernel_type  << "  ";
 
   return  cmdStr;
 }
@@ -354,9 +344,9 @@ KKStr   SVM289_BFS::svm_parameter::ToCmdLineStr ()  const
 
 
 void  SVM289_BFS::svm_parameter::ProcessSvmParameter (const KKStr&  cmd,
-                                                  const KKStr&  value,
-                                                  bool&         parmUsed
-                                                 )
+                                                      const KKStr&  value,
+                                                      bool&         parmUsed
+                                                     )
 {
   parmUsed = true;
 
@@ -562,21 +552,21 @@ SVM_Type  SVM289_BFS::SVM_Type_FromStr (KKStr  s)
   s.Upper ();
 
   if  ((s.EqualIgnoreCase ("C_SVC"))       ||  (s == "0"))
-    return C_SVC;
+    return SVM_Type::C_SVC;
 
   if  ((s.EqualIgnoreCase ("NU_SVC"))       ||  (s == "1"))
-    return NU_SVC;
+    return SVM_Type::NU_SVC;
 
   if  ((s.EqualIgnoreCase ("ONE_CLASS"))    ||  (s == "2"))
-    return  ONE_CLASS;
+    return  SVM_Type::ONE_CLASS;
 
   if  ((s.EqualIgnoreCase ("EPSILON_SVR"))  ||  (s == "3"))
-    return  EPSILON_SVR;
+    return  SVM_Type::EPSILON_SVR;
 
   if  ((s.EqualIgnoreCase ("NU_SVR"))       ||  (s == "4"))
-    return  NU_SVR;
+    return  SVM_Type::NU_SVR;
 
-  return  SVM_NULL;
+  return  SVM_Type::SVM_NULL;
 }
 
 
@@ -585,13 +575,13 @@ KKStr  SVM289_BFS::SVM_Type_ToStr (SVM_Type  svmType)
 {
   switch  (svmType)
   {
-  case  C_SVC:        return  "c_svc";
-  case  NU_SVC:       return  "nu_svc";
-  case  ONE_CLASS:    return  "one_class";
-  case  EPSILON_SVR:  return  "epsilon_svr";
-  case  NU_SVR:       return  "nu_svr";
+  case  SVM_Type::C_SVC:        return  "c_svc";
+  case  SVM_Type::NU_SVC:       return  "nu_svc";
+  case  SVM_Type::ONE_CLASS:    return  "one_class";
+  case  SVM_Type::EPSILON_SVR:  return  "epsilon_svr";
+  case  SVM_Type::NU_SVR:       return  "nu_svr";
   }
-  return  SVM_NULL;
+  return  "";
 }
 
 
@@ -653,7 +643,7 @@ static void info(const char *fmt,...)
   va_list ap;
   va_start(ap,fmt);
 
-#ifdef WIN32
+#if  defined(USE_SECURE_FUNCS)
   vsprintf_s(buf, BUFSIZ, fmt, ap);
 #else
   vsprintf(buf,fmt,ap);
@@ -692,9 +682,9 @@ public:
    *@details Return some position p where [p,len) need to be filled (p >= len if nothing needs to be filled)
    */
   kkint32  get_data(const kkint32  index, 
-                  Qfloat**     data, 
-                  kkint32      len
-                 );
+                    Qfloat**       data, 
+                    kkint32        len
+                   );
 
   void swap_index (kkint32 i, kkint32 j);  
 
@@ -2814,30 +2804,30 @@ decision_function  SVM289_BFS::svm_train_one (const svm_problem&    prob,
 
   switch  (param.svm_type)
   {
-    case C_SVC:
+    case SVM_Type::C_SVC:
       solve_c_svc (&prob, &param, alpha, &si, Cp, Cn, _log);
       break;
 
-    case NU_SVC:
+    case SVM_Type::NU_SVC:
       solve_nu_svc (&prob, &param, alpha, &si, _log);
       break;
 
-    case ONE_CLASS:
+    case SVM_Type::ONE_CLASS:
       solve_one_class (&prob, &param, alpha, &si, _log);
       break;
 
-    case EPSILON_SVR:
+    case SVM_Type::EPSILON_SVR:
       solve_epsilon_svr (&prob, &param, alpha, &si, _log);
       break;
 
-    case NU_SVR:
+    case SVM_Type::NU_SVR:
       solve_nu_svr (&prob, &param, alpha, &si, _log);
       break;
 
     default:
       {
         KKStr errMsg = "SVM289_BFS::svm_train_one   ***ERROR***   Invalid Solver Defined.";
-        errMsg << "   Solver[" << param.svm_type << "]";
+        errMsg << "   Solver[" << (int)param.svm_type << "]";
         _log.Level (-1) << endl << endl << errMsg << endl << endl;
         throw KKException (errMsg);
       }
@@ -3208,7 +3198,7 @@ void  svm_binary_svc_probability (const svm_problem    *prob,
     }
 
     {
-      FeatureVectorListPtr  subXX = new FeatureVectorList (prob->x.FileDesc (), false, log);
+      FeatureVectorListPtr  subXX = new FeatureVectorList (prob->x.FileDesc (), false);
       for  (j = 0;  j < k;  j++)
         subXX->PushOnBack (subX[j]);
       subProb = new svm_problem (*subXX, subY, prob->selFeatures);
@@ -3415,9 +3405,9 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
 
   model->weOwnSupportVectors = false;  // XXX
 
-  if  ((param.svm_type == ONE_CLASS)    ||
-       (param.svm_type == EPSILON_SVR)  ||
-       (param.svm_type == NU_SVR)
+  if  ((param.svm_type == SVM_Type::ONE_CLASS)    ||
+       (param.svm_type == SVM_Type::EPSILON_SVR)  ||
+       (param.svm_type == SVM_Type::NU_SVR)
       )
   {
     // regression or one-class-svm
@@ -3428,7 +3418,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     model->probB    = NULL;
     model->sv_coef  = new double*[1];
 
-    if  (param.probability  &&  (param.svm_type == EPSILON_SVR  ||  param.svm_type == NU_SVR))
+    if  (param.probability  &&  (param.svm_type == SVM_Type::EPSILON_SVR  ||  param.svm_type == SVM_Type::NU_SVR))
     {
       model->probA = new double[1];
       model->probA[0] = svm_svr_probability (prob, param, log);
@@ -3487,7 +3477,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     kkint32  numBinaryCombos = nr_class * (nr_class - 1) / 2;
 
     //svm_node **x = Malloc(svm_node *,l);
-    FeatureVectorList x (prob.FileDesc (), false, log);
+    FeatureVectorList x (prob.FileDesc (), false);
 
     kkint32 i;
     for  (i = 0;  i < l;  i++)
@@ -3539,7 +3529,7 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
     {
       for  (kkint32 j = i + 1;  j < nr_class;  j++)
       {
-        svm_problem  sub_prob (prob.SelFeatures (), log);
+        svm_problem  sub_prob (prob.SelFeatures (), prob.FileDesc (), log);
         kkint32 si = start[i], sj = start[j];
         kkint32 ci = count[i], cj = count[j];
         sub_prob.l = ci + cj;
@@ -3737,7 +3727,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
   // stratified cv may not give leave-one-out rate
   // Each class to l folds -> some folds may have zero elements
-  if  ((param.svm_type == C_SVC || param.svm_type == NU_SVC)  && 
+  if  ((param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC)  && 
        (nr_fold < l)
       )
   {
@@ -3817,7 +3807,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     kkint32 end = fold_start[i+1];
     kkint32 j,k;
 
-    svm_problem  subprob (prob.SelFeatures (), log);
+    svm_problem  subprob (prob.SelFeatures (), prob.FileDesc (), log);
 
     subprob.l = l - (end - begin);
     //subprob.x = Malloc(struct svm_node*,subprob.l);
@@ -3843,7 +3833,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
     svm_model*  submodel = svm_train (subprob, param, log);
     if  (param.probability && 
-       (param.svm_type == C_SVC || param.svm_type == NU_SVC))
+       (param.svm_type == SVM_Type::C_SVC || param.svm_type == SVM_Type::NU_SVC))
     {
       double *prob_estimates = new double[svm_get_nr_class (submodel)];
       kkint32  *votes          = new kkint32 [svm_get_nr_class (submodel)];
@@ -3877,8 +3867,7 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
 
 
 
-
-kkint32 svm_get_svm_type(const svm_model *model)
+SVM_Type  svm_get_svm_type (const svm_model *model)
 {
   return model->param.svm_type;
 }
@@ -3906,7 +3895,7 @@ void svm_get_labels(const svm_model*  model,
 
 double svm_get_svr_probability (const svm_model *model)
 {
-  if ((model->param.svm_type == EPSILON_SVR || model->param.svm_type == NU_SVR) &&
+  if ((model->param.svm_type == SVM_Type::EPSILON_SVR || model->param.svm_type == SVM_Type::NU_SVR) &&
       model->probA!=NULL)
     return model->probA[0];
   else
@@ -3924,9 +3913,9 @@ void  SVM289_BFS::svm_predict_values (const svm_model*      model,
                                       double*               dec_values
                                      )
 {
-  if  (model->param.svm_type == ONE_CLASS    ||
-       model->param.svm_type == EPSILON_SVR  ||
-       model->param.svm_type == NU_SVR
+  if  (model->param.svm_type == SVM_Type::ONE_CLASS    ||
+       model->param.svm_type == SVM_Type::EPSILON_SVR  ||
+       model->param.svm_type == SVM_Type::NU_SVR
       )
   {
     double *sv_coef = model->sv_coef[0];
@@ -3997,15 +3986,15 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
                                 const FeatureVector&  x
                                )
 {
-  if  ((model->param.svm_type == ONE_CLASS)     ||
-       (model->param.svm_type == EPSILON_SVR)   ||
-       (model->param.svm_type == NU_SVR)
+  if  ((model->param.svm_type == SVM_Type::ONE_CLASS)     ||
+       (model->param.svm_type == SVM_Type::EPSILON_SVR)   ||
+       (model->param.svm_type == SVM_Type::NU_SVR)
       )
   {
     double res;
     svm_predict_values (model, x, &res);
     
-    if  (model->param.svm_type == ONE_CLASS)
+    if  (model->param.svm_type == SVM_Type::ONE_CLASS)
       return (res > 0) ? 1:-1;
     else
       return res;
@@ -4059,7 +4048,7 @@ double  SVM289_BFS::svm_predict_probability (svm_model*            model,
 {
   double  probParam = model->param.probParam;
 
-  if  ((model->param.svm_type == C_SVC  ||  model->param.svm_type == NU_SVC)  &&  
+  if  ((model->param.svm_type == SVM_Type::C_SVC  ||  model->param.svm_type == SVM_Type::NU_SVC)  &&  
        ((model->probA != NULL  &&  model->probB != NULL)  ||  (probParam > 0.0))
       )
   {
@@ -4327,8 +4316,8 @@ void  SVM289_BFS::svm_save_model_XML (ostream&          o,
       //const svm_node *p = SV[i];
       const FeatureVector&  p = SV[i];
       o.precision (13);
-      o << "SupportVector" << "\t" << p.ImageFileName ()
-                           << "\t" << p.ImageClassName ();
+      o << "SupportVector" << "\t" << p.ExampleFileName ()
+                           << "\t" << p.MLClassName ();
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
         o << "\t" << sv_coef[j][i];
 
@@ -4428,7 +4417,7 @@ void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
       FeatureVectorPtr fv = new FeatureVector (fileDesc->NumOfFields ());
       KKStr  imageFileName = osReadNextToken (in, "\t", eof, eol);
       KKStr  className     = osReadNextToken (in, "\t", eof, eol);
-      fv->ImageFileName (imageFileName);
+      fv->ExampleFileName (imageFileName);
       fv->MLClass (MLClass::CreateNewMLClass (imageFileName));
 
       for  (kkint32 j = 0;  j < nr_class - 1;  j++)
@@ -4610,7 +4599,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
     {
       bool  validFeatureSelected = false;
       KKStr  selFeaturesStr = osReadNextToken (in, "\t", eof, eol);
-      model->selFeatures = FeatureNumList (fileDesc, selFeaturesStr, validFeatureSelected);
+      model->selFeatures = FeatureNumList (selFeaturesStr, validFeatureSelected);
     }
 
     else if  (fieldName.EqualIgnoreCase ("nr_sv"))
@@ -4667,7 +4656,7 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
   param       (_model.param),
   nr_class    (_model.nr_class),
   l           (_model.l),
-  SV          (_fileDesc, false, _log),
+  SV          (_fileDesc, false),
   sv_coef     (NULL),
   rho         (NULL),
   probA       (NULL),
@@ -4749,47 +4738,47 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
 
 
 SVM289_BFS::svm_model::svm_model (FileDescPtr   _fileDesc,
-                              RunLog&       _log
-                             ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+                                  RunLog&       _log
+                                ):
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
 }
 
 
 SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
-                              const FeatureNumList& _selFeatures,
-                              FileDescPtr           _fileDesc,
-                              RunLog&               _log
-                             ):
-   param       (_param),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+                                  const FeatureNumList& _selFeatures,
+                                  FileDescPtr           _fileDesc,
+                                  RunLog&               _log
+                                 ):
+   param               (_param),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_selFeatures),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_selFeatures),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 
 {
 }
@@ -4801,21 +4790,21 @@ SVM289_BFS::svm_model::svm_model (const KKStr&  _fileName,
                                   FileDescPtr   _fileDesc,
                                   RunLog&       _log
                                  ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures    (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Load (_fileName, _fileDesc, _log);
 }
@@ -4826,21 +4815,21 @@ SVM289_BFS::svm_model::svm_model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
                                  ):
-   param       (),
-   nr_class    (0),
-   l           (0),
-   SV          (_fileDesc, true, _log),
-   sv_coef     (NULL),
-   rho         (NULL),
-   probA       (NULL),
-   probB       (NULL),
-   label       (NULL),
-   nSV         (NULL),     // number of SVs for each class (nSV[k])
+   param               (),
+   nr_class            (0),
+   l                   (0),
+   SV                  (_fileDesc, true),
+   sv_coef             (NULL),
+   rho                 (NULL),
+   probA               (NULL),
+   probB               (NULL),
+   label               (NULL),
+   nSV                 (NULL),     // number of SVs for each class (nSV[k])
    weOwnSupportVectors (false),
-   selFeatures (_fileDesc),
-   dec_values     (NULL),
-   pairwise_prob  (NULL),
-   prob_estimates (NULL)
+   selFeatures         (_fileDesc),
+   dec_values          (NULL),
+   pairwise_prob       (NULL),
+   prob_estimates      (NULL)
 {
   Read (_in, _fileDesc, _log);
 }
@@ -5000,7 +4989,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
   for  (kkint32 i = 0;  i < l;  i++)
   {
     const  FeatureVector&  p = SV[i];
-    o << "SupportVector" << "\t" << p.ImageFileName ();
+    o << "SupportVector" << "\t" << p.ExampleFileName ();
 
     kkint32  origPrec = (kkint32)o.precision ();
     o.precision (16);
@@ -5090,7 +5079,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     if  (fieldName.EqualIgnoreCase ("svm_type"))
     {
       param.svm_type = SVM_Type_FromStr (line);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  Invalid SVM_Type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
@@ -5168,7 +5157,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     else if  (fieldName.EqualIgnoreCase ("SelFeatures"))
     {
       bool  valid = false;
-      selFeatures = FeatureNumList (fileDesc, line, valid);
+      selFeatures = FeatureNumList (line, valid);
     }
 
 
@@ -5205,7 +5194,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
       KKStr  imageFileName = line.ExtractToken2 ("\t");
       //model->SV[i] = &x_space[j];
       FeatureVectorPtr  fv = new FeatureVector (fileDesc->NumOfFields ());
-      fv->ImageFileName (imageFileName);
+      fv->ExampleFileName (imageFileName);
 
       for  (j = 0;  (j < (nr_class - 1))  &&  (!eol);  j++)
         sv_coef[j][i] = line.ExtractTokenDouble ("\t");
@@ -5238,7 +5227,9 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
 
 
 
-/** @brief Derives multiclass probability. */
+/**
+ @brief Derining multiclass probability as done in "Recognizing Plankton Images From the SIPPER".
+ */
 void  SVM289_BFS::svm_model::NormalizeProbability ()
 {
   // Make sure that the ProbEstimates array exists.
@@ -5330,7 +5321,7 @@ svm_model *svm_load_model (const char*  model_file_name,
       fscanf (fp, "%80s", cmd);
 
       param.svm_type = SVM_Type_FromStr (cmd);
-      if  (param.svm_type == SVM_NULL)
+      if  (param.svm_type == SVM_Type::SVM_NULL)
       {
         fprintf (stderr, "unknown svm type.\n");
         delete model;
@@ -5550,13 +5541,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
 {
   // svm_type
 
-  kkint32  svm_type = param->svm_type;
+  SVM_Type  svm_type = param->svm_type;
 
-  if  (svm_type != C_SVC        &&
-       svm_type != NU_SVC       &&
-       svm_type != ONE_CLASS    &&
-       svm_type != EPSILON_SVR  &&
-       svm_type != NU_SVR
+  if  (svm_type != SVM_Type::C_SVC        &&
+       svm_type != SVM_Type::NU_SVC       &&
+       svm_type != SVM_Type::ONE_CLASS    &&
+       svm_type != SVM_Type::EPSILON_SVR  &&
+       svm_type != SVM_Type::NU_SVR
       )
     return "unknown svm type";
   
@@ -5583,21 +5574,21 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  (param->eps <= 0)
     return "eps <= 0";
 
-  if  (svm_type == C_SVC       ||
-       svm_type == EPSILON_SVR ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::C_SVC       ||
+       svm_type == SVM_Type::EPSILON_SVR ||
+       svm_type == SVM_Type::NU_SVR
       )
     if  (param->C <= 0)
       return "C <= 0";
 
-  if  (svm_type == NU_SVC     ||
-       svm_type == ONE_CLASS  ||
-       svm_type == NU_SVR
+  if  (svm_type == SVM_Type::NU_SVC     ||
+       svm_type == SVM_Type::ONE_CLASS  ||
+       svm_type == SVM_Type::NU_SVR
       )
     if  ((param->nu <= 0) || (param->nu > 1))
       return "nu <= 0 or nu > 1";
 
-  if  (svm_type == EPSILON_SVR)
+  if  (svm_type == SVM_Type::EPSILON_SVR)
   {
     if  (param->p < 0)
       return "p < 0";
@@ -5609,13 +5600,13 @@ const char *svm_check_parameter (const svm_problem*    prob,
   if  ((param->probability != 0)  &&  (param->probability != 1))
     return "probability != 0 and probability != 1";
 
-  if  ((param->probability == 1)  &&  (svm_type == ONE_CLASS))
+  if  ((param->probability == 1)  &&  (svm_type == SVM_Type::ONE_CLASS))
     return "one-class SVM probability output not supported yet";
 
 
   // check whether nu-svc is feasible
   
-  if  (svm_type == NU_SVC)
+  if  (svm_type == SVM_Type::NU_SVC)
   {
     kkint32 l = prob->l;
     kkint32 max_nr_class = 16;
@@ -5680,6 +5671,6 @@ const char *svm_check_parameter (const svm_problem*    prob,
 
 kkint32  svm_check_probability_model (const svm_model *model)
 {
-  return ((model->param.svm_type == C_SVC       ||  model->param.svm_type == NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
-         ((model->param.svm_type == EPSILON_SVR ||  model->param.svm_type == NU_SVR) &&  model->probA!=NULL);
+  return ((model->param.svm_type == SVM_Type::C_SVC       ||  model->param.svm_type == SVM_Type::NU_SVC) &&  model->probA!=NULL && model->probB!=NULL) ||
+         ((model->param.svm_type == SVM_Type::EPSILON_SVR ||  model->param.svm_type == SVM_Type::NU_SVR) &&  model->probA!=NULL);
 }

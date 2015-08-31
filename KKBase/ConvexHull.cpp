@@ -129,11 +129,15 @@ RasterPtr  ConvexHull::Filter (const Raster&  src,
                                RasterPtr      dest
                               )
 {
-  kkint32 w = src.Width ();
-  kkint32 h = src.Height ();
+  SetSrcRaster (&src);
+  //srcHeight = src.Height ();
+  //srcWidth  = src.Width  ();
 
-  if  ((dest->Height () != h)  ||  (dest->Width () != w))
-    dest->ReSize (h, w, false);
+//  kkint32 w = src.Width ();
+//  kkint32 h = src.Height ();
+
+  if  ((dest->Height () != srcHeight)  ||  (dest->Width () != srcWidth))
+    dest->ReSize (srcHeight, srcWidth, false);
         
   Store (src);
 

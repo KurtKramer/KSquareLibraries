@@ -56,7 +56,7 @@ namespace  KKLSC
     ~ScannerFileZLib3BitEncoded ();
 
 
-    virtual  ScannerFileFormat  FileFormat ()  const  {return sfZlib3BitEncoded;}
+    virtual  Format  FileFormat ()  const  {return Format::sfZlib3BitEncoded;}
 
     virtual
     void  ScanRate (float  _scanRate);

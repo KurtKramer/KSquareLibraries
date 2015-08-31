@@ -2,39 +2,68 @@
 #define  _MODELPARAM_
 
 
-#include  "FeatureNumList.h"
-#include  "FileDesc.h"
 #include  "RunLog.h"
 #include  "KKStr.h"
 
+#include "FeatureNumList.h"
 
-namespace KKMachineLearning {
+namespace KKMLL
+{
+  #ifndef _FileDesc_Defined_
+  class  FileDesc;
+  typedef  FileDesc*  FileDescPtr;
+  #endif
+
+
+  // All the classes sub-classed from 'ModelParam'  will need this.
+  #if  !defined(_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
+  #endif
 
 
 /**
-  @brief  Abstract Base class for Machine Learning parameters.
-  @author Kurt Kramer
-  @details
-  For each Machine Learning algorithm implemented you would create a specialization of this class
-  to manage the parameters required by the algorithm.  Specifically for each new class that you
-  create that is derived from 'Model' you will new to create a class derived from 'ModelParam'.
-  This class encapsulates general parameters that are common to all Machine Learning Models.   *
-  @see  Model
+  *@brief  Abstract Base class for Machine Learning parameters.
+  *@author Kurt Kramer
+  *@details
+  *For each Machine Learning algorithm implemented you would create a specialization of this class
+  *to manage the parameters required by the algorithm. Specifically for each new class that you
+  *create that is derived from 'Model' you will new to create a class derived from 'ModelParam'.
+  *This class encapsulates general parameters that are common to all Machine Learning Models.
+  *@see  Model
   */
   class  ModelParam
   {
   public:
     typedef  ModelParam*  ModelParamPtr;
 
-    typedef  enum  {mptNULL, mptKNN, mptOldSVM, mptSvmBase, mptUsfCasCor}  ModelParamTypes;
+    enum  class  ModelParamTypes
+                      {Null,
+                       Dual,
+                       KNN,
+                       OldSVM,
+                       SvmBase,
+                       UsfCasCor
+                      };
+
     static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
   
-    typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  EncodingMethodType;
+
+    /**
+     * Needs to be synchronized with SVMparam::SVM_EncodingMethod
+     */
+    enum class  EncodingMethodType 
+    {
+      Null,
+      NoEncoding,
+      Binary,
+      Scaled
+    };
   
-    ModelParam  (FileDescPtr  _fileDesc,
-                 RunLog&      _log
-                );
+    ModelParam  ();
   
   
     ModelParam  (const ModelParam&  _param);
@@ -42,11 +71,7 @@ namespace KKMachineLearning {
     virtual
     ~ModelParam  ();
 
-    static 
-    ModelParamPtr  CreateModelParam (istream&     i,
-                                     FileDescPtr  _fileDesc,
-                                     RunLog&      _log
-                                    );
+
 
     virtual
     ModelParamPtr  Duplicate () const = 0;
@@ -57,56 +82,40 @@ namespace KKMachineLearning {
 
 
     virtual
-    void    ParseCmdLine (KKStr  _cmdLineStr,
-                          bool&   _validFormat
+    void    ParseCmdLine (KKStr    _cmdLineStr,
+                          bool&    _validFormat,
+                          RunLog&  _log
                          );
 
 
     virtual
-    void   ParseCmdLinePost ();
+    void   ParseCmdLinePost (RunLog&  log);
 
 
-    virtual
-    void    ReadXML (KKStr&  _fileName,
-                     bool&   _successful
-                    );
-  
-    virtual
-    void    ReadXML (istream&  i);
-  
-    virtual
-    void    ReadSpecificImplementationXML (istream&  i) = 0;
-  
 
-    /*!
-     @brief Creates a a Command Line String that represents these parameters.
-     @details  All derived classes should implement this method.  They should first call this method and
-               then append there own parameters that are specific to their implementation.
+  
+    /**
+     *@brief Creates a a Command Line String that represents these parameters.
+     *@details  All derived classes should implement this method. They should first call this method and
+     *          then append there own parameters that are specific to their implementation.
      */
     virtual
     KKStr   ToCmdLineStr ()  const;
   
 
-    virtual
-    void    WriteXML (std::ostream&  o)  const;
-  
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const = 0;
-
-
+ 
     // Member access methods
 
     virtual ModelParamTypes          ModelParamType             () const = 0;
     virtual KKStr                    ModelParamTypeStr          () const {return ModelParamTypeToStr (ModelParamType ());}
 
-    virtual float                    AvgMumOfFeatures           () const {return (float)selectedFeatures.NumOfFeatures ();}
+    virtual float                    AvgMumOfFeatures           () const;
     virtual EncodingMethodType       EncodingMethod             () const {return encodingMethod;}
     virtual KKStr                    EncodingMethodStr          () const {return EncodingMethodToStr (encodingMethod);}
     virtual kkint32                  ExamplesPerClass           () const {return examplesPerClass;}
     virtual const KKStr&             FileName                   () const {return fileName;}
     virtual bool                     NormalizeNominalFeatures   () const {return normalizeNominalFeatures;}
-    virtual kkint32                  NumOfFeaturesAfterEncoding () const;
-    virtual const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
+    virtual FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
     virtual bool                     ValidParam                 () const {return validParam;}
   
     // Access members that were originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
@@ -121,7 +130,7 @@ namespace KKMachineLearning {
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}
     virtual void  ExamplesPerClass   (kkint32                _examplesPerClass)   {examplesPerClass   = _examplesPerClass;}
     virtual void  FileName           (const KKStr&           _fileName)           {fileName           = _fileName;}
-    virtual void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
+    virtual void  SelectedFeatures   (FeatureNumListConst&   _selectedFeatures);
     virtual void  ValidParam         (bool                   _validParam)         {validParam         = _validParam;}
 
 
@@ -131,24 +140,40 @@ namespace KKMachineLearning {
     virtual void  Gamma    (double  _gamma);
     virtual void  Prob     (float   _prob);
 
-    static  KKStr   EncodingMethodToStr    (EncodingMethodType     encodingMethod);
+    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                 RunLog&      log
+                                                ) const;
 
+
+    static  KKStr   EncodingMethodToStr    (EncodingMethodType     encodingMethod);
 
     static  EncodingMethodType     EncodingMethodFromStr    (const KKStr&  encodingMethodStr);
 
 
-  protected:
-    FileDescPtr    fileDesc;
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           ) = 0;
 
-    RunLog&        log;
-  
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const = 0;
+
+
+    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
+    XmlTokenPtr  ReadXMLModelParamToken (XmlTokenPtr  t);
+
+    void  WriteXMLFields (ostream&  o)  const;
+
 
   private:
  
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
-                                 bool&         parameterUsed
+                                 bool&         parameterUsed,
+                                 RunLog&       log
                                 ) = 0;
 
 
@@ -160,11 +185,12 @@ namespace KKMachineLearning {
 
     bool                     normalizeNominalFeatures;
 
-    FeatureNumList           selectedFeatures;    // Feature Number to use.
+    mutable
+    FeatureNumListPtr        selectedFeatures;    /**< Feature Number to use. */
 
     bool                     validParam;
 
-    // following parameters are placed hear to support SVM based algorithms.
+    // The following parameters are placed hear to support SVM based algorithms.
     // to help transition from old(CRAPPY) design to newer less crappy design.
     double  cost;
     double  gamma;
@@ -175,7 +201,97 @@ namespace KKMachineLearning {
 
   typedef  ModelParam::ModelParamPtr   ModelParamPtr;
 
-}  /* namespace KKMachineLearning */
+
+
+
+
+
+  class   XmlElementModelParam:  public  XmlElement
+  {
+  public:
+    XmlElementModelParam (XmlTagPtr   tag,
+                          XmlStream&  s,
+                          RunLog&     log
+                         ):
+     XmlElement (tag, s, log),
+     value (NULL)
+    {
+    }
+
+                
+    ~XmlElementModelParam ()
+    {
+      delete value;
+      value = NULL;
+    }
+
+
+    virtual
+    ModelParam*  const  Value ()  const  {return value;}
+
+    virtual 
+    ModelParam*  TakeOwnership ()
+    {
+      ModelParam* v = value;
+      value = NULL;
+      return  v;
+    }
+
+  protected:
+    ModelParam*  value;
+  };  /* XmlElementModelParam */
+
+  typedef  XmlElementModelParam*  XmlElementModelParamPtr;
+
+
+
+
+
+
+  /**
+   *@brief  To be used for classes that implement that implement default constructor, readXML, and WriteXML.
+   */
+  template<class  T>
+  class  XmlElementModelParamTemplate:  public  XmlElementModelParam
+  {
+  public:
+    XmlElementModelParamTemplate (XmlTagPtr   tag,
+                                  XmlStream&  s,
+                                  RunLog&     log
+                                 ):
+    XmlElementModelParam (tag, s, log)
+    {
+      value = new T();
+      value->ReadXML (s, tag, log);
+    }
+
+                
+    ~XmlElementModelParamTemplate ()
+    {
+    }
+
+    T*  const  Value ()  const  {return dynamic_cast<T*> (value);}
+    
+    T*  TakeOwnership ()
+    {
+      T* v = dynamic_cast<T*> (value);
+      value = NULL;
+      return  v;
+    }
+
+    static
+    void  WriteXML (const T&      t,
+                    const KKStr&  varName,
+                    ostream&      o
+                   )
+    {
+      dynamic_cast<T>(t).WriteXML (varName, o);
+    }
+  private:
+  };  /* XmlElementModelParamTemplate */
+
+
+}  /* namespace KKMLL */
 
 
 

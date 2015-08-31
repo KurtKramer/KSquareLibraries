@@ -3,7 +3,7 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   /**
     ************************************************************************************************
@@ -26,12 +26,12 @@ namespace KKMachineLearning
 
     static   FeatureFileIODstWebPtr  Driver ()  {return &driver;}
 
-    virtual  FileDescPtr  GetFileDesc (const KKStr&    _fileName,
-                                       istream&        _in,
-                                       MLClassListPtr  _classList,
-                                       kkint32&        _estSize,
-                                       KKStr&          _errorMessage,
-                                       RunLog&         _log
+    virtual  FileDescPtr  GetFileDesc (const KKStr&   _fileName,
+                                       istream&       _in,
+                                       MLClassListPtr _classList,
+                                       kkint32&       _estSize,
+                                       KKStr&         _errorMessage,
+                                       RunLog&        _log
                                       );
 
 
@@ -47,15 +47,15 @@ namespace KKMachineLearning
                                             );
 
 
-    virtual  void   SaveFile (FeatureVectorList&     _data,
-                              const KKStr&           _fileName,
-                              const FeatureNumList&  _selFeatures,
-                              ostream&               _out,
-                              kkuint32&              _numExamplesWritten,
-                              VolConstBool&          _cancelFlag,
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              ostream&              _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
                               bool&                  _successful,
-                              KKStr&                 _errorMessage,
-                              RunLog&                _log
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              );
 
   private:
@@ -68,7 +68,7 @@ namespace KKMachineLearning
   };  /* FeatureFileIODstWeb */
 
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

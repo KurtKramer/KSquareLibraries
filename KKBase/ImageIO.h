@@ -3,8 +3,8 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 
-#ifndef  _IMAGEIO_
-#define  _IMAGEIO_
+#ifndef _IMAGEIO_
+#define _IMAGEIO_
 
 #include  "KKStr.h"
 

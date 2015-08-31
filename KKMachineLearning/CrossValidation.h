@@ -2,10 +2,33 @@
 #define  _CROSSVALIDATION_
 
 /**
- *@class  KKMachineLearning::CrossValidation
- *@brief  A class that is meant to manage a n-Fold Cross Validation.
- *@author  Kurt Kramer
- *@details
+ @class  KKMLL::CrossValidation
+ @brief  A class that is meant to manage a n-Fold Cross Validation.
+ @author  Kurt Kramer
+ @details
+ @code
+ *********************************************************************
+ *                           CrossValidation                         *
+ *                                                                   *
+ *                                                                   *
+ *                                                                   *
+ *-------------------------------------------------------------------*
+ *  History                                                          *
+ *                                                                   *
+ *    Date     Programmer   Description                              *
+ *  ---------- -----------  -----------------------------------------*
+ *  2004       Kurt Kramer  Original Development.                    *
+ *                                                                   *
+ *                                                                   *
+ *  2005-01-07 Kurt Kramer  Added classedCorrectly parameter to      *
+ *                          CrossValidate. If not null it should     *
+ *                          point to an array of bool that has as    *
+ *                          many elements as there are in the        *
+ *                          testImages list. Each element represents *
+ *                          weather the corresponding element in     *
+ *                          testImages was classified correctly.     *
+ *********************************************************************
+ @endcode
  */
 
 
@@ -13,16 +36,17 @@
 #include  "RunLog.h"
 
 
-namespace  KKMachineLearning  
+namespace  KKMLL  
 {
-
   #ifndef  _FeatureVector_Defined_
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif
 
 
-  #ifndef  _MLCLASS_
+  #if  !defined (_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
@@ -35,6 +59,14 @@ namespace  KKMachineLearning
   #endif
 
 
+
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
+
+
   #ifndef  _TrainingConfiguration2_Defined_
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
@@ -45,7 +77,6 @@ namespace  KKMachineLearning
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
-
 
 
   class  CrossValidation
@@ -63,10 +94,11 @@ namespace  KKMachineLearning
 
     ~CrossValidation ();
     
-    void  RunCrossValidation ();
+    void  RunCrossValidation (RunLog&  log);
 
     void  RunValidationOnly (FeatureVectorListPtr validationData,
-                             bool*                classedCorrectly = NULL
+                             bool*                classedCorrectly,
+                             RunLog&              log
                             );
 
     const
@@ -89,6 +121,7 @@ namespace  KKMachineLearning
     kkint32       NumOfSupportVectors        () const {return  numSVs;}
     kkint32       NumSVs                     () const {return  numSVs;}
     kkint32       TotalNumSVs                () const {return  totalNumSVs;}
+
     kkint32       SupportPointsTotal         () const {return  numSVs;}
     
     const VectorFloat&   Accuracies          () const {return foldAccuracies;}
@@ -101,7 +134,6 @@ namespace  KKMachineLearning
     double               SupportPointsMean   () const {return supportPointsMean;}
     double               SupportPointsStdDev () const {return supportPointsStdDev;}
 
-
     const VectorDouble&  TestTimes       () const {return testTimes;}
     double               TestTimeMean    () const {return testTimeMean;}
     double               TestTimeStdDev  () const {return testTimeStdDev;}
@@ -112,15 +144,14 @@ namespace  KKMachineLearning
     double               TrainTimeStdDev () const {return trainTimeStdDev;}
     double               TrainTimeTotal  () const {return  trainingTime;}
 
-
-
   private:
     void  AllocateMemory ();
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
-                         FeatureVectorListPtr   trainingImages,
+                         FeatureVectorListPtr   trainingExamples,
                          kkint32                foldNum,
-                         bool*                  classedCorrectly = NULL
+                         bool*                  classedCorrectly,
+                         RunLog&                log
                         );
 
     void  DeleteAllocatedMemory ();
@@ -131,6 +162,7 @@ namespace  KKMachineLearning
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
     kkint32                   duplicateTrainDataCount;
+    FactoryFVProducerPtr      fvProducerFactory;
     bool                      featuresAreAlreadyNormalized;
     FileDescPtr               fileDesc;
     VectorFloat               foldAccuracies;
@@ -140,7 +172,6 @@ namespace  KKMachineLearning
     FeatureVectorListPtr      examples;
     MLClassListPtr            mlClasses;
     kkint32                   imagesPerClass;
-    RunLog&                   log;
     kkint32                   maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
     kkint32                   numOfFolds;
 
@@ -179,10 +210,9 @@ namespace  KKMachineLearning
     bool                      weOwnConfusionMatrix;
   };
 
-
   typedef  CrossValidation*  CrossValidationPtr;
 
-}  /* namespace  KKMachineLearning */
+}  /* namespace  KKMLL */
 
 #endif
 

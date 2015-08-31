@@ -17,7 +17,7 @@ class  ClassTotalsList;
 typedef  ClassTotalsList*  ClassTotalsListPtr;
 
 
-namespace  KKMachineLearning
+namespace  KKMLL
 {
   /**
    *@brief Used to keep track of examples by size; typically used by 'CrossValidation'; for each example predicted
@@ -54,7 +54,7 @@ namespace  KKMachineLearning
 
 
   private:
-    MLClassListPtr   BuildImageClassList ()  const;
+    MLClassListPtr   BuildMLClassList ()  const;
 
     void  PrintCSVHeader      (ostream&  o)  const;
     void  PrintFormatedHeader (ostream&  o)  const;
@@ -76,6 +76,6 @@ namespace  KKMachineLearning
 
   typedef  SizeDistribution*  SizeDistributionPtr;
 
-}  /* namespace  KKMachineLearning */
+}  /* namespace  KKMLL */
 
 #endif

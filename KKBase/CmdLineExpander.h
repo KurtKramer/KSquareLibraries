@@ -6,8 +6,8 @@
 #ifndef  _CMDLINEEXPANDER_
 #define  _CMDLINEEXPANDER_
 
-#include  "RunLog.h"
-#include  "KKStr.h"
+#include "RunLog.h"
+#include "KKStr.h"
 
 
 #if  !defined(OS_WINDOWS)

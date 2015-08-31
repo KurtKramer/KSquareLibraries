@@ -34,14 +34,17 @@ namespace KKB
    *@brief Used to encode and decode BMP Images.
    *@details  Purpose of this class it to facilitate the loading and saving of BMP Image files. Not all
    * formats are supported, but the compressed version is, which most others don't support.  As a result 
-   * this class will write considerably smaller BMP files than other utilities that I have tried.  This
-   * results in faster writing images due to less disk-io.  This is especially useful when working with 
-   * gray-scale images that utilize only a small number of bits per pixel.  For example a image that is 
-   * 4096 x 4096 using only 8 levels of gray-scale (3 bits/Pixel) can compress to just several KB in many
-   * cases rather than the 16MB that a non compressed version of BMP would require.
-   * 
-   * This code has been around for +10 years.  AT some point in the future when convenient it should be
-   * rewritten to simplify.
+   * this class will write considerably smaller BMP files than other utilities that I have tried. This
+   * results in faster writing images due to less disk-io.
+   *
+   * This object was originally designed to work in conjunction with Image Extraction.  It requires no 
+   * other libraries and can read and write BMP files.
+   *
+   * When ImageExtraction creates a Bmp file it will provide pixel values  between 0 and 7, where 0 is
+   * the background and 7 is the foreground. This is a result of the SIPPER 2 and 3 Formats and may
+   * change in the future. When saving the BMP file BMPImage will map these values through the palette
+   * to 0=255, 1=219, 2=182, 3=146, 4=109, 5=73, 6=36, 7=0 resulting in a white background and a Black 
+   * foreground.
    */
   class  BmpImage 
   {
@@ -92,8 +95,8 @@ namespace KKB
 
     /**
      *@brief  Constructs a BMP image from the file specified by '_fileName'.
-     *@param[in]  _fileName     Name of file to load BMP image from.
-     *@param[out] successful   Returns true if file successful in loading.
+     *@param[in]  _fileName  Name of file to load BMP image from.
+     *@param[out] successful Returns true if file successful in loading.
      */
     BmpImage (const KKStr&  _fileName,
               bool&         successful
@@ -112,7 +115,7 @@ namespace KKB
 
     ~BmpImage ();
 
-    bool     Color ()     const  {return color;}          /**< @brief Returns true if a Color image. */
+    bool     Color ()     const  {return color;}            /**< @brief Returns true if a Color image. */
 
     const
     KKStr&   FileName ()  const  {return fileName;}
@@ -122,15 +125,15 @@ namespace KKB
     kkuint32 Height ()    const  {return  bmh.biHeight;}
 
     const   
-    uchar*   BlueRow (kkint32 row)  const;                    /**< @brief Returns the specified Row from the Blue Channel. */
+    uchar*   BlueRow (kkint32 row)  const;                  /**< @brief Returns the specified Row from the Blue Channel. */
 
-    uchar**  Image ()            {return  image;}             /**< @brief Returns back two dimension matrix of image; if color it will be the green channel. */
-
-    const   
-    uchar*   ImageRow (kkint32 row)  const;                   /**< @brief Returns the specified Row from the Green Channel. */
+    uchar**  Image ()            {return  image;}           /**< @brief Returns back two dimension matrix of image; if color it will be the green channel. */
 
     const   
-    uchar*   RedRow (kkint32 row)  const;                     /**< @brief Returns the specified Row from the Red Channel. */
+    uchar*   ImageRow (kkint32 row)  const;                 /**< @brief Returns the specified Row from the Green Channel. */
+
+    const   
+    uchar*   RedRow (kkint32 row)  const;                   /**< @brief Returns the specified Row from the Red Channel. */
 
     uchar    MaxPixVal () const  {return  uchar (maxPixVal);}
 

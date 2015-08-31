@@ -7,9 +7,9 @@
 
 using namespace  SVM289_MFS;
 
-namespace KKMachineLearning {
-
-/**
+namespace KKMLL 
+{
+ /**
   ************************************************************************************************
   * This class encapsulates general parameters that are common to all Machine Learning Models.   *
   ************************************************************************************************
@@ -20,17 +20,12 @@ namespace KKMachineLearning {
   public:
     typedef  ModelParamSvmBase*  ModelParamSvmBasePtr;
   
-
-    ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                        RunLog&      _log
-                       );
+    ModelParamSvmBase  ();
   
-    ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                        SVM_Type     _svm_type,
+    ModelParamSvmBase  (SVM_Type     _svm_type,
                         Kernel_Type  _kernelType,
                         double       _cost,
-                        double       _gamma,
-                        RunLog&      _log
+                        double       _gamma
                        );
   
     ModelParamSvmBase  (const ModelParamSvmBase&  _param);
@@ -38,10 +33,9 @@ namespace KKMachineLearning {
     virtual
     ~ModelParamSvmBase  ();
 
-    virtual ModelParamTypes  ModelParamType () const {return mptSvmBase;}
+    virtual ModelParamSvmBasePtr  Duplicate () const;
 
-    virtual
-    ModelParamSvmBasePtr  Duplicate () const;
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::SvmBase;}
 
 
     const SVM289_MFS::svm_parameter&  SvmParam ()  {return svmParam;}
@@ -57,34 +51,31 @@ namespace KKMachineLearning {
     virtual SVM_Type     SvmType    ()  const {return  svmParam.SvmType    ();}
 
 
-
- 
-    virtual
-    void    ReadSpecificImplementationXML (istream&  i);
-  
-
-    /*!
-     @brief Creates a Command Line String that represents these parameters.
-     @details  All derived classes should implement this method.  Thwy should first call this method and 
-               then append there own parameters that are specific to their implementation.
+    /**
+     *@brief Creates a Command Line String that represents these parameters.
+     *@details  All derived classes should implement this method. They should first call this method and
+     *          then append there own parameters that are specific to their implementation.
      */
-    virtual
-    KKStr   ToCmdLineStr ()  const;
-  
+    virtual KKStr   ToCmdLineStr ()  const;
 
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const;
-  
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
   
   private:
-    virtual
-    void   ParseCmdLinePost ();  // Will get called after the entire parameter string has been processed.
+    virtual  void   ParseCmdLinePost ();  // Will get called after the entire parameter string has been processed.
 
-    virtual
-    void  ParseCmdLineParameter (const KKStr&  parameter,
-                                 const KKStr&  value,
-                                 bool&         parameterUsed
-                                );
+    virtual  void  ParseCmdLineParameter (const KKStr&  parameter,
+                                          const KKStr&  value,
+                                          bool&         parameterUsed,
+                                          RunLog&       log
+                                         );
 
     SVM289_MFS::svm_parameter   svmParam;
 
@@ -92,9 +83,10 @@ namespace KKMachineLearning {
   
   typedef  ModelParamSvmBase::ModelParamSvmBasePtr   ModelParamSvmBasePtr;
 
+  typedef  XmlElementModelParamTemplate<ModelParamSvmBase>  XmlElementModelParamSvmBase;
+  typedef  XmlElementModelParamSvmBase*  XmlElementModelParamSvmBasePtr;
 
-
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 

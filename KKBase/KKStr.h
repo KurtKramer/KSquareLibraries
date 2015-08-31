@@ -34,6 +34,21 @@ using namespace  std;
 
 namespace  KKB
 {
+#if  !defined(_RunLog_Defined_)
+  class RunLog;
+#endif
+
+#if  !defined(_XmlStream_Defined_)
+  class  XmlStream;
+#endif
+
+#if  !defined(_XmlTag_Defined_)
+  class  XmlTag;
+  typedef  XmlTag  const *  XmlTagConstPtr;
+#endif
+
+
+
   /**
    *@class KKStr  KKStr.h
    *@brief A string class providing safe runtime string management.
@@ -44,11 +59,27 @@ namespace  KKB
    *@todo Should subclass the class from the stl class 'string'.
    *@author  Kurt Kramer
    */
-
-
   class  KKStr;
-  typedef  std::vector<KKStr>  VectorKKStr;
 
+
+  class  VectorKKStr:  public std::vector<KKStr>
+  {
+  public:
+    VectorKKStr ();
+
+    VectorKKStr (const VectorKKStr&  v);
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+  };
+
+  
 
   class  KKStr 
   {
@@ -76,11 +107,11 @@ namespace  KKB
 
     KKStr (const KKStr&  str);
 
-    //KKStr (KKStr&&  str);  /**< Move Constructor */
+    KKStr (KKStr&&  str);  /**< Move Constructor */
 
     KKStr (KKStrConstPtr str);
 
-    KKStr (kkint32  size);     /**< @brief Creates a KKStr object that preallocates space for 'size' characters. */
+    KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
     /** Initializes the string with a displayable version of 'd' with 'precision' decimal points. */
     KKStr (double  d,
@@ -104,6 +135,8 @@ namespace  KKB
     KKStr&   operator= (const KKStrConstPtr  src);
 
     KKStr&   operator= (const KKStr& src);
+
+    KKStr&   operator= (KKStr&& src);
 
     KKStr&   operator= (const char* src);
 
@@ -188,7 +221,7 @@ namespace  KKB
     kkint32  CompareIgnoreCase (const char* s2)  const;
 
 
-    /**KKStrList
+    /**
      *@brief Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater.
      */
     static  kkint32  CompareStrings (const KKStr&  s1, 
@@ -253,6 +286,11 @@ namespace  KKB
     char     ExtractChar ();
 
 
+    /**
+     *@brief  Removes the last character from the string and returns it to the caller.
+     *@details  If the String is already empty it will return 0.
+     */
+    char     ExtractLastChar ();
 
     /**
      *@brief  Extracts the next string token; if the string starts with a quote(") will extract until the terminating quote.
@@ -432,6 +470,13 @@ namespace  KKB
     static
       void  MemSet (void* dest,  kkuint8  byte, kkuint32  size);
 
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
     static
       const char*  Str (const char*  s);
 
@@ -539,6 +584,8 @@ namespace  KKB
     kkuint32  ToUint32     () const;
     kkuint64  ToUint64     () const;
 
+    VectorInt32*  ToVectorInt32 ()  const;
+
     wchar_t*  ToWchar_t    () const;
 
     KKStr&    Trim (const char* whiteSpaceChars = "\n\r\t ");
@@ -553,6 +600,8 @@ namespace  KKB
    
     KKStr     ToUpper ()  const;
 
+    KKStr     ToXmlStr ()  const;
+
     void      Upper ();
 
     bool      ValidInt (kkint32&  value); /**< returns true if KKStr is formated as a valid integer otherwise false.
@@ -564,7 +613,12 @@ namespace  KKB
 
     bool      ValidNum (double&  value)  const;  /**< Returns true if String is a valid number,  ex 1.0 or -3.123, etc */
 
+
+    void      WriteXML (const KKStr&  varName,
+                        ostream&      o
+                       )  const;
     
+
     //std::string  methods.
     //  These methods are provided for people who are familiar with the stl version of string.
     const char*  c_str ()  {return Str ();}
@@ -660,6 +714,7 @@ namespace  KKB
 
     KKStr&  operator<< (const char*   right);
     KKStr&  operator<< (const KKStr&  right);
+    KKStr&  operator<< (KKStr&&       right);
     KKStr&  operator<< (char          right);
     KKStr&  operator<< (kkint16       right);
     KKStr&  operator<< (kkuint16      right);
@@ -684,6 +739,7 @@ namespace  KKB
 
     //friend  KKB::KKStr& endl (KKStr& _s);
     KKStr&  operator<< (std::ostream& (* mf)(std::ostream &));
+
 
 
   private:
@@ -825,20 +881,6 @@ namespace  KKB
                    );
 
 
-  template<typename T>
-  KKStr  VectorToDelimitedStr (std::vector<T>  v,
-                               char            delimiter
-                              )
-  {
-    KKStr  s (10 * v.size ());
-    for  (kkint32 x = 0;  x < v.size ();  x++)
-    {
-      if  (x > 0)
-        s << ",";
-      s << v[x];
-    }
-    return  s;
-  }  /* VectorToDelimitedStr */
 
 
 
@@ -847,9 +889,9 @@ namespace  KKB
   public:
     typedef  KKStrList*  KKStrListPtr;
 
+    KKStrList ();
 
-    KKStrList (bool owner = false);
-
+    KKStrList (bool owner);
 
 
     /**
@@ -876,6 +918,16 @@ namespace  KKB
     bool   StringInList (KKStr& str);
 
 
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
     static
     KKStrListPtr   ParseDelimitedString (const KKStr&  str,
                                          const char*   delChars = ",\t\n\r"
@@ -900,6 +952,8 @@ namespace  KKB
   class  KKStrListIndexed
   {
   public:
+    KKStrListIndexed ();
+
     KKStrListIndexed (bool _owner,
                       bool _caseSensitive
                      );
@@ -908,21 +962,46 @@ namespace  KKB
 
     ~KKStrListIndexed ();
 
+    /**
+     *@details  Note that if 'owner' flag s set to true will take ownership of the strings added to index.
+     *@param[in]  s  Will add 's' into the u=index unless another string with the same value already exists.
+     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
+     */
     kkint32 Add (KKStrPtr  s);
 
-    kkint32 Add (const KKStr&  s);
+    /**
+     *@param[in]  s  Will add a new instance of 's' to the index unless one with the same value already exists.
+     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
+     */
+    //kkint32 Add (const KKStr&  s);
+
+    bool  CaseSensative ()  const  {return caseSensative;}
 
     kkint32 Delete (KKStr&  s);
+
+    void  DeleteContents ();
 
     kkint32 LookUp (const KKStr&  s)  const;
 
     kkint32 LookUp (KKStrPtr s)  const;
 
-    const KKStrConstPtr  LookUp (kkint32 x);
+    KKStrConstPtr  LookUp (kkuint32 x)  const;
 
     kkint32 MemoryConsumedEstimated ()  const;
 
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
     kkuint32 size ()  const;
+
+    KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
     bool  operator== (const KKStrListIndexed&  right);
 
@@ -975,6 +1054,9 @@ namespace  KKB
   KKStr StrFromUint32 (kkuint32 ui);
   KKStr StrFromInt64  (kkint64  i);
   KKStr StrFromUint64 (kkuint64 ui);
+  KKStr StrFromFloat  (float    f);
+  KKStr StrFromDouble (double   d);
+
 }  /* namespace KKB; */
 
 #endif

@@ -71,6 +71,25 @@ KKException::KKException (const char*            _exceptionStr,
 
 
 
+KKException::KKException (const char*         _exceptionStr,
+                          const KKException&  _innerException
+                         ):
+  std::exception (_innerException),
+  exceptionStr (_exceptionStr)
+{
+}
+
+
+KKException::KKException (const KKStr&        _exceptionStr,
+                          const KKException&  _innerException
+                         ):
+  std::exception (_innerException),
+  exceptionStr (_exceptionStr)
+{
+}
+
+
+
 KKException::~KKException ()  throw ()
 {
 }

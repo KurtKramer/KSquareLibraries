@@ -7,16 +7,16 @@
 #include  "FeatureVector.h"
 #include  "KKStr.h"
 
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 /**
  *@namespace  SVM289_BFS   
- *@brief Namespce used to wrap implementation of libSVM version 2.89  to be used as a pair-wise SVM.
+ *@brief Namespace used to wrap implementation of libSVM version 2.89  to be used as a pair-wise SVM.
  *@details  There is more than one version of libSVM implemented in the library.  To prevent
  * name conflicts between them each one was wrapped in their own namespace.
  *<br/>
- * libSVM is a Support Vector Machine implementor done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
+ * libSVM is a Support Vector Machine implemented done by "Chih-Chung Chang"  and  "Chih-Jen Lin". It 
  * was downloaded from http://www.csie.ntu.edu.tw/~cjlin/libsvm/.  The source code was modified by 
  * Kurt Kramer.  The primary changes to this implementation involves the replacement of the sparse data-structure 
  * in the original implementation with fixed length array implemented through the "FeatureVector" class and 
@@ -45,17 +45,17 @@ namespace  SVM289_BFS
                 );
 
     svm_problem (const FeatureNumList&  _selFeatures,
+                 FileDescPtr            _fileDesc,
                  RunLog&                _log
                 );
 
     ~svm_problem ();
 
-    RunLog&      Log ();
-
     FileDescPtr  FileDesc ()  const;
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}
 
+    FileDescPtr         fileDesc;
     kkint32             l;
     FeatureNumList      selFeatures;
     FeatureVectorList   x;
@@ -64,7 +64,16 @@ namespace  SVM289_BFS
 
 
 
-  typedef  enum  { SVM_NULL, C_SVC, NU_SVC, ONE_CLASS, EPSILON_SVR, NU_SVR }  SVM_Type;    /* svm_type */
+  enum class  SVM_Type
+  {
+    SVM_NULL,
+    C_SVC,
+    NU_SVC,
+    ONE_CLASS,
+    EPSILON_SVR,
+    NU_SVR
+  };    /* svm_type */
+
   typedef  enum  { Kernel_NULL, LINEAR, POLY, RBF, SIGMOID, PRECOMPUTED }     Kernel_Type; /* kernel_type */
 
 
@@ -234,7 +243,7 @@ namespace  SVM289_BFS
                                   RunLog&      log
                                  );
 
-  kkint32  svm_get_svm_type (const svm_model *model);
+  SVM_Type  svm_get_svm_type (const svm_model *model);
 
   kkint32  svm_get_nr_class (const svm_model *model);
 
@@ -259,7 +268,7 @@ namespace  SVM289_BFS
   double svm_predict_probability (      svm_model*      model, 
                                   const FeatureVector&  x, 
                                   double*               prob_estimates,
-                                  kkint32*                votes
+                                  kkint32*              votes
                                  );
 
   void svm_destroy_model (struct svm_model*&  model);

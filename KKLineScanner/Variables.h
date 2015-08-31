@@ -41,7 +41,7 @@ namespace  KKLSC
      *@param[in]  src  String that is to be search for environment variables and expanded.
      *@return  returns the expanded string.
      */
-    static  KKStr  SubstituteInEvironmentVariables (const KKStr&  src);
+    static  KKStr  SubstituteInEnvironmentVariables (const KKStr&  src);
 
   private:
     static  kkint32  LocateEnvStrStart (const KKStr&  str);

@@ -18,10 +18,15 @@ namespace KKB
    *@class Application
    *@brief The base class for all standalone application.
    *@details  This class is meant to be a general class that all standalone applications should be inherited 
-   *          from.  It supports command line processing, and logging facilities.
+   * from.  It supports command line processing, and logging facilities. Derived classes will need to override 
+   * the virtual methods "ApplicationName", "DisplayCommandLineParameters", and "ProcessCmdLineParameter".  Right
+   * after an instance is created you need to call the "InitalizeApplication" method; this will start the processing
+   * of any encountered parameters. For each set of parameters encountered a call to "ProcessCmdLineParameter"
+   * will be made; this is where you can intercept and process parameters that are specific to your application.
+   * Any parameters that you do not recognized should be passed onto the base-class by calling 
+   * "Application::ProcessCmdLineParameter".
    */
-
-  class  Application
+    class  Application
   {
   public:
     /** 
@@ -59,7 +64,8 @@ namespace KKB
     /** 
      *@brief Used to specify that the application is been aborted.
      *@details If you have a reason to abort the processing of this application you would call this method to set the 'abort' 
-     *         flag to true.
+     *         flag to true. It will be the responsibility of the derived class to monitor the 'Abort' flag. If is set to 
+     *         true they should terminate as quickly as they can;  they should also release any resources they have taken.
      *@param[in] _abort  Abort status to set; if set to true you are telling the application that the program needs to be terminated.
      */
     void  Abort (bool _abort)  {abort = _abort;}
@@ -78,8 +84,8 @@ namespace KKB
     /** 
      *@brief  Initialized Application Instance; 1st method to be called after instance construction.
      *@details This method will scan the command line parameters for the log file options  (-L, -Log, or -LogFile)  and use its
-     *        parameter as the LogFile name.  If none is provided it will assume the stdout as the Log File to write to.  It will take
-     *        ownership of this log file and delete it in its destructor.  Right after calling this constructor you will need to
+     *        parameter as the LogFile name. If none is provided it will assume the stdout as the Log File to write to.  It will take
+     *        ownership of this log file and delete it in its destructor. Right after calling this constructor you will need to
      *        call the method ProcessCmdLineParameters.
      *@see  RunLog
      *@see  ProcessCmdLineParameters
@@ -90,7 +96,6 @@ namespace KKB
     void     InitalizeApplication (kkint32  argc,
                                    char**   argv
                                   );
-
 
 
   protected:
@@ -106,7 +111,7 @@ namespace KKB
     /**
      *@brief This method will get called once for each parameter specified in the command line.
      *@details  Derived classes should define this method to intercept parameters that they are interested in.
-     *          Parameters are treated as pairs, Switched and Values where switches have a leading dash("-").
+     *          Parameters are treated as pairs, Switch and Values where switches have a leading dash("-").
      *          The CmdLineExpander class will be used to expand any "-CmdFile" parameters.
      *@param[in] parmSwitch      The fill switch parameter.
      *@param[in] parmValue       Any value parameter that followed the switch parameter.

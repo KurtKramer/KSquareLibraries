@@ -1,10 +1,183 @@
 #if  !defined(__USFCASCOR__H_)
+#define  __USFCASCOR__H_
 
 /**
- *@brief   Adapted by Kurt Kramer be a 'class' definition so as to  make it more usable in th ePices software world.
+ *@brief   Adapted by Kurt Kramer be a 'class' definition so as to make it more usable in th ePices software world.
  *@details  The original author is _____________.
- */
+   See notes below for original author, etc.
 
+   Modified by Kurt Kramer 2012-09-10:
+      Originally written by    R. Scott Crowder, III   Se below for his comments.
+
+      I ported this implementation as found at USF into a c++ Class and integrated into the Pices
+      application.
+        1) Restructured code as a c++ class.
+        2) A trained classifier is written to disk and can be reread at a later time.
+        3) Integrated into the Pices application.
+        4) Primary use will to be used in a Dual classifier setup along with a Support Vector Machine(SVM)(libSVM)
+           where both classifiers agree on the prediction will the label be returned otherwise the label
+           "UnKnown" will be returned.  User will have option to have the common part of the prediction in the 
+           class hierarchy returned instead.
+        5) Added predicted confidence values for each class.
+
+
+   Changes made by Steven Eschrich <eschrich@csee.usf.edu>
+   Fall, 2001
+
+ - The code was heavily modified in the I/O portion to follow
+   C4.5 standard data formats (although currently only real-valued
+   attributes are supported). It parses the .names file for classes
+   (1 of N representation) and feature values (ignore or real). The
+   logic simply treats all non-ignore fields as real so integer labels
+   are treated as continuous.
+
+ - All network parameters can be passed via command line arguments,
+   try cascor -h for details. Briefly,
+     -i #    input epochs
+     -o #    output epochs
+     -r #    number of new units to add
+     -P      make predictions. generates a filestem.pred file with class
+       names as predictions (from a .test file).
+     -N      normalize features to 0-1
+     -f filestem   Filestem for data
+     -R      use training set (re-substitution)
+
+   All other parameters that could be specified in the .net file are
+   specified as
+     -O option=value    (e.g. -O UseCache=True)
+
+ - Defaults are used for parameters, in case someone starts it without
+   any...
+
+ - Support for index files (-I option). That is, the following files
+   are supposed to exist
+     filestem.data
+     filestem.idata
+     filestem.itest (-P only)
+     filestem.names
+
+   The .idata and .itest are text files with the index number of the record
+   in .data desired. The .data file **must** be in fixed-width format, each
+   line padded to the same length with spaces.
+*/
+/****************************************************************************/
+/* C implementation of the Cascade-Correlation learning algorithm.          */
+/*                                                                          */
+/*   Written by:          R. Scott Crowder, III                             */
+/*                        School of Computer Science                        */
+/*                        Carnegie Mellon University                        */
+/*                        Pittsburgh, PA 15213-3890                         */
+/*                                                                          */
+/*                        Phone: (412) 268-8139                             */
+/*        Internet:  rsc@cs.cmu.edu                                         */
+/*                                                                          */
+/*                                                                          */
+/*  This code has been placed in the public domain by the author.  As a     */
+/*  matter of simple courtesy, anyone using or adapting this code is        */
+/*  expected to acknowledge the source.  The author would like to hear      */
+/*  about any attempts to use this system, successful or not.               */
+/*                                                                          */
+/*  This code is a port to C from the original Common Lisp implementation   */
+/*  written by Scott E. Fahlman.  (Version dated June 1 1990.)              */
+/*                                                                          */
+/*  For an explanation of this algorithm and some results, see "The         */
+/*  Cascade-Correlation Learning Architecture" by Scott E. Fahlman and      */
+/*  Christian Lebiere in D. S. Touretzky (ed.), "Advances in Neural         */
+/*  Information Processing Systems 2", Morgan Kaufmann, 1990.  A somewhat   */
+/*  longer version is available as CMU Computer Science Tech Report         */
+/*  CMU-CS-90-100.  Instructions for Ftping this report are given at the    */
+/*  end of this file.                                                       */
+/*                                                                          */
+/*  An example of the network set up file is provided at the bottom of      */
+/*  this file.                                                              */
+/*                                                                          */
+/*  This code has been successfully compiled on the following machines.     */
+/*                                                                          */
+/*  DEC Station 3100 using the MIPS compiler version 1.31                   */
+/*  Sun 4 using the gcc compiler version 1.23                               */
+/*  IBM PC-RT  using the cc compiler                                        */
+/*  IBM RS6000 (Model 520) using the xlc compiler                           */
+/*  386 machine using the Turbo C 2.0 compiler                              */
+/*  The implementation compiles with the ANSI standard.  Some machine       */
+/*  specific preprocessor commands are required.  It is assumed that your   */
+/*  system will provide the required preprocessor arguments.                */
+/*                                                                          */
+/****************************************************************************/
+/* Change Log                                                               */
+/****************************************************************************/
+/*                                                                          */
+/* Changes from Release 1 dated Jun-12-90 to Version 1.14 Jul-18-90         */
+/*                                                                          */
+/*  bug fix in TYPE_CONVERT  Thanks to Michael Witbrock for the 1st report  */
+/*  bug fix in BUILD_NET     Thanks to Michael Witbrock for the 1st report  */
+/*  bug fix in GET_ARRAY_ELEMENT       Thanks to Ken Lang                   */
+/*  bug fix in COMPUTE_CORRELATIONS    Thanks to Eric Melz                  */
+/*  bug fix in ADJUST_CORRELATIONS     Thanks to Chris Lebiere              */
+/*  bug fix in COMPUTE_SLOPES          Thanks to Chris Lebiere              */
+/*  removed 2nd call to INIT_GLOBALS   Thanks to Dimitris Michailidis       */
+/*  Added UnitType ASYMSIGMOID for users who like sigmoids to go from 0-1   */
+/*     all learning utility functions changed with this addition.           */
+/*  Added command line argument option type 'cascor1 help' for usage info.  */
+/*  Added .net file and on-the-fly parameter adjustment code.  See new      */
+/*   samples files at the end of this listing for examples.  Functions      */
+/*   main and GET_NETWORK_CONFIGURATION have changed completely.            */
+/*  GET_USER_INPUT replaced by Y_OR_N_P                                     */
+//*  <signal.h> included to support on-the-fly parameter updating            */
+/****************************************************************************/
+/*                                                                          */
+/* Changes from Version 1.15 Jul-18-90 to  1.16  Oct-24-90                  */
+/*                                                                          */
+/* bug fix in BUILD_NETWORK, INSTALL_NEW_UNIT, and TRAIN to allow           */
+/* NTestPatterns > NTrainingPatterns.  Thanks to William Stevenson          */
+/****************************************************************************/
+/*                                                                          */
+/* Changes from Version 1.16  Oct-24-90  to 1.17  Nov-12-90                 */
+/****************************************************************************/
+/* bug fix in TRAIN line 1662 change NtrainingPatterns to NTrainingPatterns */
+/*  Thanks to Merrill Flood for pointing out the problem.                   */
+/****************************************************************************/
+/*                                                                          */
+/* Changes from Version 1.17  Nov-12-90 to 1.30  Jan-23-91                  */
+/****************************************************************************/
+/* Added code to allow user to save the weights into and load weights       */
+/*   from external files.                                                   */
+/* Added code to allow saving of .net files to save any changes to          */
+/*   parameters made during interactive learning trials.                    */
+/* Added an alternative main routine that can be used to calculate          */
+/*   predictions using a previously saved set of weights.  To activate      */
+/*   this feature compile the code with the symbol PREDICT_ONLY defined.    */
+/* Added code to allow '# comment' lines in the training or test sets.      */
+/* Added optional code to calculate the number of multiply-accumulates      */
+/*   used during training.  This is useful for comparing                    */
+/*   Cascade-correlation to other learning algorithms in a machine          */
+/*   independent manner.  To activate this feature define the symbol        */
+/*   CONNX at compile time.                                                 */
+/* Added code to calculate the Lapedes and Faber Index.  Useful for    */
+/*   problems with real-valued outputs.                                     */
+/* Added UnitType VARSIGMOID which can have arbitrary output range          */
+/*   defined by SigmoidMin and SigmoidMax.  Thanks to Dimitris              */
+/*   Michailidis.                                                           */
+/* Added code to allow the training and test data to be read from           */
+/*   separate files.  Thanks to Carlos Puchol.                              */
+/* Added code to save SumError for each output instead of combining it      */
+/*   together for all outputs.  This change helps for multiple output       */
+/*   problems.  Thanks to Scott Fahlman.                                    */
+/* Code added to allow specification of a NonRandomSeed for the random      */
+/*   number generator.  Thanks to Dimitris Michailidis.                     */
+/* Removed useless setting of Ninputs and Noutputs from BUILD_NET.  Thanks  */
+/*   to Dimitris Michailidis.                                               */
+/****************************************************************************/
+/*                                                                          */
+/* Changes from Version 1.30  Jan-23-91 to 1.31 Jan-25-91                   */
+/* fixed typo.  include <string.h> not <sting.h> thanks to Peter Hancock.   */
+/*                                                                          */
+/* Changes from Version 1.31 Jan-25-91 to 1.32 Mar-21-91                    */
+/* BUG FIX in INIT_NET.  Thanks to Boris Gokhman                            */
+/* BUG FIX in TEST_EPOCH.  Thanks to Boris Gokhman                          */
+/*                                                                          */
+/* Changes from Version 1.32 Mar-21-91 to 1.33 Apr-16-92                    */
+/* Prototype correction for strtok.  Thanks to Brian Ripley                 */
+/****************************************************************************/
 //#include "utils.h"
 
 #pragma warning(disable:4996)
@@ -14,13 +187,7 @@
 #endif
 
 
-
-
-#ifndef _BOOLEAN_TYPE_
-#define _BOOLEAN_TYPE_
-typedef enum {False, True} Boolean;
-#endif
-
+typedef  bool  Boolean;
 
 #define LINELEN   1024
 
@@ -89,7 +256,7 @@ typedef enum {False, True} Boolean;
 #include "FeatureVector.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined(_CLASSPROB_)
   class  ClassProb;
@@ -99,16 +266,70 @@ namespace KKMachineLearning
   #endif
 
 
+  /**
+   *@brief Implementation of Cascade-Correlation network originally written by 
+   * R. Scott Crowder, III or CMS  restructured as a c++ class.
+   *@details 
+   *@code
+   *  Important Methods:
+   *
+   *  TrainNewClassifier        Trains a new classier from training examples.
+   *  WriteXML                  Saves a trained classifier to a output stream in the form of a XML object.
+   *  PredictClass              Returns back predicted class for a given Feature vector.
+   *  PredictClassConfidences   Prediction that returns back confidence values for each class rather than a single class prediction.
+   */
+
   class  UsfCasCor
   {
   public:
-    UsfCasCor (FileDescPtr    _fileDesc,
-               VolConstBool&  _cancelFlag,
-               RunLog&        _log
-              );
+    UsfCasCor ();
 
     ~UsfCasCor ();
 
+    kkint32  MemoryConsumedEstimated ()  const;
+
+
+    void  TrainNewClassifier (kkint32                 _in_limit,
+                              kkint32                 _out_limit,
+                              kkint32                 _number_of_rounds,
+                              kkint32                 _number_of_trials,
+                              kkint64                 _the_random_seed,
+                              bool                    _useCache,
+                              FeatureVectorListPtr    _trainData,
+                              FeatureNumListConstPtr  _selectedFeatures,
+                              VolConstBool&           _cancelFlag,
+                              RunLog&                 _log
+                             );
+
+    MLClassPtr  PredictClass (FeatureVectorPtr  example);
+
+    void  PredictConfidences (FeatureVectorPtr    example,
+                              MLClassPtr          knownClass,
+                              MLClassPtr&         predClass1,
+                              float&              predClass1Prob,
+                              MLClassPtr&         predClass2,
+                              float&              predClass2Prob,
+                              float&              knownClassProb,
+                              const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populated. */
+                              VectorFloat&        probabilities
+                             );
+
+
+    ClassProbListPtr  PredictClassConfidences (FeatureVectorPtr  example);
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+  private:
     void  CleanUpMemory ();
 
     template<typename T>
@@ -139,71 +360,8 @@ namespace KKMachineLearning
 
     typedef parmentry PARMS;
 
-    kkint32  MemoryConsumedEstimated ()  const;
-
 
     FeatureVectorListPtr  FilterOutExtremeExamples (FeatureVectorListPtr  trainExamples);
-
-    void  TrainNewClassifier (kkint32                _in_limit,
-                              kkint32                _out_limit,
-                              kkint32                _number_of_rounds,
-                              kkint32                _number_of_trials,
-                              kkint64                _the_random_seed,
-                              bool                   _useCache,
-                              FeatureVectorListPtr   _trainData,
-                              const FeatureNumList&  _selectedFeatures
-                             );
-
-    void  LoadExistingClassifier (istream&  i,
-                                  bool&     valid
-                                 );
-
-    MLClassPtr  PredictClass (FeatureVectorPtr  example);
-
-    void  PredictConfidences (FeatureVectorPtr    example,
-                              MLClassPtr          knownClass,
-                              MLClassPtr&         predClass1,
-                              float&              predClass1Prob,
-                              MLClassPtr&         predClass2,
-                              float&              predClass2Prob,
-                              float&              knownClassProb,
-                              const MLClassList&  classOrder,      /**< Dictates the order in which 'probabilities' will be populated. */
-                              VectorFloat&        probabilities
-                             );
-
-
-    ClassProbListPtr  PredictClassConfidences (FeatureVectorPtr  example);
-
-    void  WriteXML (ostream&  o);
-
-    void  WriteXmlConnections (ostream&  o);
-
-    void  ReadXml (istream&  i,
-                   bool&     valid
-                  );
-
-
-    void  ReadXmlArrayFloat (XmlTagPtr  tag, 
-                             istream&   i
-                            );
-
-    void  ReadXmlArrayFloat2D (XmlTagPtr  tag, 
-                               istream&   i
-                              );
-
-    void  ReadXmlArrayFloat2DVarying (XmlTagPtr  tag, 
-                                      istream&   i
-                                     );
-
-    void  ReadXmlArrayInt (XmlTagPtr  tag, 
-                           istream&   i
-                          );
-
-    void  ReadXmlConnections (XmlTagPtr  tag, 
-                              istream&   i
-                             );
-
-    void  ReadXmlNameValueLine (istream& i);
 
 
     /* Global variables */
@@ -211,18 +369,13 @@ namespace KKMachineLearning
     static  const char*  release_date;
     static  const char*  progname;
     
-    /* Functions */
-    char*  parm_to_string (int k);
-
-    char const *  boolean_to_string (Boolean var);
+    char const *  boolean_to_string (bool var)  const;
 
     Boolean  string_to_boolean (const char* s);
 
-    const char*  type_to_string (int var);
+    const KKStr&  type_to_string (int var)  const;
 
-    int    string_to_type (const char* s);
-
-    int    process_line (char *line);
+    int    string_to_type (const KKStr&  s);
 
     /* Utilities */
     
@@ -231,7 +384,7 @@ namespace KKMachineLearning
 
 
     //***************************************************************
-    //*                            usf-cascor                        *
+    //*                            usfcascor                        *
     //***************************************************************
     int  in_limit;
     int  out_limit;
@@ -240,23 +393,26 @@ namespace KKMachineLearning
     int  normalization_method;
     int  my_mpi_rank;
 
-    void  setup_network (FeatureVectorListPtr  trainExamples);
+    void  setup_network (FeatureVectorListPtr  trainExamples,
+                         RunLog&               log
+                        );
 
-    void  train_network    ();
-    void  allocate_network ();
+    void  train_network    (VolConstBool&  cancelFlag,
+                            RunLog&        log
+                           );
+
+    void  allocate_network (RunLog&  log);
 
 
     //****************************************************************
     //*                            'parms.c'                         *
     //****************************************************************
-    static  const char*  type_strings[];
+    static  const KKStr  type_strings[];
     static  const char*  boolean_strings[2];
 
     char parm_string[LINELEN];
 
     void     strdncase (char *s);
-
-    int      find_key (char *searchkey);
 
     int      _type_convert (char *input);
 
@@ -274,8 +430,8 @@ namespace KKMachineLearning
     //******************************************************************************************
     //*                                   load_namesfile.c                                     *
     //******************************************************************************************
-    void  load_namesfile (FeatureVectorListPtr  trainExamples,
-                          FeatureNumListPtr     selectedFeatures
+    void  load_namesfile (FeatureVectorListPtr    trainExamples,
+                          FeatureNumListConstPtr  selectedFeatures
                          );
 
 
@@ -327,11 +483,13 @@ namespace KKMachineLearning
 
     void  TRAIN_OUTPUTS_EPOCH ();
 
-    int  TRAIN_OUTPUTS (int max_epochs);
+    int  TRAIN_OUTPUTS (int            max_epochs,
+                        VolConstBool&  cancelFlag
+                       );
    
     void  INIT_CANDIDATES ();
 
-    void  INSTALL_NEW_UNIT ();
+    void  INSTALL_NEW_UNIT (RunLog&  log);
 
     void  COMPUTE_CORRELATIONS ();
 
@@ -349,12 +507,16 @@ namespace KKMachineLearning
 
     void  LIST_PARAMETERS ();
 
-    int  TRAIN (int  outlimit, 
-                int  inlimit, 
-                int  rounds
+    int  TRAIN (int            outlimit, 
+                int            inlimit, 
+                int            rounds,
+                VolConstBool&  cancelFlag,
+                RunLog&        log
                );
 
-    void  TEST_EPOCH (double test_threshold);
+    void  TEST_EPOCH (double   test_threshold,
+                      RunLog&  log
+                     );
 
     void  OUT_PASS_OUTPUT ();
 
@@ -378,7 +540,9 @@ namespace KKMachineLearning
     //******************************************************************
 
 
-    void  load_data (FeatureVectorListPtr  trainExamples);
+    void  load_data (FeatureVectorListPtr  trainExamples,
+                     RunLog&               log
+                    );
 
     void  _load_training_data (FeatureVectorListPtr  trainExamples);
 
@@ -578,26 +742,24 @@ namespace KKMachineLearning
     /***************************************************************************/
     FILE*    WeightFile;	             /**< Contains weights from the current net. */
 
-    int      Nparameters;
     Boolean  InterruptPending;         /**< TRUE => user has pressed Control-C */
-    PARMS    ParmTable[37];
-
-    void   ConstructParmTable ();
 
     MLClassListPtr  classes;            /**<  Classes that the training data consisted of.  */
 
-    FileDescPtr        fileDesc;
-
     FeatureNumListPtr  selectedFeatures;   /**< The selected features that are to be used from the source training data. */
-
-    RunLog&  log;
-
-    VolConstBool&  cancelFlag;
-
   };  /* UsfCasCor */
 
   typedef  UsfCasCor*  UsfCasCorPtr;
 
-} /* MLL */
+  
+  typedef  XmlElementTemplate<UsfCasCor>  XmlElementUsfCasCor;
+  typedef  XmlElementUsfCasCor*  XmlElementUsfCasCorPtr;
+
+
+
+
+} /* KKMLL */
 
 #endif
+
+

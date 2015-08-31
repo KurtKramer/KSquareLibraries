@@ -30,12 +30,19 @@
  * <a href="http://figment.cse.usf.edu/~kkramer/">Kurt Kramer.</a><br>
  * ( mail : <a href="mailto:kurtkramer@gmail.com">kurtkramer@gmail.com</a> )<br>
  */
+
+//#define WIN32
+
 #if  defined(WIN32) || defined(WIN64)
+
 #include <windows.h>
 #include "FLOAT.H"
+
 #else
+
 #include <inttypes.h>
 #include "float.h"
+
 #endif
 
 #include <limits>
@@ -106,6 +113,9 @@ namespace KKB
   #endif
   #endif
 
+  #define int16_max    (kkint16)32767
+  #define int16_min    (kkint16)–32,768
+  #define uint16_max   (kkuint16)65535
   #define int32_max    (kkint32)2147483647
   #define int32_min    (kkint32)-214748367
   #define uint32_max   (kkuint32)4294967295

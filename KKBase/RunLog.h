@@ -2,7 +2,7 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#ifndef  _RUNLOG_
+#if  !defined(_RUNLOG_)
 #define  _RUNLOG_
 
 /** 
@@ -199,6 +199,8 @@ namespace KKB
 
 
   typedef  RunLog*  RunLogPtr;
+
+#define  _RunLog_Defined_
 
   /*
   #ifdef  WIN32

@@ -49,17 +49,25 @@ namespace KKB
                    RunLog&            _log
                   );
 
-    Configuration (RunLog&  _log);
+    Configuration ();
 
     Configuration (const Configuration&  c);
 
     virtual  ~Configuration ();
 
-    bool  FormatGood ()                  {return  formatGood;}
+    virtual
+    void  Load (const KKB::KKStr&  _fileName,
+                RunLog&            _log
+               );
+
+
+    bool  FormatGood ()  const  {return  formatGood;}
 
     void  FormatGood (bool _formatGood)  {formatGood = _formatGood;}
 
-    const VectorKKStr&   FormatErrors ()  const {return formatErrors;}
+    const VectorKKStr&   FormatErrors         ()  const {return formatErrors;}
+    const VectorInt&     FormatErrorsLineNums ()  const {return formatErrorsLineNums;}
+
 
     VectorKKStr          FormatErrorsWithLineNumbers ()  const;
 
@@ -69,13 +77,13 @@ namespace KKB
 
     void  FormatErrorsClear ();  /**< @brief Call this to clear all format error messages. */
 
-    void  LoadFile ();
+    void  LoadFile (RunLog& log);
 
     virtual kkint32 MemoryConsumedEstimated ()  const;
 
     kkint32 NumOfSections ();
   
-    kkint32 NumOfSettings (const KKB::KKStr&  sectionName);
+    kkint32 NumOfSettings (const KKB::KKStr&  sectionName) const;
 
     kkint32 NumOfSettings (kkint32  sectionNum)  const;                /**< @brief Returns number of settings for the specified section, */
    
@@ -142,12 +150,11 @@ namespace KKB
     VectorKKStr         formatErrors;   /**< Configuration Format Errors will be recorder here. */
     VectorInt           formatErrorsLineNums;
     ConfSectionListPtr  sections; 
-
-  protected:
-    RunLog&  log;
-  };
-
+  };  /* Configuration */
 
   typedef  Configuration*  ConfigurationPtr;
+
+#define  _Configuration_Defined_
+
 }
 #endif

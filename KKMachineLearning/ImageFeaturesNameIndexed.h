@@ -6,7 +6,7 @@
 #include  "KKStr.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _FeatureVector_Defined_
@@ -21,15 +21,15 @@ namespace KKMachineLearning
 
 
 
-  class  ExtractImageFileName;
+  class  ExtractExampleFileName;
 
 
-  class  ImageFeaturesNameIndexed: public  RBTree<FeatureVector, ExtractImageFileName, KKStr>
+  class  ImageFeaturesNameIndexed: public  RBTree<FeatureVector, ExtractExampleFileName, KKStr>
   {
   public:
     ImageFeaturesNameIndexed ();
 
-    ImageFeaturesNameIndexed (FeatureVectorList&  images);
+    ImageFeaturesNameIndexed (const FeatureVectorList&  images);
 
   private:
   };
@@ -41,13 +41,13 @@ namespace KKMachineLearning
 
 
 
-  class  ExtractImageFileName
+  class  ExtractExampleFileName
   {
   public:
-     KKStr  ExtractKey (FeatureVectorPtr  image);
+     KKStr  ExtractKey (FeatureVectorPtr  example);
   };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 
 #endif

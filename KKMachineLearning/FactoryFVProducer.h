@@ -5,7 +5,7 @@
 #include "RunLog.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 #if  !defined(_FeatureVector_Defined_)
@@ -38,11 +38,17 @@ namespace KKMachineLearning
 #endif
 
 
+#if  !defined(_TrainingConfiguration2_Defined_)
+  class  TrainingConfiguration2;
+  typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
+#endif
+
+
   /**
    *@class  FactoryFVProducer
    *@brief  Responsible for creating a FeatureFectorProducer instance.
    *@details  
-   * To make the 'KKMachineLearning' library independent of the actual details of the FeatureVetir computations and 
+   * To make the 'KKMLL' library independent of the actual details of the FeatureVetir computations and 
    * their underlying source data a Factory - Producer strategy was implemented. For every FeatureVector derived class
    * there will be at least one 'FeatureVectorProducer' derived class and one 'FactoryFVProducer' derived class.
    *
@@ -85,7 +91,7 @@ namespace KKMachineLearning
     const KKStr&   Name        () const  {return name;}
 
 
-    virtual  FeatureFileIOPtr  DefaultFeatureFileIO ()  const = 0;
+    virtual  FeatureFileIOPtr  DefaultFeatureFileIO     ()  const = 0;
 
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FactoryFVProducer' works with. */
     virtual  const type_info*  FeatureVectorTypeId      () const = 0;
@@ -102,14 +108,27 @@ namespace KKMachineLearning
 
 
     /**
+     *@brief Manufactures a instance of a derived 'FeatureVector' class that is appropriate for containing instances
+     *of FeatureVectors produced by the associated FeatureVectorProducer.
+     */
+    virtual  FeatureVectorPtr  ManufacturFeatureVector (kkint32  numOfFeatires,
+                                                        RunLog&  runLog
+                                                       );
+
+    /**
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
      *of FeatureVectors produced by the associated FeatureVectorProducer.
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               );
+                                                               )
+                                                               const;
 
 
+    /**
+     *@brief  Returns a 'TrainingConfiguration2'  derived instance.
+     */
+    virtual  TrainingConfiguration2Ptr  ManufacturTrainingConfiguration ()  const;
 
 
     /**
@@ -167,7 +186,7 @@ namespace KKMachineLearning
 #define  _FactoryFVProducer_Defined_
 
 
-}  /* KKMachineLearning */
+}  /* KKMLL */
 
 
 

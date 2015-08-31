@@ -1,7 +1,7 @@
 #ifndef  _MODEL_
 #define  _MODEL_
 /**
- @class  KKMachineLearning::Model
+ @class  KKMLL::Model
  @brief Base class to all Learning Algorithms.
  @author  Kurt Kramer
  @details
@@ -10,31 +10,74 @@
    supplied labeled examples(List of FeatureVector objects),  Prediction of an unlabeled example.
  */
 
-#include "RunLog.h"
+#include "DateTime.h"
+#include "KKBaseTypes.h"
 #include "KKStr.h"
+#include "RunLog.h"
 
-#include "ClassProb.h"
-#include "FeatureEncoder2.h"
-#include "FeatureVector.h"
-#include "FileDesc.h"
-#include "MLClass.h"
+
 #include "ModelParam.h"
-#include "NormalizationParms.h"
 
 
-
-namespace KKMachineLearning
+namespace KKMLL
 {
-  #ifndef  _FeatureNumListDefined_
-  class  FeatureNumList;
-  typedef  FeatureNumList*  FeatureNumListPtr;
+  #if  !defined(_CLASSPROB_)
+  class  ClassProb;
+  typedef  ClassProb*  ClassProbPtr;
+  class  ClassProbList;
+  typedef  ClassProbList*  ClassProbListPtr;
+  #endif
+
+  #if  !defined(_FEATUREENCODER2_)
+  class  FeatureEncoder2;
+  typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
   #endif
 
 
-  #ifndef _FileDesc_Defined_
+  #ifndef  _FeatureNumList_Defined_
+  class  FeatureNumList;
+  typedef  FeatureNumList*  FeatureNumListPtr;
+  typedef  FeatureNumList const  FeatureNumListConst;
+  typedef  FeatureNumListConst*  FeatureNumListConstPtr;
+  #endif
+
+
+  #if  !defined(_FEATUREVECTOR_)
+  class  FeatureVector;
+  typedef  FeatureVector*  FeatureVectorPtr;
+  class  FeatureVectorList;
+  typedef  FeatureVectorList*  FeatureVectorListPtr;
+  #endif
+
+
+  #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
+
+
+  #if  !defined(_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
+  class  MLClassList;
+  typedef  MLClassList*  MLClassListPtr;
+  class  MLClassIndexList;
+  typedef  MLClassIndexList*  MLClassIndexListPtr;
+  #endif
+
+
+  #if  !defined(_NORMALIZATIONPARMS_)
+  class  NormalizationParms;
+  typedef  NormalizationParms*  NormalizationParmsPtr;
+  #endif
+
+
+
+  #if  !defined(_FactoryFVProducer_Defined_)
+  class  FactoryFVProducer;
+  typedef  FactoryFVProducer*  FactoryFVProducerPtr;
+  #endif
+
 
 
 
@@ -43,53 +86,26 @@ namespace KKMachineLearning
   public:
     typedef  Model*  ModelPtr;
 
-    typedef  enum  {mtNULL, mtOldSVM, mtSvmBase, mtKNN, mtUsfCasCor}   ModelTypes;
+    enum  class  ModelTypes: int 
+    {
+      Null      = 0,
+      OldSVM    = 1,
+      SvmBase   = 2,
+      KNN       = 3,
+      UsfCasCor = 4,
+      Dual      = 5
+    };
+
     static KKStr       ModelTypeToStr   (ModelTypes    _modelingType);
     static ModelTypes  ModelTypeFromStr (const KKStr&  _modelingTypeStr);
 
 
-/*
-    class  ClassPairProb
-    {
-    public:
-      ClassPairProb (MLClassPtr _classLabel,
-                     double     _probability
-                    );
-
-      ClassPairProb (const ClassPairProb&  _pair);
-
-      MLClassPtr classLabel;
-      double     probability;
-    };
-    typedef  ClassPairProb*  ClassPairProbPtr;
-
-
-
-    class ClassPairProbList:  public  KKQueue<ClassPairProb>
-    {
-    public:
-      ClassPairProbList ();
-      ClassPairProbList (bool owner);
-      ClassPairProbList (const ClassPairProbList&  pairList);
-      void  SortByClassName ();
-      void  SortByProbability (bool highToLow = true);
-    private:
-      static bool  CompairByClassName (const ClassPairProbPtr left, const ClassPairProbPtr right);
-
-      class  ProbabilityComparer;
-    };
-    typedef  ClassPairProbList*  ClassPairProbListPtr;
-
-*/
-
+    Model ();
 
     /**
      *@brief  Use this when you are planning on creating a empty model without parameters.
      */
-    Model (FileDescPtr    _fileDesc,
-           VolConstBool&  _cancelFlag,
-           RunLog&        _log
-          );
+    Model (FactoryFVProducerPtr  _factoryFVProducer);
 
 
     /**
@@ -100,11 +116,9 @@ namespace KKMachineLearning
      *@param[in]  _cancelFlag  Will monitor; if at any point it turns true this instance is to terminate and return to caller.
      *@param[in,out]  _log  Logging file.
      */
-    Model (const KKStr&       _name,
-           const ModelParam&  _param,         // Create new model from
-           FileDescPtr        _fileDesc,
-           VolConstBool&      _cancelFlag,
-           RunLog&            _log
+    Model (const KKStr&          _name,
+           const ModelParam&     _param,         // Create new model from
+           FactoryFVProducerPtr  _factoryFVProducer
           );
 
   
@@ -114,6 +128,7 @@ namespace KKMachineLearning
     Model (const Model&   _madel);
 
     virtual  ~Model ();
+
 
 
     /**
@@ -127,54 +142,64 @@ namespace KKMachineLearning
      *@param[in,out]  _log  Logging file.
      */
     static 
-      ModelPtr  CreateAModel (ModelTypes         _modelType,
-                              const KKStr&       _name,
-                              const ModelParam&  _param,      /**< Will make a duplicate copy of */
-                              FileDescPtr        _fileDesc,
-                              VolConstBool&      _cancelFlag,
-                              RunLog&            _log
+      ModelPtr  CreateAModel (ModelTypes            _modelType,
+                              const KKStr&          _name,
+                              const ModelParam&     _param,      /**< Will make a duplicate copy of */
+                              FactoryFVProducerPtr  _factoryFVProducer,
+                              VolConstBool&         _cancelFlag,
+                              RunLog&               _log
                              );
   
-    /**
-     *@brief  A factory method that will instantiate the appropriate class of training model based off the contents of the istream "i".
-     *@details  This method is used to construct a model that has already been build and saved to disk.
-     *@param[in] i  Input stream where previously built model has been saved.
-     *@param[in] _param  Parameters used to drive the creating of the model.
-     *@param[in] _fileDesc Description of the dataset that will be used to train the classifier and examples that will be classified.
-     *@param[in]  _cancelFlag  Will monitor; if at any point it turns true this instance is to terminate and return to caller.
-     *@param[in,out]  _log  Logging file.
-     */
-    static
-      ModelPtr  CreateFromStream (istream&       i,
-                                  FileDescPtr    _fileDesc,
-                                  VolConstBool&  _cancelFlag,
-                                  RunLog&        _log
-                                 );
+
     virtual
     ModelPtr                 Duplicate () const = 0;
 
 
     // Access Methods
     bool                              AlreadyNormalized          () const {return alreadyNormalized;}
+
+    virtual
+    KKStr                             Description                () const;  /**< Return short user readable description of model. */
+
     const FeatureEncoder2&            Encoder                    () const;
-    virtual const FeatureNumList&     GetFeatureNums             () const;
+
+    FactoryFVProducerPtr              FactoryFVProducer          () const  {return factoryFVProducer;}
+
+    virtual FeatureNumListConstPtr    GetFeatureNums             () const;
+
     virtual kkint32                   MemoryConsumedEstimated    () const;
+
+    MLClassListPtr                    MLClasses                  () const  {return  classes;}
+
+    MLClassListPtr                    MLClassesNewInstance       () const;  /**< Returns a new instances of 'classes' by calling copy constructor. */
+
     virtual ModelTypes                ModelType                  () const = 0;
+
     virtual KKStr                     ModelTypeStr               () const  {return ModelTypeToStr (ModelType ());}
+
     const KKStr&                      Name                       () const  {return name;}
+    void                              Name (const KKStr&  _name)  {name = _name;}
+
     virtual bool                      NormalizeNominalAttributes () const; /**< Return true, if nominal fields need to be normalized. */
+
     ModelParamPtr                     Param                      () const  {return  param;}
-    virtual const FeatureNumList&     SelectedFeatures           () const;
+
+    virtual FeatureNumListConstPtr    SelectedFeatures           () const;
+
     const KKStr&                      RootFileName               () const {return rootFileName;}
+
+    const KKB::DateTime&              TimeSaved                  () const {return timeSaved;}
+
     double                            TrainingTime               () const {return trainingTime;}
-    double                            TrianingPrepTime           () const {return trianingPrepTime;}  //*< Time ins secs spent preparing training data in Model::TrainModel */
+
+    double                            TrianingPrepTime           () const {return trianingPrepTime;}  //*< Time ins sec's spent preparing training data in Model::TrainModel */
+
     bool                              ValidModel                 () const {return validModel;}
 
 
     // Access Update Methods
     void  RootFileName (const KKStr&  _rootFileName)  {rootFileName = _rootFileName;}
   
-
 
 
     /**
@@ -189,11 +214,6 @@ namespace KKMachineLearning
 
 
 
-    void  Load (const KKStr& _rootFileName,
-                bool&        _successful
-               );
-
-
     /**
      *@brief  Every prediction  method in every class that is inherited from this class should call
      *        this method before performing there prediction.  Such things as Normalization and
@@ -204,45 +224,28 @@ namespace KKMachineLearning
      *             a new instance which the caller will have to delete will be returned.
      */
     virtual
-    FeatureVectorPtr         PrepExampleForPrediction (FeatureVectorPtr  fv,
-                                                       bool&             newExampleCreated
-                                                      );
+    FeatureVectorPtr  PrepExampleForPrediction (FeatureVectorPtr  fv,
+                                                bool&             newExampleCreated
+                                               );
 
 
-    /**
-     * @brief  Expects to read in the entire contents of a previously trained model into
-     *  this instance. One of the first lines to be read will contain the specific
-     *  type of model to be read.  To update the fields that are particular to
-     *  the specialized class the method 'ReadSpecificImplementationXML' will be
-     *  called.
-     */
-    virtual  
-    void  ReadXML (istream&  i,
-                   bool&     _successful
-                  ); 
-
-    virtual  
-    void  WriteXML (ostream&  o);
-
-
-    void  Save (const KKStr& _rootFileName,
-                bool&        _successful
-               );
-  
-
-    virtual  
-    void  WriteSpecificImplementationXML (ostream&  o) = 0;
-
-
-
-
+    virtual  void  PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr     &  predClass,
+                               double&           dist
+                              )
+    {
+      predClass = NULL;
+      dist = 0.0;
+    }
 
     //*********************************************************************
     //*     Routines that should be implemented by descendant classes.    *
     //*********************************************************************
 
     virtual
-    MLClassPtr  Predict (FeatureVectorPtr  image) = 0;
+    MLClassPtr  Predict (FeatureVectorPtr  example,
+                         RunLog&           log
+                        ) = 0;
   
     virtual
     void        Predict (FeatureVectorPtr  example,
@@ -252,23 +255,38 @@ namespace KKMachineLearning
                          kkint32&          predClass1Votes,
                          kkint32&          predClass2Votes,
                          double&           probOfKnownClass,
-                         double&           probOfPredClass1,
-                         double&           probOfPredClass2,
+                         double&           predClass1Prob,
+                         double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
-                         double&           breakTie
+                         double&           breakTie,
+                         RunLog&           log
                         ) = 0;
 
 
    virtual 
-   ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example) = 0;
+   ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                           RunLog&           log
+                                          ) = 0;
+
+
+    /**@brief  Only applied to ModelDual classifier. */
+    virtual
+    void  ProbabilitiesByClassDual (FeatureVectorPtr   example,
+                                    KKStr&             classifier1Desc,
+                                    KKStr&             classifier2Desc,
+                                    ClassProbListPtr&  classifier1Results,
+                                    ClassProbListPtr&  classifier2Results,
+                                    RunLog&            log
+                                   );
 
 
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                ) = 0;
 
     /**
@@ -278,7 +296,7 @@ namespace KKMachineLearning
      *        probabilities for any given index in '_probabilities' will be for the class
      *        specified in the same index in '_mlClasses'.
      *@param[in]  _example       FeatureVector object to calculate predicted probabilities for.
-     *@param[in]  _ImageClasses  List of image classes that caller is aware of.  This should be the
+     *@param[in]  _mlClasses  List of classes that caller is aware of. This should be the
      *            same list that was used when constructing this Model object.  The list must
      *            be the same but not necessarily in the same order as when Model was 1st
      *            constructed.  The ordering of this list will dictate the order that '_probabilities'
@@ -288,21 +306,17 @@ namespace KKMachineLearning
      *            returned in probabilities[x].
      */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                ) = 0;
   
 
     virtual  
-    void  ReadSpecificImplementationXML (istream&  i,
-                                         bool&     _successful
-                                        ) = 0; 
-
-
-    virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                  RunLog&       log
                                  );
 
     /**
@@ -319,35 +333,64 @@ namespace KKMachineLearning
     virtual  
     void  TrainModel (FeatureVectorListPtr  _trainExamples,
                       bool                  _alreadyNormalized,
-                      bool                  _takeOwnership  
+                      bool                  _takeOwnership,
+                      VolConstBool&         _cancelFlag,
+                      RunLog&               _log
                      );
 
+
+    /**
+     *@brief  To be implemented by derived classes;  the parent classes fields will be updated by the 
+     * derived class calling ReadXMLModelToken.  
+     */
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           ) = 0;
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const = 0;
+
+
+    /**
+     *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
+     */
+    void  WriteModelXMLFields (ostream&  o)  const;
+
   protected:
+    void  AddErrorMsg (const KKStr&  errMsg,
+                       kkint32       lineNum
+                      );
+
     void  AllocatePredictionVariables ();
 
 
     void  DeAllocateSpace ();
 
 
-    void  Read         (istream& i,
-                        bool&    _successful
-                       );
+    void  NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
+                                              double*  probabilities,
+                                              double   minProbability
+                                             );
 
-    void  ReadSkipToSection (istream& i, 
-                             KKStr    sectName,
-                             bool&    sectionFound
-                            );
+    /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
+    XmlTokenPtr  ReadXMLModelToken (XmlTokenPtr  t,
+                                    RunLog&      log
+                                   );
 
-    void  ReduceTrainExamples ();
+    void  ReadXMLModelPost (RunLog&  log);
+
+    void  ReduceTrainExamples (RunLog&  log);
+
 
 
     bool                   alreadyNormalized;
 
-    VolConstBool&          cancelFlag;
-
     MLClassListPtr         classes;
 
-    ClassIndexListPtr      classesIndex;
+    MLClassIndexListPtr    classesIndex;
 
     double*                classProbs;
  
@@ -357,41 +400,114 @@ namespace KKMachineLearning
 
     FeatureEncoder2Ptr     encoder;
 
+    VectorKKStr            errors;
+
+    FactoryFVProducerPtr   factoryFVProducer;
+
     FileDescPtr            fileDesc;
-
-    RunLog&                log;
-
-    KKStr                  name;
-
-    kkuint32               numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
 
     NormalizationParmsPtr  normParms;
 
-    ModelParamPtr          param;          /**< Will own this instance                            */
+    kkint32                numOfClasses;   /**< Number of Classes defined in crossClassProbTable. */
 
-    KKStr                  rootFileName;   /**< This is the root name to be used by all component objects; such as svm_model, mlClasses, and
-                                            * svmParam(including selected features).  Each one will have the same rootName with a different Suffix
-                                            *      mlClasses  "<rootName>.image_classes"
+    ModelParamPtr          param;          /**< Will own this instance,                           */
+
+    KKStr                  rootFileName;   /**< This is the root name to be used by all component objects; such as svm_model,
+                                            * mlClasses, and svmParam(including selected features). Each one will have the
+                                            * same rootName with a different suffix.
+                                            *@code
+                                            *      mlClasses  "<rootName>.classes"
                                             *      svmParam      "<rootName>.svm_parm"
                                             *      model         "<rootName>"
+                                            *@endcode
                                             */
 
     FeatureVectorListPtr   trainExamples;
 
     bool                   validModel;
 
-    kkint32*                 votes;
+    kkint32*               votes;
 
-    bool                   weOwnTrainExamples;
+    bool                   weOwnTrainExamples;  /**< Indicates if we own the 'trainExamples'. This does not mean that we own its
+                                                 * contents. That is determined by 'trainExamples->Owner ()'.
+                                                 */
+   
 
   private:
     double                 trianingPrepTime;    /**<  Time that it takes to perform normalization, and encoding */
     double                 trainingTime;
     double                 trainingTimeStart;   /**<  Time that the clock for TraininTime was started. */
-  };
+    KKStr                  name;
+    KKB::DateTime          timeSaved;           /**<  Date and Time that this model was saved. */
+  };  /* Model */
   
   typedef  Model::ModelPtr  ModelPtr;
+
+#define  _Model_Defined_
+
   
+  
+  /**
+   *@brief  The base class to be used for the manufacturing if "Model" derived classes.
+   */
+  class  XmlElementModel:  public  XmlElement
+  {
+  public:
+    XmlElementModel (XmlTagPtr   tag,
+                     XmlStream&  s,
+                     RunLog&     log
+                    ):
+        XmlElement (tag, s, log)
+    {}
+                
+    virtual  ~XmlElementModel ()
+    {
+      delete  value;
+      value = NULL;
+    }
+
+    ModelPtr  Value ()  const   {return value;}
+
+    ModelPtr  TakeOwnership ()
+    {
+      ModelPtr v = value;
+      value = NULL;
+      return v;
+    }
+
+  protected:
+    ModelPtr  value;
+  };
+  typedef  XmlElementModel*  XmlElementModelPtr;
+
+
+
+  template<class ModelType>
+  class  XmlElementModelTemplate:  public  XmlElementModel
+  {
+  public:
+    XmlElementModelTemplate (XmlTagPtr      tag,
+                             XmlStream&     s,
+                             RunLog&        log
+                            ):
+      XmlElementModel (tag, s, log)
+    {
+      value = new ModelType();
+      value->ReadXML (s, tag, log);
+    }
+                
+    virtual  ~XmlElementModelTemplate ()
+    {
+    }
+
+    ModelType*  Value ()  const   {return dynamic_cast<ModelType*>(value);}
+
+
+    ModelType*  TakeOwnership ()  {return dynamic_cast<ModelType*> (XmlElementModel::TakeOwnership ());}
+  };  /* XmlElementModelTemplate */
+
+  
+
 }  /* namespace MML */
 
 #endif

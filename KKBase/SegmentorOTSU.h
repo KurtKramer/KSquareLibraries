@@ -95,6 +95,9 @@ namespace KKB
                                          const PixelValue&  targetColor
                                         );
 
+    uchar  Threshold1 ()  const  {return threshold1;}
+    uchar  Threshold2 ()  const  {return threshold2;}
+
 
   private:
     void   LabelRaster (RasterPtr  result, 
@@ -211,6 +214,8 @@ namespace KKB
 
    //VectorDouble  PWD
 
+    uchar   threshold1;
+    uchar   threshold2;
     double  NaN;
     RunLog&  log;
   };  /* SegmentorOTSU */

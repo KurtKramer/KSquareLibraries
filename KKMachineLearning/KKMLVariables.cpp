@@ -11,7 +11,7 @@ using namespace  KKB;
 
 
 #include "KKMLVariables.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -27,7 +27,7 @@ KKMLVariables::~KKMLVariables ()
 
 
 
-KKStr  KKMLVariables::machineLearningHomeDir = "";
+KKStr  KKMLVariables::machineLearningHomeDir;
 
 
 
@@ -36,19 +36,22 @@ const KKStr&  KKMLVariables::MachineLearningHomeDir ()
   if  (machineLearningHomeDir.Empty ())
   {
     #if  defined(OS_WINDOWS)
-      machineLearningHomeDir = "C:\\KKMachineLearning";
+      machineLearningHomeDir = "C:\\KKMLL";
     #else
-      machineLearningHomeDir = "/KKMachineLearning";
+      machineLearningHomeDir = "/KKMLL";
     #endif
 
-    KKStrPtr  homeDir = osGetEnvVariable ("KKMLModeDir");
+    KKStrPtr  homeDir = osGetEnvVariable ("KKMLModelDir");
     if (homeDir == NULL)
-      homeDir = osGetEnvVariable ("KKMachineLearning");
+      homeDir = osGetEnvVariable ("KKMLL");
     if (homeDir == NULL)
       homeDir = osGetEnvVariable ("MachineLearningDir");
 
     if  (homeDir)
       machineLearningHomeDir = *homeDir;
+
+    delete  homeDir;
+    homeDir = NULL;
   }
   return  machineLearningHomeDir;
 }  /* MachineLearningHomeDir */

@@ -22,23 +22,52 @@ using namespace KKB;
 
 
 kkint32  MorphOp::biases[] = {1,  // CROSS3 
-                            2,  // CROSS5
-                            1,  // SQUARE3
-                            2,  // SQUARE5
-                            3,  // SQUARE7
-                            4,  // SQUARE9
-                            5   // SQUARE11
-                           };
+                              2,  // CROSS5
+                              1,  // SQUARE3
+                              2,  // SQUARE5
+                              3,  // SQUARE7
+                              4,  // SQUARE9
+                              5   // SQUARE11
+                             };
 
 
-kkint32  MorphOp::maskShapes[] = {stCross,   // CROSS3 
-                                stCross,   // CROSS5
-                                stSquare,  // SQUARE3
-                                stSquare,  // SQUARE5
-                                stSquare,  // SQUARE7
-                                stSquare,  // SQUARE9
-                                stSquare   // SQUARE11
-                               };
+StructureType  MorphOp::maskShapes[] = {StructureType::stCross,   // CROSS3 
+                                        StructureType::stCross,   // CROSS5
+                                        StructureType::stSquare,  // SQUARE3
+                                        StructureType::stSquare,  // SQUARE5
+                                        StructureType::stSquare,  // SQUARE7
+                                        StructureType::stSquare,  // SQUARE9
+                                        StructureType::stSquare   // SQUARE11
+                                       };
+
+
+kkint32   MorphOp::Biases (MaskTypes  mt)
+{
+  if  (mt < MaskTypes::CROSS3)
+    mt = MaskTypes::CROSS3;
+
+  else if  (mt > MaskTypes::SQUARE9)
+    mt = MaskTypes::SQUARE9;
+
+  return  biases[(int)mt];
+}
+
+
+
+StructureType  MorphOp::MaskShapes (MaskTypes  mt)
+{
+  if  (mt < MaskTypes::CROSS3)
+    mt = MaskTypes::CROSS3;
+
+  else if  (mt > MaskTypes::SQUARE9)
+    mt = MaskTypes::SQUARE9;
+
+  return  maskShapes[(int)mt];
+}
+
+
+
+
 
 
 MorphOp::MorphOp ():
@@ -67,19 +96,22 @@ MorphOp::~MorphOp ()
 
 KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
 {
-  if  (_operation == moStretcher)
+  if  (_operation == OperationType::Stretcher)
     return "Stretcher";
 
-  else if  (_operation == moBinarize)
-    return "Binarize";
+  else if  (_operation == OperationType::BmiFiltering)
+    return "BmiFiltering";
 
-  else if  (_operation == moConvexHull)
+  else if  (_operation == OperationType::ConvexHull)
     return "ConvexHull";
 
-  else if  (_operation == moErosion)
+  else if  (_operation == OperationType::Dilation)
+    return "Dilation";
+
+  else if  (_operation == OperationType::Erosion)
     return "Erosion";
 
-  else if  (_operation == moMaskExclude)
+  else if  (_operation == OperationType::MaskExclude)
     return "MaskExclude";
 
   else
@@ -91,22 +123,25 @@ KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
 MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _operationStr)
 {
   if  (_operationStr.EqualIgnoreCase ("Stretcher"))
-    return  moStretcher;
+    return  OperationType::Stretcher;
 
   else if  (_operationStr.EqualIgnoreCase ("Binarize"))
-    return  moBinarize;
+    return  OperationType::Binarize;
+
+  else if  (_operationStr.EqualIgnoreCase ("BmiFiltering"))
+    return  OperationType::BmiFiltering;
 
   else if  (_operationStr.EqualIgnoreCase ("ConvexHull"))
-    return  moConvexHull;
+    return  OperationType::ConvexHull;
 
   else if  (_operationStr.EqualIgnoreCase ("Erosion"))
-    return  moErosion;
+    return  OperationType::Erosion;
 
   else if  (_operationStr.EqualIgnoreCase ("MaskExclude"))
-    return  moMaskExclude;
+    return  OperationType::MaskExclude;
 
   else
-    return  moNULL;
+    return  OperationType::Null;
 }
 
 
@@ -181,60 +216,5 @@ bool  MorphOp::ForegroundPixel (kkint32  row,
 
 
 
-
-
-
-/**
- *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
- *@see  Erosion, Dilation, Closing, Opening, MaskType
- */
-bool  MorphOp::Fit (MaskTypes  mask,
-                    kkint32    row, 
-                    kkint32    col
-                   )  const
-{
-  kkint32  bias = biases[mask];
-  kkint32  r, c;
-  kkint32  rStart = row - bias;
-  kkint32  rEnd   = row + bias;
-  kkint32  cStart = col - bias;
-  kkint32  cEnd   = col + bias;
-
-  if  (rStart  < 0)           rStart = 0;
-  if  (rEnd    >= srcHeight)  rEnd = srcHeight - 1;
-  if  (cStart  < 0)           cStart = 0;
-  if  (cEnd    >= srcWidth)   cEnd = srcWidth - 1;
-
-  if  (maskShapes[mask] == stSquare)
-  {
-    for  (r = rStart;  r <= rEnd;  r++)
-    {
-      uchar const* rowPtr = srcGreen[r];
-
-      for  (c = cStart;  c <= cEnd;  c++)
-      {
-        if  (BackgroundPixel (rowPtr[c]))
-          return  false;
-      }
-    }
-  }
-
-  else
-  {  
-    for  (r = rStart;  r <= rEnd;  r++)
-    {
-      if  (BackgroundPixel (srcGreen[r][col]))
-        return  false;
-    }
-
-    for  (c = cStart;  c <= cEnd;  c++)
-    {
-      if  (BackgroundPixel (srcGreen[row][c]))
-        return  false;
-    }
-  }
-
-  return  true;
-}  /* Fit */
 
 

@@ -11,17 +11,13 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
-#include "FileDesc.h"
-#include "MLClass.h"
 #include "Model.h"
 #include "ModelParam.h"
 #include "ModelParamSvmBase.h"
 #include "svm2.h"
 
 
-namespace  KKMachineLearning  
+namespace  KKMLL  
 {
   class  ModelSvmBase: public Model
   {
@@ -30,38 +26,34 @@ namespace  KKMachineLearning
     typedef  ModelSvmBase*  ModelSvmBasePtr;
 
 
-    ModelSvmBase (FileDescPtr    _fileDesc,
-                  VolConstBool&  _cancelFlag,
-                  RunLog&        _log
-                );
+    ModelSvmBase ();
+
+    ModelSvmBase (FactoryFVProducerPtr  _factoryFVProducer);
 
     ModelSvmBase (const KKStr&             _name,
                   const ModelParamSvmBase& _param,         // Create new model from
-                  FileDescPtr              _fileDesc,
-                  VolConstBool&            _cancelFlag,
-                  RunLog&                  _log
+                  FactoryFVProducerPtr     _factoryFVProducer
                  );
   
     ModelSvmBase (const ModelSvmBase&   _model);
 
-    virtual
-    ~ModelSvmBase ();
+    virtual  ~ModelSvmBase ();
 
-    virtual
-    kkint32                 MemoryConsumedEstimated ()  const;
+    virtual  KKStr        Description ()  const;
 
-    virtual ModelTypes    ModelType () const  {return mtSvmBase;}
+    virtual  ModelSvmBasePtr    Duplicate ()  const;
 
-    virtual
-    kkint32                 NumOfSupportVectors () const;
+    virtual  kkint32      MemoryConsumedEstimated ()  const;
 
-    virtual
-    ModelSvmBasePtr       Duplicate ()  const;
+    virtual ModelTypes    ModelType () const  {return ModelTypes::SvmBase;}
+
+    virtual  kkint32      NumOfSupportVectors () const;
 
     ModelParamSvmBasePtr  Param ();
 
-    virtual
-    MLClassPtr            Predict (FeatureVectorPtr  image);
+    virtual  MLClassPtr   Predict (FeatureVectorPtr  image,
+                                   RunLog&           log
+                                  );
   
     virtual
     void                  Predict (FeatureVectorPtr  example,
@@ -71,24 +63,28 @@ namespace  KKMachineLearning
                                    kkint32&          predClass1Votes,
                                    kkint32&          predClass2Votes,
                                    double&           probOfKnownClass,
-                                   double&           probOfPredClass1,
-                                   double&           probOfPredClass2,
+                                   double&           predClass1Prob,
+                                   double&           predClass2Prob,
                                    kkint32&          numOfWinners,
                                    bool&             knownClassOneOfTheWinners,
-                                   double&           breakTie
+                                   double&           breakTie,
+                                   RunLog&           log
                                   );
 
 
     virtual 
-    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                            RunLog&           log
+                                           );
 
 
 
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
-                                kkint32*                 _votes,
-                                double*                _probabilities
+                                kkint32*            _votes,
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
     /**
@@ -107,42 +103,51 @@ namespace  KKMachineLearning
      *            in probabilities[x].
     */
     virtual
-    void  ProbabilitiesByClass (FeatureVectorPtr       _example,
+    void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*                _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
-  
-    virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
-                                                 );
 
 
     virtual  
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize () squared. */
+                                  RunLog&       log
                                  );
 
 
 
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
+                               RunLog&               _log
                               );
 
 
-    virtual  void  WriteSpecificImplementationXML (ostream&  o);
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
 
 
   protected:
-    SVM289_MFS::svm_model*  svmModel;
+    SVM289_MFS::Svm_Model*  svmModel;
     ModelParamSvmBasePtr    param;   /*!<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
   };  /* ModelSvmBase */
+  
+  typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
 
 
-
-typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;
-
-} /* namespace  KKMachineLearning */
+  typedef  XmlElementModelTemplate<ModelSvmBase>  XmlElementModelSvmBase;
+  typedef  XmlElementModelSvmBase*  XmlElementModelSvmBasePtr;
+} /* namespace  KKMLL */
 
 #endif

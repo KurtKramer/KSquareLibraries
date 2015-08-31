@@ -1,7 +1,7 @@
-#ifndef  _FEATUREENCODER2_
+#if  !defined(_FEATUREENCODER2_)
 #define  _FEATUREENCODER2_
 /**
- *@class  KKMachineLearning::FeatureEncoder2
+ *@class  KKMLL::FeatureEncoder2
  *@code
  ***********************************************************************
  *                       FeatureEncoder2                               *
@@ -22,14 +22,14 @@
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   class  FeatureEncoder2
   {
   public:
     typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
-    typedef  enum  {FeAsIs, FeBinary, FeScale}  FeWhatToDo;
+    enum  class  FeWhatToDo  {FeAsIs, FeBinary, FeScale};
     typedef  FeWhatToDo*  FeWhatToDoPtr;
 
 
@@ -37,13 +37,10 @@ namespace KKMachineLearning
      * @brief Constructs a Feature Encoder object.
      * @param[in] _param
      * @param[in] _fileDesc
-     * @param[in] _attributeTypes   caller keeps ownership,  but encoder will continue to reference it.
-     * @param[in] _cardinalityTable caller keeps ownership,  but encoder will continue to reference it.
      * @param[in] _log A log-file stream. All important events will be output to this stream
      */
     FeatureEncoder2 (const ModelParam& _param,
-                     FileDescPtr       _fileDesc,
-                     RunLog&           _log
+                     FileDescPtr       _fileDesc
                    );
   
     FeatureEncoder2 (const FeatureEncoder2&  _encoder);
@@ -57,7 +54,9 @@ namespace KKMachineLearning
 
     kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
 
-    FileDescPtr       CreateEncodedFileDesc (ostream*  o)  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
+    FileDescPtr       CreateEncodedFileDesc (ostream*  o,
+                                             RunLog&   log
+                                            )  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
 
     FeatureVectorListPtr  EncodedFeatureVectorList (const  FeatureVectorList&  srcData)  const;
 
@@ -84,9 +83,8 @@ namespace KKMachineLearning
     FileDescPtr                       encodedFileDesc;
     ModelParam::EncodingMethodType    encodingMethod;
     FileDescPtr                       fileDesc;
-    RunLog&                           log;
     kkint32                           numOfFeatures;
-    kkint32*                          srcFeatureNums;
+    kkuint16*                         srcFeatureNums;
     const ModelParam&                 param;
 
     struct  FeatureVar2;
@@ -95,9 +93,10 @@ namespace KKMachineLearning
     typedef  FeatureVar2List*  FeatureVar2ListPtr;
   };  /* FeatureEncoder2 */
 
+#define  _FeatureEncoder2_Defined_
 
   typedef  FeatureEncoder2::FeatureEncoder2Ptr  FeatureEncoder2Ptr;
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif

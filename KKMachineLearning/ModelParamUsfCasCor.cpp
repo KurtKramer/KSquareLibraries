@@ -7,51 +7,42 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKB;
 
 
-
 #include "ModelParamUsfCasCor.h"
-
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+#include "KKMLLTypes.h"
+using namespace  KKMLL;
 
 
-
-
-ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                                           RunLog&      _log
-                                          ):
-
-  ModelParam (_fileDesc, _log),
+ModelParamUsfCasCor::ModelParamUsfCasCor  ():
+  ModelParam (),
   in_limit         (500),
   out_limit        (500),
   number_of_rounds (-1),
   number_of_trials (1),
   random_seed      (0),
   useCache         (false)
-
 {
 }
 
 
 
 
-ModelParamUsfCasCor::ModelParamUsfCasCor  (FileDescPtr  _fileDesc,
-                                           int          _in_limit,
-                                           int          _out_limit,
-                                           int          _number_of_rounds,
-                                           int          _number_of_trials,
-                                           kkint64      _random_seed,
-                                           bool         _useCache,
-                                           RunLog&      _log
+ModelParamUsfCasCor::ModelParamUsfCasCor  (int       _in_limit,
+                                           int       _out_limit,
+                                           int       _number_of_rounds,
+                                           int       _number_of_trials,
+                                           kkint64   _random_seed,
+                                           bool      _useCache
                                           ):
-      ModelParam (_fileDesc, _log),
+      ModelParam (),
       in_limit         (_in_limit),
       out_limit        (_out_limit),
       number_of_rounds (_number_of_rounds),
@@ -77,7 +68,8 @@ ModelParamUsfCasCorPtr  ModelParamUsfCasCor::Duplicate ()  const
 
 void  ModelParamUsfCasCor::ParseCmdLineParameter (const KKStr&  parameter,
                                                   const KKStr&  value,
-                                                  bool&         parameterUsed
+                                                  bool&         parameterUsed,
+                                                  RunLog&       log
                                                )
 {
   parameterUsed = true;
@@ -167,92 +159,75 @@ KKStr   ModelParamUsfCasCor::ToCmdLineStr () const
 
 
 
-void  ModelParamUsfCasCor::WriteSpecificImplementationXML (ostream&  o)  const
+void  ModelParamUsfCasCor::WriteXML (const KKStr&  varName,
+                                     ostream&      o
+                                    )  const
 {
-  log.Level (20) << "ModelParamUsfCasCor::WriteSpecificImplementationXML XML to ostream." << endl;
+  XmlTag  startTag ("ModelParamUsfCasCor",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
-  o << "<ModelParamUsfCasCor>" << endl;
+  WriteXMLFields (o);
 
-  o << "in_limit"         << "\t"  << in_limit                  << endl
-    << "out_limit"        << "\t"  << out_limit                 << endl
-    << "number_of_rounds" << "\t"  << number_of_rounds          << endl
-    << "number_of_trials" << "\t"  << number_of_trials          << endl
-    << "random_seed"      << "\t"  << random_seed               << endl
-    << "useCache"         << "\t"  << (useCache ? "Yes" : "No") << endl;
-
-  o << "</ModelParamUsfCasCor>" << endl;
+  XmlElementInt32::WriteXML (in_limit,          "in_limit",         o);
+  XmlElementInt32::WriteXML (number_of_rounds,  "number_of_rounds", o);
+  XmlElementInt32::WriteXML (number_of_trials,  "number_of_trials", o);
+  XmlElementInt64::WriteXML (random_seed,       "random_seed",      o);
+  XmlElementBool::WriteXML  (useCache,          "useCache",         o);
+  
+  XmlTag  endTag ("ModelParamUsfCasCor", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
 }  /* WriteXML */
 
 
 
 
 
-void  ModelParamUsfCasCor::ReadSpecificImplementationXML (istream&  i)
+void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
+                                    XmlTagConstPtr  tag,
+                                    RunLog&         log
+                                   )
 {
-  log.Level (20) << "ModelParamUsfCasCor::ReadSpecificImplementationXML from XML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
   {
-    KKStr  ln (buff);
-    if  ((ln.Len () < 1)  || (ln.SubStrPart (0, 1) == "//"))
-      continue;
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true); // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("<ModelParamUsfCasCor>"))
-      continue;
-
-    if  (field.EqualIgnoreCase ("</ModelParamUsfCasCor>"))
+    t = ReadXMLModelParamToken (t);
+    if  ((t != NULL)  &&  (t->TokenType () == XmlToken::TokenTypes::tokElement))
     {
-      break;
-    }
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  varName = e->VarName ();
 
-    else if  (field.EqualIgnoreCase ("<ModelParam>"))
-    {
-      ModelParam::ReadXML (i);
-    }
+      if  (varName.EqualIgnoreCase ("in_limit"))
+        in_limit =  dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
 
-    else if  (field.EqualIgnoreCase ("in_limit"))
-    {
-      in_limit = ln.ExtractTokenInt ("\t");
-    }
+      else if  (varName.EqualIgnoreCase ("number_of_rounds"))
+        number_of_rounds =  dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
 
-    else if  (field.EqualIgnoreCase ("number_of_trials"))
-    {
-      number_of_trials = ln.ExtractTokenInt ("\t");
-    }
+      else if  (varName.EqualIgnoreCase ("number_of_trials"))
+        number_of_trials =  dynamic_cast<XmlElementInt32Ptr> (e)->Value ();
 
-    else if  (field.EqualIgnoreCase ("out_limit"))
-    {
-      out_limit = ln.ExtractTokenInt ("\t");
-    }
+      else if  (varName.EqualIgnoreCase ("random_seed"))
+        random_seed =  dynamic_cast<XmlElementInt64Ptr> (e)->Value ();
 
-    else if  (field.EqualIgnoreCase ("number_of_rounds"))
-    {
-      number_of_rounds = ln.ExtractTokenInt ("\t");
-    }
+      else if  (varName.EqualIgnoreCase ("useCache"))
+        useCache =  dynamic_cast<XmlElementBoolPtr> (e)->Value ();
 
-    else if  (field.EqualIgnoreCase ("random_seed"))
-    {
-      KKStr  randomSeedStr = ln.ExtractToken2 ("\t");
-      random_seed = randomSeedStr.ToInt64 ();
+      else
+      {
+        log.Level (-1) << endl
+          << "ModelParamUsfCasCor::ReadXM   ***ERROR***   Unexpected Element: " << e->NameTag ()->ToString () << endl
+          << endl;
+      }
     }
-
-    else if  (field.EqualIgnoreCase ("useCache"))
-    {
-      useCache = ln.ToBool ();
-    }
-
-    else
-    {
-      log.Level (-1) << endl << endl << "ModelParamUsfCasCor::ReadSpecificImplementationXML   ***ERROR**  Invalid Parameter[" << field << "]" << endl << endl;
-      ValidParam (false);
-    }
+    delete  t;
+    t = s.GetNextToken (log);
   }
-}  /* ReadSpecificImplementationXML */
+
+  bool  validFormat = false;
+}  /* ReadXML */
 
 
-
+XmlFactoryMacro(ModelParamUsfCasCor)

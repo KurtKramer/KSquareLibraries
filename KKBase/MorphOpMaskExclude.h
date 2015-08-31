@@ -39,7 +39,7 @@ namespace  KKB
     
     virtual ~MorphOpMaskExclude ();
 
-    virtual  OperationType   Operation ()  const  {return  moMaskExclude;}
+    virtual  OperationType   Operation ()  const  {return  OperationType::MaskExclude;}
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 

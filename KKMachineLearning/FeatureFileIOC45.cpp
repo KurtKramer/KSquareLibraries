@@ -1,17 +1,15 @@
 #include  "FirstIncludes.h"
-
-#include <stdio.h>
-#include <math.h>
 #include <ctype.h>
+#include <limits.h>
+#include <math.h>
+#include <stdio.h>
 #include <time.h>
-
+#include <string.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <string.h>
 #include "MemoryDebug.h"
-
 using namespace std;
 
 #include "KKBaseTypes.h"
@@ -25,7 +23,7 @@ using namespace  KKB;
 #include "FeatureFileIOC45.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -163,7 +161,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
   }
   else
   {
-    examples->Compress ();
     _successful = true;
   }
 
@@ -171,6 +168,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   return  examples;
 }  /* LoadFeatureFile */
+
 
 
 
@@ -304,27 +302,27 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
   typeStr.TrimRight ();
   KKStr  typeStrUpper = typeStr.ToUpper ();
 
-  AttributeType  attributeType = NULLAttribute;
+  AttributeType  attributeType = AttributeType::NULLAttribute;
 
   if  (typeStrUpper == "CONTINUOUS")
   {
-    attributeType = NumericAttribute;
+    attributeType = AttributeType::Numeric;
   }
 
   else if  (typeStrUpper == "IGNORE")
   {
-    attributeType = IgnoreAttribute;
+    attributeType = AttributeType::Ignore;
   }
 
   else if  (typeStrUpper == "SYMBOLIC")
   {
-    attributeType = SymbolicAttribute;
+    attributeType = AttributeType::Symbolic;
   }
 
   else
   {
     // We have a nominal field
-     attributeType = NominalAttribute;
+     attributeType = AttributeType::Nominal;
   }
 
   bool  alreadyExists = false;
@@ -341,7 +339,7 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
   }
 
 
-  if  (attributeType == NominalAttribute)
+  if  (attributeType == AttributeType::Nominal)
   {
     // Will now parse out the nominal values.
     while  (!typeStr.Empty ())
@@ -454,7 +452,6 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
 
   FileDescPtr  fileDesc = new FileDesc ();
   fileDesc->AddClasses (*_classes);
-
 
   // Can now load in attribute data
   GetLine (_in, ln, eof);  lineNum++;
@@ -609,7 +606,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     else if  (ch == '.')
     {
       // Dots have special meaning when at the end of the line or followed 
-      // by a white space character.  In these cases they delimit a separate entry.
+      // by a white space character.  In these cases they delimit a separated entry.
       char nextCh = in.get (); bool nextEOF = in.eof ();
       if  (nextEOF)
       {
@@ -725,10 +722,6 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
 
 
-
-
- 
-
 FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
                                                   const FileDescPtr  _fileDesc,
                                                   MLClassList&       _classes, 
@@ -756,12 +749,14 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
 
   bool  lineIsValid = true;
 
+  KKStr  imageFileName = "";
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   while  (!eof)
   {
     lineIsValid = true;
+    imageFileName = "";
     KKStr  field = C45ReadNextToken (_in, ",", eof, eol);
     if  (eof)
       break;
@@ -792,15 +787,15 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
 
       switch  (attributeTable[fieldNum]->Type ())
       {
-      case IgnoreAttribute:  
+      case AttributeType::Ignore:  
         example->AddFeatureData (fieldNum, field.ToFloat ());
         break;
               
-      case NumericAttribute: 
+      case AttributeType::Numeric: 
         example->AddFeatureData (fieldNum, field.ToFloat ());
         break;
 
-      case NominalAttribute: 
+      case AttributeType::Nominal: 
       {
         kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
@@ -829,7 +824,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
       }
         
 
-      case SymbolicAttribute: 
+      case AttributeType::Symbolic: 
       {
         kkint32  code = -1;  // Initialize to value for missing data.
         if  (field == "?")
@@ -840,6 +835,10 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
         else
         {
           // This is not a missing data.
+
+          if  (attributeTable[fieldNum]->Name ().EqualIgnoreCase ("ExampleFileName"))
+            imageFileName = field;
+
           code = attributeTable[fieldNum]->GetNominalCode (field);
           if  (code < 0)
           {
@@ -882,11 +881,11 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     if  (field == "?")
     {
       // The class is unknown
-      mlClass = _fileDesc->LookUpUnKnownImageClass ();
+      mlClass = _fileDesc->LookUpUnKnownMLClass ();
     }
     else
     {
-      mlClass = _fileDesc->LookUpImageClassByName (field);
+      mlClass = _fileDesc->LookUpMLClassByName (field);
       if  (!mlClass)
       {
         lineIsValid = false;
@@ -901,8 +900,11 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
     }
 
     example->MLClass (mlClass);
-    KKStr  imageName = fileRootName + "_" + StrFormatInt (lineCount, "zzzzzz0");
-    example->ImageFileName (imageName);
+
+    if  (imageFileName.Empty ())
+      imageFileName = fileRootName + "_" + StrFormatInt (lineCount, "ZZZZZ0");
+
+    example->ExampleFileName (imageFileName);
 
 
     if  (lineIsValid)
@@ -1015,15 +1017,15 @@ KKStr  FeatureFileIOC45::C45AdjName (const  KKStr&  oldName)
 
 
 
-void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
-                                   const KKStr&            _fileName,
-                                   const FeatureNumList&   _selFeatures,
-                                   ostream&                _out,
-                                   kkuint32&               _numExamplesWritten,
-                                   VolConstBool&           _cancelFlag,
-                                   bool&                   _successful,
-                                   KKStr&                  _errorMessage,
-                                   RunLog&                 _log
+void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
+                                   const KKStr&          _fileName,
+                                   FeatureNumListConst&  _selFeatures,
+                                   ostream&              _out,
+                                   kkuint32&             _numExamplesWritten,
+                                   VolConstBool&         _cancelFlag,
+                                   bool&                 _successful,
+                                   KKStr&                _errorMessage,
+                                   RunLog&               _log
                                   )
 {
   KKStr  namesFileName;
@@ -1055,7 +1057,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
       kkint32  featureNum = _selFeatures[x];
       AttributePtr attr = attrTable[featureNum];
       nf << C45AdjName (attr->Name ()) << ": ";
-      if  (attr->Type () == NominalAttribute)
+      if  (attr->Type () == AttributeType::Nominal)
       {
         kkint32 y;
         for  (y = 0;  y < attr->Cardinality ();  y++)
@@ -1065,12 +1067,12 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
         }
       }
 
-      else if  (attr->Type () == SymbolicAttribute)
+      else if  (attr->Type () == AttributeType::Symbolic)
       {
         nf << "Symbolic";
       }
 
-      else if  (attr->Type () == IgnoreAttribute)
+      else if  (attr->Type () == AttributeType::Ignore)
       {
         nf << "ignore";
       }
@@ -1082,6 +1084,9 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
 
       nf << "." << endl;
     }
+
+    nf << "ExampleFileName" << ": " << "Symbolic" << "." << endl;
+
     nf.close ();
   }
 
@@ -1109,9 +1114,8 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
     delete  stats;
   }
 
-
   kkint32  origPrecision = (kkint32)_out.precision ();
-  _out.precision (7);
+  _out.precision (9);
 
   FeatureVectorPtr   example = NULL;
 
@@ -1124,7 +1128,9 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
     {
       kkint32  featureNum = _selFeatures[x];
 
-      if  ((attrTable[featureNum]->Type () == NominalAttribute)  ||  (attrTable[featureNum]->Type () == SymbolicAttribute))
+      if  ((attrTable[featureNum]->Type () == AttributeType::Nominal)  ||
+           (attrTable[featureNum]->Type () == AttributeType::Symbolic)
+          )
       {
         if  (example->FeatureData (featureNum) == -1.0)
         {
@@ -1142,6 +1148,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&      _data,
       }
       _out << ",";
     }
+    _out << example->ExampleFileName () << ",";
     _out << example->ClassName ();
     _out << endl;
     _numExamplesWritten++;

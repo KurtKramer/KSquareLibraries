@@ -1,4 +1,5 @@
-#pragma once
+#if  !defined(_CLASSIFICATIONBIASMATRIX_)
+#define  _CLASSIFICATIONBIASMATRIX_
 
 #include "DateTime.h"
 #include "KKStr.h"
@@ -7,7 +8,6 @@
 
 #include "ConfusionMatrix2.h"
 #include "MLClass.h"
-
 
 
 //  Job in Life:   This module is the Managed version of "DataBaseServer".
@@ -20,7 +20,7 @@
 //     published 2006-july-06;  vol 216:309-311
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /**
    *@class  ClassificationBiasMatrix
@@ -36,10 +36,11 @@ namespace KKMachineLearning
    *@endcode
    *This class uses the results of a previous 10 fold cross validation confusion matrix to adjust the results of a
    *classification run.  The application CrossValidation will create a parameter file in the directory 
-   *"${LarcosHomeDir}\\Classifier\\TrainingModels\\Save" that contains the confusion matrix.  The option "-BiasMatrix" 
+   *"${xxxxxHomeDir}\\Classifier\\TrainingModels\\Save" that contains the confusion matrix.  The option "-BiasMatrix" 
    *tells the CrossValidation program to generate this parameter file.  It will have the same name as the Configuration
-   *file with the extension ".BiasMatrix.txt" Appended to the end.
-  */
+   *file with the extension ".BiasMatrix.txt" appended to the end. There is a managed version of this class in
+   *PicesInterface called PicesInterface::ClassificationBiasMatrix
+   */
   class  ClassificationBiasMatrix
   {
   public:
@@ -145,4 +146,5 @@ namespace KKMachineLearning
   };
 
   typedef  ClassificationBiasMatrix::ClassificationBiasMatrixPtr  ClassificationBiasMatrixPtr;
-}  /*  namespace KKMachineLearning  */
+}  /*  namespace KKMLL  */
+#endif

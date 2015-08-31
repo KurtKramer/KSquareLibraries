@@ -19,9 +19,10 @@ using namespace  KKB;
 #include "FeatureVector.h"
 #include "FeatureVectorProducer.h"
 #include "FeatureFileIO.h"
+#include "TrainingConfiguration2.h"
 
 #include "FactoryFVProducer.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -46,13 +47,29 @@ FactoryFVProducer::~FactoryFVProducer ()
 }
 
 
+FeatureVectorPtr  FactoryFVProducer::ManufacturFeatureVector (kkint32  numOfFeatires,
+                                                              RunLog&  runLog
+                                                             )
+{
+  return  new FeatureVector (numOfFeatires);
+}
+
 
 FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     owner,
                                                                       RunLog&  runLog
                                                                      )
+                                                                     const
 {
-  return  new FeatureVectorList (FileDesc (), owner, runLog);
+  return  new FeatureVectorList (FileDesc (), owner);
 }
+
+
+
+TrainingConfiguration2Ptr  FactoryFVProducer::ManufacturTrainingConfiguration ()  const
+{
+  return  new TrainingConfiguration2 ();
+}
+
 
 
 FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  name,

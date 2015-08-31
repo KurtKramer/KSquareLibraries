@@ -11,7 +11,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "KKBaseTypes.h"
 #include "Tokenizer.h"
 #include "KKStr.h"
 #include "TokenBuffer.h"
@@ -24,9 +24,9 @@ Tokenizer::Tokenizer (TokenBufferPtr  _in):
   atEndOfFile           (false),
   in                    (_in),
   secondCharAtEndOfFile (false),
+  operatorChars         (NULL),
   tokenList             (true),
   weOwnTokenBuffer      (false)
-
 {
   Initialize ();
 }
@@ -38,9 +38,9 @@ Tokenizer::Tokenizer (const KKStr&  _str):
   atEndOfFile           (false),
   in                    (NULL),
   secondCharAtEndOfFile (false),
+  operatorChars         (NULL),
   tokenList             (true),
   weOwnTokenBuffer      (false)
-
 {
   in = new TokenBufferStr (_str);
   weOwnTokenBuffer = true;
@@ -56,9 +56,9 @@ Tokenizer::Tokenizer (const KKStr&  _fileName,
   atEndOfFile           (false),
   in                    (NULL),
   secondCharAtEndOfFile (false),
+  operatorChars         (NULL),
   tokenList             (true),
   weOwnTokenBuffer      (false)
-
 {
   in = new TokenBufferStream (_fileName);
   _fileOpened = (in->Valid ());
@@ -79,7 +79,11 @@ Tokenizer::~Tokenizer ()
     delete  in;
     in = NULL;
   }
+  delete  operatorChars;
+  operatorChars = NULL;
 }
+
+
 
 
 
@@ -87,6 +91,8 @@ Tokenizer::~Tokenizer ()
 
 void  Tokenizer::Initialize ()
 {
+  DefineOperatorChars (",+-*/^=%[]{}()<>");
+
   GetNextChar ();
   GetNextChar ();
 
@@ -99,6 +105,12 @@ void  Tokenizer::Initialize ()
 }  /* Initialize */
 
 
+
+void  Tokenizer::DefineOperatorChars (char* const _operatorChars)
+{
+  delete  operatorChars ;
+  operatorChars = KKB::STRDUP (_operatorChars);
+}
 
 
 KKStrPtr  Tokenizer::GetNextToken ()
@@ -139,6 +151,12 @@ KKStrListPtr  Tokenizer::GetNextTokens (const KKStr& delToken)
 
 
 
+void  Tokenizer::PushTokenOnFront (KKStrPtr  t)
+{
+  tokenList.PushOnFront (t);
+}
+
+
 
 
 KKStrConstPtr  Tokenizer::Peek (kkuint32 idx)
@@ -154,8 +172,6 @@ KKStrConstPtr  Tokenizer::Peek (kkuint32 idx)
 
 
 
-
-
 bool  Tokenizer::EndOfFile ()
 {
 //  if  (tokenList.QueueSize () == 0)
@@ -165,8 +181,6 @@ bool  Tokenizer::EndOfFile ()
 
   return  (tokenList.QueueSize () < 1);
 }  /* EndOfFile */
-
-
 
 
 
@@ -233,12 +247,14 @@ bool  Tokenizer::WhiteSpaceChar (char c)  const
 
 bool  Tokenizer::DelimiterChar (char c)  const
 {
-  if  (strchr ("\n\r\t", c) == NULL)
-    return true;
-  else
-    return false;
+  return  (strchr ("\n\r\t", c) != NULL);
 }
 
+
+bool  Tokenizer::OperatorChar (char c)  const
+{
+  return  (strchr (operatorChars, c) != NULL);
+}
 
 
 
@@ -269,12 +285,17 @@ KKStrPtr  Tokenizer::GetNextTokenRaw ()
  
   KKStrPtr  nextRawToken = NULL;
 
-
   if  ((firstChar == '"')  ||  (firstChar == '\''))
   {
     // We are at the start of a string
     nextRawToken = ProcessStringToken (firstChar);
   }
+
+  else if  (OperatorChar (firstChar))
+  {
+    nextRawToken = ProcessOperatorToken ();
+  }
+    
   else
   {
     nextRawToken = ProcessFieldToken ();
@@ -282,6 +303,8 @@ KKStrPtr  Tokenizer::GetNextTokenRaw ()
 
   return  nextRawToken;
 }  /* Get Next Token */
+
+
 
 
 
@@ -330,6 +353,45 @@ KKStrPtr  Tokenizer::ProcessStringToken (char strDelChar)
 }  /* ProcessStringToken */
 
 
+
+
+KKStrPtr  Tokenizer::ProcessOperatorToken ()
+{
+  KKStrPtr  field = new KKStr (3);
+  field->Append (firstChar);
+
+  if  ((firstChar == '+')  &&  (secondChar == '+'))
+  {
+    field->Append (secondChar);
+    GetNextChar ();
+  }
+
+  else if  ((firstChar == '-')  &&  (secondChar == '-'))
+  {
+    field->Append (secondChar);
+    GetNextChar ();
+  }
+
+  else if  (firstChar == '=')
+  {
+    if  (strchr ("=<>+-*/^", secondChar) != NULL)
+    {
+      field->Append (secondChar);
+      GetNextChar ();
+    }
+  }
+
+  else if  (strchr ("+-*/^<>", firstChar) != NULL)
+  {
+    if  (secondChar == '=')
+    {
+      field->Append (secondChar);
+      GetNextChar ();
+    }
+  }
+
+  return  field;
+}  /* ProcessFieldToken */
 
 
 

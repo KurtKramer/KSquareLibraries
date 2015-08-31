@@ -21,6 +21,9 @@ using namespace std;
 
 #include "KKStr.h"
 #include "KKException.h"
+#include "KKStrParser.h"
+#include "RunLog.h"
+#include "XmlStream.h"
 using namespace KKB;
 
 
@@ -52,6 +55,7 @@ char*  KKB::STRCOPY (char*        dest,
 # endif
   return  dest;
 }  /* STRCOPY */
+
 
 
 
@@ -551,6 +555,8 @@ KKStr::KKStr (const char*  str):
 
 
 
+
+
 /**
  *@brief Copy Constructor.
  */
@@ -589,17 +595,18 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
-/*
+
+
+
  KKStr::KKStr (KKStr&&  str):
     allocatedSize (str.allocatedSize),
-    len           (str.len)
+    len           (str.len),
     val           (str.val)
 {
   str.allocatedSize = 0;
   str.len           = 0;
   str.val           = NULL;
 }
-*/
 
 
 
@@ -723,7 +730,8 @@ KKStr::KKStr (const std::string&  s):
 }
 
 
-/** @brief  Constructs a KKStr instance from a substr of 'src'.  */
+
+/** @brief  Constructs a KKStr instance from a sub-string of 'src'.  */
 KKStr::KKStr (const char*  src,
               kkuint32     startPos,
               kkuint32     endPos
@@ -1178,7 +1186,7 @@ bool   KKStr::StartsWith (const KKStr& value,
 
 
 bool   KKStr::StartsWith (const char* value,   
-                          bool ignoreCase
+                          bool        ignoreCase
                          )  const
 {
   if  (value == NULL)
@@ -1367,6 +1375,26 @@ KKStr&  KKStr::operator= (const KKStrConstPtr src)
 
   len = src->len;
   val[len] = 0;
+
+  return *this;
+}
+
+
+
+KKStr&   KKStr::operator= (KKStr&& src)
+{
+  #ifdef  KKDEBUG
+  ValidateLen ();
+  src.ValidateLen ();
+  #endif
+
+  delete  val;
+  val           = src.val;
+  allocatedSize = src.allocatedSize;
+  len           = src.len;
+  src.val           = NULL;
+  src.allocatedSize = 0;
+  src.len           = 0;
 
   return *this;
 }
@@ -1800,9 +1828,9 @@ void  KKStr::Append (const char* buff)
 
 
 
-void  KKStr::Append (const char*   buff,
-                           kkuint32  buffLen
-                    )
+void  KKStr::Append (const char*  buff,
+                     kkuint32     buffLen
+                   )
 {
   #ifdef  KKDEBUG
   ValidateLen ();
@@ -2233,8 +2261,8 @@ void  KKStr::RightPad (kkint32  width,
       if  (neededSpace >= StrIntMax)
       {
         cerr << std::endl 
-             << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
-             << "                neededSpace[" << neededSpace << "]" << std::endl
+             << "KKStr::RightPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
+             << "                  neededSpace[" << neededSpace << "]" << std::endl
              << std::endl;
         return;
       }
@@ -2283,8 +2311,8 @@ void  KKStr::LeftPad (kkint32 width,
     if  (neededSpace >= StrIntMax)
     {
       cerr << std::endl 
-           << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
-           << "                neededSpace[" << neededSpace << "]" << std::endl
+           << "KKStr::LeftPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
+           << "                 neededSpace[" << neededSpace << "]" << std::endl
            << std::endl;
       return;
     }
@@ -2859,6 +2887,46 @@ KKStr  KKStr::QuotedStr ()  const
 
 
 
+KKStr  KKStr::ToXmlStr ()  const
+{
+  if  ((!val)  ||  (len < 1))
+  {
+    return KKStr::EmptyStr ();
+  }
+  
+  KKStr  result (Len () + 5);
+  
+  kkint32  idx = 0;
+  while  (idx < len)
+  {
+    switch  (val[idx])
+    {
+      case  '<' : result.Append ("&lt;");    break;
+      case  '>' : result.Append ("&gt;");    break;
+      case  '&' : result.Append ("&amp;");   break;
+      case  '\"': result.Append ("&quot;");  break;
+      case  '\'': result.Append ("&apos;");  break;
+      case  '\t': result.Append ("&tab;");   break;
+      case  '\n': result.Append ("&nl;");    break;
+      case  '\r': result.Append ("&cr;");    break;
+      case  '\\': result.Append ("&bs;");    break;
+      case     0: result.Append ("&null;");  break;
+         
+      default:   result.Append (val[idx]);   break;
+    }
+
+    idx++;
+  }
+
+  return  result;
+}  /* ToXmlStr */
+
+
+
+
+
+
+
 KKStr  KKStr::ExtractToken (const char* delStr)
 {
   if  (!val)
@@ -3113,6 +3181,23 @@ char  KKStr::ExtractChar ()
 
   return  returnChar;
 }  /* ExtractChar */
+
+
+
+char  KKStr::ExtractLastChar ()
+{
+  #ifdef  KKDEBUG
+  ValidateLen ();
+  #endif
+
+  if  ((!val)  ||  (len < 1))
+    return 0;
+
+  --len;
+
+  return val[len];
+}  /* ExtractLastChar */
+
 
 
 
@@ -3542,6 +3627,37 @@ KKB::kkuint64  KKStr::ToUint64 () const
     return  (kkuint64)_atoi64 (val);
   #endif
 }
+
+
+VectorInt32*  KKStr::ToVectorInt32 ()  const
+{
+  VectorInt32*  results = new VectorInt32 ();
+
+  KKStrParser parser (val);
+
+  KKStr  field = parser.GetNextToken (",\t \n\r");
+  while  (!field.Empty ())
+  {
+    kkint32 dashPos = field.LocateCharacter ('-');
+    if  (dashPos < 0)
+    {
+      // This is not a range
+      results->push_back (field.ToInt32 ());
+    }
+    else
+    {
+      // We are looking at a range
+      kkint32  startNum = field.SubStrPart (0, dashPos - 1).ToInt32 ();
+      kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
+      for  (kkint32 z = startNum;   z <= endNum;  ++z)
+        results->push_back (z);
+    }
+    field = parser.GetNextToken (",\t \n\r");
+  }
+  return  results;
+}  /* ToVectorint32 */
+
+
 
 
 
@@ -3993,6 +4109,28 @@ KKStr&  KKStr::operator<< (const KKStr&  right)
 }
 
 
+KKStr&  KKStr::operator<< (KKStr&&  right)
+{
+  if  (len < 1)
+  {
+    val           = right.val;
+    len           = right.len;
+    allocatedSize = right.allocatedSize;
+
+    right.val           = NULL;
+    right.len           = 0;
+    right.allocatedSize = 0;
+  }
+  else
+  {
+    Append (right.Str ());
+  }
+  
+  return  *this;
+}
+
+
+
 
 KKStr&  KKStr::operator<< (kkint16  right)
 {
@@ -4240,6 +4378,63 @@ bool  KKStr::StrInStr (const char*  target,
 
 
 
+void  KKStr::WriteXML (const KKStr&  varName,
+                       ostream&      o
+                      )  const
+{
+  XmlTag startTag ("KKStr", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Len", len);
+  startTag.WriteXML (o);
+  XmlContent::WriteXml (val, o);
+  XmlTag  endTag ("KKStr", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+void  KKStr::ReadXML (XmlStream&      s,
+                      XmlTagConstPtr  tag,
+                      RunLog&         log
+                     )
+{
+  kkuint16  expectedLen = tag->AttributeValueInt32 ("Len");
+  delete val;
+  val = NULL;
+  allocatedSize = 0;
+  if  (expectedLen > 0)
+    AllocateStrSpace (expectedLen);
+
+  delete  val;
+  val = NULL;
+  allocatedSize = 0;
+  AllocateStrSpace (expectedLen);
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      Append (*(c->Content ()));
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+  TrimRight (" \r\n");
+}  /* ReadXML */
+
+
+
+KKStrList::KKStrList ():
+  KKQueue<KKStr> (false),
+  sorted (false)
+{
+}
 
 
 KKStrList::KKStrList (bool   owner):
@@ -4268,10 +4463,6 @@ KKStrList::KKStrList (const char*  s[]):
 
 
 
-
-
-
-
 kkint32  KKStrList::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (KKStrList);
@@ -4294,6 +4485,72 @@ bool  KKStrList::StringInList (KKStr& str)
 
   return  found;
 }
+
+
+
+
+void  KKStrList::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          RunLog&         log
+                         )
+{
+  kkuint32  count = (kkuint32)tag->AttributeValueInt32 ("Count");
+
+  DeleteContents ();
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr  c = dynamic_cast<XmlContentPtr>(t);
+      if  ((c != NULL)  &&  (c->Content () != NULL))
+      {
+        KKStrParser  parser (*(c->Content ()));
+        parser.TrimWhiteSpace (" ");
+        while  (parser.MoreTokens ())
+        {
+          KKStr field = parser.GetNextToken ("\t");
+          PushOnBack (new KKStr (field));
+        }
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
+void  KKStrList::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                         )  const
+{
+  XmlTag  startTag ("KKStrList", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)size ());
+  startTag.WriteXML (o);
+
+  const_iterator  idx;
+  kkuint32 x = 0;
+  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  {
+    KKStrPtr  sp = *idx;
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (sp->QuotedStr (), o);
+  }
+  XmlTag  endTag ("KKStrList", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
 
 
 
@@ -4485,8 +4742,8 @@ KKStrListPtr  KKStrList::DuplicateListAndContents ()  const
 
 
 kkint32  LocateLastOccurrence (const char*   str,
-                             char          ch
-                            )
+                               char          ch
+                              )
 {
   if  (!str)
     return -1;
@@ -4912,6 +5169,31 @@ KKStr  KKB::StrFromUint64 (kkuint64 ul)
 
 
 
+KKStr  KKB::StrFromFloat (float f)
+{
+  char  buff[50];
+  SPRINTF (buff, sizeof (buff), "%f", f);
+  KKStr s (buff);
+  return  s;
+}  /* StrFromFloat */
+
+
+
+KKStr  KKB::StrFromDouble (double  d)
+{
+  char  buff[50];
+  SPRINTF (buff, sizeof (buff), "%g", d);
+  KKStr s (buff);
+  return  s;
+}  /* StrFromFloat */
+
+
+
+
+
+
+
+
 KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 {
   ostringstream  o;
@@ -4922,7 +5204,88 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 
 
 
+
 const  kkuint32  KKB::KKStr::StrIntMax = USHRT_MAX;
+
+
+
+
+
+
+
+
+VectorKKStr::VectorKKStr ():
+  vector<KKStr> ()
+{
+}
+
+
+VectorKKStr::VectorKKStr (const VectorKKStr&  v):
+  vector<KKStr> (v)
+{
+}
+
+
+
+void  VectorKKStr::ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                          )
+{
+  kkuint32  count = (kkuint32)tag->AttributeValueInt32 ("Count");
+
+  clear ();
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr  c = dynamic_cast<XmlContentPtr>(t);
+      if  ((c != NULL)  &&  (c->Content () != NULL))
+      {
+        KKStrParser  parser (*(c->Content ()));
+        parser.TrimWhiteSpace (" ");
+        while  (parser.MoreTokens ())
+        {
+          KKStr field = parser.GetNextToken ("\t");
+          push_back (field);
+        }
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
+void  VectorKKStr::WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const
+{
+  XmlTag  startTag ("VectorKKStr", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Count", (kkint32)size ());
+  startTag.WriteXML (o);
+
+  const_iterator  idx;
+  kkuint32 x = 0;
+  for  (idx = begin ();  idx != end ();  ++idx, ++x)
+  {
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (idx->QuotedStr (), o);
+  }
+  XmlTag  endTag ("VectorKKStr", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
 
 
 
@@ -4943,6 +5306,20 @@ bool  KKStrListIndexed::KKStrPtrComp::operator() (const KKStrConstPtr& lhs, cons
     return ((*lhs) < (*rhs));
   else
     return  (lhs->Compare (*rhs) < 0);
+}
+
+
+
+KKStrListIndexed::KKStrListIndexed ():
+  comparator              (true),
+  indexIndex              (),
+  memoryConsumedEstimated (0),
+  nextIndex               (0),
+  owner                   (true),
+  strIndex                (NULL)
+{
+  strIndex = new StrIndex (comparator);
+  memoryConsumedEstimated = sizeof (*this);
 }
 
 
@@ -4989,6 +5366,15 @@ KKStrListIndexed::KKStrListIndexed (const KKStrListIndexed&  list):
 
 KKStrListIndexed::~KKStrListIndexed ()
 {
+  DeleteContents ();
+  indexIndex.clear ();
+  strIndex->clear ();
+}
+
+
+
+void  KKStrListIndexed::DeleteContents ()
+{
   if  (owner)
   {
     StrIndex::iterator  idx;
@@ -5002,6 +5388,7 @@ KKStrListIndexed::~KKStrListIndexed ()
   delete  strIndex;
   strIndex = NULL;
 }
+
 
 
 kkuint32  KKStrListIndexed::size ()  const
@@ -5084,6 +5471,8 @@ kkint32  KKStrListIndexed::Add (KKStrPtr  s)
 
 
 
+
+
 kkint32   KKStrListIndexed::Delete (KKStr&  s)
 {
   StrIndex::iterator  idx;
@@ -5139,9 +5528,9 @@ kkint32  KKStrListIndexed::LookUp (KKStrPtr s)  const
 
 
 
-const  KKStrConstPtr  KKStrListIndexed::LookUp (kkint32 x)
+KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
 {
-  IndexIndex::iterator  idx;
+  IndexIndex::const_iterator  idx;
   idx = indexIndex.find (x);
   if  (idx == indexIndex.end ())
     return NULL;
@@ -5150,6 +5539,73 @@ const  KKStrConstPtr  KKStrListIndexed::LookUp (kkint32 x)
 }
 
 
+void  KKStrListIndexed::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
+{
+  DeleteContents ();
+  bool  caseSensative = tag->AttributeValueByName ("CaseSensative")->ToBool ();
+  comparator.caseSensitive = caseSensative;
+
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      KKStrParser p (*c->Content ());
+
+      while  (p.MoreTokens ())
+      {
+        KKStr  s = p.GetNextToken (",\t\n\r");
+        Add (new KKStr (s));
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+KKStr  KKStrListIndexed::ToTabDelString ()  const
+{
+  KKStr  s (indexIndex.size () * 20);
+  IndexIndex::const_iterator  idx;
+  for  (idx = indexIndex.begin ();  idx != indexIndex.end ();  ++idx)
+  {
+    if (!s.Empty ())
+      s << "\t";
+    s << *(idx->second);
+  }
+  return s;
+}
+
+
+void  KKStrListIndexed::WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const
+{
+  XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);
+
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("CaseSensative", caseSensative);
+  startTag.WriteXML (o);
+
+  kkuint32 n = size ();
+  for  (kkuint32 x = 0;  x < n;  ++x)
+  {
+    KKStrConstPtr s = LookUp ((kkint32)x);
+    if  (x > 0)  o << "\t";
+    XmlContent::WriteXml (s->QuotedStr (), o);
+  }
+
+  XmlTag endTag ("KKStrListIndexed", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
 
 
 

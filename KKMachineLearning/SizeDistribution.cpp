@@ -22,7 +22,7 @@ using namespace  KKB;
 #include "SizeDistribution.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -249,7 +249,7 @@ SizeDistribution::~SizeDistribution ()
 
 
 
-MLClassListPtr   SizeDistribution::BuildImageClassList ()  const
+MLClassListPtr   SizeDistribution::BuildMLClassList ()  const
 {
   MLClassListPtr  mlClasses = new MLClassList ();
 
@@ -263,7 +263,7 @@ MLClassListPtr   SizeDistribution::BuildImageClassList ()  const
   mlClasses->SortByName ();
 
   return  mlClasses;
-}  /* BuildImageClassList */
+}  /* BuildMLClassList */
 
 
 
@@ -449,7 +449,7 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
   KKStr  hd1, hd2, hd3;
 
 
-  MLClassListPtr  classes = BuildImageClassList ();
+  MLClassListPtr  classes = BuildMLClassList ();
   MLClassList::const_iterator  cIDX;
  
 
@@ -485,7 +485,7 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
   }
 
 
-  VectorInt  finaleTotals (classes->size (), 0);
+  VectorInt  finalTotals (classes->size (), 0);
   kkint32    grandTotal = 0;
 
   classes->ExtractThreeTitleLines (hd1, hd2, hd3);
@@ -494,13 +494,13 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
     << ""      << "\t" << "Scan"  << "\t" << hd2 << "\t" << "Bucket" << endl
     << "Depth" << "\t" << "Lines" << "\t" << hd3 << "\t" << "Total"  << endl;
 
-  kkuint32 totalScanLines = 0;
+  kkuint64 totalScanLines = 0;
   kkint32  imageSize = firstBucket * bucketSize;
 
   for  (kkint32 bucketIDX = firstBucket;  bucketIDX <= lastBucket;  bucketIDX++)
   {
     kkint32  nextImageSize = imageSize + bucketSize;
-    kkuint32 scanLinesDepthForThisBucket = 0;
+    kkuint64 scanLinesDepthForThisBucket = 0;
     if  (scanLinesPerMeterDepth != NULL)
     {
       for  (kkint32 x = imageSize;  x < Min (nextImageSize, (kkint32)scanLinesPerMeterDepth->size ());  x++)
@@ -522,9 +522,9 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
 
       o << "\t" << qtyThisBucket;
 
-      bucketTotal           += qtyThisBucket;
-      finaleTotals[intIDX]  += qtyThisBucket;
-      grandTotal            += qtyThisBucket;
+      bucketTotal         += qtyThisBucket;
+      finalTotals[intIDX] += qtyThisBucket;
+      grandTotal          += qtyThisBucket;
 
       intIDX++;
     }
@@ -535,10 +535,10 @@ void  SizeDistribution::PrintByClassCollumns (ostream&      o,
 
   {
     o << endl
-      << "FinaleTotals"  << "\t"  << totalScanLines;
+      << "FinalTotals"  << "\t"  << totalScanLines;
     for  (kkuint32 x = 0;  x < classes->size ();  x++)
     {
-      o << "\t" << finaleTotals[x];
+      o << "\t" << finalTotals[x];
     }
     o << "\t" << grandTotal << endl
       << endl;

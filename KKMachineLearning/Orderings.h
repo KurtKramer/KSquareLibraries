@@ -3,16 +3,16 @@
 
 
 /**
- @class  KKMachineLearning::Orderings
- @author  Kurt Kramer
- @brief  Used to maintain multiple orderings of a single list of FeatureVector objects.
- @details
-  Will maintain multiple orderings of a single FeatureVectorList.  These orderings will be saved in 
-  a text file for recall later. This will allow the user to be able to repeat experiments using the 
-  same ordering of data again. The Idea is that the 1st time this orderings is created the order 
-  will be randomly driven with Stratification by Class.  This ordering will then be saved in data 
-  Files for future recall.  More than one order can be maintained for a single list. An example of 
-  a good use of this is RandomSplits. 
+ *@class  KKMLL::Orderings
+ *@author  Kurt Kramer
+ *@brief  Used to maintain multiple orderings of a single list of FeatureVector objects.
+ *@details
+ * Will maintain multiple orderings of a single FeatureVectorList.  These orderings will be saved in 
+ * a text file for recall later. This will allow the user to be able to repeat experiments using the 
+ * same ordering of data again. The Idea is that the 1st time this orderings is created the order 
+ * will be randomly driven with Stratification by Class.  This ordering will then be saved in data 
+ * Files for future recall.  More than one order can be maintained for a single list. An example of 
+ * a good use of this is RandomSplits. 
  */
 
 
@@ -22,7 +22,8 @@
 #include  "KKStr.h"
 
 
-namespace  KKMachineLearning  {
+namespace  KKMLL
+{
 
 
 #ifndef  _FeatureVector_Defined_
@@ -72,7 +73,8 @@ public:
    */
   Orderings (const FeatureVectorListPtr _data,
              kkuint32                   _numOfOrderings,
-             kkuint32                   _numOfFolds
+             kkuint32                   _numOfFolds,
+             RunLog&                    _log
             );
 
 
@@ -81,8 +83,8 @@ public:
    *       in a data file.
    *@details Will load object from the Feature File '_featureFileName'  and retrieve the 
    *         different orderings from a separate index file who's name will be 
-   *         osExtention (FeatureFileName) + ".idx".  The load routine will validate that all 
-   *         FeatureVector instances are accounted for in each ordering.  If the index file does not 
+   *         osExtention (FeatureFileName) + ".idx". The load routine will validate that all 
+   *         FeatureVector instances are accounted for in each ordering. If the index file does not 
    *         exist it then the  'successful' flag will bet to false.  
    *
    *@param[in] _featureFileName  File to load FeatureVector' objects from.  This will be used as 
@@ -112,8 +114,9 @@ public:
    */
   Orderings (const FeatureVectorListPtr  _data,
              const KKStr&                _indexFileName,
-             kkint32                       _numOfOrderings,
-             kkint32                       _numOfFolds
+             kkuint32                    _numOfOrderings,
+             kkuint32                    _numOfFolds,
+             RunLog&                     _log
             );
 
 
@@ -124,9 +127,12 @@ public:
    *        'indexFileName' using the 'FileName' method from FeatureVectorList.  It is expected 
    *        that a separate index file by the name osDeletExtention (FeatureFileName) + ".idx" 
    *        will exist.  The orderings will be loaded from that file.
-   *@param[in]  _data  FeatureVectorList that we want different orderings of.
+   *@param[in] _data  FeatureVectorList that we want different orderings of.
+   *@param[in] _log  Logger.
    */
-  Orderings (FeatureVectorListPtr  _data);
+  Orderings (FeatureVectorListPtr  _data,
+             RunLog&               _log
+            );
 
   ~Orderings ();
 
@@ -141,27 +147,28 @@ public:
    *@param[in]  _data  FeatureVectorList that we want different orderings of.
    *@param[in]  _numOfOrderings  Expected number of orderings.
    *@param[in]  _numOfFolds  Number of folds each ordering should be stratified by.
+   *@param[in]  _log  Logger.
    */
   static
   OrderingsPtr  CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,
                                                        kkuint32                    _numOfOrderings,
-                                                       kkuint32                    _numOfFolds
+                                                       kkuint32                    _numOfFolds,
+                                                       RunLog&                     _log
                                                       );
 
 
   /***************************************************************************/
   /*                            Access Methods                               */
   /***************************************************************************/
-  FeatureVectorListPtr     Data            ()  const  {return data;}
-  const KKStr&             FeatureFileName ()  const  {return featureFileName;}
-  const FileDescPtr        FileDesc        ()  const  {return fileDesc;}
-  const MLClassListPtr     ImageClasses    ()  const  {return mlClasses;}
-  const KKStr&             IndexFileName   ()  const  {return indexFileName;}
-  RunLog&                  Log             ()         {return log;}
-  kkuint32                 NumOfFolds      ()  const  {return numOfFolds;}
-  kkuint32                 NumOfOrderings  ()  const  {return numOfOrderings;}
-  kkuint32                 Size            ()  const  {return (kkuint32)orderings.size ();}
-  bool                     Valid           ()  const  {return valid;}
+  FeatureVectorListPtr  Data            ()  const  {return data;}
+  const KKStr&          FeatureFileName ()  const  {return featureFileName;}
+  const FileDescPtr     FileDesc        ()  const  {return fileDesc;}
+  const MLClassListPtr  MLClasses       ()  const  {return mlClasses;}
+  const KKStr&          IndexFileName   ()  const  {return indexFileName;}
+  kkuint32              NumOfFolds      ()  const  {return numOfFolds;}
+  kkuint32              NumOfOrderings  ()  const  {return numOfOrderings;}
+  kkuint32              Size            ()  const  {return (kkuint32)orderings.size ();}
+  bool                  Valid           ()  const  {return valid;}
 
 
 
@@ -174,16 +181,19 @@ public:
 
   void  Save ();
  
-  void  Save (const KKStr&  _indexFileName);
+  void  Save (const KKStr&  _indexFileName,
+              RunLog&       _log
+             );
 
 
 private:
-  void  CreateOrderings ();
+  void  CreateOrderings (RunLog&  log);
   void  DeleteOrderings ();
-  void  Load ();
+  void  Load (RunLog&  log);
 
   void  Load (const KKStr&  _indexFileName,
-              bool&          successful
+              bool&         successful,
+              RunLog&       log
              );
 
 
@@ -192,7 +202,6 @@ private:
   FileDescPtr                    fileDesc;
   MLClassListPtr                 mlClasses;
   KKStr                          indexFileName;
-  RunLog&                        log;
   kkuint32                       numOfFolds;
   kkuint32                       numOfOrderings;
   vector<FeatureVectorListPtr>   orderings;
@@ -202,6 +211,6 @@ private:
 
 typedef  Orderings::OrderingsPtr  OrderingsPtr;
 
-}  /* namespace  KKMachineLearning  */
+}  /*  KKMLL  */
 
 #endif

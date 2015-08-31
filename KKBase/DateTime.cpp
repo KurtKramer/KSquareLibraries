@@ -5,21 +5,18 @@
 
 /*  Originally developed in Borland Pascal 1986;  converted to c++ in 1995 */
 
-#include  "FirstIncludes.h"
-
-#include  <iostream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "KKBaseTypes.h"
-#include  "KKStrParser.h"
+#include "KKBaseTypes.h"
+#include "KKStrParser.h"
 using namespace KKB;
 
-
-#include  "DateTime.h"
+#include "DateTime.h"
 
 
 const char*  DateType::monthlyNames[] = 
@@ -115,7 +112,7 @@ uchar  DateType::MonthFromStr (const KKStr&  monthStr)
 
 
 uchar  DateType::DaysInTheMonth (kkint32 year, 
-                                 uchar month
+                                 uchar   month
                                 )
 {
   if  ((month < 1)  ||  (month > 12))
@@ -133,7 +130,7 @@ uchar  DateType::DaysInTheMonth (kkint32 year,
 
 
 kkint32  DateType::DaysYTDforMonth (kkint32 year,
-                                    uchar month
+                                    uchar   month
                                    )
 {
   if  ((month < 1)  ||  (month > 12))

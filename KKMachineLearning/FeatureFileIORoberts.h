@@ -4,7 +4,7 @@
 #include  "FeatureFileIO.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 
@@ -52,15 +52,15 @@ namespace KKMachineLearning
                                             );
 
 
-    virtual  void   SaveFile (FeatureVectorList&     _data,
-                              const KKStr&           _fileName,
-                              const FeatureNumList&  _selFeatures,
-                              ostream&               _out,
-                              kkuint32&              _numExamplesWritten,
-                              VolConstBool&          _cancelFlag,
-                              bool&                  _successful,
-                              KKStr&                 _errorMessage,
-                              RunLog&                _log
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              ostream&              _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
+                              bool&                 _successful,
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              );
 
 
@@ -70,6 +70,6 @@ namespace KKMachineLearning
 
   };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

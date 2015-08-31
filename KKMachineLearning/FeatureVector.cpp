@@ -1,35 +1,29 @@
 #include  "FirstIncludes.h"
-
-
 #include  <ctype.h>
 #include  <time.h>
-
 #include  <string>
 #include  <iostream>
 #include  <fstream>
 #include  <math.h>
 #include  <vector>
-
- 
 #include  "MemoryDebug.h"
-
 using namespace  std;
 
 #include "KKBaseTypes.h"
-#include "KKException.h"
 #include "DateTime.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
 using namespace  KKB;
 
-
 #include "FeatureVector.h"
+#include "ClassProb.h"
 #include "DuplicateImages.h"
 #include "FeatureNumList.h"
 #include "FeatureFileIO.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -38,7 +32,7 @@ FeatureVector::FeatureVector (kkint32  _numOfFeatures):
         numOfFeatures    (_numOfFeatures),
         breakTie         (0.0f),
         mlClass          (NULL),
-        imageFileName    (),
+        exampleFileName  (),
         missingData      (false),
         origSize         (0.0f),
         predictedClass   (NULL),
@@ -57,19 +51,15 @@ FeatureVector::FeatureVector (const FeatureVector&  _example):
   featureData      (NULL),
   numOfFeatures    (_example.numOfFeatures),
   breakTie         (_example.breakTie),
-  mlClass       (_example.mlClass),
-  imageFileName    (_example.imageFileName),
-
+  mlClass          (_example.mlClass),
+  exampleFileName  (_example.exampleFileName),
   missingData      (false),
   origSize         (_example.origSize),
   predictedClass   (_example.predictedClass),
   probability      (_example.probability),
-
   trainWeight      (_example.trainWeight),
-
   validated        (_example.validated),
   version          (-1)
-
 {
   if  (_example.featureData)
   {
@@ -88,11 +78,10 @@ FeatureVector::~FeatureVector ()
 
 
 
-
-kkint32 FeatureVector::MemoryConsumedEstimated ()  const
+kkint32  FeatureVector::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (FeatureVector)
-    +  imageFileName.MemoryConsumedEstimated ();
+    +  exampleFileName.MemoryConsumedEstimated ();
 
   if  (featureData)
     memoryConsumedEstimated += sizeof (float) * numOfFeatures;
@@ -102,16 +91,22 @@ kkint32 FeatureVector::MemoryConsumedEstimated ()  const
 
 
 
+FeatureVectorPtr  FeatureVector::Duplicate ()  const
+{
+  return new FeatureVector (*this);
+}
+
+
+
+
 void  FeatureVector::ResetNumOfFeatures (kkint32  newNumOfFeatures)
 {
   if  (newNumOfFeatures < 1)  
   {
-    cerr << endl
-         << "FeatureVector::ResetNumOfFeatures    *** ERROR ***" << endl
-         << "                                     NewNumOfFeatures[" << newNumOfFeatures << "] is invalid." << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg (128);
+    errMsg << "FeatureVector::ResetNumOfFeatures   ***ERROR***   NewNumOfFeatures[" << newNumOfFeatures << "] is invalid.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   kkint32  x;
@@ -219,19 +214,15 @@ KKStr&   FeatureVector::ClassName ()  const
 
 
 void  FeatureVector::AddFeatureData (kkint32  _featureNum,
-                                     float  _featureData
+                                     float    _featureData
                                     )
 {
   if  ((_featureNum < 0)  ||  (_featureNum >= numOfFeatures))
   {
-    cerr << endl
-         << "AddFeatureData  *** ERROR ***  FeatureNum[" 
-         << _featureNum << "] exceeds maximum allowed Feature Number["
-         << numOfFeatures << "]."
-         << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg (128);
+    errMsg << "FeatureVector::AddFeatureData   ***ERROR***   FeatureNum[" << _featureNum << "] exceeds maximum allowed Feature Number["<< numOfFeatures << "].";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   featureData[_featureNum] = _featureData;
@@ -268,13 +259,13 @@ const KKStr&  FeatureVector::PredictedClassName ()  const
 
 
 
-const KKStr&  FeatureVector::ImageClassName  ()  const
+const KKStr&  FeatureVector::MLClassName  ()  const
 {
   if  (mlClass)
     return mlClass->Name ();
   else
     return KKStr::EmptyStr ();
-}  /* ImageClassName */
+}  /* MLClassName */
 
 
 
@@ -297,19 +288,24 @@ bool FeatureVector::operator== (FeatureVector &other_image)  const
 
 
 
-
-
+FeatureVectorList::FeatureVectorList ():
+  KKQueue<FeatureVector> (true),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
+  fileDesc      (NULL),
+  fileName      (),
+  numOfFeatures (0),
+  version       (-1)
+{
+}
 
 
 
 FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
-                                      bool         _owner,
-                                      RunLog&      _log
+                                      bool         _owner
                                      ):
   KKQueue<FeatureVector> (_owner),
 
-  log           (_log),
-  curSortOrder  (IFL_UnSorted),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_fileDesc),
   fileName      (),
   numOfFeatures (0),
@@ -317,12 +313,9 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
 {
   if  (!fileDesc)
   {
-    log.Level (-1) << endl
-                   << "FeatureVectorList::FeatureVectorList    *** ERROR ***" << endl
-                   << "                                     FileDesc == NULL" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg = "FeatureVectorList::FeatureVectorList    *** ERROR ***      FileDesc == NULL";
+    cerr << endl << errMsg << endl <<endl;
+    throw KKException (errMsg);
   }
 
   numOfFeatures = fileDesc->NumOfFields ();
@@ -334,8 +327,7 @@ FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
 FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
      KKQueue<FeatureVector> (examples),
 
-     log           (examples.log),
-     curSortOrder  (IFL_UnSorted),
+     curSortOrder  (IFL_SortOrder::IFL_UnSorted),
      fileDesc      (examples.fileDesc),
      fileName      (examples.fileName),
      numOfFeatures (examples.numOfFeatures),
@@ -344,13 +336,20 @@ FeatureVectorList::FeatureVectorList (FeatureVectorList&  examples):
 }
 
 
+/**
+ *@brief  Constructor that create a duplicate list of FeatureVectors;  
+ *@details 
+ *if (owner == true)  then will also
+ *   -# duplicate the contents; that is each example in the list will be 
+ *      duplicated by calling the copy constructor.
+ *   -# And the new list will own these newly created examples.
+ */
 FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
                                       bool                      _owner
                                      ):
    KKQueue<FeatureVector> (examples, _owner),
 
-   log           (examples.log),
-   curSortOrder  (IFL_UnSorted),
+   curSortOrder  (IFL_SortOrder::IFL_UnSorted),
    fileDesc      (examples.fileDesc),
    fileName      (examples.fileName),
    numOfFeatures (examples.numOfFeatures),
@@ -360,27 +359,36 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
 
 
 
-
+/**
+ *@brief  Constructs a list of examples that are a subset of the ones in _examples as dictated by _mlClasses
+ *@details
+ * The subset will consist of the examples who's mlClass is one of the ones in mlClasses. The new 
+ * instance created will not own the contents;  it will just point to the existing examples that were in
+ * '_examples'.
+ *
+ *@param[in] _mlClasses  List of classes that the subset of examples will come from.
+ *@param[in] _examples  Examples that the subset will be derived from.
+ *@param[in] _log  Logging file.
+ */
 FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
-                                      FeatureVectorList&  _examples,
-                                      RunLog&             _log
+                                      FeatureVectorList&  _examples
                                      ):
   KKQueue<FeatureVector> (false),
 
-  log           (_log),
-  curSortOrder  (IFL_UnSorted),
+  curSortOrder  (IFL_SortOrder::IFL_UnSorted),
   fileDesc      (_examples.fileDesc),
   fileName      (_examples.fileName),
   numOfFeatures (_examples.numOfFeatures),
   version       (_examples.version)
 {
-  FeatureVectorList::const_iterator  idx;
-  for  (idx = _examples.begin ();  idx != _examples.end ();  ++idx)
+  MLClassIndexListPtr  classIdx = new MLClassIndexList (_mlClasses);
+  for  (auto idx:  _examples)
   {
-    FeatureVectorPtr  example = *idx;
-    if  (_mlClasses.PtrToIdx (example->MLClass ()) >= 0)
-      AddSingleExample (example);
+    if  (classIdx->GetClassIndex (idx->MLClass ()) >= 0)
+      PushOnBack (idx);
   }
+  delete  classIdx;
+  classIdx = NULL;
 }
 
 
@@ -406,14 +414,36 @@ kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
 
 
 
-bool  FeatureVectorList::SameExceptForSymbolicData (const FeatureVectorList&  otherData)  const
+FeatureVectorListPtr  FeatureVectorList::Duplicate (bool _owner)  const
+{
+  return new FeatureVectorList (*this, _owner);
+}
+
+
+
+FeatureVectorListPtr  FeatureVectorList::ManufactureEmptyList (bool _owner)  const
+{
+  return new FeatureVectorList (fileDesc, _owner);
+}
+
+
+
+/**
+ *@details   
+ *  Determines if the other FeatreVectorList has the same underlining layout;  that is each
+ *  field is of the same type and meaning. This way we can determine if one list contains
+ *  Apples while the other contains Oranges.
+ */
+bool  FeatureVectorList::SameExceptForSymbolicData (const FeatureVectorList&  otherData,
+                                                    RunLog&                   log
+                                                   )  const
 {
   return  fileDesc->SameExceptForSymbolicData (*(otherData.FileDesc ()), log);
 }
 
 
 
-void  FeatureVectorList::RemoveEntriesWithMissingFeatures ()
+void  FeatureVectorList::RemoveEntriesWithMissingFeatures (RunLog&  log)
 {
   log.Level (50) << "FeatureVectorList::RemoveEntriesWithMissingFeatures" << endl;
 
@@ -445,10 +475,9 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   if  (!fileDesc)
   {
     // This should never ever be able to happen,  but will check 
-    // any way.  If missing something has gone very wring.
+    // any way.  If missing something has gone very wrong.
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "      *** ERROR ***  'fileDesc == NULL'";
-    log.Level (-1) << endl << endl << msg << endl << endl;
     throw KKException (msg);
   }
 
@@ -456,7 +485,6 @@ void  FeatureVectorList::ValidateFileDescAndFieldNum (kkint32      fieldNum,
   {
     KKStr  msg (200);
     msg << "FeatureVectorList::" << funcName << "    *** ERROR ***    FeatureNum[" << fieldNum << "] is out of range.";
-    log.Level (-1) << endl << endl << msg << endl << endl;
     throw KKException (msg);
   }
 } /* ValidateFileDescAndFieldNum */
@@ -499,7 +527,7 @@ KKStr  FeatureVectorList::FeatureTypeStr (kkint32 featureNum) const
 kkint32 FeatureVectorList::FeatureCardinality (kkint32 featureNum)  const
 {
   ValidateFileDescAndFieldNum (featureNum, "FeatureCardinality");
-  return  fileDesc->Cardinality (featureNum, log);
+  return  fileDesc->Cardinality (featureNum);
 }
 
 
@@ -549,12 +577,9 @@ void  FeatureVectorList::ResetFileDesc (FileDescPtr  newFileDesc)
 {
   if  (!newFileDesc)
   {
-    cerr << endl
-         << "FeatureVectorList::ResetFileDesc   *** ERROR ***" << endl
-         << "                  newFileDesc == NULL"            << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg = "FeatureVector::ResetFileDesc   ***ERROR***   newFileDesc == NULL.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   fileDesc = newFileDesc;
@@ -575,17 +600,14 @@ void  FeatureVectorList::PushOnBack (FeatureVectorPtr  example)
 {
   if  (example->NumOfFeatures () != numOfFeatures)
   {
-    cerr << endl
-         << "FeatureVectorList::PushOnBack      *** ERROR ***  numOfFeatures mismatch"
-         << "                         numOfFeatures        [" << numOfFeatures           << "]" << endl
-         << "                         example->NumOfFeaturess[" << example->NumOfFeatures () << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (150);
+    errMsg  << "FeatureVectorList::PushOnBack   ***ERROR***   Mismatch numOfFeatures[" << numOfFeatures << "] example->NumOfFeaturess[" << example->NumOfFeatures () << "]";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   KKQueue<FeatureVector>::PushOnBack (example);
-  curSortOrder = IFL_UnSorted;
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
 }  /* Push On Back */
 
 
@@ -595,19 +617,15 @@ void  FeatureVectorList::PushOnFront (FeatureVectorPtr  example)
 {
   if  (example->NumOfFeatures () != numOfFeatures)
   {
-    cerr << endl
-         << "FeatureVectorList::PushOnFront     *** ERROR ***  numOfFeatures mismatch"
-         << "                         numOfFeatures        [" << numOfFeatures           << "]" << endl
-         << "                         example->NumOfFeaturess[" << example->NumOfFeatures () << "]" << endl
-         << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (150);
+    errMsg  << "FeatureVectorList::PushOnFront   ***ERROR***   Mismatch numOfFeatures[" << numOfFeatures << "] example->NumOfFeaturess[" << example->NumOfFeatures () << "]";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   KKQueue<FeatureVector>::PushOnFront (example);
-  curSortOrder = IFL_UnSorted;
-}  /* Push On Back */
-
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
+}  /* PushOnFront */
 
 
 
@@ -648,28 +666,17 @@ MLClassListPtr  FeatureVectorList::ExtractListOfClasses ()  const
 void  FeatureVectorList::AddSingleExample (FeatureVectorPtr  _imageFeatures)
 {
   PushOnBack (_imageFeatures);
-  curSortOrder = IFL_UnSorted;
+  curSortOrder = IFL_SortOrder::IFL_UnSorted;
 }
 
 
 
-
-void  FeatureVectorList::RemoveDuplicateEntries ()
+void  FeatureVectorList::RemoveDuplicateEntries (bool     allowDupsInSameClass,
+                                                 RunLog&  runLog
+                                                )
 {
-  DuplicateImages  dupDetector (this, FileDesc (),  log);
-  if  (dupDetector.DuplicatesFound ())
-  {
-    FeatureVectorListPtr  dupsToDelete = dupDetector.ListOfExamplesToDelete ();
-
-    FeatureVectorList::iterator  idx;
-    for  (idx = dupsToDelete->begin ();  idx != dupsToDelete->end ();  idx++)
-    {
-      FeatureVectorPtr  example = *idx;
-      DeleteEntry (example);
-      if  (Owner ())
-        delete  example;
-    }
-  }
+  DuplicateImages  dupDetector (this, runLog);
+  dupDetector.PurgeDuplicates (this, allowDupsInSameClass, NULL);
 }  /* RemoveDuplicateEntries */
 
 
@@ -681,7 +688,7 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
     KKStr  errMsg = "FeatureVectorList::AddQueue   ***ERROR***    'examplesToAdd' has different 'NumOfFeatures'.";
     errMsg << endl << "       numOfFeatures              [" << numOfFeatures               << "]" << endl
                    << "       examplesToAdd.numOfFeatures[" << examplesToAdd.numOfFeatures << "]";
-    log.Level (-1) << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw  errMsg;
   }
 
@@ -693,7 +700,7 @@ void  FeatureVectorList::AddQueue (const FeatureVectorList&  examplesToAdd)
   }
   else
   {
-    // Since there are examples in both queues,  then they should have the same version number
+    // Since there are examples in both queues, then they should have the same version number
     // otherwise the version number of the resulting KKQueue will be undefined (-1).
     if  (examplesToAdd.Version () != Version ())
       Version (-1);
@@ -723,7 +730,7 @@ kkint32  FeatureVectorList::GetClassCount (MLClassPtr  c)  const
 
 FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkuint32 level)
 {
-  FeatureVectorListPtr  examples = new FeatureVectorList (fileDesc, true, log);
+  FeatureVectorListPtr  examples = ManufactureEmptyList (true);
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  idx++)
   {
@@ -741,7 +748,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
+FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
                                                                        kkint32     _maxToExtract,
                                                                        float       _minSize
                                                                       )  const
@@ -756,11 +763,11 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
 
   // Create a new list structure that does not own the Images it contains.  This way when 
   // this structure is deleted.  The example it contains are not deleted.
-  FeatureVectorListPtr  extractedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  extractedImages = this->ManufactureEmptyList (false);
 
   if  (!extractedImages)
   {
-    KKStr  err = "***ERROR***, ExtractImagesForAGivenClass,  Could not allocate more space.";
+    KKStr  err = "***ERROR***, ExtractExamplesForAGivenClass,  Could not allocate more space.";
     cerr << endl << err << endl;
     osDisplayWarning (err);
     exit (-1);
@@ -781,48 +788,76 @@ FeatureVectorListPtr   FeatureVectorList::ExtractImagesForAGivenClass (MLClassPt
     }
   }
 
-  extractedImages->Compress ();
-
   return  extractedImages;
-}  /*  ExtractImagesForAGivenClass  */
+}  /*  ExtractExamplesForAGivenClass  */
+
+
+
+FeatureVectorListPtr  FeatureVectorList::ExtractExamplesForClassList (MLClassListPtr  classes)
+{
+  FeatureVectorListPtr  subSetForClassList =  ManufactureEmptyList (false);
+  for  (auto idx: *classes)
+  {
+    FeatureVectorListPtr  examplesForClass = ExtractExamplesForAGivenClass (idx);
+    if  (examplesForClass)
+      subSetForClassList->AddQueue (*examplesForClass);
+  }
+  return  subSetForClassList;
+}  /* ExtractExamplesForClassList */
 
 
 
 
-
-KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName () 
+KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName () 
 {
   SortByImageFileName ();
 
-  KKStrListPtr  duplicateImages = new KKStrList (true);
+  KKStrListPtr  duplicateExamples = new KKStrList (true);
 
   if  (QueueSize () < 2)
-    return  duplicateImages;
+    return  duplicateExamples;
 
   FeatureVectorList::iterator  iIDX = this->begin ();
 
-  FeatureVectorPtr  lastImage = *iIDX;  ++iIDX;
-  FeatureVectorPtr  example = NULL;
+  FeatureVectorPtr  lastExample = *iIDX;  ++iIDX;
 
-  while  (iIDX != this->end ())
+
+  while  (iIDX != end ())
   {
-    example = *iIDX;
-    if  (example->ImageFileName () == lastImage->ImageFileName ())
+    FeatureVectorPtr  example = *iIDX;  ++iIDX;
+
+    if  (example->ExampleFileName () == lastExample->ExampleFileName ())
     {
-      duplicateImages->PushOnBack (new KKStr (example->ImageFileName ()));
-      while  ((iIDX != this->end ())  &&   (example->ImageFileName () == lastImage->ImageFileName ()))
+      duplicateExamples->PushOnBack (new KKStr (example->ExampleFileName ()));
+
+      if  (iIDX != end ())
       {
         example = *iIDX;
         ++iIDX; 
       }
+      else
+      {
+        example = NULL;
     }
 
-    lastImage = example;
-
+      while  ((example != NULL)   &&   (example->ExampleFileName () == lastExample->ExampleFileName ()))
+      {
+        if  (iIDX != end ())
+        {
+          example = *iIDX;
     ++iIDX;
   }
+        else
+        {
+          example = NULL;
+        }
+      }
+    }
 
-  return  duplicateImages;
+    lastExample = example;
+  }
+
+  return  duplicateExamples;
 }  /*  ExtractDuplicateImageFileNames  */
 
 
@@ -832,12 +867,14 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByImageFileName ()
 
 FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFileName)  const
 {
-  if  ((curSortOrder != IFL_ByName) && (curSortOrder != IFL_ByRootName))
+  if  ((curSortOrder != IFL_SortOrder::IFL_ByName) &&
+       (curSortOrder != IFL_SortOrder::IFL_ByRootName)
+      )
   {
     cerr << endl
          << "FeatureVectorList::BinarySearchByName    ****  ERROR ****"  << endl
          << endl
-         << "                   List is Not sorted in ImageFileName Order"  << endl
+         << "                   List is Not sorted in ExampleFileName Order"  << endl
          << endl;
     osDisplayWarning ("FeatureVectorList::BinarySearchByName  Invalid Sort Order.");
     exit (-1);
@@ -855,12 +892,12 @@ FeatureVectorPtr  FeatureVectorList::BinarySearchByName (const KKStr&  _imageFil
 
     example = IdxToPtr (mid);
 
-    if  (example->ImageFileName () < _imageFileName)
+    if  (example->ExampleFileName () < _imageFileName)
     {
       low = mid + 1;
     }
 
-    else if  (example->ImageFileName () > _imageFileName)
+    else if  (example->ExampleFileName () > _imageFileName)
     {
       high = mid - 1;
     }
@@ -882,10 +919,9 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 {
   FeatureVectorPtr  example = NULL;
 
-  if  (curSortOrder != IFL_ByRootName)
+  if  (curSortOrder != IFL_SortOrder::IFL_ByRootName)
   {
-    log.Level (-1)  
-         << endl
+    cerr << endl
          << "FeatureVectorList::LookUpByRootName   ***WARNING***  List is NOT SORTED by RootName."  << endl
          << endl;
 
@@ -893,7 +929,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
     for  (idx = begin ();  idx != end ();  idx++)
     {
       example = *idx;
-      if  (_rootName == osGetRootName (example->ImageFileName ()))
+      if  (_rootName == osGetRootName (example->ExampleFileName ()))
         return example;
     }
     return NULL;
@@ -910,7 +946,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
       example = IdxToPtr (mid);
 
-      KKStr  tempName = osGetRootName (example->ImageFileName ());
+      KKStr  tempName = osGetRootName (example->ExampleFileName ());
 
       if  (tempName < _rootName)
       {
@@ -939,7 +975,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
 FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
-  if  (curSortOrder == IFL_ByName)
+  if  (curSortOrder == IFL_SortOrder::IFL_ByName)
   {
     return  BinarySearchByName (_imageFileName);
   }
@@ -954,7 +990,7 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
     for  (idx = 0; ((idx < qSize) && (!example)); idx++)
     {
       tempImage = IdxToPtr (idx);
-      if  (_imageFileName == tempImage->ImageFileName ())   
+      if  (_imageFileName == tempImage->ExampleFileName ())   
          example = tempImage;
     }
 
@@ -965,7 +1001,9 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
 
 
 
-FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName)
+FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                                   RunLog&       log
+                                                                  )
 {
   FILE*  in = osFOPEN (fileName.Str (), "r");
   if  (!in)
@@ -978,7 +1016,7 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
   }
 
   FeatureVectorPtr      example = NULL;
-  FeatureVectorListPtr  orderedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  orderedImages = ManufactureEmptyList (false);
 
   char buff[1024];
   while  (fgets (buff, sizeof (buff), in))
@@ -991,26 +1029,26 @@ FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr& 
       continue;
     }
 
-    KKStr imageFileName = txtLine.ExtractToken ("\n\r\t");
-    if  (orderedImages->LookUpByImageFileName (imageFileName))
+    KKStr exampleFileName = txtLine.ExtractToken ("\n\r\t");
+    if  (orderedImages->LookUpByImageFileName (exampleFileName))
     {
       // Image file name used more than once, will treat as error
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                     << "                      ImageFileName[" << imageFileName << "] occurred more than once in file." << endl
+                     << "                      ExampleFileName[" << exampleFileName << "] occurred more than once in file." << endl
                      << endl;
       fclose (in);
       delete  orderedImages;
       return NULL;
     }
 
-    example = LookUpByImageFileName (imageFileName);
+    example = LookUpByImageFileName (exampleFileName);
     if  (!example)
     {
       // Image file name not in list, will treat as error.
       log.Level (-1) << endl
                      << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                     << "                      ImageFileName[" << imageFileName << "] Not in list." << endl
+                     << "                      ExampleFileName[" << exampleFileName << "] Not in list." << endl
                      << endl;
       fclose (in);
       delete  orderedImages;
@@ -1037,10 +1075,6 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
   ofstream o (_fileName.Str ());
   if  (!o.is_open ())
   {
-    log.Level (-1) << endl
-                   << "FeatureVectorList::SaveOrderingOfImages   *** ERROR ***" << endl
-                   << "                       Could not open file[" << _fileName << "]." << endl
-                   << endl;
     _successful = false;
     return;
   }
@@ -1054,7 +1088,7 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
   FeatureVectorList::iterator  idx;
 
   for  (idx = begin ();  idx != end ();  idx++)
-    o << (*idx)->ImageFileName () << endl;
+    o << (*idx)->ExampleFileName () << endl;
 
   o.close ();
 
@@ -1067,10 +1101,13 @@ void  FeatureVectorList::SaveOrderingOfImages (const KKStr&  _fileName,
 
 
 
+/**
+ *@brief  Creates a duplicate of list and also duplicates it contents.
+ *@return Duplicated list with hard copy of its contents.
+ */
 FeatureVectorListPtr  FeatureVectorList::DuplicateListAndContents ()  const
 {
-  FeatureVectorListPtr  copyiedList = new FeatureVectorList (fileDesc, true, log);
-
+  FeatureVectorListPtr  copyiedList = ManufactureEmptyList (true);
   for  (kkint32 idx = 0;  idx < QueueSize ();  idx++)
   {
     FeatureVectorPtr  curImage = IdxToPtr (idx);
@@ -1118,13 +1155,14 @@ ClassStatisticListPtr  FeatureVectorList::GetClassStatistics ()  const
   MLClassPtr        mlClass = NULL;
   FeatureVectorPtr  example = NULL;
 
-  FeatureVectorList::const_iterator  idx  = begin ();
+  FeatureVectorList::const_iterator  idx;
+
   for  (idx = begin ();  idx != end ();  ++idx)
   {
     example = *idx;
     mlClass = example->MLClass ();
     
-    ClassStatisticPtr  classStatistic = classStatistics->LookUpByImageClass (mlClass);
+    ClassStatisticPtr  classStatistic = classStatistics->LookUpByMLClass (mlClass);
     if  (classStatistic == NULL)
     {
       classStatistic = new ClassStatistic (mlClass, 0);
@@ -1142,10 +1180,40 @@ ClassStatisticListPtr  FeatureVectorList::GetClassStatistics ()  const
 
 
 
+ClassProbListPtr  FeatureVectorList::GetClassDistribution () const
+{
+  ClassStatisticListPtr  stats = GetClassStatistics ();
+  ClassProbListPtr  distribution = new ClassProbList (true);
+
+  kkuint32 countTotal = 0;
+  ClassStatisticList::const_iterator  idx;
+  for  (idx = stats->begin ();  idx != stats->end ();  ++idx)
+  {
+    ClassStatisticPtr cs = *idx;
+    countTotal += cs->Count ();
+  }
+
+  if  (countTotal > 0)
+  {
+    for  (idx = stats->begin ();  idx != stats->end ();  ++idx)
+    {
+      ClassStatisticPtr cs = *idx;
+      distribution->PushOnBack (new ClassProb (cs->MLClass (), ((float)(cs->Count ()) / (float)countTotal), 0));
+    }
+  }
+
+  delete  stats;
+  stats = NULL;
+
+  return  distribution;
+}  /* GetClassDistribution */
+
+
+
 
 FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
 {
-  FeatureVectorListPtr  duplicateList = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  duplicateList = this->ManufactureEmptyList (false);
 
   if  (QueueSize () < 2)
   {
@@ -1154,28 +1222,28 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
     return  duplicateList;
   }
 
-
   FeatureVectorList  workList (*this, 
                                false    // owner = false,  only create a list of pointers to existing instances
                               );  // 
 
   workList.SortByRootName (false);
   
-  FeatureVectorList::iterator  idx  = workList.begin ();
+  FeatureVectorList::iterator  idx;
+  idx = workList.begin ();
 
-  FeatureVectorPtr  lastImage = *idx;  ++idx;
+  FeatureVectorPtr  lastExample = *idx;  ++idx;
   FeatureVectorPtr  example   = *idx;  ++idx;
 
-  KKStr  lastRootName = osGetRootName (lastImage->ImageFileName ());
+  KKStr  lastRootName = osGetRootName (lastExample->ExampleFileName ());
   KKStr  rootName;
 
   while  (example)
   {
-    rootName = osGetRootName (example->ImageFileName ());
+    rootName = osGetRootName (example->ExampleFileName ());
     if  (rootName != lastRootName)
     {
       lastRootName = rootName;
-      lastImage    = example;
+      lastExample    = example;
       if  (idx == workList.end ())
         example = NULL;
       else
@@ -1186,7 +1254,7 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
     }
     else
     {
-      duplicateList->PushOnBack (lastImage);
+      duplicateList->PushOnBack (lastExample);
       while  ((example != NULL)  &&  (rootName == lastRootName))
       {
         duplicateList->PushOnBack (example);
@@ -1199,7 +1267,7 @@ FeatureVectorListPtr  FeatureVectorList::ExtractDuplicatesByRootImageFileName ()
         }
 
         if  (example)
-          rootName = osGetRootName (example->ImageFileName ());
+          rootName = osGetRootName (example->ExampleFileName ());
       }
     }
   }
@@ -1250,10 +1318,11 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
   if  ((_featureNum < 0)  ||  (_featureNum >= NumOfFeatures ()))
   {
-    log.Level (-1) << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
-                   << "                                            FeatureNum   [" << _featureNum      << "]" << endl
-                   << "                                            NumOfFeatures[" << NumOfFeatures () << "]" << endl
-                   << endl;
+    cerr << endl
+         << "FeatureVectorList::CalcStatsForFeatureNum    *** ERROR ***  Invalid FeatureNum[" << _featureNum << "]" << endl
+         << "                                            FeatureNum   [" << _featureNum      << "]" << endl
+         << "                                            NumOfFeatures[" << NumOfFeatures () << "]" << endl
+         << endl;
     _count = -1;
     return;
   }
@@ -1295,12 +1364,13 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
 
 
 
-
-FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds)
+FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                                  RunLog&  log
+                                                                 )
 {
   MLClassListPtr  classes = ExtractListOfClasses ();
 
-  FeatureVectorListPtr stratifiedExamples = StratifyAmoungstClasses (classes, -1, numOfFolds);
+  FeatureVectorListPtr stratifiedExamples = StratifyAmoungstClasses (classes, -1, numOfFolds, log);
   delete  classes;  classes = NULL;
 
   return  stratifiedExamples;
@@ -1311,8 +1381,9 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOf
 
 
 FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
-                                                                  kkint32            maxImagesPerClass,
-                                                                  kkint32            numOfFolds
+                                                                  kkint32         maxImagesPerClass,
+                                                                  kkint32         numOfFolds,
+                                                                  RunLog&         log
                                                                  )
 {
   log.Level (10) << "FeatureVectorList::StratifyAmoungstClasses" << endl;
@@ -1322,20 +1393,21 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
 
   FeatureVectorListPtr*  folds = new FeatureVectorListPtr[numOfFolds];
   for  (x = 0; x < numOfFolds; x++)
-    folds[x] = new FeatureVectorList (fileDesc, false, log);
+    folds[x] =  ManufactureEmptyList (false);
 
   MLClassPtr  mlClass = NULL;
-  MLClassList::iterator  icIDX = mlClasses->begin ();
+  MLClassList::iterator  icIDX;
 
   for  (icIDX = mlClasses->begin ();  icIDX != mlClasses->end ();  ++icIDX)
   {
     mlClass = *icIDX;
-    FeatureVectorListPtr  imagesInClass = ExtractImagesForAGivenClass (mlClass);
+    FeatureVectorListPtr  imagesInClass = ExtractExamplesForAGivenClass (mlClass);
 
     if  (imagesInClass->QueueSize () < numOfFolds)
     {
       log.Level (-1) << endl
                      << "FeatureVectorList::DistributesImagesRandomlyWithInFolds    ***ERROR***" << endl
+                     << endl
                      << "*** ERROR ***,  Not enough examples to split amongst the different folds." << endl
                      << "                Class           [" << mlClass->Name ()         << "]."  << endl
                      << "                Number of Images[" << imagesInClass->QueueSize () << "]."  << endl
@@ -1347,6 +1419,8 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
       msg << "Not enough Images[" << imagesInClass->QueueSize ()  << "] "
           << "for Class["         << mlClass->Name ()          << "] "
           << "to distribute in Folds.";
+
+      if  (!osIsBackGroundProcess ())
       osDisplayWarning (msg);
     }
 
@@ -1358,7 +1432,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     imagesInClass = NULL;
   }
 
-  FeatureVectorListPtr stratafiedImages = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr stratafiedImages = ManufactureEmptyList (false);
 
   for  (foldNum = 0; foldNum < numOfFolds; foldNum++)
   {
@@ -1369,9 +1443,8 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     folds[foldNum] = NULL;
   }
 
-  stratafiedImages->Compress ();
-
   delete  folds;
+  folds = NULL;
   return  stratafiedImages;
 }  /* StratifyAmoungstClasses */
 
@@ -1419,7 +1492,7 @@ void  FeatureVectorList::PrintClassStatistics (ostream&  o)  const
   o << "Total_Classes\t" << stats->QueueSize () << endl;
   o << endl;
 
-  ClassStatisticList::iterator  statsIDX = stats->begin ();
+  ClassStatisticList::const_iterator  statsIDX;
   kkint32  index = 0;
 
   o << "Class_Name" << "\t" << "Index" << "\t" << "Count" << endl;
@@ -1430,6 +1503,7 @@ void  FeatureVectorList::PrintClassStatistics (ostream&  o)  const
   }
 
   delete  stats;
+  stats = NULL;
   return;
 }  /* PrintClassStatistics */
 
@@ -1506,7 +1580,7 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
   for  (cIDX = mlClasses->begin ();  cIDX != mlClasses->end ();  cIDX++)
   {
     MLClassPtr  mlClass = *cIDX;
-    FeatureVectorListPtr  imagesThisClass = ExtractImagesForAGivenClass (mlClass);
+    FeatureVectorListPtr  imagesThisClass = ExtractExamplesForAGivenClass (mlClass);
       
     kkint32  featureNum;
     for  (featureNum = 0;  featureNum < imagesThisClass->NumOfFeatures ();  featureNum++)
@@ -1532,6 +1606,9 @@ void  FeatureVectorList::PrintFeatureStatisticsByClass (ostream&  o)  const
 
     classIdx++;
   }
+
+  delete  mlClasses;
+  mlClasses = NULL;
 }  /* PrintFeatureStatisticsByClass */
 
 
@@ -1562,30 +1639,24 @@ VectorDouble  FeatureVectorList::ExtractMeanFeatureValues ()
 
 
 
-FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percentage,   // 0.0 -> 100.0
-                                                                 kkint32  minClassCount
+FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     percentage,   // 0.0 -> 100.0
+                                                                 kkint32   minClassCount
                                                                 )
 {
 
 
   if  (percentage <= 0.0f)
   {
-    log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  Will return empty list" << endl 
-                   << endl;
     percentage = 0.0f;
   }
 
   if  (percentage > 100.0f)
   {
-    log.Level (-1) << endl << endl 
-                   << "ImageFeaturesList::ExtractRandomSampling   ***ERROR***    Percentage[" << percentage << "]  will default it to 1.0f" << endl 
-                   << endl;
     percentage = 1.0f;
   }
 
   kkint32  newSize = (kkint32)(0.5f + (float)QueueSize () * percentage / 100.0f);
-  FeatureVectorListPtr  randomSampled = new FeatureVectorList (fileDesc, false, log);
+  FeatureVectorListPtr  randomSampled = ManufactureEmptyList (false);
 
   MLClassListPtr  classes = ExtractListOfClasses ();
   classes->SortByName ();
@@ -1593,7 +1664,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float  percenta
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
   {
     MLClassPtr ic = *idx;
-    FeatureVectorListPtr  examplesThisClass = ExtractImagesForAGivenClass (ic);
+    FeatureVectorListPtr  examplesThisClass = ExtractExamplesForAGivenClass (ic);
     examplesThisClass->RandomizeOrder ();
 
     kkint32  numExamplesThisClass = Max (minClassCount, ((kkint32)(0.5f + (float)(examplesThisClass->QueueSize ()) * percentage / 100.0f)));
@@ -1643,26 +1714,22 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
   for  (fieldNum = 0;  fieldNum < (kkint32)newFileDesc->NumOfFields ();  fieldNum++)
   {
-    if  (newFileDesc->Type (fieldNum) == SymbolicAttribute)
+    if  (newFileDesc->Type (fieldNum) == AttributeType::Symbolic)
     {
       symbolicFields.push_back (fieldNum);
       VectorInt  lookUpTable;
 
       kkint32  x;
-      for  (x = 0;  x < fileDesc->Cardinality (fieldNum, log);  x++)
+      for  (x = 0;  x < fileDesc->Cardinality (fieldNum);  x++)
       {
         const KKStr&  nominalValue = fileDesc->GetNominalValue (fieldNum, x);
         kkint32  newCd = newFileDesc->LookUpNominalCode (fieldNum, nominalValue);
         if  (newCd < 0)
         {
-          log.Level (-1) << endl << endl << endl
-                         << "FeatureVectorList::ReSyncSymbolicData      ***  ERROR  ***" << endl
-                         << endl
-                         << "FieldNum[" << fieldNum << "]  FieldName[" << newFileDesc->FieldName (fieldNum) << "]" << endl
-                         << "Nominal Value[" << nominalValue << "]    is missing." << endl
-                         << endl;
-          osWaitForEnter ();
-          exit (-1);
+          KKStr  errMsg;
+          errMsg << "FeatureVectorList::ReSyncSymbolicData  ***ERROR***    FieldNum[" << fieldNum << "]  FieldName[" << newFileDesc->FieldName (fieldNum) << "]  Nominal Value[" << nominalValue << "]    is missing.";
+          cerr << errMsg;
+          throw KKException (errMsg);
         }
 
         lookUpTable.push_back (newCd);
@@ -1671,7 +1738,6 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
       lookUpTables.push_back (lookUpTable);
     }
   }
-
 
   FeatureVectorList::iterator  idx;
   for  (idx = begin ();  idx !=  end ();  idx++)
@@ -1694,18 +1760,16 @@ void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
 
 
-void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList& otherData)
+void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList&  otherData,
+                                                  RunLog&             log
+                                                 )
 {
   if  (!fileDesc->SameExceptForSymbolicData (*(otherData.FileDesc ()), log))
   {
-    log.Level (-1) << endl << endl << endl
-                   << "FeatureVectorList::SynchronizeSymbolicData     *** ERROR ***" << endl
-                   << endl
-                   << "The two datasets have more than SymbolicData differences." << endl
-                   << endl;
-
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg;
+    errMsg = "FeatureVectorList::SynchronizeSymbolicData   ***ERROR***    The two datasets have more than SymbolicData differences.";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   FileDescPtr  newFileDesc = FileDesc::MergeSymbolicFields (*fileDesc, *(otherData.FileDesc ()), log);
@@ -1736,9 +1800,10 @@ KKStr  GetClassNameByHierarchyLevel (KKStr  className,
 }  /* GetClassNameByHierarchyLevel */
 
 
+
 FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  level)
 {
-  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = new FeatureVectorList (fileDesc, true, log);
+  FeatureVectorListPtr  examplesLabeledForAppropriateLevel = ManufactureEmptyList (true);
 
   MLClassListPtr  allClasses = ExtractListOfClasses ();
   allClasses->SortByName ();
@@ -1763,7 +1828,7 @@ FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  leve
       while  ((idx != allClasses->end ())  &&  (nextClassForThisLevel == curClassForThisLevel))
       {
         {
-          FeatureVectorListPtr  examplesForCurClass = ExtractImagesForAGivenClass (curClass);
+          FeatureVectorListPtr  examplesForCurClass = ExtractExamplesForAGivenClass (curClass);
           FeatureVectorListPtr  reLabeledExamples = examplesForCurClass->DuplicateListAndContents ();
           delete  examplesForCurClass;  examplesForCurClass = NULL;
 
@@ -1881,7 +1946,7 @@ public:
                      FeatureVectorPtr  p2
                     )
   {
-    return  (p1->ImageFileName () < p2->ImageFileName ());
+    return  (p1->ExampleFileName () < p2->ExampleFileName ());
   }
 };  /* ImageFileNameComparison */
 
@@ -1898,7 +1963,7 @@ public:
                       FeatureVectorPtr  p2
                      )
   {
-    return  (p1->ImageFileName () > p2->ImageFileName ());
+    return  (p1->ExampleFileName () > p2->ExampleFileName ());
   }
 
 };  /* ImageFileNameComparison */
@@ -1917,8 +1982,8 @@ public:
                      FeatureVectorPtr  p2
                     )
   {
-    KKStr  root1 = osGetRootNameWithExtension (p1->ImageFileName ());
-    KKStr  root2 = osGetRootNameWithExtension (p2->ImageFileName ());
+    KKStr  root1 = osGetRootNameWithExtension (p1->ExampleFileName ());
+    KKStr  root2 = osGetRootNameWithExtension (p2->ExampleFileName ());
 
     return  (root1 < root2);
   }
@@ -1935,8 +2000,8 @@ public:
                     FeatureVectorPtr  p2
                    )
   {
-    KKStr  root1 = osGetRootName (p1->ImageFileName ());
-    KKStr  root2 = osGetRootName (p2->ImageFileName ());
+    KKStr  root1 = osGetRootName (p1->ExampleFileName ());
+    KKStr  root2 = osGetRootName (p2->ExampleFileName ());
 
     return  root1 > root2;
   }
@@ -1973,7 +2038,7 @@ public:
         return false;
     }
 
-    return p1->ImageFileName () < p2->ImageFileName ();
+    return p1->ExampleFileName () < p2->ExampleFileName ();
   }
 };  /* ClassNameComparrison */
 
@@ -2009,7 +2074,7 @@ public:
         return true;
     }
 
-    return p1->ImageFileName () > p2->ImageFileName ();
+    return p1->ExampleFileName () > p2->ExampleFileName ();
   }
 };  /* ClassNameComparrisonReversed */
 
@@ -2033,7 +2098,7 @@ void  FeatureVectorList::SortByRootName (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByRootName;
+  curSortOrder = IFL_SortOrder::IFL_ByRootName;
 }  /* SortByRootName */
 
 
@@ -2051,7 +2116,7 @@ void  FeatureVectorList::SortByClass (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByClassName;
+  curSortOrder = IFL_SortOrder::IFL_ByClassName;
 }  /* SortByClass */
 
 
@@ -2071,7 +2136,7 @@ void  FeatureVectorList::SortByProbability (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByProbability;
+  curSortOrder = IFL_SortOrder::IFL_ByProbability;
 }  /* SortByProbability */
 
 
@@ -2090,7 +2155,7 @@ void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByBreakTie;
+  curSortOrder = IFL_SortOrder::IFL_ByBreakTie;
 }  /* SortByProbability */
 
 
@@ -2110,7 +2175,7 @@ void  FeatureVectorList::SortByImageFileName (bool  reversedOrder)
     sort (begin (), end (), c);
   }
 
-  curSortOrder = IFL_ByName;
+  curSortOrder = IFL_SortOrder::IFL_ByName;
 }  /* SortByImageFileName */
 
 

@@ -29,21 +29,21 @@ namespace KKB
   public:
     typedef  KKThread*  KKThreadPtr;
 
-    typedef  enum  {tpNULL,
-                    tpLow,
-                    tpNormal,
-                    tpHigh
-                   }
-                   ThreadPriority;
+    enum  class  ThreadPriority: int 
+                   {Null,
+                    Low,
+                    Normal,
+                    High
+                   };
 
-    typedef  enum  {tsNULL,
-                    tsNotStarted,
-                    tsStarting,
-                    tsRunning,
-                    tsStopping,
-                    tsStopped
-                   } 
-                   ThreadStatus;
+    enum  class  ThreadStatus: int
+                   {Null,
+                    NotStarted,
+                    Starting,
+                    Running,
+                    Stopping,
+                    Stopped
+                   };
 
 
     KKThread (const KKStr&        _threadName,
@@ -57,18 +57,38 @@ namespace KKB
 
     static  const KKStr&     ThreadStatusToStr (ThreadStatus);
 
-    VolConstBool&            CancelFlag    ()  const  {return terminateFlag;}
-    bool                     Crashed       ()  const  {return crashed;}
+    VolConstBool&            CancelFlag    ()  const  {return terminateFlag;}    /**<  Another name for 'TerminateFlag'. */
+
+    bool                     Crashed       ()  const  {return crashed;}          /**< Signifies that this thread had to terminate on its own because of an abnormal 
+                                                                                  * situation; such as a memory corruption. 
+                                                                                  */
+
+    const KKStr&             ExceptionText ()  const  {return exceptionText;}   /**<  If the overloaded 'Run' method of a derived class generates a exception that 
+                                                                                 * is not caught; then the ''ThreadStartCallBack' will catch it and store the related
+                                                                                 * text in this field.  In this case the 'Crashed()' method will return 'true'.
+                                                                                 */
+
     KKB::MsgQueuePtr         MsgQueue      ()         {return msgQueue;}
     ThreadStatus             Status        ()  const  {return status;}
     const KKStr&             StatusStr     ()  const  {return ThreadStatusToStr (status);}
-    VolConstBool&            ShutdownFlag  ()  const  {return shutdownFlag;}
-    VolConstBool&            TerminateFlag ()  const  {return terminateFlag;}
+
+    VolConstBool&            ShutdownFlag  ()  const  {return shutdownFlag;}     /**< Indicates that the application wants this thread to complete what work is queued up 
+                                                                                   * for it top process. Threads need to monitor this flag; if it goes true they are to 
+                                                                                   * complete all processing that is queued up and then shutdown. This is 
+                                                                                   */
+
+    VolConstBool&            TerminateFlag ()  const  {return terminateFlag;}    /**< Indicates that thread is to stop processing ASAP, release any resources 
+                                                                                  * it holds and terminate. Threads need to monitor this flag; if it goes 'true'
+                                                                                  * they need to terminate ASAP releasing all allocated resources. Typically set 
+                                                                                  * to true when user request to cancel processing.
+                                                                                  */
+
     kkint32                  ThreadId      ()  const  {return threadId;}
     const KKStr&             ThreadName    ()  const  {return threadName;}
 
-    void    Crashed (bool         _crashed)  {crashed = _crashed;}
-    void    Status  (ThreadStatus _status)   {status  = _status;}
+    void    Crashed       (bool          _crashed)        {crashed       = _crashed;}
+    void    ExceptionText (const KKStr&  _exceptionText)  {exceptionText = _exceptionText;}
+    void    Status        (ThreadStatus  _status)         {status        = _status;}
 
     KKStrListPtr  GetMsgs ();
 
@@ -78,7 +98,7 @@ namespace KKB
      *@brief  Specify threads that must start before this thread is started.
      *@details This method can be called multiple times;  the information is used by the 'KKTHreadManager' instance to control the
      *  start of the thread.
-     *@param[in]  _thread  A thread that needs to be in the 'tsRunning' status before this thread can start;  we do NOT take ownership.
+     *@param[in]  _thread  A thread that needs to be in the 'Running' status before this thread can start;  we do NOT take ownership.
      */
     void  AddStartPrerequistite (KKThreadPtr  _thread);
 
@@ -86,15 +106,15 @@ namespace KKB
      *@brief  Specify threads that must stop before this thread is started.
      *@details This method can be called multiple times;  the information is used by the 'KKTHreadManager' instance to control the
      *  orderly shutdown of the controlling 'KKTHreadManager' instance.
-     *@param[in]  _thread  A thread that needs to be in the 'tsStopped' status before this thread can be shutdown;  we do NOT take ownership.
+     *@param[in]  _thread  A thread that needs to be in the 'Stopped' status before this thread can be shutdown;  we do NOT take ownership.
      */
     void  AddShutdownPrerequistite (KKThreadPtr  _thread);
 
     void  Kill ();
 
-    bool  OkToShutdown ()  const;     /**< Returns 'true' if all shutdown prerequisites are in the 'tsStopped' status. */
+    bool  OkToShutdown ()  const;     /**< Returns 'true' if all shutdown prerequisites are in the 'Stopped' status. */
 
-    bool  OkToStart ()  const;        /**< Returns 'true' if all start prerequisites are in the 'tsRunning'   status. */
+    bool  OkToStart ()  const;        /**< Returns 'true' if all start prerequisites are in the 'Running'   status. */
 
     bool  ThreadStillProcessing ()  const;
 
@@ -103,6 +123,13 @@ namespace KKB
                 );                    /**<  Call this method to start thread; it will call the method "Run". */
 
     void  TerminateThread ();         /**< Call this method to have its thread stop right away and exit. */
+
+    /**
+     *@brief  Will be called whenever the value of 'terminateFlag' is changed; derived classes should override this method if
+     * they need to be aware that the terminaeFlag has changed.  This give them a chance to let other objects/methods know that
+     * the flag has changed.
+     */
+    virtual  void  TerminateFlagChanged ();
 
     void  ShutdownThread ();          /**< Call this method to have its thread finish what ever is in the queue and then exit. */
 
@@ -134,13 +161,18 @@ namespace KKB
                                                 * of an abnormal situation. 
                                                 */
 
+    KKStr                  exceptionText;      /**< If the 'ThreadStartCallBack' method catches a exception; the text of the exception 
+                                                * will be stored hear.
+                                                */
+
     MsgQueuePtr            msgQueue;           /**< This MsgQueue instance will be owned by 'ExtractionManager' we will just use
                                                 * it to communicate messages to the controlling process.
                                                 */
 
-    volatile bool          shutdownFlag;       /**< Threads need to monitor this flag; if it goes true they are to 
-                                                 * complete all processing that is queued up and then terminate.
-                                                 */
+    volatile bool          shutdownFlag;       /**< Indicates that the application wants this thread to complete what work is queued up 
+                                                * for it top process. Threads need to monitor this flag; if it goes true they are to 
+                                                * complete all processing that is queued up and then shutdown. This is 
+                                                */
 
     KKThreadListPtr        shutdownPrerequisites;
 
@@ -150,8 +182,10 @@ namespace KKB
 
     ThreadPriority         priority;
 
-    volatile bool          terminateFlag;      /**< Threads need to monitor this flag;  if it goes 'true'  they need 
-                                                * to terminate as quick as possible releasing all allocated resources.
+    volatile bool          terminateFlag;      /**< Indicates that thread is to stop processing ASAP, release any resources 
+                                                * it holds and terminate. Threads need to monitor this flag; if it goes 'true'
+                                                * they need to terminate ASAP releasing all allocated resources. Typically set 
+                                                * to true when user request to cancel processing.
                                                 */
 
     kkint32                threadId;

@@ -3,7 +3,7 @@
 
 
 /**
- *@class  KKMachineLearning::FeatureFileIO
+ *@class  KKMLL::FeatureFileIO
  *@brief  Base class for all FeatureFileIO classes.
  *@details  This is a abstract class.  For each type of FeatureFile you will need to implement
  *          a separate class derived from this class that supports the specific file format.
@@ -21,7 +21,7 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   class  FeatureFileIO;
   typedef  FeatureFileIO*  FeatureFileIOPtr;
@@ -61,13 +61,13 @@ namespace KKMachineLearning
     bool  CanWrite ()  {return  canWrite;}
 
 
-    void   AppendToFile (const KKStr&           _fileName,
-                         const FeatureNumList&  _selFeatures,
-                         FeatureVectorList&     _examples,
-                         kkuint32&              _numExamplesWritten,
-                         VolConstBool&          _cancelFlag,
-                         bool&                  _successful,
-                         RunLog&                log
+    void   AppendToFile (const KKStr&          _fileName,
+                         FeatureNumListConst&  _selFeatures,
+                         FeatureVectorList&    _examples,
+                         kkuint32&             _numExamplesWritten,
+                         VolConstBool&         _cancelFlag,
+                         bool&                 _successful,
+                         RunLog&               log
                         );
 
 
@@ -106,7 +106,7 @@ namespace KKMachineLearning
      */
     virtual
       void  SaveFeatureFile (const KKStr&           _fileName, 
-                             const FeatureNumList&  _selFeatures,
+                             FeatureNumListConst&  _selFeatures,
                              FeatureVectorList&     _examples,
                              kkuint32&              _numExamplesWritten,  /**< caller will be able to monitor this variable. */
                              VolConstBool&          _cancelFlag,
@@ -129,12 +129,12 @@ namespace KKMachineLearning
      *@param[out] _successful False will be returned if the save failed.
      *@param[in]  _log log file to send messages to.
      */
-    void  SaveFeatureFileMultipleParts (const KKStr&           _fileName, 
-                                        const FeatureNumList&  _selFeatures,
-                                        FeatureVectorList&     _examples,
-                                        VolConstBool&          _cancelFlag,
-                                        bool&                  _successful,
-                                        RunLog&                _log
+    void  SaveFeatureFileMultipleParts (const KKStr&          _fileName, 
+                                        FeatureNumListConst&  _selFeatures,
+                                        FeatureVectorList&    _examples,
+                                        VolConstBool&         _cancelFlag,
+                                        bool&                 _successful,
+                                        RunLog&               _log
                                        );
 
 
@@ -156,7 +156,7 @@ namespace KKMachineLearning
      *             feature file 'fileName'.  If set to false, then no changes were made.
      *@param[out] _timeStamp of feature file.
      *@param[in]  _log where to send diagnostic messages to.
-     *@returnz  A FeatureVectorList derived instance ; This object will own all the examples loaded
+     *@returns  A FeatureVectorList derived instance ; This object will own all the examples loaded
      *
      * A change in feature file version number would also cause all entries in the feature
      * file to be recomputed.  The feature file version number gets incremented whenever we change
@@ -174,6 +174,7 @@ namespace KKMachineLearning
                                              KKB::DateTime&        _timeStamp,
                                              RunLog&               _log
                                             );
+
 
 
     /**                       LoadInSubDirectoryTree
@@ -205,8 +206,6 @@ namespace KKMachineLearning
 
 
 
-
-
     //***************************************************************************
     //*    The following routines need to be implemented by derived classes.   *
     //***************************************************************************
@@ -232,15 +231,11 @@ namespace KKMachineLearning
 
 
 
-
-
-
-
     /**
      *@brief To be implemented by derived classes; loads the contents of a feature data file and returns a ImageFeaturesList container object.
      *@param[in]  _fileName   Feature file that is being loaded.
      *@param[in]  _fileDesc  Description of feature data that is to be loaded.
-     *@param[in,out] _classes All classes encounter during the loading of the feature file will be added to this list.
+     *@param[in,out] _classes All classes encountered during the loading of the feature file will be added to this list.
      *@param[in]  _in  input stream that feature data is to be loaded/read from.
      *@param[in]  _maxCount Maximum number of examples to load, -1 = load all
      *@param[in]  _cancelFlag If this flag turns true the load will terminate and return to caller.
@@ -274,17 +269,16 @@ namespace KKMachineLearning
      *@param[out] _errorMessage If the save fails (_successful == false)  then a description of the error will be placed here.
      *@param[in]  _log log file to send messages to.
      */
-    virtual  void   SaveFile (FeatureVectorList&      _data,
-                              const KKStr&            _fileName,
-                              const FeatureNumList&   _selFeatures,
-                              std::ostream&           _out,
-                              kkuint32&               _numExamplesWritten,
-                              VolConstBool&           _cancelFlag,
-                              bool&                   _successful,
-                              KKStr&                  _errorMessage,
-                              RunLog&                 _log
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              std::ostream&         _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
+                              bool&                 _successful,
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              ) = 0;
-
 
 
     const  KKStr&   DriverName ()  {return  driverName;}
@@ -304,7 +298,9 @@ namespace KKMachineLearning
 
     static  KKStr              FileFormatsReadAndWriteOptionsStr ();
 
-    static  VectorKKStr        RegisteredDriverNames ();
+    static  VectorKKStr        RegisteredDriverNames (bool  canRead,
+                                                      bool  canWrite
+                                                     );
 
     static  void               FinalCleanUp ();
 
@@ -345,7 +341,9 @@ namespace KKMachineLearning
                     bool&          _eof
                    );
 
-    static  void  RegisterDriver (FeatureFileIOPtr  driver);
+protected:
+  static void  RegisterDriver (FeatureFileIOPtr  driver);
+
 
   private:
     bool    canRead;
@@ -354,25 +352,24 @@ namespace KKMachineLearning
     KKStr   driverNameLower;
 
     static void  RegisterAllDrivers ();
+    static GoalKeeperPtr  featureFileIOGoalKeeper;
 
 
-  static  bool  atExitDefined;
-  static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
+    static  std::vector<FeatureFileIOPtr>*  registeredDrivers;
 
-  static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
+    static  std::vector<FeatureFileIOPtr>*  RegisteredDrivers  ();
 
-  static
-    FeatureFileIOPtr  LookUpDriver (const KKStr&  _driverName);
+    static  FeatureFileIOPtr    LookUpDriver (const KKStr&  _driverName);
   };  /* FeatureFileIO */
 
 
 
   typedef  FeatureFileIO::FeatureFileIOPtr   FeatureFileIOPtr;
 
-  #define  _FeatureFileIO_Defined_
+#define  _FeatureFileIO_Defined_
 
 
-}  /* namespace KKMachineLearning  */
+}  /* namespace KKMLL  */
 
 
 

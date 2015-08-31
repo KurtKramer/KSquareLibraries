@@ -27,7 +27,7 @@ namespace  KKLSC
     virtual
     ~ScannerFileSimple ();
 
-    virtual  ScannerFileFormat  FileFormat ()  const  {return sfSimple;}
+    virtual  Format  FileFormat ()  const  {return Format::sfSimple;}
 
     virtual 
     void   WriteTextBlock (const uchar*  txtBlock,

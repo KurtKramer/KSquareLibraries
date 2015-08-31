@@ -1,37 +1,32 @@
-#include  "FirstIncludes.h"
-
-#include  <stdio.h>
-
-#include  <fstream>
-#include  <string>
-#include  <iostream>
-#include  <vector>
-
-
-
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
-#include  "KKBaseTypes.h"
+
+#include "GlobalGoalKeeper.h"
+#include "KKBaseTypes.h"
 using namespace KKB;
 
 
-#include  "ModelParamKnn.h"
-
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
-using namespace KKMachineLearning;
-
-
+#include "ModelParamKnn.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "KKMLLTypes.h"
+#include "OSservices.h"
+#include "RunLog.h"
+using namespace KKMLL;
 
 
 
-ModelParamKnn::ModelParamKnn  (FileDescPtr  _fileDesc,
-                               RunLog&      _log
-                               ):
-  ModelParam (fileDesc, _log),
+
+
+ModelParamKnn::ModelParamKnn  ():
+  ModelParam (),
   k(1)
 {
 }
@@ -55,13 +50,13 @@ ModelParamKnn::~ModelParamKnn  ()
 
 ModelParamKnnPtr  ModelParamKnn::Duplicate ()  const
 {
-  return  new ModelParamKnn (*this);
+  return new ModelParamKnn (*this);
 }
 
 
 
 
-KKStr  ModelParamKnn::ToCmdLineStr ()  const
+KKStr  ModelParamKnn::ToCmdLineStr (RunLog&  log)  const
 {
   return  ModelParam::ToCmdLineStr () + "  -K " + StrFormatInt (k, "###0");
 }
@@ -72,7 +67,8 @@ KKStr  ModelParamKnn::ToCmdLineStr ()  const
 
 void  ModelParamKnn::ParseCmdLineParameter (const KKStr&  parameter,
                                             const KKStr&  value,
-                                            bool&         parameterUsed
+                                            bool&         parameterUsed,
+                                            RunLog&       log
                                            )
 {
   parameterUsed = true;
@@ -95,49 +91,56 @@ void  ModelParamKnn::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-void    ModelParamKnn::WriteSpecificImplementationXML (std::ostream&  o)  const
+
+void  ModelParamKnn::WriteXML (const KKStr&  varName,
+                               ostream&      o
+                              )  const
 {
-  o << "<ModelParamKnn>"  << std::endl;
-  o << "K" << "\t" << k << endl;
-  o << "</ModelParamKnn>" << std::endl;
-}
+  XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  WriteXMLFields (o);
 
 
 
-void    ModelParamKnn::ReadSpecificImplementationXML (istream&  i)
+
+  XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelParamKnn::ReadXML (XmlStream&      s,
+                              XmlTagConstPtr  tag,
+                              RunLog&         log
+                             )
 {
-  log.Level (20) << "ModelParamKnn::ReadSpecificImplementationXML from XML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
   {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelParamKnn>"))
+    t = ReadXMLModelParamToken (t);
+    if  (t)
     {
-      break;
+      const KKStr&  varName = t->VarName ();
+
+      if  (varName.EqualIgnoreCase ("k"))
+        k = dynamic_cast<XmlElementInt32Ptr> (t)->Value ();
+
+      else if  (varName.EqualIgnoreCase ("fileName"))
+        fileName = *(dynamic_cast<XmlElementKKStrPtr> (t)->Value ());
     }
 
-    else if  (field.EqualIgnoreCase ("<ModelParam>"))
-    {
-      ModelParam::ReadXML (i);
-    }
-
-    else if  (field.EqualIgnoreCase ("K"))
-    {
-      KKStr  kStr = ln.ExtractToken2 ("\t");
-      k = kStr.ToInt ();
-      if  ((k < 1)  ||  (k > 1000))
-      {
-        log.Level (-1) << "ModelParamKnn::ParseCmdLineParameter  ***ERROR***     Invalid -K parameter[" << kStr << "]" << endl;
-        validParam = false;
-      }
-    }
+    delete  t;
+    t = s.GetNextToken (log);
   }
-}  /* ReadSpecificImplementationXML */
+}  /* ReadXML */
 
+XmlFactoryMacro(ModelParamKnn)
 
 

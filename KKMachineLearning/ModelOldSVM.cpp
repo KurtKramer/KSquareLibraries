@@ -10,14 +10,13 @@
 #include <iomanip>
 #include <set>
 #include <vector>
-
-
 #include "MemoryDebug.h"
-#include "KKBaseTypes.h"
-#include "KKException.h"
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
+#include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 #include "KKStr.h"
@@ -25,41 +24,49 @@ using namespace  KKB;
 
 
 #include "ModelOldSVM.h"
-#include "ModelParamOldSVM.h"
 #include "BinaryClassParms.h"
+#include "ClassAssignments.h"
+#include "ClassProb.h"
 #include "FeatureEncoder2.h"
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
+#include "KKMLLTypes.h"
+#include "ModelParamOldSVM.h"
+#include "NormalizationParms.h"
 #include "SVMparam.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
-
-ModelOldSVM::ModelOldSVM (FileDescPtr    _fileDesc,
-                          VolConstBool&  _cancelFlag,
-                          RunLog&        _log
-                         ):
-  Model (_fileDesc, _cancelFlag, _log),
+ModelOldSVM::ModelOldSVM ():
+  Model (),
   assignments (NULL),
   svmModel    (NULL)
 {
-  Model::param = new ModelParamOldSVM (_fileDesc, _log);
+  Model::param = new ModelParamOldSVM ();
+}
+
+
+
+
+ModelOldSVM::ModelOldSVM (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
+  assignments (NULL),
+  svmModel    (NULL)
+{
+  Model::param = new ModelParamOldSVM ();
 }
 
 
 
 ModelOldSVM::ModelOldSVM (const KKStr&            _name,
                           const ModelParamOldSVM& _param,         // Create new model from
-                          FileDescPtr             _fileDesc,
-                          VolConstBool&           _cancelFlag,
-                          RunLog&                 _log
+                          FactoryFVProducerPtr    _factoryFVProducer
                          )
 :
-  Model   (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model   (_name, _param, _factoryFVProducer),
   assignments (NULL),
   svmModel    (NULL)
-
 {
 }
 
@@ -79,8 +86,6 @@ ModelOldSVM::ModelOldSVM (const ModelOldSVM& _model)
 
 ModelOldSVM::~ModelOldSVM ()
 {
-  log.Level (20) << "ModelOldSVM::~ModelOldSVM   Starting Destructor for Model[" << rootFileName << "]" << endl;
-
   delete  svmModel;
   svmModel = NULL;
 
@@ -101,10 +106,27 @@ kkint32  ModelOldSVM::MemoryConsumedEstimated ()  const
 }
 
 
+
+
 ModelOldSVMPtr  ModelOldSVM::Duplicate ()  const
 {
   return new ModelOldSVM (*this);
 }
+
+
+KKStr  ModelOldSVM::Description ()  const
+{
+  KKStr  result = "SVM(" + Name () + ")";
+
+  if  (svmModel)
+  {
+    SVMparam const *  p = svmModel->SVMParameters ();
+    result << " " << MachineTypeToStr (p->MachineType ())
+           << " " << SelectionMethodToStr (p->SelectionMethod ());
+  }
+  return  result;
+}
+
 
 
 const ClassAssignments&  ModelOldSVM::Assignments ()  const
@@ -114,17 +136,18 @@ const ClassAssignments&  ModelOldSVM::Assignments ()  const
 
 
 
-FeatureNumList  ModelOldSVM::GetFeatureNums (MLClassPtr  class1,
-                                             MLClassPtr  class2
-                                            )
+FeatureNumListConstPtr  ModelOldSVM::GetFeatureNums (FileDescPtr filedesc,
+                                                     MLClassPtr  class1,
+                                                     MLClassPtr  class2
+                                                    )
 {
-  return svmModel->GetFeatureNums (class1, class2);
+  return svmModel->GetFeatureNums (filedesc, class1, class2);
 }  /* GetFeatureNums */
 
 
 
 
-const FeatureNumList&   ModelOldSVM::GetFeatureNums ()  const
+FeatureNumListConstPtr   ModelOldSVM::GetFeatureNums ()  const
 {
   return svmModel->GetFeatureNums ();
 }
@@ -151,14 +174,14 @@ ModelParamOldSVMPtr   ModelOldSVM::Param () const
   if  (param == NULL)
   {
     KKStr errMsg = "ModelOldSVM::Param   ***ERROR***  param not defined (param == NULL).";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
-  if  (param->ModelParamType () != ModelParam::mptOldSVM)
+  if  (param->ModelParamType () != ModelParam::ModelParamTypes::OldSVM)
   {
     KKStr errMsg = "ModelOldSVM::Param   ***ERROR***  param variable of wrong type.";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -175,108 +198,27 @@ SVM_SelectionMethod  ModelOldSVM::SelectionMethod () const
 
 
 
-void  ModelOldSVM::WriteSpecificImplementationXML (ostream& o)
-{
-  log.Level (40) << "ModelOldSVM::WriteSpecificImplementationXML  Saving Model in File." << endl;
-
-  bool successful = true;
-  o << "<ModelOldSVM>" << endl;
-  svmModel->Write (o, rootFileName, successful);
-  o << "</ModelOldSVM>" << endl;
-
-} /* WriteSpecificImplementationXML */
-
-
-
-
-
-void  ModelOldSVM::ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
-                                                 )
-{
-  log.Level (40) << "ModelOldSVM::ReadSpecificImplementationXML" << endl;
-  char  buff[20480];
-
-  delete  svmModel;  svmModel = NULL;
-
-  while (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    if  (ln.Len () < 1)
-      continue;
-
-    if  ((ln[(kkint16)0] == '/')  &&  (ln[(kkint16)1] == '/'))
-      continue;
-
-    KKStr  lineName = ln.ExtractToken2 ("\t\n\r");
-    if  (lineName.EqualIgnoreCase ("</ModelOldSVM>"))
-      break;
-
-    if  (lineName.EqualIgnoreCase ("<SVMModel>"))
-    {
-      delete  svmModel;
-      svmModel = NULL;
-
-      try
-      {
-        svmModel = new SVMModel (i, _successful, fileDesc, log, cancelFlag);
-      }
-      catch (...)
-      {
-        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Exception occurred calling 'new SVMModel'." << endl << endl;
-        validModel = false;
-        _successful = false;
-      }
-
-      if  (!_successful)
-      {
-        validModel = false;
-        log.Level (-1) << endl << endl << "ModelOldSVM::ReadSpecificImplementationXML   ***ERROR***  Could not load model in SVMModel::SVMModel." << endl << endl;
-      }
-    }
-  }
-
-
-  if  (_successful  ||  validModel)
-  {
-    if  (svmModel == NULL)
-    {
-      _successful = false;
-      validModel  = false;
-
-      log.Level (-1) << endl << endl
-        << "ModelOldSVM::ReadSpecificImplementationXML  ***ERROR***   'svmModel' was not defined." << endl
-        << endl;
-    }
-  }
-
-  log.Level (40) << "ModelOldSVM::ReadSpecificImplementationXML   Exiting" << endl;
-
-}  /* ReadSpecificImplementationXML */
-
-
-
-
 void   ModelOldSVM::Predict (FeatureVectorPtr  example,
                              MLClassPtr        knownClass,
-                             MLClassPtr&       predClass,
+                             MLClassPtr&       predClass1,
                              MLClassPtr&       predClass2,
                              kkint32&          predClass1Votes,
                              kkint32&          predClass2Votes,
                              double&           probOfKnownClass,
-                             double&           probOfPredClass,
-                             double&           probOfPredClass2,
+                             double&           predClass1Prob,
+                             double&           predClass2Prob,
                              kkint32&          numOfWinners,
                              bool&             knownClassOneOfTheWinners,
-                             double&           breakTie
+                             double&           breakTie,
+                             RunLog&           log
                             )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->Predict (encodedExample, knownClass, predClass, predClass2,
+  svmModel->Predict (encodedExample, knownClass, predClass1, predClass2,
                      predClass1Votes,  predClass2Votes,
                      probOfKnownClass, 
-                     probOfPredClass,  probOfPredClass2,
+                     predClass1Prob,    predClass2Prob,
                      numOfWinners,
                      knownClassOneOfTheWinners,
                      breakTie
@@ -294,7 +236,9 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
 
 
 
-MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example,
+                                  RunLog&           log
+                                 )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
@@ -312,7 +256,23 @@ MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example)
 
 
 
-ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
+
+
+void  ModelOldSVM::PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr     &  predClass,
+                               double&           dist
+                              )
+{
+  svmModel->PredictRaw (example, predClass, dist);
+}  /* PredictRaw */
+
+
+
+
+
+ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                     RunLog&           log
+                                                    )
 {
   if  (!svmModel)
   {
@@ -323,7 +283,7 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
 
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->ProbabilitiesByClass (encodedExample, *classes, votes, classProbs);
+  svmModel->ProbabilitiesByClass (encodedExample, *classes, votes, classProbs, log);
 
   if  (newExampleCreated)
   {
@@ -331,14 +291,18 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
     encodedExample = NULL;
   }
   
-
   ClassProbListPtr  results = new ClassProbList ();
-  kkuint32  idx;
+  kkint32 idx = 0;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classes->IdxToPtr (idx);
     results->PushOnBack (new ClassProb (ic, classProbs[idx], (float)votes[idx]));
   }
+
+  if  (svmModel->SVMParameters ()->SelectionMethod () == SVM_SelectionMethod::Voting)
+    results->SortByVotes (true);
+  else
+    results->SortByProbability (true);
 
   return  results;
 }  /* ProbabilitiesByClass */
@@ -348,15 +312,16 @@ ClassProbListPtr  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 
 
-void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr       _example,
+void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                          const MLClassList&  _mlClasses,
-                                         double*                _probabilities
+                                         double*             _probabilities,
+                                         RunLog&             _log
                                         )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (_example, newExampleCreated);
 
-  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, votes, _probabilities);
+  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, votes, _probabilities, _log);
   if  (newExampleCreated)
   {
     delete encodedExample;
@@ -369,15 +334,16 @@ void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr       _example,
 
 
 
-void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr        example,
+void  ModelOldSVM::ProbabilitiesByClass (FeatureVectorPtr    example,
                                          const MLClassList&  _mlClasses,
-                                         kkint32*                 _votes,
-                                         double*                _probabilities
+                                         kkint32*            _votes,
+                                         double*             _probabilities,
+                                         RunLog&             _log
                                         )
 {
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
-  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, _votes, _probabilities);
+  svmModel->ProbabilitiesByClass (encodedExample, _mlClasses, _votes, _probabilities, _log);
   if  (newExampleCreated)
   {
     delete encodedExample;
@@ -453,10 +419,11 @@ bool  ModelOldSVM::NormalizeNominalAttributes ()  const
 
 
 void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
-                                           double**          crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                           double**       crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                           RunLog&        log
                                           )
 {
-  svmModel->RetrieveCrossProbTable (classes, crossProbTable);
+  svmModel->RetrieveCrossProbTable (classes, crossProbTable, log);
   return;
 }  /* RetrieveCrossProbTable */
 
@@ -465,10 +432,12 @@ void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
 
 void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
+                               RunLog&               _log
                               )
 {
-  log.Level (20) << "ModelOldSVM::TrainModel - Constructing From Training Data, Model[" << rootFileName << "]" << endl;
+  _log.Level (20) << "ModelOldSVM::TrainModel - Constructing From Training Data, Model[" << rootFileName << "]" << endl;
   // We do not bother with the base class 'TrainModel' like we do with other models.
   // 'ModelOldSVM' is a special case.  All we are trying to do is create a pass through
   // for 'svmModel'.
@@ -476,18 +445,20 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   delete  svmModel;
   svmModel = NULL;
 
-  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+  Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   // The "Model::TrainModel" may have manipulated the '_trainExamples'.  It will have also 
   // updated 'Model::trainExamples.  So from this point forward we use 'trainExamples'.
   _trainExamples = NULL;
 
+  if  ((!fileDesc)  &&  trainExamples)
+    fileDesc = trainExamples->FileDesc ();
 
   SVMparamPtr svmParam = Param ()->SvmParameters ();
   if  (!svmParam)
   {
     validModel = false;
     KKStr errMsg = " ModelOldSVM::TrainModel  ***ERROR***    (svmParam == NULL).";
-    log.Level (-1) << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -497,18 +468,18 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
     classes->SortByName ();
     numOfClasses = classes->QueueSize ();
     delete  assignments;
-    assignments = new ClassAssignments (*classes, log);
+    assignments = new ClassAssignments (*classes);
   }
 
   try
   {
     TrainingTimeStart ();
-    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, log, cancelFlag);
+    svmModel = new SVMModel (*svmParam, *trainExamples, *assignments, fileDesc, _log);
     TrainingTimeEnd ();
   }
   catch (...)
   {
-    log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occurred building training model." << endl << endl;
+    _log.Level (-1) << endl << "ModelOldSVM::TrainModel  Exception occurred building training model." << endl << endl;
     validModel = false;
     delete  svmModel;
     svmModel = NULL;
@@ -521,8 +492,6 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
     trainExamples = NULL;
   }
 }  /* TrainModel */
-
-
 
 
 
@@ -549,4 +518,148 @@ FeatureVectorPtr  ModelOldSVM::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
   return  fv;
 }  /* PrepExampleForPrediction */
+
+
+
+
+
+
+void  ModelOldSVM::WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const
+{
+  XmlTag  startTag ("ModelOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  WriteModelXMLFields (o);  // Write the PArent class fields 1st.
+
+  if  (assignments)
+    assignments->ToString ().WriteXML ("Assignments", o);
+
+  if  (svmModel)
+    svmModel->WriteXML ("svmModel", o);
+
+  XmlTag  endTag ("ModelOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelOldSVM::ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           )
+{
+  delete  svmModel;
+  svmModel = NULL;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
+    if  (t)
+    {
+      if  ((t->VarName ().EqualIgnoreCase ("Assignments"))  &&  (typeid(*t) == typeid(XmlElementKKStr)))
+      {
+        XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
+        delete  assignments;
+        assignments = new ClassAssignments ();
+        assignments->ParseToString (*(s->Value ()), log);
+      }
+
+      else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))
+      {
+        delete  svmModel;
+        svmModel = dynamic_cast<XmlElementSVMModelPtr> (t)->TakeOwnership ();
+      }
+
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
+        AddErrorMsg (errMsg, 0);
+        log.Level (-1) << endl << errMsg << endl << endl;
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+  if  (!param)
+    param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamOldSVM))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  ((!svmModel)  ||  (!svmModel->ValidModel ()))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelOldSVM::ReadXML  ***ERROR***  'SvmModel' was not defined or is not valid.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
+  }
+
+  ReadXMLModelPost (log);
+}  /* ReadXML */
+
+
+
+
+class  XmlFactoryModelOldSVM: public XmlFactory                           
+{                                                                         
+public:                                                                   
+  XmlFactoryModelOldSVM (): XmlFactory ("ModelOldSVM") {}                  
+                                                                          
+  virtual  XmlElementModelOldSVM*  ManufatureXmlElement (XmlTagPtr   tag, 
+                                                         XmlStream&  s, 
+                                                         RunLog&     log 
+                                                        )                
+  {                                                                        
+    return new XmlElementModelOldSVM(tag, s, log);                         
+  }                                                                        
+                                                                           
+  static   XmlFactoryModelOldSVM*   factoryInstance;                       
+                                                                           
+  static   XmlFactoryModelOldSVM*   FactoryInstance ()                     
+  {                                                                        
+    if  (factoryInstance == NULL)                                          
+    {                                                                      
+      GlobalGoalKeeper::StartBlock ();                                     
+      if  (!factoryInstance)                                               
+      {                                                                    
+        factoryInstance = new XmlFactoryModelOldSVM ();                    
+        XmlFactory::RegisterFactory (factoryInstance);                     
+      }                                                                    
+      GlobalGoalKeeper::EndBlock ();                                       
+     }                                                                     
+    return  factoryInstance;                                               
+  }                                                                        
+};                                                                         
+                                                                           
+XmlFactoryModelOldSVM*   XmlFactoryModelOldSVM::factoryInstance 
+              = XmlFactoryModelOldSVM::FactoryInstance ();
+
 

@@ -10,11 +10,11 @@
 #include <iomanip>
 #include <set>
 #include <vector>
-
 #include "MemoryDebug.h"
 using namespace  std;
 
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
@@ -28,14 +28,20 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "FeatureVector.h"
 #include "ModelKnn.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
-ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
-                    VolConstBool&  _cancelFlag,
-                    RunLog&        _log
-                   ):
-  Model (_fileDesc, _cancelFlag, _log),
+
+ModelKnn::ModelKnn ():
+  Model (),
+  param (NULL)
+{
+}
+
+
+
+ModelKnn::ModelKnn (FactoryFVProducerPtr  _factoryFVProducer):
+  Model (_factoryFVProducer),
   param (NULL)
 {
 }
@@ -45,11 +51,9 @@ ModelKnn::ModelKnn (FileDescPtr    _fileDesc,
 
 ModelKnn::ModelKnn (const KKStr&          _name,
                     const ModelParamKnn&  _param,         // Create new model from
-                    FileDescPtr           _fileDesc,
-                    VolConstBool&         _cancelFlag,
-                    RunLog&               _log
+                    FactoryFVProducerPtr  _factoryFVProducer
                    ):
-  Model (_name, _param, _fileDesc, _cancelFlag, _log),
+  Model (_name, _param, _factoryFVProducer),
   param (NULL)
 {
   param = dynamic_cast<ModelParamKnnPtr> (Model::param);
@@ -66,10 +70,12 @@ ModelKnn::ModelKnn (const ModelKnn&   _model):
 }
 
 
+
 ModelKnn::~ModelKnn ()
 {
 
 }
+
 
 
 
@@ -85,7 +91,9 @@ ModelParamKnnPtr  ModelKnn::Param ()
 }
 
 
-MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example)
+MLClassPtr  ModelKnn::Predict (FeatureVectorPtr  example,
+                               RunLog&           log
+                              )
 {
   return NULL;
 }
@@ -99,11 +107,12 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
                          kkint32&          predClass1Votes,
                          kkint32&          predClass2Votes,
                          double&           probOfKnownClass,
-                         double&           probOfPredClass1,
-                         double&           probOfPredClass2,
+                         double&           predClass1Prob,
+                         double&           predClass2Prob,
                          kkint32&          numOfWinners,
                          bool&             knownClassOneOfTheWinners,
-                         double&           breakTie
+                         double&           breakTie,
+                         RunLog&           log
                         )
 {
 }  /* Predict */
@@ -111,7 +120,9 @@ void  ModelKnn::Predict (FeatureVectorPtr  example,
 
 
 
-ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
+ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example,
+                                                  RunLog&           log
+                                                 )
 {
   if  (!classesIndex)
   {
@@ -132,7 +143,7 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
   }
 
   ClassProbListPtr  results = new ClassProbList ();
-  kkuint32  idx;
+  kkint32 idx;
   for  (idx = 0;  idx < numOfClasses;  idx++)
   {
     MLClassPtr  ic = classesIndex->GetMLClass (idx);
@@ -148,7 +159,8 @@ ClassProbListPtr  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr  example)
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
                                       const MLClassList&  _mlClasses,
                                       kkint32*            _votes,
-                                      double*             _probabilities
+                                      double*             _probabilities,
+                                      RunLog&             log
                                      )
 {
 }
@@ -156,7 +168,8 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                       const MLClassList&  _mlClasses,
-                                      double*             _probabilities
+                                      double*             _probabilities,
+                                      RunLog&             log
                                      )
 {
 }  /* ProbabilitiesByClass */
@@ -164,57 +177,18 @@ void  ModelKnn::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
 
 
-void  ModelKnn::ReadSpecificImplementationXML (istream&  i,
-                                               bool&     _successful
-                                              )
-{
-  char  buff[20480];
-  KKStr  field;
-
-  KKStr  modelFileName;
-
-  kkint32  numOfModels = 0;
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelKnn>"))
-    {
-      break;
-    }
-
-    else if  (field.EqualIgnoreCase ("<Model>"))
-    {
-      Model::ReadXML (i, _successful);
-    }
-
-    else
-    {
-      // Add code to deal with items that are specific to 'ModelSvmBase'
-    }
-  }
-
-  if  (!_successful)
-    validModel = false;
-
-  return;
-}  /* ReadSpecificImplementationXML */
-
-
-
 void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
                             bool                  _alreadyNormalized,
-                            bool                  _takeOwnership  /**< Model will take ownership of these examples */
+                            bool                  _takeOwnership,  /**< Model will take ownership of these examples */
+                            VolConstBool&         _cancelFlag,
+                            RunLog&               _log
                            )
 {
-  log.Level (20) << "ModelKnn::TrainModel    alreadyNormalized[" << _alreadyNormalized << "]  _takeOwnership[" << _takeOwnership << "]." << endl;
+  _log.Level (20) << "ModelKnn::TrainModel    alreadyNormalized[" << _alreadyNormalized << "]  _takeOwnership[" << _takeOwnership << "]." << endl;
 
   try
   {
-    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership);
+    Model::TrainModel (_trainExamples, _alreadyNormalized, _takeOwnership, _cancelFlag, _log);
   }
   catch  (const KKException& e)
   {
@@ -225,11 +199,88 @@ void  ModelKnn::TrainModel (FeatureVectorListPtr  _trainExamples,
 
 
 
-void  ModelKnn::WriteSpecificImplementationXML (ostream&  o)
+void  ModelKnn::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
 {
-  log.Level (20) << "ModelKnn::WriteSpecificImplementationXML  Saving Model in File." << endl;
+  XmlTag  startTag ("ModelParamDual",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
 
-  o << "<ModelKnn>" << endl;
+  WriteModelXMLFields (o); // Write the base class data fields 1st.
+  if  (param)
+    param->WriteXML ("Param", o);
 
-  o << "</ModelKnn>" << endl;
-}  /* WriteSpecificImplementationXML */
+  XmlTag  endTag ("ModelParamDual", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelKnn::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelToken (t, log);
+    if  (t)
+    {
+      const KKStr&  varName = t->VarName ();
+
+      if  ((varName.EqualIgnoreCase ("Param"))  &&  (typeid (*t) == typeid (XmlElementModelParamKnn)))
+      {
+        delete  param;
+        param = dynamic_cast<XmlElementModelParamKnnPtr> (t)->TakeOwnership ();
+      }
+      else
+      {
+        KKStr  errMsg (256);
+        errMsg << "Invalid XmlElement Encountered:  Section: " << t->SectionName () << "  VarName: " << varName;
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+  if  (!param)
+    param = dynamic_cast<ModelParamKnnPtr> (Model::param);
+
+  if  (Model::param == NULL)
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (typeid (*Model::param) != typeid(ModelParamKnn))
+  {
+    KKStr errMsg (128);
+    errMsg << "ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else
+  {
+    param = dynamic_cast<ModelParamKnnPtr> (Model::param);
+  }
+
+  ReadXMLModelPost (log);
+}  /* ReadXML */
+
+
+
+XmlFactoryMacro(ModelKnn)
+
+

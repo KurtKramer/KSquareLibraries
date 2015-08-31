@@ -22,9 +22,7 @@ using namespace KKB;
 MorphOpErosion::MorphOpErosion (StructureType  _structure,
                                 kkuint16       _structureSize
                                ):
-  MorphOp (),
-  structure      (_structure),
-  structureSize  (_structureSize)
+  MorphOpStruct (_structure, _structureSize)
 {
 }
 
@@ -43,71 +41,24 @@ kkint32  MorphOpErosion::MemoryConsumedEstimated ()
 
 
 
-bool  MorphOpErosion::Fit (kkint32  row,
-                           kkint32  col
-                          )  const
-{
-  kkint32  r, c;
-  kkint32  rStart = row - structureSize;
-  kkint32  rEnd   = row + structureSize;
-  kkint32  cStart = col - structureSize;
-  kkint32  cEnd   = col + structureSize;
-
-  if  (rStart  < 0)           rStart = 0;
-  if  (rEnd    >= srcHeight)  rEnd = srcHeight - 1;
-  if  (cStart  < 0)           cStart = 0;
-  if  (cEnd    >= srcWidth)   cEnd = srcWidth - 1;
-
-  if  (structure == stSquare)
-  {
-    for  (r = rStart;  r <= rEnd;  r++)
-    {
-      uchar const* rowPtr = srcGreen[r];
-
-      for  (c = cStart;  c <= cEnd;  c++)
-      {
-        if  (BackgroundPixel (rowPtr[c]))
-          return  false;
-      }
-    }
-  }
-
-  else
-  {  
-    for  (r = rStart;  r <= rEnd;  r++)
-    {
-      if  (BackgroundPixel (srcGreen[r][col]))
-        return  false;
-    }
-
-    for  (c = cStart;  c <= cEnd;  c++)
-    {
-      if  (BackgroundPixel (srcGreen[row][c]))
-        return  false;
-    }
-  }
-
-  return  true;
-}  /* Fit */
-
 
 
 RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
 {
-  this->SetSrcRaster (_image);
+  SetSrcRaster (_image);
 
   kkint32  r = 0;
   kkint32  c = 0;
 
-  kkint32  erodedForegroundPixelCount = srcRaster->ForegroundPixelCount ();
+  kkint32  erodedForegroundPixelCount = 0;
 
-  RasterPtr   erodedRaster = new Raster (*srcRaster);
+  RasterPtr erodedRaster = new Raster (*srcRaster);
 
-  uchar*      srcRow    = NULL;
-  uchar**     destGreen  = erodedRaster->Green ();
-  uchar*      destRow    = NULL;
+  uchar*    srcRow    = NULL;
+  uchar**   destGreen = erodedRaster->Green ();
+  uchar*    destRow   = NULL;
 
-  uchar       backgroundPixelValue = srcRaster->BackgroundPixelTH ();
+  uchar     backgroundPixelValue = srcRaster->BackgroundPixelValue ();
 
   for  (r = 0;  r < srcHeight;  r++)
   {
@@ -118,10 +69,19 @@ RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
     {
       if  (ForegroundPixel (srcRow[c]))
       {
-        if  (!Fit (r, c))
+        bool  fit = false;
+        if  (backgroundCountTH > 0)
+          fit = FitBackgroundCount (r, c);
+        else
+          fit = Fit (r, c);
+
+        if  (!fit)
         {
           destRow[c] = backgroundPixelValue;
-          erodedForegroundPixelCount--;
+        }
+        else
+        {
+          ++erodedForegroundPixelCount;
         }
       }
     }  /* for (c) */

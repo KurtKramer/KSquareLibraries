@@ -11,11 +11,8 @@
 #include  "KKBaseTypes.h"
 #include  "RunLog.h"
 
-
-
-namespace KKMachineLearning
+namespace KKMLL
 {
-
   #if  !defined (_FILEDESC_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
@@ -23,15 +20,13 @@ namespace KKMachineLearning
 
 
   #ifndef  _MLCLASS_
+  class  MLClass;
+  typedef  MLClass*      MLClassPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
 
 
-  #ifndef  _FeatureVector_Defined_
-  class  FeatureVectorList;
-  typedef  FeatureVectorList*  FeatureVectorListPtr;
-  #endif
 
 
 
@@ -47,6 +42,18 @@ namespace KKMachineLearning
   #endif
 
 
+  #ifndef  _FeatureVector_Defined_
+  class  FeatureVector;
+  typedef  FeatureVector*  FeatureVectorPtr;
+  #endif
+
+
+  #ifndef  _FeatureVectorList_Defined_
+  class  FeatureVectorList;
+  typedef  FeatureVectorList*  FeatureVectorListPtr;
+  #endif
+
+
   #if  !defined(_ORDERINGS_)
   class  Orderings;
   typedef  Orderings*  OrderingsPtr;
@@ -59,7 +66,6 @@ namespace KKMachineLearning
   #endif
 
 
-
   class CrossValidationMxN
   {
   public:
@@ -67,12 +73,14 @@ namespace KKMachineLearning
                         kkuint32                  _numOfOrderings,
                         kkuint32                  _numOfFolds,
                         FeatureVectorListPtr      _data,
-                        bool&                     _cancelFlag
+                        bool&                     _cancelFlag,
+                        RunLog&                   _log
                        );
 
     CrossValidationMxN (TrainingConfiguration2Ptr _comfig,
                         OrderingsPtr              _data,
-                        bool&                     _cancelFlag
+                        bool&                     _cancelFlag,
+                        RunLog&                   _log
                        );
 
     ~CrossValidationMxN ();
@@ -80,10 +88,11 @@ namespace KKMachineLearning
     const
     ConfusionMatrix2Ptr    ConfussionMatrix ()  const;
 
-    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining);
+    void  RunTrainAndTest (kkint32  numExamplsToUseForTraining,
+                           RunLog&  log
+                          );
 
-    void  RunValidations ();
-
+    void  RunValidations (RunLog&  log);
 
     // Access Methods
     kkint32               NumOfOrderings       () const {return numOfOrderings;}
@@ -106,19 +115,14 @@ namespace KKMachineLearning
     double                TrainingTimeStdDev   () const {return trainingTimeStdDev;}
 
   private:
-    void  CheckFileDescCopasetic ();
+    void  CheckFileDescCopasetic (RunLog&  log);
 
     void  CleanUpMemory ();
-
-    void  ValidateOrderingIDX (const char*  desc,  
-                               kkuint32     idx
-                              )  const;
 
 
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
     FileDescPtr               fileDesc;
-    RunLog&                   log;
     ConfusionMatrix2Ptr       meanConfusionMatrix;
     kkuint32                  numOfFolds;
     kkuint32                  numOfOrderings;
@@ -142,8 +146,7 @@ namespace KKMachineLearning
     double        testTimeMean;
     double        testTimeStdDev;
   };
-
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 
 #endif

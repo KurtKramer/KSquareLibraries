@@ -2,41 +2,29 @@
  * Copyright (C) 1994-2011 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
-
-#include  <float.h>
-#include  <math.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-#include  "KKBaseTypes.h"
-
+#include "FirstIncludes.h"
+#include <float.h>
+#include <math.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
+
+
+#include "Histogram.h"
+#include "ImageIO.h"
+#include "KKBaseTypes.h"
+#include "Raster.h"
 using namespace KKB;
 
 
-using namespace std;
 
-
-
-#include  "Histogram.h"
-
-
-#include  "Raster.h"
-#include  "ImageIO.h"
-
-
-
-
-
-Histogram::Histogram (float  _minValue,
+Histogram::Histogram (float    _minValue,
                       kkint32  _numOfBuckets,
-                      float  _bucketSize,
-                      bool   _wrapArround
+                      float    _bucketSize,
+                      bool     _wrapArround
                      ):
 
   bucketSize        (_bucketSize),
@@ -56,7 +44,6 @@ Histogram::Histogram (float  _minValue,
          << std::endl;
     exit (-1);
   }
-
 
   range = bucketSize * numOfBuckets;
 

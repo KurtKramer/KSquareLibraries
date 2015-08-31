@@ -11,12 +11,12 @@
 #include  "FeatureFileIO.h"
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 /**
- * @class  KKMachineLearning::FeatureFileIOArff
- * @brief Support the writing of ARFF Formated Feature Files.
+ * @class  KKMLL::FeatureFileIOArff
+ * @brief Support the writing of ARFF Formatted Feature Files.
  * @details
  * Supports the writing of the ARFF format as supported by the WEKA machine learning system
  * The ARFF format is very similar to the C45 file format; but there is only one file that
@@ -60,15 +60,15 @@ private:
                                           );
 
 
-  virtual  void   SaveFile (FeatureVectorList&     _data,
-                            const KKStr&           _fileName,
-                            const FeatureNumList&  _selFeatures,
-                            ostream&               _out,
-                            kkuint32&              _numExamplesWritten,
-                            VolConstBool&          _cancelFlag,
-                            bool&                  _successful,
-                            KKStr&                 _errorMessage,
-                            RunLog&                _log
+  virtual  void   SaveFile (FeatureVectorList&    _data,
+                            const KKStr&          _fileName,
+                            FeatureNumListConst&  _selFeatures,
+                            ostream&              _out,
+                            kkuint32&             _numExamplesWritten,
+                            VolConstBool&         _cancelFlag,
+                            bool&                 _successful,
+                            KKStr&                _errorMessage,
+                            RunLog&               _log
                            );
 
 
@@ -78,7 +78,7 @@ private:
 
 };
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

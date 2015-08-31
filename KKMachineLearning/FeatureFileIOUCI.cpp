@@ -25,7 +25,7 @@ using namespace  KKB;
 #include "FeatureFileIOUCI.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -102,7 +102,7 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
 
   for  (fieldNum = 0;  fieldNum < numOfFields;  fieldNum++)
   {
-    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), NumericAttribute, alreadyExists);
+    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), AttributeType::Numeric, alreadyExists);
   }
 
   return  fileDesc;
@@ -136,7 +136,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
   KKStr  ln (256);
   bool  eof;
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   GetLine (_in, ln, eof);
   while  (!eof)
@@ -161,7 +161,7 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
       example->MLClass (mlClass);
 
       KKStr  imageFileName = rootName + "_" + StrFormatInt (lineCount, "ZZZZZZ0");
-      example->ImageFileName (imageFileName);
+      example->ExampleFileName (imageFileName);
 
       examples->PushOnBack (example);
 
@@ -178,15 +178,15 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
 
 
 
-void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
-                                   const KKStr&           _fileName,
-                                   const FeatureNumList&  _selFeatures,
-                                   ostream&               _out,
-                                   kkuint32&              _numExamplesWritten,
-                                   VolConstBool&          _cancelFlag,
-                                   bool&                  _successful,
+void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
+                                   const KKStr&          _fileName,
+                                   FeatureNumListConst&  _selFeatures,
+                                   ostream&              _out,
+                                   kkuint32&             _numExamplesWritten,
+                                   VolConstBool&         _cancelFlag,
+                                   bool&                 _successful,
                                    KKStr&                 _errorMessage,
-                                   RunLog&                _log
+                                   RunLog&               _log
                                   )
 
 {
@@ -197,9 +197,21 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&     _data,
   kkint32  idx;
   kkint32  x;
 
+  FileDescPtr  fileDesc = _data.FileDesc ();
+
+  _out << "ExampleFileName";
+  for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
+  {
+    kkint32 featureNum = _selFeatures[x];
+    _out << "," << fileDesc->FieldName (featureNum);
+  }
+  _out << "," << "ClassLabel" << endl;
+
   for  (idx = 0; idx < _data.QueueSize (); idx++)
   {
     example = _data.IdxToPtr (idx);
+
+    _out << ("Train_" + KKB::osGetRootName (example->ExampleFileName ())) << ",";
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {

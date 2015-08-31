@@ -10,43 +10,46 @@
 //*                                                                         *
 //*  Prog       Date      Description                                       *
 //*  ------- -----------  ------------------------------------------------- *
-//*  Kurt    Oct-19-2002  Increment Will now take ImageClasses instead of   *
+//*  Kurt    Oct-19-2002  Increment Will now take MLClasses instead of      *
 //*                       numbers.  We will also make a unique copy of      *
-//*                       mlClassesList.  This way we will not have to      *
-//*                       worry about the numbering in the classList        *
-//*                       behind our back.                                  * 
+//*                       mlClassList. This way we will not have to worry   *
+//*                       about the numbering in the classList behind our   *
+//*                       back.                                             * 
 //***************************************************************************
 //* 
 
-
-#include "MLClass.h"
 #include "RunLog.h"
 #include "KKStr.h"
 
+#include "MLClass.h"
 
-
-namespace  KKMachineLearning
+namespace  KKMLL
 {
 
   /// <summary>
   /// A confusion matrix object that is used to record the results from a CrossValidation.
-  /// <seealso cref="CrossValidation"
+  /// <see also cref="CrossValidation"
   /// </summary>
   class  ConfusionMatrix2
   {
   public:
     typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
 
-    ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
-                      RunLog&             _log
-                     );
-    
+    ConfusionMatrix2 (const MLClassList&  _classes);
     
     ConfusionMatrix2 (const ConfusionMatrix2&  cm);
 
 
-    //  Will construct an instance of 'ConfusionMatrix2'  from the contents of the 
-    //  provided  'istream' object. 
+    /**  
+     * Will construct an instance of 'ConfusionMatrix2'  from the contents of the provided  'istream' object. 
+     *@param[in]  _classes  Will make local copy of this instance; this way we know the ordering which represents the numbering can not change behind our back.
+     *@param[in]  f   File to write report to.
+     *@param[in]  _bucketSize  Will keep statistics by size of particles.
+     *@param[in]  _numOfBuckets Number of Size buckets that will be maintained.
+     *@param[in]  _numOfProbBuckets  Maximum number of probability buckets to keep track of, 
+     *@param[in]  _probBucketSize  Size of each probability bucket.
+     *@param[in]  _log  Logger where messages are written to.
+     */
     ConfusionMatrix2 (const MLClassList&  _classes,  // Will make its own copy of '_classes'
                       istream&            f,
                       kkint32             _bucketSize,
@@ -56,7 +59,7 @@ namespace  KKMachineLearning
                       RunLog&             _log
                      );
                                            
-    
+    virtual
     ~ConfusionMatrix2 ();
 
     double   Accuracy ();
@@ -71,7 +74,9 @@ namespace  KKMachineLearning
 
     KKStr    AccuracyStr ();
 
-    void     AddIn (const ConfusionMatrix2&  cm);
+    void     AddIn (const ConfusionMatrix2&  cm,
+                    RunLog&                  log
+                   );
 
     double   AvgPredProb ()  const;
 
@@ -81,19 +86,30 @@ namespace  KKMachineLearning
 
     double   CountsByKnownClass (kkint32 knownClassIdx)  const;
 
-    VectorDouble   CountsByKnownClass ()  const;
+    const    VectorDouble&   CountsByKnownClass ()  const;
 
     void     FactorCounts (double  factor);    /**< Will multiply all counts by 'factor'  You would use this in conjunction with 'AddIn'.  */
 
-    float    FMeasure (MLClassPtr  positiveClass)  const;
+    void     ComputeFundamentalStats (MLClassPtr ic,
+                                      double&    truePositives,
+                                      double&    trueNegatives,
+                                      double&    falsePositives,
+                                      double&    falseNegatives
+                                     )
+                                   const;
+
+    float    FMeasure (MLClassPtr  positiveClass,
+                       RunLog&     log
+                      )  const;
 
     const
-    MLClassList&  ImageClasses () const  {return  classes;}
+    MLClassList&  MLClasses () const  {return  classes;}
 
     void     Increment (MLClassPtr  _knownClass,
                         MLClassPtr  _predClass,
                         kkint32     _size,
-                        double      _probability
+                        double           _probability,
+                        RunLog&          _log
                        );
 
     VectorDouble   PredictedCounts ()  const;
@@ -128,8 +144,6 @@ namespace  KKMachineLearning
 
     void     PrintErrorBySizeReduced (ostream&  outFile);
 
-
-
     //***********************************************************
     //*                  One Line Summaries                     *
     //***********************************************************
@@ -137,11 +151,7 @@ namespace  KKMachineLearning
     void   PrintProbDistributionTotalCount (ostream&  outFile);
     void   PrintProbDistributionTotalError (ostream&  outFile);
 
-    RunLog&  Log ()  {return log;}
-
     double    TotalCount ()   {return totalCount;}
-
-
 
     static
     ConfusionMatrix2Ptr  BuildFromIstreamXML (istream&  f,
@@ -150,14 +160,50 @@ namespace  KKMachineLearning
 
     void  WriteXML (ostream&  f)  const;
 
-    // This method writes a simple confusion matrix table; one row for each class.  The BIAS
-    // adjustment routines can then utilize this data to adjust final counts.
+
+    /**
+     * Meant to work with 'ClassificationStatus.cs' of PicesCommander. This will write a simple
+     * confusion matrix table; one row for each class. 'ClassificationStatus.cs' will then use this
+     * data to adjust for bias in the learner.
+     */
     void  WriteSimpleConfusionMatrix (ostream&  f)  const;
 
-
-
   private:
+    kkint32 AddClassToConfusionMatrix (MLClassPtr  newClass,
+                                       RunLog&     log
+                                      );
+
     void  InitializeMemory ();
+
+    void  InitializeVector (vector<double>&  v,
+                            kkint32          x
+                           );
+
+    void  InitializeVectorDoublePtr (vector<double*>& v,
+                                     kkint32          numClasses,
+                                     kkint32          numBuckets
+                                    );
+
+    void  CopyVector (const vector<double>&  src,
+                      vector<double>&        dest
+                     );
+
+    void  CopyVectorDoublePtr (const vector<double*>&  src,
+                               vector<double*>&        dest,
+                               kkint32                 numBuckets
+                              );
+
+    void  DeleteVectorDoublePtr (vector<double*>&  v);
+
+    void  IncreaseVectorDoublePtr (vector<double*>&  v,
+                                   int               numBucketsOld,
+                                   int               numBucketsNew
+                                  );
+
+    void  MakeSureWeHaveTheseClasses (const MLClassList&  classList,
+                                      RunLog&                  log
+                                     );
+
 
     void  PrintLatexTableColumnHeaders (ostream&  outFile);
 
@@ -246,38 +292,40 @@ namespace  KKMachineLearning
                                       kkint32   classNum
                                      );
 
-
-    void  Read (istream& f);
-
+    void  Read (istream&  f,
+                RunLog&   log
+               );
 
     kkint32          bucketSize;
     kkint32          classCount;
-    double**         correctByKnownClassByProb;
-    double**         correctByKnownClassBySize;
+    vector<double*>  correctByKnownClassByProb;
+    vector<double*>  correctByKnownClassBySize;
     double           correctCount;
-    double**         countByKnownClassByProb;
-    double**         countByKnownClassBySize;
-    double*          countsByKnownClass;
+    vector<double*>  countByKnownClassByProb;
+    vector<double*>  countByKnownClassBySize;
+    vector<double>   countsByKnownClass;
 
-    MLClassList   classes;   /**< We will make our own unique copy of the MLClassList.  This way we know the
-                                 * ordering which represents the numbering can not change behind our back.
-                                 */
-    RunLog&          log;
-    double           numInvalidClassesPredicted;
+    MLClassList  classes;  /**< We will make our own unique copy of the MLClassList.
+                            * This way we know the ordering which represents the numbering
+                            * can not change behind our back.
+                            */
+
     kkint32          numOfBuckets;
     kkint32          numOfProbBuckets;
-    double**         predictedCountsCM;
+    vector<double*>  predictedCountsCM;
+    vector<double*>  totPredProbCM;
     kkint32          probBucketSize;
     double           totalCount;
     double           totalPredProb;
-    double*          totalPredProbsByKnownClass;   /**< Total Predicted Probabilities by Known Class. */
-    double*          totalSizesByKnownClass;
-    double**         totPredProbCM;
+    vector<double>   totalPredProbsByKnownClass;     /**< Total Predicted Probabilities by Known Class. */
+    vector<double>   totalSizesByKnownClass;
 
+    double           numInvalidClassesPredicted;
   };
 
-
   typedef  ConfusionMatrix2::ConfusionMatrix2Ptr  ConfusionMatrix2Ptr;
+
+#define  _ConfussionMatrix2_Defined_
 
 
   class  ConfussionMatrix2List: public KKQueue<ConfusionMatrix2>
@@ -287,15 +335,15 @@ namespace  KKMachineLearning
 
     ~ConfussionMatrix2List ();
 
-    ConfusionMatrix2Ptr  DeriveAverageConfusionMatrix () const;
+    ConfusionMatrix2Ptr  DeriveAverageConfusionMatrix (RunLog&  log) const;
 
 
   };  /* ConfussionMatrix2List */
 
-
   typedef  ConfussionMatrix2List*  ConfussionMatrix2ListPtr;
 
+#define  _ConfussionMatrix2List_Defined_
 
-} /* namespace  KKMachineLearning */
+} /* namespace  KKMLL */
 
 #endif

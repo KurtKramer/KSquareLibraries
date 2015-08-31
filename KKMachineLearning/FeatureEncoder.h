@@ -14,6 +14,7 @@
 //*                                                                     *
 //***********************************************************************
 #include "RunLog.h"
+#include "XmlStream.h"
 
 #include "Attribute.h"
 #include "FeatureVector.h"
@@ -23,8 +24,7 @@
 #include "SVMparam.h"
 
 
-
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _FEATURENUMLIST_
@@ -36,20 +36,22 @@ namespace KKMachineLearning
   typedef  struct svm_node*     XSpacePtr;
 
 
-  typedef  enum  {FeAsIs, FeBinary, FeScale}  FeWhatToDo;
+  enum class  FeWhatToDo  {FeAsIs, FeBinary, FeScale};
+
   typedef  FeWhatToDo*  FeWhatToDoPtr;
 
 
   class  FeatureEncoder
   {
   public:
-    FeatureEncoder (const SVMparam&       _svmParam,
-                    FileDescPtr           _fileDesc,
-                    AttributeTypeVector&  _attributeTypes,   
-                    VectorInt32&          _cardinalityTable,
-                    MLClassPtr            _class1,
-                    MLClassPtr            _class2,
-                    RunLog&               _log
+    FeatureEncoder ();
+
+    FeatureEncoder (FileDescPtr            _fileDesc,
+                    MLClassPtr             _class1,
+                    MLClassPtr             _class2,
+                    const FeatureNumList&  _selectedFeatures,
+                    SVM_EncodingMethod     _encodingMethod,
+                    double                 _c_Param
                    );
     
     
@@ -63,30 +65,44 @@ namespace KKMachineLearning
     MLClassPtr  Class2 () const  {return class2;}
 
     /**
-     *@brief  Compresses 'src' images, allocating new 'xSpace' data structure.
-     *@param[in]  src              Images that are to be compressed
+     * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
+     */
+    void  CompressExamples (FeatureVectorListPtr  srcExamples,
+                            FeatureVectorListPtr  compressedExamples,
+                            ClassAssignments&     assignments
+                           );
+
+
+    FileDescPtr  CreateEncodedFileDesc (ostream*  o);
+
+    FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
+
+
+    /**
+     *@brief  Compresses 'src' examples, allocating new 'xSpace' data structure.
+     *@param[in]  src              Examples that are to be compressed
      *@param[in]  assignments      Class Assignments
      *@param[in]  xSpace           will allocate enough xSpace nodes and place compressed results in this structure.
      *@param[out] totalxSpaceUsed  number nodes used in xSpace</param>
      *@param[out] prob             Data Structure that is used by SVMLib
+     *@param[in]  log
      */
     void  EncodeIntoSparseMatrix (FeatureVectorListPtr  src,
                                   ClassAssignments&     assignments,
                                   XSpacePtr&            xSpace,
                                   kkint32&              totalxSpaceUsed,
-                                  struct svm_problem&   prob
+                                  struct svm_problem&   prob,
+                                  RunLog&               log
                                  );
 
-    FileDescPtr       CreateEncodedFileDesc (ostream*  o);
+    XSpacePtr  EncodeAExample (FeatureVectorPtr  example);
 
-    FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
 
-    XSpacePtr         EncodeAExample (FeatureVectorPtr  example);
+    void   EncodeAExample (FeatureVectorPtr  example,
+                           svm_node*         xSpace,
+                           kkint32&          xSpaceUsed
+                          );
 
-    void              EncodeAExample (FeatureVectorPtr  example,
-                                      svm_node*         xSpace,
-                                      kkint32&          xSpaceUsed
-                                     );
 
     FeatureVectorListPtr  EncodeAllExamples (const FeatureVectorListPtr  srcData);
 
@@ -95,10 +111,20 @@ namespace KKMachineLearning
                                       FeatureVectorPtr  src
                                      );
 
-    kkint32           MemoryConsumedEstimated ()  const;
+    kkint32  MemoryConsumedEstimated ()  const;
 
-    kkint32           XSpaceNeededPerImage ()  {return xSpaceNeededPerImage;}
+    virtual
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
 
+    virtual  
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+    kkint32  XSpaceNeededPerExample ()  {return xSpaceNeededPerExample;}
 
 
   private:
@@ -111,31 +137,27 @@ namespace KKMachineLearning
 
 
 
-    AttributeTypeVector&         attributeTypes;     /**< Will not own, passed in by creator. */
-    kkint32*                     cardinalityDest;
-    VectorInt32&                 cardinalityTable;   /**< Will not own, passed in by creator. */
-    MLClassPtr                   class1;
-    MLClassPtr                   class2;
-    kkint32                      codedNumOfFeatures;
-    SVM_CompressionMethod        compressionMethod;
-    kkint32*                     destFeatureNums;
-    FileDescPtr                  destFileDesc;
-    FeWhatToDoPtr                destWhatToDo;
-    SVM_EncodingMethod           encodingMethod;
-    FileDescPtr                  fileDesc;
-    RunLog&                      log;
-    kkint32                      numEncodedFeatures;
-    kkint32                      numOfFeatures;
-    FeatureNumList               selectedFeatures;
-    kkint32*                     srcFeatureNums;
-    const SVMparam&              svmParam;
-    kkint32                      xSpaceNeededPerImage;
+    kkint32*              cardinalityDest;
+    MLClassPtr            class1;
+    MLClassPtr            class2;
+    kkint32               codedNumOfFeatures;
+    double                c_Param;
+    kkint32*              destFeatureNums;
+    FileDescPtr           destFileDesc;
+    FeWhatToDoPtr         destWhatToDo;
+    SVM_EncodingMethod    encodingMethod;
+    FileDescPtr           fileDesc;
+    kkint32               numEncodedFeatures;
+    kkint32               numOfFeatures;
+    FeatureNumList        selectedFeatures;
+    kkint32*              srcFeatureNums;
+    kkint32               xSpaceNeededPerExample;
   };  /* FeatureEncoder */
 
 
   typedef  FeatureEncoder*  FeatureEncoderPtr;
 
 
-} /* namespace KKMachineLearning */
+} /* KKMLL */
 
 #endif

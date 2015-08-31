@@ -1,9 +1,9 @@
-#ifndef  _FEATUREVECTOR_
+#if  !defined(_FEATUREVECTOR_)
 #define  _FEATUREVECTOR_
 
 
 /**
- *@class  KKMachineLearning::FeatureVector
+ *@class  KKMLL::FeatureVector
  *@brief  Represents a Feature Vector of a single example, labeled or unlabeled
  *@author  Kurt Kramer
  *@details Used for the representation of a Single example.  You create an instance of 
@@ -30,7 +30,7 @@
 #include "MLClass.h"
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 
@@ -39,6 +39,10 @@ namespace KKMachineLearning
     typedef  FeatureFileIO*  FeatureFileIOPtr;
   #endif
 
+#if  !defined(_ClassProbList_Defined_)
+   class  ClassProbList;
+    typedef  ClassProbList*  ClassProbListPtr;
+#endif
 
 
   /**
@@ -46,7 +50,7 @@ namespace KKMachineLearning
    *@brief  Represents a Feature Vector of a single example, labeled or unlabeled
    *@details Used for the representation of a Single example. You create an instance of this object for each single feature
    * vector. You can subclass from this Class to make a specialized FeatureVector as in the PostLarvaeFV class.  Besides
-   * keeping track of feature data this class will also track other fields such as ImageFileName which should indicate
+   * keeping track of feature data this class will also track other fields such as ExampleFileName which should indicate
    *where the FeatureVector was derived from, probability, breakTie, and others.
    *@see FeatureVectorList
    *@see PostLarvaeFV
@@ -55,20 +59,25 @@ namespace KKMachineLearning
   class  FeatureVector 
   {
   public:
+    typedef  float  FVFloat;
+    typedef  FeatureVector*  FeatureVectorPtr;
+
     FeatureVector (kkint32  _numOfFeatures);
 
     FeatureVector (const FeatureVector&  _example);
 
     virtual  ~FeatureVector ();
 
-    void  BreakTie         (float             _breakTie)       {breakTie         = _breakTie;}        /**< @brief Update the BreakTie value. */
-    void  MLClass          (const MLClassPtr  _mlClass)        {mlClass          = _mlClass;}         /**< @brief Assign a class to this example. */
-    void  ImageFileName    (const KKStr&      _imageFileName)  {imageFileName    = _imageFileName;}   /**< @brief Name of source of feature vector, ex: file name of image that the feature vector was computed from. */
-    void  MissingData      (bool              _missingData)    {missingData      = _missingData;}     /**< @brief True indicates that not all the feature data was present when this example was loaded from a data file. */
-    void  OrigSize         (float             _origSize)       {origSize         = _origSize;}        /**< @brief The value of Feature[0] before normalization. */
-    void  PredictedClass   (const MLClassPtr  _predictedClass) {predictedClass   = _predictedClass;}
-    void  Probability      (float             _probability)    {probability      = _probability;}     /**< @brief Assign a prediction probability to this example.  */
-    void  Version          (kkint16           _version)        {version          = _version;}
+    virtual  FeatureVectorPtr  Duplicate ()  const;
+
+    void  BreakTie         (float         _breakTie)        {breakTie         = _breakTie;}         /**< @brief Update the BreakTie value. */
+    void  MLClass          (MLClassPtr    _mlClass)         {mlClass          = _mlClass;}          /**< @brief Assign a class to this example. */
+    void  ExampleFileName  (const KKStr&  _exampleFileName) {exampleFileName  = _exampleFileName;}  /**< @brief Name of source of feature vector, ex: file name of image that the feature vector was computed from. */
+    void  MissingData      (bool          _missingData)     {missingData      = _missingData;}      /**< @brief True indicates that not all the feature data was present when this example was loaded from a data file. */
+    void  OrigSize         (float         _origSize)        {origSize         = _origSize;}         /**< @brief The value of Feature[0] before normalization. */
+    void  PredictedClass   (MLClassPtr    _predictedClass)  {predictedClass   = _predictedClass;}
+    void  Probability      (float         _probability)     {probability      = _probability;}      /**< @brief Assign a prediction probability to this example.  */
+    void  Version          (kkint16       _version)         {version          = _version;}
 
     /**
      *@brief Assign a value to a specific feature number for the feature vector.
@@ -100,24 +109,24 @@ namespace KKMachineLearning
     void  Validated        (bool   _validated)     {validated    = _validated;}
 
 
-    float          BreakTie           () const  {return breakTie;}        /**< @brief The difference in probability between the two most likely classes. */
-    const KKStr&   ClassName          () const;                           /**< @brief Name of class that this example is assign to.                      */
-    MLClassPtr     MLClass            () const  {return mlClass;}         /**< @brief Class that is example is assigned to.                              */
-    const KKStr&   ImageClassName     () const;                           /**< @brief Name of class that this example is assigned to.                    */
-    const KKStr&   ImageFileName      () const  {return imageFileName;}   /**< @brief Name of file that this FeatureVector was computed from.            */
-    bool           MissingData        () const  {return missingData;}     /**< @brief True indicates that one or more features were missing.             */        
-    kkint32        NumOfFeatures      () const  {return numOfFeatures;}   /**< @brief Number of features in this FeatureVector.                          */
-    float          OrigSize           () const  {return origSize;}        /**< @brief The value of Feature[0] before normalization.                      */
+    float          BreakTie           () const  {return breakTie;}         /**< @brief The difference in probability between the two most likely classes. */
+    const KKStr&   ClassName          () const;                            /**< @brief Name of class that this example is assigned to.                    */
+    MLClassPtr     MLClass            () const  {return mlClass;}          /**< @brief Class that is example is assigned to.                              */
+    const KKStr&   MLClassName        () const;                            /**< @brief Name of class that this example is assigned to.                    */
+    const KKStr&   ExampleFileName      () const  {return exampleFileName;}  /**< @brief Name of file that this FeatureVector was computed from.            */
+    bool           MissingData        () const  {return missingData;}      /**< @brief True indicates that one or more features were missing.             */        
+    kkint32        NumOfFeatures      () const  {return numOfFeatures;}    /**< @brief Number of features in this FeatureVector.                          */
+    float          OrigSize           () const  {return origSize;}         /**< @brief The value of Feature[0] before normalization.                      */
     MLClassPtr     PredictedClass     () const  {return predictedClass;}
     const KKStr&   PredictedClassName () const;
-    float          Probability        () const  {return probability;}     /**< @brief The probability assigned by classifier to the predicted class.     */
+    float          Probability        () const  {return probability;}      /**< @brief The probability assigned by classifier to the predicted class.     */
     float          TrainWeight        () const  {return trainWeight;}
     bool           Validated          () const  {return validated;}
     kkint16        Version            () const  {return version;}
 
-    float          FeatureData        (kkint32 featureNum)  const;        /**< @returns The value of 'featureNum'                             */
-    const float*   FeatureData        () const  {return featureData;}     /**< @brief Returns as a pointer to the feature data itself.        */
-    float*         FeatureDataAlter   ()        {return featureData;}     /**< @brief Same as 'FeatureData() except you can modify the data.  */
+    float          FeatureData        (kkint32 featureNum)  const;         /**< @returns The value of 'featureNum'                             */
+    const float*   FeatureData        () const  {return featureData;}      /**< @brief Returns as a pointer to the feature data itself.        */
+    float*         FeatureDataAlter   ()        {return featureData;}      /**< @brief Same as 'FeatureData() except you can modify the data.  */
                                                                       
     const float*   FeatureDataConst   () const  {return featureData;}
     bool           FeatureDataValid   ();
@@ -147,7 +156,7 @@ namespace KKMachineLearning
                                       * classes as per the classifier. 
                                       */
     MLClassPtr     mlClass;
-    KKStr          imageFileName;
+    KKStr          exampleFileName;
     bool           missingData;      /**< @brief Indicates that some features were flagged as missing in 
                                       * data file. 
                                       */
@@ -195,8 +204,16 @@ namespace KKMachineLearning
    */
   class  FeatureVectorList:  public KKQueue<FeatureVector>
   {
-  public: 
+  public:
+    typedef  float  FVFloat;
+
     typedef  FeatureVectorList*  FeatureVectorListPtr;
+
+    /**
+     * When you use this constructor you need to define immediately provide the appropriate FileDesc instance via
+     * calling "ResetFileDesc" method.
+     */
+    FeatureVectorList ();
 
 
     /**
@@ -207,8 +224,7 @@ namespace KKMachineLearning
      *@param[out] _log Log file to send messages to.
      */
     FeatureVectorList (FileDescPtr  _fileDesc,
-                       bool         _owner,
-                       RunLog&      _log
+                       bool         _owner
                       );
 
   private:
@@ -221,10 +237,6 @@ namespace KKMachineLearning
 
 
   public:
-
-
-
-
     /** 
      *@brief  Create a duplicate list, depending on the '_owner' parameter may also duplicate the contents.
      *@details If '_owner' = true will create new instances of contents and own them.  If 'owner' = false, will
@@ -238,7 +250,6 @@ namespace KKMachineLearning
                       );
 
 
-
     /**
      *@brief  Will create a list of consisting of the subset of examples in '_examples' which are members of ImagesClasses.
      *@details  Will not own the contents;  it will just point to the existing examples that were in '_examples'.
@@ -247,8 +258,7 @@ namespace KKMachineLearning
      *@param[out] _log          Log file to send messages to.
     */ 
     FeatureVectorList (MLClassList&        _mlClasses,
-                       FeatureVectorList&  _examples,
-                       RunLog&             _log
+                       FeatureVectorList&  _examples
                       );
 
     
@@ -256,26 +266,26 @@ namespace KKMachineLearning
      *@enum IFL_SortOrder
      *@brief  Represents the different orders that a list of FeatureVector instances in a FeatureVectorList object can be in.  
      */
-    typedef  enum {IFL_UnSorted, 
-                   IFL_ByName, 
-                   IFL_ByProbability, 
-                   IFL_ByBreakTie, 
-                   IFL_ByRootName, 
-                   IFL_ByClassName
-                  } 
-                   IFL_SortOrder;
+    enum  class  IFL_SortOrder
+             {IFL_UnSorted, 
+              IFL_ByName, 
+              IFL_ByProbability, 
+              IFL_ByBreakTie, 
+              IFL_ByRootName, 
+              IFL_ByClassName
+             };
 
 
     virtual  ~FeatureVectorList ();
 
   
     // Access methods.
-    IFL_SortOrder         CurSortOrder    () const  {return curSortOrder;}
-    kkint32               FeatureCount    () const  {return numOfFeatures;}
-    const FileDescPtr     FileDesc        () const  {return fileDesc;}
-    const  KKStr&         FileName        () const  {return fileName;}
-    kkint32               NumOfFeatures   () const  {return numOfFeatures;}
-    kkint16               Version         () const  {return version;}
+    IFL_SortOrder      CurSortOrder    () const  {return curSortOrder;}
+    kkint32            FeatureCount    () const  {return numOfFeatures;}
+    const FileDescPtr  FileDesc        () const  {return fileDesc;}
+    const  KKStr&      FileName        () const  {return fileName;}
+    kkint32            NumOfFeatures   () const  {return numOfFeatures;}
+    kkint16            Version         () const  {return version;}
     //virtual  const char*      UnderlyingClass () const  {return "FeatureVectorList";}
 
 
@@ -315,55 +325,63 @@ namespace KKMachineLearning
 
     KKStr  ClassStatisticsStr ()  const;
 
-
-    KKMachineLearning::AttributeTypeVector  CreateAttributeTypeTable ()  const;
-
+    KKMLL::AttributeTypeVector  CreateAttributeTypeTable ()  const;
 
     vector<kkint32>  CreateCardinalityTable ()  const;
 
 
     /**
-     * @brief Will create a list of FeatureVectors where the class assignment will reflect the specified Hierarchy level specified by 'level'.
-     * @details The hierarchy of a given class will be indicated by underscore characters in the class name.
-     * @code
-     *     ex:   Level 1:  gelatinous
-     *           Level 2:  gelatinous_hydromedusae
-     *           Level 3:  gelatinous_hydromedusae_solmundella
-     *     If the 'level' parameter is set to 1 then all FeatureVectors who's class name starts with 'gelatinous' will be grouped
-     *     together under the class name 'gelatinous_hydromedusae'.
-     * @endcode
+     *@brief Will create a list of FeatureVectors where the class assignment will reflect the specified Hierarchy level specified by 'level'.
+     *@details The hierarchy of a given class will be indicated by underscore characters in the class name.
+     *@code
+     *    ex:   Level 1:  gelatinous
+     *          Level 2:  gelatinous_hydromedusae
+     *          Level 3:  gelatinous_hydromedusae_solmundella
+     *    If the 'level' parameter is set to 1 then all FeatureVectors who's class name starts with 'gelatinous' will be grouped
+     *    together under the class name 'gelatinous_hydromedusae'.
+     *@endcode
      */
     FeatureVectorListPtr  CreateListForAGivenLevel (kkint32  level);
 
 
     /**
-     * @brief  Creates a duplicate of list and also duplicates it contents.
-     * @return Duplicated list with hard-copy of its contents.
+     *@brief  Creates a duplicate of list using the same container.
      */
-    FeatureVectorListPtr  DuplicateListAndContents ()  const;
-
-    KKStrListPtr   ExtractDuplicatesByImageFileName ();
+    virtual
+    FeatureVectorListPtr  Duplicate (bool _owner)  const;
 
 
     /**
-     * @brief  Returns: a list of 'FeatureVector' objects that have duplicate root file names.
-     * @details The returned list will not own these items.  All instances of the duplicate objects will be returned.
-     *   Ex:  if three instances have the same ImageFileName all three will be returned.
+     *@brief  Creates a duplicate of list and also duplicates it contents.
+     *@return Duplicated list with hard-copy of its contents.
+     */
+    virtual
+    FeatureVectorListPtr  DuplicateListAndContents ()  const;
+
+    KKStrListPtr   ExtractDuplicatesByExampleFileName ();
+
+
+    /**
+     *@brief  Returns: a list of 'FeatureVector' objects that have duplicate root file names.
+     *@details The returned list will not own these items.  All instances of the duplicate objects will be returned.
+     *  Ex:  if three instances have the same ExampleFileName all three will be returned.
      */
     FeatureVectorListPtr  ExtractDuplicatesByRootImageFileName ();
 
 
-    FeatureVectorListPtr  ExtractImagesForAGivenClass (MLClassPtr  _mlClass,
-                                                       kkint32     _maxToExtract = -1,
-                                                       float       _minSize      = -1.0f
-                                                      )  const;
+    FeatureVectorListPtr  ExtractExamplesForAGivenClass (MLClassPtr  _mlClass,
+                                                         kkint32     _maxToExtract = -1,
+                                                         float       _minSize      = -1.0f
+                                                        )  const;
+
+    FeatureVectorListPtr  ExtractExamplesForClassList (MLClassListPtr  classes);
 
     VectorDouble   ExtractMeanFeatureValues ();
 
 
     /**
      *@brief  Will return a random sampling by class of our FeatureVector's; with a minimum per class of 'minClassCount'.
-     *@param[in] percentage  Percentage between 0.0 and 100.0 of each class to randomly sample.
+     *@param[in] percentage  The percentage between 0.0 and 100.0 of each class to randomly sample.
      *@param[in] minClassCount The minimum per class to keep.
      */
     FeatureVectorListPtr  ExtractRandomSampling (float    percentage,    /**<  A percentage between 0.0 and 100.0 */
@@ -387,29 +405,30 @@ namespace KKMachineLearning
     MLClassListPtr            ExtractListOfClasses ()  const;
 
     bool                      AllFieldsAreNumeric ()  const;                  /**< @brief  Returns true if all fields are numeric, no nominal fields.              */
-    KKMachineLearning::AttributeType
-                              FeatureType        (kkint32 featureNum) const;  /**< @brief  Returns the type of attribute for specified 'featureNum'. @see FileDesc */
+    KKMLL::AttributeType      FeatureType        (kkint32 featureNum) const;  /**< @brief  Returns the type of attribute for specified 'featureNum'. @see FileDesc */
     KKStr                     FeatureTypeStr     (kkint32 featureNum) const;
     kkint32                   FeatureCardinality (kkint32 featureNum) const;  /**< @brief Returns the number of values defined for a Nominal Field. @see FileDesc::Cardinality */
-    const KKStr&              FieldName          (kkint32 featureNum) const;  /**< @bnrie Returns name of Attribute Field.                                        */
+    const KKStr&              FieldName          (kkint32 featureNum) const;  /**< @brief Returns name of Attribute Field.                                        */
 
     ClassStatisticListPtr     GetClassStatistics ()  const;                   /**< @brief Returns the number of FeatureVectors per class @see ClassStatisticList */
+    ClassProbListPtr          GetClassDistribution () const;
 
     kkint32                   GetClassCount (MLClassPtr  c)  const;           /**< @brief Returns number of examples for a specific Class (MLClass).   */
 
-    RunLog&                   Log () {return  log;}
+    //RunLog&                   Log () {return  log;}
 
 
-    /** @brief  Returns a pointer to the FeatureVector which has '_imageFileName' 
-     *@details If the list is currently sorted by ImageFileName  (curSortOrder == IFL_ByName)  then a Binary Search is performed
+    /**
+     * @brief  Returns a pointer to the FeatureVector which has '_imageFileName' 
+     *@details If the list is currently sorted by ExampleFileName  (curSortOrder == IFL_ByName)  then a Binary Search is performed
      *           otherwise a sequential search is performed.
      */
     FeatureVectorPtr          LookUpByImageFileName (const KKStr&  _imageFileName)  const;
 
 
     /** 
-     *@brief   Returns a pointer to the FeatureVector who's ImageFileName rootname = _rootName *\
-     *@details If the list is currently sorted by ImageFileName  (curSortOrder == IFL_ByRootName)  then a Binary Search is performed
+     *@brief   Returns a pointer to the FeatureVector who's ExampleFileName rootname = _rootName *\
+     *@details If the list is currently sorted by ExampleFileName  (curSortOrder == IFL_ByRootName)  then a Binary Search is performed
      *         otherwise a sequential search is performed.   The parameter _rootName is assumed to be just the root name of the file.
      *         that is you used osGetRootName  to et the root part.
      */
@@ -418,6 +437,12 @@ namespace KKMachineLearning
     // void                  Sort (FeatureVectorComparison   comparison);
 
     float                     MajorityClassFraction () const; /**< Return's the fraction that the majority class makes up in this list. */
+
+    /**
+     *@brief Creates an instance of a Empty FeatureVectorList
+     */
+    virtual
+    FeatureVectorListPtr      ManufactureEmptyList (bool _owner)  const;
 
     virtual
     kkint32                   MemoryConsumedEstimated ()  const;
@@ -429,12 +454,16 @@ namespace KKMachineLearning
     /**
      *@brief  Using list of ImageFileNames in a file('fileName') create a new FeatureVectorList instance with examples in order based 
      *       off contents of file. If error occurs will return NULL.
-     *@param[in]  fileName  Name of file that contains a list of ImageFileName's  with one entry per line.
+     *@param[in]  fileName  Name of file that contains a list of ExampleFileName's  with one entry per line.
      *@returns  A new list of FeatureVector instances in the order dictated by 'fileName'.
      */
-    FeatureVectorListPtr      OrderUsingNamesFromAFile (const KKStr&  fileName);
+    FeatureVectorListPtr      OrderUsingNamesFromAFile (const KKStr&  fileName,
+                                                        RunLog&       log
+                                                       );
 
-    void                      RemoveDuplicateEntries ();
+    void                      RemoveDuplicateEntries (bool    allowDupsInSameClass,
+                                                      RunLog& runLog
+                                                     );
 
     /**
      *@brief  Will save into a file the current ordering of FeatureVector instances in list.  
@@ -447,7 +476,9 @@ namespace KKMachineLearning
                                 bool&         successful
                                );
 
-    void  SynchronizeSymbolicData (FeatureVectorList& otherData);
+    void  SynchronizeSymbolicData (FeatureVectorList&  otherData,
+                                   RunLog&             log
+                                  );
 
     void  PrintClassStatistics (std::ostream&  o)  const;
 
@@ -465,7 +496,7 @@ namespace KKMachineLearning
 
     void  ReSyncSymbolicData (FileDescPtr  newFileDesc);
 
-    void  RemoveEntriesWithMissingFeatures ();  /**< Will delete entries from list that have missing data. */
+    void  RemoveEntriesWithMissingFeatures (RunLog&  log);  /**< Will delete entries from list that have missing data. */
 
 
     /**
@@ -474,25 +505,31 @@ namespace KKMachineLearning
      *   field is of the same type and meaning.  This way we can determine if one list contains
      *   Apples while the other contains Oranges.
      */
-    bool  SameExceptForSymbolicData (const FeatureVectorList&  otherData)  const;
+    bool  SameExceptForSymbolicData (const FeatureVectorList&  otherData,
+                                     RunLog&                   log
+                                    )  const;
 
 
-    FeatureVectorListPtr  StratifyAmoungstClasses (kkint32  numOfFolds);
+    FeatureVectorListPtr  StratifyAmoungstClasses (kkint32  numOfFolds,
+                                                   RunLog&  log
+                                                  );
 
 
     FeatureVectorListPtr  StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                    kkint32         maxImagesPerClass,
-                                                   kkint32         numOfFolds
+                                                   kkint32         numOfFolds,
+                                                   RunLog&         log
                                                   );
    
     void  SortByClass         (bool  reversedOrder = false);
-    void  SortByImageFileName (bool  reversedOrder = false);
-    void  SortByProbability   (bool  reversedOrder = false);
-    void  SortByBreakTie      (bool  reversedOrder = false);
-    void  SortByRootName      (bool  reversedOrder = false);
-   
-    RunLog&        log;
 
+    void  SortByImageFileName (bool  reversedOrder = false);
+
+    void  SortByProbability   (bool  reversedOrder = false);
+
+    void  SortByBreakTie      (bool  reversedOrder = false);
+
+    void  SortByRootName      (bool  reversedOrder = false);
 
   private:
     class  BreakTieComparison;
@@ -515,7 +552,7 @@ namespace KKMachineLearning
 
     /** 
      * @brief  Keeps track of the current order of FeatureVector entries in the list.
-     * @details This helps functions such as LookUpByImageFileName to work more efficiently.  If in ImageFileName order
+     * @details This helps functions such as LookUpByImageFileName to work more efficiently.  If in ExampleFileName order
      *  it can then perform a binary search rather than a seq. scan. This field is updated by the different sort
      *  routines, and by the methods that allow you to add an entry.
      */
@@ -546,7 +583,7 @@ namespace KKMachineLearning
 
   typedef  FeatureVectorList*  FeatureVectorListPtr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif
 

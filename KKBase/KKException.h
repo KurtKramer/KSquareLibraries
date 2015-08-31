@@ -31,18 +31,24 @@ namespace KKB
     
     KKException (const KKException&  _exception);
     
-    KKException (const KKStr&   _exceptionStr);
+    KKException (const KKStr&  _exceptionStr);
+
+    KKException (const char*  _exceptionStr);
 
     KKException (const KKStr&           _exceptionStr,
                  const std::exception&  _innerException
                 );
 
-    KKException (const char*  _exceptionStr);
-
-    //KKException (const char*  &_exceptionStr);
-    
     KKException (const char*            _exceptionStr,
                  const std::exception&  _innerException
+                );
+
+    KKException (const char*         _exceptionStr,
+                 const KKException&  _innerException
+                );
+
+    KKException (const KKStr&        _exceptionStr,
+                 const KKException&  _innerException
                 );
 
     virtual  ~KKException ()  throw ();

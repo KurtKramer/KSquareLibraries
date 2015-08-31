@@ -64,9 +64,9 @@ KKStr  HTMLReport::CurStyleStr ()
 
   switch  (curAlignment)
   {
-  case  Left:   styleStr << "left";    break;
-  case  Center: styleStr << "center";  break;
-  case  Right:  styleStr << "right";   break;
+  case  AlignmentType::Left:   styleStr << "left";    break;
+  case  AlignmentType::Center: styleStr << "center";  break;
+  case  AlignmentType::Right:  styleStr << "right";   break;
   }
 
   styleStr << "\"";

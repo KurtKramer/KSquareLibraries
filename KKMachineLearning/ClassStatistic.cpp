@@ -1,10 +1,9 @@
 #include "FirstIncludes.h"
+#include <algorithm>
 #include <iostream>
 #include <map>
 #include <vector>
 #include <fstream>
-
-
 #include "MemoryDebug.h"
 using namespace  std;
 
@@ -16,8 +15,7 @@ using namespace  KKB;
 
 #include "ClassStatistic.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
-
+using namespace  KKMLL;
 
 
 
@@ -28,9 +26,8 @@ ClassStatistic::ClassStatistic (const ClassStatistic&  right):
 }
 
 
-
 ClassStatistic::ClassStatistic (MLClassPtr  _mlClass,
-                                kkuint32       _count
+                                kkuint32    _count
                                ):
    mlClass (_mlClass),
    count      (_count)
@@ -38,16 +35,13 @@ ClassStatistic::ClassStatistic (MLClassPtr  _mlClass,
 
 
 
-   
-   
- const KKStr&   ClassStatistic::Name ()  const
- {
-   if  (mlClass)
-     return mlClass->Name ();
-   else
-     return  KKStr::EmptyStr ();
- }  /* Name */
-
+const KKStr&   ClassStatistic::Name ()  const
+{
+  if  (mlClass)
+   return mlClass->Name ();
+  else
+   return  KKStr::EmptyStr ();
+}  /* Name */
 
 
 
@@ -70,7 +64,7 @@ const ClassStatistic&  ClassStatistic::operator+= (const ClassStatistic&  right)
 
 
 
-ClassStatisticList::ClassStatisticList  (bool  _owner):
+ClassStatisticList::ClassStatisticList (bool  _owner):
    KKQueue<ClassStatistic> (_owner)
 {
 }
@@ -100,7 +94,7 @@ const  ClassStatisticList&  ClassStatisticList::operator+= (const ClassStatistic
   for  (idx = right.begin ();  idx != right.end ();  idx++)
   {
     ClassStatisticPtr  rightStat = *idx;
-    ClassStatisticPtr  leftStat = LookUpByImageClass (rightStat->MLClass ());
+    ClassStatisticPtr  leftStat = LookUpByMLClass (rightStat->MLClass ());
 
     if  (leftStat)
       (*leftStat) += (*rightStat);
@@ -115,7 +109,7 @@ const  ClassStatisticList&  ClassStatisticList::operator+= (const ClassStatistic
 
 
 
-ClassStatisticPtr  ClassStatisticList::LookUpByImageClass (MLClassPtr  mlClass)  const
+ClassStatisticPtr  ClassStatisticList::LookUpByMLClass (MLClassPtr  mlClass)  const
 {
   map<MLClassPtr, ClassStatisticPtr>::const_iterator  idx;
   idx = imageClassIndex.find (mlClass);
@@ -140,7 +134,6 @@ public:
      return  (p1->MLClass ()->UpperName () < p2->MLClass ()->UpperName ());
    }
 };  /* ClassStatisticSortComparrison */
-
 
 
 

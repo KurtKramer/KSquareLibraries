@@ -86,11 +86,11 @@ KKThread::KKThread (const KKStr&        _threadName,
                    ):
    crashed               (false),
    msgQueue              (_msgQueue),
-   priority              (tpNormal),
+   priority              (ThreadPriority::Normal),
    shutdownFlag          (false),
    shutdownPrerequisites (NULL),
    startPrerequisites    (NULL),
-   status                (tsNotStarted),
+   status                (ThreadStatus::NotStarted),
    terminateFlag         (false),
    threadId              (0),
    threadName            (_threadName)
@@ -143,10 +143,10 @@ KKStr  KKThread::threadStatusDescs[] = {"NULL", "Started", "Running", "Stopping"
 
 const KKStr&  KKThread::ThreadStatusToStr (ThreadStatus ts)
 {
-  if  ((ts < 0)  ||  (ts > tsStopped))
+  if  ((ts < ThreadStatus::Null)  ||  (ts > ThreadStatus::Stopped))
     return KKStr::EmptyStr ();
   else
-    return  threadStatusDescs[ts];
+    return  threadStatusDescs[(int)ts];
 }
 
 
@@ -208,15 +208,21 @@ KKStrListPtr  KKThread::GetMsgs ()
 void  KKThread::TerminateThread ()
 {
   terminateFlag = true;
+  TerminateFlagChanged ();
 }
 
 
 
+void  KKThread::TerminateFlagChanged ()
+{
+}
+
+
 bool  KKThread::ThreadStillProcessing ()  const
 {
-  return  ((status == KKThread::tsRunning)   ||  
-           (status == KKThread::tsStarting)  ||
-           (status == KKThread::tsStopping)
+  return  ((status == ThreadStatus::Running)   ||  
+           (status == ThreadStatus::Starting)  ||
+           (status == ThreadStatus::Stopping)
           );
 }
 
@@ -231,9 +237,9 @@ void  KKThread::ShutdownThread ()
 
 void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
 {
-  if  ((status == tsNotStarted)  || 
-       (status == tsStopped)     ||
-       (status == tsNULL)
+  if  ((status == ThreadStatus::NotStarted)  || 
+       (status == ThreadStatus::Stopped)     ||
+       (status == ThreadStatus::Null)
       )
   {
     // Thread is not running;  we can return.
@@ -242,9 +248,9 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
 
   kkuint64  startTime = KKB::osGetLocalDateTime ().Seconds ();
   kkuint32  timeWaitedSoFar = 0;
-  while  ((status == tsRunning)  ||  (status == tsStopping))
+  while  ((status == ThreadStatus::Running)  ||  (status == ThreadStatus::Stopping))
   {
-	osSleepMiliSecs (50);
+	  osSleepMiliSecs (50);
     if  (maxTimeToWait > 0)
     {
       kkuint64 now = osGetLocalDateTime ().Seconds ();
@@ -255,9 +261,9 @@ void  KKThread::WaitForThreadToStop (kkuint32  maxTimeToWait)
   }
 
 
-  if  ((status != tsNotStarted)  &&
-       (status != tsStopped)     &&
-       (status != tsNULL)
+  if  ((status != ThreadStatus::NotStarted)  &&
+       (status != ThreadStatus::Stopped)     &&
+       (status != ThreadStatus::Null)
       )
   {
     Kill ();
@@ -274,9 +280,31 @@ extern "C"
   unsigned int ThreadStartCallBack (void* param) 
   {
     KKThreadPtr  tp = (KKThreadPtr)param;
-    tp->Status (KKThread::tsStarting);
-    tp->Run ();
-    tp->Status (KKThread::tsStopped);
+    tp->Status (KKThread::ThreadStatus::Starting);
+    try  
+    {
+      tp->Run ();
+    }
+    catch  (const KKException&  e1)
+    {
+      tp->Crashed (true);
+      tp->ExceptionText (e1.ToString ());
+    }
+    catch  (const std::exception e2)
+    {
+      tp->Crashed (true);
+      const char* e2What = e2.what ();
+      KKStr  msg (30 + strlen (e2What));
+      msg << "std::exception: " << e2What;
+      tp->ExceptionText (msg);
+    }
+    catch  (...)
+    {
+      tp->Crashed (true);
+      tp->ExceptionText ("exception(...) trapped.");
+    }
+
+    tp->Status (KKThread::ThreadStatus::Stopped);
     return 0;
   }
 }
@@ -286,9 +314,31 @@ extern "C"
 void*  ThreadStartCallBack (void* param)
 {
   KKThreadPtr  tp = (KKThreadPtr)param;
-  tp->Status (KKThread::tsStarting);
-  tp->Run ();
-  tp->Status (KKThread::tsStopped);
+  tp->Status (KKThread::Starting);
+    try  
+    {
+      tp->Run ();
+    }
+    catch  (const KKException&  e1)
+    {
+      tp->Crashed (true);
+      tp->ExceptionText (e1.ToString ());
+    }
+    catch  (const std::exception e2)
+    {
+      tp->Crashed (true);
+      const char* e2What = e2.what ();
+      KKStr  msg (30 + strlen (e2What));
+      msg << "std::exception: " << e2What;
+      tp->ExceptionText (msg);
+    }
+    catch  (...)
+    {
+      tp->Crashed (true);
+      const char* e2What = e2.what ();
+      tp->ExceptionText ("exception(...) trapped.");
+    }
+  tp->Status (KKThread::Stopped);
   return 0;
 }
 
@@ -323,16 +373,16 @@ void  KKThread::Start (ThreadPriority  _priority,
 
     switch  (priority)
     {
-    case  tpNULL:
-    case  tpNormal:
+    case  ThreadPriority::Null:
+    case  ThreadPriority::Normal:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_BELOW_NORMAL);
       break;
 
-    case  tpLow:
+    case  ThreadPriority::Low:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_NORMAL);
       break;
 
-    case  tpHigh:
+    case  ThreadPriority::High:
       SetThreadPriority (windowsThreadHandle, THREAD_PRIORITY_ABOVE_NORMAL);
       break;
     }
@@ -348,7 +398,7 @@ void  KKThread::Start (ThreadPriority  _priority,
                       )
 {
   int returnCd = pthread_create (&linuxThreadId,
-                                 NULL,                   // const pthread_attr_t * attr,
+                                 NULL,                  // const pthread_attr_t * attr,
                                  ThreadStartCallBack,   // void * (*start_routine)(void *),
                                  (void*)this
                                 );
@@ -475,7 +525,7 @@ bool  KKThread::OkToShutdown ()  const
   for  (idx = shutdownPrerequisites->begin ();  idx != shutdownPrerequisites->end ();  ++idx)
   {
     KKThreadPtr  preReq = *idx;
-    if  (preReq->Status () != tsStopped)
+    if  (preReq->Status () != ThreadStatus::Stopped)
       return false;
   }
   return  true;
@@ -492,7 +542,7 @@ bool  KKThread::OkToStart ()  const
   for  (idx = startPrerequisites->begin ();  idx != startPrerequisites->end ();  ++idx)
   {
     KKThreadPtr  preReq = *idx;
-    if  (preReq->Status () != tsRunning)
+    if  (preReq->Status () != ThreadStatus::Running)
       return false;
   }
   return  true;

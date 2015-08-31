@@ -1,17 +1,15 @@
 #include "FirstIncludes.h"
-
 #include <vector>
 #include <map>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 using namespace  KKB;
 
@@ -21,19 +19,18 @@ using namespace  KKB;
 #include "FileDesc.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
-
+using namespace  KKMLL;
 
 
 Orderings::Orderings (FeatureVectorListPtr  _data,
                       kkuint32              _numOfOrderings,
-                      kkuint32              _numOfFolds
+                      kkuint32              _numOfFolds,
+                      RunLog&               _log
                      ):
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
-  log            (_data->Log ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   numOfFolds     (_numOfFolds),
   numOfOrderings (_numOfOrderings),
   valid          (true)
@@ -43,7 +40,7 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
   if  (!featureFileName.Empty ())
     indexFileName = osRemoveExtension (featureFileName) + ".idx";
 
-  CreateOrderings ();
+  CreateOrderings (_log);
 }
 
 
@@ -51,15 +48,15 @@ Orderings::Orderings (FeatureVectorListPtr  _data,
 
 Orderings::Orderings (const FeatureVectorListPtr  _data,
                       const KKStr&                _indexFileName,
-                      kkint32                       _numOfOrderings,
-                      kkint32                       _numOfFolds
+                      kkuint32                    _numOfOrderings,
+                      kkuint32                    _numOfFolds,
+                      RunLog&                     _log
                      ):
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   indexFileName  (_indexFileName),
-  log            (_data->Log ()),
   numOfFolds     (_numOfFolds),
   numOfOrderings (_numOfOrderings),
   valid          (true)
@@ -67,23 +64,24 @@ Orderings::Orderings (const FeatureVectorListPtr  _data,
 {
   if  (!osFileExists (indexFileName))
   {
-    CreateOrderings ();
+    CreateOrderings (_log);
     Save ();
   }
   else
   {
-    Load ();
+    Load (_log);
   }
 }
 
 
-Orderings::Orderings (FeatureVectorListPtr  _data):
+Orderings::Orderings (FeatureVectorListPtr  _data,
+                      RunLog&               _log
+                     ):
   
   data           (new FeatureVectorList (*_data, false)),
   fileDesc       (_data->FileDesc ()),
-  mlClasses   (_data->ExtractListOfClasses ()),
+  mlClasses      (_data->ExtractListOfClasses ()),
   indexFileName  (),
-  log            (_data->Log ()),
   numOfFolds     (0),
   numOfOrderings (0),
   valid          (true)
@@ -92,7 +90,7 @@ Orderings::Orderings (FeatureVectorListPtr  _data):
   featureFileName = data->FileName ();
   if  (featureFileName.Empty ())
   {
-    log.Level (-1) << endl << endl
+    _log.Level (-1) << endl << endl
                    << "Orderings   *** ERROR ***   No File Name in FeatureVectorList object." << endl
                    << endl;
     valid = false;
@@ -102,12 +100,12 @@ Orderings::Orderings (FeatureVectorListPtr  _data):
   bool  successful = true;
   indexFileName = osRemoveExtension (featureFileName) + ".idx";
 
-  Load (indexFileName, successful);
+  Load (indexFileName, successful, _log);
   if  (!successful)
   {
-    log.Level (-1) << endl << endl << endl
-                   << "Orderings::Orderings   Error Loading existing ordering[" << indexFileName << "]" << endl
-                   << endl;
+    _log.Level (-1) << endl
+                    << "Orderings::Orderings   Error Loading existing ordering[" << indexFileName << "]" << endl
+                    << endl;
     valid = false;
   }
 
@@ -128,8 +126,7 @@ Orderings::Orderings (const KKStr&      _featureFileName,
   data            (NULL),
   featureFileName (_featureFileName),
   fileDesc        (NULL),
-  mlClasses    (NULL),
-  log             (_log),
+  mlClasses       (NULL),
   numOfFolds      (0),
   numOfOrderings  (0),
   valid           (true)
@@ -146,12 +143,12 @@ Orderings::Orderings (const KKStr&      _featureFileName,
                                    _cancelFlag,
                                    successful,
                                    changesdMade,
-                                   log
+                                   _log
                                   );
 
   if  (_cancelFlag)
   {
-    log.Level (-1) << endl << endl
+    _log.Level (-1) << endl
                    << "Orderings   ***ERROR***   CancelFlag was set,   load was canceled." << endl
                    << endl;
     valid = false;
@@ -161,7 +158,7 @@ Orderings::Orderings (const KKStr&      _featureFileName,
 
   if  (!successful)
   {
-    log.Level (-1) << endl << endl
+    _log.Level (-1) << endl
                    << "Orderings   ***ERROR***   Loading Feature File[" << featureFileName << "]" << endl
                    << endl;
     valid = false;
@@ -171,12 +168,12 @@ Orderings::Orderings (const KKStr&      _featureFileName,
   fileDesc = data->FileDesc ();
 
   indexFileName = osRemoveExtension (featureFileName) + ".idx";
-  Load (indexFileName, successful);
+  Load (indexFileName, successful, _log);
   if  (!successful)
   {
-    log.Level (-1) << endl << endl
-                   << "Orderings   *** ERROR ***   Loading Index File[" << indexFileName << "]" << endl
-                   << endl;
+    _log.Level (-1) << endl
+                    << "Orderings   *** ERROR ***   Loading Index File[" << indexFileName << "]" << endl
+                    << endl;
     valid = false;
     return;
   }
@@ -195,16 +192,15 @@ Orderings::~Orderings ()
 
 OrderingsPtr  Orderings::CreateOrderingsObjFromFileIfAvaliable (const FeatureVectorListPtr  _data,
                                                                 kkuint32                    _numOfOrderings,
-                                                                kkuint32                    _numOfFolds
+                                                                kkuint32                    _numOfFolds,
+                                                                RunLog&                     _log
                                                                )
 {
-  RunLog& log = _data->Log ();
-
   KKStr  _featureFileName = _data->FileName ();
 
   if  (_featureFileName.Empty ())
   {
-    log.Level (-1) << endl << endl << endl
+    _log.Level (-1) << endl
                    << "CreateOrderingsObjFromFileIfAvaliable  *** ERROR ***  FileName empty." << endl
                    << endl;
     return NULL;
@@ -212,14 +208,14 @@ OrderingsPtr  Orderings::CreateOrderingsObjFromFileIfAvaliable (const FeatureVec
 
   KKStr _indexFileName = osRemoveExtension (_featureFileName) + ".idx";
   
-  OrderingsPtr  orderings = new Orderings (_data, _indexFileName, _numOfOrderings, _numOfFolds);
+  OrderingsPtr  orderings = new Orderings (_data, _indexFileName, _numOfOrderings, _numOfFolds, _log);
   if  (orderings->Valid ())
   {
     if  ((orderings->NumOfOrderings () != _numOfOrderings)  ||  
          (orderings->NumOfFolds     () != _numOfFolds)
         )
     {
-      log.Level (-1) << endl << endl << endl
+      _log.Level (-1) << endl
                      << "CreateOrderingsObjFromFileIfAvaliable   *** ERROR ***      Dimension Mismatched." << endl
                      << endl
                      << "Dimensions Expected   NumOfOrderings[" << _numOfOrderings              << "]  NumOfFolds[" << _numOfFolds              << "]" << endl
@@ -232,7 +228,7 @@ OrderingsPtr  Orderings::CreateOrderingsObjFromFileIfAvaliable (const FeatureVec
   else
   {
     delete orderings;
-    orderings = new Orderings (_data, _numOfOrderings, _numOfFolds);
+    orderings = new Orderings (_data, _numOfOrderings, _numOfFolds, _log);
     if  (!orderings->Valid ())
     {
       delete  orderings;
@@ -250,7 +246,7 @@ OrderingsPtr  Orderings::CreateOrderingsObjFromFileIfAvaliable (const FeatureVec
 
 
 
-void  Orderings::CreateOrderings ()
+void  Orderings::CreateOrderings (RunLog&  log)
 {
   DeleteOrderings ();
 
@@ -258,7 +254,7 @@ void  Orderings::CreateOrderings ()
   while  (orderings.size () < numOfOrderings)
   {
     workList->RandomizeOrder ();
-    FeatureVectorListPtr  ordering = workList->StratifyAmoungstClasses (mlClasses, -1, numOfFolds);
+    FeatureVectorListPtr  ordering = workList->StratifyAmoungstClasses (mlClasses, -1, numOfFolds, log);
     orderings.push_back (ordering);
   }
 
@@ -279,10 +275,10 @@ void  Orderings::DeleteOrderings ()
 }  /* DeleteOrderings */
 
 
-void  Orderings::Load ()
+void  Orderings::Load (RunLog&  log)
 {
   bool  successful = true;
-  Load (indexFileName, successful);
+  Load (indexFileName, successful, log);
   if  (!successful)
     valid = false;
 
@@ -291,7 +287,8 @@ void  Orderings::Load ()
 
 
 void  Orderings::Load (const KKStr&  _indexFileName,
-                       bool&          successful
+                       bool&         successful,
+                       RunLog&       log
                       )
 {
   log.Level (10) << endl << endl << endl << endl;
@@ -395,7 +392,7 @@ void  Orderings::Load (const KKStr&  _indexFileName,
 
     kkint32  imagesInOrdering = 0;
 
-    FeatureVectorListPtr  ordering = new FeatureVectorList (fileDesc, false, log);
+    FeatureVectorListPtr  ordering = new FeatureVectorList (fileDesc, false);
     orderings.push_back (ordering);
 
     {
@@ -528,12 +525,14 @@ void  Orderings::Load (const KKStr&  _indexFileName,
 
 
 
-void  Orderings::Save (const KKStr&  _indexFileName)
+void  Orderings::Save (const KKStr&  _indexFileName,
+                       RunLog&       _log
+                      )
 {
   if  (indexFileName.Empty ())
   {
     // We have a problem,  no way of creating a file name.
-    log.Level (-1) << endl << endl
+    _log.Level (-1) << endl << endl
                    << "Orderings::Save    *** ERROR ***    No Index File Name Specified." << endl
                    << endl;
     osWaitForEnter ();
@@ -551,9 +550,6 @@ void  Orderings::Save (const KKStr&  _indexFileName)
 
 void  Orderings::Save ()
 {
-  log.Level (10) << "Orderings::Save  IndexFileName[" << indexFileName << "]" << endl;
-
-
   // Build an index by relative location in master list data, so that we can 
   // quickly determine index for other orderings.
   map<FeatureVectorPtr,kkint32> index;
@@ -591,17 +587,15 @@ void  Orderings::Save ()
     {
       const FeatureVectorPtr  example = *idx;
       indexIDX = index.find (example);
-      if (indexIDX == index.end ())
+      if  (indexIDX == index.end ())
       {
         // We have a very serious problem,  for some reason we 
         // could not locate the FeatureVector object in the master list.
-        log.Level (-1) << endl << endl << endl
-                       << "Orderings::Save  *** ERROR ***    FileName[" << indexFileName << "]" << endl
-                       << "                 Could not locate Image in data list" << endl
-                       << "                 This is a VERY Fatal error." << endl
-                       << endl;
-        osWaitForEnter ();
-        exit (-1);
+
+        KKStr errMsg;
+        errMsg << "Orderings::Save  ***ERROR***   FileName[" << indexFileName << "]   Could not locate Image in data list";
+        cerr << endl << errMsg << endl << endl;
+        throw KKException (errMsg);
       }
 
       o << indexIDX->second << endl;
@@ -621,13 +615,10 @@ FeatureVectorListPtr  Orderings::Ordering (kkuint32  orderingIdx)  const
 {
   if  ((orderingIdx >= orderings.size ()))
   {
-    log.Level (-1) << endl << endl << endl
-                   << "Orderings::Ordering  *** ERROR ***    Index Out Of Range." << endl
-                   << "                 Number Of Orderings [" << (kkuint32)orderings.size ()  << "]" << endl
-                   << "                 OrderingIdx         [" << (kkuint32)orderingIdx        << "]" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg;
+    errMsg << "Orderings::Ordering  ***ERROR***  Index Out Of Range;  Number Of Orderings [" << (kkuint32)orderings.size ()  << "]   OrderingIdx [" << (kkuint32)orderingIdx        << "]";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   return  orderings[orderingIdx];

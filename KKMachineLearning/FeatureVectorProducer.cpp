@@ -2,7 +2,6 @@
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -22,7 +21,7 @@ using namespace  KKB;
 
 #include "FeatureVectorProducer.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -60,7 +59,7 @@ FeatureVectorPtr  FeatureVectorProducer::ComputeFeatureVectorFromImage (const KK
   }
   else
   {
-    fv = ComputeFeatureVector (*i, knownClass, intermediateImages, runLog);
+    fv = ComputeFeatureVector (*i, knownClass, intermediateImages, 1.0f, runLog);
     delete  i;
     i = NULL;
   }

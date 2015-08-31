@@ -1,23 +1,20 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <ctype.h>
 #include <limits.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
-#include "KKBaseTypes.h"
+#include "GlobalGoalKeeper.h"
 #include "DateTime.h"
+#include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 #include "KKQueue.h"
 #include "RunLog.h"
@@ -29,12 +26,12 @@ using namespace  KKB;
 #include "FeatureNumList.h"
 #include "MLClass.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
   /**
    *@class FileDescList
@@ -52,7 +49,7 @@ namespace KKMachineLearning
   private:
   };
 
-}  /* KKMachineLearning */
+}  /* KKMLL */
 
 
 
@@ -75,8 +72,7 @@ void  FileDesc::FinalCleanUp ()
   }
   blocker->EndBlock ();
 
-  GoalKeeper::Destroy (blocker);
-  blocker = NULL;
+  GoalKeeper::Destroy (blocker);  blocker = NULL;
 }  /* FinalCleanUp */
 
 
@@ -117,9 +113,7 @@ kkint32  FileDesc::MemoryConsumedEstimated ()  const
 
 
 
-FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
-                                               VectorKKStr&  _fieldNames
-                                              )
+FileDescPtr   FileDesc::NewContinuousDataOnly (VectorKKStr&  _fieldNames)
 {
   bool  alreadyExists = false;
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -132,7 +126,7 @@ FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
       if  (seqNum > 0)
         fieldName << "_" << StrFormatInt (seqNum, "000");
 
-      newFileDesc->AddAAttribute (fieldName, NumericAttribute, alreadyExists);
+      newFileDesc->AddAAttribute (fieldName, AttributeType::Numeric, alreadyExists);
       seqNum++;
     }
       while  (alreadyExists);
@@ -143,21 +137,31 @@ FileDescPtr   FileDesc::NewContinuousDataOnly (RunLog&       _log,
 
 
 
-
-
-
-
 void  FileDesc::AddAAttribute (const Attribute&  attribute)
 {
   attributes.PushOnBack (new Attribute (attribute));
   attributeVector.push_back (attribute.Type ());
 
   kkint32  card = 0;
-  if  (attribute.Type () == NumericAttribute)
+  if  (attribute.Type () == AttributeType::Numeric)
      card = 999999999;
 
   cardinalityVector.push_back (card);
 }  /* AddAAttribute */
+
+
+
+
+
+void  FileDesc::AddAttributes (const KKMLL::AttributeList&  attributes)
+{
+  AttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  {
+    AddAAttribute (**idx);
+  }
+}
+
 
 
 
@@ -181,7 +185,7 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
   attributeVector.push_back (curAttribute->Type ());
 
   kkint32  card = 0;
-  if  (curAttribute->Type () == NumericAttribute)
+  if  (curAttribute->Type () == AttributeType::Numeric)
      card = INT_MAX;
   cardinalityVector.push_back (card);
 }  /* AddAAttribute */
@@ -189,9 +193,9 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
 
 
 
-void  FileDesc::AddClasses (MLClassList&  classesToAdd)
+void  FileDesc::AddClasses (const MLClassList&  classesToAdd)
 {
-  MLClassList::iterator  idx;
+  MLClassList::const_iterator  idx;
   for  (idx = classesToAdd.begin ();  idx != classesToAdd.end ();  idx++)
   {
     MLClassPtr  ic = *idx;
@@ -222,7 +226,9 @@ void  FileDesc::AddANominalValue (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "AddANominalValue");
   AttributeType t = Type (fieldNum);
-  if  ((t == NominalAttribute)  ||  (t = SymbolicAttribute))
+  if  ((t == AttributeType::Nominal)  ||
+       (t == AttributeType::Symbolic)
+      )
   {
     attributes[fieldNum].AddANominalValue (nominalValue, alreadyExist);
     if  (!alreadyExist)
@@ -241,11 +247,9 @@ void  FileDesc::AddANominalValue (const KKStr&   nominalValue,
   if  (!curAttribute)
   {
     // This should never happen, means that there has not been a nominal feature added yet.
-    log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue    *** ERROR ***    No Current Attribute Set." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg = "FileDesc::AddANominalValue    ***ERROR***    No Current Attribute Set.";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
   
   alreadyExist = false;
@@ -266,11 +270,10 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
   curAttribute = attributes.LookUpByName (attributeName);
   if  (!curAttribute)
   {
-    log.Level (-1) << endl
-                   << "FileDesc::AddANominalValue   *** ERROR ***,   Invalid Attribute[" << attributeName << "]." << endl
-                   << endl;
-    osWaitForEnter ();
-    exit(-1);
+    KKStr  errMsg (128);
+    errMsg << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "].";
+    log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
   AddANominalValue (nominalValue, alreadyExist, log);
@@ -278,15 +281,14 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
 
 
 
-
-MLClassPtr  FileDesc::LookUpImageClassByName (const KKStr&  className)
+MLClassPtr  FileDesc::LookUpMLClassByName (const KKStr&  className)
 {
   return  classes.LookUpByName (className);
 }
 
 
 
-MLClassPtr  FileDesc::LookUpUnKnownImageClass ()
+MLClassPtr  FileDesc::LookUpUnKnownMLClass ()
 {
   return  classes.GetUnKnownClass ();
 }
@@ -306,13 +308,10 @@ void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
 {
   if  ((fieldNum < 0)  ||  (fieldNum >= attributes.QueueSize ()))
   {
-    cerr  << endl
-          << endl
-          << "FileDesc::" << funcName << "   *** ERROR ***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined." << endl
-          << endl
-          << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg (128);
+    errMsg << "FileDesc::" << funcName << "   ***ERROR***  Invalid FieldNum[" << fieldNum << "]  Only [" << attributes.QueueSize () << "] fields defined.";
+    cerr  << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 }  /* ValidateFieldNum */
 
@@ -325,7 +324,9 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 {
   ValidateFieldNum (fieldNum, "LookUpNominalCode");
   const Attribute& a = attributes[fieldNum];
-  if  ((a.Type () != NominalAttribute)  &&  (a.Type () != SymbolicAttribute))
+  if  ((a.Type () != AttributeType::Nominal)  &&
+       (a.Type () != AttributeType::Symbolic)
+      )
   {
     return -1;
   }
@@ -337,9 +338,7 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 
 
 
-kkint32  FileDesc::Cardinality (kkint32  fieldNum,
-                              RunLog&  log
-                             )  const
+kkint32  FileDesc::Cardinality (kkint32  fieldNum)  const
 {
   ValidateFieldNum (fieldNum, "Type");
 
@@ -347,21 +346,18 @@ kkint32  FileDesc::Cardinality (kkint32  fieldNum,
 
   if  (!a)
   {
-    log.Level (-1) << endl
-                   << endl
-                   << "FileDesc::Cardinality    *** ERROR ***" << endl
-                   << "                Could not locate attribute[" << fieldNum << "]" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr  errMsg;
+    errMsg << "FileDesc::Cardinality    ***ERROR***    Could not locate attribute[" << fieldNum << "]";
+    cerr << errMsg;
+    throw  KKException (errMsg);
   }
 
   switch  (a->Type ())
   {
-  case  IgnoreAttribute:   return  a->Cardinality ();
-  case  NominalAttribute:  return  a->Cardinality ();
-  case  NumericAttribute:  return  INT_MAX;
-  case  SymbolicAttribute: return  a->Cardinality ();
+  case  AttributeType::Ignore:   return  a->Cardinality ();
+  case  AttributeType::Nominal:  return  a->Cardinality ();
+  case  AttributeType::Numeric:  return  INT_MAX;
+  case  AttributeType::Symbolic: return  a->Cardinality ();
   
   default: return  INT_MAX;
   }
@@ -420,12 +416,10 @@ AttributePtr*  FileDesc::CreateAAttributeTable ()  const
 }  /* CreateAAttributeTable */
 
 
-
-
-vector<AttributeType>  FileDesc::CreateAttributeTypeTable ()  const
+AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
 {
   kkint32  x;
-  vector<AttributeType>  attributeTypes (attributes.QueueSize (), NULLAttribute);
+  AttributeTypeVector  attributeTypes (attributes.size (), AttributeType::NULLAttribute);
   for  (x = 0;  x < attributes.QueueSize ();  x++)
     attributeTypes[x] = attributes[x].Type ();
   return attributeTypes;
@@ -612,20 +606,6 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
 
 
 
-FileDescList::FileDescList (bool  _owner):
-  KKQueue<FileDesc> (_owner)
-{
-}
-
-
-
-FileDescList::~FileDescList ()
-{
-}
-
-
-
-
 void FileDesc::DisplayAttributeMappings ( )
 {
   kkuint32 i;
@@ -637,7 +617,7 @@ void FileDesc::DisplayAttributeMappings ( )
     a = attributes.IdxToPtr (i);
     cout << i << ": ";
 
-    if  (a->Type() == NominalAttribute)
+    if  (a->Type() == AttributeType::Nominal)
     {
       for  (j = 0;  j<a->Cardinality ();  j++)
       {
@@ -649,7 +629,7 @@ void FileDesc::DisplayAttributeMappings ( )
       }
     }
 
-    else if  (a->Type() == SymbolicAttribute)
+    else if  (a->Type() == AttributeType::Symbolic)
     {
       cout << "Symbolic (";
       for  (j = 0;  j<a->Cardinality ();  j++)
@@ -665,22 +645,22 @@ void FileDesc::DisplayAttributeMappings ( )
     }
 
     
-    else if (a->Type() == IgnoreAttribute)
+    else if (a->Type() == AttributeType::Ignore)
     {
       cout << "ignore";
     }
 
-    else if (a->Type() == NumericAttribute)
+    else if (a->Type() == AttributeType::Numeric)
     {
       cout << "numeric";
     }
 
-    else if (a->Type() == OrdinalAttribute)
+    else if (a->Type() == AttributeType::Ordinal)
     {
       cout << "ordinal";
     }
 
-    else if (a->Type() == NULLAttribute)
+    else if (a->Type() == AttributeType::NULLAttribute)
     {
       cout << "NULL";
     }
@@ -712,14 +692,15 @@ kkint32  FileDesc::GetFieldNumFromAttributeName (const KKStr&  attributeName)  c
 
 /**
  * @brief Allows the user to quickly determine if there are no nominal fields.
- * @details  Example use is in CrossValidation application, by using this method it can quickly determine if it is worth while using encoding.
+ * @details  Example use is in CrossValidation application, by using this method it can quickly determine
+ * if it is worth while using encoding.
  */
 bool  FileDesc::AllFieldsAreNumeric ()  const
 {
   for  (kkint32 fieldNum = 0;  fieldNum < (kkint32)NumOfFields ();  fieldNum++)
   {
     AttributeType  t = Type (fieldNum);
-    if  ((t != NumericAttribute)  &&  (t != IgnoreAttribute))
+    if  ((t != AttributeType::Numeric)  &&  (t != AttributeType::Ignore))
       return false;
   }
 
@@ -781,7 +762,7 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
     }
 
     f->AddAAttribute (left.GetAAttribute (fieldNum));
-    if  (lType != SymbolicAttribute)
+    if  (lType != AttributeType::Symbolic)
     {
       continue;
     }
@@ -789,7 +770,7 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
     // We can merge in Nominal Values for this field.
 
     kkint32  z;
-    for  (z = 0;  z < right.Cardinality (fieldNum, log);  z++)
+    for  (z = 0;  z < right.Cardinality (fieldNum);  z++)
     {
       const KKStr&  rightNomName = right.GetNominalValue (fieldNum, z);
       kkint32  lCode = f->LookUpNominalCode (fieldNum, rightNomName);
@@ -806,3 +787,173 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 }  /* MergeSymbolicFields */
 
 
+
+
+void  FileDesc::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  className = e->SectionName ();
+      const KKStr&  varName = e->VarName ();
+      if  (varName.EqualIgnoreCase ("FileName"))
+      {
+        XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
+        if  (eKKStr)
+          FileName (*(eKKStr->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("Attributes"))
+      {
+        XmlElementAttributeListPtr  eAttributes = dynamic_cast<XmlElementAttributeListPtr>(e);
+        if  (eAttributes  &&  (eAttributes->Value ()))
+          AddAttributes (*(eAttributes->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("Classes"))
+      {
+        XmlElementMLClassNameListPtr  eCLasses = dynamic_cast<XmlElementMLClassNameListPtr>(e);
+        if  (eCLasses  &&  (eCLasses->Value ()))
+          AddClasses (*(eCLasses->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("ClassNameAttribute"))
+      {
+        XmlElementKKStrPtr  eKKStr = dynamic_cast<XmlElementKKStrPtr>(e);
+        if  (eKKStr)
+          ClassNameAttribute (*(eKKStr->Value ()));
+      }
+
+      else if  (varName.EqualIgnoreCase ("Version"))
+      {
+        XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
+        if  (eKKInt32)
+          Version ((kkint16)eKKInt32->Value ());
+      }
+
+      else if  (varName.EqualIgnoreCase ("SparseMinFeatureNum"))
+      {
+        XmlElementInt32Ptr  eKKInt32 = dynamic_cast<XmlElementInt32Ptr>(e);
+        if  (eKKInt32)
+          SparseMinFeatureNum (eKKInt32->Value ());
+      }
+      else
+      {
+        log.Level (-1) << endl
+          << "XmlElementFileDesc   ***ERROR***   Unexpected Element <" << className << ", VarName=" << varName.QuotedStr () << ">" << endl
+          << endl;
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+
+
+
+void  FileDesc::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
+
+
+{
+  XmlTag  startTag ("FileDesc", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  if  (!fileName.Empty ())
+    XmlElementKKStr::WriteXML (fileName, "FileName", o);
+
+  XmlElementAttributeList::WriteXML (attributes, "Attributes", o);
+
+  XmlElementMLClassNameList::WriteXML (classes, "Classes", o);
+
+  if  (!ClassNameAttribute ().Empty ())
+    XmlElementKKStr::WriteXML (ClassNameAttribute (), "ClassNameAttribute", o);
+
+  XmlElementInt32::WriteXML (version, "Version", o);
+
+  if  (sparseMinFeatureNum  != 0)
+    XmlElementInt32::WriteXML (sparseMinFeatureNum, "SparseMinFeatureNum", o);
+
+  XmlTag  endTag ("FileDesc", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+
+
+
+FileDescList::FileDescList (bool  _owner):
+  KKQueue<FileDesc> (_owner)
+{
+}
+
+
+
+FileDescList::~FileDescList ()
+{
+}
+
+
+
+
+XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
+                                        XmlStream&  s,
+                                        RunLog&     log
+                                       ):
+  XmlElement (tag, s, log),
+  value (NULL)
+{
+  value = new FileDesc ();
+  value->ReadXML (s, tag, log);
+  value = FileDesc::GetExistingFileDesc (value);
+}
+                
+
+ 
+XmlElementFileDesc::~XmlElementFileDesc ()
+{
+  // You can not delete an instance of FileDesc.
+  value = NULL;
+}
+
+ 
+FileDescPtr  XmlElementFileDesc::Value ()  const
+{
+  return  value;
+}
+
+
+FileDescPtr  XmlElementFileDesc::TakeOwnership ()
+{
+  FileDescPtr  v = value;
+  value = NULL;
+  return  v;
+}
+
+
+
+void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
+                                    const KKStr&     varName,
+                                    ostream&         o
+                                  )
+{
+  fileDesc.WriteXML (varName, o);
+}  /* WriteXML */
+
+
+
+XmlFactoryMacro(FileDesc)

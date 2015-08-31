@@ -3,16 +3,14 @@
 
 #include  "ModelParam.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   class ModelParamKnn: public  ModelParam
   {
   public:
     typedef  ModelParamKnn*  ModelParamKnnPtr;
 
-    ModelParamKnn  (FileDescPtr  _fileDesc,
-                    RunLog&      _log
-                   );
+    ModelParamKnn  ();
 
 
     ModelParamKnn  (const ModelParamKnn&  _param);
@@ -25,27 +23,32 @@ namespace KKMachineLearning
     virtual
     ModelParamKnnPtr  Duplicate ()  const;
 
-    virtual ModelParamTypes  ModelParamType () const {return mptKNN;}
-
-    virtual
-    void    ReadSpecificImplementationXML (istream&  i);
+    virtual ModelParamTypes  ModelParamType () const {return ModelParamTypes::KNN;}
 
     /*! 
      @brief Creates a Command Line String that represents these parameters.
      */
     virtual
-    KKStr   ToCmdLineStr ()  const;
+    KKStr   ToCmdLineStr (RunLog&  log)  const;
 
-    virtual
-    void    WriteSpecificImplementationXML (std::ostream&  o)  const;
 
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
 
   private:
     virtual
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
-                                 bool&         parameterUsed
+                                 bool&         parameterUsed,
+                                 RunLog&       log
                                 );
 
 
@@ -60,7 +63,12 @@ namespace KKMachineLearning
   };  /* ModelParamKnn */
 
   typedef  ModelParamKnn::ModelParamKnnPtr  ModelParamKnnPtr;
+
+  typedef  XmlElementModelParamTemplate<ModelParamKnn>  XmlElementModelParamKnn;
+  typedef  XmlElementModelParamKnn*  XmlElementModelParamKnnPtr;
 }
+
+
 
 
 #endif

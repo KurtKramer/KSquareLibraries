@@ -2,10 +2,10 @@
 #define  _ATTRIBUTE_
 
 /**
- *@class  KKMachineLearning::Attribute
+ *@class  KKMLL::Attribute
  *@author  Kurt Kramer
  *@brief describes a single Feature, Type and possible values.
- *@details Used to support 'FileDesc', 'FeatureVector', and 'PostLarvaeFV' classes.  FileDesc 
+ *@details Used to support 'FileDesc', 'FeatureVector', and is derived classes classes.  FileDesc 
  *         will maintain a list of 'Attribute' objects to describe each separate field in a given
  *         FeatureFile.  A given Feature can be one of several types, Numeric, Nominal, Ordinal, 
  *         and Symbolic.
@@ -20,40 +20,61 @@
  * Symbolic - Similar to Nominal except you do not know all the possible values this attribute
  *            can take on.
  *@endcode
- *@see  KKMachineLearning::FeatureEncoder, KKMachineLearning::FeatureVector, KKMachineLearning::FeatureFileIO
+ *@see  KKMLL::FeatureEncoder, KKMLL::FeatureVector, KKMLL::FeatureFileIO
 */
 
 #include <map>
 #include <vector>
 #include "KKStr.h"
 #include "KKQueue.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
-  typedef  enum 
+  enum  class  AttributeType: int
   {
     NULLAttribute,
-    IgnoreAttribute,
-    NumericAttribute,
-    NominalAttribute,
-    OrdinalAttribute,
-    SymbolicAttribute    /**< Same as NominalAttribute, except the names file does not
-                          * list all possible values.  They have to be determined from
-                          * the data file.
-                          */
-  } 
-  AttributeType;
+    Ignore,
+    Numeric,
+    Nominal,
+    Ordinal,
+    Symbolic    /**< Same as Nominal, except the names file does not
+                 * list all possible values.  They have to be determined from
+                 * the data file.
+                 */
+  };
 
-  typedef  std::vector<AttributeType>  AttributeTypeVector;
+  AttributeType  operator++(AttributeType  zed);
+
+
+  class  AttributeTypeVector: public  vector<AttributeType>
+  {
+  public:
+    AttributeTypeVector ();
+    AttributeTypeVector (kkuint32  initialSize,  AttributeType  initialValue);
+
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+
+  };  /* AttributeTypeVector */
+
 
   typedef  AttributeTypeVector*        AttributeTypeVectorPtr;
-
 
   class  Attribute
   {
   public:
+    Attribute ();
+
     Attribute (const KKStr&   _name,
                AttributeType  _type,
                kkint32        _fieldNum
@@ -76,10 +97,10 @@ namespace KKMachineLearning
 
     /**
      *@brief Returns back the cardinality of the attribute; the number of possible values it can take.
-     *@details Only  attributes with type NominalAttribute or SymbolicAttribute have a fixed number
+     *@details Only  attributes with type Nominal or Symbolic have a fixed number
      *         of possible values all others will return 999999999.
      */
-    kkint32        Cardinality ();
+    kkint32        Cardinality ()  const;
 
     kkint32        FieldNum ()  const  {return  fieldNum;}
 
@@ -87,7 +108,7 @@ namespace KKMachineLearning
 
     /**
      *@brief  Returns the nominal value for the given ordinal value.
-     *@details For example: you could have a Attribute called DayOfTheWeek that would be type 'NominalAttribute'
+     *@details For example: you could have a Attribute called DayOfTheWeek that would be type 'Nominal'
      *  where its possible values  are "Sun", "Mon", "Tue", "Wed", "Thur", "Fri", and "Sat". In this case a call
      *  to this method where 'code' == 3 would return "Wed".
      */
@@ -102,9 +123,18 @@ namespace KKMachineLearning
     const
     KKStr&         NameUpper () const {return nameUpper;}
   
+    void           ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
     AttributeType  Type () const {return  type;}
 
     KKStr          TypeStr () const;
+
+    void           WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
     Attribute&     operator= (const Attribute&  right);
 
@@ -127,21 +157,39 @@ namespace KKMachineLearning
   class  AttributeList: public KKQueue<Attribute>
   {
   public:
+    AttributeList ();
+
     AttributeList (bool owner);
 
     ~AttributeList ();
 
+
     AttributeTypeVectorPtr  CreateAttributeTypeVector ()  const;
+
 
     const
     AttributePtr  LookUpByName (const KKStr&  attributeName)  const;
 
+
     kkint32 MemoryConsumedEstimated ()  const;
+
 
     void  PushOnBack   (AttributePtr  attribute);
 
+
     void  PushOnFront  (AttributePtr  attribute);
 
+
+    void  ReadXML (XmlStream&      s,
+                   XmlTagConstPtr  tag,
+                   RunLog&         log
+                  );
+
+
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
+ 
     /**
      *@brief  Determines if two different attribute lists are the same; compares each respective attribute, name and type.                                                
      */
@@ -158,8 +206,28 @@ namespace KKMachineLearning
     std::map<KKStr, AttributePtr>  nameIndex;
   };  /* AttributeList */
 
-  KKStr  AttributeTypeToStr (AttributeType  type);
+  typedef  AttributeList*  AttributeListPtr;
 
-}  /* namespace KKMachineLearning */
+  typedef  AttributeList  const *  AttributeListConstPtr;
+
+
+  const KKStr&  AttributeTypeToStr (AttributeType  type);
+  AttributeType  AttributeTypeFromStr (const KKStr&  s);
+
+
+
+  typedef  XmlElementTemplate<AttributeTypeVector>  XmlElementAttributeTypeVector;
+  typedef  XmlElementAttributeTypeVector*  XmlElementAttributeTypeVectorPtr;
+
+
+  typedef  XmlElementTemplate<Attribute>  XmlElementAttribute;
+  typedef  XmlElementAttribute*  XmlElementAttributePtr;
+
+
+  typedef  XmlElementTemplate<AttributeList>  XmlElementAttributeList;
+  typedef  XmlElementAttributeList*  XmlElementAttributeListPtr;
+
+
+}  /* namespace KKMLL */
 
 #endif

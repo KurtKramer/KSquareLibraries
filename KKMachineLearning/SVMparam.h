@@ -2,19 +2,17 @@
 #define  _SVMPARAM_
 
 
-
-
-#include  "ClassAssignments.h"
-#include  "FeatureNumList.h"
-#include  "MLClass.h"
-#include  "FileDesc.h"
-#include  "RunLog.h"
-#include  "KKStr.h"
-#include  "svm.h"
+#include "ClassAssignments.h"
+#include "FeatureNumList.h"
+#include "FileDesc.h"
+#include "KKStr.h"
+#include "MLClass.h"
+#include "RunLog.h"
+#include "svm.h"
 using namespace SVM233;
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _BINARYCLASSPARMS_
@@ -24,28 +22,41 @@ namespace KKMachineLearning
   typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
   #endif
 
-  typedef  enum  {MachineType_NULL, 
+
+  enum class  SVM_MachineType: int
+                 {Null, 
                   OneVsOne, 
                   OneVsAll, 
                   BinaryCombos,
                   BoostSVM
-                 }         
-                  SVM_MachineType;
+                 };
 
-  typedef  enum  {SelectionMethod_NULL, SelectByVoting, SelectByProbability}  SVM_SelectionMethod;
+  enum class  SVM_SelectionMethod: int
+                 {Null, 
+                  Voting,
+                  Probability
+                 };
 
-  typedef  enum  {NoEncoding, BinaryEncoding, ScaledEncoding, Encoding_NULL}  SVM_EncodingMethod;
 
-  typedef  enum  {BRNull,
-                  BRnoCompression, 
-                  BRcompressionPost, 
-                  BRcompressionPre, 
-                  BRunBalancedVariance,
-                  BRunBalancedSpecified    // Meaning we will tell you which features are unbalanced.
-                 }       
-                    SVM_CompressionMethod;
+  /***
+   *SVM_EncodingMethod  refers to how Nominal and Symbolic features encoded.
+   *BinaryEncoding   
+   */
 
-  typedef  enum  {KT_Linear, KT_Polynomial, KT_RBF, KT_NULL}                  SVM_KernalType;
+  enum  class  SVM_EncodingMethod: int
+                 {Null,
+                  NoEncoding, 
+                  Binary, 
+                  Scaled
+                 };
+
+
+  enum  class  SVM_KernalType: int
+                 {Null,
+                  Linear,
+                  Polynomial,
+                  RBF
+                 };
 
 
   #if  !defined(_FeatureVectorList_Defined_)
@@ -63,60 +74,51 @@ namespace KKMachineLearning
   class  SVMparam
   {
   public:
-    SVMparam  (KKStr&                 _cmdLineStr,
-               const FeatureNumList&  _selectedFeatures,
-               FileDescPtr            _fileDesc,
-               RunLog&                _log,
-               bool&                  _validFormat
+    SVMparam  (KKStr&                  _cmdLineStr,
+               FeatureNumListConstPtr  _selectedFeatures,  /**< Will make own instance; caller maintains ownership status. */
+               bool&                   _validFormat,
+               RunLog&                 _log
               );
 
 
-    SVMparam  (FileDescPtr  _fileDesc,
-               RunLog&      _log
-              );
-
+    SVMparam  ();
 
     SVMparam  (const SVMparam&  _svmParam);
 
     ~SVMparam  ();
 
-
-    void    Load (ClassAssignments& _mlClasses,
-                  KKStr&            _fileName,
-                  bool&             _successful
-                 );
-
-    void    ReadXML (FILE*  i);
-
-    void    ReadXML (istream&  i);
-
-    void    Save (KKStr&  _fileName,
-                  bool&    _successful
-                 );
-
-    void    WriteXML (std::ostream&  o)  const;
-
-
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
-    void    AddBinaryClassParms (MLClassPtr             class1,
-                                 MLClassPtr             class2,
-                                 const svm_parameter&   _param,
-                                 const FeatureNumList&  _selectedFeatures,
-                                 float                  _weight
+    /**@brief Adding parameters that are specific to a class pair; this is used when using the BFS version of SVM. */
+    void    AddBinaryClassParms (MLClassPtr              _class1,            /**< First of two classes that is being added to this model.  */
+                                 MLClassPtr              _class2,            /**< Second of two classes that is being added to this model. */
+                                 const svm_parameter&    _param,             /**< Parameters that are to be used by two-class classifier.  */
+                                 FeatureNumListConstPtr  _selectedFeatures,  /**< makes own copy; caller will retain ownership status.     */
+                                 float                   _weight             /**< You can specify the weight that you want to give to this
+                                                                              * binary-class SVM when voting or computing probability.
+                                                                              */
                                 );
 
-    float   AvgMumOfFeatures ();
+    float   AvgMumOfFeatures (FileDescPtr fileDesc) const;
     float   AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const;
+
+
+    /** If binary class parms don't exist will return NULL. */
+    BinaryClassParmsPtr   GetBinaryClassParms (MLClassPtr  class1,
+                                               MLClassPtr  class2
+                                              );
 
     BinaryClassParmsPtr  GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
                                                           MLClassPtr  class2
                                                          );
 
-    const FeatureNumList&  GetFeatureNums ()  const;
+    FeatureNumListConstPtr GetFeatureNums ()  const;
 
-    const FeatureNumList&  GetFeatureNums (MLClassPtr  class1,
-                                           MLClassPtr  class2
+    FeatureNumListConstPtr GetFeatureNums (FileDescPtr  fileDesc)  const;
+
+    FeatureNumListConstPtr GetFeatureNums (FileDescPtr  fileDesc,
+                                           MLClassPtr   class1,
+                                           MLClassPtr   class2
                                           )  const;
 
     void    ProcessSvmParameter (svm_parameter&  _param,
@@ -137,6 +139,7 @@ namespace KKMachineLearning
     double                   C_Param  (MLClassPtr  class1,
                                        MLClassPtr  class2
                                       )  const;
+
     SVM_EncodingMethod       EncodingMethod             () const {return encodingMethod;}
 
     float                    FeatureCountNet            () const;
@@ -149,13 +152,19 @@ namespace KKMachineLearning
 
     kkint32                  MemoryConsumedEstimated    () const;
 
-    kkint32                  NumOfFeaturesAfterEncoding () const;
+    kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                         RunLog&      log
+                                                        ) const;
 
     const svm_parameter&     Param                      () const {return param;}
 
+    const VectorFloat&       ProbClassPairs             () const {return probClassPairs;}
+
     float                    SamplingRate               () const {return samplingRate;}
 
-    const FeatureNumList&    SelectedFeatures           () const {return selectedFeatures;}
+    FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
+
+    FeatureNumListConstPtr   SelectedFeatures           (FileDescPtr  fileDesc)  const;
 
     SVM_SelectionMethod      SelectionMethod            () const {return selectionMethod;}
 
@@ -173,28 +182,40 @@ namespace KKMachineLearning
     void  EncodingMethod     (SVM_EncodingMethod     _encodingMethod)     {encodingMethod    = _encodingMethod;}
     void  Gamma              (double                 _gamma)              {param.Gamma (_gamma);}
     void  Gamma_Param        (double                 _gamma)              {Gamma (_gamma);}
-    void  KernalType         (SVM_KernalType         _kernalType)         {param.KernalType (_kernalType);}
+    void  KernalType         (SVM_KernalType         _kernalType)         {param.KernalType ((int)_kernalType);}
 
     void  MachineType        (SVM_MachineType        _machineType)        {machineType        = _machineType;}
     void  SamplingRate       (float                  _samplingRate)       {samplingRate       = _samplingRate;}
-    void  SelectedFeatures   (const FeatureNumList&  _selectedFeatures)   {selectedFeatures   = _selectedFeatures;}
+    void  SelectedFeatures   (FeatureNumListConst&    _selectedFeatures);
+    void  SelectedFeatures   (FeatureNumListConstPtr  _selectedFeatures);
 
-    void  SetBinaryClassFields (MLClassPtr             class1,
-                                MLClassPtr             class2,
-                                const svm_parameter&   _param,
-                                const FeatureNumList&  _features,
-                                float                  _weight
+
+
+    void  SetBinaryClassFields (MLClassPtr              _class1,      /**< First of two classes that is being added to this model.  */
+                                MLClassPtr              _class2,      /**< Second of two classes that is being added to this model. */
+                                const svm_parameter&    _param,       /**< Parameters that are to be used by two-class classifier.  */
+                                FeatureNumListConstPtr  _features,    /**< makes own copy; caller will retain ownership status.     */
+                                float                   _weight       /**< You can specify the weight that you want to give to this
+                                                                       * binary-class SVM when voting or computing probability.
+                                                                       */
                                );
 
-    void  SetFeatureNums (const FeatureNumList&  _features);
+    void  SetFeatureNums (FeatureNumListConstPtr  _features);
 
-    void  SetFeatureNums    (MLClassPtr             class1,
-                             MLClassPtr             class2,
-                             const FeatureNumList&  _features,
-                             float                  _weight = -1  /**< -1 Indicates use existing value.  */
+    void  SetFeatureNums (FeatureNumListConst&    _features);
+
+
+    /** 
+     *@brief Sets the selected Features and Weight for the binary class SVM specified by _class1 and _class2.
+     *@details If this pair has not been defined yet will create a new entry and add to list of Binary-Class-Pair's. 
+     */
+    void  SetFeatureNums    (MLClassPtr              _class1,      /**< First of two classes  to set features for.           */
+                             MLClassPtr              _class2,      /**< Second of two classes to set features for.           */
+                             FeatureNumListConstPtr  _features,    /**< Makes own copy; caller will retain ownership status. */
+                             float                   _weight = -1  /**< -1 Indicates use existing value.                     */
                             );
 
-    void  SelectionMethod   (SVM_SelectionMethod    _selectionMethod)  {selectionMethod  = _selectionMethod;}
+    void  SelectionMethod   (SVM_SelectionMethod   _selectionMethod)  {selectionMethod  = _selectionMethod;}
 
 
     // Other Methods
@@ -206,8 +227,22 @@ namespace KKMachineLearning
     void  ParseCmdLineParameter (const KKStr&  parameter,
                                  const KKStr&  value,
                                  bool&         parameterUsed,
-                                 bool&         _validFormat
+                                 bool&         _validFormat,
+                                 RunLog&       log
                                 );
+
+    void  ProbClassPairsInitialize (const ClassAssignments&  assignments);
+
+
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
 
   private:
@@ -215,27 +250,27 @@ namespace KKMachineLearning
     //                      svm_parameter&  _param
     //                     );
 
-    void  ParseCmdLine (KKStr   _cmdLineStr,
-                        bool&   _validFormat
+    void  ParseCmdLine (KKStr    _cmdLineStr,
+                        bool&    _validFormat,
+                        RunLog&  _log
                        );
 
     BinaryClassParmsListPtr  binaryParmsList;
 
     SVM_EncodingMethod       encodingMethod;
 
-    FileDescPtr              fileDesc;
-
     KKStr                    fileName;
-
-    RunLog&                  log;
 
     SVM_MachineType          machineType;
 
     svm_parameter            param;             // From SVMlib2
 
+    VectorFloat              probClassPairs;   
+
     float                    samplingRate;      // USed with BoostSVM
 
-    FeatureNumList           selectedFeatures;  // Feature Number to use.
+    mutable
+    FeatureNumListPtr        selectedFeatures;  /**< Feature Numbers to use. */
 
     SVM_SelectionMethod      selectionMethod;
 
@@ -245,8 +280,6 @@ namespace KKMachineLearning
     bool                     validParam;
 
   };  /* SVMparam */
-
-
 
 
   typedef  SVMparam*   SVMparamPtr;
@@ -264,7 +297,11 @@ namespace KKMachineLearning
   SVM_SelectionMethod    SelectionMethodFromStr   (const KKStr&  selectionMethodStr);
 
 
-}  /* namespace KKMachineLearning */
+
+  typedef  XmlElementTemplate<SVMparam>  XmlElementSVMparam;
+  typedef  XmlElementSVMparam*  XmlElementSVMparamPtr;
+
+}  /* namespace KKMLL */
 
 
 

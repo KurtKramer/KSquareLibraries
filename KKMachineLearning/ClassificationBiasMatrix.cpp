@@ -25,7 +25,7 @@ using namespace  KKB;
 
 
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 #include "ClassificationBiasMatrix.h"
 
@@ -125,7 +125,7 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (const ClassificationBiasMatr
    runLog              (_runLog),
    valid               (true)
 {
-  classes = new MLClassList (cm.ImageClasses ());
+  classes = new MLClassList (cm.MLClasses ());
   numClasses = classes->QueueSize ();
   DeclareMatrix ();
   BuildFromConfusionMatrix (cm);
@@ -172,9 +172,9 @@ ClassificationBiasMatrix::ClassificationBiasMatrix (RunLog&  _runLog):
 {
   BuildTestMatrix ();
 
-  ofstream  sw ("c:\\Temp\\ClassificationBiasMatrix_Test.txt");
-  TestPaperResults (sw);
-  sw.close ();
+  //ofstream  sw ("c:\\Temp\\ClassificationBiasMatrix_Test.txt");
+  //TestPaperResults (sw);
+  //sw.close ();
 }
 
 
@@ -261,9 +261,6 @@ void  ClassificationBiasMatrix::BuildTestMatrix ()
 
 
 
-
-
-
 void  ClassificationBiasMatrix::TestPaperResults (ostream&   sw)
 {
   VectorDouble classCounts (7, 0.0);
@@ -309,7 +306,6 @@ void  ClassificationBiasMatrix::TestPaperResults (ostream&   sw)
 
   sw << endl << endl;
 }  /* TestPaperResults*/
-
 
 
 
@@ -432,7 +428,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  'Classes'  was not provided before 'DataRow'.";
         runLog.Level (-1) << errMsg << endl;
         valid = false;
-        throw errMsg;
+        throw KKException (errMsg);
       }
 
       KKStr  className = l.ExtractToken2 ("\t");
@@ -447,7 +443,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow specifies class[" + className + "] which is not defined by caller";
         runLog.Level (-1) << errMsg << endl;
         valid = false;
-        throw errMsg;
+        throw KKException (errMsg);
       }
 
       if  (fileClassesIdx < 0)
@@ -455,7 +451,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         KKStr errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow specifies class[" + className + "] was not defined in 'Classes' line.";
         runLog.Level (-1) << errMsg << endl;
         valid = false;
-        throw errMsg;
+        throw KKException (errMsg);
       }
 
       kkint32  classesRowIdx = classesIdx;
@@ -466,7 +462,7 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
         KKStr  errMsg = "ReadSimpleConfusionMatrix   ***ERROR***  DataRow Class[" + className + "]  number[" + StrFormatInt ((kkint32)dataFields.size (), "ZZZ0") + "] of values provided does not match number of Classes.";
         runLog.Level (-1) << errMsg << endl;
         valid = false;
-        throw errMsg;
+        throw KKException (errMsg);
       }
 
       for  (kkint32 c = 0;  c < numClasses;  c++)
@@ -571,7 +567,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
                                                     VectorDouble&        stdErrors
                                                    )
 {
-  // For description of calc's ee the paper: 
+  // For description of calc's see the paper: 
   //    "Estimating the Taxonomic composition of a sample when individuals are classified with error"
   //     by Andrew Solow, Cabll Davis, Qiao Hu
   //     Woods Hole Oceanographic Institution, Woods Hole Massachusetts
@@ -585,7 +581,7 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
                    "]  and Prev Defined ClassList[" + StrFormatInt (numClasses, "ZZZ0") + "].";
     runLog.Level (-1) << errMsg << endl;
     valid = false;
-    throw errMsg;
+    throw KKException (errMsg);
   }
 
   kkint32 x = 0;
@@ -618,8 +614,6 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
       }
     }
   }
-
-
 
   Matrix  m (numClasses, 1);
   for  (x = 0;  x < numClasses;  x++)
@@ -671,9 +665,6 @@ void   ClassificationBiasMatrix::PerformAdjustmnts (const VectorDouble&  classif
 
 
 
-
-
-
 void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
 {
   if  (classes == NULL)
@@ -681,7 +672,7 @@ void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
     KKStr  errMsg = "ClassificationBiasMatrix::PrintBiasMatrix  ***ERROR***   'Classes' not defined;  this indicates that this object was not properly initialized.";
     runLog.Level (-1) << errMsg << endl;
     valid = false;
-    throw errMsg;
+    throw KKException (errMsg);
   }
 
   sw << "BiasMatrix File Name            [" << biasFileName                     << "]" << endl
@@ -729,7 +720,6 @@ void  ClassificationBiasMatrix::PrintBiasMatrix (ostream& sw)
      sw << "\t" << StrFormatDouble (colTotals[col], "ZZZ,ZZ0.00");
   sw << endl;
  
-
   sw << endl;
  
   for  (row = 0; row < numClasses;  row++)
@@ -792,15 +782,20 @@ void  ClassificationBiasMatrix::PrintAdjustedResults (ostream&             sw,
   }
   catch  (KKException&  e)
   {
-    throw e;
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  KKException";
+    runLog.Level (-1) << errMsg << endl << e.ToString () << endl;
+    throw KKException (errMsg, e);
   }
-  catch  (KKStr& errMsg)
+  catch  (std::exception& e2)
   {
-    throw errMsg;
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  std::exception";
+    runLog.Level (-1) << errMsg << endl << e2.what() << endl;
+    throw KKException (errMsg, e2);
   }
   catch  (...)
   {
-    KKStr  m = "ClassificationBiasMatrix::PrintAdjustedResults     Exception thrown.";
-    throw KKException (m);
+    KKStr  errMsg = "ClassificationBiasMatrix::PrintAdjustedResults   ***ERROR***  Exception(...)";
+    runLog.Level (-1) << endl << errMsg << endl;
+    throw KKException (errMsg);
   }
 }  /* PrintAdjustedResults */

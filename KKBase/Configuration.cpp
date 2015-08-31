@@ -163,7 +163,8 @@ namespace  KKB
       return sizeof (lineNum) + name.MemoryConsumedEstimated () + settings.MemoryConsumedEstimated ();
     }
 
-    kkint32 NumOfSettings ()  {return  settings.QueueSize ();}
+
+    kkint32 NumOfSettings ()  const {return  settings.QueueSize ();}
 
 
     KKStrConstPtr   SettingName (kkint32 settingNum)  const
@@ -211,7 +212,7 @@ namespace  KKB
       settings.AddSetting (_name, _value, _lineNum);
     }
 
-    KKStrConstPtr   LookUpValue (KKStr  _name, kkint32& lineNum)
+    KKStrConstPtr   LookUpValue (const KKStr&  _name, kkint32& lineNum)
     {
       SettingPtr  setting = settings.LookUp (_name);
       if  (setting)
@@ -220,7 +221,10 @@ namespace  KKB
         return  setting->Value ();
       }
       else
+      {
+        lineNum = -1;
         return NULL;
+      }
     }
 
   private:
@@ -291,24 +295,20 @@ Configuration::Configuration (const KKStr&  _fileName,
   formatGood           (true),
   formatErrors         (),
   formatErrorsLineNums (),
-  sections             (NULL),
-  log                  (_log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
-  LoadFile ();
+  LoadFile (_log);
 }
 
 
-
-
-Configuration::Configuration (RunLog&  _log):
+Configuration::Configuration ():
   curSectionName       (),
   fileName             (),
   formatGood           (true),
   formatErrors         (),
   formatErrorsLineNums (),
-  sections             (NULL),
-  log                  (_log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
 }
@@ -322,8 +322,7 @@ Configuration::Configuration (const Configuration&  c):
   formatGood           (c.formatGood),
   formatErrors         (c.formatErrors),
   formatErrorsLineNums (c.formatErrorsLineNums),
-  sections             (NULL),
-  log                  (c.log)
+  sections             (NULL)
 {
   sections = new ConfSectionList ();
 
@@ -402,7 +401,18 @@ void  Configuration::PrintFormatErrors (ostream& o)
 
 
 
-void  Configuration::LoadFile ()
+
+void  Configuration::Load (const KKB::KKStr&  _fileName,
+                           RunLog&            _log
+                          )
+{
+  fileName = _fileName;
+  LoadFile (_log);
+}
+
+
+
+void  Configuration::LoadFile (RunLog&  log)
 {
   log.Level (10) << "Configuration::LoadFile: " << fileName << endl;
 
@@ -539,7 +549,7 @@ kkint32  Configuration::NumOfSections ()
 
 
 
-kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)
+kkint32  Configuration::NumOfSettings (const KKStr&  sectionName)  const
 {
   ConfSectionPtr  section = sections->LookUp (sectionName);
 
@@ -649,11 +659,17 @@ KKStrConstPtr   Configuration::SettingValue (kkint32       sectionNum,
                                             )  const
 
 {
+  KKStrConstPtr  result = NULL;
   ConfSectionPtr  section = sections->IdxToPtr (sectionNum);
   if  (!section)
-    return NULL;
-
-  return section->LookUpValue (settingName, lineNum);
+  {
+    lineNum = -1;
+  }
+  else
+  {
+    result = section->LookUpValue (settingName, lineNum);
+  }
+  return  result;
 }
 
 

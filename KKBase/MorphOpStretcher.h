@@ -35,7 +35,7 @@ namespace  KKB
     float  ColFactor  ()  const  {return colFactor;}
     float  RowFactor  ()  const  {return rowFactor;}
 
-    virtual  OperationType   Operation ()  const  {return  moStretcher;}
+    virtual  OperationType   Operation ()  const  {return  OperationType::Stretcher;}
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 

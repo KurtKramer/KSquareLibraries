@@ -7,6 +7,8 @@
 #include "MemoryDebug.h"
 using namespace std;
 
+
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -19,72 +21,51 @@ using namespace KKB;
 #include "FeatureVector.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+#include "KKMLLTypes.h"
+using namespace KKMLL;
 
 
 
 SVMparam::SVMparam  (KKStr&                 _cmdLineStr,
-                     const FeatureNumList&  _selectedFeatures,
-                     FileDescPtr            _fileDesc,
-                     RunLog&                _log,
-                     bool&                  _validFormat
+                     FeatureNumListConstPtr _selectedFeatures,
+                     bool&                  _validFormat,
+                     RunLog&                _log
                     ):
 
   binaryParmsList           (NULL),
-  encodingMethod            (NoEncoding),
-  fileDesc                  (_fileDesc),
+  encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
-  log                       (_log),
   param                     (),
+  probClassPairs             (),
   samplingRate              (0.0f),
-  selectedFeatures          (_selectedFeatures), 
-  selectionMethod           (SelectByVoting),
+  selectedFeatures          (), 
+  selectionMethod           (SVM_SelectionMethod::Voting),
   useProbabilityToBreakTies (false),
   validParam                (false)
 {
-  if  (!fileDesc)
-  {
-    log.Level (-1) << endl
-                   << "SVMparam::SVMparam  *** ERROR ***" << endl
-                   << "                    fileDesc == NULL" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
-
-  ParseCmdLine (_cmdLineStr, _validFormat);
+  if  (_selectedFeatures)
+    selectedFeatures = new FeatureNumList (*_selectedFeatures);
+  ParseCmdLine (_cmdLineStr, _validFormat, _log);
 }
 
 
 
 
 
-SVMparam::SVMparam  (FileDescPtr _fileDesc,
-                     RunLog&     _log
-                    ):
+SVMparam::SVMparam  ():
 
   binaryParmsList           (NULL),
-  encodingMethod            (NoEncoding),
-  fileDesc                  (_fileDesc),
+  encodingMethod            (SVM_EncodingMethod::NoEncoding),
   fileName                  (),
-  log                       (_log),
-  machineType               (OneVsOne),
+  machineType               (SVM_MachineType::OneVsOne),
   param                     (),
+  probClassPairs            (),
   samplingRate              (0.0f),
-  selectedFeatures          (_fileDesc), 
-  selectionMethod           (SelectByVoting),
+  selectedFeatures          (NULL), 
+  selectionMethod           (SVM_SelectionMethod::Voting),
   useProbabilityToBreakTies (false),
   validParam                (false)
 {
-  if  (!fileDesc)
-  {
-    log.Level (-1) << endl
-                   << "SVMparam::SVMparam  *** ERROR ***" << endl
-                   << "                    fileDesc == NULL" << endl
-                   << endl;
-    osWaitForEnter ();
-    exit (-1);
-  }
 }
 
 
@@ -95,17 +76,19 @@ SVMparam::SVMparam  (const SVMparam&  _svmParam):
 
   binaryParmsList            (NULL),
   encodingMethod             (_svmParam.encodingMethod),
-  fileDesc                   (_svmParam.fileDesc),
   fileName                   (_svmParam.fileName),
-  log                        (_svmParam.log),
   machineType                (_svmParam.machineType),
   param                      (_svmParam.param),
+  probClassPairs             (_svmParam.probClassPairs),
   samplingRate               (_svmParam.samplingRate),
   selectedFeatures           (_svmParam.selectedFeatures),
   selectionMethod            (_svmParam.selectionMethod),
   useProbabilityToBreakTies  (_svmParam.useProbabilityToBreakTies),
   validParam                 (_svmParam.validParam)
 {
+  if  (_svmParam.selectedFeatures)
+    selectedFeatures = new FeatureNumList (*_svmParam.selectedFeatures);
+
   if  (_svmParam.binaryParmsList)
   {
     binaryParmsList = _svmParam.binaryParmsList->DuplicateListAndContents ();
@@ -120,23 +103,84 @@ SVMparam::SVMparam  (const SVMparam&  _svmParam):
 
 SVMparam::~SVMparam  ()
 {
-  delete  binaryParmsList;  binaryParmsList = NULL;
+  delete  binaryParmsList;  binaryParmsList  = NULL;
+  delete  selectedFeatures; selectedFeatures = NULL;
 }
+
+
+
+FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescPtr  fileDesc)  const
+{
+  if  (!selectedFeatures)
+  {
+    selectedFeatures = new FeatureNumList (fileDesc);
+    selectedFeatures->SetAllFeatures (fileDesc);
+  }
+  return  selectedFeatures;
+}
+
 
 
 kkint32  SVMparam::MemoryConsumedEstimated () const
 {
-  kkint32  memoryConsumedEstimated = sizeof (SVMparam) 
-    + fileName.MemoryConsumedEstimated ()
-    + selectedFeatures.MemoryConsumedEstimated ();
+  kkint32  memoryConsumedEstimated = sizeof (SVMparam) + fileName.MemoryConsumedEstimated ();
+  if  (selectedFeatures)
+    memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
 
   if  (binaryParmsList)
     memoryConsumedEstimated += binaryParmsList->MemoryConsumedEstimated ();
 
-  // fileDesc   We do not own 'fileDesc'.
-
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated  */
+
+
+
+void  SVMparam::SelectedFeatures (const FeatureNumList&  _selectedFeatures)
+{
+  delete  selectedFeatures;
+  selectedFeatures  = new FeatureNumList (_selectedFeatures);
+}
+
+
+void  SVMparam::SelectedFeatures  (FeatureNumListConstPtr  _selectedFeatures)
+{
+  delete  selectedFeatures;
+  selectedFeatures  = new FeatureNumList (*_selectedFeatures);
+}
+
+
+
+void  SVMparam::ProbClassPairsInitialize (const ClassAssignments&  assignments)
+{
+  kkuint32  numClasses = assignments.size ();
+  if  (numClasses < 1)
+    return;
+
+  kkuint32  numPairs   = numClasses * (numClasses - 1) / 2;
+  probClassPairs.clear ();
+  if  (binaryParmsList == NULL)
+  {
+    for  (kkuint32 x = 0;  x < numPairs;  ++x)
+      probClassPairs.push_back (param.A);
+  }
+  else
+  {
+    for (kkuint32 class1IDX = 0;  class1IDX < (numClasses - 1);  ++class1IDX)
+    {
+      MLClassPtr       class1 = assignments.GetMLClass ((kkint16)class1IDX);
+      for (kkuint32 class2IDX = class1IDX + 1;  class2IDX < numClasses;  ++class2IDX)
+      {
+        MLClassPtr       class2 = assignments.GetMLClass ((kkint16)class2IDX);
+        BinaryClassParmsPtr  bcp = binaryParmsList->LookUp (class1, class2);
+        if  (bcp)
+          probClassPairs.push_back ((float)bcp->AParam ());
+        else
+          probClassPairs.push_back ((float)param.A);
+      }
+    }
+  }
+}  /* ProbClassPairsInitialize */
+
 
 
 
@@ -155,12 +199,11 @@ void  SVMparam::C_Param (double  _CC)
 
 
 
-
-
 void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
                                        const KKStr&  value,
                                        bool&         parameterUsed,
-                                       bool&         _validFormat
+                                       bool&         _validFormat,
+                                       RunLog&       log
                                       )
 {
   parameterUsed = true;
@@ -172,7 +215,6 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   field.Upper ();
   KKStr valueUpper (value);
   valueUpper.Upper ();
-
 
   param.ProcessSvmParameter (parameter,value, valueNum, parameterUsed);
   if  (parameterUsed)
@@ -188,11 +230,11 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   else if  (field == "-MT")
   {
     machineType = MachineTypeFromStr (valueUpper);
-    if  (machineType == MachineType_NULL)
+    if  (machineType == SVM_MachineType::Null)
     {
       _validFormat = false;
       log.Level (-1) << endl 
-        << "SVMparam::ParseCmdLine     *** ERROR ***" << endl
+        << "SVMparam::ParseCmdLineParameter     *** ERROR ***" << endl
         << "                Invalid -MT Parm[" << value << "]" << endl
         << endl;
     }
@@ -201,10 +243,10 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
   else if  ((field == "-SM")  ||  (field == "-SELECTIONMETHOD"))
   {
     selectionMethod  = SelectionMethodFromStr (valueUpper);
-    if  (selectionMethod == SelectionMethod_NULL)
+    if  (selectionMethod == SVM_SelectionMethod::Null)
     {
       log.Level (-1) << endl
-        << "SVMparam::ParseCmdLine    *** ERROR ***"  << endl
+        << "SVMparam::ParseCmdLineParameter    *** ERROR ***"  << endl
         << "            Invalid SelectionMethod (-SM)[" << value << "]." << endl
         << endl;
       _validFormat = false;
@@ -232,14 +274,15 @@ void  SVMparam::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
-                              bool&   _validFormat
+void  SVMparam::ParseCmdLine (KKStr     _cmdLineStr,
+                              bool&     _validFormat,
+                              RunLog&   _log
                              )
 {
   _validFormat = true;
 
   {
-    // Will create a svm_parameter object from _cmdLineStr,  the paramters that 
+    // Will create a svm_parameter object from _cmdLineStr,  the parameters that 
     // are not specific to svm_parameter will be left over and then we can 
     // process them.
     svm_parameter  tempParam (_cmdLineStr);
@@ -248,7 +291,7 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
 
   //DecodeParamStr (_cmdLineStr, param);
 
-  machineType = OneVsOne;
+  machineType = SVM_MachineType::OneVsOne;
 
   useProbabilityToBreakTies = false;
 
@@ -261,7 +304,7 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
   {
     if  (field[(kkint16)0] != '-')
     {
-      log.Level (-1) << "SVMparam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "SVMparam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -285,10 +328,10 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
     valueUpper.Upper ();
 
     bool  parameterUsed = false;
-    ParseCmdLineParameter (field, value, parameterUsed, _validFormat);
+    ParseCmdLineParameter (field, value, parameterUsed, _validFormat, _log);
     if  (!parameterUsed)
     {
-      log.Level (-1) << "SVMparam::ParseCmdLine - Invalid Parameter["  
+      _log.Level (-1) << "SVMparam::ParseCmdLine - Invalid Parameter["  
         << field << "]  Value[" << value << "]."
         << endl;
       _validFormat = false;
@@ -309,8 +352,6 @@ void  SVMparam::ParseCmdLine (KKStr  _cmdLineStr,
 */
 KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 {
-  log.Level (60) << "SVMparam::SvmParamToString Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr << _param.ToCmdLineStr ();
@@ -326,19 +367,17 @@ KKStr   SVMparam::SvmParamToString (const svm_parameter&  _param)  const
 */
 KKStr   SVMparam::ToString () const
 {
-  log.Level (60) << "SVMparam::ToString - Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr = SvmParamToString (param);
 
-  if  (encodingMethod != NoEncoding)
+  if  (encodingMethod != SVM_EncodingMethod::NoEncoding)
     cmdStr << "  -Encode " + EncodingMethodToStr (encodingMethod);
 
   cmdStr << "  -MT " << MachineTypeToStr (machineType);
   cmdStr << "  -SM " << SelectionMethodToStr (selectionMethod);
 
-  if  (machineType == BoostSVM)
+  if  (machineType == SVM_MachineType::BoostSVM)
   {
     cmdStr << "  -SamplingRate " << samplingRate;
   }
@@ -352,174 +391,6 @@ KKStr   SVMparam::ToString () const
 
 
 
-
-
-void  SVMparam::Save (KKStr&  _fileName,
-                      bool&    _successful
-                     )
-{
-  log.Level (20) << "SVMparam::Save - File[" << fileName << "]." << endl;
-
-  _successful = true;
-
-  fileName = _fileName;
-
-  ofstream outFile (fileName.Str ());
-
-  WriteXML (outFile);
-
-  outFile.close ();
-}  /* Save */
-
-
-
-
-void  SVMparam::WriteXML (ostream&  o)  const
-{
-  log.Level (20) << "SVMparam::Save to XML to ostream." << endl;
-
-  o << "<SVMparam>" << endl;
-
-  o << "<CmdLine>"  << "\t" << ToString ().QuotedStr () << "\t" << "</CmdLine>" << endl;
-
-  o << "<SelectedFeatures>"         << "\t"
-    << selectedFeatures.ToString () << "\t"
-    << "</SelectedFeatures>"
-    << endl;
-
-
-  if  (binaryParmsList)
-    binaryParmsList->WriteXML (o);
-
-  o << "</SVMparam>" << endl;
-}  /* WriteXML */
-
-
-
-void  SVMparam::ReadXML (istream&  i)
-{
-  log.Level (20) << "SVMparam::Read from XML file." << endl;
-
-  char  buff[20480];
-  
-  delete  binaryParmsList;  binaryParmsList = NULL;
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape charaters
-    field.Upper ();
-
-    if  (field == "</SVMPARAM>")
-      break;
-
-    else if  (field == "<CMDLINE>")
-    {
-      bool  validFormat;
-      KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", 
-                                             true      // true = decode escape charaters
-                                            );
-      ParseCmdLine (cmdLine, validFormat);
-    }
-
-    else if  (field == "<SELECTEDFEATURES>")
-    {
-      bool sucessful;
-      KKStr  featureNumStr = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape charaters
-      selectedFeatures.ExtractFeatureNumsFromStr (featureNumStr, sucessful);
-    }
-
-    else if  (field == "<BINARYCLASSPARMSLIST>")
-    {
-      binaryParmsList = BinaryClassParmsList::CreateFromXML (i, fileDesc, log);
-    }
-  }
-}  /* ReadXML */
-
-
-
-void  SVMparam::ReadXML (FILE*  i)
-{
-  log.Level (20) << "SVMparam::Read from XML file." << endl;
-
-  char  buff[10240];
-  
-  delete  binaryParmsList;  binaryParmsList = NULL;
-
-  while  (fgets (buff, sizeof (buff), i))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", 
-                                         true      // true = decode escape charaters
-                                        );
-    field.Upper ();
-
-    if  (field == "</SVMPARAM>")
-    {
-      break;
-    }
-
-    else if  (field == "<CMDLINE>")
-    {
-      bool  validFormat;
-      KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", 
-                                             true      // true = decode escape charaters
-                                            );
-      ParseCmdLine (cmdLine, validFormat);
-    }
-
-    else if  (field == "<SELECTEDFEATURES>")
-    {
-      bool sucessful;
-      KKStr  featureNumStr = ln.ExtractQuotedStr ("\n\r\t", 
-                                                   true      // true = decode escape charaters
-                                                  );
-      selectedFeatures.ExtractFeatureNumsFromStr (featureNumStr, sucessful);
-    }
-
-    else if  (field == "<BINARYCLASSPARMSLIST>")
-    {
-      binaryParmsList = BinaryClassParmsList::CreateFromXML (i, fileDesc, log);
-    }
-  }
-}  /* ReadXML */
-
-
-
-
-
-
-
-
-void  SVMparam::Load (ClassAssignments& _assignments,
-                      KKStr&            _fileName,
-                      bool&             _successful
-                     )
-{
-  log.Level (10) << "SVMparam::Load - File[" << _fileName << "]." << endl;
-
-  _successful = true;
-
-  fileName = _fileName;
-  FILE*  inputFile = osFOPEN (fileName.Str (), "r");
-
-  if  (!inputFile)
-  {
-    log.Level (-1) << "SVMparam::Load      *** ERROR ***" << endl;
-    log.Level (-1) << "                Could Not Open File[" << fileName << "]." << endl;
-    _successful = false;
-    return;
-  }
-
-  this->ReadXML (inputFile);
-   
-  fclose (inputFile);
-}  /* Load */
-
-
-
-
-
 BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
                                                                  MLClassPtr  class2
                                                                 )
@@ -528,7 +399,7 @@ BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  cla
 
   if  (binaryParmsList == NULL)
   {
-    binaryParmsList = new BinaryClassParmsList (true, 20);
+    binaryParmsList = new BinaryClassParmsList (true);
     twoClassComboParms = NULL;
   }
   else
@@ -548,73 +419,110 @@ BinaryClassParmsPtr   SVMparam::GetParamtersToUseFor2ClassCombo (MLClassPtr  cla
 
 
 
-const FeatureNumList&  SVMparam::GetFeatureNums ()  const
+
+BinaryClassParmsPtr   SVMparam::GetBinaryClassParms (MLClassPtr       class1,
+                                                     MLClassPtr       class2
+                                                    )
+{
+  if  (binaryParmsList == NULL)
+    return NULL;
+  else
+    return binaryParmsList->LookUp (class1, class2);
+}  /* GetBinaryClassParms */
+
+
+
+
+FeatureNumListConstPtr  SVMparam::GetFeatureNums ()  const
 {
   return  selectedFeatures;
 }
 
 
-const FeatureNumList&  SVMparam::GetFeatureNums (MLClassPtr  class1,
-                                                 MLClassPtr  class2
+
+FeatureNumListConstPtr  SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
+{
+  if  (selectedFeatures == NULL)
+    return SelectedFeatures (fileDesc);
+  else
+    return selectedFeatures;
+}
+
+
+
+FeatureNumListConstPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc,
+                                                 MLClassPtr   class1,
+                                                 MLClassPtr   class2
                                                 )  const
 {
   if  (!binaryParmsList)
   {
-    // This configuration file does not specify feature selction by binary classes,
-    // so return the genral one specifiedc for model.
-    return  selectedFeatures;
+    // This configuration file does not specify feature selection by binary classes,
+    // so return the general one specified for model.
+    return  SelectedFeatures (fileDesc);
   }
 
   BinaryClassParmsPtr  twoClassComboParm =  binaryParmsList->LookUp (class1, class2);
   if  (!twoClassComboParm)
-    return  selectedFeatures;
-
-
-  return  twoClassComboParm->SelectedFeatures ();
+    return  SelectedFeatures (fileDesc);
+  else
+    return  twoClassComboParm->SelectedFeaturesFD  (fileDesc);
 }  /* GetFeatureNums */
 
 
 
 
-void    SVMparam::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms)
+void   SVMparam::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms)
 {
   if  (!binaryParmsList)
-    binaryParmsList = new BinaryClassParmsList (true, 20);
+    binaryParmsList = new BinaryClassParmsList (true);
 
   binaryParmsList->PushOnBack (binaryClassParms);
 }  /* AddBinaryClassParms */
 
 
 
-float   SVMparam::AvgMumOfFeatures ()
+float   SVMparam::AvgMumOfFeatures (FileDescPtr fileDesc)  const
 {
   float  avgNumOfFeatures = 0.0f;
-  if  ((machineType == BinaryCombos)  &&  (binaryParmsList))
-    avgNumOfFeatures = binaryParmsList->FeatureCountNet ();
-  if  (avgNumOfFeatures== 0.0f)
-    avgNumOfFeatures = (float)selectedFeatures.NumOfFeatures ();
+
+  if  ((machineType == SVM_MachineType::BinaryCombos)  &&  (binaryParmsList))
+    avgNumOfFeatures = binaryParmsList->FeatureCountNet (fileDesc);
+
+  if  (avgNumOfFeatures == 0.0f)
+    avgNumOfFeatures = (float)SelectedFeatures (fileDesc)->NumOfFeatures ();
+
   return  avgNumOfFeatures;
 }  /* AvgMumOfFeatures */
 
 
 
 /**
- *@brief  returns back the class weighted average number of features per training example.
- *@details  Will calculate the average number of features per tyraining example. For each
+ *@brief  Returns back the class weighted average number of features per training example.
+ *@details  Will calculate the average number of features per training example. For each
  *          binary class combination, multiplies the number of training examples for that pair 
  *          by the number of features for that pair.  the sum of all class pairs are then 
  *          divided by the total number of examples.
- *@param[in] trainExamples  List of traninig examples that were or are to be used to train with.
+ *@param[in] trainExamples  List of training examples that were or are to be used to train with.
  */
 float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 {
-  if  (machineType == BinaryCombos)
+  FileDescPtr  fileDesc = trainExamples->FileDesc ();
+  if  (!selectedFeatures)
+  {
+    // The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.
+    // This way we make sure that the variable exists.
+    SelectedFeatures (fileDesc);
+  }
+  if  (machineType == SVM_MachineType::BinaryCombos)
   {
     kkint32 totalNumFeaturesUsed = 0;
     kkint32 toatlNumExamples     = 0;
     ClassStatisticListPtr  stats = trainExamples->GetClassStatistics ();
     if  (!stats)
-      return (float)selectedFeatures.NumOfFeatures ();
+    {
+      return (float)selectedFeatures->NumOfFeatures ();
+    }
 
     kkuint32  idx1 = 0;
     kkuint32  idx2 = 0;
@@ -630,7 +538,11 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
         MLClassPtr  class2    = class2Stats->MLClass ();
         kkuint32    class2Qty = class2Stats->Count ();
 
-        kkint32  numFeaturesThisCombo = GetFeatureNums (class1, class2).NumSelFeatures ();
+        kkint32  numFeaturesThisCombo = 0;
+        FeatureNumListConstPtr  cpfn = GetFeatureNums (fileDesc, class1, class2);
+        if  (cpfn)
+          numFeaturesThisCombo = cpfn->NumSelFeatures ();
+
         kkint32  numExamplesThisCombo = class1Qty + class2Qty;
 
         totalNumFeaturesUsed += numFeaturesThisCombo * numExamplesThisCombo;
@@ -642,37 +554,47 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
   }
   else
   {
-    return  (float)selectedFeatures.NumOfFeatures ();
+    return  (float)selectedFeatures->NumOfFeatures ();
   }
 }  /* AvgMumOfFeatures */
 
 
 
-
-kkint32  SVMparam::NumOfFeaturesAfterEncoding ()  const
+kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                               RunLog&      log
+                                              )  const
 {
+  if  (!selectedFeatures)
+  {
+    // The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.
+    // This way we make sure that the variable exists.
+    SelectedFeatures (fileDesc);
+  }
+
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
-  kkint32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
+  kkint32 numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
   switch (EncodingMethod ())
   {
-  case BinaryEncoding:
+  case  SVM_EncodingMethod::Binary:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
-      kkint32  fieldNum = selectedFeatures[z];
-      if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
-        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
+      kkint32  fieldNum = (*selectedFeatures)[z];
+      if  ((fileDesc->Type (fieldNum) == AttributeType::Nominal)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::Symbolic)
+          )
+        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else
         numFeaturesAfterEncoding ++;
     }
     break;
 
-  case ScaledEncoding:
-  case NoEncoding:
+  case SVM_EncodingMethod::Scaled:
+  case SVM_EncodingMethod::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
-    numFeaturesAfterEncoding = selectedFeatures.NumOfFeatures ();
+    numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
     break;
   }
 
@@ -682,21 +604,21 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding ()  const
 
 
 
-void  SVMparam::SetFeatureNums (MLClassPtr             class1,
-                                MLClassPtr             class2,
-                                const FeatureNumList&  _features,
-                                float                  _weight
+void  SVMparam::SetFeatureNums (MLClassPtr              _class1,
+                                MLClassPtr              _class2,
+                                FeatureNumListConstPtr  _features,
+                                float                   _weight
                                )
 {
   if  (!binaryParmsList)
   {
     if  (_weight < 0)
       _weight = 1;
-    AddBinaryClassParms (class1, class2, param, _features, _weight);
+    AddBinaryClassParms (_class1, _class2, param, _features, _weight);
   }
   else
   {
-    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (class1, class2);
+    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (_class1, _class2);
     if  (binaryParms)
     {
       if  (_weight < 0)
@@ -707,17 +629,26 @@ void  SVMparam::SetFeatureNums (MLClassPtr             class1,
     {
       if  (_weight < 0)
         _weight = 1.0f;
-      AddBinaryClassParms (class1, class2, param, _features, _weight);
+      AddBinaryClassParms (_class1, _class2, param, _features, _weight);
     }
   }
 }  /* SetFeatureNums */
 
 
 
-
 void  SVMparam::SetFeatureNums (const FeatureNumList&  _features)
 {
-  selectedFeatures = _features;
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (_features);
+}  /* SetFeatureNums */
+
+
+
+
+void  SVMparam::SetFeatureNums (FeatureNumListConstPtr  _features)
+{
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (*_features);
 }  /* SetFeatureNums */
 
 
@@ -769,7 +700,7 @@ void  SVMparam::C_Param (MLClassPtr  class1,
   {
     svm_parameter binaryParam = param;
     binaryParam.C = C_Param ();
-    AddBinaryClassParms (class1, class2, binaryParam, this->SelectedFeatures (), 1);
+    AddBinaryClassParms (class1, class2, binaryParam, SelectedFeatures (), 1.0f);
   }
   else
   {
@@ -780,23 +711,20 @@ void  SVMparam::C_Param (MLClassPtr  class1,
 
 
 
-
-
-
-void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
-                                      MLClassPtr             class2,
-                                      const svm_parameter&   _param,
-                                      const FeatureNumList&  _features,
-                                      float                  _weight
+void  SVMparam::SetBinaryClassFields (MLClassPtr              _class1,
+                                      MLClassPtr              _class2,
+                                      const svm_parameter&    _param,
+                                      FeatureNumListConstPtr  _features,
+                                      float                   _weight
                                      )
 {
   if  (!binaryParmsList)
   {
-    AddBinaryClassParms (class1, class2, _param, _features, _weight);
+    AddBinaryClassParms (_class1, _class2, _param, _features, _weight);
   }
   else
   {
-    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (class1, class2);
+    BinaryClassParmsPtr  binaryParms = binaryParmsList->LookUp (_class1, _class2);
     if  (binaryParms)
     {
       binaryParms->Param            (_param); 
@@ -805,7 +733,7 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
     }
     else
     {
-      AddBinaryClassParms (class1, class2, _param, _features, _weight);
+      AddBinaryClassParms (_class1, _class2, _param, _features, _weight);
     }
   }
 }  /* SetBinaryClassFields */
@@ -818,25 +746,138 @@ void  SVMparam::SetBinaryClassFields (MLClassPtr             class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  SVMparam::AddBinaryClassParms (MLClassPtr            class1,
-                                     MLClassPtr            class2,
-                                     const svm_parameter&  _param,
-                                     const FeatureNumList& _selectedFeatures,
-                                     float                 _weight
+void  SVMparam::AddBinaryClassParms (MLClassPtr              _class1,
+                                     MLClassPtr              _class2,
+                                     const svm_parameter&    _param,
+                                     FeatureNumListConstPtr  _selectedFeatures,  /**< We will NOT be taking ownership; we will make our own copy. */
+                                     float                   _weight
                                     )
 {
-  AddBinaryClassParms (new BinaryClassParms (class1, class2, _param, _selectedFeatures, _weight));
+  AddBinaryClassParms (new BinaryClassParms (_class1, _class2, _param, _selectedFeatures, _weight));
 }  /* AddBinaryClassParms */
 
 
 
 
-KKStr  KKMachineLearning::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
+void  SVMparam::WriteXML (const KKStr&  varName,
+                          ostream&      o
+                         )  const
 {
-  if  (encodingMethod == BinaryEncoding)
+  XmlTag  startTag ("SVMparam",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  {
+    XmlElementKeyValuePairs*   headerFields = new XmlElementKeyValuePairs ();
+
+    headerFields->Add ("EncodingMethod",             EncodingMethodToStr (encodingMethod));
+    headerFields->Add ("FileName",                   fileName);
+    headerFields->Add ("MachineType",                MachineTypeToStr (machineType));
+    if  (selectedFeatures)
+      headerFields->Add ("SelectedFeatures",         selectedFeatures->ToString ());
+    headerFields->Add ("param",                      param.ToTabDelStr ());
+
+    headerFields->Add ("samplingRate",               samplingRate);
+    headerFields->Add ("selectionMethod",            SelectionMethodToStr (selectionMethod));
+
+
+    headerFields->Add ("useProbabilityToBreakTies",  useProbabilityToBreakTies);
+
+
+    headerFields->WriteXML ("HeaderFields", o);
+    delete  headerFields;
+    headerFields = NULL;
+  }
+
+  XmlElementVectorFloat::WriteXML (probClassPairs, "probClassPairs", o);
+
+  if  (binaryParmsList)
+    binaryParmsList->WriteXML ("binaryParmsList", o);
+
+  XmlTag  endTag ("SVMparam", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  SVMparam::ReadXML (XmlStream&      s,
+                         XmlTagConstPtr  tag,
+                         RunLog&         log
+                        )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    const KKStr&  varName = t->VarName ();
+
+    if  (varName.EqualIgnoreCase ("HeaderFields")  &&  (typeid (*t) == typeid (XmlElementKeyValuePairs)))
+    {
+      XmlElementKeyValuePairsPtr  kvp = dynamic_cast<XmlElementKeyValuePairsPtr> (t);
+      if  (kvp  &&  (kvp->Value() != NULL))
+      {
+        for  (auto idx: *(kvp->Value ()))
+        {
+          if  (idx.first.EqualIgnoreCase ("EncodingMethod"))
+            encodingMethod = EncodingMethodFromStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("FileName"))
+            fileName = idx.second;
+
+          else if  (idx.first.EqualIgnoreCase ("MachineType"))
+            machineType = MachineTypeFromStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("SelectedFeatures"))
+          {
+            bool  successful = false;
+            selectedFeatures = new FeatureNumList (idx.second, successful);
+          }
+
+          else if  (idx.first.EqualIgnoreCase ("Param"))
+            param.ParseTabDelStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("SamplingRate"))
+            samplingRate = idx.second.ToFloat ();
+
+          else if  (idx.first.EqualIgnoreCase ("SelectionMethod"))
+            selectionMethod = SelectionMethodFromStr (idx.second);
+
+          else if  (idx.first.EqualIgnoreCase ("UseProbabilityToBreakTies"))
+            useProbabilityToBreakTies = idx.second.ToBool ();
+
+          else
+          {
+            log.Level (-1) << endl
+              << "SVMparam::ReadXML   ***ERROR***   UnRecognozed Header Field: " << idx.first << ":" << idx.second << endl
+              << endl;
+          }
+        }
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}  /* ReadXML */
+
+
+XmlFactoryMacro(SVMparam)
+
+
+
+
+
+
+
+KKStr  KKMLL::EncodingMethodToStr (SVM_EncodingMethod  encodingMethod)
+{
+  if  (encodingMethod == SVM_EncodingMethod::Binary)
     return  "Binary";
 
-  else if  (encodingMethod == ScaledEncoding)
+  else if  (encodingMethod == SVM_EncodingMethod::Scaled)
     return  "Scale";
 
   else
@@ -845,31 +886,31 @@ KKStr  KKMachineLearning::EncodingMethodToStr (SVM_EncodingMethod  encodingMetho
 
 
         
-SVM_EncodingMethod  KKMachineLearning::EncodingMethodFromStr (const KKStr&  encodingMethodStr)
+SVM_EncodingMethod  KKMLL::EncodingMethodFromStr (const KKStr&  encodingMethodStr)
 {
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
   if  ((encodingMethodUpper == "BINARY")  ||  (encodingMethodUpper == "BIN"))
-     return  BinaryEncoding;
+     return  SVM_EncodingMethod::Binary;
 
   if  (encodingMethodUpper == "SCALE")
-     return  ScaledEncoding;
+     return  SVM_EncodingMethod::Scaled;
 
   if  (encodingMethodUpper == "NONE")
-    return  NoEncoding;
+    return  SVM_EncodingMethod::NoEncoding;
 
-  return  Encoding_NULL;
+  return  SVM_EncodingMethod::Null;
 }  /* EncodingMethodFromStr */
 
 
 
-KKStr  KKMachineLearning::KernalTypeToStr (SVM_KernalType  kernalType)
+KKStr  KKMLL::KernalTypeToStr (SVM_KernalType  kernalType)
 {
   switch  (kernalType)
   {
-  case  KT_Linear:      return "Linear";
-  case  KT_Polynomial:  return "Polynomial";
-  case  KT_RBF:         return "RBF";
+  case  SVM_KernalType::Linear:      return "Linear";
+  case  SVM_KernalType::Polynomial:  return "Polynomial";
+  case  SVM_KernalType::RBF:         return "RBF";
   default: return "UnKnown";
   }
 
@@ -878,7 +919,7 @@ KKStr  KKMachineLearning::KernalTypeToStr (SVM_KernalType  kernalType)
 
 
 
-SVM_KernalType  KKMachineLearning::KernalTypeFromStr (const KKStr&  kernalTypeStr)
+SVM_KernalType  KKMLL::KernalTypeFromStr (const KKStr&  kernalTypeStr)
 {
   KKStr kernalTypeUpper = kernalTypeStr;
   kernalTypeUpper.Upper ();
@@ -887,14 +928,14 @@ SVM_KernalType  KKMachineLearning::KernalTypeFromStr (const KKStr&  kernalTypeSt
        (kernalTypeUpper == "LIN")     ||
        (kernalTypeUpper == "L")
       )
-    return  KT_Linear;
+    return  SVM_KernalType::Linear;
 
   if  ((kernalTypeUpper == "POLYNOMIAL")  ||
        (kernalTypeUpper == "POLY")        ||
        (kernalTypeUpper == "P")           ||
        (kernalTypeUpper == "PN")
        )
-    return  KT_Polynomial;
+    return  SVM_KernalType::Polynomial;
   
 
   if  ((kernalTypeUpper == "RBF")                 ||
@@ -903,26 +944,26 @@ SVM_KernalType  KKMachineLearning::KernalTypeFromStr (const KKStr&  kernalTypeSt
        (kernalTypeUpper == "RADIALBASISFUNC")     ||
        (kernalTypeUpper == "RADIALBASISFUNCTION")
       )
-    return  KT_RBF;
+    return  SVM_KernalType::RBF;
 
-  return  KT_Linear;
+  return  SVM_KernalType::Linear;
 }  /* KernalTypeToStr */
 
 
 
 
-KKStr  KKMachineLearning::MachineTypeToStr (SVM_MachineType  machineType)
+KKStr  KKMLL::MachineTypeToStr (SVM_MachineType  machineType)
 {
-  if  (machineType == OneVsOne)
+  if  (machineType == SVM_MachineType::OneVsOne)
     return  "OneVsOne";
 
-  else if  (machineType == OneVsAll)
+  else if  (machineType == SVM_MachineType::OneVsAll)
     return  "OneVsAll";
 
-  else if  (machineType == BinaryCombos)
+  else if  (machineType == SVM_MachineType::BinaryCombos)
     return "Binary";
 
-  else if  (machineType == BoostSVM)
+  else if  (machineType == SVM_MachineType::BoostSVM)
     return "BoostSVM";
 
   return "";
@@ -932,34 +973,34 @@ KKStr  KKMachineLearning::MachineTypeToStr (SVM_MachineType  machineType)
 
 
 
-SVM_MachineType  KKMachineLearning::MachineTypeFromStr (const KKStr&  machineTypeStr)
+SVM_MachineType  KKMLL::MachineTypeFromStr (const KKStr&  machineTypeStr)
 {
   KKStr  machineTypeUpper = machineTypeStr.ToUpper ();
 
   if  (machineTypeUpper == "ONEVSONE")
-    return  OneVsOne;
+    return  SVM_MachineType::OneVsOne;
 
   else  if  (machineTypeUpper == "ONEVSALL")
-    return  OneVsAll;
+    return  SVM_MachineType::OneVsAll;
 
   else  if  (machineTypeUpper == "BINARY")
-    return  BinaryCombos;
+    return  SVM_MachineType::BinaryCombos;
 
   else  if  (machineTypeUpper == "BOOSTSVM")
-    return  BoostSVM;
+    return  SVM_MachineType::BoostSVM;
 
-  return  MachineType_NULL;
+  return  SVM_MachineType::Null;
 }  /* MachineTypeFromStr */
  
 
 
 
-KKStr  KKMachineLearning::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
+KKStr  KKMLL::SelectionMethodToStr (SVM_SelectionMethod  selectionMethod)
 {
-  if  (selectionMethod == SelectByVoting)
+  if  (selectionMethod == SVM_SelectionMethod::Voting)
     return  "Voting";
 
-  if  (selectionMethod == SelectByProbability)
+  if  (selectionMethod == SVM_SelectionMethod::Probability)
     return  "Probability";
 
   return "";
@@ -968,20 +1009,26 @@ KKStr  KKMachineLearning::SelectionMethodToStr (SVM_SelectionMethod  selectionMe
 
 
 
-SVM_SelectionMethod  KKMachineLearning::SelectionMethodFromStr (const KKStr&  selectionMethodStr)
+SVM_SelectionMethod  KKMLL::SelectionMethodFromStr (const KKStr&  selectionMethodStr)
 {
   KKStr  selectionMethodUpper = selectionMethodStr.ToUpper ();
 
   if  ((selectionMethodUpper == "VOTE")  ||  (selectionMethodUpper == "VOTING"))
-    return  SelectByVoting;
+    return  SVM_SelectionMethod::Voting;
 
   if  ((selectionMethodUpper == "P")     ||  
        (selectionMethodUpper == "PROB")  ||
        (selectionMethodUpper == "PROBABILITY")
       )
-    return  SelectByProbability;
+    return  SVM_SelectionMethod::Probability;
 
-  return  SelectionMethod_NULL;
+  return  SVM_SelectionMethod::Null;
 
 }  /* SelectionMethodFromStr */
+
+
+
+
+
+
 

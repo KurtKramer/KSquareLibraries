@@ -5,16 +5,17 @@
 #ifndef  _KKSTRMATRIX_
 #define  _KKSTRMATRIX_
 
-#include  <ostream>
-#include  <string>
+#include <ostream>
+#include <string>
 
 #ifdef  WIN32
 #else
 #define  __cdecl  
 #endif
 
-#include  "KKBaseTypes.h"
-#include  "KKStr.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
+#include "KKStrMatrix.h"
 
 #define  EnterChar   13
 #define  EscapeChar  27

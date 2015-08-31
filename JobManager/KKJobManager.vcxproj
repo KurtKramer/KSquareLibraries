@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{FD50AE69-2D86-483D-BDC2-204B72CF94CD}</ProjectGuid>
+    <ProjectGuid>{B8045239-6597-4E1D-B535-A78DA68BA156}</ProjectGuid>
     <RootNamespace>JobManager</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>

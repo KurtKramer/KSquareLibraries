@@ -23,7 +23,7 @@ namespace  KKB
   * reduced to 1/8'the allowing for more efficient use of memory.
   *
   * This class will manage Bit-Strings up to UINT_MAX in length.  Logical operations such as bitwise AND, OR, and NOT
-  * are supported plus others.  An example of where this class is used is in KKMachineLearning::FeatureNumList.
+  * are supported plus others.  An example of where this class is used is in KKMLL::FeatureNumList.
   */
 
   class  BitString

@@ -64,6 +64,23 @@ char  TokenBufferStr::GetNextChar ()
 
 
 
+char  TokenBufferStr::PeekNextChar ()
+{
+  if  (nextCharPos >= buff.Len ())
+    return 0;
+  return  buff[nextCharPos];
+}
+
+
+
+void  TokenBufferStr::UnGetNextChar ()
+{
+  if  (nextCharPos > 0)
+    --nextCharPos;
+}
+
+
+
 bool  TokenBufferStr::EndOfFile ()
 {
   if  (nextCharPos >= buff.Len ())
@@ -143,9 +160,29 @@ char  TokenBufferStream::GetNextChar ()
 
   c = in->get ();
   if  (in->eof())
+  {
     endOfFile = true;
+    c = 0;
+  }
   return c;
 }  /* GetNextChar */
+
+
+
+char  TokenBufferStream::PeekNextChar ()
+{
+  if  (in->eof ())
+    return 0;
+  return  in->peek ();
+}
+
+
+
+
+void  TokenBufferStream::UnGetNextChar ()
+{
+  in->unget ();
+}
 
 
 

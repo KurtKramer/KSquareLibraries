@@ -1,87 +1,75 @@
-#ifndef  _MODELOLDSVM_
+#if  !defined(_MODELOLDSVM_)
 #define  _MODELOLDSVM_
 
 
-/**
- *@class KKMachineLearning::ModelOldSVM
- *@browse
- *@details
- *@code
- ************************************************************************
- **                           ModelOldSVM                               *
- **                                                                     *
- **  This is a specialization of 'Model'.  It is meant to Wrap the      *
- **  original version of 'SvmModel'.  This class will allow us to use   *
- **  the original implementation using version 2.39 of LibSVM.          *
- **                                                                     *
- ************************************************************************
- *@endcode
- */
 
+#include "RunLog.h"
+#include "KKStr.h"
 
-#include  "KKStr.h"
-#include  "ClassAssignments.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "FeatureEncoder2.h"
-#include  "FeatureNumList.h"
-#include  "FeatureVector.h"
-#include  "RunLog.h"
-#include  "svm.h"
-#include  "Model.h"
-#include  "ModelParamOldSVM.h"
-#include  "SVMModel.h"
+#include "svm.h"
+#include "Model.h"
+#include "SVMModel.h"
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
+  #if  !defined(_CLASSASSIGNMENTS_)
+  class  ClassAssignments;
+  typedef  ClassAssignments*  ClassAssignmentsPtr;
+  #endif
 
-#ifndef  _FEATUREENCODER_
-class  FeatureEncoder2;
-typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
+
+  #if  !defined(_MODELPARAMOLDSVM_)
+  class  ModelParamOldSVM;
+  typedef  ModelParamOldSVM*  ModelParamOldSVMPtr;
 #endif
 
 
+ /**
+  *@class  ModelOldSVM
+  *@brief A specialization of 'Model'; meant to Wrap the original version of 'SvmModel' class. 
+  *  It will allow us to use the original implementation using version 2.39 of LibSVM.
+  */
   class  ModelOldSVM:  public Model
   {
   public:
     typedef  ModelOldSVM*  ModelOldSVMPtr;
 
-    ModelOldSVM (FileDescPtr    _fileDesc,
-                 VolConstBool&  _cancelFlag,
-                 RunLog&        _log
-                );
+    ModelOldSVM ();
+
+    ModelOldSVM (FactoryFVProducerPtr  _factoryFVProducer);
 
     /**
      *@brief Creates a new svm model from the provided example (example) data
      *@param[in] _name  
      *@param[in] _param The parameters for the svm, and for creating the model.
-     *@param[in] _fileDesc A description of the data file.
-     *@param[in] _cancelFlag  If you want this instance to stop processing set this field to true in another thread.
-     *@param[in] _log A log-file stream. All important events will be output to this stream
+     *@param[in] _factoryFVProducer Describes the FeactureVectorProducer, FileDesc, and FeatureVectorList derived classes needed.
      */
     ModelOldSVM (const KKStr&             _name,
-                 const ModelParamOldSVM&  _param,
-                 FileDescPtr              _fileDesc,
-                 VolConstBool&            _cancelFlag,
-                 RunLog&                  _log
+                 const ModelParamOldSVM&  _param,         // Create new model from
+                 FactoryFVProducerPtr     _factoryFVProducer
                 );
   
     ModelOldSVM (const ModelOldSVM&   _madel);
   
     virtual ~ModelOldSVM ();
 
+
     virtual
     ModelOldSVMPtr  Duplicate ()  const;
 
-    virtual ModelTypes       ModelType () const  {return mtOldSVM;}
+    virtual ModelTypes       ModelType () const  {return ModelTypes::OldSVM;}
 
     const ClassAssignments&  Assignments () const;
 
-    const FeatureNumList&    GetFeatureNums ()  const;
+    virtual
+    KKStr                    Description ()  const;  /**< Return short user readable description of model. */
 
-    FeatureNumList           GetFeatureNums (MLClassPtr  class1,
+    FeatureNumListConstPtr   GetFeatureNums ()  const;
+
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr filedesc,
+                                             MLClassPtr  class1,
                                              MLClassPtr  class2
                                             );
 
@@ -105,7 +93,9 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
 
     virtual
-    MLClassPtr   Predict (FeatureVectorPtr  image);
+    MLClassPtr   Predict (FeatureVectorPtr  image,
+                          RunLog&           log
+                         );
   
     virtual
     void         Predict (FeatureVectorPtr  example,
@@ -115,17 +105,25 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
                           kkint32&          predClass1Votes,
                           kkint32&          predClass2Votes,
                           double&           probOfKnownClass,
-                          double&           probOfPredClass1,
-                          double&           probOfPredClass2,
+                          double&           predClass1Prob,
+                          double&           predClass2Prob,
                           kkint32&          numOfWinners,
                           bool&             knownClassOneOfTheWinners,
-                          double&           breakTie
+                          double&           breakTie,
+                          RunLog&           log
                          );
 
 
+    virtual  void  PredictRaw (FeatureVectorPtr  example,
+                               MLClassPtr&       predClass,
+                               double&           dist
+                              );
+
 
     virtual  
-    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example);
+    ClassProbListPtr  ProbabilitiesByClass (FeatureVectorPtr  example,
+                                            RunLog&           log
+                                           );
 
     
     
@@ -142,30 +140,33 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
       *@param[out] _votes          Number of votes for each class
       *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+      *@param[in]  log             Logger.
       */
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             log
                                );
 
 
      /**
-      ******************************************************************************************************************
-      *@brief  Will get the probabilities assigned to each class.
-      *@param[in]  example unknown example that we want to get predicted probabilities for. 
-      *@param[in]  _ImageClasses  List classes that caller is aware of.  This should be the same list that 
-      *                           was used when constructing this ModelOldSVM object.  The list must be the
+      *@brief  Retrieves probabilities assigned to each class.
+      *@param[in]  _example unknown example that we want to get predicted probabilities for. 
+      *@param[in]  _ImageClasses  List classes that caller is aware of. This should be the same list that 
+      *                           was used when constructing this ModelOldSVM object. The list must be the
       *                           same but not necessarily in the same order as when ModelOldSVM was 1st
       *                           constructed.
       *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
       *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+      *@param[in]  _log  Logger to send messages to.
       */
     virtual
     void  ProbabilitiesByClass (FeatureVectorPtr    _example,
                                 const MLClassList&  _mlClasses,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
 
@@ -173,7 +174,7 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
-     *          time and recompute the decision boundary and probability.  It will then
+     *          time and re-compute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  Example that was classified incorrectly.
@@ -225,29 +226,35 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
 
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**         crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                  RunLog&       log
                                  );
 
-
-    virtual  void  ReadSpecificImplementationXML (istream&  i,
-                                                  bool&     _successful
-                                                 );
 
     /**
      * @brief Use given training data to create a trained Model that can be used for classifying examples.
      * @param[in] _trainExamples      The example data we will be building the model from.
      * @param[in] _alreadyNormalized  Specifies weather the training data has already been normalized.
      * @param[in] _takeOwnership      If true this instance will take ownership of '_trainExamples' and delete it when done with it.
-     */
+     * @param[in] _cancelFlag         Monitored; when set to True will end processing and return to caller.
+     * @param[in] _log                Logger to send messages to.     */
     virtual  void  TrainModel (FeatureVectorListPtr  _trainExamples,
                                bool                  _alreadyNormalized,
-                               bool                  _takeOwnership  /*!< Model will take ownership of these examples */
+                               bool                  _takeOwnership,  /*!< Model will take ownership of these examples */
+                               VolConstBool&         _cancelFlag,
+                               RunLog&               _log
                               );
 
 
-    virtual  void  WriteSpecificImplementationXML (ostream&  o);
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
 
 
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
   private:
     ClassAssignmentsPtr  assignments;
@@ -256,7 +263,12 @@ typedef  FeatureEncoder2*  FeatureEncoder2Ptr;
 
 
   typedef  ModelOldSVM::ModelOldSVMPtr  ModelOldSVMPtr;
-} /* namespace KKMachineLearning */
+
+
+  typedef  XmlElementModelTemplate<ModelOldSVM>  XmlElementModelOldSVM;
+  typedef  XmlElementModelOldSVM*  XmlElementModelOldSVMPtr;
+
+} /* namespace KKMLL */
 
 
 

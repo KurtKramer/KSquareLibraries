@@ -2,7 +2,7 @@
 #define  _FEATUREVECTORPRODUCER_
 
 /**
- *@class  KKMachineLearning::FeatureVectorProducer
+ *@class  KKMLL::FeatureVectorProducer
  *@brief  A abstract class that is meant to compute a FeatureVector from a source image.
  *@details Applications that want to utilize this library will either use one of the 
  *provided "FeatureVectorProducer" derived classes or supply their own.  This class will 
@@ -23,7 +23,7 @@ using namespace  KKB;
 
 
 
-namespace KKMachineLearning 
+namespace KKMLL 
 {
 
 #if  !defined(_FeatureVector_Defined_)
@@ -68,12 +68,34 @@ namespace KKMachineLearning
 
     virtual ~FeatureVectorProducer ();
 
+
+    /**
+     *@brief  Compute a FeatureVector for the supplied 'image'.
+     *@param[in] image
+     *@param[in] knownClass  The class label that will be assigned to this Feature vector.
+     *@param[in,out] intermediateImages  If not NULL will save a copy of the intermediate images created during Feature Computation; the call will own the list and its contents.
+     *@param[in] priorReductionFactor  The reduction that was done to the image prior to calling this routine; if no size change was made then set this field to 1.0. The 
+     *                                 FeaureVector computation routines will use this field to adjust SizeDependent features appropriately. the value of this parameter represents 
+     *                                 the number of pixels that were reduced to 1 pixel. A value of 3 indicates (3 x 3) pixels were reduced to 1 pixel.
+     *@param[in] log Logging file.
+     *@returns The resultant Feature vector computed.
+     */
     virtual  FeatureVectorPtr  ComputeFeatureVector (const Raster&     image,
                                                      const MLClassPtr  knownClass,
                                                      RasterListPtr     intermediateImages,
+                                                     float             priorReductionFactor,
                                                      RunLog&           runLog
                                                     ) = 0;
 
+
+    /**
+     *@brief  Compute a FeatureVector from the image file specified by 'fileName'
+     *@param[in] image
+     *@param[in] knownClass  The class label that will be assigned to this Feature vector.
+     *@param[in,out] intermediateImages  If not NULL will save a copy of the intermediate images created during Feature Computation; the call will own the list and its contents.
+     *@param[in] log Logging file.
+     *@returns The resultant Feature vector computed.
+     */
     virtual  FeatureVectorPtr  ComputeFeatureVectorFromImage (const KKStr&      fileName,
                                                               const MLClassPtr  knownClass,
                                                               RasterListPtr     intermediateImages,
@@ -84,6 +106,7 @@ namespace KKMachineLearning
 
     /**  @brief  Returns the 'type_info' of the FeatureVector that this instance of 'FeatureVectorProducer' creates. */
     virtual  const type_info*  FeatureVectorTypeId () const = 0;
+
 
     /** 
      *@brief Returns the 'type_info' of the FeatureVectorList derived class that can contain instances in 'FeatureVector' 
@@ -98,13 +121,13 @@ namespace KKMachineLearning
     /** @brief  Returns pointer to factory that instantiated this instance */
     FactoryFVProducerPtr  Factory ()  const  {return factory;}
 
+
     /**  
      *@brief  Returns back a "FileDesc" instance that describes the features that this instance of 'FeatureVectorProducer' creates.
      * The class derived form this class is responsible for creating the FileDesc instance.  When this method is called if "fileDesc" 
      * equals NULL  then will call "DefineFileDesc", which is a pure virtual method that will be implemented by the derived class, to 
      * instantiate a new instance.
      */
-
     FileDescConstPtr  FileDesc ()  const;
 
 
@@ -115,9 +138,12 @@ namespace KKMachineLearning
     //  Feature description related methods.
     kkuint32  FeatureCount ()  const;
 
+
     const KKStr&  FeatureName (kkuint32  fieldNum)  const;
 
+
     kkuint32  MaxNumOfFeatures ()     {return  FeatureCount ();}  /**<  Same as FeatureCount  */
+
 
     /**
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
@@ -125,7 +151,7 @@ namespace KKMachineLearning
      */
     virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
                                                                 RunLog&  runLog
-                                                               ) = 0;
+                                                               ) const = 0;
 
 
   protected:
@@ -143,8 +169,6 @@ namespace KKMachineLearning
 
 #define  _FeatureVectorProducer_Defined_
 
-}  /* KKMachineLearning */
-
-
+}  /* KKMLL */
 
 #endif

@@ -12,8 +12,8 @@ namespace  KKB
   /**
    *@brief  Represents one single random number generator.
    *@details  Rather than using the two global functions "lrand48" and "srand48" you can create an
-   *          instance of this class that will provide the random sequence.  The advantage is that 
-   *          you can control who has access to this sequence.  That is you do not need to worry that
+   *          instance of this class that will provide the random sequence. The advantage is that 
+   *          you can control who has access to this sequence. That is you do not need to worry that
    *          some other code that you are calling is not also getting numbers from this sequence.
    *          This will allow you to guarantee the same sequence of numbers for the same seed.
    */

@@ -37,29 +37,31 @@ namespace  KKB
   class  MorphOp
   {
   public:
-    typedef  enum
+    enum  class  OperationType
     {
-      moNULL,
-      moBinarize,
-      moConvexHull,
-      moErosion,
-      moMaskExclude,
-      moStretcher
-    }  OperationType;
+      Null,
+      Binarize,
+      BmiFiltering,
+      ConvexHull,
+      Dilation,
+      Erosion,
+      MaskExclude,
+      Stretcher
+    };
 
     KKB::KKStr       OperationTypeToStr   (OperationType      _operation);
     OperationType    OperationTypeFromStr (const KKB::KKStr&  _operationStr);
 
 
-    typedef  enum
+    enum class  StructureType: int
     {
-       stNULL,
+       Null,
        stCross,
        stSquare
-    }  
-      StructureType;
+    };
 
-    typedef  enum  
+    
+    enum class  MaskTypes: int
     {
       CROSS3   = 0,
       CROSS5   = 1,
@@ -68,7 +70,7 @@ namespace  KKB
       SQUARE7  = 4,
       SQUARE9  = 5,
       SQUARE11 = 6
-    }  MaskTypes;
+    };
 
 
     MorphOp ();
@@ -77,7 +79,11 @@ namespace  KKB
 
     virtual  OperationType   Operation ()  const  = 0;
 
+
     virtual  RasterPtr  PerformOperation (Raster const* _image) = 0;
+
+    static  kkint32        Biases     (MaskTypes  mt);
+    static  StructureType  MaskShapes (MaskTypes  mt);
 
   protected:
 
@@ -88,25 +94,18 @@ namespace  KKB
                            kkint32  col
                          )  const;  
 
-    /**
-     *@brief Returns true if all the pixels covered by the specified mask are Foreground pixels.
-     *@see  Erosion, Dilatation, Closing, Opening, MaskType
-     */
-    bool  Fit (MaskTypes  mask,
-               kkint32    row, 
-               kkint32    col
-              )  const;
-
     bool  ForegroundPixel (uchar  pixel)  const;
 
     bool  ForegroundPixel (kkint32  row,
                            kkint32  col
                           )  const;
 
+
     void  SetSrcRaster (RasterConstPtr  _srcRaster);
 
     uchar            backgroundPixelTH;
     uchar            backgroundPixelValue;
+
 
     RasterConstPtr   srcRaster;
 
@@ -122,8 +121,8 @@ namespace  KKB
     kkint32          srcHeight;
     kkint32          srcWidth;
 
-    static  kkint32  biases[];
-    static  kkint32  maskShapes[];
+    static  kkint32        biases[];
+    static  StructureType  maskShapes[];
 
   private:
   };  /* MorphOp */

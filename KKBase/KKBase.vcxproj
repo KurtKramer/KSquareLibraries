@@ -109,9 +109,12 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MorphOp.cpp" />
     <ClCompile Include="MorphOpBinarize.cpp" />
+    <ClCompile Include="MorphOpBmiFiltering.cpp" />
+    <ClCompile Include="MorphOpDilation.cpp" />
     <ClCompile Include="MorphOpErosion.cpp" />
     <ClCompile Include="MorphOpMaskExclude.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
+    <ClCompile Include="MorphOpStruct.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
     <ClCompile Include="OSservices.cpp" />
     <ClCompile Include="PixelValue.cpp" />
@@ -127,6 +130,7 @@
     <ClCompile Include="TokenBuffer.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
     <ClCompile Include="XmlStream.cpp" />
+    <ClCompile Include="XmlTokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -169,9 +173,12 @@
     <ClInclude Include="MemoryDebug.h" />
     <ClInclude Include="MorphOp.h" />
     <ClInclude Include="MorphOpBinarize.h" />
+    <ClInclude Include="MorphOpBmiFiltering.h" />
+    <ClInclude Include="MorphOpDilation.h" />
     <ClInclude Include="MorphOpErosion.h" />
     <ClInclude Include="MorphOpMaskExclude.h" />
     <ClInclude Include="MorphOpStretcher.h" />
+    <ClInclude Include="MorphOpStruct.h" />
     <ClInclude Include="MsgQueue.h" />
     <ClInclude Include="OSservices.h" />
     <ClInclude Include="PixelValue.h" />
@@ -189,6 +196,7 @@
     <ClInclude Include="TokenBuffer.h" />
     <ClInclude Include="Tokenizer.h" />
     <ClInclude Include="XmlStream.h" />
+    <ClInclude Include="XmlTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

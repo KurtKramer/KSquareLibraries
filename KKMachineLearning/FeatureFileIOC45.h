@@ -3,22 +3,20 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
-
-
 /**
- * @class  FeatureFileIOC45
- * @brief  Supports the reading and writing of feature data from C45 formated feature files.
- * @details
- * @code
- * ************************************************************************************************
- * *  FeatureFileIODC45   Sub-classed from FeatureFileIO.  Supports the reading and writing of    *
- * *  the C45 file format.  For each data set there will be two files.  'Names'  and  'Data'      *
- * *  http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm  for description                    *
- * ************************************************************************************************
- * @endcode
- * @see  FeatureFileIO
+ *@class  FeatureFileIOC45
+ *@brief  Supports the reading and writing of feature data from C45 formated feature files.
+ *@details
+ *@code
+ *************************************************************************************************
+ **  FeatureFileIODC45   Sub-classed from FeatureFileIO.  Supports the reading and writing of    *
+ **  the C45 file format.  For each data set there will be two files.  'Names'  and  'Data'      *
+ **  http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm  for description                    *
+ *************************************************************************************************
+ *@endcode
+ *@see  FeatureFileIO
  */
 class  FeatureFileIOC45: public FeatureFileIO
 {
@@ -66,15 +64,15 @@ public:
 
 
   virtual  
-    void   SaveFile (FeatureVectorList&     _data,
-                     const KKStr&           _fileName,
-                     const FeatureNumList&  _selFeatures,
-                     ostream&               _out,
-                     kkuint32&              _numExamplesWritten,
-                     VolConstBool&          _cancelFlag,
-                     bool&                  _successful,
-                     KKStr&                 _errorMessage,
-                     RunLog&                _log
+    void   SaveFile (FeatureVectorList&    _data,
+                     const KKStr&          _fileName,
+                     FeatureNumListConst&  _selFeatures,
+                     ostream&              _out,
+                     kkuint32&             _numExamplesWritten,
+                     VolConstBool&         _cancelFlag,
+                     bool&                 _successful,
+                     KKStr&                _errorMessage,
+                     RunLog&               _log
                     );
 
 
@@ -114,5 +112,5 @@ private:
 
 typedef  FeatureFileIOC45::FeatureFileIOC45Ptr   FeatureFileIOC45Ptr;
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 #endif

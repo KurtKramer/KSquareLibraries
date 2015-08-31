@@ -1,4 +1,4 @@
-#ifndef  _NORMALIZATIONPARMS_
+#if  !defined(_NORMALIZATIONPARMS_)
 #define  _NORMALIZATIONPARMS_
 
 #include "Attribute.h"
@@ -8,7 +8,7 @@
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
   #ifndef  _RUNLOG_
@@ -50,13 +50,19 @@ namespace KKMachineLearning
   /**
    *@brief  Normalization Parameters;  calculation and implementation.
    *@details Normalization parameters will be calculated for all features but 
-   *         when individual examples are normalized, only the ones specified by 
-   *        _featuresToNormalize' will be normalized.              
+   * when individual examples are normalized, only the ones specified by 
+   * _featuresToNormalize' will be normalized.              
    */
-
   class  NormalizationParms
   {
   public:
+    NormalizationParms ();
+
+    NormalizationParms (bool                _normalizeNominalFeatures,
+                        FeatureVectorList&  _examples,
+                        RunLog&             _log
+                       );
+
     NormalizationParms (const ModelParam&   _param,
                         FeatureVectorList&  _examples,
                         RunLog&             _log
@@ -89,60 +95,98 @@ namespace KKMachineLearning
 
     kkint32 MemoryConsumedEstimated ()  const;
 
-    void  NormalizeExamples (FeatureVectorListPtr  examples);
+    FileDescPtr  FileDesc ()  const  {return fileDesc;}
+
+    void  NormalizeExamples (FeatureVectorListPtr  examples,
+                             RunLog&               log
+                            );
 
     void  NormalizeAExample (FeatureVectorPtr  example);
 
+    bool  NormalizeNominalFeatures ()  const  {return normalizeNominalFeatures;}
+
     FeatureVectorPtr  ToNormalized (FeatureVectorPtr  example)  const;
 
-    kkint32 NumOfFeatures ()  {return numOfFeatures;}
+    kkint32 NumOfFeatures ()  const {return numOfFeatures;}
+
+    float   NumOfExamples ()  const {return numOfExamples;}
 
 
-    void  Read (FILE*  i,
-                bool&  sucessful
+    void  Read (FILE*    i,
+                bool&    sucessful,
+                RunLog&  log
                );
 
 
     void  Read (istream&  i,
-                bool&     sucessful
+                bool&     sucessful,
+                RunLog&   log
                );
+
+
+    void  ReadXML (XmlStream&  s,
+                   XmlTagPtr   tag,
+                   RunLog&     log
+                  );
 
 
     void  Save (const KKStr&  _fileName,
-                bool&         _successfull
+                bool&         _successfull,
+                RunLog&       _log
                );
 
+    
     void  Write (std::ostream&  o);
 
-    float  Mean (kkint32 i);
-    float  Sigma (kkint32 i);
 
-    const float*  Mean ()  {return  mean;}
-    const float*  Sigma () {return  sigma;}
+    void  WriteXML (const KKStr&  varName,
+                    ostream&      o
+                   )  const;
 
+
+    double  Mean (kkint32  i,
+                  RunLog&  log
+                 );
+
+
+    double  Sigma (kkint32 i,
+                   RunLog&  log
+                  );
+
+    
+    const double*  Mean  () const  {return  mean;}
+    const double*  Sigma () const  {return  sigma;}
+
+    
 
   private:
     void  ConstructNormalizeFeatureVector ();
+    void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
 
-    KKMachineLearning::AttributeTypeVector  attriuteTypes;
-    FileDescPtr               fileDesc;
-    KKStr                     fileName;
-    RunLog&                   log;
-    float*                   mean;
-    bool*                     normalizeFeature;
-    bool                      normalizeNominalFeatures;
-    kkint32                     numOfFeatures;
-    float                    numOfExamples;
-    float*                   sigma;
+    AttributeTypeVector  attriuteTypes;
+    FileDescPtr          fileDesc;
+    KKStr                fileName;
+    double*              mean;
+    bool*                normalizeFeature;
+    bool                 normalizeNominalFeatures;
+    kkint32              numOfFeatures;
+    float                numOfExamples;
+    double*              sigma;
   };  /* NormalizationParms */
 
 
   typedef  NormalizationParms*  NormalizationParmsPtr;
 
 
-  #define  _NormalizationParmsDefined_
+  #define  _NormalizationParms_Defined_
 
-}  /* namespace KKMachineLearning { */
+
+
+  typedef  XmlElementTemplate<NormalizationParms>  XmlElementNormalizationParms;
+  typedef  XmlElementNormalizationParms*  XmlElementNormalizationParmsPtr;
+
+
+}  /* KKMLL */
 
 
 #endif

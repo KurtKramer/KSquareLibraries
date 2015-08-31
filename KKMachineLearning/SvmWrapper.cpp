@@ -5,32 +5,40 @@
  *@brief  Provides an interface to the svm.cpp functions.
  */
 
-#include <ctype.h>
-#include <math.h>
-#include <stdio.h>
-#include <time.h>
-#include <vector>
 #include <algorithm>
+#include <ctype.h>
+#ifdef  WIN32
+#include  "float.h"
+#endif
 #include <fstream>
 #include <iostream>
-#include <ostream>
+#include <math.h>
 #include <map>
 #include <numeric>
+#ifdef  WIN32
+#include <ostream>
+#endif
 #include <set>
-#include <string>
 #include <sstream>
+#include <stdio.h>
+#include <string>
+#include <time.h>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include "MemoryDebug.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 using namespace KKB;
 
 
 #include "SvmWrapper.h"
+
+
+#include "KKMLLTypes.h"
 #include "svm.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -238,15 +246,234 @@ void saveData (svm_problem  ds,
 }
 
 
+/**
+ **@brief Will normailize probabilites such that the sum of all equal 1.0 and no one probability will be less than 'minProbability'.
+ *@param[in]  numClasses     Number of classes represented in array 'probabilities'.
+ *@param[in,out]  probabilities  Probabilites that are to be adjusted.
+ *@param[in]      minProbability  Smallest probablity that any one class can have assigned to it.
+ */
+void  NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
+                                          double*  probabilities,
+                                          double   minProbability
+                                         )
+{
+  double  sumGreaterOrEqualMin = 0.0;
+  kkint32 numLessThanMin = 0;
+
+  kkint32 x = 0;
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      ++numLessThanMin;
+    else
+      sumGreaterOrEqualMin += probabilities[x];
+  }
+
+  double probLessMinTotal = numLessThanMin * minProbability;
+  double probLeftToAllocate  = 1.0 - probLessMinTotal;  
+
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      probabilities[x] = minProbability;
+    else
+      probabilities[x] = (probabilities[x] / sumGreaterOrEqualMin) * probLeftToAllocate;
+  }
+}  /* NormalizeProbabilitiesWithAMinumum */
+
+
+
+
+void  ComputeProbForVoting  (kkint32          numClasses,             /**< Number of Classes. */
+                             float            A,                      /**< probability parameter */
+                             vector<double>&  dist,                   /**< Distances for each binary classifier from decision boundary. */
+                             double**         crossClassProbTable,    /**< Two dimensional array that is 'numClass' by 'numClass';  will receive the probabilities between classes. */
+                             kkint32*         votes,                  /**< Array 'numClasses' in length that will receive the number of Votes each class won. */
+                             double*          probabilities,          /**< Array 'numClasses' in length that will receive the computed Probability for Each Class */
+                             kkint32          knownClassNum,          /**< The Class that we know the example to be. */
+                             double           confidence,             /**< Used for calculating 'compact'  probability must exceed this.  */
+                             double&          compact                 /**< 'knownClassNum'  and  'confidence'  need to be provided. */
+                            )
+{
+  compact = 0.0;
+
+  kkint32 i;
+  for  (i = 0;  i < numClasses;  i++)
+    votes[i] = 0;
+
+   kkint32 distIdx = 0;
+   for  (i = 0;  i < (numClasses - 1); i++)
+   {
+     for  (kkint32 j = i + 1;  j < numClasses;  j++)
+     {
+       if  (dist[distIdx] > 0)
+         votes[i]++;
+       else
+         votes[j]++;
+
+       crossClassProbTable[i][j] = 0.0;
+       crossClassProbTable[j][i] = 0.0;
+
+       distIdx++;
+     }
+   }
+
+   int  win1 = -1;
+   int  win2 = -1;
+   int  win3 = -1;
+   int  win4 = -1;
+
+   int  win1Idx = 0;
+   int  win2Idx = 0;
+   int  win3Idx = 0;
+   int  win4Idx = 0;
+
+   for  (i = 0;  i < numClasses;  ++i)
+   {
+     int  zed = votes[i];
+     if  (zed >= win4)
+     {
+       win4 = zed;
+       win4Idx = i;
+
+       if  (win4 >= win3)
+       {
+         win4 = win3;
+         win4Idx = win3Idx;
+         win3 = zed;
+         win3Idx = i;
+
+         if  (win3 >= win2)
+         {
+           win3 = win2;
+           win3Idx = win2Idx;
+           win2 = zed;
+           win2Idx = i;
+
+           if  (win2 >= win1)
+           {
+             win2 = win1;
+             win2Idx = win1Idx;
+             win1 = zed;
+             win1Idx = i;
+           }
+         }
+       }
+     }
+   }
+
+   if  (win1 == win2)
+   {
+     if  (win1 == win3)
+     {
+       if  (win1 == win4)
+       {
+         probabilities[win1Idx] = 0.25;
+         probabilities[win2Idx] = 0.25;
+         probabilities[win3Idx] = 0.25;
+         probabilities[win4Idx] = 0.25;
+       }
+       else
+       {
+         probabilities[win1Idx] = 0.95 / 3.0;
+         probabilities[win2Idx] = 0.95 / 3.0;
+         probabilities[win3Idx] = 0.95 / 3.0;
+         probabilities[win4Idx] = 0.05;
+       }
+     }
+     else
+     {
+       probabilities[win1Idx] = 0.85 / 2.0;
+       probabilities[win2Idx] = 0.85 / 2.0;
+       probabilities[win3Idx] = 0.10;
+       probabilities[win4Idx] = 0.05;
+     }
+   }
+
+   else 
+   {
+     probabilities[win1Idx] = 0.65;
+     if  (win2 == win3)
+     {
+       if  (win2 == win4)
+       {
+         probabilities[win2Idx] = 0.30 / 3.0;
+         probabilities[win3Idx] = 0.30 / 3.0;
+         probabilities[win4Idx] = 0.30 / 3.0;
+       }
+       else
+       {
+         probabilities[win2Idx] = 0.30 / 2.0;
+         probabilities[win3Idx] = 0.30 / 2.0;
+         probabilities[win4Idx] = 0.05;
+       }
+     }
+
+     else
+     {
+       probabilities[win2Idx] = 0.20;
+       if  (win3 == win4)
+       {
+         probabilities[win3Idx] = 0.15 / 2.0;
+         probabilities[win4Idx] = 0.15 / 2.0;
+       }
+       else
+       {
+         probabilities[win3Idx] = 0.10;
+         probabilities[win4Idx] = 0.05;
+       }
+     }
+   }
+
+   //NormalizeProbabilitiesWithAMinumum (numClasses, probabilities, 0.001);
+
+   for  (i = 0;  i < numClasses;  ++i)
+   {
+     crossClassProbTable [win1Idx][i] = probabilities[win1Idx];
+     crossClassProbTable [i][win1Idx] = 1.0 - probabilities[win1Idx];
+     if  (i != win1Idx)
+     {
+       crossClassProbTable [win2Idx][i] = probabilities[win2Idx];
+       crossClassProbTable [i][win2Idx] = 1.0 - probabilities[win2Idx];
+       if  (i != win2Idx)
+       {
+         crossClassProbTable [win3Idx][i] = probabilities[win3Idx];
+         crossClassProbTable [i][win3Idx] = 1.0 - probabilities[win3Idx];
+         if  (i != win3Idx)
+         {
+           crossClassProbTable [win4Idx][i] = probabilities[win4Idx];
+           crossClassProbTable [i][win4Idx] = 1.0 - probabilities[win4Idx];
+         }
+       }
+     }
+   }
+
+   if  ((knownClassNum >= 0) &&  (knownClassNum < numClasses))
+   {
+     kkint32 maxIndex1 = -1;
+     kkint32 maxIndex2 = -1;
+     maxIndex1 = GetMaxIndex (probabilities, numClasses, maxIndex2);
+
+     if  (probabilities[maxIndex1] >= confidence)
+     {
+       if  ((probabilities[knownClassNum] < 1.0f)  &&  (probabilities[knownClassNum] > 0.0f))
+       {
+         compact = -log ((double)probabilities[knownClassNum]);
+       }
+     }
+   }
+}  /* ComputeProbForVoting */
+
+
 
 
 
 
 void  ComputeProb  (kkint32            numClasses,               // Number of Classes
-                    float              A,                      // probability parameter
+                    const VectorFloat& probClassPairs,         // probability parameter
                     vector<double>&    dist,                   // Distances for each binary classifier from decision boundary.
                     double**           crossClassProbTable,    // A 'numClass' x 'numClass' matrix;  will get the probabilities between classes.
-                    kkint32*             votes,                  // votes by class
+                    kkint32*           votes,                  // votes by class
                     double*            probabilities,          // Probabilities for Each Class
                     kkint32            knownClassNum           // -1 = Don't know the class otherwise the Number of the Class.
                    )
@@ -265,7 +492,7 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
        else
          votes[j]++;
 
-       double tempProb = (double)(1.0 / (1.0 + exp (-1.0 * double (A) * dist[distIdx])));
+       double tempProb = (double)(1.0 / (1.0 + exp (-1.0 * probClassPairs[distIdx] * dist[distIdx])));
        crossClassProbTable[i][j] = tempProb;
        crossClassProbTable[j][i] = (1.0 - tempProb);
        distIdx++;
@@ -305,6 +532,7 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
      kkint32 maxIndex2 = -1;
      maxIndex1 = GetMaxIndex (probabilities, numClasses, maxIndex2);
    }
+   //NormalizeProbabilitiesWithAMinumum (numClasses, probabilities, 0.002);
 }  /* ComputeProb */
 
 
@@ -312,11 +540,11 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
 
 
 
-struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter&  param,
+struct SvmModel233**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
                                                       struct       svm_problem&    subprob
                                                      )
 { 
-  struct svm_model **submodel;
+  struct SvmModel233 **submodel;
 
   kkint32 numSVM = param.numSVM;
   kkint32 sample = (kkint32) (param.sample);
@@ -326,24 +554,24 @@ struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter
   kkint32  boosting   = param.boosting;
   kkint32  dimSelect  = param.dimSelect;
 
-  Learn_Type learnType;
+  LearnType learnType;
 
   if  ((numSVM == 1)  &&  (sample == 100))
-    learnType= NORMAL;
+    learnType= LearnType::NORMAL;
 
   else if  (dimSelect > 0)
-    learnType = SUBSPACE;
+    learnType = LearnType::SUBSPACE;
 
   else if (boosting != 0)
-    learnType=BOOSTING;
+    learnType=LearnType::BOOSTING;
 
   else if(sampleSV!=0)
-    learnType=SAMPLESV;
+    learnType=LearnType::SAMPLESV;
 
   else
-    learnType=BAGGING;
+    learnType=LearnType::BAGGING;
 
-  submodel = new svm_model* [numSVM];
+  submodel = new SvmModel233* [numSVM];
   submodel[0] = svm_train (&subprob,  &param);
 
   return  submodel;
@@ -354,25 +582,23 @@ struct svm_model**  KKMachineLearning::SvmTrainModel (const struct svm_parameter
 
 
 
-
-
-void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
-                                           struct svm_model**      subModel,
-                                           const struct svm_node*  unknownClassFeatureData, 
-                                           kkint32*                  votes,
-                                           double*                 probabilities,
-                                           kkint32                 knownClass,
-                                           kkint32&                predClass1,
-                                           kkint32&                predClass2,
-                                           kkint32&                predClass1Votes,
-                                           kkint32&                predClass2Votes,
-                                           double&                 probOfPredClass1,
-                                           double&                 probOfPredClass2,
-                                           double&                 probOfKnownClass,
-                                           Ivector&                winners,
-                                           double**                crossClassProbTable,
-                                           double&                 breakTie
-                                          )
+void   KKMLL::SvmPredictClass (SVMparam&               svmParam,
+                               struct SvmModel233**    subModel,
+                               const struct svm_node*  unknownClassFeatureData, 
+                               kkint32*                votes,
+                               double*                 probabilities,
+                               kkint32                 knownClass,
+                               kkint32&                predClass1,
+                               kkint32&                predClass2,
+                               kkint32&                predClass1Votes,
+                               kkint32&                predClass2Votes,
+                               double&                 predClass1Prob,
+                               double&                 predClass2Prob,
+                               double&                 probOfKnownClass,
+                               Ivector&                winners,
+                               double**                crossClassProbTable,
+                               double&                 breakTie
+                              )
 {
   const struct svm_parameter&  param = svmParam.Param ();
 
@@ -383,8 +609,10 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
 
 
   svm_predict (subModel[0], unknownClassFeatureData, dist, winners, -1);
+
+
   ComputeProb  (NUMCLASS,
-                param.A,
+                svmParam.ProbClassPairs (),
                 dist,                   // Distances for each binary classifier from decision boundary.
                 crossClassProbTable,    // Will get Probabilities between classes.
                 votes,
@@ -392,8 +620,7 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
                 knownClass              // -1 = Don't know the class otherwise the Number of the Class.
                );
 
-
-  GreaterVotes ((svmParam.SelectionMethod () == SelectByProbability),
+  GreaterVotes ((svmParam.SelectionMethod () == SVM_SelectionMethod::Probability),
                 NUMCLASS,
                 votes,
                 probabilities,
@@ -403,19 +630,19 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
   if  (predClass1 >= 0)
   {
     predClass1Votes    = votes[predClass1];
-    probOfPredClass1   = probabilities[predClass1];
+    predClass1Prob   = probabilities[predClass1];
   }
 
   if  (predClass2 >= 0)
   {
     predClass2Votes    = votes[predClass2];
-    probOfPredClass2   = probabilities[predClass2];
+    predClass2Prob   = probabilities[predClass2];
   }
 
   if  (knownClass >= 0)
     probOfKnownClass   = probabilities[knownClass];
 
-  breakTie = (probOfPredClass1 - probOfPredClass2);
+  breakTie = (predClass1Prob - predClass2Prob);
 }  /* SvmPredictClass */
 
 
@@ -423,14 +650,14 @@ void   KKMachineLearning::SvmPredictClass (SVMparam&               svmParam,
 
 
 
-kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   param,
-                                              svm_model**                   submodel, 
-                                              const svm_node*               unKnownData, 
-                                              kkint32                       desired, 
-                                              double&                       dist,
-                                              double&                       probability,
-                                              kkint32                       excludeSupportVectorIDX
-                                             )
+kkint32  KKMLL::SvmPredictTwoClass (const svm_parameter&  param,
+                                    SvmModel233**           submodel, 
+                                    const svm_node*       unKnownData, 
+                                    kkint32               desired, 
+                                    double&               dist,
+                                    double&               probability,
+                                    kkint32               excludeSupportVectorIDX
+                                   )
 {
   if  (submodel[0]->nr_class != 2)
   {
@@ -444,7 +671,6 @@ kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   pa
     exit (-1);
   }
 
-
   kkint32  v = kkint32 (svm_predictTwoClasses (submodel[0], unKnownData, dist, excludeSupportVectorIDX));
 
   probability = (1.0 / (1.0 + exp (-1.0 * param.A * dist)));
@@ -455,12 +681,38 @@ kkint32  KKMachineLearning::SvmPredictTwoClass (const struct svm_parameter&   pa
 
 
 
+void  KKMLL::SvmPredictRaw (SvmModel233**      submodel, 
+                            const svm_node*  unKnownData,
+                            double&          label,
+                            double&          dist
+                           )
+{
+  if  (submodel[0]->nr_class != 2)
+  {
+    cerr << endl
+         << endl
+         << "SvmPredictTwoClass    *** ERROR ***" << endl
+         << endl
+         << "Number of classes should be equal to two." << endl
+         << endl;
+    osWaitForEnter ();
+    exit (-1);
+  }
+
+  dist = 0.0;
+
+  label = svm_predictTwoClasses (submodel[0], unKnownData, dist, -1);
+
+  return;
+}  /* SvmPredictRaw */
 
 
-void  KKMachineLearning::SvmSaveModel (struct svm_model**  subModel,
-                                       const char*         fileName,
-                                       bool&               successfull
-                                      )
+
+
+void  KKMLL::SvmSaveModel (struct SvmModel233**  subModel,
+                           const char*         fileName,
+                           bool&               successfull
+                          )
 {
   successfull = true;
 
@@ -470,8 +722,8 @@ void  KKMachineLearning::SvmSaveModel (struct svm_model**  subModel,
 
 
 
-void  KKMachineLearning::SvmSaveModel (ostream&             o,
-                         struct  svm_model**  model
+void  KKMLL::SvmSaveModel (ostream&             o,
+                         struct  SvmModel233**  model
                         )
 {
    Svm_Save_Model (o, model[0]);
@@ -481,9 +733,9 @@ void  KKMachineLearning::SvmSaveModel (ostream&             o,
 
 
 
-struct svm_model**   KKMachineLearning::SvmLoadModel (const char* fileName)
+struct SvmModel233**   KKMLL::SvmLoadModel (const char* fileName)
 {
-  svm_model**  models = new svm_model*[1];
+  SvmModel233**  models = new SvmModel233*[1];
   models[0] = svm_load_model(fileName);
 
   if  (models[0] == NULL)
@@ -496,11 +748,11 @@ struct svm_model**   KKMachineLearning::SvmLoadModel (const char* fileName)
 
 
 
-struct svm_model**   KKMachineLearning::SvmLoadModel (istream&  f,
+struct SvmModel233**   KKMLL::SvmLoadModel (istream&  f,
                                         RunLog&   log
                                        )
 {
-  svm_model**  models = new svm_model*[1];
+  SvmModel233**  models = new SvmModel233*[1];
   models[0] = Svm_Load_Model (f, log);
 
   if  (models[0] == NULL)
@@ -516,7 +768,7 @@ struct svm_model**   KKMachineLearning::SvmLoadModel (istream&  f,
 
 
 
-void   KKMachineLearning::SvmDestroyModel (struct svm_model**  subModel)
+void   KKMLL::SvmDestroyModel (struct SvmModel233**  subModel)
 {
   svm_destroy_model (subModel[0]);
 }

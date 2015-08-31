@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include  <ctype.h>
+#include <limits.h>
 #include  <time.h>
 
 #include  <string>
@@ -24,7 +25,7 @@ using namespace  KKB;
 #include "FeatureFileIOSparse.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -83,7 +84,8 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
     }
 
     MLClassPtr  mlClass = _classes->GetMLClassPtr (className);
-    //mlClass = _classes->GetMLClassPtr (className);
+
+    mlClass = _classes->GetMLClassPtr (className);
 
     KKStr  field;
     GetToken (_in, " \t", field, eof, eol);
@@ -109,7 +111,7 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
   for  (kkint32 fieldNum = featureNumMin;  fieldNum <= featureNumMax;  fieldNum++)
   {
     bool  alreadyExists = false;
-    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), NumericAttribute, alreadyExists);
+    fileDesc->AddAAttribute ("Field_" + StrFormatInt (fieldNum, "ZZZZ0"), AttributeType::Numeric, alreadyExists);
   }
 
   return  fileDesc;
@@ -147,7 +149,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
   if  (_maxCount < 1)
     _maxCount = int32_max;
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   while  ((!eof)   &&  (!_cancelFlag)  &&  ((kkint32)examples->size () < _maxCount))
   {
@@ -177,7 +179,7 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
     example->MLClass (mlClass);
 
     KKStr  exampleName = rootName + "_" + StrFormatInt (lineCount, "ZZZZZZ0");
-    example->ImageFileName (exampleName);
+    example->ExampleFileName (exampleName);
 
     KKStr  field = "";
     GetToken (_in, " \t", field, eof, eol);
@@ -216,15 +218,15 @@ FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName
 
 
 
-void   FeatureFileIOSparse::SaveFile (FeatureVectorList&     _data,
-                                      const KKStr&           _fileName,
-                                      const FeatureNumList&  _selFeatures,
-                                      ostream&               _out,
-                                      kkuint32&              _numExamplesWritten,
-                                      VolConstBool&          _cancelFlag,
-                                      bool&                  _successful,
-                                      KKStr&                 _errorMessage,
-                                      RunLog&                _log
+void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
+                                      const KKStr&          _fileName,
+                                      FeatureNumListConst&  _selFeatures,
+                                      ostream&              _out,
+                                      kkuint32&             _numExamplesWritten,
+                                      VolConstBool&         _cancelFlag,
+                                      bool&                 _successful,
+                                      KKStr&                _errorMessage,
+                                      RunLog&               _log
                                      )
 {
   _log.Level (20) << "FeatureFileIOSparse::SaveFile     FileName[" << _fileName << "]." << endl;

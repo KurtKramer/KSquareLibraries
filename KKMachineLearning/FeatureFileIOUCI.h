@@ -3,7 +3,7 @@
 
 #include  "FeatureFileIO.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
 
 
@@ -45,36 +45,35 @@ namespace KKMachineLearning
                                       );
 
 
-    virtual  FeatureVectorListPtr  LoadFile (const KKStr&          _fileName,
-                                             const FileDescPtr     _fileDesc,
-                                             MLClassList&          _classes, 
-                                             istream&              _in,
-                                             kkint32               _maxCount,    // Maximum # images to load.
-                                             VolConstBool&  _cancelFlag,
-                                             bool&                 _changesMade,
-                                             KKStr&                _errorMessage,
-                                             RunLog&               _log
+    virtual  FeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
+                                             const FileDescPtr  _fileDesc,
+                                             MLClassList&       _classes, 
+                                             istream&           _in,
+                                             kkint32            _maxCount,    // Maximum # images to load.
+                                             VolConstBool&      _cancelFlag,
+                                             bool&              _changesMade,
+                                             KKStr&             _errorMessage,
+                                             RunLog&            _log
                                             );
 
 
-    virtual  void   SaveFile (FeatureVectorList&     _data,
-                              const KKStr&           _fileName,
-                              const FeatureNumList&  _selFeatures,
-                              ostream&               _out,
-                              kkuint32&              _numExamplesWritten,
-                              VolConstBool&          _cancelFlag,
-                              bool&                  _successful,
-                              KKStr&                 _errorMessage,
-                              RunLog&                _log
+    virtual  void   SaveFile (FeatureVectorList&    _data,
+                              const KKStr&          _fileName,
+                              FeatureNumListConst&  _selFeatures,
+                              ostream&              _out,
+                              kkuint32&             _numExamplesWritten,
+                              VolConstBool&         _cancelFlag,
+                              bool&                 _successful,
+                              KKStr&                _errorMessage,
+                              RunLog&               _log
                              );
 
 
 
   private:
     static  FeatureFileIOUCI  driver;
-
   };  /* FeatureFileIOUCI*/
 
-}  /* namespace KKMachineLearning */
+}  /* namespace KKMLL */
 
 #endif

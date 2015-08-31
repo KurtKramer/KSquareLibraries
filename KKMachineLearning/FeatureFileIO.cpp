@@ -1,12 +1,8 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
-
-
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -19,6 +15,7 @@ using namespace std;
 
 #include "KKBaseTypes.h"
 #include "DateTime.h"
+#include "GoalKeeper.h"
 #include "GlobalGoalKeeper.h"
 #include "ImageIO.h"
 #include "OSservices.h"
@@ -40,17 +37,15 @@ using namespace KKB;
 #include "FeatureVectorProducer.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
 
-
-
-void  ReportError (RunLog&        log,
+void  ReportError (RunLog&       log,
                    const KKStr&  fileName,
                    const KKStr&  funcName,
-                   kkint32          lineCount,
+                   kkint32       lineCount,
                    const KKStr&  errorDesc
                   )
 {
@@ -65,10 +60,9 @@ void  ReportError (RunLog&        log,
 
 
 
-bool  FeatureFileIO::atExitDefined = false;
-
 
 vector<FeatureFileIOPtr>*  FeatureFileIO::registeredDrivers = NULL;
+
 
 
 std::vector<FeatureFileIOPtr>*  FeatureFileIO::RegisteredDrivers  ()
@@ -86,14 +80,11 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 {
   GlobalGoalKeeper::StartBlock ();
 
-  if  (!atExitDefined)
-  {
-    atexit (FeatureFileIO::FinalCleanUp);
-    atExitDefined = true;
-  }
-
   if  (!registeredDrivers)
+  {
+    RegisterAllDrivers ();
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
+  }
 
   registeredDrivers->push_back (_driver);
 
@@ -106,13 +97,6 @@ void  FeatureFileIO::RegisterFeatureFileIODriver (FeatureFileIOPtr  _driver)
 void  FeatureFileIO::RegisterAllDrivers ()
 {
   GlobalGoalKeeper::StartBlock ();
-
-  if  (!atExitDefined)
-  {
-    atexit (FeatureFileIO::FinalCleanUp);
-    atExitDefined = true;
-  }
-
   if  (registeredDrivers == NULL)
   {
     registeredDrivers = new std::vector<FeatureFileIOPtr> ();
@@ -124,40 +108,11 @@ void  FeatureFileIO::RegisterAllDrivers ()
     registeredDrivers->push_back (new FeatureFileIORoberts ());
     registeredDrivers->push_back (new FeatureFileIOSparse  ());
     registeredDrivers->push_back (new FeatureFileIOUCI     ());
+    atexit (FeatureFileIO::FinalCleanUp);
   }
 
   GlobalGoalKeeper::EndBlock ();
 }  /* RegisterAllDrivers */
-
-
-
-
-FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
-{
-  GlobalGoalKeeper::StartBlock ();
-
-  if  (registeredDrivers == NULL)
-    registeredDrivers = new std::vector<FeatureFileIOPtr> ();
-
-  FeatureFileIOPtr  result = NULL;
-
-  KKStr  driverNameLower = _driverName.ToLower ();
-  vector<FeatureFileIOPtr>::const_iterator  idx;
-  for  (idx = registeredDrivers->begin ();  idx != registeredDrivers->end ();  idx++)
-  {
-    if  ((*idx)->driverNameLower == driverNameLower)
-    {
-      result =  *idx;
-      break;
-    }
-  }
-
-  GlobalGoalKeeper::EndBlock ();
-
-  return  result;
-}  /* LookUpDriver */
-
-
 
 
 
@@ -219,6 +174,22 @@ void FeatureFileIO::FinalCleanUp ()
   GlobalGoalKeeper::EndBlock ();
 }  /* CleanUpFeatureFileIO */
 
+
+
+
+
+FeatureFileIOPtr  FeatureFileIO::LookUpDriver (const KKStr&  _driverName)
+{
+  vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+  KKStr  driverNameLower = _driverName.ToLower ();
+  vector<FeatureFileIOPtr>::const_iterator  idx;
+  for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+  {
+    if  ((*idx)->driverNameLower == driverNameLower)
+      return  *idx;
+  }
+  return  NULL;
+}  /* LookUpDriver */
 
 
 
@@ -321,18 +292,28 @@ KKStr  FeatureFileIO::FileFormatsReadAndWriteOptionsStr ()
 
 
 
-VectorKKStr  FeatureFileIO::RegisteredDriverNames ()
+VectorKKStr  FeatureFileIO::RegisteredDriverNames (bool  canRead,
+                                                   bool  canWrite
+                                                  )
 {
   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
   VectorKKStr  names;
   vector<FeatureFileIOPtr>::iterator  idx;
 
   for  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
-    names.push_back ((*idx)->DriverName ());
+  {
+    FeatureFileIOPtr  driver = *idx;
+    if  (canRead  &&  (!driver->CanRead ()))
+      continue;
+
+    if  (canWrite  &&  (!driver->CanWrite ()))
+      continue;
+
+    names.push_back (driver->DriverName ());
+  }
 
   return  names;
 }  /* RegisteredDriverNames */
-
 
 
 
@@ -528,7 +509,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
   }
   else
   {
-    examples->Compress ();
     _successful = true;
   }
 
@@ -540,13 +520,13 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
 
 
 
-void   FeatureFileIO::AppendToFile (const KKStr&           _fileName,
-                                    const FeatureNumList&  _selFeatures,
-                                    FeatureVectorList&     _examples,
-                                    kkuint32&              _numExamplesWritten,
-                                    VolConstBool&          _cancelFlag,
-                                    bool&                  _successful,
-                                    RunLog&                _log
+void   FeatureFileIO::AppendToFile (const KKStr&          _fileName,
+                                    FeatureNumListConst&  _selFeatures,
+                                    FeatureVectorList&    _examples,
+                                    kkuint32&             _numExamplesWritten,
+                                    VolConstBool&         _cancelFlag,
+                                    bool&                 _successful,
+                                    RunLog&               _log
                                    )
 {
   _log.Level (10) << "FeatureFileIO::AppendToFile - File[" << _fileName << "]." << endl;
@@ -582,13 +562,13 @@ void   FeatureFileIO::AppendToFile (const KKStr&           _fileName,
 
 
 
-void  FeatureFileIO::SaveFeatureFile (const KKStr&           _fileName, 
-                                      const FeatureNumList&  _selFeatures,
-                                      FeatureVectorList&     _examples,
-                                      kkuint32&              _numExamplesWritten,
-                                      VolConstBool&          _cancelFlag,
-                                      bool&                  _successful,
-                                      RunLog&                _log
+void  FeatureFileIO::SaveFeatureFile (const KKStr&          _fileName, 
+                                      FeatureNumListConst&  _selFeatures,
+                                      FeatureVectorList&    _examples,
+                                      kkuint32&             _numExamplesWritten,
+                                      VolConstBool&         _cancelFlag,
+                                      bool&                 _successful,
+                                      RunLog&               _log
                                      )
 {
   _log.Level (10) << "FeatureFileIO::SaveFeatureFile - File[" << _fileName << "]." << endl;
@@ -614,12 +594,12 @@ void  FeatureFileIO::SaveFeatureFile (const KKStr&           _fileName,
 
 
 
-void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileName, 
-                                                   const FeatureNumList&  _selFeatures,
-                                                   FeatureVectorList&     _examples,
-                                                   VolConstBool&          _cancelFlag,
-                                                   bool&                  _successful,
-                                                   RunLog&                _log
+void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&          _fileName, 
+                                                   FeatureNumListConst&  _selFeatures,
+                                                   FeatureVectorList&    _examples,
+                                                   VolConstBool&         _cancelFlag,
+                                                   bool&                 _successful,
+                                                   RunLog&               _log
                                                   )
 {
   kkuint32  numExamplesWritten = 0;
@@ -641,7 +621,7 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
 
     while  ((idx != _examples.end ())  &&  (_successful)  &&  (!_cancelFlag))
     {
-      FeatureVectorListPtr  part = new FeatureVectorList (_examples.FileDesc (), false, _log);
+      FeatureVectorListPtr  part = _examples.ManufactureEmptyList (false);
 
       while  ((idx != _examples.end ())  &&  (part->QueueSize () < maxPartSize))
       {
@@ -660,14 +640,6 @@ void  FeatureFileIO::SaveFeatureFileMultipleParts (const KKStr&           _fileN
     }
   }
 }  /* SaveFeatureFileMultipleParts */
-
-
-
-
-
-
-
-
 
 
 
@@ -795,13 +767,13 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
       osAddLastSlash (subDirName);
 
-      // We want to add the directory path to the ImageFileName so that we can later locate the source image.
+      // We want to add the directory path to the ExampleFileName so that we can later locate the source image.
       FeatureVectorList::iterator  idx = subDirImages->begin ();
       for  (idx = subDirImages->begin ();  idx != subDirImages->end ();  idx++)
       {
         fv = *idx;
-        KKStr  newImageFileName = subDirName + fv->ImageFileName ();
-        fv->ImageFileName (newImageFileName);
+        KKStr  newImageFileName = subDirName + fv->ExampleFileName ();
+        fv->ExampleFileName (newImageFileName);
       }
 
       dirImages->AddQueue (*subDirImages);
@@ -993,7 +965,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       {
         RasterPtr image = ReadImage (fullFileName);
         if  (image)
-          fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, _log);
+          fv = fvProducer->ComputeFeatureVector (*image, _unknownClass, NULL, 1.0f, _log);
         delete image;
         image = NULL;
         if  (fv)
@@ -1023,8 +995,8 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
       else
       {
         _changesMade = true;
-        fv->ImageFileName (*imageFileName);
-        _log.Level (30) << fv->ImageFileName () << "  " << fv->OrigSize () << endl;
+        fv->ExampleFileName (*imageFileName);
+        _log.Level (30) << fv->ExampleFileName () << "  " << fv->OrigSize () << endl;
         extractedFeatures->PushOnBack (fv);
         numOfNewFeatureExtractions++;
 

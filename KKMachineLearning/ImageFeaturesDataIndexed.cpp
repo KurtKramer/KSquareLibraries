@@ -1,16 +1,13 @@
-#include  "FirstIncludes.h"
-
-#include  <stdio.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <limits>
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -20,7 +17,7 @@ using namespace  KKB;
 
 #include "ImageFeaturesDataIndexed.h"
 #include "FeatureVector.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -38,16 +35,14 @@ ImageFeaturesDataIndexed::ImageFeaturesDataIndexed ():
 
 
 
-ImageFeaturesDataIndexed::ImageFeaturesDataIndexed (FeatureVectorList&  images):
+ImageFeaturesDataIndexed::ImageFeaturesDataIndexed (const FeatureVectorList&  examples):
    RBTree<ImageDataTreeEntry, ExtractFeatureData, ImageFeaturesNodeKey> (extractFeatureData, true)
 {
-  FeatureVectorPtr  image = NULL;
-
-  FeatureVectorList::iterator idx;
-  for  (idx = images.begin ();  idx != images.end ();  idx++)
+  FeatureVectorPtr  example = NULL;
+  for  (auto  idx:  examples)
   {
-    image = *idx;
-    RBInsert (image);
+    example = idx;
+    RBInsert (example);
   }
 }
 
@@ -55,45 +50,45 @@ ImageFeaturesDataIndexed::ImageFeaturesDataIndexed (FeatureVectorList&  images):
 
 
 
-void  ImageFeaturesDataIndexed::RBInsert (FeatureVectorPtr  image)
+void  ImageFeaturesDataIndexed::RBInsert (FeatureVectorPtr  example)
 {
-  RBTree<ImageDataTreeEntry, ExtractFeatureData, ImageFeaturesNodeKey>::RBInsert (new ImageDataTreeEntry (image));
+  RBTree<ImageDataTreeEntry, ExtractFeatureData, ImageFeaturesNodeKey>::RBInsert (new ImageDataTreeEntry (example));
 }
 
 
 
 
 
-FeatureVectorPtr  ImageFeaturesDataIndexed::GetEqual (const FeatureVectorPtr  image)
+FeatureVectorPtr  ImageFeaturesDataIndexed::GetEqual (const FeatureVectorPtr  example)
 {
-  ImageDataTreeEntryPtr entry = new ImageDataTreeEntry (image);
+  ImageDataTreeEntryPtr entry = new ImageDataTreeEntry (example);
 
   ImageDataTreeEntryPtr  newEntry = RBTree<ImageDataTreeEntry, ExtractFeatureData, ImageFeaturesNodeKey>::GetEqual (entry->NodeKey ());
 
-  FeatureVectorPtr  imageFound = NULL;
+  FeatureVectorPtr  exampleFound = NULL;
   if  (newEntry)
-    imageFound = newEntry->Image ();
+    exampleFound = newEntry->Example ();
 
   delete  entry;  entry = NULL;
-
-  return  imageFound;
+                                                                                                          
+  return  exampleFound;
 }
 
 
 
 
 
-ImageDataTreeEntry::ImageDataTreeEntry (FeatureVectorPtr  _image):
-         image   (_image),
-         nodeKey (_image)
+ImageDataTreeEntry::ImageDataTreeEntry (FeatureVectorPtr  _example):
+         example  (_example),
+         nodeKey  (_example)
 
 {
 }
 
 
 
-ImageFeaturesNodeKey::ImageFeaturesNodeKey (FeatureVectorPtr  _image):
-  image (_image)
+ImageFeaturesNodeKey::ImageFeaturesNodeKey (FeatureVectorPtr  _example):
+  example (_example)
 {
 }
 
@@ -102,24 +97,24 @@ ImageFeaturesNodeKey::ImageFeaturesNodeKey (FeatureVectorPtr  _image):
 
 bool  ImageFeaturesNodeKey::operator== (const ImageFeaturesNodeKey& rightNode)  const
 {
-  return  (CompareTwoImages (image, rightNode.image) == 0);
+  return  (CompareTwoExamples (example, rightNode.example) == 0);
 }
 
 bool   ImageFeaturesNodeKey::operator< (const ImageFeaturesNodeKey& rightNode)  const
 {
-  return  (CompareTwoImages (image, rightNode.image) < 0);
+  return  (CompareTwoExamples (example, rightNode.example) < 0);
 }
 
 bool   ImageFeaturesNodeKey::operator> (const ImageFeaturesNodeKey& rightNode)  const
 {
-  return  (CompareTwoImages (image, rightNode.image) > 0);
+  return  (CompareTwoExamples (example, rightNode.example) > 0);
 }
 
 
 
-kkint32  ImageFeaturesNodeKey::CompareTwoImages (const FeatureVectorPtr i1,
-                                               const FeatureVectorPtr i2
-                                              )  const
+kkint32  ImageFeaturesNodeKey::CompareTwoExamples (const FeatureVectorPtr i1,
+                                                   const FeatureVectorPtr i2
+                                                 )  const
 {
   const float*  f1 = i1->FeatureDataConst ();
   const float*  f2 = i2->FeatureDataConst ();

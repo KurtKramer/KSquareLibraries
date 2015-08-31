@@ -11,19 +11,58 @@
 
 using namespace  std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
+#include "XmlStream.h"
 using namespace  KKB;
 
-#include "ModelParam.h"
 #include "NormalizationParms.h"
 #include "FeatureNumList.h"
-#include "MLClass.h"
 #include "FeatureVector.h"
+#include "MLClass.h"
+#include "ModelParam.h"
 #include "TrainingConfiguration2.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
+
+NormalizationParms::NormalizationParms ():
+  fileDesc                 (NULL),
+  fileName                 (),
+  mean                     (NULL),
+  normalizeFeature         (NULL),
+  normalizeNominalFeatures (false),
+  numOfFeatures            (0),
+  numOfExamples            (0),
+  sigma                    (NULL)
+{
+}  /*  NormalizationParms */
+
+
+
+NormalizationParms::NormalizationParms (bool                _normalizeNominalFeatures,
+                                        FeatureVectorList&  _examples,
+                                        RunLog&             _log
+                                       ):
+
+  fileDesc                 (NULL),
+  fileName                 (),
+  mean                     (NULL),
+  normalizeFeature         (NULL),
+  normalizeNominalFeatures (_normalizeNominalFeatures),
+  numOfFeatures            (0),
+  numOfExamples            (0),
+  sigma                    (NULL)
+
+{
+  _log.Level (20) << "FeatureNormalization - Creating instance from[" << _examples.FileName () << "]." << endl;
+
+  fileDesc      = _examples.FileDesc ();
+  attriuteTypes = fileDesc->CreateAttributeTypeTable ();
+  numOfFeatures = _examples.NumOfFeatures ();
+  DeriveNormalizationParameters (_examples);
+}  /*  NormalizationParms */
 
 
 
@@ -33,7 +72,6 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
                                        ):
   fileDesc                 (NULL),
   fileName                 (),
-  log                      (_log),
   mean                     (NULL),
   normalizeFeature         (NULL),
   normalizeNominalFeatures (false),
@@ -41,92 +79,25 @@ NormalizationParms::NormalizationParms (const ModelParam&   _param,
   numOfExamples            (0),
   sigma                    (NULL)
 {
-  log.Level (20) << "FeatureNormalization - Creating instance from[" << _examples.FileName () << "]." << endl;
+  _log.Level (20) << "FeatureNormalization - Creating instance from[" << _examples.FileName () << "]." << endl;
 
   fileDesc                 = _examples.FileDesc ();
+  numOfFeatures = _examples.NumOfFeatures ();
   attriuteTypes            = fileDesc->CreateAttributeTypeTable ();
   normalizeNominalFeatures = _param.NormalizeNominalFeatures ();
 
-
-  numOfFeatures = _examples.NumOfFeatures ();
-
-  // numOfFeatures = FeatureNumList::MAXnumOFfeatures ();
-  // numOfExamples   = _examples.QueueSize ();
- 
-  numOfExamples   = 0;
-  kkint32 numOfNoise  = 0;
-
-  mean  = new float[numOfFeatures];
-  sigma = new float[numOfFeatures];
-
-  double*  total    = new double [numOfFeatures];
-  double*  sigmaTot = new double [numOfFeatures];
- 
-  kkint32  i;
-
-  for  (i = 0; i < numOfFeatures; i++)
-  {
-    mean[i]     = 0.0;
-    sigma[i]    = 0.0;
-    total[i]    = 0.0;
-    sigmaTot[i] = 0.0;
-  }
-
-  double  featureValue;
-
-  FeatureVectorPtr  example;
-
-  FeatureVectorList::iterator imageIDX;
-
-  for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
-  {
-    example = *imageIDX;
-    if  ((example->MLClass ()->UnDefined ())  ||  
-         (example->MissingData ())            ||  
-         (!example->FeatureDataValid ())
-        )
-    {
-      // We have a noise example and do not want this as part of our Normalization 
-      // procedure.
-      numOfNoise++;
-    }
-    else
-    {
-      // Since this example is defined then we can use it in our normalization calculations.
-      for  (i = 0; i < numOfFeatures; i++)
-      {
-        featureValue = double (example->FeatureData (i));
-        total[i]    += featureValue;
-        sigmaTot[i] += (featureValue * featureValue);
-      }
-
-      numOfExamples++;
-    }
-}  
- 
-  for  (i = 0; i < numOfFeatures; i++)
-  {
-    double meanDouble  = total[i] / double (numOfExamples);
-    mean[i]  = float (meanDouble);
-    sigma[i] = float (sqrt ((sigmaTot[i] - (double (numOfExamples) * meanDouble * meanDouble)) / (double (numOfExamples) - 1.0)));
-  }
-
-  delete[]  sigmaTot;
-  delete[]  total;
-
-  ConstructNormalizeFeatureVector ();
+  DeriveNormalizationParameters (_examples);
 }
 
 
 
-NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr  _config,
+NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr _config,
                                         FeatureVectorList&        _examples,
                                         RunLog&                   _log
                                        ):
 
   fileDesc                 (NULL),
   fileName                 (),
-  log                      (_log),
   mean                     (NULL),
   normalizeFeature         (NULL),
   normalizeNominalFeatures (false),
@@ -135,82 +106,15 @@ NormalizationParms::NormalizationParms (TrainingConfiguration2Ptr  _config,
   sigma                    (NULL)
 
 {
-  log.Level (20) << "FeatureNormalization - Creating instance from[" 
-                 << _examples.FileName () << "]."
-                 << endl;
+  _log.Level (20) << "FeatureNormalization - Creating instance from[" << _examples.FileName () << "]." << endl;
 
   fileDesc                 = _config->FileDesc ();
   attriuteTypes            = fileDesc->CreateAttributeTypeTable ();
   normalizeNominalFeatures = _config->NormalizeNominalFeatures ();
 
-
   numOfFeatures = _examples.NumOfFeatures ();
 
-  // numOfFeatures = FeatureNumList::MAXnumOFfeatures ();
-  // numOfExamples   = _examples.QueueSize ();
- 
-  numOfExamples   = 0;
-  kkint32 numOfNoise    = 0;
-
-  mean  = new float[numOfFeatures];
-  sigma = new float[numOfFeatures];
-
-  double*  total    = new double [numOfFeatures];
-  double*  sigmaTot = new double [numOfFeatures];
- 
-  kkint32  i;
-
-  for  (i = 0; i < numOfFeatures; i++)
-  {
-    mean[i]     = 0.0;
-    sigma[i]    = 0.0;
-    total[i]    = 0.0;
-    sigmaTot[i] = 0.0;
-  }
-
-  double  featureValue;
-
-  FeatureVectorPtr  example;
-
-  FeatureVectorList::iterator imageIDX;
-
-  for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
-  {
-    example = *imageIDX;
-    if  ((example->MLClass ()->UnDefined ())  ||  
-         (example->MissingData ())               ||  
-         (!example->FeatureDataValid ())
-        )
-    {
-      // We have a noise example and do not want this as part of our Normalization 
-      // procedure.
-      numOfNoise++;
-    }
-    else
-    {
-      // Since this example is defined then we can use it in our normalization calculations.
-      for  (i = 0; i < numOfFeatures; i++)
-      {
-        featureValue = double (example->FeatureData (i));
-        total[i]    += featureValue;
-        sigmaTot[i] += (featureValue * featureValue);
-      }
-
-      numOfExamples++;
-    }
-}  
- 
-  for  (i = 0; i < numOfFeatures; i++)
-  {
-    double meanDouble  = total[i] / double (numOfExamples);
-    mean[i]  = float (meanDouble);
-    sigma[i] = float (sqrt ((sigmaTot[i] - (double (numOfExamples) * meanDouble * meanDouble)) / (double (numOfExamples) - 1.0)));
-  }
-
-  delete[]  sigmaTot;
-  delete[]  total;
-
-  ConstructNormalizeFeatureVector ();
+  DeriveNormalizationParameters (_examples);
 }  /*  NormalizationParms */
 
 
@@ -225,7 +129,6 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
                                        ):
   fileDesc                  (_fileDesc),
   fileName                  (_fileName),
-  log                       (_log),
   mean                      (NULL),
   normalizeFeature          (NULL),
   normalizeNominalFeatures  (false),
@@ -234,11 +137,9 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
   sigma                     (NULL)
 
 {
-  log.Level (10) << "NormalizationParms::NormalizationParms - Loading instance from File[" 
-                 << fileName << "]." 
-                 << endl;
+  _log.Level (10) << "NormalizationParms::NormalizationParms - Loading instance from File[" << fileName << "]." << endl;
 
-  attriuteTypes            = fileDesc->CreateAttributeTypeTable ();
+  attriuteTypes = fileDesc->CreateAttributeTypeTable ();
 
   KKStr  field;
 
@@ -247,13 +148,13 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
   FILE*  inputFile = osFOPEN (fileName.Str (), "r");
   if  (!inputFile)
   {
-    log.Level (-1) << "NormalizationParms::NormalizationParms   *** ERROR ***" << endl
+    _log.Level (-1) << "NormalizationParms::NormalizationParms   *** ERROR ***" << endl
                    << "                    Input File[" << fileName << "] is not Valid." << endl;
     _successfull = false;
     return;
   }
 
-  Read (inputFile, _successfull);
+  Read (inputFile, _successfull, _log);
 
   fclose (inputFile);
 
@@ -271,7 +172,6 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
 
   fileDesc                  (_fileDesc),
   fileName                  (),
-  log                       (_log),
   mean                      (NULL),
   normalizeFeature          (NULL),
   normalizeNominalFeatures  (false),
@@ -282,7 +182,7 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
 {
   attriuteTypes  = fileDesc->CreateAttributeTypeTable ();
 
-  Read (_in, _successfull);
+  Read (_in, _successfull, _log);
 
   ConstructNormalizeFeatureVector ();
 }
@@ -296,7 +196,6 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
 
   fileDesc                  (_fileDesc),
   fileName                  (),
-  log                       (_log),
   mean                      (NULL),
   normalizeFeature          (NULL),
   normalizeNominalFeatures  (false),
@@ -307,7 +206,7 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
 {
   attriuteTypes  = fileDesc->CreateAttributeTypeTable ();
 
-  Read (_in, _successfull);
+  Read (_in, _successfull, _log);
 
   ConstructNormalizeFeatureVector ();
 }
@@ -315,13 +214,11 @@ NormalizationParms::NormalizationParms (FileDescPtr  _fileDesc,
 
 
 
-
-
 NormalizationParms::~NormalizationParms ()
 {
-  delete  [] mean;
-  delete  [] sigma;
-  delete  [] normalizeFeature;
+  delete [] mean;               mean             = NULL;
+  delete [] sigma;              sigma            = NULL;
+  delete [] normalizeFeature;   normalizeFeature = NULL;
 }
 
 
@@ -330,18 +227,115 @@ kkint32  NormalizationParms::MemoryConsumedEstimated ()  const
   kkint32  memoryConsumedEstimated = sizeof (NormalizationParms)
     + attriuteTypes.size () * sizeof (AttributeType)
     + fileName.MemoryConsumedEstimated ()
-    + numOfFeatures * (sizeof (bool) + sizeof (float) + sizeof (float));  //  mean + sigma
+    + numOfFeatures * (sizeof (bool) + sizeof (double) + sizeof (double));  //  mean + sigma
 
   return  memoryConsumedEstimated;
 }
 
 
 
+void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _examples)
+{
+  numOfExamples   = 0;
+  kkint32 numOfNoise    = 0;
+
+  mean  = new double[numOfFeatures];
+  sigma = new double[numOfFeatures];
+
+  double*  total    = new double [numOfFeatures];
+  double*  sigmaTot = new double [numOfFeatures];
+ 
+  kkint32 i;
+
+  for  (i = 0; i < numOfFeatures; i++)
+  {
+    mean[i]     = 0.0;
+    sigma[i]    = 0.0;
+    total[i]    = 0.0;
+    sigmaTot[i] = 0.0;
+  }
+
+  double  featureValue;
+
+  FeatureVectorPtr  image;
+
+  FeatureVectorList::iterator imageIDX;
+
+  for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
+  {
+    image = *imageIDX;
+    if  ((image->MLClass ()->UnDefined ())  ||  
+         (image->MissingData ())               ||  
+         (!image->FeatureDataValid ())
+        )
+    {
+      // We have a noise image and do not want this as partof our Normalization 
+      // procedure.
+      numOfNoise++;
+    }
+    else
+    {
+      // Since this image is defined then we can use it in our normalization calculations.
+      for  (i = 0; i < numOfFeatures; i++)
+      {
+        featureValue = double (image->FeatureData (i));
+        total[i]    += featureValue;
+      }
+
+      numOfExamples++;
+    }
+  }
+
+  for  (i = 0; i < numOfFeatures; i++)
+  {
+    double meanDouble  = total[i] / double (numOfExamples);
+    mean[i]  = meanDouble;
+  }
+
+
+  for  (imageIDX = _examples.begin ();  imageIDX != _examples.end ();  imageIDX++)
+  {
+    image = *imageIDX;
+    if  ((image->MLClass ()->UnDefined ())  ||  
+         (image->MissingData ())               ||  
+         (!image->FeatureDataValid ())
+        )
+    {
+      // We have a noise image and do not want this as part of our Normalization 
+      // procedure.
+    }
+    else
+    {
+      // Since this image is defined then we can use it in our normalization calculations.
+      for  (i = 0; i < numOfFeatures; i++)
+      {
+        featureValue = double (image->FeatureData (i));
+        double  delta = featureValue - mean[i];
+        sigmaTot[i] += delta * delta;
+      }
+    }
+  }
+
+  for  (i = 0; i < numOfFeatures; i++)
+  {
+    sigma[i] = sqrt (sigmaTot[i] / numOfExamples);
+  }
+
+  delete[]  sigmaTot;
+  delete[]  total;
+
+  ConstructNormalizeFeatureVector ();
+
+} /* DeriveNormalizationParameters */
+
+
+
 void  NormalizationParms::Save (const KKStr&  _fileName,
-                                bool&          _successfull
+                                bool&          _successfull,
+                                RunLog&        _log
                                )
 {
-  log.Level (20) << "NormalizationParms::Save  FileName[" << _fileName << "]." << endl;
+  _log.Level (20) << "NormalizationParms::Save  FileName[" << _fileName << "]." << endl;
 
   fileName = _fileName;
 
@@ -350,9 +344,7 @@ void  NormalizationParms::Save (const KKStr&  _fileName,
   ofstream outFile (fileName.Str ());
   if  (!outFile.is_open ())
   {
-    log.Level (-1) << "NormalizationParms::Save - Error writing to file["
-                   << _fileName << "]."
-                   << endl;
+    _log.Level (-1) << endl << "NormalizationParms::Save  ***EROR***  writing to file["<< _fileName << "]." << endl << endl;
     _successfull = false;
     return;
   }
@@ -396,8 +388,9 @@ void  NormalizationParms::Write (ostream&  o)
 
 
 
-void  NormalizationParms::Read (FILE*  i,
-                                bool&  sucessful
+void  NormalizationParms::Read (FILE*    i,
+                                bool&    sucessful,
+                                RunLog&  log
                                )
 {
   char  buff[40960];
@@ -444,14 +437,14 @@ void  NormalizationParms::Read (FILE*  i,
         continue;
       }
 
-      mean  = new float[numOfFeatures];
-      sigma = new float[numOfFeatures];
+      mean  = new double[numOfFeatures];
+      sigma = new double[numOfFeatures];
 
       kkint32 x;
       for  (x = 0;  x < numOfFeatures;  x++)
       {
-        mean [x] = float (0);
-        sigma[x] = float (0);
+        mean [x] = 0.0;
+        sigma[x] = 0.0;
       }
     }
 
@@ -467,8 +460,8 @@ void  NormalizationParms::Read (FILE*  i,
     {
       if  (!mean)
       {
-        log.Level (-1) << endl << endl << endl
-                       << "NormalizationParms::Read      NumOfFeatures was not specified before 'Means'." << endl
+        log.Level (-1) << endl 
+                       << "NormalizationParms::Read  ***ERROR***    NumOfFeatures was not specified before 'Means'." << endl
                        << endl;
         sucessful = false;
         continue;
@@ -477,7 +470,7 @@ void  NormalizationParms::Read (FILE*  i,
       kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
-        mean[x] = float (ln.ExtractTokenDouble ("\t"));
+        mean[x] = ln.ExtractTokenDouble ("\t");
         x++;
       }
     }
@@ -487,8 +480,8 @@ void  NormalizationParms::Read (FILE*  i,
     {
       if  (!sigma)
       {
-        log.Level (-1) << endl << endl << endl
-                       << "NormalizationParms::Read      NumOfFeatures was not specified before 'Sigmas'." << endl
+        log.Level (-1) << endl 
+                       << "NormalizationParms::Read   ***ERROR***  NumOfFeatures was not specified before 'Sigmas'." << endl
                        << endl;
         sucessful = false;
         continue;
@@ -497,7 +490,7 @@ void  NormalizationParms::Read (FILE*  i,
       kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
-        sigma[x] = float (ln.ExtractTokenDouble ("\t\n\r"));
+        sigma[x] = ln.ExtractTokenDouble ("\t\n\r");
         x++;
       }
     }
@@ -509,7 +502,8 @@ void  NormalizationParms::Read (FILE*  i,
 
 
 void  NormalizationParms::Read (istream&  i,
-                                bool&     sucessful
+                                bool&     sucessful,
+                                RunLog&   log
                                )
 {
   char  buff[40960];
@@ -535,7 +529,7 @@ void  NormalizationParms::Read (istream&  i,
       numOfFeatures = ln.ExtractTokenInt ("\t");
       if  (numOfFeatures < 1)
       {
-        log.Level (-1) << endl << endl << endl
+        log.Level (-1) << endl
                        << "NormalizationParms::Read      NumOfFeatures[" << numOfFeatures << "]" << endl
                        << endl
                        << "                              Must be greater than 0." << endl
@@ -546,7 +540,7 @@ void  NormalizationParms::Read (istream&  i,
 
       if  (numOfFeatures != fileDesc->NumOfFields ())
       {
-        log.Level (-1) << endl << endl << endl
+        log.Level (-1) << endl
                        << "NormalizationParms::Read      NumOfFeatures dose not agree with FileDesc provided." << endl
                        << endl
                        << "           NumOfFeatures[" << numOfFeatures            << "]" << endl
@@ -556,19 +550,19 @@ void  NormalizationParms::Read (istream&  i,
         continue;
       }
 
-      mean  = new float[numOfFeatures];
-      sigma = new float[numOfFeatures];
+      mean  = new double[numOfFeatures];
+      sigma = new double[numOfFeatures];
 
       kkint32 x;
       for  (x = 0;  x < numOfFeatures;  x++)
       {
-        mean [x] = float (0);
-        sigma[x] = float (0);
+        mean [x] = 0.0;
+        sigma[x] = 0.0;
       }
     }
 
     else if  (field == "NUMOFEXAMPLES")
-      numOfExamples = float (ln.ExtractTokenDouble ("\t"));
+      numOfExamples = (float)ln.ExtractTokenDouble ("\t");
 
     
     else if  (field == "NORMALIZENOMINALFEATURES")
@@ -579,7 +573,7 @@ void  NormalizationParms::Read (istream&  i,
     {
       if  (!mean)
       {
-        log.Level (-1) << endl << endl << endl
+        log.Level (-1) << endl
                        << "NormalizationParms::Read      NumOfFeatures was not specified before 'Means'." << endl
                        << endl;
         sucessful = false;
@@ -589,7 +583,7 @@ void  NormalizationParms::Read (istream&  i,
       kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
-        mean[x] = float (ln.ExtractTokenDouble ("\t"));
+        mean[x] = ln.ExtractTokenDouble ("\t");
         x++;
       }
     }
@@ -599,7 +593,7 @@ void  NormalizationParms::Read (istream&  i,
     {
       if  (!sigma)
       {
-        log.Level (-1) << endl << endl << endl
+        log.Level (-1) << endl
                        << "NormalizationParms::Read      NumOfFeatures was not specified before 'Sigmas'." << endl
                        << endl;
         sucessful = false;
@@ -609,7 +603,7 @@ void  NormalizationParms::Read (istream&  i,
       kkint32  x = 0;
       while  ((!ln.Empty ())  &&  (x < numOfFeatures))
       {
-        sigma[x] = float (ln.ExtractTokenDouble ("\t\n\r"));
+        sigma[x] = ln.ExtractTokenDouble ("\t\n\r");
         x++;
       }
     }
@@ -618,16 +612,117 @@ void  NormalizationParms::Read (istream&  i,
 
 
 
+void  NormalizationParms::WriteXML (const KKStr&  varName,
+                                    ostream&      o
+                                   )  const
+{
+  XmlTag  startTag ("NormalizationParms", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  XmlElementInt32::WriteXML (numOfFeatures,             "NumOfFeatures",            o);
+  XmlElementFloat::WriteXML (numOfExamples,             "NumOfExamples",            o);
+  XmlElementBool::WriteXML  (normalizeNominalFeatures,  "NormalizeNominalFeatures", o);
+
+  if  (fileDesc)   XmlElementFileDesc::WriteXML    (*fileDesc,             "FileDesc", o);
+  if  (mean)       XmlElementArrayDouble::WriteXML (numOfFeatures, mean,   "Mean",     o);
+  if  (sigma)      XmlElementArrayDouble::WriteXML (numOfFeatures, sigma,  "sigma",    o);
+
+  XmlTag  endTag ("NormalizationParms", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+
+void  NormalizationParms::ReadXML (XmlStream&  s,
+                                   XmlTagPtr   tag,
+                                   RunLog&     log
+                                  )
+{
+  XmlTokenPtr  t = s.GetNextToken (log);
+
+  while  (t)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+    {
+      XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+      const KKStr&  className = e->SectionName ();
+      const KKStr&  varName = e->VarName ();
+      if  (varName.EqualIgnoreCase ("NumOfFeatures"))
+        numOfFeatures = e->ToInt32 ();
+
+      else if  (varName.EqualIgnoreCase ("NumOfExamples"))
+        numOfExamples = e->ToFloat ();
+
+      else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
+        normalizeNominalFeatures = e->ToBool ();
+
+      else if  (varName.EqualIgnoreCase ("FileDesc"))
+      {
+        XmlElementFileDescPtr  fd = dynamic_cast<XmlElementFileDescPtr>(e);
+        fileDesc = fd->Value ();
+      }
+
+      else if  (varName.EqualIgnoreCase ("Mean"))
+      {
+        XmlElementArrayDoublePtr  m = dynamic_cast<XmlElementArrayDoublePtr>(e);
+        if  (m->Count () == numOfFeatures)
+        {
+          delete  mean;
+          mean = m->TakeOwnership ();
+        }
+        else
+        {
+          log.Level (-1) << endl
+            << "XmlElementNormalizationParms   ***ERROR***    mean->Count[" << m->Count ()  << "] does not agree with NumOfFeatures[" << numOfFeatures << "]." <<endl
+            << endl;
+        }
+      }
+
+      else if  (varName.EqualIgnoreCase ("Sigma"))
+      {
+        XmlElementArrayDoublePtr  s = dynamic_cast<XmlElementArrayDoublePtr>(e);
+        if  (s->Count () == numOfFeatures)
+        {
+          delete  sigma;
+          sigma = s->TakeOwnership ();
+        }
+        else
+        {
+          log.Level (-1) << endl
+            << "XmlElementNormalizationParms   ***ERROR***    sigma->Count[" << s->Count ()  << "] does not agree with NumOfFeatures[" << numOfFeatures << "]." <<endl
+            << endl;
+        }
+      }
+    }
+
+    delete t;
+    t = s.GetNextToken (log);
+  }
+
+  if  (fileDesc)
+  {
+    attriuteTypes = fileDesc->CreateAttributeTypeTable ();
+    ConstructNormalizeFeatureVector ();
+  }
+}  /* ReadXML */
 
 
 
 
-float  NormalizationParms::Mean (kkint32 i)
+
+
+double  NormalizationParms::Mean (kkint32  i,
+                                  RunLog&  log
+                                 )
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
-    log.Level (-1) << "NormalizationParms::Mean feature Number[" << i << "]  out of bounds." << endl;
-    return  (float)-99999.99;
+    log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
+    return  -99999.99;
   }
   else
   {
@@ -639,11 +734,13 @@ float  NormalizationParms::Mean (kkint32 i)
 
 
 
-float  NormalizationParms::Sigma (kkint32 i)
+double  NormalizationParms::Sigma (kkint32  i,
+                                   RunLog&  log
+                                  )
 {
   if  ((i < 0)  ||  (i > numOfFeatures))
   {
-    log.Level (-1) << "NormalizationParms::Mean feature Number[" << i << "]  out of bounds." << endl;
+    log.Level (-1) << "NormalizationParms::Mean   ***ERROR***   Feature Number[" << i << "]  out of bounds." << endl;
     return  (float)-99999.99;
   }
   else
@@ -670,7 +767,9 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 
     else 
     {
-      if  ((attriuteTypes[i] == NominalAttribute)  ||  (attriuteTypes[i] == SymbolicAttribute))
+      if  ((attriuteTypes[i] == AttributeType::Nominal)  ||
+           (attriuteTypes[i] == AttributeType::Symbolic)
+          )
       {
         normalizeFeature[i] = false;
       }
@@ -693,10 +792,10 @@ void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
   {
     if  (normalizeFeature[i])
     {
-      if  (sigma[i] != 0)
-        featureData[i] = (featureData[i] - mean[i]) / sigma[i];
-      else
-        featureData[i] = 0;
+      double  normValue = 0.0;
+      if  (sigma[i] != 0.0)
+        normValue = ((double)featureData[i] - mean[i]) / sigma[i];
+      featureData[i] = (float)normValue;
     }
   }
 }  /* NormalizeAExample */
@@ -706,13 +805,15 @@ void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
 
 
 
-void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  images)
+void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  examples,
+                                             RunLog&               log
+                                            )
 {
-  if  (numOfFeatures != images->NumOfFeatures ())
+  if  (numOfFeatures != examples->NumOfFeatures ())
   {
     log.Level (-1) << "NormalizationParms::NoralizeImage  **** ERROR ****     Mismatched Feature Count." << endl
                    << "            NormalizationParms [" << numOfFeatures            << "]" << endl
-                   << "            ImageFeatiresList  [" << images->NumOfFeatures () << "]."  << endl
+                   << "            ImageFeatiresList  [" << examples->NumOfFeatures () << "]."  << endl
                    << endl;
 
     osWaitForEnter ();
@@ -722,7 +823,7 @@ void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  images)
 
   FeatureVectorList::iterator idx;
 
-  for  (idx = images->begin ();  idx != images->end ();  idx++)
+  for  (idx = examples->begin ();  idx != examples->end ();  ++idx)
     NormalizeAExample (*idx);
 
   return;
@@ -734,16 +835,20 @@ FeatureVectorPtr  NormalizationParms::ToNormalized (FeatureVectorPtr  example)  
 {
   FeatureVectorPtr  result = new FeatureVector (*example);
   float*  featureData = result->FeatureDataAlter ();
-  for  (kkint32 i = 0; i < numOfFeatures; i++)
+  for  (kkint32 i = 0;  i < numOfFeatures;  ++i)
   {
     if  (normalizeFeature[i])
     {
-      if  (sigma[i] != 0)
-        featureData[i] = (featureData[i] - mean[i]) / sigma[i];
-      else
-        featureData[i] = 0;
+      double  normValue = 0.0;
+      if  (sigma[i] != 0.0)
+        normValue = ((double)featureData[i] - mean[i]) / sigma[i];
+      featureData[i] = (float)normValue;
     }
   }
 
   return result;
 }  /* ToNormalized */
+
+
+
+XmlFactoryMacro(NormalizationParms)

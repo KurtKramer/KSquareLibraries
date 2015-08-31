@@ -2,7 +2,7 @@
 #define  _BINARYCLASSPARMS_
 
 /**
- @class  KKMachineLearning::BinaryClassParms
+ @class  KKMLL::BinaryClassParms
  @brief  Machine Learning parameters to be used by a pair of classes.
  @author Kurt Kramer
  @details
@@ -22,20 +22,19 @@
  ** and feature parameters that are specific to them.                 *
  **********************************************************************
  @endcode
- @see  KKMachineLearning::SVMparam, KKMachineLearning::ModelParamOldSVM, KKMachineLearning::SVM233
+ @see  KKMLL::SVMparam, KKMLL::ModelParamOldSVM, KKMLL::SVM233
  */
-
 #include "KKQueue.h"
 
 #include "svm.h"
 #include "FeatureNumList.h"
+#include "FileDesc.h"
 
-namespace KKMachineLearning
+namespace KKMLL
 {
   #if  !defined (_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
-  typedef  MLClass const * MLClassConstPtr;
   #endif
 
 
@@ -51,12 +50,20 @@ namespace KKMachineLearning
 
     typedef  SVM233::svm_parameter  svm_parameter;
 
-    /** @brief  Create from existing Model on Disk. */
-    BinaryClassParms (MLClassPtr             _class1,
-                      MLClassPtr             _class2,
-                      const svm_parameter&   _param,
-                      const FeatureNumList&  _selectedFeatures,
-                      float                  _weight
+    /** 
+     *@brief  Constructor for 'BinaryClassParms' where caller supplies the two classes and parameters for that specific class pair. 
+     *@param[in] _class1
+     *@param[in] _class2
+     *@param[in] _param
+     *@param[in] _selectedFeatures  Will create a duplicate instance; caller will still have same ownership status.
+     *@param[in] _weight
+     */
+    
+    BinaryClassParms (MLClassPtr              _class1,
+                      MLClassPtr              _class2,
+                      const svm_parameter&    _param,
+                      FeatureNumListConstPtr  _selectedFeatures,
+                      float                   _weight
                      );
     
     BinaryClassParms (const BinaryClassParms&  binaryClassParms);
@@ -65,26 +72,30 @@ namespace KKMachineLearning
 
     static
     BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr& _str,
-                                              FileDescPtr  _fileDesc,
                                               RunLog&      _log
                                              );
 
     //  Member Access Methods
-    double                 AParam           () const {return  param.A;}
-    MLClassPtr             Class1           () const {return  class1;}
-    MLClassPtr             Class2           () const {return  class2;}
-    double                 C                () const {return  param.C;}
-    const svm_parameter&   Param            () const {return  param;}
-    const FeatureNumList&  SelectedFeatures () const {return  selectedFeatures;}
-    float                  Weight           () const {return  weight;}
+    double                   AParam             () const {return  param.A;}
+    MLClassPtr               Class1             () const {return  class1;}
+    MLClassPtr               Class2             () const {return  class2;}
+    double                   C                  () const {return  param.C;}
+    const svm_parameter&     Param              () const {return  param;}
+    FeatureNumListConstPtr   SelectedFeatures   () const {return  selectedFeatures;}
+    float                    Weight             () const {return  weight;}
+
+    kkuint16                 NumOfFeatures      (FileDescPtr fileDesc) const; 
+    FeatureNumListConstPtr   SelectedFeaturesFD (FileDescPtr fileDesc) const;
+
 
     // member Update methods
-    void  AParam           (float                  _A)                 {param.A           = _A;}
-    void  C                (double                 _c)                 {param.C           = _c;}
-    void  Gamma            (double                 _gamma)             {param.gamma       = _gamma;}
-    void  Param            (const svm_parameter&   _param)             {param             = _param;}
-    void  SelectedFeatures (const FeatureNumList&  _selectedFeatures)  {selectedFeatures  = _selectedFeatures;}
-    void  Weight           (float                  _weight)            {weight            = _weight;}
+    void  AParam           (float                       _A)                 {param.A           = _A;}
+    void  C                (double                      _c)                 {param.C           = _c;}
+    void  Gamma            (double                      _gamma)             {param.gamma       = _gamma;}
+    void  Param            (const svm_parameter&        _param)             {param             = _param;}
+    void  SelectedFeatures (const FeatureNumListConst&  _selectedFeatures);
+    void  SelectedFeatures (FeatureNumListConstPtr      _selectedFeatures);  /**< Will make copy of instance;  caller will retain ownership status. */
+    void  Weight           (float                       _weight)            {weight            = _weight;}
 
     KKStr   Class1Name ()  const;
     KKStr   Class2Name ()  const;
@@ -93,12 +104,14 @@ namespace KKMachineLearning
 
 
   private:
-    MLClassPtr      class1;
-    MLClassPtr      class2;
+    MLClassPtr         class1;
+    MLClassPtr         class2;
 
-    svm_parameter   param;             /**< From SVMlib            */
-    FeatureNumList  selectedFeatures;  /**< Feature Number to use. */
-    float           weight;
+    svm_parameter      param;             /**< From SVMlib             */
+
+    mutable
+    FeatureNumListPtr  selectedFeatures;  /**< Feature Numbers to use. */
+    float              weight;
   };  /* BinaryClassParms */
 
 
@@ -112,6 +125,8 @@ namespace KKMachineLearning
   {
   public:
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
+
+    BinaryClassParmsList ();
 
     BinaryClassParmsList (bool  _owner);
     
@@ -139,7 +154,7 @@ namespace KKMachineLearning
 
     ~BinaryClassParmsList ();
 
-    float  FeatureCountNet ()  const;
+    float  FeatureCountNet (FileDescPtr fileDesc)  const;
 
     BinaryClassParmsPtr  LookUp (MLClassPtr  _class1,
                                  MLClassPtr  _class2
@@ -168,6 +183,20 @@ namespace KKMachineLearning
     void  WriteXML (ostream&  o)  const;
 
 
+
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
+
+
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
+
+
+
+
   private:
      struct  KeyField
      {
@@ -189,7 +218,11 @@ namespace KKMachineLearning
 
   typedef  BinaryClassParmsList::BinaryClassParmsListPtr  BinaryClassParmsListPtr;
 
-}  /* namespace KKMachineLearning */
+  typedef  XmlElementTemplate<BinaryClassParmsList>  XmlElementBinaryClassParmsList;
+  typedef  XmlElementBinaryClassParmsList*  XmlElementBinaryClassParmsListPtr;
+
+
+}  /* namespace KKMLL */
 
 #endif
 

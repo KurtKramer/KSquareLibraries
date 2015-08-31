@@ -3,16 +3,13 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
-
 #include <errno.h>
 #include <istream>
 #include <iostream>
 #include <fstream>
 //#include <stdio.h>
 #include <vector>
-
 #include "KKBaseTypes.h"
-
 
 #if  defined(WIN32)
 #include <windows.h>
@@ -21,7 +18,6 @@
 #include <semaphore.h>
 #endif
 #include "MemoryDebug.h"
-
 using namespace std;
 
 

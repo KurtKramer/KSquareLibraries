@@ -113,7 +113,7 @@ kkint32  Variables::LocateEnvStrStart (const KKStr&  str)
 
 
 
-KKStr  Variables::SubstituteInEvironmentVariables (const KKStr&  src)
+KKStr  Variables::SubstituteInEnvironmentVariables (const KKStr&  src)
 {
   kkint32  x = LocateEnvStrStart (src);
   if  (x < 0)
@@ -159,5 +159,5 @@ KKStr  Variables::SubstituteInEvironmentVariables (const KKStr&  src)
   }
 
   return  str;
-}  /* osSubstituteInEvironmentVariables */
+}  /* SubstituteInEnvironmentVariables */
 

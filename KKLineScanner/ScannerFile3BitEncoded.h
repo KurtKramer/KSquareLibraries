@@ -88,7 +88,7 @@ namespace  KKLSC
     static
     const uchar*  CompensationTable ();
 
-    virtual  ScannerFileFormat  FileFormat ()  const  {return sf3BitEncoded;}
+    virtual  Format  FileFormat ()  const  {return Format::sf3BitEncoded;}
 
     virtual
     void  ScanRate (float  _scanRate);

@@ -1,17 +1,13 @@
 #include  "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -26,7 +22,7 @@ using namespace  KKB;
 #include "FeatureFileIOArff.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace  KKMachineLearning;
+using namespace  KKMLL;
 
 
 
@@ -52,7 +48,7 @@ FileDescPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
                                              MLClassListPtr  _classes,
                                              kkint32&        _estSize,
                                              KKStr&          _errorMessage,
-                                             RunLog&          _log
+                                             RunLog&         _log
                                             )
 {
   _log.Level (10) << endl << endl 
@@ -91,7 +87,7 @@ FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&       _fileName,
 
 void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
                                     const KKStr&          _fileName,
-                                    const FeatureNumList& _selFeatures,
+                                    FeatureNumListConst&  _selFeatures,
                                     ostream&              _out,
                                     kkuint32&             _numExamplesWritten,
                                     VolConstBool&         _cancelFlag,
@@ -146,7 +142,9 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
            << attr->Name ()
            << " ";
 
-      if  ((attr->Type () == NominalAttribute)   ||  (attr->Type () == SymbolicAttribute))
+      if  ((attr->Type () == AttributeType::Nominal)   ||
+           (attr->Type () == AttributeType::Symbolic)
+          )
       {
         _out << "(";
         for (x = 0;  x < attr->Cardinality ();  x++)
@@ -165,7 +163,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
       _out << endl;
     }
 
-    _out << "@attribute ImageFileName  " << "string" << endl;
+    _out << "@attribute ExampleFileName  " << "string" << endl;
 
     _out << "@attribute Classes? { " << classListStr << " }" << endl;
 
@@ -195,14 +193,16 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     {
       kkint32  featureNum = _selFeatures[x];
 
-      if  ((attrTable[featureNum]->Type () == NominalAttribute)  ||  (attrTable[featureNum]->Type () == SymbolicAttribute))
+      if  ((attrTable[featureNum]->Type () == AttributeType::Nominal)  ||
+           (attrTable[featureNum]->Type () == AttributeType::Symbolic)
+          )
         _out << attrTable[featureNum]->GetNominalValue ((kkint32)(example->FeatureData (featureNum)));
       else
         _out << example->FeatureData (featureNum);
       _out << ",";
     }
 
-    KKStr  imageFileName = osGetRootNameWithExtension (example->ImageFileName ());
+    KKStr  imageFileName = osGetRootNameWithExtension (example->ExampleFileName ());
     if  (imageFileName.Empty ())
       imageFileName == "Row_" + StrFormatInt (idx, rowMask.Str ());
     _out << imageFileName << ",";

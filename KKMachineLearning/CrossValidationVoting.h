@@ -1,61 +1,40 @@
 #ifndef  _CROSSVALIDATIONVOTING_
 #define  _CROSSVALIDATIONVOTING_
 
-//*********************************************************************
-//* Written by: Kurt Kramer                                           *
-//*        For: Research Work, Plankton recognition System            *
-//*                                                                   *
-//*-------------------------------------------------------------------*
-//*                       CrossValidationVoting                       *
-//*                                                                   *
-//*-------------------------------------------------------------------*
-//*  History                                                          *
-//*                                                                   *
-//*    Date     Programmer   Description                              *
-//*  ---------- -----------  -----------------------------------------*
-//*  2005-01-07 Kurt Kramer  Added classedCorrectly parameter to      *
-//*                          CrossValidate.  If not null it should    *
-//*                          point to an array of bool that has as    *
-//*                          many elements as there are in the        *
-//*                          testImages list.  Each element represents*
-//*                          weather the corresponding element in     *
-//*                          testImages was classified correctly.     *
-//*                                                                   *
-//*********************************************************************
-
-
-//  2005-01-07
-//  Added the parameter classedCorrectly to CrossValidate
-
-
-
 #include  "RunLog.h"
 
 
 
-namespace  KKMachineLearning 
+namespace  KKMLL 
 {
+  #if  !defined(FeatureVector_Defined_)
+  class  FeatureVector;
+  typedef  FeatureVector*  FeatureVectorPtr;
+  #endif
 
-  #ifndef  _FeatureVectorList_Defined_
+
+  #if  !defined(_FeatureVectorList_Defined_)
   class  FeatureVectorList;
   typedef  FeatureVectorList*  FeatureVectorListPtr;
   #endif
 
 
-  #ifndef  _MLCLASS_
+  #if  !defined(_MLCLASS_)
+  class  MLClass;
+  typedef  MLClass*  MLClassPtr;
   class  MLClassList;
   typedef  MLClassList*  MLClassListPtr;
   #endif
 
 
 
-  #ifndef  _ConfussionMatrix2_
+  #if   !defined(_ConfussionMatrix2_Defined_)
   class  ConfusionMatrix2;
   typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
   #endif
 
 
-  #ifndef  _TrainingConfiguration2_Defined_
+  #if  !defined(_TrainingConfiguration2_Defined_)
   class  TrainingConfiguration2;
   typedef  TrainingConfiguration2*  TrainingConfiguration2Ptr;
   #endif
@@ -66,7 +45,7 @@ namespace  KKMachineLearning
   #endif
 
 
-  #ifndef  _FileDesc_Defined_
+  #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
   #endif
@@ -81,17 +60,18 @@ namespace  KKMachineLearning
                            MLClassListPtr                 _mlClasses,
                            kkint32                        _numOfFolds,
                            bool                           _featuresAreAlreadyNormalized,
-                           FileDescPtr                    _fileDesc,
-                           RunLog&                        _log
+                           FileDescPtr                    _fileDesc
                           );
 
     ~CrossValidationVoting ();
     
-    void  RunCrossValidation();
+    void  RunCrossValidation (RunLog&  log);
 
     void  RunValidationOnly (FeatureVectorListPtr validationData,
-                             bool*                classedCorrectly = NULL
+                             bool*                classedCorrectly,
+                             RunLog&              log
                             );
+
 
     ConfusionMatrix2Ptr    ConfussionMatrix ()  {return  confusionMatrix;}
 
@@ -104,12 +84,13 @@ namespace  KKMachineLearning
     double  TrainingTime              ()  const {return  trainingTime;}
 
   private:
-    void  AllocateMemory ();
+    void  AllocateMemory (RunLog&  log);
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
-                         FeatureVectorListPtr   trainingImages,
+                         FeatureVectorListPtr   trainingExamples,
                          kkint32                foldNum,
-                         bool*                  classedCorrectly = NULL
+                         bool*                  classedCorrectly,
+                         RunLog&                log
                         );
 
     void  DeleteAllocatedMemory ();
@@ -125,14 +106,12 @@ namespace  KKMachineLearning
     FeatureVectorListPtr          examples;
     MLClassListPtr                mlClasses;
     kkint32                       examplesPerClass;
-    RunLog&                       log;
     kkint32                       maxNumOfConflicts;  /**< Will indicate the number confusionMatrices created in table in cmByNumOfConflicts; */
     kkint32                       numOfFolds;
     kkint32                       numOfSupportVectors;
     kkint32*                      numOfWinnersCounts;
     kkint32*                      numOfWinnersCorrects;
     kkint32*                      numOfWinnersOneOfTheWinners;
-
     double                        classificationTime;
     double                        trainingTime;
   };
@@ -140,7 +119,7 @@ namespace  KKMachineLearning
 
   typedef  CrossValidationVoting*  CrossValidationVotingPtr;
 
-} /* namespace KKMachineLearning */
+} /* namespace KKMLL */
 
 #endif
 

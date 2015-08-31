@@ -3,8 +3,8 @@
 //***********************************************************************
 //*                           SVMModel                                  *
 //*                                                                     *
-//*  Represents a training model for svmlib.  Uses Image Feature data   *
-//*  ImageClasses, libsvm parameters, and included features to build    *
+//*  Represents a training model for svmlib. Uses Example Feature data  *
+//*  MLClasses, libsvm parameters, and included features to build       *
 //*  a svm training model.  You can save this model to disk for later   *
 //*  use without having to train again. An application can create       *
 //*  several instances of this model for different phases of a          *
@@ -12,24 +12,26 @@
 //***********************************************************************
 
 
-#include  "KKStr.h"
-#include  "ClassAssignments.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-#include  "FeatureVector.h"
-#include  "svm.h"
-#include  "SVMparam.h"
+#include "KKStr.h"
+#include "ClassAssignments.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "FeatureVector.h"
+#include "svm.h"
+#include "SVMparam.h"
 
 
 
-namespace KKMachineLearning
+namespace KKMLL
 {
-
 
 #ifndef  _FEATURENUMLIST_
 class  FeatureNumList;
 typedef  FeatureNumList*  FeatureNumListPtr;
+typedef  FeatureNumList const FeatureNumListConst;
+typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 #endif
+
 
 #ifndef  _FEATUREENCODER_
 class  FeatureEncoder;
@@ -75,68 +77,32 @@ typedef  struct svm_node*     XSpacePtr;
   class  SVMModel
   {
   public:
-
-
     /**
-     *@brief Loads an SVM model from disk
-     *@param[in]  _rootFileName The filename for the model; without an extension.
-     *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
-     *@param[in]  _fileDesc A description of the training data that was used to train the classifier.
-     *@param[in]  _log A LogFile stream. All important events will be output to this stream
-     *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
+     *@brief Default constructor used by XmlElementSVMModel to create and load a new instance from a XML Stream.
      */
-    SVMModel (const KKStr&   _rootFileName,   
-              bool&          _successful,
-              FileDescPtr    _fileDesc,
-              RunLog&        _log,
-              VolConstBool&  _cancelFlag
-             );
+    SVMModel ();
   
-
-    /**
-     *@brief Loads an SVM model from disk.
-     *@details  The '_cancelFlag' parameter is meant to allow another thread to cancel processing 
-     *          by a different thread in SVMmodel.  Ex:  If one thread is building a new SVM for
-     *          this instance of SVMmodel, that thread will periodically monitor '_cancelFlag', if
-     *          it is set to true it will terminate its processing.
-     *@param[in]  _in A file stream to read and build SVMModel from.
-     *@param[out] _successful Set to true if the model is successfully loaded, false otherwise
-     *@param[in]  _fileDesc A description of the data file. I'm not sure this is needed for this function.
-     *@param[in]  _log A log-file stream. All important events will be output to this stream
-     *@param[in]  _cancelFlag  If set to true any process running in SVMModel will terminate.
-     */
-    SVMModel (istream&       _in,   // Create from existing Model on Disk.
-              bool&          _successful,
-              FileDescPtr    _fileDesc,
-              RunLog&        _log,
-              VolConstBool&  _cancelFlag
-             );
-
-
 
     /**
      *@brief  Constructor that will create a svmlib training model using the 
      *        features and classes for training purposes.
      *@param[in]  _svmParam  Specifies the parameters to be used for training.  These
      *            are the same parameters that you would specify in the command line 
-     *            to svm_train.  Plus the feature numbers to be  used.
+     *            to svm_train. Plus the feature numbers to be  used.
      *@param[in]  _examples  Training data for the classifier.
      *@param[in]  _assignments List of classes and there associated number ti be 
      *            used by the SVM.  You can merge 1 or more classes by assigning them 
-     *            the same number.  This number will be used by the SVM.  When 
+     *            the same number. This number will be used by the SVM.  When 
      *            predictions are done by SVM it return a number, _assignments will 
      *            then be used to map back-to the correct class.
      *@param[in] _fileDesc  File-Description that describes the training data.
      *@param[out] _log Log file to log messages to.
-     *@param[in]  _cancelFlag  The training process will monitor this flag; if it goes true it
-     *            return to caller.
      */
-    SVMModel (SVMparam&           _svmParam,
+    SVMModel (const SVMparam&     _svmParam,
               FeatureVectorList&  _examples,
               ClassAssignments&   _assignments,
               FileDescPtr         _fileDesc,
-              RunLog&             _log,
-              VolConstBool&       _cancelFlag
+              RunLog&             _log
              );
 
 
@@ -145,16 +111,21 @@ typedef  struct svm_node*     XSpacePtr;
      */
     virtual ~SVMModel ();
 
-    const FeatureNumList&   GetFeatureNums ()  const;
+    virtual  void   CancelFlag (bool  _cancelFlag);
 
-    const FeatureNumList&   GetFeatureNums (MLClassPtr  class1,
-                                            MLClassPtr  class2
-                                           )  const;
+    FeatureNumListConstPtr   GetFeatureNums ()  const;
 
-    //MLClassList&  ImageClasses ()  {return mlClasses;}  
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc)  const;
+
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc,
+                                             MLClassPtr   class1,
+                                             MLClassPtr   class2
+                                            )  const;
+
+    //MLClassList&  MLClasses ()  {return mlClasses;}  
     const ClassAssignments&  Assignments () const  {return assignments;}
 
-    //kkint32              DuplicateDataCount () const {return duplicateDataCount;}
+    //kkint32              DuplicateDataCount () const {return duplicateCount;}
 
     kkint32            MemoryConsumedEstimated ()  const;
 
@@ -169,14 +140,16 @@ typedef  struct svm_node*     XSpacePtr;
                                                 kkint32& totalNumSVs
                                                );
 
-    const SVMparam&    SVMParameters           () const {return svmParam;}
+    SVMparam const *   SVMParameters           () const {return svmParam;}
 
     const KKStr&       RootFileName            () const {return rootFileName;}
 
 
-    SVM_SelectionMethod   SelectionMethod      () const {return svmParam.SelectionMethod ();}
+    SVM_SelectionMethod   SelectionMethod      () const {return svmParam->SelectionMethod ();}
 
     double             TrainingTime            () const {return trainingTime;}
+
+    bool               ValidModel              () const {return validModel;}
 
 
     double   DistanceFromDecisionBoundary (FeatureVectorPtr  example,
@@ -197,8 +170,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] predClass1Votes Number votes 'predClass1' received.
      *@param[out] predClass2Votes Number votes 'predClass2' received.
      *@param[out] probOfKnownClass Probability of 'knownClass' if specified.
-     *@param[out] probOfPredClass Probability of 'predClass1' if specified.
-     *@param[out] probOfPredClass2 Probability of 'predClass2' if specified.
+     *@param[out] predClass1Prob Probability of 'predClass1' if specified.
+     *@param[out] predClass2Prob Probability of 'predClass2' if specified.
      *@param[out] numOfWinners  Number of classes that had the same number of votes as the winning class.
      *@param[out] knownClassOneOfTheWinners  Will return true if the known class was one of the classes that had the highest number of votes.
      *@param[out] breakTie The difference in probability between the classes with the two highest probabilities.
@@ -210,13 +183,21 @@ typedef  struct svm_node*     XSpacePtr;
                     kkint32&          predClass1Votes,
                     kkint32&          predClass2Votes,
                     double&           probOfKnownClass,
-                    double&           probOfPredClass,
-                    double&           probOfPredClass2,
+                    double&           predClass1Prob,
+                    double&           predClass2Prob,
                     kkint32&          numOfWinners,
                     bool&             knownClassOneOfTheWinners,
                     double&           breakTie
                    );
 
+
+    /**
+     *@brief  Returns the distance from the decision border of the SVM.
+     */
+    void  PredictRaw (FeatureVectorPtr  example,
+                      MLClassPtr     &  predClass,
+                      double&           dist
+                     );
 
     /**
      *@brief  Will get the probabilities assigned to each class.
@@ -227,12 +208,14 @@ typedef  struct svm_node*     XSpacePtr;
      *                          constructed.
      *@param[out] _votes  An array that must be as big as the number of classes in _mlClasses.
      *@param[out] _probabilities  An array that must be as big as the number of classes in _mlClasses.  
-     *            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+     *                            The probability of class in _mlClasses[x] will be returned in _probabilities[x].
+     *@param[in]  _log Logging file.  
      */
     void  ProbabilitiesByClass (FeatureVectorPtr    example,
                                 const MLClassList&  _mlClasses,
                                 kkint32*            _votes,
-                                double*             _probabilities
+                                double*             _probabilities,
+                                RunLog&             _log
                                );
 
 
@@ -240,7 +223,7 @@ typedef  struct svm_node*     XSpacePtr;
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
      *@details  This method will iterate through all the S/V's removing them one at a 
-     *          time and recompute the decision boundary and probability.  It will then
+     *          time and re-compute the decision boundary and probability.  It will then
      *          return the S/V's that when removed improve the probability in 'c1's 
      *          the most.
      *@param[in]  example  The Example that was classified incorrectly.
@@ -287,28 +270,36 @@ typedef  struct svm_node*     XSpacePtr;
      *            the list of classes in 'classes'.  'crossProbTable' will be a two dimension square matrix 
      *            size will be dictated by the number of classes in 'classes'.  Ex:  Entry[3][2] will have the 
      *            contain the probability between classes[3] and classes[2].
+     *@param[in]  log Logging file.  
      */
     void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  double**      crossProbTable,  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                  RunLog&       log
                                  );
 
 
-    void  Save (const KKStr&  _rootFileName,
-                bool&         _successful
-               );
+    virtual  void  ReadXML (XmlStream&      s,
+                            XmlTagConstPtr  tag,
+                            RunLog&         log
+                           );
 
-    void  Write (ostream&       o,
-                 const KKStr&   rootFileName,
-                 bool&          _successful
-                );
 
+    virtual  void  WriteXML (const KKStr&  varName,
+                             ostream&      o
+                            )  const;
 
 
   private:
-    typedef  struct svm_model**   ModelPtr;
+    typedef  struct SvmModel233**   ModelPtr;
 
     FeatureVectorListPtr*   BreakDownExamplesByClass (FeatureVectorListPtr  examples);
 
+
+    void  DeleteModels ();
+    void  DeleteXSpaces ();
+
+    void  AllocateModels ();
+    void  AllocateXSpaces ();
 
     void  BuildClassIdxTable ();
 
@@ -341,7 +332,8 @@ typedef  struct svm_node*     XSpacePtr;
                                 const MLClassList&    classesThisAssignment,
                                 FeatureEncoderPtr     featureEncoder,
                                 MLClassList&          allClasses,
-                                ClassAssignmentsPtr&  classAssignments
+                                ClassAssignmentsPtr&  classAssignments,
+                                RunLog&               log
                                );
 
 
@@ -364,20 +356,21 @@ typedef  struct svm_node*     XSpacePtr;
      */ 
     void  BuildProblemBinaryCombos (FeatureVectorListPtr  class1Examples, 
                                     FeatureVectorListPtr  class2Examples, 
-                                    SVMparam&             _svmParam,
                                     BinaryClassParmsPtr&  _twoClassParms,
                                     FeatureEncoderPtr&    _encoder,
                                     struct svm_problem&   prob, 
                                     XSpacePtr&            xSpace, 
                                     MLClassPtr            class1, 
-                                    MLClassPtr            class2
+                                    MLClassPtr            class2,
+                                    RunLog&               log
                                    );
 
 
     void  PredictProbabilitiesByBinaryCombos (FeatureVectorPtr    example,  
                                               const MLClassList&  _mlClasses,
                                               kkint32*            _votes,
-                                              double*             _probabilities
+                                              double*             _probabilities,
+                                              RunLog&             _log
                                              );
 
 
@@ -386,7 +379,7 @@ typedef  struct svm_node*     XSpacePtr;
      *@brief  calculates the number of features that will be present after encoding, and allocates
      *        predictedXSpace to accommodate the size.
      */
-    void  CalculatePredictXSpaceNeeded ();
+    void  CalculatePredictXSpaceNeeded (RunLog&  log);
 
 
 
@@ -394,7 +387,9 @@ typedef  struct svm_node*     XSpacePtr;
      *@brief Builds a BinaryCombo svm model
      *@param[in] examples The examples to use when training the new model
      */
-    void ConstructBinaryCombosModel (FeatureVectorListPtr examples);
+    void ConstructBinaryCombosModel (FeatureVectorListPtr  examples,
+                                     RunLog&               log
+                                    );
 
 
     /**
@@ -403,7 +398,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] prob  Data structure used by SvnLib.
      */
     void ConstructOneVsAllModel (FeatureVectorListPtr examples,
-                                 svm_problem&         prob
+                                 svm_problem&         prob,
+                                 RunLog&              log
                                 );
 
 
@@ -413,7 +409,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[out] prob  Data structure used by SvnLib.
      */
     void ConstructOneVsOneModel (FeatureVectorListPtr  examples,
-                                 svm_problem&          prob
+                                 svm_problem&          prob,
+                                 RunLog&               log
                                 );
 
 
@@ -424,8 +421,8 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[in] row      The svm_problem structure that the converted data will be stored
      */
     kkint32  EncodeExample (FeatureVectorPtr  example,
-                          svm_node*         row
-                         );
+                            svm_node*         row
+                           );
 
 
     static
@@ -447,17 +444,25 @@ typedef  struct svm_node*     XSpacePtr;
                        );
 
 
+    void  InializeProbClassPairs ();
 
-    void  SetSelectedFeatures (const FeatureNumList& _selectedFeatures);
+
+    void  SetSelectedFeatures (FeatureNumListConst&  _selectedFeatures,
+                               RunLog&               _log
+                              );
+
+    void  SetSelectedFeatures (FeatureNumListConstPtr  _selectedFeatures,
+                               RunLog&                 _log
+                              );
 
 
     void  PredictOneVsAll (XSpacePtr    xSpace,
                            MLClassPtr   knownClass,
-                           MLClassPtr&  predClass,
+                           MLClassPtr   &predClass1,
                            MLClassPtr&  predClass2,
                            double&      probOfKnownClass,
-                           double&      probOfPredClass,
-                           double&      probOfPredClass2,
+                           double&      predClass1Prob,
+                           double&      predClass2Prob,
                            kkint32&     numOfWinners,
                            bool&        knownClassOneOfTheWinners,
                            double&      breakTie
@@ -467,34 +472,17 @@ typedef  struct svm_node*     XSpacePtr;
 
     void  PredictByBinaryCombos (FeatureVectorPtr  example,
                                  MLClassPtr        knownClass,
-                                 MLClassPtr&       predClass,
+                                 MLClassPtr       &predClass1,
                                  MLClassPtr&       predClass2,
                                  kkint32&          predClass1Votes,
                                  kkint32&          predClass2Votes,
                                  double&           probOfKnownClass,
-                                 double&           probOfPredClass,
-                                 double&           probOfPredClass2,
+                                 double&           predClass1Prob,
+                                 double&           predClass2Prob,
                                  double&           breakTie,
                                  kkint32&          numOfWinners,
                                  bool&             knownClassOneOfTheWinners
                                 );
-
-
-    void  Read         (istream& i);
-    void  ReadHeader   (istream& i);
-    void  ReadOneVsOne (istream& i);
-    void  ReadOneVsAll (istream& i);
-    void  ReadOneVsAllEntry (istream& i,
-                             kkint32  modelIDX
-                            );
- 
-    void  ReadBinaryCombos (istream& i);
-
-
-    void  ReadSkipToSection (istream&   i, 
-                             KKStr      sectName,
-                             bool&      sectionFound
-                            );
 
 
     ClassAssignments       assignments;
@@ -504,7 +492,7 @@ typedef  struct svm_node*     XSpacePtr;
     BinaryClassParmsPtr*   binaryParameters;      /**< only used when doing Classification with diff Feature 
                                                    * Selection by 2 class combo's
                                                    */
-    VolConstBool&          cancelFlag;
+    volatile bool          cancelFlag;
 
     VectorInt32            cardinality_table;
 
@@ -522,8 +510,6 @@ typedef  struct svm_node*     XSpacePtr;
                                                    */
     FileDescPtr            fileDesc;
 
-    RunLog&                log;
-
     ModelPtr*              models;
 
     kkint32                numOfClasses;          /**< Number of Classes defined in crossClassProbTable.  */
@@ -534,30 +520,30 @@ typedef  struct svm_node*     XSpacePtr;
 
     kkuint32               predictXSpaceWorstCase;
 
-    XSpacePtr              predictXSpace;  /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
+    XSpacePtr              predictXSpace;         /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
 
     double*                probabilities;
 
-    KKStr                  rootFileName;   /**< This is the root name to be used by all component 
-                                             * objects; such as svm_model, mlClasses, and
-                                             * svmParam(including selected features).  Each one
-                                             * will have the same rootName with a different Suffix
-                                             *     mlClasses  "<rootName>.image_classes"
-                                             *     svmParam   "<rootName>.svm_parm"
-                                             *     model      "<rootName>"
-                                             */
+    KKStr                  rootFileName;          /**< This is the root name to be used by all component 
+                                                    * objects; such as SvmModel233, mlClasses, and
+                                                    * svmParam(including selected features).  Each one
+                                                    * will have the same rootName with a different Suffix
+                                                    *     mlClasses  "<rootName>.example_classes"
+                                                    *     svmParam   "<rootName>.svm_parm"
+                                                    *     model      "<rootName>"
+                                                    */
 
-    FeatureNumList         selectedFeatures;
+    FeatureNumListPtr      selectedFeatures;
 
-    SVMparam               svmParam;
+    SVMparamPtr            svmParam;
 
     double                 trainingTime;
 
-    KKMachineLearning::AttributeTypeVector  type_table;
+    KKMLL::AttributeTypeVector  type_table;
 
     bool                   validModel;
 
-    kkint32*                 votes;
+    kkint32*               votes;
 
     XSpacePtr*             xSpaces;    /**< There will be one xSpace structure for each libSVM classifier that has 
                                         *   to be built; for a total of 'numOfModels'. This will be the input to 
@@ -567,12 +553,17 @@ typedef  struct svm_node*     XSpacePtr;
     kkint32                xSpacesTotalAllocated;
   };
 
-
-
   typedef  SVMModel*  SVMModelPtr;
 
 
-} /* namespace KKMachineLearning */
+
+  typedef  XmlElementTemplate<SVMModel>  XmlElementSVMModel;
+  typedef  XmlElementSVMModel*  XmlElementSVMModelPtr;
+
+
+
+} /* namespace KKMLL */
+
 
 
 #endif

@@ -1,17 +1,13 @@
-#include  "FirstIncludes.h"
-
-#include  <stdio.h>
-#include  <math.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <math.h>
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
@@ -26,7 +22,7 @@ using namespace KKB;
 #include "FeatureFileIOColumn.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -116,7 +112,7 @@ FileDescPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
       }
 
 
-      fileDesc->AddAAttribute ("Field_" + StrFormatInt (numOfFeatures, "ZZZZ0"), NumericAttribute, alreadyExists);
+      fileDesc->AddAAttribute ("Field_" + StrFormatInt (numOfFeatures, "ZZZZ0"), AttributeType::Numeric, alreadyExists);
       numOfFeatures++;
     }
   }
@@ -154,7 +150,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
   // Will initially create empty examples, then populate
   // each feature value as row's are read in.
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   {
     // Read first row to get count of number of examples,
@@ -167,7 +163,7 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
       exampleClass = _classes.GetMLClassPtr (field);
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
       example->MLClass (exampleClass);
-      example->ImageFileName (rootName + "_" + StrFormatInt (lineCount, "00000"));
+      example->ExampleFileName (rootName + "_" + StrFormatInt (lineCount, "00000"));
       examples->PushOnBack (example);
       lineCount++;
       GetToken (_in, " ", field, eof, eol);
@@ -238,15 +234,15 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileNam
 
 
 
-void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
-                                      const KKStr&           _fileName,
-                                      const FeatureNumList&  _selFeatures,
-                                      ostream&               _out,
-                                      kkuint32&              _numExamplesWritten,
-                                      VolConstBool&          _cancelFlag,
-                                      bool&                  _successful,
-                                      KKStr&                 _errorMessage,
-                                      RunLog&                _log
+void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
+                                      const KKStr&          _fileName,
+                                      FeatureNumListConst&  _selFeatures,
+                                      ostream&              _out,
+                                      kkuint32&             _numExamplesWritten,
+                                      VolConstBool&         _cancelFlag,
+                                      bool&                 _successful,
+                                      KKStr&                _errorMessage,
+                                      RunLog&               _log
                                      )
 {
   _log.Level (20) << "FeatureFileIOColumn::SaveFile     FileName[" << _fileName << "]." << endl;
@@ -264,23 +260,25 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&     _data,
     {
       if  (lineNum > 0)
         _out << " ";
-      _out << _data[lineNum].ImageClassName ();
+      _out << _data[lineNum].MLClassName ();
     }
     _out << endl;
   }
 
-  kkint32  featureNum = 0;
-  for  (featureNum = 0;  featureNum < (kkint32)fileDesc->NumOfFields ();  featureNum++)
+  kkuint16  idx = 0;
+  for  (idx = 0;  idx < _selFeatures.NumSelFeatures ();  ++idx)
   {
-    kkint32  lineNum = 0;
-
-    while  (lineNum < _data.QueueSize ())
+    kkuint16  featureNum = _selFeatures[idx];
     {
-      if  (lineNum > 0)
-        _out << " ";
-      _out << _data[lineNum].FeatureData (featureNum);
+      FeatureVectorList::const_iterator  idx2 = _data.begin ();
+      ++idx2;
+      _out  << (*idx2)->FeatureData (featureNum);
+      while  (idx2 != _data.end ())
+      {
+        _out  << "\t" << (*idx2)->FeatureData (featureNum);
+        ++idx2;
+      }
     }
-
     _out << endl;
 
     _numExamplesWritten = (kkuint32)((double)(_data.QueueSize ()) * ((double)featureNum / (double)(fileDesc->NumOfFields ())));

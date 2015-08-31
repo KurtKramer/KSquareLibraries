@@ -1,17 +1,13 @@
-#include  "FirstIncludes.h"
-
+#include "FirstIncludes.h"
 #include <stdio.h>
 #include <math.h>
-#include  <ctype.h>
-#include  <time.h>
-
-#include  <string>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
-
-#include  "MemoryDebug.h"
-
+#include <ctype.h>
+#include <time.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
@@ -22,11 +18,10 @@ using namespace std;
 #include "KKStr.h"
 using namespace KKB;
 
-
 #include "FeatureFileIODstWeb.h"
 #include "FileDesc.h"
 #include "MLClass.h"
-using namespace KKMachineLearning;
+using namespace KKMLL;
 
 
 
@@ -203,7 +198,7 @@ FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
   for  (x = 0;  x < attributes.size ();  x++)
   {
     bool  alreadyExists = false;
-    fileDesc->AddAAttribute (attributes[x]->code, NominalAttribute, alreadyExists);
+    fileDesc->AddAAttribute (attributes[x]->code, AttributeType::Nominal, alreadyExists);
     if  (alreadyExists)
     {
       _log.Level (-1) << endl
@@ -229,23 +224,18 @@ FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
 
 
 
-
-
-
-
-FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName,
-                                                     const FileDescPtr _fileDesc,
-                                                     MLClassList&      _classes, 
-                                                     istream&          _in,
-                                                     kkint32           _maxCount,    /**< Maximum # images to load. */
-                                                     VolConstBool&     _cancelFlag,
-                                                     bool&             _changesMade,
-                                                     KKStr&            _errorMessage,
-                                                     RunLog&           _log
+FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&  _fileName,
+                                                     FileDescPtr   _fileDesc,
+                                                     MLClassList&  _classes, 
+                                                     istream&      _in,
+                                                     kkint32       _maxCount,    /**< Maximum # images to load. */
+                                                     VolConstBool& _cancelFlag,
+                                                     bool&         _changesMade,
+                                                     KKStr&        _errorMessage,
+                                                     RunLog&       _log
                                                    )
 {
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;
-
 
   MLClassPtr  trueClass  = _classes.GetMLClassPtr ("TRUE");
   MLClassPtr  falseClass = _classes.GetMLClassPtr ("FALSE");
@@ -278,7 +268,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
     return  NULL;
   }
 
-  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true, _log);
+  FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
   KKStr  classNameAttributeUpper (_fileDesc->ClassNameAttribute ());
   classNameAttributeUpper.Upper ();
@@ -296,7 +286,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
     FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
     example->MLClass (falseClass);
-    example->ImageFileName (idStr);
+    example->ExampleFileName (idStr);
     {
       // Set all fields to False
       kkint32  x;
@@ -353,15 +343,15 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
 
 
-void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&     _data,
-                                      const KKStr&           _fileName,
-                                      const FeatureNumList&  _selFeatures,
-                                      ostream&               _out,
-                                      kkuint32&              _numExamplesWritten,
-                                      VolConstBool&          _cancelFlag,
-                                      bool&                  _successful,
-                                      KKStr&                 _errorMessage,
-                                      RunLog&                _log
+void   FeatureFileIODstWeb::SaveFile (FeatureVectorList&    _data,
+                                      const KKStr&          _fileName,
+                                      FeatureNumListConst&  _selFeatures,
+                                      ostream&              _out,
+                                      kkuint32&             _numExamplesWritten,
+                                      VolConstBool&         _cancelFlag,
+                                      bool&                 _successful,
+                                      KKStr&                _errorMessage,
+                                      RunLog&               _log
                                      )
 {
   _log.Level (-1) << endl << endl

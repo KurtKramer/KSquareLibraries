@@ -10,10 +10,7 @@
 #include <stdio.h>
 #include <string>
 #include <vector>
-
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 
@@ -25,43 +22,72 @@ using namespace  std;
 using namespace  KKB;
 
 
+#include "ClassProb.h"
+#include "FactoryFVProducer.h"
+#include "FeatureEncoder2.h"
+#include "FeatureNumList.h"
+#include "FeatureVector.h"
 #include "Model.h"
 #include "ModelOldSVM.h"
 #include "ModelSvmBase.h"
 #include "ModelKnn.h"
 #include "ModelUsfCasCor.h"
-
-#include "FeatureEncoder2.h"
-#include "FeatureNumList.h"
-#include "FeatureVector.h"
+#include "ModelDual.h"
 #include "ModelParam.h"
-using namespace  KKMachineLearning;
+#include "ModelParamDual.h"
+#include "ModelParamOldSVM.h"
+#include "NormalizationParms.h"
+using namespace  KKMLL;
 
+
+Model::Model ():
+    alreadyNormalized        (false),
+    classes                  (NULL),
+    classesIndex             (NULL),
+    classProbs               (NULL),
+    crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
+    encoder                  (NULL),
+    factoryFVProducer        (NULL),
+    fileDesc                 (NULL),
+    name                     (),
+    normParms                (NULL),
+    numOfClasses             (0),
+    param                    (NULL),
+    rootFileName             (),
+    trainExamples            (NULL),
+    trianingPrepTime         (0.0),
+    trainingTime             (0.0),
+    trainingTimeStart        (0.0),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false)
+{
+}
 
 
 Model::Model (const Model&  _model):
     alreadyNormalized       (false),
-    cancelFlag              (_model.cancelFlag),
     classes                 (NULL),
     classesIndex            (NULL),
     classProbs              (NULL),
     crossClassProbTable     (NULL),
     crossClassProbTableSize (0),
     encoder                 (NULL),
+    factoryFVProducer       (_model.factoryFVProducer),
     fileDesc                (_model.fileDesc),
-    log                     (_model.log),
     name                    (_model.name),
-    numOfClasses            (_model.numOfClasses),
     normParms               (NULL),
+    numOfClasses            (_model.numOfClasses),
     param                   (NULL),
     rootFileName            (_model.rootFileName),
     trainExamples           (NULL),
-    validModel              (_model.validModel),
-    votes                   (NULL),
-    weOwnTrainExamples      (false),
     trianingPrepTime        (0.0),
     trainingTime            (_model.trainingTime),
-    trainingTimeStart       (_model.trainingTime)
+    trainingTimeStart       (_model.trainingTime),
+    validModel              (_model.validModel),
+    votes                   (NULL),
+    weOwnTrainExamples      (false)
 {
   numOfClasses = 0;
   if  (_model.param != NULL)
@@ -76,7 +102,7 @@ Model::Model (const Model&  _model):
   }
 
   if  (_model.classesIndex)
-    classesIndex = new ClassIndexList (*_model.classesIndex);
+    classesIndex = new MLClassIndexList (*_model.classesIndex);
 
 
   if  (_model.encoder)
@@ -86,25 +112,22 @@ Model::Model (const Model&  _model):
 
     
 /**
- @brief  Use this when you are planning on creating a empty model without parameters.
+ *@brief  Use this when you are planning on creating a empty model without parameters.
  */
-Model::Model (FileDescPtr    _fileDesc,
-              VolConstBool&  _cancelFlag,
-              RunLog&        _log
-             ):
+Model::Model (FactoryFVProducerPtr  _factoryFVProducer):
     alreadyNormalized        (false),
-    cancelFlag               (_cancelFlag),
     classes                  (NULL),
     classesIndex             (NULL),
+    classProbs               (NULL),
     crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
     encoder                  (NULL),
-    fileDesc                 (_fileDesc),
-    log                      (_log),
+    factoryFVProducer        (_factoryFVProducer),
+    fileDesc                 (NULL),
     name                     (),
     normParms                (NULL),
     numOfClasses             (0),
     param                    (NULL),
-    classProbs               (NULL),
     rootFileName             (),
     trainExamples            (NULL),
     trianingPrepTime         (0.0),
@@ -114,6 +137,7 @@ Model::Model (FileDescPtr    _fileDesc,
     votes                    (NULL),
     weOwnTrainExamples       (false)
 {
+  fileDesc = factoryFVProducer->FileDesc ();
 }
 
     
@@ -123,42 +147,36 @@ Model::Model (FileDescPtr    _fileDesc,
  *@param[in] _name
  *@param[in] _param Will make own local copy.
  *@param[in] _fileDesc A description of the data file.
- *@param[in] _cancelFlag  This field will be monitored and if it goes true then any processing 
- *           going on will quit and exit back to caller.
  *@param[in] _log A log-file stream. All important events will be output to this stream
  */
-Model::Model (const KKStr&       _name,
-              const ModelParam&  _param,      // Create new model from
-              FileDescPtr        _fileDesc,
-              VolConstBool&      _cancelFlag,
-              RunLog&            _log
+Model::Model (const KKStr&          _name,
+              const ModelParam&     _param,      // Create new model from
+              FactoryFVProducerPtr  _factoryFVProducer
              ):
-    alreadyNormalized     (false),
-    cancelFlag            (_cancelFlag),
-    classes               (NULL),
-    classesIndex          (NULL),
-    crossClassProbTable   (NULL),
-    encoder               (NULL),
-    fileDesc              (_fileDesc),
-    log                   (_log),
-    name                  (_name),
-    normParms             (NULL),
-    numOfClasses          (0),
-    param                 (NULL),
-    classProbs            (NULL),
-    rootFileName          (),
-    trainExamples         (NULL),
-    trianingPrepTime      (0.0),
-    trainingTime          (0.0),
-    trainingTimeStart     (0.0),
-    validModel            (true),
-    votes                 (NULL),
-    weOwnTrainExamples    (false)
-
+    alreadyNormalized        (false),
+    classes                  (NULL),
+    classesIndex             (NULL),
+    classProbs               (NULL),
+    crossClassProbTable      (NULL),
+    crossClassProbTableSize  (0),
+    encoder                  (NULL),
+    factoryFVProducer        (_factoryFVProducer),
+    fileDesc                 (NULL),
+    name                     (_name),
+    normParms                (NULL),
+    numOfClasses             (0),
+    param                    (NULL),
+    rootFileName             (),
+    trainExamples            (NULL),
+    trianingPrepTime         (0.0),
+    trainingTime             (0.0),
+    trainingTimeStart        (0.0),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false)
 {
+  fileDesc = factoryFVProducer->FileDesc ();
   param = _param.Duplicate ();
-
-  log.Level (20) << "ModelKnn::ModelKnn - Constructing From Training Data." << endl;
 }
 
 
@@ -170,17 +188,11 @@ Model::Model (const KKStr&       _name,
 Model::~Model ()
 {
   DeAllocateSpace ();
-  delete  classesIndex;
-  classesIndex = NULL;
 
-  delete  classes;
-  classes = NULL;
-
-  delete  encoder;
-  encoder = NULL;
-
-  delete  normParms;
-  normParms = NULL;
+  delete  classesIndex;  classesIndex = NULL;
+  delete  classes;       classes = NULL;
+  delete  encoder;       encoder = NULL;
+  delete  normParms;     normParms = NULL;
 
   if  (weOwnTrainExamples)
   {
@@ -213,132 +225,42 @@ kkint32  Model::MemoryConsumedEstimated ()  const
 
 
 
-ModelPtr  Model::CreateFromStream (istream&       i,
-                                   FileDescPtr    _fileDesc,
-                                   VolConstBool&  _cancelFlag,
-                                   RunLog&        _log
-                                  )
+MLClassListPtr  Model::MLClassesNewInstance () const
 {
-  istream::pos_type startPos = i.tellg ();
-
-  char  buff[20480];
-  KKStr  ln;
-
-  ModelTypes  modelType = mtNULL;
-
-
-  // First we need to determine which type of model this is.  We will
-  // scan through the file until we locate a ModelParamType field.
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    ln = buff;
-    KKStr  lineName = ln.ExtractToken2 ("\t");
-
-    if  (lineName.EqualIgnoreCase ("</Model>"))
-    {
-      // We did not find the parameter type 
-      break;
-    }
-
-    if  (lineName.EqualIgnoreCase ("ModelType"))
-    {
-      KKStr  modelTypeStr = ln.ExtractToken2 ("\t");
-      modelType = ModelTypeFromStr (modelTypeStr);
-      if  (modelType == mtNULL)
-      {
-        _log.Level (-1) << endl
-          << "ModelParam::CreateFromStream  ***ERROR***   Invalid ModelType[" << modelTypeStr << "]." << endl
-          << endl;
-      }
-      break;
-    }
-  }
-
-  if  (modelType == mtNULL)
-  {
-    // We never found the type of parameter we are looking for.
-    _log.Level (-1) << endl
-      << "Model::CreateFromStream   ***ERROR***   No Parameter Type was defined." << endl
-      << endl;
+  if  (classes)
+    return new MLClassList (*classes);
+  else
     return NULL;
-  }
-
-  i.seekg (startPos);
-
-  ModelPtr model = NULL;
-  switch  (modelType)
-  {
-  case  mtKNN:      model = new ModelKnn     (_fileDesc, _cancelFlag, _log);
-                    break;
-
-  case  mtOldSVM:   model = new ModelOldSVM  (_fileDesc, _cancelFlag, _log);
-                    break;
- 
-  case  mtSvmBase:  model = new ModelSvmBase (_fileDesc, _cancelFlag, _log);
-                    break;
-
-  }
-
-  if  (!model)
-    return  NULL;
-
-  bool  successful = false;
-  try
-  {
-    model->ReadXML (i, successful);
-  }
-  catch  (const KKException& e)
-  {
-    _log.Level (-1) << endl
-      << "Model::CreateFromStream    ***ERROR***  Exception occurred in executing 'ReadXML'" << endl
-      << "      " << e.ToString ()  << endl
-      << endl;
-    successful = false;
-    delete  model;
-    model = NULL;
-  }
-  catch (...)
-  {
-    _log.Level (-1) << endl
-      << "Model::CreateFromStream    ***ERROR***  Exception occurred in executing 'ReadXML'" << endl
-      << endl;
-    successful = false;
-    delete  model;
-    model = NULL;
-  }
-
-  if  (!successful)
-  {
-    _log.Level (-1) << endl
-      << "Model::CreateFromStream    ***ERROR***  Loading Model from file." << endl
-      << endl;
-    delete  model;
-    model = NULL;
-  }
-
-  return  model;
-}  /* CreateFromStream */
+}  /* MLClassesNewInstance */
 
 
 
 
-KKStr  Model::ModelTypeToStr (ModelTypes   _modelingType)
+void  Model::AddErrorMsg (const KKStr&  errMsg,
+                          kkint32       lineNum
+                         )
 {
-  if  (_modelingType == mtNULL)
-    return "NULL";
-  
-  else if  (_modelingType == mtOldSVM)
-    return "OldSVM";
+  errors.push_back (errMsg);
+}
 
-  else if  (_modelingType == mtSvmBase)
-    return "SvmBase";
-  
-  else if  (_modelingType == mtKNN)
-    return "KNN";
 
-  else if  (_modelingType == mtUsfCasCor)
-    return "UsfCasCor";
 
+KKStr  Model::Description ()  const
+{
+  return ModelTypeStr () + "(" + Name () + ")";
+}
+
+
+
+
+KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
+{
+  if       (_modelingType == ModelTypes::Null)      return "NULL";
+  else if  (_modelingType == ModelTypes::OldSVM)    return "OldSVM";
+  else if  (_modelingType == ModelTypes::SvmBase)   return "SvmBase";
+  else if  (_modelingType == ModelTypes::KNN)       return "KNN";
+  else if  (_modelingType == ModelTypes::UsfCasCor) return "UsfCasCor";
+  else if  (_modelingType == ModelTypes::Dual)      return "Dual";
   else
     return "NULL";
 }  /* ModelingMethodToStr */
@@ -348,31 +270,26 @@ KKStr  Model::ModelTypeToStr (ModelTypes   _modelingType)
 
 Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 {
-  if  (_modelingTypeStr.EqualIgnoreCase ("OldSVM")  ||  _modelingTypeStr.EqualIgnoreCase ("One_Level"))
-    return mtOldSVM;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))
-    return mtSvmBase;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))
-    return mtKNN;
-
-  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))
-    return mtUsfCasCor;
+  if       (_modelingTypeStr.EqualIgnoreCase ("OldSVM")  ||  
+            _modelingTypeStr.EqualIgnoreCase ("One_Level"))   return ModelTypes::OldSVM;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("SvmBase"))     return ModelTypes::SvmBase;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("KNN"))         return ModelTypes::KNN;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("UsfCasCor"))   return ModelTypes::UsfCasCor;
+  else if  (_modelingTypeStr.EqualIgnoreCase ("Dual"))        return ModelTypes::Dual;
 
   else
-    return mtNULL;
+    return ModelTypes::Null;
 }  /* ModelingMethodFromStr */
 
 
 
 
-ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
-                               const KKStr&      _name,
-                               const ModelParam& _param,  
-                               FileDescPtr       _fileDesc,
-                               VolConstBool&     _cancelFlag,
-                               RunLog&           _log
+ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
+                               const KKStr&          _name,
+                               const ModelParam&     _param,  
+                               FactoryFVProducerPtr  _factoryFVProducer,
+                               VolConstBool&         _cancelFlag,
+                               RunLog&               _log
                               )
 {
   ModelPtr  model = NULL;
@@ -380,40 +297,47 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
   {
     switch  (_modelType)
     {
-    case  mtOldSVM:    model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::OldSVM:    
+          model = new ModelOldSVM    (_name, dynamic_cast<const ModelParamOldSVM&>    (_param), _factoryFVProducer);
+          break;
 
-    case  mtSvmBase:   model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::SvmBase:
+          model = new ModelSvmBase   (_name, dynamic_cast<const ModelParamSvmBase&>   (_param), _factoryFVProducer);
+          break;
 
-    case  mtKNN:       model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::KNN:
+          model = new ModelKnn       (_name, dynamic_cast<const ModelParamKnn&>       (_param), _factoryFVProducer);
+          break;
 
-    case  mtUsfCasCor: model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _fileDesc, _cancelFlag, _log);
-                       break;
+    case  ModelTypes::UsfCasCor:
+          model = new ModelUsfCasCor (_name, dynamic_cast<const ModelParamUsfCasCor&> (_param), _factoryFVProducer);
+          break;
 
+    case  ModelTypes::Dual:
+          model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _factoryFVProducer);
+          break;
     }  /* end of switch */
+  }
+  catch  (const KKException&  e)
+  {
+    delete  model; model = NULL;
+    throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
   catch  (const std::exception&  e)
   {
-    delete  model;
-    model = NULL;
+    delete  model;  model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
   catch  (const char*  e2)
   {
-    delete  model;
-    model = NULL;
-
+    delete  model;  model = NULL;
     KKStr  exceptionStr = "Model::CreateAModel  Exception calling constructor[";
     exceptionStr << e2 << "]."; 
     throw  KKException (exceptionStr);
   }
-
   catch  (...)
   {
-    delete  model;
-    model = NULL;
+    delete  model;  model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.  No info provided.");
   }
 
@@ -425,13 +349,14 @@ ModelPtr  Model::CreateAModel (ModelTypes        _modelType,
 
 void  Model::AllocatePredictionVariables ()
 {
-  kkuint32  x, y;
+  kkint32 x = 0;
+  kkint32 y = 0;
 
   DeAllocateSpace ();
 
   if  (classes == NULL)
   {
-    log.Level (-1) << endl << endl 
+    cerr << endl << endl 
       << "Model::AllocatePredictionVariables   ***ERROR***      (classes == NULL)"  << endl
       << endl;
 
@@ -464,7 +389,7 @@ void  Model::AllocatePredictionVariables ()
 
 void  Model::DeAllocateSpace ()
 {
-  kkuint32  x;
+  kkint32 x = 0;
   if  (crossClassProbTable)
   {
     for  (x = 0;  x < numOfClasses;  x++)
@@ -494,7 +419,7 @@ const FeatureEncoder2&  Model::Encoder () const
 
 
 
-const FeatureNumList&   Model::GetFeatureNums ()  const
+FeatureNumListConstPtr   Model::GetFeatureNums ()  const
 {
   if  (!param)
     throw KKException ("Model::GetFeatureNums  'param == NULL'.");
@@ -507,7 +432,7 @@ bool  Model::NormalizeNominalAttributes ()  const
   if  (!param)
     throw KKException ("Model::NormalizeNominalAttributes  'param == NULL'.");
 
-  if  (param->EncodingMethod () == ModelParam::NoEncoding)
+  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::NoEncoding)
     return  true;
   else
     return  false;
@@ -515,7 +440,7 @@ bool  Model::NormalizeNominalAttributes ()  const
 
 
 
-const FeatureNumList&  Model::SelectedFeatures () const
+FeatureNumListConstPtr  Model::SelectedFeatures () const
 {
   if  (!param)
     throw KKException ("Model::GetFeatureNums  'param'.");
@@ -542,298 +467,32 @@ void  Model::TrainingTimeEnd ()
 
 
 
-void  Model::Load (const KKStr&  _rootFileName,
-                   bool&         _successful
-                  )
-{
-  log.Level (20) << "Model::Load  Load Model in File[" << _rootFileName << "]." << endl;
-  rootFileName = _rootFileName;
-  KKStr  fileName = rootFileName + ".Model";
-
-  ifstream  i (fileName.Str (), ios_base::in);
-  if  (!i.is_open ())
-  {
-    log.Level (-1) << endl << endl << "Model::Load   Failed to open file[" << fileName << "]" << endl;
-    _successful = false;
-    return;
-  }
-
-  ReadXML (i, _successful);
-
-  i.close ();
-}  /* Load */
-
-
-
-
-void  Model::Save (const KKStr&  _rootFileName,
-                   bool&         _successful
-                  )
-{
-  log.Level (20) << "Model::Save  Saving Model in File["
-                 << _rootFileName << "]."
-                 << endl;
-
-  _successful = true;
-
-  rootFileName = _rootFileName;
-
-  KKStr  fileName = rootFileName + ".Model";
-
-  ofstream  o (fileName.Str ());
-  if  (!o.is_open ())
-  {
-    _successful = false;
-    log.Level (-1) << endl << endl 
-      << "Model::Save    ***ERROR***   Opening[" << fileName << "]." << endl;
-    return;
-  }
-
-  WriteXML (o);
-
-  o.close ();
-}  /* Save */
-
-
-
-
-void  Model::WriteXML (ostream&  o)
-{
-  log.Level (20) << "Model::WriteXML  Saving Model in File." << endl;
-
-  o << "<Model>" << endl;
-  o << "ModelType"          << "\t" << ModelTypeStr ()                                  << endl;
-  o << "Name"               << "\t" << Name ()                                          << endl;
-
-  o << "RootFileName"       << "\t" << rootFileName                                     << endl;
-  o << "Classes"            << "\t" << classes->ToCommaDelimitedStr ()                  << endl;
-  if  (classesIndex)
-    o << "ClassesIndex"       << "\t" << classesIndex->ToCommaDelString ()              << endl;
-
-  if  (param)
-  {
-    o << "<Parameters>"  << endl;
-    param->WriteXML (o);
-    o << "</Parameters>" << endl;
-  }
-  o << "Time"               << "\t" << osGetLocalDateTime ()                            << endl;
-  o << "TrainingTime"       << "\t" << trainingTime                                     << endl;
-  o << "AlreadyNormalized"  << "\t" << (alreadyNormalized ? "Yes" : "No")               << endl;
-  if  (normParms)
-    normParms->Write (o);
-
-  o << "<SpecificImplementation>"  << endl;
-  WriteSpecificImplementationXML (o);
-  o << "</SpecificImplementation>"  << endl;
-
-  o << "</Model>" << endl;
-
-} /* WriteXML */
-
-
-
-
-void  Model::ReadXML (istream&  i,
-                      bool&     _successful
-                     )
-{
-  validModel = true;
-  delete  normParms;
-  normParms = NULL;
-  _successful = true;
-
-  delete  classesIndex;
-  classesIndex = NULL;
-
-
-  char  buff[40960];
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field.Empty ())
-      continue;
-
-    if  (field.EqualIgnoreCase ("</Model>"))
-      break;
-
-    if  (field.EqualIgnoreCase ("CLASSES"))
-    {
-      delete  classes;
-      classes = MLClassList::BuildListFromDelimtedStr (ln, ',');
-      delete  classesIndex;
-      classesIndex = new ClassIndexList (*classes);
-    }
-
-    else if  (field.EqualIgnoreCase ("ClassesIndex"))
-    {
-      delete  classesIndex;  classesIndex = NULL;
-      classesIndex = new ClassIndexList ();
-      classesIndex->ParseClassIndexList (ln);
-    }
-
-    else if  (field.EqualIgnoreCase ("Name"))
-    {
-      name = ln.ExtractToken2 ("\n\r\t");
-    }
-
-    else if  (field == "TIME")
-    {
-    }
-
-    else if  (field.EqualIgnoreCase ("<Parameters>"))
-    {
-      delete  param;
-      param = NULL;
-
-      try
-      {
-        param = ModelParam::CreateModelParam (i, fileDesc, log);
-      }
-      catch  (const exception&  e)
-      {
-        _successful = false;
-        validModel = false;
-        KKStr  errMsg;
-        errMsg << "Exception executing function 'ModelParam::CreateModelParam'.  Exception[" << e.what () << "]";
-        log.Level (-1) << endl << "Model::ReadXML    ***ERROR***    "  << errMsg << endl << endl;
-        throw KKException (errMsg);
-      }
-
-      if  (!param)
-      {
-        _successful = false;
-        validModel = false;
-        KKStr  errMsg = "Model::ReadXML    ***ERROR***    (param == NULL)";
-        log.Level (-1) << errMsg << endl;
-      }
-
-      else if  (!param->ValidParam ())
-      {
-        _successful = false;
-        validModel = false;
-        log.Level (-1) << endl << endl << "Model::ReadXML   ***ERROR***   <ModelParam>  was invalid." << endl << endl;
-      }
-    }
-
-    else if  (field == "TRAININGTIME")
-      trainingTime = ln.ExtractTokenDouble ("\n\r\t");
-
-    else if  (field.EqualIgnoreCase ("AlreadyNormalized"))
-      alreadyNormalized = ln.ExtractTokenBool ("\t");
-
-    else if  (field.EqualIgnoreCase ("<NormalizationParms>"))
-    {
-      delete  normParms;
-      normParms = NULL;
-      _successful = true;
-      normParms = new NormalizationParms (fileDesc, i, _successful, log);
-      if  (!_successful)
-      {
-        KKStr  errMsg = "Model::ReadXML    ***ERROR***     Reading in <NormalizationParms>";
-        log.Level (-1) << endl << endl
-                       << errMsg << endl
-                       << endl;
-        throw KKException (errMsg);
-      }
-    }
-    else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
-    {
-      ReadSpecificImplementationXML (i, _successful);
-    }
-  }
-
-  if  (classes == NULL)
-  {
-    _successful = false;
-    log.Level (-1) << endl << endl 
-                   << "Model::ReadXML    Class List was not defined." << endl
-                   << endl;
-  }
-
-  else if  ((normParms == NULL)  &&  (!alreadyNormalized))
-  {
-    _successful = false;
-    log.Level (-1) << endl << endl 
-                   << "Model::ReadXML    Normalization Parameters was not defined." << endl
-                   << endl;
-  }
-
-  else
-  {
-    numOfClasses = classes->QueueSize ();
-    AllocatePredictionVariables ();
-  }
-}  /* ReadXML */
-
-
-
-
-
-void  Model::ReadSkipToSection (istream& i, 
-                                KKStr    sectName,
-                                bool&    sectionFound
-                               )
-{
-  sectionFound = false;
-  char  buff[10240];
-  sectName.Upper ();
-
-
-  KKStr  field;
-
-  // Skip to start of OneVsOne section
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-    if  (field == sectName)
-    {
-      sectionFound = true;
-      break;
-    }
-  }
-
-  if  (!sectionFound)
-  {
-    log.Level (-1) << endl << endl
-                   << "Model::ReadSkipToSection    *** Could not find section[" << sectName << "]" <<endl
-                   << endl;
-  }
-}  /* ReadSkipToSection */
-
-
-
-
 /**
  *@brief Performs operations such as FeatureEncoding, and  Normalization; the actual training 
  *       of models occurs in the specific implementation of 'Model'.
  */
 void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
                          bool                  _alreadyNormalized,
-                         bool                  _takeOwnership  /*!< True = Model will take ownership of these examples */
+                         bool                  _takeOwnership,  /*!< True = Model will take ownership of these examples */
+                         VolConstBool&         _cancelFlag,
+                         RunLog&               _log
                         )
 {
-  log.Level (40) << "Model::TrainModel" << endl;
+  _log.Level (10) << "Model::TrainModel   Preparing for training of Model[" << Name () << "]  Examples[" << _trainExamples->QueueSize () << "]" << endl;
 
   double  prepStartTime = osGetSystemTimeUsed ();
 
   if  (_trainExamples == NULL)
   {
     KKStr  errMsg = "ModelSvmBase::TrainModel   (_trainExamples == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
   if  (_trainExamples->QueueSize () < 2)
   {
     KKStr  errMsg = "ModelSvmBase::TrainModel   (_trainExamples == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
+    _log.Level (-1) << endl << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 
@@ -847,35 +506,43 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   classes->SortByName ();
 
   delete  classesIndex;
-  classesIndex = new ClassIndexList (*classes);
-
+  classesIndex = new MLClassIndexList (*classes);
 
   if  (param->ExamplesPerClass () < int32_max)
-    ReduceTrainExamples ();
+    ReduceTrainExamples (_log);
 
   if  (!_alreadyNormalized)
   {
     if  (!weOwnTrainExamples)
     {
-      FeatureVectorListPtr  temp = new FeatureVectorList (*trainExamples, true);
+      // Since we do not own the WE will have to duplicate the trainExamples list and its contents before we normalize the data.
+      FeatureVectorListPtr  temp = trainExamples->Duplicate (true);
       weOwnTrainExamples = true;
       trainExamples = temp;
     }
+    else if  (!trainExamples->Owner ())
+    {
+      // Even though we own 'trainExamples' we do not own its contents; so we will need to create a new list and own those contents.
+      FeatureVectorListPtr  temp = trainExamples->Duplicate (true);
+      weOwnTrainExamples = true;
+      delete  trainExamples;
+      trainExamples = temp;
+    }
     delete  normParms;
-    normParms = new NormalizationParms (*param, *trainExamples, log);
-    normParms->NormalizeExamples (trainExamples);
+    normParms = new NormalizationParms (*param, *trainExamples, _log);
+    normParms->NormalizeExamples (trainExamples, _log);
   }
 
-  if  (param->EncodingMethod () == ModelParam::Encoding_NULL)
+  if  (param->EncodingMethod () == ModelParam::EncodingMethodType::Null)
   {
     // There is nothing for us to do.
     return;
   }
 
-  if  ((param->EncodingMethod () != ModelParam::Encoding_NULL)  &&   (param->EncodingMethod () != ModelParam::NoEncoding))
+  if  ((param->EncodingMethod () != ModelParam::EncodingMethodType::Null)  &&   (param->EncodingMethod () != ModelParam::EncodingMethodType::NoEncoding))
   {
     if  (!encoder)
-      encoder = new FeatureEncoder2 (*param, fileDesc, log);
+      encoder = new FeatureEncoder2 (*param, fileDesc);
 
     FeatureVectorListPtr  encodedImages = encoder->EncodeAllExamples (trainExamples);
     if  (weOwnTrainExamples)
@@ -895,13 +562,22 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   if  (trianingPrepTime < 0.0)
     trianingPrepTime += (24.0 * 60.0 * 60.0);
 
-  log.Level (40) << "Model::TrainModel   Exiting." << endl;
+  _log.Level (40) << "Model::TrainModel   Exiting." << endl;
 }  /* TrainModel */
 
 
 
 
 
+/**
+ *@brief  Every prediction  method in every class that is inherited from this class should call
+ *        this method before performing there prediction. Such things as Normalization and
+ *        Feature Encoding.
+ *@param[in]  fv  Feature vector of example that needs to be prepared.
+ *@param[out]  newExampleCreated  Indicates if either Feature Encoding and/or Normalization needed
+ *             to be done. If neither then the original instance is returned. If Yes then
+ *             a new instance which the caller will have to be delete will be returned.
+ */
 FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
                                                    bool&             newExampleCreated
                                                   )
@@ -920,7 +596,7 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
     newExampleCreated = true;
   }
 
-  // I do not believe we need the encoder at this point. At least not for the Features Selected part.  Maybe the conversion from niminal fields will make sense.
+  // I do not believe we need the encoder at this point. At least not for the Features Selected part. Maybe the conversion from minimal fields will make sense.
   if  (encoder)
   {
     oldFV = fv;
@@ -938,10 +614,46 @@ FeatureVectorPtr  Model::PrepExampleForPrediction (FeatureVectorPtr  fv,
 
 
 
+
+/**
+ * Will normalize probabilities such that the sum of all equal 1.0 and no one probability will be less than 'minProbability'.
+ */
+void  Model::NormalizeProbabilitiesWithAMinumum (kkint32  numClasses,
+                                                 double*  probabilities,
+                                                 double   minProbability
+                                                )
+{
+  double  sumGreaterOrEqualMin = 0.0;
+  kkint32 numLessThanMin = 0;
+
+  kkint32 x = 0;
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      ++numLessThanMin;
+    else
+      sumGreaterOrEqualMin += probabilities[x];
+  }
+
+  double probLessMinTotal = numLessThanMin * minProbability;
+  double probLeftToAllocate  = 1.0 - probLessMinTotal;  
+
+  for  (x = 0;  x < numClasses;  ++x)
+  {
+    if  (probabilities[x] < minProbability)
+      probabilities[x] = minProbability;
+    else
+      probabilities[x] = (probabilities[x] / sumGreaterOrEqualMin) * probLeftToAllocate;
+  }
+}  /* NormalizeProbabilitiesWithAMinumum */
+
+
+
+
 /**
  @brief  Reduces the Training Images down to the size dictated by the 'examplesPerClass' parameter.
  */
-void  Model::ReduceTrainExamples ()
+void  Model::ReduceTrainExamples (RunLog&  log)
 {
   kkint32  examplesPerClass = param->ExamplesPerClass ();
   kkuint32  zed = 0;
@@ -970,6 +682,7 @@ void  Model::ReduceTrainExamples ()
     }
 
     delete  stats;
+    stats = NULL;
   }
 
   if  (!reductionNeeded)
@@ -978,14 +691,14 @@ void  Model::ReduceTrainExamples ()
     return;
   }
 
-  FeatureVectorListPtr  reducedSet = new FeatureVectorList (fileDesc, false, log);
-  FeatureVectorListPtr  deleteSet  = new FeatureVectorList (fileDesc, false, log);  // Examples that we do not use will need to be deleted.
+  FeatureVectorListPtr  reducedSet = trainExamples->ManufactureEmptyList (false);
+  FeatureVectorListPtr  deleteSet  = trainExamples->ManufactureEmptyList (false);  // Examples that we do not use will need to be deleted.
   MLClassList::iterator  idx;
 
   for  (idx = classes->begin ();  idx != classes->end ();  idx++)
   {
     MLClassPtr  ic = *idx;
-    FeatureVectorListPtr  examplesThisClass = trainExamples->ExtractImagesForAGivenClass (ic);
+    FeatureVectorListPtr  examplesThisClass = trainExamples->ExtractExamplesForAGivenClass (ic);
     if  ((!examplesThisClass)  ||  (examplesThisClass->size () < 1))
     {
       log.Level (-1) << endl
@@ -1032,9 +745,11 @@ void  Model::ReduceTrainExamples ()
   }
   else
   {
+    // Since we are replacing 'trainExamples' with 'reducedSet' we will now own 'trainExamples' but not its contents.
+    reducedSet->Owner (false);
+    weOwnTrainExamples = true;
     trainExamples = reducedSet;
     reducedSet = NULL;
-    trainExamples->Owner (false);
     deleteSet->Owner (false);
     delete  deleteSet;
     deleteSet = NULL;
@@ -1045,7 +760,8 @@ void  Model::ReduceTrainExamples ()
 
 
 void  Model::RetrieveCrossProbTable (MLClassList&   classes,
-                                     double**          crossClassProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
+                                     double**       crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+                                     RunLog&        log
                                     )
 {
   if  (classes.QueueSize () != crossClassProbTableSize)
@@ -1114,5 +830,207 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
   delete  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
+
+
+
+
+void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
+                                       KKStr&             classifier1Desc,
+                                       KKStr&             classifier2Desc,
+                                       ClassProbListPtr&  classifier1Results,
+                                       ClassProbListPtr&  classifier2Results,
+                                       RunLog&            log
+                                      )
+{
+  delete classifier1Results;  classifier1Results = NULL;
+  delete classifier2Results;  classifier2Results = NULL;
+
+  classifier1Desc = Description ();
+  classifier2Desc = Description ();
+
+  classifier1Results = ProbabilitiesByClass (example, log);
+  if  (classifier1Results)
+    classifier2Results = new ClassProbList (*classifier1Results);
+}  /* ProbabilitiesByClassDual */
+
+
+
+
+
+
+void  Model::WriteModelXMLFields (ostream&  o)  const
+{
+  //timeSaved = osGetLocalDateTime ();
+  ModelTypeStr ().WriteXML ("ModelType", o);
+  Name ().WriteXML ("Name", o);
+  rootFileName.WriteXML ("RootFileName", o);
+  XmlElementMLClassNameList::WriteXML (*classes, "classes", o);
+  if  (classesIndex)
+    classesIndex->WriteXML ("ClassesIndex", o);
+
+
+  if  (factoryFVProducer)
+    XmlElementKKStr::WriteXML (factoryFVProducer->Name (), "FvFactoryProducer", o);
+
+  if  (fileDesc)
+    fileDesc->WriteXML ("FileDesc", o);
+
+  if  (param)
+    param->WriteXML ("Param", o);
+
+  timeSaved.YYYY_MM_DD_HH_MM_SS ().WriteXML ("TimeSaved", o);
+  XmlElementDouble::WriteXML (trainingTime, "TrainingTime", o);
+  XmlElementBool::WriteXML (alreadyNormalized, "AlreadyNormalized", o);
+  if  (normParms)
+    normParms->WriteXML ("NormParms", o);
+} /* WriteModelXMLFields */
+
+
+
+
+XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
+                                       RunLog&      log
+                                      )
+{
+  const KKStr&  varName = t->VarName ();
+  if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+  {
+    bool  tokenFound = true;
+
+    XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+
+    const KKStr&  varName = e->VarName ();
+
+    if  (varName.EqualIgnoreCase ("ModelType"))
+    {
+      if  (ModelType ()  != Model::ModelTypeFromStr (e->ToKKStr ()))
+      {
+        KKStr errMsg (128);
+        errMsg << "Model::ReadXMLModelToken   ***ERROR***   Wrong ModelType encountered;  Expected[" << ModelTypeStr () << "] "
+               << "ModelType Specified[" << e->ToKKStr () << "].";
+
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
+    }
+
+    else if  (varName.EqualIgnoreCase ("Name"))
+      name = e->ToKKStr ();
+
+    else if  (varName.EqualIgnoreCase ("RootFileName"))
+      rootFileName = e->ToKKStr ();
+
+    else if  ((varName.EqualIgnoreCase ("Classes"))  &&  (typeid(*e) == typeid (XmlElementMLClassNameList)))
+    {
+      delete classes;
+      classes = dynamic_cast<XmlElementMLClassNameListPtr> (t)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("ClassesIndex")  &&  (typeid(*e) == typeid (XmlElementMLClassIndexList)))
+    {
+      delete classesIndex;
+      classesIndex = dynamic_cast<XmlElementMLClassIndexListPtr>(t)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("FvFactoryProducer"))
+    {
+      factoryFVProducer = FactoryFVProducer::LookUpFactory (e->ToKKStr ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("FileDesc")  &&  (typeid(*e) == typeid (XmlElementFileDesc)))
+    {
+      fileDesc = dynamic_cast<XmlElementFileDescPtr>(t)->Value ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Param")) 
+    {
+      XmlElementModelParamPtr  xmlParameterElement = dynamic_cast<XmlElementModelParamPtr> (e);
+      if  (xmlParameterElement)
+      {
+        delete param;
+        param = xmlParameterElement->TakeOwnership ();
+      }
+      else
+      {
+        KKStr errMsg (128);
+        errMsg << "Model::ReadXMLModelToken   ***ERROR***   ModelParam variable 'param' not defined correctly.";
+        log.Level (-1) << endl << errMsg << endl << endl;
+        AddErrorMsg (errMsg, 0);
+      }
+    }
+
+    else if  (varName.EqualIgnoreCase ("TimeSaved"))
+      timeSaved = DateTime (e->ToKKStr ());
+
+    else if  (varName.EqualIgnoreCase ("TrainingTime"))
+      trainingTime = e->ToDouble ();
+
+    else if  (varName.EqualIgnoreCase ("AlreadyNormalized"))
+      alreadyNormalized = e->ToBool ();
+
+    else if  ((varName.EqualIgnoreCase ("NormParms"))  &&  (typeid (*e) == typeid (XmlElementNormalizationParms)))
+    {
+      delete  normParms;
+      normParms = dynamic_cast<XmlElementNormalizationParmsPtr> (e)->TakeOwnership ();
+    }
+
+    else
+    {
+      tokenFound = false;
+    }
+
+    if  (tokenFound)
+    {
+      delete t;
+      t = NULL;
+    }
+  }
+
+  return  t;
+}  /* ReadXMLModelToken */
+
+
+
+void  Model::ReadXMLModelPost (RunLog&  log)
+{
+  if  (!param)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'param' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  else if  (!param->ValidParam ())
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'Param' is NOT Valid .";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (!classes)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'classes' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (!fileDesc)
+  {
+    KKStr errMsg = "Model::ReadXMLModelPost   ***ERROR***   'fileDesc' not defined.";
+    AddErrorMsg (errMsg, 0);
+    log.Level (-1) << endl << errMsg << endl << endl;
+  }
+
+  if  (errors.size () > 0)
+  {
+    log.Level (-1) << "Model::ReadXMLModelPost    Errors were detected;  model is INVALID." << endl;
+    validModel = false;
+  }
+  else
+  {
+    AllocatePredictionVariables ();
+  }
+
+}  /* ReadXMLModelPost */
 
 

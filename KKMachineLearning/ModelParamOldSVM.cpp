@@ -1,43 +1,35 @@
-#include  "FirstIncludes.h"
-
-#include  <stdio.h>
-
-#include  <fstream>
-#include  <string>
-#include  <iostream>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "GlobalGoalKeeper.h"
+#include "KKBaseTypes.h"
+#include "KKException.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace KKB;
 
 
-#include  "ModelParamOldSVM.h"
-#include  "BinaryClassParms.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-using namespace KKMachineLearning;
+#include "ModelParamOldSVM.h"
+#include "BinaryClassParms.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "KKMLLTypes.h"
+using namespace KKMLL;
 
 
-ModelParamOldSVM::ModelParamOldSVM  (FileDescPtr  _fileDesc,
-                                     RunLog&      _log
-                                   ):
+ModelParamOldSVM::ModelParamOldSVM  ():
 
-  ModelParam (_fileDesc, _log),
+  ModelParam (),
   svmParameters (NULL)
 {
-  if  (!fileDesc)
-  {
-    KKStr errMsg = "ModelParamOldSVM::ModelParamOldSVM  *** ERROR ***  (fileDesc == NULL)";
-    log.Level (-1) << endl << endl << errMsg << endl << endl;
-    throw  KKException (errMsg);
-  }
-
-  svmParameters = new SVMparam (_fileDesc, _log);
+  svmParameters = new SVMparam ();
 }
 
 
@@ -184,9 +176,11 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding () const
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                      RunLog&      log
+                                                     ) const
 {
-  return  svmParameters->NumOfFeaturesAfterEncoding ();
+  return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc, log);
 }
 
 
@@ -211,9 +205,12 @@ void  ModelParamOldSVM::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 }
 
 
-const FeatureNumList&   ModelParamOldSVM::SelectedFeatures () const
+FeatureNumListConstPtr   ModelParamOldSVM::SelectedFeatures () const
 {
-  return svmParameters->SelectedFeatures ();
+  if  (svmParameters)
+    return svmParameters->SelectedFeatures ();
+  else
+    return NULL;
 }
 
 
@@ -291,8 +288,9 @@ SVM_SelectionMethod ModelParamOldSVM::SelectionMethod () const
 
 
 
-void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
-                                      bool&   _validFormat
+void  ModelParamOldSVM::ParseCmdLine (KKStr    _cmdLineStr,
+                                      bool&    _validFormat,
+                                      RunLog&  _log
                                      )
 {
   _validFormat = true;
@@ -307,7 +305,7 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
   {
     if  (field[0] != '-')  
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -330,10 +328,10 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
 
     bool  parameterUsed = false;
 
-    ParseCmdLineParameter (field, value, parameterUsed);
+    ParseCmdLineParameter (field, value, parameterUsed, _log);
     if  (!parameterUsed)
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
+      _log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
         << field << "]  Value[" << value << "]."
         << endl;
       _validFormat = false;
@@ -346,7 +344,7 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
 
   // Since this class is a special case that handles the old SvmParam paradigm we need
   // to update the local Model:: parameters with those that were updated in 'SvmParam'.
-  ModelParam::EncodingMethod ((ModelParam::EncodingMethodType)svmParameters->EncodingMethod     ());
+  ModelParam::EncodingMethod (SVM_EncodingMethodToModelParamEncodingMethodType (svmParameters->EncodingMethod ()));
   
   ModelParam::A_Param  (svmParameters->A_Param ());
   ModelParam::C_Param  (svmParameters->C_Param ());
@@ -358,13 +356,28 @@ void  ModelParamOldSVM::ParseCmdLine (KKStr   _cmdLineStr,
 
 
 
+ModelParam::EncodingMethodType  ModelParamOldSVM::SVM_EncodingMethodToModelParamEncodingMethodType (SVM_EncodingMethod  _encodingMethod)
+{
+  switch  (_encodingMethod)
+  {
+  case  SVM_EncodingMethod::Null:        return ModelParam::EncodingMethodType::Null;
+  case  SVM_EncodingMethod::NoEncoding:  return ModelParam::EncodingMethodType::NoEncoding;
+  case  SVM_EncodingMethod::Binary:      return ModelParam::EncodingMethodType::Binary;
+  case  SVM_EncodingMethod::Scaled:      return ModelParam::EncodingMethodType::Scaled;
+  }
+  return ModelParam::EncodingMethodType::Null;;
+}
+
+
+
 void  ModelParamOldSVM::ParseCmdLineParameter (const KKStr&  parameter,
                                                const KKStr&  value,
-                                               bool&         parameterUsed
+                                               bool&         parameterUsed,
+                                               RunLog&       log
                                               )
 {
   bool  validFormat = true;
-  svmParameters->ParseCmdLineParameter (parameter, value, parameterUsed, validFormat);
+  svmParameters->ParseCmdLineParameter (parameter, value, parameterUsed, validFormat, log);
   if  (!validFormat)
   {
     log.Level (-1) << endl << endl
@@ -383,8 +396,6 @@ void  ModelParamOldSVM::ParseCmdLineParameter (const KKStr&  parameter,
 */
 KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 {
-  log.Level (60) << "ModelParamOldSVM::SvmParamToString Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr << _param.ToCmdLineStr ();
@@ -400,8 +411,6 @@ KKStr   ModelParamOldSVM::SvmParamToString (const svm_parameter&  _param)  const
 */
 KKStr   ModelParamOldSVM::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParamOldSVM::ToCmdLineStr - Entered." << endl;
-
   KKStr  cmdStr (300);
 
   cmdStr = svmParameters->ToString ();
@@ -411,42 +420,12 @@ KKStr   ModelParamOldSVM::ToCmdLineStr () const
 
 
 
-void  ModelParamOldSVM::WriteSpecificImplementationXML (ostream&  o)  const
+BinaryClassParmsPtr   ModelParamOldSVM::GetBinaryClassParms (MLClassPtr       class1,
+                                                             MLClassPtr       class2
+                                                            )  const
 {
-  log.Level (20) << "ModelParamOldSVM::WriteSpecificImplementationXML to XML to ostream." << endl;
-  o << "<ModelParamOldSVM>" << std::endl;
-  svmParameters->WriteXML (o);
-  o << "</ModelParamOldSVM>" << endl;
-}  /* WriteSpecificImplementationXML */
-
-
-
-
-
-void  ModelParamOldSVM::ReadSpecificImplementationXML (istream& i)
-{
-  log.Level (20) << "ModelParamOldSVM::ReadSpecificImplementationXML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);      // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelParamOldSVM>"))
-      break;
-
-    if  (field.EqualIgnoreCase ("<SVMparam>"))
-    {
-      svmParameters->ReadXML (i);
-    }
-  }
-}  /* ReadSpecificImplementationXML */
-
-
-
+  return svmParameters->GetBinaryClassParms (class1, class2);
+}
 
 
 
@@ -459,11 +438,12 @@ BinaryClassParmsPtr   ModelParamOldSVM::GetParamtersToUseFor2ClassCombo (MLClass
 
 
 
-FeatureNumList  ModelParamOldSVM::GetFeatureNums (MLClassPtr  class1,
-                                                  MLClassPtr  class2
-                                                 )  const
+FeatureNumListConstPtr  ModelParamOldSVM::GetFeatureNums (FileDescPtr  fileDesc,
+                                                          MLClassPtr   class1,
+                                                          MLClassPtr   class2
+                                                        )  const
 {
-  return svmParameters->GetFeatureNums (class1, class2);
+  return svmParameters->GetFeatureNums (fileDesc, class1, class2);
 }  /* GetFeatureNums */
 
 
@@ -477,18 +457,18 @@ void    ModelParamOldSVM::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassP
 
 
 
-float   ModelParamOldSVM::AvgMumOfFeatures ()
+float   ModelParamOldSVM::AvgMumOfFeatures (FileDescPtr  fileDesc)
 {
-  return  svmParameters->AvgMumOfFeatures ();
+  return  svmParameters->AvgMumOfFeatures (fileDesc);
 }  /* AvgMumOfFeatures */
 
 
 
 
 
-void  ModelParamOldSVM::SetFeatureNums (MLClassPtr             class1,
-                                        MLClassPtr             class2,
-                                        const FeatureNumList&  _features,
+void  ModelParamOldSVM::SetFeatureNums (MLClassPtr              class1,
+                                        MLClassPtr              class2,
+                                        FeatureNumListConstPtr  _features,
                                         float                  _weight
                                        )
 {
@@ -499,11 +479,11 @@ void  ModelParamOldSVM::SetFeatureNums (MLClassPtr             class1,
 
 
 
-void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr             class1,
-                                              MLClassPtr             class2,
-                                              const svm_parameter&   _param,
-                                              const FeatureNumList&  _features,
-                                              float                  _weight
+void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr              class1,
+                                              MLClassPtr              class2,
+                                              const svm_parameter&    _param,
+                                              FeatureNumListConstPtr  _features,
+                                              float                   _weight
                                              )
 {
   svmParameters->SetBinaryClassFields (class1, class2, _param, _features, _weight);
@@ -517,14 +497,87 @@ void  ModelParamOldSVM::SetBinaryClassFields (MLClassPtr             class1,
  * @brief  Add a Binary parameters using svm_parametr cmd line str.
  *         Typically used by TrainingConfiguration.
 */
-void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr            class1,
-                                             MLClassPtr            class2,
-                                             const svm_parameter&  _param,
-                                             const FeatureNumList& _selectedFeatures,
-                                             float                 _weight
+void  ModelParamOldSVM::AddBinaryClassParms (MLClassPtr              class1,
+                                             MLClassPtr              class2,
+                                             const svm_parameter&    _param,
+                                             FeatureNumListConstPtr  _selectedFeatures,
+                                             float                   _weight
                                             )
 {
   svmParameters->AddBinaryClassParms (class1, class2, _param, _selectedFeatures, _weight);
 }  /* AddBinaryClassParms */
 
 
+
+
+
+void  ModelParamOldSVM::WriteXML (const KKStr&  varName,
+                                  ostream&      o
+                                 )  const
+{
+  XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  WriteXMLFields (o);
+
+  svmParameters->ToString ().WriteXML ("SvmParameters", o);
+
+  XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}  /* WriteXML */
+
+
+
+
+
+void  ModelParamOldSVM::ReadXML (XmlStream&      s,
+                                 XmlTagConstPtr  tag,
+                                 RunLog&         log
+                                )
+{
+  KKStr  svmParametersStr;
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
+  {
+    t = ReadXMLModelParamToken (t);
+    if  (t)
+    {
+      const KKStr& varName = t->VarName ();
+      XmlElementPtr e = dynamic_cast<XmlElementPtr> (t);
+      if  (!e)
+      {
+        log.Level (-1) << endl
+          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected content: " << endl
+          << endl;
+      }
+      else if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))
+      {
+        svmParametersStr = e->ToKKStr ();
+      }
+
+      else
+      {
+        log.Level (-1) << endl
+          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected Element: " << e->NameTagStr () << endl
+          << endl;
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+
+  FeatureNumListConstPtr  selFeatures = ModelParam::SelectedFeatures ();
+
+  bool  validFormat = false;
+  delete  svmParameters;
+  svmParameters = new SVMparam  (svmParametersStr, selFeatures, validFormat, log);
+}  /* ReadXML */
+
+ 
+
+
+XmlFactoryMacro(ModelParamOldSVM)

@@ -3,38 +3,385 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <string.h>
 #include <string>
 #include <iostream>
+#include <ostream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
 #include "BitString.h"
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
-#include "Tokenizer.h"
+#include "KKStrParser.h"
+#include "XmlTokenizer.h"
+#include "XmlStream.h"
 using namespace KKB;
 
 
-#include "XmlStream.h"
 
 
-XmlStream::XmlStream (TokenizerPtr _tokenStream):
-  tokenStream (_tokenStream)
+XmlStream::XmlStream (XmlTokenizerPtr _tokenStream):
+    endOfElementTagNames (),
+    endOfElemenReached   (false),
+    fileName             (),
+    nameOfLastEndTag     (),
+    tokenStream          (_tokenStream),
+    weOwnTokenStream     (false)
 {
+}
+
+
+
+XmlStream::XmlStream (const KKStr&  _fileName,
+                      RunLog&       _log
+                     ):
+    endOfElementTagNames (),
+    endOfElemenReached   (false),
+    fileName             (_fileName),
+    nameOfLastEndTag     (),
+    tokenStream          (NULL),
+    weOwnTokenStream     (false)
+{
+  bool fileOpened = false;
+  tokenStream = new XmlTokenizer (fileName, fileOpened);
+  weOwnTokenStream = true;
 }
 
 
 
 XmlStream::~XmlStream ()
 {
+  delete tokenStream;
+  tokenStream = NULL;
+}
+
+
+
+/**
+ *@brief  Registers a Factory at the current hierarchy that is being processed.
+ */
+void  XmlStream::RegisterFactory (XmlFactoryPtr  factory)
+{
+  if  (factoryManagers.size () > 0)
+    factoryManagers.back ()->RegisterFactory (factory);
+  else
+    XmlFactory::RegisterFactory (factory);
+
+}  /* RegisterFactory */
+
+
+
+void  XmlStream::PushXmlElementLevel (const KKStr&  sectionName)
+{
+  endOfElementTagNames.push_back (sectionName);
+  factoryManagers.push_back (new XmlFactoryManager (sectionName));
+}  /* PushNewXmlElementLevel */
+
+
+
+void  XmlStream::PopXmlElementLevel ()
+{
+  if  ((endOfElementTagNames.size () < 1)  ||  (factoryManagers.size () < 1))
+    return;
+
+   endOfElementTagNames.pop_back ();
+   XmlFactoryManagerPtr  fm = factoryManagers.back ();
+   factoryManagers.pop_back ();
+   delete  fm;
+   fm = NULL;
+}
+
+
+XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
+{
+  XmlFactory*  result = NULL;
+  kkuint32  level = factoryManagers.size ();
+  while  ((level > 0)  &&  (result == NULL))
+  {
+    --level;
+    result = factoryManagers[level]->FactoryLookUp (sectionName);
+  }
+
+  if  (result == NULL)
+    result = XmlFactory::FactoryLookUp (sectionName);
+  return  result;
+}
+
+
+XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
+{
+  if  (endOfElemenReached)
+    return NULL;
+
+  XmlTokenPtr  token = NULL;
+
+  KKStrPtr   t = tokenStream->GetNextToken ();
+  if  (t == NULL)
+    return NULL;
+
+  if  (t->FirstChar () == '<')
+  {
+    XmlTagPtr  tag = new XmlTag (t);
+    delete  t;
+    t = NULL;
+    if  (tag->TagType () == XmlTag::TagTypes::tagStart)
+    {
+      XmlFactoryPtr  factory = TrackDownFactory (tag->Name ());
+      if  (!factory)
+        factory = XmlElementUnKnownFactoryInstance  ();
+      else
+        int zed =100;
+      log.Level (50) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
+
+      PushXmlElementLevel (tag->Name ());
+      token = factory->ManufatureXmlElement (tag, *this, log);
+      KKStr  endTagName = endOfElementTagNames.back ();
+      PopXmlElementLevel ();
+      endOfElemenReached = false;
+    }
+
+    else if  (tag->TagType () == XmlTag::TagTypes::tagEmpty)
+    {
+      XmlFactoryPtr  factory = XmlFactory::FactoryLookUp (tag->Name ());
+      if  (!factory)
+        factory = XmlElementUnKnownFactoryInstance  ();
+      PushXmlElementLevel (tag->Name ());
+      endOfElemenReached = true;
+      token = factory->ManufatureXmlElement (tag, *this, log);
+      if  ((!endOfElemenReached)  &&  (tag->TagType () == XmlTag::TagTypes::tagStart))
+      {
+        //  The element that we just read did not finish consuming all its components.
+        log.Level (-1) << "XmlStream::GetNextToken   ***WARNING***   The element just read[" << tag->Name () << "]  Did not consume all its elements." << endl;
+        XmlTokenPtr  t = GetNextToken (log);
+        while  (t)
+        {
+          delete t;
+          t = GetNextToken (log);
+        }
+      }
+      endOfElemenReached = false;
+      PopXmlElementLevel ();
+    }
+
+    else if  (tag->TagType () == XmlTag::TagTypes::tagEnd)
+    {
+      if  (endOfElementTagNames.size () < 1)
+      {
+        // end tag with no matching start tag.
+        log.Level (-1) << endl
+            << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << tag->Name () << ">  with no matching start-tag." << endl
+            << endl;
+      }
+      else
+      {
+        endOfElemenReached = true;
+        nameOfLastEndTag = tag->Name ();
+        if  (!endOfElementTagNames.back ().EqualIgnoreCase (nameOfLastEndTag))
+        {
+          log.Level (-1) << endl
+            << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << nameOfLastEndTag << ">  does not match StartTag <" << endOfElementTagNames.back () << ">." << endl
+            << endl;
+          // </End-Tag>  does not match <Start-Tag>  we will put back on token stream assuming that we are missing a </End-Tag>
+          // We will end the current element here.
+          tokenStream->PushTokenOnFront (new KKStr ("<" + tag->Name () + " />"));
+        }
+      }
+      delete  tag;
+      tag = NULL;
+    }
+  }
+  else
+  {
+    token = new XmlContent (t);
+  }
+  return  token;
+}  /* GetNextToken */
+
+ 
+
+
+ XmlContentPtr  XmlStream::GetNextContent (RunLog& log)
+{
+  if  (!tokenStream)
+    return NULL;
+
+  KKStrConstPtr  peekNext = tokenStream->Peek (0);
+  if  (!peekNext)
+    return NULL;
+
+  if  (peekNext->FirstChar () == '<')
+    return NULL;
+
+  else
+  {
+    KKStrPtr ts = tokenStream->GetNextToken ();
+    if  (ts)
+      return  new XmlContent (ts);
+    else
+      return  NULL;
+  }
+}
+
+
+
+
+XmlAttributeList::XmlAttributeList (bool  _owner):
+  KKQueue<XmlAttribute> (_owner)
+{
+}
+
+
+XmlAttributeList::XmlAttributeList (const XmlAttributeList&  attributes)
+{
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+    PushOnBack (*idx);
+}
+
+
+
+void  XmlAttributeList::PushOnBack  (XmlAttributePtr a)
+{
+  KKQueue<XmlAttribute>::PushOnBack (a);
+  nameIndex.insert (NameIndexPair (a->Name (), a));
+}
+
+
+void  XmlAttributeList::PushOnFront (XmlAttributePtr a)
+{
+  KKQueue<XmlAttribute>::PushOnFront (a);
+  nameIndex.insert (NameIndexPair (a->Name (), a));
+}
+
+
+XmlAttributePtr  XmlAttributeList::PopFromBack ()
+{
+  XmlAttributePtr  a = KKQueue<XmlAttribute>::PopFromBack ();
+  if  (a)
+    DeleteFromNameIndex (a);
+  return  a;
+}
+
+
+XmlAttributePtr  XmlAttributeList::PopFromFromt ()
+{
+  XmlAttributePtr  a = KKQueue<XmlAttribute>::PopFromFront ();
+  if  (a)
+    DeleteFromNameIndex (a);
+  return  a;
+}
+
+
+
+void  XmlAttributeList::DeleteFromNameIndex (XmlAttributePtr a)
+{
+  {
+    NameIndex::iterator idx;
+    idx = nameIndex.find (a->Name ());
+    while  ((idx != nameIndex.end ()) &&  
+            (idx->first == a->Name ())  &&
+            (idx->second != a)
+           )
+       ++idx;
+
+    if  ((idx != nameIndex.end ())  &&  (idx->second == a))
+      nameIndex.erase (idx);
+  }
+}
+
+
+
+KKStrConstPtr  XmlAttributeList::AttributeValueByName  (const KKStr&  name)   const
+{
+  XmlAttributePtr  a = LookUpByName (name);
+  if  (a)
+    return &(a->Value ());
+  else
+    return NULL;
+}
+
+
+KKStrConstPtr  XmlAttributeList::AttributeValueByIndex (kkuint32  index)  const
+{
+  if  (index >= size ())
+    return NULL;
+  else
+    return &(at (index)->Value ());
+}
+
+
+KKStrConstPtr  XmlAttributeList::AttributeNameByIndex  (kkuint32  index)  const
+{
+  if  (index >= size ())
+    return NULL;
+  else
+    return &(at (index)->Name ());
+}
+
+
+
+const KKStr&   XmlAttributeList::AttributeValueKKStr   (const KKStr&  name)   const
+{
+  KKStrConstPtr s = AttributeValueByName (name);
+  if  (s)
+    return  *s;
+  else
+    return KKStr::EmptyStr ();
+}
+
+
+
+kkint32  XmlAttributeList::AttributeValueInt32  (const KKStr&  name)   const
+{
+  KKStrConstPtr s = AttributeValueByName (name);
+  if  (!s)
+    return  0;
+  else
+    return s->ToInt32 ();
+}
+
+
+
+DateTime  XmlAttributeList::AttributeValueDateTime  (const KKStr&  name)   const
+{
+  KKStrConstPtr s = AttributeValueByName (name);
+  if  (!s)
+    return  DateTime ();
+  
+  DateTime  dt (*s);
+  return  dt;
+}
+
+
+
+
+
+void  XmlAttributeList::AddAttribute (const KKStr&  name,
+                                      const KKStr&  value
+                                     )
+{
+  PushOnBack (new XmlAttribute (name, value));
+}
+
+
+
+XmlAttributePtr  XmlAttributeList::LookUpByName (const KKStr&  name) const
+{
+  NameIndex::const_iterator  idx;
+  idx = nameIndex.find (name);
+  if  (idx == nameIndex.end ())
+    return NULL;
+
+  if  (idx->first != name)
+    return NULL;
+
+  return idx->second;
 }
 
 
@@ -58,6 +405,9 @@ void  ReadWholeTag (istream&  i,
 
 
 
+
+
+
 void  ExtractAttribute (KKStr&  tagStr, 
                         KKStr&  attributeName,
                         KKStr&  attributeValue
@@ -68,7 +418,7 @@ void  ExtractAttribute (KKStr&  tagStr,
   attributeName  = "";
   attributeValue = "";
 
-  // Skip over lading spaces
+  // Skip over leading spaces
   while  (startIdx < len)
   {
     if  (strchr ("\n\t\r ", tagStr[startIdx]) == NULL)
@@ -134,9 +484,12 @@ void  ExtractAttribute (KKStr&  tagStr,
 
 
 
-XmlTag::XmlTag (istream&  i)
+XmlTag::XmlTag (istream&  i):
+   attributes (true),
+   name       (),
+   tagType    (TagTypes::tagNULL)
 {
-  tagType = tagNULL;
+  tagType = TagTypes::tagNULL;
 
   if  (i.peek () == '<')
     i.get ();
@@ -147,25 +500,25 @@ XmlTag::XmlTag (istream&  i)
   if  (tagStr.FirstChar () == '/')
   {
     tagStr.ChopFirstChar ();
-    tagType = tagEnd;
+    tagType = TagTypes::tagEnd;
   }
 
   if  (tagStr.EndsWith ("/>"))
   {
-    tagType = tagEmpty;
+    tagType = TagTypes::tagEmpty;
     tagStr.ChopLastChar ();
     tagStr.ChopLastChar ();
   }
 
   else if  (tagStr.LastChar () != '>')
   {
-    tagType = tagStart;
+    tagType = TagTypes::tagStart;
   }
 
   else
   {
-    if  (tagType == tagNULL)
-      tagType = tagStart;
+    if  (tagType == TagTypes::tagNULL)
+      tagType = TagTypes::tagStart;
     tagStr.ChopLastChar ();
   }
 
@@ -180,267 +533,1327 @@ XmlTag::XmlTag (istream&  i)
   {
     ExtractAttribute (tagStr, attributeName, attributeValue);
     if  (!attributeName.Empty ())
-      attributes.push_back (XmlAttribute (attributeName, attributeValue));
+      attributes.AddAttribute (attributeName, attributeValue);
   }
 }
 
 
 
-
-XmlTag::XmlTag (TokenizerPtr  tokenStream):
-     tagType (tagNULL)
+XmlTag::XmlTag (const KKStrConstPtr  tagStr):
+   attributes (true),
+   name       (),
+   tagType    (TagTypes::tagNULL)
 {
-  // We are assumed to be at the beginning of a new tag.
-  KKStrListPtr  tokens = tokenStream->GetNextTokens (">");
-  if  (!tokens)
-    return;
+  KKStrParser parser(*tagStr);
+  parser.TrimWhiteSpace (" ");
 
-  KKStrPtr t = NULL;
+  if  (parser.PeekNextChar () == '<')
+    parser.GetNextChar ();
 
-  if  (tokens->QueueSize () < 1)
+  if  (parser.PeekLastChar () == '>')
+    parser.GetLastChar ();
+
+  if  (parser.PeekNextChar () == '/')
   {
-    delete  tokens;
-    return;
+    parser.GetNextChar ();
+    tagType = XmlTag::TagTypes::tagEnd;
+  }
+  else if  (parser.PeekLastChar () == '/')
+  {
+    parser.GetLastChar ();
+    tagType = XmlTag::TagTypes::tagEmpty;
+  }
+  else
+  {
+    tagType = XmlTag::TagTypes::tagStart;
   }
 
-  if  ((*tokens)[0] == "<")
+  name = parser.GetNextToken ();
+  parser.SkipWhiteSpace ();
+
+  while  (parser.MoreTokens ())
   {
-    t = tokens->PopFromFront ();
-    delete  t;
-    t = NULL;
+    KKStr attributeName  = parser.GetNextToken ("=");
+    KKStr attributeValue = parser.GetNextToken (" \t\n\r");
+    attributes.AddAttribute (attributeName, attributeValue);
+  }
+}  /* XmlTag::XmlTag (const KKStrConstPtr  tagStr) */
+
+
+
+
+XmlTag::XmlTag (const KKStr&  _name,
+                TagTypes      _tagType
+               ):
+   attributes (true),
+   name       (_name),
+   tagType    (_tagType)
+{
+}
+
+
+XmlTag::~XmlTag ()
+{
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           const KKStr&  attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName, attributeValue);
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           bool          attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName, (attributeValue ? "Yes" : "No"));
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           kkint32       attributeValue
+                         )
+{
+  attributes.AddAttribute (attributeName, StrFromInt32 (attributeValue));
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           kkint64       attributeValue
+                         )
+{
+  attributes.AddAttribute (attributeName, StrFromInt64 (attributeValue));
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           double        attributeValue
+                          )
+{
+  KKStr  s (20);
+  s << attributeValue;
+  attributes.AddAttribute (attributeName, s);
+}
+
+
+
+void  XmlTag::AddAtribute (const KKStr&     attributeName,
+                           const DateTime&  attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName,  attributeValue.YYYY_MM_DD_HH_MM_SS ());
+}
+
+
+
+KKStrConstPtr  XmlTag::AttributeValueByName  (const KKStr&  name)   const
+{
+  return  attributes.AttributeValueByName (name);
+}
+
+
+KKStrConstPtr  XmlTag::AttributeValueByIndex (kkuint32  index)  const
+{
+  return  attributes.AttributeValueByIndex (index);
+}
+
+
+KKStrConstPtr  XmlTag::AttributeNameByIndex  (kkuint32  index)  const
+{
+  return  attributes.AttributeNameByIndex (index);
+}
+
+
+kkint32  XmlTag::AttributeValueInt32 (const KKStr& attributeName)  const
+{
+ return  this->attributes.AttributeValueInt32  (attributeName);
+}
+
+
+DateTime  XmlTag::AttributeValueDateTime (const KKStr&  attributeName)   const
+{
+ return  this->attributes.AttributeValueDateTime  (attributeName);
+}
+
+
+const KKStr&  XmlTag::AttributeValueKKStr (const KKStr& attributeName)  const
+{
+ return  attributes.AttributeValueKKStr  (attributeName);
+}
+
+
+KKStr  XmlTag::ToString ()  const
+{
+  KKStr  s (name.Len () + attributes.size () * 30);
+  s << "<";
+  
+  if  (tagType == TagTypes::tagEnd)
+    s << "/";
+
+  s << name;
+
+  XmlAttributeList::const_iterator  idx;
+  for  (idx = attributes.begin();  idx != attributes.end ();  ++idx)
+  {
+    XmlAttributePtr  a = *idx;
+    s << " " <<  a->Name () << "=" << a->Value ().QuotedStr ();
   }
 
-  // We will assume that we have a start tag unless proven otherwise.
-  tagType = tagStart;
+  if  (tagType == TagTypes::tagEmpty)
+    s << "/";
 
-  if  ((tokens->QueueSize () > 0)  &&  (*(tokens->BackOfQueue ()) == ">"))
+   s << ">";
+
+   return  s;
+}
+
+
+kkint32  xmlLevel = 0;
+
+
+void  XmlTag::WriteXML (ostream& o)
+{
+  if  (TagType () == TagTypes::tagEnd)
+    --xmlLevel;
+
+  for  (kkint32 x = 0;  x < xmlLevel;  ++x)
+    o << "  ";
+  o << ToString ();
+
+  if  (this->TagType () == TagTypes::tagStart)
+    ++xmlLevel;
+}  /* WriteXML */
+
+
+
+
+
+XmlToken::XmlToken ()
+{
+}
+
+
+XmlToken::~XmlToken ()
+{
+}
+
+
+XmlElement::XmlElement (const KKStr&      sectionName,
+                        XmlTag::TagTypes  tagType
+                       ):
+  nameTag (new XmlTag (sectionName, tagType))
+{}
+ 
+
+
+XmlElement::XmlElement (XmlTagPtr   _nameTag,
+                        XmlStream&  s,
+                        RunLog&     log
+                       ):
+  nameTag (_nameTag)
+{}
+ 
+
+
+XmlElement ::~XmlElement ()
+{
+  delete  nameTag;
+  nameTag = NULL;
+}
+
+
+
+KKStr  XmlElement::NameTagStr ()  const
+{
+  if  (!nameTag)
+    return KKStr::EmptyStr ();
+  else
+    return nameTag->ToString ();
+}
+
+
+
+const KKStr&  XmlElement::SectionName ()  const
+{
+  if  (nameTag)
+    return  nameTag->Name ();
+  else
+    return KKStr::EmptyStr ();
+}
+
+
+const KKStr&   XmlElement::VarName ()  const
+{
+  if  (!nameTag)
+    return KKStr::EmptyStr ();
+
+  KKStrConstPtr  nameStr = nameTag->AttributeValueByName ("VarName");
+  if  (nameStr)
+    return  *nameStr;
+  else
+    return  KKStr::EmptyStr ();
+}
+
+
+
+
+KKStrConstPtr  XmlElement::AttributeValue (const KKStr&  attributeName)
+{
+  if  (nameTag)
+    return nameTag->AttributeValueByName (attributeName);
+  else
+    return NULL;
+}
+
+
+KKStrConstPtr  XmlElement::AttributeValue (const char* attributeName)
+{
+  if  (nameTag)
+    return nameTag->AttributeValueByName (attributeName);
+  else
+    return NULL;
+}
+
+
+
+
+XmlContent::XmlContent (KKStrPtr  _content): 
+      XmlToken (), 
+      content (_content) 
+{
+}
+
+
+
+XmlContent::~XmlContent ()
+{
+  delete  content;
+  content = NULL;
+}
+
+
+
+KKStrPtr  XmlContent::TakeOwnership ()
+{
+  KKStrPtr  c = content;
+  content = NULL;
+  return c;
+}
+
+
+void  XmlContent::WriteXml (const KKStr&  s,
+                            ostream&      o
+                           )
+{
+  const char*  str = s.Str ();
+  kkuint32 len = s.Len ();
+
+  for  (kkuint32 x = 0;  x < len;  ++x)
   {
-    t = tokens->PopFromBack ();
-    delete t;
-    t = NULL;
-
-    if  ((tokens->QueueSize () > 0)  &&  (*(tokens->BackOfQueue ()) == "/"))
+    char ch = str[x];
+    switch  (ch)
     {
-      // We have a Empty tag.
-      tagType = tagEmpty;
+    case  '&':  o << "&amp;";  break;
+    case  '<':  o << "&lt;";   break;
+    case  '>':  o << "&gt;";   break;
+    default:    o << ch;       break;
     }
   }
+}  /* WriteXML */
 
-  if  ((tokens->QueueSize () > 0)  &&  ((*tokens)[0] == "/"))
+
+
+XmlFactoryManagerPtr   XmlFactory::globalXmlFactoryManager = NULL;
+
+
+
+XmlFactory*  XmlFactory::FactoryLookUp (const KKStr&  className)
+{
+  GlobalGoalKeeper::StartBlock ();
+  if  (globalXmlFactoryManager == NULL)
   {
-    // We have a Ending Tag
-    tagType = tagEnd;
-    t = tokens->PopFromBack ();
-    delete t;
-    t = NULL;
-
-    if  (tokens->QueueSize () > 0)
-      name = (*tokens)[0];
-
-    delete  tokens;
-    tokens = NULL;
-    return;
+    globalXmlFactoryManager = new XmlFactoryManager ("globalXmlFactoryManager");
+    atexit (FinalCleanUp);
   }
 
+  XmlFactory*  factory = globalXmlFactoryManager->FactoryLookUp (className);
 
-  if  (tokens->QueueSize () < 1)
+  GlobalGoalKeeper::EndBlock ();
+
+  return  factory;
+}  /* FactoryLookUp */
+
+
+
+void   XmlFactory::RegisterFactory  (XmlFactory*  factory)
+{
+  if  (!factory)
   {
-    delete  tokens;
-    return;
+    KKStr  errMsg = "XmlStream::RegisterFactory   ***ERROR***   (factory == NULL).";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
 
+  GlobalGoalKeeper::StartBlock ();
 
-  // At this point the only thing in tokens should be Attribute Pairs.
-  kkint32  idx = 0;
-  name = (*tokens)[idx];
-  idx++;
-
-  KKStr  attrName = "";
-  KKStr  attrValue = "";
-
-  while  (idx < tokens->QueueSize ())
+  if  (!globalXmlFactoryManager)
   {
-    attrName = "";
-    attrValue = "";
+    globalXmlFactoryManager = new XmlFactoryManager ("globalXmlFactoryManager");
+    atexit (FinalCleanUp);
+  }
 
-    attrName = (*tokens)[idx];  idx++;
+  globalXmlFactoryManager->RegisterFactory (factory);
 
-    if  (idx < tokens->QueueSize ())
+  GlobalGoalKeeper::EndBlock ();
+}
+
+
+
+void  XmlFactory::FinalCleanUp ()
+{
+  if  (globalXmlFactoryManager)
+    delete  globalXmlFactoryManager;
+  globalXmlFactoryManager = NULL;
+}
+
+
+
+
+XmlFactory::XmlFactory (const KKStr&  _clasName):
+   className (_clasName)
+{
+}
+
+
+
+
+XmlFactoryManager::XmlFactoryManager (const KKStr&  _name):
+  factories (),
+  name      (_name)
+{
+}
+
+
+XmlFactoryManager::~XmlFactoryManager ()
+{
+  map<KKStr, XmlFactory*>::iterator  idx;
+  for  (idx = factories.begin ();  idx != factories.end ();  ++idx)
+  {
+    XmlFactory*  f = idx->second;
+    delete  f;
+  }
+  factories.clear ();
+}
+
+
+
+void   XmlFactoryManager::RegisterFactory  (XmlFactory*  factory)
+{
+  GlobalGoalKeeper::StartBlock ();
+  XmlFactory*  existingFactory = FactoryLookUp (factory->ClassName ());
+  if  (existingFactory)
+  {
+    GlobalGoalKeeper::EndBlock ();
+    KKStr  errMsg (200);
+    errMsg << "XmlFactoryManager::RegisterFactory  FactoryManager[" << name << "]  Factory[" << factory->ClassName () << "] already exists." ;
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
+  else
+  {
+    factories.insert (pair<KKStr, XmlFactory*> (factory->ClassName (), factory));
+  }
+  GlobalGoalKeeper::EndBlock ();
+}
+      
+
+XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
+{
+  GlobalGoalKeeper::StartBlock ();
+  XmlFactory*  result = NULL;
+
+  map<KKStr, XmlFactory*>::const_iterator  idx;
+  idx = factories.find (className);
+  if  (idx == factories.end ())
+    result =  NULL;
+  else
+    result = idx->second;
+
+  GlobalGoalKeeper::EndBlock ();
+  return  result;
+}  /* FactoryLookUp */
+
+
+
+
+XmlElementBool::XmlElementBool (XmlTagPtr   tag,
+                                XmlStream&  s,
+                                RunLog&     log
+                               ):
+    XmlElement (tag, s, log),
+    value (false)
+{
+  KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");
+  if  (valueStr)
+    value = valueStr->ToBool ();
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
-      if  ((*tokens)[idx] == "=")
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      value = c->Content ()->ToBool ();
+    }
+    delete  t;
+    t = s.GetNextToken (log);
+  }
+}
+
+
+XmlElementBool::~XmlElementBool ()
+{
+}
+
+
+bool  XmlElementBool::Value ()  const
+{
+  return  value;
+}
+
+
+
+void  XmlElementBool::WriteXML (const bool    b,
+                                const KKStr&  varName,
+                                ostream&      o
+                               )
+{
+  XmlTag startTag ("Bool", XmlTag::TagTypes::tagEmpty);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Value", b);
+  startTag.WriteXML (o);
+  o << endl;
+}
+
+XmlFactoryMacro(Bool)
+
+
+XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr   tag,
+                                      XmlStream&  s,
+                                      RunLog&     log
+                                     ):
+    XmlElement (tag, s, log),
+    value (new deque<XmlTokenPtr> ())
+{
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
+  {
+    value->push_back (t);
+    t = s.GetNextToken (log);
+  }
+}
+                
+
+XmlElementUnKnown::~XmlElementUnKnown ()
+{
+  if  (value)
+  {
+    for  (auto idx: *value)
+      delete  idx;
+    delete  value;
+    value = NULL;
+  }
+}
+
+
+deque<XmlTokenPtr>*  XmlElementUnKnown::TakeOwnership ()
+{
+  deque<XmlTokenPtr>* v = value;
+  value = NULL;
+  return v;
+}
+
+
+XmlFactoryMacro(UnKnown)
+
+XmlFactoryPtr  KKB::XmlElementUnKnownFactoryInstance ()
+{
+  return  XmlFactoryUnKnown::FactoryInstance ();
+}
+
+
+XmlElementDateTime::XmlElementDateTime (XmlTagPtr   tag,
+                                        XmlStream&  s,
+                                        RunLog&     log
+                                       ):
+    XmlElement (tag, s, log),
+    value ()
+{
+  value = tag->AttributeValueDateTime ("Value");
+}
+
+               
+XmlElementDateTime::~XmlElementDateTime ()  
+{
+}
+
+
+void  XmlElementDateTime::WriteXML (const DateTime&  d,
+                                    const KKStr&     varName,
+                                    ostream&         o
+                                   )
+{
+  XmlTag startTag ("DateTime", XmlTag::TagTypes::tagEmpty);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Value", d.YYYY_MM_DD_HH_MM_SS ());
+  startTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(DateTime)
+
+
+
+
+
+
+XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
+    XmlElement ("KeyValuePairs", XmlTag::TagTypes::tagStart),
+    value (new vector<pair<KKStr,KKStr> > ())
+{
+}
+
+
+XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
+                                                  XmlStream&  s,
+                                                  RunLog&     log
+                                                 ):
+    XmlElement (tag, s, log),
+    value (NULL)
+{
+  value = new vector<pair<KKStr,KKStr> > ();
+
+  XmlTokenPtr t = s.GetNextToken (log);
+  while  (t != NULL)
+  {
+    if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c)
       {
-        idx++;
-        if  (idx < tokens->QueueSize ())
+        KKStrParser p (*(c->Content ()));
+        p.TrimWhiteSpace (" ");
+        
+        while  (p.MoreTokens ())
         {
-          attrValue = (*tokens)[idx];
-          idx++;
+          KKStr  key = p.GetNextToken ("\t\n");
+          if  (p.LastDelimiter () == '\n')
+            value->push_back (pair<KKStr,KKStr> (key, ""));
+          else
+            value->push_back (pair<KKStr,KKStr> (key, p.GetRestOfLine ()));
         }
       }
-
-      attributes.push_back (XmlAttribute (attrName, attrValue));
     }
-
-    if  ((idx < tokens->QueueSize ())  &&  ((*tokens)[idx] == ","))
-      idx++;
+    delete  t;
+    t = s.GetNextToken (log);
   }
-
-  delete  tokens;  tokens = NULL;
-}  /* XmlTag::XmlTag (TokenizerPtr  tokenStream) */
+}
 
 
-
-
-const KKStr&  XmlTag::AttributeValue (const KKStr& attributeName)  const
+XmlElementKeyValuePairs::~XmlElementKeyValuePairs ()
 {
-  XmlAttributeList::const_iterator  idx;
-  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  delete  value;
+  value = NULL;
+}
+
+
+vector<pair<KKStr,KKStr> >*  XmlElementKeyValuePairs::TakeOwnership ()
+{
+  vector<pair<KKStr,KKStr> >* v = value;
+  value = NULL;
+  return  v;
+}
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    const KKStr&  v
+                                   )
+{
+  value->push_back (pair<KKStr,KKStr> (key, v));
+}
+
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    kkint32       v
+                                   )
+{
+  Add (key, KKB::StrFromInt32 (v));
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    float         v
+                                   )
+{
+  Add (key, KKB::StrFromFloat (v));
+}
+
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    double        v
+                                   )
+{
+  Add (key, KKB::StrFromDouble (v));
+}
+
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&  key,
+                                    bool          v
+                                   )
+{
+  KKStr  vStr = "False";
+  if  (v)  vStr = "True";
+  Add (key, vStr);
+}
+
+
+
+void  XmlElementKeyValuePairs::Add (const KKStr&          key,
+                                    const KKB::DateTime&  v
+                                   )
+{
+  Add (key, v.YYYY_MM_DD_HH_MM_SS ());
+}
+
+
+
+void  XmlElementKeyValuePairs::WriteXML (const KKStr&  varName,
+                                         ostream&      o
+                                        )
+{
+  XmlTag  startTag ("KeyValuePairs",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  vector<pair<KKStr,KKStr> >::const_iterator  idx;
+  for  (idx = value->begin ();  idx != value->end ();  ++idx)
   {
-    if  (idx->Name ().EqualIgnoreCase (attributeName))
-      return idx->Value ();
+    XmlContent::WriteXml (idx->first,  o);
+    o << "\t";
+    XmlContent::WriteXml (idx->second, o);
+    o << endl;
   }
 
-  return KKStr::EmptyStr ();
-} /* AttributeValue */
+  XmlTag  endTag ("KeyValuePairs", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(KeyValuePairs)
 
 
 
 
-const KKStr&  XmlTag::AttributeValue (const char* attributeName)  const
+
+XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
+                                                              XmlStream&  s,           
+                                                              RunLog&     log          
+                                                            ):
+    XmlElement (tag, s, log),
+    height (0),
+    widths (NULL),
+    value  (NULL)
 {
-  XmlAttributeList::const_iterator  idx;
-  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  height = tag->AttributeValueInt32 ("Height");
+  if  (height < 1)
   {
-    if  (idx->Name ().EqualIgnoreCase (attributeName))
-      return idx->Value ();
+    log.Level (-1) << endl 
+      << "XmlElementArrayFloat2DVarying   ***ERROR***   Height[" << height << "] must be greater than 0." << endl 
+      << endl;
+    height = 0;
+    return;
+  }
+  value  = new float*[height];
+  widths = new kkuint32[height];
+
+  XmlTokenPtr  tok = s.GetNextToken (log);
+  kkuint32  rowCount = 0;
+  while  (tok)
+  {
+    if  (typeid(*tok) == typeid(XmlElementArrayFloat))
+    {
+      if  (rowCount >= height)
+      {
+        log.Level (-1) << endl
+          << "XmlElementArrayFloat2DVarying   ***ERROR***   Number of defined rows exceeds defined Height[" << height << "]" << endl
+          << endl;
+        widths[rowCount] = 0;
+        value[rowCount]  = NULL;
+      }
+      else
+      {
+        XmlElementArrayFloatPtr f = dynamic_cast<XmlElementArrayFloatPtr>(tok);
+        widths[rowCount] = f->Count ();
+        value[rowCount] = f->TakeOwnership ();
+      }
+      ++rowCount;
+    }
+    delete  tok;
+    tok = s.GetNextToken (log);
+  }
+  while  (rowCount < height)
+  {
+    value[rowCount] = NULL;
+    ++rowCount;
+  }
+}
+
+
+
+XmlElementArrayFloat2DVarying::~XmlElementArrayFloat2DVarying ()
+{
+  if  (value)
+  {
+    for  (kkuint32 x = 0;  x < height;  ++x)
+    {
+      delete value[x];
+      value[x] = NULL;
+    }
+  }
+  delete  value;   value  = NULL;
+  delete  widths;  widths = NULL;
+}
+
+
+
+
+float**   XmlElementArrayFloat2DVarying::TakeOwnership ()
+{
+  float** v = value;
+  value = NULL;
+  return v;
+}
+
+
+kkuint32*   XmlElementArrayFloat2DVarying::TakeOwnershipWidths ()
+{
+  kkuint32* w = widths;
+  widths = NULL;
+  return w;
+}
+
+
+                                      
+void  XmlElementArrayFloat2DVarying::WriteXML 
+               (kkuint32        height,
+                const kkint32*  widths,      /**< Each entry in array defines the length of the corresponding row in 'mat'.  */ 
+                float** const   mat,
+                const KKStr&    varName,
+                ostream&        o 
+                )
+{
+  XmlTag startTag ("ArrayFloat2DVarying", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.AddAtribute ("Height", (kkint32)height);
+  startTag.WriteXML (o);
+  o << endl;
+
+  for  (kkuint32 r = 0;  r < height;  ++r)
+  {
+    KKStr rowName = "Row_" + StrFormatInt (r, "000");
+    XmlElementArrayFloat::WriteXML (widths[r], mat[r], rowName, o);
   }
 
-  return KKStr::EmptyStr ();
-} /* AttributeValue */
+  XmlTag  endTag ("ArrayFloat2DVarying", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(ArrayFloat2DVarying)
 
 
 
 
-/**  
- *@brief  Will return either a XmlElement or a XmlContent
- */
-XmlTokenPtr  XmlStream::GetNextToken ()  /*!< Will return either a XmlElement or a XmlContent */
+
+
+
+
+
+
+
+
+XmlFactoryMacro(KKStr)
+
+XmlFactoryPtr  KKB::XmlElementKKStrFactoryInstance ()
 {
-  if  (tokenStream->EndOfFile ())
-    return NULL;
-
-  KKStrConstPtr  tokenStr = tokenStream->Peek (0);
-  if  (tokenStr == NULL)
-    return NULL;
-
-  if  ((*tokenStr) == "<")
-    return  ProcessElement ();
-  else
-    return new XmlContent (tokenStream);
-}  /* GetNextToken */
-
-
-
-
-XmlElementPtr  XmlStream::ProcessElement ()
-{
-  // We are assuming that we are at the very beginning of a new element.  In this case
-  // the very next thing we get should be a tag field.
-
-  XmlTagPtr tag = new XmlTag (tokenStream);
-  if  (!tag)
-    return  NULL;
-
-  XmlElementCreator creator = LookUpXmlElementCreator (tag->Name ());
-  if  (creator)
-    return  creator (tag, *this);
-  else
-    return NULL;
-}  /* ProcessElement */
-
-
-
-
-
-
-XmlToken::XmlToken (TokenTypes  _tokenType):
-  tokenType (_tokenType)
-{
+  return  XmlFactoryKKStr::FactoryInstance ();
 }
 
 
 
 
-
-XmlElement::XmlElement ():
-   XmlToken (tokElement)
-{
-}
-
-
-XmlElement::XmlElement (TokenizerPtr  _tokenStream):
-   XmlToken (tokElement)
-{
-}
-
-
-
-XmlContent::XmlContent (TokenizerPtr  _tokenStream):
-   XmlToken (tokContent)
-{
-}
+XmlFactoryMacro(VectorKKStr)
+XmlFactoryMacro(KKStrList)
+XmlFactoryMacro(KKStrListIndexed)
 
 
 
 
 
 
-map<KKStr, XmlStream::XmlElementCreator>  XmlStream::xmlElementCreators;
 
 
 
 /**
- @brief Register a 'XmlElementCreator' function with its associated name.
- @details  if you try to register the same function with the same name will generate a warning to 
-           cerr.  If you try and register two different functions with the same name will throw 
-           an exception.
+ * Works with matching Marco (XmlElementBuiltInTypeHeader) defined in XmlStream.h  
  */
-void   XmlStream::RegisterXmlElementCreator  (const KKStr&       elementName,
-                                              XmlElementCreator  creator
-                                             )
-{
-  map<KKStr, XmlElementCreator>::iterator  idx;
-  idx = xmlElementCreators.find (elementName);
-  if  (idx != xmlElementCreators.end ())
-  {
-    // A 'XmlElementCreator'  creator already exists with name 'elementName'.
-    if  (idx->second == creator)
-    {
-      // Trying to register the same function,  No harm done.
-      cerr << std::endl
-           << "XmlStream::RegisterXmlElementCreator   ***WARNING***   trying to register[" << elementName << "] Creator more than once." << std::endl
-           << std::endl;
-      return;
-    }
-    else
-    {
-      // Trying to register two different 'XmlElementCreator' functions.  This is VERY VERY bad.
-      KKStr  errMsg = "XmlStream::RegisterXmlElementCreator   ***WARNING***   Trying to register[" + elementName + "] as two different Creator functions.";
-      cerr << std::endl << errMsg << std::endl;
-      throw KKException (errMsg);
-    }
-  }
+#define  XmlElementBuiltInTypeBody(T,TypeName,ParseMethod)                \
+ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,             \
+                                             XmlStream&  s,               \
+                                             RunLog&     log              \
+                                            ):                            \
+  XmlElement (tag, s, log),                                               \
+  value ((T)0)                                                            \
+{                                                                         \
+  KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");          \
+  if  (valueStr)                                                          \
+    value = (T)valueStr->##ParseMethod ();                                \
+  XmlTokenPtr tok = s.GetNextToken (log);                                 \
+  while  (tok != NULL)                                                    \
+  {                                                                       \
+    if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)           \
+    {                                                                     \
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                \
+      value = (T)c->Content ()->##ParseMethod ();                         \
+    }                                                                     \
+    delete  tok;                                                          \
+    tok = s.GetNextToken (log);                                           \
+  }                                                                       \
+}                                                                         \
+                                                                          \
+                                                                          \
+XmlElement##TypeName::~ XmlElement##TypeName ()                           \
+{                                                                         \
+}                                                                         \
+                                                                          \
+                                                                          \
+void   XmlElement##TypeName::WriteXML (T             d,                   \
+                                       const KKStr&  varName,             \
+                                       ostream&      o                    \
+                                      )                                   \
+{                                                                         \
+  XmlTag startTag (#TypeName, XmlTag::TagTypes::tagEmpty);                \
+  if  (!varName.Empty ())                                                 \
+    startTag.AddAtribute ("VarName", varName);                            \
+  startTag.AddAtribute ("Value", d);                                      \
+  startTag.WriteXML (o);                                                  \
+  o << endl;                                                              \
+}                                                                         \
+                                                                          \
+                                                                          \
+bool     XmlElement##TypeName::ToBool   () const {return value != 0;}     \
+KKStr    XmlElement##TypeName::ToKKStr  () const {return (KKStr)value;}   \
+double   XmlElement##TypeName::ToDouble () const {return (double)value;}  \
+float    XmlElement##TypeName::ToFloat  () const {return (float)value;}   \
+kkint32  XmlElement##TypeName::ToInt32  () const {return (kkint32)value;} \
+                                                                          \
+XmlFactoryMacro(TypeName)
 
-  xmlElementCreators.insert (pair<KKStr,XmlElementCreator>(elementName, creator));
-}  /* RegisterXmlElementCreator */
 
 
 
-XmlStream::XmlElementCreator  XmlStream::LookUpXmlElementCreator (const KKStr&  elementName)
-{
-  map<KKStr, XmlElementCreator>::iterator  idx;
-  idx = xmlElementCreators.find (elementName);
-  if  (idx == xmlElementCreators.end ())
-    return NULL;
-  else
-    return idx->second;
-}  /* LookUpXmlElementCreator */
+
+
+#define  XmlElementArrayBody(T,TypeName,ParserNextTokenMethod)                \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
+                                            XmlStream&  s,                    \
+                                            RunLog&     log                   \
+                                          ):                                  \
+      XmlElement (tag, s, log),                                               \
+      count (0),                                                              \
+      value (NULL)                                                            \
+{                                                                             \
+  count = tag->AttributeValueInt32 ("Count");                                 \
+  if  (count < 0)                                                             \
+  {                                                                           \
+    log.Level (-1) << endl                                                    \
+      << "XmlElement##TypeName   ***ERROR***   Attribute Count[" << count     \
+      << "] must be a positive value; will set array to NULL." << endl        \
+      << endl;                                                                \
+      count = 0;                                                              \
+  }                                                                           \
+                                                                              \
+  if  (count <= 0)                                                            \
+  {                                                                           \
+    value = NULL;                                                             \
+    count = 0;                                                                \
+  }                                                                           \
+  else                                                                        \
+  {                                                                           \
+    value = new T[count];                                                     \
+  }                                                                           \
+                                                                              \
+  kkuint32  fieldsExtracted = 0;                                              \
+  XmlTokenPtr  tok = s.GetNextToken (log);                                    \
+  while  (tok)                                                                \
+  {                                                                           \
+    if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)               \
+    {                                                                         \
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                    \
+                                                                              \
+      KKStrParser p (*(c->Content ()));                                       \
+                                                                              \
+      while  (p.MoreTokens ())                                                \
+      {                                                                       \
+        double  zed = p.##ParserNextTokenMethod ("\t,");                      \
+        if  (fieldsExtracted < count)                                         \
+          value[fieldsExtracted] = (T)zed;                                    \
+        ++fieldsExtracted;                                                    \
+      }                                                                       \
+    }                                                                         \
+    delete  tok;                                                              \
+    tok = s.GetNextToken (log);                                               \
+  }                                                                           \
+                                                                              \
+  if  (fieldsExtracted != count)                                              \
+  {                                                                           \
+    log.Level (-1) << endl                                                    \
+      << "XmlElement##TypeName<>   ***ERROR***   FieldsExtracted["            \
+      << fieldsExtracted << "]  differs from specified Count["                \
+      << count << "]" << endl                                                 \
+      << endl;                                                                \
+  }                                                                           \
+}                                                                             \
+                                                                              \
+                                                                              \
+XmlElement##TypeName::~XmlElement##TypeName ()                                \
+{                                                                             \
+  delete  value;                                                              \
+  value = NULL;                                                               \
+}                                                                             \
+                                                                              \
+                                                                              \
+T*   XmlElement##TypeName::TakeOwnership ()                                   \
+{                                                                             \
+  T* v = value;                                                               \
+  value = NULL;                                                               \
+  return v;                                                                   \
+}                                                                             \
+                                                                              \
+                                                                              \
+void  XmlElement##TypeName::WriteXML (kkuint32       count,                   \
+                                      const T*       d,                       \
+                                      const KKStr&   varName,                 \
+                                      ostream&       o                        \
+                                      )                                       \
+{                                                                             \
+  XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                    \
+  if  (!varName.Empty ())                                                     \
+    startTag.AddAtribute ("VarName", varName);                                \
+  startTag.AddAtribute ("Count", (kkint32)count);                             \
+  startTag.WriteXML (o);                                                      \
+                                                                              \
+  for  (kkuint32 x = 0;  x < count;  ++x)                                     \
+  {                                                                           \
+    if  (x > 0)                                                               \
+      o << "\t";                                                              \
+    o << d[x];                                                                \
+  }                                                                           \
+  XmlTag  endTag (#TypeName, XmlTag::TagTypes::tagEnd);                       \
+  endTag.WriteXML (o);                                                        \
+  o << endl;                                                                  \
+}                                                                             \
+                                                                              \
+XmlFactoryMacro(TypeName)
+
+
+
+
+
+
+
+
+
+/**
+ *@details  Works with corresponding macro (XmlElementArray2DHeader) defined in header file "XmlStream.h"
+ *@param  T  The Built-In type,  examples: float, kkint32, double, ...
+ *@param  TypeName  The name we give the type  ex:  "Int32", "Float", ....
+ *@param  XmlElementToUse  the XmlElement derived class that will be used to process each row in the matrix.
+ */
+#define  XmlElementArray2DBody(T,TypeName,XmlElementToUse)                     \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                   \
+                                            XmlStream&  s,                     \
+                                            RunLog&     log                    \
+                                          ):                                   \
+      XmlElement (tag, s, log),                                                \
+      height (0),                                                              \
+      value (NULL),                                                            \
+      width (0)                                                                \
+{                                                                              \
+  height = tag->AttributeValueInt32 ("Height");                                \
+  if  (height <= 0)                                                            \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Height["     \
+      << height << "] must be a positive value; will set array to NULL."       \
+      << endl << endl;                                                         \
+      height = 0;                                                              \
+  }                                                                            \
+                                                                               \
+  width = tag->AttributeValueInt32 ("Width");                                  \
+  if  (width <= 0)                                                             \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   Attribute Width["      \
+      << width << "] must be a positive value; will set array to NULL."        \
+      << endl << endl;                                                         \
+    width = 0;                                                                 \
+  }                                                                            \
+                                                                               \
+  if  ((height <= 0)  || (width <= 0))                                         \
+  {                                                                            \
+    value = NULL;                                                              \
+    height = 0;                                                                \
+    width = 0;                                                                 \
+  }                                                                            \
+  else                                                                         \
+  {                                                                            \
+    value = new T*[width];                                                     \
+  }                                                                            \
+                                                                               \
+  kkuint32  rowCount = 0;                                                      \
+  XmlTokenPtr  tok = s.GetNextToken (log);                                     \
+  while  (tok)                                                                 \
+  {                                                                            \
+    if  (typeid(*tok) != typeid(XmlElementToUse))                              \
+    {                                                                          \
+       log.Level (-1) << endl                                                  \
+         << "XmlElement" << #TypeName << "   ***ERROR***   Element: "          \
+         <<  tok->SectionName ()  << "  unexpected."                           \
+         << endl << endl;                                                      \
+    }                                                                          \
+    else                                                                       \
+    {                                                                          \
+      XmlElementToUse*  row = dynamic_cast<XmlElementToUse*> (tok);            \
+      if  (row->Count () != width)                                             \
+      {                                                                        \
+        log.Level (-1) << endl                                                 \
+          << "XmlElement" << #TypeName << "   ***ERROR***   Row Count[ "       \
+          <<  row->Count () << " not equal to Width[" << width << "]."         \
+          << endl << endl;                                                     \
+      }                                                                        \
+      else                                                                     \
+      {                                                                        \
+        if  (rowCount < height)                                                \
+          value[rowCount] = row->TakeOwnership ();                             \
+        ++rowCount;                                                            \
+      }                                                                        \
+    }                                                                          \
+    delete  tok;                                                               \
+    tok = s.GetNextToken (log);                                                \
+  }                                                                            \
+                                                                               \
+  if  (rowCount != height)                                                     \
+  {                                                                            \
+    log.Level (-1) << endl                                                     \
+      << "XmlElement" << #TypeName << "   ***ERROR***   RowCount[ "            \
+      << rowCount << "]  differs from specified height[" << height << "]."     \
+      << endl << endl;                                                         \
+  }                                                                            \
+  while  (rowCount < height)                                                   \
+  {                                                                            \
+    value[rowCount] = new T[width];                                            \
+    for (kkuint32 x = 0; x < width;  ++x)                                      \
+        value[rowCount][x] = (T)0;                                             \
+    ++rowCount;                                                                \
+  }                                                                            \
+}                                                                              \
+                                                                               \
+                                                                               \
+XmlElement##TypeName::~XmlElement##TypeName ()                                 \
+{                                                                              \
+  if  (value)                                                                  \
+  {                                                                            \
+    for  (kkuint32 x = 0;  x < height;  ++x)                                   \
+      delete value[x];                                                         \
+  }                                                                            \
+  delete  value;                                                               \
+  value = NULL;                                                                \
+}                                                                              \
+                                                                               \
+                                                                               \
+T**   XmlElement##TypeName::TakeOwnership ()                                   \
+{                                                                              \
+  T** v = value;                                                               \
+  value = NULL;                                                                \
+  return v;                                                                    \
+}                                                                              \
+                                                                               \
+                                                                               \
+void  XmlElement##TypeName::WriteXML (kkuint32      height,                    \
+                                      kkuint32      width,                     \
+                                      T** const     mat,                       \
+                                      const KKStr&  varName,                   \
+                                      ostream&       o                         \
+                                     )                                         \
+{                                                                              \
+  XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                     \
+  if  (!varName.Empty ())                                                      \
+    startTag.AddAtribute ("VarName", varName);                                 \
+  startTag.AddAtribute ("Height", (kkint32)height);                            \
+  startTag.AddAtribute ("Width",  (kkint32)width);                             \
+  startTag.WriteXML (o);                                                       \
+                                                                               \
+  for  (kkuint32 r = 0;  r < height;  ++r)                                     \
+  {                                                                            \
+    KKStr vn = "Row_" + StrFormatInt (r, "0000");                              \
+    XmlElementToUse::WriteXML (width, mat[r], vn, o);                          \
+  }                                                                            \
+  XmlTag  endTag (#TypeName, XmlTag::TagTypes::tagEnd);                        \
+  endTag.WriteXML (o);                                                         \
+  o << endl;                                                                   \
+}                                                                              \
+                                                                               \
+XmlFactoryMacro(TypeName)
+
+
+
+
+
+
+
+
+
+#define  XmlElementVectorBody(T,TypeName,ParserNextTokenMethod)            \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
+                                            XmlStream&  s,                 \
+                                            RunLog&     log                \
+                                           ):                              \
+  XmlElement (tag, s, log)                                                 \
+{                                                                          \
+  kkint32  count = 0;                                                      \
+  KKStrConstPtr  countStr = tag->AttributeValueByName ("Count");           \
+  if  (countStr)                                                           \
+    count = countStr->ToInt32 ();                                          \
+                                                                           \
+  value = new vector<T> ();                                                \
+                                                                           \
+  XmlTokenPtr  tok = s.GetNextToken (log);                                 \
+  while  (tok)                                                             \
+  {                                                                        \
+    if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)            \
+    {                                                                      \
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                 \
+                                                                           \
+      KKStrParser p (*(c->Content ()));                                    \
+                                                                           \
+      while  (p.MoreTokens ())                                             \
+      {                                                                    \
+        T  zed = p.##ParserNextTokenMethod ("\t,");                        \
+        value->push_back ((T)zed);                                         \
+      }                                                                    \
+    }                                                                      \
+    delete  tok;                                                           \
+    tok = s.GetNextToken (log);                                            \
+  }                                                                        \
+}                                                                          \
+                                                                           \
+                                                                           \
+                                                                           \
+XmlElement##TypeName::~XmlElement##TypeName ()                             \
+{                                                                          \
+  delete  value;                                                           \
+  value = NULL;                                                            \
+}                                                                          \
+                                                                           \
+                                                                           \
+                                                                           \
+vector<T>*  XmlElement##TypeName::TakeOwnership ()                         \
+{                                                                          \
+  vector<T>*  v = value;                                                   \
+  value = NULL;                                                            \
+  return v;                                                                \
+}                                                                          \
+                                                                           \
+                                                                           \
+                                                                           \
+void  XmlElement##TypeName::WriteXML (const vector<T>&  v,                 \
+                                      const KKStr&      varName,           \
+                                      ostream&          o                  \
+                                     )                                     \
+{                                                                          \
+  XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                 \
+  if  (!varName.Empty ())                                                  \
+    startTag.AddAtribute ("VarName", varName);                             \
+  startTag.WriteXML (o);                                                   \
+                                                                           \
+  for  (kkuint32 x = 0;  x < v.size ();  ++x)                              \
+  {                                                                        \
+    if  (x > 0)                                                            \
+      o << "\t";                                                           \
+    o << v[x];                                                             \
+  }                                                                        \
+  XmlTag  endTag (#TypeName, XmlTag::TagTypes::tagEnd);                    \
+  endTag.WriteXML (o);                                                     \
+  o << endl;                                                               \
+}                                                                          \
+                                                                           \
+XmlFactoryMacro(TypeName)
+
+
+
+
+
+// Integral Types
+XmlElementBuiltInTypeBody(kkint32,Int32,ToInt32)  // XmlElementInt32
+
+XmlElementBuiltInTypeBody(kkint64,Int64,ToInt64)  // XmlElementInt64
+
+XmlElementBuiltInTypeBody(float,Float,ToDouble)   // XmlElementFloat
+
+XmlElementBuiltInTypeBody(double,Double,ToDouble) // XmlElementDouble
+
+
+
+
+// Arrays
+
+XmlElementArrayBody(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
+
+XmlElementArrayBody(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
+
+XmlElementArrayBody(double,   ArrayDouble,   GetNextTokenDouble)   
+
+XmlElementArrayBody(float,    ArrayFloat,    GetNextTokenDouble)
+
+
+XmlElementArray2DBody(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
+
+
+
+// Vectors
+
+XmlElementVectorBody(kkint32,  VectorInt32,  GetNextTokenInt)
+XmlElementVectorBody(float,    VectorFloat,  GetNextTokenFloat)

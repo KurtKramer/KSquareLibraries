@@ -1,35 +1,33 @@
-#include  "FirstIncludes.h"
-#include  <stdio.h>
-#include  <fstream>
-#include  <string>
-#include  <iostream>
-#include  <vector>
-#include  "MemoryDebug.h"
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <fstream>
+#include <string>
+#include <iostream>
+#include <vector>
+#include "MemoryDebug.h"
 using namespace std;
 
-
-#include  "KKBaseTypes.h"
-#include  "OSservices.h"
-#include  "RunLog.h"
+#include "GlobalGoalKeeper.h"
+#include "KKBaseTypes.h"
+#include "OSservices.h"
+#include "RunLog.h"
 using namespace KKB;
 
 
-#include  "ModelParamSvmBase.h"
-#include  "FileDesc.h"
-#include  "MLClass.h"
-using namespace KKMachineLearning;
-
+#include "ModelParamSvmBase.h"
+#include "FileDesc.h"
+#include "MLClass.h"
+#include "KKMLLTypes.h"
+using namespace KKMLL;
 
 #include  "svm2.h"
 using namespace  SVM289_MFS;
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                                       RunLog&      _log
-                                      ):
+ModelParamSvmBase::ModelParamSvmBase  ():
 
-  ModelParam (_fileDesc, _log),
+  ModelParam (),
   svmParam   ()
 {
 }
@@ -37,15 +35,13 @@ ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
 
 
 
-ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
-                                       SVM_Type     _svm_type,
+ModelParamSvmBase::ModelParamSvmBase  (SVM_Type     _svm_type,
                                        Kernel_Type  _kernelType,
                                        double       _cost,
-                                       double       _gamma,
-                                       RunLog&      _log
+                                       double       _gamma
                                       ):
 
-  ModelParam (_fileDesc, log),
+  ModelParam (),
   svmParam   ()
 {
   svmParam.SvmType    (_svm_type);
@@ -53,9 +49,6 @@ ModelParamSvmBase::ModelParamSvmBase  (FileDescPtr  _fileDesc,
   svmParam.Cost       (_cost);
   svmParam.Gamma      (_gamma);
 }
-
-
-
 
 
 
@@ -110,7 +103,8 @@ double  ModelParamSvmBase::Gamma ()  const
 
 void  ModelParamSvmBase::ParseCmdLineParameter (const KKStr&  parameter,
                                                 const KKStr&  value,
-                                                bool&         parameterUsed
+                                                bool&         parameterUsed,
+                                                RunLog&       log
                                                )
 {
   svmParam.ProcessSvmParameter (parameter, value, parameterUsed);
@@ -136,7 +130,6 @@ void   ModelParamSvmBase::ParseCmdLinePost ()
 */
 KKStr   ModelParamSvmBase::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParamSvmBase::ToCmdLineStr - Entered." << endl;
   KKStr  cmdStr (300);
   cmdStr = ModelParam::ToCmdLineStr () + " " + svmParam.ToCmdLineStr ();
   return  cmdStr;
@@ -145,59 +138,54 @@ KKStr   ModelParamSvmBase::ToCmdLineStr () const
 
 
 
-void  ModelParamSvmBase::WriteSpecificImplementationXML (ostream&  o)  const
-{
-  log.Level (20) << "ModelParamSvmBase::WriteSpecificImplementationXML XML to ostream." << endl;
 
-  o << "<ModelParamSvmBase>" << endl;
-  o << "SvmParam" << "\t" << svmParam.ToTabDelStr () << endl;
-  o << "</ModelParamSvmBase>" << endl;
+void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
+                                   ostream&      o
+                                  )  const
+{
+  XmlTag  startTag ("ModelParamOldSVM",  XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  o << endl;
+
+  WriteXMLFields (o);
+
+
+  svmParam.ToTabDelStr ().WriteXML ("SvmParam", o);
+
+  XmlTag  endTag ("ModelParamOldSVM", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
 }  /* WriteXML */
 
 
 
 
 
-void  ModelParamSvmBase::ReadSpecificImplementationXML (istream&  i)
+void  ModelParamSvmBase::ReadXML (XmlStream&      s,
+                                  XmlTagConstPtr  tag,
+                                  RunLog&         log
+                                 )
 {
-  log.Level (20) << "ModelParamSvmBase::ReadSpecificImplementationXML from XML file." << endl;
-
-  char  buff[20480];
-  
-  while  (i.getline (buff, sizeof (buff)))
+  XmlTokenPtr  t = s.GetNextToken (log);
+  while  (t)
   {
-    KKStr  ln (buff);
-    if  ((ln.Len () < 1)  || (ln.SubStrPart (0, 1) == "//"))
-      continue;
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true); // true = decode escape characters
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("<ModelParamSvmBase>"))
-      continue;
-
-    if  (field.EqualIgnoreCase ("</ModelParamSvmBase>"))
+    t = ReadXMLModelParamToken (t);
+    if  (t)
     {
-      break;
+      if  (t->VarName ().EqualIgnoreCase ("SvmParam"))
+      {
+        svmParam.ParseTabDelStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+      }
     }
-
-    else if  (field.EqualIgnoreCase ("<ModelParam>"))
-    {
-      ModelParam::ReadXML (i);
-    }
-
-    else if  (field.EqualIgnoreCase ("SvmParam"))
-    {
-      svmParam.ParseTabDelStr (ln);
-    }
-
-    else
-    {
-      log.Level (-1) << endl << endl << "ModelParamSvmBase::ReadSpecificImplementationXML   ***ERROR**  Invalid Parameter[" << field << "]" << endl << endl;
-      ValidParam (false);
-    }
+    delete  t;
+    t = s.GetNextToken (log);
   }
-}  /* ReadSpecificImplementationXML */
 
+  bool  validFormat = false;
+}  /* ReadXML */
 
+ 
+XmlFactoryMacro(ModelParamSvmBase)
 

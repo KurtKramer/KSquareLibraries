@@ -190,7 +190,7 @@ namespace  KKB
 
   typedef  GoalKeeper::GoalKeeperPtr  GoalKeeperPtr;
 
-
+#define  _GoalKeeper_Defined_
 
   class  GoalKeeperList:  public  KKQueue<GoalKeeper>
   {

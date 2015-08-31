@@ -1,56 +1,47 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
-
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
-
 #include "MemoryDebug.h"
 using namespace std;
 
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace KKB;
 
 
-
-
 #include "ModelParam.h"
 #include "ModelParamKnn.h"
 #include "ModelParamOldSVM.h"
 #include "ModelParamSvmBase.h"
-
-#include "FileDesc.h"
-#include "MLClass.h"
+#include "ModelParamUsfCasCor.h"
+#include "ModelParamDual.h"
+#include "KKMLLTypes.h"
 #include "Model.h"
-using namespace  KKMachineLearning;
+//#include "FileDesc.h"
+#include "MLClass.h"
+using namespace  KKMLL;
 
 
 
+ModelParam::ModelParam  ():
 
-
-
-ModelParam::ModelParam  (FileDescPtr  _fileDesc,
-                         RunLog&      _log
-                        ):
-
-  encodingMethod            (NoEncoding),
+  encodingMethod            (EncodingMethodType::NoEncoding),
   examplesPerClass          (int32_max),
-  fileDesc                  (_fileDesc),
   fileName                  (),
-  log                       (_log),
   normalizeNominalFeatures  (false),
-  selectedFeatures          (_fileDesc), 
+  selectedFeatures          (NULL), 
   validParam                (true),
   // SVM related parameters
   cost                      (0.0),
   gamma                     (0.0),
   prob                      (0.0f)
 {
+  /*
   if  (!fileDesc)
   {
     log.Level (-1) << endl
@@ -60,6 +51,7 @@ ModelParam::ModelParam  (FileDescPtr  _fileDesc,
     osWaitForEnter ();
     exit (-1);
   }
+  */
 }
 
 
@@ -70,108 +62,58 @@ ModelParam::ModelParam  (const ModelParam&  _param):
 
   encodingMethod             (_param.encodingMethod),
   examplesPerClass           (_param.examplesPerClass),
-  fileDesc                   (_param.fileDesc),
   fileName                   (_param.fileName),
-  log                        (_param.log),
   normalizeNominalFeatures   (_param.normalizeNominalFeatures),
-  selectedFeatures           (_param.selectedFeatures),
+  selectedFeatures           (NULL),
   validParam                 (_param.validParam),
   // SVM related parameters
   cost                       (_param.cost),
   gamma                      (_param.gamma),
   prob                       (_param.prob)
 {
+  if  (_param.selectedFeatures)
+    selectedFeatures = new FeatureNumList (*(_param.selectedFeatures));
 }
 
 
 
 ModelParam::~ModelParam  ()
 {
+  delete  selectedFeatures;
+  selectedFeatures = NULL;
 }
 
 
 kkint32  ModelParam::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (ModelParam)
-    +  fileName.MemoryConsumedEstimated ()
-    +  selectedFeatures.MemoryConsumedEstimated ();
+    +  fileName.MemoryConsumedEstimated ();
 
+  if  (selectedFeatures)
+    memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }
 
 
-ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
-                                             FileDescPtr  _fileDesc,
-                                             RunLog&      _log
-                                            )
+
+float   ModelParam::AvgMumOfFeatures () const 
 {
-  istream::pos_type startPos = i.tellg ();
+  if  (selectedFeatures)
+    return   (float)selectedFeatures->NumOfFeatures ();
+  else
+    return  0;
+}
+  
 
-  char  buff[20480];
-  KKStr  ln;
 
-  ModelParamTypes  modelParamType = mptNULL;
+void  ModelParam::SelectedFeatures   (FeatureNumListConst&  _selectedFeatures)   
+{
+  delete  selectedFeatures;
+  selectedFeatures = new FeatureNumList (_selectedFeatures);
+}
 
 
-  // First we need to determine which type of model this is.  We will
-  // scan through the file until we locate a ModelParamType field.
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    ln = buff;
-    KKStr  lineName= ln.ExtractToken2 ("\t");
 
-    if  (lineName.EqualIgnoreCase ("</ModelParam>"))
-    {
-      // We did not find the parameter type 
-      break;
-    }
-
-    if  (lineName.EqualIgnoreCase ("ModelParamType"))
-    {
-      KKStr  modelParamTypeStr = ln.ExtractToken2 ("\t");
-      modelParamType = ModelParamTypeFromStr (modelParamTypeStr);
-      if  (modelParamType == mptNULL)
-      {
-        _log.Level (-1) << endl
-          << "ModelParam::CreateModelParam  ***ERROR***   Invalid ModelParamType[" << modelParamTypeStr << "]." << endl
-          << endl;
-        
-      }
-      break;
-    }
-  }
-
-  if  (modelParamType == mptNULL)
-  {
-    // We never found the type of parameter we are looking for.
-    _log.Level (-1) << endl
-      << "ModelParam::CreateModelParam  ***ERROR***   No Parameter Tye was defined." << endl
-      << endl;
-    return NULL;
-  }
-
-  i.seekg (startPos);
-
-  ModelParamPtr modelParam = NULL;
-  switch  (modelParamType)
-  {
-  case  mptKNN:      modelParam = new ModelParamKnn     (_fileDesc, _log);
-                     break;
-
-  case  mptOldSVM:   modelParam = new ModelParamOldSVM  (_fileDesc, _log);
-                     break;
- 
-  case  mptSvmBase:  modelParam = new ModelParamSvmBase (_fileDesc, _log);
-                     break;
-
-  }
-
-  if  (!modelParam)
-    return  NULL;
-
-  modelParam->ReadXML (i);
-  return  modelParam;
-}  /* CreateModelParam */
 
 
 
@@ -179,20 +121,23 @@ ModelParamPtr  ModelParam::CreateModelParam (istream&     i,
 
 KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 {
-  if  (_modelParamType == mptNULL)
+  if  (_modelParamType == ModelParamTypes::Null)
     return "NULL";
   
-  else if  (_modelParamType == mptKNN)
+  else if  (_modelParamType == ModelParamTypes::Dual)
+    return "ModelParamDual";
+
+  else if  (_modelParamType == ModelParamTypes::KNN)
     return "ModelParamKnn";
 
-  else if  (_modelParamType == mptOldSVM)
+  else if  (_modelParamType == ModelParamTypes::OldSVM)
     return "ModelParamOldSVM";
   
-  else if  (_modelParamType == mptSvmBase)
+  else if  (_modelParamType == ModelParamTypes::SvmBase)
     return "ModelParamSvmBase";
 
-  else if  (_modelParamType == mptUsfCasCor)
-    return "ModelUsfCasCor";
+  else if  (_modelParamType == ModelParamTypes::UsfCasCor)
+    return  "UsfCasCor";
 
   else
     return "NULL";
@@ -202,20 +147,23 @@ KKStr   ModelParam::ModelParamTypeToStr (ModelParamTypes _modelParamType)
 
 ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _modelParamTypeStr)
 {
-  if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
-    return mptOldSVM;
+  if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamDual"))
+    return ModelParamTypes::Dual;
+
+  else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamOldSVM"))
+    return ModelParamTypes::OldSVM;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamSvmBase"))
-    return mptSvmBase;
+    return ModelParamTypes::SvmBase;
 
   else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelParamKnn"))
-    return mptKNN;
+    return ModelParamTypes::KNN;
 
-  else if  (_modelParamTypeStr.EqualIgnoreCase ("ModelUsfCasCor"))
-    return mptUsfCasCor;
+  else if  (_modelParamTypeStr.EqualIgnoreCase ("UsfCasCor"))
+    return ModelParamTypes::UsfCasCor;
 
   else
-    return mptNULL;
+    return ModelParamTypes::Null;
 }
 
 
@@ -283,8 +231,9 @@ void  ModelParam::Prob (float _prob)
 
 
 
-void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
-                                bool&   _validFormat
+void  ModelParam::ParseCmdLine (KKStr    _cmdLineStr,
+                                bool&    _validFormat,
+                                RunLog&  _log
                                )
 {
   _validFormat = true;
@@ -300,7 +249,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
   {
     if  (field.FirstChar () != '-')
     {
-      log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
+      _log.Level (-1) << "ModelParam::ParseCmdLine  *** Invalid Parameter["
         << field << "] ***"
         << endl;
       _validFormat = false;
@@ -325,8 +274,11 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
 
     if  ((field == "-FS")  ||  (field == "-FEATURESSELECTED")  ||  (field == "-FEATURESSEL")  ||  (field == "FEATURESEL"))
     {
+      delete  selectedFeatures;
       bool  valid = true;
-      selectedFeatures.ExtractFeatureNumsFromStr (value, valid);
+      selectedFeatures = new FeatureNumList (value, valid);
+      if  (!selectedFeatures)
+        _validFormat= false;
     }
 
     else if  (field.EqualIgnoreCase ("-C")  ||  field.EqualIgnoreCase ("-Cost"))
@@ -346,7 +298,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
       examplesPerClass = value.ToInt ();
       if  (examplesPerClass < 1)
       {
-        log.Level (-1) 
+        _log.Level (-1) 
           << endl << endl
           << "ModelParam::ParseCmdLine ***ERROR***  Invalid '-ExamplsPerClass' parameter specified[" << value << "]" << endl
           << endl;
@@ -376,10 +328,10 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
     else
     {
       bool  parameterUsed = false;
-      ParseCmdLineParameter (field, value, parameterUsed);
+      ParseCmdLineParameter (field, value, parameterUsed, _log);
       if  (!parameterUsed)
       {
-        log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
+        _log.Level (-1) << "ModelParam::ParseCmdLine - Invalid Parameter["  
           << field << "]  Value[" << value << "]."
           << endl;
         _validFormat = false;
@@ -390,7 +342,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
     field = _cmdLineStr.ExtractToken (" \t\n\r");
   } 
 
-  ParseCmdLinePost ();
+  ParseCmdLinePost (_log);
 
   validParam = _validFormat;
 }  /* ParseCmdLine */
@@ -403,7 +355,7 @@ void  ModelParam::ParseCmdLine (KKStr   _cmdLineStr,
  * @details  An example use of this is in 'ModelParamSvmBase' where the local 'ParseCmdLineParameter'
  *           routine processes parameters that 'Model' needs to be aware of.
  */
-void  ModelParam::ParseCmdLinePost ()
+void  ModelParam::ParseCmdLinePost (RunLog&  log)
 {
 }
 
@@ -414,16 +366,15 @@ void  ModelParam::ParseCmdLinePost ()
 */
 KKStr   ModelParam::ToCmdLineStr () const
 {
-  log.Level (60) << "ModelParam::ToCmdLineStr - Entered." << endl;
-
   KKStr  cmdStr (300);
 
-  cmdStr = "-SF " + selectedFeatures.ToCommaDelStr ();
+  if  (selectedFeatures)
+    cmdStr << "-SF " + selectedFeatures->ToCommaDelStr ();
 
   if  (examplesPerClass < int32_max)
     cmdStr << "  -EPC " << examplesPerClass;
 
-  if  (encodingMethod != NoEncoding)
+  if  (encodingMethod != EncodingMethodType::NoEncoding)
     cmdStr << "  -Encode " + EncodingMethodToStr (encodingMethod);
 
   return  cmdStr;
@@ -432,180 +383,54 @@ KKStr   ModelParam::ToCmdLineStr () const
 
 
 
-void  ModelParam::WriteXML (ostream&  o)  const
-{
-  log.Level (20) << "ModelParam::Save to XML to ostream." << endl;
 
-  o << "<ModelParam>" << endl
-    << "ModelParamType"     << "\t"  << ModelParamTypeStr    ()             << std::endl
-    << "EncodingMethod"     << "\t"  << EncodingMethodStr    ()             << std::endl
-    << "ExamplesPerClass"   << "\t"  << examplesPerClass                    << std::endl
-    << "FileName"           << "\t"  << fileName                            << std::endl
-    << "SelectedFeatures"   << "\t"  << selectedFeatures.ToCommaDelStr ()   << std::endl
-    << endl;
-  
-  o << "<SpecificImplementation>"  << endl;
-  WriteSpecificImplementationXML (o);
-  o << "</SpecificImplementation>"  << endl;
-
- o << "</ModelParam>" << endl;
-}  /* WriteXML */
-
-
-
-
-
-void  ModelParam::ReadXML (istream&  i)
-{
-  log.Level (20) << "ModelParam::Read from XML file." << endl;
-
-  char  buff[10240];
-  
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", 
-                                         true      // true = decode escape characters
-                                        );
-    field.Upper ();
-
-    if  (field.EqualIgnoreCase ("</ModelParam>"))
-    {
-      break;
-    }
-
-    else if  (field == "<CMDLINE>")
-    {
-      bool  validFormat;
-      KKStr  cmdLine = ln.ExtractQuotedStr ("\n\r\t", 
-                                             true      // true = decode escape characters
-                                            );
-      ParseCmdLine (cmdLine, validFormat);
-    }
-
-    else if  (field.EqualIgnoreCase ("EncodingMethod"))
-    {
-      KKStr  encodingMethodStr =  ln.ExtractToken2 ("\t");
-      encodingMethod = EncodingMethodFromStr (encodingMethodStr);
-      if  (encodingMethod == Encoding_NULL)
-      {
-        log.Level (-1) << endl << "ModelParam::ReadXML   ***ERROR***  Invalid EncodingMethod Method[" << encodingMethodStr << "]" << endl;
-        validParam = false;
-      }
-    }
-
-    else if  (field.EqualIgnoreCase ("ExamplesPerClass"))
-    {
-      examplesPerClass = ln.ExtractTokenInt ("\t");
-      if  (examplesPerClass < 1)
-      {
-        log.Level (-1) 
-          << endl << endl
-          << "ModelParam::ReadXML   ***ERROR***  Invalid ExamplesPerClass[" << examplesPerClass << "]" << endl
-          << endl;
-        validParam = false;
-        examplesPerClass = int32_max;
-      }
-    }
-
-    else if  (field.EqualIgnoreCase ("FileName"))
-    {
-      fileName = ln.ExtractToken2 ("\t");
-    }
-  
-    else if  (field.EqualIgnoreCase ("SelectedFeatures"))
-    {
-      bool  validFeatureStr = false;
-      KKStr  selectedFeaturesStr =  ln.ExtractToken2 ("\t");
-      selectedFeatures.ExtractFeatureNumsFromStr (selectedFeaturesStr, validFeatureStr);
-      if  (!validFeatureStr)
-      {
-        log.Level (-1) << "ModelParam::ReadXML   ***ERROR***  Invalid selected Features[" << selectedFeaturesStr << "]" << endl;
-        validParam = false;
-      }
-    }
-
-    else if  (field.EqualIgnoreCase ("<SpecificImplementation>"))
-    {
-      ReadSpecificImplementationXML (i);
-    }
-  }
-}  /* ReadXML */
-
-
-
-
-
-
-void  ModelParam::ReadXML (KKStr&  _fileName,
-                           bool&   _successful
-                          )
-{
-  log.Level (10) << "ModelParam::ReadXML - File[" << _fileName << "]." << endl;
-
-  _successful = true;
-
-  fileName = _fileName;
-
-  ifstream  inputFile (fileName.Str ());
-
-  if  (!inputFile.is_open ())
-  {
-    log.Level (-1) << "ModelParam::ReadXML      *** ERROR ***" << endl;
-    log.Level (-1) << "                     Could Not Open File[" << fileName << "]." << endl;
-    _successful = false;
-    return;
-  }
-
-  ReadXML (inputFile);
-   
-  inputFile.close ();
-}  /* ReadXML */
-
-
-
-
-kkint32  ModelParam::NumOfFeaturesAfterEncoding ()  const
+kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
+                                                 RunLog&      log
+                                                )  const
 {
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;
-  kkint32 numOfFeaturesSelected = selectedFeatures.NumOfFeatures ();
+
+  if  (!selectedFeatures)
+    selectedFeatures = new FeatureNumList (fileDesc);
+
+  kkint32 numOfFeaturesSelected = selectedFeatures->NumOfFeatures ();
 
   switch (EncodingMethod ())
   {
-  case BinaryEncoding:
+  case EncodingMethodType::Binary:
     for  (z = 0; z < numOfFeaturesSelected; z++)
     {
-      kkint32  fieldNum = selectedFeatures[z];
-      if  ((fileDesc->Type (fieldNum) == NominalAttribute)  ||  (fileDesc->Type (fieldNum) == SymbolicAttribute))
-        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum, log);
+      kkint32  fieldNum = (*selectedFeatures)[z];
+      if  ((fileDesc->Type (fieldNum) == AttributeType::Nominal)  ||
+           (fileDesc->Type (fieldNum) == AttributeType::Symbolic)
+          )
+        numFeaturesAfterEncoding += fileDesc->Cardinality (fieldNum);
       else
         numFeaturesAfterEncoding ++;
     }
     break;
 
-  case ScaledEncoding:
-  case NoEncoding:
+  case EncodingMethodType::Scaled:
+  case EncodingMethodType::NoEncoding:
   default:
     //numFeaturesAfterEncoding = fileDesc->NumOfFields ( );
-    numFeaturesAfterEncoding = selectedFeatures.NumOfFeatures ();
+    numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
     break;
   }
 
   return  numFeaturesAfterEncoding;
-}  /* NumOfFeaturesAfterEncoding */
-
-
+}  // NumOfFeaturesAfterEncoding 
 
 
 
 
 KKStr  ModelParam::EncodingMethodToStr (EncodingMethodType  encodingMethod)
 {
-  if  (encodingMethod == BinaryEncoding)
+  if  (encodingMethod == EncodingMethodType::Binary)
     return  "Binary";
 
-  else if  (encodingMethod == ScaledEncoding)
+  else if  (encodingMethod == EncodingMethodType::Scaled)
     return  "Scale";
 
   else
@@ -621,15 +446,110 @@ ModelParam::EncodingMethodType  ModelParam::EncodingMethodFromStr (const KKStr& 
   KKStr  encodingMethodUpper = encodingMethodStr.ToUpper ();
 
   if  ((encodingMethodUpper == "BINARY")  ||  (encodingMethodUpper == "BIN"))
-     return  BinaryEncoding;
+     return  EncodingMethodType::Binary;
 
   if  (encodingMethodUpper == "SCALE")
-     return  ScaledEncoding;
+     return  EncodingMethodType::Scaled;
 
   if  (encodingMethodUpper == "NONE")
-    return  NoEncoding;
+    return  EncodingMethodType::NoEncoding;
 
-  return  Encoding_NULL;
+  return  EncodingMethodType::Null;
 }  /* EncodingMethodFromStr */
+
+
+
+
+
+void  ModelParam::WriteXMLFields (ostream&  o)  const
+
+{
+  EncodingMethodToStr (encodingMethod).WriteXML ("EncodingMethod", o);
+
+  XmlElementInt32::WriteXML (examplesPerClass, "ExamplesPerClass", o);
+
+  fileName.WriteXML ("FileName", o);
+
+  XmlElementBool::WriteXML (normalizeNominalFeatures, "NormalizeNominalFeatures", o);
+
+  if  (selectedFeatures)
+    selectedFeatures->WriteXML ("SelectedFeatures", o);
+
+  XmlElementDouble::WriteXML (cost,       "Cost",       o);
+  XmlElementDouble::WriteXML (gamma,      "Gamma",      o);
+  XmlElementDouble::WriteXML (prob,       "Prob",       o);
+  XmlElementBool::WriteXML   (validParam, "ValidParam", o);
+}  /* WriteXML */
+
+
+
+
+XmlTokenPtr  ModelParam::ReadXMLModelParamToken (XmlTokenPtr  t)
+{
+  const KKStr&  varName = t->VarName ();
+  if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
+  {
+    XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
+
+    bool  tokenFound = true;
+
+    if  (varName.EqualIgnoreCase ("EncodingMethod"))
+    {
+      encodingMethod = EncodingMethodFromStr (e->ToKKStr ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("ExamplesPerClass"))
+    {
+      examplesPerClass = e->ToInt32 ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("FileName"))
+    {
+      fileName = e->ToKKStr ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("NormalizeNominalFeatures"))
+    {
+      normalizeNominalFeatures = e->ToBool ();;
+    }
+
+    else if  ((varName.EqualIgnoreCase ("SelectedFeatures"))  &&  (typeid (*e) == typeid (XmlElementFeatureNumList)))
+    {
+      selectedFeatures = dynamic_cast<XmlElementFeatureNumListPtr> (e)->TakeOwnership ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Cost"))
+    {
+      cost = e->ToDouble ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Gamma"))
+    {
+      gamma = e->ToDouble ();
+    }
+
+    else if  (varName.EqualIgnoreCase ("Prob"))
+    {
+      prob = (float)(e->ToDouble ());
+    }
+
+    else if  (varName.EqualIgnoreCase ("ValidParam"))
+    {
+      validParam = e->ToBool ();
+    }
+    else
+    {
+      tokenFound = false;
+    }
+
+    if  (tokenFound)
+    {
+      delete t;
+      t = NULL;
+    }
+  }
+
+  return  t;
+}  /* ReadXMLModelParamToken */
 
 
