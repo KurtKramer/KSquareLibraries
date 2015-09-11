@@ -636,7 +636,6 @@ void  ModelDual::ProbabilitiesByClassDual (FeatureVectorPtr   example,
   delete  classifier1Results;  classifier1Results = NULL;
   delete  classifier2Results;  classifier2Results = NULL;
 
-
   if  ((!classifier1)  ||  (!classifier2))
   {
     log.Level (-1) << endl << endl << "ModelDual::ProbabilitiesByClassDual   ***ERROR***      Both Classifiers are not defined." << endl << endl;
@@ -728,7 +727,6 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr    example,
       _probabilities[x] = cp->probability;
     }
   }
-
 
   delete  predictions1;
   predictions1 = NULL;
@@ -998,7 +996,6 @@ void  ModelDual::ReadXML (XmlStream&      s,
       log.Level (-1) << endl << errMsg << endl << endl;
       AddErrorMsg (errMsg, 0);
     }
-
 
     if  (validModel)
     {
