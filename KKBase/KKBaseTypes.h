@@ -216,17 +216,40 @@ namespace KKB
                              T  d
                             )
   {
-    if  ((a >= b)  &&  (a >= c)  &&  (a >= d))
-      return a;
-
-    if  ((b >= c)  &&  (b >= d))
-      return b;
-
-    if  (c >= d)
-      return c;
-    else
-      return d;
+    return  Max (Max (a, b), Max (c, d));
   }
+
+
+
+  /** @brief Generic Max function, that takes five parameters of the same type. */
+  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4)
+  {
+    return Max (Max(x0, x1, x2, x3), x4);
+  }
+
+
+
+  /** @brief Generic Max function, that takes six parameters of the same type. */
+  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5)
+  {
+    return Max (Max(x0, x1, x2), Max (x3, x4, x5));
+  }
+
+
+  /** @brief Generic Max function, that takes seven parameters of the same type. */
+  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5, T x6)
+  {
+    return Max (Max(x0, x1, x2, x3), Max (x4, x5, x6));
+  }
+
+
+
+  /** @brief Generic Max function, that takes eight parameters of the same type. */
+  template <class T> T  Max (T x0, T x1, T x2, T x3, T x4, T x5, T x6, T x7)
+  {
+    return Max (Max(x0, x1, x2, x3), Max (x4, x5, x6, x7));
+  }
+
 
 
   template <class T>  T  Swap (T&  x,
