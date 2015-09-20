@@ -110,7 +110,7 @@ void  ScannerFileSimple::WriteBufferFrame ()
     uchar* buff = new uchar[paddingNeeded];
     memset (buff, 0, paddingNeeded);
     fwrite (buff, 1, paddingNeeded, file);
-    delete  buff;
+    delete[]  buff;
   }
 
   frameBufferNextLine = 0;

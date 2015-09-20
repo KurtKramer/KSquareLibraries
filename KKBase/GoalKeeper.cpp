@@ -24,7 +24,7 @@
 
 using namespace std;
 
-
+#include "KKException.h"
 #include "GoalKeeper.h"
 #include "OSservices.h"
 using namespace  KKB;
@@ -351,7 +351,9 @@ void  GoalKeeper::Create (const KKStr&             _name,
   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 /**< default security attributes */
                                            false,                /**< initially not owned */
                                            "GoalKeeperClass"
-                                          ); 
+                                          );
+  if  (mutexCreateHandle == NULL)
+    throw KKException ("GoalKeeper::Create  failed to get handle to Mutex Object 'GoalKeeperClass'.");
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 
@@ -417,7 +419,9 @@ void  GoalKeeper::CreateAndStartBlock (const KKStr&             _name,
   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 /**< default security attributes. */
                                            false,                /**< initially not owned.         */
                                            "GoalKeeperClass"
-                                          ); 
+                                          );
+  if (mutexCreateHandle == NULL)
+    throw KKException("GoalKeeper::CreateAndStartBlock  failed to get handle to Mutex Object 'GoalKeeperClass'.");
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 
@@ -491,6 +495,8 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
                                            false,                /**< initially not owned */
                                            "GoalKeeperClass"
                                           ); 
+  if (mutexCreateHandle == NULL)
+    throw KKException("GoalKeeper::Destroy  failed to get handle to Mutex Object 'GoalKeeperClass'.");
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 

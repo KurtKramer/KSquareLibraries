@@ -100,7 +100,7 @@ FeatureNumList::FeatureNumList (const BitString&  bitString):
 
   VectorUint16  listOfSelectedFeatures;
   bitString.ListOfSetBits16 (listOfSelectedFeatures);
-  AllocateArraySize ((kkint32)listOfSelectedFeatures.size ());
+  AllocateArraySize ((kkuint16)listOfSelectedFeatures.size ());
   for  (kkuint32 x = 0;  x < listOfSelectedFeatures.size ();  x++)
     AddFeature (listOfSelectedFeatures[x]);
 }
@@ -567,7 +567,7 @@ void  FeatureNumList::ParseToString (const KKStr&  _str,
   {
     sort(list->begin (), list->end ());
     maxFeatureNum = list->back ();
-    AllocateArraySize (list->size ());
+    AllocateArraySize ((kkuint16)list->size ());
     for  (auto idx: *list)
       AddFeature (idx);
   }

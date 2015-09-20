@@ -88,19 +88,15 @@ namespace  KKB
 
     SettingPtr  LookUp (const KKStr&  name)
     {
-      kkint32      idx;
-      kkint32      qSize = QueueSize ();
-      SettingPtr   setting = NULL;
-      SettingPtr   tempSetting;
-  
-      for  (idx = 0; ((idx < qSize) && (!setting)); idx++)
+      kkint32  idx;
+      kkint32  qSize = QueueSize ();
+      for  (idx = 0;  idx < qSize;  idx++)
       {
-        tempSetting = IdxToPtr (idx);
-        if  (name.EqualIgnoreCase (tempSetting->Name ()))
-          setting = tempSetting;
+        SettingPtr setting = IdxToPtr (idx);
+        if  (name.EqualIgnoreCase (setting->Name ()))
+          return setting;
       }
-
-      return  setting;
+      return  NULL;
     }  /* LookUp */
 
 

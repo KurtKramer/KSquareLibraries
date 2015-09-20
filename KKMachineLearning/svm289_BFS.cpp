@@ -5219,7 +5219,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
     }
   }
 
-  delete  buff;
+  delete[]  buff;
   buff = NULL;
   weOwnSupportVectors = true;  // XXX
   SV.Owner (true);

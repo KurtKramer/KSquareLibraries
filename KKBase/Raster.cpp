@@ -7612,19 +7612,19 @@ RasterPtr  Raster::ReduceByFactor (float factor)  const  //  0 < factor <= 1.0
      
   }
 
-  delete  accumulatorAreaRed;    accumulatorAreaRed   = NULL;
-  delete  accumulatorAreaGreen;  accumulatorAreaGreen = NULL;
-  delete  accumulatorAreaBlue;   accumulatorAreaBlue  = NULL;
+  delete[]  accumulatorAreaRed;    accumulatorAreaRed   = NULL;
+  delete[]  accumulatorAreaGreen;  accumulatorAreaGreen = NULL;
+  delete[]  accumulatorAreaBlue;   accumulatorAreaBlue  = NULL;
 
-  delete  divisorArea;       divisorArea    = NULL;
+  delete[]  divisorArea;       divisorArea    = NULL;
 
-  delete  accumulatorRed;    accumulatorRed    = NULL;
-  delete  accumulatorGreen;  accumulatorGreen  = NULL;
-  delete  accumulatorBlue;   accumulatorBlue   = NULL;
-  delete  divisor;           divisor           = NULL;
+  delete[]  accumulatorRed;    accumulatorRed    = NULL;
+  delete[]  accumulatorGreen;  accumulatorGreen  = NULL;
+  delete[]  accumulatorBlue;   accumulatorBlue   = NULL;
+  delete[]  divisor;           divisor           = NULL;
 
-  delete  rowFactor;       rowFactor      = NULL;
-  delete  colFactor;       colFactor      = NULL;
+  delete[]  rowFactor;       rowFactor      = NULL;
+  delete[]  colFactor;       colFactor      = NULL;
 
   return  reducedRaster;
 }  /* ReduceByFactor */
@@ -9156,7 +9156,7 @@ uchar*  Raster::ToCompressor (kkuint32&  compressedBuffLen)  const
 
   compressedBuffLen = 0;
   uchar*  compressedBuff = (uchar*)Compressor::CreateCompressedBuffer (buff, totalDataNeeded, compressedBuffLen);
-  delete  buff;  buff = NULL;
+  delete[]  buff;  buff = NULL;
   return  compressedBuff;
 }  /* ToCompressor */
 

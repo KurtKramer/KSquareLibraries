@@ -295,7 +295,7 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (kkint32&  len)
       uchar* newBuff = new uchar[newBuffSize];
       memset (newBuff, 0, newBuffSize);
       memcpy (newBuff, buff, buffSize);
-      delete buff;
+      delete[] buff;
       buff = newBuff;
       newBuff = NULL;
       buffSize = newBuffSize;
@@ -382,7 +382,7 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure8Bit (kkint32&  len)
 
       memset (newBuff, 0, newBuffSize);
       memcpy (newBuff, buff, buffSize);
-      delete buff;
+      delete[] buff;
       buff = newBuff;
       newBuff = NULL;
       buffSize = newBuffSize;
@@ -1308,8 +1308,8 @@ void  BmpImage::Load1BitColor (FILE*  inFile,
 
   ReAllocateForBiggerScreen ();
 
-  delete  rowData;
-  delete  packedRowData;
+  delete[]  rowData;
+  delete[]  packedRowData;
 }  /* Load1BitColor */
 
 
@@ -1460,7 +1460,7 @@ void  BmpImage::Load4BitColor (FILE*  inFile,
     }
   }
 
-  delete  rowData;
+  delete[]  rowData;
 }  /* Load4BitColor */
 
 
@@ -1535,7 +1535,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   successfull = true;
 
-  delete  rowData;   rowData = NULL;
+  delete[]  rowData;   rowData = NULL;
 
 }  /* Load8BitColor */
 
@@ -1656,7 +1656,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
     }
   }
 
-  delete  imageBuff;
+  delete[]  imageBuff;
 }  /* Load4BitColorCompressed */
 
 
@@ -1768,7 +1768,7 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
     }
   }
 
-  delete  imageBuff;
+  delete[]  imageBuff;
 } /* Load8BitColorCompressed */
 
 
@@ -1833,7 +1833,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
 
   successfull = true;
 
-  delete  rowData;   rowData = NULL;
+  delete[]  rowData;   rowData = NULL;
 }  /* Load24BitColor */
 
 
@@ -2158,8 +2158,7 @@ void  BmpImage::EliminateVerticalLines ()
     col++;
   }
 
-  delete  potVertLine;
-
+  delete[]  potVertLine;
 } /* EliminateVerticalLines */
 
 
@@ -2652,13 +2651,16 @@ void BmpImage::ClearImage()
 const   
 uchar* BmpImage::BlueRow (kkint32 row)  const
 {
-  if  ((blue == NULL)  ||  (row < 0)  ||  (row >= (kkint32)Height ()))
+  if  (blue == NULL)
+    throw KKException("BmpImage::BlueRow  'blue' channel is set to NULL.");
+  if  ((row < 0)  ||  (row >= (kkint32)Height ()))
   {
     cerr << std::endl
          << std::endl
          << "BmpImage::BlueRow   *** ERROR ***  Invalid Row[" << row << "]." << std::endl
          << std::endl;
     //osWaitForEnter ();
+    throw KKException("BmpImage::BlueRow  row:" + StrFromInt32(row) + " is out of range where Height:" + StrFromInt32(row));
   }
 
   return  blue[row];
@@ -2669,13 +2671,15 @@ uchar* BmpImage::BlueRow (kkint32 row)  const
 const   
 uchar* BmpImage::ImageRow (kkint32 row)  const
 {
+  if  (image == NULL)
+    throw KKException("::ImageRow  'image' set to NULL.");
   if  ((row < 0)  ||  (row >= (kkint32)Height ()))
   {
     cerr << std::endl
          << std::endl
          << "BmpImage   *** ERROR ***  Invalid Row[" << row << "]." << std::endl
          << std::endl;
-    //osWaitForEnter ();
+    throw KKException("BmpImage::ImageRow  row:" + StrFromInt32(row) + " is out of range where Height:" + StrFromInt32(row));
   }
 
   return  image[row];
@@ -2685,13 +2689,16 @@ uchar* BmpImage::ImageRow (kkint32 row)  const
 const   
 uchar* BmpImage::RedRow (kkint32 row)  const
 {
-  if  ((red == NULL)  ||  (row < 0)  ||  (row >= (kkint32)Height ()))
+  if (blue == NULL)
+    throw KKException("BmpImage::RedRow  'red' channel is set to NULL.");
+  if ((row < 0) || (row >= (kkint32)Height()))
   {
     cerr << std::endl
-         << std::endl
-         << "BmpImage::RedRow   *** ERROR ***  Invalid Row[" << row << "]." << std::endl
-         << std::endl;
+      << std::endl
+      << "BmpImage::RedRow   *** ERROR ***  Invalid Row[" << row << "]." << std::endl
+      << std::endl;
     //osWaitForEnter ();
+    throw KKException("BmpImage::BlueRed  row:" + StrFromInt32(row) + " is out of range where Height:" + StrFromInt32(row));
   }
 
   return  red[row];

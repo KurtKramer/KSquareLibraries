@@ -148,8 +148,8 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
     {
       // There is still input data;  so something went wrong. We will prompt a diagnostic message and return NULL
       cerr << "Compressor::CreateCompressedBuffer   -  The input buffer was not fully processed." << std::endl;
-      delete  compressedBuff;  compressedBuff  = NULL;
-      delete  outputBuffer;    outputBuffer    = NULL;
+      delete[]  compressedBuff;  compressedBuff  = NULL;
+      delete[]  outputBuffer;    outputBuffer    = NULL;
       return  NULL;
     }
   }
@@ -159,7 +159,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
   /* clean up and return */
  (void)deflateEnd (&strm);
 
- delete  outputBuffer;  outputBuffer = NULL;
+ delete[]  outputBuffer;  outputBuffer = NULL;
 
  return  compressedBuff;
 
@@ -264,7 +264,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       uchar* newUnCompressedBuff  = new uchar[newUnCompressedLen];
       memcpy (newUnCompressedBuff, unCompressedBuff, unCompressedLen);
       memcpy (newUnCompressedBuff + unCompressedLen, outBuffer, have);
-      delete  unCompressedBuff;
+      delete[]  unCompressedBuff;
       unCompressedBuff = newUnCompressedBuff;
       unCompressedLen = newUnCompressedLen;
       newUnCompressedBuff = NULL;
@@ -275,7 +275,7 @@ void*   Compressor::Decompress (const void*  compressedBuff,
   /* clean up and return */
   (void)inflateEnd(&strm);
 
-  delete  outBuffer;
+  delete[]  outBuffer;
   outBuffer = NULL;
 
   GlobalGoalKeeper::EndBlock ();

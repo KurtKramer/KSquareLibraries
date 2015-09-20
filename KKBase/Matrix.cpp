@@ -591,10 +591,10 @@ double  Matrix::CalcDeterminent (kkint32*  rowMap,
     else
       sign = 1;
 
-    delete  newColMap;
+    delete[]  newColMap;
   }
 
-  delete  newRowMap;
+  delete[]  newRowMap;
 
   return  det;
 }  /* CalcDeterminent */

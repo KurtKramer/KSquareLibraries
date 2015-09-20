@@ -523,7 +523,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
     delete  src;  src  = NULL;
     delete  dest; dest = NULL;
   #endif
-  delete  count;      count = NULL;
+  delete[]  count;      count = NULL;
 
   return  numOfedgePixels;
 }  /* FollowContour */
@@ -863,7 +863,7 @@ ComplexDouble**  GetFourierOneDimMask (kkint32  size)
       fourierMask[x] = NULL;
     }
 
-    delete  fourierMask;
+    delete[]  fourierMask;
     fourierMask = NULL;
   }
 
@@ -944,7 +944,7 @@ ComplexDouble**   GetRevFourierOneDimMask (kkint32  size)  // For reverse Fourie
       revFourierMask[x] = NULL;
     }
 
-    delete  revFourierMask;
+    delete[]  revFourierMask;
     revFourierMask = NULL;
   }
 
@@ -1185,7 +1185,6 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
     maxDistance = Max (maxDistance, distance);
   }
 
-
   float  bucketSize = (maxDistance - minDistance) / numOfBuckets;
 
   if  (bucketSize == 0.0)
@@ -1197,13 +1196,12 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
     for  (x = 0;  x < points->QueueSize ();  x++)
     {
       kkint32 bucketIDX = (kkint32)((distances[x] - minDistance) / bucketSize);
-
       buckets[bucketIDX]++;
     }
   }
 
-  delete  points;     points    = NULL;
-  delete  distances;  distances = NULL;
+  delete    points;     points    = NULL;
+  delete[]  distances;  distances = NULL;
 
   return;
 }  /* HistogramDistanceFromAPoint */

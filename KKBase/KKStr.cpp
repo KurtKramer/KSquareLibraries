@@ -4446,7 +4446,7 @@ KKStrList::KKStrList (bool   owner):
 
 
 KKStrList::KKStrList (const char*  s[]):
-    KKQueue<KKStr> (true, 10),
+    KKQueue<KKStr> (true),
     sorted (false)
 {
   if  (s == NULL)

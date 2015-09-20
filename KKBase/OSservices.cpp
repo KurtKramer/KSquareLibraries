@@ -335,7 +335,7 @@ KKStr  KKB::osGetCurrentDirectory ()
 
   KKStr  curDir (buff);
 
-  delete buff;   
+  delete[] buff;   
 
   return  curDir;
 }  /* GetCurrentDirectory */

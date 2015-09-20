@@ -4098,7 +4098,7 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
     model->kValueTable = new double[model->l];
 
 
-  delete  buff;
+  delete[]  buff;
   buff = NULL;
 
   return  model;

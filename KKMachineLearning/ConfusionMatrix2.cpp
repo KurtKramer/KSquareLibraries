@@ -2433,9 +2433,9 @@ void   ConfusionMatrix2::PrintErrorBySizeRowReduced (ostream&  outFile,
   outFile << endl;
   outFile << endl;
 
-  delete  bucketHeadings;
-  delete  bucketCount;
-  delete  bucketCorrect;
+  delete[]  bucketHeadings;
+  delete[]  bucketCount;
+  delete[]  bucketCorrect;
 }  /* PrintErrorBySizeRowReduced */
 
 
