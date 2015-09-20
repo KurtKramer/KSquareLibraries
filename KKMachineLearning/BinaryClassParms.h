@@ -141,13 +141,13 @@ namespace KKMLL
 
 
     static  
-      BinaryClassParmsListPtr  CreateFromXML (istream&     i, 
-                                              FileDescPtr  fileDesc,
-                                              RunLog&      log
+      BinaryClassParmsListPtr  CreateFromXML (std::istream&  i, 
+                                              FileDescPtr    fileDesc,
+                                              RunLog&        log
                                              );
 
     static  
-      BinaryClassParmsListPtr  CreateFromXML (FILE*        i, 
+      BinaryClassParmsListPtr  CreateFromXML (std::FILE*   i, 
                                               FileDescPtr  fileDesc,
                                               RunLog&      log
                                              );
@@ -175,12 +175,12 @@ namespace KKMLL
                    RunLog&      log
                   );
 
-    void  ReadXML (istream&     i,
-                   FileDescPtr  fileDesc,
-                   RunLog&      log
+    void  ReadXML (std::istream&   i,
+                   FileDescPtr     fileDesc,
+                   RunLog&      log                                                                             
                   );
 
-    void  WriteXML (ostream&  o)  const;
+    void  WriteXML (std::ostream&  o)  const;
 
 
 
@@ -190,8 +190,8 @@ namespace KKMLL
                            );
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const;
 
 
@@ -200,7 +200,7 @@ namespace KKMLL
   private:
      struct  KeyField
      {
-       KeyField (MLClassPtr  _class1,  
+       KeyField (MLClassPtr  _class1,
                  MLClassPtr  _class2
                 );
 
@@ -210,8 +210,8 @@ namespace KKMLL
        MLClassPtr  class2;
      };
 
-     typedef  map<KeyField,BinaryClassParmsPtr>   ClassIndexType;
-     typedef  pair<KeyField, BinaryClassParmsPtr>  ClassIndexPair;
+     typedef  std::map<KeyField,BinaryClassParmsPtr>   ClassIndexType;
+     typedef  std::pair<KeyField, BinaryClassParmsPtr>  ClassIndexPair;
      ClassIndexType  classIndex;
   };
 

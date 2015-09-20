@@ -240,8 +240,8 @@ namespace KKMLL
                            );
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const;
 
 

@@ -83,27 +83,26 @@ namespace  KKB
 
     char       LookUpEntity (const KKStr&  entityName)  const;
 
-    bool             atEndOfFile;
-    TokenBufferPtr   in;
+    bool                  atEndOfFile;
+    TokenBufferPtr        in;
 
-    kkuint32         tokenListLen;
-    deque<KKStrPtr>  tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
-                                      * As end of stream is approached will fill with end of file
-                                      * Tokens as a flag.
-                                      */
+    kkuint32              tokenListLen;
+    std::deque<KKStrPtr>  tokenList;      /**< @brief Will contain a fixed list of future tokens to read.
+                                           * As end of stream is approached will fill with end of file
+                                           * Tokens as a flag.
+                                           */
 
-    bool             weOwnTokenBuffer; /**< @brief Set to true indicates that we need to call the destructor on the TokenBuffer 'in' that we are processing. */
+    bool                  weOwnTokenBuffer; /**< @brief Set to true indicates that we need to call the destructor on the TokenBuffer 'in' that we are processing. */
 
-    char             firstChar;
+    char                  firstChar;
 
-    map<KKStr,char>  entityMap;       /**< @brief Used to maintain a list of valid entities and their respective replacement characters. THese are
-                                       * the name of the xml escape characters,  ex: "quot" = '"',  "lt" = '<'. These are the escape sequences that
-                                       * start with a ampersand(&) and end with a semicolon.
-                                       */
+    std::map<KKStr,char>  entityMap;       /**< @brief Used to maintain a list of valid entities and their respective replacement characters. THese are
+                                            * the name of the xml escape characters,  ex: "quot" = '"',  "lt" = '<'. These are the escape sequences that
+                                            * start with a ampersand(&) and end with a semicolon.
+                                            */
 
-    ofstream logger1;
-    ofstream logger2;
-
+    std::ofstream logger1;
+    std::ofstream logger2;
   };  /* XmlTokenizer */
 
 

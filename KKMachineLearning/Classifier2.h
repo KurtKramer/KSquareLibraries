@@ -90,16 +90,16 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
                          );
  
     MLClassPtr  ClassifyAExample (FeatureVector&  example,
-                                kkint32&        numOfWinners,
-                                bool&           knownClassOneOfTheWinners
-                               );
+                                  kkint32&        numOfWinners,
+                                  bool&           knownClassOneOfTheWinners
+                                 );
 
     MLClassPtr  ClassifyAExample (FeatureVector&  example,
-                                double&         probability,
-                                kkint32&        numOfWinners,
-                                bool&           knownClassOneOfTheWinners,
-                                double&         breakTie
-                               );
+                                  double&         probability,
+                                  kkint32&        numOfWinners,
+                                  bool&           knownClassOneOfTheWinners,
+                                  double&         breakTie
+                                 );
 
     /**
      *@brief  For a given two class pair return the names of the 'numToFind' worst S/V's.
@@ -112,11 +112,11 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   kkint32           numToFind,
-                                                   MLClassPtr        c1,
-                                                   MLClassPtr        c2
-                                                  );
+    std::vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
+                                                        kkint32           numToFind,
+                                                        MLClassPtr        c1,
+                                                        MLClassPtr        c2
+                                                       );
 
 
 
@@ -129,11 +129,11 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    kkint32           numToFind,
-                                                    MLClassPtr        c1,
-                                                    MLClassPtr        c2
-                                                   );
+    std::vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
+                                                         kkint32           numToFind,
+                                                         MLClassPtr        c1,
+                                                         MLClassPtr        c2
+                                                       );
 
 
     virtual
@@ -186,17 +186,17 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
                                                 );
 
 
-    vector<KKStr>        SupportVectorNames (MLClassPtr  c1,
+    std::vector<KKStr>   SupportVectorNames (MLClassPtr  c1,
                                              MLClassPtr  c2
                                             );
 
 
 
   private:
-    typedef  map<MLClassPtr     , Classifier2Ptr>      ClassClassifierIndexType;
-    typedef  pair<MLClassPtr     , Classifier2Ptr>     ClassClassifierPair;
-    typedef  multimap<Classifier2Ptr,MLClassPtr     >  ClassifierClassIndexType;
-    typedef  pair<Classifier2Ptr,MLClassPtr     >      ClassifierClassPair;
+    typedef  std::map<MLClassPtr, Classifier2Ptr>      ClassClassifierIndexType;
+    typedef  std::pair<MLClassPtr, Classifier2Ptr>     ClassClassifierPair;
+    typedef  std::multimap<Classifier2Ptr,MLClassPtr>  ClassifierClassIndexType;
+    typedef  std::pair<Classifier2Ptr,MLClassPtr>      ClassifierClassPair;
 
 
     void             BuildSubClassifierIndex ();

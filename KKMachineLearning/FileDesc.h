@@ -247,8 +247,8 @@ namespace KKMLL
                                             );
 
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 
@@ -327,7 +327,7 @@ class  XmlElementFileDesc:  public  XmlElement
     static
     void  WriteXML (const FileDesc&  fileDesc,
                     const KKStr&     varName,
-                    ostream&         o
+                    std::ostream&     o
                    );
   private:
     FileDescPtr  value;

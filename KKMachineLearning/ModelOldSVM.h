@@ -182,11 +182,11 @@ namespace KKMLL
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   kkint32           numToFind,
-                                                   MLClassPtr        c1,
-                                                   MLClassPtr        c2
-                                                  );
+    std::vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
+                                                        kkint32           numToFind,
+                                                        MLClassPtr        c1,
+                                                        MLClassPtr        c2
+                                                       );
 
 
     /**
@@ -198,11 +198,11 @@ namespace KKMLL
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    kkint32           numToFind,
-                                                    MLClassPtr        c1,
-                                                    MLClassPtr        c2
-                                                   );
+    std::vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
+                                                         kkint32           numToFind,
+                                                         MLClassPtr        c1,
+                                                         MLClassPtr        c2
+                                                        );
 
 
     /**
@@ -217,12 +217,12 @@ namespace KKMLL
                                                  bool&             newExampleCreated
                                                 );    
     
-    vector<KKStr>  SupportVectorNames ()  const;
+    std::vector<KKStr>  SupportVectorNames ()  const;
 
 
-    vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
-                                       MLClassPtr  c2
-                                      )  const;
+    std::vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
+                                            MLClassPtr  c2
+                                           )  const;
 
 
     void  RetrieveCrossProbTable (MLClassList&  classes,
@@ -252,8 +252,8 @@ namespace KKMLL
                            );
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const;
 
   private:

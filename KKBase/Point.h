@@ -5,9 +5,9 @@
 #ifndef  _POINT_
 #define  _POINT_
 
-#include  "KKBaseTypes.h"
-#include  "KKQueue.h"
-#include  "KKStr.h"
+#include "KKBaseTypes.h"
+#include "KKQueue.h"
+#include "KKStr.h"
 
 namespace KKB
 {
@@ -65,7 +65,7 @@ namespace KKB
 
   typedef  Point*  PointPtr;
 
-  typedef  vector<Point>  VectorPoint;
+  typedef  std::vector<Point>  VectorPoint;
 
 
   /**

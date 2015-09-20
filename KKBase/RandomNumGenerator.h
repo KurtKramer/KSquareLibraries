@@ -5,7 +5,7 @@
 #ifndef  _KKU_RANDOMNUMGENERATOR_
 #define  _KKU_RANDOMNUMGENERATOR_
 
-#include  "KKBaseTypes.h"
+#include "KKBaseTypes.h"
 
 namespace  KKB
 {

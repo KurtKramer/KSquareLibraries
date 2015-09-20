@@ -231,11 +231,11 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
-                                                   kkint32           numToFind,
-                                                   MLClassPtr        c1,
-                                                   MLClassPtr        c2
-                                                  );
+    std::vector<ProbNamePair>  FindWorstSupportVectors (FeatureVectorPtr  example,
+                                                        kkint32           numToFind,
+                                                        MLClassPtr        c1,
+                                                        MLClassPtr        c2
+                                                       );
 
  
     /**
@@ -247,19 +247,19 @@ typedef  struct svm_node*     XSpacePtr;
      *@param[in]  c1  Class that the 'example; parameter should have been classed as.
      *@param[in]  c2  Class that it was classified as.
      */
-    vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
-                                                    kkint32           numToFind,
-                                                    MLClassPtr        c1,
-                                                    MLClassPtr        c2
-                                                   );
+    std::vector<ProbNamePair>  FindWorstSupportVectors2 (FeatureVectorPtr  example,
+                                                         kkint32           numToFind,
+                                                         MLClassPtr        c1,
+                                                         MLClassPtr        c2
+                                                        );
 
  
-    vector<KKStr>  SupportVectorNames ()  const;
+    std::vector<KKStr>  SupportVectorNames ()  const;
 
 
-    vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
-                                       MLClassPtr  c2
-                                      )  const;
+    std::vector<KKStr>  SupportVectorNames (MLClassPtr  c1,
+                                            MLClassPtr  c2
+                                           )  const;
 
 
     /**
@@ -284,8 +284,8 @@ typedef  struct svm_node*     XSpacePtr;
                            );
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const;
 
 

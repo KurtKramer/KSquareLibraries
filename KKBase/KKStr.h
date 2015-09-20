@@ -18,7 +18,6 @@
 #include <ostream>
 #include <string>
 #include <vector>
-using namespace  std;
 
 #ifdef  WIN32
 #else
@@ -74,8 +73,8 @@ namespace  KKB
                    RunLog&         log
                   );
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
   };
 
@@ -614,8 +613,8 @@ namespace  KKB
     bool      ValidNum (double&  value)  const;  /**< Returns true if String is a valid number,  ex 1.0 or -3.123, etc */
 
 
-    void      WriteXML (const KKStr&  varName,
-                        ostream&      o
+    void      WriteXML (const KKStr&   varName,
+                        std::ostream&  o
                        )  const;
     
 
@@ -761,9 +760,9 @@ namespace  KKB
   };   /* KKStr */
 
 
-  typedef  KKStr::KKStrPtr       KKStrPtr;
-  typedef  KKStr::KKStrConstPtr  KKStrConstPtr;
-  typedef  pair<KKStr,KKStr>     KKStrPair;
+  typedef  KKStr::KKStrPtr         KKStrPtr;
+  typedef  KKStr::KKStrConstPtr    KKStrConstPtr;
+  typedef  std::pair<KKStr,KKStr>  KKStrPair;
 
 
 
@@ -924,8 +923,8 @@ namespace  KKB
                   );
 
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
     static
@@ -999,8 +998,8 @@ namespace  KKB
 
     KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
     bool  operator== (const KKStrListIndexed&  right);

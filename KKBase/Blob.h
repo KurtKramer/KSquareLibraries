@@ -74,7 +74,7 @@ namespace  KKB
    *@class BlobList
    *@brief Maintains a list of blobs.  
    */                                                                     
-  class  BlobList: public  map<kkint32,BlobPtr>
+  class  BlobList: public  std::map<kkint32,BlobPtr>
   {
   public:
     BlobList (bool  _owner);
@@ -120,10 +120,10 @@ namespace  KKB
     void  PushOnFront (BlobPtr  blob);
 
   private:
-    typedef  pair<kkint32,BlobPtr> BlobIndexPair;
+    typedef  std::pair<kkint32,BlobPtr> BlobIndexPair;
 
-    vector<BlobPtr>  availableBlobs;
-    kkint32          nextBlobId;
+    std::vector<BlobPtr>  availableBlobs;
+    kkint32               nextBlobId;
   };
 
 

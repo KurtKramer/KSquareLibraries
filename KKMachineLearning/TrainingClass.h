@@ -100,14 +100,14 @@ namespace KKMLL
 
 
     virtual  
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
     virtual
     void  WriteXML (const KKStr&  varName,
                     const KKStr&  rootDir,
-                    ostream&      o
+                    std::ostream& o
                    )  const;
 
 
@@ -175,8 +175,8 @@ namespace KKMLL
                                  RunLog&     log
                                 );
 
-    virtual void        WriteXML (const KKStr&  varName,
-                                  ostream&      o
+    virtual void        WriteXML (const KKStr&   varName,
+                                  std::ostream&  o
                                  )  const;
   private: 
     KKStr   rootDir;

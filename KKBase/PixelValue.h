@@ -6,8 +6,8 @@
 #ifndef _PIXELVALUE_
 #define _PIXELVALUE_
 
-#include  "KKBaseTypes.h"
-#include  "KKStr.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
 
 
 namespace KKB

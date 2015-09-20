@@ -207,8 +207,8 @@ namespace KKMLL
     void   UnSet (kkuint16  featureNum);
 
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 

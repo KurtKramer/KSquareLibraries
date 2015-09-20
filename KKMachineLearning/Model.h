@@ -349,15 +349,15 @@ namespace KKMLL
                            ) = 0;
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const = 0;
 
 
     /**
      *@brief  The "WriteXML" method in Derived classes call this method to include the parents classes fields in the XML data.
      */
-    void  WriteModelXMLFields (ostream&  o)  const;
+    void  WriteModelXMLFields (std::ostream&  o)  const;
 
   protected:
     void  AddErrorMsg (const KKStr&  errMsg,

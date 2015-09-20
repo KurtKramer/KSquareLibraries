@@ -85,10 +85,10 @@ namespace KKMLL
                         RunLog&       _log
                        );
 
-    NormalizationParms (FileDescPtr   _fileDesc,
-                        istream&      _in,
-                        bool&         _successfull,
-                        RunLog&       _log
+    NormalizationParms (FileDescPtr     _fileDesc,
+                        std::istream&   _in,
+                        bool&           _successfull,
+                        RunLog&         _log
                        );
 
     ~NormalizationParms ();
@@ -118,9 +118,9 @@ namespace KKMLL
                );
 
 
-    void  Read (istream&  i,
-                bool&     sucessful,
-                RunLog&   log
+    void  Read (std::istream&  i,
+                bool&          sucessful,
+                RunLog&        log
                );
 
 
@@ -139,8 +139,8 @@ namespace KKMLL
     void  Write (std::ostream&  o);
 
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 

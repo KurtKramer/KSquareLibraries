@@ -484,11 +484,11 @@ void  ClassificationBiasMatrix::ReadSimpleConfusionMatrix (istream&           sr
 
 
 
-void  ClassificationBiasMatrix::WriteXML (ostream&  o)
+void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
 {
-  o << "<ClassificationBiasMatrix>" << endl;
+  o << "<ClassificationBiasMatrix>" << std::endl;
 
-  o << "BiasFileName" << "\t" << biasFileName << endl;
+  o << "BiasFileName" << "\t" << biasFileName << std::endl;
 
   if  ((!classes)  ||  (!counts)  ||  (!probabilities))
   {
@@ -505,13 +505,13 @@ void  ClassificationBiasMatrix::WriteXML (ostream&  o)
     return;
   }
 
-  o << "NumClasses"          << "\t" << numClasses                      << endl;
-  o << "Classes"             << "\t" << classes->ToCommaDelimitedStr () << endl;
-  o << "ConfigFileName"      << "\t" << configFileName                  << endl;
-  o << "ConfigDateTime"      << "\t" << configDateTime                  << endl;
-  o << "DateTimeFileWritten" << "\t" << dateTimeFileWritten             << endl;
+  o << "NumClasses"          << "\t" << numClasses                      << std::endl;
+  o << "Classes"             << "\t" << classes->ToCommaDelimitedStr () << std::endl;
+  o << "ConfigFileName"      << "\t" << configFileName                  << std::endl;
+  o << "ConfigDateTime"      << "\t" << configDateTime                  << std::endl;
+  o << "DateTimeFileWritten" << "\t" << dateTimeFileWritten             << std::endl;
 
-  o << "<SimpleConfusionMatrix>" << endl;
+  o << "<SimpleConfusionMatrix>" << std::endl;
   for  (kkint32 rowIdx = 0;  rowIdx < numClasses;  rowIdx++)
   {
     o << "DataRow"                  << "\t" 
@@ -523,12 +523,12 @@ void  ClassificationBiasMatrix::WriteXML (ostream&  o)
         o << ",";
       o << ((*counts)[rowIdx][colIdx]) << ":" << StrFormatDouble ((*probabilities)[rowIdx][colIdx], "ZZ0.0000");
     }
-    o << endl;
+    o << std::endl;
   }
 
-  o << "</SimpleConfusionMatrix>" << endl;
+  o << "</SimpleConfusionMatrix>" << std::endl;
 
-  o << "</ClassificationBiasMatrix>"  << endl;
+  o << "</ClassificationBiasMatrix>"  << std::endl;
 
 }  /* WriteXML */
 

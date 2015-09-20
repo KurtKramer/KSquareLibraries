@@ -46,7 +46,6 @@
 #include <algorithm>
 #include <functional>
 #include <iostream>
-using namespace  std;
 
 
 #include "KKBaseTypes.h"

@@ -8,15 +8,13 @@
 #ifndef  _DATETIME_
 #define  _DATETIME_
 
-#include  "KKStr.h"
+#include "KKStr.h"
 
 /**
  * @file  DateTime.h
  * @brief  Their are three classes in this file meant to represent  Date, Time, and DateTime called
  *         DateType, TimeType, and DateTimeType.
  */
-
-
 
 
 namespace  KKB  

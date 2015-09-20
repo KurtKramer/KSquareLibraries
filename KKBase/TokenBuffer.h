@@ -60,7 +60,7 @@ namespace  KKB
   class  TokenBufferStream: public TokenBuffer
   {
   public:
-    TokenBufferStream (istream*  _in);
+    TokenBufferStream (std::istream*  _in);
 
     TokenBufferStream (const KKStr&  _fileName);
 
@@ -76,10 +76,10 @@ namespace  KKB
     virtual char  PeekNextChar ();
 
   private:
-    bool       endOfFile;
-    KKStr      fileName;
-    ifstream*  fileStream;
-    istream*   in;
+    bool            endOfFile;
+    KKStr           fileName;
+    std::ifstream*  fileStream;
+    std::istream*   in;
   };  /* TokenBufferStream */
 
   

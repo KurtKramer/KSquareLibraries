@@ -49,7 +49,7 @@ namespace KKMLL
   AttributeType  operator++(AttributeType  zed);
 
 
-  class  AttributeTypeVector: public  vector<AttributeType>
+  class  AttributeTypeVector: public  std::vector<AttributeType>
   {
   public:
     AttributeTypeVector ();
@@ -61,8 +61,8 @@ namespace KKMLL
                    RunLog&         log
                   );
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
   };  /* AttributeTypeVector */
@@ -132,8 +132,8 @@ namespace KKMLL
 
     KKStr          TypeStr () const;
 
-    void           WriteXML (const KKStr&  varName,
-                             ostream&      o
+    void           WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const;
 
     Attribute&     operator= (const Attribute&  right);
@@ -186,8 +186,8 @@ namespace KKMLL
                   );
 
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
  
     /**

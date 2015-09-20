@@ -177,7 +177,7 @@ namespace KKMLL
 
     static  bool  atExitDefined;
 
-    typedef  map<KKStr,FactoryFVProducerPtr>  FactoryMap;
+    typedef  std::map<KKStr,FactoryFVProducerPtr>  FactoryMap;
     static  FactoryMap*  factories;
   };  /* FactoryFVProducer */
 

@@ -88,8 +88,8 @@ namespace  KKB
      * be the 'TrainingProcess2' class requiring to add a XmlElement factory for 'Model' derived classes. These 
      * Factory derived classes would contain a cancelFlag reference that they pass in the constructor to all 
      */
-    VectorKKStr                    endOfElementTagNames;
-    vector<XmlFactoryManagerPtr>   factoryManagers;
+    VectorKKStr                         endOfElementTagNames;
+    std::vector<XmlFactoryManagerPtr>   factoryManagers;
 
 
     bool             endOfElemenReached;
@@ -158,8 +158,8 @@ namespace  KKB
   private:
     void  DeleteFromNameIndex (XmlAttributePtr a);
 
-    typedef  multimap<KKStr,XmlAttributePtr>   NameIndex;
-    typedef  pair<KKStr,XmlAttributePtr>       NameIndexPair;
+    typedef  std::multimap<KKStr,XmlAttributePtr>   NameIndex;
+    typedef  std::pair<KKStr,XmlAttributePtr>       NameIndexPair;
     NameIndex  nameIndex;
   };  /* XmlAttributeList */
 
@@ -184,7 +184,7 @@ namespace  KKB
      *@details It sis assumed that the next character read from the input stream "i" will be '<'; if not then it is assumed that the next 
      * character is the one immediately following the '<'.
      */
-    XmlTag (istream&  i);
+    XmlTag (std::istream&  i);
 
     const KKStr&  Name ()           const  {return  name;}
     TagTypes      TagType ()        const  {return  tagType;}
@@ -228,7 +228,7 @@ namespace  KKB
 
     KKStr  ToString ()  const;
 
-    void  WriteXML (ostream& o);
+    void  WriteXML (std::ostream& o);
 
   private:
     KKStr             name;
@@ -338,8 +338,8 @@ namespace  KKB
     KKStrPtr        TakeOwnership ();
 
     static
-    void  WriteXml (const KKStr&  s,
-                    ostream&      o
+    void  WriteXml (const KKStr&   s,
+                    std::ostream&  o
                    );
 
   private:
@@ -370,8 +370,8 @@ namespace  KKB
     XmlFactory*  FactoryLookUp (const KKStr&  className)  const;
 
   private:
-    map<KKStr, XmlFactory*>  factories;
-    KKStr                    name;
+    std::map<KKStr, XmlFactory*>  factories;
+    KKStr                         name;
   };  /* XmlFactoryManager */
 
   typedef  XmlFactoryManager*  XmlFactoryManagerPtr;
@@ -452,9 +452,9 @@ namespace  KKB
     }
 
     static
-    void  WriteXML (const T&      t,
-                    const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const T&       t,
+                    const KKStr&   varName,
+                    std::ostream&  o
                    )
     {
       t.WriteXML (varName, o);
@@ -485,13 +485,13 @@ namespace  KKB
                 
     virtual  ~XmlElementUnKnown ();
 
-    deque<XmlTokenPtr>*  Value () const  {return  value;}
+    std::deque<XmlTokenPtr>*  Value () const  {return  value;}
 
-    deque<XmlTokenPtr>*  TakeOwnership ();
+    std::deque<XmlTokenPtr>*  TakeOwnership ();
 
 
   private:
-    deque<XmlTokenPtr>*  value;  
+    std::deque<XmlTokenPtr>*  value;
   };
   typedef  XmlElementUnKnown*  XmlElementUnKnownPtr;
 
@@ -512,9 +512,9 @@ namespace  KKB
     bool  Value ()  const;
 
     static
-    void  WriteXML (const bool    b,
-                    const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const bool     b,
+                    const KKStr&   varName,
+                    std::ostream&  o
                    );
 
     virtual  bool     ToBool   () const {return  value;}
@@ -549,7 +549,7 @@ namespace  KKB
     static
     void  WriteXML (const DateTime&  d,
                     const KKStr&     varName,
-                    ostream&         o
+                    std::ostream&    o
                    );
 
     virtual  bool     ToBool   () const {return  (value.Seconds () > 0);}
@@ -590,9 +590,9 @@ namespace  KKB
                 
     virtual  ~XmlElementKeyValuePairs ();
 
-    vector<pair<KKStr,KKStr> >*  Value ()  const  {return value;}
+    std::vector<std::pair<KKStr,KKStr> >*  Value ()  const  {return value;}
 
-    vector<pair<KKStr,KKStr> >*  TakeOwnership ();
+    std::vector<std::pair<KKStr,KKStr> >*  TakeOwnership ();
 
     void  Add (const KKStr&  key,
                const KKStr&  v
@@ -618,12 +618,12 @@ namespace  KKB
                const KKB::DateTime&  v
               );
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    );
 
   private:
-    vector<pair<KKStr,KKStr> >*  value;
+    std::vector<std::pair<KKStr,KKStr> >*  value;
   };  /* XmlElementKeyValuePairs */
 
   typedef  XmlElementKeyValuePairs*  XmlElementKeyValuePairsPtr;
@@ -657,7 +657,7 @@ namespace  KKB
                     const kkint32*  widths,      /**< Each entry in array defines the length of the corresponding row in 'mat'.  */ 
                     float** const   mat,
                     const KKStr&    varName,
-                    ostream&        o 
+                    std::ostream&   o
                    );
 
 
@@ -800,9 +800,9 @@ namespace  KKB
     T  Value ()  const  {return value;}                     \
                                                             \
     static                                                  \
-    void  WriteXML (T             d,                        \
-                    const KKStr&  varName,                  \
-                    ostream&      o                         \
+    void  WriteXML (T              d,                       \
+                    const KKStr&   varName,                 \
+                    std::ostream&  o                        \
                    );                                       \
                                                             \
     virtual  bool     ToBool   () const;                    \
@@ -840,7 +840,7 @@ namespace  KKB
     void  WriteXML (kkuint32       count,                          \
                     const T*       d,                              \
                     const KKStr&   varName,                        \
-                    ostream&       o                               \
+                    std::ostream&  o                               \
                    );                                              \
                                                                    \
   private:                                                         \
@@ -869,11 +869,11 @@ namespace  KKB
     T**   TakeOwnership ();                                        \
                                                                    \
     static                                                         \
-    void  WriteXML (kkuint32      height,                          \
-                    kkuint32      width,                           \
-                    T** const     mat,                             \
-                    const KKStr&  varName,                         \
-                    ostream&      o                                \
+    void  WriteXML (kkuint32       height,                         \
+                    kkuint32       width,                          \
+                    T** const      mat,                            \
+                    const KKStr&   varName,                        \
+                    std::ostream&  o                               \
                    );                                              \
                                                                    \
   private:                                                         \
@@ -901,18 +901,18 @@ namespace  KKB
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \
                                                                    \
-    vector<T>*  const  Value ()  const {return value;}             \
+    std::vector<T>*  const  Value ()  const {return value;}        \
                                                                    \
-    vector<T>*  TakeOwnership ();                                  \
+    std::vector<T>*  TakeOwnership ();                             \
                                                                    \
     static                                                         \
-    void  WriteXML (const vector<##T>&  d,                         \
+    void  WriteXML (const std::vector<##T>&  d,                    \
                     const KKStr&        varName,                   \
-                    ostream&            o                          \
+                    std::ostream&       o                          \
                    );                                              \
                                                                    \
   private:                                                         \
-    vector<T>*  value;                                             \
+    std::vector<T>*  value;                                        \
   };                                                               \
   typedef  XmlElement##TypeName*   XmlElement##TypeName##Ptr;
 

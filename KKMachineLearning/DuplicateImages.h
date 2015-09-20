@@ -96,10 +96,10 @@ namespace KKMLL
 
     void                   PurgeDuplicates (FeatureVectorListPtr  examples,
                                             bool                  allowDupsInSameClass,
-                                            ostream*              report
+                                            std::ostream*         report
                                            );  /**<  if not equal NULL will list examples being purged. */
 
-    void                   ReportDuplicates (ostream&  o);
+    void                   ReportDuplicates (std::ostream&  o);
 
 
   private:

@@ -51,7 +51,7 @@ namespace KKMLL
     void  PushOnBack  (ClassStatisticPtr  stat);
     void  PushOnFront (ClassStatisticPtr  stat);
 
-    void  PrintReport (ostream& r);
+    void  PrintReport (std::ostream& r);
 
     kkint32 operator[]  (MLClassPtr  mlClass);
     const  ClassStatisticList&  operator+= (const ClassStatisticList&  right);

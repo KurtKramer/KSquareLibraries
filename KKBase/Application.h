@@ -143,9 +143,9 @@ namespace KKB
     RunLog&     log;  
 
   private:
-    vector<KKStrPair>  expandedParameterPairs;
-    KKStr              logFileName;
-    RunLogPtr          ourLog;  // We use this Log file if one is not provided,
+    std::vector<KKStrPair>  expandedParameterPairs;
+    KKStr                   logFileName;
+    RunLogPtr               ourLog;  // We use this Log file if one is not provided,
   };  /* Application */
 }  /* NameSpace KKB */
 

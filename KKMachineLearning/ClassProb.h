@@ -11,8 +11,6 @@
 #include "KKQueue.h"
 #include "KKStr.h"
 
-using namespace KKB;
-
 
 namespace KKMLL
 {
@@ -119,18 +117,18 @@ namespace KKMLL
                    RunLog&         log
                   );
 
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 
 
     static
-      ClassProbListPtr  CreateFromXMLStream (istream& i);
+      ClassProbListPtr  CreateFromXMLStream (std::istream& i);
 
   private:
-    typedef  map<MLClassPtr,ClassProbPtr>   MLClassIndexType;
-    typedef  pair<MLClassPtr,ClassProbPtr>  MLClassIndexPair;
+    typedef  std::map<MLClassPtr,ClassProbPtr>   MLClassIndexType;
+    typedef  std::pair<MLClassPtr,ClassProbPtr>  MLClassIndexPair;
 
     static bool  CompairByClassName (const ClassProbPtr left, const ClassProbPtr right);
 

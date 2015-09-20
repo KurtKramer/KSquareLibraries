@@ -52,8 +52,8 @@ namespace KKMLL
   class  MLClass 
   {
   private:
-    static  MLClassListPtr   existingMLClasses;
-    static  map<MLClassListPtr,MLClassListPtr>  existingClassLists;
+    static  MLClassListPtr                           existingMLClasses;
+    static  std::map<MLClassListPtr,MLClassListPtr>  existingClassLists;
 
     static  void  AddImageClassList    (MLClassListPtr  list);
     static  void  DeleteImageClassList (MLClassListPtr  list);
@@ -183,8 +183,8 @@ namespace KKMLL
     bool            UnDefined ()  const  {return  unDefined;}
     void            UnDefined (bool _unDefined)  {unDefined = _unDefined;}
 
-    void            WriteXML (const KKStr&  varName,
-                              ostream&      o
+    void            WriteXML (const KKStr&   varName,
+                              std::ostream&  o
                              )  const;
   private:
     kkint32         classId;      /**< From MySQL table  Classes, '-1' indicates that not loaded from table.                        */
@@ -376,8 +376,8 @@ namespace KKMLL
 
     KKStr       ToCommaDelimitedQuotedStr ()  const;
 
-    void        WriteXML (const KKStr&  varName,
-                          ostream&      o
+    void        WriteXML (const KKStr&   varName,
+                          std::ostream&  o
                          )  const;
     
     bool        operator== (const MLClassList&  right)  const;
@@ -407,7 +407,7 @@ namespace KKMLL
                              bool&          successful
                             );
 
-    typedef  map<KKStr,MLClassPtr>     NameIndex;
+    typedef  std::map<KKStr,MLClassPtr>   NameIndex;
     NameIndex     nameIndex;
 
     /**
@@ -457,7 +457,7 @@ namespace KKMLL
    *@see KKMLL::Model
    *@see KKMLL::FeatureEncoder2::compress
    */
-  class  MLClassIndexList: public  map<MLClassPtr, kkint16>
+  class  MLClassIndexList: public  std::map<MLClassPtr, kkint16>
   {
   public:
     typedef  MLClassIndexList*  MLClassIndexListPtr;
@@ -521,14 +521,14 @@ namespace KKMLL
 
 
     virtual
-    void  WriteXML (const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const KKStr&   varName,
+                    std::ostream&  o
                    )  const;
 
 
   private:
-    map<kkint16, MLClassPtr>  shortIdx;
-    kkint16                   largestIndex;   /**< largest index used so far. */
+    std::map<kkint16, MLClassPtr>  shortIdx;
+    kkint16                        largestIndex;   /**< largest index used so far. */
   };  /* MLClassIndexList */
 
   typedef  MLClassIndexList::MLClassIndexListPtr  MLClassIndexListPtr;
@@ -563,7 +563,7 @@ namespace KKMLL
     static
     void  WriteXML (const MLClass&  mlClass,
                     const KKStr&    varName,
-                    ostream&        o
+                    std::ostream&   o
                    );
   private:
     MLClassPtr  value;
@@ -593,7 +593,7 @@ namespace KKMLL
     static
     void  WriteXML (const MLClassList&  mlClassList,
                     const KKStr&        varName,
-                    ostream&            o
+                    std::ostream&       o
                    );
   private:
     MLClassListPtr  value;

@@ -26,7 +26,7 @@
 
 #include <fstream>
 
-#include  "KKBaseTypes.h"
+#include "KKBaseTypes.h"
 
 namespace  KKB
 {

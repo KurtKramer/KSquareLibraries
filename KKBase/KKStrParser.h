@@ -6,7 +6,7 @@
 #define  _KKSTRPARSER_
 
 #include  "DateTime.h"
-#include  "KKStr.h"
+#include "KKStr.h"
 
 
 namespace KKB 

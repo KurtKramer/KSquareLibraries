@@ -314,7 +314,7 @@ namespace KKMLL
 
     virtual void           Save (const KKStr& fileName)  const;
 
-    virtual void           Save (ostream&  o)  const;
+    virtual void           Save (std::ostream&  o)  const;
 
     void                   SetFeatureNums (const  FeatureNumList&  features);
 
@@ -343,8 +343,8 @@ namespace KKMLL
 
     static  KKStr          GetEffectiveConfigFileName (const  KKStr&  configFileName);
 
-    void                   WriteXML (const KKStr&  varName,
-                                     ostream&      o
+    void                   WriteXML (const KKStr&   varName,
+                                     std::ostream&  o
                                     )  const;
 
 
@@ -365,7 +365,7 @@ namespace KKMLL
      *@brief  To be used by both Base Class and Derived classes to write fields that are 
      specific to 'TrainingConfiguration2'.
      */
-    void                   WriteXMLFields (ostream& o)  const;
+    void                   WriteXMLFields (std::ostream& o)  const;
 
 
   private:
@@ -532,7 +532,7 @@ namespace KKMLL
                                 );
   
   private:
-    static map<KKStr,Factory*>*  registeredFactories;
+    static std::map<KKStr,Factory*>*  registeredFactories;
     
     static  void  FinalCleanUp ();
 

@@ -5,9 +5,8 @@
 #if  !defined(_KKU_MSGQUEUE_)
 #define  _KKU_MSGQUEUE_
 #include <queue>
-using namespace  std;
 
-#include  "GoalKeeperSimple.h"
+#include "GoalKeeperSimple.h"
 
 namespace KKB
 {

@@ -156,15 +156,15 @@ namespace KKMLL
                            ) = 0;
 
 
-    virtual  void  WriteXML (const KKStr&  varName,
-                             ostream&      o
+    virtual  void  WriteXML (const KKStr&   varName,
+                             std::ostream&  o
                             )  const = 0;
 
 
     /**  @brief  Will process any tokens that belong to 'ModelParam' and return NULL ones that are not will be passed back. */
     XmlTokenPtr  ReadXMLModelParamToken (XmlTokenPtr  t);
 
-    void  WriteXMLFields (ostream&  o)  const;
+    void  WriteXMLFields (std::ostream&  o)  const;
 
 
   private:
@@ -280,9 +280,9 @@ namespace KKMLL
     }
 
     static
-    void  WriteXML (const T&      t,
-                    const KKStr&  varName,
-                    ostream&      o
+    void  WriteXML (const T&       t,
+                    const KKStr&   varName,
+                    std::ostream&  o
                    )
     {
       dynamic_cast<T>(t).WriteXML (varName, o);
