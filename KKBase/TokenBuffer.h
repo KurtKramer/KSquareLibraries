@@ -5,7 +5,7 @@
 #ifndef _TOKENBUFFER_
 #define _TOKENBUFFER_
 
-#include  "KKStr.h"
+#include "KKStr.h"
 
 namespace  KKB
 {
@@ -50,9 +50,8 @@ namespace  KKB
     virtual void  UnGetNextChar ();
 
   private:
-    KKStr  buff;
-
-    kkint32  nextCharPos;
+    KKStr     buff;
+    kkuint32  nextCharPos;
   };
 
 

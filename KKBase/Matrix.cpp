@@ -989,7 +989,7 @@ double   Matrix::Determinant ()
     delete  mat[r];
     mat[r] = NULL;
   }
-  delete  mat;
+  delete[]  mat;
   mat = NULL;
 	return (det);
 }  /* Determinant */
@@ -1061,12 +1061,12 @@ MatrixPtr  Matrix::Covariance ()  const
 
   for  (col = 0;  col < numOfCols;  col++)
   {
-    delete  centeredVals[col];
+    delete[]  centeredVals[col];
     centeredVals[col] = NULL;
   }
-  delete  centeredVals;   centeredVals = NULL;
-  delete  means;          means  = NULL;
-  delete  totals;         totals = NULL;
+  delete[]  centeredVals;   centeredVals = NULL;
+  delete[]  means;          means  = NULL;
+  delete[]  totals;         totals = NULL;
 
   return  covariances;
 }  /* Covariance */
@@ -1292,7 +1292,7 @@ kkint32  Matrix::Tqli (double*  d,
         if  (iter == 100)
         {
           cerr << std::endl << std::endl
-               << "EigenVector::tqli    **** ERROR ****            To many iterations in tqli" << std::endl
+               << "Matrix::tqli    **** ERROR ****            To many iterations in tqli" << std::endl
                << std::endl;
           //osWaitForEnter ();
           //exit (-1);

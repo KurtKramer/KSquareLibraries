@@ -18,6 +18,7 @@ using namespace std;
 
 #include "EigenVector.h"
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "OSservices.h"
 using namespace KKB;
 
@@ -33,7 +34,8 @@ void  KKB::Tred2 (kkint32   n,
                   double*   e
                  )
 {
-  kkint32  i, j, k, l;
+  if ((n < 1) || (n > 2))
+    throw KKException("KKB::Tred2  n:" + StrFromInt32(n) + " out of range of 1 thru 2");  kkint32  i, j, k, l;
 
   double  scale, hh, h, g, f;
 
@@ -193,6 +195,9 @@ void  KKB::tqli (kkint32   n,
                  double    z[2][2]
                 )
 {
+  if  ((n < 1)  ||  (n > 2))
+    throw KKException ("KKB::tqli  n:" + StrFromInt32(n) + " out of range of 1 thru 2");
+
   kkint32  m, l, iter, i, k;
   double  s, r, p,g, f, dd, c, b;
 

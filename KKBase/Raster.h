@@ -68,6 +68,9 @@ namespace KKB
     Blue
   };
 
+  KKStr          ColorChannelToKKStr   (ColorChannels  c);
+  ColorChannels  ColorChannelFromKKStr (const KKStr&   s);
+
 
   class  RasterList;
   typedef  RasterList*  RasterListPtr;

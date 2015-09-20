@@ -68,23 +68,26 @@ void   SegmentorOTSU::LabelRaster (RasterPtr  result,
                                    RasterPtr  srcImage
                                   )
 {
-  uchar*  maskArea = NULL;
-  uchar   maskTh   = 0;
+  uchar*  resultArea = result->GreenArea();
+  uchar*  srcArea    = srcImage->GreenArea();
+  kkint32 totPixels  = srcImage->TotPixels();
   if  (mask)
   {
-    maskArea = mask->GreenArea ();
-    maskTh   = mask->BackgroundPixelTH ();
-  }
-
-  uchar*  resultArea = result->GreenArea ();
-  uchar*  srcArea    = srcImage->GreenArea ();
-  kkint32 totPixels  = srcImage->TotPixels ();
-  for  (kkint32  x = 0;  x < totPixels;  ++x)
-  {
-    if  ((srcArea[x] == pixelValue)  &&  (maskArea[x] > maskTh))
+    uchar*  maskArea = mask->GreenArea ();
+    uchar   maskTh   = mask->BackgroundPixelTH ();
+    for (kkint32 x = 0; x < totPixels; ++x)
     {
-      resultArea[x] = label;
+      if ((srcArea[x] == pixelValue) && (maskArea[x] > maskTh))
+      {
+        resultArea[x] = label;
+      }
     }
+  }
+  else
+  {
+    for  (kkint32  x = 0;  x < totPixels;  ++x)
+      if  (srcArea[x] == pixelValue)
+        resultArea[x] = label;
   }
 }  /* LabelRaster */
 

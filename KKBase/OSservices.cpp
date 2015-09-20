@@ -199,13 +199,11 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
     else
       return false;
   }
-
  
   bool  lastFieldAStar = false;
 
   const char*  cp = fileName.Str ();
-  kkint32      lenLeftToCheck = fileName.Len ();
-
+  kkuint32     lenLeftToCheck = fileName.Len ();
 
   kkint32  fieldNum;
 
@@ -232,12 +230,15 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
             matchFound = true;
             // lets move cp beyond where we found field in fileName
             cp = cp + field.Len ();
-            lenLeftToCheck = lenLeftToCheck - field.Len ();
+            if  (field.Len() > lenLeftToCheck)
+              lenLeftToCheck = 0;
+            else
+              lenLeftToCheck = lenLeftToCheck - field.Len ();
           }
           else
           {
-            cp++;
-            lenLeftToCheck--;
+            ++cp;
+            --lenLeftToCheck;
           }
         }
 
@@ -473,11 +474,12 @@ KKStrListPtr  KKB::osValidFileNameErrors (const KKStr&  _name)
   else
   {
     // Check for invalid names.
-    kkint32  x = 0;
+    kkuint32  x = 0;
     while  (invalidNames[x] != NULL)
     {
       if  (_name.EqualIgnoreCase (invalidNames[x]))
         errors->PushOnBack (new KKStr ("Can not use \"" + _name + "\""));
+      ++x;
     }
 
     // Check for invalid characters
@@ -2490,22 +2492,19 @@ KKStr  KKB::osReadNextToken (FILE*       in,
 
 
 
-KKStr   KKB::osReadRestOfLine (std::istream&  in,
-                               bool&          eof
-                              )
+KKStrPtr   KKB::osReadRestOfLine (std::istream&  in,
+                                  bool&          eof
+                                 )
 {
   eof = false;
-
-  char  line[20480];
-  kkint32  maxLineLen = sizeof (line) - 1;
 
   kkint32  ch = in.get ();  
   eof = in.eof ();
 
   if  (eof)
-    return "";
+    return NULL;
 
-  kkint32 lineLen = 0;
+  KKStrPtr  result = new KKStr (1024);
 
   // Read till first delimiter or eof
   while  (!eof)
@@ -2516,49 +2515,33 @@ KKStr   KKB::osReadRestOfLine (std::istream&  in,
     }
     else
     {
-      line[lineLen] = ch;
-      lineLen++;
-      
-      if  (lineLen >= maxLineLen)
+      result->Append (ch);
+      if  (result->Len () >= (result->MaxLenSupported ()))
         break;
-
       ch = in.get ();  eof = in.eof ();
     }
   }
 
-  line[lineLen] = 0;  // Terminating NULL character.
+  result->Trim (" \n\r");
 
-
-  // Remove Trailing whitespace
-  while  (lineLen > 0)
-  {
-    if  (strchr (" \r\n", line[lineLen - 1]) == 0)
-      break;
-    lineLen--;
-    line[lineLen] = 0;
-  }
-
-  return  line;
+  return  result;
 }  /* osReadRestOfLine */
 
 
 
 
-KKStr  KKB::osReadRestOfLine (FILE*  in,
-                              bool&  eof
-                             )
+KKStrPtr  KKB::osReadRestOfLine (FILE*  in,
+                                 bool&  eof
+                                )
 {
   eof = false;
 
-  char  line[20480];
-  kkint32  maxLineLen = sizeof (line) - 1;
-
   kkint32  ch = fgetc (in);  
   eof = (feof (in) != 0);
-  if  (eof)  return "";
+  if  (eof)  
+    return NULL;
 
-  kkint32 lineLen = 0;
-
+  KKStrPtr  result = new KKStr(1024);
   // Read till first delimiter or eof
   while  (!eof)
   {
@@ -2568,29 +2551,17 @@ KKStr  KKB::osReadRestOfLine (FILE*  in,
     }
     else
     {
-      line[lineLen] = ch;
-      lineLen++;
-      if  (lineLen >= maxLineLen)
+      result->Append (ch);
+      if  (result->Len () >= result->MaxLenSupported ())
         break;
       ch = fgetc (in);  eof = (feof (in) != 0);
     }
   }
-  line[lineLen] = 0;  // Terminating NULL character.
 
-  // Remove Trailing whitespace
-  while  (lineLen > 0)
-  {
-    if  (strchr (" \r\n", line[lineLen - 1]) == 0)
-      break;
-    lineLen--;
-    line[lineLen] = 0;
-  }
+  result->TrimRight (" \r\n");
 
-  return  line;
+  return  result;
 }  /* osReadRestOfLine */
-
-
-
 
 
 
@@ -2736,7 +2707,8 @@ void  KKB::osSkipRestOfLine (std::istream&  in,
 kkint32  KKB::osGetProcessId ()
 {
 #ifdef  WIN32
-  DWORD WINAPI  processId = GetCurrentProcessId ();
+  //DWORD WINAPI  processId = GetCurrentProcessId ();
+  DWORD processId = GetCurrentProcessId();
   return  processId;
 
 #else
@@ -2751,7 +2723,8 @@ kkint32  KKB::osGetProcessId ()
 kkint32  KKB::osGetThreadId ()
 {
 #ifdef  WIN32
-  DWORD WINAPI threadId = GetCurrentThreadId ();
+  //DWORD WINAPI threadId = GetCurrentThreadId ();
+  DWORD threadId = GetCurrentThreadId();
   return  threadId;
 #else
   return 0;
@@ -2799,7 +2772,7 @@ VectorKKStr  KKB::osSplitDirectoryPathIntoParts (const KKStr&  path)
   if  (path.Len () == 0)
     return parts;
 
-  kkint32  zed = 0;
+  kkuint32  zed = 0;
 
   if  (path[(kkuint16)1] == ':')
   {

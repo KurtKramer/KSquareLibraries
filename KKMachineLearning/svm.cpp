@@ -233,6 +233,7 @@ void  SvmModel233::WriteXML (const KKStr&  varName,
 
 void  SvmModel233::ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            )
 {
@@ -252,7 +253,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
   valid = true;
 
   XmlTokenPtr  t = NULL;
-  while  (!errorsFound)
+  while  ((!errorsFound)  &&  (!cancelFlag))
   {
     if  (t != NULL)
     {
@@ -267,7 +268,12 @@ void  SvmModel233::ReadXML (XmlStream&      s,
       }
     }
 
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
+    if  (cancelFlag)
+    {
+      delete  t;
+      t = NULL:
+    }
     if  (!t)  break;
 
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
@@ -476,7 +482,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     }
   }
 
-  valid = !errorsFound;
+  valid = (!errorsFound)  &&  (!cancelFlag);
 }  /* ReadXML */
 
 

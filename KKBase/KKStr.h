@@ -70,6 +70,7 @@ namespace  KKB
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 
@@ -90,7 +91,7 @@ namespace  KKB
     class  LessCaseInsensitiveOperator;  /**< To be used by templates as the Pred operator. */
 
   private:
-    static  const  kkuint32  StrIntMax;
+    static  const  kkuint32  KKStrIntMax;
 
     kkuint16  allocatedSize;
     kkuint16  len;
@@ -382,9 +383,11 @@ namespace  KKB
      */
     bool     ExtractTokenBool (const char* delStr);
 
-    char     FirstChar () const;                             /**< @brief Returns the first character in the string; if the string is empty returns 0. */
+    char     FirstChar () const;                             /**< Returns the first character in the string; if the string is empty returns 0. */
 
-    kkint32  InstancesOfChar (char ch)  const;               /**< @brief Returns the number of instances of 'ch' in the string. */
+    void     FreeUpUnUsedSpace ();                           /**< Alloocated space s significanly larger than length of string will reallocate to free up unused space. */
+
+    kkint32  InstancesOfChar (char ch)  const;               /**< Returns the number of instances of 'ch' in the string. */
 
     /**
      *@brief Returns a quoted version of string where special characters Line-Feed, Carriage Return,
@@ -395,7 +398,7 @@ namespace  KKB
      */
     KKStr    QuotedStr ()  const;   
 
-    char     LastChar ()  const;                             /**< @brief Returns the last character in the string but if the string is empty returns 0. */
+    char     LastChar ()  const;                             /**< Returns the last character in the string but if the string is empty returns 0. */
 
     /**
      *@brief   pads the string with enough 'ch' characters on the left side until the string is
@@ -407,7 +410,7 @@ namespace  KKB
                       uchar ch = ' '
                      );
 
-    kkint32  Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
+    kkuint32 Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
 
     kkint32  LocateCharacter (char  ch) const;               /**< @brief Returns index of 1st occurrence of 'ch' otherwise -1.             */
 
@@ -419,11 +422,13 @@ namespace  KKB
 
     kkint32  LocateStr (const KKStr&  searchStr)  const;     /**< @brief Returns index of 1st occurrence of 'searchStr' otherwise -1.      */
 
-    void     LopOff (kkint32 lastCharPos);                     /**< @brief Trims off all characters after the 'lastCharPos' index; to make an empty string you would have to specify -1. */
+    void     LopOff (kkint32 lastCharPos);                   /**< @brief Trims off all characters after the 'lastCharPos' index; to make an empty string you would have to specify -1. */
 
     void     Lower ();                                       /**< @brief Make all characters in the String into lower case. */
 
-    KKStr    MaxLen (kkint32  maxLen)  const;
+    KKStr    MaxLen (kkuint32  maxLen)  const;                /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
+
+    kkuint32 MaxLenSupported ()  const;                      /**< Returns the maximum String Length that this string can support. */
 
     kkint32  MemoryConsumedEstimated () const;
 
@@ -472,6 +477,7 @@ namespace  KKB
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 
@@ -919,6 +925,7 @@ namespace  KKB
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 
@@ -990,6 +997,7 @@ namespace  KKB
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 

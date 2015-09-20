@@ -324,8 +324,8 @@ RasterPtr  Histogram::CreateGraph ()  const
     col += (barWidth + interBarWidth);
   }  
 
-  delete  peakBarLines;
-  delete  vertGridLines;
+  delete[]  peakBarLines;
+  delete[]  vertGridLines;
 
   graph->ReverseImage ();
 
@@ -494,8 +494,8 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
     col += (barWidth + interBarWidth);
   }  
 
-  delete  peakBarLines;
-  delete  vertGridLines;
+  delete[]  peakBarLines;
+  delete[]  vertGridLines;
 
   graph->ReverseImage ();
 
@@ -880,7 +880,7 @@ HistogramPtr  Histogram::Equalized ()
   newHist->totalVal   = totalVal;
 
 
-  delete  histSumTable;
+  delete[]  histSumTable;
 
   return  newHist;
 } /* Equalize */

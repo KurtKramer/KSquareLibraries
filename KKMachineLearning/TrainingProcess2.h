@@ -336,6 +336,7 @@ namespace KKMLL
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            );
 

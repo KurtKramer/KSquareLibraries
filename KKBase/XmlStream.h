@@ -50,10 +50,10 @@ namespace  KKB
 
     virtual  ~XmlStream ();
 
-    virtual  XmlTokenPtr  GetNextToken (RunLog&  log);     /**< Will return either a XmlElement or a XmlContent which ever is next. 
-                                                            * If we are at the end of the element then NULL will be returned,
-                                                            */
-
+    /** Will return either a XmlElement or a XmlContent which ever is next; If we are at the end of the element then NULL will be returned. */
+    virtual  XmlTokenPtr  GetNextToken (VolConstBool&  cancelFlag,
+                                        RunLog&        log
+                                       ); 
 
     virtual  XmlContentPtr  GetNextContent (RunLog& log);  /**< Will return any content that may exist before the next tag; if 
                                                             * there is no content before the next tag will return NULL
@@ -388,9 +388,10 @@ namespace  KKB
 
     virtual  const KKStr&  ClassName ()  const  {return className;}
 
-    virtual  XmlElementPtr  ManufatureXmlElement (XmlTagPtr   tag,
-                                                  XmlStream&  s,
-                                                  RunLog&     log
+    virtual  XmlElementPtr  ManufatureXmlElement (XmlTagPtr      tag,
+                                                  XmlStream&     s,
+                                                  VolConstBool&  cancelFlag,
+                                                  RunLog&        log
                                                  ) = 0;
       
     static  XmlFactory*  FactoryLookUp (const KKStr&  className);
@@ -424,15 +425,16 @@ namespace  KKB
   class  XmlElementTemplate:  public  XmlElement
   {
   public:
-    XmlElementTemplate (XmlTagPtr   tag,
-                        XmlStream&  s,
-                        RunLog&     log
+    XmlElementTemplate (XmlTagPtr      tag,
+                        XmlStream&     s,
+                        VolConstBool&  cancelFlag,
+                        RunLog&        log
                        ):
      XmlElement (tag, s, log),
      value (NULL)
     {
       value = new T();
-      value->ReadXML (s, tag, log);
+      value->ReadXML (s, tag, cancelFlag, log);
     }
 
                 
@@ -478,9 +480,10 @@ namespace  KKB
   class  XmlElementUnKnown:  public  XmlElement
   {
   public:
-    XmlElementUnKnown (XmlTagPtr   tag,
-                       XmlStream&  s,
-                       RunLog&     log
+    XmlElementUnKnown (XmlTagPtr      tag,
+                       XmlStream&     s,
+                       VolConstBool&  cancelFlag,
+                       RunLog&        log
                      );
                 
     virtual  ~XmlElementUnKnown ();
@@ -502,9 +505,10 @@ namespace  KKB
   class  XmlElementBool:  public  XmlElement
   {
   public:
-    XmlElementBool (XmlTagPtr   tag,
-                    XmlStream&  s,
-                    RunLog&     log
+    XmlElementBool (XmlTagPtr      tag,
+                    XmlStream&     s,
+                    VolConstBool&  cancelFlag, 
+                    RunLog&        log
                    );
                 
     virtual  ~XmlElementBool ();
@@ -537,9 +541,10 @@ namespace  KKB
   class  XmlElementDateTime:  public  XmlElement
   {
   public:
-    XmlElementDateTime (XmlTagPtr   tag,
-                        XmlStream&  s,
-                        RunLog&     log
+    XmlElementDateTime (XmlTagPtr      tag,
+                        XmlStream&     s,
+                        VolConstBool&  cancelFlag,
+                        RunLog&        log
                        );
                 
     virtual  ~XmlElementDateTime ();
@@ -583,9 +588,10 @@ namespace  KKB
      * Used while from XmlStream  while reading file;  everytime it comes across a new Section(Start-Tag) 
      * a new instance of this class will be instantiated.
      */
-    XmlElementKeyValuePairs (XmlTagPtr   tag,
-                             XmlStream&  s,
-                             RunLog&     log
+    XmlElementKeyValuePairs (XmlTagPtr      tag,
+                             XmlStream&     s,
+                             VolConstBool&  cancelFlag,
+                             RunLog&        log
                             );
                 
     virtual  ~XmlElementKeyValuePairs ();
@@ -635,9 +641,10 @@ namespace  KKB
   class  XmlElementArrayFloat2DVarying: public XmlElement
   {
   public:
-    XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
-                                   XmlStream&  s,           
-                                   RunLog&     log          
+    XmlElementArrayFloat2DVarying (XmlTagPtr      tag,
+                                   XmlStream&     s,
+                                   VolConstBool&  cancelFlag,
+                                   RunLog&        log          
                                   );
 
     virtual  ~XmlElementArrayFloat2DVarying ();
@@ -676,11 +683,12 @@ namespace  KKB
   class  XmlElementKKStr: public  XmlElementTemplate<KKStr>
   {
   public:
-    XmlElementKKStr (XmlTagPtr   tag,
-                     XmlStream&  s,
-                     RunLog&     log
+    XmlElementKKStr (XmlTagPtr      tag,
+                     XmlStream&     s,
+                     VolConstBool&  cancelFlag,
+                     RunLog&        log
                     ):
-      XmlElementTemplate<KKStr> (tag, s, log)
+      XmlElementTemplate<KKStr> (tag, s, cancelFlag, log)
     {}
 
     virtual  bool     ToBool   () const {return  (Value () ? Value ()->ToBool () : false);}
@@ -707,39 +715,40 @@ namespace  KKB
 
 
 
-#define  XmlFactoryMacro(NameOfClass)                                             \
-    class  XmlFactory##NameOfClass: public XmlFactory                             \
-    {                                                                             \
-    public:                                                                       \
-      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
-                                                                                  \
-      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
-                                                               XmlStream&  s,     \
-                                                               RunLog&     log    \
-                                                              )                   \
-      {                                                                           \
-        return new XmlElement##NameOfClass(tag, s, log);                          \
-      }                                                                           \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   factoryInstance;                        \
-                                                                                  \
-      static   XmlFactory##NameOfClass*   FactoryInstance ()                      \
-      {                                                                           \
-        if  (factoryInstance == NULL)                                             \
-        {                                                                         \
-          GlobalGoalKeeper::StartBlock ();                                        \
-          if  (!factoryInstance)                                                  \
-          {                                                                       \
-            factoryInstance = new XmlFactory##NameOfClass ();                     \
-            XmlFactory::RegisterFactory (factoryInstance);                        \
-          }                                                                       \
-          GlobalGoalKeeper::EndBlock ();                                          \
-         }                                                                        \
-        return  factoryInstance;                                                  \
-      }                                                                           \
-    };                                                                            \
-                                                                                  \
-    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance           \
+#define  XmlFactoryMacro(NameOfClass)                                                     \
+    class  XmlFactory##NameOfClass: public XmlFactory                                     \
+    {                                                                                     \
+    public:                                                                               \
+      XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                            \
+                                                                                          \
+      virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr      tag,        \
+                                                               XmlStream&     s,          \
+                                                               VolConstBool&  cancelFlag, \
+                                                               RunLog&        log         \
+                                                              )                           \
+      {                                                                                   \
+        return new XmlElement##NameOfClass(tag, s, cancelFlag, log);                      \
+      }                                                                                   \
+                                                                                          \
+      static   XmlFactory##NameOfClass*   factoryInstance;                                \
+                                                                                          \
+      static   XmlFactory##NameOfClass*   FactoryInstance ()                              \
+      {                                                                                   \
+        if  (factoryInstance == NULL)                                                     \
+        {                                                                                 \
+          GlobalGoalKeeper::StartBlock ();                                                \
+          if  (!factoryInstance)                                                          \
+          {                                                                               \
+            factoryInstance = new XmlFactory##NameOfClass ();                             \
+            XmlFactory::RegisterFactory (factoryInstance);                                \
+          }                                                                               \
+          GlobalGoalKeeper::EndBlock ();                                                  \
+         }                                                                                \
+        return  factoryInstance;                                                          \
+      }                                                                                   \
+    };                                                                                    \
+                                                                                          \
+    XmlFactory##NameOfClass*   XmlFactory##NameOfClass::factoryInstance                   \
                   = XmlFactory##NameOfClass::FactoryInstance ();
 
 
@@ -754,6 +763,7 @@ namespace  KKB
       XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
       virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
                                                                XmlStream&  s,     \
+                                                               VolConstBool&  cancelFlag, \
                                                                RunLog&     log    \
                                                               )                   \
       {                                                                           \
@@ -790,9 +800,10 @@ namespace  KKB
   class  XmlElement##TypeName:  public  XmlElement          \
   {                                                         \
   public:                                                   \
-    XmlElement##TypeName (XmlTagPtr   tag,                  \
-                          XmlStream&  s,                    \
-                          RunLog&     log                   \
+    XmlElement##TypeName (XmlTagPtr      tag,               \
+                          XmlStream&     s,                 \
+                          VolConstBool&  cancelFlag,        \
+                          RunLog&        log                \
                          );                                 \
                                                             \
     virtual  ~XmlElement##TypeName ();                      \
@@ -824,9 +835,10 @@ namespace  KKB
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
   public:                                                          \
-    XmlElement##TypeName (XmlTagPtr   tag,                         \
-                          XmlStream&  s,                           \
-                          RunLog&     log                          \
+    XmlElement##TypeName (XmlTagPtr       tag,                     \
+                          XmlStream&      s,                       \
+                           VolConstBool&  cancelFlag,              \
+                          RunLog&         log                      \
                          );                                        \
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \
@@ -855,9 +867,10 @@ namespace  KKB
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
   public:                                                          \
-    XmlElement##TypeName (XmlTagPtr   tag,                         \
-                          XmlStream&  s,                           \
-                          RunLog&     log                          \
+    XmlElement##TypeName (XmlTagPtr       tag,                     \
+                          XmlStream&      s,                       \
+                           VolConstBool&  cancelFlag,              \
+                          RunLog&         log                      \
                          );                                        \
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \
@@ -894,9 +907,10 @@ namespace  KKB
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
   public:                                                          \
-    XmlElement##TypeName (XmlTagPtr   tag,                         \
-                          XmlStream&  s,                           \
-                          RunLog&     log                          \
+    XmlElement##TypeName (XmlTagPtr      tag,                      \
+                          XmlStream&     s,                        \
+                          VolConstBool&  cancelFlag,               \
+                          RunLog&        log                       \
                          );                                        \
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \

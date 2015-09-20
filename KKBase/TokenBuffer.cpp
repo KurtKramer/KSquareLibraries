@@ -2,19 +2,19 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
-#include  <stdio.h>
-#include  <stdlib.h>
-#include  <vector>
-#include  <fstream>
-#include  <iostream>
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <fstream>
+#include <iostream>
 //#include  <istream>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace std;
 
 
-#include  "TokenBuffer.h"
+#include "TokenBuffer.h"
 using namespace KKB;
 
 

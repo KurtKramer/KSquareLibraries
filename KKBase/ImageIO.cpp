@@ -348,7 +348,7 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
         ptr += nOffset;
       }
 
-      delete  palette;
+      free (palette);
       palette = NULL;
     }
 

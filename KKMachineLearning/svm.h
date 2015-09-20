@@ -188,6 +188,7 @@ struct SvmModel233
 
   virtual  void  ReadXML (XmlStream&      s,
                           XmlTagConstPtr  tag,
+                          VolConstBool&   cancelFlag,
                           RunLog&         log
                          );
 

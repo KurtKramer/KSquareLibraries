@@ -165,7 +165,13 @@ void  GoalKeeperSimple::Create (const KKStr&                   _name,
   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 /**< default security attributes */
                                            false,                /**< initially not owned */
                                            "GoalKeeperClass"
-                                          ); 
+                                          );
+  if  (!mutexCreateHandle)
+  {
+    KKStr errMsg = "GoalKeeperSimple::Create   ***ERROR***   CreateMutex failed; returned back NULL;  _name:" + _name;
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 
@@ -232,6 +238,12 @@ void  GoalKeeperSimple::CreateAndStartBlock (const KKStr&                   _nam
                                            false,                /**< initially not owned.         */
                                            "GoalKeeperClass"
                                           ); 
+  if  (!mutexCreateHandle)
+  {
+    KKStr errMsg = "GoalKeeperSimple::CreateAndStartBlock   ***ERROR***   CreateMutex failed; returned back NULL;  _name:" + _name;
+    cerr << endl << errMsg << endl << endl;
+    throw KKException(errMsg);
+  }
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 
@@ -305,6 +317,12 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
                                            false,                /**< initially not owned */
                                            "GoalKeeperClass"
                                           ); 
+  if (!mutexCreateHandle)
+  {
+    KKStr errMsg = "GoalKeeperSimple::Destroy   ***ERROR***   CreateMutex failed; returned back NULL";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException(errMsg);
+  }
 
   WaitForSingleObject (mutexCreateHandle, INFINITE);
 

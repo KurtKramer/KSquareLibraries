@@ -68,11 +68,11 @@ TrainingProcess2Ptr  TrainingProcess2::LoadExistingTrainingProcess (const KKStr&
   }
 
   XmlStreamPtr  stream = new XmlStream (savedModelName, log);
-  XmlTokenPtr  t = stream->GetNextToken (log);
+  XmlTokenPtr  t = stream->GetNextToken (cancelFlag, log);
   while  (t  &&  (typeid (*t)  !=  typeid (XmlElementTrainingProcess2)))
   {
     delete  t;
-    t = stream->GetNextToken (log);
+    t = stream->GetNextToken (cancelFlag, log);
   }
 
   if  (t)
@@ -1236,6 +1236,7 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
 
 void  TrainingProcess2::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
+                                 VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
@@ -1268,7 +1269,7 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 
   bool  errorsFound = false;
 
-  XmlTokenPtr  t = s.GetNextToken (log);
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t)
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
@@ -1356,66 +1357,67 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
-
-  if  (!model)
+  if  (!cancelFlag)
   {
-    log.Level (-1) << endl
-      << "TrainingProcess2::ReadXML   ***ERROR***   'model' was not defined." << endl
-      << endl;
-    errorsFound = true;
-  }
-
-  if  (mlClasses == NULL)
-  {
-    log.Level (-1) << endl
-      << "TrainingProcess2::ReadXML   ***ERROR***   'mlClasses' was not defined." << endl
-      << endl;
-    errorsFound = true;
-  }
-
-  if  (model  &&  (model->MLClasses ())  &&  mlClasses)
-  {
-    if  (*mlClasses != *(model->MLClasses ()))
+    if  (!model)
     {
       log.Level (-1) << endl
-        << "TrainingProcess2::ReadXML   ***ERROR***   TrainingProcess2::mlClasses  does not agree with model->MlClasses" << endl
+        << "TrainingProcess2::ReadXML   ***ERROR***   'model' was not defined." << endl
         << endl;
       errorsFound = true;
     }
-  }
 
-  if (!errorsFound)
-  {
-    if  (config)
+    if  (mlClasses == NULL)
     {
-      if  (config->SubClassifiers () != NULL)
+      log.Level (-1) << endl
+        << "TrainingProcess2::ReadXML   ***ERROR***   'mlClasses' was not defined." << endl
+        << endl;
+      errorsFound = true;
+    }
+
+    if  (model  &&  (model->MLClasses ())  &&  mlClasses)
+    {
+      if  (*mlClasses != *(model->MLClasses ()))
       {
-        bool  cancelFlag = false;
-        LoadSubClassifiers (WhenToRebuild::NotValid,
-                            true,    // CheckForDuplicates
-                            cancelFlag,
-                            log
-                           );
+        log.Level (-1) << endl
+          << "TrainingProcess2::ReadXML   ***ERROR***   TrainingProcess2::mlClasses  does not agree with model->MlClasses" << endl
+          << endl;
+        errorsFound = true;
       }
     }
+
+    if (!errorsFound)
+    {
+      if  (config)
+      {
+        if  (config->SubClassifiers () != NULL)
+        {
+          LoadSubClassifiers (WhenToRebuild::NotValid,
+                              true,    // CheckForDuplicates
+                              cancelFlag,
+                              log
+                             );
+        }
+      }
+    }
+
+    delete  subProcessorsNameList;
+    subProcessorsNameList = NULL;
   }
 
-  delete  subProcessorsNameList;
-  subProcessorsNameList = NULL;
-
-  if  (errorsFound)
-    Abort (true);
+  if  (errorsFound  ||  cancelFlag)
+     Abort (true);
 
   log.Level (20) << "TrainingProcess2::ReadXML    Exiting!" << endl;
 }  /* ReadXML */
 
 
 XmlFactoryMacro(TrainingProcess2)
-
-
-
 
 
 

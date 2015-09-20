@@ -297,7 +297,7 @@ namespace KKMLL
 
     FeatureVectorListPtr   LoadFeatureDataFromTrainingLibraries (KKB::DateTime&  latestImageTimeStamp,
                                                                  bool&           changesMadeToTrainingLibraries,
-                                                                 bool&           cancelFlag,
+                                                                 VolConstBool&   cancelFlag,
                                                                  RunLog&         log
                                                                 );
 
@@ -309,6 +309,7 @@ namespace KKMLL
 
     virtual void           ReadXML (XmlStream&      s,
                                     XmlTagConstPtr  tag,
+                                    VolConstBool&   cancelFlag,
                                     RunLog&         log
                                    );
 
@@ -355,11 +356,14 @@ namespace KKMLL
                                                                          RunLog&       _log
                                                                         );
 
-    XmlTokenPtr            ReadXMLBaseToken (XmlTokenPtr  t,
-                                             RunLog&      log
+    XmlTokenPtr            ReadXMLBaseToken (XmlTokenPtr    t,
+                                             VolConstBool&  cancelFlag,
+                                             RunLog&        log
                                             );
 
-    void                   ReadXMLPost (RunLog&  log);
+    void                   ReadXMLPost (VolConstBool&  cancelFlag,
+                                        RunLog&        log
+                                       );
 
     /**
      *@brief  To be used by both Base Class and Derived classes to write fields that are 
@@ -394,7 +398,7 @@ namespace KKMLL
     FeatureVectorListPtr   ExtractFeatures (const TrainingClassPtr  trainingClass,
                                             KKB::DateTime&          latestTimeStamp,
                                             bool&                   changesMade,
-                                            bool&                   cancelFlag,
+                                            VolConstBool&           cancelFlag,
                                             RunLog&                 log
                                            );
 

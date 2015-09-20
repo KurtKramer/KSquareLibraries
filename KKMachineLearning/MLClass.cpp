@@ -387,7 +387,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
     // So if there is an underscore character,  and all the characters to the right of it are
     // numeric characters,  then we will remove the underscore and the following numbers.
 
-    kkint32  y = x + 1;
+    kkuint32  y = x + 1;
 
     bool  allFollowingCharsAreNumeric = true;
     while  ((y < className.Len ()) &&  (allFollowingCharsAreNumeric))

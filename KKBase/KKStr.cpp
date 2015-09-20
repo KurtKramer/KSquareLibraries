@@ -700,12 +700,12 @@ KKStr::KKStr (kkint32  size):
   if  (size <= 0)
     size = 1;
 
-  else if  ((kkuint32)size >= StrIntMax)
+  else if  ((kkuint32)size >= KKStrIntMax)
   {
     cerr  << std::endl 
-          << "KKStr::KKStr    ***WARNNING***   Trying to allocate Size[" << size << "]  which is >= StrIntMax[" << StrIntMax << "]." << std::endl
+          << "KKStr::KKStr    ***WARNNING***   Trying to allocate Size[" << size << "]  which is >= KKStrIntMax[" << KKStrIntMax << "]." << std::endl
           << std::endl;
-    size = StrIntMax - 1;
+    size = KKStrIntMax - 1;
   }
 
   AllocateStrSpace (size);
@@ -747,10 +747,10 @@ KKStr::KKStr (const char*  src,
   }
 
   kkuint32  subStrLen = 1 + endPos - startPos;
-  if  (subStrLen > (StrIntMax - 1))
+  if  (subStrLen > (KKStrIntMax - 1))
   {
-    cerr << "KKStr::KKStr   ***ERROR***  requested SubStr[" << startPos << ", " << endPos << "]  len[" << subStrLen << "] is greater than StrIntMax[" << (StrIntMax - 1) << "]" << std::endl;
-    endPos = (startPos + StrIntMax - 2);
+    cerr << "KKStr::KKStr   ***ERROR***  requested SubStr[" << startPos << ", " << endPos << "]  len[" << subStrLen << "] is greater than KKStrIntMax[" << (KKStrIntMax - 1) << "]" << std::endl;
+    endPos = (startPos + KKStrIntMax - 2);
     subStrLen = 1 + endPos - startPos;
   }
 
@@ -775,12 +775,12 @@ void  KKStr::AllocateStrSpace (kkuint32  size)
          << std::endl;
   }
 
-  if  (size >= StrIntMax)
+  if  (size >= KKStrIntMax)
   {
     //  Can not allocate this much space;  This string has gotten out of control.
-    cerr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than StrIntMax[" << StrIntMax << "]" << std::endl;
+    cerr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than KKStrIntMax[" << KKStrIntMax << "]" << std::endl;
     KKStr  errStr (150);
-    errStr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than StrIntMax[" << StrIntMax << "]";
+    errStr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than KKStrIntMax[" << KKStrIntMax << "]";
     throw  KKException (errStr);
   }
 
@@ -814,34 +814,54 @@ void  KKStr::GrowAllocatedStrSpace (kkuint32  newAllocatedSize)
   if  (newAllocatedSize < allocatedSize)
   {
     KKStr  errMsg (128);
-    errMsg << "KKStr::GrowAllocatedStrSpace  ***ERROR***" << "  newAllocatedSize[" << newAllocatedSize << "]  is smaller than allocatedSize[" << allocatedSize << "]";
+    errMsg << "KKStr::GrowAllocatedStrSpace  ***ERROR***   newAllocatedSize[" << newAllocatedSize << "]  is smaller than allocatedSize[" << allocatedSize << "]";
     cerr  << std::endl << std::endl << errMsg << std::endl << std::endl;
     throw  KKException (errMsg);
   }
 
-  if  (newAllocatedSize >= (StrIntMax - 5))
+  if  (newAllocatedSize >= (KKStrIntMax - 5))
   {
     //  Can not allocate this much space;  This string has gotten out of control.
-    cerr << std::endl
-         << "KKStr::GrowAllocatedStrSpace   ***ERROR***      NewAllocatedSize["  << newAllocatedSize << "] is larger than StrIntMax[" << (StrIntMax - 5) << "]" << std::endl
-         << std::endl;
-    newAllocatedSize = StrIntMax - 6;
+    KKStr  errMsg (128);
+    errMsg << "KKStr::GrowAllocatedStrSpace   ***ERROR***   NewAllocatedSize[" << newAllocatedSize << "] is larger than KKStrIntMax[" << (KKStrIntMax - 5) << "]";
+    throw KKException (errMsg);
   }
 
   newAllocatedSize += 5;  // Lets allocate a little extra space on the hope that we will save a lot of cycles reallocating again this string.
+  {
+    // Will check to see if reasonable to grow by 25% over current len.
+    kkuint32  newAllocatedWithExtraRoomForGrowth = Min ((kkuint32)(len + (len / 4)), (KKStrIntMax - 1));
+    if  ((newAllocatedWithExtraRoomForGrowth > newAllocatedSize)  &&  (newAllocatedSize < KKStrIntMax))
+      newAllocatedSize = newAllocatedWithExtraRoomForGrowth;
+  }
 
   if  (val == NULL)
   {
     val = new char[newAllocatedSize];
+    if  (val == NULL)
+    {
+      KKStr  errMsg(128);
+      errMsg << "KKStr::GrowAllocatedStrSpace   ***ERROR***   Allocation of NewAllocatedSize[" << newAllocatedSize << "] characters failed.";
+      cerr << endl << errMsg << endl <<endl;
+      throw KKException(errMsg);
+    }
     memset (val, 0, newAllocatedSize);
     allocatedSize = (kkuint16)newAllocatedSize;
   }
   else
   {
     char*  newVal = new char[newAllocatedSize];
+    if (newVal == NULL)
+    {
+      KKStr  errMsg(128);
+      errMsg << "KKStr::GrowAllocatedStrSpace   ***ERROR***   Allocation of NewAllocatedSize[" << newAllocatedSize << "] characters failed.";
+      cerr << endl << errMsg << endl << endl;
+      throw KKException(errMsg);
+    }
+
     memset (newVal, 0, newAllocatedSize);
     memcpy (newVal, val, allocatedSize);
-    delete  val;
+    delete[]  val;
     val = newVal;
     allocatedSize = (kkuint16)newAllocatedSize;
   }
@@ -1346,35 +1366,39 @@ void  KKStr::ValidateLen ()  const
 
 KKStr&  KKStr::operator= (const KKStrConstPtr src)
 {
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  src.ValidateLen ();
-  #endif
-
   if  (src == this)
   {
     // We are assigning our selves to our selves;  there is nothing to do.
     return *this;
   }
 
-  kkuint16  spaceNeeded = src->len + 1;
-  if  ((spaceNeeded > allocatedSize)  ||  (!val))
+  if  (src == NULL)
   {
-    delete  val;
-    val = NULL;
-    allocatedSize = 0;
-    AllocateStrSpace (spaceNeeded);
+    len = 0;
+    if  ((val != NULL)  &&  (allocatedSize > 0))
+      val[0] = 0;
   }
   else
   {
-    memset (val, 0, allocatedSize);
+    kkuint16  spaceNeeded = src->len + 1;
+    if  ((spaceNeeded > allocatedSize)  ||  (!val))
+    {
+      delete  val;
+      val = NULL;
+      allocatedSize = 0;
+      AllocateStrSpace (spaceNeeded);
+    }
+    else
+    {
+      memset (val, 0, allocatedSize);
+    }
+
+    if  (src->val)
+      memcpy (val, src->val, src->len);
+
+    len = src->len;
+    val[len] = 0;
   }
-
-  if  (src->val)
-    memcpy (val, src->val, src->len);
-
-  len = src->len;
-  val[len] = 0;
 
   return *this;
 }
@@ -1521,14 +1545,10 @@ KKStr&  KKStr::operator= (kkint32  right)
 
 KKStr&  KKStr::operator= (const std::vector<KKStr>& right)
 {
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-
   kkint32  spaceNeeded = 2;  /* Start with 2 bytes for overhead. */
   kkuint32  x = 0;
   for  (x = 0;  x < right.size ();  x++)
-    spaceNeeded = right[x].Len ();
+    spaceNeeded += right[x].Len ();
 
   if  (spaceNeeded > allocatedSize)
   {
@@ -1536,6 +1556,13 @@ KKStr&  KKStr::operator= (const std::vector<KKStr>& right)
     val = NULL;
     allocatedSize = 0;
     AllocateStrSpace (spaceNeeded);
+  }
+
+  if  (!val)
+  {
+    KKStr  errMsg = "KKStr::operator= (const std::vector<KKStr>& right)   ***ERROR***   Space for string not allocatd!";
+    cerr << endl << errMsg << endl <<endl;
+    throw KKException (errMsg);
   }
 
   char*  ptr = val;
@@ -1805,14 +1832,14 @@ void  KKStr::Append (const char* buff)
 
   if  (neededSpace > allocatedSize)
   {
-    if  (neededSpace >= StrIntMax)
+    if  (neededSpace >= KKStrIntMax)
     {
       cerr << std::endl 
            << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
            << "                buffLen[" << buffLen         << "]" << std::endl
            << "                neededSpace[" << neededSpace << "]" << std::endl
            << std::endl;
-      return;
+      throw KKException ("KKStr::Append  Length will exceed what KKStr can managed;  neededSpace: " + StrFromUint32 (neededSpace));
     }
     GrowAllocatedStrSpace (neededSpace);
   }
@@ -1844,14 +1871,14 @@ void  KKStr::Append (const char*  buff,
 
   if  (neededSpace > allocatedSize)
   {
-    if  (neededSpace >= StrIntMax)
+    if  (neededSpace >= KKStrIntMax)
     {
       cerr << std::endl 
            << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
            << "                buffLen[" << buffLen         << "]" << std::endl
            << "                neededSpace[" << neededSpace << "]" << std::endl
            << std::endl;
-      return;
+      throw KKException("KKStr::Append  Length will exceed what KKStr can managed;  neededSpace: " + StrFromUint32(neededSpace));
     }
     GrowAllocatedStrSpace (neededSpace);
   }
@@ -1870,19 +1897,18 @@ void  KKStr::Append (const char*  buff,
 
 
 
-
 void  KKStr::Append (char ch)
 {
   kkuint32  neededSpace = len + 2;
   if  (neededSpace > allocatedSize)
   {
-    if  (neededSpace >= StrIntMax)
+    if  (neededSpace >= KKStrIntMax)
     {
       cerr << std::endl 
            << "KKStr::Append   ***ERROR***   Size of buffer can not fit into String." << std::endl
            << "                neededSpace[" << neededSpace << "]" << std::endl
            << std::endl;
-      return;
+      throw KKException("KKStr::Append (char ch)  Length will exceed what KKStr can managed;  neededSpace: " + StrFromUint32(neededSpace));
     }
     GrowAllocatedStrSpace (neededSpace);
   }
@@ -1917,7 +1943,7 @@ void  KKStr::AppendInt32 (kkint32  i)
     return;
   }
 
-  char  buff[20];
+  char  buff[64];
   kkint16  bi = sizeof (buff) - 1;
   buff[bi] = 0;
 
@@ -1956,7 +1982,7 @@ void  KKStr::AppendUInt32 (kkuint32  i)
     return;
   }
 
-  char  buff[20];
+  char  buff[64];
   kkint16  bi = sizeof (buff) - 1;
   buff[bi] = 0;
 
@@ -1984,6 +2010,32 @@ char  KKStr::FirstChar ()  const
     return 0;
 
   return  val[0];
+}
+
+
+
+void  KKStr::FreeUpUnUsedSpace()
+{
+  kkuint32 unUsedSpace = allocatedSize - (len + 1);
+  kkuint32 acceptableWaist = allocatedSize / 5;
+  if  (unUsedSpace > acceptableWaist)
+  {
+    kkuint32 neededSpace = len + 1;
+    char* newVal = new char[neededSpace];
+    if (newVal == NULL)
+    {
+      KKStr  errMsg(128);
+      errMsg << "KKStr::FreeUpUnUsedSpace   ***ERROR***   Allocation of NeededSpace[" << neededSpace << "] characters failed.";
+      cerr << endl << errMsg << endl << endl;
+      throw KKException(errMsg);
+    }
+
+    memcpy(newVal, val, len);
+    newVal[len] = 0;
+    delete[]  val;
+    val = newVal;
+    allocatedSize = (kkuint16)neededSpace;
+  }
 }
 
 
@@ -2258,7 +2310,7 @@ void  KKStr::RightPad (kkint32  width,
 
     if  (neededSpace > allocatedSize)
     {
-      if  (neededSpace >= StrIntMax)
+      if  (neededSpace >= KKStrIntMax)
       {
         cerr << std::endl 
              << "KKStr::RightPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
@@ -2299,25 +2351,34 @@ void  KKStr::LeftPad (kkint32 width,
     width = 0;
   }
 
+  kkuint32  neededSpace = (kkuint32)width + 1;
+  if (neededSpace >= KKStrIntMax)
+  {
+    KKStr  errMsg(128);
+    errMsg << "KKStr::LeftPad   ***ERROR***   Size of buffer can not fit into String; neededSpace[" << neededSpace << "].";
+    cerr << std::endl << errMsg << endl << endl;
+    throw KKException(errMsg);
+  }
+
   if  (!val)
   {
     len = 0;
     allocatedSize = 0;
   }
 
-  kkuint32  neededSpace = (kkuint32)width + 1;
   if  (neededSpace > allocatedSize)
   {
-    if  (neededSpace >= StrIntMax)
-    {
-      cerr << std::endl 
-           << "KKStr::LeftPad   ***ERROR***   Size of buffer can not fit into String." << std::endl
-           << "                 neededSpace[" << neededSpace << "]" << std::endl
-           << std::endl;
-      return;
-    }
-    GrowAllocatedStrSpace (neededSpace); 
+    GrowAllocatedStrSpace(neededSpace);
   }
+
+  if (val == NULL)
+  {
+    KKStr  errMsg(128);
+    errMsg << "KKStr::LeftPad   ***ERROR***   val == NULL; couuld not allocate neededSpace[" << neededSpace << "].";
+    cerr << std::endl << errMsg << endl << endl;
+    throw KKException(errMsg);
+  }
+
 
   if  (len >= (kkuint16)width)
   {
@@ -2469,13 +2530,20 @@ void  KKStr::Lower ()
 
 
 
-KKStr  KKStr::MaxLen (kkint32  maxLen)  const
+KKStr  KKStr::MaxLen (kkuint32  maxLen)  const
 {
-  maxLen = Max ((kkint32)0, maxLen);
+  maxLen = Max ((kkuint32)0, maxLen);
   if  (len < maxLen)
     return *this;
   else
     return SubStrPart (0, maxLen - 1);
+}
+
+
+
+kkuint32 KKStr::MaxLenSupported ()  const 
+{
+  return KKStrIntMax - 1;
 }
 
 
@@ -4398,6 +4466,7 @@ void  KKStr::WriteXML (const KKStr&  varName,
 
 void  KKStr::ReadXML (XmlStream&      s,
                       XmlTagConstPtr  tag,
+                      VolConstBool&   cancelFlag,
                       RunLog&         log
                      )
 {
@@ -4413,8 +4482,8 @@ void  KKStr::ReadXML (XmlStream&      s,
   allocatedSize = 0;
   AllocateStrSpace (expectedLen);
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
@@ -4422,8 +4491,13 @@ void  KKStr::ReadXML (XmlStream&      s,
       Append (*(c->Content ()));
     }
     delete  t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 
   TrimRight (" \r\n");
 }  /* ReadXML */
@@ -4491,6 +4565,7 @@ bool  KKStrList::StringInList (KKStr& str)
 
 void  KKStrList::ReadXML (XmlStream&      s,
                           XmlTagConstPtr  tag,
+                          VolConstBool&   cancelFlag,
                           RunLog&         log
                          )
 {
@@ -4498,8 +4573,8 @@ void  KKStrList::ReadXML (XmlStream&      s,
 
   DeleteContents ();
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
@@ -4515,10 +4590,14 @@ void  KKStrList::ReadXML (XmlStream&      s,
         }
       }
     }
-
     delete t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 
@@ -5205,7 +5284,7 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 
 
 
-const  kkuint32  KKB::KKStr::StrIntMax = USHRT_MAX;
+const  kkuint32  KKB::KKStr::KKStrIntMax = USHRT_MAX;
 
 
 
@@ -5229,6 +5308,7 @@ VectorKKStr::VectorKKStr (const VectorKKStr&  v):
 
 void  VectorKKStr::ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                           )
 {
@@ -5236,9 +5316,9 @@ void  VectorKKStr::ReadXML (XmlStream&      s,
 
   clear ();
 
-  XmlTokenPtr  t = s.GetNextToken (log);
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
 
-  while  (t)
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
@@ -5256,8 +5336,13 @@ void  VectorKKStr::ReadXML (XmlStream&      s,
     }
 
     delete t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 
@@ -5541,6 +5626,7 @@ KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
 
 void  KKStrListIndexed::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
+                                 VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
@@ -5548,8 +5634,8 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
   bool  caseSensative = tag->AttributeValueByName ("CaseSensative")->ToBool ();
   comparator.caseSensitive = caseSensative;
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
@@ -5563,8 +5649,13 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 

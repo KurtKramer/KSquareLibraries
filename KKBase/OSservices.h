@@ -390,13 +390,13 @@ namespace KKB
                                  bool&          eol
                                 );
 
-  KKB::KKStr    osReadRestOfLine (std::istream&  in,
-                                  bool&          eof
-                                 );
+  KKB::KKStrPtr    osReadRestOfLine (std::istream&  in,
+                                     bool&          eof
+                                    );
 
-  KKB::KKStr    osReadRestOfLine (FILE*  in,
-                                  bool&  eof
-                                 );
+  KKB::KKStrPtr    osReadRestOfLine (FILE*  in,
+                                     bool&  eof
+                                    );
 
 
   /**

@@ -194,7 +194,7 @@ void  FeatureFileIOC45::C45StrPreProcessName (KKStr&  ln)
 
   KKStr  newLine (ln.Len ());  
 
-  kkint32 x = 0;
+  kkuint32 x = 0;
   char thisChar;
   char nextChar;
   while  (x < ln.Len ())
@@ -240,7 +240,7 @@ kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
                                                    char          ch
                                                   )
 {
-  kkint32 x = 0;
+  kkuint32 x = 0;
   while  (x < txt.Len ())
   {
     if  (txt[x] == ch)
@@ -251,7 +251,7 @@ kkint32  FeatureFileIOC45::C45LocateNextCharacter (const KKStr&  txt,
     x++;
   }
 
-  if  (x < txt.Len ())  return x;  else  return -1;
+  if  (x < txt.Len ())  return (kkint32)x;  else  return -1;
 }  /* C45LocateNextCharacter */
 
 
@@ -466,7 +466,7 @@ FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
 
       // Locate a period followed by white space, if not followed by 
       // white space, will be part of a name.
-      kkint32  dotPos = 0;
+      kkuint32  dotPos = 0;
       while  (dotPos < ln.Len ())
       {
         if  (ln[dotPos] == '.')
@@ -996,7 +996,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 
 KKStr  FeatureFileIOC45::C45AdjName (const  KKStr&  oldName)
 {
-  kkint32  x;
+  kkuint32  x;
   KKStr  newName (oldName.Len () + 3);
   for  (x = 0; x < oldName.Len ();  x++)
   {

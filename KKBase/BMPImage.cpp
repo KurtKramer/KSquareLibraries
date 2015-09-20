@@ -1516,7 +1516,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
         << "***ERROR*** BmpImage::Load8BitColor, Error Reading File" << std::endl
         << std::endl;
       successfull = false;
-      delete  rowData;  rowData = NULL;
+      delete[]  rowData;  rowData = NULL;
       return;
     }
 
@@ -1816,7 +1816,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
         << "***ERROR*** BmpImage::Load24BitColor, Error Reading File" << std::endl
         << std::endl;
       successfull = false;
-      delete  rowData;  rowData = NULL;
+      delete[]  rowData;  rowData = NULL;
       return;
     }
 

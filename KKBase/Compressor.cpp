@@ -228,8 +228,8 @@ void*   Compressor::Decompress (const void*  compressedBuff,
     if  (ret == Z_STREAM_ERROR)
     {
       cerr << "Compressor::Decompress  ***ERROR***  zlib function call 'inflate'  failed."  << std::endl;
-      delete  outBuffer;  outBuffer = NULL;
-      delete  unCompressedBuff;     unCompressedBuff    = NULL;
+      delete[]  outBuffer;  outBuffer = NULL;
+      delete[]  unCompressedBuff;     unCompressedBuff    = NULL;
       unCompressedLen = 0;
       GlobalGoalKeeper::EndBlock ();
       return NULL;
@@ -243,8 +243,8 @@ void*   Compressor::Decompress (const void*  compressedBuff,
       {
         cerr << "Compressor::Decompress  ***ERROR***  zlib function call 'inflate'  failed."  << std::endl;
         (void)inflateEnd (&strm);
-        delete  outBuffer;          outBuffer        = NULL;
-        delete  unCompressedBuff;   unCompressedBuff = NULL;
+        delete[]  outBuffer;          outBuffer        = NULL;
+        delete[]  unCompressedBuff;   unCompressedBuff = NULL;
         unCompressedLen = 0;
         GlobalGoalKeeper::EndBlock ();
         return NULL;

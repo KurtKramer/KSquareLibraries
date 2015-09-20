@@ -2155,10 +2155,10 @@ FeatureVectorListPtr   TrainingConfiguration2::LoadOtherClasssExamples (RunLog& 
  *@param[in]  cancelFlag  Will monitor this flag; if turns true will terminate the load and return.
  *@param[in]  log Logging File.
  */
-FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&  latestImageTimeStamp,
-                                                                                    bool&      changesMadeToTrainingLibraries,
-                                                                                    bool&      cancelFlag,
-                                                                                    RunLog&    log
+FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries (DateTime&      latestImageTimeStamp,
+                                                                                    bool&          changesMadeToTrainingLibraries,
+                                                                                    VolConstBool&  cancelFlag,
+                                                                                    RunLog&        log
                                                                                    )
 {
   log.Level (10) << "TrainingConfiguration2::LoadFeatureDataFromTrainingLibraries - Starting." << endl;
@@ -2260,7 +2260,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingClassPtr  trainingClass,
                                                                DateTime&               latestTimeStamp,
                                                                bool&                   changesMade,
-                                                               bool&                   cancelFlag,
+                                                               VolConstBool&           cancelFlag,
                                                                RunLog&                 log
                                                               )
 {
@@ -2683,8 +2683,9 @@ void  TrainingConfiguration2::WriteXML (const KKStr&  varName,
 
 
 
-XmlTokenPtr  TrainingConfiguration2::ReadXMLBaseToken (XmlTokenPtr  t,
-                                                       RunLog&      log
+XmlTokenPtr  TrainingConfiguration2::ReadXMLBaseToken (XmlTokenPtr    t,
+                                                       VolConstBool&  cancelFlag,
+                                                       RunLog&        log
                                                       )
 {
   const KKStr&  varName = t->VarName ();
@@ -2833,7 +2834,9 @@ XmlTokenPtr  TrainingConfiguration2::ReadXMLBaseToken (XmlTokenPtr  t,
 
 
 
-void  TrainingConfiguration2::ReadXMLPost (RunLog&  log)
+void  TrainingConfiguration2::ReadXMLPost (VolConstBool&  cancelFlag,
+                                           RunLog&        log
+                                          )
 {
   if  (!fvFactoryProducer)
     fvFactoryProducer = DefaultFeatureVectorProducer (log);
@@ -2841,7 +2844,7 @@ void  TrainingConfiguration2::ReadXMLPost (RunLog&  log)
   fileDesc = fvFactoryProducer->FileDesc ();
   
   TrainingClassList::iterator  idx;
-  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  ++idx)
+  for  (idx = trainingClasses.begin ();  (idx != trainingClasses.end ())  &&  (!cancelFlag);  ++idx)
   {
     TrainingClassPtr  tc = *idx;
     if  (!tc->SubClassifierName ().Empty ())
@@ -2860,6 +2863,7 @@ void  TrainingConfiguration2::ReadXMLPost (RunLog&  log)
 
 void   TrainingConfiguration2::ReadXML (XmlStream&      s,
                                         XmlTagConstPtr  tag,
+                                        VolConstBool&   cancelFlag,
                                         RunLog&         log
                                        )
 
@@ -2876,14 +2880,20 @@ void   TrainingConfiguration2::ReadXML (XmlStream&      s,
 
   VectorKKStr*  subClassifierNameList = NULL;
 
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
-    t = ReadXMLBaseToken (t, log);
+    t = ReadXMLBaseToken (t, cancelFlag, log);
     delete  t;
-    t = s.GetNextToken (log);
+    if  (cancelFlag)
+      t = NULL;
+    else
+      t = s.GetNextToken (cancelFlag, log);
   }
-  ReadXMLPost (log);
+  delete t;
+  t = NULL;
+  if  (!cancelFlag)
+    ReadXMLPost (cancelFlag, log);
 }  /* ReadXML */
 
 

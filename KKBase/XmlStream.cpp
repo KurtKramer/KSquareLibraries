@@ -114,9 +114,12 @@ XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
 }
 
 
-XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
+
+XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
+                                      RunLog&        log
+                                     )
 {
-  if  (endOfElemenReached)
+  if  (endOfElemenReached  || cancelFlag)
     return NULL;
 
   XmlTokenPtr  token = NULL;
@@ -140,7 +143,7 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
       log.Level (50) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
 
       PushXmlElementLevel (tag->Name ());
-      token = factory->ManufatureXmlElement (tag, *this, log);
+      token = factory->ManufatureXmlElement (tag, *this, cancelFlag, log);
       KKStr  endTagName = endOfElementTagNames.back ();
       PopXmlElementLevel ();
       endOfElemenReached = false;
@@ -153,16 +156,16 @@ XmlTokenPtr  XmlStream::GetNextToken (RunLog&  log)
         factory = XmlElementUnKnownFactoryInstance  ();
       PushXmlElementLevel (tag->Name ());
       endOfElemenReached = true;
-      token = factory->ManufatureXmlElement (tag, *this, log);
+      token = factory->ManufatureXmlElement (tag, *this, cancelFlag, log);
       if  ((!endOfElemenReached)  &&  (tag->TagType () == XmlTag::TagTypes::tagStart))
       {
         //  The element that we just read did not finish consuming all its components.
         log.Level (-1) << "XmlStream::GetNextToken   ***WARNING***   The element just read[" << tag->Name () << "]  Did not consume all its elements." << endl;
-        XmlTokenPtr  t = GetNextToken (log);
+        XmlTokenPtr  t = GetNextToken (cancelFlag, log);
         while  (t)
         {
           delete t;
-          t = GetNextToken (log);
+          t = GetNextToken (cancelFlag, log);
         }
       }
       endOfElemenReached = false;
@@ -719,7 +722,7 @@ KKStr  XmlTag::ToString ()  const
 kkint32  xmlLevel = 0;
 
 
-void  XmlTag::WriteXML (ostream& o)
+void  XmlTag::WriteXML (std::ostream& o)
 {
   if  (TagType () == TagTypes::tagEnd)
     --xmlLevel;
@@ -849,8 +852,8 @@ KKStrPtr  XmlContent::TakeOwnership ()
 }
 
 
-void  XmlContent::WriteXml (const KKStr&  s,
-                            ostream&      o
+void  XmlContent::WriteXml (const KKStr&   s,
+                            std::ostream&  o
                            )
 {
   const char*  str = s.Str ();
@@ -994,9 +997,10 @@ XmlFactory*  XmlFactoryManager::FactoryLookUp (const KKStr&  className)  const
 
 
 
-XmlElementBool::XmlElementBool (XmlTagPtr   tag,
-                                XmlStream&  s,
-                                RunLog&     log
+XmlElementBool::XmlElementBool (XmlTagPtr      tag,
+                                XmlStream&     s,
+                                VolConstBool&  cancelFlag,
+                                RunLog&        log
                                ):
     XmlElement (tag, s, log),
     value (false)
@@ -1004,7 +1008,7 @@ XmlElementBool::XmlElementBool (XmlTagPtr   tag,
   KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");
   if  (valueStr)
     value = valueStr->ToBool ();
-  XmlTokenPtr t = s.GetNextToken (log);
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
   while  (t != NULL)
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
@@ -1013,7 +1017,7 @@ XmlElementBool::XmlElementBool (XmlTagPtr   tag,
       value = c->Content ()->ToBool ();
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 }
 
@@ -1030,9 +1034,9 @@ bool  XmlElementBool::Value ()  const
 
 
 
-void  XmlElementBool::WriteXML (const bool    b,
-                                const KKStr&  varName,
-                                ostream&      o
+void  XmlElementBool::WriteXML (const bool     b,
+                                const KKStr&   varName,
+                                std::ostream&  o
                                )
 {
   XmlTag startTag ("Bool", XmlTag::TagTypes::tagEmpty);
@@ -1046,18 +1050,19 @@ void  XmlElementBool::WriteXML (const bool    b,
 XmlFactoryMacro(Bool)
 
 
-XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr   tag,
-                                      XmlStream&  s,
-                                      RunLog&     log
+XmlElementUnKnown::XmlElementUnKnown (XmlTagPtr      tag,
+                                      XmlStream&     s,
+                                      VolConstBool&  cancelFlag,
+                                      RunLog&        log
                                      ):
     XmlElement (tag, s, log),
     value (new deque<XmlTokenPtr> ())
 {
-  XmlTokenPtr t = s.GetNextToken (log);
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
   while  (t != NULL)
   {
     value->push_back (t);
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 }
                 
@@ -1090,9 +1095,10 @@ XmlFactoryPtr  KKB::XmlElementUnKnownFactoryInstance ()
 }
 
 
-XmlElementDateTime::XmlElementDateTime (XmlTagPtr   tag,
-                                        XmlStream&  s,
-                                        RunLog&     log
+XmlElementDateTime::XmlElementDateTime (XmlTagPtr      tag,
+                                        XmlStream&     s,
+                                        VolConstBool&  cancelFlag,
+                                        RunLog&        log
                                        ):
     XmlElement (tag, s, log),
     value ()
@@ -1108,7 +1114,7 @@ XmlElementDateTime::~XmlElementDateTime ()
 
 void  XmlElementDateTime::WriteXML (const DateTime&  d,
                                     const KKStr&     varName,
-                                    ostream&         o
+                                    std::ostream&    o
                                    )
 {
   XmlTag startTag ("DateTime", XmlTag::TagTypes::tagEmpty);
@@ -1134,16 +1140,17 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs ():
 }
 
 
-XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
-                                                  XmlStream&  s,
-                                                  RunLog&     log
+XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr      tag,
+                                                  XmlStream&     s,
+                                                  VolConstBool&  cancelFlag,
+                                                  RunLog&        log
                                                  ):
     XmlElement (tag, s, log),
     value (NULL)
 {
   value = new vector<pair<KKStr,KKStr> > ();
 
-  XmlTokenPtr t = s.GetNextToken (log);
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
   while  (t != NULL)
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
@@ -1165,7 +1172,7 @@ XmlElementKeyValuePairs::XmlElementKeyValuePairs (XmlTagPtr   tag,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 }
 
@@ -1275,9 +1282,10 @@ XmlFactoryMacro(KeyValuePairs)
 
 
 
-XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
-                                                              XmlStream&  s,           
-                                                              RunLog&     log          
+XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr      tag,
+                                                              XmlStream&     s,
+                                                              VolConstBool&  cancelFlag,
+                                                              RunLog&        log          
                                                             ):
     XmlElement (tag, s, log),
     height (0),
@@ -1296,7 +1304,7 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
   value  = new float*[height];
   widths = new kkuint32[height];
 
-  XmlTokenPtr  tok = s.GetNextToken (log);
+  XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);
   kkuint32  rowCount = 0;
   while  (tok)
   {
@@ -1319,7 +1327,7 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr   tag,
       ++rowCount;
     }
     delete  tok;
-    tok = s.GetNextToken (log);
+    tok = s.GetNextToken (cancelFlag, log);
   }
   while  (rowCount < height)
   {
@@ -1430,9 +1438,10 @@ XmlFactoryMacro(KKStrListIndexed)
  * Works with matching Marco (XmlElementBuiltInTypeHeader) defined in XmlStream.h  
  */
 #define  XmlElementBuiltInTypeBody(T,TypeName,ParseMethod)                \
- XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,             \
-                                             XmlStream&  s,               \
-                                             RunLog&     log              \
+ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,          \
+                                             XmlStream&     s,            \
+                                             VolConstBool&  cancelFlag,   \
+                                             RunLog&        log           \
                                             ):                            \
   XmlElement (tag, s, log),                                               \
   value ((T)0)                                                            \
@@ -1440,7 +1449,7 @@ XmlFactoryMacro(KKStrListIndexed)
   KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");          \
   if  (valueStr)                                                          \
     value = (T)valueStr->##ParseMethod ();                                \
-  XmlTokenPtr tok = s.GetNextToken (log);                                 \
+  XmlTokenPtr tok = s.GetNextToken (cancelFlag, log);                     \
   while  (tok != NULL)                                                    \
   {                                                                       \
     if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)           \
@@ -1449,7 +1458,7 @@ XmlFactoryMacro(KKStrListIndexed)
       value = (T)c->Content ()->##ParseMethod ();                         \
     }                                                                     \
     delete  tok;                                                          \
-    tok = s.GetNextToken (log);                                           \
+    tok = s.GetNextToken (cancelFlag, log);                               \
   }                                                                       \
 }                                                                         \
                                                                           \
@@ -1459,9 +1468,9 @@ XmlElement##TypeName::~ XmlElement##TypeName ()                           \
 }                                                                         \
                                                                           \
                                                                           \
-void   XmlElement##TypeName::WriteXML (T             d,                   \
-                                       const KKStr&  varName,             \
-                                       ostream&      o                    \
+void   XmlElement##TypeName::WriteXML (T              d,                  \
+                                       const KKStr&   varName,            \
+                                       std::ostream&  o                   \
                                       )                                   \
 {                                                                         \
   XmlTag startTag (#TypeName, XmlTag::TagTypes::tagEmpty);                \
@@ -1487,9 +1496,10 @@ XmlFactoryMacro(TypeName)
 
 
 #define  XmlElementArrayBody(T,TypeName,ParserNextTokenMethod)                \
-XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
-                                            XmlStream&  s,                    \
-                                            RunLog&     log                   \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,               \
+                                            XmlStream&     s,                 \
+                                            VolConstBool&  cancelFlag,        \
+                                            RunLog&        log                \
                                           ):                                  \
       XmlElement (tag, s, log),                                               \
       count (0),                                                              \
@@ -1516,7 +1526,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
   }                                                                           \
                                                                               \
   kkuint32  fieldsExtracted = 0;                                              \
-  XmlTokenPtr  tok = s.GetNextToken (log);                                    \
+  XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);                        \
   while  (tok)                                                                \
   {                                                                           \
     if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)               \
@@ -1534,7 +1544,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                  \
       }                                                                       \
     }                                                                         \
     delete  tok;                                                              \
-    tok = s.GetNextToken (log);                                               \
+    tok = s.GetNextToken (cancelFlag, log);                                   \
   }                                                                           \
                                                                               \
   if  (fieldsExtracted != count)                                              \
@@ -1566,7 +1576,7 @@ T*   XmlElement##TypeName::TakeOwnership ()                                   \
 void  XmlElement##TypeName::WriteXML (kkuint32       count,                   \
                                       const T*       d,                       \
                                       const KKStr&   varName,                 \
-                                      ostream&       o                        \
+                                      std::ostream&  o                        \
                                       )                                       \
 {                                                                             \
   XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                    \
@@ -1603,9 +1613,10 @@ XmlFactoryMacro(TypeName)
  *@param  XmlElementToUse  the XmlElement derived class that will be used to process each row in the matrix.
  */
 #define  XmlElementArray2DBody(T,TypeName,XmlElementToUse)                     \
-XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                   \
-                                            XmlStream&  s,                     \
-                                            RunLog&     log                    \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,                \
+                                            XmlStream&     s,                  \
+                                            VolConstBool&  cancelFlag,         \
+                                            RunLog&        log                 \
                                           ):                                   \
       XmlElement (tag, s, log),                                                \
       height (0),                                                              \
@@ -1644,7 +1655,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                   \
   }                                                                            \
                                                                                \
   kkuint32  rowCount = 0;                                                      \
-  XmlTokenPtr  tok = s.GetNextToken (log);                                     \
+  XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);                         \
   while  (tok)                                                                 \
   {                                                                            \
     if  (typeid(*tok) != typeid(XmlElementToUse))                              \
@@ -1672,7 +1683,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,                   \
       }                                                                        \
     }                                                                          \
     delete  tok;                                                               \
-    tok = s.GetNextToken (log);                                                \
+    tok = s.GetNextToken (cancelFlag, log);                                    \
   }                                                                            \
                                                                                \
   if  (rowCount != height)                                                     \
@@ -1716,7 +1727,7 @@ void  XmlElement##TypeName::WriteXML (kkuint32      height,                    \
                                       kkuint32      width,                     \
                                       T** const     mat,                       \
                                       const KKStr&  varName,                   \
-                                      ostream&       o                         \
+                                      std::ostream&  o                         \
                                      )                                         \
 {                                                                              \
   XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                     \
@@ -1747,9 +1758,10 @@ XmlFactoryMacro(TypeName)
 
 
 #define  XmlElementVectorBody(T,TypeName,ParserNextTokenMethod)            \
-XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
-                                            XmlStream&  s,                 \
-                                            RunLog&     log                \
+XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
+                                            XmlStream&     s,              \
+                                            VolConstBool&  cancelFlag,     \
+                                            RunLog&        log             \
                                            ):                              \
   XmlElement (tag, s, log)                                                 \
 {                                                                          \
@@ -1760,7 +1772,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
                                                                            \
   value = new vector<T> ();                                                \
                                                                            \
-  XmlTokenPtr  tok = s.GetNextToken (log);                                 \
+  XmlTokenPtr  tok = s.GetNextToken (cancelFlag, log);                     \
   while  (tok)                                                             \
   {                                                                        \
     if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)            \
@@ -1776,7 +1788,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr   tag,               \
       }                                                                    \
     }                                                                      \
     delete  tok;                                                           \
-    tok = s.GetNextToken (log);                                            \
+    tok = s.GetNextToken (cancelFlag, log);                                \
   }                                                                        \
 }                                                                          \
                                                                            \
@@ -1801,7 +1813,7 @@ vector<T>*  XmlElement##TypeName::TakeOwnership ()                         \
                                                                            \
 void  XmlElement##TypeName::WriteXML (const vector<T>&  v,                 \
                                       const KKStr&      varName,           \
-                                      ostream&          o                  \
+                                      std::ostream&     o                  \
                                      )                                     \
 {                                                                          \
   XmlTag startTag (#TypeName, XmlTag::TagTypes::tagStart);                 \

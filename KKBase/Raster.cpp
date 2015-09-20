@@ -52,6 +52,30 @@ using namespace KKB;
 volatile GoalKeeperPtr  Raster::goalKeeper = NULL;
 volatile bool           Raster::rasterInitialized = false;
 
+
+KKStr  KKB::ColorChannelToKKStr (ColorChannels  c)
+{
+  switch  (c)  {
+  case  ColorChannels::Red:   return "Red";
+  case  ColorChannels::Green: return "Green";
+  case  ColorChannels::Blue:  return "Blue";
+  default:
+    return "";
+  }
+}
+
+
+ColorChannels  KKB::ColorChannelFromKKStr(const KKStr& s)
+{
+  char  c = tolower(s.FirstChar());
+  if  (c == 'r')  return ColorChannels::Red;
+  if  (c == 'g')  return ColorChannels::Green;
+  if  (c == 'b')  return ColorChannels::Blue;
+  return ColorChannels::Green;
+}
+
+
+
 void  Raster::Initialize ()
 {
   GoalKeeper::Create ("Raster", goalKeeper);
@@ -776,6 +800,14 @@ Raster::Raster (kkint32       _height,
     errMsg << "Raster::Raster   ***ERROR***   One of the provided channels is 'NULL'.";
     cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
     throw KKException (errMsg);
+  }
+
+  if ((!redArea) || (!greenArea) || (!blueArea))
+  {
+    KKB::KKStr errMsg;
+    errMsg << "Raster::Raster   ***ERROR***   Not all channels were allocated.";
+    cerr << std::endl << std::endl << errMsg << std::endl << std::endl;
+    throw KKException(errMsg);
   }
 
   memcpy (redArea,   _redChannel,   totPixels);
@@ -3219,7 +3251,15 @@ BlobListPtr   Raster::ExtractBlobs (kkint32  dist)
           if  (nearBlobId >= 0)
           {
             curBlob   = blobs->LookUpByBlobId (nearBlobId);
-            curBlobId = curBlob->id;
+            if  (curBlob)
+              curBlobId = curBlob->id;
+            else
+            {
+              // If we get to this point there is something wrong with the 'blobs' data structure; for every blobId
+              // specified in blobIds(via nearBlobId) there should be a entry in 'blobs'.
+              curBlob = blobs->NewBlob(row, col);
+              curBlobId = curBlob->id;
+            }
           }
           else
           {
@@ -6068,7 +6108,12 @@ HistogramPtr  Raster::Histogram (ColorChannels  channel)  const
   }
 
   if  (!data)
-    data = greenArea;
+  {
+    KKStr  errMsg (128);
+    errMsg << "Raster::Histogram   ***ERROR***    channel: " << ColorChannelToKKStr (channel) << "  Is not defined.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
 
   HistogramPtr histogram = new KKB::Histogram (0, 256, 1.0, false);
   for  (kkint32 x = 0;  x < totPixels;  x++)
@@ -6863,8 +6908,11 @@ void  Raster::DrawConnectedPointList (Point              offset,
       }
     }
 
-    row = pixel->Row () + offset.Row ();
-    col = pixel->Col () + offset.Col ();
+    if  (pixel != NULL)
+    {
+      row = pixel->Row () + offset.Row ();
+      col = pixel->Col () + offset.Col ();
+    }
 
     if  ((row <  height)  &&  (col <  width)   &&
          (row >= 0)       &&  (col >= 0)    
@@ -7396,9 +7444,9 @@ RasterPtr  Raster::ReduceByEvenMultiple (kkint32  multiple)  const
     workRaster[nRow]  = NULL;
     workDivisor[nRow] = NULL;
   }
-  delete  workRaster;
+  delete[]  workRaster;
   workRaster = NULL;
-  delete  workDivisor;
+  delete[]  workDivisor;
   workDivisor = NULL;
 
   reducedRaster->ForegroundPixelCount (nForegroundPixelCount);
@@ -8944,7 +8992,7 @@ RasterPtr  RasterList::CreateSmoothedFrame ()
   for  (x = 0;  x < totPixels;  x++)
     newGreenArea[x] = (uchar)  (totGreenArea[x] / rastersAdded);
 
-  delete  totGreenArea;
+  delete[]  totGreenArea;
 
   return  smoothedRaster;
 }  /* CreateSmoothedFrame */
@@ -9499,12 +9547,12 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
 
     for  (col = 0;  col < 3;  col++)
     {
-      delete  centeredVals[col];
+      delete[]  centeredVals[col];
       centeredVals[col] = NULL;
     }
-    delete  centeredVals;   centeredVals = NULL;
-    delete  means;          means  = NULL;
-    delete  totals;         totals = NULL;
+    delete[]  centeredVals;   centeredVals = NULL;
+    delete[]  means;          means  = NULL;
+    delete[]  totals;         totals = NULL;
   }
  
   MatrixPtr      eigenVectors = NULL;
@@ -9663,9 +9711,9 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
       delete  centeredVals[col];
       centeredVals[col] = NULL;
     }
-    delete  centeredVals;   centeredVals = NULL;
-    delete  means;          means  = NULL;
-    delete  totals;         totals = NULL;
+    delete[]  centeredVals;   centeredVals = NULL;
+    delete[]  means;          means  = NULL;
+    delete[]  totals;         totals = NULL;
   }
  
   MatrixPtr      eigenVectors = NULL;

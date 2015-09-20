@@ -472,12 +472,11 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
 
 KKStr  StripOutInvalidLatexCaracters (const KKStr&  src)
 {
-  kkint32  newLen = (kkint32)(src.Len () * 1.3);
+  kkuint32  newLen = (kkint32)(src.Len () * 1.3);
 
   KKStr  result (newLen);
 
-
-  for  (kkint32 x = 0;  x < src.Len ();  x++)
+  for  (kkuint32 x = 0;  x < src.Len ();  x++)
   {
     char  ch = src[x];
 

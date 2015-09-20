@@ -1091,7 +1091,7 @@ kkint32  ContourFollower::CreateFourierDescriptorBySampling (kkint32  numOfBucke
     totalCol += point.Col ();
   }
 
-  delete[]  points;
+  delete  points;
   points = NULL;
 
   float  centerRow = (float)totalRow / (float)numOfBuckets;
