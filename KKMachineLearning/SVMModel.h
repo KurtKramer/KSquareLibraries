@@ -280,6 +280,7 @@ typedef  struct svm_node*     XSpacePtr;
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            );
 

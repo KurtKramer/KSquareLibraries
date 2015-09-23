@@ -238,6 +238,7 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
 
 void  TrainingClass::ReadXML (XmlStream&      s,
                               XmlTagConstPtr  tag,
+                              VolConstBool&   cancelFlag,
                               RunLog&         log
                              )
 {
@@ -263,8 +264,8 @@ void  TrainingClass::ReadXML (XmlStream&      s,
       SubClassifierName (v);
   }
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  ((t->VarName ().EqualIgnoreCase ("Directory"))  &&  (typeid (*t) ==  typeid (XmlElementKKStr)))
     {
@@ -276,8 +277,10 @@ void  TrainingClass::ReadXML (XmlStream&      s,
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 
@@ -428,13 +431,15 @@ void  TrainingClassList::WriteXML (const KKStr&  varName,
 
 
 
-void  TrainingClassList::ReadXML (XmlStream&  s,
-                                  XmlTagPtr   tag,
-                                  RunLog&     log
+void  TrainingClassList::ReadXML (XmlStream&     s,
+                                  XmlTagPtr      tag,
+                                  VolConstBool&  cancelFlag,
+                                  RunLog&        log
                                  )
 {
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag,
+                                  RunLog&        log, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
@@ -467,8 +472,10 @@ void  TrainingClassList::ReadXML (XmlStream&  s,
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 
@@ -477,12 +484,13 @@ void  TrainingClassList::ReadXML (XmlStream&  s,
   public:
     XmlFactoryTrainingClass (): XmlFactory ("TrainingClass") {}
 
-    virtual  XmlElementTrainingClass*  ManufatureXmlElement (XmlTagPtr   tag,
-                                                             XmlStream&  s,
-                                                             RunLog&     log
+    virtual  XmlElementTrainingClass*  ManufatureXmlElement (XmlTagPtr      tag,
+                                                             XmlStream&     s,
+                                                             VolConstBool&  cancelFlag,
+                                                             RunLog&        log
                                                             )
     {
-      return new XmlElementTrainingClass(tag, s, log);
+      return new XmlElementTrainingClass(tag, s, cancelFlag, log);
     }
 
     static   XmlFactoryTrainingClass*   factoryInstance;
@@ -501,8 +509,9 @@ void  TrainingClassList::ReadXML (XmlStream&  s,
        }                                                   
       return  factoryInstance;                             
     }                                                      
-  };                                                       
-                                                             
+  };
+ 
+
   XmlFactoryTrainingClass*   XmlFactoryTrainingClass::factoryInstance
                   = XmlFactoryTrainingClass::FactoryInstance ();
 

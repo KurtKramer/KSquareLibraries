@@ -2985,6 +2985,7 @@ void  UsfCasCor::WriteXML (const KKStr&  varName,
 
 void  UsfCasCor::ReadXML (XmlStream&      s,
                           XmlTagConstPtr  tag,
+                          VolConstBool&   cancelFlag,
                           RunLog&         log
                          )
 {
@@ -2994,8 +2995,8 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
   if  (OutputWeights)
     Delete2DArray (OutputWeights, Noutputs);
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     bool  tokenProcessed = false;
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
@@ -3217,63 +3218,65 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
     }
 
     delete t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 
+  delete  t;
+  t = NULL;
 
   // We are done reading the XML data;  now we must build our dynamic memory structures.
-
-
-  if  (NTestPatterns > 0)
+  if  (!cancelFlag)
   {
-    TestInputs  = new float*[NTestPatterns];
-    TestOutputs = new float*[NTestPatterns];
-    for  (int z = 0; z < NTestPatterns; ++z)
+    if  (NTestPatterns > 0)
     {
-      TestInputs[z]  = new float[Ninputs];
-      TestOutputs[z] = new float[Noutputs];
+      TestInputs  = new float*[NTestPatterns];
+      TestOutputs = new float*[NTestPatterns];
+      for  (int z = 0; z < NTestPatterns; ++z)
+      {
+        TestInputs[z]  = new float[Ninputs];
+        TestOutputs[z] = new float[Noutputs];
+      }
     }
-  }
-  else
-  {
-    TestInputs  = TrainingInputs;
-    TestOutputs = TrainingOutputs;
-  }
-
-  if  (!ExtraValues)
-    ExtraValues = new float[MaxUnits];
-
-  if  (!Values)
-    Values = ExtraValues;
-
-
-  if  (UseCache) 
-  {
-     /* Odd error check. If usecache was specified in file, but not on
-      * command line, then Cache was not allocated. We look for NULL
-      * value and allocate storage here. 
-      */
-     if  (ValuesCache == NULL )
-     {
-       ValuesCache = new float*[MaxCases];     //(float **)CALLOC(MaxCases, sizeof(float *));
-       ErrorsCache = new float*[MaxCases];
-
-       for  (kkint32 i = 0;  i < MaxCases;  i++)
-       {
-         ValuesCache[i] = new float[MaxUnits];
-         ErrorsCache[i] = new float[Noutputs];
-       }
-     }
-
-
-    for  (kkint32 i = 0;  i < NTrainingPatterns;  i++)
+    else
     {
-      Values = ValuesCache[i];
+      TestInputs  = TrainingInputs;
+      TestOutputs = TrainingOutputs;
+    }
+
+    if  (!ExtraValues)
+      ExtraValues = new float[MaxUnits];
+
+    if  (!Values)
+      Values = ExtraValues;
+
+
+    if  (UseCache) 
+    {
+       /* Odd error check. If usecache was specified in file, but not on
+        * command line, then Cache was not allocated. We look for NULL
+        * value and allocate storage here. 
+        */
+       if  (ValuesCache == NULL )
+       {
+         ValuesCache = new float*[MaxCases];     //(float **)CALLOC(MaxCases, sizeof(float *));
+         ErrorsCache = new float*[MaxCases];
+
+         for  (kkint32 i = 0;  i < MaxCases;  i++)
+         {
+           ValuesCache[i] = new float[MaxUnits];
+           ErrorsCache[i] = new float[Noutputs];
+         }
+       }
+
+      for  (kkint32 i = 0;  i < NTrainingPatterns;  i++)
+      {
+        Values = ValuesCache[i];
       
-      /* Unit values must be calculated in order because the activations */
-      /* cascade down through the hidden layers */
-      for  (kkint32 j = 1 + Ninputs;  j < Nunits;  j++) 
-         COMPUTE_UNIT_VALUE(j);
+        /* Unit values must be calculated in order because the activations */
+        /* cascade down through the hidden layers */
+        for  (kkint32 j = 1 + Ninputs;  j < Nunits;  j++) 
+           COMPUTE_UNIT_VALUE(j);
+      }
     }
   }
 

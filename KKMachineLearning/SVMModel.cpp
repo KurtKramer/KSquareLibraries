@@ -2417,6 +2417,7 @@ void  SVMModel::WriteXML (const KKStr&  varName,
 
 void  SVMModel::ReadXML (XmlStream&      s,
                          XmlTagConstPtr  tag,
+                         VolConstBool&   cancelFlag,
                          RunLog&         log
                         )
 {
@@ -2442,8 +2443,8 @@ void  SVMModel::ReadXML (XmlStream&      s,
   while  (!errorsFound)
   {
     delete  t;
-    t = s.GetNextToken (log);
-    if  (!t)
+    t = s.GetNextToken (cancelFlag, log);
+    if  ((!t)  ||  cancelFlag)
       break;
 
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
@@ -2628,6 +2629,9 @@ void  SVMModel::ReadXML (XmlStream&      s,
   }
   delete  t;
   t = NULL;
+
+  if  (cancelFlag)
+    errorsFound = true;
 
   if  (assignments.size () < 2)
   {

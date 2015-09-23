@@ -95,6 +95,7 @@ namespace KKMLL
     virtual
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 
@@ -170,9 +171,10 @@ namespace KKMLL
 
     TrainingClassPtr    LocateByDirectory (const KKStr&  directory);
 
-    virtual void        ReadXML (XmlStream&  s,
-                                 XmlTagPtr   tag,
-                                 RunLog&     log
+    virtual void        ReadXML (XmlStream&     s,
+                                 XmlTagPtr      tag,
+                                 VolConstBool&  cancelFlag,
+                                 RunLog&        log
                                 );
 
     virtual void        WriteXML (const KKStr&   varName,
