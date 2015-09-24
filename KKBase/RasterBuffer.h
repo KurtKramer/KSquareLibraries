@@ -92,12 +92,12 @@ namespace KKB
     /** @brief  Remove the oldest 'Raster' instance from the buffer.  */
      void  ThrowOutOldestOccupiedBuffer ();
 
-    queue<RasterPtr>     buffer;
-    GoalKeeperPtr        gateKeeper;
-    kkint32              maxNumOfBuffers;
-    kkint32              memoryConsumed;
-    KKStr                name;             /**< Name of buffer. */
-    kkint32              rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */
+    std::queue<RasterPtr> buffer;
+    GoalKeeperPtr         gateKeeper;
+    kkint32               maxNumOfBuffers;
+    kkint32               memoryConsumed;
+    KKStr                 name;             /**< Name of buffer. */
+    kkint32               rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */
   };  /* RasterBuffer */
 
 

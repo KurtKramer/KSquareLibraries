@@ -40,8 +40,8 @@ namespace KKB
     virtual  void  NotifyObservers ();
 
   private:
-    multimap<KKObserverPtr,KKObserverPtr>            observers;
-    multimap<KKObserverPtr,KKObserverPtr>::iterator  observersIdx;
+    std::multimap<KKObserverPtr,KKObserverPtr>            observers;
+    std::multimap<KKObserverPtr,KKObserverPtr>::iterator  observersIdx;
 
     friend class  KKObserver;
   };  /* KKObservable */

@@ -2,7 +2,6 @@
 #define  _SCANNERFILE_
 
 #include <vector>
-using namespace std;
 
 
 //**************************************************************************
@@ -452,7 +451,7 @@ namespace  KKLSC
     kkuint32  frameNumCurLoaded;         /**< Indicates the frame that is currently loaded in 'frameBuffer'.                  */
 
 
-    vector<kkint64>  frameOffsets;       /**<  Will maintain a list of byte offsets;  each entry will be the byte offset for  *
+    std::vector<kkint64>  frameOffsets;  /**<  Will maintain a list of byte offsets;  each entry will be the byte offset for  *
                                           * its corresponding frame                                                           *
                                           */
     bool      frameOffsetsBuildRunning;
@@ -462,17 +461,17 @@ namespace  KKLSC
                                           * of 'BuildFrameOffsets'.                                                           *
                                           */
 
-    GoalKeeperPtr  goalie;               /**<  Used to control access to the buildFrameIndex table.                           */
+    GoalKeeperPtr        goalie;         /**<  Used to control access to the buildFrameIndex table.                           */
 
-    ofstream*      indexFile;            /**< When writing a Scanner file will also write out a ByteOffset index file to aid
+    std::ofstream*       indexFile;      /**< When writing a Scanner file will also write out a ByteOffset index file to aid
                                           * future access to this file.
                                           */
-    KKStr          indexFileName;
+    KKStr                indexFileName;
 
     ScannerFileEntryPtr  scannerFileEntry;
 
 
-    StartStopPointList  startStopPoints;    /**< Points where he user does or does-not want to process(Count) are tacked in this
+    StartStopPointList   startStopPoints;   /**< Points where he user does or does-not want to process(Count) are tacked in this
                                              * data structure.  Each entry is flagged as a Start or Stop point.  These entries
                                              * are saved in the IndexFile along with the frame offsets table.
                                              */
