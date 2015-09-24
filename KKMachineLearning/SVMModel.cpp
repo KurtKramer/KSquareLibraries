@@ -415,7 +415,10 @@ void  SVMModel::AllocateModels ()
   models = new ModelPtr  [numOfModels];
   {
     for  (kkint32 x = 0;  x < numOfModels;  x++)
+    {
       models[x]  = new SvmModel233*[1];
+      models[x][0] = NULL;
+    }
   }
 }
 

@@ -152,6 +152,7 @@ namespace KKMLL
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            ) = 0;
 
@@ -209,9 +210,10 @@ namespace KKMLL
   class   XmlElementModelParam:  public  XmlElement
   {
   public:
-    XmlElementModelParam (XmlTagPtr   tag,
-                          XmlStream&  s,
-                          RunLog&     log
+    XmlElementModelParam (XmlTagPtr      tag,
+                          XmlStream&     s,
+                          VolConstBool&  cancelFlag,
+                          RunLog&        log
                          ):
      XmlElement (tag, s, log),
      value (NULL)
@@ -255,14 +257,15 @@ namespace KKMLL
   class  XmlElementModelParamTemplate:  public  XmlElementModelParam
   {
   public:
-    XmlElementModelParamTemplate (XmlTagPtr   tag,
-                                  XmlStream&  s,
-                                  RunLog&     log
+    XmlElementModelParamTemplate (XmlTagPtr      tag,
+                                  XmlStream&     s,
+                                  VolConstBool&  cancelFlag,
+                                  RunLog&        log
                                  ):
-    XmlElementModelParam (tag, s, log)
+    XmlElementModelParam (tag, s, cancelFlag, log)
     {
       value = new T();
-      value->ReadXML (s, tag, log);
+      value->ReadXML (s, tag, cancelFlag, log);
     }
 
                 

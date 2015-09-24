@@ -282,6 +282,7 @@ void  Attribute::WriteXML (const KKStr&  varName,
 
 void  Attribute::ReadXML (XmlStream&      s,
                           XmlTagConstPtr  tag,
+                          VolConstBool&   cancelFlag,
                           RunLog&         log
                          )
 {
@@ -292,8 +293,8 @@ void  Attribute::ReadXML (XmlStream&      s,
   name = tag->AttributeValueKKStr ("Name");
   nameUpper = name.ToUpper ();
 
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  ((t->SectionName ().EqualIgnoreCase ("NominalValues"))  &&  (typeid(*t) == typeid(XmlElementVectorKKStr)))
     {
@@ -310,7 +311,11 @@ void  Attribute::ReadXML (XmlStream&      s,
           AddANominalValue (*idx, alreadyEixists);
       }
     }
+    delete t;
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete t;
+  t = NULL;
 }
 
 
@@ -521,13 +526,14 @@ void  AttributeList::WriteXML (const KKStr&  varName,
 
 void  AttributeList::ReadXML (XmlStream&      s,
                               XmlTagConstPtr  tag,
+                              VolConstBool&   cancelFlag,
                               RunLog&         log
                              )
 {
   DeleteContents ();
   Owner (true);
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (typeid (*t) == typeid(XmlElementAttribute))
     {
@@ -536,8 +542,10 @@ void  AttributeList::ReadXML (XmlStream&      s,
         PushOnBack (attrToken->TakeOwnership ());
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete t;
+  t = NULL;
 }
 
 
@@ -590,6 +598,7 @@ void  AttributeTypeVector::WriteXML (const KKStr&  varName,
 
 void  AttributeTypeVector::ReadXML (XmlStream&      s,
                                     XmlTagConstPtr  tag,
+                                    VolConstBool&   cancelFlag,
                                     RunLog&         log
                                    )
 {
@@ -598,8 +607,8 @@ void  AttributeTypeVector::ReadXML (XmlStream&      s,
   kkuint32  expectedLen = (kkuint32)tag->AttributeValueInt32 ("Size");
   AttributeTypeVector decodeTable;
 
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (typeid (*t) == typeid (XmlContent))
     {
@@ -632,8 +641,10 @@ void  AttributeTypeVector::ReadXML (XmlStream&      s,
         
       }
     }
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }
 
 

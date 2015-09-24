@@ -791,11 +791,12 @@ FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 
 void  FileDesc::ReadXML (XmlStream&      s,
                          XmlTagConstPtr  tag,
+                         VolConstBool&   cancelFlag,
                          RunLog&         log
                         )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
@@ -852,8 +853,11 @@ void  FileDesc::ReadXML (XmlStream&      s,
     }
 
     delete t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 
@@ -910,15 +914,16 @@ FileDescList::~FileDescList ()
 
 
 
-XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr   tag,
-                                        XmlStream&  s,
-                                        RunLog&     log
+XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr      tag,
+                                        XmlStream&     s,
+                                        VolConstBool&  cancelFlag,
+                                        RunLog&        log
                                        ):
   XmlElement (tag, s, log),
   value (NULL)
 {
   value = new FileDesc ();
-  value->ReadXML (s, tag, log);
+  value->ReadXML (s, tag, cancelFlag, log);
   value = FileDesc::GetExistingFileDesc (value);
 }
                 

@@ -172,6 +172,7 @@ namespace KKMLL
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 

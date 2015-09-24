@@ -536,11 +536,12 @@ void  ModelParamOldSVM::WriteXML (const KKStr&  varName,
 
 void  ModelParamOldSVM::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
+                                 VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
   KKStr  svmParametersStr;
-  XmlTokenPtr  t = s.GetNextToken (log);
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t)
   {
     t = ReadXMLModelParamToken (t);
@@ -567,14 +568,19 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 
-  FeatureNumListConstPtr  selFeatures = ModelParam::SelectedFeatures ();
+  delete t;
+  t = NULL;
 
-  bool  validFormat = false;
-  delete  svmParameters;
-  svmParameters = new SVMparam  (svmParametersStr, selFeatures, validFormat, log);
+  if  (!cancelFlag)
+  {
+    FeatureNumListConstPtr  selFeatures = ModelParam::SelectedFeatures ();
+    bool  validFormat = false;
+    delete  svmParameters;
+    svmParameters = new SVMparam  (svmParametersStr, selFeatures, validFormat, log);
+  }
 }  /* ReadXML */
 
  

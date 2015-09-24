@@ -422,14 +422,15 @@ void  ClassProbList::WriteXML (const KKStr&  varName,
 
 void  ClassProbList::ReadXML (XmlStream&      s,
                               XmlTagConstPtr  tag,
+                              VolConstBool&   cancelFlag,
                               RunLog&         log
                              )
 {
   XmlTokenPtr  t = NULL;
-  while  (true)
+  while  (true  &&  (!cancelFlag))
   {
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
     if  (!t)  break;
     if  (typeid (*t) != typeid (XmlContent))
       continue;
@@ -455,6 +456,8 @@ void  ClassProbList::ReadXML (XmlStream&      s,
     PushOnBack (new ClassProb (MLClass::CreateNewMLClass (className), probability, votes));
   }
 
+  delete t;
+  t = NULL;
 }  /* ReadXML */
 
 

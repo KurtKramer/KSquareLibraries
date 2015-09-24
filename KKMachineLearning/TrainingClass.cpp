@@ -437,8 +437,7 @@ void  TrainingClassList::ReadXML (XmlStream&     s,
                                   RunLog&        log
                                  )
 {
-  XmlTokenPtr t = s.GetNextToken (cancelFlag,
-                                  RunLog&        log, log);
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)

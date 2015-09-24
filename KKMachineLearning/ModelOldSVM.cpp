@@ -553,13 +553,14 @@ void  ModelOldSVM::WriteXML (const KKStr&  varName,
 
 void  ModelOldSVM::ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            )
 {
   delete  svmModel;
   svmModel = NULL;
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t   &&  (!cancelFlag))
   {
     t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
     if  (t)
@@ -587,8 +588,14 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+
+  delete  t;
+  t = NULL;
+
+  if  (cancelFlag)
+    AddErrorMsg ("ModelOldSVM::ReadXML   ***CANCELED***", 0);
 
   if  (!param)
     param = dynamic_cast<ModelParamOldSVMPtr> (Model::param);
@@ -633,33 +640,35 @@ class  XmlFactoryModelOldSVM: public XmlFactory
 public:                                                                   
   XmlFactoryModelOldSVM (): XmlFactory ("ModelOldSVM") {}                  
                                                                           
-  virtual  XmlElementModelOldSVM*  ManufatureXmlElement (XmlTagPtr   tag, 
-                                                         XmlStream&  s, 
-                                                         RunLog&     log 
+  virtual  XmlElementModelOldSVM*  ManufatureXmlElement (XmlTagPtr      tag, 
+                                                         XmlStream&     s,
+                                                         VolConstBool&  cancelFlag,
+                                                         RunLog&        log 
                                                         )                
   {                                                                        
-    return new XmlElementModelOldSVM(tag, s, log);                         
-  }                                                                        
-                                                                           
+    return new XmlElementModelOldSVM(tag, s, cancelFlag, log);
+  }
+
   static   XmlFactoryModelOldSVM*   factoryInstance;                       
-                                                                           
-  static   XmlFactoryModelOldSVM*   FactoryInstance ()                     
-  {                                                                        
-    if  (factoryInstance == NULL)                                          
-    {                                                                      
-      GlobalGoalKeeper::StartBlock ();                                     
-      if  (!factoryInstance)                                               
-      {                                                                    
-        factoryInstance = new XmlFactoryModelOldSVM ();                    
-        XmlFactory::RegisterFactory (factoryInstance);                     
-      }                                                                    
-      GlobalGoalKeeper::EndBlock ();                                       
-     }                                                                     
-    return  factoryInstance;                                               
-  }                                                                        
-};                                                                         
-                                                                           
-XmlFactoryModelOldSVM*   XmlFactoryModelOldSVM::factoryInstance 
+
+  static   XmlFactoryModelOldSVM*   FactoryInstance ()
+  {
+    if  (factoryInstance == NULL)
+    {
+      GlobalGoalKeeper::StartBlock ();
+      if  (!factoryInstance)
+      {
+        factoryInstance = new XmlFactoryModelOldSVM ();
+        XmlFactory::RegisterFactory (factoryInstance);
+      }
+      GlobalGoalKeeper::EndBlock ();
+     }
+    return  factoryInstance;
+  }
+};
+
+
+XmlFactoryModelOldSVM*   XmlFactoryModelOldSVM::factoryInstance
               = XmlFactoryModelOldSVM::FactoryInstance ();
 
 

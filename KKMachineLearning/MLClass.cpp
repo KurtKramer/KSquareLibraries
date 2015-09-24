@@ -485,9 +485,10 @@ void  MLClass::WriteXML (const KKStr&    varName,
 
 
 
-XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
-                                      XmlStream&  s,
-                                      RunLog&     log
+XmlElementMLClass::XmlElementMLClass (XmlTagPtr      tag,
+                                      XmlStream&     s,
+                                      VolConstBool&  cancelFlag,
+                                      RunLog&        log
                                      ):
   XmlElement (tag, s, log),
   value (NULL)
@@ -528,9 +529,9 @@ XmlElementMLClass::XmlElementMLClass (XmlTagPtr   tag,
       value->Summarize (v->ToBool ());
   }
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
-    t = s.GetNextToken (log);
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
+    t = s.GetNextToken (cancelFlag, log);
 }
 
         
@@ -1438,16 +1439,17 @@ KKStr&  KKMLL::operator<< (      KKStr&            str,
 
 
 
-XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr   tag,
-                                                      XmlStream&  s,
-                                                      RunLog&     log
+XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr      tag,
+                                                      XmlStream&     s,
+                                                      VolConstBool&  cancelFlag,
+                                                      RunLog&        log
                                                      ):
     XmlElement (tag, s, log),
     value (NULL)
 {
   value = new MLClassList ();
-  XmlTokenPtr t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (typeid (*t) == typeid(XmlContent))
     {
@@ -1467,8 +1469,10 @@ XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr   tag,
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }
  
 
@@ -1704,14 +1708,15 @@ KKStr  MLClassIndexList::ToCommaDelString ()  const
 
 void  MLClassIndexList::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
+                                 VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
   largestIndex = -1;
   shortIdx.clear ();
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (typeid (*t) == typeid (XmlContent))
     {
@@ -1724,8 +1729,10 @@ void  MLClassIndexList::ReadXML (XmlStream&      s,
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 

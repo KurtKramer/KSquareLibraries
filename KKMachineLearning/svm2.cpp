@@ -5352,6 +5352,7 @@ void  SVM289_MFS::Svm_Model::WriteXML (const KKStr&  varName,
 
 void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
                                       XmlTagConstPtr  tag,
+                                      VolConstBool&   cancelFlag,      
                                       RunLog&         log
                                      )
 {
@@ -5362,8 +5363,8 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
   kkint32  numBinaryCombos = 0;
 
   KKStr  svmParametersStr;
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     const KKStr& varName = t->VarName ();
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
@@ -5503,8 +5504,10 @@ void  SVM289_MFS::Svm_Model::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 

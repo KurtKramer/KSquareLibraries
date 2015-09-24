@@ -198,6 +198,7 @@ namespace KKMLL
 
     void                        ReadXML (XmlStream&      s,
                                          XmlTagConstPtr  tag,
+                                         VolConstBool&   cancelFlag,
                                          RunLog&         log
                                         );
 
@@ -313,9 +314,10 @@ namespace KKMLL
 class  XmlElementFileDesc:  public  XmlElement
   {
   public:
-    XmlElementFileDesc (XmlTagPtr   tag,
-                        XmlStream&  s,
-                        RunLog&     log
+    XmlElementFileDesc (XmlTagPtr      tag,
+                        XmlStream&     s,
+                        VolConstBool&  cancelFlag,
+                        RunLog&        log
                        );
                 
     virtual  ~XmlElementFileDesc ();

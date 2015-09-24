@@ -637,14 +637,14 @@ void  NormalizationParms::WriteXML (const KKStr&  varName,
 
 
 
-void  NormalizationParms::ReadXML (XmlStream&  s,
-                                   XmlTagPtr   tag,
-                                   RunLog&     log
+void  NormalizationParms::ReadXML (XmlStream&     s,
+                                   XmlTagPtr      tag,
+                                   VolConstBool&  cancelFlag,
+                                   RunLog&        log
                                   )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
@@ -700,8 +700,10 @@ void  NormalizationParms::ReadXML (XmlStream&  s,
     }
 
     delete t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 
   if  (fileDesc)
   {

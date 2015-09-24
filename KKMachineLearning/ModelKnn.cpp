@@ -224,11 +224,12 @@ void  ModelKnn::WriteXML (const KKStr&  varName,
 
 void  ModelKnn::ReadXML (XmlStream&      s,
                          XmlTagConstPtr  tag,
+                         VolConstBool&   cancelFlag,
                          RunLog&         log
                         )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     t = ReadXMLModelToken (t, log);
     if  (t)
@@ -249,8 +250,11 @@ void  ModelKnn::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+
+  delete  t;
+  t = NULL;
 
   if  (!param)
     param = dynamic_cast<ModelParamKnnPtr> (Model::param);

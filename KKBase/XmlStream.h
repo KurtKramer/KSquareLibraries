@@ -288,9 +288,9 @@ namespace  KKB
                 XmlTag::TagTypes  tagType
                );
 
-    XmlElement (XmlTagPtr   _nameTag,
-                XmlStream&  s,
-                RunLog&     log
+    XmlElement (XmlTagPtr      _nameTag,
+                XmlStream&     s,
+                RunLog&        log
                );
                 
     virtual  ~XmlElement ();

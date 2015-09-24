@@ -124,9 +124,10 @@ namespace KKMLL
                );
 
 
-    void  ReadXML (XmlStream&  s,
-                   XmlTagPtr   tag,
-                   RunLog&     log
+    void  ReadXML (XmlStream&     s,
+                   XmlTagPtr      tag,
+                   VolConstBool&  cancelFlag,
+                   RunLog&        log
                   );
 
 

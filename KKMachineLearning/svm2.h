@@ -215,6 +215,7 @@ namespace  SVM289_MFS
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            );
 

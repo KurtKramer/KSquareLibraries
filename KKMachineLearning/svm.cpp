@@ -272,7 +272,7 @@ void  SvmModel233::ReadXML (XmlStream&      s,
     if  (cancelFlag)
     {
       delete  t;
-      t = NULL:
+      t = NULL;
     }
     if  (!t)  break;
 

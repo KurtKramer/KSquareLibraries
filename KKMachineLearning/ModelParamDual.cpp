@@ -277,11 +277,12 @@ void  ModelParamDual::WriteXML (const KKStr&  varName,
 
 void  ModelParamDual::ReadXML (XmlStream&      s,
                                XmlTagConstPtr  tag,
+                               VolConstBool&   cancelFlag,
                                RunLog&         log
                               )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     t = ReadXMLModelParamToken (t);
     if  (t)
@@ -304,8 +305,10 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
         probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 

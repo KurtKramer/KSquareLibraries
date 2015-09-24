@@ -647,12 +647,13 @@ void  ModelSvmBase::WriteXML (const KKStr&  varName,
 
 void  ModelSvmBase::ReadXML (XmlStream&      s,
                              XmlTagConstPtr  tag,
+                             VolConstBool&   cancelFlag,
                              RunLog&         log
                             )
 {
   delete  svmModel;
   svmModel = NULL;
-  XmlTokenPtr  t = s.GetNextToken (log);
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t)
   {
     t = ReadXMLModelToken (t, log);  // 1st see if the base class has this data field.
@@ -673,34 +674,39 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
     }
 
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 
-  if  (!param)
-    param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
-
-  if  (Model::param == NULL)
+  if  (!cancelFlag)
   {
-    KKStr errMsg (128);
-    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
+    if  (!param)
+      param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
 
-  else if  (typeid (*Model::param) != typeid(ModelParamSvmBase))
-  {
-    KKStr errMsg (128);
-    errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
+    if  (Model::param == NULL)
+    {
+      KKStr errMsg (128);
+      errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+      AddErrorMsg (errMsg, 0);
+      log.Level (-1) << endl << errMsg << endl << endl;
+    }
 
-  else
-  {
-    param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
-  }
+    else if  (typeid (*Model::param) != typeid(ModelParamSvmBase))
+    { 
+      KKStr errMsg (128);
+      errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
+      AddErrorMsg (errMsg, 0);
+      log.Level (-1) << endl << errMsg << endl << endl;
+    }
 
-  ReadXMLModelPost (log);
+    else
+    {
+      param = dynamic_cast<ModelParamSvmBasePtr> (Model::param);
+    } 
+
+    ReadXMLModelPost (log);
+  }
 }  /* ReadXML */
 
  

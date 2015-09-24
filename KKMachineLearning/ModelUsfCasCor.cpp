@@ -488,14 +488,15 @@ void  ModelUsfCasCor::WriteXML (const KKStr&  varName,
 
 void  ModelUsfCasCor::ReadXML (XmlStream&      s,
                                XmlTagConstPtr  tag,
+                               VolConstBool&   cancelFlag,
                                RunLog&         log
                               )
 {
   delete  usfCasCorClassifier;
   usfCasCorClassifier = NULL;
 
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     t = ReadXMLModelToken (t, log);
     if  (t)
@@ -514,34 +515,40 @@ void  ModelUsfCasCor::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
 
-  if  (!param)
-    param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
+  delete  t;
+  t = NULL;
 
-  if  (Model::param == NULL)
+  if  (!cancelFlag)
   {
-    KKStr errMsg (128);
-    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
+    if  (!param)
+      param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
 
-  else if  (typeid (*Model::param) != typeid(ModelParamUsfCasCor))
-  {
-    KKStr errMsg (128);
-    errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
-    AddErrorMsg (errMsg, 0);
-    log.Level (-1) << endl << errMsg << endl << endl;
-  }
+    if  (Model::param == NULL)
+    {
+      KKStr errMsg (128);
+      errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined.";
+      AddErrorMsg (errMsg, 0);
+      log.Level (-1) << endl << errMsg << endl << endl;
+    }
 
-  else
-  {
-    param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
-  }
+    else if  (typeid (*Model::param) != typeid(ModelParamUsfCasCor))
+    {
+      KKStr errMsg (128);
+      errMsg << "ModelUsfCasCor::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type;  found: " << Model::param->ModelParamTypeStr ();
+      AddErrorMsg (errMsg, 0);
+      log.Level (-1) << endl << errMsg << endl << endl;
+    }
 
-  ReadXMLModelPost (log);
+    else
+    {
+      param = dynamic_cast<ModelParamUsfCasCorPtr> (Model::param);
+    }
+
+    ReadXMLModelPost (log);
+  }
 }  /* ReadXML */
 
 

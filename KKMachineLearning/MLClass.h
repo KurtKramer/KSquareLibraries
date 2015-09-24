@@ -516,6 +516,7 @@ namespace KKMLL
     virtual
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
+                   VolConstBool&   cancelFlag,
                    RunLog&         log
                   );
 
@@ -549,9 +550,10 @@ namespace KKMLL
   class  XmlElementMLClass:  public  XmlElement
   {
   public:
-    XmlElementMLClass (XmlTagPtr   tag,
-                       XmlStream&  s,
-                       RunLog&     log
+    XmlElementMLClass (XmlTagPtr      tag,
+                       XmlStream&     s,
+                       VolConstBool&  cancelFlag,
+                       RunLog&        log
                       );
                 
     virtual  ~XmlElementMLClass ();
@@ -579,9 +581,10 @@ namespace KKMLL
   class  XmlElementMLClassNameList:  public  XmlElement
   {
   public:
-    XmlElementMLClassNameList (XmlTagPtr   tag,
-                               XmlStream&  s,
-                               RunLog&     log
+    XmlElementMLClassNameList (XmlTagPtr      tag,
+                               XmlStream&     s,
+                               VolConstBool&  cancelFlag,
+                               RunLog&        log
                               );
                 
     virtual  ~XmlElementMLClassNameList ();

@@ -165,11 +165,12 @@ void  ModelParamSvmBase::WriteXML (const KKStr&  varName,
 
 void  ModelParamSvmBase::ReadXML (XmlStream&      s,
                                   XmlTagConstPtr  tag,
+                                  VolConstBool&   cancelFlag,
                                   RunLog&         log
                                  )
 {
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
   {
     t = ReadXMLModelParamToken (t);
     if  (t)
@@ -180,10 +181,10 @@ void  ModelParamSvmBase::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
-
-  bool  validFormat = false;
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
  

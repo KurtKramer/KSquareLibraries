@@ -516,6 +516,7 @@ void  BinaryClassParmsList::WriteXML (const KKStr&  varName,
 
 void  BinaryClassParmsList::ReadXML (XmlStream&      s,
                                      XmlTagConstPtr  tag,
+                                     VolConstBool&   cancelFlag,
                                      RunLog&         log
                                     )
 {
@@ -523,8 +524,8 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
   classIndex.clear ();
 
   bool  errorsFound = false;
-  XmlTokenPtr  t = s.GetNextToken (log);
-  while  (t  &&  !errorsFound)
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag)  &&  (!errorsFound))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokContent)
     {
@@ -537,8 +538,10 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
       }
     }
     delete  t;
-    t = s.GetNextToken (log);
+    t = s.GetNextToken (cancelFlag, log);
   }
+  delete  t;
+  t = NULL;
 }  /* ReadXML */
 
 

@@ -345,6 +345,7 @@ namespace KKMLL
      */
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
+                            VolConstBool&   cancelFlag,
                             RunLog&         log
                            ) = 0;
 
@@ -488,12 +489,13 @@ namespace KKMLL
   public:
     XmlElementModelTemplate (XmlTagPtr      tag,
                              XmlStream&     s,
+                             VolConstBool&  cancelFlag,
                              RunLog&        log
                             ):
       XmlElementModel (tag, s, log)
     {
       value = new ModelType();
-      value->ReadXML (s, tag, log);
+      value->ReadXML (s, tag, cancelFlag, log);
     }
                 
     virtual  ~XmlElementModelTemplate ()
