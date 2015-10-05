@@ -171,8 +171,7 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
       weight = float (atof (value.Str ()));
   }
 
-  BinaryClassParmsPtr  binaryClassParms 
-        = new  BinaryClassParms (class1, class2, *svm_param, selectedFeatures, weight);
+  BinaryClassParmsPtr  binaryClassParms = (svm_param == NULL) ? NULL :new  BinaryClassParms (class1, class2, *svm_param, selectedFeatures, weight);
 
   delete  selectedFeatures;  selectedFeatures = NULL;
   delete  svm_param;         svm_param        = NULL;

@@ -136,7 +136,7 @@ void*  Compressor::CreateCompressedBuffer (void*      source,
           uchar*  newCompressedBuff = new uchar[newCompressedBuffLen];
           memcpy (newCompressedBuff, compressedBuff, compressedBuffLen);
           memcpy (newCompressedBuff + compressedBuffLen, outputBuffer, have);
-          delete  compressedBuff;
+          delete[]  compressedBuff;
           compressedBuff    = newCompressedBuff;
           compressedBuffLen = newCompressedBuffLen;
         }

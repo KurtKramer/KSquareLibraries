@@ -311,7 +311,7 @@ double  Matrix::DeterminantSlow ()
 
   double det = CalcDeterminent (rowMap, colMap, numOfCols);
 
-  delete  colMap;
+  delete[]  colMap;
   return  det;
 }  /* Determinant */
 
@@ -808,8 +808,8 @@ void  Matrix::EigenVectors (MatrixPtr&      eigenVectors,
     for  (kkint32 x = 0;  x < numOfRows;  ++x)
       eigenValues->push_back (d[x]);
 
-    delete  d;  d = NULL;
-    delete  e;  e = NULL;
+    delete[]  d;  d = NULL;
+    delete[]  e;  e = NULL;
   }
 }  /* GetEigenVectors */
 

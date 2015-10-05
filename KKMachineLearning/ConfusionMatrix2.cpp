@@ -1202,8 +1202,8 @@ void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)
   o << "</tbody>" << endl
     << "</table>" << endl;
 
-  delete  totalCountsByPredClass;
-  delete  totalPredProbByPredClass;
+  delete[]  totalCountsByPredClass;
+  delete[]  totalPredProbByPredClass;
 }  /* PrintConfusionMatrixHTML */
 
 

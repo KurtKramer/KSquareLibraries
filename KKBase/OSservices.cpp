@@ -327,7 +327,7 @@ KKStr  KKB::osGetCurrentDirectory ()
     buffLen = reqLen;
 
     if  (buff)
-      delete buff;
+      delete[] buff;
 
     buff = new char[buffLen];
  

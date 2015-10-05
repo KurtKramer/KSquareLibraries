@@ -589,6 +589,9 @@ KKStr::KKStr (const KKStr&  str):
   }
 
   AllocateStrSpace (str.allocatedSize);
+  if  (!val)
+    throw KKException("KKStr::KKStr  Allocation failed.");
+
   memcpy (val, str.val, str.len);
   len = str.len;
 }
@@ -755,6 +758,8 @@ KKStr::KKStr (const char*  src,
   }
 
   AllocateStrSpace (1 + subStrLen);             // Need one extra byte for NULL terminating character.
+  if  (!val)
+    throw KKException ("KKStr::KKStr   Allocation Failed");
 
   memcpy (val, src + startPos, subStrLen);
   len = (kkuint16)subStrLen;
@@ -1446,6 +1451,8 @@ KKStr&  KKStr::operator= (const KKStr&  src)
     val = NULL;
     allocatedSize = 0;
     AllocateStrSpace (spaceNeeded);
+    if  (!val)
+      throw KKException ("KKStr::operator=");
   }
   else
   {

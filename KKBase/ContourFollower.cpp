@@ -771,7 +771,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
     delete[] dest;  dest = NULL;
   #endif
   
-  delete  count;
+  delete[]  count;
   count = NULL;
   
   

@@ -490,10 +490,13 @@ Raster::Raster (const Raster&  _raster):
   AddRasterInstance (this);
 
   AllocateImageArea ();
+  if  (!greenArea)  throw KKException ("Raster::Raster  Failed to allocate 'greenArea'.");
   memcpy (greenArea, _raster.greenArea, totPixels);
 
   if  (color)
   {
+    if  (!redArea)   throw KKException("Raster::Raster  Allocation of 'redArea'  failed.");
+    if  (!blueArea)  throw KKException("Raster::Raster  Allocation of 'blueArea' failed.");
     memcpy (redArea,  _raster.redArea,  totPixels);
     memcpy (blueArea, _raster.blueArea, totPixels);
   }
@@ -501,6 +504,7 @@ Raster::Raster (const Raster&  _raster):
   if  (_raster.fourierMagArea)
   {
     AllocateFourierMagnitudeTable ();
+    if  (!fourierMagArea)  throw KKException ("Raster::Raster  Allocation of 'fourierMagArea' failed.");
     memcpy (fourierMagArea, _raster.fourierMagArea, sizeof (float) * totPixels);
   }
 }
@@ -754,6 +758,7 @@ Raster::Raster (kkint32       _height,
 {
   AddRasterInstance (this);
   AllocateImageArea ();
+  if  (!greenArea)  throw KKException ("Raster::Raster   Failed to allocate 'greenArea'.");
   memcpy (greenArea, _grayScaleData, totPixels);
 }
 
@@ -3258,6 +3263,8 @@ BlobListPtr   Raster::ExtractBlobs (kkint32  dist)
               // If we get to this point there is something wrong with the 'blobs' data structure; for every blobId
               // specified in blobIds(via nearBlobId) there should be a entry in 'blobs'.
               curBlob = blobs->NewBlob(row, col);
+              if  (!curBlob)  throw KKException(" Raster::ExtractBlobs   curBlob == NULL");
+
               curBlobId = curBlob->id;
             }
           }
@@ -6889,7 +6896,7 @@ void  Raster::DrawConnectedPointList (Point              offset,
   PointPtr  pixel = NULL;
   PointPtr  lastPoint = NULL;
 
-  kkint32  row, col;
+  kkint32  row = 0, col = 0;
 
   for  (pIDX = borderPixs.begin ();  pIDX != borderPixs.end ();  pIDX++)
   {
@@ -7298,9 +7305,9 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
     }
   }
 
-  delete  candidatesRed;    candidatesRed   = NULL;
-  delete  candidatesGreen;  candidatesGreen = NULL;
-  delete  candidatesBlue;   candidatesBlue  = NULL;
+  delete[]  candidatesRed;    candidatesRed   = NULL;
+  delete[]  candidatesGreen;  candidatesGreen = NULL;
+  delete[]  candidatesBlue;   candidatesBlue  = NULL;
 
   return  result;
 } /* CreateSmoothedMediumImage */
@@ -9616,7 +9623,7 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
       resultArea[y] = (uchar)Min ((kkint32)((adjChannel[y] - valMin) * adjScaleFact + 0.5), (kkint32)255);
     }
   }
-  delete  adjChannel;    adjChannel   = NULL;
+  delete[]  adjChannel;  adjChannel   = NULL;
   delete  cov;           cov          = NULL;
   delete  eigenValues;   eigenValues  = NULL;
   delete  eigenVectors;  eigenVectors = NULL;
@@ -9788,10 +9795,10 @@ RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
         resultArea[y] = 0;
     }
   }
-  delete  adjChannel;    adjChannel   = NULL;
-  delete  cov;           cov          = NULL;
-  delete  eigenValues;   eigenValues  = NULL;
-  delete  eigenVectors;  eigenVectors = NULL;
+  delete[] adjChannel;    adjChannel   = NULL;
+  delete   cov;           cov          = NULL;
+  delete   eigenValues;   eigenValues  = NULL;
+  delete   eigenVectors;  eigenVectors = NULL;
 
   return  result;
 }  /* CreateGrayScaleKLTOnMaskedArea */
