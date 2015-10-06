@@ -232,6 +232,8 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
     for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  ++iIDX)
     {
       FeatureVectorPtr example = *iIDX;
+      if  (!example)
+        continue;
 
       if  (example == exampleToKeep)
       {
@@ -300,6 +302,8 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
     for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  ++iIDX)
     {
       FeatureVectorPtr example = *iIDX;
+      if  (!example)
+        continue;
 
       if  (example == exampleToKeep)
       {

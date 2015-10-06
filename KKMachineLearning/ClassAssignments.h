@@ -63,12 +63,7 @@ namespace KKMLL
     kkint16         GetNumForClass (MLClassPtr  mlClass)  const;
 
     VectorShort     GetUniqueListOfAssignments ()  const;
-
-    void            Load (const KKStr&  fileName,
-                          bool&         successful,
-                          RunLog&       log
-                         );
-
+    
     kkint32         MemoryConsumedEstimated ()  const;
 
     /**

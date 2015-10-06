@@ -820,11 +820,11 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
   FeatureVectorList::iterator  iIDX = this->begin ();
 
   FeatureVectorPtr  lastExample = *iIDX;  ++iIDX;
-
-
   while  (iIDX != end ())
   {
     FeatureVectorPtr  example = *iIDX;  ++iIDX;
+    if  (!example)
+      continue;
 
     if  (example->ExampleFileName () == lastExample->ExampleFileName ())
     {
@@ -845,8 +845,8 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
         if  (iIDX != end ())
         {
           example = *iIDX;
-    ++iIDX;
-  }
+          ++iIDX;
+        }
         else
         {
           example = NULL;
@@ -976,29 +976,18 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
   if  (curSortOrder == IFL_SortOrder::IFL_ByName)
-  {
     return  BinarySearchByName (_imageFileName);
-  }
-
   else
   {
-    kkint32            idx;
-    kkint32            qSize = QueueSize ();
     FeatureVectorPtr   example = NULL;
-    FeatureVectorPtr   tempImage;
-
-    for  (idx = 0; ((idx < qSize) && (!example)); idx++)
+    for  (auto tempExample:  *this)
     {
-      tempImage = IdxToPtr (idx);
-      if  (_imageFileName == tempImage->ExampleFileName ())   
-         example = tempImage;
+      if  (tempExample->ExampleFileName () == _imageFileName)
+         example = tempExample;
     }
-
     return  example;
   }
 }  /* LookUpByImageFileName */
-
-
 
 
 FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
@@ -1443,7 +1432,7 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
     folds[foldNum] = NULL;
   }
 
-  delete  folds;
+  delete[]  folds;
   folds = NULL;
   return  stratafiedImages;
 }  /* StratifyAmoungstClasses */

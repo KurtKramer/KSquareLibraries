@@ -177,64 +177,6 @@ kkint16  ClassAssignments::GetNumForClass (MLClassPtr  mlClass)  const
 
 
 
-
-
-void  ClassAssignments::Load (const KKStr&  fileName,
-                              bool&         successful,
-                              RunLog&       log
-                             )
-{
-  log.Level (10) << "ClassAssignments::Load -  File[" << fileName << "]." << endl;
-
-  char   buff[20480];
-
-  FILE*  inputFile = osFOPEN (fileName.Str (), "r");
-  if  (!inputFile)
-  {
-    log.Level (-1) << endl
-                   << "ClassAssignments::Load    *** ERROR ***" << endl
-                   << "                Input File[" << fileName << "] not Valid." << endl
-                   << endl;
-    successful = false;
-    return;
-  }
-
-  while  (fgets (buff, sizeof (buff), inputFile))
-  {
-    log.Level (70) << "ReadInData - [" << buff << "]" << endl;
-
-    KKStr  dataRow (buff);
-    dataRow.TrimRight ();
-    dataRow.TrimLeft ();
-
-    KKStr  className = dataRow.ExtractToken2 ("\n\r\t,");
-    kkint16  classNum  = (kkint16)dataRow.ExtractTokenInt ("\n\r\t,");
-
-    MLClassPtr mlClass = MLClass::CreateNewMLClass (className);
-    kkint32  existingAssignmentNum = GetNumForClass (mlClass);
-    if  (existingAssignmentNum >= 0)
-    {
-      // We already have this class Loaded,  for now i am only going to
-      // display a warning.
-      log.Level (-1) << endl
-                     << endl
-                     << endl
-                     << "ClassAssignments::Load    *** ERROR ***" << endl
-                     << "MLClass[" << className << "] being loaded more than once." << endl
-                     << endl;
-    }
-    else
-    {
-      AddMLClass (mlClass, classNum, log);
-    }
-  }
-
-  fclose (inputFile);
-  successful = true;
-}  /* Load */
-
-
-
 void  ClassAssignments::Save (const KKStr&  fileName,
                               bool&          successful
                              )

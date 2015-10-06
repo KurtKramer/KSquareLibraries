@@ -1017,7 +1017,7 @@ void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)
 
   outFile << endl << endl;
 
-  delete  totals;
+  delete[]  totals;
 }  /* PrintConfusionMatrix */
 
 
@@ -1548,7 +1548,7 @@ void   ConfusionMatrix2::PrintConfusionMatrixLatexTable (ostream&  outFile)
 
   outFile << endl;
 
-  delete  totals;
+  delete[]  totals;
 }  /* PrintConfusionMatrixLatexTable */
 
 
@@ -1662,7 +1662,7 @@ void   ConfusionMatrix2::PrintConfusionMatrixNarrow (ostream&  outFile)
 
   outFile << endl << endl;
 
-  delete  totals;
+  delete[]  totals;
 }  /* PrintCrossValidationNarrow */
 
 
@@ -1799,10 +1799,10 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
     r << endl;
   }
 
-  delete  falseNegatives;
-  delete  falsePositives;
-  delete  trueNegatives;
-  delete  truePositives;
+  delete[]  falseNegatives;
+  delete[]  falsePositives;
+  delete[]  trueNegatives;
+  delete[]  truePositives;
 }  /* PrintTrueFalsePositivesTabDelimited */
 
 
@@ -2183,8 +2183,8 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
     outFile << "\t" << perc << "%";
   }
 
-  delete  totalCount;
-  delete  totalCorrect;
+  delete[]  totalCount;   totalCount   = NULL;
+  delete[]  totalCorrect; totalCorrect = NULL;
 
   outFile << endl;
 
@@ -2251,7 +2251,7 @@ void   ConfusionMatrix2::PrintProbDistributionTotalCount (ostream&  outFile)
 
   outFile << endl;
 
-  delete  count;
+  delete[]  count;
 
   return;
 }  /* PrintProbDistributionTotalCount */
@@ -2323,8 +2323,8 @@ void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
 
   outFile << endl;
 
-  delete  count;
-  delete  correct;
+  delete[]  count;    count   = NULL;
+  delete[]  correct;  correct = NULL;
 }  /* PrintProbDistributionTotalError */
  
 
@@ -2473,7 +2473,7 @@ KKStr   ConfusionMatrix2::AccuracyStr ()
     accuracyStr << className << " " << StrFormatDouble (accuracys[x], "##0.000") << "%";
   }
 
-  delete  accuracys;
+  delete[]  accuracys;  accuracys = NULL;
 
   return  accuracyStr;
 }  /* AccuracyStr */
