@@ -621,7 +621,7 @@ void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVPr
       return;
     }
 
-    KKStr  fullFileName (dirPath);
+    KKStr  fullFileName (*dirPath);
     osAddLastSlash (fullFileName);
     fullFileName << example->ExampleFileName ();
 

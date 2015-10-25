@@ -109,8 +109,6 @@ namespace  KKB
 
     KKStr (KKStr&&  str);  /**< Move Constructor */
 
-    KKStr (KKStrConstPtr str);
-
     KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
     /** Initializes the string with a displayable version of 'd' with 'precision' decimal points. */
@@ -132,7 +130,7 @@ namespace  KKB
            kkuint32     endPos
           );
 
-    KKStr&   operator= (const KKStrConstPtr  src);
+    //KKStr&   operator= (const KKStrConstPtr  src);
 
     KKStr&   operator= (const KKStr& src);
 
@@ -426,7 +424,7 @@ namespace  KKB
 
     void     Lower ();                                       /**< @brief Make all characters in the String into lower case. */
 
-    KKStr    MaxLen (kkuint32  maxLen)  const;                /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
+    KKStr    MaxLen (kkuint32  maxLen)  const;               /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
 
     kkuint32 MaxLenSupported ()  const;                      /**< Returns the maximum String Length that this string can support. */
 
@@ -603,6 +601,8 @@ namespace  KKB
 
     KKStr     ToLower ()  const;
    
+    KKStrPtr  ToKKStrPtr () const;    /**< Instatiates a new instance of KKStr with Allocated optimized for current string length.  */
+
     KKStr     ToUpper ()  const;
 
     KKStr     ToXmlStr ()  const;

@@ -669,6 +669,33 @@ KKStrConstPtr   Configuration::SettingValue (kkint32       sectionNum,
 }
 
 
+KKStr   Configuration::SettingValueToStr (kkint32       sectionNum,
+                                          const KKStr&  settingName,
+                                          kkint32&      lineNum
+                                         )  const
+
+{
+  KKStrConstPtr  result = NULL;
+  ConfSectionPtr  section = sections->IdxToPtr (sectionNum);
+  if  (!section)
+  {
+    lineNum = -1;
+  }
+  else
+  {
+    result = section->LookUpValue (settingName, lineNum);
+  }
+
+  if  (result == NULL)
+    return KKStr::EmptyStr ();
+  else
+    return KKStr (*result);
+}
+
+
+
+
+
 
 
 KKStrConstPtr   Configuration::SettingValue (kkint32 sectionNum,
@@ -701,6 +728,19 @@ KKStrConstPtr   Configuration::SettingValue (const KKB::KKStr&  sectionName,
   return  SettingValue (sectionNum, settingName, lineNum);
 }
 
+
+
+KKStr  Configuration::SettingValueToStr (const KKB::KKStr&  sectionName,
+                                         const KKB::KKStr&  settingName,
+                                         kkint32&           lineNum
+                                        )  const
+{
+  kkint32  sectionNum = SectionNum (sectionName);
+  if  (sectionNum < 0)
+    return NULL;
+
+  return  SettingValueToStr (sectionNum, settingName, lineNum);
+}
 
 
 

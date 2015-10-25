@@ -380,9 +380,9 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
 
   {
     // We are going to read in header part of file.
-
+    KKStr  nextLine = "";
     bool  eof = false;
-    KKStr  nextLine = osReadRestOfLine (i, eof);
+    nextLine = osReadRestOfLine2 (i, eof);
     if  (eof  ||  (nextLine[(kkint16)0] != 'P')  ||  (nextLine[(kkint16)1] != '5'))
     {
       fclose (i);
@@ -390,7 +390,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
     }
 
     kkint32  headerFieldsRead = 0;
-    nextLine = osReadRestOfLine (i, eof);
+    nextLine = osReadRestOfLine2 (i, eof);
     while  (!eof)
     {
       if  (nextLine[(kkint16)0] != '#')
@@ -407,7 +407,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
         }
         headerFieldsRead++;
       }
-      nextLine = osReadRestOfLine (i, eof);
+      nextLine = osReadRestOfLine2 (i, eof);
     }
   }
 

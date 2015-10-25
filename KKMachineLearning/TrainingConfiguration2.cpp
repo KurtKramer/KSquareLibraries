@@ -1634,7 +1634,7 @@ FeatureNumListPtr  TrainingConfiguration2::DeriveFeaturesSelected (kkint32  sect
   kkint32  featuresIncludedLineNum = 0;
   kkint32  featuresExcludedLineNum = 0;
 
-  KKStr  includedFeaturesStr (SettingValue (sectionNum, "FEATURES_INCLUDED", featuresIncludedLineNum));
+  KKStr  includedFeaturesStr (SettingValueToStr (sectionNum, "FEATURES_INCLUDED", featuresIncludedLineNum));
 
   FeatureNumListPtr  selectedFeatures = NULL;
 
@@ -1671,7 +1671,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
   kkint32  sectionLineNum = SectionLineNum (sectionNum);
   kkint32  fvFactoryLineNum = 0;
 
-  KKStr  modelingMethodStr  (SettingValue (sectionNum, "MODELING_METHOD", methodLineNum));
+  KKStr  modelingMethodStr  (SettingValueToStr (sectionNum, "MODELING_METHOD", methodLineNum));
   modelingMethodStr.Upper ();
 
   log.Level (30) << "ValidateGlobalSection - ModelingMethod[" << Model::ModelTypeToStr (modelingMethod) << "]   LineNum[" << methodLineNum << "]." << endl;
@@ -1699,7 +1699,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
     FormatGood (false);
   }
 
-  KKStr  fvFactoryProducerName (SettingValue (sectionNum, "FEATURE_COMPUTER", fvFactoryLineNum));
+  KKStr  fvFactoryProducerName (SettingValueToStr (sectionNum, "FEATURE_COMPUTER", fvFactoryLineNum));
   if  (fvFactoryLineNum < 0)
   {
     fvFactoryProducerSpecified = false;
@@ -1732,7 +1732,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
     }
   }
 
-  KKStr  rootDirStr  (SettingValue (sectionNum, "ROOT_DIR", rootDirLineNum));
+  KKStr  rootDirStr  (SettingValueToStr (sectionNum, "ROOT_DIR", rootDirLineNum));
   if  (rootDirLineNum < 0)
   {
     // No Root Directory was specified.
@@ -1760,14 +1760,14 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
   kkint32  featuresIncludedLineNum  = -1;
   kkint32  examplesPerClassLineNum  = -1;
 
-  KKStr  modelParametersStr  = SettingValue (sectionNum, "Parameters",        parametersLineNum);
-  KKStr  featuresIncludedStr = SettingValue (sectionNum, "Features_Included", featuresIncludedLineNum);
+  KKStr  modelParametersStr  = SettingValueToStr (sectionNum, "Parameters",        parametersLineNum);
+  KKStr  featuresIncludedStr = SettingValueToStr (sectionNum, "Features_Included", featuresIncludedLineNum);
 
   if  ((parametersLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
-    modelParametersStr = SettingValue ("Model3", "Parameters", parametersLineNum);
+    modelParametersStr = SettingValueToStr ("Model3", "Parameters", parametersLineNum);
 
   if  ((featuresIncludedLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
-    featuresIncludedStr = SettingValue ("Model3", "Features_Included", featuresIncludedLineNum);
+    featuresIncludedStr = SettingValueToStr ("Model3", "Features_Included", featuresIncludedLineNum);
 
   if  (parametersLineNum < 0)
   {
@@ -1795,15 +1795,15 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
   }
 
   {
-    KKStr  examplesPerClassStr = SettingValue (sectionNum, "Examples_Per_Class", examplesPerClassLineNum);
+    KKStr  examplesPerClassStr = SettingValueToStr (sectionNum, "Examples_Per_Class", examplesPerClassLineNum);
     if  (examplesPerClassStr.Empty ())
-      examplesPerClassStr = SettingValue (sectionNum, "Images_Per_Class", examplesPerClassLineNum);
+      examplesPerClassStr = SettingValueToStr (sectionNum, "Images_Per_Class", examplesPerClassLineNum);
 
     if  ((examplesPerClassLineNum < 0)  &&  (modelingMethod == Model::ModelTypes::OldSVM))
     {
-      examplesPerClassStr = SettingValue ("Model3", "Examples_Per_Class", examplesPerClassLineNum);
+      examplesPerClassStr = SettingValueToStr ("Model3", "Examples_Per_Class", examplesPerClassLineNum);
       if  (examplesPerClassStr.Empty ())
-        examplesPerClassStr = SettingValue ("Model3", "Images_Per_Class", examplesPerClassLineNum);
+        examplesPerClassStr = SettingValueToStr ("Model3", "Images_Per_Class", examplesPerClassLineNum);
     }
 
     if  (examplesPerClassStr.Empty ())
@@ -1832,7 +1832,7 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
       examplesPerClass = modelParameters->ExamplesPerClass ();
   }
 
-  KKStr  otherClassName (SettingValue (sectionNum, "OtherClass", otherClassLineNum));
+  KKStr  otherClassName (SettingValueToStr (sectionNum, "OtherClass", otherClassLineNum));
   if  (otherClassLineNum >= 0)
   {
     if  (otherClassName.Empty ())
@@ -1870,10 +1870,10 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
 
   kkint32  sectionLineNum = SectionLineNum (sectionNum);
 
-  KKStr  class1Name   (SettingValue (sectionNum, "CLASS1",     class1NameLineNum));
-  KKStr  class2Name   (SettingValue (sectionNum, "CLASS2",     class2NameLineNum));
-  KKStr  parameterStr (SettingValue (sectionNum, "PARAMETERS", parameterLinenum));
-  KKStr  weightStr    (SettingValue (sectionNum, "WEIGHT",     weightLineNum));
+  KKStr  class1Name   (SettingValueToStr (sectionNum, "CLASS1",     class1NameLineNum));
+  KKStr  class2Name   (SettingValueToStr (sectionNum, "CLASS2",     class2NameLineNum));
+  KKStr  parameterStr (SettingValueToStr (sectionNum, "PARAMETERS", parameterLinenum));
+  KKStr  weightStr    (SettingValueToStr (sectionNum, "WEIGHT",     weightLineNum));
 
   if  (class1NameLineNum < 0)
   {
@@ -1970,7 +1970,7 @@ void   TrainingConfiguration2::ValidateConfiguration (RunLog&  log)
 
   for  (kkint32  sectionNum = 0; sectionNum < numOfSections; sectionNum++)
   {
-    KKStr  sectionName (SectionName (sectionNum));
+    KKStr  sectionName (*SectionName (sectionNum));
     sectionName.Upper ();
 
     if  (sectionName == "TRAINING_CLASS")

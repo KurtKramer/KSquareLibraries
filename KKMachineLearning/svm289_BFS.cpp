@@ -4522,7 +4522,7 @@ svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
 
     else if  (fieldName.EqualIgnoreCase ("Param"))
     {
-      ln = osReadRestOfLine (in, eof);
+      ln = osReadRestOfLine2 (in, eof);
       eol = true;
       model->param.ParseTabDelStr (ln);
     }

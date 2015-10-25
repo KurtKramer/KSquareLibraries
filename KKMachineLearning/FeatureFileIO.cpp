@@ -919,7 +919,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
     imageFileName = *fnIDX;
 
     // pv414-_002_20140414-162243_02068814-1261.bmp
-    KKStr  rootName = osGetRootName (imageFileName);
+    KKStr  rootName = osGetRootName (*imageFileName);
     if  (rootName == "pv414-_002_20140414-162243_02068814-1261")
       cout << "Stop Here." << endl;
 

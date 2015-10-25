@@ -116,10 +116,22 @@ namespace KKB
                                     )  const;
 
 
+    KKStr              SettingValueToStr (const KKB::KKStr&  sectionName,
+                                          const KKB::KKStr&  settingName,
+                                          kkint32&           lineNum
+                                         )  const;
+
+
     KKStrConstPtr      SettingValue (kkint32            sectionNum,
                                      const KKB::KKStr&  settingName,
                                      kkint32&           lineNum
                                     )  const;
+
+
+    KKStr              SettingValueToStr (kkint32            sectionNum,
+                                          const KKB::KKStr&  settingName,
+                                          kkint32&           lineNum
+                                         )  const;
 
 
     KKStrConstPtr      SettingValue (kkint32 sectionNum,

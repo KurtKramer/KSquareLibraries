@@ -365,7 +365,7 @@ ClassProbListPtr  ClassProbList::CreateFromXMLStream (istream& i)
 
   bool eof = false;
 
-  KKStr line = osReadRestOfLine (i, eof);
+  KKStr line = osReadRestOfLine2 (i, eof);
 
   while  (!eof)
   {
@@ -384,7 +384,7 @@ ClassProbListPtr  ClassProbList::CreateFromXMLStream (istream& i)
 
       result->PushOnBack (new ClassProb (c, prob, (float)votes));
     }
-    line = osReadRestOfLine (i, eof);
+    line = osReadRestOfLine2 (i, eof);
   }
 
   return result;

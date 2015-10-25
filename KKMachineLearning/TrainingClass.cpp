@@ -452,7 +452,7 @@ void  TrainingClassList::ReadXML (XmlStream&     s,
           if  (s)
           {
             if  (varName.EqualIgnoreCase ("RootDir"))
-              RootDir (s->Value ());
+              RootDir (*(s->Value ()));
           }
         }
         else if   (typeid (*t)  ==  typeid (XmlElementTrainingClass))

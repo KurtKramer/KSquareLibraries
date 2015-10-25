@@ -209,7 +209,7 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
 
   for  (fieldNum = 0;  fieldNum < searchFields->QueueSize ();  fieldNum++)
   {
-    const KKStr&  field = searchFields->IdxToPtr (fieldNum);
+    const KKStr&  field = *(searchFields->IdxToPtr (fieldNum));
     
     if  (field == "*")
     {
@@ -2490,6 +2490,17 @@ KKStr  KKB::osReadNextToken (FILE*       in,
 
 
 
+KKB::KKStr  KKB::osReadRestOfLine2 (std::istream&  in,
+                                    bool&          eof
+                                   )
+{
+  KKStrPtr l = osReadRestOfLine (in, eof);
+  KKStr  result(*l);
+  delete l;
+  l = NULL;
+  return  result;
+}
+
 
 
 KKStrPtr   KKB::osReadRestOfLine (std::istream&  in,
@@ -2562,6 +2573,19 @@ KKStrPtr  KKB::osReadRestOfLine (FILE*  in,
 
   return  result;
 }  /* osReadRestOfLine */
+
+
+
+KKB::KKStr  KKB::osReadRestOfLine2 (FILE*  in,
+                                    bool&  eof
+                                   )
+{
+  KKStrPtr l = osReadRestOfLine (in, eof);
+  KKStr  result(*l);
+  delete l;
+  l = NULL;
+  return  result;
+}
 
 
 

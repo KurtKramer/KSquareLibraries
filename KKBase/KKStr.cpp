@@ -125,7 +125,7 @@ kkint32  KKB::STRICMP (const char*  left,
 
 kkint32  KKB::STRNICMP (const char*  left,
                         const char*  right,
-                        kkint32        len
+                        kkint32      len
                        )
 {
   if  (left == NULL)
@@ -555,8 +555,6 @@ KKStr::KKStr (const char*  str):
 
 
 
-
-
 /**
  *@brief Copy Constructor.
  */
@@ -572,8 +570,7 @@ KKStr::KKStr (const KKStr&  str):
 
   if  (str.val[str.len] != 0)
   {
-    cerr << std::endl 
-         << std::endl 
+    std::cerr << std::endl 
          << "KKStr::KKStr    ***ERROR***    Missing terminating NULL" << std::endl
          << std::endl;
   }
@@ -581,22 +578,20 @@ KKStr::KKStr (const KKStr&  str):
   kkuint16  neededSpace = str.len + 1;
   if  (neededSpace > str.allocatedSize)
   {
-    cerr << std::endl;
-    cerr << "KKStr::KKStr (const KKStr&  str)   **** ERROR ****" << std::endl;
-    cerr << "        AllocatedSize["  << str.allocatedSize << "]  on Source KKStr is to Short" << std::endl;
-    cerr << "        for Str[" << str.val << "]." << std::endl;
-    exit (-1);
+    KKStr  errMsg = "KKStr::KKStr (const KKStr&  str)   AllocatedSize["  + ::StrFromUint16(str.allocatedSize) + "]  on Source KKStr is to Short";
+    std::cerr << endl << errMsg << "  ***ERROR***" << std::endl << std::endl;
+    throw new KKException (errMsg);
   }
 
   AllocateStrSpace (str.allocatedSize);
-  if  (!val)
-    throw KKException("KKStr::KKStr  Allocation failed.");
+  if  (!val)  {
+    std::cerr << std::endl << "KKStr::KKStr  ***ERROR***   Allocation Failed." << std::endl << std::endl; 
+    throw KKException("KKStr::KKStr  ***ERROR***  Allocation Failed.");
+  }
 
-  memcpy (val, str.val, str.len);
+  std::memcpy (val, str.val, str.len);
   len = str.len;
 }
-
-
 
 
 
@@ -613,46 +608,6 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
-
-
-
-/**
- @brief  Constructs a new KKStr from a pointer to a KKStr.
- */
-KKStr::KKStr (KKStrConstPtr  str): 
-        val (NULL)
-{
-  if  (!str)
-  {
-    AllocateStrSpace (1);
-    len = 0;
-    return;
-  }
-
-  if  (!(str->val))
-  {
-    AllocateStrSpace (1);
-    len = 0;
-    return;
-  }
-  
-  kkuint16  neededSpace = str->len + 1;
-
-  if  (neededSpace > str->allocatedSize)
-  {
-    cerr << std::endl;
-    cerr << "KKStr::KKStr (const KKStr&  str)   **** ERROR ****" << std::endl;
-    cerr << "        AllocatedSize["  << str->allocatedSize << "]  on Source KKStr is to Short" << std::endl;
-    cerr << "        for Str[" << str->val << "]." << std::endl;
-    throw "KKStr  Constructor (const KKStrPtr&  str)   'AllocatedSize' on source is too small.";
-  }
-
-  AllocateStrSpace (str->allocatedSize);
-
-  STRCOPY (val, allocatedSize, str->val);
-
-  len = str->len;
-}
 
 
 
@@ -1368,7 +1323,7 @@ void  KKStr::ValidateLen ()  const
   }
 }
 
-
+/*
 KKStr&  KKStr::operator= (const KKStrConstPtr src)
 {
   if  (src == this)
@@ -1404,9 +1359,9 @@ KKStr&  KKStr::operator= (const KKStrConstPtr src)
     len = src->len;
     val[len] = 0;
   }
-
   return *this;
 }
+*/
 
 
 
@@ -2290,11 +2245,15 @@ void  KKStr::RightPad (kkint32  width,
 
   if  (width < 0)
   {
-    cerr << std::endl;
-    cerr << "KKStr::RightPad (kkint32  width,  char ch)    **** ERROR ****" << std::endl;
-    cerr << "                width[" << width << "]  invalid." << std::endl;
-    cerr << std::endl;
-    exit (-1);
+    KKStr errMsg = "KKStr::RightPad (kkint32  width,  char ch)    ***ERROR***   width[" + StrFromInt32 (width) + "]  invalid.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException(errMsg);
+  }
+
+  if  ((kkuint32)width > MaxLenSupported ())  {
+    KKStr errMsg = "KKStr::RightPad (kkint32  width,  char ch)    ***ERROR***   width[" + StrFromInt32 (width) + "]  greater-than KKStr suppotrts.";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException(errMsg);
   }
 
   if  (!val)
@@ -2303,7 +2262,6 @@ void  KKStr::RightPad (kkint32  width,
     len = 0;
   }
 
- 
   if  (len > (kkuint16)width)
   {
     len = (kkuint16)width;
@@ -2578,6 +2536,11 @@ KKStr  KKStr::ToLower ()  const
 }  /* ToLower */
 
 
+
+KKStrPtr  KKStr::ToKKStrPtr () const
+{
+  return new KKStr (*this);
+}
 
 
 
@@ -4644,12 +4607,9 @@ KKStrPtr  KKStrList::BinarySearch (const KKStr&  searchStr)
 {
   if  (!sorted)
   {
-    cerr << std::endl
-         << "KKStrList::BinarySearch     **** ERROR ****"  << std::endl
-         << std::endl
-         << "            KKStr List is Not Sorted" << std::endl
-         << std::endl;
-    exit (-1);
+    KKStr errMsg = "KKStrList::BinarySearch     **** ERROR ****        KKStr List is Not Sorted";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
   }
   
   kkint32  low  = 0;

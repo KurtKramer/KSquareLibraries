@@ -53,7 +53,7 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
   osAddLastSlash (*dirPath);
   directories.push_back (dirPath);
 
-  KKStr  fileSpec (dirPath);
+  KKStr  fileSpec (*dirPath);
   fileSpec << "*.*";
 
   KKStrListPtr  files = osGetListOfFiles (fileSpec);
@@ -72,7 +72,7 @@ void  ImageDirTree::Load (const KKStr&  _subDir)
         existingIdx = entries.find (*fileName);
         if  (existingIdx != entries.end ())
         {
-          dupIdx = duplicates.find (fileName);
+          dupIdx = duplicates.find (*fileName);
           if  (dupIdx == duplicates.end ())
             duplicates.insert (pair<KKStr, kkint32> (*fileName, 2));
           else
