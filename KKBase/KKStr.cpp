@@ -762,6 +762,7 @@ void  KKStr::AllocateStrSpace (kkuint32  size)
 
 
 
+
 kkint32  KKStr::MemoryConsumedEstimated () const  
 {
   return sizeof (char*) + 2 * sizeof (kkuint16) + allocatedSize;

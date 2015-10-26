@@ -554,6 +554,12 @@ void  FileDesc::CreateBlocker ()
 
 FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
 {
+  if (fileDesc == NULL)
+  {
+    KKStr errMsg = "FileDesc::GetExistingFileDesc   ***ERROR***   (fileDesc == NULL).";
+    cerr << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
   FileDescPtr  result = NULL;
 
   CreateBlocker ();

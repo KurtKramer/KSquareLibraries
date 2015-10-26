@@ -509,24 +509,26 @@ XmlElementMLClass::XmlElementMLClass (XmlTagPtr      tag,
   {
     KKStrConstPtr n = tag->AttributeNameByIndex (x);
     KKStrConstPtr v = tag->AttributeValueByIndex (x);
+    if  (v != NULL)
+    {
+      if  ((n->EqualIgnoreCase ("Parent"))  &&  (!v->Empty ()))
+        value->Parent (MLClass::CreateNewMLClass (*v));
 
-    if  ((n->EqualIgnoreCase ("Parent"))  &&  (v != NULL)  &&  (!v->Empty ()))
-      value->Parent (MLClass::CreateNewMLClass (*v));
+      else if  (n->EqualIgnoreCase ("CountFactor"))
+        value->CountFactor (v->ToFloat ());
 
-    else if  (n->EqualIgnoreCase ("CountFactor"))
-      value->CountFactor (v->ToFloat ());
+      else if  (n->EqualIgnoreCase ("Description"))
+        value->Description (*v);
 
-    else if  (n->EqualIgnoreCase ("Description"))
-      value->Description (*v);
+      else if  (n->EqualIgnoreCase ("Mandatory"))
+        value->Mandatory (v->ToBool ());
 
-    else if  (n->EqualIgnoreCase ("Mandatory"))
-      value->Mandatory (v->ToBool ());
+      else if  (n->EqualIgnoreCase ("StoredOnDataBase"))
+        value->StoredOnDataBase (v->ToBool ());
 
-    else if  (n->EqualIgnoreCase ("StoredOnDataBase"))
-      value->StoredOnDataBase (v->ToBool ());
-
-    else if  (n->EqualIgnoreCase ("Summarize"))
-      value->Summarize (v->ToBool ());
+      else if  (n->EqualIgnoreCase ("Summarize"))
+        value->Summarize (v->ToBool ());
+    }
   }
 
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
@@ -687,7 +689,6 @@ void  MLClassList::Load (const KKStr&  _fileName,
                          bool&         _successfull
                         )
 {
-  char   buff[20480];
   kkint32  lineCount = 0;
 
   FILE*  inputFile = osFOPEN (_fileName.Str (), "r");
@@ -699,13 +700,13 @@ void  MLClassList::Load (const KKStr&  _fileName,
     return;
   }
 
-  while  (fgets (buff, sizeof (buff), inputFile))
+  bool eof = false;
+  KKStrPtr  dataRow = KKB::osReadRestOfLine (inputFile, eof);
+  while  (!eof)
   {
-    KKStr  dataRow (buff);
+    dataRow->TrimRight ();
 
-    dataRow.TrimRight ();
-
-    MLClassPtr  oneRow = MLClass::CreateNewMLClass (dataRow);
+    MLClassPtr  oneRow = MLClass::CreateNewMLClass (*dataRow);
 
     AddMLClass (oneRow);
 
@@ -713,7 +714,11 @@ void  MLClassList::Load (const KKStr&  _fileName,
       undefinedLoaded = true;
 
     lineCount++;
+    delete  dataRow;
+    dataRow = KKB::osReadRestOfLine (inputFile, eof);
   }
+  delete  dataRow;
+  dataRow = NULL;
 
   fclose (inputFile);
   _successfull = true;
@@ -876,17 +881,15 @@ MLClassPtr  MLClassList::GetMLClassPtr (const  KKStr& _name)
 
 MLClassPtr  MLClassList::GetNoiseClass ()  const
 {
-  kkint32     count      = QueueSize ();
   MLClassPtr  noiseClass = NULL;
-  kkint32     x;
-
-  for  (x = 0; ((x < count)  &&  (!noiseClass)); x++)
+  for  (auto idx: *this)  
   {
-    MLClassPtr  mlClass = IdxToPtr (x);
-    if  (mlClass->UnDefined ())
-       noiseClass = mlClass;
+    if  (idx->UnDefined ())
+    {
+     noiseClass = idx;
+     break;
+    }
   }
-
   return  noiseClass;
 }  /* GetNoiseClass */
 

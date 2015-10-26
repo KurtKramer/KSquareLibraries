@@ -836,8 +836,8 @@ void  ModelDual::RetrieveCrossProbTable (MLClassList&  _classes,
     delete  crossProbTableC2[x];  crossProbTableC2[x] = NULL;
   }
 
-  delete  crossProbTableC1;  crossProbTableC1 = NULL;
-  delete  crossProbTableC2;  crossProbTableC2 = NULL;
+  delete[]  crossProbTableC1;  crossProbTableC1 = NULL;
+  delete[]  crossProbTableC2;  crossProbTableC2 = NULL;
 
 }  /* RetrieveCrossProbTable */
 

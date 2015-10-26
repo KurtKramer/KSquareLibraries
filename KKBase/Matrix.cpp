@@ -799,8 +799,8 @@ void  Matrix::EigenVectors (MatrixPtr&      eigenVectors,
     if  (successful != 1)
     {
       delete  eigenVectors;  eigenVectors = NULL;
-      delete  d;             d = NULL;
-      delete  e;             e = NULL;
+      delete[] d;            d = NULL;
+      delete[] e;            e = NULL;
       return;
     }
 

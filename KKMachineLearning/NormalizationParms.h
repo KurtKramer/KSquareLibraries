@@ -73,24 +73,6 @@ namespace KKMLL
                         RunLog&                    _log
                        );
 
-    NormalizationParms (FileDescPtr   _fileDesc,
-                        KKStr         _fileName,
-                        bool&         _successfull,
-                        RunLog&       _log
-                       );
-
-    NormalizationParms (FileDescPtr   _fileDesc,
-                        FILE*         _in,
-                        bool&         _successfull,
-                        RunLog&       _log
-                       );
-
-    NormalizationParms (FileDescPtr     _fileDesc,
-                        std::istream&   _in,
-                        bool&           _successfull,
-                        RunLog&         _log
-                       );
-
     ~NormalizationParms ();
 
     kkint32 MemoryConsumedEstimated ()  const;
@@ -111,33 +93,11 @@ namespace KKMLL
 
     float   NumOfExamples ()  const {return numOfExamples;}
 
-
-    void  Read (FILE*    i,
-                bool&    sucessful,
-                RunLog&  log
-               );
-
-
-    void  Read (std::istream&  i,
-                bool&          sucessful,
-                RunLog&        log
-               );
-
-
     void  ReadXML (XmlStream&     s,
                    XmlTagPtr      tag,
                    VolConstBool&  cancelFlag,
                    RunLog&        log
                   );
-
-
-    void  Save (const KKStr&  _fileName,
-                bool&         _successfull,
-                RunLog&       _log
-               );
-
-    
-    void  Write (std::ostream&  o);
 
 
     void  WriteXML (const KKStr&   varName,
@@ -157,8 +117,6 @@ namespace KKMLL
     
     const double*  Mean  () const  {return  mean;}
     const double*  Sigma () const  {return  sigma;}
-
-    
 
   private:
     void  ConstructNormalizeFeatureVector ();

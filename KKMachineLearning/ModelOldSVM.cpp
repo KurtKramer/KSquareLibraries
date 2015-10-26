@@ -449,6 +449,13 @@ void  ModelOldSVM::TrainModel (FeatureVectorListPtr  _trainExamples,
   // The "Model::TrainModel" may have manipulated the '_trainExamples'.  It will have also 
   // updated 'Model::trainExamples.  So from this point forward we use 'trainExamples'.
   _trainExamples = NULL;
+  if  (trainExamples == NULL)
+  {
+    validModel = false;
+    KKStr errMsg = " ModelOldSVM::TrainModel  ***ERROR***    (trainExamples == NULL).";
+    _log.Level (-1) << endl << errMsg << endl << endl;
+    throw KKException (errMsg);
+  }
 
   if  ((!fileDesc)  &&  trainExamples)
     fileDesc = trainExamples->FileDesc ();

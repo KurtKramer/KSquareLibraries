@@ -819,14 +819,15 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
 
   FeatureVectorList::iterator  iIDX = this->begin ();
 
-  FeatureVectorPtr  lastExample = *iIDX;  ++iIDX;
   while  (iIDX != end ())
   {
     FeatureVectorPtr  example = *iIDX;  ++iIDX;
     if  (!example)
       continue;
 
-    if  (example->ExampleFileName () == lastExample->ExampleFileName ())
+    KKStr  lastFileName = example->ExampleFileName ();
+
+    if  (example->ExampleFileName () == lastFileName)
     {
       duplicateExamples->PushOnBack (new KKStr (example->ExampleFileName ()));
 
@@ -838,9 +839,9 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
       else
       {
         example = NULL;
-    }
+      }
 
-      while  ((example != NULL)   &&   (example->ExampleFileName () == lastExample->ExampleFileName ()))
+      while  ((example != NULL)   &&   (example->ExampleFileName () == lastFileName))
       {
         if  (iIDX != end ())
         {
@@ -853,8 +854,6 @@ KKStrListPtr   FeatureVectorList::ExtractDuplicatesByExampleFileName ()
         }
       }
     }
-
-    lastExample = example;
   }
 
   return  duplicateExamples;

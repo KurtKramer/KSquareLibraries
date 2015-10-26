@@ -2779,7 +2779,7 @@ void ConfusionMatrix2::PrintConfusionMatrixHTML (const char *title,
   file << "</body>" << endl;
   file << "</html>" << endl;
 
-  delete  totals;
+  delete[]  totals;
 }   /* PrintConfusionMatrixHTML */
 
 

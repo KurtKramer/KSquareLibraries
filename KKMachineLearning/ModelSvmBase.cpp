@@ -214,7 +214,7 @@ void  ModelSvmBase::TrainModel (FeatureVectorListPtr  _trainExamples,
   }
 
   SVM289_MFS::svm_problem  prob (*trainExamples, y, *(param->SelectedFeatures ()));
-  delete  y;  y = NULL;
+  delete[]  y;  y = NULL;
 
   try
   {
@@ -608,7 +608,7 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
 kkint32  ModelSvmBase::NumOfSupportVectors ()  const
 {
   kkint32  numOfSupportVectors = 0;
-  if  (svmModel)
+  if  (!svmModel)
     return  0;
 
   return  svmModel->numSVs;

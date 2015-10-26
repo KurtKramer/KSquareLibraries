@@ -328,13 +328,6 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
     delete  model;  model = NULL;
     throw  KKException ("Model::CreateAModel  Exception calling constructor.", e);
   }
-  catch  (const char*  e2)
-  {
-    delete  model;  model = NULL;
-    KKStr  exceptionStr = "Model::CreateAModel  Exception calling constructor[";
-    exceptionStr << e2 << "]."; 
-    throw  KKException (exceptionStr);
-  }
   catch  (...)
   {
     delete  model;  model = NULL;
@@ -827,7 +820,7 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
     }
   }
 
-  delete  indexTable;  indexTable = NULL;
+  delete[]  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
 
