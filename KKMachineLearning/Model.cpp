@@ -316,6 +316,11 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
     case  ModelTypes::Dual:
           model = new ModelDual      (_name, dynamic_cast<const ModelParamDual&>      (_param), _factoryFVProducer);
           break;
+
+    default:
+          KKStr errMsg = "Model::CreateAModel   ***ERROR***  Invalid _modelType[" + KKB::StrFromInt16((kkint16)_modelType) + "].";
+          _log.Level (-1) << endl << errMsg << endl << endl;
+          throw KKException(errMsg);
     }  /* end of switch */
   }
   catch  (const KKException&  e)

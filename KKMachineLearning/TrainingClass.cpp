@@ -345,20 +345,15 @@ TrainingClassPtr  TrainingClassList::LocateByMLClass (MLClassPtr  _mlClass)  con
 
 TrainingClassPtr  TrainingClassList::LocateByMLClassName (const KKStr&  className)
 {
-  kkint32  size = QueueSize ();
-
-  kkint32 idx = 0;
-
   TrainingClassPtr  traningClass = NULL;
-
-  for  (idx = 0; ((idx < size)  &&  (!traningClass)); idx++)
+  for  (auto idx: *this)
   {
-    TrainingClassPtr  temp = IdxToPtr (idx);
-
-    if  (temp->Name () == className)
-        traningClass = temp;
+    if  (idx->Name ().EqualIgnoreCase(className))
+    {
+      traningClass = idx;
+      break;
+    }
   }
-
   return  traningClass;
 }  /* LocateByMLClassName */
 

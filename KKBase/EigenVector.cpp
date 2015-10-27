@@ -58,7 +58,10 @@ void  KKB::Tred2 (kkint32   n,
       {
         for (k = 0;  k < l + 1;  k++)
         {
-          a[i][k] /= scale;       // Use scaled a's for transformation
+          if  (scale == 0.0)
+            a[i][k] = 0.0;
+          else
+            a[i][k] /= scale;     // Use scaled a's for transformation
           h+= a[i][k] * a[i][k];  // h = sigma
         }
         

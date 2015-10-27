@@ -3271,6 +3271,12 @@ BlobListPtr   Raster::ExtractBlobs (kkint32  dist)
           else
           {
             curBlob = blobs->NewBlob (row, col);
+            if  (!curBlob)
+            {
+              KKStr errMsg = "Raster::ExtractBlobs   ***ERROR***   allocation of new 'curBlob' failed.";
+              cerr << endl << errMsg << endl << endl;
+              throw KKException (errMsg);
+            }
             curBlobId = curBlob->id;
           }
 

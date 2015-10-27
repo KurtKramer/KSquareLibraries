@@ -123,21 +123,15 @@ public:
 
   ClassTotals::ClassTotalsPtr  LookUp (KKStr  _name)
   {
-    _name.Upper ();
-
-    kkint32  idx;
     ClassTotals::ClassTotalsPtr  classTotals = NULL;
-    ClassTotals::ClassTotalsPtr  temp;
-
-    for  (idx = 0; (idx < QueueSize ())  &&  (classTotals == NULL); idx++)
+    for  (auto temp: *this)
     {
-      temp = IdxToPtr (idx);
-      if  (temp->nameUpper == _name)
+      if  (temp->name.EqualIgnoreCase (_name))
       {
         classTotals = temp;
+        break;
       }
     }
-
     return  classTotals;
   }
 };  /* ClassTotalsList */

@@ -159,13 +159,10 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
 
   MLClassPtr  startingAncestor = NULL;
 
-  MLClassList::const_iterator  idx;
-
-  for  (idx = existingMLClasses->begin ();  idx != existingMLClasses->end ();  ++idx)
+  for  (auto existingMLClass: *existingMLClasses)
   {
-    MLClassPtr ancestor = *idx;
-    startingAncestor = *idx;
-    ancestor = startingAncestor->Parent ();
+    startingAncestor = existingMLClass;
+    MLClassPtr ancestor = startingAncestor->Parent ();
     while  (ancestor != NULL)
     {
       if  (ancestor == parent)
@@ -173,7 +170,6 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
         results->PushOnBack (startingAncestor);
         break;
       }
-
       ancestor = ancestor->Parent ();
       if  (ancestor == startingAncestor)
         break;

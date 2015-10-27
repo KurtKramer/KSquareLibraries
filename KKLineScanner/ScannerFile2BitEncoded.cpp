@@ -432,7 +432,7 @@ void  ScannerFile2BitEncoded::ProcessTextBlock (const OpRec&  rec)
      eof = true;
   textMsgPtr[recsRead] = 0;
   ReportTextMsg (textMsgPtr, textMsgLen);
-  delete  textMsgPtr;  textMsgPtr = NULL;
+  delete[]  textMsgPtr;  textMsgPtr = NULL;
   textMsgLen = 0;
 }  /* ProcessTextBlock */
 

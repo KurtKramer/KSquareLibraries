@@ -469,7 +469,7 @@ kkint64  ScannerFile4BitEncoded::SkipToNextFrame ()
     ++numScanLinesReadThisFrameBuffer;
   }
 
-  delete  scanLine;
+  delete[]  scanLine;
   scanLine = NULL;
 
   if  (feof (file) != 0)
@@ -503,7 +503,7 @@ void  ScannerFile4BitEncoded::ProcessTextBlock (const OpRec&  rec)
      textMsgPtr[recsRead] = 0;
      ReportTextMsg (textMsgPtr, textMsgLen);
    }
-   delete  textMsgPtr;  textMsgPtr = NULL;
+   delete[]  textMsgPtr;  textMsgPtr = NULL;
    textMsgLen = 0;
 }  /* ProcessTextBlock */
 

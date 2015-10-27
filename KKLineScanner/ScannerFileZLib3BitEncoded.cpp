@@ -415,7 +415,7 @@ kkuint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
       {
         uint8  textBlockLen;
         fread (&textBlockLen, 1, 1, file);
-        char  buff[256];
+        char  buff[257];
         fread (&buff, textBlockLen, 1, file);
         if  (!feof (file))
         {

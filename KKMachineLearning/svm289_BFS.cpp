@@ -5496,7 +5496,7 @@ svm_model *svm_load_model (const char*  model_file_name,
     //x_space[j++].index = -1;
     model->SV.PushOnBack (fv);
   }
-  delete  line;
+  delete[]  line;
   line = NULL;
 
   if  (ferror (fp) != 0 || fclose (fp) != 0)
@@ -5659,8 +5659,8 @@ const char *svm_check_parameter (const svm_problem*    prob,
       }
     }
 
-    delete  label;  label = NULL;
-    delete  count;  count = NULL;
+    delete[]  label;  label = NULL;
+    delete[]  count;  count = NULL;
   }
 
   return NULL;

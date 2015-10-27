@@ -1338,18 +1338,23 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
     return;
   }
 
-  char  buff[20480];
+  KKStrPtr  ln = NULL;
 
-  while  (fgets (buff, sizeof (buff), f))
+  while  (true)
   {
-    KKStr  ln (buff);
-    KKStr lineName = ln.ExtractToken2 ("\t\n\r");
+    bool  eol = false;
+    delete ln;
+    ln = KKB::osReadRestOfLine (f, eof);
+    if  (eof)  break;
+    if  (!ln)  continue;
+
+    KKStr lineName = ln->ExtractToken2 ("\t\n\r");
 
     if  (lineName.EqualIgnoreCase ("IndexEntry"))
     {
-      kkuint32 frameNum    = ln.ExtractTokenUint   ("\t\n\r");
-      kkint32  scanLineNum = ln.ExtractTokenInt    ("\t\n\r");
-      kkuint64 byteOffset  = ln.ExtractTokenUint64 ("\t\n\r");
+      kkuint32 frameNum    = ln->ExtractTokenUint   ("\t\n\r");
+      kkint32  scanLineNum = ln->ExtractTokenInt    ("\t\n\r");
+      kkuint64 byteOffset  = ln->ExtractTokenUint64 ("\t\n\r");
       UpdateFrameOffset (frameNum, scanLineNum, byteOffset);
       if  (scanLineNum > largestKnownScanLine)
         largestKnownScanLine = scanLineNum;
@@ -1362,7 +1367,7 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
     else if  (lineName.EqualIgnoreCase ("StartStopPoint"))
     {
-      StartStopPointPtr  entry = new StartStopPoint (ln);
+      StartStopPointPtr  entry = new StartStopPoint (*ln);
       if  (entry->Type () == StartStopPoint::StartStopType::Invalid)
       {
         delete  entry;
@@ -1376,10 +1381,12 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
     else if  (lineName.EqualIgnoreCase ("DeleteStartStopPoint"))
     {
-      kkint32  scanLineNum = ln.ExtractTokenInt ("\n\t\r");
+      kkint32  scanLineNum = ln->ExtractTokenInt ("\n\t\r");
       startStopPoints.DeleteEntry (scanLineNum);
     }
   }
+  delete  ln;
+  ln = NULL;
 
   fclose (f);
   successful = true;

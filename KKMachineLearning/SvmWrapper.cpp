@@ -757,7 +757,7 @@ struct SvmModel233**   KKMLL::SvmLoadModel (istream&  f,
 
   if  (models[0] == NULL)
   {
-    delete  models;
+    delete[]  models;
     models = NULL;
   }
 

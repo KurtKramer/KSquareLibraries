@@ -271,7 +271,7 @@ kkint64  ScannerFile3BitEncoded::SkipToNextFrame ()
     ++numScanLinesReadThisFrameBuffer;
   }
 
-  delete  scanLine;
+  delete[]  scanLine;
   scanLine = NULL;
 
   if  (feof (file) != 0)
@@ -447,7 +447,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
   if  (textMsg)
   {
     ReportTextMsg (textMsg, textMsgLen);
-    delete  textMsg;  textMsg = NULL;
+    delete[]  textMsg;  textMsg = NULL;
     textMsgLen = 0;
   }
 }  /* GetNextScanLine */

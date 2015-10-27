@@ -577,16 +577,14 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
 
   else
   {
-    FileDescList::iterator  idx;
-
-    for  (idx = exisitingDescriptions->begin ();  idx != exisitingDescriptions->end ();  idx++)
+    for  (auto existingFileDesc: *exisitingDescriptions)  
     {
-      FileDescPtr existingFileDesc = *idx;
-
       if  (existingFileDesc == fileDesc)
-        return  fileDesc;
-
-      if  ((*existingFileDesc) == (*fileDesc))
+      {
+        result = existingFileDesc;
+        break;
+      }
+      else if  ((*existingFileDesc) == (*fileDesc))
       {
         // Looks like we already have a compatible "FileDesc" instance.
         // In this case this is the one the user will want.
