@@ -12,7 +12,7 @@
 #include <iostream>
 
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace std;
 
 
@@ -417,6 +417,12 @@ void  SvmModel233::ReadXML (XmlStream&      s,
         log.Level (-1) << "SvmModel233::ReadXML  ***ERROR***  Exceeding expected number of Support Vectors." << endl;
       }
 
+      if  (!SV)
+      {
+        log.Level (-1) << endl << "SvmModel233::ReadXML   ***ERROR***   'SV'  was no defined  LineNum:" << lineName << endl << endl;
+        errorsFound = true;
+      }
+
       if  (!errorsFound)
       {
         if  (lineName.EqualIgnoreCase ("SuportVectorNamed"))
@@ -428,7 +434,6 @@ void  SvmModel233::ReadXML (XmlStream&      s,
           sv_coef[j][numSVsLoaded] = p.GetNextTokenDouble ("\t");
 
         SV[numSVsLoaded] = &(xSpace[numElementsLoaded]);
-
 
         while  ((p.MoreTokens ())  &&  (numElementsLoaded < (totalNumOfElements - 1)))
         {
@@ -962,14 +967,15 @@ void  svm_parameter::ProcessSvmParameter (KKStr   cmd,
   else if  (cmd == "-W")
   {
     ++nr_weight;
-    weight_label = (kkint32 *) realloc (weight_label, sizeof (kkint32) * nr_weight);
-    weight = (double *) realloc (weight, sizeof (double) * nr_weight);
-    weight_label[nr_weight - 1] = atoi (cmd.SubStrPart (2).Str ());
-    weight[nr_weight - 1]       = valueNum;
+    weight_label = KKB::kkReallocateArray (weight_label, nr_weight - 1, nr_weight);
+    weight       = KKB::kkReallocateArray (weight,       nr_weight - 1, nr_weight);
+    weight_label [nr_weight - 1] = cmd.SubStrPart (2).ToInt32 ();
+    weight       [nr_weight - 1] = valueNum;
   }
 
   else
     parmUsed = false;
+
 }  /* ProcessSvmParameter */
 
 
@@ -1437,9 +1443,9 @@ void SVM233::Cache::lru_insert(head_t *h)
 
 
 kkint32  SVM233::Cache::get_data (const kkint32 index, 
-                              Qfloat**  data, 
-                              kkint32     len
-                             )
+                                  Qfloat**      data, 
+                                  kkint32       len
+                                 )
 {
   head_t *h = &head[index];
 
@@ -3678,9 +3684,6 @@ void svm_get_labels(const SvmModel233 *model, kkint32* label)
 
 
 
-
-
-
 const char *svm_type_table[] =
 {
   "c_svc","nu_svc","one_class","epsilon_svr","nu_svr",NULL
@@ -3692,82 +3695,6 @@ const char *kernel_type_table[]=
 {
   "linear","polynomial","rbf","sigmoid",NULL
 };
-
-
-
-
-
-kkint32 SVM233::svm_save_model (const char *model_file_name, const SvmModel233 *model)
-{
-  FILE *fp = fopen (model_file_name, "w");
-  if  (fp==NULL) return -1;
-
-  const svm_parameter& param = model->param;
-
-  fprintf (fp, "svm_type    %s\n", svm_type_table    [param.svm_type]);
-  fprintf (fp, "kernel_type %s\n", kernel_type_table [param.kernel_type]);
-  fprintf (fp, "dimSelect   %d\n", param.dimSelect);
-
-
-  if  (param.kernel_type == POLY)
-    fprintf(fp,"degree %g\n", param.degree);
-
-  if  (param.kernel_type == POLY || param.kernel_type == RBF || param.kernel_type == SIGMOID)
-    fprintf(fp,"gamma %g\n", param.gamma);
-
-  if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
-    fprintf(fp,"coef0 %g\n", param.coef0);
-
-  kkint32 nr_class = model->nr_class;
-  kkint32 l = model->l;
-  fprintf  (fp, "nr_class %d\n", nr_class);
-  fprintf  (fp, "total_sv %d\n",l);
-
-  {
-    fprintf(fp, "rho");
-    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
-      fprintf(fp," %g",model->rho[i]);
-    fprintf(fp, "\n");
-  }
-
-  if (model->label)
-  {
-    fprintf(fp, "label");
-    for(kkint32 i=0;i<nr_class;i++)
-      fprintf(fp," %d",model->label[i]);
-    fprintf(fp, "\n");
-  }
-
-  if  (model->nSV)
-  {
-    fprintf(fp, "nr_sv");
-    for(kkint32 i=0;i<nr_class;i++)
-      fprintf(fp," %d",  model->nSV[i]);
-    fprintf(fp, "\n");
-  }
-
-  fprintf(fp, "SV\n");
-  const double * const *sv_coef = model->sv_coef;
-  const svm_node * const *SV = model->SV;
-
-  for (kkint32 i = 0;  i < l;  i++)
-  {
-    for  (kkint32 j = 0;  j < nr_class - 1;  j++)
-      fprintf(fp, "%.16g ",sv_coef[j][i]);
-
-    const svm_node *p = SV[i];
-    while(p->index != -1)
-    {
-      fprintf(fp,"%d:%.8g ",p->index,p->value);
-      p++;
-    }
-    fprintf(fp, "\n");
-  }
-
-  fclose (fp);
-  return 0;
-}
-
 
 
 
@@ -3876,8 +3803,8 @@ void  SVM233::Svm_Save_Model (ostream&           o,
 
 
 struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
-                                           RunLog&   log
-                                          )
+                                             RunLog&   log
+                                            )
 {
   SvmModel233*  model = new SvmModel233 ();
 
@@ -3919,8 +3846,8 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
     log.Level (-1) << endl << endl
       << "SVM233::Svm_Load_Model    ***ERROR***    The '<Svm233>'  header is missing.  Not a valid model." << endl
       << endl;
-    delete  model; model = NULL;
-    delete  buff;  buff = NULL;
+    delete    model; model = NULL;
+    delete[]  buff;  buff  = NULL;
     return NULL;
   }
 
@@ -4109,207 +4036,6 @@ struct SvmModel233*  SVM233::Svm_Load_Model (istream&  f,
 
   return  model;
 }  /* Svm_Load_Model */
-
-
-
-
-
-SvmModel233*  SVM233::svm_load_model (const char *model_file_name)
-{
-  FILE *fp = fopen (model_file_name, "rb");
-  if  (fp == NULL) 
-    return NULL;
-
-  // read parameters
-
-  SvmModel233 *model = new SvmModel233 ();
-  svm_parameter& param = model->param;
-  model->rho   = NULL;
-  model->label = NULL;
-  model->nSV   = NULL;
-
-  char cmd[82];
-  while(1)
-  {
-    fscanf(fp,"%80s",cmd);
-
-    if  (KKStr::StrEqualNoCase (cmd, "svm_type"))
-    {
-      fscanf(fp,"%80s",cmd);
-      kkint32 i;
-      for (i=0;svm_type_table[i];i++)
-      {
-        if  (KKStr::StrEqualNoCase (svm_type_table[i], cmd))
-        {
-          param.svm_type=i;
-          break;
-        }
-      }
-
-      if  (svm_type_table[i] == NULL)
-      {
-        fprintf (stderr,"unknown svm type.\n");
-        free (model->rho);
-        free (model->label);
-        free (model->nSV);
-        delete model;
-        return NULL;
-      }
-    }
-
-    else if  (KKStr::StrEqualNoCase (cmd, "kernel_type"))
-    {
-      fscanf(fp,"%80s",cmd);
-      kkint32 i;
-      for  (i = 0;  kernel_type_table[i];  i++)
-      {
-        if  (KKStr::StrEqualNoCase (kernel_type_table[i], cmd))
-        {
-          param.kernel_type=i;
-          break;
-        }
-      }
-
-      if  (kernel_type_table[i] == NULL)
-      {
-        fprintf(stderr,"unknown kernel function.\n");
-        free(model->rho);
-        free(model->label);
-        free(model->nSV);
-        delete model;
-        return NULL;
-      }
-    }
-
-    else if  (KKStr::StrEqualNoCase (cmd, "dimSelect"))
-      fscanf (fp, "%d", &param.dimSelect);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "degree"))
-      fscanf(fp,"%lf",&param.degree);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "gamma"))
-      fscanf(fp,"%lf",&param.gamma);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "coef0"))
-      fscanf(fp,"%lf",&param.coef0);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "nr_class"))
-      fscanf(fp,"%d",&model->nr_class);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "total_sv"))
-      fscanf(fp,"%d",&model->l);
-
-    else if  (KKStr::StrEqualNoCase (cmd, "rho"))
-    {
-      kkint32 n = model->nr_class * (model->nr_class - 1) / 2;
-      model->rho = Malloc (double, n);
-      for  (kkint32 i=0; i < n;  i++)
-        fscanf(fp,"%lf",&model->rho[i]);
-    }
-
-    else if  (KKStr::StrEqualNoCase (cmd, "label"))
-    {
-      kkint32 n = model->nr_class;
-      model->label = Malloc(kkint32,n);
-      for(kkint32 i=0;i<n;i++)
-        fscanf(fp,"%d",&model->label[i]);
-    }
-
-    else if  (KKStr::StrEqualNoCase (cmd, "nr_sv"))
-    {
-      kkint32 n = model->nr_class;
-      model->nSV = Malloc(kkint32,n);
-      for  (kkint32 i = 0;  i < n;  i++)
-        fscanf(fp, "%d", &model->nSV[i]);
-    }
-
-    else if  (KKStr::StrEqualNoCase (cmd, "SV"))
-    {
-      while(1)
-      {
-        kkint32 c = getc (fp);
-        if  (c == EOF || c == '\n') break;
-      }
-      break;
-    }
-
-    else
-    {
-      fprintf (stderr,"unknown text in model file\n");
-      free (model->rho);
-      free (model->label);
-      free (model->nSV);
-      delete model;
-      return NULL;
-    }
-  }
-
-  // read sv_coef and SV
-
-  kkint32 elements = 0;
-  kkint32 pos = ftell(fp);
-
-  while(1)
-  {
-    kkint32 c = fgetc(fp);
-    switch(c)
-    {
-    case '\n':
-      // count the '-1' element
-    case ':':
-      ++elements;
-      break;
-    case EOF:
-      goto out;
-    default:
-      ;
-    }
-  }
-
-out:
-  fseek(fp, pos, SEEK_SET);
-
-  kkint32 m = model->nr_class - 1;
-  kkint32 l = model->l;
-  model->sv_coef = Malloc(double *,m);
-  kkint32 i;
-  for  (i = 0;  i < m;  i++)
-    model->sv_coef[i] = Malloc(double,l);
-
-  model->SV = Malloc(svm_node*,l);
-  svm_node *x_space = Malloc(svm_node,elements);
-
-  kkint32 j=0;
-  for  (i = 0;  i < l;  i++)
-  {
-    model->SV[i] = &x_space[j];
-    for (kkint32 k = 0;  k < m;  k++)
-      fscanf (fp, "%lf", &model->sv_coef[k][i]);
-    while  (1)
-    {
-      kkint32 c;
-      do {
-        c = getc(fp);
-        if(c=='\n') goto out2;
-      } while(isspace(c));
-      ungetc(c,fp);
-      fscanf(fp,"%d:%lf",&(x_space[j].index),&(x_space[j].value));
-      ++j;
-      }
-out2:
-    x_space[j++].index = -1;
-  }
-
-  fclose(fp);
-
-
-  // kak, 2006-Jul-03, Following array is needed during prediction, it is 
-  //                   created in svm_train so need to do here also.
-  model->kValueTable = new double[model->l];
-
-  return model;
-}  /* svm_load_model */
-
 
 
 
@@ -5113,7 +4839,7 @@ void  SVM233::svm_GetSupportVectorStatistics (const struct SvmModel233*  model,
       }
     }
 
-    delete  start;
+    delete[]  start;
     start = NULL;
   }
 

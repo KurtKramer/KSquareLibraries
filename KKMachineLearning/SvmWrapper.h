@@ -24,14 +24,6 @@ namespace KKMLL
                        );
 
 
-  void    SvmSaveModel (struct SvmModel233**  subModel,
-                        const char*           fileName,
-                        bool&                 successfull
-                       );
-
-
-  struct  SvmModel233**   SvmLoadModel (const char* fileName);
-
   struct  SvmModel233**   SvmLoadModel (istream&  f,
                                         RunLog&   log
                                        );

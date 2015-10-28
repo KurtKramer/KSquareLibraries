@@ -2343,7 +2343,7 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
     }
   }
 
-  delete  indexTable;  indexTable = NULL;
+  delete[]  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
 

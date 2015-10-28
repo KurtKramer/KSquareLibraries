@@ -584,6 +584,10 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
         result = existingFileDesc;
         break;
       }
+      else if  (existingFileDesc == NULL)
+      {
+        continue;
+      }
       else if  ((*existingFileDesc) == (*fileDesc))
       {
         // Looks like we already have a compatible "FileDesc" instance.

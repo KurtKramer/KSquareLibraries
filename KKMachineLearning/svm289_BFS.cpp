@@ -65,19 +65,6 @@ namespace  SVM289_BFS
                                 double*   p  /**< Class Probability        */
                                );
 
-  void  readline (FILE*    input,
-                  char*&   buff,
-                  kkint32& buffLen,
-                  bool&    eof
-                 );
-
-  void  svm_load_model_XML_SupportVectorSection (istream&     in,
-                                                 FileDescPtr  fileDesc,
-                                                 svm_model&   model,
-                                                 bool&        valid,
-                                                 RunLog&      log
-                                                );
-
   // Stratified cross validation
   void  svm_cross_validation (const svm_problem&    prob, 
                               const svm_parameter&  param, 
@@ -122,7 +109,6 @@ namespace  SVM289_BFS
 #define INF HUGE_VAL
 #define TAU 1e-12
 //#define Malloc(type,n) (type *)malloc((n)*sizeof(type))
-
 
 
 
@@ -3040,7 +3026,7 @@ void  SVM289_BFS::sigmoid_train (kkint32        l,
   if  (iter >= max_iter)
     info ("Reaching maximal iterations in two-class probability estimates\n");
 
-  delete  t;  t = NULL;
+  delete[]  t;  t = NULL;
 }  /* sigmoid_train */
 
 
@@ -3685,23 +3671,23 @@ svm_model*  SVM289_BFS::svm_train  (const svm_problem&     prob,
       }
     }
 
-    delete label;  label = NULL;
-    delete probA;  probA = NULL;
-    delete probB;  probB = NULL;
-    delete count;  count = NULL;
-    delete perm;   perm  = NULL;
-    delete start;  start = NULL;
+    delete[] label;  label = NULL;
+    delete[] probA;  probA = NULL;
+    delete[] probB;  probB = NULL;
+    delete[] count;  count = NULL;
+    delete[] perm;   perm  = NULL;
+    delete[] start;  start = NULL;
     //free (x);
-    delete weighted_C;  weighted_C = NULL;
-    delete nonzero;     nonzero    = NULL;
+    delete[] weighted_C;  weighted_C = NULL;
+    delete[] nonzero;     nonzero    = NULL;
     for  (i = 0;  i < numBinaryCombos;  i++)
     {
       delete f[i].alpha;
       f[i].alpha = NULL;
     }
-    delete f;          f = NULL;
-    delete nz_count;   nz_count = NULL;
-    delete nz_start;   nz_start = NULL;
+    delete[] f;          f = NULL;
+    delete[] nz_count;   nz_count = NULL;
+    delete[] nz_start;   nz_start = NULL;
   }
 
   return  model;
@@ -3781,11 +3767,11 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     for (i=1;i<=nr_fold;i++)
       fold_start[i] = fold_start[i-1]+fold_count[i-1];
 
-    delete start;        start = NULL;
-    delete label;       label = NULL;
-    delete count;        count = NULL;
-    delete index;       index = NULL;
-    delete fold_count;  fold_count = NULL;
+    delete[] start;       start = NULL;
+    delete[] label;       label = NULL;
+    delete[] count;       count = NULL;
+    delete[] index;       index = NULL;
+    delete[] fold_count;  fold_count = NULL;
   }
   else
   {
@@ -3839,10 +3825,8 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
       kkint32  *votes          = new kkint32 [svm_get_nr_class (submodel)];
       for  (j = begin;  j < end;  j++)
         target[perm[j]] = svm_predict_probability (submodel, prob.x[perm[j]], prob_estimates, votes);
-      delete  prob_estimates;
-      prob_estimates = NULL;
-      delete  votes;
-      votes = NULL;
+      delete[]  prob_estimates;  prob_estimates = NULL;
+      delete[]  votes;           votes          = NULL;
     }
     else
     {
@@ -3858,8 +3842,8 @@ void  SVM289_BFS::svm_cross_validation (const svm_problem&    prob,
     delete  subprob.y;   subprob.y = NULL;
   }    
 
-  delete fold_start;  fold_start = NULL;
-  delete perm;        perm       = NULL;
+  delete[] fold_start;  fold_start = NULL;
+  delete[] perm;        perm       = NULL;
 }  /* svm_cross_validation */
  
 
@@ -4029,8 +4013,8 @@ double SVM289_BFS::svm_predict (const svm_model*      model,
         vote_max_idx = i;
     }
 
-    delete  vote;        vote = NULL;
-    delete  dec_values;  dec_values = NULL;
+    delete[] vote;        vote = NULL;
+    delete[] dec_values;  dec_values = NULL;
 
     return model->label[vote_max_idx];
   }
@@ -4118,556 +4102,25 @@ double  SVM289_BFS::svm_predict_probability (svm_model*            model,
 }  /* svm_predict_probability */
 
 
-
-
-
-
-
-
-kkint32  SVM289_BFS::svm_save_model (const char*      model_file_name, 
-                                     const svm_model* model
-                                    )
-{
-  FILE *fp = osFOPEN (model_file_name,"w");
-  if  (fp == NULL) 
-    return -1;
-
-  const svm_parameter& param = model->param;
-
-  fprintf (fp, "svm_type %s\n",    SVM_Type_ToStr (param.svm_type).Str ());
-  fprintf (fp, "kernel_type %s\n", Kernel_Type_ToStr (param.kernel_type).Str ());
-
-  if  (param.kernel_type == POLY)
-    fprintf(fp,"degree %d\n", param.degree);
-
-  if  (param.kernel_type == POLY || param.kernel_type == RBF || param.kernel_type == SIGMOID)
-    fprintf(fp,"gamma %g\n", param.gamma);
-
-  if  (param.kernel_type == POLY || param.kernel_type == SIGMOID)
-    fprintf(fp,"coef0 %g\n", param.coef0);
-
-  kkint32 nr_class = model->nr_class;
-  kkint32 l = model->l;
-  fprintf (fp, "nr_class %d\n", nr_class);
-  fprintf (fp, "total_sv %d\n", l);
-  
-  {
-    fprintf(fp, "rho");
-    for  (kkint32 i = 0;  i < nr_class * (nr_class - 1) / 2;  i++)
-      fprintf(fp," %g",model->rho[i]);
-    fprintf(fp, "\n");
-  }
-  
-  if  (model->label)
-  {
-    fprintf(fp, "label");
-    for  (kkint32 i = 0;  i < nr_class;  i++)
-      fprintf (fp," %d",  model->label[i]);
-    fprintf (fp, "\n");
-  }
-
-  if  (model->probA) // regression has probA only
-  {
-    fprintf(fp, "probA");
-    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
-      fprintf(fp," %g",model->probA[i]);
-    fprintf(fp, "\n");
-  }
-  if  (model->probB)
-  {
-    fprintf(fp, "probB");
-    for(kkint32 i=0;i<nr_class*(nr_class-1)/2;i++)
-      fprintf(fp," %g",model->probB[i]);
-    fprintf(fp, "\n");
-  }
-
-  if  (model->nSV)
-  {
-    fprintf (fp, "nr_sv");
-    for  (kkint32 i = 0;  i < nr_class;  i++)
-      fprintf(fp," %d", model->nSV[i]);
-    fprintf(fp, "\n");
-  }
-
-
-  fprintf(fp, "SV\n");
-  const double * const *sv_coef = model->sv_coef;
-
-  //const svm_node * const *SV = model->SV;
-  const FeatureVectorList&  SV = model->SV;
-  FeatureNumList  selFeatures = model->selFeatures;
-
-  for  (kkint32 i = 0;  i < l;  i++)
-  {
-    for  (kkint32 j = 0;  j < nr_class-1;  j++)
-      fprintf (fp, "%.16g ", sv_coef[j][i]);
-
-    //const svm_node *p = SV[i];
-    const FeatureVector&  p = SV[i];
-
-    if  (param.kernel_type == PRECOMPUTED)
-    {
-      //fprintf(fp,"0:%d ",(kkint32)(p->value));
-      fprintf (fp, "0:%d ", (kkint32)(p.FeatureData (0)));
-    }
-    else
-    {
-      kkint32  zed = 0;  
-      for  (zed = 0;  zed < p.NumOfFeatures ();  zed++)
-        fprintf (fp, "%d:%.8g ", zed, p.FeatureData (zed));
-
-      //while (p->index != -1)
-      //{
-      //  fprintf(fp,"%d:%.8g ", p->index, p->value);
-      //  p++;
-      //}
-    }
-    fprintf(fp, "\n");
-  }
-
-  if  (ferror(fp) != 0 || fclose(fp) != 0) 
-    return -1;
-  else 
-    return 0;
-}  /* svm_save_model */
-
-
-
-
-
-void  SVM289_BFS::svm_save_model_XML (ostream&          o, 
-                                      const svm_model&  model
-                                     )
-{
-  kkint32  origPrecision = (kkint32)o.precision ();
-
-  kkint32 nr_class = model.nr_class;
-  kkint32 l = model.l;
-  kkint32  numBinarySVM = nr_class * (nr_class - 1) / 2;
-
-  o << "<LibSvmModel>" << std::endl;
-
-  o << "Version"   << "\t" << LIBSVM_VERSION << std::endl;
-
-  o << "Param"     << "\t" << model.param.ToTabDelStr () << std::endl;
-  o << "nr_class"  << "\t" << (model.nr_class)          << std::endl;
-  o << "total_sv"  << "\t" << (model.l)                 << std::endl;
-
-  {
-    o.precision (12);
-    o << "rho";
-    for  (kkint32 i = 0;  i < numBinarySVM;  i++)
-      o << "\t" << (model.rho[i]);
-    o << std::endl;
-    o.precision (origPrecision);
-  }
-
-  if  (model.label)
-  {
-    o << "label";
-    for  (kkint32 i = 0;  i < nr_class;  i++)
-      o << "\t" << (model.label[i]);
-    o << std::endl;
-  }
-
-  if  (model.probA) // regression has probA only
-  {
-    o.precision (12);
-    o << "probA";
-    for  (kkint32 i = 0;  i <  numBinarySVM;  i++)
-      o << "\t" << (model.probA[i]);
-    o << std::endl;
-    o.precision (origPrecision);
-  }
-
-  if  (model.probB)
-  {
-    o.precision (12);
-    o << "probB";
-    for  (kkint32 i = 0;  i < numBinarySVM;  i++)
-      o << "\t" << (model.probB[i]);
-    o << std::endl;
-    o.precision (origPrecision);
-  }
-
-  {
-    o << "SelectedFeatures" << "\t" << model.selFeatures.ToCommaDelStr () << std::endl;
-  }
-
-  if  (model.nSV)
-  {
-    o << "nr_sv";
-    for  (kkint32 i = 0;  i < nr_class;  i++)
-      o << "\t" << (model.nSV[i]);
-    o << std::endl;
-  }
-
-  {
-    o << "<SupportVectors>" << std::endl;
-
-    const double * const *sv_coef = model.sv_coef;
-
-    //const svm_node * const *SV = model->SV;
-    const FeatureVectorList&  SV = model.SV;
-    FeatureNumList  selFeatures = model.selFeatures;
-
-    for  (kkint32 i = 0;  i < l;  i++)
-    {
-      //const svm_node *p = SV[i];
-      const FeatureVector&  p = SV[i];
-      o.precision (13);
-      o << "SupportVector" << "\t" << p.ExampleFileName ()
-                           << "\t" << p.MLClassName ();
-      for  (kkint32 j = 0;  j < nr_class - 1;  j++)
-        o << "\t" << sv_coef[j][i];
-
-      if  (model.param.kernel_type == PRECOMPUTED)
-      {
-        o << "\t" << (kkint32)(p.FeatureData (0));
-      }
-      else
-      {
-        o.precision (10);
-        kkint32  zed = 0;  
-        for  (zed = 0;  zed < p.NumOfFeatures ();  zed++)
-          o << "\t" << zed << ":" << p.FeatureData (zed);
-      }
-      o << endl;
-    }
-
-    o << "</SupportVectors>" << std::endl;
-  }
-
-  o << "</LibSvmModel>" << endl;
-
-  o.precision (origPrecision);
-}  /* svm_save_model_XML */
-
-
-
-
-
-
-void  SVM289_BFS::svm_load_model_XML_SupportVectorSection (istream&     in,
-                                                       FileDescPtr  fileDesc,
-                                                       svm_model&   model,
-                                                       bool&        valid,
-                                                       RunLog&      log
-                                                      )
-{
-  KKStr  fieldName;
-
-  bool  eof = false;
-  bool  eol = false;
-
-  kkint32 nr_class = model.nr_class;
-  kkint32 l = model.l;
-
-  kkint32  fn = 0;
-
-  float  featureValue;
-
-  KKStr  svCoefStr;
-  KKStr  fdStr;
-  KKStr  fnStr;
-  KKStr  fValueStr;
-  KKStr  featureFieldStr;
-
-  valid = true;
-
-  {
-    kkint32  x, y;
-    model.sv_coef = new double*[nr_class - 1];
-    for  (x = 0;  x < nr_class - 1;  x++)
-    {
-      model.sv_coef[x] = new double[l];
-      for  (y = 0;  y < l;  y++)
-        model.sv_coef[x][y] = 0.0;
-    }
-  }
-
-  model.SV.DeleteContents ();
-  model.SV.Owner (true);
-
-  kkint32  numSupportVectorsRead = 0;
-  while  (!eof)
-  {
-    fieldName = osReadNextToken (in, "\t", eof, eol);
-    if  (eol  ||  (fieldName.Len () < 1))
-      continue;
-
-    if  (fieldName.SubStrPart (0, 1) == "//")
-      continue;
-
-    if  (fieldName.EqualIgnoreCase ("</SupportVectors>"))
-      break;
-
-    if  (fieldName.EqualIgnoreCase ("SupportVector"))
-    {
-      if  (numSupportVectorsRead >= l)
-      {
-        log.Level (-1) << endl << endl
-          << "SVM289_BFS::svm_load_model_XML_SupportVectorSection    ***ERROR***"
-          << "    Number Support Vectors defined in <SupportVectors> section is greater than specified[" << l << "]" << endl
-          << endl;
-        valid = false;
-        break;
-      }
-
-      FeatureVectorPtr fv = new FeatureVector (fileDesc->NumOfFields ());
-      KKStr  imageFileName = osReadNextToken (in, "\t", eof, eol);
-      KKStr  className     = osReadNextToken (in, "\t", eof, eol);
-      fv->ExampleFileName (imageFileName);
-      fv->MLClass (MLClass::CreateNewMLClass (imageFileName));
-
-      for  (kkint32 j = 0;  j < nr_class - 1;  j++)
-      {
-        svCoefStr = osReadNextToken (in, "\t", eof, eol);
-        model.sv_coef[j][numSupportVectorsRead] = svCoefStr.ToDouble ();
-      }
-
-
-      if  (model.param.kernel_type == PRECOMPUTED)
-      {
-        fdStr = osReadNextToken (in, "\t", eof, eol);
-        fv->FeatureData (0, (float)fdStr.ToDouble ());
-      }
-      else
-      {
-        featureFieldStr = osReadNextToken (in, "\t", eof, eol);
-        while  ((!eof)  &&  (!eol))
-        {
-          fnStr     = featureFieldStr.ExtractToken2 (":");
-          fValueStr = featureFieldStr;
-
-          fn = fnStr.ToInt ();
-          featureValue = (float)fValueStr.ToDouble ();
-
-          if  ((fn < 0)  ||  (fn >= (kkint32)fileDesc->NumOfFields ()))
-          {
-            log.Level (-1) << endl << endl 
-              << "SVM289_BFS::svm_load_model_XML_SupportVectorSection   ***ERROR***     Invalid Feature Index[" << fn << "] Specified." << endl
-              << endl;
-            valid = false;
-            break;
-          }
-          else
-          {
-            fv->FeatureData (fn, featureValue);
-          }
-
-          featureFieldStr = osReadNextToken (in, "\t", eof, eol);
-        }
-      }
-    
-      model.SV.PushOnBack (fv);
-      numSupportVectorsRead++;
-    }
-  }
-
-  if  (model.SV.QueueSize () != l)
-  {
-    log.Level (-1) << endl << endl
-      << "SVM289_BFS::svm_load_model_XML_SupportVectorSection   ***ERROR***     Wrong number of Support Vectors Specified." << endl
-      << "      Expected [" << l << "]   Found[" << model.SV.QueueSize () << "]" << endl
-      << endl;
-
-    valid = false;
-  }
-}  /* svm_load_model_XML_SupportVectorSection */
-
-
-    
-
-
-svm_model*  SVM289_BFS::svm_load_model_XML (istream&     in,
-                                        FileDescPtr  fileDesc,
-                                        RunLog&      log
-                                       )
-{
-  svm_model*  model = new svm_model (fileDesc, log);
-
-  bool  validModel = true;
-
-  kkint32  version      = -1;
-  kkint32  nr_class     = -1;
-  kkint32  l            = -1;
-  kkint32  numBinarySVM = -1;
-
-  bool  eof  = false;
-  bool  eol  = false;
-
-  KKStr  fieldName;
-  KKStr  ln;
-
-  while  (!eof)
-  {
-    fieldName = osReadNextToken (in, "\t", eof, eol);
-    if  (eof)
-      break;
-
-    if  (fieldName.Len () < 1)
-      continue;
-
-    if  ((fieldName.FirstChar () == '/')  &&  (fieldName[(kkint16)1] == '/'))
-      continue;
-
-    if  (fieldName.EqualIgnoreCase ("</LibSvmModel>"))
-      break;
-
-    if  (fieldName.EqualIgnoreCase ("Version"))
-    {
-      in >> version;
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("Param"))
-    {
-      ln = osReadRestOfLine2 (in, eof);
-      eol = true;
-      model->param.ParseTabDelStr (ln);
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("nr_class"))
-    {
-      ln = osReadNextToken (in, "\t", eof, eol);
-      nr_class = ln.ToInt ();
-      model->nr_class = nr_class;
-      numBinarySVM = nr_class * (nr_class - 1) / 2;
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("total_sv"))
-    {
-      ln = osReadNextToken (in, "\t", eof, eol);
-      l = ln.ToInt ();
-      model->l = l;
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("rho"))
-    {
-      kkint32  i = 0;
-      model->rho = new double[numBinarySVM];
-      KKStr  rStr = osReadNextToken (in, "\t", eof, eol);
-      while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
-      {
-        model->rho[i] = rStr.ToDouble ();
-        rStr = osReadNextToken (in, "\t", eof, eol);
-        i++;
-      }
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("label"))
-    {
-      kkint32  i = 0;
-      model->label = new kkint32[nr_class];
-      KKStr  lStr = osReadNextToken (in, "\t", eof, eol);
-      while  ((!eol)  &&  (!eof)  &&  (i < nr_class))
-      {
-        model->label[i] = lStr.ToInt ();
-        lStr = osReadNextToken (in, "\t", eof, eol);
-        i++;
-      }
-    }
-
-
-    else if  (fieldName.EqualIgnoreCase ("probA"))
-    {
-      kkint32  i = 0;
-      model->probA = new double[numBinarySVM];
-      KKStr  pStr = osReadNextToken (in, "\t", eof, eol);
-      while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
-      {
-        model->probA[i] = pStr.ToDouble ();
-        pStr = osReadNextToken (in, "\t", eof, eol);
-        i++;
-      }
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("probB"))
-    {
-      kkint32  i = 0;
-      model->probB = new double[numBinarySVM];
-      KKStr  pStr = osReadNextToken (in, "\t", eof, eol);
-      while  ((!eol)  &&  (!eof)  &&  (i < numBinarySVM))
-      {
-        model->probB[i] = pStr.ToDouble ();
-        pStr = osReadNextToken (in, "\t", eof, eol);
-        i++;
-      }
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("SelectedFeatures"))
-    {
-      bool  validFeatureSelected = false;
-      KKStr  selFeaturesStr = osReadNextToken (in, "\t", eof, eol);
-      model->selFeatures = FeatureNumList (selFeaturesStr, validFeatureSelected);
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("nr_sv"))
-    {
-      kkint32  i = 0;
-      model->nSV = new kkint32[nr_class];
-      KKStr  nSvStr = osReadNextToken (in, "\t", eof, eol);
-      while  ((!eol)  &&  (!eof)  &&  (i < nr_class))
-      {
-        model->nSV[i] = nSvStr.ToInt ();
-        nSvStr = osReadNextToken (in, "\t", eof, eol);
-        i++;
-      }
-    }
-
-    else if  (fieldName.EqualIgnoreCase ("<SupportVectors>"))
-    {
-      // There will be one line of text for each Support Vector.
-      bool  validSupportVectorSection = true;
-      SVM289_BFS::svm_load_model_XML_SupportVectorSection (in,
-                                                       fileDesc,
-                                                       *model,
-                                                       validSupportVectorSection,
-                                                       log
-                                                      );
-      if  (!validSupportVectorSection)
-        validModel = false;
-    }
-  }
-
-
-  if  (version != LIBSVM_VERSION)
-  {
-    log.Level (-1) << endl << endl << "SVM289_BFS::svm_load_model_XML   ***ERROR***   Model Version[" << version << "]  was found.  Expected[" << LIBSVM_VERSION << "]." << endl;
-    validModel = false;
-  }
-
-
-  if  (!validModel)
-  {
-    delete  model;
-    model = NULL;
-  }
-
-  return  model;
-} /* svm_load_model_XML */
-
-
-
 SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
                                   FileDescPtr       _fileDesc,
                                   RunLog&           _log
                                  ):
-  param       (_model.param),
-  nr_class    (_model.nr_class),
-  l           (_model.l),
-  SV          (_fileDesc, false),
-  sv_coef     (NULL),
-  rho         (NULL),
-  probA       (NULL),
-  probB       (NULL),
-  label       (NULL),
-  nSV         (NULL),     // number of SVs for each class (nSV[k])
+  param               (_model.param),
+  nr_class            (_model.nr_class),
+  l                   (_model.l),
+  SV                  (_fileDesc, false),
+  sv_coef             (NULL),
+  rho                 (NULL),
+  probA               (NULL),
+  probB               (NULL),
+  label               (NULL),
+  nSV                 (NULL),     // number of SVs for each class (nSV[k])
   weOwnSupportVectors (_model.weOwnSupportVectors),
-  selFeatures (_model.selFeatures),
-  dec_values     (NULL),
-  pairwise_prob  (NULL),
-  prob_estimates (NULL)
+  selFeatures         (_model.selFeatures),
+  dec_values          (NULL),
+  pairwise_prob       (NULL),
+  prob_estimates      (NULL)
 
 {
   kkint32  m = nr_class - 1;
@@ -4784,33 +4237,6 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
 }
 
 
-
-
-SVM289_BFS::svm_model::svm_model (const KKStr&  _fileName,
-                                  FileDescPtr   _fileDesc,
-                                  RunLog&       _log
-                                 ):
-   param               (),
-   nr_class            (0),
-   l                   (0),
-   SV                  (_fileDesc, true),
-   sv_coef             (NULL),
-   rho                 (NULL),
-   probA               (NULL),
-   probB               (NULL),
-   label               (NULL),
-   nSV                 (NULL),     // number of SVs for each class (nSV[k])
-   weOwnSupportVectors (false),
-   selFeatures         (_fileDesc),
-   dec_values          (NULL),
-   pairwise_prob       (NULL),
-   prob_estimates      (NULL)
-{
-  Load (_fileName, _fileDesc, _log);
-}
-
-
-
 SVM289_BFS::svm_model::svm_model (istream&     _in,
                                   FileDescPtr  _fileDesc,
                                   RunLog&      _log
@@ -4904,25 +4330,6 @@ double** SVM289_BFS::svm_model::PairwiseProb  ()
   }
   return  pairwise_prob;
 }
-
-
-void  SVM289_BFS::svm_model::Save (const KKStr&  fileName,
-                                   RunLog&       log
-                                  )
-{
-  ofstream  o (fileName.Str ());
-  if  (!o.is_open ())
-  {
-    KKStr  errorMsg = "SVM289_BFS::svm_model::Save   ***ERROR***   Could not open File[" + fileName + "].";
-    log.Level (-1) << endl << endl << errorMsg << endl << endl;
-    throw  errorMsg;
-  }
-
-  Write (o);
-  o.close ();
-}  /* Save */
-
-
 
 
 void  SVM289_BFS::svm_model::Write (ostream& o)
@@ -5020,27 +4427,6 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
 
 
 
-
-void  SVM289_BFS::svm_model::Load (const KKStr&  fileName,
-                                   FileDescPtr   fileDesc,
-                                   RunLog&       log
-                                  )
-{
-  ifstream  in (fileName.Str ());
-  if  (!in.is_open ())
-  {
-    KKStr  errorMsg = "SVM289_BFS::svm_model::Load   ***ERROR***   Could not open File[" + fileName + "].";
-    log.Level (-1) << endl << endl << errorMsg << endl << endl;
-    throw  errorMsg;
-  }
-
-  Read (in, fileDesc, log);
-  in.close ();
-}  /* Load */
-
-
-
-
 void  SVM289_BFS::svm_model::Read (istream&     in, 
                                    FileDescPtr  fileDesc,
                                    RunLog&      log
@@ -5096,7 +4482,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
       {
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  Invalid kernel_type[" + line + "].";
         log.Level (-1) << endl << errorMsg << endl << endl;
-        delete  buff;  buff = NULL;
+        delete[]  buff;  buff = NULL;
         throw  errorMsg;
       }
     }
@@ -5183,7 +4569,7 @@ void  SVM289_BFS::svm_model::Read (istream&     in,
       {
         KKStr errorMsg = "SVM289_BFS::svm_model::Read   ***ERROR***  To many Support Vector's Defined.";
         log.Level (-1) << endl << errorMsg << endl << endl;
-        delete  buff;
+        delete[]  buff;
         throw  errorMsg;
       }
 
@@ -5260,256 +4646,6 @@ void  SVM289_BFS::svm_model::NormalizeProbability ()
 
 
 
-void  SVM289_BFS::readline (FILE*    input,
-                            char*&   buff,
-                            kkint32&   buffLen,
-                            bool&    eof
-                           )
-{
-  if  (fgets (buff, buffLen, input) == NULL)
-  {
-    buff[0] = 0;
-    eof = true;
-    return;
-  }
-
-  while (strrchr (buff, '\n') == NULL)
-  {
-    kkint32  newBuffLen = buffLen * 2;
-    buff = GrowAllocation (buff, buffLen, newBuffLen);
-    buffLen = newBuffLen;
-    kkint32  len = (kkint32)strlen (buff);
-    if  (fgets(buff + len, buffLen - len, input) == NULL)
-      break;
-  }
-
-  eof = false;
-  return;
-}  /* readline */
-
-
-
-
-
-
-
-svm_model *svm_load_model (const char*  model_file_name,
-                           FileDescPtr  fileDesc,
-                           RunLog&      log
-                          )
-{
-  FILE*  fp = fopen (model_file_name, "RT");
-  if  (fp == NULL)
-    return NULL;
-
-  char*  buff    = NULL;
-  kkint32  buffLen = 0;
-  bool   eof = false;
-
-  // read parameters
-
-  svm_model *model = new svm_model (fileDesc, log);
-  svm_parameter& param = model->param;
-
-  char cmd[82];
-  while  (1)
-  {
-    fscanf (fp, "%80s", cmd);
-
-    if  (strcmp (cmd, "svm_type") == 0)
-    {
-      fscanf (fp, "%80s", cmd);
-
-      param.svm_type = SVM_Type_FromStr (cmd);
-      if  (param.svm_type == SVM_Type::SVM_NULL)
-      {
-        fprintf (stderr, "unknown svm type.\n");
-        delete model;
-        model = NULL;
-        return  NULL;
-      }
-    }
-
-    else if  (strcmp(cmd, "kernel_type") == 0)
-    {    
-      fscanf (fp, "%80s", cmd);
-
-      param.kernel_type = Kernel_Type_FromStr (cmd);
-      if  (param.kernel_type == Kernel_NULL)
-      {
-        fprintf(stderr,"unknown kernel function.\n");
-        delete  model;
-        model = NULL;
-        return NULL;
-      }
-    }
-    else if(strcmp(cmd,"degree")==0)
-      fscanf(fp,"%d",&param.degree);
-
-    else if  (strcmp (cmd, "gamma") == 0)
-      fscanf(fp,"%lf",&param.gamma);
-
-    else if  (strcmp (cmd, "coef0") == 0)
-      fscanf (fp, "%lf", &param.coef0);
-
-    else if  (strcmp (cmd, "nr_class") == 0)
-      fscanf (fp, "%d", &model->nr_class);
-
-    else if  (strcmp (cmd, "total_sv") == 0)
-      fscanf (fp,"%d",&model->l);
-
-    else if  (strcmp(cmd,"rho")==0)
-    {
-      kkint32 n = model->nr_class * (model->nr_class-1)/2;
-      model->rho = new double[n];
-      for (kkint32 i = 0;  i < n;  i++)
-        fscanf (fp, "%lf", &model->rho[i]);
-    }
-
-    else if  (strcmp (cmd, "label") == 0)
-    {
-      kkint32 n = model->nr_class;
-      model->label = new kkint32[n];
-      for (kkint32 i=0;  i < n;  i++)
-        fscanf (fp, "%d", &model->label[i]);
-    }
-
-    else if  (strcmp (cmd, "probA") == 0)
-    {
-      kkint32 n = model->nr_class * (model->nr_class-1) / 2;  // n = Totl num of Binary Combos
-      model->probA = new double[n];
-      for (kkint32 i = 0;  i < n;  i++)
-        fscanf (fp, "%lf", &model->probA[i]);
-    }
-
-    else if  (strcmp (cmd, "probB") == 0)
-    {
-      kkint32 n = model->nr_class * (model->nr_class-1)/2;
-      model->probB = new double[n];
-      for  (kkint32 i = 0;  i < n;  i++)
-        fscanf(fp,"%lf",&model->probB[i]);
-    }
-
-    else if  (strcmp (cmd, "nr_sv") == 0)
-    {
-      kkint32 n = model->nr_class;
-      model->nSV = new kkint32[n];
-      for (kkint32 i = 0;  i < n;  i++)
-        fscanf(fp, "%d", &model->nSV[i]);
-    }
-
-    else if  (strcmp (cmd, "SV") == 0)
-    {
-      while(1)
-      {
-        kkint32 c = getc(fp);
-        if(c==EOF || c=='\n') break;  
-      }
-      break;
-    }
-    else
-    {
-      fprintf(stderr,"unknown text in model file: [%s]\n",cmd);
-      delete  model;
-      model = NULL;
-      return NULL;
-    }
-  }
-
-  // read sv_coef and SV
-
-  kkint32 elements = 0;
-  kkint32 pos = ftell(fp);
-
-  kkint32  max_line_len = 1024;
-  char*  line = new char[max_line_len];
-
-  char  *p, *endptr, *idx, *val;
-
-  readline (fp, line, max_line_len, eof);
-
-  while  (!eof)
-  {
-    p = strtok (line,":");
-    while(1)
-    {
-      p = strtok(NULL,":");
-      if  (p == NULL)
-        break;
-      ++elements;
-    }
-
-    readline (fp, line, max_line_len, eof);
-  }
-  elements += model->l;
-
-  fseek (fp, pos, SEEK_SET);
-
-  kkint32 m = model->nr_class - 1;
-  kkint32 l = model->l;
-  model->sv_coef = new double*[m];
-  kkint32 i;
-  for  (i = 0;  i < m;  i++)
-    model->sv_coef[i] = new double[l];
-
-  //model->SV = Malloc(svm_node*,l);
-  model->SV.DeleteContents ();
-
-  //svm_node *x_space = NULL;
-  //if  (l > 0) x_space = Malloc(svm_node,elements);
-
-  kkint32 j=0;
-  for  (i = 0;  i < l;  i++)
-  {
-    readline (fp, line, max_line_len, eof);
-
-    //model->SV[i] = &x_space[j];
-    FeatureVectorPtr  fv = new FeatureVector (fileDesc->NumOfFields ());
-    
-    p = strtok(line, " \t");
-    model->sv_coef[0][i] = strtod(p,&endptr);
-    for(kkint32 k=1;k<m;k++)
-    {
-      p = strtok(NULL, " \t");
-      model->sv_coef[k][i] = strtod(p,&endptr);
-    }
-
-    while(1)
-    {
-      idx = strtok(NULL, ":");
-      val = strtok(NULL, " \t");
-
-      if(val == NULL)
-        break;
-
-      //x_space[j].index = (kkint32) strtol(idx,&endptr,10);
-      //x_space[j].value = strtod(val,&endptr);
-
-      kkint32   featureNum   = (kkint32) strtol(idx, &endptr, 10);
-      float  featureValue = (float)strtod(val, &endptr);
-
-      fv->AddFeatureData (featureNum, featureValue);
-
-      ++j;
-    }
-
-    //x_space[j++].index = -1;
-    model->SV.PushOnBack (fv);
-  }
-  delete[]  line;
-  line = NULL;
-
-  if  (ferror (fp) != 0 || fclose (fp) != 0)
-    return NULL;
-
-  model->weOwnSupportVectors = true;  // XXX
-  model->SV.Owner (true);
-  return model;
-}  /* svm_load_model */
-
-
-
-
 void  SVM289_BFS::svm_destroy_model (svm_model*&  model)
 {
   //if  (model->weOwnSupportVectors  &&  (model->l > 0))
@@ -5525,13 +4661,11 @@ void  SVM289_BFS::svm_destroy_model (svm_model*&  model)
 
 
 
-
 void svm_destroy_param (svm_parameter*& param)
 {
   delete  param;
   param = NULL;
 }
-
 
 
 
@@ -5652,8 +4786,8 @@ const char *svm_check_parameter (const svm_problem*    prob,
         kkint32 n2 = count[j];
         if  ((param->nu * (n1 + n2) / 2) > Min (n1, n2))
         {
-          delete  label;  label = NULL;
-          delete  count;  count = NULL;
+          delete[]  label;  label = NULL;
+          delete[]  count;  count = NULL;
           return "specified nu is infeasible";
         }
       }

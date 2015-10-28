@@ -301,7 +301,27 @@ namespace KKB
   #pragma pack(pop)
 
 
-}  /* namespace KKB */
 
+  template<typename T>
+  T*  kkReallocateArray (T*       oldA,
+                         kkint32  oldSize,
+                         kkint32  newSize
+                        )
+  {
+    T*  newA = new T[newSize];
+    kkint32 x = 0;
+    while (x < Min(oldSize, newSize))  {
+      newA[x] = oldA[x];
+      ++x;
+    }
+    while  (x < Max(oldSize, newSize))  {
+      newA[x] = NULL;
+      ++x;
+    }
+    delete[]  oldA;
+    oldA = NULL;
+    return newA;
+  }  /* namespace KKB */
+}
 
 #endif

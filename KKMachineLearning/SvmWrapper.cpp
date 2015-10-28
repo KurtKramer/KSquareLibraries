@@ -708,23 +708,9 @@ void  KKMLL::SvmPredictRaw (SvmModel233**      submodel,
 
 
 
-
-void  KKMLL::SvmSaveModel (struct SvmModel233**  subModel,
-                           const char*         fileName,
-                           bool&               successfull
-                          )
-{
-  successfull = true;
-
-  kkint32 x = svm_save_model (fileName, subModel[0]);
-  successfull = (x == 0);
-}
-
-
-
 void  KKMLL::SvmSaveModel (ostream&             o,
-                         struct  SvmModel233**  model
-                        )
+                           struct  SvmModel233**  model
+                          )
 {
    Svm_Save_Model (o, model[0]);
 }
@@ -733,24 +719,9 @@ void  KKMLL::SvmSaveModel (ostream&             o,
 
 
 
-struct SvmModel233**   KKMLL::SvmLoadModel (const char* fileName)
-{
-  SvmModel233**  models = new SvmModel233*[1];
-  models[0] = svm_load_model(fileName);
-
-  if  (models[0] == NULL)
-  {
-    delete  models;
-    models = NULL;
-  }
-  return models;
-}
-
-
-
 struct SvmModel233**   KKMLL::SvmLoadModel (istream&  f,
-                                        RunLog&   log
-                                       )
+                                            RunLog&   log
+                                           )
 {
   SvmModel233**  models = new SvmModel233*[1];
   models[0] = Svm_Load_Model (f, log);

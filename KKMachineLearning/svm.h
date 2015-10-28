@@ -214,17 +214,16 @@ struct SvmModel233*  svm_train  (const struct svm_problem*   prob,
                                 );
 
 
-struct SvmModel233*  svm_load_model (const char*  model_file_name);
-
 
 struct SvmModel233*  Svm_Load_Model (std::istream&  f,
                                      RunLog&        log
                                     );
 
-
+/*
 kkint32 svm_save_model (const char*                model_file_name, 
                         const struct SvmModel233*  model
                        );
+*/
 
 void    Svm_Save_Model (std::ostream&       o, 
                         const SvmModel233*  model

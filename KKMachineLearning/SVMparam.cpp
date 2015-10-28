@@ -552,6 +552,10 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
     delete  stats;  stats = NULL;
     return  (float)totalNumFeaturesUsed / (float)toatlNumExamples;
   }
+  else if  (!selectedFeatures)
+  {
+    return 0.0f;
+  }
   else
   {
     return  (float)selectedFeatures->NumOfFeatures ();
@@ -570,6 +574,9 @@ kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
     // This way we make sure that the variable exists.
     SelectedFeatures (fileDesc);
   }
+
+  if  (!selectedFeatures)
+    return 0;
 
   kkint32 z;
   kkint32 numFeaturesAfterEncoding = 0;

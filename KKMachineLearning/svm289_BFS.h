@@ -160,11 +160,6 @@ namespace  SVM289_BFS
                RunLog&                _log
               );
 
-    svm_model (const KKStr&  _fileName,
-               FileDescPtr   _fileDesc,
-               RunLog&       _log
-              );
-
     svm_model (istream&     _fileName,
                FileDescPtr  _fileDesc,
                RunLog&      _log
@@ -176,17 +171,7 @@ namespace  SVM289_BFS
     double*  ProbEstimates ();
     double** PairwiseProb  ();
 
-
-    void  Save (const KKStr&  fileName,
-                RunLog&       log
-               );
-
     void  Write (ostream& o);
-
-    void  Load (const KKStr&  fileName,
-                FileDescPtr   fileDesc,
-                RunLog&       log
-               );
 
     void  Read (istream&     i, 
                 FileDescPtr  fileDesc,
@@ -227,21 +212,6 @@ namespace  SVM289_BFS
                           const svm_parameter&  param,
                           RunLog&               log
                          );
-
-  kkint32  svm_save_model (const char*        model_file_name, 
-                           const  svm_model*  model
-                          );
-
-  void  svm_save_model_XML (ostream&          o, 
-                            const svm_model&  model
-                           );
-
-  svm_model*  svm_load_model (const char *model_file_name);
-
-  svm_model*  svm_load_model_XML (istream&     i,
-                                  FileDescPtr  fileDesc,
-                                  RunLog&      log
-                                 );
 
   SVM_Type  svm_get_svm_type (const svm_model *model);
 

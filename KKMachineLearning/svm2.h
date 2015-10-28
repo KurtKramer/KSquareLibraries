@@ -172,16 +172,6 @@ namespace  SVM289_MFS
                FileDescPtr            _fileDesc
               );
 
-    Svm_Model (const KKStr&  _fileName,
-               FileDescPtr   _fileDesc,
-               RunLog&       _log
-              );
-
-    Svm_Model (istream&     _fileName,
-               FileDescPtr  _fileDesc,
-               RunLog&      _log
-              );
-
     ~Svm_Model ();
 
     void  CleanUpMemory ();
@@ -193,22 +183,6 @@ namespace  SVM289_MFS
     double** PairwiseProb  ();
 
     kkint32  MemoryConsumedEstimated ()  const;
-
-    void  Save (const KKStr&  fileName,
-                RunLog&       log
-               );
-
-    void  Write (ostream& o);
-
-    void  Load (const KKStr&  fileName,
-                FileDescPtr   fileDesc,
-                RunLog&       log
-               );
-
-    void  Read (istream&     i, 
-                FileDescPtr  fileDesc,
-                RunLog&      log
-               );
 
     void  NormalizeProbability ();
 
@@ -257,27 +231,10 @@ namespace  SVM289_MFS
   typedef  XmlElementSvm_Model*  XmlElementSvm_ModelPtr;
 
 
-
-
   Svm_Model*  svm_train  (const svm_problem&    prob,
                           const svm_parameter&  param,
                           RunLog&               log
                          );
-
-  kkint32  svm_save_model (const char*              model_file_name, 
-                           const struct Svm_Model*  model
-                          );
-
-  void  svm_save_model_XML (ostream&          o, 
-                            const Svm_Model&  model
-                           );
-
-  Svm_Model*  svm_load_model (const char *model_file_name);
-
-  Svm_Model*  svm_load_model_XML (istream&     i,
-                                  FileDescPtr  fileDesc,
-                                  RunLog&      log
-                                 );
 
   kkint32  svm_get_svm_type (const struct Svm_Model *model);
 
@@ -321,11 +278,6 @@ namespace  SVM289_MFS
   kkint32 svm_check_probability_model(const struct Svm_Model *model);
 
   extern void (*svm_print_string) (const char *);
-
-  //#ifdef __cplusplus
-  //}
-  //#endif
-
 
 
   template <class T> inline void swap(T& x, T& y) { T t=x; x=y; y=t; }

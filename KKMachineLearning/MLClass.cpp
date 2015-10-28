@@ -161,6 +161,8 @@ MLClassListPtr  MLClass::BuildListOfDecendents (MLClassPtr  parent)
 
   for  (auto existingMLClass: *existingMLClasses)
   {
+    if  (!existingMLClass)
+      continue;
     startingAncestor = existingMLClass;
     MLClassPtr ancestor = startingAncestor->Parent ();
     while  (ancestor != NULL)
