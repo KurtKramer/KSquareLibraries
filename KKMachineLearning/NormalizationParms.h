@@ -100,6 +100,15 @@ namespace KKMLL
                   );
 
 
+    void  Save (const KKStr&  _fileName,
+                bool&         _successfull,
+                RunLog&       _log
+               );
+
+    
+    void  Write (std::ostream&  o);
+
+
     void  WriteXML (const KKStr&   varName,
                     std::ostream&  o
                    )  const;

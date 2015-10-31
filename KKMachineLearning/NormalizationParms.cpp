@@ -236,6 +236,61 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
 
 
 
+void  NormalizationParms::Save (const KKStr&  _fileName,
+                                bool&          _successfull,
+                                RunLog&        _log
+                               )
+{
+  _log.Level (20) << "NormalizationParms::Save  FileName[" << _fileName << "]." << endl;
+
+  fileName = _fileName;
+
+  _successfull = true;
+
+  ofstream outFile (fileName.Str ());
+  if  (!outFile.is_open ())
+  {
+    _log.Level (-1) << endl << "NormalizationParms::Save  ***EROR***  writing to file["<< _fileName << "]." << endl << endl;
+    _successfull = false;
+    return;
+  }
+
+  Write (outFile);
+
+  outFile.close ();
+
+  return;
+} /* Save */
+
+
+
+void  NormalizationParms::Write (ostream&  o)
+{
+  kkint32  i = 0;
+
+  kkint32  origPrecision = (kkint32)o.precision();
+  o.precision (12);
+
+  o << "<NormalizationParms>"      << endl;
+  o << "NumOfFeatures"             << "\t" << numOfFeatures                             << endl;
+  o << "NumOfExamples"             << "\t" << numOfExamples                             << endl;
+  o << "NormalizeNominalFeatures"  << "\t" << (normalizeNominalFeatures ? "Yes" : "No") << endl;
+
+  o << "Means";
+  for  (i = 0;  i < numOfFeatures;  i++)
+    o << "\t" << mean[i];
+  o << endl;
+
+
+  o << "Sigmas";
+  for  (i = 0;  i < numOfFeatures;  i++)
+     o << "\t" << sigma[i];
+  o << endl;
+
+  o << "</NormalizationParms>" << endl;
+  o.precision (origPrecision);
+}  /* Write */
+
 
 void  NormalizationParms::WriteXML (const KKStr&  varName,
                                     ostream&      o
