@@ -2495,10 +2495,15 @@ KKB::KKStr  KKB::osReadRestOfLine2 (std::istream&  in,
                                    )
 {
   KKStrPtr l = osReadRestOfLine (in, eof);
-  KKStr  result(*l);
-  delete l;
-  l = NULL;
-  return  result;
+  if  (l) {
+    KKStr  result(*l);
+    delete l;
+    l = NULL;
+    return  result;
+  }
+  else {
+    return "";
+  }
 }
 
 
