@@ -158,7 +158,7 @@ namespace KKB
    */
   char           osGetDriveLetter (const KKStr&  pathName);   
 
-  KKStrPtr       osGetEnvVariable (KKStr  _varName);
+  KKStrPtr       osGetEnvVariable (const KKStr&  _varName);
 
   KKB::DateTime  osGetFileDateTime (const KKStr& fileName);
 

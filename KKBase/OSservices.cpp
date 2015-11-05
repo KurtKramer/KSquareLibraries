@@ -894,7 +894,7 @@ bool  KKB::osCreateDirectory (const KKStr&  _dirName)
 
 #ifdef  WIN32
  
-KKStrPtr  KKB::osGetEnvVariable (KKStr  _varName)
+KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
 {
   char    buff[1024];
   DWORD   varLen;
@@ -914,7 +914,7 @@ KKStrPtr  KKB::osGetEnvVariable (KKStr  _varName)
 #else
 
 
-KKStrPtr  KKB::osGetEnvVariable (KKStr  _varName)
+KKStrPtr  KKB::osGetEnvVariable (const KKStr&  _varName)
 {
   char*  envStrValue = NULL;
   
