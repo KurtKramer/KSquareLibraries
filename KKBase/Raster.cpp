@@ -1186,7 +1186,7 @@ RasterPtr   Raster::ReversedImage ()
 
 RasterPtr  Raster::StreatchImage (float  rowFactor,
                                   float  colFactor
-                                 )
+                                 )  const
 {
   MorphOpStretcher  streatcher (rowFactor, colFactor);
   return  streatcher.PerformOperation (this);

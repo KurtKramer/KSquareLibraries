@@ -250,7 +250,7 @@ namespace  KKB
 
     kkuint32              ToDays    ()  const;
     double                ToHours   ()  const;
-    kkuint64              ToSeconds ()  const;
+    kkuint64              ToSeconds ()  const;             /**< Number seconds since "0000/01/01 00:00:00"  */
 
     void                  HoursAdd    (kkint32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
     void                  MinutesAdd  (kkint32 _mins);

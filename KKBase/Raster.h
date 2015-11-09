@@ -1060,7 +1060,7 @@ namespace KKB
 
     RasterPtr     StreatchImage (float  rowFactor,
                                  float  colFactor
-                                );
+                                )  const;
 
     void          ReverseImage ();   // Reverse the image Foreground and Background.
 
@@ -1145,7 +1145,7 @@ namespace KKB
 
     RasterPtr     ThinContour ()  const;
 
-    RasterPtr     TightlyBounded (kkuint32 borderPixels)  const;
+    RasterPtr     TightlyBounded (kkuint32 borderPixels)  const;  /**< Retrns the smallest image that contains all teh forground pixels plus collumn and row padding specified by 'borderPixels'. */
 
     RasterPtr     Transpose ()  const;
 
