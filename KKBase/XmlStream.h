@@ -179,11 +179,11 @@ namespace  KKB
 
     virtual  ~XmlTag ();
 
-    /**
-     *@brief Will construct a generic XML tag from the following characters in the stream.
-     *@details It sis assumed that the next character read from the input stream "i" will be '<'; if not then it is assumed that the next 
-     * character is the one immediately following the '<'.
-     */
+    ///<summary>Will construct a generic XML tag from the following characters in the stream.</summary>
+    ///<remarks>
+    ///It is assumed that the next character read from the input stream "i" will be '<'; if not then it is assumed that the next 
+    ///character is the one immediately following the '<'.
+    ///</remarks>
     XmlTag (std::istream&  i);
 
     const KKStr&  Name ()           const  {return  name;}
@@ -244,9 +244,7 @@ namespace  KKB
 
 
 
-  /**
-   *@brief The parent Class to the two type of tokens,  "XmlElement"  and  "XmlContent"
-   */
+  ///<Summary>@brief The parent Class to the two type of tokens,  "XmlElement"  and  "XmlContent"</Summary>
   class  XmlToken
   {
   public:
@@ -273,12 +271,11 @@ namespace  KKB
 
 
 
-  /**
-   * Parent class for all XmlElements;  when XmlStream encounters the start of a element it looks up the appropriate ElementFactory that 
-   * will create an instance of a XmlElement derived class. The constructor of that class will be provided the XmlTag that starts the element 
-   * plus a pointer to the XmlStream instance that is reading the XML file. The XmlElement derived classes constructor will the be responsible
-   * creating an instance of the class that the XmnlElement wraps.
-   */
+  ///<Summary>Parent class to all XmlElements</Summary>
+  ///<remarks> When XmlStream encounters the start of a element it looks up the appropriate ElementFactory that will construct an instance of a XmlElement 
+  /// derived class. The constructor of that class will be provided the XmlTag that starts the element plus a pointer to the XmlStream instance
+  /// that is reading the XML file. The XmlElement derived classes constructor will the be responsible for creating an instance of the class 
+  /// that the XmnlElement wraps.</remarks>
   class  XmlElement: public  XmlToken
   {
   public:
@@ -361,10 +358,7 @@ namespace  KKB
     ~XmlFactoryManager ();
  
 
-    /**
-     *@brief  Give the FactoryManager instance ownership of this factory;  the name of the factory must be 
-     * unique.
-     */
+    ///<summary>Give the FactoryManager instance ownership of this factory;  the name of the factory must be unique.</summary>
     void   RegisterFactory  (XmlFactory*  factory);
       
     XmlFactory*  FactoryLookUp (const KKStr&  className)  const;
@@ -396,11 +390,9 @@ namespace  KKB
       
     static  XmlFactory*  FactoryLookUp (const KKStr&  className);
 
-    /**
-     *@brief  register a instance of a Derives Factory class for the Global XmlFactoryManager.
-     *@param[in]  factory  The instance that is being registered; factories will take ownership and the method 
-     *  'XmlStream' will be responsible for deleting upon application shutdown.
-     */
+    ///<summary>Register a instance of a Derives Factory class for the Global XmlFactoryManager.</summary>
+    ///<param name = 'factory'>   The instance that is being registered; factories will take ownership and the method 
+    /// 'XmlStream' will be responsible for deleting upon application shutdown.</param>
     static  void   RegisterFactory  (XmlFactory*  factory);
 
     static  XmlFactoryManagerPtr  globalXmlFactoryManager;
@@ -418,9 +410,7 @@ namespace  KKB
 
 
   
-  /**
-   *@brief  To be used for classes that implement default constructor, ReadXML, and WriteXML.
-   */
+  ///<summary>To be used for classes that implement default constructor, ReadXML, and WriteXML.</summary>
   template<class  T>
   class  XmlElementTemplate:  public  XmlElement
   {
@@ -468,15 +458,12 @@ namespace  KKB
 
 
 
-
-  
-
   /****************************************************************************/
-  /**
-   *@brief  XmlElement derived class that will be used when there is no Factory defined for the element.
-   *@details All sub-elements and content will be saved in value which will be a list of XmlEemenst and 
-   * content .
-   */
+
+
+  ///<summary>XmlElement derived class that will be used when there is no Factory defined for the element.</summary>
+  ///<remarks>All sub-elements and content will be saved in value which will be a list of XmlEemenst and 
+  ///content.</remarks>
   class  XmlElementUnKnown:  public  XmlElement
   {
   public:
@@ -578,16 +565,12 @@ namespace  KKB
   {
   public:
 
-    /**
-     *@brief  Used to construct an instance that will be written out to a XML file.
-     */
+    ///<summary>Used to construct an instance that will be written out to a XML file.</summary>
     XmlElementKeyValuePairs ();
     
 
-    /**
-     * Used while from XmlStream  while reading file;  everytime it comes across a new Section(Start-Tag) 
-     * a new instance of this class will be instantiated.
-     */
+    ///<summary>Used while from XmlStream  while reading file; every time it comes across a new Section(Start-Tag)
+    ///a new instance of this class will be instantiated.</summary>
     XmlElementKeyValuePairs (XmlTagPtr      tag,
                              XmlStream&     s,
                              VolConstBool&  cancelFlag,
@@ -600,29 +583,12 @@ namespace  KKB
 
     std::vector<std::pair<KKStr,KKStr> >*  TakeOwnership ();
 
-    void  Add (const KKStr&  key,
-               const KKStr&  v
-              );
-
-    void  Add (const KKStr&  key,
-               kkint32       v
-              );
-
-    void  Add (const KKStr&  key,
-               float         v
-              );
-
-    void  Add (const KKStr&  key,
-               double        v
-              );
-
-    void  Add (const KKStr&  key,
-               bool          v
-              );
-
-    void  Add (const KKStr&          key,
-               const KKB::DateTime&  v
-              );
+    void  Add (const KKStr&  key,  const KKStr&          v);
+    void  Add (const KKStr&  key,  kkint32               v);
+    void  Add (const KKStr&  key,  float                 v);
+    void  Add (const KKStr&  key,  double                v);
+    void  Add (const KKStr&  key,  bool                  v);
+    void  Add (const KKStr&  key,  const KKB::DateTime&  v);
 
     void  WriteXML (const KKStr&   varName,
                     std::ostream&  o
