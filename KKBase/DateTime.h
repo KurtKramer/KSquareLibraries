@@ -206,11 +206,9 @@ namespace  KKB
 
 
 
-  /**
-   *@brief represents Date and Time, consists of two member classes DateType & TimeType.
-   *@sa osGetFileDateTime
-   *@sa osGetLocalDateTime
-   */
+  ///<summary>Represents Date and Time, consists of two member classes DateType & TimeType.</summary>
+  ///<seealso cref='osGetFileDateTime'/>
+  ///<seealso cref='osGetLocalDateTime'/>
   class  DateTime
   {
   public:
@@ -254,7 +252,7 @@ namespace  KKB
 
     void                  HoursAdd    (kkint32  hours);    /**< @brief  Add _hours to DateTime, will adjust date to accommodate 24 hour clock. */
     void                  MinutesAdd  (kkint32 _mins);
-    void                  SecondsAdd  (long  _secs);
+    void                  SecondsAdd  (long    _secs);
 
     KKStr                 YYYYMMDDHHMMSS ()  const;
 
@@ -280,38 +278,13 @@ namespace  KKB
   };  /* DateTime */
 
 
+  KKStr&  operator<< (KKB::KKStr&  left,  const DateType&  right);
+  KKStr&  operator<< (KKB::KKStr&  left,  const TimeType&  right);
+  KKStr&  operator<< (KKB::KKStr&  left,  const DateTime&  right);
 
-
-  KKStr&  operator<< (      KKB::KKStr&     left,
-                      const KKB::DateType&  right
-                     );
-
-
-  std::ostream& operator<< (      std::ostream&   os, 
-                            const KKB::DateType&  right
-                           );
-
-
-  KKStr&  operator<< (       KKStr&     left,
-                       const TimeType&  right
-                      );
-
-
-  std::ostream& operator<< (      std::ostream&  os, 
-                            const TimeType&      right
-                           );
-
-
-  KKStr&  operator<< (      KKB::KKStr&  left,
-                      const DateTime&    right
-                     );
-
-
-  std::ostream&  operator<< (      std::ostream&   os, 
-                             const DateTime&       right
-                            ); 
-
-
+  std::ostream&  operator<< (std::ostream&  os,  const DateType&  right);
+  std::ostream&  operator<< (std::ostream&  os,  const TimeType&  right);
+  std::ostream&  operator<< (std::ostream&  os,  const DateTime&  right); 
 
 }  /* KKB */
 #endif

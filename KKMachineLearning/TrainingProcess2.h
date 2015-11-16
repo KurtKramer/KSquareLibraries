@@ -52,30 +52,29 @@ namespace KKMLL
   typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
 
 
-  /**
-   *@class TrainingProcess2  TrainingProcess2.h  "KSquareLibraries\KKMachineLearning\TrainingProcess2.h"
-   *@brief Manages the creation and loading of training models.
-   *@details A trained model can either be built from scratch using specified training data or a persistent instance 
-   * can be loaded from a XMLStream. There are several static methods that are best used to manage the various situations
-   * such as "CreateTrainingProcess", "CreateTrainingProcessForLevel", "CreateTrainingProcessFromTrainingExamples",
-   * "LoadExistingTrainingProcess".  The result of any of these methods is a TrainigProcess2 instance that you
-   * use to create a Classifier instance.<p>
-   *
-   * Supporting Classes:
-   *  - TrainingConfiguration2  Manages defines the parameters of a classifier such as:
-   *    -# Type of algorithm
-   *    -# List Classes of and where training examples can be loaded from.
-   *    -# Sub-Classifiers that is for any given class another "TrainingConfiguration2" can be specified indicating another 
-   *       classifier to be used when that class is predicted.
-   *    -# Class Weights
-   *
-   *  - Model  Base class for all algorithms.  SupportVectorMachine(SVM), USFCasCor, BFS-SVM, etc ....
-   *
-   *  - Classifier2 You construct an instance from a 'TrainingProcess2' instance;  this is the class that manages predictions.
-   *
-   * Sub-Classifiers:  For each sub-classifiers specified in the "TrainingConfiguration2" another instance of "TrainingProcess2" 
-   * will be created. Data member "subTrainingProcesses" will keep a list of these "TrainingProcess2" instances.
-   */  
+  ///<summary>Manages the creation and loading of training models.</summary>
+  ///<remarks>
+  /// A trained model can either be built from scratch using specified training data or a persistent instance 
+  /// can be loaded from a XMLStream. There are several static methods that are best used to manage the various situations
+  /// such as "CreateTrainingProcess", "CreateTrainingProcessForLevel", "CreateTrainingProcessFromTrainingExamples",
+  /// "LoadExistingTrainingProcess". The result of any of these methods is a TrainigProcess2 instance that you
+  /// use to create a Classifier instance.<p>
+  ///
+  /// Supporting Classes:
+  ///  - TrainingConfiguration2  Manages defines the parameters of a classifier such as:
+  ///   -# Type of algorithm
+  ///   -# List Classes of and where training examples can be loaded from.
+  ///   -# Sub-Classifiers that is for any given class another "TrainingConfiguration2" can be specified indicating another 
+  ///      classifier to be used when that class is predicted.
+  ///   -# Class Weights
+  ///
+  /// - Model  Base class for all algorithms.  SupportVectorMachine(SVM), USFCasCor, BFS-SVM, etc ....
+  ///
+  /// - Classifier2 You construct an instance from a 'TrainingProcess2' instance;  this is the class that manages predictions.
+  ///
+  ///  Sub-Classifiers:  For each sub-classifiers specified in the "TrainingConfiguration2" another instance of "TrainingProcess2" 
+  ///  will be created. Data member "subTrainingProcesses" will keep a list of these "TrainingProcess2" instances.
+  ///</remarks>
   class  TrainingProcess2
   {
   public:
