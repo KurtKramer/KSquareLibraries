@@ -122,7 +122,7 @@ void  ContourFollower::GetFirstPixel (kkint32&  startRow,
     {
       for  (col = 0;  ((col < width)  &&  (!found));  ++col)
       {
-        if  ((rows[row][col] > backgroundPixelTH)  &&  (PixelCountIn9PixelNeighborhood (startRow, startCol) > 1))
+        if  ((rows[row][col] > backgroundPixelTH)  &&  (PixelCountIn9PixelNeighborhood (row, col) > 1))
         {
           found = true;
           startRow = row;
