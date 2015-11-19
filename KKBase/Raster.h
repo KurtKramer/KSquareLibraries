@@ -1102,15 +1102,21 @@ namespace KKB
 
     RasterPtr     SegmentImage (bool  save = false);
 
-    /**
-     *@brief  Compresses the image in Raster using a simple Run length algorithm and returns a pointer to compressed data.
-     *@details Using a simple run length compression algorithm compress the data in Raster and return a 
-     *        pointer to the resultant buffer.  The caller will take ownership of the compressed data and be 
-     *        responsible for deleting it.  The function 'FromCompressor' can take the compressed data with its
-     *        length and recreate the original Raster object.
-     *@param[out]  buffLen Length of the compressed buffer returned.
-     *@return pointer to compressed data.
-     */
+     /// <summary>
+     /// Compresses the image in Raster using a simple Run length algorithm and returns a pointer to
+     /// compressed data.
+     /// </summary>
+     ///
+     /// <remarks>
+     /// Using a simple run length compression algorithm compress the data in Raster and return a
+     /// pointer to the resultant buffer.  The caller will take ownership of the compressed data and be
+     /// responsible for deleting it.  The function 'FromCompressor' can take the compressed data with
+     /// its length and recreate the original Raster object.
+     /// </remarks>
+     ///
+     /// <param name="buffLen"> [in,out] Length of the compressed buffer returned. </param>
+     ///
+     /// <returns>  pointer to compressed data;  null if it fails, else an uchar*. </returns>
      uchar*       SimpleCompression (kkuint32&  buffLen)  const;
     
 
@@ -1145,7 +1151,7 @@ namespace KKB
 
     RasterPtr     ThinContour ()  const;
 
-    RasterPtr     TightlyBounded (kkuint32 borderPixels)  const;  /**< Retrns the smallest image that contains all teh forground pixels plus collumn and row padding specified by 'borderPixels'. */
+    RasterPtr     TightlyBounded (kkuint32 borderPixels)  const;  /**< Returns the smallest image that contains all the foreground pixels plus column and row padding specified by 'borderPixels'. */
 
     RasterPtr     Transpose ()  const;
 

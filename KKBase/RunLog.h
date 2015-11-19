@@ -69,13 +69,10 @@ namespace KKB
     ~RunLog ();
 
 
-    /**
-     *@brief Sets current message level.  
-     *@details You would normally call this method just before you wish to start logging a
-     * message.  If you are not changing the level since previous call then no need to call.
-     *
-     *   log.Level (20) << "ClassName::MethodName  Message" << endl;
-     */
+    ///<summary>
+    /// Sets current message level you would normally call this method just before you wish to start logging a
+    /// message. If you are not changing the level since previous call then no need to call.
+    ///</summary>
     RunLog&  Level (kkint32 _level);
 
     kkint32  Level () const  {return curLevel;}

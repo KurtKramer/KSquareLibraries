@@ -23,25 +23,25 @@ namespace  KKB
   class  GoalKeeperList;
   typedef  GoalKeeperList*  GoalKeeperListPtr;
 
-  /**
-   * @brief Used to deal with issues related to thread synchronization issues when sharing the same variables.  
-   * @details Use the GoalKeeper::Create method to create an instance of this class.  The Create method will ensure 
-   * that two different threads don't accidentally create two different instances of the same GoalKeeper object.<p>
-   *
-   * GoalKeeper has a concept of levels of depth. That is a particular thread may call 'StartBlock' more than once, 
-   * each time doing so it would be one level deeper.  In this case it would have to call 'EndBlock' an equal number
-   * of times to actually release the block.  Imagine that you have a function that Starts and Ends a Block but can
-   * be called from the middle of another function that also Starts and Ends a block on the same GoalKeeper object.<p>
-   *
-   * This class is meant to function the same under Windows or Linux
-   */
+  ///<summary> Used to deal with issues related to thread synchronization issues when sharing the same variables.  </summary>
+  ///<remarks>
+  /// Use the GoalKeeper::Create method to create an instance of this class. The Create method will ensure 
+  /// that two different threads don't accidentally create two different instances of the same GoalKeeper object.<p/>
+  ///
+  /// GoalKeeper has a concept of levels of depth. That is a particular thread may call StartBlock more than once, 
+  /// each time doing so it would be one level deeper. In this case it would have to call EndBlock an equal number
+  /// of times to actually release the block. Imagine that you have a function that Starts and Ends a Block but can
+  /// be called from the middle of another function that also Starts and Ends a block on the same GoalKeeper object.<p/>
+  ///
+  /// This class is meant to function the same under Windows or Linux
+  ///</remarks>
   class GoalKeeper
   {
   public:
     typedef  GoalKeeper*  GoalKeeperPtr;
 
   private:
-    /**  @brief Constructs a GoalKeeper object; best to do this via the GoalKeeper::Create method. */
+    ///<summary> Constructs a GoalKeeper object; best to do this via the GoalKeeper::Create method. </summary>
     GoalKeeper (const KKStr&  _name);
    
     ~GoalKeeper ();

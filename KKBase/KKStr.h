@@ -48,16 +48,6 @@ namespace  KKB
 
 
 
-  /**
-   *@class KKStr  KKStr.h
-   *@brief A string class providing safe runtime string management.
-   *@details  This String class was originally developed back in the early 90's.  It is meant to make 
-   *         string management simple and easy.  Strings can dynamically increase in size as needed.  
-   *         All methods make sure that there is no accessing outside of the bounds of the allocated
-   *         string.
-   *@todo Should subclass the class from the stl class 'string'.
-   *@author  Kurt Kramer
-   */
   class  KKStr;
 
 
@@ -81,6 +71,16 @@ namespace  KKB
 
   
 
+
+
+
+  ///<summary>
+  /// A string class providing safe runtime management; strings can be used as stream and StringBuilder objects. Simple
+  /// token parsing is supported as well as various translations to other formats such as 'int', 'double', and others.
+  /// Allocation is done dynamically increasing as needs warrant. All methods ensure that there is no accessing outside 
+  /// the bounds of the allocated string.  
+  ///</summary>
+  ///<todo> Should subclass the class from the stl class 'string'. </todo>
   class  KKStr 
   {
   public:
@@ -111,24 +111,17 @@ namespace  KKB
 
     KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
-    /** Initializes the string with a displayable version of 'd' with 'precision' decimal points. */
-    KKStr (double  d,
-           kkint32 precision
-          );
+    ///<summary> Initializes the string with a displayable version of <paramref name='d'/> with <paramref name='precision'/> decimal points. </summary>
+    KKStr (double  d,  kkint32 precision);
 
-    /** Constructs a KKStr instance form a stl::string instance. */
+    ///<summary>Constructs a KKStr instance form a stl::string instance.</summary>
     KKStr (const std::string& s);
 
-    /**  
-     *@brief  Constructs an instance from a substring of the ascii-z string 'src'.
-     *@param[in]  src       Source string to build new instance from.
-     *@param[in]  startPos  First character in 'src' that we want to include in new instance.
-     *@param[in]  endPos    Last  character in 'src' that we want to include in new instance.
-     */
-    KKStr (const char*  src,
-           kkuint32     startPos,
-           kkuint32     endPos
-          );
+    ///<summary> Constructs an instance from a substring of the ascii-z string <paramref name="src"/>. </summary>
+    ///<param name='src'> Source string to build new instance from. </param>
+    ///<param name = 'startPos'> Index of first character that we want to include in new instance.</param>
+    ///<param name='endPos'> Index of last  character that we want to include in new instance.</param>
+    KKStr (const char*  src,  kkuint32 startPos,  kkuint32 endPos);
 
     //KKStr&   operator= (const KKStrConstPtr  src);
 
@@ -195,48 +188,39 @@ namespace  KKB
     kkint32  CompareTo (const KKStr&  s2)  const  {return  Compare (s2);}
 
 
-    /**
-     *@brief  Compares with another KKStr, ignoring case.
-     *@param[in]  s2  Other String to compare with.
-     *@return  -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater.
-     */
+    
+    ///<summary>Compares with another KKStr, ignoring case.</summary>
+    ///<param name='s2'>  Other String to compare with.</param>
+    ///<returns> -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater.</returns>
     kkint32  CompareIgnoreCase (const KKStr& s2)  const;
 
 
-    /**
-     *@brief  Compares with STL string ignoring case.
-     *@param[in]  s2  STL String  std::string that we will compare with.
-     *@return  -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater.
-     */
+    ///<summary>Compares with STL string ignoring case.  </summary>
+    /// <param name='s2'> STL String  std::string that we will compare with. </param>
+    ///<returns> -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater. </returns>
     kkint32  CompareIgnoreCase (const std::string&  s2)  const;
 
 
-    /**
-     *@brief  Compares with ascii-z string ignoring case.
-     *@param[in]  s2  Ascii-z string to compare with.
-     *@return  -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater.
-     */
+    
+    ///<summary>Compares with ascii-z string ignoring case. </summary>
+    ///<param name='s2'> Ascii-z string to compare with. </param>
+    ///<returns> -1=less, 0=equal, 1=greater, -1, 0, or 1,  indicating if less than, equal, or greater. </returns>
     kkint32  CompareIgnoreCase (const char* s2)  const;
 
 
-    /**
-     *@brief Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater.
-     */
-    static  kkint32  CompareStrings (const KKStr&  s1, 
-                                   const KKStr&  s2
-                                  );
+    ///<summary>Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater. </summary>
+    static  kkint32  CompareStrings (const KKStr&  s1,  const KKStr&  s2);
 
-    /**
-     *@brief Concatenates the list of char* strings,  stops at first one that is NULL   
-     *details  Iterates through values concatenating each one onto a result string.  Terminates when 'values[x] == NULL'.
-     */
-    static 
-      KKStr  Concat (const char**  values);
+    ///<summary> 
+    /// Concatenates the list of char* strings, stopping at first NULL. Each of these NULL terminated strings are concatenated 
+    /// onto the result string; terminates when 'values[x] == NULL'.
+    ///</summary>
+    static  KKStr  Concat (const char**  values);
 
-    /**
-     *@brief Concatenates the list of char* strings,  stops at first one that is NULL
-     *@details  Iterates through values Concatenating each one onto a result string.  Terminates when 'values[x] == NULL'.
-     */
+    ///<summary> 
+    /// Concatenates the list of char* strings, stops at first NULL  Each of these NULL terminated strings are concatenated 
+    /// onto the result string; terminates when 'values[x] == NULL'.
+    ///</summary>
     static
       KKStr  Concat (const VectorKKStr&  values);
 
@@ -290,53 +274,56 @@ namespace  KKB
      */
     char     ExtractLastChar ();
 
-    /**
-     *@brief  Extracts the next string token; if the string starts with a quote(") will extract until the terminating quote.
-     *@code
-     ***************** ExtractQuotedStr ********************
-     **     Will extract and decode a quoted string.       *
-     **                                                    *
-     ** If first character starts with a Quote.            *
-     **   a.  Extract all characters until next Quote.     *
-     **                                                    *
-     **   b.  Translate                                    *
-     **         "\n" -> '\n'                               *
-     **         "\t" -> '\t'                               *
-     **         "\r" -> '\r'                               *
-     **         "\\" -> '\'                                *
-     **         "\"" -> '"'                                *
-     **         "\0" -> char(0)                            *
-     **                                                    *
-     **   c.  The start and ending Quotes will not be      *
-     **       included in returned string.                 *
-     **                                                    *
-     **   d.  Following delimiter will be removed.         *
-     **       '\n', '\t', '\r'.                            *
-     **                                                    *
-     ** Else                                               *
-     **   a. Extract all characters until delimiter.       *
-     **       '\n', '\t', '\r'.                            *
-     *******************************************************
-     *@endcode
-     *@param[in]  delChars  List of acceptable delimiter characters.
-     *@param[in]  decodeEscapeCharacters  If true escape sequences will be decoded, that is characters that are preceded by the back slash ('\').  ex:  '\t' = Tab Character, '\r' = Carriage return, '\\' = '\'.
-     *@return Token String
-     */
+    ///<summary>
+    /// Extracts the next string token; if the string starts with a quote(&quot;) will extract until the terminating quote.
+    ///</summary>
+    ///<remarks>
+    ///<![CDATA[
+    /// ***************** ExtractQuotedStr ********************
+    /// **     Will extract and decode a quoted string.       *
+    /// **                                                    *
+    /// ** If first character starts with a Quote.            *
+    /// **   a.  Extract all characters until next Quote.     *
+    /// **                                                    *
+    /// **   b.  Translate                                    *
+    /// **         "\n" -> '\n'                               *
+    /// **         "\t" -> '\t'                               *
+    /// **         "\r" -> '\r'                               *
+    /// **         "\\" -> '\'                                *
+    /// **         "\"" -> '"'                                *
+    /// **         "\0" -> char(0)                            *
+    /// **                                                    *
+    /// **   c.  The start and ending Quotes will not be      *
+    /// **       included in returned string.                 *
+    /// **                                                    *
+    /// **   d.  Following delimiter will be removed.         *
+    /// **       '\n', '\t', '\r'.                            *
+    /// **                                                    *
+    /// ** Else                                               *
+    /// **   a. Extract all characters until delimiter.       *
+    /// **       '\n', '\t', '\r'.                            *
+    /// *******************************************************
+    ///]]>
+    ///</remarks>
+    ///<param nqame='delChars'> List of acceptable delimiter characters. </param>
+    ///<param name='decodeEscapeCharacters'> If true escape sequences will be decoded, that is characters that are preceded 
+    /// by the back slash (\\).  ex:  \\t = Tab Character, \\r = Carriage return, \\\\ = '\'.
+
+    ///<returns>Token String </returns>
     KKStr  ExtractQuotedStr (const char*  delChars,
                              bool         decodeEscapeCharacters
                             );
 
 
-    /**
-     *@brief  Extract first Token from the string.
-     *@details Removes first Token from string and returns it skipping over any leading
-     * delimiters. Tokens will be terminated by end of string or the first occurrence of a
-     * delimiter character. If no more tokens left will return a Empty KKStr. Note if
-     * you do not want to skip over leading delimiter characters the use 'ExtractToken2'.
-     *@param[in]  delStr List of delimiting characters.
-     *@return  Extracted Token.
-     *@see ExtractToken2
-     */
+    ///<summary> Extract first Token from the string. </summary>
+    ///<remarks>
+    /// Removes first Token from string and returns it skipping over any leading delimiters. Tokens will be terminated 
+    /// by end of string or the first occurrence of a delimiter character. If no more tokens left will return a Empty
+    /// KKStr. Note if you do not want to skip over leading delimiter characters the use 'ExtractToken2'.
+    ///</remarks>
+    ///<param name='delStr'> List of delimiting characters. </param>
+    ///<returns>  Extracted Token. </returns>
+    ///<seealso cref='ExtractToken2'/>
     KKStr   ExtractToken  (const char* delStr = "\n\t\r ");  
     
 
@@ -630,20 +617,17 @@ namespace  KKB
 
     const char*  data  ()  {return Str ();}
 
-    /**    KKStr&  operator+= (kkint32 right)        {return  *this << right;}
-     *
-     *@todo  Want to implement all the methods that the std::string  class implements.  
-     *       this way people who are familiar with the std::string class will find using
-     *       this class easier.
+    /**@todo  Want to implement all the methods that the std::string  class implements  
+     *this way people who are familiar with the std::string class will find using
+     *this class easier.
      */
 
-    /**
-     *@brief Will return the position where the 1st instance of 'str' after 'pos' occurs or -1 if not found.
-     *@param[in] str The string to search for.
-     *@param[in] pos The starting position to start the search from.
-     *@returns index where 'str' first occurs at or after 'pos' otherwise -1 if not found.
-     */
+    ///<summary> Will return the position where the 1st instance of 'str' after 'pos' occurs or -1 if not found. </summary>
+    ///<param name='str'> String that you are searching for. </param>
+    ///<param name='pos'> The starting position to start the search from. </param>
+    ///<returns> The index where 'str' first occurs at or after 'pos' otherwise -1 if not found. </returns>
     kkint32  Find (const KKStr&  str, kkint32 pos = 0)     const;
+
     kkint32  Find (const char*   s,   kkint32 pos, kkint32 n)  const;
     kkint32  Find (const char*   s,   kkint32 pos = 0 )    const;
     kkint32  Find (char          c,   kkint32 pos = 0 )    const;
@@ -685,19 +669,14 @@ namespace  KKB
 
     
 
-    /**
-     *@brief  Pads the string with spaces so that it is exactly 'width' characters long.
-     *@details  Can pad either left, right, or center as specified by 'dir'.  If KKStr 
-     * Already greater than 'width' will truncate new string.
-     *
-     *@param[in]  width Width of KKStr;  Will pad KKStr with spaces until it is width long.
-     *@param[in]  dir  'L' - Pad on the left side, 
-     *                 'R' - Pad on the right side,
-     *                 'C' - Pad on left and Right so that text is centered.
-    */
-    KKStr  Wide (kkint32 width,      
-                 char  dir = 'R'
-                )  const; 
+    ///<summary>
+    /// Pads the string with spaces so that it is exactly 'width' characters long.
+    /// Can pad either left, right, or center as specified by 'dir'. If KKStr Already greater than 'width' will truncate new string.
+    ///</summary>
+    ///<param name='width'> Width of KKStr; will pad KKStr with spaces until it is width long. </param>
+    ///<param name='dir'>Direction to pad from  'L' - Pad on the left side,  'R' - Pad on the right side, and 
+    /// 'C' - Pad on left and Right so that text is centered.</param>
+    KKStr  Wide (kkint32 width,  char  dir = 'R')  const; 
                                       
 
     char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
@@ -771,19 +750,8 @@ namespace  KKB
   typedef  std::pair<KKStr,KKStr>  KKStrPair;
 
 
-
-  //typedef  KKStr::VectorKKStr  VectorKKStr;
-
-
-
-  KKStr  operator+ (const char    left,
-                    const KKStr&  right
-                   );
-
-
-  KKStr  operator+ (const char*   left,
-                    const KKStr&  right
-                   );
+  KKStr  operator+ (const char   left,  const KKStr&  right);
+  KKStr  operator+ (const char*  left,  const KKStr&  right);
 
 
 
@@ -808,83 +776,24 @@ namespace  KKB
   #endif
 
 
-  char*  STRCAT (char*        dest,
-                 kkint32      destSize,
-                 const char*  src
-                );
-
-
-  char*  STRCOPY (char*        dest, 
-                  kkint32      destSize,
-                  const char*  src
-                 );
-
-  char*  STRCOPY (char*        dest,
-                  kkuint16     destSize,
-                  const char*  src
-                 );
+  char*  STRCAT  (char*  dest,  kkint32  destSize, const char*  src);
+  char*  STRCOPY (char*  dest,  kkint32  destSize, const char*  src);
+  char*  STRCOPY (char*  dest,  kkuint16 destSize, const char*  src);
 
   char*  STRDUP (const char* src);
 
 
-  kkint32  STRICMP (const char*  left,
-                    const char*  right
-                   );
+  kkint32  STRICMP  (const char*  left, const char*  right);
+  kkint32  STRNICMP (const char*  left, const char*  right,  kkint32      len);
 
-  kkint32  STRNICMP (const char*  left,
-                     const char*  right,
-                     kkint32      len
-                    );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkint16      right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkuint16     right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkint32      right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkuint32     right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkint64      right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkuint64     right
-                   );
-
-  kkint32  SPRINTF (char*        buff,
-                    kkint32      buffSize,
-                    const char*  formatSpec,
-                    kkint32      precision,
-                    double       d
-                   );
-
-  kkint32  SPRINTF (char*         buff,
-                    kkint32       buffSize,
-                    char  const*  formatSpec,
-                    double        d
-                   );
-
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint16      right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint16     right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint32      right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint32     right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint64      right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkuint64     right);
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  const char*  formatSpec,  kkint32      precision,  double       d );
+  kkint32  SPRINTF (char*  buff,  kkint32 buffSize,  char const*  formatSpec,  double       d);
 
 
 
@@ -899,14 +808,15 @@ namespace  KKB
     KKStrList (bool owner);
 
 
-    /**
-     *@brief  Creates a list from a NULL terminated list of (char*) strings.
-     *@details  The last entry in the list has to be NULL.
-     *@code
-     *  const char* zed[] = {"This", "is", "a", "test", NULL};
-     *  KKStrList  wordList (zed);
-     *@endcode
-     */
+    
+    ///<summary> 
+    /// Creates a list from a array of NULL terminated strings; the last entry in the list has to be NULL.
+    ///   <code>
+    ///  Example:
+    ///     const char* zed[] = {"This", "is", "a", "test", NULL};
+    ///     KKStrList  wordList (zed);
+    ///   </code>
+    ///</summary>
     KKStrList (const char*  s[]);
 
     
@@ -952,9 +862,7 @@ namespace  KKB
 
 
 
-  /**
-   *@brief Maintains a list of ordered KKStr instances that can be recalled by either string of index.
-   */
+  ///<summary> Maintains a list of ordered KKStr instances that can be recalled by either string of index. </summary>
   class  KKStrListIndexed
   {
   public:
@@ -968,18 +876,16 @@ namespace  KKB
 
     ~KKStrListIndexed ();
 
-    /**
-     *@details  Note that if 'owner' flag s set to true will take ownership of the strings added to index.
-     *@param[in]  s  Will add 's' into the u=index unless another string with the same value already exists.
-     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
-     */
-    kkint32 Add (KKStrPtr  s);
+    ///<summary>Note that if 'owner' flag s set to true will take ownership of the strings added to index.</summary>
+    ///<param name='s'>  Will add 's' into the u=index unless another string with the same value already exists. </param>
+    ///<returns> The index assigned to 's' or -1 if 's' is a duplicate of one already in the list. </returns>
+    kkint32  Add (KKStrPtr  s);
 
-    /**
-     *@param[in]  s  Will add a new instance of 's' to the index unless one with the same value already exists.
-     *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
-     */
-    //kkint32 Add (const KKStr&  s);
+    // /**
+    //  *@param[in]  s  Will add a new instance of 's' to the index unless one with the same value already exists.
+    //  *@returns The index assigned to 's' or -1 if 's' is a duplicate of one already in the list.
+    //  */
+    //  kkint32 Add (const KKStr&  s);
 
     bool  CaseSensative ()  const  {return caseSensative;}
 

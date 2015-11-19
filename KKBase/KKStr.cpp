@@ -5627,7 +5627,7 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
-
+///<summary> Strings will be separated by tab(\t) characters and in order of index. </summary>
 KKStr  KKStrListIndexed::ToTabDelString ()  const
 {
   KKStr  s (indexIndex.size () * 20);
@@ -5642,9 +5642,7 @@ KKStr  KKStrListIndexed::ToTabDelString ()  const
 }
 
 
-void  KKStrListIndexed::WriteXML (const KKStr&  varName,
-                                  ostream&      o
-                                 )  const
+void  KKStrListIndexed::WriteXML (const KKStr& varName,  ostream& o)  const
 {
   XmlTag  startTag ("KKStrListIndexed", XmlTag::TagTypes::tagStart);
 

@@ -181,7 +181,7 @@ void  ModelDual::TrainModel (FeatureVectorListPtr  _trainExamples,
                              RunLog&               _log
                             )
 {
-  _log.Level (10) << "ModelDual::TrainModel  Model[" << param->FileName () << "]" << endl;
+  _log.Level (10) << "ModelDual::TrainModel  Model[" << param->FileName () << "]  _trainExamples->size()[" << _trainExamples->size() << "]" << endl;
 
   if  (param == NULL)
   {

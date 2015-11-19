@@ -19,12 +19,12 @@
 
 namespace  KKB  
 {
-  /**
-   *@brief  Represents a calendar date consisting of three fields, Year, Month, and Day.
-   *@details This date format will support operations that will allow you to determine the number
-   * of days between two dates; derive a new date by adding or subtracting Days, Months, or Years
-   * from an existing date, etc; and convert date into one of several displayable formats.
-   */
+  ///<summary> Represents a calendar date consisting of three fields, Year, Month, and Day. </summary>
+  ///<remarks> 
+  /// This date format will support operations that will allow you to determine the number of days between two 
+  /// dates; derive a new date by adding or subtracting Days, Months, or Years from an existing date, etc; and 
+  /// convert date into one of several displayable formats.
+  ///</remarks>
   class  DateType
   {
   public:
@@ -37,35 +37,33 @@ namespace  KKB
               uchar  _day
              );
 
-    /** @brief Constructs a date from an integer that represents the total number of days since 1/1/0000 */
+    ///<summary> Constructs a date from an integer that represents the total number of days since 1/1/0000 */  </summary>
     DateType (kkint32  days);
 
-    /**
-     * @brief Constructs a date from a displayable string.
-     * @details Strings can be both all numeric or combination of alpha numeric. Each part of the date, (Year,
-     *         Month, Day) can be separated by ' ', '/', '\\t', '\\n', or '\\r'. Examples of valid strings are
-     *         "1997/02/25", "02/25/1997", "Feb 02 1997",  "02/Feb/1997", "1997 February 02".  The ordering of
-     *         the numeric fields will be determined by context with one of three possible formats, mm/dd/yyyy,
-     *         yyyy/mm/dd, and dd/mm/yyyy.
-     *
-     *         A flaw in this schema is that if the day of the month is in the range of (1<->12), an all numeric
-     *         format is used, and the ordering is supposed to be "dd/mm/yyyy" this routine will assume that it
-     *         is looking at "mm/dd/yyyy" with the result of swapping the "Month" and "Day" fields.  As a rule
-     *         I try to always use the alpha numeric version of the month.
-     * @param[in]  s  String representing data that is to be parsed.
-     */
+    ///<summary> Constructs a date from a displayable string; the year, month, and days fields are detertmie3d from context. . </summary>
+    ///<remarks>
+    ///<![CDATA[
+    /// Strings can be both all numeric or combination of alpha numeric. Each part of the date, (Year, Month, Day) can be separated 
+    /// by ' ', '/', '\\t', '\\n', or '\\r'. Examples of valid strings are "1997/02/25", "02/25/1997", "Feb 02 1997",  "02/Feb/1997",
+    /// "1997 February 02".  The ordering of the numeric fields will be determined by context with one of three possible formats, 
+    /// mm/dd/yyyy, yyyy/mm/dd, and dd/mm/yyyy.
+    ///
+    /// A flaw in this schema is that if the day of the month is in the range of (1<->12), an all numeric format is used, and the
+    /// ordering is supposed to be "dd/mm/yyyy" this routine will assume that it is looking at "mm/dd/yyyy" with the result of 
+    /// swapping the "Month" and "Day" fields.  As a rule I try to always use the alpha numeric version of the month.
+    ///]]>
+    ///<remarks>
     DateType (KKStr  s);
 
 
-    /**
-     *@brief  Adds a number of days to the date.
-     *@details
-     *@code
-     *   Example:   Date d ("April 14 1962");  //  Sets the instance of 'd' to the date '1962/04/14'.
-     *              d.AddDays (12);            //  'd' now contains the date '1962/04/24'.
-     *              d.AddDays (-25);           //  'd' now contains the date '1962/03/30'.
-     *@endcode
-     */
+    ///<summary> Adds a number of days to the date. </summary>
+    ///<remarks>
+    ///<code>
+    ///  Example:   Date d ("April 14 1962");  //  Sets the instance of 'd' to the date '1962/04/14'.
+    ///             d.AddDays (12);            //  'd' now contains the date '1962/04/24'.
+    ///             d.AddDays (-25);           //  'd' now contains the date '1962/03/30'.
+    ///</code>
+    ///</remarks>
     void   AddDays   (kkint32 _days);
 
     void   AddMonths (kkint32 _months);
@@ -76,12 +74,12 @@ namespace  KKB
     uchar  Month () const {return  month;}
     uchar  Day   () const {return  day;}
 
-    /**
-     *@brief Returns back the number of days since "1/1/0000".
-     *@details  This can be used to determine the number of days between two different dates.  For example
-     *          you have two instances of 'DateType'  'd1' and 'd2'.  The number of days between the two
-     *          dates can be determined by  "int deltaDays = d1.Days () - d2.Days ();".
-     */
+    ///<summary> Returns back the number of days since "1/1/0000". </summary>
+    ///<remarks>
+    /// This can be used to determine the number of days between two different dates.  For example you have two 
+    /// instances of 'DateType'  'd1' and 'd2'.  The number of days between the two dates can be determined by 
+    /// "int deltaDays = d1.Days () - d2.Days ();".
+    ///</remarks>
     kkint32   Days ()  const;
 
     kkuint64  Seconds () const;
@@ -149,9 +147,8 @@ namespace  KKB
 
 
 
-  /**
-   *@brief  Represents a Time, consisting of three fields, Hour, Minute, and Second.
-   */
+  
+  ///<summary> Represents a Time, consisting of three fields, Hour, Minute, and Second. </summary>
   class  TimeType 
   {
   public:
@@ -206,7 +203,7 @@ namespace  KKB
 
 
 
-  ///<summary>Represents Date and Time, consists of two member classes DateType & TimeType.</summary>
+  ///<summary>Represents Date and Time, consists of two member classes DateType and TimeType.</summary>
   ///<seealso cref='osGetFileDateTime'/>
   ///<seealso cref='osGetLocalDateTime'/>
   class  DateTime

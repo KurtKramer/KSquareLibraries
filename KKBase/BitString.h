@@ -75,18 +75,18 @@ namespace  KKB
     kkuint32  Count  ()  const;
 
 
-    /**@brief Returns true if bit indicated by 'bitNum' is set to '1'. */
+    ///<summary Returns true if bit indicated by <paramref name='bitNum'/> is set to 1. </summary>
     bool  Test (kkuint32  bitNum)  const;
 
 
-    /**
-     *@brief Get Bit positions that are set to '1'.
-     *@details  The parameter 'setBits' will be populated with the list of bits that are set to '1' for bit strings that are up to 2^16-1 bits long.
-     *@code
-     * ex: Bit String "001200110011" will produce a vector <2, 3, 6, 7, 10, 11>
-     *@endcode
-     *@param[out] setBits   Will be populated with all bits that are set to '1', will be cleared first.
-     */
+    ///<summary>
+    /// Get Bit positions that are set to 1; The parameter <paramref name='setBits'/> will be populated with the list of bits that are set 
+    /// to 1 for bit strings that are up to 2^16-1 bits long.
+    ///</summary>
+    ///<code>
+    /// ex: Bit String &quot;001200110011&quot; will produce a vector &lt;2, 3, 6, 7, 10, 11&gt;
+    ///</code>
+    ///<param name='setBits'> Will be populated with all bits that are set to '1', will be cleared first.</param>
     void  ListOfSetBits16 (VectorUint16&  setBits)  const;  
 
     /**

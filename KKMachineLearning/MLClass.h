@@ -200,11 +200,10 @@ namespace KKMLL
                                    * Adding this field to help support the PicesInterface version of this class.
                                    */
 
-    bool            storedOnDataBase;
-                                  /**< Because we have no control over classes that users unilaterally create
-                                   * it would be useful to know which ones are stored in the PICES database
-                                   * table "Classes".
-                                   */
+    bool            storedOnDataBase; /**< Because we have no control over classes that users unilaterally create
+                                       * it would be useful to know which ones are stored in the PICES database
+                                       * table "Classes".
+                                       */
 
     bool            summarize;    /**< Indicates that Classification report should produce a summary column 
                                    * for the family of classes decedent from this class. Example classes that

@@ -181,8 +181,8 @@ namespace  KKB
 
     ///<summary>Will construct a generic XML tag from the following characters in the stream.</summary>
     ///<remarks>
-    ///It is assumed that the next character read from the input stream "i" will be '<'; if not then it is assumed that the next 
-    ///character is the one immediately following the '<'.
+    ///It is assumed that the next character read from the input stream <paramref name="i"/> will be &lt;; if not then it is assumed that the next 
+    ///character is the one immediately following the &lt;.
     ///</remarks>
     XmlTag (std::istream&  i);
 
