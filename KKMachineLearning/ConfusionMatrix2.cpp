@@ -1807,11 +1807,11 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
 
 
 
-void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr       ic,
-                                                  double&          truePositives,
-                                                  double&          trueNegatives,
-                                                  double&          falsePositives,
-                                                  double&          falseNegatives
+void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr ic,
+                                                  double&    truePositives,
+                                                  double&    trueNegatives,
+                                                  double&    falsePositives,
+                                                  double&    falseNegatives
                                                  )
                                                  const
 {

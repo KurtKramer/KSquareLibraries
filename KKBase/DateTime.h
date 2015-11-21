@@ -40,7 +40,7 @@ namespace  KKB
     ///<summary> Constructs a date from an integer that represents the total number of days since 1/1/0000 */  </summary>
     DateType (kkint32  days);
 
-    ///<summary> Constructs a date from a displayable string; the year, month, and days fields are detertmie3d from context. . </summary>
+    ///<summary> Constructs a date from a displayable string; the year, month, and days fields are detertmie3d from context. </summary>
     ///<remarks>
     ///<![CDATA[
     /// Strings can be both all numeric or combination of alpha numeric. Each part of the date, (Year, Month, Day) can be separated 
@@ -204,8 +204,6 @@ namespace  KKB
 
 
   ///<summary>Represents Date and Time, consists of two member classes DateType and TimeType.</summary>
-  ///<seealso cref='osGetFileDateTime'/>
-  ///<seealso cref='osGetLocalDateTime'/>
   class  DateTime
   {
   public:

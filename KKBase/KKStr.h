@@ -277,7 +277,8 @@ namespace  KKB
     ///<summary>
     /// Extracts the next string token; if the string starts with a quote(&quot;) will extract until the terminating quote.
     ///</summary>
-    ///<remarks>
+    ///<remarks><code><example>
+    /// 
     ///<![CDATA[
     /// ***************** ExtractQuotedStr ********************
     /// **     Will extract and decode a quoted string.       *
@@ -304,7 +305,7 @@ namespace  KKB
     /// **       '\n', '\t', '\r'.                            *
     /// *******************************************************
     ///]]>
-    ///</remarks>
+    ///</example></code></remarks>
     ///<param nqame='delChars'> List of acceptable delimiter characters. </param>
     ///<param name='decodeEscapeCharacters'> If true escape sequences will be decoded, that is characters that are preceded 
     /// by the back slash (\\).  ex:  \\t = Tab Character, \\r = Carriage return, \\\\ = '\'.

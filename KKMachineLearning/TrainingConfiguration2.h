@@ -267,7 +267,10 @@ namespace KKMLL
     float                  AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const;
 
 
-    KKStr                  DirectoryPathForClass (MLClassPtr  mlClass)  const;
+    /// <summary> Fully expanded directory path for specified class.</summary>
+    /// <param name="mlClass">Class that we want to get directory path for training images.</param>
+    /// <returns> Returns full patch where images for mlClass are stored; directory path is fully expended. </returns>
+    KKStr  DirectoryPathForClass (MLClassPtr  mlClass)  const;
 
     /**
      *@brief  Removes all training classes from the configuration; example use would be to remove all classes and then add 

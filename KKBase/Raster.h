@@ -1128,20 +1128,18 @@ namespace KKB
 
     RasterPtr     SwapQuadrants ()  const;
 
-    /**
-     *@brief Thresholds image in HSI space.
-     *@details
-     *        Returns an image with only the pixels that are within a specified distance in HSI space to the
-     *        supplied HSI parameters.  All pixels that are not within the specified distance will be set to
-     *        'flagValue'.
-     *@param[in] thresholdH  Hue in radians(0.0 <-> 2Pie).
-     *@param[in] thresholdS  Saturation (0.0 <-> 1.0).
-     *@param[in] thresholdI  Intensity (0.0 <-> 1.0).
-     *@param[in] distance    Threshold Distance (0.0 <-> 1.0) that a pixel must be within in HSI space to be included.
-     *@param[in] flagValue   PixelValue to set for pixels that are NOT within 'distance' of threshold.
-     *@returns A image where pixels that are within the threshold will retain their original pixel values and 
-     * the ones that are not will be set to 'flagValue'.
-     */
+    ///<summary> Thresholds image in HSI space.</summary>
+    ///<remarks>
+    ///  Returns an image with only the pixels that are within a specified distance in HSI space to the supplied  HSI
+    ///  parameters. All pixels that are not within the specified distance will be set to <paramref name='flagValue'/>.
+    ///</remarks>
+    ///<param name='thresholdH'>  Hue in radians(0.0 thru 2Pie).</param>
+    ///<param name='thresholdS'>  Saturation (0.0 thru 1.0).</param>
+    ///<param name='thresholdI'>  Intensity (0.0 thru 1.0).</param>
+    ///<param name='distance'>    Euclidean Distance (0.0 thru 1.0) that a pixel must be within in HSI space to be included.</param>
+    ///<param name='flagValue'>   PixelValue to set for pixels that are NOT within 'distance' of threshold.</param>
+    ///<returns> A image where pixels that are within the threshold will retain their original pixel values and 
+    /// the ones that are not will be set to 'flagValue'.</returns>
     RasterPtr     ThresholdInHSI (float              thresholdH,
                                   float              thresholdS, 
                                   float              thresholdI, 
