@@ -75,7 +75,7 @@ namespace  KKB
     kkuint32  Count  ()  const;
 
 
-    ///<summary Returns true if bit indicated by <paramref name='bitNum'/> is set to 1. </summary>
+    ///<summary> Returns true if bit indicated by <paramref name='bitNum'/> is set to 1. </summary>
     bool  Test (kkuint32  bitNum)  const;
 
 
@@ -106,9 +106,9 @@ namespace  KKB
     void  PopulateVectorBool (VectorBool&  boolVector)  const;
 
     void  ReSet ();                 /**< @brief Set all bits to '0'.                      */
-    void  ReSet (kkuint32 bitNum);    /**< @brief Set the bit indicated by 'bitNum' to '0'. */
+    void  ReSet (kkuint32 bitNum);  /**< @brief Set the bit indicated by 'bitNum' to '0'. */
     void  Set   ();                 /**< @brief Set all bits to '1'.                      */
-    void  Set   (kkuint32 bitNum);    /**< @brief Set the bit indicated by 'bitNum' to '1'. */
+    void  Set   (kkuint32 bitNum);   /**< @brief Set the bit indicated by 'bitNum' to '1'. */
 
 
     /**

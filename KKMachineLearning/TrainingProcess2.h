@@ -89,28 +89,22 @@ namespace KKMLL
     };
 
 
-    /**
-     *@brief  Creates a TrainingPorcess based off a specified configuration; depending on the '_whenToRebuild' parameter
-     * and the current status of the corresponding "save" file will either load existing trained classifier or build a 
-     * new one from scratch.
-     *@param[in]  config  A previously loaded configuration file that specifies directories where 
-     *                     example images for each class can be found.  Caller will still own 'config'
-     *                     and be responsible for deleting it.
-     *
-     *@param[in]  checkForDuplicates  If set to true will look for duplicates in the training data. Two
-     *                                FeatureVectors will be considered duplicate if they have the Same
-     *                                ExampleFileName or the save Feature Values.  If duplicates are in 
-     *                                the same class then all but one will be removes.  If they are
-     *                                in more then one class then they will both be removed.
-     *
-     *@param[in]  whenToRebuild      Specify when to rebuild the Models; see definition of enumerator WhenToRebuild.
-     *
-     *@param[in]  saveTrainedModel   Specifies whether to the TrainingPorcess if it needs to be trained.
-     *
-     *@param[in]  cancelFlag         Will monitor; if it ever is set to true stop processing at earliest convenience and return to caller.
-     *
-     *@param[in]  log   Logging file.
-     */
+    
+    ///<summary
+    /// Creates a TrainingPorcess based off a specified configuration; depending on the '_whenToRebuild' parameter
+    /// and the current status of the corresponding "save" file will either load existing trained classifier or build a 
+    /// new one from scratch.
+    ///</summary>
+    ///<param name="config"> A previously loaded configuration file that specifies directories where example images for 
+    ///        each class can be found. Caller will still own config and be responsible for deleting it.</param>
+    ///<param name="checkForDuplicates"> If set to true will look for duplicates in the training data. Two FeatureVectors 
+    ///        will be considered duplicate if they have the Same ExampleFileName or the save Feature Values. If duplicates 
+    ///        are in same class then all but one will be removes. If they are in more then one class then they will both
+    ///        be removed.</param>
+    ///<param name="whenToRebuild"> Specify when to rebuild the Models; see definition of enumerator WhenToRebuild.</param>
+    ///<param name="saveTrainedModel"> Specifies whether to the TrainingPorcess if it needs to be trained. </param>
+    ///<param name="cancelFlag"> Will monitor; if it ever is set to true stop processing at earliest convenience and return to caller.</param>
+    ///<param name="log"> Logging file. </param>
     static
     TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  config,
                                                 bool                          checkForDuplicates,
@@ -122,26 +116,23 @@ namespace KKMLL
     
 
 
-    /**
-     *@brief  Build a new model from scratch for the specified class level removing duplicate training examples.
-     *
-     *@details  Using the parameter level will construct a classifier that groups classes together
-     *          by group hierarchy. Underscore characters in the class name will be used to differentiate group
-     *          levels. Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
-     *          belongs to level 1.
-     *
-     *@param[in]  config  Configuration that will provide parameters such as classes and their related 
-     *                    directories where training examples are found and sub-classifiers.
-     *
-     *@param[in]  level  The grouping level to build a classifier for. Ex: if _level = 2 is specified
-     *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
-     *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
-     *
-     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
-     *                        and return to caller.
-     *
-     *@param[in]  log  Logging file.
-     */
+    ///<summary>Build a new model from scratch for the specified class level removing duplicate training examples.</summary>
+    ///<remarks>
+    /// Using the parameter level will construct a classifier that groups classes together by group hierarchy. Underscore 
+    /// characters in the class name will be used to differentiate group levels. Ex:  Crustacean_Copepod_Calanoid has three 
+    /// levels of grouping where Crustacean belongs to level 1, Copeod to level 2, and Calanoid to level 3.
+    ///</remarks>
+    ///<param name="config"> Configuration that will provide parameters such as classes and their related directories where 
+    ///       training examples are found and sub-classifiers.
+    ///</param>
+    ///<param name="level">  The grouping level to build a classifier for. Ex: if _level = 2 is specified and referring to the
+    ///       class name "Crustacean_Copepod_Calanoid" above all classes that start with "Crustacean_Copepod_" will be combined 
+    ///       as one logical class.
+    ///</param>
+    ///<param name="cancelFlag">  Will monitor if it ever is set to true will stop processing at earliest convenience and return 
+    ///       to caller.
+    ///</param>
+    ///<param name="log"> Logging file.</param>
     static
     TrainingProcess2Ptr  CreateTrainingProcessForLevel (TrainingConfiguration2Const*  config,
                                                         kkuint32                      level,
@@ -150,27 +141,20 @@ namespace KKMLL
                                                        );
 
 
-    /**
-     *@brief  Build a new model from scratch for the specified class level removing duplicate training examples.
-     *
-     *@details  Using the parameter level will construct a classifier that groups classes together
-     *          by group hierarchy. Underscore characters in the class name will be used to differentiate group
-     *          levels. Ex:  Crustacean_Copepod_Calanoid has three levels of grouping where 'Crustacean'
-     *          belongs to level 1.
-     *
-     *@param[in]  configFileName  Name of Configuration file that is to be used to construct instance of TrainingConfiguration2. 
-     *                    Will provide parameters such as classes and their related directories where training examples 
-     *                    are found and sub-classifiers.
-     *
-     *@param[in]  level  The grouping level to build a classifier for.  Ex: if _level = 2 is specified
-     *                   and referring to the class name "Crustacean_Copepod_Calanoid" above all classes
-     *                   that start with "Crustacean_Copepod_" will be combined as one logical class.
-     *
-     *@param[in]  cancelFlag  Will monitor if it ever is set to true will stop processing at earliest convenience 
-     *                        and return to caller.
-     *
-     *@param[in]  log  Logging file.
-     */
+    ///<summary> Build a new model from scratch for the specified class level removing duplicate training examples. </sumary>
+    ///<remarks>
+    /// Using the parameter level will construct a classifier that groups classes together by group hierarchy. Underscore 
+    /// characters in the class name will be used to differentiate group levels. Ex: Crustacean_Copepod_Calanoid has three 
+    /// levels of grouping where Crustacean, Copepod, and Calanoid belong to levels 1, 2, 3 respectivly.
+    ///</remarks>
+    ///<param name="configFileName"> Name of Configuration file that is to be used to construct instance of TrainingConfiguration2. 
+    ///     Will provide parameters such as classes and their related directories where training examples are found and sub-classifiers.
+    ///</param>
+    ///<param name="level"> The grouping level to build a classifier for. Ex: if _level = 2 is specified and referring to the class 
+    ///     name Crustacean_Copepod_Calanoid above all classes that start with Crustacean_Copepod_ will be combined as one logical class.
+    ///</param>
+    ///<param name="cancelFlag"> Will monitor if it ever is set to true will stop processing at earliest convenience and return to caller. </param>
+    ///<param name="log">Logging file.</param>
     static
     TrainingProcess2Ptr  CreateTrainingProcessForLevel (const KKStr&   configFileName,
                                                         kkuint32       level,
@@ -318,17 +302,14 @@ namespace KKMLL
                                    kkint32&  totalNumSVs
                                   );
 
-    /**
-      *@brief Returns back pointer to 1st classifier of Dual Classifier.
-      *@details If not a Dual classifier will return back NULL. Keep in mind that you will
-      *  not own this classifier and that it can be deleted at any time.
-      */
+    ///<summary>
+    /// Returns back pointer to 1st classifier of Dual Classifier; if not a Dual classifier will return back NULL. Keep in mind 
+    /// that you will not own this classifier and that it can be deleted at any time.
+    ///</summary>
     TrainingProcess2Ptr   TrainingProcessLeft ();
 
-    /**
-      *@brief Returns back pointer to 2nd classifier of Dual Classifier.
-      *@details If not a Dual classifier will return back NULL.
-      */
+    
+    ///<sunmary> Returns back pointer to 2nd classifier of Dual Classifier; if not a Dual classifier will return back NULL. <summary>
     TrainingProcess2Ptr   TrainingProcessRight ();
 
     void  ValidateConfiguration ();
@@ -339,10 +320,7 @@ namespace KKMLL
                             RunLog&         log
                            );
 
-
-    virtual  void  WriteXML (const KKStr&   varName,
-                             std::ostream&  o
-                            )  const;
+    virtual  void  WriteXML (const KKStr&  varName,  std::ostream& o)  const;
 
 
   private:
@@ -353,9 +331,7 @@ namespace KKMLL
 
     void    BuildModel3 ();
 
-    void    CheckForDuplicates (bool     allowDupsInSameClass,
-                                RunLog&  log
-                               );
+    void    CheckForDuplicates (bool allowDupsInSameClass,  RunLog&  log);
 
     void    LoadSubClassifiers (WhenToRebuild  whenToRebuild,
                                 bool           checkForDuplicates,
@@ -373,7 +349,6 @@ namespace KKMLL
                                            VolConstBool&                   cancelFlag,
                                            RunLog&                         log
                                           );
-
 
 
 

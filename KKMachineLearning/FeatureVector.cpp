@@ -368,7 +368,6 @@ FeatureVectorList::FeatureVectorList (const FeatureVectorList&  examples,
  *
  *@param[in] _mlClasses  List of classes that the subset of examples will come from.
  *@param[in] _examples  Examples that the subset will be derived from.
- *@param[in] _log  Logging file.
  */
 FeatureVectorList::FeatureVectorList (MLClassList&        _mlClasses,
                                       FeatureVectorList&  _examples

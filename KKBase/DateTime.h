@@ -204,6 +204,8 @@ namespace  KKB
 
 
   ///<summary>Represents Date and Time, consists of two member classes DateType and TimeType.</summary>
+  ///<seealso cref='KKB::osGetFileDateTime'/>
+  ///<seealso cref='KKB::osGetLocalDateTime'/>
   class  DateTime
   {
   public:
