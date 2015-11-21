@@ -307,8 +307,7 @@ namespace  KKB
     ///</remarks>
     ///<param nqame='delChars'> List of acceptable delimiter characters. </param>
     ///<param name='decodeEscapeCharacters'> If true escape sequences will be decoded, that is characters that are preceded 
-    /// by the back slash (\\).  ex:  \\t = Tab Character, \\r = Carriage return, \\\\ = '\'.
-
+    /// by the back slash (\\).  ex:  \\t = Tab Character, \\r = Carriage return, \\\\ = '\'.</param>
     ///<returns>Token String </returns>
     KKStr  ExtractQuotedStr (const char*  delChars,
                              bool         decodeEscapeCharacters
