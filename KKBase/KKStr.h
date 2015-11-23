@@ -69,10 +69,6 @@ namespace  KKB
                    )  const;
   };
 
-  
-
-
-
 
   ///<summary>
   /// A string class providing safe runtime management; strings can be used as stream and StringBuilder objects. Simple
@@ -275,40 +271,12 @@ namespace  KKB
     char     ExtractLastChar ();
 
     ///<summary>
-    /// Extracts the next string token; if the string starts with a quote(&quot;) will extract until the terminating quote.
+    /// Extracts the next string token; if the string starts with a quote(&quot;) will extract until the terminating quote. Special
+    /// control characters that are encoded with back-slashes such as carriage-return, line-feed, tab, quotes, etc will be decoded.
+    /// It is the inverse of the QuotedStr or ToQuotedStr methods.
     ///</summary>
-    ///<remarks><code><example>
-    /// 
-    ///<![CDATA[
-    /// ***************** ExtractQuotedStr ********************
-    /// **     Will extract and decode a quoted string.       *
-    /// **                                                    *
-    /// ** If first character starts with a Quote.            *
-    /// **   a.  Extract all characters until next Quote.     *
-    /// **                                                    *
-    /// **   b.  Translate                                    *
-    /// **         "\n" -> '\n'                               *
-    /// **         "\t" -> '\t'                               *
-    /// **         "\r" -> '\r'                               *
-    /// **         "\\" -> '\'                                *
-    /// **         "\"" -> '"'                                *
-    /// **         "\0" -> char(0)                            *
-    /// **                                                    *
-    /// **   c.  The start and ending Quotes will not be      *
-    /// **       included in returned string.                 *
-    /// **                                                    *
-    /// **   d.  Following delimiter will be removed.         *
-    /// **       '\n', '\t', '\r'.                            *
-    /// **                                                    *
-    /// ** Else                                               *
-    /// **   a. Extract all characters until delimiter.       *
-    /// **       '\n', '\t', '\r'.                            *
-    /// *******************************************************
-    ///]]>
-    ///</example></code></remarks>
     ///<param nqame='delChars'> List of acceptable delimiter characters. </param>
-    ///<param name='decodeEscapeCharacters'> If true escape sequences will be decoded, that is characters that are preceded 
-    /// by the back slash (\\).  ex:  \\t = Tab Character, \\r = Carriage return, \\\\ = '\'.</param>
+    ///<param name='decodeEscapeCharacters'> Indicates if escape sequences should be decoded back to their original code.</param>
     ///<returns>Token String </returns>
     KKStr  ExtractQuotedStr (const char*  delChars,
                              bool         decodeEscapeCharacters
@@ -569,6 +537,7 @@ namespace  KKB
     double    ToLongitude  () const;   /**< @brief Processes string as if a standard longitude; ex: "95:32.2E" = 95.53833. */
     long      ToLong       () const;
     float     ToPercentage () const;
+    KKStr     ToQuotedStr  () const  {return QuotedStr ();}
     kkuint32  ToUint       () const;
     ulong     ToUlong      () const;
     kkuint32  ToUint32     () const;

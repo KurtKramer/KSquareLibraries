@@ -273,7 +273,7 @@ double  svm_predict  (const struct SvmModel233*  model,
  *@param[in]  x       Example that we want to make prediction on.
  *@param[out] dist    Distance from decision boundary.
  *@param[in]  excludeSupportVectorIDX  Index of support vector that should be excluded form computation; if less than zero will be ignored.
- *@returns The predicted class; Zero(0) or One(1);  if (dist <= 0)  the class Zero otherwise class One.
+ *@returns The predicted class; Zero(0) or One(1);  if (dist less-or-equal 0)  the class Zero otherwise class One.
  */
 double  svm_predictTwoClasses (const SvmModel233*  model,
                                const svm_node*   x,

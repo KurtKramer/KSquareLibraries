@@ -8,22 +8,39 @@
 #include <ostream>
 using namespace std;
 
+#include "KKBaseTypes.h"
+
+
 namespace  KKB
 {
+#if !defined(_KKSTR_)
+  class KKStr;
+  typedef  KKStr*            KKStrPtr;
+  typedef  KKStr const       KKStrConst;
+  typedef  KKStrConst*       KKStrConstPtr;
+  typedef  std::pair<KKStr,KKStr>  KKStrPair;
+#endif
+
+#if  !defined(_RUNLOG_)
+  class RunLog;
+#endif
 
 #if  !defined(_XMLSTREAM_)
-  class  XmlStream;
-  typedef  XmlStream*  XmlStreamPtr;
+  class   XmlStream;
+  typedef XmlStream*  XmlStreamPtr;
+  class   XmlTag;
+  typedef XmlTag*       XmlTagPtr;
+  typedef XmlTag const  XmlTagConst;
+  typedef XmlTagConst*  XmlTagConstPtr;
 #endif
 
 
   /**
    *@class  Atom  Atom.h
    *@brief Base class of all other classes that is meant to be managed by 'KKBase'
-   *@details  'Atom' will have a few important virtual methods that all derived classes will be
-   *          required to implement.  This will allow for the smooth functioning of XML
-   *          file reading and writing.  Ex: 'WriteXML',  this method is to write a XML version
-   *          of the derived class to a output stream.  A registered BuildFromXML function will
+   *@details  'Atom' will have a few important virtual methods that all derived classes will be required to implement. 
+   *          This will allow for the smooth functioning of XML file reading and writing. Ex: 'WriteXML', this method 
+   *          is to write a XML version of the derived class to a output stream. A registered BuildFromXML function will
    *          be able to create a new instance of the derived class.
    *
    *          Create on 2010-02-22;  primary purpose is to help generate more ideas along these
@@ -39,11 +56,22 @@ namespace  KKB
     Atom ();
     virtual  ~Atom ();
 
-    virtual  void  WriteXML (ostream&  o) = 0;
-    virtual  const char*  ClassName () = 0;
+    virtual  const char*  ClassName () const = 0;
 
-    //static  AtomPtr  BuildFromXML (XmlStream&  i);
-  
+    virtual
+    Atom*    Duplicate ()  const = 0;
+
+    virtual
+    void     ReadXML (XmlStream&      s,
+                      XmlTagConstPtr  tag,
+                      VolConstBool&   cancelFlag,
+                      RunLog&         log
+                     ) = 0;
+
+    virtual
+    void     WriteXML (const KKStr&   varName,
+                       std::ostream&  o
+                      )  const = 0;
 
   private:  
     static  vector<AtomCreator>  registeredAtomCreators;
@@ -51,4 +79,3 @@ namespace  KKB
 }
 
 #endif
-

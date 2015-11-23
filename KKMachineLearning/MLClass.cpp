@@ -1,16 +1,12 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
-
 
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
@@ -18,7 +14,6 @@ using namespace  std;
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
-
 
 #include "FileDesc.h"
 #include "MLClass.h"
@@ -1705,8 +1700,6 @@ KKStr  MLClassIndexList::ToCommaDelString ()  const
 }  /* ToCommaDelString */
 
 
-
-
 void  MLClassIndexList::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
                                  VolConstBool&   cancelFlag,
@@ -1737,8 +1730,6 @@ void  MLClassIndexList::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
-
-
 void  MLClassIndexList::WriteXML (const KKStr&  varName,
                                   ostream&      o
                                  )  const
@@ -1754,8 +1745,6 @@ void  MLClassIndexList::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }
-
-
 
 
 XmlFactoryMacro(MLClassIndexList)

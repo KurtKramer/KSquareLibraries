@@ -1,14 +1,11 @@
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <math.h>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace  std;
 
 #include "GlobalGoalKeeper.h"
@@ -236,60 +233,45 @@ void  NormalizationParms::DeriveNormalizationParameters (FeatureVectorList&  _ex
 
 
 
-void  NormalizationParms::Save (const KKStr&  _fileName,
-                                bool&          _successfull,
-                                RunLog&        _log
-                               )
+void  NormalizationParms::WriteToFile  (const KKStr&  _fileName,  bool& _successfull,  RunLog& _log)  const
 {
-  _log.Level (20) << "NormalizationParms::Save  FileName[" << _fileName << "]." << endl;
-
+  _log.Level (20) << "NormalizationParms::WriteToFile  FileName[" << _fileName << "]." << endl;
   fileName = _fileName;
-
   _successfull = true;
-
   ofstream outFile (fileName.Str ());
   if  (!outFile.is_open ())
   {
-    _log.Level (-1) << endl << "NormalizationParms::Save  ***EROR***  writing to file["<< _fileName << "]." << endl << endl;
+    _log.Level (-1) << endl << "NormalizationParms::WriteToFile  ***EROR***  writing to file["<< _fileName << "]." << endl << endl;
     _successfull = false;
     return;
   }
-
-  Write (outFile);
-
+  WriteXML ("NormalizationParms", outFile);
   outFile.close ();
-
   return;
 } /* Save */
 
 
 
-void  NormalizationParms::Write (ostream&  o)
+NormalizationParmsPtr  NormalizationParms::ReadFromFile (const KKStr&  fileName,  RunLog& log)
 {
-  kkint32  i = 0;
+  NormalizationParmsPtr n = NULL;
+  XmlStreamPtr  stream = new XmlStream (fileName, log);
+  bool  cancelFlag = false;
+  XmlTokenPtr  t = stream->GetNextToken (cancelFlag, log);
+  while  (t  &&  (!n))
+  {
+    if  (typeid (*t)  !=  typeid (XmlElementNormalizationParms))
+      n = dynamic_cast<XmlElementNormalizationParmsPtr> (t)->Value ();
+    delete  t;
+    t = stream->GetNextToken (cancelFlag, log);
+  }
+  delete t;      t      = NULL;
+  delete stream; stream = NULL;
+  return n;
+}
 
-  kkint32  origPrecision = (kkint32)o.precision();
-  o.precision (12);
-
-  o << "<NormalizationParms>"      << endl;
-  o << "NumOfFeatures"             << "\t" << numOfFeatures                             << endl;
-  o << "NumOfExamples"             << "\t" << numOfExamples                             << endl;
-  o << "NormalizeNominalFeatures"  << "\t" << (normalizeNominalFeatures ? "Yes" : "No") << endl;
-
-  o << "Means";
-  for  (i = 0;  i < numOfFeatures;  i++)
-    o << "\t" << mean[i];
-  o << endl;
 
 
-  o << "Sigmas";
-  for  (i = 0;  i < numOfFeatures;  i++)
-     o << "\t" << sigma[i];
-  o << endl;
-
-  o << "</NormalizationParms>" << endl;
-  o.precision (origPrecision);
-}  /* Write */
 
 
 void  NormalizationParms::WriteXML (const KKStr&  varName,
@@ -393,10 +375,6 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
 }  /* ReadXML */
 
 
-
-
-
-
 double  NormalizationParms::Mean (kkint32  i,
                                   RunLog&  log
                                  )
@@ -411,9 +389,6 @@ double  NormalizationParms::Mean (kkint32  i,
     return  mean[i];
   }
 }  /* Mean */
-
-
-
 
 
 double  NormalizationParms::Sigma (kkint32  i,
@@ -432,8 +407,6 @@ double  NormalizationParms::Sigma (kkint32  i,
 }  /* Sigma */
 
 
-
-
 void  NormalizationParms::ConstructNormalizeFeatureVector ()
 {
   delete  normalizeFeature;
@@ -446,7 +419,6 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
     {
       normalizeFeature[i] = true;
     }
-
     else 
     {
       if  ((attriuteTypes[i] == AttributeType::Nominal)  ||
@@ -464,8 +436,6 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 }  /* ConstructNormalizeFeatureVector */
 
 
-
-
 void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
 {
   float*  featureData = example->FeatureDataAlter ();
@@ -481,9 +451,6 @@ void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
     }
   }
 }  /* NormalizeAExample */
-
-
-
 
 
 

@@ -38,9 +38,7 @@ XmlStream::XmlStream (XmlTokenizerPtr _tokenStream):
 
 
 
-XmlStream::XmlStream (const KKStr&  _fileName,
-                      RunLog&       _log
-                     ):
+XmlStream::XmlStream (const KKStr& _fileName,  RunLog& _log):
     endOfElementTagNames (),
     endOfElemenReached   (false),
     fileName             (_fileName),

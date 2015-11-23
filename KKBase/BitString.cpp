@@ -2,25 +2,20 @@
  * Copyright (C) 1994-2011 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-
 #include "FirstIncludes.h"
-
 #include <stdio.h>
 #include <fstream>
 #include <string>
 #include <iostream>
 #include <vector>
-
 #include <string.h>
-
 #include "MemoryDebug.h"
-
 using namespace std;
-
 
 #include "BitString.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
+#include "XmlStream.h"
 using namespace KKB;
 
 
@@ -59,12 +54,9 @@ void  BitString::BuildBitCounts ()
 
 
 
-
-
 BitString::BitString (kkuint32  _bitLen):
   bitLen  (_bitLen),
   byteLen (0)
-
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
@@ -72,19 +64,14 @@ BitString::BitString (kkuint32  _bitLen):
 }
 
 
-
-
-BitString::BitString (const BitString&  b):
-    bitLen  (b.bitLen),
-    byteLen (b.byteLen),
-    str     (new uchar[b.byteLen])
-
+BitString::BitString (const BitString&  bs):
+  bitLen  (bs.bitLen),
+  byteLen (bs.byteLen),
+  str     (NULL)
 {
-  kkuint32  x;
-  for  (x = 0;  x < byteLen;  x++)
-  {
-    str[x] = b.str[x];
-  }
+  uchar*   str;
+  str = new uchar[byteLen];
+  memcpy (str, bs.str, byteLen);
 }
 
 
@@ -95,30 +82,23 @@ BitString::BitString (kkuint32   _bitLen,
     bitLen  (_bitLen),
     byteLen (0),
     str     (NULL)
-
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
   memset (str, 0, byteLen);
-
   kkuint32  x;
-
   for  (x = 0;  x < bitNumsLen;  x++)
   {
     if  (bitNums[x] >= bitLen)
     {
-      cerr << std::endl << std::endl
-           << "BitString::BitString Constructing from list of numbers  *** ERROR ***" << std::endl
-           << std::endl
-           << "           bitNums[" << x << "] = [" << bitNums[x] << "] which is >= bitLen[" << bitLen << "]." << std::endl
-           << std::endl;
-      exit (-1);
+      KKStr  msg (128);
+      msg << "BitString   Constructing from list of numbers:  bitNums[" << x << "] = [" << bitNums[x] << "] which is >= bitLen[" << bitLen << "].";
+      cerr << std::endl << std::endl << "BitString   ***ERROR***  " << msg << std::endl << std::endl;
+      throw KKException (msg);
     }
-
     Set (bitNums[x]);
   }
 }
-
 
 
 
@@ -127,6 +107,14 @@ BitString::~BitString ()
   delete  str;
   str = NULL;
 }
+
+
+
+BitString*  BitString::Duplicate ()  const
+{
+  return new BitString (*this);
+}
+
 
 
 void  BitString::CalcByteAndBitOffsets (kkuint32  bitNum,
@@ -613,3 +601,53 @@ BitString   BitString::operator^  (const BitString&  right)  /* bitwise exclusiv
 
   return  result;
 }
+
+
+
+void  BitString::ReadXML (XmlStream&      s,
+                          XmlTagConstPtr  tag,
+                          VolConstBool&   cancelFlag,
+                          RunLog&         log
+                         )
+{
+  kkint32  bitIndex = 0;
+  XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
+  while  (t  &&  (!cancelFlag))
+  {
+    if  (typeid (*t) == typeid (XmlContent))
+    {
+      XmlContentPtr c = dynamic_cast<XmlContentPtr> (t);
+      if  (c  &&  c->Content ())
+      {
+        KKStrConstPtr  text = c->Content ();
+        /** TODO decode text block into list of bits. */
+        //ParseClassIndexList (*text, log);
+      }
+    }
+    delete  t;
+    t = s.GetNextToken (cancelFlag, log);
+  }
+  delete  t;
+  t = NULL;
+}  /* ReadXML */
+
+
+
+
+void  BitString::WriteXML (const KKStr&  varName,
+                           ostream&      o
+                          )  const
+{
+  XmlTag  startTag ("BitString", XmlTag::TagTypes::tagStart);
+  if  (!varName.Empty ())
+    startTag.AddAtribute ("VarName", varName);
+  startTag.WriteXML (o);
+  XmlContent::WriteXml (this->HexStr(), o);
+  XmlTag  endTag ("BitString", XmlTag::TagTypes::tagEnd);
+  endTag.WriteXML (o);
+  o << endl;
+}
+
+
+XmlFactoryMacro(BitString)
+

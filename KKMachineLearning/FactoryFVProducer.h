@@ -156,11 +156,11 @@ namespace KKMLL
 
     /**
      *@brief  This is where you register newly instantiated instances of 'FactoryFVProducer' derived classes.
-     *@details The instance will be added to a list of existing factories ('FactoryFVProducer::factories').
-     *This list is a map<> structure indexed by 'FactoryFVProducer::Name()'.  If an instance with the same
-     *name already exists a appropriate error message will be written the 'runLog' and it will not be added
-     * to 'FactoryFVProducer::factories'.
-     *@param[in]  factory  The newly created instance of a 'FactoryFVProducer' derived class that you want to register.
+     *@details The instance will be added to a list of existing factories "FactoryFVProducer::factories".
+     *This list is a map structure indexed by "FactoryFVProducer::Name()". If an instance with the same
+     *name already exists a appropriate error message will be written to the "runLog" and will not be added
+     * to "FactoryFVProducer::factories".
+     *@param[in]  factory  The newly created instance of a "FactoryFVProducer" derived class that you want to register.
      *@param[in]  runLog  Pointer to logger; if equal NULL will write messages to temp created instance. 
      */
     static  void  RegisterFactory (FactoryFVProducerPtr  factory,

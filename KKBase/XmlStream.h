@@ -44,9 +44,7 @@ namespace  KKB
 
     XmlStream (XmlTokenizerPtr  _tokenStream);
 
-    XmlStream (const KKStr&  _fileName,
-               RunLog&       _log
-              );
+    XmlStream (const KKStr&  _fileName,  RunLog& _log);
 
     virtual  ~XmlStream ();
 

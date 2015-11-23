@@ -42,28 +42,25 @@ namespace  KKB
 
     ///<summary> Constructs a date from a displayable string; the year, month, and days fields are detertmie3d from context. </summary>
     ///<remarks>
-    ///<![CDATA[
     /// Strings can be both all numeric or combination of alpha numeric. Each part of the date, (Year, Month, Day) can be separated 
-    /// by ' ', '/', '\\t', '\\n', or '\\r'. Examples of valid strings are "1997/02/25", "02/25/1997", "Feb 02 1997",  "02/Feb/1997",
-    /// "1997 February 02".  The ordering of the numeric fields will be determined by context with one of three possible formats, 
-    /// mm/dd/yyyy, yyyy/mm/dd, and dd/mm/yyyy.
+    /// by &quot; &quot;, &quot;/&quot;, tab, line-feed, or carriage-return. Examples of valid strings are &quot;1997/02/25&quot;,
+    /// &quot;02/25/1997&quot;, &quot;Feb 02 1997&quot;,  &quot;02/Feb/1997&quot;, &quot;1997 February 02&quot;. The ordering of
+    /// the numeric fields will be determined by context with one of three possible formats,  mm/dd/yyyy, yyyy/mm/dd, and dd/mm/yyyy.
     ///
-    /// A flaw in this schema is that if the day of the month is in the range of (1<->12), an all numeric format is used, and the
-    /// ordering is supposed to be "dd/mm/yyyy" this routine will assume that it is looking at "mm/dd/yyyy" with the result of 
-    /// swapping the "Month" and "Day" fields.  As a rule I try to always use the alpha numeric version of the month.
-    ///]]>
-    ///<remarks>
+    /// A flaw in this schema is that if the day of the month is in the range of (1 thru 12), an all numeric format is used, and the
+    /// ordering is supposed to be &quot;dd/mm/yyyy&quot; this routine will assume that it is looking at &quot;mm/dd/yyyy&quot; with
+    /// the result of  swapping the &quot;Month&quot; and &quot;Day&quot; fields. As a rule I try to always use the alpha numeric 
+    /// version of the month.
+    ///</remarks>
     DateType (KKStr  s);
 
 
     ///<summary> Adds a number of days to the date. </summary>
-    ///<remarks>
-    ///<code>
-    ///  Example:   Date d ("April 14 1962");  //  Sets the instance of 'd' to the date '1962/04/14'.
-    ///             d.AddDays (12);            //  'd' now contains the date '1962/04/24'.
-    ///             d.AddDays (-25);           //  'd' now contains the date '1962/03/30'.
-    ///</code>
-    ///</remarks>
+    ///<example>
+    ///  Example:   Date d (&quot;April 14 1962&quot;);  //  Sets the instance of &quot;d&quot; to the date &quot;1962-04-14&quot;.
+    ///             d.AddDays (12);            //  &quot;d&quot; now contains the date &quot;1962-04-24&quot;.
+    ///             d.AddDays (-25);           //  &quot;d&quot; now contains the date &quot;1962-03-30&quot;.
+    ///</example>
     void   AddDays   (kkint32 _days);
 
     void   AddMonths (kkint32 _months);
@@ -74,11 +71,11 @@ namespace  KKB
     uchar  Month () const {return  month;}
     uchar  Day   () const {return  day;}
 
-    ///<summary> Returns back the number of days since "1/1/0000". </summary>
+    ///<summary> Returns back the number of days since &quot;1/1/0000&quot;. </summary>
     ///<remarks>
-    /// This can be used to determine the number of days between two different dates.  For example you have two 
-    /// instances of 'DateType'  'd1' and 'd2'.  The number of days between the two dates can be determined by 
-    /// "int deltaDays = d1.Days () - d2.Days ();".
+    /// This can be used to determine the number of days between two different dates. For example you have two 
+    /// instances of &quot;DateType&quot;  &quot;d1&quot; and &quot;d2&quot;. The number of days between the two dates can be determined by
+    /// &quot;int deltaDays = d1.Days () - d2.Days ();&quot;.
     ///</remarks>
     kkint32   Days ()  const;
 
@@ -108,7 +105,7 @@ namespace  KKB
     DateType   operator-  (const DateType&  right)  const;
     DateType&  operator++ ();
 
-    uchar  DaysThisMonth ()  const;  /**<  @brief returns the number of days in 'month' and if leapYear and february returns 29. */
+    uchar  DaysThisMonth ()  const;  /**<  @brief returns the number of days in 'month' and if leapYear and February returns 29. */
     
     static  uchar  MonthFromStr (const KKStr&  monthStr);
 
@@ -204,8 +201,6 @@ namespace  KKB
 
 
   ///<summary>Represents Date and Time, consists of two member classes DateType and TimeType.</summary>
-  ///<seealso cref='KKB::osGetFileDateTime'/>
-  ///<seealso cref='KKB::osGetLocalDateTime'/>
   class  DateTime
   {
   public:
@@ -216,7 +211,6 @@ namespace  KKB
     DateTime (const DateType&  _date,
               const TimeType&  _time
              );
-
 
     DateTime (short  _year,
               uchar  _month,

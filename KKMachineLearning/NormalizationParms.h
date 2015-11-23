@@ -56,6 +56,8 @@ namespace KKMLL
   class  NormalizationParms
   {
   public:
+    typedef  NormalizationParms*  NormalizationParmsPtr;
+
     NormalizationParms ();
 
     NormalizationParms (bool                _normalizeNominalFeatures,
@@ -100,13 +102,10 @@ namespace KKMLL
                   );
 
 
-    void  Save (const KKStr&  _fileName,
-                bool&         _successfull,
-                RunLog&       _log
-               );
+    void  WriteToFile (const KKStr&  _fileName,  bool& _successfull,  RunLog& _log)  const;
 
     
-    void  Write (std::ostream&  o);
+    //void  Write (std::ostream&  o);
 
 
     void  WriteXML (const KKStr&   varName,
@@ -127,13 +126,16 @@ namespace KKMLL
     const double*  Mean  () const  {return  mean;}
     const double*  Sigma () const  {return  sigma;}
 
+    static
+    NormalizationParmsPtr  ReadFromFile (const KKStr&  fileName,  RunLog& log);
+
   private:
     void  ConstructNormalizeFeatureVector ();
     void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
 
     AttributeTypeVector  attriuteTypes;
     FileDescPtr          fileDesc;
-    KKStr                fileName;
+    mutable KKStr        fileName;
     double*              mean;
     bool*                normalizeFeature;
     bool                 normalizeNominalFeatures;
@@ -143,7 +145,7 @@ namespace KKMLL
   };  /* NormalizationParms */
 
 
-  typedef  NormalizationParms*  NormalizationParmsPtr;
+  typedef  NormalizationParms::NormalizationParmsPtr  NormalizationParmsPtr;
 
 
   #define  _NormalizationParms_Defined_

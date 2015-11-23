@@ -6,8 +6,10 @@
 #ifndef  _BITSTRING_
 #define  _BITSTRING_
 
-#include  "KKBaseTypes.h"
-#include  "KKStr.h"
+#include "Atom.h"
+#include "KKBaseTypes.h"
+#include "KKStr.h"
+#include "XmlStream.h"
 
 namespace  KKB
 {
@@ -22,14 +24,13 @@ namespace  KKB
   * you would require very large amount of memory to accomplish this.  With BitString's the memory requirement is
   * reduced to 1/8'the allowing for more efficient use of memory.
   *
-  * This class will manage Bit-Strings up to UINT_MAX in length.  Logical operations such as bitwise AND, OR, and NOT
+  * This class will manage Bit-Strings up to UINT_MAX in length. Logical operations such as bitwise AND, OR, and NOT
   * are supported plus others.  An example of where this class is used is in KKMLL::FeatureNumList.
   */
 
-  class  BitString
+  class  BitString: public Atom
   {
   public:
-
     /**
      *@brief Construct a bit string of length _binLen with all bits set to '0'.
      *@param[in]  _bitLen Length of bit string to allocate.
@@ -57,6 +58,11 @@ namespace  KKB
 
     /**@brief Returns the length of the bit-string */
     kkuint32  BitLen ()  const  {return bitLen;}
+
+    const char*  ClassName () const  {return "BitString";}
+
+    virtual
+    BitString*   Duplicate ()  const;
 
     /**
      *@brief  Create a bit-string from a Hex String.
@@ -89,14 +95,15 @@ namespace  KKB
     ///<param name='setBits'> Will be populated with all bits that are set to '1', will be cleared first.</param>
     void  ListOfSetBits16 (VectorUint16&  setBits)  const;  
 
-    /**
-     *@brief Get Bit positions that are set to '1'.
-     *@details  The parameter 'setBits' will be populated with the list of bits that are set to '1' for bit strings that are up to 2^32-1 bits long.
-     *@code
-     * ex: Bit String "001200110011" will produce a vector <2, 3, 6, 7, 10, 11>
-     *@endcode
-     *@param[out] setBits  Will be populated with all bits that are set to '1', will be cleared first.
-     */
+    
+    ///<summary>
+    /// Get Bit positions that are set to &quot;1&quot;.  The parameter <paramref name="setBits"/> will be populated with the list of 
+    /// bits that are set to &quot;1&quot; for bit strings that are up to 2^32-1 bits long.
+    ///</summary>
+    ///<example>
+    /// ex: Bit String &quot;001200110011&quot; will produce a vector &lt;2, 3, 6, 7, 10, 11&gt;
+    ///</example>
+    ///<param in="setBits"> Will be populated with all bits that are set to &quot;1&quot;, will be cleared first. </param>
     void  ListOfSetBits32 (VectorUint32&  setBits)  const;  
 
     /**
@@ -109,6 +116,18 @@ namespace  KKB
     void  ReSet (kkuint32 bitNum);  /**< @brief Set the bit indicated by 'bitNum' to '0'. */
     void  Set   ();                 /**< @brief Set all bits to '1'.                      */
     void  Set   (kkuint32 bitNum);   /**< @brief Set the bit indicated by 'bitNum' to '1'. */
+
+    virtual
+    void     ReadXML (XmlStream&      s,
+                      XmlTagConstPtr  tag,
+                      VolConstBool&   cancelFlag,
+                      RunLog&         log
+                     ) = 0;
+
+    virtual
+    void     WriteXML (const KKStr&   varName,
+                       std::ostream&  o
+                      )  const = 0;
 
 
     /**
@@ -163,6 +182,7 @@ namespace  KKB
 
   typedef  BitString*  BitStringPtr;
 
+  typedef  XmlElementTemplate<BitString>  XmlElementMLClassIndexList;
 } /* namespace  KKB */
 
 #endif

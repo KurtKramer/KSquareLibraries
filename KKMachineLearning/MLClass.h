@@ -503,7 +503,7 @@ namespace KKMLL
     /** 
      *@brief Returns string consisting of all contained classes indicating ClassIndex assigned to each class.
      *@details Each class will be separated by a comma(",") delimiter character and each class will consist of 
-     * "ClassName" and associated "ClassIndex" separated by colon(":") character.  The class names will be 
+     * "ClassName" and associated "ClassIndex" separated by colon(":") character. The class names will be 
      * enclosed in quotes("). The method "ParseClassIndexList" will be able to decode this string to
      * repopulate an instance of "MLClassIndexList".
      *@see "KKStr::QuotedStr"
@@ -601,8 +601,6 @@ namespace KKMLL
     MLClassListPtr  value;
   };
   typedef  XmlElementMLClassNameList*  XmlElementMLClassNameListPtr;
-
-
 
 
   typedef  XmlElementTemplate<MLClassIndexList>  XmlElementMLClassIndexList;

@@ -56,15 +56,15 @@ namespace KKMLL
   ///<remarks>
   /// A trained model can either be built from scratch using specified training data or a persistent instance 
   /// can be loaded from a XMLStream. There are several static methods that are best used to manage the various situations
-  /// such as "CreateTrainingProcess", "CreateTrainingProcessForLevel", "CreateTrainingProcessFromTrainingExamples",
-  /// "LoadExistingTrainingProcess". The result of any of these methods is a TrainigProcess2 instance that you
-  /// use to create a Classifier instance.<p>
+  /// such as &quot;CreateTrainingProcess&quot;, &quot;CreateTrainingProcessForLevel&quot;, &quot;CreateTrainingProcessFromTrainingExamples&quot;,
+  /// &quot;LoadExistingTrainingProcess&quot;. The result of any of these methods is a TrainigProcess2 instance that you
+  /// use to create a Classifier instance.
   ///
   /// Supporting Classes:
   ///  - TrainingConfiguration2  Manages defines the parameters of a classifier such as:
   ///   -# Type of algorithm
   ///   -# List Classes of and where training examples can be loaded from.
-  ///   -# Sub-Classifiers that is for any given class another "TrainingConfiguration2" can be specified indicating another 
+  ///   -# Sub-Classifiers that is for any given class another &quot;TrainingConfiguration2&quot; can be specified indicating another
   ///      classifier to be used when that class is predicted.
   ///   -# Class Weights
   ///
@@ -72,8 +72,8 @@ namespace KKMLL
   ///
   /// - Classifier2 You construct an instance from a 'TrainingProcess2' instance;  this is the class that manages predictions.
   ///
-  ///  Sub-Classifiers:  For each sub-classifiers specified in the "TrainingConfiguration2" another instance of "TrainingProcess2" 
-  ///  will be created. Data member "subTrainingProcesses" will keep a list of these "TrainingProcess2" instances.
+  ///  Sub-Classifiers:  For each sub-classifiers specified in the &quot;TrainingConfiguration2&quot; another instance of &quot;TrainingProcess2&quot;
+  ///  will be created. Data member &quot;subTrainingProcesses&quot; will keep a list of these &quot;TrainingProcess2&quot; instances.
   ///</remarks>
   class  TrainingProcess2
   {
@@ -90,9 +90,9 @@ namespace KKMLL
 
 
     
-    ///<summary
-    /// Creates a TrainingPorcess based off a specified configuration; depending on the '_whenToRebuild' parameter
-    /// and the current status of the corresponding "save" file will either load existing trained classifier or build a 
+    ///<summary>
+    /// Creates a TrainingPorcess based off a specified configuration; depending on the &quot;_whenToRebuild&quot; parameter
+    /// and the current status of the corresponding &quot;save&quot; file will either load existing trained classifier or build a
     /// new one from scratch.
     ///</summary>
     ///<param name="config"> A previously loaded configuration file that specifies directories where example images for 
@@ -103,7 +103,7 @@ namespace KKMLL
     ///        be removed.</param>
     ///<param name="whenToRebuild"> Specify when to rebuild the Models; see definition of enumerator WhenToRebuild.</param>
     ///<param name="saveTrainedModel"> Specifies whether to the TrainingPorcess if it needs to be trained. </param>
-    ///<param name="cancelFlag"> Will monitor; if it ever is set to true stop processing at earliest convenience and return to caller.</param>
+    ///<param name="cancelFlag"> Will monitor; if it ever is set to true stop processing at earliest convenience and return to caller. </param>
     ///<param name="log"> Logging file. </param>
     static
     TrainingProcess2Ptr  CreateTrainingProcess (TrainingConfiguration2Const*  config,
@@ -141,11 +141,11 @@ namespace KKMLL
                                                        );
 
 
-    ///<summary> Build a new model from scratch for the specified class level removing duplicate training examples. </sumary>
+    ///<summary> Build a new model from scratch for the specified class level removing duplicate training examples. </summary>
     ///<remarks>
     /// Using the parameter level will construct a classifier that groups classes together by group hierarchy. Underscore 
     /// characters in the class name will be used to differentiate group levels. Ex: Crustacean_Copepod_Calanoid has three 
-    /// levels of grouping where Crustacean, Copepod, and Calanoid belong to levels 1, 2, 3 respectivly.
+    /// levels of grouping where Crustacean, Copepod, and Calanoid belong to levels 1, 2, 3 respectively.
     ///</remarks>
     ///<param name="configFileName"> Name of Configuration file that is to be used to construct instance of TrainingConfiguration2. 
     ///     Will provide parameters such as classes and their related directories where training examples are found and sub-classifiers.
@@ -309,7 +309,7 @@ namespace KKMLL
     TrainingProcess2Ptr   TrainingProcessLeft ();
 
     
-    ///<sunmary> Returns back pointer to 2nd classifier of Dual Classifier; if not a Dual classifier will return back NULL. <summary>
+    ///<summary> Returns back pointer to 2nd classifier of Dual Classifier; if not a Dual classifier will return back NULL. </summary>
     TrainingProcess2Ptr   TrainingProcessRight ();
 
     void  ValidateConfiguration ();

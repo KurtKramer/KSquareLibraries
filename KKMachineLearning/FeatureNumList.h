@@ -207,33 +207,15 @@ namespace KKMLL
     /** @brief Turns off specified feature 'featureNum'; if 'featureNum' is not turned on then nothing happens; same as using 'operator-='.  */
     void   UnSet (kkuint16  featureNum);
 
-
-    void  WriteXML (const KKStr&   varName,
-                    std::ostream&  o
-                   )  const;
+    void  WriteXML (const KKStr& varName,  std::ostream&  o)  const;
 
 
-    /**
-     *@brief Returns back the selected feature.
-     *@details  A FeatureNumList instance consists of a list of selected features. It is logically like an 
-     * array of selected features that is the same length as the number of selected features.
-     *@code
-     * Example code that scans the FeatureNumList object  'goodFeatures'
-     *
-     * void  PrintSelectedFeatures (const FeatureNumList&  goodFeatures)
-     * {
-     *   cout << "Selected Features: ";
-     *   for  (kkint32 x = 0;  x < goodFeatures.NumOfFeatures ();
-     *   {
-     *     if  (x > 0)  cout << ",";
-     *     cout << goodFeatures[x];
-     *   }
-     *   cout << endl;
-     * }
-     *@endcode
-     *@param[in]  _idx  The position in this instance that you want to return.
-     *@return  Selected feature at position '_idx'.
-     */
+    ///<summary>
+    /// Returns back selected feature. A FeatureNumList instance consists of a list of selected features. It is logically like an array of selected 
+    /// features that is the same length as the number of selected features.
+    ///</summary>
+    ///<param name="idx"> The position in this instance that you want to return. </param>
+    ///<returns> Selected feature at position &quot;_idx&quot;.</returns>
     kkuint16  operator[] (kkint32  idx)  const;
 
     FeatureNumList&  operator=  (const FeatureNumList&   _features);
@@ -274,24 +256,12 @@ namespace KKMLL
   #define  _FeatureNumList_Defined_
 
 
-  std::ostream& operator<< (      std::ostream&     os, 
-                            const FeatureNumList&   features
-                           );
+  std::ostream& operator<< (std::ostream& os,  const FeatureNumList& features);
 
-
-  std::ostream& operator<< (      std::ostream&       os, 
-                            const FeatureNumListPtr&  features
-                           );
-
-  //extern
-  //const  char*  FeatureDecriptions[];
-
+  std::ostream& operator<< (std::ostream& os,  const FeatureNumListPtr&  features);
 
   typedef  XmlElementTemplate<FeatureNumList>  XmlElementFeatureNumList;
   typedef  XmlElementFeatureNumList*  XmlElementFeatureNumListPtr;
-
-
-
 } /* namespace KKMLL */
 
 #endif
