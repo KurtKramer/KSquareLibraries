@@ -28,9 +28,13 @@ namespace  KKB
   * are supported plus others.  An example of where this class is used is in KKMLL::FeatureNumList.
   */
 
-  class  BitString: public Atom
+  class  BitString  // : public Atom
   {
   public:
+    /** @brief  Instantiates a empty bit-string of length 0; needed for ReadXML  */
+    BitString ();
+
+
     /**
      *@brief Construct a bit string of length _binLen with all bits set to '0'.
      *@param[in]  _bitLen Length of bit string to allocate.
@@ -62,7 +66,7 @@ namespace  KKB
     const char*  ClassName () const  {return "BitString";}
 
     virtual
-    BitString*   Duplicate ()  const;
+    BitString*     Duplicate ()  const;
 
     /**
      *@brief  Create a bit-string from a Hex String.
@@ -122,12 +126,12 @@ namespace  KKB
                       XmlTagConstPtr  tag,
                       VolConstBool&   cancelFlag,
                       RunLog&         log
-                     ) = 0;
+                     );
 
     virtual
     void     WriteXML (const KKStr&   varName,
                        std::ostream&  o
-                      )  const = 0;
+                      )  const;
 
 
     /**
@@ -182,7 +186,7 @@ namespace  KKB
 
   typedef  BitString*  BitStringPtr;
 
-  typedef  XmlElementTemplate<BitString>  XmlElementMLClassIndexList;
+  typedef  XmlElementTemplate<BitString>  XmlElementBitString;
 } /* namespace  KKB */
 
 #endif

@@ -13,6 +13,7 @@
 using namespace std;
 
 #include "BitString.h"
+#include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "XmlStream.h"
@@ -51,6 +52,16 @@ void  BitString::BuildBitCounts ()
     }
   }
 }  /* BuildBitCounts */
+
+
+
+BitString::BitString ():
+  bitLen  (0),
+  byteLen (0)
+{
+  byteLen = ((bitLen - 1) / 8) + 1;
+  str = NULL;
+}
 
 
 
@@ -622,6 +633,8 @@ void  BitString::ReadXML (XmlStream&      s,
         KKStrConstPtr  text = c->Content ();
         /** TODO decode text block into list of bits. */
         //ParseClassIndexList (*text, log);
+        delete text;
+        text = NULL;
       }
     }
     delete  t;
