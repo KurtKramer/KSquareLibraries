@@ -6,7 +6,7 @@
 #define  _ATOM_
 
 #include <ostream>
-using namespace std;
+
 
 #include "KKBaseTypes.h"
 
@@ -74,7 +74,7 @@ namespace  KKB
                       )  const = 0;
 
   private:  
-    static  vector<AtomCreator>  registeredAtomCreators;
+    static  std::vector<AtomCreator>  registeredAtomCreators;
   };  /*  Atom */
 }
 

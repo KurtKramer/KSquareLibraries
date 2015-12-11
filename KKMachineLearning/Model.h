@@ -15,9 +15,7 @@
 #include "KKStr.h"
 #include "RunLog.h"
 
-
 #include "ModelParam.h"
-
 
 namespace KKMLL
 {

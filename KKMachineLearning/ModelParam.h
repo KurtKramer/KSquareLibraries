@@ -1,10 +1,8 @@
 #ifndef  _MODELPARAM_
 #define  _MODELPARAM_
 
-
-#include  "RunLog.h"
-#include  "KKStr.h"
-
+#include "RunLog.h"
+#include "KKStr.h"
 #include "FeatureNumList.h"
 
 namespace KKMLL

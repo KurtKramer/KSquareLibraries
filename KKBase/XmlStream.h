@@ -4,12 +4,13 @@
  */
 #ifndef  _XMLSTREAM_
 #define  _XMLSTREAM_
-#include  <map>
+#include <map>
 
 #include "DateTime.h"
 #include "KKStr.h"
 #include "RunLog.h"
 #include "XmlTokenizer.h"
+
 using namespace KKB;
 
 namespace  KKB

@@ -1,13 +1,25 @@
 #ifndef  _CLASSIFIER2_
 #define  _CLASSIFIER2_
 
+
+
 #include "Application.h"
+
+
+// Problem apperas to b in file below,
 #include "Model.h"
+
+
+
 #include "ModelOldSVM.h"
 #include "ModelParamOldSVM.h"
+
+
+
 #include "ModelParam.h"
 #include "RunLog.h"
 #include "SVMModel.h"
+
 
 
 namespace  KKMLL

@@ -5,17 +5,17 @@
 #ifndef  _KKEXCEPTION_
 #define  _KKEXCEPTION_
 
-#include  <ostream>
-#include  <string>
+#include <ostream>
+#include <string>
 
 #ifdef  WIN32
 #else
 #define  __cdecl  
 #endif
 
-#include  "KKBaseTypes.h"
-#include  "KKQueue.h"
-#include  "KKStr.h"
+#include "KKBaseTypes.h"
+#include "KKQueue.h"
+#include "KKStr.h"
 
 #define  EnterChar   13
 #define  EscapeChar  27
