@@ -28,7 +28,7 @@ namespace  KKB
   * are supported plus others.  An example of where this class is used is in KKMLL::FeatureNumList.
   */
 
-  class  BitString  // : public Atom
+  class  BitString: public Atom  // : public Atom
   {
   public:
     /** @brief  Instantiates a empty bit-string of length 0; needed for ReadXML  */
@@ -66,7 +66,7 @@ namespace  KKB
     const char*  ClassName () const  {return "BitString";}
 
     virtual
-    BitString*     Duplicate ()  const;
+    BitString*   Duplicate ()  const;
 
     /**
      *@brief  Create a bit-string from a Hex String.

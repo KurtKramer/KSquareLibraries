@@ -104,7 +104,6 @@ namespace KKB
    *@see Point
    *@see PointList
    *@see RasterList()
-   *@see Sobel
    */
   class  Raster
   {
@@ -1120,7 +1119,7 @@ namespace KKB
      uchar*       SimpleCompression (kkuint32&  buffLen)  const;
     
 
-    RasterPtr     SobelEdgeDetector ();
+    RasterPtr     SobelEdgeDetector () const;
 
     RasterListPtr SplitImageIntoEqualParts (kkint32 numColSplits,
                                             kkint32 numRowSplits

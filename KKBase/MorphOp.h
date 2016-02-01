@@ -16,7 +16,6 @@
 
 
 
-
 #include "KKQueue.h"
 #include "KKStr.h"
 #include "RunLog.h"
@@ -34,6 +33,14 @@ namespace  KKB
 
 namespace  KKB
 {
+  /**  
+   *@brief  Base class for all Morphological operations.
+   *@details
+   *  It is assumed that all morphologocal operations will be working with a source image and returning a new
+   * modified image; the atcual operation is to be perfomed by the "PerformOperation" metho where you pass in
+   * a poiter to the source Image/ Raster. The the derived class would then call "SetSrcRaster" to intialize
+   * the base class "MorphOp" with pointers to the source image.
+   */
   class  MorphOp
   {
   public:
@@ -46,11 +53,12 @@ namespace  KKB
       Dilation,
       Erosion,
       MaskExclude,
+      SobelEdgeDetection,
       Stretcher
     };
 
-    KKB::KKStr       OperationTypeToStr   (OperationType      _operation);
-    OperationType    OperationTypeFromStr (const KKB::KKStr&  _operationStr);
+    KKB::KKStr     OperationTypeToStr   (OperationType      _operation);
+    OperationType  OperationTypeFromStr (const KKB::KKStr&  _operationStr);
 
 
     enum class  StructureType: int
@@ -72,13 +80,11 @@ namespace  KKB
       SQUARE11 = 6
     };
 
-
     MorphOp ();
 
     virtual  ~MorphOp ();
 
     virtual  OperationType   Operation ()  const  = 0;
-
 
     virtual  RasterPtr  PerformOperation (Raster const* _image) = 0;
 
@@ -86,13 +92,11 @@ namespace  KKB
     static  StructureType  MaskShapes (MaskTypes  mt);
 
   protected:
-
     bool  BackgroundPixel (uchar  pixel)  const;
-
 
     bool  BackgroundPixel (kkint32  row,
                            kkint32  col
-                         )  const;  
+                          )  const;  
 
     bool  ForegroundPixel (uchar  pixel)  const;
 
@@ -100,12 +104,10 @@ namespace  KKB
                            kkint32  col
                           )  const;
 
-
     void  SetSrcRaster (RasterConstPtr  _srcRaster);
 
     uchar            backgroundPixelTH;
     uchar            backgroundPixelValue;
-
 
     RasterConstPtr   srcRaster;
 
@@ -127,15 +129,13 @@ namespace  KKB
   private:
   };  /* MorphOp */
 
+#define  _MorphOp_Defined_
 
   typedef  MorphOp*  MorphOpPtr;
 
-
   typedef  KKQueue<MorphOp>  MorphologicalOperatorList;
 
-
   typedef  MorphologicalOperatorList*  MorphologicalOperatorListPtr;
-
 } /* namespace KKB; */
 
 #endif

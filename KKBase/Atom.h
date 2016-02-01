@@ -37,7 +37,7 @@ namespace  KKB
 
   /**
    *@class  Atom  Atom.h
-   *@brief Base class of all other classes that is meant to be managed by 'KKBase'
+   *@brief Base class of all other classes that are meant to be managed by 'KKBase'
    *@details  'Atom' will have a few important virtual methods that all derived classes will be required to implement. 
    *          This will allow for the smooth functioning of XML file reading and writing. Ex: 'WriteXML', this method 
    *          is to write a XML version of the derived class to a output stream. A registered BuildFromXML function will

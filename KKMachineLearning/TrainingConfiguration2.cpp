@@ -8,15 +8,12 @@
 #include "MemoryDebug.h"
 using namespace  std;
 
-
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
 #include "KKException.h"
 #include "OSservices.h"
 #include "RunLog.h"
 using namespace  KKB;
-
-
 
 #include "TrainingConfiguration2.h"
 #include "BinaryClassParms.h"
@@ -36,7 +33,6 @@ using namespace  KKB;
 #include "ModelParamUsfCasCor.h"
 #include "NormalizationParms.h"
 using namespace  KKMLL;
-
 
 
 
@@ -131,7 +127,6 @@ TrainingConfiguration2::TrainingConfiguration2 ():
 
 
 
-
 void  TrainingConfiguration2::Load (const KKStr&  _configFileName, 
                                     bool          _validateDirectories,
                                     RunLog&       log
@@ -171,9 +166,6 @@ void  TrainingConfiguration2::Load (const KKStr&  _configFileName,
     DetermineWhatTheRootDirectoryIs ();
 
 }  /* Load */
-
-
-
 
 
 
@@ -247,7 +239,6 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
 
 
 
-
 TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 FileDescPtr     _fileDesc,
                                                 const KKStr&    _parameterStr,
@@ -313,7 +304,6 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 }
 
 
-
   
 TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
                                                 FileDescPtr     _fileDesc,
@@ -368,10 +358,9 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   case  ModelParam::ModelParamTypes::UsfCasCor: modelingMethod = Model::ModelTypes::UsfCasCor;  break;
   }
 }
-  
-  
-  
-  
+
+ 
+
 TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  tc):
   Configuration (tc),
   configFileNameSpecified    (tc.configFileNameSpecified),
@@ -428,8 +417,6 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
 
 
 
-
-
 TrainingConfiguration2::~TrainingConfiguration2 ()
 {
   delete  noiseTrainingClass;     noiseTrainingClass    = NULL;
@@ -462,14 +449,10 @@ FactoryFVProducerPtr  TrainingConfiguration2::FvFactoryProducer (RunLog&  log) c
 }
 
 
-
-
 FactoryFVProducerPtr  TrainingConfiguration2::DefaultFeatureVectorProducer (RunLog&  runLog)  const
 {
   return  GrayScaleImagesFVProducerFactory::Factory (&runLog);
 }
-
-
 
 
 
@@ -505,7 +488,6 @@ KKStr  TrainingConfiguration2::DirectoryPathForClass (MLClassPtr  mlClass)  cons
 
 
 
-
 kkuint32  TrainingConfiguration2::NumHierarchialLevels ()  const
 {
   TrainingClassList::const_iterator  idx;
@@ -520,7 +502,6 @@ kkuint32  TrainingConfiguration2::NumHierarchialLevels ()  const
 
   return  numHierarchialLevels;
 }  /* NumHierarchialLevels */
-
 
 
 
@@ -546,8 +527,6 @@ void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
 
 
 
-
-
 MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)   const
 {
   MLClassListPtr  classes = new MLClassList ();
@@ -563,7 +542,6 @@ MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchia
 
   return  classes;
 }  /* ExtractListOfClassesForAGivenHierarchialLevel */
-
 
 
 
@@ -594,7 +572,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHier
 
 
 
-
 void  TrainingConfiguration2::Save (ostream&  o)  const
 {
   {
@@ -614,7 +591,6 @@ void  TrainingConfiguration2::Save (ostream&  o)  const
       o << "OtherClass=" << otherClass->Name () << endl;
     o << endl;
   }
-
 
   if  (noiseTrainingClass)
   {
@@ -694,8 +670,6 @@ void  TrainingConfiguration2::Save (const KKStr& fileName)  const
 } /* Save */
 
 
-
-
 void   TrainingConfiguration2::RootDir (const KKStr& _rootDir)
 {
   rootDir = _rootDir;
@@ -745,8 +719,6 @@ MLClassListPtr   TrainingConfiguration2::ExtractClassList ()  const
 
 
 
-
-
 MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 {
   TrainingClassList::const_iterator  idx;
@@ -782,8 +754,6 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 
 
 
-
-
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
                                              FileDescPtr         _fileDesc,
@@ -813,10 +783,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
 
   return  config;
 }  /* CreateFromFeatureVectorList */
-
-
-
-
 
 
 
@@ -908,7 +874,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromDirectoryStructure
 
 
 
-
 void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (const KKStr&  _subDir,
                                                                             bool&         _successful,
                                                                             KKStr&        _errorMessage,
@@ -973,8 +938,6 @@ void  TrainingConfiguration2::BuildTrainingClassListFromDirectoryStructure (cons
   delete  origTraniningClasses;
   origTraniningClasses = NULL;
 }  /* BuildTrainingClassListFromDirectoryStructure */
-
-
 
 
 
@@ -1088,8 +1051,6 @@ SVMparamPtr  TrainingConfiguration2::SVMparamToUse ()  const
 
 
 
-
-
 float   TrainingConfiguration2::A_Param () const
 {
   if  (modelParameters)
@@ -1178,7 +1139,6 @@ void  TrainingConfiguration2::MachineType (SVM_MachineType _machineType)
 
 
 
-
 SVM_MachineType  TrainingConfiguration2::MachineType ()  const
 {
   ModelParamOldSVMPtr  oldSVMparms = OldSvmParameters ();
@@ -1187,7 +1147,6 @@ SVM_MachineType  TrainingConfiguration2::MachineType ()  const
   else
     return  SVM_MachineType::Null;
 }  /* MachineType */
-
 
 
 
@@ -1217,9 +1176,6 @@ void  TrainingConfiguration2::SetFeatureNums (const  FeatureNumList&  features)
     modelParameters->SelectedFeatures (features);
 }  /* SetFeatureNums */
 
-
-
-
 void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
                                               MLClassPtr             class2,
                                               const FeatureNumList&  _features,
@@ -1232,8 +1188,6 @@ void  TrainingConfiguration2::SetFeatureNums (MLClassPtr             class1,
     oldSVMparms->SetFeatureNums (class1, class2, &_features, _weight);
   }
 }  /* SetFeatureNums */
-
-
 
 
 
@@ -1256,8 +1210,6 @@ SVM_EncodingMethod   TrainingConfiguration2::EncodingMethod ()  const
 
 
 
-
-
 double  TrainingConfiguration2::C_Param (MLClassPtr  class1,
                                          MLClassPtr  class2
                                         )  const
@@ -1271,7 +1223,6 @@ double  TrainingConfiguration2::C_Param (MLClassPtr  class1,
 
 
 
-
 void  TrainingConfiguration2::C_Param (MLClassPtr  class1,
                                        MLClassPtr  class2,
                                        double      cParam
@@ -1281,10 +1232,6 @@ void  TrainingConfiguration2::C_Param (MLClassPtr  class1,
   if  (oldSVMparms)
     oldSVMparms->C_Param (class1, class2, cParam);
 }  /* C_Param */
-
-
-
-
 
 
 
@@ -1302,7 +1249,6 @@ void  TrainingConfiguration2::SetBinaryClassFields (MLClassPtr                  
 
 
 
-
 void  TrainingConfiguration2::SetTrainingClasses (TrainingClassListPtr  _trainingClasses)
 {
   EmptyTrainingClasses ();
@@ -1314,14 +1260,12 @@ void  TrainingConfiguration2::SetTrainingClasses (TrainingClassListPtr  _trainin
 
 
 
-
 float  TrainingConfiguration2::AvgNumOfFeatures ()  const
 {
   if  (modelParameters)
     return modelParameters->AvgMumOfFeatures ();
   return 0.0f;
 }  /* AvgMumOfFeatures */
-
 
 
 
@@ -1336,7 +1280,6 @@ float  TrainingConfiguration2::AvgNumOfFeatures (FeatureVectorListPtr  trainExam
 
 
 
-
 SVM_KernalType  TrainingConfiguration2::KernalType ()  const
 {
   const SVMparamPtr  param = SVMparamToUse ();
@@ -1347,13 +1290,13 @@ SVM_KernalType  TrainingConfiguration2::KernalType ()  const
 
 
 
-
 void   TrainingConfiguration2::KernalType (SVM_KernalType _kernalType)
 {
   const SVMparamPtr  param = SVMparamToUse ();
   if  (param)
     return param->KernalType (_kernalType);
 }  /* KernalType */
+
 
 
 FeatureNumList  TrainingConfiguration2::GetFeatureNums ()  const
@@ -1369,7 +1312,6 @@ FeatureNumList  TrainingConfiguration2::GetFeatureNums ()  const
   else
     return FeatureNumList (1);
 }  /* GetFeatureNums */
-
 
 
 
@@ -1397,8 +1339,6 @@ kkint32  TrainingConfiguration2::ExamplesPerClass ()  const
 
 
 
-
-
 FeatureNumList   TrainingConfiguration2::GetFeatureNums (MLClassPtr  class1,
                                                          MLClassPtr  class2
                                                         )
@@ -1416,8 +1356,6 @@ FeatureNumList   TrainingConfiguration2::GetFeatureNums (MLClassPtr  class1,
 
 
 
-
-
 void  TrainingConfiguration2::SetModelParameters (ModelParamPtr  _svmParanters,
                                                   kkint32        _examplesPerClass
                                                  )
@@ -1426,7 +1364,6 @@ void  TrainingConfiguration2::SetModelParameters (ModelParamPtr  _svmParanters,
   modelParameters   = _svmParanters->Duplicate ();
   examplesPerClass  = _examplesPerClass;
 }  /* SetModel3Parameters */
-
 
 
 
@@ -1459,9 +1396,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
 
   return  config;
 }  /* ValidateSubClassifier */
-
-
-
 
 
 
@@ -1609,7 +1543,6 @@ void  TrainingConfiguration2::ValidateOtherClass (MLClassPtr  otherClass,
     FormatGood (false);
   }
 }  /* ValidateOtherClass */
-
 
 
 
@@ -1850,8 +1783,6 @@ void   TrainingConfiguration2::ValidateGlobalSection (kkint32  sectionNum,
 
 
 
-
-
 void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
                                                            RunLog&  log
                                                           )
@@ -1956,10 +1887,6 @@ void   TrainingConfiguration2::ValidateTwoClassParameters (kkint32  sectionNum,
 
 
 
-
-
-
-
 void   TrainingConfiguration2::ValidateConfiguration (RunLog&  log)
 {
   // Validate TrainingClasses
@@ -2037,14 +1964,10 @@ void   TrainingConfiguration2::ValidateConfiguration (RunLog&  log)
 
 
 
-
-
-
 TrainingClassPtr   TrainingConfiguration2::LocateByMLClassName (const KKStr&  className)
 {
   return  trainingClasses.LocateByMLClassName (className);
 }
-
 
 
 
@@ -2056,8 +1979,6 @@ void   TrainingConfiguration2::EmptyTrainingClasses ()
     delete  trainingClass;
   }
 }  /* DeleteTrainingClasses */
-
-
 
 
 
@@ -2073,7 +1994,6 @@ bool  TrainingConfiguration2::NormalizeNominalFeatures ()
   else
     return false;
 }  /* NormalizeNominalFeatures */
-
 
 
 
@@ -2134,7 +2054,6 @@ FeatureVectorListPtr   TrainingConfiguration2::LoadOtherClasssExamples (RunLog& 
 
   return  otherClassExamples;
 }  /* LoadOtherClasssExamples */
-
 
 
 
@@ -2212,7 +2131,6 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
     delete  featureDataThisClass;  featureDataThisClass = NULL;
   }
 
-
   if  (NoiseTrainingClass ()  &&  (!cancelFlag)  &&  (!errorOccured))
   {
     log.Level (30) << "LoadFeatureDataFromTrainingLibraries  Loading Noise Class [" << NoiseTrainingClass ()->ExpandedDirectory (rootDir, 0) << "]" << endl;
@@ -2255,8 +2173,6 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
 
 
-
-
 FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingClassPtr  trainingClass,
                                                                DateTime&               latestTimeStamp,
                                                                bool&                   changesMade,
@@ -2293,7 +2209,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
                  );
   {
     // We now want to reset the ImageFileNames stored in each 'FeatureVector' instance so that it 
-      // reflects the sub-directory from where it was retrieved. Between that and the 'rootDir' 
+    // reflects the sub-directory from where it was retrieved. Between that and the 'rootDir' 
     // field you will be able to get the full path to then original image.
 
       KKStr subDirName = trainingClass->Directory (zed);
@@ -2302,12 +2218,12 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
 
     FeatureVectorList::iterator  idx;
       for  (idx = extractedExamplesThisDir->begin ();  idx != extractedExamplesThisDir->end ();  ++idx)
-    {
-      FeatureVectorPtr  fv = *idx;
-      KKStr  newFileName =  subDirName + osGetRootNameWithExtension (fv->ExampleFileName ());
-      fv->ExampleFileName (newFileName);
+      {
+        FeatureVectorPtr  fv = *idx;
+        KKStr  newFileName =  subDirName + osGetRootNameWithExtension (fv->ExampleFileName ());
+        fv->ExampleFileName (newFileName);
+      }
     }
-  }
 
     extractedExamples->AddQueue (*extractedExamplesThisDir);
     extractedExamplesThisDir->Owner (false);
@@ -2318,8 +2234,6 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (const TrainingCla
   log.Level (30) << "ExtractFeatures    Exiting" << endl;
   return  extractedExamples;
 }  /* ExtractFeatures */
-
-
 
 
 
@@ -2387,8 +2301,6 @@ bool  TrainingConfiguration2::ConfigFileExists (const KKStr& _configFileName)
 
 
 
-
-
 void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
 {
   TrainingClassList::iterator  idx;
@@ -2423,26 +2335,26 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
     while  (zed < rootDirParts.size ())
       rootDirParts.pop_back ();
   }
-  }
+}
 
 
-  //***********************************************************************************
-  // We need to update the 'trainingClasses' structure before the 'rootDir' variable.
-  // This is because the following code that updates the 'TrainingClass' objects in
-  // 'trainingClasses' will use the 'rootDir' variable in the 'ExpandedDirectory' 
-  // method.
-  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
+
+//***********************************************************************************
+// We need to update the 'trainingClasses' structure before the 'rootDir' variable.
+// This is because the following code that updates the 'TrainingClass' objects in
+// 'trainingClasses' will use the 'rootDir' variable in the 'ExpandedDirectory' 
+// method.
+for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
+{
+  TrainingClassPtr  tc = *idx;
+
+  for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
   {
-    TrainingClassPtr  tc = *idx;
-
-    for  (kkuint32  dirIdx = 0;  dirIdx < tc->DirectoryCount ();  ++dirIdx)
-    {
-      VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
+    VectorKKStr  parts = osSplitDirectoryPathIntoParts (tc->ExpandedDirectory (rootDir, dirIdx));
 
     KKStr newTrainClassSubDir = "";
     for (zed = (kkuint32)rootDirParts.size ();  zed < (kkuint32)parts.size ();  zed++)
       newTrainClassSubDir << parts[zed];
-
       tc->Directory (dirIdx, newTrainClassSubDir);
     }
   }
@@ -2450,7 +2362,6 @@ void   TrainingConfiguration2::DetermineWhatTheRootDirectoryIs ()
   rootDir = "";
   for  (zed = 0;  zed < rootDirParts.size ();  zed++)
     rootDir << rootDirParts[zed];
-
 }  /* DetermineWhatTheRootDirectoryIs */
 
 
@@ -2468,7 +2379,6 @@ BinaryClassParmsPtr  TrainingConfiguration2::GetParamtersToUseFor2ClassCombo (ML
 }  /* BinaryClassParms */
 
 
-
 BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr       class1,
                                                                    MLClassPtr       class2
                                                                   )
@@ -2479,7 +2389,6 @@ BinaryClassParmsPtr   TrainingConfiguration2::GetBinaryClassParms (MLClassPtr   
 
   return param->GetBinaryClassParms (class1, class2);
 }
-
 
 
 TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  configFileName)  const
@@ -2494,7 +2403,6 @@ TrainingConfiguration2Ptr  TrainingConfiguration2List::LookUp (const KKStr&  con
   }
   return NULL;
 }
-
 
 
 
@@ -2581,7 +2489,6 @@ void  TrainingConfiguration2::RegisterFatory (const KKStr&  className,
 
 
 
-
 TrainingConfiguration2Ptr  TrainingConfiguration2::Factory::Manufacture 
              (const KKStr&  configFileName,
               bool          validateDirectories,
@@ -2595,13 +2502,11 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::Factory::Manufacture
 
 
 
-
 void  TrainingConfiguration2::FinalCleanUp ()
 {
   delete  registeredFactories;
   registeredFactories = NULL;
 }
-
 
 
 
@@ -2659,8 +2564,6 @@ void  TrainingConfiguration2::WriteXMLFields (ostream& o)  const
     XmlElementVectorKKStr::WriteXML (subClassifierList, "subClassifiers", o);
   }
 }  /* WriteXMLFields */
-
-
 
 
 
@@ -2860,7 +2763,6 @@ void  TrainingConfiguration2::ReadXMLPost (VolConstBool&  cancelFlag,
 
 
 
-
 void   TrainingConfiguration2::ReadXML (XmlStream&      s,
                                         XmlTagConstPtr  tag,
                                         VolConstBool&   cancelFlag,
@@ -2895,8 +2797,6 @@ void   TrainingConfiguration2::ReadXML (XmlStream&      s,
   if  (!cancelFlag)
     ReadXMLPost (cancelFlag, log);
 }  /* ReadXML */
-
-
 
 
 XmlFactoryMacro(TrainingConfiguration2)

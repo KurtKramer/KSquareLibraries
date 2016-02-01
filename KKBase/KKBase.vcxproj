@@ -119,6 +119,7 @@
     <ClCompile Include="MorphOpDilation.cpp" />
     <ClCompile Include="MorphOpErosion.cpp" />
     <ClCompile Include="MorphOpMaskExclude.cpp" />
+    <ClCompile Include="MorphOpSobel.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
     <ClCompile Include="MorphOpStruct.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
@@ -131,7 +132,6 @@
     <ClCompile Include="RunLog.cpp" />
     <ClCompile Include="SegmentorOTSU.cpp" />
     <ClCompile Include="SimpleCompressor.cpp" />
-    <ClCompile Include="Sobel.cpp" />
     <ClCompile Include="StatisticalFunctions.cpp" />
     <ClCompile Include="TokenBuffer.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
@@ -183,6 +183,7 @@
     <ClInclude Include="MorphOpDilation.h" />
     <ClInclude Include="MorphOpErosion.h" />
     <ClInclude Include="MorphOpMaskExclude.h" />
+    <ClInclude Include="MorphOpSobel.h" />
     <ClInclude Include="MorphOpStretcher.h" />
     <ClInclude Include="MorphOpStruct.h" />
     <ClInclude Include="MsgQueue.h" />
@@ -196,7 +197,6 @@
     <ClInclude Include="RunLog.h" />
     <ClInclude Include="SegmentorOTSU.h" />
     <ClInclude Include="SimpleCompressor.h" />
-    <ClInclude Include="Sobel.h" />
     <ClInclude Include="StatisticalFunctions.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TokenBuffer.h" />

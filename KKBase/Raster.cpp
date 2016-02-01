@@ -45,7 +45,7 @@ using namespace std;
 #include "MorphOpStretcher.h"
 #include "OSservices.h"
 #include "SimpleCompressor.h"
-#include "Sobel.h"
+#include "MorphOpSobel.h"
 using namespace KKB;
 
 
@@ -7693,10 +7693,10 @@ RasterPtr  Raster::ReduceByFactor (float factor)  const  //  0 < factor <= 1.0
 
 
 
-RasterPtr  Raster::SobelEdgeDetector ()
+RasterPtr  Raster::SobelEdgeDetector ()  const
 {
-  Sobel  sobel (this);
-  return sobel.MagnitudeImage ();
+  MorphOpSobel  sobel;
+  return sobel.PerformOperation (this);
 }  /* SobelEdgeDetector */
 
 

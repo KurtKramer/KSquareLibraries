@@ -49,22 +49,14 @@ namespace  KKB
                               kkint32  col
                              )  const;
 
-    //uchar  Hit (kkint32  row,
-    //            kkint32  col
-    //           )  const;
-
     uchar  HitForegroundCount (kkint32  row,
                                kkint32  col
                               )  const;
-
-
-
 
     StructureType  structure;
     kkint32        backgroundCountTH;  /**<  If greater than zero; then pixel must have at least that many neighbors to be considered a fit. */
     kkint32        foregroundCountTH;
     kkuint16       structureSize;
-
   };  /* MorphOpStruct */
 
   typedef  MorphOpStruct*  MorphOpStructPtr;

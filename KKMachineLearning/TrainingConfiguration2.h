@@ -204,7 +204,7 @@ namespace KKMLL
     kkint32                NumOfRounds             () const  {return  Number_of_rounds ();}
     kkint32                Number_of_rounds        () const;
     MLClassPtr             OtherClass              () const  {return  otherClass;}
-    const KKStr&           RootDir                 () const  {return  rootDir;}
+    const KKStr&           RootDir                 () const  {return  rootDir;}                  /**< @brief The root directory where Training library images are stored. */
     KKStr                  RootDirExpanded         () const;
 
     TrainingConfiguration2ListPtr  SubClassifiers    () const {return  subClassifiers;}
