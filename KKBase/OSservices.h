@@ -390,6 +390,13 @@ namespace KKB
                                  bool&          eol
                                 );
 
+  /**
+   *@brief Extracts text up to and including the next end-of-line character and returns pointer to dynamical allocated str that caller will own.
+   *@details The new-line character that terminated the nor any carriage-return will not be included. If stream [[in]] is already at 
+   * end-of-file then will return NULL as well as eof being set to true.
+   *@param  in   Stream to read text from.
+   *@param  eof  Set to true if end-of-file is reached while reading file.
+   */
   KKB::KKStrPtr  osReadRestOfLine (std::istream&  in,
                                    bool&          eof
                                   );

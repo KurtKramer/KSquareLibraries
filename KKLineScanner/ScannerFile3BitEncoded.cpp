@@ -350,7 +350,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
         if  (endOfTextBlock)
         {
           ReportTextMsg (textMsg, textMsgLen);
-          delete  textMsg;  textMsg = NULL;
+          delete[]  textMsg;  textMsg = NULL;
           textMsgLen = 0;
         }
       }
