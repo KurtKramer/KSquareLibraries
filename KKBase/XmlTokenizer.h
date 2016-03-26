@@ -7,11 +7,11 @@
 #define _XMLTOKENIZER_
 /**
  *@class  KKB::XmlTokenizer
- *@brief  Class is meant to break down a stream into a set of logical tokens.
+ *@brief  Manages the break down a stream into a set of logical tokens compatible with the XML format.
  *@author Kurt Kramer
- *@details  This class was originally created while taking Non Linear Systems. It breaks up a source 
- *          KKStr or text file into logical tokens. You can create your own source of characters by
- *          creating a Class derived from KKB::TokenBuffer.
+ *@details  Breaks up a source KKStr, text file, or [[TokenBuffer]] into logical tokens compatible with the XML format. XmlStream
+ * utilizes this object to parse streams.
+ *@ref XmlStream          
  */
 
 
@@ -25,8 +25,14 @@ namespace  KKB
   class  XmlTokenizer
   {
   public:
+    /**
+     *@brief Constructs a XmlTokenizer using the provided [[TokenBuffer]] _in as the data stream source.
+     *@details Does NOT take ownership of _in; next token extracted will be from current position in _in.
+     *@param _in Will retrieve tokens from starting from its current position; does not take ownership.
+     */
     XmlTokenizer (TokenBufferPtr _in);
 
+    /** @brief Manages the extraction of xml tokens from a KKStr instance; accomplishes this by building a [[TokenBufferStr]] around _str. */
     XmlTokenizer (const KKStr&  _str);
 
     XmlTokenizer (const KKStr&  _fileName,
@@ -36,6 +42,7 @@ namespace  KKB
     ~XmlTokenizer ();
 
 
+    /** Indicates if there anymore tokens that can be extracted. */
     bool  EndOfFile ();
 
 
@@ -55,10 +62,11 @@ namespace  KKB
      */
     KKStrListPtr  GetNextTokens (const KKStr&  delToken);  
 
-
+    /**@brief Allows you to look at future tokens in the stream; index of 0 would be the next token to be extracted. */
     KKStrConstPtr  Peek (kkuint32 idx);
 
     
+    /**@brief places token at current position such that it will be the next token extracted from the stream. */
     void  PushTokenOnFront (KKStrPtr  t);
 
     
