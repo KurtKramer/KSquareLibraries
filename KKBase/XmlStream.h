@@ -15,12 +15,6 @@ using namespace KKB;
 
 namespace  KKB
 {
-  /**
-   *@class  XmlStream  XmlStream.h
-   *@brief  I created these Xml classes 2010-02-22  to someday simplify the reading and writing
-   *        of objects to disk.  Right now it is more of an Idea Generator than anything usable.
-   */
-
   class  XmlToken;
   typedef  XmlToken*  XmlTokenPtr;
 
@@ -38,6 +32,17 @@ namespace  KKB
 
 
 
+  /**
+   *@class  XmlStream  XmlStream.h
+   *@brief Manages the reading and writing of objects in a simple XML format.
+   *  For a class to be supported by XmlStream it must implement:
+   *  - Default constructor.
+   *  - Helper Class derived form XmlElement 
+   *  - Helper Class derived from XmlFactory
+   *  - Method XmlRead  
+   *  - Method XmlWrite
+   *
+   */
   class  XmlStream
   {
   public:
@@ -719,7 +724,7 @@ namespace  KKB
 
 
 
-// To be used when the XmlElement derived class is defined as a member of the class in question.
+/** To be used when the XmlElement derived class is defined as a member of the class in question. */
 
 #define  XmlFactoryMacro2(NameOfClass)                                            \
     class  XmlFactory##NameOfClass: public XmlFactory                             \

@@ -28,7 +28,7 @@ namespace KKMLL
   *@details
   *For each Machine Learning algorithm implemented you would create a specialization of this class
   *to manage the parameters required by the algorithm. Specifically for each new class that you
-  *create that is derived from 'Model' you will new to create a class derived from 'ModelParam'.
+  *create that is derived from 'Model' you will create a class derived from 'ModelParam'.
   *This class encapsulates general parameters that are common to all Machine Learning Models.
   *@see  Model
   */
@@ -204,7 +204,11 @@ namespace KKMLL
 
 
 
-
+  /**
+   * @brief Base class to be used by all ModelParam derived objects.
+   * @details Each derived class will need to implement their own XmlElement derived helper class. They will do it by utilizing the
+   * [[XmlElementModelParamTemplate]] template which inherits this base class "XmlElementModelParam".
+   */
   class   XmlElementModelParam:  public  XmlElement
   {
   public:
@@ -249,7 +253,8 @@ namespace KKMLL
 
 
   /**
-   *@brief  To be used for classes that implement that implement default constructor, readXML, and WriteXML.
+   *@brief  ModelParam derived classes will implement their "XmlElement" helper class via this template.
+   *@see XmlElementModelParamKnn, XmlElementModelParamUsfCasCor, XmlElementModelOldSVM
    */
   template<class  T>
   class  XmlElementModelParamTemplate:  public  XmlElementModelParam
