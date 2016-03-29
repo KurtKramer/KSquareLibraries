@@ -83,7 +83,7 @@ namespace  KKB
     void       ProcessAmpersand ();
 
 
-    void       ReadInNextLogicalToken ();  /**  Will retrieve the next token in the stream which will be either a tag token
+    void       ReadInNextLogicalToken ();  /**<  Will retrieve the next token in the stream which will be either a tag token
                                             * or up to one line of the content part of an element.
                                             */
 

@@ -84,9 +84,9 @@ namespace  KKB
 
 
     /**
-     * When we start a new element the name of the Section is pushed on the back  of 'endOfElementTagNames'.  This
+     * When we start a new element the name of the Section is pushed on the back  of 'endOfElementTagNames'. This
      * is how we keep track of the End tag that we are looking for to close out the current element.  The member
-     * 'factoryManagers' works in synchronization with endOfElementTagNames.  That is when we start a new Element
+     * 'factoryManagers' works in synchronization with endOfElementTagNames. That is when we start a new Element
      * we push an empty 'XmlFactoryManager' instance onto 'factoryManagers'. This will allow XmlElement derived 
      * classes to specify 'XmlFactory' derived instances that are specific to their universe.  An example use would
      * be the 'TrainingProcess2' class requiring to add a XmlElement factory for 'Model' derived classes. These 
