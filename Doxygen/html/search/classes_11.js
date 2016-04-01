@@ -10,7 +10,6 @@ var searchData=
   ['rbtree',['RBTree',['../class_k_k_b_1_1_r_b_tree.html',1,'KKB']]],
   ['rbtree_3c_20featurevector_2c_20extractexamplefilename_2c_20kkstr_20_3e',['RBTree&lt; FeatureVector, ExtractExampleFileName, KKStr &gt;',['../class_k_k_b_1_1_r_b_tree.html',1,'KKB']]],
   ['rbtree_3c_20imagedatatreeentry_2c_20extractfeaturedata_2c_20imagefeaturesnodekey_20_3e',['RBTree&lt; ImageDataTreeEntry, ExtractFeatureData, ImageFeaturesNodeKey &gt;',['../class_k_k_b_1_1_r_b_tree.html',1,'KKB']]],
-  ['rgbquad',['RGBQUAD',['../struct_k_k_b_1_1_r_g_b_q_u_a_d.html',1,'KKB']]],
   ['rgbquad_5fpred',['RGBQUAD_Pred',['../class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred.html',1,'BmpImage::PalletBuilder']]],
   ['rootnamecomparrison',['RootNameComparrison',['../class_feature_vector_list_1_1_root_name_comparrison.html',1,'KKMLL::FeatureVectorList']]],
   ['rootnamecomparrisonreversed',['RootNameComparrisonReversed',['../class_feature_vector_list_1_1_root_name_comparrison_reversed.html',1,'KKMLL::FeatureVectorList']]],

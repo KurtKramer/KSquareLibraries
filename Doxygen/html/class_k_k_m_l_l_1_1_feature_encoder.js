@@ -15,7 +15,7 @@ var class_k_k_m_l_l_1_1_feature_encoder =
     [ "EncodeAllExamples", "class_k_k_m_l_l_1_1_feature_encoder.html#ad22b9ed7426ebd0126472917cde20138", null ],
     [ "EncodeIntoSparseMatrix", "class_k_k_m_l_l_1_1_feature_encoder.html#ad8d410b25748ce3d86eaeaff7ee73bec", null ],
     [ "MemoryConsumedEstimated", "class_k_k_m_l_l_1_1_feature_encoder.html#aed7fd3271e7ce09181205874048ef9e8", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_feature_encoder.html#a29ff9e685814c37f115754bb40550d80", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_feature_encoder.html#a4da98e7abffd3faaee30de359cb03ee8", null ],
     [ "WriteXML", "class_k_k_m_l_l_1_1_feature_encoder.html#a22bc8ae1c1bf08f0411d929a4b707572", null ],
     [ "XSpaceNeededPerExample", "class_k_k_m_l_l_1_1_feature_encoder.html#abdf459cb6ec11bf1519a53643a24fdb8", null ]
 ];

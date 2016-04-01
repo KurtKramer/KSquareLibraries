@@ -17,7 +17,7 @@ var class_k_k_m_l_l_1_1_model_svm_base =
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_svm_base.html#ac89efbfc18a12c050e7ef7620f667374", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_svm_base.html#ab455a1aee8a6e0fc57af3504b556de50", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_svm_base.html#a5e5b9d88b430b62c8f1a7d2b4db3991f", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_svm_base.html#a59482ea2b313ea81532a6a3af78d262a", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_svm_base.html#acbd2bc1b2c0208aecbf74514d38431a7", null ],
     [ "RetrieveCrossProbTable", "class_k_k_m_l_l_1_1_model_svm_base.html#a60b424c785d7d4af1c9664cbc5c3fa8b", null ],
     [ "TrainModel", "class_k_k_m_l_l_1_1_model_svm_base.html#a05f43d6e02a04d6a00079f7d85459eff", null ],
     [ "WriteXML", "class_k_k_m_l_l_1_1_model_svm_base.html#aec3cf8dd16805af8483fbf7b836fcaf9", null ],

@@ -19,7 +19,7 @@ var class_k_k_m_l_l_1_1_model_param_dual =
     [ "OtherClass", "class_k_k_m_l_l_1_1_model_param_dual.html#afb94ad207c21bec2c6a56dfb33de2386", null ],
     [ "ProbFusionMethodFromStr", "class_k_k_m_l_l_1_1_model_param_dual.html#a7d3cfcefe1290cf84a76c1ffaad21d92", null ],
     [ "ProbFusionMethodToStr", "class_k_k_m_l_l_1_1_model_param_dual.html#ab51c6549d440fbc01a53d68447c3ae95", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_param_dual.html#ade228dbe991a59cda00b313828a2b302", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_param_dual.html#aab4c499ddc06789ad9f51eeb0213401f", null ],
     [ "ToCmdLineStr", "class_k_k_m_l_l_1_1_model_param_dual.html#ac60d7249bbd474220b45534335a0b389", null ],
     [ "WriteXML", "class_k_k_m_l_l_1_1_model_param_dual.html#aac80a5c4dbdd177e9d52dab25c22504f", null ]
 ];

@@ -32,7 +32,7 @@ var class_k_k_m_l_l_1_1_model_param_old_s_v_m =
     [ "NumOfFeaturesAfterEncoding", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a77c29c4bb2a1e81788a674aa9c445395", null ],
     [ "Param", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a4afafb9212ff974c0e9f4d3bb92341da", null ],
     [ "ParseCmdLine", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a730e73f251b652a0daecb146c761065d", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a22055a7a9db8d08642ff923744261905", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#ae255b7209ea485ffc3c1a1de8d02170e", null ],
     [ "SamplingRate", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a909975913e139974fb838640eb432d10", null ],
     [ "SamplingRate", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a8cbcee7c6a7d8bb451fb92cf2ae6a96b", null ],
     [ "SelectedFeatures", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a5e74d2d1fc44df897f89f2039c8f42bd", null ],
@@ -46,5 +46,5 @@ var class_k_k_m_l_l_1_1_model_param_old_s_v_m =
     [ "SvmParamToString", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#ae41abc45584fa47bec84802404d941b2", null ],
     [ "ToCmdLineStr", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a9a387fc13e588958d64734c2129b2e00", null ],
     [ "UseProbabilityToBreakTies", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#aaf6958c8e70fa5b723e5d99fb80c1b18", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#acd6ae478a9f58524daf5df173e1f76a2", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_model_param_old_s_v_m.html#a93bd36e45a7be10e225872998a1470ee", null ]
 ];

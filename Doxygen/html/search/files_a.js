@@ -41,6 +41,8 @@ var searchData=
   ['morphoperosion_2eh',['MorphOpErosion.h',['../_morph_op_erosion_8h.html',1,'']]],
   ['morphopmaskexclude_2ecpp',['MorphOpMaskExclude.cpp',['../_morph_op_mask_exclude_8cpp.html',1,'']]],
   ['morphopmaskexclude_2eh',['MorphOpMaskExclude.h',['../_morph_op_mask_exclude_8h.html',1,'']]],
+  ['morphopsobel_2ecpp',['MorphOpSobel.cpp',['../_morph_op_sobel_8cpp.html',1,'']]],
+  ['morphopsobel_2eh',['MorphOpSobel.h',['../_morph_op_sobel_8h.html',1,'']]],
   ['morphopstretcher_2ecpp',['MorphOpStretcher.cpp',['../_morph_op_stretcher_8cpp.html',1,'']]],
   ['morphopstretcher_2eh',['MorphOpStretcher.h',['../_morph_op_stretcher_8h.html',1,'']]],
   ['morphopstruct_2ecpp',['MorphOpStruct.cpp',['../_morph_op_struct_8cpp.html',1,'']]],

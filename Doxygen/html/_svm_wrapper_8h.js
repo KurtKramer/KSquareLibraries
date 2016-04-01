@@ -12,12 +12,10 @@ var _svm_wrapper_8h =
     ] ],
     [ "EncodeProblem", "_svm_wrapper_8h.html#a58cbe9bc58626fbd609ec541e2b75237", null ],
     [ "SvmDestroyModel", "_svm_wrapper_8h.html#a07340d912a278e2cfea411b27a6c6a38", null ],
-    [ "SvmLoadModel", "_svm_wrapper_8h.html#ae66dc600a1ad46868bb467d57742703b", null ],
     [ "SvmLoadModel", "_svm_wrapper_8h.html#ac9ff0c69da87de2e5f1acbf3ecb753e8", null ],
     [ "SvmPredictClass", "_svm_wrapper_8h.html#a658f1d24f059e14b27229482d01e0400", null ],
     [ "SvmPredictRaw", "_svm_wrapper_8h.html#af6a8aee2aad78a52bbec33f12e9d2960", null ],
     [ "SvmPredictTwoClass", "_svm_wrapper_8h.html#a95c64fa9a94ff6173fdcddd21a8f9faa", null ],
     [ "SvmSaveModel", "_svm_wrapper_8h.html#a08e1aac868c4d08ce0f3078319f73908", null ],
-    [ "SvmSaveModel", "_svm_wrapper_8h.html#a06f20c1acb06eb5051d3fc706710c716", null ],
     [ "SvmTrainModel", "_svm_wrapper_8h.html#a3ae412535bfbc5eb1cd1f6e6cbfe60e6", null ]
 ];

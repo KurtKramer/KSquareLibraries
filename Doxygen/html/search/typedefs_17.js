@@ -14,6 +14,7 @@ var searchData=
   ['xmlelementattributetypevectorptr',['XmlElementAttributeTypeVectorPtr',['../namespace_k_k_m_l_l.html#aa7746fb63f9f6681844ce4c35072b75a',1,'KKMLL']]],
   ['xmlelementbinaryclassparmslist',['XmlElementBinaryClassParmsList',['../namespace_k_k_m_l_l.html#a89ae108d23713fb8f26f6954c70d5cf6',1,'KKMLL']]],
   ['xmlelementbinaryclassparmslistptr',['XmlElementBinaryClassParmsListPtr',['../namespace_k_k_m_l_l.html#a28345267a8dd6b1310330e6a9c841bf9',1,'KKMLL']]],
+  ['xmlelementbitstring',['XmlElementBitString',['../namespace_k_k_b.html#a08eccbf7626d1c9bc414dce125921ce1',1,'KKB']]],
   ['xmlelementboolptr',['XmlElementBoolPtr',['../namespace_k_k_b.html#af1a286924b8cff973d8b7d3d733a0a06',1,'KKB']]],
   ['xmlelementclassproblist',['XmlElementClassProbList',['../namespace_k_k_m_l_l.html#a590810bfbb25bef1964a45832dacea2e',1,'KKMLL']]],
   ['xmlelementclassproblistptr',['XmlElementClassProbListPtr',['../namespace_k_k_m_l_l.html#a99077fb1ba171c086f8bc1d8feb1d190',1,'KKMLL']]],

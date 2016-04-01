@@ -6,11 +6,13 @@ var dir_38385f38009448f72cf34e15bf4b149b =
     ] ],
     [ "Atom.cpp", "_atom_8cpp.html", null ],
     [ "Atom.h", "_atom_8h.html", "_atom_8h" ],
-    [ "BitString.cpp", "_bit_string_8cpp.html", null ],
+    [ "BitString.cpp", "_bit_string_8cpp.html", [
+      [ "XmlFactoryBitString", "class_xml_factory_bit_string.html", "class_xml_factory_bit_string" ]
+    ] ],
     [ "BitString.h", "_bit_string_8h.html", "_bit_string_8h" ],
     [ "Blob.cpp", "_blob_8cpp.html", null ],
     [ "Blob.h", "_blob_8h.html", "_blob_8h" ],
-    [ "BMPheader.h", "_b_m_pheader_8h.html", "_b_m_pheader_8h" ],
+    [ "BMPheader.h", "_b_m_pheader_8h.html", null ],
     [ "BMPImage.cpp", "_b_m_p_image_8cpp.html", "_b_m_p_image_8cpp" ],
     [ "BMPImage.h", "_b_m_p_image_8h.html", "_b_m_p_image_8h" ],
     [ "Chart.cpp", "_chart_8cpp.html", "_chart_8cpp" ],
@@ -35,9 +37,7 @@ var dir_38385f38009448f72cf34e15bf4b149b =
     [ "EigenVector.h", "_eigen_vector_8h.html", "_eigen_vector_8h" ],
     [ "FirstIncludes.h", "_first_includes_8h.html", "_first_includes_8h" ],
     [ "GlobalGoalKeeper.cpp", "_global_goal_keeper_8cpp.html", null ],
-    [ "GlobalGoalKeeper.h", "_global_goal_keeper_8h.html", [
-      [ "GlobalGoalKeeper", "class_k_k_b_1_1_global_goal_keeper.html", "class_k_k_b_1_1_global_goal_keeper" ]
-    ] ],
+    [ "GlobalGoalKeeper.h", "_global_goal_keeper_8h.html", "_global_goal_keeper_8h" ],
     [ "GoalKeeper.cpp", "_goal_keeper_8cpp.html", null ],
     [ "GoalKeeper.h", "_goal_keeper_8h.html", "_goal_keeper_8h" ],
     [ "GoalKeeperSimple.cpp", "_goal_keeper_simple_8cpp.html", null ],
@@ -99,6 +99,10 @@ var dir_38385f38009448f72cf34e15bf4b149b =
     [ "MorphOpErosion.h", "_morph_op_erosion_8h.html", "_morph_op_erosion_8h" ],
     [ "MorphOpMaskExclude.cpp", "_morph_op_mask_exclude_8cpp.html", null ],
     [ "MorphOpMaskExclude.h", "_morph_op_mask_exclude_8h.html", "_morph_op_mask_exclude_8h" ],
+    [ "MorphOpSobel.cpp", "_morph_op_sobel_8cpp.html", null ],
+    [ "MorphOpSobel.h", "_morph_op_sobel_8h.html", [
+      [ "MorphOpSobel", "class_k_k_b_1_1_morph_op_sobel.html", "class_k_k_b_1_1_morph_op_sobel" ]
+    ] ],
     [ "MorphOpStretcher.cpp", "_morph_op_stretcher_8cpp.html", [
       [ "CellFactor", "class_morph_op_stretcher_1_1_cell_factor.html", "class_morph_op_stretcher_1_1_cell_factor" ]
     ] ],
@@ -135,10 +139,6 @@ var dir_38385f38009448f72cf34e15bf4b149b =
     [ "SimpleCompressor.cpp", "_simple_compressor_8cpp.html", null ],
     [ "SimpleCompressor.h", "_simple_compressor_8h.html", [
       [ "SimpleCompressor", "class_k_k_b_1_1_simple_compressor.html", "class_k_k_b_1_1_simple_compressor" ]
-    ] ],
-    [ "Sobel.cpp", "_sobel_8cpp.html", null ],
-    [ "Sobel.h", "_sobel_8h.html", [
-      [ "Sobel", "class_k_k_b_1_1_sobel.html", "class_k_k_b_1_1_sobel" ]
     ] ],
     [ "StatisticalFunctions.cpp", "_statistical_functions_8cpp.html", null ],
     [ "StatisticalFunctions.h", "_statistical_functions_8h.html", "_statistical_functions_8h" ],

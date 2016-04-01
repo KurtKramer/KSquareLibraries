@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_5f_5fcdecl',['__cdecl',['../_k_k_str_8h.html#a238347d7669f8f1e9c83bfe63a2730c4',1,'__cdecl():&#160;KKStr.h'],['../_run_log_8h.html#a238347d7669f8f1e9c83bfe63a2730c4',1,'__cdecl():&#160;RunLog.h'],['../_k_k_exception_8h.html#a238347d7669f8f1e9c83bfe63a2730c4',1,'__cdecl():&#160;KKException.h'],['../_h_t_m_l_report_8h.html#a238347d7669f8f1e9c83bfe63a2730c4',1,'__cdecl():&#160;HTMLReport.h'],['../_k_k_str_matrix_8h.html#a238347d7669f8f1e9c83bfe63a2730c4',1,'__cdecl():&#160;KKStrMatrix.h']]],
   ['_5fclassifier2_5fdefined_5f',['_Classifier2_Defined_',['../_classifier2_8h.html#a7dbdae7e66930f5e24c844fb80d9571c',1,'Classifier2.h']]],
   ['_5fclassifier2list_5fdefined_5f',['_Classifier2List_Defined_',['../_classifier2_8h.html#abec0ecb44e193b8c7f9f3f19d45d1d5e',1,'Classifier2.h']]],
   ['_5fclassprob_5fdefined_5f',['_ClassProb_Defined_',['../_class_prob_8h.html#a36c122ec08aa6df4bf7ad844b2d6b5c5',1,'ClassProb.h']]],
@@ -33,12 +32,14 @@ var searchData=
   ['_5fmlclasslist_5fdefined_5f',['_MLClassList_Defined_',['../_m_l_class_8h.html#a34b1bb26cef1306ad62ca88824644dd5',1,'MLClass.h']]],
   ['_5fmodel_5fdefined_5f',['_Model_Defined_',['../_model_8h.html#abbe95049767305e54da4af70c70258e7',1,'Model.h']]],
   ['_5fmodelusfcascor_5fdefined_5f',['_ModelUsfCasCor_Defined_',['../_model_usf_cas_cor_8h.html#a4d3a2a5b94a4d4805285e38ed0e12c9a',1,'ModelUsfCasCor.h']]],
+  ['_5fmorphop_5fdefined_5f',['_MorphOp_Defined_',['../_morph_op_8h.html#a4e29d2403980e432094585f425f07bef',1,'MorphOp.h']]],
   ['_5fmorphopbmifiltering_5fdefined_5f',['_MorphOpBmiFiltering_Defined_',['../_morph_op_bmi_filtering_8h.html#a7d9279fbf709705575b7f576f94debe4',1,'MorphOpBmiFiltering.h']]],
   ['_5fno_5fmemory_5fleak_5fcheck_5f',['_NO_MEMORY_LEAK_CHECK_',['../_first_includes_8h.html#a05f8fcf96a18db9dba40cdcdae6ded53',1,'_NO_MEMORY_LEAK_CHECK_():&#160;FirstIncludes.h'],['../_first_includes_8h.html#a05f8fcf96a18db9dba40cdcdae6ded53',1,'_NO_MEMORY_LEAK_CHECK_():&#160;FirstIncludes.h']]],
   ['_5fnormalizationparms_5fdefined_5f',['_NormalizationParms_Defined_',['../_normalization_parms_8h.html#a1b42dad56340b0d9e09bbeb13872662e',1,'NormalizationParms.h']]],
   ['_5fraster_5fdefined_5f',['_Raster_Defined_',['../_raster_8h.html#a2b76383b4b32e0a05a4c73524c0fad6e',1,'Raster.h']]],
   ['_5frasterlist_5fdefined_5f',['_RasterList_Defined_',['../_raster_8h.html#a103af19306bbabc25c991e6a91409d1e',1,'Raster.h']]],
   ['_5frunlog_5fdefined_5f',['_RunLog_Defined_',['../_run_log_8h.html#a282fb412d9af4fda06e5e762b29b4d3f',1,'RunLog.h']]],
+  ['_5fscl_5fsecure_5fno_5fwarnings',['_SCL_SECURE_NO_WARNINGS',['../_usf_cas_cor_8cpp.html#abd0a75654ea98e87fa73a854b3f54837',1,'UsfCasCor.cpp']]],
   ['_5ftrainingconfiguration2_5fdefined_5f',['_TrainingConfiguration2_Defined_',['../_training_configuration2_8h.html#ab5d21109a9da8617eab46b9282cac3be',1,'TrainingConfiguration2.h']]],
   ['_5ftrainingconfiguration2list_5fdefined_5f',['_TrainingConfiguration2List_Defined_',['../_training_configuration2_8h.html#a250aef3c587560c7d5ea1c915b53beed',1,'TrainingConfiguration2.h']]],
   ['_5ftrainingprocess2_5fdefined_5f',['_TrainingProcess2_Defined_',['../_training_process2_8h.html#afb2411831c91d3ffc8edbc55e7ac9fed',1,'TrainingProcess2.h']]],

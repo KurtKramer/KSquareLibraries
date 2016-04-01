@@ -1,10 +1,9 @@
 var _h_t_m_l_report_8h =
 [
     [ "HTMLReport", "class_k_k_b_1_1_h_t_m_l_report.html", "class_k_k_b_1_1_h_t_m_l_report" ],
-    [ "__cdecl", "_h_t_m_l_report_8h.html#a238347d7669f8f1e9c83bfe63a2730c4", null ],
     [ "HTMLReportPtr", "_h_t_m_l_report_8h.html#a9794ab43b4b17d680dd505d0f2550c92", null ],
     [ "endl", "_h_t_m_l_report_8h.html#ad1f50f65af6adc8fa9e6f62d007818a8", null ],
-    [ "operator<<", "_h_t_m_l_report_8h.html#ae8f4ec2e15dda5c703fb47d4f313f4c1", null ],
+    [ "operator<<", "_h_t_m_l_report_8h.html#a671111bc5d6ca669c6cdea173621140b", null ],
     [ "operator<<", "_h_t_m_l_report_8h.html#a09becdbc088274961b9230e8a79c46f3", null ],
     [ "operator<<", "_h_t_m_l_report_8h.html#a5e869b469b56d1a9ed006db060f0da9e", null ],
     [ "operator<<", "_h_t_m_l_report_8h.html#a442063ff57d33a591f372308cece648f", null ],

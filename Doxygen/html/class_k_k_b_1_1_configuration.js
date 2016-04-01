@@ -23,7 +23,7 @@ var class_k_k_b_1_1_configuration =
     [ "NumOfSections", "class_k_k_b_1_1_configuration.html#ab0f4ec3df333ac45eebf4b3bc4b72477", null ],
     [ "NumOfSettings", "class_k_k_b_1_1_configuration.html#aa7cc05562fce75eb8c720bba45980559", null ],
     [ "NumOfSettings", "class_k_k_b_1_1_configuration.html#a9914f5ba6c1278a988af4fcd011d58a1", null ],
-    [ "PrintFormatErrors", "class_k_k_b_1_1_configuration.html#a2ff92451e5b7ffbf98900a679040a376", null ],
+    [ "PrintFormatErrors", "class_k_k_b_1_1_configuration.html#aa20014b94bcc40e3c6b283821c42e212", null ],
     [ "SectionDefined", "class_k_k_b_1_1_configuration.html#a5fc44650421878e33f9e9e537f71bdab", null ],
     [ "SectionLineNum", "class_k_k_b_1_1_configuration.html#a9ec3ea4ab84f5311e22c679087ae485c", null ],
     [ "SectionName", "class_k_k_b_1_1_configuration.html#aa0c65a7f1f5e7885b6dd50fce22f2c79", null ],
@@ -32,5 +32,7 @@ var class_k_k_b_1_1_configuration =
     [ "SettingName", "class_k_k_b_1_1_configuration.html#a5fe555d390f8aee3cd8da0c4bd2b6a36", null ],
     [ "SettingValue", "class_k_k_b_1_1_configuration.html#a3ec669dec9c7fa4c1a350d3582d49b46", null ],
     [ "SettingValue", "class_k_k_b_1_1_configuration.html#a9316bf174af1824baa4f1f6f1816cb55", null ],
-    [ "SettingValue", "class_k_k_b_1_1_configuration.html#a5c7fc0c7b4a7f695105fb05d482b73be", null ]
+    [ "SettingValue", "class_k_k_b_1_1_configuration.html#a5c7fc0c7b4a7f695105fb05d482b73be", null ],
+    [ "SettingValueToStr", "class_k_k_b_1_1_configuration.html#ae422231ca6ffc64d6790f1a1ab8a48a7", null ],
+    [ "SettingValueToStr", "class_k_k_b_1_1_configuration.html#ac94b40f7c7fda89736003a7c0effabb6", null ]
 ];

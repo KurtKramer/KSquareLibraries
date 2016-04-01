@@ -23,6 +23,7 @@ var searchData=
   ['morphopdilation',['MorphOpDilation',['../class_k_k_b_1_1_morph_op_dilation.html',1,'KKB']]],
   ['morphoperosion',['MorphOpErosion',['../class_k_k_b_1_1_morph_op_erosion.html',1,'KKB']]],
   ['morphopmaskexclude',['MorphOpMaskExclude',['../class_k_k_b_1_1_morph_op_mask_exclude.html',1,'KKB']]],
+  ['morphopsobel',['MorphOpSobel',['../class_k_k_b_1_1_morph_op_sobel.html',1,'KKB']]],
   ['morphopstretcher',['MorphOpStretcher',['../class_k_k_b_1_1_morph_op_stretcher.html',1,'KKB']]],
   ['morphopstruct',['MorphOpStruct',['../class_k_k_b_1_1_morph_op_struct.html',1,'KKB']]],
   ['movdir',['MovDir',['../struct_k_k_b_1_1_mov_dir.html',1,'KKB']]],

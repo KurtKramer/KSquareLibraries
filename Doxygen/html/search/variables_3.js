@@ -28,7 +28,7 @@ var searchData=
   ['confidence',['confidence',['../struct_s_v_m233_1_1svm__parameter.html#a760c2b49fb1bf53322de2476065ea2e1',1,'SVM233::svm_parameter']]],
   ['config1',['config1',['../class_k_k_m_l_l_1_1_model_dual.html#a1d0f07c3ee783f1f91bcb5436c968908',1,'KKMLL::ModelDual']]],
   ['config2',['config2',['../class_k_k_m_l_l_1_1_model_dual.html#ae3a785cf1484bb40abe8d090312e6061',1,'KKMLL::ModelDual']]],
-  ['count',['count',['../struct_bmp_image_1_1_code_pair.html#a1501fa5638588a3a7afdbbfb62327dae',1,'KKB::BmpImage::CodePair::count()'],['../class_size_distribution_1_1_class_totals.html#a0b48bda46c5e908b4ab5511293837f3c',1,'KKMLL::SizeDistribution::ClassTotals::count()']]],
+  ['count',['count',['../class_size_distribution_1_1_class_totals.html#a0b48bda46c5e908b4ab5511293837f3c',1,'KKMLL::SizeDistribution::ClassTotals::count()'],['../struct_bmp_image_1_1_code_pair.html#a1501fa5638588a3a7afdbbfb62327dae',1,'KKB::BmpImage::CodePair::count()']]],
   ['cp',['Cp',['../class_s_v_m289___m_f_s_1_1_solver.html#a951f59ea72f372f0e188c5815774fc6d',1,'SVM289_MFS::Solver::Cp()'],['../class_s_v_m289___b_f_s_1_1_solver.html#a7bae981240155350227523f2bd08ee87',1,'SVM289_BFS::Solver::Cp()']]],
   ['crossclassprobtable',['crossClassProbTable',['../class_k_k_m_l_l_1_1_model.html#aa209a1fe3b39f80df9adc87e2f0343d5',1,'KKMLL::Model']]],
   ['crossclassprobtablesize',['crossClassProbTableSize',['../class_k_k_m_l_l_1_1_model.html#a6e6436028d45da095f732b4bf7835101',1,'KKMLL::Model']]],

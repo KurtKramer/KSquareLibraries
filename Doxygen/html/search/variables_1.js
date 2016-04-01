@@ -8,10 +8,5 @@ var searchData=
   ['alpha_5fstatus',['alpha_status',['../class_s_v_m233_1_1_solver.html#a53fe33a3d4e7904b9b26343eb3942309',1,'SVM233::Solver::alpha_status()'],['../class_s_v_m289___m_f_s_1_1_solver.html#a1f3505d06f19ce96eff19d3908adc42d',1,'SVM289_MFS::Solver::alpha_status()'],['../class_s_v_m289___b_f_s_1_1_solver.html#ac02e702c2d611adf01940d51cf204ecd',1,'SVM289_BFS::Solver::alpha_status()']]],
   ['alreadynormalized',['alreadyNormalized',['../class_k_k_m_l_l_1_1_model.html#a56de637fe285bd31edb55f0eaca5fbb7',1,'KKMLL::Model']]],
   ['aqua',['Aqua',['../class_k_k_b_1_1_pixel_value.html#a51fc16a4bf4f2c1470b793db00e51db9',1,'KKB::PixelValue']]],
-  ['arraydouble',['ArrayDouble',['../_xml_stream_8cpp.html#a21e593248360588d96fd17761b6a2855',1,'XmlStream.cpp']]],
-  ['arrayfloat',['ArrayFloat',['../namespace_k_k_b.html#a1cfe3e4ca2637d08a754c02e23db4d2d',1,'KKB']]],
-  ['arrayfloat2d',['ArrayFloat2D',['../_xml_stream_8cpp.html#a7835ea88dae1834a6c67a9755d626ff5',1,'XmlStream.cpp']]],
-  ['arrayint32',['ArrayInt32',['../namespace_k_k_b.html#a5d64254e8592a5323db96d70abeca3e9',1,'KKB']]],
-  ['arrayuint16',['ArrayUint16',['../_xml_stream_8cpp.html#a19172287865314de8f29136233ea822e',1,'XmlStream.cpp']]],
   ['attributetype',['attributeType',['../struct_feature_encoder2_1_1_feature_var2.html#ad657d80ae265a387fdeb63dfd67cd695',1,'FeatureEncoder2::FeatureVar2']]]
 ];

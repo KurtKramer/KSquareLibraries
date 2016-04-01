@@ -16,7 +16,7 @@ var class_k_k_m_l_l_1_1_model_usf_cas_cor =
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#add4f86cc82b119a8b7fd15bb8d28918a", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#ac6c85f944e8e62df5a1b39a2f1418abc", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#a64224427bcf24341d23344f916b1a1bf", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#a803269b032ba62b991db4de5639ebea9", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#a33d9ec2c81c6fb684364e47bd08ee6e6", null ],
     [ "TrainModel", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#a4bcd5585f141a9e11852e851e5fa9904", null ],
     [ "WriteXML", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#ac63803b8c29a0b8679d360daf6d863dd", null ],
     [ "param", "class_k_k_m_l_l_1_1_model_usf_cas_cor.html#a36a6059d8c3bf8c01d1ab95eb37da770", null ],

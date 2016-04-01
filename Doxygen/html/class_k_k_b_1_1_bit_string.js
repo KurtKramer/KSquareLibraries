@@ -1,11 +1,14 @@
 var class_k_k_b_1_1_bit_string =
 [
+    [ "BitString", "class_k_k_b_1_1_bit_string.html#a129b293aa7369637810c1d54471e1258", null ],
     [ "BitString", "class_k_k_b_1_1_bit_string.html#ab5d7f4ff230b20e46451bf7322ef31b8", null ],
     [ "BitString", "class_k_k_b_1_1_bit_string.html#aaae20c7515dc5ddd98e4ffa65a3a379a", null ],
     [ "BitString", "class_k_k_b_1_1_bit_string.html#a934828473e02585ddc44ff46ee0ea637", null ],
     [ "~BitString", "class_k_k_b_1_1_bit_string.html#a80cc99cfa92f334852ff43f44ff36f4f", null ],
     [ "BitLen", "class_k_k_b_1_1_bit_string.html#a989985f5b1d32ae42722f19852894605", null ],
+    [ "ClassName", "class_k_k_b_1_1_bit_string.html#a610a7f712c54ecdde050c4c64e3f460e", null ],
     [ "Count", "class_k_k_b_1_1_bit_string.html#aff2c39f8780ecdd66261a853652f7bc4", null ],
+    [ "Duplicate", "class_k_k_b_1_1_bit_string.html#afbd70179ae53fb7326b129758e0e6521", null ],
     [ "FromHexStr", "class_k_k_b_1_1_bit_string.html#aef2308cabde1b30fc5efd50040fa4e40", null ],
     [ "HexStr", "class_k_k_b_1_1_bit_string.html#a100eecb241e6df9b39ce197b5b38f635", null ],
     [ "ListOfSetBits16", "class_k_k_b_1_1_bit_string.html#a445228d8a399dc91cbd409d7a93f687e", null ],
@@ -24,9 +27,11 @@ var class_k_k_b_1_1_bit_string =
     [ "operator^=", "class_k_k_b_1_1_bit_string.html#ab2806a5d5386ff44ead5463528aff5ff", null ],
     [ "operator|=", "class_k_k_b_1_1_bit_string.html#a596dbd93da7626d59ca53ea5ca5bbd7d", null ],
     [ "PopulateVectorBool", "class_k_k_b_1_1_bit_string.html#a39ddda1f72f0f2106cb6352efdcca3be", null ],
+    [ "ReadXML", "class_k_k_b_1_1_bit_string.html#a63fa7f49ff50431c75443fe287fe5d4f", null ],
     [ "ReSet", "class_k_k_b_1_1_bit_string.html#a3a1d4d31e09c629708e1fab7b61d5827", null ],
     [ "ReSet", "class_k_k_b_1_1_bit_string.html#ae227683a35784b738e238fcba450e2b3", null ],
     [ "Set", "class_k_k_b_1_1_bit_string.html#a408197f10d8ef4b235896c9bf4f9ff2a", null ],
     [ "Set", "class_k_k_b_1_1_bit_string.html#a1fd0485391733f37acfe04205cbb9f7b", null ],
-    [ "Test", "class_k_k_b_1_1_bit_string.html#a22ca08eb89f3ddcceade7490485cc5e8", null ]
+    [ "Test", "class_k_k_b_1_1_bit_string.html#a22ca08eb89f3ddcceade7490485cc5e8", null ],
+    [ "WriteXML", "class_k_k_b_1_1_bit_string.html#a4c0c3f7bf53ef6ca2558927f2cb500fc", null ]
 ];

@@ -10,7 +10,7 @@ var class_k_k_b_1_1_xml_tag =
     [ "XmlTag", "class_k_k_b_1_1_xml_tag.html#a4fc615bc59f6dc243f19148a15839710", null ],
     [ "XmlTag", "class_k_k_b_1_1_xml_tag.html#a59e8ab5dd5bb9e4ae233e222171b4c7b", null ],
     [ "~XmlTag", "class_k_k_b_1_1_xml_tag.html#abbb5fef8e3d0dc433a6aaaf88a821d2f", null ],
-    [ "XmlTag", "class_k_k_b_1_1_xml_tag.html#ae2e003adb392a5defce81675603c8faa", null ],
+    [ "XmlTag", "class_k_k_b_1_1_xml_tag.html#aafdbac20c27fc1cda98f4d0e77c490c0", null ],
     [ "AddAtribute", "class_k_k_b_1_1_xml_tag.html#a169ba62b2b75ad1b54332d9ce5eb0568", null ],
     [ "AddAtribute", "class_k_k_b_1_1_xml_tag.html#a2643b3019d0c8cebdd578882ffa899ec", null ],
     [ "AddAtribute", "class_k_k_b_1_1_xml_tag.html#aa593d243bb281b07ba8a1ea7d7f52c5e", null ],
@@ -28,5 +28,5 @@ var class_k_k_b_1_1_xml_tag =
     [ "Name", "class_k_k_b_1_1_xml_tag.html#a80934a69d86c1e06b13889fcde99a63b", null ],
     [ "TagType", "class_k_k_b_1_1_xml_tag.html#abe56f7d7b736e627d3a9a584ff965b1e", null ],
     [ "ToString", "class_k_k_b_1_1_xml_tag.html#ac2edd74085cdd50465096426f1ef9e44", null ],
-    [ "WriteXML", "class_k_k_b_1_1_xml_tag.html#a69e8d2e356cf6b73aebd1c5afdacf9b9", null ]
+    [ "WriteXML", "class_k_k_b_1_1_xml_tag.html#a0ba9ea780e48285cbcd0ecac787a4012", null ]
 ];

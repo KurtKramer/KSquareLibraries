@@ -7,7 +7,7 @@ var class_k_k_m_l_l_1_1_class_prob_list =
     [ "ClassProbList", "class_k_k_m_l_l_1_1_class_prob_list.html#a73e845ee1b7c6495bb7e58fb1bc3578f", null ],
     [ "ClassProbList", "class_k_k_m_l_l_1_1_class_prob_list.html#a92fad6b2d4778df82dcd953246123870", null ],
     [ "AddIn", "class_k_k_m_l_l_1_1_class_prob_list.html#a98fdb0e8bfe0b2f4509065a44fe23da7", null ],
-    [ "CreateFromXMLStream", "class_k_k_m_l_l_1_1_class_prob_list.html#a1b7437d1726a181c390186b715d283a3", null ],
+    [ "CreateFromXMLStream", "class_k_k_m_l_l_1_1_class_prob_list.html#a76c5829ccf9f017310597ee96cfbf474", null ],
     [ "DeleteEntry", "class_k_k_m_l_l_1_1_class_prob_list.html#adfa441f1001b7f7e4ab654f255e664eb", null ],
     [ "DeleteEntry", "class_k_k_m_l_l_1_1_class_prob_list.html#a489505043d555ef97b5dca594a4e48ce", null ],
     [ "LookUp", "class_k_k_m_l_l_1_1_class_prob_list.html#a67c190400adf2ac84dffec9bac2706ef", null ],
@@ -19,9 +19,9 @@ var class_k_k_m_l_l_1_1_class_prob_list =
     [ "NormalizeToOne", "class_k_k_m_l_l_1_1_class_prob_list.html#a998993b0a25ba7fd35cfa540277d0638", null ],
     [ "PushOnBack", "class_k_k_m_l_l_1_1_class_prob_list.html#a9fd88e9e49fd9b46142f1557d74e56ed", null ],
     [ "PushOnFront", "class_k_k_m_l_l_1_1_class_prob_list.html#a723a2559550b4ebcd151e4939f9bc7b6", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_class_prob_list.html#ad1e2cd82f27d72e97512c9216f02dea2", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_class_prob_list.html#ae64a4db4cbc2922f5265dbdbeba3c338", null ],
     [ "SortByClassName", "class_k_k_m_l_l_1_1_class_prob_list.html#a67ebea1263fa112597b8bc1275a7cc32", null ],
     [ "SortByProbability", "class_k_k_m_l_l_1_1_class_prob_list.html#ac398f0d6991ead17d970a5b085b3eaed", null ],
     [ "SortByVotes", "class_k_k_m_l_l_1_1_class_prob_list.html#ab6eaf7cd82af0befd522fc9b57c9f8b2", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_class_prob_list.html#a5d2ca20fad25ba3769021b8767b800dd", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_class_prob_list.html#abb8848cedbdfce81ffbee6663c5c6dec", null ]
 ];

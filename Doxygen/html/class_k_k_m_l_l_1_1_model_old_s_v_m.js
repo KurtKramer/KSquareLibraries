@@ -25,7 +25,7 @@ var class_k_k_m_l_l_1_1_model_old_s_v_m =
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#ae0b70394f1463488bd4cde326624a40d", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a2d4baff9d3f232cebc85bb2b139769c7", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a7f79c44cb8cf82bcb559bd7b3064016d", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a52febb1a056556ac5c00097383ff9c4e", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#aae946586f3f82596971847e40301fb5a", null ],
     [ "RetrieveCrossProbTable", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a3f0c5c06bb287c4bd1734c4fa4dc7520", null ],
     [ "SelectionMethod", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#ac76da2e7d5179c7b29ef05194b5337e5", null ],
     [ "SupportVectorNames", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a0faf1d2b9c960d1778ab66f6a8baacba", null ],
@@ -33,5 +33,5 @@ var class_k_k_m_l_l_1_1_model_old_s_v_m =
     [ "SupportVectorStatistics", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a831aa8e22b89b087a9df7bf6488264c2", null ],
     [ "SvmModel", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a8919ff70a99646266de13a130db1672c", null ],
     [ "TrainModel", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a38047608aa2f3ce8321edf77ea24207b", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a3f7405b3e3ef463d9d4c365abe157de0", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_model_old_s_v_m.html#a0d65427d615b71dcf55cd463ec9422b0", null ]
 ];

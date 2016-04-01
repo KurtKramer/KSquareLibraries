@@ -1,7 +1,29 @@
 var searchData=
 [
-  ['uchar',['uchar',['../class_k_k_m_l_l_1_1_gray_scale_images_f_v.html#a6c8ed7cb47a08ad34c89fb721b97cdcc',1,'KKMLL::GrayScaleImagesFV::uchar()'],['../namespace_k_k_b.html#ace9969169bf514f9ee6185186949cdf7',1,'KKB::uchar()']]],
-  ['uint',['uint',['../namespace_k_k_b.html#ab8557ae1b1f2361659d82a890e2f8014',1,'KKB']]],
-  ['ulong',['ulong',['../namespace_k_k_b.html#ad16da29960588b11a873b8b16b197396',1,'KKB']]],
-  ['ushort',['ushort',['../namespace_k_k_b.html#a4a7e2d1bab49f38edf25c38a8dc20012',1,'KKB']]]
+  ['vectorbool',['VectorBool',['../namespace_k_k_b.html#a14c7fc0d2e2c8b80878017f195980b89',1,'KKB']]],
+  ['vectorchar',['VectorChar',['../namespace_k_k_b.html#ac5763efba6ccdbee14392d153dd69809',1,'KKB']]],
+  ['vectorcharptr',['VectorCharPtr',['../namespace_k_k_b.html#acdcd703f4c3f54b8a4aa38cdc95af701',1,'KKB']]],
+  ['vectordouble',['VectorDouble',['../namespace_k_k_b.html#a5906c207479607e5f450434095914a41',1,'KKB']]],
+  ['vectordoubletptr',['VectorDoubletPtr',['../namespace_k_k_b.html#a035c6931de674cc639eaebeca6419ad8',1,'KKB']]],
+  ['vectorfloat',['VectorFloat',['../namespace_k_k_b.html#a4820c3670ee1fe74f0c4de981c600faf',1,'KKB']]],
+  ['vectorfloatptr',['VectorFloatPtr',['../namespace_k_k_b.html#a182835040a03db3c21a7ea4e46c84790',1,'KKB']]],
+  ['vectorint',['VectorInt',['../namespace_k_k_b.html#a791ebe73f89917067a7aab9dbd817e45',1,'KKB']]],
+  ['vectorint16',['VectorInt16',['../namespace_k_k_b.html#ac2cb16557b269f092b9b8d05c90c0c9f',1,'KKB']]],
+  ['vectorint32',['VectorInt32',['../namespace_k_k_b.html#adf8a10085d231870d8a072046d6cba10',1,'KKB']]],
+  ['vectorint32ptr',['VectorInt32Ptr',['../namespace_k_k_b.html#a0a0457effc318aa340f69262261760eb',1,'KKB']]],
+  ['vectorint64',['VectorInt64',['../namespace_k_k_b.html#a53584303a9b1e1ae8f4c72034685bf99',1,'KKB']]],
+  ['vectorint64ptr',['VectorInt64Ptr',['../namespace_k_k_b.html#a9249e96328ebcbaa92560e5ffbd589ec',1,'KKB']]],
+  ['vectorintptr',['VectorIntPtr',['../namespace_k_k_b.html#a0fb33b081f971e43176068897f27428f',1,'KKB']]],
+  ['vectorpoint',['VectorPoint',['../namespace_k_k_b.html#a45768068a46dcf810be0a0f5a91627bb',1,'KKB']]],
+  ['vectorshort',['VectorShort',['../namespace_k_k_b.html#a17d2c938216be2f3e37e982067fa7234',1,'KKB']]],
+  ['vectorshortptr',['VectorShortPtr',['../namespace_k_k_b.html#ab423dc7b2750fb78f63c613d0b94691b',1,'KKB']]],
+  ['vectoruchar',['VectorUchar',['../namespace_k_k_b.html#a2e345982c9a919580d77a11178ad920a',1,'KKB']]],
+  ['vectorucharptr',['VectorUcharPtr',['../namespace_k_k_b.html#ac43cb621a63d628438a729543638a404',1,'KKB']]],
+  ['vectoruint',['VectorUint',['../namespace_k_k_b.html#a199042935a7ad6d22354bc8f0090b938',1,'KKB']]],
+  ['vectoruint16',['VectorUint16',['../namespace_k_k_b.html#a4f57cb1872dd1448f1e20798475afc06',1,'KKB']]],
+  ['vectoruint32',['VectorUint32',['../namespace_k_k_b.html#ab5f0d7bc82b746e1e75e48a6394ccb60',1,'KKB']]],
+  ['vectoruint64',['VectorUint64',['../namespace_k_k_b.html#a04089b7368e1a306b1c5689ac46ce19a',1,'KKB']]],
+  ['vectorulong',['VectorUlong',['../namespace_k_k_b.html#ac8e4b77afddb0db278beb180dae0b6dc',1,'KKB']]],
+  ['vectorulongptr',['VectorUlongPtr',['../namespace_k_k_b.html#a7122b1e95aed86a78a6b6d378deecd5d',1,'KKB']]],
+  ['volconstbool',['VolConstBool',['../namespace_k_k_b.html#a7d390f568e2831fb76b86b56c87bf92f',1,'KKB']]]
 ];

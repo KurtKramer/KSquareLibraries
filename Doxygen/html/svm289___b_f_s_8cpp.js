@@ -17,7 +17,6 @@ var svm289___b_f_s_8cpp =
     [ "multiclass_probability", "svm289___b_f_s_8cpp.html#a891a677bee703ad8feda11a3c7e99363", null ],
     [ "powi", "svm289___b_f_s_8cpp.html#ac4f2bb7782ed887ee0589d5bcbdd731d", null ],
     [ "print_string_stdout", "svm289___b_f_s_8cpp.html#a4edee28127eebfbcdab94b75c57341c5", null ],
-    [ "readline", "svm289___b_f_s_8cpp.html#a86155e119ca18e4212d4c663c38c0152", null ],
     [ "sigmoid_predict", "svm289___b_f_s_8cpp.html#a5a02bb36bfbcc78735ba18c0580b8a97", null ],
     [ "sigmoid_train", "svm289___b_f_s_8cpp.html#a5d8aba7048d23e9abbff3e055850a471", null ],
     [ "solve_c_svc", "svm289___b_f_s_8cpp.html#a1ffc7754e8ec86580b0681e65b765d3c", null ],
@@ -34,8 +33,6 @@ var svm289___b_f_s_8cpp =
     [ "svm_get_svm_type", "svm289___b_f_s_8cpp.html#a977790be51fc2c2db8f994fa60ce45d4", null ],
     [ "svm_get_svr_probability", "svm289___b_f_s_8cpp.html#a40c2f7a0d7e827b1b987959d2e847844", null ],
     [ "svm_group_classes", "svm289___b_f_s_8cpp.html#a50e8a1e35b79b63599a92a959314de95", null ],
-    [ "svm_load_model", "svm289___b_f_s_8cpp.html#a6be17014ad66df770e2f83ddebcf579b", null ],
-    [ "svm_load_model_XML_SupportVectorSection", "svm289___b_f_s_8cpp.html#a422f901c745e8d0107097ee5098c96df", null ],
     [ "svm_svr_probability", "svm289___b_f_s_8cpp.html#a3c7d87d9a1a948af98386408728c2aba", null ],
     [ "svm_train_one", "svm289___b_f_s_8cpp.html#ae92d39f186f1bce1e6cffdd3d382b948", null ]
 ];

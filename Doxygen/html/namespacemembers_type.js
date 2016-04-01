@@ -10,7 +10,6 @@ var namespacemembers_type =
     [ "i", "namespacemembers_type_i.html", null ],
     [ "j", "namespacemembers_type_j.html", null ],
     [ "k", "namespacemembers_type_k.html", null ],
-    [ "l", "namespacemembers_type_l.html", null ],
     [ "m", "namespacemembers_type_m.html", null ],
     [ "n", "namespacemembers_type_n.html", null ],
     [ "o", "namespacemembers_type_o.html", null ],
@@ -21,6 +20,5 @@ var namespacemembers_type =
     [ "t", "namespacemembers_type_t.html", null ],
     [ "u", "namespacemembers_type_u.html", null ],
     [ "v", "namespacemembers_type_v.html", null ],
-    [ "w", "namespacemembers_type_w.html", null ],
     [ "x", "namespacemembers_type_x.html", null ]
 ];

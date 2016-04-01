@@ -41,7 +41,7 @@ var class_k_k_m_l_l_1_1_training_process2 =
     [ "OldSVMModel", "class_k_k_m_l_l_1_1_training_process2.html#acbffba5c88bcccf54724042a0bea38c0", null ],
     [ "Parameters", "class_k_k_m_l_l_1_1_training_process2.html#ac8fcf74cb7815cda2495ca358bde7d01", null ],
     [ "PriorProbability", "class_k_k_m_l_l_1_1_training_process2.html#aa82e1165e117f1a8a3bb288286b814a2", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_training_process2.html#a57f73db064d579a33cb2035e1cf5a857", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_training_process2.html#acdc15c7892c55af20a72b80d15dee0c0", null ],
     [ "ReportTraningClassStatistics", "class_k_k_m_l_l_1_1_training_process2.html#aacbc206806accfe00db4b1058df38cd1", null ],
     [ "SaveTrainingProcess", "class_k_k_m_l_l_1_1_training_process2.html#a251864b9100b64113649b171b2634900", null ],
     [ "SubTrainingProcesses", "class_k_k_m_l_l_1_1_training_process2.html#a35c4c95dc376fcafd7b06ce18c47cd67", null ],
@@ -51,5 +51,5 @@ var class_k_k_m_l_l_1_1_training_process2 =
     [ "TrainingProcessRight", "class_k_k_m_l_l_1_1_training_process2.html#a61cd866f5ff9269a4ac8399b46d76919", null ],
     [ "TrainingTime", "class_k_k_m_l_l_1_1_training_process2.html#a3c2b70c8ee5142a84b3bafd5a787d427", null ],
     [ "ValidateConfiguration", "class_k_k_m_l_l_1_1_training_process2.html#a3e2b57b94305808af451fd905e769d5e", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_training_process2.html#a54e9204ddec1372080553c5d1fe122f2", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_training_process2.html#a35cf9c0ab759e95b140b253b4db53c3b", null ]
 ];

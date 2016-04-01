@@ -37,7 +37,7 @@ var class_k_k_m_l_l_1_1_s_v_mparam =
     [ "ProbClassPairs", "class_k_k_m_l_l_1_1_s_v_mparam.html#a4dace21b93df510f6cdf2d9722edef1a", null ],
     [ "ProbClassPairsInitialize", "class_k_k_m_l_l_1_1_s_v_mparam.html#a224dcd1bf0f35df058c14318188a56fd", null ],
     [ "ProcessSvmParameter", "class_k_k_m_l_l_1_1_s_v_mparam.html#aa5eaf4b4136dac017f59de2e8217bbb7", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_s_v_mparam.html#ae81c50c08d32e87811f035a6796359a4", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_s_v_mparam.html#a2cd57741ec82e82e55a9a637ef14e7c0", null ],
     [ "SamplingRate", "class_k_k_m_l_l_1_1_s_v_mparam.html#acfefd9e2a297952641d848e54f3932ca", null ],
     [ "SamplingRate", "class_k_k_m_l_l_1_1_s_v_mparam.html#a48fffce9005030d7201d1429123929a4", null ],
     [ "SelectedFeatures", "class_k_k_m_l_l_1_1_s_v_mparam.html#a52c95a964ff1638bb24289967937b29b", null ],
@@ -53,5 +53,5 @@ var class_k_k_m_l_l_1_1_s_v_mparam =
     [ "SvmParamToString", "class_k_k_m_l_l_1_1_s_v_mparam.html#a2c79ac20378aedbddf889c356bc3f1bf", null ],
     [ "ToString", "class_k_k_m_l_l_1_1_s_v_mparam.html#a92293ae68a65e26cd73d2c973a2246f0", null ],
     [ "UseProbabilityToBreakTies", "class_k_k_m_l_l_1_1_s_v_mparam.html#a2da6c5858675cfd9db51e50f548d5f46", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_s_v_mparam.html#a246cfd55d3742b853de50f57850c6191", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_s_v_mparam.html#a1c5b624f8e72edde7bbe2c48f3b5af8e", null ]
 ];

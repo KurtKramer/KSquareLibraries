@@ -1,5 +1,6 @@
 var _usf_cas_cor_8cpp =
 [
+    [ "_SCL_SECURE_NO_WARNINGS", "_usf_cas_cor_8cpp.html#abd0a75654ea98e87fa73a854b3f54837", null ],
     [ "BEGIN_CONNECTION_STRING", "_usf_cas_cor_8cpp.html#acd00b47e46594b632a44b1927e0e4034", null ],
     [ "BEGIN_INPUT_WEIGHTS_STRING", "_usf_cas_cor_8cpp.html#a57a769cb23b92859fb1dc5038d4f1b88", null ],
     [ "BEGIN_OUTPUT_WEIGHTS_STRING", "_usf_cas_cor_8cpp.html#ab8ee432ac598dcb57f7390834fad86c8", null ],

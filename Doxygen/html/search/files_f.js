@@ -28,8 +28,6 @@ var searchData=
   ['simplecompressor_2eh',['SimpleCompressor.h',['../_simple_compressor_8h.html',1,'']]],
   ['sizedistribution_2ecpp',['SizeDistribution.cpp',['../_size_distribution_8cpp.html',1,'']]],
   ['sizedistribution_2eh',['SizeDistribution.h',['../_size_distribution_8h.html',1,'']]],
-  ['sobel_2ecpp',['Sobel.cpp',['../_sobel_8cpp.html',1,'']]],
-  ['sobel_2eh',['Sobel.h',['../_sobel_8h.html',1,'']]],
   ['startstoppoint_2ecpp',['StartStopPoint.cpp',['../_start_stop_point_8cpp.html',1,'']]],
   ['startstoppoint_2eh',['StartStopPoint.h',['../_start_stop_point_8h.html',1,'']]],
   ['statisticalfunctions_2ecpp',['StatisticalFunctions.cpp',['../_statistical_functions_8cpp.html',1,'']]],

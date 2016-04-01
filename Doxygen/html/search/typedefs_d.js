@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['node',['Node',['../class_k_k_b_1_1_r_b_tree.html#a06ef741f6d070fe4faebde70eec7ec6a',1,'KKB::RBTree']]],
-  ['nodeptr',['NodePtr',['../class_k_k_b_1_1_iterator.html#aa840c0dd987e462281441126f7f36f19',1,'KKB::Iterator::NodePtr()'],['../class_k_k_b_1_1_r_b_tree.html#a6b0f3cc33c4554c51afe9bbb82c41906',1,'KKB::RBTree::NodePtr()']]],
-  ['normalizationparmsptr',['NormalizationParmsPtr',['../namespace_k_k_m_l_l.html#a398d05517609c333aaf415007f713d79',1,'KKMLL']]]
+  ['orderingsptr',['OrderingsPtr',['../class_k_k_m_l_l_1_1_orderings.html#af1bbd9a32dc13a33a747c4c5c0112714',1,'KKMLL::Orderings::OrderingsPtr()'],['../namespace_k_k_m_l_l.html#a5cf1d479819cbad8a8f6777fd4932015',1,'KKMLL::OrderingsPtr()']]],
+  ['osfilepos',['osFilePos',['../namespace_k_k_b.html#a18d02cabaafac3bd64feb89b1fa02afa',1,'KKB']]]
 ];

@@ -10,6 +10,6 @@ var class_k_k_m_l_l_1_1_attribute_list =
     [ "operator==", "class_k_k_m_l_l_1_1_attribute_list.html#abd4c2ee5f677c2678bb93b1b6b722212", null ],
     [ "PushOnBack", "class_k_k_m_l_l_1_1_attribute_list.html#a84253dbf5beefc50ef755077c829e902", null ],
     [ "PushOnFront", "class_k_k_m_l_l_1_1_attribute_list.html#a609ac9acc9742ceefde6768a22e5d73a", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_attribute_list.html#ad8406e5548f8440ca1db38e7298ae32f", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_attribute_list.html#a892a8ec73de99419bbb73ea2e16e06dd", null ]
+    [ "ReadXML", "class_k_k_m_l_l_1_1_attribute_list.html#a9d594a24f8c00b824c27ec991c2329c6", null ],
+    [ "WriteXML", "class_k_k_m_l_l_1_1_attribute_list.html#aca03f8c9867d29ee7136f9b441f4309f", null ]
 ];

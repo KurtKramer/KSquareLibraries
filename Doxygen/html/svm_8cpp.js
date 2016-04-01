@@ -15,6 +15,8 @@ var svm_8cpp =
     [ "clone", "svm_8cpp.html#a042890ae5011103ccc6062a677cff472", null ],
     [ "info", "svm_8cpp.html#a0ebae296798b259c5fe4850260bc3d60", null ],
     [ "info_flush", "svm_8cpp.html#aa9479af6b244e998b5b35f52720c309e", null ],
+    [ "max", "svm_8cpp.html#af89e72ffe29dd42949c494bc4ec751e6", null ],
+    [ "min", "svm_8cpp.html#a1ffcc19cad97bf20039eaa77c0040425", null ],
     [ "solve_c_svc", "svm_8cpp.html#a3d48ff0cfde1955d7d4c98ff55312c30", null ],
     [ "solve_c_svc", "svm_8cpp.html#a14d8ba8d3c906b7ca528c215c94cb399", null ],
     [ "solve_epsilon_svr", "svm_8cpp.html#af3672588d870cdeff1459d286d6ba294", null ],

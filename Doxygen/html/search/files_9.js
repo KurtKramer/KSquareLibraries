@@ -30,6 +30,5 @@ var searchData=
   ['kkthreadmanager_2eh',['KKThreadManager.h',['../_k_k_thread_manager_8h.html',1,'']]],
   ['kku_2eh',['KKU.h',['../_k_k_u_8h.html',1,'']]],
   ['kku_5ffftw_2ecpp',['kku_fftw.cpp',['../kku__fftw_8cpp.html',1,'']]],
-  ['kku_5ffftw_2eh',['kku_fftw.h',['../kku__fftw_8h.html',1,'']]],
-  ['ksquarelibraries_5fmainpage_2eh',['KSquareLibraries_MainPage.h',['../_k_square_libraries___main_page_8h.html',1,'']]]
+  ['kku_5ffftw_2eh',['kku_fftw.h',['../kku__fftw_8h.html',1,'']]]
 ];

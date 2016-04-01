@@ -14,7 +14,7 @@ var class_k_k_m_l_l_1_1_model_knn =
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_knn.html#a45c6ac9ae90dec50431f74de47b656ac", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_knn.html#a9fed09ede10a5ce0540e222e3687a0b0", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_knn.html#a7eb25717610720ec93326ae1898b5ef1", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_knn.html#a7a205962ea409f65f1ee731bf73dbb63", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_knn.html#a51dcb3399032bf92901278e43c4e907c", null ],
     [ "TrainModel", "class_k_k_m_l_l_1_1_model_knn.html#a4dac911ec83b0967ec87062beb2697d7", null ],
     [ "WriteXML", "class_k_k_m_l_l_1_1_model_knn.html#a53d42c5f481669518e7d257372a9dd52", null ]
 ];

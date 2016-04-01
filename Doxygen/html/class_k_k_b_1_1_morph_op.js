@@ -17,6 +17,7 @@ var class_k_k_b_1_1_morph_op =
       [ "Dilation", "class_k_k_b_1_1_morph_op.html#a32070d9c14d16849873a8a409f5b0d69a5a870896d32acca70f912a0c11edca66", null ],
       [ "Erosion", "class_k_k_b_1_1_morph_op.html#a32070d9c14d16849873a8a409f5b0d69a35b6b7b81c8d146da93c09daa3875ea0", null ],
       [ "MaskExclude", "class_k_k_b_1_1_morph_op.html#a32070d9c14d16849873a8a409f5b0d69a2166273bd619a450f27a35e9c9e421c3", null ],
+      [ "SobelEdgeDetection", "class_k_k_b_1_1_morph_op.html#a32070d9c14d16849873a8a409f5b0d69ae9eb5dc5ac36ae1b3a4eb7c17def6093", null ],
       [ "Stretcher", "class_k_k_b_1_1_morph_op.html#a32070d9c14d16849873a8a409f5b0d69a0a93701260be81cae9cf81aade6afaa1", null ]
     ] ],
     [ "StructureType", "class_k_k_b_1_1_morph_op.html#a09e4aff7e81327849855ff72082d85b3", [

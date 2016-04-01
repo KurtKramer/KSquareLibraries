@@ -19,7 +19,7 @@ var class_k_k_m_l_l_1_1_model_dual =
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_dual.html#a62801b539d71f3154268805c3a83c750", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_model_dual.html#ade44b69692248df468e4b10d1952ff3f", null ],
     [ "ProbabilitiesByClassDual", "class_k_k_m_l_l_1_1_model_dual.html#a0bec6bc89089c04f7b0eae2250d7570e", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_model_dual.html#ac790129648213c961e9c39ffea62f573", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_model_dual.html#acd4989c89b05cea1d59eeea7e6b6a077", null ],
     [ "ReconcilePredictions", "class_k_k_m_l_l_1_1_model_dual.html#a3c48848a74244130f9757e0e411d5f4b", null ],
     [ "ReconcileProbAndVotes", "class_k_k_m_l_l_1_1_model_dual.html#aca263119cde1cffcce22061d4c51016f", null ],
     [ "RetrieveCrossProbTable", "class_k_k_m_l_l_1_1_model_dual.html#aef8305bf0dad2053413aaa370c4d1986", null ],

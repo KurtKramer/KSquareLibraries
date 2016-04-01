@@ -19,7 +19,7 @@ var class_k_k_m_l_l_1_1_s_v_m_model =
     [ "Predict", "class_k_k_m_l_l_1_1_s_v_m_model.html#acd0c5d26be6a926aebe0bb28e23ae188", null ],
     [ "PredictRaw", "class_k_k_m_l_l_1_1_s_v_m_model.html#a0d323e778b6be3b2fdfe95e8c9123645", null ],
     [ "ProbabilitiesByClass", "class_k_k_m_l_l_1_1_s_v_m_model.html#a1c5a892328e992f604e129d6d3f6bdca", null ],
-    [ "ReadXML", "class_k_k_m_l_l_1_1_s_v_m_model.html#a3c7182da8a017b3bf3da34ab259e0eaa", null ],
+    [ "ReadXML", "class_k_k_m_l_l_1_1_s_v_m_model.html#ad98423dac9fe89cde21ca69082c2d640", null ],
     [ "RetrieveCrossProbTable", "class_k_k_m_l_l_1_1_s_v_m_model.html#a05b5f25f66cdb59e35655b73a00679e6", null ],
     [ "RootFileName", "class_k_k_m_l_l_1_1_s_v_m_model.html#abdd9fa3a5a163d03f74d68c2038a9824", null ],
     [ "SelectionMethod", "class_k_k_m_l_l_1_1_s_v_m_model.html#a84a4af4216530e69ad2ef3c7e536ca09", null ],
@@ -29,5 +29,5 @@ var class_k_k_m_l_l_1_1_s_v_m_model =
     [ "SVMParameters", "class_k_k_m_l_l_1_1_s_v_m_model.html#ada9d0b3d74b6958d36a315ba189e2c59", null ],
     [ "TrainingTime", "class_k_k_m_l_l_1_1_s_v_m_model.html#abaeeabe3857af6e74081b76bf8f93789", null ],
     [ "ValidModel", "class_k_k_m_l_l_1_1_s_v_m_model.html#ad7a9840be2fc4bb5a08fb41fc2896315", null ],
-    [ "WriteXML", "class_k_k_m_l_l_1_1_s_v_m_model.html#aaa1da876add1e40c6d548a0731fff570", null ]
+    [ "WriteXML", "class_k_k_m_l_l_1_1_s_v_m_model.html#acb6a791944907884c0c5992c5215a42c", null ]
 ];

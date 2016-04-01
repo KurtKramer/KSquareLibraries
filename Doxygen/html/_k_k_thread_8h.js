@@ -4,5 +4,6 @@ var _k_k_thread_8h =
     [ "KKThreadList", "class_k_k_b_1_1_k_k_thread_list.html", "class_k_k_b_1_1_k_k_thread_list" ],
     [ "KKThreadListPtr", "_k_k_thread_8h.html#a959019686fca1d3421262b937e82867a", null ],
     [ "KKThreadManagerPtr", "_k_k_thread_8h.html#a9373d6bd6f2977b14e92c9e8e5ec4cdc", null ],
-    [ "KKThreadPtr", "_k_k_thread_8h.html#a777246973c170048c5d7aca8a7df3e42", null ]
+    [ "KKThreadPtr", "_k_k_thread_8h.html#a777246973c170048c5d7aca8a7df3e42", null ],
+    [ "ThreadStartCallBack", "_k_k_thread_8h.html#ae794a520ad588629dcd5827773f4ff86", null ]
 ];
