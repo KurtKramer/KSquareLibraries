@@ -1,0 +1,81 @@
+\hypertarget{_configuration_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Configuration.cpp File Reference}
+\label{_configuration_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Configuration.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Configuration.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Configuration.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Queue.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_configuration_1_1_conf_section}{K\+K\+B\+::\+Configuration\+::\+Conf\+Section}
+\item 
+class \hyperlink{class_k_k_b_1_1_configuration_1_1_conf_section_list}{K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+List}
+\item 
+class \hyperlink{class_k_k_b_1_1_configuration_1_1_setting}{K\+K\+B\+::\+Configuration\+::\+Setting}
+\item 
+class \hyperlink{class_k_k_b_1_1_configuration_1_1_setting_list}{K\+K\+B\+::\+Configuration\+::\+Setting\+List}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_b}{K\+KB}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespace_k_k_b}{K\+KB} The namespace for K\+K\+Base Library supporting general functionality needed by almost any application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_configuration_8cpp_a65029dc58121c93c0ecd83d9809d077a}{Strip\+Out\+Any\+Comments} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&line)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Configuration.\+cpp@{Configuration.\+cpp}!Strip\+Out\+Any\+Comments@{Strip\+Out\+Any\+Comments}}
+\index{Strip\+Out\+Any\+Comments@{Strip\+Out\+Any\+Comments}!Configuration.\+cpp@{Configuration.\+cpp}}
+\subsubsection[{\texorpdfstring{Strip\+Out\+Any\+Comments(\+K\+K\+Str \&line)}{StripOutAnyComments(KKStr &line)}}]{\setlength{\rightskip}{0pt plus 5cm}void Strip\+Out\+Any\+Comments (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{line}
+\end{DoxyParamCaption}
+)}\hypertarget{_configuration_8cpp_a65029dc58121c93c0ecd83d9809d077a}{}\label{_configuration_8cpp_a65029dc58121c93c0ecd83d9809d077a}
+
+
+Definition at line 359 of file Configuration.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Len(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+K\+K\+Str\+::operator\mbox{[}$\,$\mbox{]}(), and K\+K\+B\+::\+K\+K\+Str\+::\+Sub\+Str\+Part().
+
+
+\begin{DoxyCode}
+360 \{
+361   \textcolor{keywordtype}{bool} found = \textcolor{keyword}{false};
+362   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  len   = line.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+363   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x     = 0;
+364  
+365 
+366   \textcolor{keywordflow}{while}  ((x < (len - 1))  &&  (!found))
+367   \{
+368     \textcolor{keywordflow}{if}  ((line[x]     == \textcolor{charliteral}{'/'})  &&
+369          (line[x + 1] == \textcolor{charliteral}{'/'}))
+370       found = \textcolor{keyword}{true};
+371     \textcolor{keywordflow}{else}
+372       x++;
+373   \}
+374 
+375   \textcolor{keywordflow}{if}  (found)
+376   \{
+377     \textcolor{keywordflow}{if}  (x == 0)
+378       line = \textcolor{stringliteral}{""};
+379     \textcolor{keywordflow}{else}
+380       line = line.\hyperlink{class_k_k_b_1_1_k_k_str_a5f20b2ddfc9f07c8ef99592810332ddb}{SubStrPart} (0, x - 1);
+381   \}
+382 
+383 \} \textcolor{comment}{/* StripOutAnyComments */}
+\end{DoxyCode}

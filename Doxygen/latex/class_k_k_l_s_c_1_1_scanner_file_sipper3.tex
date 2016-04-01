@@ -1,0 +1,156 @@
+\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3}{}\section{K\+K\+L\+SC\+:\+:Scanner\+File\+Sipper3 Class Reference}
+\label{class_k_k_l_s_c_1_1_scanner_file_sipper3}\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+
+
+Used to construct Sipper3 data record stream from scan lines.  
+
+
+
+
+{\ttfamily \#include $<$Scanner\+File\+Sipper3.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_a4f60b2e49f61ff36a350d3d8810b3fbb}{Scanner\+File\+Sipper3} ()
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_a8c82854e8556fed9c8f628d4d42acd7e}{$\sim$\+Scanner\+File\+Sipper3} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_a78546e03143e1b2419eeb9bb012b871a}{Bytes\+Last\+Scan\+Line} () const 
+\item 
+\hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_a36bff4bb89ed876ef081b5176e99ac46}{Bytes\+Written} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_a28663122031000bf89a67ca8e1f1aac8}{Scan\+Lines\+Written} () const 
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_file_sipper3_ad61463be808379fa82305d685def72da}{Write\+Whole\+Scan\+Line} (ostream \&o, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$line, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} len)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to construct Sipper3 data record stream from scan lines. 
+
+This class is meant to construct a stream of Sipper3 Records for a single Scan line. You add all the pixels from a single scan line by calling \textquotesingle{}Add\+Pixel\textquotesingle{} for each pixel in the scan line. When you are done Adding all the pixels in a single scan line you call \textquotesingle{}Write\textquotesingle{} to write all the Sipper3 buffer records to disk. The input range of pixel values is \textquotesingle{}0 \textquotesingle{}-\/ thru \textquotesingle{}255\textquotesingle{} where \textquotesingle{}0\textquotesingle{} is the background. \textquotesingle{}Add\+Pixel\textquotesingle{} will convert into 3 bit gray-\/scale by dividing by 32. 
+
+Definition at line 21 of file Scanner\+File\+Sipper3.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!Scanner\+File\+Sipper3@{Scanner\+File\+Sipper3}}
+\index{Scanner\+File\+Sipper3@{Scanner\+File\+Sipper3}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{Scanner\+File\+Sipper3()}{ScannerFileSipper3()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File\+Sipper3\+::\+Scanner\+File\+Sipper3 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_a4f60b2e49f61ff36a350d3d8810b3fbb}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_a4f60b2e49f61ff36a350d3d8810b3fbb}
+
+
+Definition at line 22 of file Scanner\+File\+Sipper3.\+cpp.
+
+
+\begin{DoxyCode}
+22                                        :
+23       bytesWritten      (0),
+24       bytesLastScanLine (0),
+25       scanLinesWritten  (0)
+26 \{
+27 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!````~Scanner\+File\+Sipper3@{$\sim$\+Scanner\+File\+Sipper3}}
+\index{````~Scanner\+File\+Sipper3@{$\sim$\+Scanner\+File\+Sipper3}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{$\sim$\+Scanner\+File\+Sipper3()}{~ScannerFileSipper3()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File\+Sipper3\+::$\sim$\+Scanner\+File\+Sipper3 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_a8c82854e8556fed9c8f628d4d42acd7e}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_a8c82854e8556fed9c8f628d4d42acd7e}
+
+
+Definition at line 32 of file Scanner\+File\+Sipper3.\+cpp.
+
+
+\begin{DoxyCode}
+33 \{
+34 
+35 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!Bytes\+Last\+Scan\+Line@{Bytes\+Last\+Scan\+Line}}
+\index{Bytes\+Last\+Scan\+Line@{Bytes\+Last\+Scan\+Line}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{Bytes\+Last\+Scan\+Line() const }{BytesLastScanLine() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3\+::\+Bytes\+Last\+Scan\+Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_a78546e03143e1b2419eeb9bb012b871a}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_a78546e03143e1b2419eeb9bb012b871a}
+
+
+Definition at line 29 of file Scanner\+File\+Sipper3.\+h.
+
+
+\begin{DoxyCode}
+29 \{\textcolor{keywordflow}{return} bytesLastScanLine;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!Bytes\+Written@{Bytes\+Written}}
+\index{Bytes\+Written@{Bytes\+Written}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{Bytes\+Written() const }{BytesWritten() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint64} K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3\+::\+Bytes\+Written (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_a36bff4bb89ed876ef081b5176e99ac46}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_a36bff4bb89ed876ef081b5176e99ac46}
+
+
+Definition at line 28 of file Scanner\+File\+Sipper3.\+h.
+
+
+\begin{DoxyCode}
+28 \{\textcolor{keywordflow}{return} bytesWritten;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!Scan\+Lines\+Written@{Scan\+Lines\+Written}}
+\index{Scan\+Lines\+Written@{Scan\+Lines\+Written}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{Scan\+Lines\+Written() const }{ScanLinesWritten() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3\+::\+Scan\+Lines\+Written (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_a28663122031000bf89a67ca8e1f1aac8}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_a28663122031000bf89a67ca8e1f1aac8}
+
+
+Definition at line 30 of file Scanner\+File\+Sipper3.\+h.
+
+
+\begin{DoxyCode}
+30 \{\textcolor{keywordflow}{return} scanLinesWritten;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}!Write\+Whole\+Scan\+Line@{Write\+Whole\+Scan\+Line}}
+\index{Write\+Whole\+Scan\+Line@{Write\+Whole\+Scan\+Line}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Sipper3}}
+\subsubsection[{\texorpdfstring{Write\+Whole\+Scan\+Line(ostream \&o, uchar $\ast$line, kkint32 len)}{WriteWholeScanLine(ostream &o, uchar *line, kkint32 len)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+File\+Sipper3\+::\+Write\+Whole\+Scan\+Line (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{o, }
+\item[{{\bf uchar} $\ast$}]{line, }
+\item[{{\bf kkint32}}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_sipper3_ad61463be808379fa82305d685def72da}{}\label{class_k_k_l_s_c_1_1_scanner_file_sipper3_ad61463be808379fa82305d685def72da}
+
+
+Definition at line 39 of file Scanner\+File\+Sipper3.\+cpp.
+
+
+\begin{DoxyCode}
+43 \{
+44   bytesLastScanLine = 0;
+45   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} lenUint = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})len;
+46   o.write ((\textcolor{keywordtype}{char}*)&lenUint, \textcolor{keyword}{sizeof} (lenUint));
+47   bytesWritten += \textcolor{keyword}{sizeof} (lenUint);
+48   bytesLastScanLine +=  \textcolor{keyword}{sizeof} (lenUint);
+49   o.write ((\textcolor{keywordtype}{char}*)line, lenUint);
+50   bytesWritten +=  lenUint;
+51   bytesLastScanLine +=   lenUint;
+52   scanLinesWritten++;
+53 \}  \textcolor{comment}{/* CompressWholeLine */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file_sipper3_8h}{Scanner\+File\+Sipper3.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file_sipper3_8cpp}{Scanner\+File\+Sipper3.\+cpp}\end{DoxyCompactItemize}

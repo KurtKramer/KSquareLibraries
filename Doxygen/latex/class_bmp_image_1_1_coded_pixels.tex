@@ -1,0 +1,379 @@
+\hypertarget{class_bmp_image_1_1_coded_pixels}{}\section{K\+KB\+:\+:Bmp\+Image\+:\+:Coded\+Pixels Class Reference}
+\label{class_bmp_image_1_1_coded_pixels}\index{K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels@{K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels}}
+
+
+This object is used to help encode the data stored in B\+M\+P\+Image\+::image into 8 or 4 bit compressed formats used by B\+MP files. $\ast$.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_bmp_image_1_1_coded_pixels_af59dd3feabc1ae2a88654383bcd8e15e}{Coded\+Pixels} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+height, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+width)
+\item 
+\hyperlink{class_bmp_image_1_1_coded_pixels_aa1c2fdcc56e2a6f0c5e3cd8d403a4839}{$\sim$\+Coded\+Pixels} ()
+\item 
+void \hyperlink{class_bmp_image_1_1_coded_pixels_a0ddc3f25a9dabfa5abb34ca6bc30f35a}{Add\+Pixel} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} pixel)
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_bmp_image_1_1_coded_pixels_a24e3b9d2c2762abd06f8d42aa465ac18}{Create\+Pixel\+Data\+Structure4\+Bit} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&len)
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_bmp_image_1_1_coded_pixels_a56efbf027da1579db01c2bcd8d223a7f}{Create\+Pixel\+Data\+Structure8\+Bit} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&len)
+\item 
+void \hyperlink{class_bmp_image_1_1_coded_pixels_aa885a381c15fdd3a1971c0a658d4f009}{E\+OL} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This object is used to help encode the data stored in B\+M\+P\+Image\+::image into 8 or 4 bit compressed formats used by B\+MP files. $\ast$. 
+
+Definition at line 163 of file B\+M\+P\+Image.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!Coded\+Pixels@{Coded\+Pixels}}
+\index{Coded\+Pixels@{Coded\+Pixels}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{Coded\+Pixels(kkint32 \+\_\+height, kkint32 \+\_\+width)}{CodedPixels(kkint32 _height, kkint32 _width)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Coded\+Pixels (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+height, }
+\item[{{\bf kkint32}}]{\+\_\+width}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_af59dd3feabc1ae2a88654383bcd8e15e}{}\label{class_bmp_image_1_1_coded_pixels_af59dd3feabc1ae2a88654383bcd8e15e}
+
+
+Definition at line 200 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+202                                     :
+203   height (\_height),
+204   width  (\_width),
+205   top (NULL)
+206 \{
+207   codesAllocated = height * (width + 4);
+208   used = 0;
+209 
+210   codes = \textcolor{keyword}{new} CodePair[codesAllocated];
+211 \}
+\end{DoxyCode}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!````~Coded\+Pixels@{$\sim$\+Coded\+Pixels}}
+\index{````~Coded\+Pixels@{$\sim$\+Coded\+Pixels}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{$\sim$\+Coded\+Pixels()}{~CodedPixels()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::$\sim$\+Coded\+Pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_aa1c2fdcc56e2a6f0c5e3cd8d403a4839}{}\label{class_bmp_image_1_1_coded_pixels_aa1c2fdcc56e2a6f0c5e3cd8d403a4839}
+
+
+Definition at line 215 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+216 \{
+217   \textcolor{keyword}{delete} codes;
+218 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!Add\+Pixel@{Add\+Pixel}}
+\index{Add\+Pixel@{Add\+Pixel}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{Add\+Pixel(uchar pixel)}{AddPixel(uchar pixel)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Add\+Pixel (
+\begin{DoxyParamCaption}
+\item[{{\bf uchar}}]{pixel}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_a0ddc3f25a9dabfa5abb34ca6bc30f35a}{}\label{class_bmp_image_1_1_coded_pixels_a0ddc3f25a9dabfa5abb34ca6bc30f35a}
+This method is called once for each pixel in the B\+MP image 
+
+Definition at line 223 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::count, and K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::pixel.
+
+
+
+Referenced by K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted4\+Bit(), and K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted8\+Bit().
+
+
+\begin{DoxyCode}
+224 \{
+225   \textcolor{keywordflow}{if}  (used >= codesAllocated)
+226   \{
+227     \textcolor{comment}{// We are exceeding the codes Size.}
+228     cerr << \textcolor{stringliteral}{"CodedPixels::AddPixel *** Error ***, Exceeding  codesAllocated."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+229     \textcolor{keywordflow}{return};
+230   \}
+231 
+232   \textcolor{keywordflow}{if}  (!top)
+233   \{
+234     top = &(codes[0]);
+235     used++;
+236     top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = 1;
+237     top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} = pixel;
+238   \}
+239 
+240   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((pixel != top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel})  ||  (top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} == 0))
+241   \{
+242     used++;
+243     top++;
+244     top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = 1;
+245     top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} = pixel;
+246   \}
+247 
+248   \textcolor{keywordflow}{else} 
+249   \{
+250     \textcolor{keywordflow}{if}  (top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} >= 254)
+251     \{
+252       used++;
+253       top++;
+254       top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = 1;
+255       top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} = pixel;
+256     \}
+257     \textcolor{keywordflow}{else}
+258     \{
+259       top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count}++;
+260     \}
+261   \}
+262 \}  \textcolor{comment}{/* AddPixel */}
+\end{DoxyCode}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!Create\+Pixel\+Data\+Structure4\+Bit@{Create\+Pixel\+Data\+Structure4\+Bit}}
+\index{Create\+Pixel\+Data\+Structure4\+Bit@{Create\+Pixel\+Data\+Structure4\+Bit}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{Create\+Pixel\+Data\+Structure4\+Bit(kkint32 \&len)}{CreatePixelDataStructure4Bit(kkint32 &len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} $\ast$ K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Create\+Pixel\+Data\+Structure4\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32} \&}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_a24e3b9d2c2762abd06f8d42aa465ac18}{}\label{class_bmp_image_1_1_coded_pixels_a24e3b9d2c2762abd06f8d42aa465ac18}
+Creates the appropriate compressed data structure for the B\+MP 4-\/bit compressed file format. The length of the structure created will be returned in the \textquotesingle{}len\textquotesingle{} parameter. The caller will be responsible for deleting the returned data structure. 
+
+Definition at line 277 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::count, and K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::pixel.
+
+
+
+Referenced by K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted4\+Bit().
+
+
+\begin{DoxyCode}
+278 \{
+279   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  buffSize = codesAllocated;
+280 
+281   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}* buff = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} [buffSize + 4];  \textcolor{comment}{// + 4 For Safety}
+282   memset (buff, 0, codesAllocated);
+283 
+284 
+285   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curPair = 0;
+286   top = &(codes[0]);
+287 
+288   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bp = 0;
+289 
+290   \textcolor{keywordflow}{while}  (curPair < used)
+291   \{
+292     \textcolor{keywordflow}{if}  (bp >= buffSize)
+293     \{
+294       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newBuffSize = buffSize * 2;
+295       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}* newBuff = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newBuffSize];
+296       memset (newBuff, 0, newBuffSize);
+297       memcpy (newBuff, buff, buffSize);
+298       \textcolor{keyword}{delete}[] buff;
+299       buff = newBuff;
+300       newBuff = NULL;
+301       buffSize = newBuffSize;
+302     \}
+303 
+304 
+305     \{
+306       \textcolor{keywordflow}{if}  ((top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} == 0)  &&  (top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} == 0))
+307       \{
+308         \textcolor{comment}{// Add End Of Line }
+309         buff[bp] = 0;
+310         bp++;
+311         buff[bp] = 0;
+312         bp++;
+313 
+314         curPair++;
+315         top++;
+316       \}
+317 
+318       \textcolor{keywordflow}{else}
+319       \{
+320         \textcolor{keywordflow}{if}  (top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} > 254)
+321         \{
+322           buff[bp] = 254;
+323           bp++;
+324 
+325           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} * 16 + top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel};
+326           bp++;
+327 
+328           top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} - 254;
+329         \}
+330 
+331         \textcolor{keywordflow}{else}
+332         \{
+333           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count};
+334           bp++;
+335 
+336           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} * 16 + top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel};
+337           bp++;
+338 
+339           curPair++;
+340           top++;
+341         \}
+342       \}
+343     \}
+344   \}
+345 
+346   buff[bp] = 0;
+347   bp++;
+348 
+349   buff[bp] = 1;
+350   bp++;
+351 
+352   len = bp;     
+353   \textcolor{keywordflow}{return}  buff;
+354 \} \textcolor{comment}{/* CreatePixelDataStructure */}
+\end{DoxyCode}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!Create\+Pixel\+Data\+Structure8\+Bit@{Create\+Pixel\+Data\+Structure8\+Bit}}
+\index{Create\+Pixel\+Data\+Structure8\+Bit@{Create\+Pixel\+Data\+Structure8\+Bit}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{Create\+Pixel\+Data\+Structure8\+Bit(kkint32 \&len)}{CreatePixelDataStructure8Bit(kkint32 &len)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} $\ast$ K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Create\+Pixel\+Data\+Structure8\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32} \&}]{len}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_a56efbf027da1579db01c2bcd8d223a7f}{}\label{class_bmp_image_1_1_coded_pixels_a56efbf027da1579db01c2bcd8d223a7f}
+Creates the appropriate compressed data structure for the B\+MP 8-\/bit compressed file format. The length of the structure created will be returned in the \textquotesingle{}len\textquotesingle{} parameter. The caller will be responsible for deleting the returned data structure. 
+
+Definition at line 358 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::count, K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::pixel.
+
+
+
+Referenced by K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted8\+Bit().
+
+
+\begin{DoxyCode}
+359 \{
+360   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  buffSize = codesAllocated;
+361 
+362   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}* buff = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} [buffSize + 4];  \textcolor{comment}{// + 4 For Safety}
+363   memset (buff, 0, codesAllocated);
+364 
+365   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curPair = 0;
+366   top = &(codes[0]);
+367 
+368   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bp = 0;
+369 
+370   \textcolor{keywordflow}{while}  (curPair < used)
+371   \{
+372     \textcolor{keywordflow}{if}  (bp >= (buffSize - 1))
+373     \{
+374       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newBuffSize = buffSize * 2;
+375       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}* newBuff = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newBuffSize + 2];
+376       \textcolor{keywordflow}{if}  (newBuff == NULL)
+377       \{
+378         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg = \textcolor{stringliteral}{"BmpImage::CodedPixels::CreatePixelDataStructure8Bit    ***ERROR***    
+       Allocation of 'newBuff'  failed."};
+379         cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+380         \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+381       \}
+382 
+383       memset (newBuff, 0, newBuffSize);
+384       memcpy (newBuff, buff, buffSize);
+385       \textcolor{keyword}{delete}[] buff;
+386       buff = newBuff;
+387       newBuff = NULL;
+388       buffSize = newBuffSize;
+389     \}
+390 
+391 
+392     \{
+393       \textcolor{keywordflow}{if}  ((top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} == 0)  &&  (top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} == 0))
+394       \{
+395         \textcolor{comment}{// Add End Of Line }
+396         buff[bp] = 0;
+397         bp++;
+398         buff[bp] = 0;
+399         bp++;
+400 
+401         curPair++;
+402         top++;
+403       \}
+404 
+405       \textcolor{keywordflow}{else}
+406       \{
+407         \textcolor{keywordflow}{if}  (top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} > 254)
+408         \{
+409           buff[bp] = 254;
+410           bp++;
+411 
+412           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel};
+413           bp++;
+414 
+415           top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} - 254;
+416         \}
+417 
+418         \textcolor{keywordflow}{else}
+419         \{
+420           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count};
+421           bp++;
+422 
+423           buff[bp] = top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel};
+424           bp++;
+425 
+426           curPair++;
+427           top++;
+428         \}
+429       \}
+430     \}
+431   \}
+432 
+433 
+434   buff[bp] = 0;
+435   bp++;
+436 
+437   buff[bp] = 1;
+438   bp++;
+439 
+440   len = bp;     
+441   \textcolor{keywordflow}{return}  buff;
+442 \} \textcolor{comment}{/* CreatePixelDataStructure */}
+\end{DoxyCode}
+\index{Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}!E\+OL@{E\+OL}}
+\index{E\+OL@{E\+OL}!Bmp\+Image\+::\+Coded\+Pixels@{Bmp\+Image\+::\+Coded\+Pixels}}
+\subsubsection[{\texorpdfstring{E\+O\+L()}{EOL()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+E\+OL (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_bmp_image_1_1_coded_pixels_aa885a381c15fdd3a1971c0a658d4f009}{}\label{class_bmp_image_1_1_coded_pixels_aa885a381c15fdd3a1971c0a658d4f009}
+This is called once at the end of each row of pixels. 
+
+Definition at line 266 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::count, and K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+::pixel.
+
+
+
+Referenced by K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted4\+Bit(), and K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted8\+Bit().
+
+
+\begin{DoxyCode}
+267 \{
+268   used++;
+269   top++;
+270   top->\hyperlink{struct_bmp_image_1_1_code_pair_a1501fa5638588a3a7afdbbfb62327dae}{count} = 0;
+271   top->\hyperlink{struct_bmp_image_1_1_code_pair_ac341a7d727f931dc9c446eb1d67fe022}{pixel} = 0;
+272 \}  \textcolor{comment}{/* EOL */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_b_m_p_image_8cpp}{B\+M\+P\+Image.\+cpp}\end{DoxyCompactItemize}

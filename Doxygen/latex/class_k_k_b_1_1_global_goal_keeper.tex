@@ -1,0 +1,90 @@
+\hypertarget{class_k_k_b_1_1_global_goal_keeper}{}\section{K\+KB\+:\+:Global\+Goal\+Keeper Class Reference}
+\label{class_k_k_b_1_1_global_goal_keeper}\index{K\+K\+B\+::\+Global\+Goal\+Keeper@{K\+K\+B\+::\+Global\+Goal\+Keeper}}
+
+
+Maintains one instance of a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object that can be used anywhere in the application.  
+
+
+
+
+{\ttfamily \#include $<$Global\+Goal\+Keeper.\+h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_k_k_b_1_1_global_goal_keeper_a4e03a2807ca2f00c359da8625afb4cc5}{End\+Block} ()
+\item 
+static void \hyperlink{class_k_k_b_1_1_global_goal_keeper_a05d7aab73a0cc12c01f4dd6e8d3da839}{Start\+Block} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Maintains one instance of a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object that can be used anywhere in the application. 
+
+It is meant to be used for simple cases. 
+
+Definition at line 23 of file Global\+Goal\+Keeper.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Global\+Goal\+Keeper@{K\+K\+B\+::\+Global\+Goal\+Keeper}!End\+Block@{End\+Block}}
+\index{End\+Block@{End\+Block}!K\+K\+B\+::\+Global\+Goal\+Keeper@{K\+K\+B\+::\+Global\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{End\+Block()}{EndBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Global\+Goal\+Keeper\+::\+End\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_global_goal_keeper_a4e03a2807ca2f00c359da8625afb4cc5}{}\label{class_k_k_b_1_1_global_goal_keeper_a4e03a2807ca2f00c359da8625afb4cc5}
+
+
+Definition at line 51 of file Global\+Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block().
+
+
+
+Referenced by K\+K\+B\+::\+Run\+Log\+::\+Append(), K\+K\+L\+S\+C\+::\+Scanner\+File\+Simple\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File3\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File4\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+B\+::\+Compressor\+::\+Decompress(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+::\+Define\+File\+Desc\+Static(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Factory\+Instace(), Xml\+Factory\+Training\+Class\+::\+Factory\+Instance(), Xml\+Factory\+Model\+Old\+S\+V\+M\+::\+Factory\+Instance(), K\+K\+B\+::\+Xml\+Factory\+Manager\+::\+Factory\+Look\+Up(), K\+K\+B\+::\+Xml\+Factory\+::\+Factory\+Look\+Up(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Final\+Clean\+Up(), K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Get\+Or\+Create\+Scanner\+File\+Entry(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Look\+Up\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Manufacture(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Register\+Driver(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Register\+Factory(), K\+K\+B\+::\+Xml\+Factory\+Manager\+::\+Register\+Factory(), K\+K\+B\+::\+Xml\+Factory\+::\+Register\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Register\+Fatory(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Register\+Feature\+File\+I\+O\+Driver(), K\+K\+B\+::\+K\+K\+Observable\+::\+Register\+Observer(), K\+K\+B\+::\+K\+K\+Observable\+::\+Un\+Register\+Observer(), K\+K\+B\+::\+Run\+Log\+::\+Write\+Line(), and K\+K\+B\+::\+K\+K\+Observer\+::$\sim$\+K\+K\+Observer().
+
+
+\begin{DoxyCode}
+52 \{
+53   \textcolor{keywordflow}{if}  (!globalGoalie)
+54     CreateGlobalGoalie ();
+55   globalGoalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+56 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Global\+Goal\+Keeper@{K\+K\+B\+::\+Global\+Goal\+Keeper}!Start\+Block@{Start\+Block}}
+\index{Start\+Block@{Start\+Block}!K\+K\+B\+::\+Global\+Goal\+Keeper@{K\+K\+B\+::\+Global\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Start\+Block()}{StartBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Global\+Goal\+Keeper\+::\+Start\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_global_goal_keeper_a05d7aab73a0cc12c01f4dd6e8d3da839}{}\label{class_k_k_b_1_1_global_goal_keeper_a05d7aab73a0cc12c01f4dd6e8d3da839}
+
+
+Definition at line 42 of file Global\+Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+B\+::\+Run\+Log\+::\+Append(), K\+K\+L\+S\+C\+::\+Scanner\+File\+Simple\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File3\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+L\+S\+C\+::\+Scanner\+File4\+Bit\+Encoded\+::\+Compensation\+Table(), K\+K\+B\+::\+Compressor\+::\+Decompress(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+::\+Define\+File\+Desc\+Static(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Factory\+Instace(), Xml\+Factory\+Training\+Class\+::\+Factory\+Instance(), Xml\+Factory\+Model\+Old\+S\+V\+M\+::\+Factory\+Instance(), K\+K\+B\+::\+Xml\+Factory\+Manager\+::\+Factory\+Look\+Up(), K\+K\+B\+::\+Xml\+Factory\+::\+Factory\+Look\+Up(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Final\+Clean\+Up(), K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Get\+Or\+Create\+Scanner\+File\+Entry(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Look\+Up\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Manufacture(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Register\+Driver(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Register\+Factory(), K\+K\+B\+::\+Xml\+Factory\+Manager\+::\+Register\+Factory(), K\+K\+B\+::\+Xml\+Factory\+::\+Register\+Factory(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Register\+Fatory(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Register\+Feature\+File\+I\+O\+Driver(), K\+K\+B\+::\+K\+K\+Observable\+::\+Register\+Observer(), K\+K\+B\+::\+K\+K\+Observable\+::\+Un\+Register\+Observer(), K\+K\+B\+::\+Run\+Log\+::\+Write\+Line(), and K\+K\+B\+::\+K\+K\+Observer\+::$\sim$\+K\+K\+Observer().
+
+
+\begin{DoxyCode}
+43 \{
+44   \textcolor{keywordflow}{if}  (!globalGoalie)
+45     CreateGlobalGoalie ();
+46   globalGoalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+47 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_global_goal_keeper_8h}{Global\+Goal\+Keeper.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_global_goal_keeper_8cpp}{Global\+Goal\+Keeper.\+cpp}\end{DoxyCompactItemize}

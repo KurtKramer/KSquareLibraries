@@ -1,0 +1,932 @@
+\hypertarget{class_k_k_b_1_1_date_time}{}\section{K\+KB\+:\+:Date\+Time Class Reference}
+\label{class_k_k_b_1_1_date_time}\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+
+
+{\ttfamily \#include $<$Date\+Time.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_date_time_a3ccfb87f7a2e9683b91964e32d907161}{Date\+Time} ()
+\item 
+\hyperlink{class_k_k_b_1_1_date_time_a147e3ba552c01109b1327624d6aed70b}{Date\+Time} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&date\+Time)
+\item 
+\hyperlink{class_k_k_b_1_1_date_time_af93fc54efb1e1daa33c1ffe79d5f78bb}{Date\+Time} (const \hyperlink{class_k_k_b_1_1_date_type}{Date\+Type} \&\+\_\+date, const \hyperlink{class_k_k_b_1_1_time_type}{Time\+Type} \&\+\_\+time)
+\item 
+\hyperlink{class_k_k_b_1_1_date_time_a08a9a2435a6b3474017d4b4cddbdcc6d}{Date\+Time} (short \+\_\+year, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+month, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+day, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+hour, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+minute, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+second)
+\item 
+\hyperlink{class_k_k_b_1_1_date_time_a5685c4e77778d570f3e14149bc2bb970}{Date\+Time} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s)
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_a285f607b8d42745d661a76530192a5fa}{Add\+Days} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+days)
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_aa00751cde5c47424833acef065629adf}{Add\+Hours} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+hours)
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_a7621802a3441ba13250536f60ce26ba8}{Add\+Minutes} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+mins)
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_a4231e149b01ab91773736995e8a5bc52}{Add\+Seconds} (long \+\_\+secs)
+\item 
+const \hyperlink{class_k_k_b_1_1_date_type}{K\+K\+B\+::\+Date\+Type} \& \hyperlink{class_k_k_b_1_1_date_time_ab18f4ea0ddd5df87ad52e343f68b039e}{Date} () const 
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_date_time_a4ff581d59f874c3fb7d5fc3344fba4bf}{Day} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_date_time_afb7cd42c8b3683935391f684ed866221}{H\+H\+\_\+\+M\+M\+\_\+\+SS} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_a922684cdbfaf29c9bc46bd932569d911}{Hours\+Add} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} hours)
+\begin{DoxyCompactList}\small\item\em Add \+\_\+hours to \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time}, will adjust date to accommodate 24 hour clock. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}{Minutes\+Add} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+mins)
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_date_time_a651e406918c5d7f1905252ada51abb37}{Month} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a14c61e0102af91b8910c15070d2c33ce}{operator!=} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \hyperlink{class_k_k_b_1_1_date_time_a358894c10ee65b942d362ce6de71460c}{operator+} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \hyperlink{class_k_k_b_1_1_date_time_abdcdc4c9d9a3a7d82462cddd132cc734}{operator-\/} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a76b9346b8f98fbaea671dd1892cffa7f}{operator$<$} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a8c908bd1fefa7152856936e3b9336f64}{operator$<$=} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \& \hyperlink{class_k_k_b_1_1_date_time_a16e05498069aca8c6bd510a68b2bee69}{operator=} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right)
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a1be303a5cb29cfd06c6de9562e454eba}{operator==} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a7ac966a3cb35eed48e6ce09265ea4a84}{operator$>$} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_date_time_a19ff014e57d8d03d97e3b5a57f6ac036}{operator$>$=} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&right) const 
+\item 
+\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} \hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_date_time_a0ca7d0cc7a5634c4c975fd16bbb41b32}{Seconds\+Add} (long \+\_\+secs)
+\item 
+const \hyperlink{class_k_k_b_1_1_time_type}{Time\+Type} \& \hyperlink{class_k_k_b_1_1_date_time_a981ba2e8e1ca8319d51be65c746442e1}{Time} () const 
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_date_time_a92e8292a86720233831e6433df092fb5}{To\+Days} () const 
+\item 
+double \hyperlink{class_k_k_b_1_1_date_time_a1245f39d8c4209cf226c73de7950c426}{To\+Hours} () const 
+\begin{DoxyCompactList}\small\item\em summary$>$Number seconds since \char`\"{}0000/01/01 00\+:00\+:00\char`\"{}\end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} \hyperlink{class_k_k_b_1_1_date_time_a32ae25734d45d75f34a5dd0db163d57d}{To\+Seconds} () const 
+\item 
+short \hyperlink{class_k_k_b_1_1_date_time_aedfb008b85fd86fd6cec7d664ffac585}{Year} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}{Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_date_time_ae8cb83aa1fe9cf1bf1694413055ea433}{Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 204 of file Date\+Time.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date\+Time@{Date\+Time}}
+\index{Date\+Time@{Date\+Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date\+Time()}{DateTime()}}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time\+::\+Date\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a3ccfb87f7a2e9683b91964e32d907161}{}\label{class_k_k_b_1_1_date_time_a3ccfb87f7a2e9683b91964e32d907161}
+
+
+Definition at line 997 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Attribute\+List\+::\+Attribute\+Value\+Date\+Time(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink(), and K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Xml\+Element\+Date\+Time().
+
+
+\begin{DoxyCode}
+997                    :  
+998       date(),
+999       time ()
+1000 \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date\+Time@{Date\+Time}}
+\index{Date\+Time@{Date\+Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date\+Time(const Date\+Time \&date\+Time)}{DateTime(const DateTime &dateTime)}}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time\+::\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{date\+Time}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a147e3ba552c01109b1327624d6aed70b}{}\label{class_k_k_b_1_1_date_time_a147e3ba552c01109b1327624d6aed70b}
+
+
+Definition at line 1006 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+K\+K\+Job\+Manager().
+
+
+\begin{DoxyCode}
+1006                                             :
+1007        date (dateTime.date),
+1008        time (dateTime.time)
+1009 \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date\+Time@{Date\+Time}}
+\index{Date\+Time@{Date\+Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date\+Time(const Date\+Type \&\+\_\+date, const Time\+Type \&\+\_\+time)}{DateTime(const DateType &_date, const TimeType &_time)}}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time\+::\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Type} \&}]{\+\_\+date, }
+\item[{const {\bf Time\+Type} \&}]{\+\_\+time}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_af93fc54efb1e1daa33c1ffe79d5f78bb}{}\label{class_k_k_b_1_1_date_time_af93fc54efb1e1daa33c1ffe79d5f78bb}
+
+
+Definition at line 1016 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+
+Referenced by operator+(), and operator-\/().
+
+
+\begin{DoxyCode}
+1018                     :
+1019        date (\_date),
+1020        time (\_time)
+1021 \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date\+Time@{Date\+Time}}
+\index{Date\+Time@{Date\+Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date\+Time(short \+\_\+year, uchar \+\_\+month, uchar \+\_\+day, uchar \+\_\+hour, uchar \+\_\+minute, uchar \+\_\+second)}{DateTime(short _year, uchar _month, uchar _day, uchar _hour, uchar _minute, uchar _second)}}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time\+::\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{short}]{\+\_\+year, }
+\item[{{\bf uchar}}]{\+\_\+month, }
+\item[{{\bf uchar}}]{\+\_\+day, }
+\item[{{\bf uchar}}]{\+\_\+hour, }
+\item[{{\bf uchar}}]{\+\_\+minute, }
+\item[{{\bf uchar}}]{\+\_\+second}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a08a9a2435a6b3474017d4b4cddbdcc6d}{}\label{class_k_k_b_1_1_date_time_a08a9a2435a6b3474017d4b4cddbdcc6d}
+
+
+Definition at line 1028 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Training\+Process2().
+
+
+\begin{DoxyCode}
+1034                     :
+1035       date (\_year, \_month, \_day),
+1036       time (\_hour, \_minute, \_second)
+1037 \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date\+Time@{Date\+Time}}
+\index{Date\+Time@{Date\+Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date\+Time(const K\+K\+Str \&s)}{DateTime(const KKStr &s)}}]{\setlength{\rightskip}{0pt plus 5cm}Date\+Time\+::\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a5685c4e77778d570f3e14149bc2bb970}{}\label{class_k_k_b_1_1_date_time_a5685c4e77778d570f3e14149bc2bb970}
+
+
+Definition at line 1043 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Count\+Instances\+Of(), K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Rest\+Of\+Str(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+Date\+Type\+::operator=(), K\+K\+B\+::\+Time\+Type\+::operator=(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Attribute\+List\+::\+Attribute\+Value\+Date\+Time(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Date\+Time(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Status\+File\+Process\+Line().
+
+
+\begin{DoxyCode}
+1043                                   :
+1044       date(),
+1045       time ()
+1046 
+1047 \{
+1048   \textcolor{keywordflow}{if}  (s.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1049     \textcolor{keywordflow}{return};
+1050 
+1051   \hyperlink{class_k_k_b_1_1_k_k_str_parser}{KKStrParser} parser (s);
+1052 
+1053   \textcolor{keywordflow}{if}  ((s.\hyperlink{class_k_k_b_1_1_k_k_str_a08b9dcd254e64e4337008ab3007fdbc8}{CountInstancesOf} (\textcolor{charliteral}{'-'}) > 2)  &&  (s.\hyperlink{class_k_k_b_1_1_k_k_str_a08b9dcd254e64e4337008ab3007fdbc8}{CountInstancesOf} (\textcolor{charliteral}{'/'}) < 1))
+1054   \{
+1055     \textcolor{comment}{// Looks like the date part is broken up by '-' not '/'}
+1056     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  datePart1 = parser.GetNextToken (\textcolor{stringliteral}{"- "});
+1057     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  datePart2 = parser.GetNextToken (\textcolor{stringliteral}{"- "});
+1058     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  datePart3 = parser.GetNextToken (\textcolor{stringliteral}{"- "});
+1059     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  timeStr  = parser.GetRestOfStr ();
+1060 
+1061     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  dateStr = datePart1 + \textcolor{stringliteral}{"/"} + datePart2 + \textcolor{stringliteral}{"/"} + datePart3;
+1062     date = \hyperlink{class_k_k_b_1_1_date_type}{DateType} (dateStr);
+1063     time = \hyperlink{class_k_k_b_1_1_time_type}{TimeType} (timeStr);
+1064   \}
+1065   \textcolor{keywordflow}{else}
+1066   \{
+1067     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  field1 = parser.GetNextToken (\textcolor{stringliteral}{"- "});
+1068     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  field2 = parser.GetNextToken (\textcolor{stringliteral}{"- "});
+1069     date = \hyperlink{class_k_k_b_1_1_date_type}{DateType} (field1);
+1070     time = \hyperlink{class_k_k_b_1_1_time_type}{TimeType} (field2);
+1071   \}
+1072 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Add\+Days@{Add\+Days}}
+\index{Add\+Days@{Add\+Days}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Add\+Days(kkint32 \+\_\+days)}{AddDays(kkint32 _days)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Add\+Days (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+days}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a285f607b8d42745d661a76530192a5fa}{}\label{class_k_k_b_1_1_date_time_a285f607b8d42745d661a76530192a5fa}
+
+
+Definition at line 1108 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Add\+Days().
+
+
+\begin{DoxyCode}
+1109 \{
+1110   date.\hyperlink{class_k_k_b_1_1_date_type_a9a57c3c22c9b41ccc65211b824c9f245}{AddDays} (\_days);
+1111 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Add\+Hours@{Add\+Hours}}
+\index{Add\+Hours@{Add\+Hours}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Add\+Hours(kkint32 \+\_\+hours)}{AddHours(kkint32 _hours)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Add\+Hours (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+hours}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_aa00751cde5c47424833acef065629adf}{}\label{class_k_k_b_1_1_date_time_aa00751cde5c47424833acef065629adf}
+
+
+Definition at line 1114 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Time\+Type\+::\+Hour(), K\+K\+B\+::\+Date\+Type\+::operator+(), K\+K\+B\+::\+Date\+Type\+::operator-\/(), and K\+K\+B\+::\+Date\+Type\+::operator=().
+
+
+
+Referenced by Hours\+Add().
+
+
+\begin{DoxyCode}
+1115 \{
+1116   \textcolor{keywordflow}{if}  (\_hours < 0)
+1117   \{
+1118     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newHour = time.\hyperlink{class_k_k_b_1_1_time_type_a11b31ed39738ea8b9885e05f53b8a07c}{Hour} () + \_hours;
+1119     \textcolor{keywordflow}{while}  (newHour < 0)
+1120     \{
+1121       date = date - 1;
+1122       newHour += 24;
+1123     \}
+1124     time.\hyperlink{class_k_k_b_1_1_time_type_a11b31ed39738ea8b9885e05f53b8a07c}{Hour} ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})newHour);
+1125   \}
+1126   \textcolor{keywordflow}{else}
+1127   \{
+1128     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newHour = time.\hyperlink{class_k_k_b_1_1_time_type_a11b31ed39738ea8b9885e05f53b8a07c}{Hour} () + \_hours;
+1129     \textcolor{keywordflow}{while}  (newHour > 23)
+1130     \{
+1131       date = date + 1;
+1132       newHour -= 24;
+1133     \}
+1134     time.\hyperlink{class_k_k_b_1_1_time_type_a11b31ed39738ea8b9885e05f53b8a07c}{Hour} ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})newHour);
+1135   \}
+1136 \}  \textcolor{comment}{/* AddHours */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Add\+Minutes@{Add\+Minutes}}
+\index{Add\+Minutes@{Add\+Minutes}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Add\+Minutes(kkint32 \+\_\+mins)}{AddMinutes(kkint32 _mins)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Add\+Minutes (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+mins}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a7621802a3441ba13250536f60ce26ba8}{}\label{class_k_k_b_1_1_date_time_a7621802a3441ba13250536f60ce26ba8}
+
+
+Definition at line 1139 of file Date\+Time.\+cpp.
+
+
+
+References Hours\+Add(), and K\+K\+B\+::\+Time\+Type\+::\+Minute().
+
+
+
+Referenced by Minutes\+Add().
+
+
+\begin{DoxyCode}
+1140 \{
+1141   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newMins = time.\hyperlink{class_k_k_b_1_1_time_type_aef6fa51f14cb1dd0876bd01340186c37}{Minute} () + \_mins;
+1142 
+1143   \textcolor{keywordflow}{while}  (newMins < 0)
+1144   \{
+1145     \hyperlink{class_k_k_b_1_1_date_time_a922684cdbfaf29c9bc46bd932569d911}{HoursAdd} (-1);
+1146     newMins += 60;
+1147   \}
+1148 
+1149   \textcolor{keywordflow}{while}  (newMins >= 60)
+1150   \{
+1151     \hyperlink{class_k_k_b_1_1_date_time_a922684cdbfaf29c9bc46bd932569d911}{HoursAdd} (1);
+1152     newMins -= 60;
+1153   \}
+1154 
+1155   time.\hyperlink{class_k_k_b_1_1_time_type_aef6fa51f14cb1dd0876bd01340186c37}{Minute} ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})newMins);
+1156 \}  \textcolor{comment}{/* AddMinutes */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Add\+Seconds@{Add\+Seconds}}
+\index{Add\+Seconds@{Add\+Seconds}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Add\+Seconds(long \+\_\+secs)}{AddSeconds(long _secs)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Add\+Seconds (
+\begin{DoxyParamCaption}
+\item[{long}]{\+\_\+secs}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a4231e149b01ab91773736995e8a5bc52}{}\label{class_k_k_b_1_1_date_time_a4231e149b01ab91773736995e8a5bc52}
+
+
+Definition at line 1159 of file Date\+Time.\+cpp.
+
+
+
+References Minutes\+Add(), and K\+K\+B\+::\+Time\+Type\+::\+Second().
+
+
+
+Referenced by Seconds\+Add().
+
+
+\begin{DoxyCode}
+1160 \{
+1161   \textcolor{keywordtype}{long}  newSecs = time.\hyperlink{class_k_k_b_1_1_time_type_a628fd6ea76c67b34b425a1d8a6634b63}{Second} () + \_secs;
+1162 
+1163   \textcolor{keywordtype}{long}  minsToAdd = newSecs / 60;
+1164   newSecs = newSecs - (minsToAdd * 60);
+1165   \textcolor{keywordflow}{if}  (minsToAdd != 0)
+1166     \hyperlink{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}{MinutesAdd} (minsToAdd);
+1167 
+1168   \textcolor{keywordflow}{while}  (newSecs < 0)
+1169   \{
+1170     \hyperlink{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}{MinutesAdd} (-1);
+1171     newSecs += 60;
+1172   \}
+1173 
+1174   \textcolor{keywordflow}{while}  (newSecs >= 60)
+1175   \{
+1176     \hyperlink{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}{MinutesAdd} (1);
+1177     newSecs -= 60;
+1178   \}
+1179 
+1180   time.\hyperlink{class_k_k_b_1_1_time_type_a628fd6ea76c67b34b425a1d8a6634b63}{Second} ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})newSecs);
+1181 \}  \textcolor{comment}{/* AddSeconds */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Date@{Date}}
+\index{Date@{Date}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Date() const }{Date() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+B\+::\+Date\+Type}\& K\+K\+B\+::\+Date\+Time\+::\+Date (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_date_time_ab18f4ea0ddd5df87ad52e343f68b039e}{}\label{class_k_k_b_1_1_date_time_ab18f4ea0ddd5df87ad52e343f68b039e}
+
+
+Definition at line 230 of file Date\+Time.\+h.
+
+
+
+Referenced by K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+230 \{\textcolor{keywordflow}{return}  date;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Day@{Day}}
+\index{Day@{Day}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Day() const }{Day() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Date\+Time\+::\+Day (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_date_time_a4ff581d59f874c3fb7d5fc3344fba4bf}{}\label{class_k_k_b_1_1_date_time_a4ff581d59f874c3fb7d5fc3344fba4bf}
+
+
+Definition at line 238 of file Date\+Time.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Day().
+
+
+\begin{DoxyCode}
+238 \{\textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_a2a73547523a2043033732bec07afdd06}{Day}   ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!H\+H\+\_\+\+M\+M\+\_\+\+SS@{H\+H\+\_\+\+M\+M\+\_\+\+SS}}
+\index{H\+H\+\_\+\+M\+M\+\_\+\+SS@{H\+H\+\_\+\+M\+M\+\_\+\+SS}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{H\+H\+\_\+\+M\+M\+\_\+\+S\+S() const }{HH_MM_SS() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Date\+Time\+::\+H\+H\+\_\+\+M\+M\+\_\+\+SS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_afb7cd42c8b3683935391f684ed866221}{}\label{class_k_k_b_1_1_date_time_afb7cd42c8b3683935391f684ed866221}
+The date part will be converted into hours. 
+
+Definition at line 1222 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Time\+Type\+::\+Hour(), K\+K\+B\+::\+Time\+Type\+::\+Minute(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+Time\+Type\+::\+Second(), K\+K\+B\+::\+Str\+Format\+Int(), and K\+K\+B\+::\+Date\+Type\+::\+To\+Hours().
+
+
+\begin{DoxyCode}
+1223 \{
+1224   \textcolor{keywordflow}{return}  \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((date.\hyperlink{class_k_k_b_1_1_date_type_af9b4820b07fa57d902c76b86c9f129ee}{ToHours} () + time.\hyperlink{class_k_k_b_1_1_time_type_a11b31ed39738ea8b9885e05f53b8a07c}{Hour} ()), \textcolor{stringliteral}{"###00"}) + \textcolor{stringliteral}{":"} + 
+1225           \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (time.\hyperlink{class_k_k_b_1_1_time_type_aef6fa51f14cb1dd0876bd01340186c37}{Minute} (), \textcolor{stringliteral}{"00"})                      + \textcolor{stringliteral}{":"} +
+1226           \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (time.\hyperlink{class_k_k_b_1_1_time_type_a628fd6ea76c67b34b425a1d8a6634b63}{Second} (), \textcolor{stringliteral}{"00"});
+1227 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Hours\+Add@{Hours\+Add}}
+\index{Hours\+Add@{Hours\+Add}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Hours\+Add(kkint32 hours)}{HoursAdd(kkint32 hours)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Hours\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{hours}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a922684cdbfaf29c9bc46bd932569d911}{}\label{class_k_k_b_1_1_date_time_a922684cdbfaf29c9bc46bd932569d911}
+
+
+Add \+\_\+hours to \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time}, will adjust date to accommodate 24 hour clock. 
+
+
+
+Definition at line 1186 of file Date\+Time.\+cpp.
+
+
+
+References Add\+Hours().
+
+
+
+Referenced by Add\+Minutes().
+
+
+\begin{DoxyCode}
+1187 \{
+1188   \hyperlink{class_k_k_b_1_1_date_time_aa00751cde5c47424833acef065629adf}{AddHours} (\_hours);
+1189 \}  \textcolor{comment}{/* HoursAdd */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Minutes\+Add@{Minutes\+Add}}
+\index{Minutes\+Add@{Minutes\+Add}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Minutes\+Add(kkint32 \+\_\+mins)}{MinutesAdd(kkint32 _mins)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Minutes\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+mins}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}{}\label{class_k_k_b_1_1_date_time_af9c89ac57882cb38458235f5b1c42781}
+
+
+Definition at line 1194 of file Date\+Time.\+cpp.
+
+
+
+References Add\+Minutes().
+
+
+
+Referenced by Add\+Seconds().
+
+
+\begin{DoxyCode}
+1195 \{
+1196   \hyperlink{class_k_k_b_1_1_date_time_a7621802a3441ba13250536f60ce26ba8}{AddMinutes} (\_mins);
+1197 \}  \textcolor{comment}{/* MinutesAdd */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Month@{Month}}
+\index{Month@{Month}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Month() const }{Month() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Date\+Time\+::\+Month (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_date_time_a651e406918c5d7f1905252ada51abb37}{}\label{class_k_k_b_1_1_date_time_a651e406918c5d7f1905252ada51abb37}
+
+
+Definition at line 237 of file Date\+Time.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Month().
+
+
+\begin{DoxyCode}
+237 \{\textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_a2ed203f7e120b49cd5fb994613b5c9a2}{Month} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator"!=(const Date\+Time \&right) const }{operator!=(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a14c61e0102af91b8910c15070d2c33ce}{}\label{class_k_k_b_1_1_date_time_a14c61e0102af91b8910c15070d2c33ce}
+
+
+Definition at line 1248 of file Date\+Time.\+cpp.
+
+
+\begin{DoxyCode}
+1249 \{
+1250   \textcolor{keywordflow}{return}  Compare (right) != 0;
+1251 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator+@{operator+}}
+\index{operator+@{operator+}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator+(const Date\+Time \&right) const }{operator+(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Date\+Time} Date\+Time\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a358894c10ee65b942d362ce6de71460c}{}\label{class_k_k_b_1_1_date_time_a358894c10ee65b942d362ce6de71460c}
+
+
+Definition at line 1281 of file Date\+Time.\+cpp.
+
+
+
+References Date\+Time(), K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), K\+K\+B\+::\+Date\+Type\+::\+Days(), K\+K\+B\+::\+Time\+Type\+::\+Seconds(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+\begin{DoxyCode}
+1282 \{
+1283   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} netDays = date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} ()    + right.date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} ();
+1284   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} netSecs = time.\hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} () + right.time.\hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} (); 
+1285   netSecs = netSecs % 86400;
+1286 
+1287   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_date_time_a3ccfb87f7a2e9683b91964e32d907161}{DateTime} (\hyperlink{class_k_k_b_1_1_date_type}{DateType} (netDays), \hyperlink{class_k_k_b_1_1_time_type}{TimeType} (netSecs));
+1288 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator-\/(const Date\+Time \&right) const }{operator-(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Date\+Time} Date\+Time\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_abdcdc4c9d9a3a7d82462cddd132cc734}{}\label{class_k_k_b_1_1_date_time_abdcdc4c9d9a3a7d82462cddd132cc734}
+
+
+Definition at line 1293 of file Date\+Time.\+cpp.
+
+
+
+References Date\+Time(), K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), K\+K\+B\+::\+Date\+Type\+::\+Days(), K\+K\+B\+::\+Time\+Type\+::\+Seconds(), and K\+K\+B\+::\+Time\+Type\+::\+Time\+Type().
+
+
+\begin{DoxyCode}
+1294 \{
+1295   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} netDays = date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} () - right.date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} ();
+1296 
+1297   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} leftSecs  = time.\hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} ();
+1298   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} rightSecs = right.time.\hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} ();
+1299 
+1300   \textcolor{keywordflow}{while}  (rightSecs > leftSecs)
+1301   \{
+1302     netDays--;
+1303     leftSecs = leftSecs + 86400; 
+1304   \}
+1305 
+1306   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} netSecs = leftSecs - rightSecs;
+1307 
+1308   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} numOfDaysInSecs = netSecs / 86400;
+1309   netSecs = netSecs % 86400;
+1310 
+1311   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_date_time_a3ccfb87f7a2e9683b91964e32d907161}{DateTime} (\hyperlink{class_k_k_b_1_1_date_type}{DateType} (netDays + numOfDaysInSecs), 
+      \hyperlink{class_k_k_b_1_1_time_type}{TimeType} (netSecs));
+1312 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator$<$(const Date\+Time \&right) const }{operator<(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a76b9346b8f98fbaea671dd1892cffa7f}{}\label{class_k_k_b_1_1_date_time_a76b9346b8f98fbaea671dd1892cffa7f}
+
+
+Definition at line 1268 of file Date\+Time.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Create\+Training\+Process().
+
+
+\begin{DoxyCode}
+1269 \{
+1270   \textcolor{keywordflow}{return}  Compare (right) < 0;
+1271 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator$<$=(const Date\+Time \&right) const }{operator<=(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a8c908bd1fefa7152856936e3b9336f64}{}\label{class_k_k_b_1_1_date_time_a8c908bd1fefa7152856936e3b9336f64}
+
+
+Definition at line 1274 of file Date\+Time.\+cpp.
+
+
+\begin{DoxyCode}
+1275 \{
+1276   \textcolor{keywordflow}{return}  Compare (right) <= 0;
+1277 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator=(const Date\+Time \&right)}{operator=(const DateTime &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Date\+Time} \& Date\+Time\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a16e05498069aca8c6bd510a68b2bee69}{}\label{class_k_k_b_1_1_date_time_a16e05498069aca8c6bd510a68b2bee69}
+
+
+Definition at line 1231 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::operator=(), and K\+K\+B\+::\+Time\+Type\+::operator=().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Create\+Models\+From\+Training\+Data(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Extract\+Training\+Class\+Features(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load\+Feature\+Data\+From\+Training\+Libraries(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Read\+X\+M\+L(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Status\+File\+Process\+Line(), and K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Xml\+Element\+Date\+Time().
+
+
+\begin{DoxyCode}
+1232 \{
+1233   date = right.date;
+1234   time = right.time;
+1235   \textcolor{keywordflow}{return} *\textcolor{keyword}{this};
+1236 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator==@{operator==}}
+\index{operator==@{operator==}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator==(const Date\+Time \&right) const }{operator==(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a1be303a5cb29cfd06c6de9562e454eba}{}\label{class_k_k_b_1_1_date_time_a1be303a5cb29cfd06c6de9562e454eba}
+
+
+Definition at line 1241 of file Date\+Time.\+cpp.
+
+
+\begin{DoxyCode}
+1242 \{
+1243   \textcolor{keywordflow}{return}  Compare (right) == 0;
+1244 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator$>$(const Date\+Time \&right) const }{operator>(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a7ac966a3cb35eed48e6ce09265ea4a84}{}\label{class_k_k_b_1_1_date_time_a7ac966a3cb35eed48e6ce09265ea4a84}
+
+
+Definition at line 1255 of file Date\+Time.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Extract\+Training\+Class\+Features(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load\+Feature\+Data\+From\+Training\+Libraries().
+
+
+\begin{DoxyCode}
+1256 \{
+1257   \textcolor{keywordflow}{return}  Compare (right) > 0;
+1258 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{operator$>$=(const Date\+Time \&right) const }{operator>=(const DateTime &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Date\+Time\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a19ff014e57d8d03d97e3b5a57f6ac036}{}\label{class_k_k_b_1_1_date_time_a19ff014e57d8d03d97e3b5a57f6ac036}
+
+
+Definition at line 1262 of file Date\+Time.\+cpp.
+
+
+\begin{DoxyCode}
+1263 \{
+1264   \textcolor{keywordflow}{return}  Compare (right) >= 0;
+1265 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Seconds@{Seconds}}
+\index{Seconds@{Seconds}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Seconds() const }{Seconds() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint64} Date\+Time\+::\+Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{}\label{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}
+
+
+Definition at line 1092 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Seconds(), and K\+K\+B\+::\+Time\+Type\+::\+Seconds().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Bool(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Double(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Float(), and K\+K\+B\+::\+K\+K\+Thread\+::\+Wait\+For\+Thread\+To\+Stop().
+
+
+\begin{DoxyCode}
+1093 \{
+1094   \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64}  secsInDate = (\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64})date.\hyperlink{class_k_k_b_1_1_date_type_a6f20551f9a6b56cc5af99873624f1092}{Seconds} ();
+1095   \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64}  secsInTime = (\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64})time.\hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} ();
+1096   \textcolor{keywordflow}{return}  secsInDate + secsInTime;
+1097 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Seconds\+Add@{Seconds\+Add}}
+\index{Seconds\+Add@{Seconds\+Add}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Seconds\+Add(long \+\_\+secs)}{SecondsAdd(long _secs)}}]{\setlength{\rightskip}{0pt plus 5cm}void Date\+Time\+::\+Seconds\+Add (
+\begin{DoxyParamCaption}
+\item[{long}]{\+\_\+secs}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_date_time_a0ca7d0cc7a5634c4c975fd16bbb41b32}{}\label{class_k_k_b_1_1_date_time_a0ca7d0cc7a5634c4c975fd16bbb41b32}
+
+
+Definition at line 1202 of file Date\+Time.\+cpp.
+
+
+
+References Add\+Seconds().
+
+
+\begin{DoxyCode}
+1203 \{
+1204   \hyperlink{class_k_k_b_1_1_date_time_a4231e149b01ab91773736995e8a5bc52}{AddSeconds} (\_secs);
+1205 \}   \textcolor{comment}{/* SecondsAdd */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Time@{Time}}
+\index{Time@{Time}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Time() const }{Time() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Time\+Type}\& K\+K\+B\+::\+Date\+Time\+::\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_date_time_a981ba2e8e1ca8319d51be65c746442e1}{}\label{class_k_k_b_1_1_date_time_a981ba2e8e1ca8319d51be65c746442e1}
+
+
+Definition at line 232 of file Date\+Time.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+::\+Add\+Msg(), and K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+232 \{\textcolor{keywordflow}{return}  time;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!To\+Days@{To\+Days}}
+\index{To\+Days@{To\+Days}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Days() const }{ToDays() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} Date\+Time\+::\+To\+Days (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a92e8292a86720233831e6433df092fb5}{}\label{class_k_k_b_1_1_date_time_a92e8292a86720233831e6433df092fb5}
+
+
+Definition at line 1100 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Days().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Int32().
+
+
+\begin{DoxyCode}
+1100 \{\textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!To\+Hours@{To\+Hours}}
+\index{To\+Hours@{To\+Hours}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Hours() const }{ToHours() const }}]{\setlength{\rightskip}{0pt plus 5cm}double Date\+Time\+::\+To\+Hours (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a1245f39d8c4209cf226c73de7950c426}{}\label{class_k_k_b_1_1_date_time_a1245f39d8c4209cf226c73de7950c426}
+
+
+summary$>$Number seconds since \char`\"{}0000/01/01 00\+:00\+:00\char`\"{}
+
+
+
+Definition at line 1101 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Days(), and K\+K\+B\+::\+Time\+Type\+::\+To\+Hours().
+
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!To\+Seconds@{To\+Seconds}}
+\index{To\+Seconds@{To\+Seconds}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Seconds() const }{ToSeconds() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint64} Date\+Time\+::\+To\+Seconds (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_a32ae25734d45d75f34a5dd0db163d57d}{}\label{class_k_k_b_1_1_date_time_a32ae25734d45d75f34a5dd0db163d57d}
+Number seconds since \char`\"{}0000/01/01 00\+:00\+:00\char`\"{} 
+
+Definition at line 1105 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Days(), and K\+K\+B\+::\+Time\+Type\+::\+Seconds().
+
+
+\begin{DoxyCode}
+1105 \{\textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64})(date.\hyperlink{class_k_k_b_1_1_date_type_aa9e8ab2449893e84916ecddadee88428}{Days} ()) * (\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64})86400 + time.
+      \hyperlink{class_k_k_b_1_1_time_type_af80ec040b96f4ec8e2dcd91bd59f76b9}{Seconds} ();\};
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Year@{Year}}
+\index{Year@{Year}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Year() const }{Year() const }}]{\setlength{\rightskip}{0pt plus 5cm}short K\+K\+B\+::\+Date\+Time\+::\+Year (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_date_time_aedfb008b85fd86fd6cec7d664ffac585}{}\label{class_k_k_b_1_1_date_time_aedfb008b85fd86fd6cec7d664ffac585}
+
+
+Definition at line 236 of file Date\+Time.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Year().
+
+
+\begin{DoxyCode}
+236 \{\textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_a153a587f1657fa1c1e4b8be97abe6190}{Year}  ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS@{Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS}}
+\index{Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS@{Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+S\+S() const }{YYYY_MM_DD_HH_MM_SS() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Date\+Time\+::\+Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+SS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}{}\label{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}
+
+
+Definition at line 1216 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Time\+Type\+::\+H\+H\+\_\+\+M\+M\+\_\+\+S\+S(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), and K\+K\+B\+::\+Date\+Type\+::\+Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Add(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+::\+Write\+Model\+X\+M\+L\+Fields(), and K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+1217 \{
+1218   \textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_abd409b4dc6e65f43d02da336a0fcb8b4}{YYYY\_MM\_DD} () + \textcolor{stringliteral}{"-"} + time.\hyperlink{class_k_k_b_1_1_time_type_a120d19c3fcb1105e6e2c93a969ccc92e}{HH\_MM\_SS} ();
+1219 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}!Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS@{Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS}}
+\index{Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS@{Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS}!K\+K\+B\+::\+Date\+Time@{K\+K\+B\+::\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+S\+S() const }{YYYYMMDDHHMMSS() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Date\+Time\+::\+Y\+Y\+Y\+Y\+M\+M\+D\+D\+H\+H\+M\+M\+SS (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_date_time_ae8cb83aa1fe9cf1bf1694413055ea433}{}\label{class_k_k_b_1_1_date_time_ae8cb83aa1fe9cf1bf1694413055ea433}
+
+
+Definition at line 1209 of file Date\+Time.\+cpp.
+
+
+
+References K\+K\+B\+::\+Time\+Type\+::\+H\+H\+M\+M\+S\+S(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), and K\+K\+B\+::\+Date\+Type\+::\+Y\+Y\+Y\+Y\+M\+M\+D\+D().
+
+
+\begin{DoxyCode}
+1210 \{
+1211   \textcolor{keywordflow}{return}  date.\hyperlink{class_k_k_b_1_1_date_type_a40b4aad78f416a6dae0db043e2925cb4}{YYYYMMDD} () + time.\hyperlink{class_k_k_b_1_1_time_type_a07c629b3910b9799408e853f27945244}{HHMMSS} ();
+1212 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_date_time_8h}{Date\+Time.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_date_time_8cpp}{Date\+Time.\+cpp}\end{DoxyCompactItemize}

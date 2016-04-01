@@ -1,0 +1,1154 @@
+\hypertarget{class_k_k_b_1_1_k_k_thread}{}\section{K\+KB\+:\+:K\+K\+Thread Class Reference}
+\label{class_k_k_b_1_1_k_k_thread}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+
+
+The base class to be used any thread.  
+
+
+
+
+{\ttfamily \#include $<$K\+K\+Thread.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:K\+K\+Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_k_k_thread}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_k_k_thread}{K\+K\+Thread} $\ast$ \hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{K\+K\+Thread\+Ptr}
+\item 
+enum \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0c}{Thread\+Priority} \+: int \{ \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0cabbb93ef26e3c101ff11cdd21cab08a94}{Thread\+Priority\+::\+Null}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca28d0edd045e05cf5af64e35ae0c4c6ef}{Thread\+Priority\+::\+Low}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca960b44c579bc2f6818d2daaf9e4c16f0}{Thread\+Priority\+::\+Normal}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca655d20c1ca69519ca647684edbb2db35}{Thread\+Priority\+::\+High}
+ \}
+\item 
+enum \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}{Thread\+Status} \+: int \{ \\*
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}{Thread\+Status\+::\+Null}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}{Thread\+Status\+::\+Not\+Started}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac2efe4bbd13e6cb0db293e72884273c0}{Thread\+Status\+::\+Starting}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}{Thread\+Status\+::\+Running}, 
+\\*
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a7b7ecb39b9e110c2a31409a1672bad23}{Thread\+Status\+::\+Stopping}, 
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{Thread\+Status\+::\+Stopped}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_thread_aae2cc3ddbc461d7be2ff904b40ccf2e8}{K\+K\+Thread} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+thread\+Name, \hyperlink{namespace_k_k_b_a9373d6bd6f2977b14e92c9e8e5ec4cdc}{K\+K\+Thread\+Manager\+Ptr} \+\_\+thread\+Manager, \hyperlink{namespace_k_k_b_aaa43074273f12ed325a053d9e1faf84a}{Msg\+Queue\+Ptr} \+\_\+msg\+Queue)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_thread_afb0fecef6c388894ce1c6e6926f3b177}{$\sim$\+K\+K\+Thread} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_aace756a5a4ea776957f8be561ff8bd16}{Add\+Shutdown\+Prerequistite} (\hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{K\+K\+Thread\+Ptr} \+\_\+thread)
+\begin{DoxyCompactList}\small\item\em Specify threads that must stop before this thread is started. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a092fff07582fdaa4b17eb00214d47923}{Add\+Start\+Prerequistite} (\hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{K\+K\+Thread\+Ptr} \+\_\+thread)
+\begin{DoxyCompactList}\small\item\em Specify threads that must start before this thread is started. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a85dcfd92879c8f74102af810cc44628b}{Cancel\+Flag} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_a1cc302487fe9e7fe79e7e6b056d3e7d1}{Crashed} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a56f7600f8a53e737dd8f6732a1176a91}{Crashed} (bool \+\_\+crashed)
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a28ce636186cfdc8914248e0a087d7b0d}{Exception\+Text} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a48548f93187fd062a78b4a7410f125a6}{Exception\+Text} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+exception\+Text)
+\item 
+\hyperlink{namespace_k_k_b_a8f5f50672f37857425120831223888aa}{K\+K\+Str\+List\+Ptr} \hyperlink{class_k_k_b_1_1_k_k_thread_a7b4f886e76610bb6f585e14d34285f13}{Get\+Msgs} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a66111ed632dffca679c664909d5773bd}{Kill} ()
+\begin{DoxyCompactList}\small\item\em stops the running thread and frees the thread handle \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_k_k_thread_a0a8d08e9a902c496f7ee0c46f2aee2cc}{Memory\+Consumed\+Estimated} ()
+\item 
+\hyperlink{namespace_k_k_b_aaa43074273f12ed325a053d9e1faf84a}{K\+K\+B\+::\+Msg\+Queue\+Ptr} \hyperlink{class_k_k_b_1_1_k_k_thread_ac6ca78e4481c0a20b0cf15789d1101c7}{Msg\+Queue} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_a7aa56da8a1a30568b4b7c353909e6b4c}{Ok\+To\+Shutdown} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_afc63e1d57bfa5a690c13db687b655f32}{Ok\+To\+Start} () const 
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_k_k_thread_a4ecfa3856e1b5bb4a5a125fdc05c4e67}{Run} ()
+\item 
+\hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a271dba95d3432cf7ea4992951f2b2a38}{Shutdown\+Flag} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_af3d38a6013474f4710c1797fbf26d3cb}{Shutdown\+Thread} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_aa0dcedfb40c5208fb5764e13851a7728}{Start} (\hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0c}{Thread\+Priority} \+\_\+priority, bool \&successful)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}{Thread\+Status} \hyperlink{class_k_k_b_1_1_k_k_thread_a8b6636f59306caf89c24d9f756293d71}{Status} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a90737d98d41227c3748e0404aa69b939}{Status} (\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}{Thread\+Status} \+\_\+status)
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a7a1d208bb108a4bbd2e19fe9b0657428}{Status\+Str} () const 
+\item 
+\hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a188ecbf965ed6a19e5c16e9ae0127652}{Terminate\+Flag} () const 
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_k_k_thread_aae645d31ef55a539e83b0309b316de07}{Terminate\+Flag\+Changed} ()
+\begin{DoxyCompactList}\small\item\em Will be called whenever the value of \textquotesingle{}terminate\+Flag\textquotesingle{} is changed; derived classes should override this method if they need to be aware that the terminae\+Flag has changed. This give them a chance to let other objects/methods know that the flag has changed. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_ad8ce909fbb09ad87c759e7a442530a08}{Terminate\+Thread} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_k_k_thread_a31fa88422cee1e9c7c197a90cf508073}{Thread\+Id} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a547e53d47818a4de7d367ce58203ade9}{Thread\+Name} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_af13369365be9c420e142d121f910c5c1}{Thread\+Still\+Processing} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_aaca46f2589c1c14e207900575bcabae7}{Wait\+For\+Thread\+To\+Stop} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} max\+Time\+To\+Wait)
+\begin{DoxyCompactList}\small\item\em Called by separate thread; will stay in loop until the thread controlled by this instance shutdown or it waited the \textquotesingle{}max\+Time\+To\+Wait\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_thread_a7a111deabee84c8aed46022bffb0574f}{Thread\+Status\+To\+Str} (\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}{Thread\+Status})
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a8f6c004d6510b90e5eff9c34efd20967}{Add\+Msg} (\hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+Str\+Ptr} msg)
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_thread_a52304cd03534d86ce8e392d342d37a69}{Add\+Msg} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&msg)
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_ac2f537ffb0162014816a7b446417bbd7}{Shutdown\+Or\+Terminate\+Requested} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_ae767d026a9b2bfc4d4f50f1a24cf279f}{There\+Is\+A\+Circular\+Reference\+Shutdown} (\hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{K\+K\+Thread\+Ptr} \+\_\+thread) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_thread_aead4ae8442a3f5c0f629ee0eed28a759}{There\+Is\+A\+Circular\+Reference\+Start} (\hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{K\+K\+Thread\+Ptr} \+\_\+thread) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The base class to be used any thread. 
+
+This will be the base class for each one of the different types of processing. 
+
+Definition at line 27 of file K\+K\+Thread.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!K\+K\+Thread\+Ptr@{K\+K\+Thread\+Ptr}}
+\index{K\+K\+Thread\+Ptr@{K\+K\+Thread\+Ptr}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{K\+K\+Thread\+Ptr}{KKThreadPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Thread}$\ast$ {\bf K\+K\+B\+::\+K\+K\+Thread\+::\+K\+K\+Thread\+Ptr}}\hypertarget{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{}\label{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}
+
+
+Definition at line 30 of file K\+K\+Thread.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Priority@{Thread\+Priority}}
+\index{Thread\+Priority@{Thread\+Priority}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Priority}{ThreadPriority}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf K\+K\+B\+::\+K\+K\+Thread\+::\+Thread\+Priority} \+: int\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0c}{}\label{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Null@{Null}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Null@{Null}}\item[{\em 
+Null\hypertarget{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0cabbb93ef26e3c101ff11cdd21cab08a94}{}\label{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0cabbb93ef26e3c101ff11cdd21cab08a94}
+}]\index{Low@{Low}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Low@{Low}}\item[{\em 
+Low\hypertarget{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca28d0edd045e05cf5af64e35ae0c4c6ef}{}\label{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca28d0edd045e05cf5af64e35ae0c4c6ef}
+}]\index{Normal@{Normal}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Normal@{Normal}}\item[{\em 
+Normal\hypertarget{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca960b44c579bc2f6818d2daaf9e4c16f0}{}\label{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca960b44c579bc2f6818d2daaf9e4c16f0}
+}]\index{High@{High}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!High@{High}}\item[{\em 
+High\hypertarget{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca655d20c1ca69519ca647684edbb2db35}{}\label{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca655d20c1ca69519ca647684edbb2db35}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 32 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+32                                : \textcolor{keywordtype}{int} 
+33                    \{\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aabbb93ef26e3c101ff11cdd21cab08a94}{Null},
+34                     Low,
+35                     Normal,
+36                     High
+37                    \};
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Status@{Thread\+Status}}
+\index{Thread\+Status@{Thread\+Status}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Status}{ThreadStatus}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf K\+K\+B\+::\+K\+K\+Thread\+::\+Thread\+Status} \+: int\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Null@{Null}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Null@{Null}}\item[{\em 
+Null\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}
+}]\index{Not\+Started@{Not\+Started}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Not\+Started@{Not\+Started}}\item[{\em 
+Not\+Started\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}
+}]\index{Starting@{Starting}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Starting@{Starting}}\item[{\em 
+Starting\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac2efe4bbd13e6cb0db293e72884273c0}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac2efe4bbd13e6cb0db293e72884273c0}
+}]\index{Running@{Running}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Running@{Running}}\item[{\em 
+Running\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}
+}]\index{Stopping@{Stopping}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Stopping@{Stopping}}\item[{\em 
+Stopping\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a7b7ecb39b9e110c2a31409a1672bad23}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a7b7ecb39b9e110c2a31409a1672bad23}
+}]\index{Stopped@{Stopped}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Stopped@{Stopped}}\item[{\em 
+Stopped\hypertarget{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{}\label{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 39 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+39                              : \textcolor{keywordtype}{int}
+40                    \{\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aabbb93ef26e3c101ff11cdd21cab08a94}{Null},
+41                     NotStarted,
+42                     Starting,
+43                     Running,
+44                     Stopping,
+45                     Stopped
+46                    \};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!K\+K\+Thread@{K\+K\+Thread}}
+\index{K\+K\+Thread@{K\+K\+Thread}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{K\+K\+Thread(const K\+K\+Str \&\+\_\+thread\+Name, K\+K\+Thread\+Manager\+Ptr \+\_\+thread\+Manager, Msg\+Queue\+Ptr \+\_\+msg\+Queue)}{KKThread(const KKStr &_threadName, KKThreadManagerPtr _threadManager, MsgQueuePtr _msgQueue)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Thread\+::\+K\+K\+Thread (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+thread\+Name, }
+\item[{{\bf K\+K\+Thread\+Manager\+Ptr}}]{\+\_\+thread\+Manager, }
+\item[{{\bf Msg\+Queue\+Ptr}}]{\+\_\+msg\+Queue}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_aae2cc3ddbc461d7be2ff904b40ccf2e8}{}\label{class_k_k_b_1_1_k_k_thread_aae2cc3ddbc461d7be2ff904b40ccf2e8}
+
+
+Definition at line 83 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), Normal, and Not\+Started.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+K\+K\+Thread\+Manager().
+
+
+\begin{DoxyCode}
+86                     :
+87    crashed               (\textcolor{keyword}{false}),
+88    msgQueue              (\_msgQueue),
+89    priority              (\hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca960b44c579bc2f6818d2daaf9e4c16f0}{ThreadPriority::Normal}),
+90    shutdownFlag          (\textcolor{keyword}{false}),
+91    shutdownPrerequisites (NULL),
+92    startPrerequisites    (NULL),
+93    status                (\hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}{ThreadStatus::NotStarted}),
+94    terminateFlag         (\textcolor{keyword}{false}),
+95    threadId              (0),
+96    threadName            (\_threadName)
+97 
+98 \{
+99 \textcolor{preprocessor}{#if  defined(WIN32)}
+100   windowsThreadHandle  = NULL;
+101   windowsThreadId = 0;
+102 \textcolor{preprocessor}{#else}
+103   linuxThreadId = 0;
+104 \textcolor{preprocessor}{#endif}
+105 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!````~K\+K\+Thread@{$\sim$\+K\+K\+Thread}}
+\index{````~K\+K\+Thread@{$\sim$\+K\+K\+Thread}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{$\sim$\+K\+K\+Thread()}{~KKThread()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Thread\+::$\sim$\+K\+K\+Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_thread_afb0fecef6c388894ce1c6e6926f3b177}{}\label{class_k_k_b_1_1_k_k_thread_afb0fecef6c388894ce1c6e6926f3b177}
+
+
+Definition at line 109 of file K\+K\+Thread.\+cpp.
+
+
+\begin{DoxyCode}
+110 \{
+111   \textcolor{keyword}{delete}  shutdownPrerequisites;  shutdownPrerequisites = NULL;
+112   \textcolor{keyword}{delete}  startPrerequisites;     startPrerequisites    = NULL;
+113 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Add\+Msg@{Add\+Msg}}
+\index{Add\+Msg@{Add\+Msg}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Add\+Msg(\+K\+K\+Str\+Ptr msg)}{AddMsg(KKStrPtr msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Add\+Msg (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str\+Ptr}}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a8f6c004d6510b90e5eff9c34efd20967}{}\label{class_k_k_b_1_1_k_k_thread_a8f6c004d6510b90e5eff9c34efd20967}
+Taking ownership of \textquotesingle{}msg\textquotesingle{} and will append to \textquotesingle{}msg\+Queue\textquotesingle{}. 
+
+Definition at line 154 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+Msg\+Queue\+::\+Add\+Msg().
+
+
+\begin{DoxyCode}
+155 \{
+156   \textcolor{keywordflow}{if}  (msgQueue == NULL)
+157   \{
+158     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+159          << \textcolor{stringliteral}{"KKThread::AddMsg   ***ERROR***    msgQuue is not defined."}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+160          << \textcolor{stringliteral}{"                   Msg["} << *msg << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+161          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+162     \textcolor{keyword}{delete}  msg;
+163     msg = NULL;
+164   \}
+165   \textcolor{keywordflow}{else}
+166   \{
+167     msgQueue->\hyperlink{class_k_k_b_1_1_msg_queue_a4d7d0adcf4f06a7afc6c8187a20bf95c}{AddMsg} (msg);
+168   \}
+169 \}  \textcolor{comment}{/* AddMsg */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Add\+Msg@{Add\+Msg}}
+\index{Add\+Msg@{Add\+Msg}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Add\+Msg(const K\+K\+Str \&msg)}{AddMsg(const KKStr &msg)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Add\+Msg (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a52304cd03534d86ce8e392d342d37a69}{}\label{class_k_k_b_1_1_k_k_thread_a52304cd03534d86ce8e392d342d37a69}
+A copy of the message \textquotesingle{}msg\textquotesingle{} will be added to the end of msg\+Queue. 
+
+Definition at line 174 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+Msg\+Queue\+::\+Add\+Msg(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Len(), K\+K\+B\+::os\+Get\+Local\+Date\+Time(), K\+K\+B\+::os\+Get\+Thread\+Id(), and K\+K\+B\+::\+Date\+Time\+::\+Time().
+
+
+
+Referenced by Run().
+
+
+\begin{DoxyCode}
+175 \{
+176   \textcolor{keywordflow}{if}  (msgQueue == NULL)
+177   \{
+178     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+179          << \textcolor{stringliteral}{"KKThread::AddMsg   ***ERROR***    msgQuue is not defined."}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+180          << \textcolor{stringliteral}{"                       Msg["} << msg << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+181          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+182   \}
+183   \textcolor{keywordflow}{else}
+184   \{
+185     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} msgTemp (msg.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} () + 20);
+186     msgTemp << \hyperlink{namespace_k_k_b_aa1d581b15163a41037c43bdbd800d0f8}{osGetThreadId} () << \textcolor{stringliteral}{" - "} << \hyperlink{namespace_k_k_b_af54c205cde0465bcb2c74f3881a96413}{osGetLocalDateTime} ().
+      \hyperlink{class_k_k_b_1_1_date_time_a981ba2e8e1ca8319d51be65c746442e1}{Time} () << \textcolor{stringliteral}{"->"} << msg;
+187     msgQueue->\hyperlink{class_k_k_b_1_1_msg_queue_a4d7d0adcf4f06a7afc6c8187a20bf95c}{AddMsg} (msgTemp);
+188   \}
+189 \}  \textcolor{comment}{/* AddMsg */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Add\+Shutdown\+Prerequistite@{Add\+Shutdown\+Prerequistite}}
+\index{Add\+Shutdown\+Prerequistite@{Add\+Shutdown\+Prerequistite}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Add\+Shutdown\+Prerequistite(\+K\+K\+Thread\+Ptr \+\_\+thread)}{AddShutdownPrerequistite(KKThreadPtr _thread)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Add\+Shutdown\+Prerequistite (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Thread\+Ptr}}]{\+\_\+thread}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_aace756a5a4ea776957f8be561ff8bd16}{}\label{class_k_k_b_1_1_k_k_thread_aace756a5a4ea776957f8be561ff8bd16}
+
+
+Specify threads that must stop before this thread is started. 
+
+This method can be called multiple times; the information is used by the \textquotesingle{}K\+K\+T\+Hread\+Manager\textquotesingle{} instance to control the orderly shutdown of the controlling \textquotesingle{}K\+K\+T\+Hread\+Manager\textquotesingle{} instance. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+thread} & A thread that needs to be in the \textquotesingle{}Stopped\textquotesingle{} status before this thread can be shutdown; we do N\+OT take ownership. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 510 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Thread\+List\+::\+K\+K\+Thread\+List().
+
+
+\begin{DoxyCode}
+511 \{
+512   \textcolor{keywordflow}{if}  (!shutdownPrerequisites)
+513     shutdownPrerequisites = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_thread_list}{KKThreadList} (\textcolor{keyword}{false});
+514   shutdownPrerequisites->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_thread);
+515 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Add\+Start\+Prerequistite@{Add\+Start\+Prerequistite}}
+\index{Add\+Start\+Prerequistite@{Add\+Start\+Prerequistite}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Add\+Start\+Prerequistite(\+K\+K\+Thread\+Ptr \+\_\+thread)}{AddStartPrerequistite(KKThreadPtr _thread)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Add\+Start\+Prerequistite (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Thread\+Ptr}}]{\+\_\+thread}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_a092fff07582fdaa4b17eb00214d47923}{}\label{class_k_k_b_1_1_k_k_thread_a092fff07582fdaa4b17eb00214d47923}
+
+
+Specify threads that must start before this thread is started. 
+
+This method can be called multiple times; the information is used by the \textquotesingle{}K\+K\+T\+Hread\+Manager\textquotesingle{} instance to control the start of the thread. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+thread} & A thread that needs to be in the \textquotesingle{}Running\textquotesingle{} status before this thread can start; we do N\+OT take ownership. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 501 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Thread\+List\+::\+K\+K\+Thread\+List().
+
+
+\begin{DoxyCode}
+502 \{
+503   \textcolor{keywordflow}{if}  (!startPrerequisites)
+504     startPrerequisites = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_thread_list}{KKThreadList} (\textcolor{keyword}{false});
+505   startPrerequisites->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_thread);
+506 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Cancel\+Flag@{Cancel\+Flag}}
+\index{Cancel\+Flag@{Cancel\+Flag}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Cancel\+Flag() const }{CancelFlag() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vol\+Const\+Bool}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Cancel\+Flag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a85dcfd92879c8f74102af810cc44628b}{}\label{class_k_k_b_1_1_k_k_thread_a85dcfd92879c8f74102af810cc44628b}
+Another name for \textquotesingle{}Terminate\+Flag\textquotesingle{}. 
+
+Definition at line 60 of file K\+K\+Thread.\+h.
+
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Crashed@{Crashed}}
+\index{Crashed@{Crashed}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Crashed() const }{Crashed() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+K\+K\+Thread\+::\+Crashed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a1cc302487fe9e7fe79e7e6b056d3e7d1}{}\label{class_k_k_b_1_1_k_k_thread_a1cc302487fe9e7fe79e7e6b056d3e7d1}
+Signifies that this thread had to terminate on its own because of an abnormal situation; such as a memory corruption. 
+
+Definition at line 62 of file K\+K\+Thread.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Any\+Processors\+Crashed().
+
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Crashed@{Crashed}}
+\index{Crashed@{Crashed}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Crashed(bool \+\_\+crashed)}{Crashed(bool _crashed)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+K\+K\+Thread\+::\+Crashed (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+crashed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a56f7600f8a53e737dd8f6732a1176a91}{}\label{class_k_k_b_1_1_k_k_thread_a56f7600f8a53e737dd8f6732a1176a91}
+
+
+Definition at line 89 of file K\+K\+Thread.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Thread\+Start\+Call\+Back().
+
+
+\begin{DoxyCode}
+89 \{crashed       = \_crashed;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Exception\+Text@{Exception\+Text}}
+\index{Exception\+Text@{Exception\+Text}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Exception\+Text() const }{ExceptionText() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Exception\+Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a28ce636186cfdc8914248e0a087d7b0d}{}\label{class_k_k_b_1_1_k_k_thread_a28ce636186cfdc8914248e0a087d7b0d}
+If the overloaded \textquotesingle{}Run\textquotesingle{} method of a derived class generates a exception that is not caught; then the \textquotesingle{}\textquotesingle{}Thread\+Start\+Call\+Back\textquotesingle{} will catch it and store the related text in this field. In this case the \textquotesingle{}\hyperlink{class_k_k_b_1_1_k_k_thread_a1cc302487fe9e7fe79e7e6b056d3e7d1}{Crashed()}\textquotesingle{} method will return \textquotesingle{}true\textquotesingle{}. 
+
+Definition at line 66 of file K\+K\+Thread.\+h.
+
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Exception\+Text@{Exception\+Text}}
+\index{Exception\+Text@{Exception\+Text}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Exception\+Text(const K\+K\+Str \&\+\_\+exception\+Text)}{ExceptionText(const KKStr &_exceptionText)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+K\+K\+Thread\+::\+Exception\+Text (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+exception\+Text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a48548f93187fd062a78b4a7410f125a6}{}\label{class_k_k_b_1_1_k_k_thread_a48548f93187fd062a78b4a7410f125a6}
+
+
+Definition at line 90 of file K\+K\+Thread.\+h.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+
+Referenced by K\+K\+B\+::\+Thread\+Start\+Call\+Back().
+
+
+\begin{DoxyCode}
+90 \{exceptionText = \_exceptionText;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Get\+Msgs@{Get\+Msgs}}
+\index{Get\+Msgs@{Get\+Msgs}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Get\+Msgs()}{GetMsgs()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+List\+Ptr} K\+K\+Thread\+::\+Get\+Msgs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_a7b4f886e76610bb6f585e14d34285f13}{}\label{class_k_k_b_1_1_k_k_thread_a7b4f886e76610bb6f585e14d34285f13}
+
+
+Definition at line 193 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+Msg\+Queue\+::\+Get\+Next\+Msg(), and K\+K\+B\+::\+K\+K\+Str\+List\+::\+K\+K\+Str\+List().
+
+
+\begin{DoxyCode}
+194 \{
+195   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  results = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrList} (\textcolor{keyword}{true});
+196   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  msg = msgQueue->\hyperlink{class_k_k_b_1_1_msg_queue_a4e280303e6b11471624e1274cc681649}{GetNextMsg} ();
+197   \textcolor{keywordflow}{while}  (msg)
+198   \{
+199     results->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (msg);
+200     msg = msgQueue->\hyperlink{class_k_k_b_1_1_msg_queue_a4e280303e6b11471624e1274cc681649}{GetNextMsg} ();
+201   \}
+202 
+203   \textcolor{keywordflow}{return} results;
+204 \}  \textcolor{comment}{/* GetMsgs */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Kill@{Kill}}
+\index{Kill@{Kill}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Kill()}{Kill()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Kill (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_a66111ed632dffca679c664909d5773bd}{}\label{class_k_k_b_1_1_k_k_thread_a66111ed632dffca679c664909d5773bd}
+
+
+stops the running thread and frees the thread handle 
+
+
+
+Definition at line 427 of file K\+K\+Thread.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Kill\+All\+Running\+Threads(), and Wait\+For\+Thread\+To\+Stop().
+
+
+\begin{DoxyCode}
+428 \{
+429     \textcolor{keywordflow}{if}  (windowsThreadHandle == NULL)
+430     \textcolor{keywordflow}{return}; 
+431 
+432     WaitForSingleObject (windowsThreadHandle, INFINITE);
+433     CloseHandle (windowsThreadHandle);
+434     windowsThreadHandle = NULL;
+435 \}  \textcolor{comment}{/* Kill */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+Thread\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_a0a8d08e9a902c496f7ee0c46f2aee2cc}{}\label{class_k_k_b_1_1_k_k_thread_a0a8d08e9a902c496f7ee0c46f2aee2cc}
+
+
+Definition at line 117 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+Msg\+Queue\+::\+Memory\+Consumed\+Estimated(), K\+K\+B\+::\+K\+K\+Thread\+List\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+K\+K\+Str\+::\+Memory\+Consumed\+Estimated().
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+List\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+118 \{
+119   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  estMem = \textcolor{keyword}{sizeof} (crashed)                + 
+120                   \textcolor{keyword}{sizeof} (msgQueue)               + 
+121                   \textcolor{keyword}{sizeof} (shutdownFlag)           +
+122                   \textcolor{keyword}{sizeof} (startPrerequisites)     +
+123                   \textcolor{keyword}{sizeof} (shutdownPrerequisites)  +
+124                   \textcolor{keyword}{sizeof} (status)                 + 
+125                   \textcolor{keyword}{sizeof} (terminateFlag)          +
+126                   threadName.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ();
+127 
+128   \textcolor{keywordflow}{if}  (msgQueue)
+129     estMem += msgQueue->\hyperlink{class_k_k_b_1_1_msg_queue_afe6ceeb9745ccf087a35eca6e83b026f}{MemoryConsumedEstimated} ();
+130 
+131   \textcolor{keywordflow}{if}  (startPrerequisites)
+132     estMem += startPrerequisites->\hyperlink{class_k_k_b_1_1_k_k_thread_list_a2c29dc603b4f8b74548e286ffab9bc91}{MemoryConsumedEstimated} ();
+133 
+134   \textcolor{keywordflow}{if}  (shutdownPrerequisites)
+135     estMem += shutdownPrerequisites->\hyperlink{class_k_k_b_1_1_k_k_thread_list_a2c29dc603b4f8b74548e286ffab9bc91}{MemoryConsumedEstimated} ();
+136 
+137   \textcolor{keywordflow}{return}  estMem;
+138 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Msg\+Queue@{Msg\+Queue}}
+\index{Msg\+Queue@{Msg\+Queue}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Msg\+Queue()}{MsgQueue()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+B\+::\+Msg\+Queue\+Ptr} K\+K\+B\+::\+K\+K\+Thread\+::\+Msg\+Queue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_ac6ca78e4481c0a20b0cf15789d1101c7}{}\label{class_k_k_b_1_1_k_k_thread_ac6ca78e4481c0a20b0cf15789d1101c7}
+
+
+Definition at line 71 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+71 \{\textcolor{keywordflow}{return} msgQueue;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Ok\+To\+Shutdown@{Ok\+To\+Shutdown}}
+\index{Ok\+To\+Shutdown@{Ok\+To\+Shutdown}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Ok\+To\+Shutdown() const }{OkToShutdown() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Thread\+::\+Ok\+To\+Shutdown (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_thread_a7aa56da8a1a30568b4b7c353909e6b4c}{}\label{class_k_k_b_1_1_k_k_thread_a7aa56da8a1a30568b4b7c353909e6b4c}
+Returns \textquotesingle{}true\textquotesingle{} if all shutdown prerequisites are in the \textquotesingle{}Stopped\textquotesingle{} status. 
+
+Definition at line 519 of file K\+K\+Thread.\+cpp.
+
+
+
+References Status(), and Stopped.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Shutdown\+Processing().
+
+
+\begin{DoxyCode}
+520 \{
+521   \textcolor{keywordflow}{if}  (!shutdownPrerequisites)
+522     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+523 
+524   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKThreadList::const\_iterator}  idx;
+525   \textcolor{keywordflow}{for}  (idx = shutdownPrerequisites->begin ();  idx != shutdownPrerequisites->end ();  ++idx)
+526   \{
+527     \hyperlink{class_k_k_b_1_1_k_k_thread}{KKThreadPtr}  preReq = *idx;
+528     \textcolor{keywordflow}{if}  (preReq->\hyperlink{class_k_k_b_1_1_k_k_thread_a8b6636f59306caf89c24d9f756293d71}{Status} () != \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{ThreadStatus::Stopped})
+529       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+530   \}
+531   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+532 \}  \textcolor{comment}{/* OkToShutdown */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Ok\+To\+Start@{Ok\+To\+Start}}
+\index{Ok\+To\+Start@{Ok\+To\+Start}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Ok\+To\+Start() const }{OkToStart() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Thread\+::\+Ok\+To\+Start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_thread_afc63e1d57bfa5a690c13db687b655f32}{}\label{class_k_k_b_1_1_k_k_thread_afc63e1d57bfa5a690c13db687b655f32}
+Returns \textquotesingle{}true\textquotesingle{} if all start prerequisites are in the \textquotesingle{}Running\textquotesingle{} status. 
+
+Definition at line 536 of file K\+K\+Thread.\+cpp.
+
+
+
+References Running, and Status().
+
+
+\begin{DoxyCode}
+537 \{
+538   \textcolor{keywordflow}{if}  (!startPrerequisites)
+539     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+540 
+541   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKThreadList::const\_iterator}  idx;
+542   \textcolor{keywordflow}{for}  (idx = startPrerequisites->begin ();  idx != startPrerequisites->end ();  ++idx)
+543   \{
+544     \hyperlink{class_k_k_b_1_1_k_k_thread}{KKThreadPtr}  preReq = *idx;
+545     \textcolor{keywordflow}{if}  (preReq->\hyperlink{class_k_k_b_1_1_k_k_thread_a8b6636f59306caf89c24d9f756293d71}{Status} () != \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}{ThreadStatus::Running})
+546       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+547   \}
+548   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+549 \}  \textcolor{comment}{/* OkToStart */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Run@{Run}}
+\index{Run@{Run}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Run()}{Run()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a4ecfa3856e1b5bb4a5a125fdc05c4e67}{}\label{class_k_k_b_1_1_k_k_thread_a4ecfa3856e1b5bb4a5a125fdc05c4e67}
+
+
+Reimplemented in \hyperlink{class_k_k_b_1_1_k_k_thread_manager_ad1dfab64405504de3a8d8506d18b6ddd}{K\+K\+B\+::\+K\+K\+Thread\+Manager}.
+
+
+
+Definition at line 447 of file K\+K\+Thread.\+cpp.
+
+
+
+References Add\+Msg().
+
+
+
+Referenced by K\+K\+B\+::\+Thread\+Start\+Call\+Back().
+
+
+\begin{DoxyCode}
+448 \{
+449   \textcolor{comment}{// This method should have been over ridden by a derived class.}
+450  \textcolor{keyword}{const} \textcolor{keywordtype}{char}*  msg = \textcolor{stringliteral}{"KKThread::Run   ***ERROR***       This method should have been over ridden by a
+       derived class."};
+451 
+452   cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+453        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+454   \hyperlink{class_k_k_b_1_1_k_k_thread_a8f6c004d6510b90e5eff9c34efd20967}{AddMsg} (msg);
+455 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Shutdown\+Flag@{Shutdown\+Flag}}
+\index{Shutdown\+Flag@{Shutdown\+Flag}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Shutdown\+Flag() const }{ShutdownFlag() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vol\+Const\+Bool}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Shutdown\+Flag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a271dba95d3432cf7ea4992951f2b2a38}{}\label{class_k_k_b_1_1_k_k_thread_a271dba95d3432cf7ea4992951f2b2a38}
+Indicates that the application wants this thread to complete what work is queued up for it top process. Threads need to monitor this flag; if it goes true they are to complete all processing that is queued up and then shutdown. This is 
+
+Definition at line 75 of file K\+K\+Thread.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Shutdown\+Processing().
+
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Shutdown\+Or\+Terminate\+Requested@{Shutdown\+Or\+Terminate\+Requested}}
+\index{Shutdown\+Or\+Terminate\+Requested@{Shutdown\+Or\+Terminate\+Requested}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Shutdown\+Or\+Terminate\+Requested()}{ShutdownOrTerminateRequested()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+K\+K\+Thread\+::\+Shutdown\+Or\+Terminate\+Requested (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_k_k_b_1_1_k_k_thread_ac2f537ffb0162014816a7b446417bbd7}{}\label{class_k_k_b_1_1_k_k_thread_ac2f537ffb0162014816a7b446417bbd7}
+
+
+Definition at line 148 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+148 \{\textcolor{keywordflow}{return}  (terminateFlag || shutdownFlag);\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Shutdown\+Thread@{Shutdown\+Thread}}
+\index{Shutdown\+Thread@{Shutdown\+Thread}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Shutdown\+Thread()}{ShutdownThread()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Shutdown\+Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_af3d38a6013474f4710c1797fbf26d3cb}{}\label{class_k_k_b_1_1_k_k_thread_af3d38a6013474f4710c1797fbf26d3cb}
+Call this method to have its thread finish what ever is in the queue and then exit. 
+
+Definition at line 231 of file K\+K\+Thread.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Shutdown\+Processing().
+
+
+\begin{DoxyCode}
+232 \{
+233   shutdownFlag = \textcolor{keyword}{true};
+234 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Start@{Start}}
+\index{Start@{Start}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Start(\+Thread\+Priority \+\_\+priority, bool \&successful)}{Start(ThreadPriority _priority, bool &successful)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Start (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread\+Priority}}]{\+\_\+priority, }
+\item[{bool \&}]{successful}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_aa0dcedfb40c5208fb5764e13851a7728}{}\label{class_k_k_b_1_1_k_k_thread_aa0dcedfb40c5208fb5764e13851a7728}
+Call this method to start thread; it will call the method \char`\"{}\+Run\char`\"{}. 
+
+Definition at line 352 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception().
+
+
+\begin{DoxyCode}
+355 \{
+356   priority = \_priority;
+357 
+358   windowsThreadHandle = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long}*)CreateThread (NULL,
+359                                                 0,
+360                                                 (LPTHREAD\_START\_ROUTINE)
+      \hyperlink{namespace_k_k_b_ae794a520ad588629dcd5827773f4ff86}{ThreadStartCallBack},
+361                                                 (\hyperlink{class_k_k_b_1_1_k_k_thread_ae0ca65f275a57c346e71486ad84b271a}{KKThreadPtr})\textcolor{keyword}{this},
+362                                                 0,
+363                                                 &windowsThreadId
+364                                                );
+365   \textcolor{keywordflow}{if}  (windowsThreadHandle == NULL)
+366   \{
+367     successful = \textcolor{keyword}{false};
+368     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (\textcolor{stringliteral}{"Failed to create thread"});
+369   \}
+370   \textcolor{keywordflow}{else}
+371   \{
+372     threadId = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})windowsThreadId;
+373 
+374     \textcolor{keywordflow}{switch}  (priority)
+375     \{
+376     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0cabbb93ef26e3c101ff11cdd21cab08a94}{ThreadPriority::Null}:
+377     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca960b44c579bc2f6818d2daaf9e4c16f0}{ThreadPriority::Normal}:
+378       SetThreadPriority (windowsThreadHandle, THREAD\_PRIORITY\_BELOW\_NORMAL);
+379       \textcolor{keywordflow}{break};
+380 
+381     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca28d0edd045e05cf5af64e35ae0c4c6ef}{ThreadPriority::Low}:
+382       SetThreadPriority (windowsThreadHandle, THREAD\_PRIORITY\_NORMAL);
+383       \textcolor{keywordflow}{break};
+384 
+385     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_b_1_1_k_k_thread_ad9b55cc20284bcadd051a20945325e0ca655d20c1ca69519ca647684edbb2db35}{ThreadPriority::High}:
+386       SetThreadPriority (windowsThreadHandle, THREAD\_PRIORITY\_ABOVE\_NORMAL);
+387       \textcolor{keywordflow}{break};
+388     \}
+389     SetThreadName ();
+390     successful = \textcolor{keyword}{true};
+391   \}
+392 \}  \textcolor{comment}{/* Start */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Status@{Status}}
+\index{Status@{Status}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Status() const }{Status() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Thread\+Status} K\+K\+B\+::\+K\+K\+Thread\+::\+Status (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a8b6636f59306caf89c24d9f756293d71}{}\label{class_k_k_b_1_1_k_k_thread_a8b6636f59306caf89c24d9f756293d71}
+
+
+Definition at line 72 of file K\+K\+Thread.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+All\+Threads\+Terminated(), Ok\+To\+Shutdown(), Ok\+To\+Start(), and K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Shutdown\+Processing().
+
+
+\begin{DoxyCode}
+72 \{\textcolor{keywordflow}{return} status;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Status@{Status}}
+\index{Status@{Status}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Status(\+Thread\+Status \+\_\+status)}{Status(ThreadStatus _status)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+K\+K\+Thread\+::\+Status (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread\+Status}}]{\+\_\+status}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a90737d98d41227c3748e0404aa69b939}{}\label{class_k_k_b_1_1_k_k_thread_a90737d98d41227c3748e0404aa69b939}
+
+
+Definition at line 91 of file K\+K\+Thread.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Thread\+Start\+Call\+Back().
+
+
+\begin{DoxyCode}
+91 \{status        = \_status;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Status\+Str@{Status\+Str}}
+\index{Status\+Str@{Status\+Str}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Status\+Str() const }{StatusStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Status\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a7a1d208bb108a4bbd2e19fe9b0657428}{}\label{class_k_k_b_1_1_k_k_thread_a7a1d208bb108a4bbd2e19fe9b0657428}
+
+
+Definition at line 73 of file K\+K\+Thread.\+h.
+
+
+
+References Thread\+Status\+To\+Str().
+
+
+\begin{DoxyCode}
+73 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_thread_a7a111deabee84c8aed46022bffb0574f}{ThreadStatusToStr} (status);\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Terminate\+Flag@{Terminate\+Flag}}
+\index{Terminate\+Flag@{Terminate\+Flag}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Terminate\+Flag() const }{TerminateFlag() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vol\+Const\+Bool}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Terminate\+Flag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a188ecbf965ed6a19e5c16e9ae0127652}{}\label{class_k_k_b_1_1_k_k_thread_a188ecbf965ed6a19e5c16e9ae0127652}
+Indicates that thread is to stop processing A\+S\+AP, release any resources it holds and terminate. Threads need to monitor this flag; if it goes \textquotesingle{}true\textquotesingle{} they need to terminate A\+S\+AP releasing all allocated resources. Typically set to true when user request to cancel processing. 
+
+Definition at line 80 of file K\+K\+Thread.\+h.
+
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Terminate\+Flag\+Changed@{Terminate\+Flag\+Changed}}
+\index{Terminate\+Flag\+Changed@{Terminate\+Flag\+Changed}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Terminate\+Flag\+Changed()}{TerminateFlagChanged()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Terminate\+Flag\+Changed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_thread_aae645d31ef55a539e83b0309b316de07}{}\label{class_k_k_b_1_1_k_k_thread_aae645d31ef55a539e83b0309b316de07}
+
+
+Will be called whenever the value of \textquotesingle{}terminate\+Flag\textquotesingle{} is changed; derived classes should override this method if they need to be aware that the terminae\+Flag has changed. This give them a chance to let other objects/methods know that the flag has changed. 
+
+
+
+Definition at line 216 of file K\+K\+Thread.\+cpp.
+
+
+
+Referenced by Terminate\+Thread().
+
+
+\begin{DoxyCode}
+217 \{
+218 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Terminate\+Thread@{Terminate\+Thread}}
+\index{Terminate\+Thread@{Terminate\+Thread}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Terminate\+Thread()}{TerminateThread()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Terminate\+Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_ad8ce909fbb09ad87c759e7a442530a08}{}\label{class_k_k_b_1_1_k_k_thread_ad8ce909fbb09ad87c759e7a442530a08}
+Call this method to have its thread stop right away and exit. 
+
+Definition at line 208 of file K\+K\+Thread.\+cpp.
+
+
+
+References Terminate\+Flag\+Changed().
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Thread\+Manager\+::\+Terminate\+Processing().
+
+
+\begin{DoxyCode}
+209 \{
+210   terminateFlag = \textcolor{keyword}{true};
+211   \hyperlink{class_k_k_b_1_1_k_k_thread_aae645d31ef55a539e83b0309b316de07}{TerminateFlagChanged} ();
+212 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!There\+Is\+A\+Circular\+Reference\+Shutdown@{There\+Is\+A\+Circular\+Reference\+Shutdown}}
+\index{There\+Is\+A\+Circular\+Reference\+Shutdown@{There\+Is\+A\+Circular\+Reference\+Shutdown}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{There\+Is\+A\+Circular\+Reference\+Shutdown(\+K\+K\+Thread\+Ptr \+\_\+thread) const }{ThereIsACircularReferenceShutdown(KKThreadPtr _thread) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Thread\+::\+There\+Is\+A\+Circular\+Reference\+Shutdown (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Thread\+Ptr}}]{\+\_\+thread}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_b_1_1_k_k_thread_ae767d026a9b2bfc4d4f50f1a24cf279f}{}\label{class_k_k_b_1_1_k_k_thread_ae767d026a9b2bfc4d4f50f1a24cf279f}
+
+
+Definition at line 480 of file K\+K\+Thread.\+cpp.
+
+
+
+References There\+Is\+A\+Circular\+Reference\+Start().
+
+
+\begin{DoxyCode}
+481 \{
+482   \textcolor{keywordflow}{if}  (!shutdownPrerequisites)
+483     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+484 
+485   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKThreadList::const\_iterator}  idx;
+486   \textcolor{keywordflow}{for}  (idx = shutdownPrerequisites->begin ();  idx != shutdownPrerequisites->end ();  ++idx)
+487   \{
+488     \hyperlink{class_k_k_b_1_1_k_k_thread}{KKThreadPtr}  preReq = *idx;
+489     \textcolor{keywordflow}{if}  (preReq == \_thread)
+490       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+491 
+492     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (preReq->\hyperlink{class_k_k_b_1_1_k_k_thread_aead4ae8442a3f5c0f629ee0eed28a759}{ThereIsACircularReferenceStart} (\_thread))
+493       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+494   \}
+495   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+496 \}  \textcolor{comment}{/* ThereIsACircularReferenceShutdown */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!There\+Is\+A\+Circular\+Reference\+Start@{There\+Is\+A\+Circular\+Reference\+Start}}
+\index{There\+Is\+A\+Circular\+Reference\+Start@{There\+Is\+A\+Circular\+Reference\+Start}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{There\+Is\+A\+Circular\+Reference\+Start(\+K\+K\+Thread\+Ptr \+\_\+thread) const }{ThereIsACircularReferenceStart(KKThreadPtr _thread) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Thread\+::\+There\+Is\+A\+Circular\+Reference\+Start (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Thread\+Ptr}}]{\+\_\+thread}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_b_1_1_k_k_thread_aead4ae8442a3f5c0f629ee0eed28a759}{}\label{class_k_k_b_1_1_k_k_thread_aead4ae8442a3f5c0f629ee0eed28a759}
+
+
+Definition at line 459 of file K\+K\+Thread.\+cpp.
+
+
+
+References There\+Is\+A\+Circular\+Reference\+Start().
+
+
+
+Referenced by There\+Is\+A\+Circular\+Reference\+Shutdown(), and There\+Is\+A\+Circular\+Reference\+Start().
+
+
+\begin{DoxyCode}
+460 \{
+461   \textcolor{keywordflow}{if}  (!startPrerequisites)
+462     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+463 
+464   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKThreadList::const\_iterator}  idx;
+465   \textcolor{keywordflow}{for}  (idx = startPrerequisites->begin ();  idx != startPrerequisites->end ();  ++idx)
+466   \{
+467     \hyperlink{class_k_k_b_1_1_k_k_thread}{KKThreadPtr}  preReq = *idx;
+468     \textcolor{keywordflow}{if}  (preReq == \_thread)
+469       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+470 
+471     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (preReq->\hyperlink{class_k_k_b_1_1_k_k_thread_aead4ae8442a3f5c0f629ee0eed28a759}{ThereIsACircularReferenceStart} (\_thread))
+472       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+473   \}
+474   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+475 \}  \textcolor{comment}{/* ThereIsACircularReferenceStart */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Id@{Thread\+Id}}
+\index{Thread\+Id@{Thread\+Id}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Id() const }{ThreadId() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+K\+K\+Thread\+::\+Thread\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a31fa88422cee1e9c7c197a90cf508073}{}\label{class_k_k_b_1_1_k_k_thread_a31fa88422cee1e9c7c197a90cf508073}
+
+
+Definition at line 86 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+86 \{\textcolor{keywordflow}{return} threadId;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Name@{Thread\+Name}}
+\index{Thread\+Name@{Thread\+Name}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Name() const }{ThreadName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+K\+K\+Thread\+::\+Thread\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a547e53d47818a4de7d367ce58203ade9}{}\label{class_k_k_b_1_1_k_k_thread_a547e53d47818a4de7d367ce58203ade9}
+
+
+Definition at line 87 of file K\+K\+Thread.\+h.
+
+
+\begin{DoxyCode}
+87 \{\textcolor{keywordflow}{return} threadName;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Status\+To\+Str@{Thread\+Status\+To\+Str}}
+\index{Thread\+Status\+To\+Str@{Thread\+Status\+To\+Str}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Status\+To\+Str(\+Thread\+Status)}{ThreadStatusToStr(ThreadStatus)}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& K\+K\+Thread\+::\+Thread\+Status\+To\+Str (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread\+Status}}]{ts}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_k_k_thread_a7a111deabee84c8aed46022bffb0574f}{}\label{class_k_k_b_1_1_k_k_thread_a7a111deabee84c8aed46022bffb0574f}
+
+
+Definition at line 144 of file K\+K\+Thread.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), Null, and Stopped.
+
+
+
+Referenced by Status\+Str().
+
+
+\begin{DoxyCode}
+145 \{
+146   \textcolor{keywordflow}{if}  ((ts < \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}{ThreadStatus::Null})  ||  (ts > 
+      \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{ThreadStatus::Stopped}))
+147     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+148   \textcolor{keywordflow}{else}
+149     \textcolor{keywordflow}{return}  threadStatusDescs[(int)ts];
+150 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Thread\+Still\+Processing@{Thread\+Still\+Processing}}
+\index{Thread\+Still\+Processing@{Thread\+Still\+Processing}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Thread\+Still\+Processing() const }{ThreadStillProcessing() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Thread\+::\+Thread\+Still\+Processing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_thread_af13369365be9c420e142d121f910c5c1}{}\label{class_k_k_b_1_1_k_k_thread_af13369365be9c420e142d121f910c5c1}
+
+
+Definition at line 221 of file K\+K\+Thread.\+cpp.
+
+
+
+References Running, Starting, and Stopping.
+
+
+\begin{DoxyCode}
+222 \{
+223   \textcolor{keywordflow}{return}  ((status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}{ThreadStatus::Running})   ||  
+224            (status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac2efe4bbd13e6cb0db293e72884273c0}{ThreadStatus::Starting})  ||
+225            (status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a7b7ecb39b9e110c2a31409a1672bad23}{ThreadStatus::Stopping})
+226           );
+227 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}!Wait\+For\+Thread\+To\+Stop@{Wait\+For\+Thread\+To\+Stop}}
+\index{Wait\+For\+Thread\+To\+Stop@{Wait\+For\+Thread\+To\+Stop}!K\+K\+B\+::\+K\+K\+Thread@{K\+K\+B\+::\+K\+K\+Thread}}
+\subsubsection[{\texorpdfstring{Wait\+For\+Thread\+To\+Stop(kkuint32 max\+Time\+To\+Wait)}{WaitForThreadToStop(kkuint32 maxTimeToWait)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Thread\+::\+Wait\+For\+Thread\+To\+Stop (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{max\+Time\+To\+Wait}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_thread_aaca46f2589c1c14e207900575bcabae7}{}\label{class_k_k_b_1_1_k_k_thread_aaca46f2589c1c14e207900575bcabae7}
+
+
+Called by separate thread; will stay in loop until the thread controlled by this instance shutdown or it waited the \textquotesingle{}max\+Time\+To\+Wait\textquotesingle{}. 
+
+Does not call the \textquotesingle{}Shutdown\+Thread\textquotesingle{} or \textquotesingle{}Terminate\+Thread\textquotesingle{} methods. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Time\+To\+Wait} & Will wait \textquotesingle{}max\+Time\+To\+Wait\textquotesingle{} seconds before giving up on waiting at which point will try to kill thread. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 238 of file K\+K\+Thread.\+cpp.
+
+
+
+References Kill(), Not\+Started, Null, K\+K\+B\+::os\+Get\+Local\+Date\+Time(), K\+K\+B\+::os\+Sleep\+Mili\+Secs(), Running, K\+K\+B\+::\+Date\+Time\+::\+Seconds(), Stopped, and Stopping.
+
+
+\begin{DoxyCode}
+239 \{
+240   \textcolor{keywordflow}{if}  ((status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}{ThreadStatus::NotStarted})  || 
+241        (status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{ThreadStatus::Stopped})     ||
+242        (status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}{ThreadStatus::Null})
+243       )
+244   \{
+245     \textcolor{comment}{// Thread is not running;  we can return.}
+246     \textcolor{keywordflow}{return};
+247   \}
+248 
+249   \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64}  startTime = \hyperlink{namespace_k_k_b_af54c205cde0465bcb2c74f3881a96413}{KKB::osGetLocalDateTime} ().
+      \hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} ();
+250   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  timeWaitedSoFar = 0;
+251   \textcolor{keywordflow}{while}  ((status == \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a5bda814c4aedb126839228f1a3d92f09}{ThreadStatus::Running})  ||  (status == 
+      \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72a7b7ecb39b9e110c2a31409a1672bad23}{ThreadStatus::Stopping}))
+252   \{
+253       \hyperlink{namespace_k_k_b_a6d3dee6d4727244d65814aaade882c59}{osSleepMiliSecs} (50);
+254     \textcolor{keywordflow}{if}  (maxTimeToWait > 0)
+255     \{
+256       \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} now = \hyperlink{namespace_k_k_b_af54c205cde0465bcb2c74f3881a96413}{osGetLocalDateTime} ().\hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} ();
+257       timeWaitedSoFar = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})(now - startTime);
+258       \textcolor{keywordflow}{if}  (timeWaitedSoFar > maxTimeToWait)
+259         \textcolor{keywordflow}{break};
+260     \}
+261   \}
+262 
+263 
+264   \textcolor{keywordflow}{if}  ((status != \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72afa7be7845bc42b3491d9d0377958be94}{ThreadStatus::NotStarted})  &&
+265        (status != \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72ac23e2b09ebe6bf4cb5e2a9abe85c0be2}{ThreadStatus::Stopped})     &&
+266        (status != \hyperlink{class_k_k_b_1_1_k_k_thread_a3f72bb1988ae5dd353b39260ae0acc72abbb93ef26e3c101ff11cdd21cab08a94}{ThreadStatus::Null})
+267       )
+268   \{
+269     \hyperlink{class_k_k_b_1_1_k_k_thread_a66111ed632dffca679c664909d5773bd}{Kill} ();
+270   \}
+271 
+272 \}  \textcolor{comment}{/* WaitForThreadToStop */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_thread_8h}{K\+K\+Thread.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_thread_8cpp}{K\+K\+Thread.\+cpp}\end{DoxyCompactItemize}

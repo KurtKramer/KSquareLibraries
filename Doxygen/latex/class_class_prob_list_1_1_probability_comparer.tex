@@ -1,0 +1,71 @@
+\hypertarget{class_class_prob_list_1_1_probability_comparer}{}\section{K\+K\+M\+LL\+:\+:Class\+Prob\+List\+:\+:Probability\+Comparer Class Reference}
+\label{class_class_prob_list_1_1_probability_comparer}\index{K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Probability\+Comparer@{K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Probability\+Comparer}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_class_prob_list_1_1_probability_comparer_a3dd496c2de0edeee46ff4559e43cf40b}{Probability\+Comparer} (bool \+\_\+high\+To\+Low)
+\item 
+bool \hyperlink{class_class_prob_list_1_1_probability_comparer_a107d0a176da180f396102fab8567f84a}{operator()} (const \hyperlink{namespace_k_k_m_l_l_aac4f1402b049fe046f3fa6c789a0c5d0}{Class\+Prob\+Ptr} left, const \hyperlink{namespace_k_k_m_l_l_aac4f1402b049fe046f3fa6c789a0c5d0}{Class\+Prob\+Ptr} right)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 90 of file Class\+Prob.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Class\+Prob\+List\+::\+Probability\+Comparer@{Class\+Prob\+List\+::\+Probability\+Comparer}!Probability\+Comparer@{Probability\+Comparer}}
+\index{Probability\+Comparer@{Probability\+Comparer}!Class\+Prob\+List\+::\+Probability\+Comparer@{Class\+Prob\+List\+::\+Probability\+Comparer}}
+\subsubsection[{\texorpdfstring{Probability\+Comparer(bool \+\_\+high\+To\+Low)}{ProbabilityComparer(bool _highToLow)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Probability\+Comparer\+::\+Probability\+Comparer (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+high\+To\+Low}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_class_prob_list_1_1_probability_comparer_a3dd496c2de0edeee46ff4559e43cf40b}{}\label{class_class_prob_list_1_1_probability_comparer_a3dd496c2de0edeee46ff4559e43cf40b}
+
+
+Definition at line 93 of file Class\+Prob.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Sort\+By\+Probability().
+
+
+\begin{DoxyCode}
+93 :  highToLow (\_highToLow)  \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Class\+Prob\+List\+::\+Probability\+Comparer@{Class\+Prob\+List\+::\+Probability\+Comparer}!operator()@{operator()}}
+\index{operator()@{operator()}!Class\+Prob\+List\+::\+Probability\+Comparer@{Class\+Prob\+List\+::\+Probability\+Comparer}}
+\subsubsection[{\texorpdfstring{operator()(const Class\+Prob\+Ptr left, const Class\+Prob\+Ptr right)}{operator()(const ClassProbPtr left, const ClassProbPtr right)}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Probability\+Comparer\+::operator() (
+\begin{DoxyParamCaption}
+\item[{const {\bf Class\+Prob\+Ptr}}]{left, }
+\item[{const {\bf Class\+Prob\+Ptr}}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_class_prob_list_1_1_probability_comparer_a107d0a176da180f396102fab8567f84a}{}\label{class_class_prob_list_1_1_probability_comparer_a107d0a176da180f396102fab8567f84a}
+
+
+Definition at line 95 of file Class\+Prob.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Class\+Prob\+::probability.
+
+
+\begin{DoxyCode}
+98   \{ 
+99     \textcolor{keywordflow}{if}  (highToLow)
+100       \textcolor{keywordflow}{return} (left->\hyperlink{class_k_k_m_l_l_1_1_class_prob_acea1b6e0e6011c4d7d1008a73c6bbc37}{probability} > right->\hyperlink{class_k_k_m_l_l_1_1_class_prob_acea1b6e0e6011c4d7d1008a73c6bbc37}{probability});
+101     \textcolor{keywordflow}{else}
+102       \textcolor{keywordflow}{return} (left->\hyperlink{class_k_k_m_l_l_1_1_class_prob_acea1b6e0e6011c4d7d1008a73c6bbc37}{probability} < right->\hyperlink{class_k_k_m_l_l_1_1_class_prob_acea1b6e0e6011c4d7d1008a73c6bbc37}{probability});
+103   \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_class_prob_8cpp}{Class\+Prob.\+cpp}\end{DoxyCompactItemize}

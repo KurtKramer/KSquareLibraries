@@ -1,0 +1,499 @@
+\hypertarget{class_k_k_b_1_1_k_k_str_list}{}\section{K\+KB\+:\+:K\+K\+Str\+List Class Reference}
+\label{class_k_k_b_1_1_k_k_str_list}\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+
+
+{\ttfamily \#include $<$K\+K\+Str.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:K\+K\+Str\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_b_1_1_k_k_str_list}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_str_list_1_1_string_comparison}{String\+Comparison}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_k_k_str_list}{K\+K\+Str\+List} $\ast$ \hyperlink{class_k_k_b_1_1_k_k_str_list_a466accb870aa75f4b47943932fccb4c8}{K\+K\+Str\+List\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}{K\+K\+Str\+List} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_list_a35f0d495449b13e07a0fd8cc90b90b4c}{K\+K\+Str\+List} (bool owner)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_list_a1e6557c33b11dd3c3c4ff51a538d7353}{K\+K\+Str\+List} (const char $\ast$s\mbox{[}$\,$\mbox{]})
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_list_a0209f0a13bcd253c40108864b3804063}{Add\+String} (\hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+Str\+Ptr} str)
+\item 
+\hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+Str\+Ptr} \hyperlink{class_k_k_b_1_1_k_k_str_list_abfeb41d75fc3e285f7bdf65593f204a1}{Binary\+Search} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&search\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_list_a466accb870aa75f4b47943932fccb4c8}{K\+K\+Str\+List\+Ptr} \hyperlink{class_k_k_b_1_1_k_k_str_list_a9316bb3167f82a9695b3b09e56545d12}{Duplicate\+List\+And\+Contents} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_k_k_str_list_a2e3450903dba55c8733e638c6916ba3d}{Memory\+Consumed\+Estimated} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_list_a0f573b4a2aa069d5dc5097f5f2fe8d15}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_list_a239828772f41e47f3a136ea15e40f5d6}{Sort} (bool \+\_\+reversed\+Order)
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_str_list_a7d5d3da0512d094034bd6203aaa3576f}{String\+In\+List} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&str)
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_list_aba21c9259253e8ae268ee13d5e0b3539}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_b_1_1_k_k_str_list_a466accb870aa75f4b47943932fccb4c8}{K\+K\+Str\+List\+Ptr} \hyperlink{class_k_k_b_1_1_k_k_str_list_a1685b0a8cb9d04d5f37be0e7b7fc0407}{Parse\+Delimited\+String} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&str, const char $\ast$del\+Chars=\char`\"{},\textbackslash{}t\textbackslash{}n\textbackslash{}r\char`\"{})
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 770 of file K\+K\+Str.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!K\+K\+Str\+List\+Ptr@{K\+K\+Str\+List\+Ptr}}
+\index{K\+K\+Str\+List\+Ptr@{K\+K\+Str\+List\+Ptr}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+List\+Ptr}{KKStrListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Str\+List}$\ast$ {\bf K\+K\+B\+::\+K\+K\+Str\+List\+::\+K\+K\+Str\+List\+Ptr}}\hypertarget{class_k_k_b_1_1_k_k_str_list_a466accb870aa75f4b47943932fccb4c8}{}\label{class_k_k_b_1_1_k_k_str_list_a466accb870aa75f4b47943932fccb4c8}
+
+
+Definition at line 773 of file K\+K\+Str.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!K\+K\+Str\+List@{K\+K\+Str\+List}}
+\index{K\+K\+Str\+List@{K\+K\+Str\+List}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+List()}{KKStrList()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+List\+::\+K\+K\+Str\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}{}\label{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}
+
+
+Definition at line 4478 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+Str\+List().
+
+
+
+Referenced by K\+K\+B\+::\+Msg\+Queue\+::\+Get\+All\+Msgs(), and K\+K\+Str\+List().
+
+
+\begin{DoxyCode}
+4478                      :
+4479   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKStr>} (\textcolor{keyword}{false}),
+4480   sorted (\textcolor{keyword}{false})
+4481 \{
+4482 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!K\+K\+Str\+List@{K\+K\+Str\+List}}
+\index{K\+K\+Str\+List@{K\+K\+Str\+List}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+List(bool owner)}{KKStrList(bool owner)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+List\+::\+K\+K\+Str\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a35f0d495449b13e07a0fd8cc90b90b4c}{}\label{class_k_k_b_1_1_k_k_str_list_a35f0d495449b13e07a0fd8cc90b90b4c}
+summary$>$ Creates a list from a array of N\+U\+LL terminated strings; the last entry in the list has to be N\+U\+LL. {\ttfamily  Example\+: const char$\ast$ zed\mbox{[}\mbox{]} = \{\char`\"{}\+This\char`\"{}, \char`\"{}is\char`\"{}, \char`\"{}a\char`\"{}, \char`\"{}test\char`\"{}, N\+U\+LL\}; \hyperlink{class_k_k_b_1_1_k_k_str_list}{K\+K\+Str\+List} word\+List (zed); } /summary$>$ 
+
+Definition at line 4485 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+Str\+List().
+
+
+
+Referenced by K\+K\+B\+::\+K\+K\+Str\+Matrix\+::\+Add\+Row(), K\+K\+B\+::\+Image\+Dir\+Tree\+::\+Directories(), Duplicate\+List\+And\+Contents(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Extract\+Duplicates\+By\+Example\+File\+Name(), K\+K\+B\+::\+K\+K\+Thread\+::\+Get\+Msgs(), K\+K\+B\+::\+Tokenizer\+::\+Get\+Next\+Tokens(), K\+K\+B\+::\+Xml\+Tokenizer\+::\+Get\+Next\+Tokens(), K\+K\+Str\+List(), K\+K\+B\+::os\+Get\+List\+Of\+Directories(), K\+K\+B\+::os\+Get\+List\+Of\+Files(), K\+K\+B\+::os\+Get\+List\+Of\+Image\+Files(), os\+Parse\+Search\+Spec(), K\+K\+B\+::os\+Valid\+File\+Name\+Errors(), and Parse\+Delimited\+String().
+
+
+\begin{DoxyCode}
+4485                                  :
+4486   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKStr>} (owner),
+4487   sorted (\textcolor{keyword}{false})
+4488 \{
+4489 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!K\+K\+Str\+List@{K\+K\+Str\+List}}
+\index{K\+K\+Str\+List@{K\+K\+Str\+List}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+List(const char $\ast$s[])}{KKStrList(const char *s[])}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+List\+::\+K\+K\+Str\+List (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a1e6557c33b11dd3c3c4ff51a538d7353}{}\label{class_k_k_b_1_1_k_k_str_list_a1e6557c33b11dd3c3c4ff51a538d7353}
+
+
+Definition at line 4493 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+Str\+List().
+
+
+
+Referenced by K\+K\+Str\+List().
+
+
+\begin{DoxyCode}
+4493                                      :
+4494     \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKStr>} (\textcolor{keyword}{true}),
+4495     sorted (\textcolor{keyword}{false})
+4496 \{
+4497   \textcolor{keywordflow}{if}  (s == NULL)
+4498     \textcolor{keywordflow}{return};
+4499 
+4500   \textcolor{keywordtype}{int}  x = 0;
+4501   \textcolor{keywordflow}{while}  (s[x] != NULL)
+4502   \{
+4503     \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (s[x]));
+4504     ++x;
+4505   \}
+4506 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Add\+String@{Add\+String}}
+\index{Add\+String@{Add\+String}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Add\+String(\+K\+K\+Str\+Ptr str)}{AddString(KKStrPtr str)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+List\+::\+Add\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str\+Ptr}}]{str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a0209f0a13bcd253c40108864b3804063}{}\label{class_k_k_b_1_1_k_k_str_list_a0209f0a13bcd253c40108864b3804063}
+
+
+Definition at line 4651 of file K\+K\+Str.\+cpp.
+
+
+\begin{DoxyCode}
+4652 \{
+4653   \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (str);
+4654   sorted = \textcolor{keyword}{false};
+4655 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Binary\+Search@{Binary\+Search}}
+\index{Binary\+Search@{Binary\+Search}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Binary\+Search(const K\+K\+Str \&search\+Str)}{BinarySearch(const KKStr &searchStr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Ptr} K\+K\+Str\+List\+::\+Binary\+Search (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{search\+Str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_abfeb41d75fc3e285f7bdf65593f204a1}{}\label{class_k_k_b_1_1_k_k_str_list_abfeb41d75fc3e285f7bdf65593f204a1}
+
+
+Definition at line 4607 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator$<$(), and K\+K\+B\+::\+K\+K\+Str\+::operator$>$().
+
+
+\begin{DoxyCode}
+4608 \{
+4609   \textcolor{keywordflow}{if}  (!sorted)
+4610   \{
+4611     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg = \textcolor{stringliteral}{"KKStrList::BinarySearch     **** ERROR ****        KKStr List is Not Sorted"};
+4612     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4613     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+4614   \}
+4615   
+4616   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  low  = 0;
+4617   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  high = \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () - 1;
+4618   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  mid;
+4619 
+4620   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  str = NULL;
+4621 
+4622   \textcolor{keywordflow}{while}  (low <= high)
+4623   \{
+4624     mid = (low + high) / 2;
+4625 
+4626     str = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (mid);
+4627 
+4628     \textcolor{keywordflow}{if}  (*str  < searchStr)
+4629     \{
+4630       low = mid + 1;
+4631     \}
+4632 
+4633     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (*str > searchStr)
+4634     \{
+4635       high = mid - 1;
+4636     \}
+4637 
+4638     \textcolor{keywordflow}{else}
+4639     \{
+4640       \textcolor{keywordflow}{return}  str;
+4641     \}
+4642   \}
+4643 
+4644   \textcolor{keywordflow}{return}  NULL;
+4645 \}  \textcolor{comment}{/* BinarySearch */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Duplicate\+List\+And\+Contents@{Duplicate\+List\+And\+Contents}}
+\index{Duplicate\+List\+And\+Contents@{Duplicate\+List\+And\+Contents}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Duplicate\+List\+And\+Contents() const }{DuplicateListAndContents() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+List\+Ptr} K\+K\+Str\+List\+::\+Duplicate\+List\+And\+Contents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_list_a9316bb3167f82a9695b3b09e56545d12}{}\label{class_k_k_b_1_1_k_k_str_list_a9316bb3167f82a9695b3b09e56545d12}
+
+
+Definition at line 4779 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+Str\+List().
+
+
+\begin{DoxyCode}
+4780 \{
+4781   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  newList = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}{KKStrList} (\textcolor{keyword}{true});
+4782   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKStrList::const\_iterator}  idx;
+4783   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+4784     newList->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (*(*idx)));
+4785 
+4786   \textcolor{keywordflow}{return}  newList;
+4787 \}  \textcolor{comment}{/* DuplicateListAndContents */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+Str\+List\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_list_a2e3450903dba55c8733e638c6916ba3d}{}\label{class_k_k_b_1_1_k_k_str_list_a2e3450903dba55c8733e638c6916ba3d}
+
+
+Definition at line 4511 of file K\+K\+Str.\+cpp.
+
+
+\begin{DoxyCode}
+4512 \{
+4513   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}{KKStrList});
+4514   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{KKStrList::const\_iterator} idx;
+4515   \textcolor{keywordflow}{for}  (idx = this->begin ();  idx != this->end ();  ++idx)
+4516     memoryConsumedEstimated += (*idx)->MemoryConsumedEstimated ();
+4517   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+4518 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Parse\+Delimited\+String@{Parse\+Delimited\+String}}
+\index{Parse\+Delimited\+String@{Parse\+Delimited\+String}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Parse\+Delimited\+String(const K\+K\+Str \&str, const char $\ast$del\+Chars="",\textbackslash{}t\textbackslash{}n\textbackslash{}r"")}{ParseDelimitedString(const KKStr &str, const char *delChars=",\textbackslash{}t\textbackslash{}n\textbackslash{}r")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+List\+Ptr} K\+K\+Str\+List\+::\+Parse\+Delimited\+String (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{str, }
+\item[{const char $\ast$}]{del\+Chars = {\ttfamily \char`\"{},\textbackslash{}t\textbackslash{}n\textbackslash{}r\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_k_k_str_list_a1685b0a8cb9d04d5f37be0e7b7fc0407}{}\label{class_k_k_b_1_1_k_k_str_list_a1685b0a8cb9d04d5f37be0e7b7fc0407}
+
+
+Definition at line 4659 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+Str\+List(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right().
+
+
+\begin{DoxyCode}
+4662 \{
+4663   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  parms = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_ae8f27238b72887a795737931735ff802}{KKStrList} (\textcolor{keyword}{true});
+4664 
+4665 \textcolor{preprocessor}{# ifdef  USE\_SECURE\_FUNCS}
+4666     \textcolor{keywordtype}{char}*  workStr =  \_strdup (str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+4667 \textcolor{preprocessor}{# else}
+4668     \textcolor{keywordtype}{char}*  workStr =  strdup (str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+4669 \textcolor{preprocessor}{# endif}
+4670 
+4671   \textcolor{keywordtype}{char}*  nextChar = workStr;
+4672 
+4673   \textcolor{keywordflow}{while}  (*nextChar)
+4674   \{
+4675     \textcolor{comment}{// Skip Past Leading Blanks}
+4676     \textcolor{keywordflow}{while}  ((*nextChar)  &&  (*nextChar == \textcolor{charliteral}{' '}))
+4677     \{
+4678       nextChar++;
+4679     \}
+4680 
+4681     \textcolor{keywordflow}{if}  (*nextChar == 0)
+4682       \textcolor{keywordflow}{break};
+4683 
+4684     \textcolor{keyword}{const} \textcolor{keywordtype}{char}*  startOfToken = nextChar;
+4685 
+4686     \textcolor{keywordflow}{while}  ((*nextChar)  &&  (strchr (delChars, *nextChar) == NULL))
+4687     \{
+4688       nextChar++;
+4689     \}
+4690 
+4691     \textcolor{keywordflow}{if}  (*nextChar != 0)
+4692     \{
+4693       *nextChar = 0;
+4694       nextChar++;
+4695     \}
+4696 
+4697     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  token = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (startOfToken);
+4698     token->\hyperlink{class_k_k_b_1_1_k_k_str_aa912161f17871e2d6fec7bbac033221c}{TrimRight} ();
+4699 
+4700     parms->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (token);
+4701   \}
+4702 
+4703   \textcolor{keyword}{delete}  [] workStr;
+4704 
+4705   \textcolor{keywordflow}{return}  parms;
+4706 \}  \textcolor{comment}{/* ParseDelimitedString */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+List\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a0f573b4a2aa069d5dc5097f5f2fe8d15}{}\label{class_k_k_b_1_1_k_k_str_list_a0f573b4a2aa069d5dc5097f5f2fe8d15}
+
+
+Definition at line 4537 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Value\+Int32(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Xml\+Content\+::\+Content(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Token(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+More\+Tokens(), K\+K\+B\+::\+Xml\+Token\+::tok\+Content, K\+K\+B\+::\+Xml\+Token\+::\+Token\+Type(), and K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Trim\+White\+Space().
+
+
+\begin{DoxyCode}
+4542 \{
+4543   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  count = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})tag->AttributeValueInt32 (\textcolor{stringliteral}{"Count"});
+4544 
+4545   \hyperlink{class_k_k_b_1_1_k_k_queue_a72dbe1e65d567536dbf4be3617230254}{DeleteContents} ();
+4546 
+4547   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+4548   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+4549   \{
+4550     \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_ae98e2c1a798882647578cae4adcd7176}{TokenType} () == \hyperlink{class_k_k_b_1_1_xml_token_a18b6e90c919f4b92e3b024f50f247f62aff369b5479984ca659548f37ad4caec9}{XmlToken::TokenTypes::tokContent})
+4551     \{
+4552       \hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr}  c = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr}\textcolor{keyword}{>}(t);
+4553       \textcolor{keywordflow}{if}  ((c != NULL)  &&  (c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} () != NULL))
+4554       \{
+4555         \hyperlink{class_k_k_b_1_1_k_k_str_parser}{KKStrParser}  parser (*(c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} ()));
+4556         parser.TrimWhiteSpace (\textcolor{stringliteral}{" "});
+4557         \textcolor{keywordflow}{while}  (parser.MoreTokens ())
+4558         \{
+4559           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} field = parser.GetNextToken (\textcolor{stringliteral}{"\(\backslash\)t"});
+4560           \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (field));
+4561         \}
+4562       \}
+4563     \}
+4564     \textcolor{keyword}{delete} t;
+4565     \textcolor{keywordflow}{if}  (cancelFlag)
+4566       t = NULL;
+4567     \textcolor{keywordflow}{else}
+4568       t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+4569   \}
+4570   \textcolor{keyword}{delete}  t;
+4571   t = NULL;
+4572 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Sort@{Sort}}
+\index{Sort@{Sort}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Sort(bool \+\_\+reversed\+Order)}{Sort(bool _reversedOrder)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+List\+::\+Sort (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+reversed\+Order}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a239828772f41e47f3a136ea15e40f5d6}{}\label{class_k_k_b_1_1_k_k_str_list_a239828772f41e47f3a136ea15e40f5d6}
+
+
+Definition at line 4770 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+List\+::\+String\+Comparison\+::\+String\+Comparison().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink().
+
+
+\begin{DoxyCode}
+4771 \{
+4772   StringComparison  stringComparison (\_reversedOrder);
+4773   sort (begin (), end (), stringComparison);
+4774   \textcolor{keywordflow}{if}  (!\_reversedOrder)
+4775     sorted = \textcolor{keyword}{true};
+4776 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!String\+In\+List@{String\+In\+List}}
+\index{String\+In\+List@{String\+In\+List}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{String\+In\+List(\+K\+K\+Str \&str)}{StringInList(KKStr &str)}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Str\+List\+::\+String\+In\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_list_a7d5d3da0512d094034bd6203aaa3576f}{}\label{class_k_k_b_1_1_k_k_str_list_a7d5d3da0512d094034bd6203aaa3576f}
+
+
+Definition at line 4522 of file K\+K\+Str.\+cpp.
+
+
+\begin{DoxyCode}
+4523 \{
+4524   \textcolor{keywordtype}{bool}  found = \textcolor{keyword}{false};
+4525   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx;
+4526   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} qSize = \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+4527 
+4528   \textcolor{keywordflow}{for}  (idx = 0; ((idx < qSize) && (!found)); idx++)
+4529     found = (str == (*\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx)));
+4530 
+4531   \textcolor{keywordflow}{return}  found;
+4532 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+B\+::\+K\+K\+Str\+List@{K\+K\+B\+::\+K\+K\+Str\+List}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+List\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_list_aba21c9259253e8ae268ee13d5e0b3539}{}\label{class_k_k_b_1_1_k_k_str_list_aba21c9259253e8ae268ee13d5e0b3539}
+
+
+Definition at line 4577 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::operator$<$$<$(), K\+K\+B\+::\+K\+K\+Str\+::\+Quoted\+Str(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Content\+::\+Write\+Xml(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+4580 \{
+4581   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"KKStrList"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{XmlTag::TagTypes::tagStart});
+4582   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+4583     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+4584   startTag.AddAtribute (\textcolor{stringliteral}{"Count"}, (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})size ());
+4585   startTag.WriteXML (o);
+4586 
+4587   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{const\_iterator}  idx;
+4588   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;
+4589   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx, ++x)
+4590   \{
+4591     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  sp = *idx;
+4592     \textcolor{keywordflow}{if}  (x > 0)  o << \textcolor{stringliteral}{"\(\backslash\)t"};
+4593     \hyperlink{class_k_k_b_1_1_xml_content_ab0e370562d215b8e19dac6d18c4a95e1}{XmlContent::WriteXml} (sp->\hyperlink{class_k_k_b_1_1_k_k_str_a193b549c8d4b41a9692f890dae1993f4}{QuotedStr} (), o);
+4594   \}
+4595   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"KKStrList"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{XmlTag::TagTypes::tagEnd});
+4596   endTag.WriteXML (o);
+4597   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4598 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8h}{K\+K\+Str.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8cpp}{K\+K\+Str.\+cpp}\end{DoxyCompactItemize}

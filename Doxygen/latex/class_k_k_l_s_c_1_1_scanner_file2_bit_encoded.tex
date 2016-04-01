@@ -1,0 +1,497 @@
+\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded}{}\section{K\+K\+L\+SC\+:\+:Scanner\+File2\+Bit\+Encoded Class Reference}
+\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded}\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+
+
+Implements a 2 bit Encoded format.  
+
+
+
+
+{\ttfamily \#include $<$Scanner\+File2\+Bit\+Encoded.\+h$>$}
+
+Inheritance diagram for K\+K\+L\+SC\+:\+:Scanner\+File2\+Bit\+Encoded\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_scanner_file2_bit_encoded_1_1_op_rec}{Op\+Rec}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_end_of_scan_line}{Op\+Rec\+End\+Of\+Scan\+Line}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_raw_pixel_one}{Op\+Rec\+Raw\+Pixel\+One}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_raw_pixels_two}{Op\+Rec\+Raw\+Pixels\+Two}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_raw_pixels_var_len12_bit}{Op\+Rec\+Raw\+Pixels\+Var\+Len12\+Bit}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_raw_pixels_var_len12_bit__2}{Op\+Rec\+Raw\+Pixels\+Var\+Len12\+Bit\+\_\+2}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_raw_pixels_var_len4_bit}{Op\+Rec\+Raw\+Pixels\+Var\+Len4\+Bit}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_run_len10_bit}{Op\+Rec\+Run\+Len10\+Bit}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_run_len10_bit__2}{Op\+Rec\+Run\+Len10\+Bit\+\_\+2}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_run_len_p_vx}{Op\+Rec\+Run\+Len\+P\+Vx}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block}{Op\+Rec\+Text\+Block}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block__2}{Op\+Rec\+Text\+Block\+\_\+2}
+\item 
+struct \hyperlink{struct_scanner_file2_bit_encoded_1_1_raw_pixel_rec}{Raw\+Pixel\+Rec}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded}{Scanner\+File2\+Bit\+Encoded} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a7cf72359f00a78ee199521a98119b2f4}{Scanner\+File2\+Bit\+Encoded\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aeb7744cca4f626dad7950ff0da82f8d2}{Scanner\+File2\+Bit\+Encoded} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a8d1bbf13db27590dcfe4cf968439084d}{Scanner\+File2\+Bit\+Encoded} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+pixels\+Per\+Scan\+Line, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+frame\+Height, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+virtual \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_af801f5037bc9330823c595c52cddfde4}{$\sim$\+Scanner\+File2\+Bit\+Encoded} ()
+\item 
+virtual \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a9eb976c9d084a94db71a5e8d1fadb903}{Format} \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a31b2528cb29f384bc15a92e6a7fb2916}{File\+Format} () const 
+\item 
+virtual void \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a447bedabb0c6c8e7752a0a230a8f10a6}{Scan\+Rate} (float \+\_\+scan\+Rate)
+\item 
+virtual void \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_acf0a8b70e2605d514d4776f41aaa8344}{Write\+Text\+Block} (const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$txt\+Block, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} txt\+Block\+Len)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a83ff6c2d28f8e6e8cdc673394f649805}{Compensation\+Table} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aacca356c7ba02957f9f7fa3913c339eb}{Read\+Buffer\+Frame} ()
+\begin{DoxyCompactList}\small\item\em Read on one Scanner File Frame. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aa006464a1af79b156f801661c36d8416}{Skip\+To\+Next\+Frame} ()
+\begin{DoxyCompactList}\small\item\em Skip to start of next frame returning back byte offset of that frame. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_ac2e40bbfc9ed6663de4d58177c51760e}{Write\+Buffer\+Frame} ()
+\begin{DoxyCompactList}\small\item\em Write the contents of \textquotesingle{}frame\+Buffer\textquotesingle{} to he end of the scanner file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Implements a 2 bit Encoded format. 
+
+This is a very simple implementation of run-\/length compression. All pixels will be translated from 8 bit to 2 bit. 
+\begin{DoxyCode}
+ All data will be stored in two byte records with the exception of text.
+ each 2 byte record will start with a 3 bit OpCode and a one bit eol flag.
+ the rest of the 12 bits will be organized depending on the opcode field.
+
+ Bits
+ =====
+ 0 - 2:  OP-Code
+
+ 3 - 3:  \hyperlink{_usf_cas_cor_8cpp_a4e67e9429d48a2ba8f833ee3b1dceb5d}{EOL} Flag;  End of ScanLine \textcolor{charliteral}{'0'} = Not end of line,   \textcolor{charliteral}{'1'} = End of line.
+
+Op-Code
+  0: Text Block
+     Bits 4 - 15  Length of text block in 4 byte groups.  So number in \textcolor{keyword}{this} field 
+                  is multiplied by 4 to \textcolor{keyword}{get} the total number of bytes.  This allows
+                  \textcolor{keywordflow}{for} up to (4096 * 4) bytes.  
+
+  1: 3 Raw Bytes
+      Pix0  Pix1   Pix2
+     (4-7) (8-11) (12-15)
+
+  2: Number of White Spaces
+     Bits 4 - 15  Number of 4 pixels that are background (0).  The total length of
+                  this field is this number times 4 allowing for a run-length of up
+                  to (4 * 4096) spaces divisible by 4.
+\end{DoxyCode}
+ 
+
+Definition at line 45 of file Scanner\+File2\+Bit\+Encoded.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Scanner\+File2\+Bit\+Encoded\+Ptr@{Scanner\+File2\+Bit\+Encoded\+Ptr}}
+\index{Scanner\+File2\+Bit\+Encoded\+Ptr@{Scanner\+File2\+Bit\+Encoded\+Ptr}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Scanner\+File2\+Bit\+Encoded\+Ptr}{ScannerFile2BitEncodedPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Scanner\+File2\+Bit\+Encoded}$\ast$ {\bf K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Scanner\+File2\+Bit\+Encoded\+Ptr}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a7cf72359f00a78ee199521a98119b2f4}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a7cf72359f00a78ee199521a98119b2f4}
+
+
+Definition at line 48 of file Scanner\+File2\+Bit\+Encoded.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Scanner\+File2\+Bit\+Encoded@{Scanner\+File2\+Bit\+Encoded}}
+\index{Scanner\+File2\+Bit\+Encoded@{Scanner\+File2\+Bit\+Encoded}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Scanner\+File2\+Bit\+Encoded(const K\+K\+Str \&\+\_\+file\+Name, Run\+Log \&\+\_\+log)}{ScannerFile2BitEncoded(const KKStr &_fileName, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File2\+Bit\+Encoded\+::\+Scanner\+File2\+Bit\+Encoded (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aeb7744cca4f626dad7950ff0da82f8d2}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aeb7744cca4f626dad7950ff0da82f8d2}
+
+
+Definition at line 163 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Scanner\+File().
+
+
+\begin{DoxyCode}
+165                                                 :
+166   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a252cce5d981908fa83c60e28eba9bdb1}{ScannerFile} (\_fileName, \_log),
+167   rawPixelRecBuffer     (NULL),
+168   rawPixelRecBufferLen  (0),
+169   rawPixelRecBufferSize (0),
+170   encodedBuff           (NULL),
+171   encodedBuffLen        (0),
+172   encodedBuffNext       (NULL),
+173   encodedBuffSize       (0),
+174   rawStr                (NULL),
+175   rawStrLen             (0),
+176   rawStrSize            (0),
+177   runLen                (0),
+178   runLenChar            (0),
+179   curCompStatus         (csNull)
+180 \{
+181   BuildConversionTables ();
+182 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Scanner\+File2\+Bit\+Encoded@{Scanner\+File2\+Bit\+Encoded}}
+\index{Scanner\+File2\+Bit\+Encoded@{Scanner\+File2\+Bit\+Encoded}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Scanner\+File2\+Bit\+Encoded(const K\+K\+Str \&\+\_\+file\+Name, kkuint32 \+\_\+pixels\+Per\+Scan\+Line, kkuint32 \+\_\+frame\+Height, Run\+Log \&\+\_\+log)}{ScannerFile2BitEncoded(const KKStr &_fileName, kkuint32 _pixelsPerScanLine, kkuint32 _frameHeight, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File2\+Bit\+Encoded\+::\+Scanner\+File2\+Bit\+Encoded (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf kkuint32}}]{\+\_\+pixels\+Per\+Scan\+Line, }
+\item[{{\bf kkuint32}}]{\+\_\+frame\+Height, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a8d1bbf13db27590dcfe4cf968439084d}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a8d1bbf13db27590dcfe4cf968439084d}
+
+
+Definition at line 188 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Scanner\+File().
+
+
+\begin{DoxyCode}
+192                                                 :
+193   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a252cce5d981908fa83c60e28eba9bdb1}{ScannerFile} (\_fileName, \_pixelsPerScanLine, \_frameHeight, \_log),
+194   rawPixelRecBuffer     (NULL),
+195   rawPixelRecBufferLen  (0),
+196   rawPixelRecBufferSize (0),
+197   encodedBuff           (NULL),
+198   encodedBuffLen        (0),
+199   encodedBuffNext       (NULL),
+200   encodedBuffSize       (0),
+201   rawStr                (NULL),
+202   rawStrLen             (0),
+203   rawStrSize            (0),
+204   runLen                (0),
+205   runLenChar            (0),
+206   curCompStatus         (csNull)
+207 \{
+208   BuildConversionTables ();
+209   AllocateEncodedBuff ();
+210   AllocateRawStr (\_pixelsPerScanLine + 100);
+211 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!````~Scanner\+File2\+Bit\+Encoded@{$\sim$\+Scanner\+File2\+Bit\+Encoded}}
+\index{````~Scanner\+File2\+Bit\+Encoded@{$\sim$\+Scanner\+File2\+Bit\+Encoded}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{$\sim$\+Scanner\+File2\+Bit\+Encoded()}{~ScannerFile2BitEncoded()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File2\+Bit\+Encoded\+::$\sim$\+Scanner\+File2\+Bit\+Encoded (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_af801f5037bc9330823c595c52cddfde4}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_af801f5037bc9330823c595c52cddfde4}
+
+
+Definition at line 215 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+\begin{DoxyCode}
+216 \{
+217   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a74096c23c868e43e410ceddc327e704e}{opened})
+218     \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a2bbf17cf71339ed9fac45dc8c9ac2a1e}{Close} ();
+219 
+220   \textcolor{keyword}{delete}  encodedBuff;          encodedBuff         = NULL;
+221   \textcolor{keyword}{delete}  rawPixelRecBuffer;    rawPixelRecBuffer   = NULL;
+222   \textcolor{keyword}{delete}  rawStr;               rawStr              = NULL;
+223 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Compensation\+Table@{Compensation\+Table}}
+\index{Compensation\+Table@{Compensation\+Table}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Compensation\+Table()}{CompensationTable()}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf uchar} $\ast$ Scanner\+File2\+Bit\+Encoded\+::\+Compensation\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a83ff6c2d28f8e6e8cdc673394f649805}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a83ff6c2d28f8e6e8cdc673394f649805}
+
+
+Definition at line 331 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Conpensation\+Table().
+
+
+\begin{DoxyCode}
+332 \{
+333   GlobalGoalKeeper::StartBlock ();
+334   \textcolor{keywordflow}{if}  (!compensationTable)
+335     BuildConversionTables ();
+336   GlobalGoalKeeper::EndBlock ();
+337   \textcolor{keywordflow}{return}  compensationTable;
+338 \}  \textcolor{comment}{/* CompensationTable */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!File\+Format@{File\+Format}}
+\index{File\+Format@{File\+Format}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{File\+Format() const }{FileFormat() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Format} K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+File\+Format (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a31b2528cb29f384bc15a92e6a7fb2916}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a31b2528cb29f384bc15a92e6a7fb2916}
+
+
+Reimplemented from \hyperlink{class_k_k_l_s_c_1_1_scanner_file_af77a2c70d67e128d4706bfa1bf7dc428}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 65 of file Scanner\+File2\+Bit\+Encoded.\+h.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::sf2\+Bit\+Encoded.
+
+
+\begin{DoxyCode}
+65 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a9eb976c9d084a94db71a5e8d1fadb903af3095a7a2ca6c23dfd11942c41a35d66}{Format::sf2BitEncoded};\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Read\+Buffer\+Frame@{Read\+Buffer\+Frame}}
+\index{Read\+Buffer\+Frame@{Read\+Buffer\+Frame}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Read\+Buffer\+Frame()}{ReadBufferFrame()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} Scanner\+File2\+Bit\+Encoded\+::\+Read\+Buffer\+Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aacca356c7ba02957f9f7fa3913c339eb}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aacca356c7ba02957f9f7fa3913c339eb}
+
+
+Read on one Scanner File Frame. 
+
+
+
+Implements \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a4131dff88c03ceef3f1dafd95f1447ee}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 368 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::file, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+File\+Offset\+Last, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+File\+Offset\+Next, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+Len, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+Next\+Line, and K\+K\+B\+::os\+F\+T\+E\+L\+L().
+
+
+\begin{DoxyCode}
+369 \{
+370   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_acaab8b4f6845f11e0a23b0d0e7d62374}{frameBufferLen} = 0;
+371   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a04ad19b685d3d4cd26ddc81a7e0f5d76}{frameBufferNextLine} = 0;
+372   \textcolor{keywordflow}{if}  (feof (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file}) != 0)
+373   \{
+374     memset (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_ab07c8ac594c6c8324e3078c8d4085633}{frameBuffer}, 0, \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a101cdb2a0320f6aaefcabadc585beb34}{frameBufferSize});
+375     \textcolor{keywordflow}{return} 0;
+376   \}
+377 
+378   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a90c4adfddeadda2794d0b643e5311a2b}{frameBufferFileOffsetLast} = \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+379   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numScanLinesReadThisFrameBuffer = 0;
+380   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  buffPtr = \hyperlink{class_k_k_l_s_c_1_1_scanner_file_ab07c8ac594c6c8324e3078c8d4085633}{frameBuffer};
+381   \textcolor{keywordflow}{while}  ((feof (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file}) == 0)  &&  (numScanLinesReadThisFrameBuffer < 
+      \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a5598193d137fb79782cc1967ec830625}{frameHeight}))
+382   \{
+383     GetNextScanLine (buffPtr, \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine});
+384     \hyperlink{class_k_k_l_s_c_1_1_scanner_file_acaab8b4f6845f11e0a23b0d0e7d62374}{frameBufferLen} += \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine};
+385     buffPtr += \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine};
+386     ++numScanLinesReadThisFrameBuffer;
+387   \}
+388 
+389   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a76318219aaf8142be8a0dfb1705c7430}{frameBufferFileOffsetNext} = \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+390   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a04ad19b685d3d4cd26ddc81a7e0f5d76}{frameBufferNextLine} = 0;
+391   \textcolor{keywordflow}{return}  numScanLinesReadThisFrameBuffer;
+392 \}  \textcolor{comment}{/* ReadBufferFrame */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Scan\+Rate@{Scan\+Rate}}
+\index{Scan\+Rate@{Scan\+Rate}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Scan\+Rate(float \+\_\+scan\+Rate)}{ScanRate(float _scanRate)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+File2\+Bit\+Encoded\+::\+Scan\+Rate (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+scan\+Rate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a447bedabb0c6c8e7752a0a230a8f10a6}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_a447bedabb0c6c8e7752a0a230a8f10a6}
+
+
+Reimplemented from \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a713120a99c2a4bc13060dd1daff1260e}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 356 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+\begin{DoxyCode}
+357 \{
+358   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_ab95128a2cbc221f0d930072d55321d63}{ScannerFile::ScanRate} (\_scanRate);
+359 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Skip\+To\+Next\+Frame@{Skip\+To\+Next\+Frame}}
+\index{Skip\+To\+Next\+Frame@{Skip\+To\+Next\+Frame}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Skip\+To\+Next\+Frame()}{SkipToNextFrame()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint64} Scanner\+File2\+Bit\+Encoded\+::\+Skip\+To\+Next\+Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aa006464a1af79b156f801661c36d8416}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_aa006464a1af79b156f801661c36d8416}
+
+
+Skip to start of next frame returning back byte offset of that frame. 
+
+This will be called by the \textquotesingle{}Update\+Frame\+Offset\textquotesingle{} and \textquotesingle{}Determine\+Frame\+Offset\+For\+Frame\textquotesingle{} methods used to build the \textquotesingle{}frame\+Offsets\textquotesingle{} table. It is important that the implementation of this method N\+OT update the frame\+Buffer fields; such as \textquotesingle{}frame\+Buffer\textquotesingle{}, \textquotesingle{}frame\+Buffer\+Next\+Line\textquotesingle{}, etc ..... 
+
+Implements \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a1797e4ba35b312c53da2c453f1303f35}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 396 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::pixels\+Per\+Scan\+Line.
+
+
+\begin{DoxyCode}
+397 \{
+398   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  scanLine = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine}];
+399 
+400   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numScanLinesReadThisFrameBuffer = 0;
+401   \textcolor{keywordflow}{while}  ((feof (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file}) == 0)  &&  (numScanLinesReadThisFrameBuffer < 
+      \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a5598193d137fb79782cc1967ec830625}{frameHeight}))
+402   \{
+403     GetNextScanLine (scanLine, \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine});
+404     ++numScanLinesReadThisFrameBuffer;
+405   \}
+406 
+407   \textcolor{keywordflow}{if}  (feof (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file}) != 0)
+408     \textcolor{keywordflow}{return} -1;
+409   \textcolor{keywordflow}{else}
+410     \textcolor{keywordflow}{return} \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+411 \}  \textcolor{comment}{/* SkipToNextFrame */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Write\+Buffer\+Frame@{Write\+Buffer\+Frame}}
+\index{Write\+Buffer\+Frame@{Write\+Buffer\+Frame}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Write\+Buffer\+Frame()}{WriteBufferFrame()}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+File2\+Bit\+Encoded\+::\+Write\+Buffer\+Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_ac2e40bbfc9ed6663de4d58177c51760e}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_ac2e40bbfc9ed6663de4d58177c51760e}
+
+
+Write the contents of \textquotesingle{}frame\+Buffer\textquotesingle{} to he end of the scanner file. 
+
+
+
+Implements \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a0dd1758522d374f14fec469099402962}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 638 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+::file, K\+K\+L\+S\+C\+::\+Scanner\+File\+::file\+Size\+In\+Bytes, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+File\+Offset\+Last, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+File\+Offset\+Next, K\+K\+L\+S\+C\+::\+Scanner\+File\+::frame\+Buffer\+Next\+Line, K\+K\+B\+::os\+F\+T\+E\+L\+L(), and K\+K\+L\+S\+C\+::\+Scanner\+File\+::pixels\+Per\+Scan\+Line.
+
+
+\begin{DoxyCode}
+639 \{
+640   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a90c4adfddeadda2794d0b643e5311a2b}{frameBufferFileOffsetLast} = \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+641   \textcolor{comment}{//nextScanLineOffset = osFTELL (file);}
+642 
+643   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  frameRow = 0;
+644   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  framePtr = \hyperlink{class_k_k_l_s_c_1_1_scanner_file_ab07c8ac594c6c8324e3078c8d4085633}{frameBuffer};
+645   \textcolor{keywordflow}{while}  (frameRow < \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a04ad19b685d3d4cd26ddc81a7e0f5d76}{frameBufferNextLine})
+646   \{
+647     WriteNextScanLine (framePtr, \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine});
+648     framePtr += \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a07b4ac6b33c35ad0148c7a1422c73cfe}{pixelsPerScanLine};
+649     ++frameRow;
+650   \}
+651 
+652   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a76318219aaf8142be8a0dfb1705c7430}{frameBufferFileOffsetNext} = \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+653   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_aa630f7e950cfd1cd6ecaa901f410728a}{fileSizeInBytes} = \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a76318219aaf8142be8a0dfb1705c7430}{frameBufferFileOffsetNext};
+654 \}  \textcolor{comment}{/* WriteBufferFrame*/}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}!Write\+Text\+Block@{Write\+Text\+Block}}
+\index{Write\+Text\+Block@{Write\+Text\+Block}!K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded}}
+\subsubsection[{\texorpdfstring{Write\+Text\+Block(const uchar $\ast$txt\+Block, kkuint32 txt\+Block\+Len)}{WriteTextBlock(const uchar *txtBlock, kkuint32 txtBlockLen)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+File2\+Bit\+Encoded\+::\+Write\+Text\+Block (
+\begin{DoxyParamCaption}
+\item[{const {\bf uchar} $\ast$}]{txt\+Block, }
+\item[{{\bf kkuint32}}]{txt\+Block\+Len}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_acf0a8b70e2605d514d4776f41aaa8344}{}\label{class_k_k_l_s_c_1_1_scanner_file2_bit_encoded_acf0a8b70e2605d514d4776f41aaa8344}
+
+
+Implements \hyperlink{class_k_k_l_s_c_1_1_scanner_file_ade81ae552ed646a84a334c49163b9a12}{K\+K\+L\+S\+C\+::\+Scanner\+File}.
+
+
+
+Definition at line 923 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::end\+Of\+Text, K\+K\+L\+S\+C\+::\+Scanner\+File\+::file, K\+K\+L\+S\+C\+::\+Scanner\+File\+::file\+Size\+In\+Bytes, K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::len\+High, K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+\_\+2\+::len\+Low, K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::op\+Code, K\+K\+B\+::os\+F\+T\+E\+L\+L(), K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+::text\+Block, and K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+::text\+Block\+\_\+2.
+
+
+\begin{DoxyCode}
+926 \{
+927   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  charsLeft = txtBlockLen;
+928   \textcolor{keyword}{const} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  txtBlockPtr = txtBlock;
+929   \textcolor{keywordflow}{while}  (charsLeft > 0)
+930   \{
+931     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  charsToWrite = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})2048, charsLeft);
+932     OpRec  rec;
+933 
+934     rec.textBlock.opCode     = 1;
+935     rec.textBlock.endOfText  = (charsToWrite < charsLeft) ? 0 : 1;
+936     rec.textBlock.lenHigh    = charsToWrite / 256;
+937     *encodedBuffNext = rec;
+938     ++encodedBuffNext;
+939 
+940     encodedBuffNext->\hyperlink{union_scanner_file2_bit_encoded_1_1_op_rec_a248430767d96c07d738f9b7209b324e4}{textBlock\_2}.\hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block__2_abedb614c6b2b8ad2ff3e2ace167fe96e}{lenLow} = charsToWrite % 256;
+941     ++encodedBuffNext;
+942 
+943     memcpy (encodedBuffNext, txtBlockPtr, charsToWrite);
+944 
+945     charsLeft       -= charsToWrite;
+946     txtBlockPtr     += charsToWrite;
+947     encodedBuffNext += charsToWrite;
+948   \}
+949 
+950   \textcolor{comment}{//nextScanLineOffset = osFTELL (file);}
+951   \hyperlink{class_k_k_l_s_c_1_1_scanner_file_aa630f7e950cfd1cd6ecaa901f410728a}{fileSizeInBytes} = \hyperlink{namespace_k_k_b_a2cc11a5ae09d10d69ad751b549e5d94e}{osFTELL} (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_a26db15f7823ce67b1621da17468ec807}{file});
+952 \}  \textcolor{comment}{/* WriteTextBlock */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file2_bit_encoded_8h}{Scanner\+File2\+Bit\+Encoded.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file2_bit_encoded_8cpp}{Scanner\+File2\+Bit\+Encoded.\+cpp}\end{DoxyCompactItemize}

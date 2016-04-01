@@ -1,0 +1,1193 @@
+\hypertarget{class_k_k_m_l_l_1_1_feature_encoder}{}\section{K\+K\+M\+LL\+:\+:Feature\+Encoder Class Reference}
+\label{class_k_k_m_l_l_1_1_feature_encoder}\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+
+
+{\ttfamily \#include $<$Feature\+Encoder.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder_afaf2be970998ea6430e5d17ea95d80a7}{Feature\+Encoder} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a3dafb5bf818bb9f7485b19b7f761f878}{Feature\+Encoder} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class2, const \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \&\+\_\+selected\+Features, \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64c}{S\+V\+M\+\_\+\+Encoding\+Method} \+\_\+encoding\+Method, double \+\_\+c\+\_\+\+Param)
+\begin{DoxyCompactList}\small\item\em Constructs a Feature Encoder object. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a631274626b3d882a9c09ba7ff1950dea}{$\sim$\+Feature\+Encoder} ()
+\begin{DoxyCompactList}\small\item\em Frees any memory allocated by, and owned by the \hyperlink{class_k_k_m_l_l_1_1_feature_encoder}{Feature\+Encoder}. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a397e19999f5572120b55038835614162}{Class1} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a70eb189a61d27c7c513085274a7edd75}{Class2} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a42b4b25e6c20c3f64cc8a9ca3af0f54c}{Coded\+Num\+Of\+Features} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a4cafac6289697a73ce7105793ef0c8d2}{Compress\+Examples} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} src\+Examples, \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} compressed\+Examples, \hyperlink{class_k_k_m_l_l_1_1_class_assignments}{Class\+Assignments} \&assignments)
+\begin{DoxyCompactList}\small\item\em Left over from Bit\+Reduction days; removed all code except that which processed the NO bit reduction option. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_afe8038fbfd17aacd6d3e31aa9345ca43}{Create\+Encoded\+Feature\+Vector} (\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&src\+Data)
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a9a6f0f195cb6856e88caf0aec52dd54a}{Create\+Encoded\+File\+Desc} (ostream $\ast$o)
+\item 
+\hyperlink{namespace_k_k_m_l_l_abbdd347e3f7ba84af6a5452ef7a0cfef}{X\+Space\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{Encode\+A\+Example} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example)
+\begin{DoxyCompactList}\small\item\em Converts a single example into the svm\+\_\+problem format. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af6a88ec1786cbcd70a4eb2ffe7c95c9b}{Encode\+A\+Example} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example, \hyperlink{struct_s_v_m233_1_1svm__node}{svm\+\_\+node} $\ast$x\+Space, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&x\+Space\+Used)
+\begin{DoxyCompactList}\small\item\em Converts a single example into the svm\+\_\+problem format. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a7449052191dd87e2c5038abbccec7e73}{Encode\+A\+Example} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} encoded\+File\+Desc, \hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} src)
+\item 
+\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_ad22b9ed7426ebd0126472917cde20138}{Encode\+All\+Examples} (const \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} src\+Data)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_ad8d410b25748ce3d86eaeaff7ee73bec}{Encode\+Into\+Sparse\+Matrix} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} src, \hyperlink{class_k_k_m_l_l_1_1_class_assignments}{Class\+Assignments} \&assignments, \hyperlink{namespace_k_k_m_l_l_abbdd347e3f7ba84af6a5452ef7a0cfef}{X\+Space\+Ptr} \&x\+Space, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&totalx\+Space\+Used, struct \hyperlink{struct_s_v_m233_1_1svm__problem}{svm\+\_\+problem} \&prob, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\begin{DoxyCompactList}\small\item\em Compresses \textquotesingle{}src\textquotesingle{} examples, allocating new \textquotesingle{}x\+Space\textquotesingle{} data structure. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_aed7fd3271e7ce09181205874048ef9e8}{Memory\+Consumed\+Estimated} () const 
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a4da98e7abffd3faaee30de359cb03ee8}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a22bc8ae1c1bf08f0411d929a4b707572}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, ostream \&o) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_abdf459cb6ec11bf1519a53643a24fdb8}{X\+Space\+Needed\+Per\+Example} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 44 of file Feature\+Encoder.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Feature\+Encoder@{Feature\+Encoder}}
+\index{Feature\+Encoder@{Feature\+Encoder}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Feature\+Encoder()}{FeatureEncoder()}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder\+::\+Feature\+Encoder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_afaf2be970998ea6430e5d17ea95d80a7}{}\label{class_k_k_m_l_l_1_1_feature_encoder_afaf2be970998ea6430e5d17ea95d80a7}
+
+
+Definition at line 31 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+No\+Encoding.
+
+
+\begin{DoxyCode}
+31                                :
+32     cardinalityDest          (NULL),
+33     class1                   (NULL),
+34     class2                   (NULL),
+35     codedNumOfFeatures       (0),
+36     c\_Param                  (1.0),
+37     destFeatureNums          (NULL),
+38     destFileDesc             (NULL),
+39     destWhatToDo             (NULL),
+40     encodingMethod           (\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding}),
+41     fileDesc                 (NULL),
+42     numEncodedFeatures       (0),
+43     numOfFeatures            (0),
+44     selectedFeatures         (),
+45     srcFeatureNums           (NULL),
+46     xSpaceNeededPerExample   (0)
+47 \{
+48 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Feature\+Encoder@{Feature\+Encoder}}
+\index{Feature\+Encoder@{Feature\+Encoder}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Feature\+Encoder(\+File\+Desc\+Ptr \+\_\+file\+Desc, M\+L\+Class\+Ptr \+\_\+class1, M\+L\+Class\+Ptr \+\_\+class2, const Feature\+Num\+List \&\+\_\+selected\+Features, S\+V\+M\+\_\+\+Encoding\+Method \+\_\+encoding\+Method, double \+\_\+c\+\_\+\+Param)}{FeatureEncoder(FileDescPtr _fileDesc, MLClassPtr _class1, MLClassPtr _class2, const FeatureNumList &_selectedFeatures, SVM_EncodingMethod _encodingMethod, double _c_Param)}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder\+::\+Feature\+Encoder (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class2, }
+\item[{const {\bf Feature\+Num\+List} \&}]{\+\_\+selected\+Features, }
+\item[{{\bf S\+V\+M\+\_\+\+Encoding\+Method}}]{\+\_\+encoding\+Method, }
+\item[{double}]{\+\_\+c\+\_\+\+Param}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a3dafb5bf818bb9f7485b19b7f761f878}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a3dafb5bf818bb9f7485b19b7f761f878}
+
+
+Constructs a Feature Encoder object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Desc} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+class1} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+class2} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & A log-\/file stream. All important events will be output to this stream \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 59 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary, K\+K\+M\+L\+L\+::\+Attribute\+::\+Cardinality(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Fe\+As\+Is, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), K\+K\+M\+L\+L\+::\+Fe\+Binary, K\+K\+M\+L\+L\+::\+Fe\+Scale, K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+A\+Attribute(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Get\+Nominal\+Value(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Name(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+New\+Continuous\+Data\+Only(), K\+K\+M\+L\+L\+::\+No\+Encoding, K\+K\+M\+L\+L\+::\+Nominal, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Of\+Features(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), K\+K\+M\+L\+L\+::\+Scaled, K\+K\+M\+L\+L\+::\+Symbolic, and K\+K\+M\+L\+L\+::\+Attribute\+::\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+65                                 :
+66 
+67     cardinalityDest          (NULL),
+68     class1                   (\_class1),
+69     class2                   (\_class2),
+70     codedNumOfFeatures       (0),
+71     c\_Param                  (\_c\_Param),
+72     destFeatureNums          (NULL),
+73     destFileDesc             (NULL),
+74     destWhatToDo             (NULL),
+75     encodingMethod           (\_encodingMethod),
+76     fileDesc                 (\_fileDesc),
+77     numEncodedFeatures       (0),
+78     numOfFeatures            (0),
+79     selectedFeatures         (\_selectedFeatures),
+80     srcFeatureNums           (NULL),
+81     xSpaceNeededPerExample   (0)
+82 \{
+83   numOfFeatures   = selectedFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_af2d974ca245a5d3c2bc88da0fe674493}{NumOfFeatures} ();
+84 
+85   xSpaceNeededPerExample = 0;
+86   srcFeatureNums   = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfFeatures];
+87   cardinalityDest  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfFeatures];
+88   destFeatureNums  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfFeatures];
+89   destWhatToDo     = \textcolor{keyword}{new} \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo}[numOfFeatures];
+90 
+91   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}   destFieldNames;
+92 
+93   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+94 
+95   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures;  x++)
+96   \{
+97     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  srcFeatureNum = selectedFeatures[x];
+98     srcFeatureNums  [x] = srcFeatureNum;
+99     destFeatureNums [x] = xSpaceNeededPerExample;
+100     cardinalityDest [x] = 1;
+101     destWhatToDo    [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+102 
+103     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}&  attribute = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a3434345c7dff811c0414b20ea9213519}{GetAAttribute} (srcFeatureNum);
+104     \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555ab}{AttributeType}  attributeType = attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}{Type} ();
+105     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}        cardinality   = attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a7a7e8d04e3a93b47f6c2d1f99f0e42c6}{Cardinality} ();
+106 
+107     \textcolor{keywordflow}{switch} (encodingMethod)
+108     \{
+109       \textcolor{keywordflow}{case} \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca6ce976e8f061b2b5cfe4d0c50c3405dd}{SVM\_EncodingMethod::Binary}:
+110         \textcolor{keywordflow}{if}  ((attributeType == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||  (attributeType == 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic}))
+111         \{
+112           destWhatToDo    [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary};
+113           cardinalityDest [x] = cardinality;
+114           xSpaceNeededPerExample += cardinalityDest[x];
+115           numEncodedFeatures   += cardinalityDest[x];
+116           \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  zed < cardinalityDest[x];  zed++)
+117           \{
+118             \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fieldName = attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} () + \textcolor{stringliteral}{"\_"} + attribute.
+      \hyperlink{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}{GetNominalValue} (zed);
+119             destFieldNames.push\_back (fieldName);
+120           \}
+121         \}
+122         \textcolor{keywordflow}{else}
+123         \{
+124           xSpaceNeededPerExample++;
+125           numEncodedFeatures++;
+126           destWhatToDo [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+127           destFieldNames.push\_back (attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+128         \}
+129         \textcolor{keywordflow}{break};
+130 
+131 
+132       \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca7380ae6c5e1189eef50cfd0557d74e99}{SVM\_EncodingMethod::Scaled}:
+133         xSpaceNeededPerExample++;
+134         numEncodedFeatures++;
+135         \textcolor{keywordflow}{if}  ((attributeType == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||
+136              (attributeType == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+137             )
+138           destWhatToDo [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale};
+139         \textcolor{keywordflow}{else}
+140           destWhatToDo [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+141 
+142         destFieldNames.push\_back (attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+143         \textcolor{keywordflow}{break};
+144 
+145 
+146       \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding}:
+147       \textcolor{keywordflow}{default}:
+148         xSpaceNeededPerExample++;
+149         numEncodedFeatures++;
+150         destWhatToDo [x] = \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+151         destFieldNames.push\_back (attribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+152         \textcolor{keywordflow}{break};
+153     \}
+154   \}
+155 
+156   codedNumOfFeatures = xSpaceNeededPerExample;
+157 
+158   destFileDesc = \hyperlink{class_k_k_m_l_l_1_1_file_desc_a743571b092e55a4d5d15531804ccedb9}{FileDesc::NewContinuousDataOnly} (destFieldNames);
+159 
+160   xSpaceNeededPerExample++;  \textcolor{comment}{// Add one more for the terminating (-1)}
+161 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!````~Feature\+Encoder@{$\sim$\+Feature\+Encoder}}
+\index{````~Feature\+Encoder@{$\sim$\+Feature\+Encoder}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{$\sim$\+Feature\+Encoder()}{~FeatureEncoder()}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder\+::$\sim$\+Feature\+Encoder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a631274626b3d882a9c09ba7ff1950dea}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a631274626b3d882a9c09ba7ff1950dea}
+
+
+Frees any memory allocated by, and owned by the \hyperlink{class_k_k_m_l_l_1_1_feature_encoder}{Feature\+Encoder}. 
+
+
+
+Definition at line 172 of file Feature\+Encoder.\+cpp.
+
+
+\begin{DoxyCode}
+173 \{
+174   \textcolor{keyword}{delete}  srcFeatureNums;
+175   \textcolor{keyword}{delete}  destFeatureNums;
+176   \textcolor{keyword}{delete}  cardinalityDest;
+177   \textcolor{keyword}{delete}  destWhatToDo;
+178 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Class1@{Class1}}
+\index{Class1@{Class1}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Class1() const }{Class1() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Class1 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a397e19999f5572120b55038835614162}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a397e19999f5572120b55038835614162}
+
+
+Definition at line 64 of file Feature\+Encoder.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Distance\+From\+Decision\+Boundary().
+
+
+\begin{DoxyCode}
+64 \{\textcolor{keywordflow}{return} class1;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Class2@{Class2}}
+\index{Class2@{Class2}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Class2() const }{Class2() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Class2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a70eb189a61d27c7c513085274a7edd75}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a70eb189a61d27c7c513085274a7edd75}
+
+
+Definition at line 65 of file Feature\+Encoder.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Distance\+From\+Decision\+Boundary().
+
+
+\begin{DoxyCode}
+65 \{\textcolor{keywordflow}{return} class2;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Coded\+Num\+Of\+Features@{Coded\+Num\+Of\+Features}}
+\index{Coded\+Num\+Of\+Features@{Coded\+Num\+Of\+Features}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Coded\+Num\+Of\+Features() const }{CodedNumOfFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Coded\+Num\+Of\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a42b4b25e6c20c3f64cc8a9ca3af0f54c}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a42b4b25e6c20c3f64cc8a9ca3af0f54c}
+
+
+Definition at line 61 of file Feature\+Encoder.\+h.
+
+
+\begin{DoxyCode}
+61 \{\textcolor{keywordflow}{return} codedNumOfFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Compress\+Examples@{Compress\+Examples}}
+\index{Compress\+Examples@{Compress\+Examples}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Compress\+Examples(\+Feature\+Vector\+List\+Ptr src\+Examples, Feature\+Vector\+List\+Ptr compressed\+Examples, Class\+Assignments \&assignments)}{CompressExamples(FeatureVectorListPtr srcExamples, FeatureVectorListPtr compressedExamples, ClassAssignments &assignments)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+Encoder\+::\+Compress\+Examples (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{src\+Examples, }
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{compressed\+Examples, }
+\item[{{\bf Class\+Assignments} \&}]{assignments}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a4cafac6289697a73ce7105793ef0c8d2}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a4cafac6289697a73ce7105793ef0c8d2}
+
+
+Left over from Bit\+Reduction days; removed all code except that which processed the NO bit reduction option. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em examples\+\_\+list} & The list of examples you want to attempt to reduce \\
+\hline
+\mbox{\tt out}  & {\em compressed\+\_\+examples\+\_\+list} & The reduced list of examples \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 637 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Add\+Queue(), and K\+K\+B\+::os\+Get\+System\+Time\+Used().
+
+
+\begin{DoxyCode}
+641 \{
+642   \textcolor{keywordtype}{double} time\_before, time\_after;
+643   time\_before = \hyperlink{namespace_k_k_b_ac4f313e9dd666221b0fd014797decfe0}{osGetSystemTimeUsed} ();
+644   compressedExamples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a90809e07f7e33e591da0d266c1907ca9}{AddQueue} (*srcExamples);
+645   time\_after = \hyperlink{namespace_k_k_b_ac4f313e9dd666221b0fd014797decfe0}{osGetSystemTimeUsed} ();
+646   compressedExamples->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+647   \textcolor{keywordflow}{return};
+648 \}  \textcolor{comment}{/* CompressExamples */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Create\+Encoded\+Feature\+Vector@{Create\+Encoded\+Feature\+Vector}}
+\index{Create\+Encoded\+Feature\+Vector@{Create\+Encoded\+Feature\+Vector}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Create\+Encoded\+Feature\+Vector(\+Feature\+Vector\+List \&src\+Data)}{CreateEncodedFeatureVector(FeatureVectorList &srcData)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+Encoder\+::\+Create\+Encoded\+Feature\+Vector (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List} \&}]{src\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_afe8038fbfd17aacd6d3e31aa9345ca43}{}\label{class_k_k_m_l_l_1_1_feature_encoder_afe8038fbfd17aacd6d3e31aa9345ca43}
+
+
+Definition at line 653 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Add\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+All\+Fields\+Are\+Numeric(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Duplicate\+List\+And\+Contents(), Encode\+A\+Example(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), S\+V\+M233\+::svm\+\_\+node\+::index, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back(), and S\+V\+M233\+::svm\+\_\+node\+::value.
+
+
+\begin{DoxyCode}
+654 \{
+655   \textcolor{keywordflow}{if}  (srcData.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a349dffffbca2b8f86120f1cfe2df5cbf}{AllFieldsAreNumeric} ())
+656     \textcolor{keywordflow}{return}  srcData.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af14ad0946bbc6de8abdc4b513b6cf859}{DuplicateListAndContents} ();
+657 
+658   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  encodedFeatureVectorList = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (destFileDesc, \textcolor{keyword}{true});
+659 
+660   \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{FeatureVectorList::iterator}  idx;
+661   \textcolor{keywordflow}{for}  (idx = srcData.begin ();   idx != srcData.end ();  idx++)
+662   \{
+663     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  srcExample = *idx;
+664     \hyperlink{struct_s_v_m233_1_1svm__node}{XSpacePtr}  encodedData = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{EncodeAExample} (srcExample);
+665 
+666     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  zed = 0;
+667     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedFeatureVector = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (
+      codedNumOfFeatures);
+668     \textcolor{keywordflow}{while}  (encodedData[zed].index != -1)
+669     \{
+670       encodedFeatureVector->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (encodedData[zed].index, (\textcolor{keywordtype}{float})encodedData[zed].
+      value);
+671       zed++;
+672     \}
+673 
+674     encodedFeatureVector->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (srcExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} ());
+675     encodedFeatureVectorList->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (encodedFeatureVector);
+676 
+677     \textcolor{keyword}{delete}  encodedData;
+678     encodedData = NULL;
+679   \}
+680 
+681   \textcolor{keywordflow}{return}  encodedFeatureVectorList;
+682 \}  \textcolor{comment}{/* CreateEncodedFeatureVector */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Create\+Encoded\+File\+Desc@{Create\+Encoded\+File\+Desc}}
+\index{Create\+Encoded\+File\+Desc@{Create\+Encoded\+File\+Desc}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Create\+Encoded\+File\+Desc(ostream $\ast$o)}{CreateEncodedFileDesc(ostream *o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Feature\+Encoder\+::\+Create\+Encoded\+File\+Desc (
+\begin{DoxyParamCaption}
+\item[{ostream $\ast$}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a9a6f0f195cb6856e88caf0aec52dd54a}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a9a6f0f195cb6856e88caf0aec52dd54a}
+
+
+Definition at line 201 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Attribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Fe\+As\+Is, K\+K\+M\+L\+L\+::\+Fe\+Binary, K\+K\+M\+L\+L\+::\+Fe\+Scale, K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Field\+Name(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Nominal\+Value(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Numeric, K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+Str\+Format\+Int(), and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Type\+Str().
+
+
+
+Referenced by Encode\+All\+Examples().
+
+
+\begin{DoxyCode}
+202 \{
+203   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  newFileDesc = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} ();
+204 
+205   \textcolor{keywordflow}{if}  (o)
+206   \{
+207     *o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+208        << \textcolor{stringliteral}{"Orig"}     << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Orig"}      << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Field"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Encoded"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Encoded"}  
+       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+209     *o << \textcolor{stringliteral}{"FieldNum"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldName"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Type"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldNum"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldName"}
+       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+210   \}
+211 
+212   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+213 
+214   \textcolor{keywordtype}{bool}  alreadyExist;
+215   
+216   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures; x++)
+217   \{
+218     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  srcFeatureNum = srcFeatureNums[x];
+219     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = destFeatureNums[x];
+220 
+221     \textcolor{keywordflow}{if}  (y >= numEncodedFeatures)
+222     \{
+223       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg (128);
+224       errMsg << \textcolor{stringliteral}{"FeatureEncoder::CreateEncodedFileDesc  numEncodedFeatures ["} << numEncodedFeatures << \textcolor{stringliteral}{"] 
+       exceeded."};
+225       cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+226            << \textcolor{stringliteral}{"FeatureEncoder::CreateEncodedFileDesc     *** ERROR ***"}           << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+227            << \textcolor{stringliteral}{"             "} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+228            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+229       \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+230       exit (-1);
+231     \}
+232 
+233     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  origFieldDesc = \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (srcFeatureNum, \textcolor{stringliteral}{"zz0"}) + \textcolor{stringliteral}{"\(\backslash\)t"} +
+234                             fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (srcFeatureNum) + \textcolor{stringliteral}{"\(\backslash\)t"} +
+235                             fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_aab158079a610de24575b40389d7f098c}{TypeStr} (srcFeatureNum);
+236 
+237 
+238     \textcolor{keywordflow}{switch} (destWhatToDo[x])
+239     \{
+240     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs}:
+241       \{
+242         newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x), 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+243         \textcolor{keywordflow}{if}  (o)
+244         \{
+245           *o << origFieldDesc          << \textcolor{stringliteral}{"\(\backslash\)t"} 
+246              << y                      << \textcolor{stringliteral}{"\(\backslash\)t"}
+247              << fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x)
+248              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+249         \}
+250       \}
+251       \textcolor{keywordflow}{break};
+252 
+253     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary}:
+254       \{
+255         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z = 0;  z < cardinalityDest[x];  z++)
+256         \{
+257           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  nominalValue = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a732930fe4786f35e1b9428c90c05d61c}{GetNominalValue} (srcFeatureNums[x], z);
+258           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  encodedName  = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x) + \textcolor{stringliteral}{"\_"} + nominalValue;
+259           newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (encodedName, 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+260           \textcolor{keywordflow}{if}  (o)
+261           \{
+262             *o << origFieldDesc << \textcolor{stringliteral}{"\(\backslash\)t"} 
+263                << y             << \textcolor{stringliteral}{"\(\backslash\)t"}
+264                << encodedName
+265                << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+266           \}
+267 
+268           y++;
+269         \}
+270       \}
+271 
+272       \textcolor{keywordflow}{break};
+273 
+274     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale}:
+275       \{
+276         newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x), 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+277         \textcolor{keywordflow}{if}  (o)
+278         \{
+279           *o << origFieldDesc           << \textcolor{stringliteral}{"\(\backslash\)t"} 
+280              << y                       << \textcolor{stringliteral}{"\(\backslash\)t"}
+281              << fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x)
+282              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+283         \}
+284       \}
+285       \textcolor{keywordflow}{break};
+286     \}
+287   \}
+288 
+289   \textcolor{keywordflow}{return}  newFileDesc;
+290 \}  \textcolor{comment}{/* CreateEncodedFileDesc */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Encode\+A\+Example@{Encode\+A\+Example}}
+\index{Encode\+A\+Example@{Encode\+A\+Example}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Encode\+A\+Example(\+Feature\+Vector\+Ptr example)}{EncodeAExample(FeatureVectorPtr example)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X\+Space\+Ptr} Feature\+Encoder\+::\+Encode\+A\+Example (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{}\label{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}
+
+
+Converts a single example into the svm\+\_\+problem format. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em example} & That we\textquotesingle{}re converting \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 301 of file Feature\+Encoder.\+cpp.
+
+
+
+References Encode\+A\+Example().
+
+
+
+Referenced by Create\+Encoded\+Feature\+Vector(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Probabilities\+By\+Class().
+
+
+\begin{DoxyCode}
+302 \{
+303   \textcolor{comment}{// XSpacePtr  xSpace  = (struct svm\_node*)malloc (xSpaceNeededPerExample * sizeof (struct svm\_node));}
+304   \hyperlink{struct_s_v_m233_1_1svm__node}{XSpacePtr}  xSpace  = \textcolor{keyword}{new} \hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}[xSpaceNeededPerExample];
+305   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  xSpaceUsed = 0;
+306   \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{EncodeAExample} (example, xSpace, xSpaceUsed);
+307   \textcolor{keywordflow}{return}  xSpace;
+308 \}  \textcolor{comment}{/* EncodeAExample */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Encode\+A\+Example@{Encode\+A\+Example}}
+\index{Encode\+A\+Example@{Encode\+A\+Example}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Encode\+A\+Example(\+Feature\+Vector\+Ptr example, svm\+\_\+node $\ast$x\+Space, kkint32 \&x\+Space\+Used)}{EncodeAExample(FeatureVectorPtr example, svm_node *xSpace, kkint32 &xSpaceUsed)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+Encoder\+::\+Encode\+A\+Example (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example, }
+\item[{{\bf svm\+\_\+node} $\ast$}]{x\+Space, }
+\item[{{\bf kkint32} \&}]{x\+Space\+Used}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_af6a88ec1786cbcd70a4eb2ffe7c95c9b}{}\label{class_k_k_m_l_l_1_1_feature_encoder_af6a88ec1786cbcd70a4eb2ffe7c95c9b}
+
+
+Converts a single example into the svm\+\_\+problem format. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em The} & example That we\textquotesingle{}re converting \\
+\hline
+\mbox{\tt in}  & {\em The} & row kkint32 he svm\+\_\+problem structure that the converted data will be stored \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 392 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Fe\+As\+Is, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Fe\+Binary, K\+K\+M\+L\+L\+::\+Fe\+Scale, S\+V\+M233\+::svm\+\_\+node\+::index, K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and S\+V\+M233\+::svm\+\_\+node\+::value.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Distance\+From\+Decision\+Boundary(), Encode\+A\+Example(), Encode\+Into\+Sparse\+Matrix(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors2().
+
+
+\begin{DoxyCode}
+396 \{
+397   \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  featureData = example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+398   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+399 
+400   xSpaceUsed = 0;
+401 
+402   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures; x++)
+403   \{
+404     \textcolor{keywordtype}{float}  featureVal = featureData [srcFeatureNums[x]];
+405     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = destFeatureNums[x];
+406 
+407     \textcolor{keywordflow}{if}  (y >= xSpaceNeededPerExample)
+408     \{
+409       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg (128);
+410       errMsg << \textcolor{stringliteral}{"FeatureEncoder::EncodeAExample  ***ERROR***   xSpaceNeededPerExample["} << 
+      xSpaceNeededPerExample << \textcolor{stringliteral}{"]."};
+411       cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+412            << \textcolor{stringliteral}{"FeatureEncoder::EncodeAExample     *** ERROR ***"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+413            << \textcolor{stringliteral}{"             "} << errMsg                           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+414            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+415       \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+416     \}
+417 
+418     \textcolor{keywordflow}{switch} (destWhatToDo[x])
+419     \{
+420     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs}:
+421       \{
+422         \textcolor{keywordflow}{if}  (featureVal != 0.0)
+423         \{
+424           xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_a3c4e097d4f2ba8091128a9b605fcaa12}{index} = y;
+425           xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_abc3f1df2ce88e0759c7f3fe74eefcf0d}{value} = featureVal;
+426           xSpaceUsed++;
+427         \}
+428       \}
+429       \textcolor{keywordflow}{break};
+430 
+431     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary}:
+432       \{
+433         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z = 0; z < cardinalityDest[x]; z++)
+434         \{
+435           \textcolor{keywordtype}{float}  bVal = ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})featureVal == z);
+436           \textcolor{keywordflow}{if}  (bVal != 0.0)
+437           \{
+438             xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_a3c4e097d4f2ba8091128a9b605fcaa12}{index} = y;
+439             xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_abc3f1df2ce88e0759c7f3fe74eefcf0d}{value} = bVal;
+440             xSpaceUsed++;
+441           \}
+442           y++;
+443         \}
+444       \}
+445 
+446       \textcolor{keywordflow}{break};
+447 
+448     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale}:
+449       \{
+450         \textcolor{keywordflow}{if}  (featureVal != (\textcolor{keywordtype}{float})0.0)
+451         \{
+452           xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_a3c4e097d4f2ba8091128a9b605fcaa12}{index} = y;
+453           xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_abc3f1df2ce88e0759c7f3fe74eefcf0d}{value} = featureVal / (float)cardinalityDest[x];
+454           xSpaceUsed++;
+455         \}
+456       \}
+457       \textcolor{keywordflow}{break};
+458     \}
+459   \}
+460 
+461   xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_a3c4e097d4f2ba8091128a9b605fcaa12}{index} = -1;
+462   xSpace[xSpaceUsed].\hyperlink{struct_s_v_m233_1_1svm__node_abc3f1df2ce88e0759c7f3fe74eefcf0d}{value} = -1;
+463   xSpaceUsed++;
+464 \}  \textcolor{comment}{/* EncodeAExample */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Encode\+A\+Example@{Encode\+A\+Example}}
+\index{Encode\+A\+Example@{Encode\+A\+Example}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Encode\+A\+Example(\+File\+Desc\+Ptr encoded\+File\+Desc, Feature\+Vector\+Ptr src)}{EncodeAExample(FileDescPtr encodedFileDesc, FeatureVectorPtr src)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+Ptr} Feature\+Encoder\+::\+Encode\+A\+Example (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{encoded\+File\+Desc, }
+\item[{{\bf Feature\+Vector\+Ptr}}]{src}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a7449052191dd87e2c5038abbccec7e73}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a7449052191dd87e2c5038abbccec7e73}
+
+
+Definition at line 313 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Add\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Fe\+As\+Is, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector(), K\+K\+M\+L\+L\+::\+Fe\+Binary, K\+K\+M\+L\+L\+::\+Fe\+Scale, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Predicted\+Class(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Train\+Weight().
+
+
+
+Referenced by Encode\+All\+Examples().
+
+
+\begin{DoxyCode}
+316 \{
+317   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedExample = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (numEncodedFeatures);
+318   encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass}     (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass}     ());
+319   encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3ec4b39405a2904c966a505c391cff33}{PredictedClass} (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3ec4b39405a2904c966a505c391cff33}{PredictedClass} ());
+320   \textcolor{comment}{//encodedExample->Version        (src->Version        ());}
+321   encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight}    (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight}    ());
+322 
+323   \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  featureData = src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+324   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+325 
+326   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures; x++)
+327   \{
+328     \textcolor{keywordtype}{float}  featureVal = featureData [srcFeatureNums[x]];
+329     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = destFeatureNums[x];
+330 
+331     \textcolor{keywordflow}{switch} (destWhatToDo[x])
+332     \{
+333     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs}:
+334       \{
+335         encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, featureVal);
+336       \}
+337       \textcolor{keywordflow}{break};
+338 
+339     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary}:
+340       \{
+341         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z = 0; z < cardinalityDest[x]; z++)
+342         \{
+343           \textcolor{keywordtype}{float}  bVal = ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})featureVal == z);
+344           encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, bVal);
+345           y++;
+346         \}
+347       \}
+348 
+349       \textcolor{keywordflow}{break};
+350 
+351     \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale}:
+352       \{
+353         encodedExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, (featureVal / (\textcolor{keywordtype}{float})cardinalityDest[x]));
+354       \}
+355       \textcolor{keywordflow}{break};
+356     \}
+357   \}
+358 
+359   \textcolor{keywordflow}{return}  encodedExample;
+360 \}  \textcolor{comment}{/* EncodeAExample */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Encode\+All\+Examples@{Encode\+All\+Examples}}
+\index{Encode\+All\+Examples@{Encode\+All\+Examples}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Encode\+All\+Examples(const Feature\+Vector\+List\+Ptr src\+Data)}{EncodeAllExamples(const FeatureVectorListPtr srcData)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+Encoder\+::\+Encode\+All\+Examples (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List\+Ptr}}]{src\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_ad22b9ed7426ebd0126472917cde20138}{}\label{class_k_k_m_l_l_1_1_feature_encoder_ad22b9ed7426ebd0126472917cde20138}
+
+
+Definition at line 366 of file Feature\+Encoder.\+cpp.
+
+
+
+References Create\+Encoded\+File\+Desc(), Encode\+A\+Example(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back().
+
+
+\begin{DoxyCode}
+367 \{
+368   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  encodedFileDesc = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_a9a6f0f195cb6856e88caf0aec52dd54a}{CreateEncodedFileDesc} (NULL);
+369 
+370   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  encodedExamples = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (encodedFileDesc, \textcolor{keyword}{true});
+371 
+372   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+373 
+374   \textcolor{keywordflow}{for}  (idx = srcData->begin ();  idx !=  srcData->end ();   idx++)
+375   \{
+376     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} srcExample = *idx;
+377     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedExample = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{EncodeAExample} (encodedFileDesc, 
+      srcExample);
+378     encodedExamples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (encodedExample);
+379   \}
+380 
+381   \textcolor{keywordflow}{return}  encodedExamples;
+382 \}  \textcolor{comment}{/* EncodeAllExamples */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Encode\+Into\+Sparse\+Matrix@{Encode\+Into\+Sparse\+Matrix}}
+\index{Encode\+Into\+Sparse\+Matrix@{Encode\+Into\+Sparse\+Matrix}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Encode\+Into\+Sparse\+Matrix(\+Feature\+Vector\+List\+Ptr src, Class\+Assignments \&assignments, X\+Space\+Ptr \&x\+Space, kkint32 \&totalx\+Space\+Used, struct svm\+\_\+problem \&prob, Run\+Log \&log)}{EncodeIntoSparseMatrix(FeatureVectorListPtr src, ClassAssignments &assignments, XSpacePtr &xSpace, kkint32 &totalxSpaceUsed, struct svm_problem &prob, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{src, }
+\item[{{\bf Class\+Assignments} \&}]{assignments, }
+\item[{{\bf X\+Space\+Ptr} \&}]{x\+Space, }
+\item[{{\bf kkint32} \&}]{totalx\+Space\+Used, }
+\item[{struct {\bf svm\+\_\+problem} \&}]{prob, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_ad8d410b25748ce3d86eaeaff7ee73bec}{}\label{class_k_k_m_l_l_1_1_feature_encoder_ad8d410b25748ce3d86eaeaff7ee73bec}
+
+
+Compresses \textquotesingle{}src\textquotesingle{} examples, allocating new \textquotesingle{}x\+Space\textquotesingle{} data structure. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em src} & Examples that are to be compressed \\
+\hline
+\mbox{\tt in}  & {\em assignments} & Class Assignments \\
+\hline
+\mbox{\tt in}  & {\em x\+Space} & will allocate enough x\+Space nodes and place compressed results in this structure. \\
+\hline
+\mbox{\tt out}  & {\em totalx\+Space\+Used} & number nodes used in x\+Space\\
+\hline
+\end{DoxyParams}
+
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em prob} & Data Structure that is used by S\+V\+M\+Lib \\
+\hline
+\mbox{\tt in}  & {\em log} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 514 of file Feature\+Encoder.\+cpp.
+
+
+
+References Encode\+A\+Example(), K\+K\+M\+L\+L\+::\+Class\+Assignments\+::\+Get\+Num\+For\+Class(), S\+V\+M233\+::svm\+\_\+problem\+::index, S\+V\+M233\+::svm\+\_\+problem\+::l, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Train\+Weight(), S\+V\+M233\+::svm\+\_\+problem\+::W, S\+V\+M233\+::svm\+\_\+problem\+::x, and S\+V\+M233\+::svm\+\_\+problem\+::y.
+
+
+\begin{DoxyCode}
+522 \{
+523   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  compressedExamples    = NULL;
+524   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  examplesToUseFoXSpace = NULL;
+525   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}               xSpaceUsed            = 0;
+526 
+527   totalxSpaceUsed = 0;
+528 
+529   examplesToUseFoXSpace = src;
+530 
+531   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfExamples = examplesToUseFoXSpace->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+532   \textcolor{comment}{//kkint32  elements      = numOfExamples * xSpaceNeededPerExample;}
+533 
+534   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l}     = numOfExamples;
+535   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y}     = (\textcolor{keywordtype}{double}*)malloc  (prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l} * sizeof (\textcolor{keywordtype}{double}));
+536   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}     = (\textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node} **) malloc (prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l} * sizeof (\textcolor{keyword}{struct} 
+      \hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*));
+537   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index} = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l}];
+538   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a5d86ac405294437f5a2da3a0e90d7bd5}{exampleNames}.clear ();
+539 
+540   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (examplesToUseFoXSpace);
+541 
+542   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * \textcolor{keyword}{sizeof} (\textcolor{keyword}{struct} 
+      \hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node});  \textcolor{comment}{// I added '10' to elements because I am paranoid}
+543 
+544   xSpace = (\textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*) malloc (totalBytesForxSpaceNeeded);
+545   \textcolor{keywordflow}{if}  (xSpace == NULL)
+546   \{
+547     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+548                    << \textcolor{stringliteral}{" FeatureEncoder::Compress   *** Failed to allocates space for 'xSpace' ****"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+549                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+550                    << \textcolor{stringliteral}{"     Space needed          ["} << totalBytesForxSpaceNeeded << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+551                    << \textcolor{stringliteral}{"     Num of Examples       ["} << numOfExamples             << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+552                    << \textcolor{stringliteral}{"     Num XSpaceNodesNeeded ["} << numNeededXspaceNodes      << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+553                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+554     \textcolor{comment}{// we sill have to allocate space for each individual training example separately.}
+555     \textcolor{comment}{//throw "FeatureEncoder::Compress     Allocation of memory for xSpace Failed.";}
+556   \}
+557 
+558   prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W} = NULL;
+559 
+560   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;
+561  
+562   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  example      = NULL;
+563   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}        lastMlClass  = NULL;
+564   \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}           lastClassNum = -1;
+565 
+566   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bytesOfxSpacePerExample = xSpaceNeededPerExample * \textcolor{keyword}{sizeof} (\textcolor{keyword}{struct }
+      \hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node});
+567 
+568   \textcolor{keywordflow}{for} (i = 0;  i < prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l};  i++)
+569   \{
+570     \textcolor{keywordflow}{if}  (totalxSpaceUsed > numNeededXspaceNodes)
+571     \{
+572       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+573         << \textcolor{stringliteral}{"FeatureEncoder::Compress   ***ERROR***   We have exceeded the number of XSpace nodes allocated.
+      "} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+574         << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+575     \}
+576 
+577     example = examplesToUseFoXSpace->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i);
+578 
+579     \textcolor{keywordflow}{if}  (example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} () != lastMlClass)
+580     \{
+581       lastMlClass  = example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} ();
+582       lastClassNum = assignments.\hyperlink{class_k_k_m_l_l_1_1_class_assignments_a16bde30c19763d38ebcf9c33f0accd5f}{GetNumForClass} (lastMlClass);
+583     \}
+584 
+585     prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y}[i]     = lastClassNum;
+586     prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index}[i] = i;
+587     prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a5d86ac405294437f5a2da3a0e90d7bd5}{exampleNames}.push\_back (\hyperlink{namespace_k_k_b_af5b668ed9902d7f93b62529664a739f0}{osGetRootName} (example->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} ()));
+588 
+589     \textcolor{keywordflow}{if}  (prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W})
+590     \{
+591       prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W}[i] = example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight} () * c\_Param;
+592       \textcolor{keywordflow}{if}  (example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight} () <= 0.0f)
+593       \{
+594         log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+595                        << \textcolor{stringliteral}{"FeatureEncoder::EncodeIntoSparseMatrix    ***ERROR***   Example["} << example->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+596                        << \textcolor{stringliteral}{"      has a TrainWeight value of 0 or less defaulting to 1.0"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+597                        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+598         prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W}[i] = 1.0 * c\_Param;
+599       \}
+600     \}
+601 
+602     \textcolor{keywordflow}{if}  (xSpace == NULL)
+603     \{
+604       \textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*  xSpaceThisExample = (\textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*) malloc (
+      bytesOfxSpacePerExample);
+605       prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[i] = xSpaceThisExample;
+606       \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{EncodeAExample} (example, prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[i], xSpaceUsed);
+607       \textcolor{keywordflow}{if}  (xSpaceUsed < xSpaceNeededPerExample)
+608       \{
+609         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bytesNeededForThisExample = xSpaceUsed * \textcolor{keyword}{sizeof} (\textcolor{keyword}{struct }
+      \hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node});
+610         \textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*  smallerXSpaceThisExample = (\textcolor{keyword}{struct }\hyperlink{struct_s_v_m233_1_1svm__node}{svm\_node}*) malloc (
+      bytesNeededForThisExample);
+611         memcpy (smallerXSpaceThisExample, xSpaceThisExample, bytesNeededForThisExample);
+612         free  (xSpaceThisExample);
+613         prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[i] = smallerXSpaceThisExample;
+614       \}
+615     \}
+616     \textcolor{keywordflow}{else}
+617     \{
+618       prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[i] = &xSpace[totalxSpaceUsed];
+619       \hyperlink{class_k_k_m_l_l_1_1_feature_encoder_af82278dec57d34f3ebcf6ea97cc625d2}{EncodeAExample} (example, prob.\hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[i], xSpaceUsed);
+620     \}
+621     totalxSpaceUsed += xSpaceUsed;
+622   \}
+623 
+624   \textcolor{keyword}{delete}  compressedExamples;
+625   \textcolor{keywordflow}{return};
+626 \}  \textcolor{comment}{/* Compress */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Feature\+Encoder\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_aed7fd3271e7ce09181205874048ef9e8}{}\label{class_k_k_m_l_l_1_1_feature_encoder_aed7fd3271e7ce09181205874048ef9e8}
+
+
+Definition at line 182 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Memory\+Consumed\+Estimated().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+183 \{
+184   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_feature_encoder_afaf2be970998ea6430e5d17ea95d80a7}{FeatureEncoder}) 
+185     + selectedFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a9efe0d2ced65e384afbc196a915567b6}{MemoryConsumedEstimated} ()
+186     + numOfFeatures * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32});
+187 
+188   \textcolor{keywordflow}{if}  (cardinalityDest)
+189     memoryConsumedEstimated += 3 * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}) * numOfFeatures;    \textcolor{comment}{// cardinalityDest +
+       destFeatureNums + srcFeatureNums}
+190 
+191   \textcolor{comment}{//  We do not own 'destFileDesc'  and  'fileDesc'}
+192   \textcolor{keywordflow}{if}  (destWhatToDo)
+193     memoryConsumedEstimated += \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo}) * numOfFeatures;
+194 
+195   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+196 \}  \textcolor{comment}{/* MemoryConsumedEstimated */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+Encoder\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a4da98e7abffd3faaee30de359cb03ee8}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a4da98e7abffd3faaee30de359cb03ee8}
+
+
+Definition at line 737 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Encoding\+Method\+From\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+Xml\+Element\+::\+To\+Double(), K\+K\+B\+::\+Xml\+Element\+::\+To\+Int32(), K\+K\+B\+::\+Xml\+Token\+::tok\+Element, K\+K\+B\+::\+Xml\+Token\+::\+Token\+Type(), K\+K\+B\+::\+Xml\+Element\+::\+To\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc\+::\+Value(), and K\+K\+B\+::\+Xml\+Element\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+742 \{
+743   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr} t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag,  log);
+744   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+745   \{
+746     \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_ae98e2c1a798882647578cae4adcd7176}{TokenType} () == XmlToken::TokenTypes::tokElement)
+747     \{
+748       \hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr} e = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr}\textcolor{keyword}{>} (t);
+749       \textcolor{keywordflow}{if}  (e)
+750       \{
+751         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} varName = e->\hyperlink{class_k_k_b_1_1_xml_element_aef57cf00be66a3a387ce849b35125f51}{VarName} ();
+752 
+753         \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"CodedNumOfFeatures"}))
+754           codedNumOfFeatures= e->\hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{ToInt32} ();
+755 
+756         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"C\_Param"}))
+757           c\_Param = e->\hyperlink{class_k_k_b_1_1_xml_element_ac32778396ab8bdb215ad38f2f33f05de}{ToDouble} ();
+758 
+759         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NumEncodedFeatures"}))
+760           numEncodedFeatures = e->\hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{ToInt32} ();
+761 
+762         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NumOfFeatures"}))
+763           numOfFeatures = e->\hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{ToInt32} ();
+764 
+765         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"xSpaceNeededPerExample"}))
+766           xSpaceNeededPerExample = e->\hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{ToInt32} ();
+767 
+768         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*e) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_b_1_1_xml_element_array_int32}{XmlElementArrayInt32}))
+769         \{
+770           \hyperlink{class_k_k_b_1_1_xml_element_array_int32}{XmlElementArrayInt32Ptr} xmlArray = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_array_int32}{XmlElementArrayInt32Ptr}\textcolor{keyword}{>} (e);
+771           \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} count = xmlArray->\hyperlink{class_k_k_b_1_1_xml_element_array_int32_a2773cdcb924ac8c67e32a4d07ee15f30}{Count} ();
+772           \textcolor{keywordflow}{if}  (count != numOfFeatures)
+773           \{
+774             log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+775               << \textcolor{stringliteral}{"FeatureEncoder::ReadXML   ***ERROR***  Variable["} << varName << \textcolor{stringliteral}{"]  Invalid Length["} << 
+      count << \textcolor{stringliteral}{"]  Expected["} << numOfFeatures << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+776               << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+777           \}
+778           \textcolor{keywordflow}{else}
+779           \{
+780             \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"CardinalityDest"}))
+781             \{
+782               \textcolor{keyword}{delete}  cardinalityDest;
+783               cardinalityDest = xmlArray->\hyperlink{class_k_k_b_1_1_xml_element_array_int32_a466c9f162ec1ce60a50feb8f2268b86c}{TakeOwnership} ();
+784             \}
+785 
+786             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"DestFeatureNums"}))
+787             \{
+788               \textcolor{keyword}{delete}  destFeatureNums;
+789               destFeatureNums = xmlArray->\hyperlink{class_k_k_b_1_1_xml_element_array_int32_a466c9f162ec1ce60a50feb8f2268b86c}{TakeOwnership} ();
+790             \}
+791 
+792             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"SrcFeatureNums"}))
+793             \{
+794               \textcolor{keyword}{delete}  srcFeatureNums;
+795               srcFeatureNums = xmlArray->\hyperlink{class_k_k_b_1_1_xml_element_array_int32_a466c9f162ec1ce60a50feb8f2268b86c}{TakeOwnership} ();
+796             \}
+797           \}
+798         \}
+799 
+800         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Class1"}))
+801           class1 = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a9fd24c617c42d89afc92414575e00e9a}{MLClass::CreateNewMLClass} (e->
+      \hyperlink{class_k_k_b_1_1_xml_element_a3028fc03b79509e6378749f6a8b426b9}{ToKKStr} (), -1);
+802 
+803         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Class2"}))
+804           class2 = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a9fd24c617c42d89afc92414575e00e9a}{MLClass::CreateNewMLClass} (e->
+      \hyperlink{class_k_k_b_1_1_xml_element_a3028fc03b79509e6378749f6a8b426b9}{ToKKStr} (), -1);
+805 
+806         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"FileDesc"})  &&  (\textcolor{keyword}{typeid} (*e) == \textcolor{keyword}{typeid} (
+      \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{XmlElementFileDesc})))
+807           fileDesc = dynamic\_cast<XmlElementFileDescPtr> (e)->Value ();
+808 
+809         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"DestFileDesc"})  &&  (\textcolor{keyword}{typeid} (*e) == \textcolor{keyword}{typeid} (
+      \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{XmlElementFileDesc})))
+810           destFileDesc = dynamic\_cast<XmlElementFileDescPtr> (e)->Value ();
+811 
+812         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"DestWhatToDo"})  &&  (\textcolor{keyword}{typeid} (*e) == \textcolor{keyword}{typeid} (
+      \hyperlink{class_k_k_b_1_1_xml_element_vector_int32}{XmlElementVectorInt32})))
+813         \{
+814           \hyperlink{class_k_k_b_1_1_xml_element_vector_int32}{XmlElementVectorInt32Ptr}  xmlVect = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_vector_int32}{XmlElementVectorInt32Ptr}\textcolor{keyword}{>} (e);
+815           \textcolor{keywordflow}{if}  (xmlVect  &&  xmlVect->\hyperlink{class_k_k_b_1_1_xml_element_vector_int32_ab2877c6bbf603155fc89cb974bc02883}{Value} ())
+816           \{
+817             \textcolor{keyword}{const} \hyperlink{namespace_k_k_b_adf8a10085d231870d8a072046d6cba10}{VectorInt32}&  v = *(xmlVect->\hyperlink{class_k_k_b_1_1_xml_element_vector_int32_ab2877c6bbf603155fc89cb974bc02883}{Value} ());
+818             \textcolor{keywordflow}{if}  (v.size () != numOfFeatures)
+819             \{
+820               log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+821                 << \textcolor{stringliteral}{"FeatureEncoder::ReadXML   ***ERROR***   Variable["} << varName << \textcolor{stringliteral}{"]  Invalid Size["} << 
+      v.size () << \textcolor{stringliteral}{"]  Expected["} << numOfFeatures << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+822                 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+823             \}
+824             \textcolor{keywordflow}{else}
+825             \{
+826               \textcolor{keyword}{delete}  destWhatToDo;
+827               destWhatToDo = \textcolor{keyword}{new} \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo}[v.size ()];
+828               \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;  x < v.size ();  ++x)
+829                 destWhatToDo[x] = (\hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo})v[x];
+830             \}
+831           \}
+832         \}
+833 
+834         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"EncodingMethod"}))
+835           encodingMethod = \hyperlink{namespace_k_k_m_l_l_a100cc09ba8368cc433f3f8643e3d0abb}{EncodingMethodFromStr} (e->
+      \hyperlink{class_k_k_b_1_1_xml_element_a3028fc03b79509e6378749f6a8b426b9}{ToKKStr} ());
+836 
+837         \textcolor{keywordflow}{else}
+838         \{
+839           log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"XmlElementTrainingClassList   ***ERROR***   Un-expected Section Element["}
+       << e->\hyperlink{class_k_k_b_1_1_xml_element_a2b85dcb37a0f63bd7979d16d12296876}{SectionName} () << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+840         \}
+841       \}
+842     \}
+843 
+844     \textcolor{keyword}{delete}  t;
+845     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+846   \}
+847   \textcolor{keyword}{delete}  t;
+848   t = NULL;
+849 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, ostream \&o) const }{WriteXML(const KKStr &varName, ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+Encoder\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_a22bc8ae1c1bf08f0411d929a4b707572}{}\label{class_k_k_m_l_l_1_1_feature_encoder_a22bc8ae1c1bf08f0411d929a4b707572}
+
+
+Definition at line 687 of file Feature\+Encoder.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Encoding\+Method\+To\+Str(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+690 \{
+691   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  tagStart (\textcolor{stringliteral}{"TrainingClassList"}, XmlTag::TagTypes::tagStart);
+692   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+693     tagStart.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+694 
+695   tagStart.WriteXML (o);
+696   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+697 
+698   XmlElementInt32::WriteXML  (codedNumOfFeatures,     \textcolor{stringliteral}{"CodedNumOfFeatures"},     o);
+699   XmlElementDouble::WriteXML (c\_Param,                \textcolor{stringliteral}{"c\_Param"},                o);
+700   XmlElementInt32::WriteXML  (numEncodedFeatures,     \textcolor{stringliteral}{"NumEncodedFeatures"},     o);
+701   XmlElementInt32::WriteXML  (numOfFeatures,          \textcolor{stringliteral}{"NumOfFeatures"},          o);
+702   XmlElementInt32::WriteXML  (xSpaceNeededPerExample, \textcolor{stringliteral}{"xSpaceNeededPerExample"}, o);
+703 
+704   \textcolor{keywordflow}{if}  (cardinalityDest)
+705     XmlElementArrayInt32::WriteXML (numOfFeatures, cardinalityDest, \textcolor{stringliteral}{"CardinalityDest"}, o);
+706 
+707   \textcolor{keywordflow}{if}  (class1)  class1->Name ().WriteXML (\textcolor{stringliteral}{"Class1"}, o);
+708   \textcolor{keywordflow}{if}  (class2)  class2->Name ().WriteXML (\textcolor{stringliteral}{"Class2"}, o);
+709   \textcolor{keywordflow}{if}  (destFeatureNums)
+710     XmlElementArrayInt32::WriteXML (numOfFeatures, destFeatureNums, \textcolor{stringliteral}{"DestFeatureNums"}, o);
+711 
+712   \textcolor{keywordflow}{if}  (fileDesc)      fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a52dd5520a36027eef50b4d7a613b6fba}{WriteXML}     (\textcolor{stringliteral}{"FileDesc"},     o);
+713   \textcolor{keywordflow}{if}  (destFileDesc)  destFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a52dd5520a36027eef50b4d7a613b6fba}{WriteXML} (\textcolor{stringliteral}{"DestFileDesc"}, o);
+714 
+715   \textcolor{keywordflow}{if}  (destWhatToDo)
+716   \{
+717     \hyperlink{namespace_k_k_b_adf8a10085d231870d8a072046d6cba10}{VectorInt32}  v;
+718     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < numOfFeatures;  ++x)
+719       v.push\_back ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(destWhatToDo[x]));
+720     XmlElementVectorInt32::WriteXML (v, \textcolor{stringliteral}{"DestWhatToDo"}, o);
+721   \}
+722 
+723   \hyperlink{namespace_k_k_m_l_l_ad6a1e63c0b52f7236e41cee6ce834273}{EncodingMethodToStr} (encodingMethod).\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"EncodingMethod"}, o);
+724 
+725   selectedFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a8119e4ff5c20ad2793df8766c9cb84ea}{WriteXML} (\textcolor{stringliteral}{"selectedFeatures"}, o);
+726 
+727   \textcolor{keywordflow}{if}  (srcFeatureNums)
+728     XmlElementArrayInt32::WriteXML (numOfFeatures, srcFeatureNums, \textcolor{stringliteral}{"SrcFeatureNums"}, o);
+729  
+730   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  tagEnd (\textcolor{stringliteral}{"TrainingClassList"}, XmlTag::TagTypes::tagEnd);
+731   tagEnd.WriteXML (o);
+732   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+733 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}!X\+Space\+Needed\+Per\+Example@{X\+Space\+Needed\+Per\+Example}}
+\index{X\+Space\+Needed\+Per\+Example@{X\+Space\+Needed\+Per\+Example}!K\+K\+M\+L\+L\+::\+Feature\+Encoder@{K\+K\+M\+L\+L\+::\+Feature\+Encoder}}
+\subsubsection[{\texorpdfstring{X\+Space\+Needed\+Per\+Example()}{XSpaceNeededPerExample()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+X\+Space\+Needed\+Per\+Example (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder_abdf459cb6ec11bf1519a53643a24fdb8}{}\label{class_k_k_m_l_l_1_1_feature_encoder_abdf459cb6ec11bf1519a53643a24fdb8}
+
+
+Definition at line 128 of file Feature\+Encoder.\+h.
+
+
+\begin{DoxyCode}
+128 \{\textcolor{keywordflow}{return} xSpaceNeededPerExample;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_encoder_8h}{Feature\+Encoder.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_encoder_8cpp}{Feature\+Encoder.\+cpp}\end{DoxyCompactItemize}

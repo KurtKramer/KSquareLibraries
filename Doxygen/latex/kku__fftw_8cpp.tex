@@ -1,0 +1,62 @@
+\hypertarget{kku__fftw_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/kku\+\_\+fftw.cpp File Reference}
+\label{kku__fftw_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/kku\+\_\+fftw.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/kku\+\_\+fftw.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$complex$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}kku\+\_\+fftw.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{kku__fftw_8cpp_aef82dd4e060edfb8bd2095364c08e381}{S\+W\+AP} (float \&a, float \&b)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile \hyperlink{namespace_k_k_b_ae74d71076d6a6eb363f18a563ac0785a}{K\+K\+B\+::\+Goal\+Keeper\+Ptr} \hyperlink{kku__fftw_8cpp_a56d0ef9c33c59fa345eb490e7ca64e96}{fftw\+Goal\+Keeper} = N\+U\+LL
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{kku\+\_\+fftw.\+cpp@{kku\+\_\+fftw.\+cpp}!S\+W\+AP@{S\+W\+AP}}
+\index{S\+W\+AP@{S\+W\+AP}!kku\+\_\+fftw.\+cpp@{kku\+\_\+fftw.\+cpp}}
+\subsubsection[{\texorpdfstring{S\+W\+A\+P(float \&a, float \&b)}{SWAP(float &a, float &b)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+W\+AP (
+\begin{DoxyParamCaption}
+\item[{float \&}]{a, }
+\item[{float \&}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{kku__fftw_8cpp_aef82dd4e060edfb8bd2095364c08e381}{}\label{kku__fftw_8cpp_aef82dd4e060edfb8bd2095364c08e381}
+
+
+Definition at line 130 of file kku\+\_\+fftw.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+F\+F\+T().
+
+
+\begin{DoxyCode}
+131 \{
+132   \textcolor{keywordtype}{float} zed = a;
+133   a = b;
+134   b = zed;
+135 \}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{kku\+\_\+fftw.\+cpp@{kku\+\_\+fftw.\+cpp}!fftw\+Goal\+Keeper@{fftw\+Goal\+Keeper}}
+\index{fftw\+Goal\+Keeper@{fftw\+Goal\+Keeper}!kku\+\_\+fftw.\+cpp@{kku\+\_\+fftw.\+cpp}}
+\subsubsection[{\texorpdfstring{fftw\+Goal\+Keeper}{fftwGoalKeeper}}]{\setlength{\rightskip}{0pt plus 5cm}volatile {\bf K\+K\+B\+::\+Goal\+Keeper\+Ptr} fftw\+Goal\+Keeper = N\+U\+LL}\hypertarget{kku__fftw_8cpp_a56d0ef9c33c59fa345eb490e7ca64e96}{}\label{kku__fftw_8cpp_a56d0ef9c33c59fa345eb490e7ca64e96}
+
+
+Definition at line 259 of file kku\+\_\+fftw.\+cpp.
+

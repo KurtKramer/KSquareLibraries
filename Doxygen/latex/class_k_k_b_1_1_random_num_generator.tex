@@ -1,0 +1,119 @@
+\hypertarget{class_k_k_b_1_1_random_num_generator}{}\section{K\+KB\+:\+:Random\+Num\+Generator Class Reference}
+\label{class_k_k_b_1_1_random_num_generator}\index{K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}}
+
+
+Represents one single random number generator.  
+
+
+
+
+{\ttfamily \#include $<$Random\+Num\+Generator.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_random_num_generator_a7c17e42b6512c279b6301bd8e4d8f5c5}{Random\+Num\+Generator} ()
+\item 
+\hyperlink{class_k_k_b_1_1_random_num_generator_afd97066c4ad6a91c3e72edd31866e650}{Random\+Num\+Generator} (long \+\_\+seed)
+\item 
+\hyperlink{class_k_k_b_1_1_random_num_generator_a71ddf586846ca9349b2a916177fc8ac9}{$\sim$\+Random\+Num\+Generator} ()
+\item 
+long \hyperlink{class_k_k_b_1_1_random_num_generator_a4d89c40b50259c9928605ac8adcc777d}{Next} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents one single random number generator. 
+
+Rather than using the two global functions \char`\"{}lrand48\char`\"{} and \char`\"{}srand48\char`\"{} you can create an instance of this class that will provide the random sequence. The advantage is that you can control who has access to this sequence. That is you do not need to worry that some other code that you are calling is not also getting numbers from this sequence. This will allow you to guarantee the same sequence of numbers for the same seed. 
+
+Definition at line 20 of file Random\+Num\+Generator.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}!Random\+Num\+Generator@{Random\+Num\+Generator}}
+\index{Random\+Num\+Generator@{Random\+Num\+Generator}!K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}}
+\subsubsection[{\texorpdfstring{Random\+Num\+Generator()}{RandomNumGenerator()}}]{\setlength{\rightskip}{0pt plus 5cm}Random\+Num\+Generator\+::\+Random\+Num\+Generator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_random_num_generator_a7c17e42b6512c279b6301bd8e4d8f5c5}{}\label{class_k_k_b_1_1_random_num_generator_a7c17e42b6512c279b6301bd8e4d8f5c5}
+
+
+Definition at line 25 of file Random\+Num\+Generator.\+cpp.
+
+
+\begin{DoxyCode}
+26 \{
+27 \textcolor{preprocessor}{#if  defined(WIN32)}
+28   \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} = 0x1234ABCD330E;
+29 \textcolor{preprocessor}{#else}
+30   \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} = 0x1234ABCD330ELLU;
+31 \textcolor{preprocessor}{#endif}
+32 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}!Random\+Num\+Generator@{Random\+Num\+Generator}}
+\index{Random\+Num\+Generator@{Random\+Num\+Generator}!K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}}
+\subsubsection[{\texorpdfstring{Random\+Num\+Generator(long \+\_\+seed)}{RandomNumGenerator(long _seed)}}]{\setlength{\rightskip}{0pt plus 5cm}Random\+Num\+Generator\+::\+Random\+Num\+Generator (
+\begin{DoxyParamCaption}
+\item[{long}]{\+\_\+seed}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_random_num_generator_afd97066c4ad6a91c3e72edd31866e650}{}\label{class_k_k_b_1_1_random_num_generator_afd97066c4ad6a91c3e72edd31866e650}
+
+
+Definition at line 35 of file Random\+Num\+Generator.\+cpp.
+
+
+\begin{DoxyCode}
+36 \{
+37   \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} seedMask = 65535;
+38   \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} &= seedMask;
+39   \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} upperBits = \_seed;
+40   upperBits <<= 16;
+41   \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} |= upperBits;
+42 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}!````~Random\+Num\+Generator@{$\sim$\+Random\+Num\+Generator}}
+\index{````~Random\+Num\+Generator@{$\sim$\+Random\+Num\+Generator}!K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}}
+\subsubsection[{\texorpdfstring{$\sim$\+Random\+Num\+Generator()}{~RandomNumGenerator()}}]{\setlength{\rightskip}{0pt plus 5cm}Random\+Num\+Generator\+::$\sim$\+Random\+Num\+Generator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_random_num_generator_a71ddf586846ca9349b2a916177fc8ac9}{}\label{class_k_k_b_1_1_random_num_generator_a71ddf586846ca9349b2a916177fc8ac9}
+
+
+Definition at line 45 of file Random\+Num\+Generator.\+cpp.
+
+
+\begin{DoxyCode}
+46 \{
+47 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}!Next@{Next}}
+\index{Next@{Next}!K\+K\+B\+::\+Random\+Num\+Generator@{K\+K\+B\+::\+Random\+Num\+Generator}}
+\subsubsection[{\texorpdfstring{Next()}{Next()}}]{\setlength{\rightskip}{0pt plus 5cm}long Random\+Num\+Generator\+::\+Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_random_num_generator_a4d89c40b50259c9928605ac8adcc777d}{}\label{class_k_k_b_1_1_random_num_generator_a4d89c40b50259c9928605ac8adcc777d}
+
+
+Definition at line 63 of file Random\+Num\+Generator.\+cpp.
+
+
+\begin{DoxyCode}
+64 \{
+65   \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} = ( ((a * \hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence}) & mask) + c ) % m;
+66   \textcolor{keywordflow}{return} (\textcolor{keywordtype}{long})(\hyperlink{_k_k_base_types_8cpp_a9f6516ed195a919be488f0d84b219cc9}{\_lrand48\_sequence} >> 17);
+67 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_random_num_generator_8h}{Random\+Num\+Generator.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_random_num_generator_8cpp}{Random\+Num\+Generator.\+cpp}\end{DoxyCompactItemize}

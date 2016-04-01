@@ -1,0 +1,689 @@
+\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer}{}\section{K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+F\+V\+Producer Class Reference}
+\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer}\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+
+
+{\ttfamily \#include $<$Gray\+Scale\+Images\+F\+V\+Producer.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+F\+V\+Producer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_ab2d517051827c2ff83737d15e3bf0708}{Gray\+Scale\+Images\+F\+V\+Producer} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} factory)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8fa33ccdf275a1c25319ad159fff4737}{$\sim$\+Gray\+Scale\+Images\+F\+V\+Producer} ()
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8e8b7ed5663e7fe6a61b134dbc5ea8d7}{Compute\+Feature\+Vector} (const \hyperlink{class_k_k_b_1_1_raster}{Raster} \&src\+Image, const \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} known\+Class, \hyperlink{namespace_k_k_b_a5369c086484e7d77bcb87b0b8aa7193d}{Raster\+List\+Ptr} intermediate\+Images, float prior\+Reduction\+Factor, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&run\+Log)
+\begin{DoxyCompactList}\small\item\em Compute a \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} for the supplied \textquotesingle{}image\textquotesingle{}. \end{DoxyCompactList}\item 
+virtual const type\+\_\+info $\ast$ \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5819ed8e535aac119991691c4c0aeb4b}{Feature\+Vector\+List\+Type\+Id} () const 
+\begin{DoxyCompactList}\small\item\em Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} derived class that can contain instances in \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} instances created by this producer. \end{DoxyCompactList}\item 
+virtual const type\+\_\+info $\ast$ \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5e6c2f87ddbfc5fcb048b3337f35f609}{Feature\+Vector\+Type\+Id} () const 
+\begin{DoxyCompactList}\small\item\em Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the Feature Vector that this instance of \textquotesingle{}Feature\+Computer\textquotesingle{} creates. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8c118271dc9bac941f86adcd5dd44a6f}{Manufactur\+Feature\+Vector\+List} (bool owner, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&run\+Log) const 
+\begin{DoxyCompactList}\small\item\em Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors by this \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_aaa9437b36ae935eec369341935fd21f9}{Version} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a077006af32da9856f20e77fd32898624}{Define\+File\+Desc\+Static} ()
+\item 
+static \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a7f3991a75f9a7345b6f6c29dac5bc479}{Max\+Num\+Of\+Features} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a16e9b5b35454bb61df2d1330790ec72a}{Define\+File\+Desc} () const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 19 of file Gray\+Scale\+Images\+F\+V\+Producer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Gray\+Scale\+Images\+F\+V\+Producer@{Gray\+Scale\+Images\+F\+V\+Producer}}
+\index{Gray\+Scale\+Images\+F\+V\+Producer@{Gray\+Scale\+Images\+F\+V\+Producer}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+Producer(\+Factory\+F\+V\+Producer\+Ptr factory)}{GrayScaleImagesFVProducer(FactoryFVProducerPtr factory)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+Producer\+::\+Gray\+Scale\+Images\+F\+V\+Producer (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{factory}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_ab2d517051827c2ff83737d15e3bf0708}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_ab2d517051827c2ff83737d15e3bf0708}
+
+
+Definition at line 173 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+Feature\+Vector\+Producer().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+Manufacture\+Instance().
+
+
+\begin{DoxyCode}
+173                                                                                   :
+174     \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a1d60d2cfe0d160215ae44a6c8aa0f10a}{FeatureVectorProducer} (\textcolor{stringliteral}{"GrayScaleImages"},
+175                            factory
+176                           ),
+177     totPixsForMorphOps (4000000),
+178     workRaster1Area (NULL),
+179     workRaster2Area (NULL),
+180     workRaster3Area (NULL),
+181     workRaster1Rows (NULL),
+182     workRaster2Rows (NULL),
+183     workRaster3Rows (NULL)
+184 \{
+185   workRaster1Area = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[totPixsForMorphOps];
+186   workRaster2Area = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[totPixsForMorphOps];
+187   workRaster3Area = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[totPixsForMorphOps];
+188 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!````~Gray\+Scale\+Images\+F\+V\+Producer@{$\sim$\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\index{````~Gray\+Scale\+Images\+F\+V\+Producer@{$\sim$\+Gray\+Scale\+Images\+F\+V\+Producer}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{$\sim$\+Gray\+Scale\+Images\+F\+V\+Producer()}{~GrayScaleImagesFVProducer()}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+Producer\+::$\sim$\+Gray\+Scale\+Images\+F\+V\+Producer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8fa33ccdf275a1c25319ad159fff4737}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8fa33ccdf275a1c25319ad159fff4737}
+
+
+Definition at line 193 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+\begin{DoxyCode}
+194 \{
+195   \textcolor{keyword}{delete}  workRaster1Area;  workRaster1Area = NULL;
+196   \textcolor{keyword}{delete}  workRaster2Area;  workRaster2Area = NULL;
+197   \textcolor{keyword}{delete}  workRaster3Area;  workRaster3Area = NULL;
+198   \textcolor{keyword}{delete}  workRaster1Rows;  workRaster1Rows = NULL;
+199   \textcolor{keyword}{delete}  workRaster2Rows;  workRaster2Rows = NULL;
+200   \textcolor{keyword}{delete}  workRaster3Rows;  workRaster3Rows = NULL;
+201 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Compute\+Feature\+Vector@{Compute\+Feature\+Vector}}
+\index{Compute\+Feature\+Vector@{Compute\+Feature\+Vector}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Compute\+Feature\+Vector(const Raster \&src\+Image, const M\+L\+Class\+Ptr known\+Class, Raster\+List\+Ptr intermediate\+Images, float prior\+Reduction\+Factor, Run\+Log \&run\+Log)}{ComputeFeatureVector(const Raster &srcImage, const MLClassPtr knownClass, RasterListPtr intermediateImages, float priorReductionFactor, RunLog &runLog)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+Ptr} Gray\+Scale\+Images\+F\+V\+Producer\+::\+Compute\+Feature\+Vector (
+\begin{DoxyParamCaption}
+\item[{const {\bf Raster} \&}]{image, }
+\item[{const {\bf M\+L\+Class\+Ptr}}]{known\+Class, }
+\item[{{\bf Raster\+List\+Ptr}}]{intermediate\+Images, }
+\item[{float}]{prior\+Reduction\+Factor, }
+\item[{{\bf Run\+Log} \&}]{run\+Log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8e8b7ed5663e7fe6a61b134dbc5ea8d7}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8e8b7ed5663e7fe6a61b134dbc5ea8d7}
+
+
+Compute a \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} for the supplied \textquotesingle{}image\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em image} & \\
+\hline
+\mbox{\tt in}  & {\em known\+Class} & The class label that will be assigned to this Feature vector. \\
+\hline
+\mbox{\tt in,out}  & {\em intermediate\+Images} & If not N\+U\+LL will save a copy of the intermediate images created during Feature Computation; the call will own the list and its contents. \\
+\hline
+\mbox{\tt in}  & {\em prior\+Reduction\+Factor} & The reduction that was done to the image prior to calling this routine; if no size change was made then set this field to 1.\+0. The Feaure\+Vector computation routines will use this field to adjust Size\+Dependent features appropriately. the value of this parameter represents the number of pixels that were reduced to 1 pixel. A value of 3 indicates (3 x 3) pixels were reduced to 1 pixel. \\
+\hline
+\mbox{\tt in}  & {\em log} & Logging file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The resultant Feature vector computed. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8f93296a46432624867b12ed8631df0f}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 316 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Calc\+Area\+And\+Intensity\+Features(), K\+K\+B\+::\+Raster\+::\+Central\+Moments(), K\+K\+B\+::\+Raster\+::\+Compute\+Central\+Moments(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Convex\+Hull\+::\+Convex\+Area(), K\+K\+B\+::\+Convex\+Hull\+::\+Convex\+Hull(), K\+K\+B\+::\+Raster\+::\+Dilation(), K\+K\+B\+::\+Raster\+::\+Edge(), K\+K\+B\+::\+Raster\+::\+Erosion(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data\+Alter(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector(), K\+K\+B\+::\+Raster\+::\+Fill\+Hole(), K\+K\+B\+::\+Convex\+Hull\+::\+Filter(), K\+K\+B\+::\+Raster\+::\+Foreground\+Pixel\+Count(), K\+K\+B\+::\+Raster\+::\+Height(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+B\+::operator+(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Orig\+Size(), K\+K\+B\+::\+Blob\+::\+Pixel\+Count(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Morph\+Op\+::\+S\+Q\+U\+A\+R\+E3, K\+K\+B\+::\+Morph\+Op\+::\+S\+Q\+U\+A\+R\+E5, K\+K\+B\+::\+Morph\+Op\+::\+S\+Q\+U\+A\+R\+E7, K\+K\+B\+::\+Morph\+Op\+::\+S\+Q\+U\+A\+R\+E9, K\+K\+B\+::\+Str\+Format\+Int(), K\+K\+B\+::\+Raster\+::\+Thin\+Contour(), Version(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Version(), and K\+K\+B\+::\+Raster\+::\+Width().
+
+
+\begin{DoxyCode}
+323 \{
+324   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  fv = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (maxNumOfFeatures);
+325   fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (knownClass);
+326   \textcolor{keywordtype}{float}*  featureData = fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a1de79e775d2bb2ddde4016a1269b5431}{FeatureDataAlter} ();
+327 
+328   fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a17650be71b83695d35d34029257652ea}{Version} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_aaa9437b36ae935eec369341935fd21f9}{Version} ());
+329 
+330   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} areaBeforeReduction = 0;
+331   \textcolor{keywordtype}{float}  weighedSizeBeforeReduction = 0.0f;
+332 
+333   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row = 0;
+334   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = 0;
+335 
+336   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  intensityHistBuckets[8];
+337   srcImage.CalcAreaAndIntensityFeatures (areaBeforeReduction, 
+338                                          weighedSizeBeforeReduction,
+339                                          intensityHistBuckets
+340                                         );
+341 
+342   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} srcHeight = srcImage.Height ();
+343   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} srcWidth  = srcImage.Width  ();
+344 
+345   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} reducedHeight = srcHeight;
+346   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} reducedWidth  = srcWidth;
+347 
+348   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} reducedSquareArea = reducedHeight * reducedWidth;
+349 
+350   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} reductionMultiple = 1;
+351 
+352   \textcolor{keywordflow}{while}  (reducedSquareArea > totPixsForMorphOps)
+353   \{
+354     ++reductionMultiple;
+355     reducedHeight = (srcHeight + reductionMultiple - 1) / reductionMultiple;
+356     reducedWidth  = (srcWidth  + reductionMultiple - 1) / reductionMultiple;
+357     reducedSquareArea = reducedHeight * reducedWidth;
+358   \}
+359 
+360   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  reductionMultipleSquared = reductionMultiple * reductionMultiple;
+361 
+362   \textcolor{keywordtype}{float}    totalReductionMultiple = priorReductionFactor * reductionMultiple;
+363   \textcolor{keywordtype}{float}    totalReductionMultipleSquared = totalReductionMultiple * totalReductionMultiple;
+364 
+365   \textcolor{keyword}{delete}  workRaster1Rows;  workRaster1Rows = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[reducedHeight];
+366   \textcolor{keyword}{delete}  workRaster2Rows;  workRaster2Rows = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[reducedHeight];
+367   \textcolor{keyword}{delete}  workRaster3Rows;  workRaster3Rows = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[reducedHeight];
+368 
+369   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  wp1 = workRaster1Area;
+370   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  wp2 = workRaster2Area;
+371   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  wp3 = workRaster3Area;
+372 
+373   \textcolor{keywordflow}{for}  (row = 0;  row < reducedHeight; ++row)
+374   \{
+375     workRaster1Rows[row] = wp1;
+376     workRaster2Rows[row] = wp2;
+377     workRaster3Rows[row] = wp3;
+378     wp1 += reducedWidth;
+379     wp2 += reducedWidth;
+380     wp3 += reducedWidth;
+381   \}
+382 
+383   \hyperlink{class_k_k_b_1_1_raster}{Raster}  workRaster1 (reducedHeight, reducedWidth, workRaster1Area, workRaster1Rows);
+384   \hyperlink{class_k_k_b_1_1_raster}{Raster}  workRaster2 (reducedHeight, reducedWidth, workRaster2Area, workRaster2Rows);
+385   \hyperlink{class_k_k_b_1_1_raster}{Raster}  workRaster3 (reducedHeight, reducedWidth, workRaster3Area, workRaster3Rows);
+386 
+387   \hyperlink{class_k_k_b_1_1_raster}{Raster} \textcolor{keyword}{const} * initRaster = NULL;
+388   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}      wr1        = NULL;
+389   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}      wr2        = NULL;
+390 
+391   \textcolor{keywordflow}{if}  (reductionMultiple > 1)
+392   \{
+393     \textcolor{keywordflow}{try}
+394     \{
+395       ReductionByMultiple (reductionMultiple, srcImage, workRaster1);
+396     \}
+397     \textcolor{keywordflow}{catch}  (...)
+398     \{
+399       runLog.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \textcolor{stringliteral}{"GrayScaleImagesFVProducer::ComputeFeatureVector   ***ERROR*** 
+       Exception calling 'ReductionByMultiple'."}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+400       \textcolor{keywordflow}{return} NULL;
+401     \}
+402     initRaster = &workRaster1;
+403     wr1        = &workRaster2;
+404     wr2        = &workRaster3;
+405   \}
+406   \textcolor{keywordflow}{else}
+407   \{
+408     initRaster = &srcImage;
+409     wr1        = &workRaster1;
+410     wr2        = &workRaster2;
+411   \}
+412 
+413   \textcolor{keywordflow}{if}  (areaBeforeReduction < 20)
+414   \{
+415     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} tp = 0;  tp < maxNumOfFeatures;  tp++)
+416       featureData[tp] = 9999999;
+417     \textcolor{keywordflow}{return} fv;
+418   \}
+419   
+420   \textcolor{keywordtype}{float}  convexf = 0.0;
+421   \textcolor{keywordtype}{float}  centralMoments[9];
+422   \textcolor{keywordtype}{float}  centralMomentsWeighted[9];
+423 
+424   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  pixelCountReduced = 0;
+425   \textcolor{keywordtype}{float}    pixelCountWeightedReduced = 0.0f;
+426 
+427   initRaster->\hyperlink{class_k_k_b_1_1_raster_aba990cd9fd39b7804863b6d4cad39f05}{ComputeCentralMoments} (pixelCountReduced, pixelCountWeightedReduced, 
+      centralMoments, centralMomentsWeighted);
+428 
+429 
+430   \textcolor{keywordtype}{float}  edgeMomentf[9];
+431 
+432   initRaster->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr1);
+433   wr1->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr2);
+434   wr2->\hyperlink{class_k_k_b_1_1_raster_a617d427bb2b7094a9d012e63036a66d8}{FillHole} (wr1);
+435 
+436   wr1->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr2);
+437   wr2->\hyperlink{class_k_k_b_1_1_raster_a02fe968acb47d8f7654c115041598c8a}{Edge} (wr1);
+438   wr1->\hyperlink{class_k_k_b_1_1_raster_a48d9a6e24ed721effc322d9b3bb7ab7d}{CentralMoments} (edgeMomentf);
+439   \textcolor{keywordflow}{if}  (intermediateImages)
+440   \{
+441     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numEdgePixelsFound = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(edgeMomentf[0]);
+442     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Edge\_Image\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (numEdgePixelsFound, \textcolor{stringliteral}{"ZZZZ0"}), 
+      intermediateImages);
+443   \}
+444 
+445   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} area = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(centralMoments[0] + 0.5f);  \textcolor{comment}{// Moment-0 is the same as the number
+       of foreground pixels in example.}
+446   \{
+447     \hyperlink{class_k_k_b_1_1_convex_hull}{ConvexHullPtr}  ch = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_convex_hull}{ConvexHull} ();
+448     ch->\hyperlink{class_k_k_b_1_1_convex_hull_a738c3a3fb1e27c75fd1c5a61bd278cec}{Filter} (*initRaster, wr1);
+449     convexf = (float)ch->\hyperlink{class_k_k_b_1_1_convex_hull_a3f6d4a0b84fb968042d1be038d7903ad}{ConvexArea} ();
+450 
+451     \textcolor{keywordflow}{if}  (intermediateImages)
+452     \{
+453       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} convexImageFileName = \textcolor{stringliteral}{"ConvexHull\_"} +
+454                                    \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})convexf, \textcolor{stringliteral}{"ZZZZZ0"});
+455       SaveIntermediateImage (*wr1, convexImageFileName, intermediateImages);
+456     \}
+457 
+458     \textcolor{comment}{//delete  convexImage;}
+459     \textcolor{comment}{//convexImage = NULL;}
+460     \textcolor{keyword}{delete}  ch;
+461     ch = NULL;
+462   \}
+463 
+464   initRaster->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr1);
+465   wr1->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr2);
+466   \textcolor{keywordtype}{float}  areaOpen3 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount}());
+467   \textcolor{keywordflow}{if}  (intermediateImages)
+468     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Opening3\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaOpen3, \textcolor{stringliteral}{"ZZZZZZ0"}), intermediateImages);
+469 
+470 
+471   initRaster->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr1, MorphOp::MaskTypes::SQUARE5);
+472   wr1->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr2, MorphOp::MaskTypes::SQUARE5);
+473   \textcolor{keywordtype}{float}  areaOpen5 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+474   \textcolor{keywordflow}{if}  (intermediateImages)
+475     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Opening5\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaOpen5, \textcolor{stringliteral}{"ZZZZZZ0"}), intermediateImages);
+476 
+477   initRaster->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr1, MorphOp::MaskTypes::SQUARE7);
+478   wr1->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr2, MorphOp::MaskTypes::SQUARE7);
+479   \textcolor{keywordtype}{float}  areaOpen7 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+480   \textcolor{keywordflow}{if}  (intermediateImages)
+481     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Opening7\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaOpen7, \textcolor{stringliteral}{"ZZZZZZ0"}), intermediateImages);
+482   
+483   wr2->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr1, MorphOp::MaskTypes::SQUARE9);
+484   wr1->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr2, MorphOp::MaskTypes::SQUARE9);
+485   \textcolor{keywordtype}{float}  areaOpen9 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+486   \textcolor{keywordflow}{if}  (intermediateImages)
+487     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Opening9\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaOpen9, \textcolor{stringliteral}{"ZZZZZZ0"}), intermediateImages);
+488 
+489   initRaster->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr1);
+490   wr1->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr2);
+491   \textcolor{keywordtype}{float}  areaClose3 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+492   \textcolor{keywordflow}{if}  (intermediateImages)
+493     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Close3\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaClose3, \textcolor{stringliteral}{"ZZZZZZ0
+      "}), intermediateImages);
+494 
+495   wr2->\hyperlink{class_k_k_b_1_1_raster_a617d427bb2b7094a9d012e63036a66d8}{FillHole} (wr1);
+496   \textcolor{keywordtype}{float}  tranf = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+497   \textcolor{keywordflow}{if}  (intermediateImages)
+498     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"FillHole\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})tranf, \textcolor{stringliteral}{"ZZZZZZ0"}), intermediateImages);
+499 
+500   initRaster->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr1, MorphOp::MaskTypes::SQUARE5);
+501   wr1->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr2, MorphOp::MaskTypes::SQUARE5);
+502   \textcolor{keywordtype}{float}  areaClose5 = (float)(wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+503   \textcolor{keywordflow}{if}  (intermediateImages)
+504     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Close5\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaClose5, \textcolor{stringliteral}{"ZZZZZZ0
+      "}), intermediateImages);
+505   
+506   initRaster->\hyperlink{class_k_k_b_1_1_raster_afb263b7cc4ab60bf6745c5166173bbb9}{Dilation} (wr1, MorphOp::MaskTypes::SQUARE7);
+507   wr1->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion}   (wr2, MorphOp::MaskTypes::SQUARE7);
+508   \textcolor{keywordtype}{float}  areaClose7 = float (wr2->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} ());
+509   \textcolor{keywordflow}{if}  (intermediateImages)
+510     SaveIntermediateImage (*wr2, \textcolor{stringliteral}{"Close7\_"} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})areaClose7, \textcolor{stringliteral}{"ZZZZZZ0
+      "}), intermediateImages);
+511 
+512   \{
+513     featureData[SizeIndex]    = float (areaBeforeReduction * priorReductionFactor);
+514     featureData[Moment1Index] = float (centralMoments[1]);
+515     featureData[Moment2Index] = float (centralMoments[2]);
+516     featureData[Moment3Index] = float (centralMoments[3]);
+517     featureData[Moment4Index] = float (centralMoments[4]);
+518     featureData[Moment5Index] = float (centralMoments[5]);
+519     featureData[Moment6Index] = float (centralMoments[6]);
+520     featureData[Moment7Index] = float (centralMoments[7]);
+521     featureData[Moment8Index] = float (centralMoments[8]);
+522 
+523     featureData[WeighedMoment0Index] = centralMomentsWeighted[0] * totalReductionMultiple;
+524     featureData[WeighedMoment1Index] = centralMomentsWeighted[1];
+525     featureData[WeighedMoment2Index] = centralMomentsWeighted[2];
+526     featureData[WeighedMoment3Index] = centralMomentsWeighted[3];
+527     featureData[WeighedMoment4Index] = centralMomentsWeighted[4];
+528     featureData[WeighedMoment5Index] = centralMomentsWeighted[5];
+529     featureData[WeighedMoment6Index] = centralMomentsWeighted[6];
+530     featureData[WeighedMoment7Index] = centralMomentsWeighted[7];
+531     featureData[WeighedMoment8Index] = centralMomentsWeighted[8];
+532 
+533     featureData[EdgeSizeIndex]    = (float)edgeMomentf[0] * totalReductionMultiple;
+534     featureData[EdgeMoment1Index] = (float)edgeMomentf[1];
+535     featureData[EdgeMoment2Index] = (float)edgeMomentf[2];
+536     featureData[EdgeMoment3Index] = (float)edgeMomentf[3];
+537     featureData[EdgeMoment4Index] = (float)edgeMomentf[4];
+538     featureData[EdgeMoment5Index] = (float)edgeMomentf[5];
+539     featureData[EdgeMoment6Index] = (float)edgeMomentf[6];
+540     featureData[EdgeMoment7Index] = (float)edgeMomentf[7];
+541     featureData[EdgeMoment8Index] = (float)edgeMomentf[8];
+542 
+543     \textcolor{comment}{// Need to adjust for any reduction in Image Size}
+544     \textcolor{comment}{//featureData[SizeIndex]           = float (areaBeforeReduction);}
+545     \textcolor{comment}{//featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));}
+546     \textcolor{comment}{//featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;}
+547   \}
+548 
+549 
+550   \textcolor{keywordflow}{if} ((area > convexf)  &&  (convexf > 0))
+551      featureData[TransparancyConvexHullIndex] = 1.0;
+552   \textcolor{keywordflow}{else} 
+553      featureData[TransparancyConvexHullIndex] = (float)area / (\textcolor{keywordtype}{float})convexf;
+554 
+555   featureData[TransparancyPixelCountIndex] = (float)area / (\textcolor{keywordtype}{float})tranf;
+556   featureData[TransparancyOpen3Index]      = (float)(area - areaOpen3)  / (float)area;
+557   featureData[TransparancyOpen5Index]      = (float)(area - areaOpen5)  / (float)area;
+558   featureData[TransparancyOpen7Index]      = (float)(area - areaOpen7)  / (float)area;                
+559   featureData[TransparancyOpen9Index]      = (float)(area - areaOpen9)  / (float)area;
+560   featureData[TransparancyClose3Index]     = (float)(area - areaClose3) / (float)area;
+561   featureData[TransparancyClose5Index]     = (float)(area - areaClose5) / (float)area;
+562   featureData[TransparancyClose7Index]     = (float)(area - areaClose7) / (float)area;
+563  
+564   \{
+565     \textcolor{comment}{// This part has to be done after 'CalcOrientationAndEigerRatio' is called. That is where the example
+       centroid is calculated.}
+566     \textcolor{comment}{//fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);}
+567     \textcolor{comment}{//fv->CentroidRow (initRaster->CentroidRow () * reductioqnMultiple);}
+568   \}
+569 
+570   featureData[ConvexAreaIndex]       = convexf * totalReductionMultipleSquared;
+571   featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
+572   featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
+573 
+574   \textcolor{keywordtype}{float}  areaD = float (areaBeforeReduction);
+575 
+576   featureData[IntensityHist1Index] = ((float)intensityHistBuckets[1] / areaD);
+577   featureData[IntensityHist2Index] = ((float)intensityHistBuckets[2] / areaD);
+578   featureData[IntensityHist3Index] = ((float)intensityHistBuckets[3] / areaD);
+579   featureData[IntensityHist4Index] = ((float)intensityHistBuckets[4] / areaD);
+580   featureData[IntensityHist5Index] = ((float)intensityHistBuckets[5] / areaD);
+581   featureData[IntensityHist6Index] = ((float)intensityHistBuckets[6] / areaD);
+582   featureData[IntensityHist7Index] = ((float)intensityHistBuckets[7] / areaD);
+583 
+584 
+585   \{
+586     \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  darkSpots = NULL;
+587 
+588     BinarizeImageByThreshold (200, 255, *initRaster, *wr1); 
+589    
+590     wr1->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr2, MorphOp::MaskTypes::SQUARE3);
+591     wr2->\hyperlink{class_k_k_b_1_1_raster_a5a019718e60c06c4262e8127232ff19c}{Erosion} (wr1, MorphOp::MaskTypes::SQUARE3);
+592 
+593     \hyperlink{class_k_k_b_1_1_blob_list}{KKB::BlobListPtr}  blobs = wr1->\hyperlink{class_k_k_b_1_1_raster_a5d6059f6d0020e493683b2a00a6a8821}{ExtractBlobs} (3);
+594 
+595     \textcolor{keywordtype}{int}  darkSpotFreq[10];
+596     \textcolor{keywordtype}{int} x;
+597     \textcolor{keywordflow}{for}  (x = 0;  x < 10;  ++x)
+598       darkSpotFreq[x] = 0;
+599 
+600     KKB::BlobList::iterator  idx;
+601     \textcolor{keywordflow}{for}  (idx = blobs->begin ();  idx != blobs->end ();  ++idx)
+602     \{
+603       \hyperlink{class_k_k_b_1_1_blob}{KKB::BlobPtr}  b = idx->second;
+604 
+605       \textcolor{keywordtype}{double} l =  ::log ((\textcolor{keywordtype}{double})(b->\hyperlink{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}{PixelCount} ()));
+606 
+607       \textcolor{keywordtype}{double} logOfThree = ::log (3.0);
+608 
+609       \textcolor{keywordtype}{int}  index = (int)floor (l / logOfThree);
+610       index = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (\hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (0, index), 9);
+611       ++(darkSpotFreq[index]);
+612     \}
+613 
+614     featureData[DarkSpotCount0] = (float)darkSpotFreq[0];
+615     featureData[DarkSpotCount1] = (float)darkSpotFreq[1];
+616     featureData[DarkSpotCount2] = (float)darkSpotFreq[2];
+617     featureData[DarkSpotCount3] = (float)darkSpotFreq[3];
+618     featureData[DarkSpotCount4] = (float)darkSpotFreq[4];
+619     featureData[DarkSpotCount5] = (float)darkSpotFreq[5];
+620     featureData[DarkSpotCount6] = (float)darkSpotFreq[6];
+621     featureData[DarkSpotCount7] = (float)darkSpotFreq[7];
+622     featureData[DarkSpotCount8] = (float)darkSpotFreq[8];
+623     featureData[DarkSpotCount9] = (float)darkSpotFreq[9];
+624 
+625     \textcolor{keyword}{delete}  blobs;
+626     blobs = NULL;
+627   \}
+628 
+629   \textcolor{keywordflow}{if}  (intermediateImages)
+630   \{
+631     \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  thinnedImage = initRaster->\hyperlink{class_k_k_b_1_1_raster_a213e2625810c526dae791ff6aadad2a5}{ThinContour} ();
+632     SaveIntermediateImage  (*thinnedImage, \textcolor{stringliteral}{"\_Thinned"}, intermediateImages);
+633     \textcolor{keyword}{delete}  thinnedImage;  
+634     thinnedImage = NULL;
+635   \}
+636 
+637   featureData[0] = (float)areaBeforeReduction;  \textcolor{comment}{// In case the example was reduced.}
+638   fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a5ea23a16266bc34a289824042a836c06}{OrigSize} ((\textcolor{keywordtype}{float})areaBeforeReduction);
+639  
+640   \textcolor{keywordflow}{return} fv;
+641 \}  \textcolor{comment}{/* ComputeFeatureVector */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Define\+File\+Desc@{Define\+File\+Desc}}
+\index{Define\+File\+Desc@{Define\+File\+Desc}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Define\+File\+Desc() const }{DefineFileDesc() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Gray\+Scale\+Images\+F\+V\+Producer\+::\+Define\+File\+Desc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a16e9b5b35454bb61df2d1330790ec72a}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a16e9b5b35454bb61df2d1330790ec72a}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a14067d343fed61b78aab6962850b3c34}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 659 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+
+References Define\+File\+Desc\+Static().
+
+
+\begin{DoxyCode}
+660 \{
+661   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a077006af32da9856f20e77fd32898624}{DefineFileDescStatic} ();
+662 \}  \textcolor{comment}{/* DefineFileDesc */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Define\+File\+Desc\+Static@{Define\+File\+Desc\+Static}}
+\index{Define\+File\+Desc\+Static@{Define\+File\+Desc\+Static}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Define\+File\+Desc\+Static()}{DefineFileDescStatic()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Gray\+Scale\+Images\+F\+V\+Producer\+::\+Define\+File\+Desc\+Static (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a077006af32da9856f20e77fd32898624}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a077006af32da9856f20e77fd32898624}
+
+
+Definition at line 668 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Attribute(), K\+K\+M\+L\+L\+::\+Encode\+Problem(), K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+M\+L\+L\+::\+Numeric, K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block(), and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Version().
+
+
+
+Referenced by Define\+File\+Desc(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+File\+Desc(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+Manufactur\+Feature\+Vector\+List().
+
+
+\begin{DoxyCode}
+669 \{
+670   \textcolor{keywordflow}{if}  (existingFileDesc)
+671     \textcolor{keywordflow}{return}  existingFileDesc;
+672 
+673   GlobalGoalKeeper::StartBlock ();
+674   \textcolor{keywordflow}{if}  (!existingFileDesc)
+675   \{
+676     \textcolor{keywordtype}{bool}  alreadyExists = \textcolor{keyword}{false};
+677     \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  tempFileDesc = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_file_desc}{KKMLL::FileDesc} ();
+678     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} fieldNum = 0;  fieldNum < maxNumOfFeatures;  ++fieldNum)
+679     \{
+680       tempFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (featureNames[fieldNum], 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExists);
+681     \}
+682     tempFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_aff599179bf3e386c5da240117386da12}{Version} (\hyperlink{_gray_scale_images_f_v_producer_8h_abe2ad7e75260504d7f992932855312f9}{\_GrayScaleImagesFVProducer\_VersionNum\_}
+      );
+683 
+684     existingFileDesc = \hyperlink{class_k_k_m_l_l_1_1_file_desc_ab64013b479502d2761a9f11570a565bc}{FileDesc::GetExistingFileDesc} (tempFileDesc);
+685     tempFileDesc = NULL;
+686   \}
+687   GlobalGoalKeeper::EndBlock ();
+688 
+689   \textcolor{comment}{// Lets make sure that one was already created by opening up a data file.}
+690   \textcolor{keywordflow}{return} existingFileDesc;
+691 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Feature\+Vector\+List\+Type\+Id@{Feature\+Vector\+List\+Type\+Id}}
+\index{Feature\+Vector\+List\+Type\+Id@{Feature\+Vector\+List\+Type\+Id}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Feature\+Vector\+List\+Type\+Id() const }{FeatureVectorListTypeId() const }}]{\setlength{\rightskip}{0pt plus 5cm}const type\+\_\+info $\ast$ Gray\+Scale\+Images\+F\+V\+Producer\+::\+Feature\+Vector\+List\+Type\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5819ed8e535aac119991691c4c0aeb4b}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5819ed8e535aac119991691c4c0aeb4b}
+
+
+Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} derived class that can contain instances in \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} instances created by this producer. 
+
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a2c22d1df90af267a264cc21ad31c369a}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 652 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+\begin{DoxyCode}
+653 \{
+654   \textcolor{keywordflow}{return}  &(\textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList}));
+655 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Feature\+Vector\+Type\+Id@{Feature\+Vector\+Type\+Id}}
+\index{Feature\+Vector\+Type\+Id@{Feature\+Vector\+Type\+Id}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Feature\+Vector\+Type\+Id() const }{FeatureVectorTypeId() const }}]{\setlength{\rightskip}{0pt plus 5cm}const type\+\_\+info $\ast$ Gray\+Scale\+Images\+F\+V\+Producer\+::\+Feature\+Vector\+Type\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5e6c2f87ddbfc5fcb048b3337f35f609}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a5e6c2f87ddbfc5fcb048b3337f35f609}
+
+
+Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the Feature Vector that this instance of \textquotesingle{}Feature\+Computer\textquotesingle{} creates. 
+
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a4562c12bc19d0eef87c54ba32cfa69ed}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 646 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+\begin{DoxyCode}
+647 \{
+648   \textcolor{keywordflow}{return}  &(\textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector}));
+649 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Manufactur\+Feature\+Vector\+List@{Manufactur\+Feature\+Vector\+List}}
+\index{Manufactur\+Feature\+Vector\+List@{Manufactur\+Feature\+Vector\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufactur\+Feature\+Vector\+List(bool owner, Run\+Log \&run\+Log) const }{ManufacturFeatureVectorList(bool owner, RunLog &runLog) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+Producer\+::\+Manufactur\+Feature\+Vector\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{owner, }
+\item[{{\bf Run\+Log} \&}]{run\+Log}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8c118271dc9bac941f86adcd5dd44a6f}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a8c118271dc9bac941f86adcd5dd44a6f}
+
+
+Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors by this \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. 
+
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_adc6163ba80510ea41c6047172db93ac0}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 696 of file Gray\+Scale\+Images\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+File\+Desc().
+
+
+\begin{DoxyCode}
+700 \{
+701   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (\hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} (), owner);
+702 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Max\+Num\+Of\+Features@{Max\+Num\+Of\+Features}}
+\index{Max\+Num\+Of\+Features@{Max\+Num\+Of\+Features}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Max\+Num\+Of\+Features()}{MaxNumOfFeatures()}}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf kkint32} K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+::\+Max\+Num\+Of\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a7f3991a75f9a7345b6f6c29dac5bc479}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_a7f3991a75f9a7345b6f6c29dac5bc479}
+
+
+Definition at line 51 of file Gray\+Scale\+Images\+F\+V\+Producer.\+h.
+
+
+\begin{DoxyCode}
+51 \{\textcolor{keywordflow}{return} maxNumOfFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}!Version@{Version}}
+\index{Version@{Version}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Version() const }{Version() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf kkint16} K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+::\+Version (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_aaa9437b36ae935eec369341935fd21f9}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_aaa9437b36ae935eec369341935fd21f9}
+The version number of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} that is going to be computed. 
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8e2f54e185b2fb5de854d9978b4fbac8}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer}.
+
+
+
+Definition at line 49 of file Gray\+Scale\+Images\+F\+V\+Producer.\+h.
+
+
+
+Referenced by Compute\+Feature\+Vector().
+
+
+\begin{DoxyCode}
+49 \{\textcolor{keywordflow}{return} \hyperlink{_gray_scale_images_f_v_producer_8h_abe2ad7e75260504d7f992932855312f9}{\_GrayScaleImagesFVProducer\_VersionNum\_};\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_producer_8h}{Gray\+Scale\+Images\+F\+V\+Producer.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_producer_8cpp}{Gray\+Scale\+Images\+F\+V\+Producer.\+cpp}\end{DoxyCompactItemize}

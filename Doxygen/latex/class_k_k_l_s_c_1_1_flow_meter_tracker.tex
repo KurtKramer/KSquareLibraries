@@ -1,0 +1,658 @@
+\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker}{}\section{K\+K\+L\+SC\+:\+:Flow\+Meter\+Tracker Class Reference}
+\label{class_k_k_l_s_c_1_1_flow_meter_tracker}\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+
+
+Class that keeps track the Flow-\/\+Meter-\/\+Counter values by scan-\/lines; using these values it will compute estimated flow rate.  
+
+
+
+
+{\ttfamily \#include $<$Flow\+Meter\+Tracker.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker}{Flow\+Meter\+Tracker} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e157d685c7b8d014283b6aac91c9e13}{Flow\+Meter\+Tracker\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_ac01ccbd7718941c3a821e499b0e4bba2}{Flow\+Meter\+Tracker} ()
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_ae9571fdcfec50a23611ed0e29842a725}{Flow\+Meter\+Tracker} (const \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker}{Flow\+Meter\+Tracker} \&entry)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_aa90fc6d963922729eb135aef0302626d}{$\sim$\+Flow\+Meter\+Tracker} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a85314afe96a7852a3a50017d140ea416}{Add\+Entry} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+scan\+Line\+Num, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+counter\+Value)
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}{Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio} (float \+\_\+flow\+Rate\+Ratio)
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a8283bfd939242a647fc3492bba61627d}{Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate} (float \+\_\+flow\+Rate)
+\item 
+bool \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_aff930f3e77f1d8af7294d27966da81e6}{Flow\+Meter\+Present} () const 
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a9435248bf01376552b708b4d7547c290}{Flow\+Rate\+Default} () const 
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a176b1931eddf6ad1683e86f892b5f4a7}{Flow\+Rate\+Instantaneous} ()
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a92102f7a3e4a3cbb0d39d3e88884adfb}{Flow\+Rate\+Ratio\+Default} () const 
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a956eb37830d4e2a2992df07325d4455e}{Flow\+Rate\+Ratio\+Default\+Changed} (float \+\_\+flow\+Rate\+Ratio\+Default)
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_aa5fe2f20f364a07e166433a1d7361841}{Flow\+Rate\+Trend} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e38494a55a7cfa9b4848d8e898f4364}{Get\+Flow\+Rate\+Instantaneous} (float \&flow\+Rate, float \&flow\+Rate\+Ratio)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a3d1c1382398a02264f7a8d64592fbbc5}{Get\+Flow\+Rate\+Trend} (float \&flow\+Rate, float \&flow\+Rate\+Ratio)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a35c33841d559b871e52862fdb4c89257}{History\+Table\+Size} () const 
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a52d9a3d9c584520b255788ddb72a2772}{Imaging\+Width\+Meters} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a6b284bd361debbc938646c5f61b0752a}{Imaging\+Width\+Pixels} () const 
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a5fd668e3e541ac0d64bb5700f29dcfe9}{Initialize} (bool \+\_\+flow\+Meter\+Present, float \+\_\+flow\+Rate\+Ratio\+Default, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+history\+Table\+Size, float \+\_\+scan\+Rate, float \+\_\+imaging\+Width\+Meters, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+imaging\+Width\+Pixels, float \+\_\+tics\+Per\+Meter)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a2598984defe635c20f97315d91965857}{Memory\+Consumed\+Estimated} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_ad870c6bf344de81de931651f4d1ca7ab}{Scan\+Rate\+Changed} (float \+\_\+new\+Scan\+Rate)
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_ac70a63d4866311c7d2e31f9fec8a8e82}{Tics\+Per\+Meter} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that keeps track the Flow-\/\+Meter-\/\+Counter values by scan-\/lines; using these values it will compute estimated flow rate. 
+
+
+\begin{DoxyCode}
+Glossary
+
+
+FlowRate(FR) = Rate of water flow in (Meters/Sec)
+
+FlowRateRatio(FRR) = Number TemporalPixel's per SpatialPixel with respect to physical distance; aka 
+      FlowRateFactor.  (TP's/SP's)
+
+ScanRate(SR) = Number of camera scan lines captured per second.  (ScanLines/Sec)  or  (TP's/Sec)
+
+SpatialPixel(SP) = From the image chambers width perspective;  
+
+TemporalPixel(TP) = One scan line;  The physical distance a pixel covers with respect to flow is dependent
+                on both scan rate and flow rate.   TP = (FRR)(SP).
+
+ChamberWidthSpatialy (CWS)  Distance across Imaging Chamber width as measured in meters (m).
+ChamberWidthPixels   (CWP)  Number of pixels imaged across the imaging chamber. (1 + CropLeft - CropRight).
+        (SP's)
+ChamberWidthTemporal (CWT)  Time it would take for Camera to cover same distance in direction of flow.
+
+ FlowRateRatio = ((CWS)(SR)) / ((FR)(CWP)).
+ FlowRate      = ((CWS)(SR)) / ((FRR)(CWP))
+\end{DoxyCode}
+ 
+
+Definition at line 44 of file Flow\+Meter\+Tracker.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Meter\+Tracker\+Ptr@{Flow\+Meter\+Tracker\+Ptr}}
+\index{Flow\+Meter\+Tracker\+Ptr@{Flow\+Meter\+Tracker\+Ptr}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Meter\+Tracker\+Ptr}{FlowMeterTrackerPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Flow\+Meter\+Tracker}$\ast$ {\bf K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Flow\+Meter\+Tracker\+Ptr}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e157d685c7b8d014283b6aac91c9e13}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e157d685c7b8d014283b6aac91c9e13}
+
+
+Definition at line 47 of file Flow\+Meter\+Tracker.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Meter\+Tracker@{Flow\+Meter\+Tracker}}
+\index{Flow\+Meter\+Tracker@{Flow\+Meter\+Tracker}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Meter\+Tracker()}{FlowMeterTracker()}}]{\setlength{\rightskip}{0pt plus 5cm}Flow\+Meter\+Tracker\+::\+Flow\+Meter\+Tracker (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_ac01ccbd7718941c3a821e499b0e4bba2}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_ac01ccbd7718941c3a821e499b0e4bba2}
+
+
+Definition at line 29 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+\begin{DoxyCode}
+29                                    :
+30     flowMeterPresent     (\textcolor{keyword}{false}),
+31     flowRateDefault      (1.0f),
+32     flowRateRatioDefault (1.0f),
+33     history              (NULL),
+34     historyTableSize     (-1),
+35     historyLastIdxAdded  (-1),
+36     historyOldestIdx     (-1),
+37     imagingWidthMeters   (0.0635f),
+38     imagingWidthPixels   (2048),
+39     scanRate             (0.0f),
+40     ticsPerMeter         (10.0f)
+41 \{
+42 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Meter\+Tracker@{Flow\+Meter\+Tracker}}
+\index{Flow\+Meter\+Tracker@{Flow\+Meter\+Tracker}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Meter\+Tracker(const Flow\+Meter\+Tracker \&entry)}{FlowMeterTracker(const FlowMeterTracker &entry)}}]{\setlength{\rightskip}{0pt plus 5cm}Flow\+Meter\+Tracker\+::\+Flow\+Meter\+Tracker (
+\begin{DoxyParamCaption}
+\item[{const {\bf Flow\+Meter\+Tracker} \&}]{entry}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_ae9571fdcfec50a23611ed0e29842a725}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_ae9571fdcfec50a23611ed0e29842a725}
+
+
+Definition at line 46 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+\begin{DoxyCode}
+46                                                                  :
+47     flowMeterPresent     (entry.flowMeterPresent),
+48     flowRateDefault      (entry.flowRateDefault),
+49     flowRateRatioDefault (entry.flowRateRatioDefault),
+50     history              (NULL),
+51     historyTableSize     (entry.historyTableSize),
+52     historyLastIdxAdded  (entry.historyLastIdxAdded),
+53     historyOldestIdx     (entry.historyOldestIdx),
+54     imagingWidthMeters   (entry.imagingWidthMeters),
+55     imagingWidthPixels   (entry.imagingWidthPixels),
+56     scanRate             (entry.scanRate),
+57     ticsPerMeter         (entry.ticsPerMeter)
+58 \{
+59   history = \textcolor{keyword}{new} Entry[historyTableSize];
+60   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < historyTableSize;  ++x)
+61     history[x] = entry.history[x];
+62 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!````~Flow\+Meter\+Tracker@{$\sim$\+Flow\+Meter\+Tracker}}
+\index{````~Flow\+Meter\+Tracker@{$\sim$\+Flow\+Meter\+Tracker}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{$\sim$\+Flow\+Meter\+Tracker()}{~FlowMeterTracker()}}]{\setlength{\rightskip}{0pt plus 5cm}Flow\+Meter\+Tracker\+::$\sim$\+Flow\+Meter\+Tracker (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_aa90fc6d963922729eb135aef0302626d}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_aa90fc6d963922729eb135aef0302626d}
+
+
+Definition at line 67 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+\begin{DoxyCode}
+68 \{
+69   \textcolor{keyword}{delete}  history;
+70   history = NULL;
+71 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Add\+Entry@{Add\+Entry}}
+\index{Add\+Entry@{Add\+Entry}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Add\+Entry(kkuint32 \+\_\+scan\+Line\+Num, kkuint32 \+\_\+counter\+Value)}{AddEntry(kkuint32 _scanLineNum, kkuint32 _counterValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Add\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{\+\_\+scan\+Line\+Num, }
+\item[{{\bf kkuint32}}]{\+\_\+counter\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a85314afe96a7852a3a50017d140ea416}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a85314afe96a7852a3a50017d140ea416}
+
+
+Definition at line 128 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+\begin{DoxyCode}
+131 \{
+132   \textcolor{keywordflow}{if}  (historyLastIdxAdded < 0)
+133   \{
+134     historyLastIdxAdded = 0;
+135     historyOldestIdx    = 0;
+136   \}
+137   \textcolor{keywordflow}{else}
+138   \{
+139     ++historyLastIdxAdded;
+140     \textcolor{keywordflow}{if}  (historyLastIdxAdded >= historyTableSize)
+141       historyLastIdxAdded = 0;
+142     \textcolor{keywordflow}{if}  (historyLastIdxAdded == historyOldestIdx)
+143     \{
+144       ++historyOldestIdx;
+145       \textcolor{keywordflow}{if}  (historyOldestIdx >= historyTableSize)
+146         historyOldestIdx = 0;
+147     \}
+148   \}
+149   history[historyLastIdxAdded].scanLineNum  = \_scanLineNum;
+150   history[historyLastIdxAdded].counterValue = \_counterValue;
+151 \}  \textcolor{comment}{/* AddEntry */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio@{Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio}}
+\index{Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio@{Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio(float \+\_\+flow\+Rate\+Ratio)}{ComputeFlowRateFromFlowRateRatio(float _flowRateRatio)}}]{\setlength{\rightskip}{0pt plus 5cm}float Flow\+Meter\+Tracker\+::\+Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+flow\+Rate\+Ratio}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}
+
+
+Definition at line 254 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+Referenced by Flow\+Rate\+Ratio\+Default\+Changed(), Initialize(), and Scan\+Rate\+Changed().
+
+
+\begin{DoxyCode}
+255 \{
+256   \textcolor{keywordflow}{if}  ((\_flowRateRatio == 0.0f)  ||  (imagingWidthPixels == 0.0f))
+257     \textcolor{keywordflow}{return}  flowRateDefault;
+258 
+259   \textcolor{comment}{//float  flowRate = (imagingWidthMeters * scanRate) / (\_flowRateRatio * imagingWidthPixels);}
+260   \textcolor{keywordtype}{float}  flowRate = (\_flowRateRatio  * scanRate * imagingWidthMeters)  / imagingWidthPixels;
+261 
+262   \textcolor{keywordflow}{return}  flowRate;
+263 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate@{Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate}}
+\index{Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate@{Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate(float \+\_\+flow\+Rate)}{ComputeFlowRateRatioFromFlowRate(float _flowRate)}}]{\setlength{\rightskip}{0pt plus 5cm}float Flow\+Meter\+Tracker\+::\+Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+flow\+Rate}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a8283bfd939242a647fc3492bba61627d}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a8283bfd939242a647fc3492bba61627d}
+
+
+Definition at line 267 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+Referenced by Get\+Flow\+Rate\+Instantaneous(), and Get\+Flow\+Rate\+Trend().
+
+
+\begin{DoxyCode}
+268 \{
+269   \textcolor{keywordflow}{if}  ((\_flowRate == 0.0f)  ||  (imagingWidthPixels == 0.0f))
+270     \textcolor{keywordflow}{return}  flowRateRatioDefault;
+271 
+272   \textcolor{comment}{//float  flowRateRatio = (imagingWidthMeters * scanRate) / (\_flowRate * imagingWidthPixels);}
+273   \textcolor{keywordtype}{float}  flowRateRatio = (\_flowRate * imagingWidthPixels) / (imagingWidthMeters * scanRate);
+274 
+275   \textcolor{keywordflow}{return} flowRateRatio;
+276 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Meter\+Present@{Flow\+Meter\+Present}}
+\index{Flow\+Meter\+Present@{Flow\+Meter\+Present}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Meter\+Present() const }{FlowMeterPresent() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Flow\+Meter\+Present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_aff930f3e77f1d8af7294d27966da81e6}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_aff930f3e77f1d8af7294d27966da81e6}
+
+
+Definition at line 76 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+76 \{\textcolor{keywordflow}{return} flowMeterPresent;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Rate\+Default@{Flow\+Rate\+Default}}
+\index{Flow\+Rate\+Default@{Flow\+Rate\+Default}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Rate\+Default() const }{FlowRateDefault() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Flow\+Rate\+Default (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a9435248bf01376552b708b4d7547c290}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a9435248bf01376552b708b4d7547c290}
+
+
+Definition at line 77 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+77 \{\textcolor{keywordflow}{return} flowRateDefault;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Rate\+Instantaneous@{Flow\+Rate\+Instantaneous}}
+\index{Flow\+Rate\+Instantaneous@{Flow\+Rate\+Instantaneous}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Rate\+Instantaneous()}{FlowRateInstantaneous()}}]{\setlength{\rightskip}{0pt plus 5cm}float Flow\+Meter\+Tracker\+::\+Flow\+Rate\+Instantaneous (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a176b1931eddf6ad1683e86f892b5f4a7}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a176b1931eddf6ad1683e86f892b5f4a7}
+Computes flow rate using the two most current count entries. 
+
+Definition at line 163 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+Referenced by Get\+Flow\+Rate\+Instantaneous().
+
+
+\begin{DoxyCode}
+164 \{
+165   \textcolor{keywordflow}{if}  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))
+166     \textcolor{keywordflow}{return} flowRateDefault;
+167 
+168   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} prevIdx = historyLastIdxAdded - 1;
+169   \textcolor{keywordflow}{if}  (prevIdx < 0)
+170     prevIdx = historyTableSize - 1;
+171 
+172   EntryPtr  lastPtr = history + historyLastIdxAdded;
+173   EntryPtr  prevPtr = history + prevIdx;
+174  
+175   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} tics      = lastPtr->counterValue - prevPtr->counterValue;
+176   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+177 
+178   \textcolor{keywordtype}{float} meters = tics / ticsPerMeter;
+179   \textcolor{keywordtype}{float} secs   = scanLines / scanRate;
+180 
+181   \textcolor{keywordflow}{return}  meters / secs;
+182 \}  \textcolor{comment}{/* FlowRateInstantaneous */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Rate\+Ratio\+Default@{Flow\+Rate\+Ratio\+Default}}
+\index{Flow\+Rate\+Ratio\+Default@{Flow\+Rate\+Ratio\+Default}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Rate\+Ratio\+Default() const }{FlowRateRatioDefault() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Flow\+Rate\+Ratio\+Default (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a92102f7a3e4a3cbb0d39d3e88884adfb}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a92102f7a3e4a3cbb0d39d3e88884adfb}
+
+
+Definition at line 78 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+78 \{\textcolor{keywordflow}{return} flowRateRatioDefault;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Rate\+Ratio\+Default\+Changed@{Flow\+Rate\+Ratio\+Default\+Changed}}
+\index{Flow\+Rate\+Ratio\+Default\+Changed@{Flow\+Rate\+Ratio\+Default\+Changed}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Rate\+Ratio\+Default\+Changed(float \+\_\+flow\+Rate\+Ratio\+Default)}{FlowRateRatioDefaultChanged(float _flowRateRatioDefault)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Flow\+Rate\+Ratio\+Default\+Changed (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+flow\+Rate\+Ratio\+Default}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a956eb37830d4e2a2992df07325d4455e}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a956eb37830d4e2a2992df07325d4455e}
+
+
+Definition at line 111 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+References Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio().
+
+
+\begin{DoxyCode}
+112 \{
+113   flowRateRatioDefault = \_flowRateRatioDefault;
+114   flowRateDefault = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}{ComputeFlowRateFromFlowRateRatio} (flowRateRatioDefault)
+      ;
+115 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Flow\+Rate\+Trend@{Flow\+Rate\+Trend}}
+\index{Flow\+Rate\+Trend@{Flow\+Rate\+Trend}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Flow\+Rate\+Trend()}{FlowRateTrend()}}]{\setlength{\rightskip}{0pt plus 5cm}float Flow\+Meter\+Tracker\+::\+Flow\+Rate\+Trend (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_aa5fe2f20f364a07e166433a1d7361841}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_aa5fe2f20f364a07e166433a1d7361841}
+Computes flow rate using full range of history table. 
+
+Definition at line 187 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+Referenced by Get\+Flow\+Rate\+Trend().
+
+
+\begin{DoxyCode}
+188 \{
+189   \textcolor{keywordflow}{if}  ((historyLastIdxAdded == historyOldestIdx)  ||  (ticsPerMeter == 0.0f)  ||  (scanRate == 0.0f))
+190     \textcolor{keywordflow}{return} flowRateDefault;
+191 
+192   EntryPtr  lastPtr = history + historyLastIdxAdded;
+193   EntryPtr  prevPtr = history + historyOldestIdx;
+194  
+195   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} tics      = lastPtr->counterValue - prevPtr->counterValue;
+196   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
+197 
+198   \textcolor{keywordflow}{if}  ((tics == 0)  ||  (scanLines == 0))
+199     \textcolor{keywordflow}{return} 0.0f;
+200 
+201   \textcolor{keywordtype}{float} meters = tics / ticsPerMeter;
+202   \textcolor{keywordtype}{float} secs   = scanLines / scanRate;
+203 
+204   \textcolor{keywordflow}{return}  meters / secs;
+205 \}  \textcolor{comment}{/* FlowRateTrend */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Get\+Flow\+Rate\+Instantaneous@{Get\+Flow\+Rate\+Instantaneous}}
+\index{Get\+Flow\+Rate\+Instantaneous@{Get\+Flow\+Rate\+Instantaneous}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Get\+Flow\+Rate\+Instantaneous(float \&flow\+Rate, float \&flow\+Rate\+Ratio)}{GetFlowRateInstantaneous(float &flowRate, float &flowRateRatio)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Get\+Flow\+Rate\+Instantaneous (
+\begin{DoxyParamCaption}
+\item[{float \&}]{flow\+Rate, }
+\item[{float \&}]{flow\+Rate\+Ratio}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e38494a55a7cfa9b4848d8e898f4364}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a3e38494a55a7cfa9b4848d8e898f4364}
+
+
+Definition at line 210 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+References Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate(), and Flow\+Rate\+Instantaneous().
+
+
+\begin{DoxyCode}
+213 \{
+214   \textcolor{keywordflow}{if}  (!flowMeterPresent)
+215   \{
+216     flowRate      = flowRateDefault;
+217     flowRateRatio = flowRateRatioDefault;
+218     \textcolor{keywordflow}{return};
+219   \}
+220 
+221   flowRate = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a176b1931eddf6ad1683e86f892b5f4a7}{FlowRateInstantaneous} ();
+222   flowRateRatio = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a8283bfd939242a647fc3492bba61627d}{ComputeFlowRateRatioFromFlowRate} (flowRate);
+223 
+224   \textcolor{keywordflow}{return};
+225 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Get\+Flow\+Rate\+Trend@{Get\+Flow\+Rate\+Trend}}
+\index{Get\+Flow\+Rate\+Trend@{Get\+Flow\+Rate\+Trend}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Get\+Flow\+Rate\+Trend(float \&flow\+Rate, float \&flow\+Rate\+Ratio)}{GetFlowRateTrend(float &flowRate, float &flowRateRatio)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Get\+Flow\+Rate\+Trend (
+\begin{DoxyParamCaption}
+\item[{float \&}]{flow\+Rate, }
+\item[{float \&}]{flow\+Rate\+Ratio}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a3d1c1382398a02264f7a8d64592fbbc5}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a3d1c1382398a02264f7a8d64592fbbc5}
+
+
+Definition at line 228 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+References Compute\+Flow\+Rate\+Ratio\+From\+Flow\+Rate(), and Flow\+Rate\+Trend().
+
+
+\begin{DoxyCode}
+231 \{
+232   \textcolor{keywordflow}{if}  ((!flowMeterPresent)  ||  (this->historyLastIdxAdded < 0)  ||  (historyLastIdxAdded == this->
+      historyOldestIdx))
+233   \{
+234     flowRate      = flowRateDefault;
+235     flowRateRatio = flowRateRatioDefault;
+236     \textcolor{keywordflow}{return};
+237   \}
+238 
+239   \textcolor{keywordflow}{if}  (!flowMeterPresent)
+240   \{
+241     flowRate      = flowRateDefault;
+242     flowRateRatio = flowRateRatioDefault;
+243     \textcolor{keywordflow}{return};
+244   \}
+245 
+246   flowRate = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_aa5fe2f20f364a07e166433a1d7361841}{FlowRateTrend} ();
+247   flowRateRatio = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a8283bfd939242a647fc3492bba61627d}{ComputeFlowRateRatioFromFlowRate} (flowRate);
+248 
+249   \textcolor{keywordflow}{return};
+250 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!History\+Table\+Size@{History\+Table\+Size}}
+\index{History\+Table\+Size@{History\+Table\+Size}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{History\+Table\+Size() const }{HistoryTableSize() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+History\+Table\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a35c33841d559b871e52862fdb4c89257}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a35c33841d559b871e52862fdb4c89257}
+
+
+Definition at line 79 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+79 \{\textcolor{keywordflow}{return} historyTableSize;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Imaging\+Width\+Meters@{Imaging\+Width\+Meters}}
+\index{Imaging\+Width\+Meters@{Imaging\+Width\+Meters}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Imaging\+Width\+Meters() const }{ImagingWidthMeters() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Imaging\+Width\+Meters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a52d9a3d9c584520b255788ddb72a2772}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a52d9a3d9c584520b255788ddb72a2772}
+
+
+Definition at line 80 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+80 \{\textcolor{keywordflow}{return} imagingWidthMeters;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Imaging\+Width\+Pixels@{Imaging\+Width\+Pixels}}
+\index{Imaging\+Width\+Pixels@{Imaging\+Width\+Pixels}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Imaging\+Width\+Pixels() const }{ImagingWidthPixels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Imaging\+Width\+Pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a6b284bd361debbc938646c5f61b0752a}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a6b284bd361debbc938646c5f61b0752a}
+
+
+Definition at line 81 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+81 \{\textcolor{keywordflow}{return} imagingWidthPixels;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Initialize(bool \+\_\+flow\+Meter\+Present, float \+\_\+flow\+Rate\+Ratio\+Default, kkint32 \+\_\+history\+Table\+Size, float \+\_\+scan\+Rate, float \+\_\+imaging\+Width\+Meters, kkint32 \+\_\+imaging\+Width\+Pixels, float \+\_\+tics\+Per\+Meter)}{Initialize(bool _flowMeterPresent, float _flowRateRatioDefault, kkint32 _historyTableSize, float _scanRate, float _imagingWidthMeters, kkint32 _imagingWidthPixels, float _ticsPerMeter)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Initialize (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+flow\+Meter\+Present, }
+\item[{float}]{\+\_\+flow\+Rate\+Ratio\+Default, }
+\item[{{\bf kkint32}}]{\+\_\+history\+Table\+Size, }
+\item[{float}]{\+\_\+scan\+Rate, }
+\item[{float}]{\+\_\+imaging\+Width\+Meters, }
+\item[{{\bf kkint32}}]{\+\_\+imaging\+Width\+Pixels, }
+\item[{float}]{\+\_\+tics\+Per\+Meter}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a5fd668e3e541ac0d64bb5700f29dcfe9}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a5fd668e3e541ac0d64bb5700f29dcfe9}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+flow\+Meter\+Present} & Indicates if there is a Flow Meter or will Flow\+Rate and Flow\+Rate\+Ratio be derived from configuration; see \+\_\+flow\+Rate\+Ratio\+Default. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+flow\+Rate\+Ratio\+Default} & When flow meter s not present or unable to compute Flow\+Rate will utilize this value to return Flow\+Rate and Flow\+Rate\+Ratio. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+history\+Table\+Size} & The number of Flow\+Meter readings that will be tracked. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+scan\+Rate} & Scan-\/\+Lines per second that camera is operating at. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+imaging\+Width\+Meters} & Width in meters that is being imaged. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+imaging\+Width\+Pixels} & Number of pixels that is being imaged; this is the same as distance refereed to by \+\_\+imaging\+Width\+Meters. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+tics\+Per\+Meter} & The number counter ticks that occur per meter; this value will help compute Flow\+Rate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 74 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+References Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio().
+
+
+\begin{DoxyCode}
+82 \{                                   
+83   flowMeterPresent     = \_flowMeterPresent;
+84   flowRateRatioDefault = \_flowRateRatioDefault;
+85   scanRate             = \_scanRate;             
+86   imagingWidthMeters   = \_imagingWidthMeters;  
+87   imagingWidthPixels   = \_imagingWidthPixels;
+88   ticsPerMeter         = \_ticsPerMeter;         
+89 
+90   historyTableSize = \_historyTableSize;
+91   \textcolor{keyword}{delete}  history;
+92   history = \textcolor{keyword}{new} Entry[historyTableSize];
+93   historyLastIdxAdded = -1;
+94   historyOldestIdx    = -1;
+95 
+96   flowRateDefault = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}{ComputeFlowRateFromFlowRateRatio} (flowRateRatioDefault)
+      ;
+97 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Flow\+Meter\+Tracker\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_a2598984defe635c20f97315d91965857}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_a2598984defe635c20f97315d91965857}
+
+
+Definition at line 101 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+\begin{DoxyCode}
+102 \{
+103   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  mem = \textcolor{keyword}{sizeof} (*this);
+104   \textcolor{keywordflow}{if}  (historyTableSize > 0)
+105     mem += \textcolor{keyword}{sizeof} (Entry) * historyTableSize;
+106   \textcolor{keywordflow}{return}  mem;
+107 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Scan\+Rate\+Changed@{Scan\+Rate\+Changed}}
+\index{Scan\+Rate\+Changed@{Scan\+Rate\+Changed}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Scan\+Rate\+Changed(float \+\_\+new\+Scan\+Rate)}{ScanRateChanged(float _newScanRate)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flow\+Meter\+Tracker\+::\+Scan\+Rate\+Changed (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+new\+Scan\+Rate}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_ad870c6bf344de81de931651f4d1ca7ab}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_ad870c6bf344de81de931651f4d1ca7ab}
+
+
+Definition at line 119 of file Flow\+Meter\+Tracker.\+cpp.
+
+
+
+References Compute\+Flow\+Rate\+From\+Flow\+Rate\+Ratio().
+
+
+\begin{DoxyCode}
+120 \{
+121   scanRate = \_newScanRate;
+122   flowRateDefault = \hyperlink{class_k_k_l_s_c_1_1_flow_meter_tracker_a4fcd14644883c07362cd2d02f57791e9}{ComputeFlowRateFromFlowRateRatio} (flowRateRatioDefault)
+      ;
+123 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}!Tics\+Per\+Meter@{Tics\+Per\+Meter}}
+\index{Tics\+Per\+Meter@{Tics\+Per\+Meter}!K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker@{K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker}}
+\subsubsection[{\texorpdfstring{Tics\+Per\+Meter() const }{TicsPerMeter() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+L\+S\+C\+::\+Flow\+Meter\+Tracker\+::\+Tics\+Per\+Meter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flow_meter_tracker_ac70a63d4866311c7d2e31f9fec8a8e82}{}\label{class_k_k_l_s_c_1_1_flow_meter_tracker_ac70a63d4866311c7d2e31f9fec8a8e82}
+
+
+Definition at line 82 of file Flow\+Meter\+Tracker.\+h.
+
+
+\begin{DoxyCode}
+82 \{\textcolor{keywordflow}{return} ticsPerMeter;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_flow_meter_tracker_8h}{Flow\+Meter\+Tracker.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_flow_meter_tracker_8cpp}{Flow\+Meter\+Tracker.\+cpp}\end{DoxyCompactItemize}

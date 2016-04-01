@@ -1,0 +1,701 @@
+\hypertarget{class_k_k_b_1_1_r_b_tree}{}\section{K\+KB\+:\+:R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$ Class Template Reference}
+\label{class_k_k_b_1_1_r_b_tree}\index{K\+K\+B\+::\+R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$@{K\+K\+B\+::\+R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}}
+
+
+{\ttfamily \#include $<$R\+B\+Tree.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef Entry $\ast$ \hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_iterator}{Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$ $\ast$ \hyperlink{class_k_k_b_1_1_r_b_tree_acc78dafbc3dcd8bc3872e29679bb3ef0}{Iterator\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode}$<$ Entry $>$ \hyperlink{class_k_k_b_1_1_r_b_tree_a06ef741f6d070fe4faebde70eec7ec6a}{Node}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_b_tree_a06ef741f6d070fe4faebde70eec7ec6a}{Node} $\ast$ \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{Node\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_b_tree}{R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$ \hyperlink{class_k_k_b_1_1_r_b_tree_a4d849196b2997a6021ea34ef77901eb0}{Tree}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_b_tree_a4d849196b2997a6021ea34ef77901eb0}{Tree} $\ast$ \hyperlink{class_k_k_b_1_1_r_b_tree_a657196027b6c9741e01cb4563b7bf28b}{Tree\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a8c31cb7a1a97513dcbe717696359be09}{R\+B\+Tree} (Compare\+Nodes \&\+\_\+comparator, bool \+\_\+owner)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a4eac00e8d6d4c300a912a840ff04720b}{R\+B\+Tree} (\hyperlink{class_k_k_b_1_1_r_b_tree}{R\+B\+Tree} \&tree)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0d0922dcd2232caf29223e5b9c5e4174}{$\sim$\+R\+B\+Tree} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_b_tree_a9cbd35932923709b3b8b9d9df8634379}{Calc\+Tree\+Stats} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_r_b_tree_a14b77873f1b45db066bd393e9811641d}{Compare\+To\+Tree} (\hyperlink{class_k_k_b_1_1_r_b_tree_a657196027b6c9741e01cb4563b7bf28b}{Tree\+Ptr} tree)
+\item 
+void \hyperlink{class_k_k_b_1_1_r_b_tree_a925c62ec939b5d7b90959a3af8b42d28}{Delete\+Current\+Node} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_b_tree_ae031a4b6803af6a9a02b5218481c4f46}{Delete\+Entry} (\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} e)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a9f157c30cce4885b8abac7f4981321e9}{Get\+Equal} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a66b152371fdfc103f41a830625a04a53}{Get\+First} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}{Get\+Greater} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_ac9365b1ea43d7306c8231ee200758d3e}{Get\+Greater\+Or\+Equal} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_aea42a72543e2efeec63f717b14673ff8}{Get\+Last} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a0e2fc0cb7fd4091c8abde407edd84351}{Get\+Less} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a0d2058b081781e20e9f02cee450c6071}{Get\+Next} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a288b6e6075de026e66848d181b6acfe7}{Get\+Prev} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{Node\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_a210190ae61de6e1a7b15b39673e6a47d}{R\+B\+Insert} (\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} e)
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_r_b_tree_ae859ee76df89480dae7d99ff1928d294}{Size} ()
+\item 
+\hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_r_b_tree_ab18dadc39bc478f028afee14fb4199a5}{Validate} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_b_tree_a5ae41c47b60eda49ebd66754e863258c}{Walk\+Tree} ()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_r_b_tree_a6acff2e7675519aa68e26d0e3328ac78}{Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$\\*
+class K\+K\+B\+::\+R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}
+
+
+
+Definition at line 69 of file R\+B\+Tree.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Entry\+Ptr@{Entry\+Ptr}}
+\index{Entry\+Ptr@{Entry\+Ptr}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Entry\+Ptr}{EntryPtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef Entry$\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Entry\+Ptr}}\hypertarget{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{}\label{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}
+
+
+Definition at line 122 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Iterator\+Ptr@{Iterator\+Ptr}}
+\index{Iterator\+Ptr@{Iterator\+Ptr}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Iterator\+Ptr}{IteratorPtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef {\bf Iterator}$<$Entry,Compare\+Nodes,Key\+Type$>$$\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Iterator\+Ptr}}\hypertarget{class_k_k_b_1_1_r_b_tree_acc78dafbc3dcd8bc3872e29679bb3ef0}{}\label{class_k_k_b_1_1_r_b_tree_acc78dafbc3dcd8bc3872e29679bb3ef0}
+
+
+Definition at line 176 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Node@{Node}}
+\index{Node@{Node}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Node}{Node}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef {\bf R\+Bnode}$<$Entry$>$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Node}}\hypertarget{class_k_k_b_1_1_r_b_tree_a06ef741f6d070fe4faebde70eec7ec6a}{}\label{class_k_k_b_1_1_r_b_tree_a06ef741f6d070fe4faebde70eec7ec6a}
+
+
+Definition at line 123 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Node\+Ptr@{Node\+Ptr}}
+\index{Node\+Ptr@{Node\+Ptr}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Node\+Ptr}{NodePtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef {\bf Node}$\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Node\+Ptr}}\hypertarget{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{}\label{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}
+
+
+Definition at line 124 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Tree@{Tree}}
+\index{Tree@{Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Tree}{Tree}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef {\bf R\+B\+Tree}$<$Entry,Compare\+Nodes,Key\+Type$>$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Tree}}\hypertarget{class_k_k_b_1_1_r_b_tree_a4d849196b2997a6021ea34ef77901eb0}{}\label{class_k_k_b_1_1_r_b_tree_a4d849196b2997a6021ea34ef77901eb0}
+
+
+Definition at line 126 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Tree\+Ptr@{Tree\+Ptr}}
+\index{Tree\+Ptr@{Tree\+Ptr}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Tree\+Ptr}{TreePtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ typedef {\bf Tree}$\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Tree\+Ptr}}\hypertarget{class_k_k_b_1_1_r_b_tree_a657196027b6c9741e01cb4563b7bf28b}{}\label{class_k_k_b_1_1_r_b_tree_a657196027b6c9741e01cb4563b7bf28b}
+
+
+Definition at line 128 of file R\+B\+Tree.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!R\+B\+Tree@{R\+B\+Tree}}
+\index{R\+B\+Tree@{R\+B\+Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{R\+B\+Tree(\+Compare\+Nodes \&\+\_\+comparator, bool \+\_\+owner)}{RBTree(CompareNodes &_comparator, bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes, typename Key\+Type $>$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf R\+B\+Tree} (
+\begin{DoxyParamCaption}
+\item[{Compare\+Nodes \&}]{\+\_\+comparator, }
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a8c31cb7a1a97513dcbe717696359be09}{}\label{class_k_k_b_1_1_r_b_tree_a8c31cb7a1a97513dcbe717696359be09}
+
+
+Definition at line 298 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+300                                                  :
+301    comparator    (\_comparator),
+302    curNode       (NULL),
+303    nil           (NULL),
+304    owner         (\_owner),
+305    root          (NULL),
+306    size          (0),
+307    numOfIterators(0),
+308    iterators     (NULL)
+309 \{
+310   nil = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_r_bnode}{RBnode<Entry>} (NULL, NULL, NULL, \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black}, NULL);
+311   root    = nil;
+312   curNode = nil;
+313 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!R\+B\+Tree@{R\+B\+Tree}}
+\index{R\+B\+Tree@{R\+B\+Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{R\+B\+Tree(\+R\+B\+Tree \&tree)}{RBTree(RBTree &tree)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes, typename Key\+Type $>$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf R\+B\+Tree} (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$ \&}]{tree}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a4eac00e8d6d4c300a912a840ff04720b}{}\label{class_k_k_b_1_1_r_b_tree_a4eac00e8d6d4c300a912a840ff04720b}
+
+
+Definition at line 319 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+319                                                            :
+320 
+321    comparator    (tree.comparator),
+322    size          (tree.size),
+323    owner         (\textcolor{keyword}{true}),
+324    root          (NULL),
+325    nil           (NULL),
+326    numOfIterators(0),
+327    iterators     (NULL)
+328 \{
+329   nil = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_r_bnode}{RBnode<Entry>} (NULL, NULL, NULL, \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{Black}, NULL);
+330   root = CloneSubTree (tree.root, tree.nil, nil);
+331  
+332   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = CountNodesInSubTree (root);
+333 
+334   curNode = nil;
+335 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!````~R\+B\+Tree@{$\sim$\+R\+B\+Tree}}
+\index{````~R\+B\+Tree@{$\sim$\+R\+B\+Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{$\sim$\+R\+B\+Tree()}{~RBTree()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::$\sim${\bf R\+B\+Tree} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a0d0922dcd2232caf29223e5b9c5e4174}{}\label{class_k_k_b_1_1_r_b_tree_a0d0922dcd2232caf29223e5b9c5e4174}
+
+
+Definition at line 370 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+371 \{
+372   \textcolor{keywordflow}{if}  (root != nil)
+373     DeleteSubTree (root);
+374 
+375 
+376   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < numOfIterators;  i++)
+377   \{
+378      iterators[i]->TreeHasBeenDeleted ();
+379   \}
+380 
+381   \textcolor{keyword}{delete}  nil;
+382 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Calc\+Tree\+Stats@{Calc\+Tree\+Stats}}
+\index{Calc\+Tree\+Stats@{Calc\+Tree\+Stats}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Calc\+Tree\+Stats()}{CalcTreeStats()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ void {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Calc\+Tree\+Stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a9cbd35932923709b3b8b9d9df8634379}{}\label{class_k_k_b_1_1_r_b_tree_a9cbd35932923709b3b8b9d9df8634379}
+
+
+Definition at line 1393 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1394 \{
+1395   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfLeafs = 0;
+1396   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfNodes = 0;
+1397   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}* leafPaths  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[size];
+1398 
+1399   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  shortestPath = \hyperlink{_usf_cas_cor_8h_a9ec306f36d50c7375e74f0d1c55a3a67}{INT\_MAX};
+1400   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  longestPath  = INT\_MIN;
+1401 
+1402   CheckNodeStats (root, numOfNodes, numOfLeafs, leafPaths, shortestPath, longestPath, 0);
+1403 
+1404   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalLen = 0;
+1405 
+1406   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0; x < numOfLeafs; x++)
+1407     totalLen += leafPaths[x];
+1408 
+1409   \textcolor{keywordtype}{double}  avgLen = (double)totalLen / (\textcolor{keywordtype}{double})numOfLeafs;
+1410 
+1411   std::cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1412             << \textcolor{stringliteral}{"Number of Nodes   ["} << numOfNodes   << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1413             << \textcolor{stringliteral}{"Number of Leafs   ["} << numOfLeafs   << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1414             << \textcolor{stringliteral}{"Shortest Path     ["} << shortestPath << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1415             << \textcolor{stringliteral}{"Longest  Path     ["} << longestPath  << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1416             << \textcolor{stringliteral}{"Average Length    ["} << avgLen       << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1417 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Compare\+To\+Tree@{Compare\+To\+Tree}}
+\index{Compare\+To\+Tree@{Compare\+To\+Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Compare\+To\+Tree(\+Tree\+Ptr tree)}{CompareToTree(TreePtr tree)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ bool {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Compare\+To\+Tree (
+\begin{DoxyParamCaption}
+\item[{{\bf Tree\+Ptr}}]{tree}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a14b77873f1b45db066bd393e9811641d}{}\label{class_k_k_b_1_1_r_b_tree_a14b77873f1b45db066bd393e9811641d}
+
+
+Definition at line 409 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+410 \{
+411  \textcolor{keywordflow}{return}  AreSubTreesTheSame (root, nil, tree->root, tree->nil);
+412 \}  \textcolor{comment}{/* CompareToTree */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Delete\+Current\+Node@{Delete\+Current\+Node}}
+\index{Delete\+Current\+Node@{Delete\+Current\+Node}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Delete\+Current\+Node()}{DeleteCurrentNode()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ void {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Delete\+Current\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a925c62ec939b5d7b90959a3af8b42d28}{}\label{class_k_k_b_1_1_r_b_tree_a925c62ec939b5d7b90959a3af8b42d28}
+
+
+Definition at line 718 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+719 \{
+720   \textcolor{keywordflow}{if}  ((curNode == nil)   ||  (curNode == NULL))
+721   \{
+722     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+723     std::cerr << \textcolor{stringliteral}{"    *** Warning ***"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+724     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+725     std::cerr << \textcolor{stringliteral}{"RBTree<Entry,CompareNodes,KeyType>::DeleteCurrentNode -  No Current Node Defined."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+726     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+727     \textcolor{keywordflow}{return};
+728   \}
+729 
+730 
+731   \hyperlink{class_k_k_b_1_1_r_b_tree_a0e7710d8357973338c99b99034b17f33}{EntryPtr}  entry2Delete = curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+732 
+733   \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{NodePtr}  node2Delete = curNode;
+734 
+735   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (node2Delete);
+736   \textcolor{keywordflow}{if}  ((curNode == nil)  ||  (curNode == NULL))
+737     curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (node2Delete);
+738 
+739 
+740   \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{NodePtr}  deletedNode = RBDelete (node2Delete);
+741 
+742   \textcolor{keywordflow}{if}  (deletedNode->Data () != entry2Delete)
+743   \{
+744     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+745     std::cerr << \textcolor{stringliteral}{"    *** ERROR ***"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+746     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+747     std::cerr << \textcolor{stringliteral}{"RBTree<Entry,CompareNodes,KeyType>::DeleteCurrentNode -  Wrong Node was Returned for
+       Deletion."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+748     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+749   \}
+750   \textcolor{keywordflow}{else}
+751   \{
+752     \textcolor{keywordflow}{if}  (owner)
+753       \textcolor{keyword}{delete}  deletedNode->Data ();
+754 
+755     \textcolor{keyword}{delete}  deletedNode;
+756   \}
+757 \}  \textcolor{comment}{/* DeleteCurrentNode */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Delete\+Entry@{Delete\+Entry}}
+\index{Delete\+Entry@{Delete\+Entry}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Delete\+Entry(\+Entry\+Ptr e)}{DeleteEntry(EntryPtr e)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ void {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Delete\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf Entry\+Ptr}}]{e}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_ae031a4b6803af6a9a02b5218481c4f46}{}\label{class_k_k_b_1_1_r_b_tree_ae031a4b6803af6a9a02b5218481c4f46}
+
+
+Definition at line 1382 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1383 \{
+1384   \hyperlink{class_k_k_b_1_1_r_bnode}{RBnode<Entry>}* node2Delete = SearchForEntry (root, e);
+1385   \textcolor{keywordflow}{if}  (node2Delete)
+1386     RBDelete (node2Delete);
+1387 \}  \textcolor{comment}{/* DeleteEntry */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Equal@{Get\+Equal}}
+\index{Get\+Equal@{Get\+Equal}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Equal(const Key\+Type \&key)}{GetEqual(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type$>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Equal (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a9f157c30cce4885b8abac7f4981321e9}{}\label{class_k_k_b_1_1_r_b_tree_a9f157c30cce4885b8abac7f4981321e9}
+
+
+Definition at line 493 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+494 \{
+495   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_a9f157c30cce4885b8abac7f4981321e9}{GetEqual} (root, key);
+496 
+497   \textcolor{keywordflow}{if}  (curNode == nil)
+498     \textcolor{keywordflow}{return} NULL;
+499 
+500   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+501 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+First@{Get\+First}}
+\index{Get\+First@{Get\+First}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+First()}{GetFirst()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+First (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a66b152371fdfc103f41a830625a04a53}{}\label{class_k_k_b_1_1_r_b_tree_a66b152371fdfc103f41a830625a04a53}
+
+
+Definition at line 763 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+764 \{
+765   \textcolor{keywordflow}{if}  (root == nil)
+766     \textcolor{keywordflow}{return} NULL;
+767   
+768   curNode = Minimum ();
+769   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+770 \}  \textcolor{comment}{/* GetFirst () */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Greater@{Get\+Greater}}
+\index{Get\+Greater@{Get\+Greater}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Greater(const Key\+Type \&key)}{GetGreater(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type$>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Greater (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}{}\label{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}
+
+
+Definition at line 598 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+599 \{
+600   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}{GetGreater} (root, key);
+601   \textcolor{keywordflow}{return} curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+602 \}  \textcolor{comment}{/* GetGreater */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Greater\+Or\+Equal@{Get\+Greater\+Or\+Equal}}
+\index{Get\+Greater\+Or\+Equal@{Get\+Greater\+Or\+Equal}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Greater\+Or\+Equal(const Key\+Type \&key)}{GetGreaterOrEqual(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type$>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Greater\+Or\+Equal (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_ac9365b1ea43d7306c8231ee200758d3e}{}\label{class_k_k_b_1_1_r_b_tree_ac9365b1ea43d7306c8231ee200758d3e}
+
+
+Definition at line 608 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+609 \{
+610   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_ac9365b1ea43d7306c8231ee200758d3e}{GetGreaterOrEqual} (root, key);
+611   \textcolor{keywordflow}{return} curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+612 \}  \textcolor{comment}{/* GetGreater */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Last@{Get\+Last}}
+\index{Get\+Last@{Get\+Last}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Last()}{GetLast()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Last (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_aea42a72543e2efeec63f717b14673ff8}{}\label{class_k_k_b_1_1_r_b_tree_aea42a72543e2efeec63f717b14673ff8}
+
+
+Definition at line 776 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+777 \{
+778   \textcolor{keywordflow}{if}  (root == nil)
+779     \textcolor{keywordflow}{return} NULL;
+780   
+781   curNode = Maximum ();
+782   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+783 \}  \textcolor{comment}{/* GetLast () */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Less@{Get\+Less}}
+\index{Get\+Less@{Get\+Less}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Less(const Key\+Type \&key)}{GetLess(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type$>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Less (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a0e2fc0cb7fd4091c8abde407edd84351}{}\label{class_k_k_b_1_1_r_b_tree_a0e2fc0cb7fd4091c8abde407edd84351}
+
+
+Definition at line 669 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+670 \{
+671   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_a0e2fc0cb7fd4091c8abde407edd84351}{GetLess} (root, key);
+672   \textcolor{keywordflow}{return} curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+673 \}  \textcolor{comment}{/* GetGreater */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Next@{Get\+Next}}
+\index{Get\+Next@{Get\+Next}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Next()}{GetNext()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ {\bf Entry\+Ptr} {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_b_tree_a0d2058b081781e20e9f02cee450c6071}{}\label{class_k_k_b_1_1_r_b_tree_a0d2058b081781e20e9f02cee450c6071}
+
+
+Definition at line 164 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+164 \{\textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Get\+Prev@{Get\+Prev}}
+\index{Get\+Prev@{Get\+Prev}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Get\+Prev()}{GetPrev()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ {\bf Entry\+Ptr} {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Prev (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_b_tree_a288b6e6075de026e66848d181b6acfe7}{}\label{class_k_k_b_1_1_r_b_tree_a288b6e6075de026e66848d181b6acfe7}
+
+
+Definition at line 166 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+166 \{\textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Predecessor@{Predecessor}}
+\index{Predecessor@{Predecessor}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Predecessor()}{Predecessor()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Predecessor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{}\label{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}
+
+
+Definition at line 682 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+683 \{
+684   \textcolor{keywordflow}{if}  ((curNode == nil)   ||  (curNode == NULL))
+685     \textcolor{keywordflow}{return} NULL;
+686 
+687   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+688 
+689   \textcolor{keywordflow}{if}  ((curNode == nil)   ||  (curNode == NULL))
+690     \textcolor{keywordflow}{return} NULL;
+691 
+692   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+693 \}  \textcolor{comment}{/* Predecessor */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!R\+B\+Insert@{R\+B\+Insert}}
+\index{R\+B\+Insert@{R\+B\+Insert}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{R\+B\+Insert(\+Entry\+Ptr e)}{RBInsert(EntryPtr e)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$ $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::R\+B\+Insert (
+\begin{DoxyParamCaption}
+\item[{{\bf Entry\+Ptr}}]{e}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_a210190ae61de6e1a7b15b39673e6a47d}{}\label{class_k_k_b_1_1_r_b_tree_a210190ae61de6e1a7b15b39673e6a47d}
+
+
+Definition at line 1111 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1112 \{
+1113   \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{NodePtr}  newNode = Insert (e);
+1114 
+1115   \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{NodePtr}  x = newNode;
+1116 
+1117   \hyperlink{class_k_k_b_1_1_r_b_tree_a6b0f3cc33c4554c51afe9bbb82c41906}{NodePtr}  y = NULL;
+1118 
+1119   x->\hyperlink{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}{Color} (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red});
+1120 
+1121   \textcolor{keywordflow}{while}  ((x != root)  &&  (x->Parent ()->Color () == \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red}))
+1122   \{
+1123     \textcolor{keywordflow}{if}  (x->Parent () == x->Parent ()->Parent ()->Left ())
+1124     \{
+1125       y = x->Parent ()->Parent ()->Right ();
+1126 
+1127       \textcolor{keywordflow}{if}  (y->Color () == \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red})
+1128       \{
+1129         x->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});          \textcolor{comment}{// Case 1}
+1130         y->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});                     \textcolor{comment}{// Case 1}
+1131         x->Parent ()->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red}); \textcolor{comment}{// Case 1}
+1132         x = x->Parent ()->Parent ();                   \textcolor{comment}{// Case 1}
+1133       \}
+1134 
+1135       \textcolor{keywordflow}{else}
+1136       \{
+1137         \textcolor{keywordflow}{if}  (x == x->Parent ()->Right ())
+1138         \{        
+1139           x = x->Parent ();                       \textcolor{comment}{// Case 2}
+1140           LeftRotate (x);                         \textcolor{comment}{// Case 2}
+1141         \}
+1142 
+1143         x->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});          \textcolor{comment}{// Case 3}
+1144         x->Parent ()->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red}); \textcolor{comment}{// Case 3}
+1145         RightRotate (x->Parent ()->Parent ());         \textcolor{comment}{// Case 3}
+1146       \}
+1147     \}
+1148 
+1149     \textcolor{keywordflow}{else}
+1150     \{
+1151       y = x->\hyperlink{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}{Parent} ()->\hyperlink{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}{Parent} ()->\hyperlink{class_k_k_b_1_1_r_bnode_abee0e42c1fe63794d9bbd3c1664fbb87}{Left} ();
+1152 
+1153       \textcolor{keywordflow}{if}  (y->Color () == \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red})
+1154       \{
+1155         x->\hyperlink{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}{Parent} ()->\hyperlink{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}{Color} (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});
+1156         y->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});
+1157         x->Parent ()->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red});
+1158         x = x->Parent ()->Parent ();
+1159       \}
+1160 
+1161       \textcolor{keywordflow}{else}
+1162       \{
+1163         \textcolor{keywordflow}{if}  (x == x->Parent ()->Left ())
+1164         \{
+1165           x = x->Parent ();
+1166           RightRotate (x);
+1167         \}
+1168 
+1169         x->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});
+1170         x->Parent ()->Parent ()->Color (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548aee38e4d5dd68c4e440825018d549cb47}{RBcolor::Red});
+1171         LeftRotate (x->Parent ()->Parent ());
+1172       \}
+1173     \}
+1174   \}
+1175 
+1176 
+1177   root->\hyperlink{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}{Color} (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548ae90dfb84e30edf611e326eeb04d680de}{RBcolor::Black});
+1178   \textcolor{keywordflow}{return}  newNode;
+1179 \}  \textcolor{comment}{/* RBInsert */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Size@{Size}}
+\index{Size@{Size}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Size()}{Size()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ {\bf kkuint32} {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_b_tree_ae859ee76df89480dae7d99ff1928d294}{}\label{class_k_k_b_1_1_r_b_tree_ae859ee76df89480dae7d99ff1928d294}
+
+
+Definition at line 140 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+140 \{\textcolor{keywordflow}{return}  size;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Successor@{Successor}}
+\index{Successor@{Successor}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Successor()}{Successor()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Successor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{}\label{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}
+
+
+Definition at line 700 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+701 \{
+702   \textcolor{keywordflow}{if}  ((curNode == nil)   ||  (curNode == NULL))
+703     \textcolor{keywordflow}{return} NULL;
+704 
+705   curNode = \hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+706 
+707   \textcolor{keywordflow}{if}  ((curNode == nil)   ||  (curNode == NULL))
+708     \textcolor{keywordflow}{return} NULL;
+709 
+710   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+711 \}  \textcolor{comment}{/* Successor */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Validate@{Validate}}
+\index{Validate@{Validate}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Validate()}{Validate()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ bool {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Validate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_b_tree_ab18dadc39bc478f028afee14fb4199a5}{}\label{class_k_k_b_1_1_r_b_tree_ab18dadc39bc478f028afee14fb4199a5}
+
+
+Definition at line 1483 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1484 \{
+1485   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  blackNodeHeight = -1;
+1486 
+1487   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfNodes = ValidateSubTree (root, nil, \textcolor{stringliteral}{"Root"}, 0, blackNodeHeight);
+1488 
+1489   \textcolor{keywordflow}{if}  (numOfNodes != size)
+1490   \{
+1491     std::cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+1492               << \textcolor{stringliteral}{"*** ERROR *** NumOfNodes["} << numOfNodes << \textcolor{stringliteral}{"] Does not add up to size["} << size << \textcolor{stringliteral}{"]."} 
+      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1493     \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+1494   \}
+1495 
+1496   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1497 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Walk\+Tree@{Walk\+Tree}}
+\index{Walk\+Tree@{Walk\+Tree}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Walk\+Tree()}{WalkTree()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ void {\bf K\+K\+B\+::\+R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Walk\+Tree (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_b_tree_a5ae41c47b60eda49ebd66754e863258c}{}\label{class_k_k_b_1_1_r_b_tree_a5ae41c47b60eda49ebd66754e863258c}
+
+
+Definition at line 142 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+142 \{\hyperlink{class_k_k_b_1_1_r_b_tree_a5ae41c47b60eda49ebd66754e863258c}{WalkTree} (root);\}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}!Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$@{Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}}
+\index{Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$@{Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}!K\+K\+B\+::\+R\+B\+Tree@{K\+K\+B\+::\+R\+B\+Tree}}
+\subsubsection[{\texorpdfstring{Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}{Iterator< Entry, CompareNodes, KeyType >}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$ friend class {\bf Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_r_b_tree_a6acff2e7675519aa68e26d0e3328ac78}{}\label{class_k_k_b_1_1_r_b_tree_a6acff2e7675519aa68e26d0e3328ac78}
+
+
+Definition at line 130 of file R\+B\+Tree.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_r_b_tree_8h}{R\+B\+Tree.\+h}\end{DoxyCompactItemize}

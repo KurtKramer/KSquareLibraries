@@ -1,0 +1,352 @@
+\hypertarget{class_k_k_b_1_1_point_list}{}\section{K\+KB\+:\+:Point\+List Class Reference}
+\label{class_k_k_b_1_1_point_list}\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+
+
+Container object used to maintaining a list of pixel locations.  
+
+
+
+
+{\ttfamily \#include $<$Point.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Point\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_b_1_1_point_list}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_point_list}{Point\+List} $\ast$ \hyperlink{class_k_k_b_1_1_point_list_af5058320a40be067bf73c2d78ff8b35d}{Point\+List\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_point_list_a23bf858f650e6db462382919b02e4fcd}{Point\+List} (const \hyperlink{class_k_k_b_1_1_point_list}{Point\+List} \&point\+List)
+\item 
+\hyperlink{class_k_k_b_1_1_point_list_a3249bff2a2964884fb2ef535248e9f05}{Point\+List} (bool \+\_\+owner)
+\item 
+void \hyperlink{class_k_k_b_1_1_point_list_a88e04c04e513be256b1528e1f56db795}{Box\+Coordinites} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&min\+Row, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&min\+Col, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&max\+Row, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&max\+Col)
+\item 
+\hyperlink{class_k_k_b_1_1_point}{Point} \hyperlink{class_k_k_b_1_1_point_list_a7d4d04d6634c57306d578d7c1b68e77a}{Calculate\+Center\+Point} ()
+\item 
+float \hyperlink{class_k_k_b_1_1_point_list_a0ce92775337aa4b62a0a49fef0d40626}{Compute\+Segment\+Lens} (float height\+Factor, float width\+Factor) const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_point_list_a69c5c11221415ee7f9cd968a75d40774}{To\+Del\+Str} (char del) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_b_1_1_point_list_af5058320a40be067bf73c2d78ff8b35d}{Point\+List\+Ptr} \hyperlink{class_k_k_b_1_1_point_list_a9b650b13f7e46d57ed47eb36c40906d1}{From\+Del\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Container object used to maintaining a list of pixel locations. 
+
+Definition at line 75 of file Point.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Point\+List\+Ptr@{Point\+List\+Ptr}}
+\index{Point\+List\+Ptr@{Point\+List\+Ptr}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Point\+List\+Ptr}{PointListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Point\+List}$\ast$ {\bf K\+K\+B\+::\+Point\+List\+::\+Point\+List\+Ptr}}\hypertarget{class_k_k_b_1_1_point_list_af5058320a40be067bf73c2d78ff8b35d}{}\label{class_k_k_b_1_1_point_list_af5058320a40be067bf73c2d78ff8b35d}
+
+
+Definition at line 78 of file Point.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Point\+List@{Point\+List}}
+\index{Point\+List@{Point\+List}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Point\+List(const Point\+List \&point\+List)}{PointList(const PointList &pointList)}}]{\setlength{\rightskip}{0pt plus 5cm}Point\+List\+::\+Point\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Point\+List} \&}]{point\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_point_list_a23bf858f650e6db462382919b02e4fcd}{}\label{class_k_k_b_1_1_point_list_a23bf858f650e6db462382919b02e4fcd}
+
+
+Definition at line 93 of file Point.\+cpp.
+
+
+
+References Point\+List().
+
+
+
+Referenced by Point\+List().
+
+
+\begin{DoxyCode}
+93                                                 :
+94     \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<Point>} (\textcolor{keyword}{true})
+95 \{
+96   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{PointList::const\_iterator}  idx;
+97   \textcolor{keywordflow}{for}  (idx = pointList.begin ();  idx != pointList.end ();  idx++)
+98   \{
+99     \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (*(*idx)));
+100   \}
+101 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Point\+List@{Point\+List}}
+\index{Point\+List@{Point\+List}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Point\+List(bool \+\_\+owner)}{PointList(bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Point\+List\+::\+Point\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_point_list_a3249bff2a2964884fb2ef535248e9f05}{}\label{class_k_k_b_1_1_point_list_a3249bff2a2964884fb2ef535248e9f05}
+
+
+Definition at line 105 of file Point.\+cpp.
+
+
+
+References Point\+List().
+
+
+
+Referenced by K\+K\+B\+::\+Contour\+Follower\+::\+Create\+Fourier\+Descriptor\+By\+Sampling(), K\+K\+B\+::\+Contour\+Follower\+::\+Create\+Point\+List\+From\+Fourier(), K\+K\+B\+::\+Raster\+::\+Derive\+Image\+Length(), From\+Del\+Str(), K\+K\+B\+::\+Contour\+Follower\+::\+Generate\+Contour\+List(), Point\+List(), and K\+K\+B\+::\+Raster\+::\+Thin\+Contour().
+
+
+\begin{DoxyCode}
+105                                 :
+106     \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<Point>} (\_owner)
+107 \{
+108 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Box\+Coordinites@{Box\+Coordinites}}
+\index{Box\+Coordinites@{Box\+Coordinites}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Box\+Coordinites(kkint32 \&min\+Row, kkint32 \&min\+Col, kkint32 \&max\+Row, kkint32 \&max\+Col)}{BoxCoordinites(kkint32 &minRow, kkint32 &minCol, kkint32 &maxRow, kkint32 &maxCol)}}]{\setlength{\rightskip}{0pt plus 5cm}void Point\+List\+::\+Box\+Coordinites (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32} \&}]{min\+Row, }
+\item[{{\bf kkint32} \&}]{min\+Col, }
+\item[{{\bf kkint32} \&}]{max\+Row, }
+\item[{{\bf kkint32} \&}]{max\+Col}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_point_list_a88e04c04e513be256b1528e1f56db795}{}\label{class_k_k_b_1_1_point_list_a88e04c04e513be256b1528e1f56db795}
+
+
+Definition at line 111 of file Point.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+
+Referenced by K\+K\+B\+::\+Contour\+Follower\+::\+Create\+Point\+List\+From\+Fourier().
+
+
+\begin{DoxyCode}
+116 \{
+117   minRow = minCol = 999999;
+118   maxRow = maxCol = -1;
+119 
+120   \textcolor{keywordflow}{for}  (\hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{iterator} x = begin ();  x != end ();  x++)
+121   \{
+122     \hyperlink{class_k_k_b_1_1_point}{PointPtr} p = *x;
+123     \textcolor{keywordflow}{if}  (p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} () < minRow)
+124       minRow = p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ();
+125 
+126     \textcolor{keywordflow}{if}  (p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} () > maxRow)
+127       maxRow = p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ();
+128 
+129     \textcolor{keywordflow}{if}  (p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} () < minCol)
+130       minCol = p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+131 
+132     \textcolor{keywordflow}{if}  (p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} () > maxCol)
+133       maxCol = p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+134   \}
+135 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Calculate\+Center\+Point@{Calculate\+Center\+Point}}
+\index{Calculate\+Center\+Point@{Calculate\+Center\+Point}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Calculate\+Center\+Point()}{CalculateCenterPoint()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point} Point\+List\+::\+Calculate\+Center\+Point (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_point_list_a7d4d04d6634c57306d578d7c1b68e77a}{}\label{class_k_k_b_1_1_point_list_a7d4d04d6634c57306d578d7c1b68e77a}
+
+
+Definition at line 138 of file Point.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), K\+K\+B\+::\+Point\+::\+Point(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+\begin{DoxyCode}
+139 \{
+140   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalRow = 0;
+141   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalCol = 0;
+142   \textcolor{keywordflow}{for}  (\hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{iterator} x = begin ();  x != end ();  x++)
+143   \{
+144     \hyperlink{class_k_k_b_1_1_point}{PointPtr} p = *x;
+145     totalRow += p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ();
+146     totalCol += p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+147   \}
+148 
+149   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} centerRow = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((\textcolor{keywordtype}{double})totalRow / (double)size () + 0.5);
+150   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} centerCol = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((\textcolor{keywordtype}{double})totalCol / (double)size () + 0.5);
+151   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_point}{Point} (centerRow, centerCol);
+152 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!Compute\+Segment\+Lens@{Compute\+Segment\+Lens}}
+\index{Compute\+Segment\+Lens@{Compute\+Segment\+Lens}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{Compute\+Segment\+Lens(float height\+Factor, float width\+Factor) const }{ComputeSegmentLens(float heightFactor, float widthFactor) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Point\+List\+::\+Compute\+Segment\+Lens (
+\begin{DoxyParamCaption}
+\item[{float}]{height\+Factor, }
+\item[{float}]{width\+Factor}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_point_list_a0ce92775337aa4b62a0a49fef0d40626}{}\label{class_k_k_b_1_1_point_list_a0ce92775337aa4b62a0a49fef0d40626}
+
+
+Definition at line 233 of file Point.\+cpp.
+
+
+\begin{DoxyCode}
+236 \{
+237   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+238     \textcolor{keywordflow}{return} 0.0f;
+239 
+240   \textcolor{keywordtype}{float} totalLen = 0.0f;
+241 
+242   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{const\_iterator}  idx;
+243   idx = begin ();
+244   \hyperlink{class_k_k_b_1_1_point}{PointPtr} lastPoint = *idx;
+245   ++idx;
+246 
+247   \textcolor{keywordflow}{while}  (idx != end ())
+248   \{
+249     \hyperlink{class_k_k_b_1_1_point}{PointPtr}  nextPoint = *idx;  ++idx;
+250 
+251     \textcolor{keywordtype}{float}  deltaHeight = (float)(nextPoint->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} () - lastPoint->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ()) * heightFactor;
+252     \textcolor{keywordtype}{float}  deltaWidth  = (float)(nextPoint->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} () - lastPoint->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ()) * widthFactor;
+253 
+254     \textcolor{keywordtype}{float}  segmentLen = sqrt (deltaHeight * deltaHeight + deltaWidth * deltaWidth);
+255 
+256     totalLen += segmentLen;
+257     lastPoint = nextPoint;
+258   \}
+259 
+260   \textcolor{keywordflow}{return}  totalLen;
+261 \}  \textcolor{comment}{/* ComputeSegmentLens */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!From\+Del\+Str@{From\+Del\+Str}}
+\index{From\+Del\+Str@{From\+Del\+Str}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{From\+Del\+Str(const K\+K\+Str \&s)}{FromDelStr(const KKStr &s)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+List\+Ptr} Point\+List\+::\+From\+Del\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_point_list_a9b650b13f7e46d57ed47eb36c40906d1}{}\label{class_k_k_b_1_1_point_list_a9b650b13f7e46d57ed47eb36c40906d1}
+
+
+Definition at line 176 of file Point.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Chop\+First\+Char(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Extract\+Token\+Int(), K\+K\+B\+::\+K\+K\+Str\+::\+Find(), K\+K\+B\+::\+K\+K\+Str\+::\+First\+Char(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Len(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), Point\+List(), K\+K\+B\+::\+K\+K\+Str\+::\+Sub\+Str\+Part(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Left().
+
+
+\begin{DoxyCode}
+177 \{
+178   \hyperlink{class_k_k_b_1_1_point_list}{PointListPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point_list_a23bf858f650e6db462382919b02e4fcd}{PointList} (\textcolor{keyword}{true});
+179 
+180   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s (\_s);
+181   s.\hyperlink{class_k_k_b_1_1_k_k_str_af7c102c53103ddff3f48270b4a198c89}{TrimLeft} ();
+182 
+183   \textcolor{keywordflow}{while}  (s.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} () > 0)
+184   \{
+185     \textcolor{keywordtype}{char} nextCh = s.\hyperlink{class_k_k_b_1_1_k_k_str_ac20e69c629b985c6569af914d9cc3e8c}{FirstChar} ();
+186     \textcolor{keywordtype}{char} endPairChar = 0;
+187     \textcolor{keywordflow}{if}  (nextCh == \textcolor{charliteral}{'['})
+188       endPairChar = \textcolor{charliteral}{']'};
+189 
+190     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (nextCh == \textcolor{charliteral}{'('})
+191       endPairChar = \textcolor{charliteral}{')'};
+192 
+193     \textcolor{keywordflow}{else}
+194     \{
+195       \textcolor{comment}{// Not Bracketed.}
+196       endPairChar = 0;
+197       \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}  row = (\hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16})s.\hyperlink{class_k_k_b_1_1_k_k_str_ae50047144b908273ffd004bd9379f6d0}{ExtractTokenInt} (\textcolor{stringliteral}{",\(\backslash\)t\(\backslash\)n\(\backslash\)t"});
+198       \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}  col = (\hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16})s.\hyperlink{class_k_k_b_1_1_k_k_str_ae50047144b908273ffd004bd9379f6d0}{ExtractTokenInt} (\textcolor{stringliteral}{",\(\backslash\)t\(\backslash\)n\(\backslash\)t"});
+199       result->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (row, col));
+200     \}
+201 
+202     \textcolor{keywordflow}{if}  (endPairChar != 0)
+203     \{
+204       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} pairStr = \textcolor{stringliteral}{""};
+205       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx = s.\hyperlink{class_k_k_b_1_1_k_k_str_a3972260712f99de712591dc5be2d3eef}{Find} (endPairChar);
+206       \textcolor{keywordflow}{if}  (idx >= 0)
+207       \{
+208         pairStr = s.\hyperlink{class_k_k_b_1_1_k_k_str_a5f20b2ddfc9f07c8ef99592810332ddb}{SubStrPart} (0, idx - 1);
+209         s = s.\hyperlink{class_k_k_b_1_1_k_k_str_a5f20b2ddfc9f07c8ef99592810332ddb}{SubStrPart} (idx + 1);
+210       \}
+211       \textcolor{keywordflow}{else}
+212       \{
+213         pairStr = s;
+214         s = \textcolor{stringliteral}{""};
+215       \}
+216 
+217       \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}  row = (\hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16})pairStr.\hyperlink{class_k_k_b_1_1_k_k_str_ae50047144b908273ffd004bd9379f6d0}{ExtractTokenInt} (\textcolor{stringliteral}{","});
+218       \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}  col = (\hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16}) pairStr.\hyperlink{class_k_k_b_1_1_k_k_str_ae50047144b908273ffd004bd9379f6d0}{ExtractTokenInt} (\textcolor{stringliteral}{","});
+219       result->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (row, col));
+220       nextCh = s.\hyperlink{class_k_k_b_1_1_k_k_str_ac20e69c629b985c6569af914d9cc3e8c}{FirstChar} ();
+221       \textcolor{keywordflow}{if}  ((nextCh == \textcolor{charliteral}{','})  ||  (nextCh == \textcolor{charliteral}{'\(\backslash\)n'})  ||  (nextCh == \textcolor{charliteral}{'\(\backslash\)r'})  || (nextCh == \textcolor{charliteral}{'\(\backslash\)t'}))
+222         s.\hyperlink{class_k_k_b_1_1_k_k_str_a974ed722249e4e96fde79d483a314712}{ChopFirstChar} ();
+223     \}
+224     s.\hyperlink{class_k_k_b_1_1_k_k_str_af7c102c53103ddff3f48270b4a198c89}{TrimLeft} ();
+225   \}
+226 
+227   \textcolor{keywordflow}{return}  result;
+228 \}  \textcolor{comment}{/* FromDelStr */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}!To\+Del\+Str@{To\+Del\+Str}}
+\index{To\+Del\+Str@{To\+Del\+Str}!K\+K\+B\+::\+Point\+List@{K\+K\+B\+::\+Point\+List}}
+\subsubsection[{\texorpdfstring{To\+Del\+Str(char del) const }{ToDelStr(char del) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Point\+List\+::\+To\+Del\+Str (
+\begin{DoxyParamCaption}
+\item[{char}]{del}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_point_list_a69c5c11221415ee7f9cd968a75d40774}{}\label{class_k_k_b_1_1_point_list_a69c5c11221415ee7f9cd968a75d40774}
+
+
+Definition at line 156 of file Point.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+\begin{DoxyCode}
+157 \{
+158   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+159     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"[]"};
+160 
+161   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () * 10);
+162 
+163   \textcolor{keywordtype}{int}  count = 0;
+164   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{PointList::const\_iterator}  idx;
+165   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx, ++count)
+166   \{
+167     \hyperlink{class_k_k_b_1_1_point}{PointPtr}  p = *idx;
+168     \textcolor{keywordflow}{if}  (count > 0)
+169       result << del;
+170     result << p->\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} () << del << p->\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+171   \}
+172   \textcolor{keywordflow}{return}  result;
+173 \}  \textcolor{comment}{/* ToDelStr */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_point_8h}{Point.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_point_8cpp}{Point.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,118 @@
+\hypertarget{_s_v_m_model_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+M\+Model.cpp File Reference}
+\label{_s_v_m_model_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+M\+Model.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+M\+Model.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$set$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Global\+Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Exception.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Xml\+Stream.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+V\+M\+Model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+M\+L\+L\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Binary\+Class\+Parms.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Encoder.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Num\+List.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Vector.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Svm\+Wrapper.\+h\char`\"{}}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_m_l_l}{K\+K\+M\+LL}
+\begin{DoxyCompactList}\small\item\em Namespace for all K$^\wedge$2 Machine Learning code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{_s_v_m_model_8cpp_a40759ba6dc57dc1b738f1440a39eda2b}{Adj\+Prob} (double prob)
+\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{_s_v_m_model_8cpp_a69a0d619af2391c19ed97742a226a90b}{Get\+Max\+Index} (T $\ast$vote, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} vote\+Length, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&max\+Index1, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&max\+Index2)
+\item 
+bool \hyperlink{namespace_k_k_m_l_l_aed4f24e07be0cb219051de190df720b4}{K\+K\+M\+L\+L\+::\+Pair\+Compare\+Operator} (\hyperlink{class_k_k_m_l_l_1_1_prob_name_pair}{Prob\+Name\+Pair} l, \hyperlink{class_k_k_m_l_l_1_1_prob_name_pair}{Prob\+Name\+Pair} r)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{S\+V\+M\+Model.\+cpp@{S\+V\+M\+Model.\+cpp}!Adj\+Prob@{Adj\+Prob}}
+\index{Adj\+Prob@{Adj\+Prob}!S\+V\+M\+Model.\+cpp@{S\+V\+M\+Model.\+cpp}}
+\subsubsection[{\texorpdfstring{Adj\+Prob(double prob)}{AdjProb(double prob)}}]{\setlength{\rightskip}{0pt plus 5cm}double Adj\+Prob (
+\begin{DoxyParamCaption}
+\item[{double}]{prob}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_v_m_model_8cpp_a40759ba6dc57dc1b738f1440a39eda2b}{}\label{_s_v_m_model_8cpp_a40759ba6dc57dc1b738f1440a39eda2b}
+
+
+Definition at line 105 of file S\+V\+M\+Model.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors2().
+
+
+\begin{DoxyCode}
+106 \{
+107   \textcolor{keywordflow}{if}  (prob < 0.001)
+108     prob = 0.001;
+109   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (prob > 0.999)
+110     prob = 0.999;
+111   \textcolor{keywordflow}{return}  prob;
+112 \}
+\end{DoxyCode}
+\index{S\+V\+M\+Model.\+cpp@{S\+V\+M\+Model.\+cpp}!Get\+Max\+Index@{Get\+Max\+Index}}
+\index{Get\+Max\+Index@{Get\+Max\+Index}!S\+V\+M\+Model.\+cpp@{S\+V\+M\+Model.\+cpp}}
+\subsubsection[{\texorpdfstring{Get\+Max\+Index(\+T $\ast$vote, kkint32 vote\+Length, kkint32 \&max\+Index1, kkint32 \&max\+Index2)}{GetMaxIndex(T *vote, kkint32 voteLength, kkint32 &maxIndex1, kkint32 &maxIndex2)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ void Get\+Max\+Index (
+\begin{DoxyParamCaption}
+\item[{T $\ast$}]{vote, }
+\item[{{\bf kkint32}}]{vote\+Length, }
+\item[{{\bf kkint32} \&}]{max\+Index1, }
+\item[{{\bf kkint32} \&}]{max\+Index2}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_v_m_model_8cpp_a69a0d619af2391c19ed97742a226a90b}{}\label{_s_v_m_model_8cpp_a69a0d619af2391c19ed97742a226a90b}
+
+
+Definition at line 39 of file S\+V\+M\+Model.\+cpp.
+
+
+\begin{DoxyCode}
+44 \{
+45   T max1     = vote[0];
+46   maxIndex1  = 0;
+47 
+48   T  max2    = 0;
+49   maxIndex2  = -1;
+50 
+51   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 1;  i < voteLength;  i++)
+52   \{
+53     \textcolor{keywordflow}{if}  (vote[i] > max1)
+54     \{
+55       max2      = max1;
+56       maxIndex2 = maxIndex1;
+57       max1      = vote[i];
+58       maxIndex1 = i;
+59     \}
+60 
+61     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (maxIndex2 < 0)
+62     \{
+63       max2      = vote[i];
+64       maxIndex2 = i;
+65     \}
+66 
+67     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (vote[i] > max2)
+68     \{
+69       max2 = vote[i];
+70       maxIndex2 = i;
+71     \}
+72   \}
+73 
+74   \textcolor{keywordflow}{return};
+75 \}  \textcolor{comment}{/* GetMaxIndex */}
+\end{DoxyCode}

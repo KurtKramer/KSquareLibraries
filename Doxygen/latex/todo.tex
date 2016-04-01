@@ -1,0 +1,32 @@
+
+\begin{DoxyRefList}
+\item[\label{todo__todo000015}%
+\hypertarget{todo__todo000015}{}%
+Class \hyperlink{class_k_k_b_1_1_chart}{K\+KB\+:\+:Chart} ]This class \hyperlink{class_k_k_b_1_1_chart}{Chart} has not been used as of yet so requires testing.  
+\item[\label{todo__todo000013}%
+\hypertarget{todo__todo000013}{}%
+Member \hyperlink{class_k_k_b_1_1_k_k_str_a3972260712f99de712591dc5be2d3eef}{K\+KB\+:\+:K\+K\+Str\+:\+:Find} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&str, kkint32 pos=0) const ]Want to implement all the methods that the std\+::string class implements this way people who are familiar with the std\+::string class will find using this class easier.  
+\item[\label{todo__todo000016}%
+\hypertarget{todo__todo000016}{}%
+Member \hyperlink{class_k_k_b_1_1_k_k_str_a5fc76668dbfe28861b45ecebda941b7c}{K\+KB\+:\+:K\+K\+Str\+:\+:Left\+Pad} (kkint32 width, uchar ch= \textquotesingle{} \textquotesingle{})]Need to properly debug through \textquotesingle{}\hyperlink{class_k_k_b_1_1_k_k_str_a5fc76668dbfe28861b45ecebda941b7c}{K\+K\+Str\+::\+Left\+Pad};  
+\item[\label{todo__todo000005}%
+\hypertarget{todo__todo000005}{}%
+Member \hyperlink{class_k_k_l_s_c_1_1_scanner_file3_bit_encoded_ab6ef1007e883fd2d3f2a6cb6a91451fd}{K\+K\+L\+SC\+:\+:Scanner\+File3\+Bit\+Encoded\+:\+:Write\+Buffer\+Frame} ()]We need to implement a 64 bit ftell function for non windows; this will involve implementation of \textquotesingle{}\#define \+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS 64\textquotesingle{} and ftell; probably thru macros in the \char`\"{}\+First\+Includes.\+h\char`\"{} file.  
+\item[\label{todo__todo000002}%
+\hypertarget{todo__todo000002}{}%
+Member \hyperlink{class_k_k_l_s_c_1_1_scanner_file_af156749ba59d3e87182ef64a33251f89}{K\+K\+L\+SC\+:\+:Scanner\+File\+:\+:Report\+Instrument\+Data\+Word} (uchar id\+Num, kkuint32 scan\+Line\+Num, Word\+Format32\+Bits data\+Word)]Need to add code to do something the data word just posted.  
+\item[\label{todo__todo000001}%
+\hypertarget{todo__todo000001}{}%
+Member \hyperlink{class_k_k_l_s_c_1_1_scanner_file_a642d150fc6003b4a3e5734c8d7fe38de}{K\+K\+L\+SC\+:\+:Scanner\+File\+:\+:Report\+Text\+Msg} (const char $\ast$text\+Buff, kkint32 num\+Text\+Bytes)]Need to add code to do something with the text\+Buff message.  
+\item[\label{todo__todo000009}%
+\hypertarget{todo__todo000009}{}%
+Member \hyperlink{class_k_k_m_l_l_1_1_model_dual_a7fbbf876aa795e6628025d9ac60ed834}{K\+K\+M\+LL\+:\+:Model\+Dual\+:\+:Predict} (Feature\+Vector\+Ptr example, M\+L\+Class\+Ptr known\+Class, M\+L\+Class\+Ptr \&pred\+Class1, M\+L\+Class\+Ptr \&pred\+Class2, kkint32 \&pred\+Class1\+Votes, kkint32 \&pred\+Class2\+Votes, double \&prob\+Of\+Known\+Class, double \&pred\+Class1\+Prob, double \&pred\+Class2\+Prob, kkint32 \&num\+Of\+Winners, bool \&known\+Class\+One\+Of\+The\+Winners, double \&break\+Tie, Run\+Log \&log)]Make sure that \textquotesingle{}classifier1-\/$>$Classify\+A\+Example\textquotesingle{} does not modify the feature data.  
+\item[\label{todo__todo000008}%
+\hypertarget{todo__todo000008}{}%
+Member \hyperlink{class_k_k_m_l_l_1_1_model_dual_a962c786e5b22cd2ab856f3554200cda3}{K\+K\+M\+LL\+:\+:Model\+Dual\+:\+:Predict} (Feature\+Vector\+Ptr example, Run\+Log \&log)]\hyperlink{class_k_k_m_l_l_1_1_model_dual_a962c786e5b22cd2ab856f3554200cda3}{Model\+Dual\+::\+Predict} Make sure that the call to the first classifier does not modify the encoded\+Example.  
+\item[\label{todo__todo000010}%
+\hypertarget{todo__todo000010}{}%
+Member \hyperlink{class_k_k_m_l_l_1_1_model_dual_acd4989c89b05cea1d59eeea7e6b6a077}{K\+K\+M\+LL\+:\+:Model\+Dual\+:\+:Read\+X\+ML} (Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)]I need the Config1 configuration read from the X\+ML file to be correct; but to deal with this problem for now; will reload the original. 
+
+I need the Config1 configuration read from the X\+ML file to be correct; but to deal with this problem for now; will reload the original. 
+\end{DoxyRefList}

@@ -1,0 +1,68 @@
+\hypertarget{namespace_k_k_job_managment}{}\section{K\+K\+Job\+Managment Namespace Reference}
+\label{namespace_k_k_job_managment}\index{K\+K\+Job\+Managment@{K\+K\+Job\+Managment}}
+
+
+A framework for managing a large number of processes(\+Jobs) in a multi-\/cpu/ multi-\/o/s environment.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_job_managment_1_1_job_manager_list}{Job\+Manager\+List}
+\item 
+class \hyperlink{class_k_k_job_managment_1_1_k_k_job}{K\+K\+Job}
+\item 
+class \hyperlink{class_k_k_job_managment_1_1_k_k_job_list}{K\+K\+Job\+List}
+\item 
+class \hyperlink{class_k_k_job_managment_1_1_k_k_job_manager}{K\+K\+Job\+Manager}
+\begin{DoxyCompactList}\small\item\em Responsable for keeping track of a list of jobs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_job_managment_1_1_k_k_job_manager}{K\+K\+Job\+Manager} $\ast$ \hyperlink{namespace_k_k_job_managment_aa12a7270f9983ca4ed916533dc8adbc4}{Job\+Manager\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_job_managment_1_1_k_k_job_list}{K\+K\+Job\+List} $\ast$ \hyperlink{namespace_k_k_job_managment_a56a0b6cdfa294a14b789c80701f456de}{K\+K\+Job\+List\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_job_managment_1_1_k_k_job_a53526e4ffe4ab2b7858f79ab0ed65a1d}{K\+K\+Job\+::\+K\+K\+Job\+Ptr} \hyperlink{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{K\+K\+Job\+Ptr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A framework for managing a large number of processes(\+Jobs) in a multi-\/cpu/ multi-\/o/s environment. 
+
+Name\+Space for the Job\+Management Library.
+
+\hyperlink{namespace_k_k_job_managment}{K\+K\+Job\+Managment}
+
+The Idea is that \textquotesingle{}\hyperlink{class_k_k_job_managment_1_1_k_k_job}{K\+K\+Job}\textquotesingle{} and \textquotesingle{}\hyperlink{class_k_k_job_managment_1_1_k_k_job_manager}{K\+K\+Job\+Manager}\textquotesingle{} would be used to build specific \hyperlink{class_k_k_job_managment_1_1_k_k_job}{K\+K\+Job} Management code arround. In the case of \textquotesingle{}Feature\+Seletion\textquotesingle{} we would detrive sub-\/classes to manage the Major Speps and Jobs which would then in turn call a different set of Derved classes that would manage Binary, Multi\+Class, Parameter Tuning, and Feature Selection tasks. 
+\begin{DoxyCode}
+ex:  KKJobManager would be replaced by.
+   ParameterManager:: public KKJobManager
+   FeatureSelectionManager:: public KKJobManager
+\end{DoxyCode}
+
+
+The Random\+Splits application makes use of the framework. 
+
+\subsection{Typedef Documentation}
+\index{K\+K\+Job\+Managment@{K\+K\+Job\+Managment}!Job\+Manager\+Ptr@{Job\+Manager\+Ptr}}
+\index{Job\+Manager\+Ptr@{Job\+Manager\+Ptr}!K\+K\+Job\+Managment@{K\+K\+Job\+Managment}}
+\subsubsection[{\texorpdfstring{Job\+Manager\+Ptr}{JobManagerPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Job\+Manager\+::\+Job\+Manager\+Ptr} {\bf K\+K\+Job\+Managment\+::\+Job\+Manager\+Ptr}}\hypertarget{namespace_k_k_job_managment_aa12a7270f9983ca4ed916533dc8adbc4}{}\label{namespace_k_k_job_managment_aa12a7270f9983ca4ed916533dc8adbc4}
+
+
+Definition at line 63 of file K\+K\+Job.\+h.
+
+\index{K\+K\+Job\+Managment@{K\+K\+Job\+Managment}!K\+K\+Job\+List\+Ptr@{K\+K\+Job\+List\+Ptr}}
+\index{K\+K\+Job\+List\+Ptr@{K\+K\+Job\+List\+Ptr}!K\+K\+Job\+Managment@{K\+K\+Job\+Managment}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+List\+Ptr}{KKJobListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Job\+List\+::\+K\+K\+Job\+List\+Ptr} {\bf K\+K\+Job\+Managment\+::\+K\+K\+Job\+List\+Ptr}}\hypertarget{namespace_k_k_job_managment_a56a0b6cdfa294a14b789c80701f456de}{}\label{namespace_k_k_job_managment_a56a0b6cdfa294a14b789c80701f456de}
+
+
+Definition at line 58 of file K\+K\+Job.\+h.
+
+\index{K\+K\+Job\+Managment@{K\+K\+Job\+Managment}!K\+K\+Job\+Ptr@{K\+K\+Job\+Ptr}}
+\index{K\+K\+Job\+Ptr@{K\+K\+Job\+Ptr}!K\+K\+Job\+Managment@{K\+K\+Job\+Managment}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+Ptr}{KKJobPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Job\+::\+K\+K\+Job\+Ptr} {\bf K\+K\+Job\+Managment\+::\+K\+K\+Job\+Ptr}}\hypertarget{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{}\label{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}
+
+
+Definition at line 227 of file K\+K\+Job.\+h.
+

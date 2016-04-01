@@ -1,0 +1,1881 @@
+\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam}{}\section{K\+K\+M\+LL\+:\+:S\+V\+Mparam Class Reference}
+\label{class_k_k_m_l_l_1_1_s_v_mparam}\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+
+
+This class encapsulates are the information necessary to build a \hyperlink{class_k_k_m_l_l_1_1_s_v_m_model}{S\+V\+M\+Model} class.  
+
+
+
+
+{\ttfamily \#include $<$S\+V\+Mparam.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_acd0bbf497520f9f645006c443d8357cf}{S\+V\+Mparam} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+cmd\+Line\+Str, \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+selected\+Features, bool \&\+\_\+valid\+Format, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_af45d964ab5bf227e5b40973b3638aa81}{S\+V\+Mparam} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aefebc0bea32719ed11f308b48bc35fa7}{S\+V\+Mparam} (const \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam}{S\+V\+Mparam} \&\+\_\+svm\+Param)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_af9b67e2bfd088f283bcef2c4232b0bcc}{$\sim$\+S\+V\+Mparam} ()
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a18270c5117ee0c817974cf084452b4ec}{A\+\_\+\+Param} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1791100f8a340b67ac0b48464d8fd90f}{A\+\_\+\+Param} (float \+\_\+A)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{Add\+Binary\+Class\+Parms} (\hyperlink{namespace_k_k_m_l_l_aca399c0744e11553270ffaca507cfee7}{Binary\+Class\+Parms\+Ptr} binary\+Class\+Parms)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a39c75fd4febfba99372e36e648574e3c}{Add\+Binary\+Class\+Parms} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class2, const \hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param, \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+selected\+Features, float \+\_\+weight)
+\begin{DoxyCompactList}\small\item\em Adding parameters that are specific to a class pair; this is used when using the B\+FS version of S\+VM. \end{DoxyCompactList}\item 
+float \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a58807d8d010cdf96986a08b2d0ccc872}{Avg\+Mum\+Of\+Features} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} file\+Desc) const 
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aea20e2e912e4ef0aebcd2da8f127c32a}{Avg\+Num\+Of\+Features} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} train\+Examples) const 
+\begin{DoxyCompactList}\small\item\em Returns back the class weighted average number of features per training example. \end{DoxyCompactList}\item 
+const \hyperlink{namespace_k_k_m_l_l_a15376316ebec0ec5e4d1f11cfb06c15b}{Binary\+Class\+Parms\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a433e645fd36fbf86a92dff43f4d2c812}{Binary\+Parms\+List} () const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ae370b8852451329cd5548b790ab5d65a}{C\+\_\+\+Param} () const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aa447494cc004d960e4e7087ff95b0bcb}{C\+\_\+\+Param} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class2) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aa2f055aaa47a5ae839aee315e67c97dc}{C\+\_\+\+Param} (double \+\_\+\+CC)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a3826910d5c5f40a2d3d85f5f83d670ce}{C\+\_\+\+Param} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class2, double c\+Param)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64c}{S\+V\+M\+\_\+\+Encoding\+Method} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a64c242e8dc965631a3f3a95de555cd40}{Encoding\+Method} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a0a547718ae424aa1958b255a174ffd71}{Encoding\+Method} (\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64c}{S\+V\+M\+\_\+\+Encoding\+Method} \+\_\+encoding\+Method)
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1531d88ea94ba6cb7296c566e8d23268}{Feature\+Count\+Net} () const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1020e8f3be4aab8ca18971164aa28394}{Gamma} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a34f304809d2f576882c708be9197d659}{Gamma} (double \+\_\+gamma)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ac58b26647e9c2218acf6d09d228aa7c7}{Gamma\+\_\+\+Param} (double \+\_\+gamma)
+\item 
+\hyperlink{namespace_k_k_m_l_l_aca399c0744e11553270ffaca507cfee7}{Binary\+Class\+Parms\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a95ee3ea18db839fa7a05bf957b4e5294}{Get\+Binary\+Class\+Parms} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class2)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ab44a92bf720b8a8fea7e52f8fb7f122a}{Get\+Feature\+Nums} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a82f9d7f87a042a63aab6c2ff4a159692}{Get\+Feature\+Nums} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} file\+Desc) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_af65f1c70c6c1be8c79c64d28f82f4abd}{Get\+Feature\+Nums} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} file\+Desc, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class2) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_aca399c0744e11553270ffaca507cfee7}{Binary\+Class\+Parms\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a781fab93d6c2c65ad180c3e8f17358a9}{Get\+Paramters\+To\+Use\+For2\+Class\+Combo} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} class2)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{S\+V\+M\+\_\+\+Kernal\+Type} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ad5f7fd716c4503f0c7dc988581afa43e}{Kernal\+Type} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1e7084816c58984309e2325aeaf97116}{Kernal\+Type} (\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{S\+V\+M\+\_\+\+Kernal\+Type} \+\_\+kernal\+Type)
+\item 
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9a}{S\+V\+M\+\_\+\+Machine\+Type} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a30153e00007f9cf65343e0ad97ad61fb}{Machine\+Type} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a48190c955c4c0d944b7eb805a403210d}{Machine\+Type} (\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9a}{S\+V\+M\+\_\+\+Machine\+Type} \+\_\+machine\+Type)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a8338dec54ee6c5cb7b37a6f809913e35}{Memory\+Consumed\+Estimated} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a34199d2a821d81f2b6510d67eec25249}{Num\+Of\+Features\+After\+Encoding} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} file\+Desc, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log) const 
+\item 
+const \hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\+\_\+parameter} \& \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a8cfd90d197ffc05e10330d52320f61fe}{Param} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_acd0149df04ec777b4ada1e45cea308cb}{Parse\+Cmd\+Line\+Parameter} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&parameter, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&value, bool \&parameter\+Used, bool \&\+\_\+valid\+Format, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+const \hyperlink{namespace_k_k_b_a4820c3670ee1fe74f0c4de981c600faf}{Vector\+Float} \& \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a4dace21b93df510f6cdf2d9722edef1a}{Prob\+Class\+Pairs} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a224dcd1bf0f35df058c14318188a56fd}{Prob\+Class\+Pairs\+Initialize} (const \hyperlink{class_k_k_m_l_l_1_1_class_assignments}{Class\+Assignments} \&assignments)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aa5eaf4b4136dac017f59de2e8217bbb7}{Process\+Svm\+Parameter} (\hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} cmd, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} value, double value\+Num, bool \&parm\+Used)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a2cd57741ec82e82e55a9a637ef14e7c0}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_acfefd9e2a297952641d848e54f3932ca}{Sampling\+Rate} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a48fffce9005030d7201d1429123929a4}{Sampling\+Rate} (float \+\_\+sampling\+Rate)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{Selected\+Features} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a83040ef0a19057919d3701b3de6e6ba6}{Selected\+Features} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} file\+Desc) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a86c57234fe4588b42c62abff5db6f98a}{Selected\+Features} (\hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+selected\+Features)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a803c3e0c113be1980462e4a0ad438fc5}{Selected\+Features} (\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+selected\+Features)
+\item 
+\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8}{S\+V\+M\+\_\+\+Selection\+Method} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a084ed27759d9ef55a14b369da0ad7b93}{Selection\+Method} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a9f86dd39fb9528dbed813bb1b0676b36}{Selection\+Method} (\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8}{S\+V\+M\+\_\+\+Selection\+Method} \+\_\+selection\+Method)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aafd96edb5dd7c038e5d9bf49a1ba19f1}{Set\+Binary\+Class\+Fields} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class2, const \hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param, \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+features, float \+\_\+weight)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aabbd229c11a37f4d76e2da5135bf148e}{Set\+Feature\+Nums} (\hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+features)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a54ccb20e0f61d61f1e642227df4e3e2e}{Set\+Feature\+Nums} (\hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+features)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_aaa64f049d7e527b6b0402932972e211f}{Set\+Feature\+Nums} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+class2, \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{Feature\+Num\+List\+Const\+Ptr} \+\_\+features, float \+\_\+weight=-\/1)
+\begin{DoxyCompactList}\small\item\em Sets the selected Features and Weight for the binary class S\+VM specified by \+\_\+class1 and \+\_\+class2. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a2c79ac20378aedbddf889c356bc3f1bf}{Svm\+Param\+To\+String} (const \hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param) const 
+\begin{DoxyCompactList}\small\item\em Convert a svm\+\_\+parameter struct to a cmdline str. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a92293ae68a65e26cd73d2c973a2246f0}{To\+String} () const 
+\begin{DoxyCompactList}\small\item\em Convert all parameters to a command line string. \end{DoxyCompactList}\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a2da6c5858675cfd9db51e50f548d5f46}{Use\+Probability\+To\+Break\+Ties} () const 
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1c5b624f8e72edde7bbe2c48f3b5af8e}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class encapsulates are the information necessary to build a \hyperlink{class_k_k_m_l_l_1_1_s_v_m_model}{S\+V\+M\+Model} class. 
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_m_l_l_1_1_s_v_m_model}{S\+V\+M\+Model} 
+
+\hyperlink{namespace_s_v_m233}{S\+V\+M233} 
+
+\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{Binary\+Class\+Parms} 
+\end{DoxySeeAlso}
+
+
+Definition at line 74 of file S\+V\+Mparam.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!S\+V\+Mparam@{S\+V\+Mparam}}
+\index{S\+V\+Mparam@{S\+V\+Mparam}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{S\+V\+Mparam(\+K\+K\+Str \&\+\_\+cmd\+Line\+Str, Feature\+Num\+List\+Const\+Ptr \+\_\+selected\+Features, bool \&\+\_\+valid\+Format, Run\+Log \&\+\_\+log)}{SVMparam(KKStr &_cmdLineStr, FeatureNumListConstPtr _selectedFeatures, bool &_validFormat, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+Mparam\+::\+S\+V\+Mparam (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+cmd\+Line\+Str, }
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+selected\+Features, }
+\item[{bool \&}]{\+\_\+valid\+Format, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_acd0bbf497520f9f645006c443d8357cf}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_acd0bbf497520f9f645006c443d8357cf}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+selected\+Features} & Will make own instance; caller maintains ownership status. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 29 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+No\+Encoding, S\+V\+M233\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and K\+K\+M\+L\+L\+::\+Voting.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+33                      :
+34 
+35   binaryParmsList           (NULL),
+36   encodingMethod            (\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding}),
+37   fileName                  (),
+38   param                     (),
+39   probClassPairs             (),
+40   samplingRate              (0.0f),
+41   selectedFeatures          (), 
+42   selectionMethod           (\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8ab6fb89142b836f54bb0062e2bdce2e49}{SVM\_SelectionMethod::Voting}),
+43   useProbabilityToBreakTies (\textcolor{keyword}{false}),
+44   validParam                (\textcolor{keyword}{false})
+45 \{
+46   \textcolor{keywordflow}{if}  (\_selectedFeatures)
+47     selectedFeatures = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (*\_selectedFeatures);
+48   ParseCmdLine (\_cmdLineStr, \_validFormat, \_log);
+49 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!S\+V\+Mparam@{S\+V\+Mparam}}
+\index{S\+V\+Mparam@{S\+V\+Mparam}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{S\+V\+Mparam()}{SVMparam()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+Mparam\+::\+S\+V\+Mparam (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_af45d964ab5bf227e5b40973b3638aa81}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_af45d964ab5bf227e5b40973b3638aa81}
+
+
+Definition at line 55 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+No\+Encoding, K\+K\+M\+L\+L\+::\+One\+Vs\+One, S\+V\+M233\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and K\+K\+M\+L\+L\+::\+Voting.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Model\+Param\+Old\+S\+V\+M(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+S\+V\+M\+Model().
+
+
+\begin{DoxyCode}
+55                     :
+56 
+57   binaryParmsList           (NULL),
+58   encodingMethod            (\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding}),
+59   fileName                  (),
+60   machineType               (\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa2cb1a8e8122853731a8eb99f1bd56630}{SVM\_MachineType::OneVsOne}),
+61   param                     (),
+62   probClassPairs            (),
+63   samplingRate              (0.0f),
+64   selectedFeatures          (NULL), 
+65   selectionMethod           (\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8ab6fb89142b836f54bb0062e2bdce2e49}{SVM\_SelectionMethod::Voting}),
+66   useProbabilityToBreakTies (\textcolor{keyword}{false}),
+67   validParam                (\textcolor{keyword}{false})
+68 \{
+69 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!S\+V\+Mparam@{S\+V\+Mparam}}
+\index{S\+V\+Mparam@{S\+V\+Mparam}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{S\+V\+Mparam(const S\+V\+Mparam \&\+\_\+svm\+Param)}{SVMparam(const SVMparam &_svmParam)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+Mparam\+::\+S\+V\+Mparam (
+\begin{DoxyParamCaption}
+\item[{const {\bf S\+V\+Mparam} \&}]{\+\_\+svm\+Param}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aefebc0bea32719ed11f308b48bc35fa7}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aefebc0bea32719ed11f308b48bc35fa7}
+
+
+Definition at line 75 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Duplicate\+List\+And\+Contents(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), S\+V\+M233\+::svm\+\_\+parameter\+::operator=(), and S\+V\+M233\+::svm\+\_\+parameter\+::svm\+\_\+parameter().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Model\+Param\+Old\+S\+V\+M(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+S\+V\+M\+Model().
+
+
+\begin{DoxyCode}
+75                                               :
+76 
+77   binaryParmsList            (NULL),
+78   encodingMethod             (\_svmParam.encodingMethod),
+79   fileName                   (\_svmParam.fileName),
+80   machineType                (\_svmParam.machineType),
+81   param                      (\_svmParam.param),
+82   probClassPairs             (\_svmParam.probClassPairs),
+83   samplingRate               (\_svmParam.samplingRate),
+84   selectedFeatures           (\_svmParam.selectedFeatures),
+85   selectionMethod            (\_svmParam.selectionMethod),
+86   useProbabilityToBreakTies  (\_svmParam.useProbabilityToBreakTies),
+87   validParam                 (\_svmParam.validParam)
+88 \{
+89   \textcolor{keywordflow}{if}  (\_svmParam.selectedFeatures)
+90     selectedFeatures = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (*\_svmParam.selectedFeatures);
+91 
+92   \textcolor{keywordflow}{if}  (\_svmParam.binaryParmsList)
+93   \{
+94     binaryParmsList = \_svmParam.binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a5ac10819cc4b7e3857ba9308038f7819}{DuplicateListAndContents} ();
+95       
+96     \textcolor{comment}{//  new BinaryClassParmsList (true, \_svmParam.binaryParmsList->QueueSize ());}
+97     \textcolor{comment}{//  binaryParmsList  = new BinaryClassParmsList (*(\_svmParam.binaryParmsList));}
+98   \}
+99   param = \_svmParam.param;
+100 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!````~S\+V\+Mparam@{$\sim$\+S\+V\+Mparam}}
+\index{````~S\+V\+Mparam@{$\sim$\+S\+V\+Mparam}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{$\sim$\+S\+V\+Mparam()}{~SVMparam()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+Mparam\+::$\sim$\+S\+V\+Mparam (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_af9b67e2bfd088f283bcef2c4232b0bcc}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_af9b67e2bfd088f283bcef2c4232b0bcc}
+
+
+Definition at line 104 of file S\+V\+Mparam.\+cpp.
+
+
+\begin{DoxyCode}
+105 \{
+106   \textcolor{keyword}{delete}  binaryParmsList;  binaryParmsList  = NULL;
+107   \textcolor{keyword}{delete}  selectedFeatures; selectedFeatures = NULL;
+108 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!A\+\_\+\+Param@{A\+\_\+\+Param}}
+\index{A\+\_\+\+Param@{A\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{A\+\_\+\+Param() const }{A_Param() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+A\+\_\+\+Param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a18270c5117ee0c817974cf084452b4ec}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a18270c5117ee0c817974cf084452b4ec}
+
+
+Definition at line 132 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::A.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+A\+\_\+\+Param(), and K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Parse\+Cmd\+Line().
+
+
+\begin{DoxyCode}
+132 \{\textcolor{keywordflow}{return} param.\hyperlink{struct_s_v_m233_1_1svm__parameter_ae77c2459a4305fca375197165412abe2}{A};\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!A\+\_\+\+Param@{A\+\_\+\+Param}}
+\index{A\+\_\+\+Param@{A\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{A\+\_\+\+Param(float \+\_\+\+A)}{A_Param(float _A)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+A\+\_\+\+Param (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+A}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a1791100f8a340b67ac0b48464d8fd90f}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a1791100f8a340b67ac0b48464d8fd90f}
+
+
+Definition at line 187 of file S\+V\+Mparam.\+cpp.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::A.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+A\+\_\+\+Param().
+
+
+\begin{DoxyCode}
+188 \{
+189   param.\hyperlink{struct_s_v_m233_1_1svm__parameter_ae77c2459a4305fca375197165412abe2}{A} = \_A;
+190 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Add\+Binary\+Class\+Parms@{Add\+Binary\+Class\+Parms}}
+\index{Add\+Binary\+Class\+Parms@{Add\+Binary\+Class\+Parms}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Add\+Binary\+Class\+Parms(\+Binary\+Class\+Parms\+Ptr binary\+Class\+Parms)}{AddBinaryClassParms(BinaryClassParmsPtr binaryClassParms)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Add\+Binary\+Class\+Parms (
+\begin{DoxyParamCaption}
+\item[{{\bf Binary\+Class\+Parms\+Ptr}}]{binary\+Class\+Parms}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}
+
+
+Definition at line 475 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Binary\+Class\+Parms\+List(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Push\+On\+Back().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Add\+Binary\+Class\+Parms(), and Add\+Binary\+Class\+Parms().
+
+
+\begin{DoxyCode}
+476 \{
+477   \textcolor{keywordflow}{if}  (!binaryParmsList)
+478     binaryParmsList = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list}{BinaryClassParmsList} (\textcolor{keyword}{true});
+479 
+480   binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a39d338e2b3cae165227fbb4441b5f917}{PushOnBack} (binaryClassParms);
+481 \}  \textcolor{comment}{/* AddBinaryClassParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Add\+Binary\+Class\+Parms@{Add\+Binary\+Class\+Parms}}
+\index{Add\+Binary\+Class\+Parms@{Add\+Binary\+Class\+Parms}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Add\+Binary\+Class\+Parms(\+M\+L\+Class\+Ptr \+\_\+class1, M\+L\+Class\+Ptr \+\_\+class2, const svm\+\_\+parameter \&\+\_\+param, Feature\+Num\+List\+Const\+Ptr \+\_\+selected\+Features, float \+\_\+weight)}{AddBinaryClassParms(MLClassPtr _class1, MLClassPtr _class2, const svm_parameter &_param, FeatureNumListConstPtr _selectedFeatures, float _weight)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Add\+Binary\+Class\+Parms (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class2, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{\+\_\+param, }
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+selected\+Features, }
+\item[{float}]{\+\_\+weight}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a39c75fd4febfba99372e36e648574e3c}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a39c75fd4febfba99372e36e648574e3c}
+
+
+Adding parameters that are specific to a class pair; this is used when using the B\+FS version of S\+VM. 
+
+Add a Binary parameters using svm\+\_\+parametr cmd line str. Typically used by Training\+Configuration. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+class1} & First of two classes that is being added to this model. \\
+\hline
+{\em \+\_\+class2} & Second of two classes that is being added to this model. \\
+\hline
+{\em \+\_\+param} & Parameters that are to be used by two-\/class classifier. \\
+\hline
+{\em \+\_\+selected\+Features} & makes own copy; caller will retain ownership status. \\
+\hline
+{\em \+\_\+weight} & You can specify the weight that you want to give to this binary-\/class S\+VM when voting or computing probability. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 756 of file S\+V\+Mparam.\+cpp.
+
+
+
+References Add\+Binary\+Class\+Parms(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Binary\+Class\+Parms().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Add\+Binary\+Class\+Parms(), C\+\_\+\+Param(), Set\+Binary\+Class\+Fields(), and Set\+Feature\+Nums().
+
+
+\begin{DoxyCode}
+762 \{
+763   \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (\textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParms} (\_class1, \_class2, \_param, 
+      \_selectedFeatures, \_weight));
+764 \}  \textcolor{comment}{/* AddBinaryClassParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Avg\+Mum\+Of\+Features@{Avg\+Mum\+Of\+Features}}
+\index{Avg\+Mum\+Of\+Features@{Avg\+Mum\+Of\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Avg\+Mum\+Of\+Features(\+File\+Desc\+Ptr file\+Desc) const }{AvgMumOfFeatures(FileDescPtr fileDesc) const }}]{\setlength{\rightskip}{0pt plus 5cm}float S\+V\+Mparam\+::\+Avg\+Mum\+Of\+Features (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{file\+Desc}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a58807d8d010cdf96986a08b2d0ccc872}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a58807d8d010cdf96986a08b2d0ccc872}
+
+
+Definition at line 485 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Combos, K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Feature\+Count\+Net(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Of\+Features(), and Selected\+Features().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Avg\+Mum\+Of\+Features().
+
+
+\begin{DoxyCode}
+486 \{
+487   \textcolor{keywordtype}{float}  avgNumOfFeatures = 0.0f;
+488 
+489   \textcolor{keywordflow}{if}  ((machineType == \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa01ad67463554c5f5552dcc6b5f4a553f}{SVM\_MachineType::BinaryCombos})  &&  (binaryParmsList))
+490     avgNumOfFeatures = binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a28b156b8457805504a162433b5b2ee74}{FeatureCountNet} (fileDesc);
+491 
+492   \textcolor{keywordflow}{if}  (avgNumOfFeatures == 0.0f)
+493     avgNumOfFeatures = (float)\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc)->NumOfFeatures ();
+494 
+495   \textcolor{keywordflow}{return}  avgNumOfFeatures;
+496 \}  \textcolor{comment}{/* AvgMumOfFeatures */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Avg\+Num\+Of\+Features@{Avg\+Num\+Of\+Features}}
+\index{Avg\+Num\+Of\+Features@{Avg\+Num\+Of\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Avg\+Num\+Of\+Features(\+Feature\+Vector\+List\+Ptr train\+Examples) const }{AvgNumOfFeatures(FeatureVectorListPtr trainExamples) const }}]{\setlength{\rightskip}{0pt plus 5cm}float S\+V\+Mparam\+::\+Avg\+Num\+Of\+Features (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{train\+Examples}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aea20e2e912e4ef0aebcd2da8f127c32a}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aea20e2e912e4ef0aebcd2da8f127c32a}
+
+
+Returns back the class weighted average number of features per training example. 
+
+Will calculate the average number of features per training example. For each binary class combination, multiplies the number of training examples for that pair by the number of features for that pair. the sum of all class pairs are then divided by the total number of examples. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em train\+Examples} & List of training examples that were or are to be used to train with. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 508 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Combos, K\+K\+M\+L\+L\+::\+Class\+Statistic\+::\+Count(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Get\+Class\+Statistics(), Get\+Feature\+Nums(), K\+K\+M\+L\+L\+::\+Class\+Statistic\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Sel\+Features(), and Selected\+Features().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Avg\+Num\+Of\+Features().
+
+
+\begin{DoxyCode}
+509 \{
+510   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDesc = trainExamples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ();
+511   \textcolor{keywordflow}{if}  (!selectedFeatures)
+512   \{
+513     \textcolor{comment}{// The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.}
+514     \textcolor{comment}{// This way we make sure that the variable exists.}
+515     \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc);
+516   \}
+517   \textcolor{keywordflow}{if}  (machineType == \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa01ad67463554c5f5552dcc6b5f4a553f}{SVM\_MachineType::BinaryCombos})
+518   \{
+519     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} totalNumFeaturesUsed = 0;
+520     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} toatlNumExamples     = 0;
+521     \hyperlink{class_k_k_m_l_l_1_1_class_statistic_list}{ClassStatisticListPtr}  stats = trainExamples->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a25d68202689dd6400dcf9a3b18fd5ad9}{GetClassStatistics} ();
+522     \textcolor{keywordflow}{if}  (!stats)
+523     \{
+524       \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_af2d974ca245a5d3c2bc88da0fe674493}{NumOfFeatures} ();
+525     \}
+526 
+527     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  idx1 = 0;
+528     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  idx2 = 0;
+529     \textcolor{keywordflow}{for}  (idx1 = 0;  idx1 < (stats->size() - 1);  idx1++)
+530     \{
+531       \hyperlink{class_k_k_m_l_l_1_1_class_statistic}{ClassStatisticPtr}  class1Stats = stats->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx1);
+532       \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  class1    = class1Stats->\hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}{MLClass} ();
+533       \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}    class1Qty = class1Stats->\hyperlink{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}{Count} ();
+534 
+535       \textcolor{keywordflow}{for}  (idx2 = idx1 + 1;  idx2 < (stats->size());  idx2++)
+536       \{
+537         \hyperlink{class_k_k_m_l_l_1_1_class_statistic}{ClassStatisticPtr}  class2Stats = stats->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx2);
+538         \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  class2    = class2Stats->\hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}{MLClass} ();
+539         \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}    class2Qty = class2Stats->\hyperlink{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}{Count} ();
+540 
+541         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numFeaturesThisCombo = 0;
+542         \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{FeatureNumListConstPtr}  cpfn = \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ab44a92bf720b8a8fea7e52f8fb7f122a}{GetFeatureNums} (fileDesc, class1
+      , class2);
+543         \textcolor{keywordflow}{if}  (cpfn)
+544           numFeaturesThisCombo = cpfn->NumSelFeatures ();
+545 
+546         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numExamplesThisCombo = class1Qty + class2Qty;
+547 
+548         totalNumFeaturesUsed += numFeaturesThisCombo * numExamplesThisCombo;
+549         toatlNumExamples     += numExamplesThisCombo;
+550       \}
+551     \}
+552     \textcolor{keyword}{delete}  stats;  stats = NULL;
+553     \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})totalNumFeaturesUsed / (float)toatlNumExamples;
+554   \}
+555   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (!selectedFeatures)
+556   \{
+557     \textcolor{keywordflow}{return} 0.0f;
+558   \}
+559   \textcolor{keywordflow}{else}
+560   \{
+561     \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_af2d974ca245a5d3c2bc88da0fe674493}{NumOfFeatures} ();
+562   \}
+563 \}  \textcolor{comment}{/* AvgMumOfFeatures */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Binary\+Parms\+List@{Binary\+Parms\+List}}
+\index{Binary\+Parms\+List@{Binary\+Parms\+List}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Binary\+Parms\+List() const }{BinaryParmsList() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Binary\+Class\+Parms\+List\+Ptr} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Binary\+Parms\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a433e645fd36fbf86a92dff43f4d2c812}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a433e645fd36fbf86a92dff43f4d2c812}
+
+
+Definition at line 135 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Binary\+Parms\+List().
+
+
+\begin{DoxyCode}
+135 \{\textcolor{keywordflow}{return} binaryParmsList;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!C\+\_\+\+Param@{C\+\_\+\+Param}}
+\index{C\+\_\+\+Param@{C\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+Param() const }{C_Param() const }}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+C\+\_\+\+Param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_ae370b8852451329cd5548b790ab5d65a}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_ae370b8852451329cd5548b790ab5d65a}
+
+
+Definition at line 137 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::C.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+C\+\_\+\+Param(), C\+\_\+\+Param(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Parse\+Cmd\+Line(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+137 \{\textcolor{keywordflow}{return} param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a8b864fed529218604af5affb2184b20f}{C};\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!C\+\_\+\+Param@{C\+\_\+\+Param}}
+\index{C\+\_\+\+Param@{C\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+Param(\+M\+L\+Class\+Ptr class1, M\+L\+Class\+Ptr class2) const }{C_Param(MLClassPtr class1, MLClassPtr class2) const }}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+Mparam\+::\+C\+\_\+\+Param (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class2}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aa447494cc004d960e4e7087ff95b0bcb}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aa447494cc004d960e4e7087ff95b0bcb}
+
+
+Definition at line 663 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+C(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up().
+
+
+\begin{DoxyCode}
+666 \{
+667   \textcolor{keywordflow}{if}  (!binaryParmsList)
+668   \{
+669     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+670       << \textcolor{stringliteral}{"SVMparam::C\_Param   ***ERROR***     'binaryParmsList'  is not defined."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+671       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+672     \textcolor{keywordflow}{return} 0.0;
+673   \}
+674 
+675   \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  binaryParms = binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+676   \textcolor{keywordflow}{if}  (!binaryParms)
+677   \{
+678     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+679       << \textcolor{stringliteral}{"SVMparam::C\_Param   ***ERROR***    No entry for Class["} << class1->Name () << \textcolor{stringliteral}{", "} << class2->
+      Name () << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+680       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+681     \textcolor{keywordflow}{return} 0.0;
+682   \}
+683   \textcolor{keywordflow}{else}
+684   \{
+685     \textcolor{keywordflow}{return} binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_aefb6c5d54ce92e8c8ce96f6b9f2eafc2}{C} ();
+686   \}
+687 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!C\+\_\+\+Param@{C\+\_\+\+Param}}
+\index{C\+\_\+\+Param@{C\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+Param(double \+\_\+\+C\+C)}{C_Param(double _CC)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+C\+\_\+\+Param (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+\+CC}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aa2f055aaa47a5ae839aee315e67c97dc}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aa2f055aaa47a5ae839aee315e67c97dc}
+
+
+Definition at line 195 of file S\+V\+Mparam.\+cpp.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::C.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+C\+\_\+\+Param().
+
+
+\begin{DoxyCode}
+196 \{
+197   param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a8b864fed529218604af5affb2184b20f}{C} = \_CC;
+198 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!C\+\_\+\+Param@{C\+\_\+\+Param}}
+\index{C\+\_\+\+Param@{C\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{C\+\_\+\+Param(\+M\+L\+Class\+Ptr class1, M\+L\+Class\+Ptr class2, double c\+Param)}{C_Param(MLClassPtr class1, MLClassPtr class2, double cParam)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+C\+\_\+\+Param (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class2, }
+\item[{double}]{c\+Param}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a3826910d5c5f40a2d3d85f5f83d670ce}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a3826910d5c5f40a2d3d85f5f83d670ce}
+
+
+Definition at line 692 of file S\+V\+Mparam.\+cpp.
+
+
+
+References Add\+Binary\+Class\+Parms(), S\+V\+M233\+::svm\+\_\+parameter\+::C, K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+C(), C\+\_\+\+Param(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up(), and Selected\+Features().
+
+
+\begin{DoxyCode}
+696 \{
+697   \textcolor{keywordflow}{if}  (!binaryParmsList)
+698   \{
+699     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+700       << \textcolor{stringliteral}{"SVMparam::C\_Param   ***ERROR***     'binaryParmsList'  is not defined."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+701       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+702     \textcolor{keywordflow}{return};
+703   \}
+704 
+705   \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  binaryParms = binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+706   \textcolor{keywordflow}{if}  (!binaryParms)
+707   \{
+708     \hyperlink{struct_s_v_m233_1_1svm__parameter}{svm\_parameter} binaryParam = param;
+709     binaryParam.\hyperlink{struct_s_v_m233_1_1svm__parameter_a8b864fed529218604af5affb2184b20f}{C} = \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_ae370b8852451329cd5548b790ab5d65a}{C\_Param} ();
+710     \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (class1, class2, binaryParam, 
+      \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (), 1.0f);
+711   \}
+712   \textcolor{keywordflow}{else}
+713   \{
+714     binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_aefb6c5d54ce92e8c8ce96f6b9f2eafc2}{C} (cParam);
+715   \}
+716 \}  \textcolor{comment}{/* C\_Param */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Encoding\+Method@{Encoding\+Method}}
+\index{Encoding\+Method@{Encoding\+Method}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Encoding\+Method() const }{EncodingMethod() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+V\+M\+\_\+\+Encoding\+Method} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Encoding\+Method (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a64c242e8dc965631a3f3a95de555cd40}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a64c242e8dc965631a3f3a95de555cd40}
+
+
+Definition at line 143 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Encoding\+Method(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Normalize\+Nominal\+Attributes(), Num\+Of\+Features\+After\+Encoding(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Parse\+Cmd\+Line(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+143 \{\textcolor{keywordflow}{return} encodingMethod;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Encoding\+Method@{Encoding\+Method}}
+\index{Encoding\+Method@{Encoding\+Method}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Encoding\+Method(\+S\+V\+M\+\_\+\+Encoding\+Method \+\_\+encoding\+Method)}{EncodingMethod(SVM_EncodingMethod _encodingMethod)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Encoding\+Method (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Encoding\+Method}}]{\+\_\+encoding\+Method}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a0a547718ae424aa1958b255a174ffd71}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a0a547718ae424aa1958b255a174ffd71}
+
+
+Definition at line 182 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Encoding\+Method().
+
+
+\begin{DoxyCode}
+182 \{encodingMethod    = \_encodingMethod;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Feature\+Count\+Net@{Feature\+Count\+Net}}
+\index{Feature\+Count\+Net@{Feature\+Count\+Net}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Feature\+Count\+Net() const }{FeatureCountNet() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Feature\+Count\+Net (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a1531d88ea94ba6cb7296c566e8d23268}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a1531d88ea94ba6cb7296c566e8d23268}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Gamma@{Gamma}}
+\index{Gamma@{Gamma}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Gamma() const }{Gamma() const }}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Gamma (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a1020e8f3be4aab8ca18971164aa28394}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a1020e8f3be4aab8ca18971164aa28394}
+
+
+Definition at line 147 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::\+Gamma().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Gamma(), and K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Parse\+Cmd\+Line().
+
+
+\begin{DoxyCode}
+147 \{\textcolor{keywordflow}{return} param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a027beafb4ebb5704a76522e03f9b35d6}{Gamma} ();\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Gamma@{Gamma}}
+\index{Gamma@{Gamma}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Gamma(double \+\_\+gamma)}{Gamma(double _gamma)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Gamma (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+gamma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a34f304809d2f576882c708be9197d659}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a34f304809d2f576882c708be9197d659}
+
+
+Definition at line 183 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::\+Gamma().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Gamma(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Gamma\+\_\+\+Param(), and Gamma\+\_\+\+Param().
+
+
+\begin{DoxyCode}
+183 \{param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a027beafb4ebb5704a76522e03f9b35d6}{Gamma} (\_gamma);\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Gamma\+\_\+\+Param@{Gamma\+\_\+\+Param}}
+\index{Gamma\+\_\+\+Param@{Gamma\+\_\+\+Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Gamma\+\_\+\+Param(double \+\_\+gamma)}{Gamma_Param(double _gamma)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Gamma\+\_\+\+Param (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+gamma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_ac58b26647e9c2218acf6d09d228aa7c7}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_ac58b26647e9c2218acf6d09d228aa7c7}
+
+
+Definition at line 184 of file S\+V\+Mparam.\+h.
+
+
+
+References Gamma().
+
+
+\begin{DoxyCode}
+184 \{\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a1020e8f3be4aab8ca18971164aa28394}{Gamma} (\_gamma);\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Get\+Binary\+Class\+Parms@{Get\+Binary\+Class\+Parms}}
+\index{Get\+Binary\+Class\+Parms@{Get\+Binary\+Class\+Parms}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Get\+Binary\+Class\+Parms(\+M\+L\+Class\+Ptr class1, M\+L\+Class\+Ptr class2)}{GetBinaryClassParms(MLClassPtr class1, MLClassPtr class2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Binary\+Class\+Parms\+Ptr} S\+V\+Mparam\+::\+Get\+Binary\+Class\+Parms (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class2}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a95ee3ea18db839fa7a05bf957b4e5294}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a95ee3ea18db839fa7a05bf957b4e5294}
+If binary class parms don\textquotesingle{}t exist will return N\+U\+LL. 
+
+Definition at line 423 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Get\+Binary\+Class\+Parms(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Get\+Binary\+Class\+Parms().
+
+
+\begin{DoxyCode}
+426 \{
+427   \textcolor{keywordflow}{if}  (binaryParmsList == NULL)
+428     \textcolor{keywordflow}{return} NULL;
+429   \textcolor{keywordflow}{else}
+430     \textcolor{keywordflow}{return} binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+431 \}  \textcolor{comment}{/* GetBinaryClassParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Get\+Feature\+Nums@{Get\+Feature\+Nums}}
+\index{Get\+Feature\+Nums@{Get\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Get\+Feature\+Nums() const }{GetFeatureNums() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List\+Const\+Ptr} S\+V\+Mparam\+::\+Get\+Feature\+Nums (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_ab44a92bf720b8a8fea7e52f8fb7f122a}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_ab44a92bf720b8a8fea7e52f8fb7f122a}
+
+
+Definition at line 436 of file S\+V\+Mparam.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Get\+Feature\+Nums().
+
+
+\begin{DoxyCode}
+437 \{
+438   \textcolor{keywordflow}{return}  selectedFeatures;
+439 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Get\+Feature\+Nums@{Get\+Feature\+Nums}}
+\index{Get\+Feature\+Nums@{Get\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Get\+Feature\+Nums(\+File\+Desc\+Ptr file\+Desc) const }{GetFeatureNums(FileDescPtr fileDesc) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List\+Const\+Ptr} S\+V\+Mparam\+::\+Get\+Feature\+Nums (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{file\+Desc}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a82f9d7f87a042a63aab6c2ff4a159692}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a82f9d7f87a042a63aab6c2ff4a159692}
+
+
+Definition at line 443 of file S\+V\+Mparam.\+cpp.
+
+
+
+References Selected\+Features().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Get\+Feature\+Nums().
+
+
+\begin{DoxyCode}
+444 \{
+445   \textcolor{keywordflow}{if}  (selectedFeatures == NULL)
+446     \textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc);
+447   \textcolor{keywordflow}{else}
+448     \textcolor{keywordflow}{return} selectedFeatures;
+449 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Get\+Feature\+Nums@{Get\+Feature\+Nums}}
+\index{Get\+Feature\+Nums@{Get\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Get\+Feature\+Nums(\+File\+Desc\+Ptr file\+Desc, M\+L\+Class\+Ptr class1, M\+L\+Class\+Ptr class2) const }{GetFeatureNums(FileDescPtr fileDesc, MLClassPtr class1, MLClassPtr class2) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List\+Const\+Ptr} S\+V\+Mparam\+::\+Get\+Feature\+Nums (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{file\+Desc, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class2}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_af65f1c70c6c1be8c79c64d28f82f4abd}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_af65f1c70c6c1be8c79c64d28f82f4abd}
+
+
+Definition at line 453 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up(), Selected\+Features(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Selected\+Features\+F\+D().
+
+
+
+Referenced by Avg\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Get\+Feature\+Nums(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Get\+Feature\+Nums().
+
+
+\begin{DoxyCode}
+457 \{
+458   \textcolor{keywordflow}{if}  (!binaryParmsList)
+459   \{
+460     \textcolor{comment}{// This configuration file does not specify feature selection by binary classes,}
+461     \textcolor{comment}{// so return the general one specified for model.}
+462     \textcolor{keywordflow}{return}  \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc);
+463   \}
+464 
+465   \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  twoClassComboParm =  binaryParmsList->
+      \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+466   \textcolor{keywordflow}{if}  (!twoClassComboParm)
+467     \textcolor{keywordflow}{return}  \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc);
+468   \textcolor{keywordflow}{else}
+469     \textcolor{keywordflow}{return}  twoClassComboParm->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_aebdec3c0e91497ba4937543368a6a899}{SelectedFeaturesFD}  (fileDesc);
+470 \}  \textcolor{comment}{/* GetFeatureNums */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Get\+Paramters\+To\+Use\+For2\+Class\+Combo@{Get\+Paramters\+To\+Use\+For2\+Class\+Combo}}
+\index{Get\+Paramters\+To\+Use\+For2\+Class\+Combo@{Get\+Paramters\+To\+Use\+For2\+Class\+Combo}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Get\+Paramters\+To\+Use\+For2\+Class\+Combo(\+M\+L\+Class\+Ptr class1, M\+L\+Class\+Ptr class2)}{GetParamtersToUseFor2ClassCombo(MLClassPtr class1, MLClassPtr class2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Binary\+Class\+Parms\+Ptr} S\+V\+Mparam\+::\+Get\+Paramters\+To\+Use\+For2\+Class\+Combo (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{class2}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a781fab93d6c2c65ad180c3e8f17358a9}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a781fab93d6c2c65ad180c3e8f17358a9}
+
+
+Definition at line 394 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Binary\+Class\+Parms(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Binary\+Class\+Parms\+List(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Push\+On\+Back().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Get\+Paramters\+To\+Use\+For2\+Class\+Combo(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Get\+Paramters\+To\+Use\+For2\+Class\+Combo().
+
+
+\begin{DoxyCode}
+397 \{
+398   \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  twoClassComboParms = NULL;
+399 
+400   \textcolor{keywordflow}{if}  (binaryParmsList == NULL)
+401   \{
+402     binaryParmsList = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list}{BinaryClassParmsList} (\textcolor{keyword}{true});
+403     twoClassComboParms = NULL;
+404   \}
+405   \textcolor{keywordflow}{else}
+406   \{
+407     twoClassComboParms = binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+408   \}
+409 
+410   \textcolor{keywordflow}{if}  (!twoClassComboParms)
+411   \{
+412     twoClassComboParms = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParms} (class1, class2, param, selectedFeatures, 1.0
+      f);
+413     binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a39d338e2b3cae165227fbb4441b5f917}{PushOnBack} (twoClassComboParms);
+414   \}
+415 
+416   \textcolor{keywordflow}{return}  twoClassComboParms;
+417 \}  \textcolor{comment}{/* GetParamtersToUSeFor2ClassCombo */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Kernal\+Type@{Kernal\+Type}}
+\index{Kernal\+Type@{Kernal\+Type}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Kernal\+Type() const }{KernalType() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+V\+M\+\_\+\+Kernal\+Type} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Kernal\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_ad5f7fd716c4503f0c7dc988581afa43e}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_ad5f7fd716c4503f0c7dc988581afa43e}
+
+
+Definition at line 149 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::\+Kernal\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Kernal\+Type(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Kernal\+Type().
+
+
+\begin{DoxyCode}
+149 \{\textcolor{keywordflow}{return} (\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{SVM\_KernalType})param.\hyperlink{struct_s_v_m233_1_1svm__parameter_aa2a2d663867b1d60c71a8fd2f1da3318}{KernalType} ();\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Kernal\+Type@{Kernal\+Type}}
+\index{Kernal\+Type@{Kernal\+Type}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Kernal\+Type(\+S\+V\+M\+\_\+\+Kernal\+Type \+\_\+kernal\+Type)}{KernalType(SVM_KernalType _kernalType)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Kernal\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Kernal\+Type}}]{\+\_\+kernal\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a1e7084816c58984309e2325aeaf97116}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a1e7084816c58984309e2325aeaf97116}
+
+
+Definition at line 185 of file S\+V\+Mparam.\+h.
+
+
+
+References S\+V\+M233\+::svm\+\_\+parameter\+::\+Kernal\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Kernal\+Type(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Kernal\+Type().
+
+
+\begin{DoxyCode}
+185 \{param.\hyperlink{struct_s_v_m233_1_1svm__parameter_aa2a2d663867b1d60c71a8fd2f1da3318}{KernalType} ((\textcolor{keywordtype}{int})\_kernalType);\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Machine\+Type@{Machine\+Type}}
+\index{Machine\+Type@{Machine\+Type}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Machine\+Type() const }{MachineType() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+V\+M\+\_\+\+Machine\+Type} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Machine\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a30153e00007f9cf65343e0ad97ad61fb}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a30153e00007f9cf65343e0ad97ad61fb}
+
+
+Definition at line 151 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Description(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Distance\+From\+Decision\+Boundary(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Machine\+Type(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Num\+Of\+Support\+Vectors(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Predict(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Support\+Vector\+Statistics(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+S\+V\+M\+Model(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+151 \{\textcolor{keywordflow}{return} machineType;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Machine\+Type@{Machine\+Type}}
+\index{Machine\+Type@{Machine\+Type}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Machine\+Type(\+S\+V\+M\+\_\+\+Machine\+Type \+\_\+machine\+Type)}{MachineType(SVM_MachineType _machineType)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Machine\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Machine\+Type}}]{\+\_\+machine\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a48190c955c4c0d944b7eb805a403210d}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a48190c955c4c0d944b7eb805a403210d}
+
+
+Definition at line 187 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Machine\+Type().
+
+
+\begin{DoxyCode}
+187 \{machineType        = \_machineType;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+Mparam\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a8338dec54ee6c5cb7b37a6f809913e35}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a8338dec54ee6c5cb7b37a6f809913e35}
+
+
+Definition at line 124 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Memory\+Consumed\+Estimated(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+K\+K\+Str\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+125 \{
+126   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_af45d964ab5bf227e5b40973b3638aa81}{SVMparam}) + fileName.
+      \hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ();
+127   \textcolor{keywordflow}{if}  (selectedFeatures)
+128     memoryConsumedEstimated += selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a9efe0d2ced65e384afbc196a915567b6}{MemoryConsumedEstimated} ();
+129 
+130   \textcolor{keywordflow}{if}  (binaryParmsList)
+131     memoryConsumedEstimated += binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a60b727ebd8d5e47268e200314d9ccf57}{MemoryConsumedEstimated} ();
+132 
+133   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+134 \}  \textcolor{comment}{/* MemoryConsumedEstimated  */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Num\+Of\+Features\+After\+Encoding@{Num\+Of\+Features\+After\+Encoding}}
+\index{Num\+Of\+Features\+After\+Encoding@{Num\+Of\+Features\+After\+Encoding}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Features\+After\+Encoding(\+File\+Desc\+Ptr file\+Desc, Run\+Log \&log) const }{NumOfFeaturesAfterEncoding(FileDescPtr fileDesc, RunLog &log) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+Mparam\+::\+Num\+Of\+Features\+After\+Encoding (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{file\+Desc, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a34199d2a821d81f2b6510d67eec25249}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a34199d2a821d81f2b6510d67eec25249}
+
+
+Definition at line 567 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary, K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Cardinality(), Encoding\+Method(), K\+K\+M\+L\+L\+::\+No\+Encoding, K\+K\+M\+L\+L\+::\+Nominal, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), K\+K\+M\+L\+L\+::\+Scaled, Selected\+Features(), K\+K\+M\+L\+L\+::\+Symbolic, and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Type().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Num\+Of\+Features\+After\+Encoding().
+
+
+\begin{DoxyCode}
+570 \{
+571   \textcolor{keywordflow}{if}  (!selectedFeatures)
+572   \{
+573     \textcolor{comment}{// The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.}
+574     \textcolor{comment}{// This way we make sure that the variable exists.}
+575     \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{SelectedFeatures} (fileDesc);
+576   \}
+577 
+578   \textcolor{keywordflow}{if}  (!selectedFeatures)
+579     \textcolor{keywordflow}{return} 0;
+580 
+581   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z;
+582   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} numFeaturesAfterEncoding = 0;
+583   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} numOfFeaturesSelected = selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_af2d974ca245a5d3c2bc88da0fe674493}{NumOfFeatures} ();
+584 
+585   \textcolor{keywordflow}{switch} (\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a64c242e8dc965631a3f3a95de555cd40}{EncodingMethod} ())
+586   \{
+587   \textcolor{keywordflow}{case}  \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca6ce976e8f061b2b5cfe4d0c50c3405dd}{SVM\_EncodingMethod::Binary}:
+588     \textcolor{keywordflow}{for}  (z = 0; z < numOfFeaturesSelected; z++)
+589     \{
+590       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  fieldNum = (*selectedFeatures)[z];
+591       \textcolor{keywordflow}{if}  ((fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a4d84c65489e2ac36e91cb1d8a34adb89}{Type} (fieldNum) == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||
+592            (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a4d84c65489e2ac36e91cb1d8a34adb89}{Type} (fieldNum) == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+593           )
+594         numFeaturesAfterEncoding += fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a58a548ebb87bfc265d05208871390f54}{Cardinality} (fieldNum);
+595       \textcolor{keywordflow}{else}
+596         numFeaturesAfterEncoding ++;
+597     \}
+598     \textcolor{keywordflow}{break};
+599 
+600   \textcolor{keywordflow}{case} \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca7380ae6c5e1189eef50cfd0557d74e99}{SVM\_EncodingMethod::Scaled}:
+601   \textcolor{keywordflow}{case} \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding}:
+602   \textcolor{keywordflow}{default}:
+603     \textcolor{comment}{//numFeaturesAfterEncoding = fileDesc->NumOfFields ( );}
+604     numFeaturesAfterEncoding = selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_af2d974ca245a5d3c2bc88da0fe674493}{NumOfFeatures} ();
+605     \textcolor{keywordflow}{break};
+606   \}
+607 
+608   \textcolor{keywordflow}{return}  numFeaturesAfterEncoding;
+609 \}  \textcolor{comment}{/* NumOfFeaturesAfterEncoding */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Param@{Param}}
+\index{Param@{Param}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Param() const }{Param() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf svm\+\_\+parameter}\& K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a8cfd90d197ffc05e10330d52320f61fe}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a8cfd90d197ffc05e10330d52320f61fe}
+
+
+Definition at line 159 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Param(), and K\+K\+M\+L\+L\+::\+Svm\+Predict\+Class().
+
+
+\begin{DoxyCode}
+159 \{\textcolor{keywordflow}{return} param;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Parse\+Cmd\+Line\+Parameter@{Parse\+Cmd\+Line\+Parameter}}
+\index{Parse\+Cmd\+Line\+Parameter@{Parse\+Cmd\+Line\+Parameter}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Parse\+Cmd\+Line\+Parameter(const K\+K\+Str \&parameter, const K\+K\+Str \&value, bool \&parameter\+Used, bool \&\+\_\+valid\+Format, Run\+Log \&log)}{ParseCmdLineParameter(const KKStr &parameter, const KKStr &value, bool &parameterUsed, bool &_validFormat, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Parse\+Cmd\+Line\+Parameter (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{parameter, }
+\item[{const {\bf K\+K\+Str} \&}]{value, }
+\item[{bool \&}]{parameter\+Used, }
+\item[{bool \&}]{\+\_\+valid\+Format, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_acd0149df04ec777b4ada1e45cea308cb}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_acd0149df04ec777b4ada1e45cea308cb}
+
+
+Definition at line 202 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Encoding\+Method\+From\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Machine\+Type\+From\+Str(), K\+K\+M\+L\+L\+::\+Null, K\+K\+B\+::\+K\+K\+Str\+::operator==(), S\+V\+M233\+::svm\+\_\+parameter\+::\+Process\+Svm\+Parameter(), K\+K\+M\+L\+L\+::\+Selection\+Method\+From\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+To\+Double(), and K\+K\+B\+::\+K\+K\+Str\+::\+Upper().
+
+
+\begin{DoxyCode}
+208 \{
+209   parameterUsed = \textcolor{keyword}{true};
+210   \_validFormat  = \textcolor{keyword}{true};
+211 
+212   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  field = parameter;
+213   \textcolor{keywordtype}{double}  valueNum = value.\hyperlink{class_k_k_b_1_1_k_k_str_a95207190bd6a470ca0ef25ebea459c80}{ToDouble} ();
+214 
+215   field.\hyperlink{class_k_k_b_1_1_k_k_str_a66ea0feabc94da88591b56a683695bd9}{Upper} ();
+216   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} valueUpper (value);
+217   valueUpper.Upper ();
+218 
+219   param.\hyperlink{struct_s_v_m233_1_1svm__parameter_ab5a7c97ba6772210f6071400dfae48db}{ProcessSvmParameter} (parameter,value, valueNum, parameterUsed);
+220   \textcolor{keywordflow}{if}  (parameterUsed)
+221     \textcolor{keywordflow}{return};
+222 
+223   parameterUsed = \textcolor{keyword}{true};
+224 
+225   \textcolor{keywordflow}{if} ((field == \textcolor{stringliteral}{"-ENCODE"}))
+226   \{
+227     encodingMethod = \hyperlink{namespace_k_k_m_l_l_a100cc09ba8368cc433f3f8643e3d0abb}{EncodingMethodFromStr} (valueUpper);
+228   \}
+229 
+230   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (field == \textcolor{stringliteral}{"-MT"})
+231   \{
+232     machineType = \hyperlink{namespace_k_k_m_l_l_a05f26527ddefaf91b278afcd8e7981e2}{MachineTypeFromStr} (valueUpper);
+233     \textcolor{keywordflow}{if}  (machineType == \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aabbb93ef26e3c101ff11cdd21cab08a94}{SVM\_MachineType::Null})
+234     \{
+235       \_validFormat = \textcolor{keyword}{false};
+236       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+237         << \textcolor{stringliteral}{"SVMparam::ParseCmdLineParameter     *** ERROR ***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+238         << \textcolor{stringliteral}{"                Invalid -MT Parm["} << value << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+239         << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+240     \}
+241   \}
+242 
+243   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((field == \textcolor{stringliteral}{"-SM"})  ||  (field == \textcolor{stringliteral}{"-SELECTIONMETHOD"}))
+244   \{
+245     selectionMethod  = \hyperlink{namespace_k_k_m_l_l_af92818c3487e45a3debbd91aa263cca6}{SelectionMethodFromStr} (valueUpper);
+246     \textcolor{keywordflow}{if}  (selectionMethod == \hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8abbb93ef26e3c101ff11cdd21cab08a94}{SVM\_SelectionMethod::Null})
+247     \{
+248       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+249         << \textcolor{stringliteral}{"SVMparam::ParseCmdLineParameter    *** ERROR ***"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+250         << \textcolor{stringliteral}{"            Invalid SelectionMethod (-SM)["} << value << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+251         << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+252       \_validFormat = \textcolor{keyword}{false};
+253     \}
+254   \}
+255 
+256   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((field == \textcolor{stringliteral}{"-SR"})  ||  (field == \textcolor{stringliteral}{"-SAMPLINGRATE"}))
+257   \{
+258     samplingRate = float (atof (value.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ()));
+259   \}
+260 
+261 
+262   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((field == \textcolor{stringliteral}{"-UP"})  ||  (field == \textcolor{stringliteral}{"-USEPROBABILITY"}))
+263   \{
+264     useProbabilityToBreakTies = \textcolor{keyword}{true};
+265   \}
+266 
+267 
+268   \textcolor{keywordflow}{else}
+269   \{
+270     parameterUsed = \textcolor{keyword}{false};
+271   \}
+272 \}  \textcolor{comment}{/* ParseCmdLineParameter */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Prob\+Class\+Pairs@{Prob\+Class\+Pairs}}
+\index{Prob\+Class\+Pairs@{Prob\+Class\+Pairs}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Prob\+Class\+Pairs() const }{ProbClassPairs() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector\+Float}\& K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Prob\+Class\+Pairs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a4dace21b93df510f6cdf2d9722edef1a}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a4dace21b93df510f6cdf2d9722edef1a}
+
+
+Definition at line 161 of file S\+V\+Mparam.\+h.
+
+
+\begin{DoxyCode}
+161 \{\textcolor{keywordflow}{return} probClassPairs;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Prob\+Class\+Pairs\+Initialize@{Prob\+Class\+Pairs\+Initialize}}
+\index{Prob\+Class\+Pairs\+Initialize@{Prob\+Class\+Pairs\+Initialize}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Prob\+Class\+Pairs\+Initialize(const Class\+Assignments \&assignments)}{ProbClassPairsInitialize(const ClassAssignments &assignments)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Prob\+Class\+Pairs\+Initialize (
+\begin{DoxyParamCaption}
+\item[{const {\bf Class\+Assignments} \&}]{assignments}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a224dcd1bf0f35df058c14318188a56fd}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a224dcd1bf0f35df058c14318188a56fd}
+
+
+Definition at line 153 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Class\+Assignments\+::\+Get\+M\+L\+Class(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up().
+
+
+\begin{DoxyCode}
+154 \{
+155   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numClasses = assignments.size ();
+156   \textcolor{keywordflow}{if}  (numClasses < 1)
+157     \textcolor{keywordflow}{return};
+158 
+159   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numPairs   = numClasses * (numClasses - 1) / 2;
+160   probClassPairs.clear ();
+161   \textcolor{keywordflow}{if}  (binaryParmsList == NULL)
+162   \{
+163     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;  x < numPairs;  ++x)
+164       probClassPairs.push\_back (param.\hyperlink{struct_s_v_m233_1_1svm__parameter_ae77c2459a4305fca375197165412abe2}{A});
+165   \}
+166   \textcolor{keywordflow}{else}
+167   \{
+168     \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} class1IDX = 0;  class1IDX < (numClasses - 1);  ++class1IDX)
+169     \{
+170       \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}       class1 = assignments.\hyperlink{class_k_k_m_l_l_1_1_class_assignments_a1e6deee5eda8bf069953b65f6a0ef187}{GetMLClass} ((
+      \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16})class1IDX);
+171       \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} class2IDX = class1IDX + 1;  class2IDX < numClasses;  ++class2IDX)
+172       \{
+173         \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}       class2 = assignments.\hyperlink{class_k_k_m_l_l_1_1_class_assignments_a1e6deee5eda8bf069953b65f6a0ef187}{GetMLClass} ((
+      \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16})class2IDX);
+174         \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  bcp = binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (class1, class2);
+175         \textcolor{keywordflow}{if}  (bcp)
+176           probClassPairs.push\_back ((\textcolor{keywordtype}{float})bcp->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a30a735931a8328e0dc073644f42db552}{AParam} ());
+177         \textcolor{keywordflow}{else}
+178           probClassPairs.push\_back ((\textcolor{keywordtype}{float})param.\hyperlink{struct_s_v_m233_1_1svm__parameter_ae77c2459a4305fca375197165412abe2}{A});
+179       \}
+180     \}
+181   \}
+182 \}  \textcolor{comment}{/* ProbClassPairsInitialize */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Process\+Svm\+Parameter@{Process\+Svm\+Parameter}}
+\index{Process\+Svm\+Parameter@{Process\+Svm\+Parameter}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Process\+Svm\+Parameter(svm\+\_\+parameter \&\+\_\+param, K\+K\+Str cmd, K\+K\+Str value, double value\+Num, bool \&parm\+Used)}{ProcessSvmParameter(svm_parameter &_param, KKStr cmd, KKStr value, double valueNum, bool &parmUsed)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Process\+Svm\+Parameter (
+\begin{DoxyParamCaption}
+\item[{{\bf svm\+\_\+parameter} \&}]{\+\_\+param, }
+\item[{{\bf K\+K\+Str}}]{cmd, }
+\item[{{\bf K\+K\+Str}}]{value, }
+\item[{double}]{value\+Num, }
+\item[{bool \&}]{parm\+Used}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aa5eaf4b4136dac017f59de2e8217bbb7}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aa5eaf4b4136dac017f59de2e8217bbb7}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a2cd57741ec82e82e55a9a637ef14e7c0}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a2cd57741ec82e82e55a9a637ef14e7c0}
+
+
+Definition at line 815 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), and K\+K\+B\+::\+Xml\+Token\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+820 \{
+821   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+822   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+823   \{
+824     \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  varName = t->\hyperlink{class_k_k_b_1_1_xml_token_a28b39cfdfa2ed63048a812b1cb52263c}{VarName} ();
+825 
+826     \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"HeaderFields"})  &&  (\textcolor{keyword}{typeid} (*t) == \textcolor{keyword}{typeid} (
+      \hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs}{XmlElementKeyValuePairs})))
+827     \{
+828       \hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs}{XmlElementKeyValuePairsPtr}  kvp = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs}{XmlElementKeyValuePairsPtr}\textcolor{keyword}{>} (t);
+829       \textcolor{keywordflow}{if}  (kvp  &&  (kvp->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_ad9d419323ca34af818aac7304f0bc388}{Value}() != NULL))
+830       \{
+831         \textcolor{keywordflow}{for}  (\textcolor{keyword}{auto} idx: *(kvp->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_ad9d419323ca34af818aac7304f0bc388}{Value} ()))
+832         \{
+833           \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"EncodingMethod"}))
+834             encodingMethod = \hyperlink{namespace_k_k_m_l_l_a100cc09ba8368cc433f3f8643e3d0abb}{EncodingMethodFromStr} (idx.second);
+835 
+836           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"FileName"}))
+837             fileName = idx.second;
+838 
+839           \textcolor{keywordflow}{else} if  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"MachineType"}))
+840             machineType = \hyperlink{namespace_k_k_m_l_l_a05f26527ddefaf91b278afcd8e7981e2}{MachineTypeFromStr} (idx.second);
+841 
+842           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"SelectedFeatures"}))
+843           \{
+844             \textcolor{keywordtype}{bool}  successful = \textcolor{keyword}{false};
+845             selectedFeatures = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (idx.second, successful);
+846           \}
+847 
+848           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"Param"}))
+849             param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a4f1419736814d5c7185dfc36ed331ea4}{ParseTabDelStr} (idx.second);
+850 
+851           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"SamplingRate"}))
+852             samplingRate = idx.second.ToFloat ();
+853 
+854           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"SelectionMethod"}))
+855             selectionMethod = \hyperlink{namespace_k_k_m_l_l_af92818c3487e45a3debbd91aa263cca6}{SelectionMethodFromStr} (idx.second);
+856 
+857           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (idx.first.EqualIgnoreCase (\textcolor{stringliteral}{"UseProbabilityToBreakTies"}))
+858             useProbabilityToBreakTies = idx.second.ToBool ();
+859 
+860           \textcolor{keywordflow}{else}
+861           \{
+862             log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+863               << \textcolor{stringliteral}{"SVMparam::ReadXML   ***ERROR***   UnRecognozed Header Field: "} << idx.first << \textcolor{stringliteral}{":"} << idx
+      .second << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+864               << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+865           \}
+866         \}
+867       \}
+868     \}
+869     \textcolor{keyword}{delete}  t;
+870     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+871   \}
+872   \textcolor{keyword}{delete}  t;
+873   t = NULL;
+874 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Sampling\+Rate@{Sampling\+Rate}}
+\index{Sampling\+Rate@{Sampling\+Rate}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Sampling\+Rate() const }{SamplingRate() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Sampling\+Rate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_acfefd9e2a297952641d848e54f3932ca}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_acfefd9e2a297952641d848e54f3932ca}
+
+
+Definition at line 163 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Sampling\+Rate().
+
+
+\begin{DoxyCode}
+163 \{\textcolor{keywordflow}{return} samplingRate;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Sampling\+Rate@{Sampling\+Rate}}
+\index{Sampling\+Rate@{Sampling\+Rate}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Sampling\+Rate(float \+\_\+sampling\+Rate)}{SamplingRate(float _samplingRate)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Sampling\+Rate (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+sampling\+Rate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a48fffce9005030d7201d1429123929a4}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a48fffce9005030d7201d1429123929a4}
+
+
+Definition at line 188 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Sampling\+Rate().
+
+
+\begin{DoxyCode}
+188 \{samplingRate       = \_samplingRate;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selected\+Features@{Selected\+Features}}
+\index{Selected\+Features@{Selected\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selected\+Features() const }{SelectedFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List\+Const\+Ptr} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Selected\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a52c95a964ff1638bb24289967937b29b}
+
+
+Definition at line 165 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by C\+\_\+\+Param(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Selected\+Features(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+S\+V\+M\+Model().
+
+
+\begin{DoxyCode}
+165 \{\textcolor{keywordflow}{return} selectedFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selected\+Features@{Selected\+Features}}
+\index{Selected\+Features@{Selected\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selected\+Features(\+File\+Desc\+Ptr file\+Desc) const }{SelectedFeatures(FileDescPtr fileDesc) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List\+Const\+Ptr} S\+V\+Mparam\+::\+Selected\+Features (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{file\+Desc}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a83040ef0a19057919d3701b3de6e6ba6}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a83040ef0a19057919d3701b3de6e6ba6}
+
+
+Definition at line 112 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), and K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Set\+All\+Features().
+
+
+
+Referenced by Avg\+Mum\+Of\+Features(), Avg\+Num\+Of\+Features(), Get\+Feature\+Nums(), and Num\+Of\+Features\+After\+Encoding().
+
+
+\begin{DoxyCode}
+113 \{
+114   \textcolor{keywordflow}{if}  (!selectedFeatures)
+115   \{
+116     selectedFeatures = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (fileDesc);
+117     selectedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_afcbacd973886d300af224b02f82d3a6d}{SetAllFeatures} (fileDesc);
+118   \}
+119   \textcolor{keywordflow}{return}  selectedFeatures;
+120 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selected\+Features@{Selected\+Features}}
+\index{Selected\+Features@{Selected\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selected\+Features(\+Feature\+Num\+List\+Const \&\+\_\+selected\+Features)}{SelectedFeatures(FeatureNumListConst &_selectedFeatures)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Selected\+Features (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+selected\+Features}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a86c57234fe4588b42c62abff5db6f98a}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a86c57234fe4588b42c62abff5db6f98a}
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Selected\+Features().
+
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selected\+Features@{Selected\+Features}}
+\index{Selected\+Features@{Selected\+Features}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selected\+Features(\+Feature\+Num\+List\+Const\+Ptr \+\_\+selected\+Features)}{SelectedFeatures(FeatureNumListConstPtr _selectedFeatures)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Selected\+Features (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+selected\+Features}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a803c3e0c113be1980462e4a0ad438fc5}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a803c3e0c113be1980462e4a0ad438fc5}
+
+
+Definition at line 145 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List().
+
+
+\begin{DoxyCode}
+146 \{
+147   \textcolor{keyword}{delete}  selectedFeatures;
+148   selectedFeatures  = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (*\_selectedFeatures);
+149 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selection\+Method@{Selection\+Method}}
+\index{Selection\+Method@{Selection\+Method}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selection\+Method() const }{SelectionMethod() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+V\+M\+\_\+\+Selection\+Method} K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Selection\+Method (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a084ed27759d9ef55a14b369da0ad7b93}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a084ed27759d9ef55a14b369da0ad7b93}
+
+
+Definition at line 169 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Description(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Selection\+Method(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Selection\+Method(), and K\+K\+M\+L\+L\+::\+Svm\+Predict\+Class().
+
+
+\begin{DoxyCode}
+169 \{\textcolor{keywordflow}{return} selectionMethod;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Selection\+Method@{Selection\+Method}}
+\index{Selection\+Method@{Selection\+Method}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Selection\+Method(\+S\+V\+M\+\_\+\+Selection\+Method \+\_\+selection\+Method)}{SelectionMethod(SVM_SelectionMethod _selectionMethod)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Selection\+Method (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Selection\+Method}}]{\+\_\+selection\+Method}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a9f86dd39fb9528dbed813bb1b0676b36}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a9f86dd39fb9528dbed813bb1b0676b36}
+
+
+Definition at line 218 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Selection\+Method().
+
+
+\begin{DoxyCode}
+218 \{selectionMethod  = \_selectionMethod;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Set\+Binary\+Class\+Fields@{Set\+Binary\+Class\+Fields}}
+\index{Set\+Binary\+Class\+Fields@{Set\+Binary\+Class\+Fields}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Set\+Binary\+Class\+Fields(\+M\+L\+Class\+Ptr \+\_\+class1, M\+L\+Class\+Ptr \+\_\+class2, const svm\+\_\+parameter \&\+\_\+param, Feature\+Num\+List\+Const\+Ptr \+\_\+features, float \+\_\+weight)}{SetBinaryClassFields(MLClassPtr _class1, MLClassPtr _class2, const svm_parameter &_param, FeatureNumListConstPtr _features, float _weight)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Set\+Binary\+Class\+Fields (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class2, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{\+\_\+param, }
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+features, }
+\item[{float}]{\+\_\+weight}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aafd96edb5dd7c038e5d9bf49a1ba19f1}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aafd96edb5dd7c038e5d9bf49a1ba19f1}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+class1} & First of two classes that is being added to this model. \\
+\hline
+{\em \+\_\+class2} & Second of two classes that is being added to this model. \\
+\hline
+{\em \+\_\+param} & Parameters that are to be used by two-\/class classifier. \\
+\hline
+{\em \+\_\+features} & makes own copy; caller will retain ownership status. \\
+\hline
+{\em \+\_\+weight} & You can specify the weight that you want to give to this binary-\/class S\+VM when voting or computing probability. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 721 of file S\+V\+Mparam.\+cpp.
+
+
+
+References Add\+Binary\+Class\+Parms(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Param(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Selected\+Features(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Weight().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Set\+Binary\+Class\+Fields().
+
+
+\begin{DoxyCode}
+727 \{
+728   \textcolor{keywordflow}{if}  (!binaryParmsList)
+729   \{
+730     \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (\_class1, \_class2, \_param, \_features, \_weight);
+731   \}
+732   \textcolor{keywordflow}{else}
+733   \{
+734     \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  binaryParms = binaryParmsList->
+      \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (\_class1, \_class2);
+735     \textcolor{keywordflow}{if}  (binaryParms)
+736     \{
+737       binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a8b29f264963789ce9145e8baa589b088}{Param}            (\_param); 
+738       binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a2885a141b7eb3f3230e9c164265adcab}{SelectedFeatures} (\_features);
+739       binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a8756aba72d7881f019f65762441d75b8}{Weight}           (\_weight);
+740     \}
+741     \textcolor{keywordflow}{else}
+742     \{
+743       \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (\_class1, \_class2, \_param, \_features, \_weight);
+744     \}
+745   \}
+746 \}  \textcolor{comment}{/* SetBinaryClassFields */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Set\+Feature\+Nums@{Set\+Feature\+Nums}}
+\index{Set\+Feature\+Nums@{Set\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Set\+Feature\+Nums(\+Feature\+Num\+List\+Const\+Ptr \+\_\+features)}{SetFeatureNums(FeatureNumListConstPtr _features)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Set\+Feature\+Nums (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+features}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aabbd229c11a37f4d76e2da5135bf148e}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aabbd229c11a37f4d76e2da5135bf148e}
+
+
+Definition at line 655 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List().
+
+
+\begin{DoxyCode}
+656 \{
+657   \textcolor{keyword}{delete}  selectedFeatures;
+658   selectedFeatures = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{FeatureNumList} (*\_features);
+659 \}  \textcolor{comment}{/* SetFeatureNums */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Set\+Feature\+Nums@{Set\+Feature\+Nums}}
+\index{Set\+Feature\+Nums@{Set\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Set\+Feature\+Nums(\+Feature\+Num\+List\+Const \&\+\_\+features)}{SetFeatureNums(FeatureNumListConst &_features)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Set\+Feature\+Nums (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+features}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a54ccb20e0f61d61f1e642227df4e3e2e}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a54ccb20e0f61d61f1e642227df4e3e2e}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Set\+Feature\+Nums@{Set\+Feature\+Nums}}
+\index{Set\+Feature\+Nums@{Set\+Feature\+Nums}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Set\+Feature\+Nums(\+M\+L\+Class\+Ptr \+\_\+class1, M\+L\+Class\+Ptr \+\_\+class2, Feature\+Num\+List\+Const\+Ptr \+\_\+features, float \+\_\+weight=-\/1)}{SetFeatureNums(MLClassPtr _class1, MLClassPtr _class2, FeatureNumListConstPtr _features, float _weight=-1)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Set\+Feature\+Nums (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class1, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+class2, }
+\item[{{\bf Feature\+Num\+List\+Const\+Ptr}}]{\+\_\+features, }
+\item[{float}]{\+\_\+weight = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_aaa64f049d7e527b6b0402932972e211f}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_aaa64f049d7e527b6b0402932972e211f}
+
+
+Sets the selected Features and Weight for the binary class S\+VM specified by \+\_\+class1 and \+\_\+class2. 
+
+If this pair has not been defined yet will create a new entry and add to list of Binary-\/\+Class-\/\+Pair\textquotesingle{}s. 
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+class1} & First of two classes to set features for. \\
+\hline
+{\em \+\_\+class2} & Second of two classes to set features for. \\
+\hline
+{\em \+\_\+features} & Makes own copy; caller will retain ownership status. \\
+\hline
+{\em \+\_\+weight} & -\/1 Indicates use existing value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 614 of file S\+V\+Mparam.\+cpp.
+
+
+
+References Add\+Binary\+Class\+Parms(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Look\+Up(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Selected\+Features(), and K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+::\+Weight().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Set\+Feature\+Nums().
+
+
+\begin{DoxyCode}
+619 \{
+620   \textcolor{keywordflow}{if}  (!binaryParmsList)
+621   \{
+622     \textcolor{keywordflow}{if}  (\_weight < 0)
+623       \_weight = 1;
+624     \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (\_class1, \_class2, param, \_features, \_weight);
+625   \}
+626   \textcolor{keywordflow}{else}
+627   \{
+628     \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms}{BinaryClassParmsPtr}  binaryParms = binaryParmsList->
+      \hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_aab855a58369c229e40fa4b9248931a7e}{LookUp} (\_class1, \_class2);
+629     \textcolor{keywordflow}{if}  (binaryParms)
+630     \{
+631       \textcolor{keywordflow}{if}  (\_weight < 0)
+632         \_weight = binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a8756aba72d7881f019f65762441d75b8}{Weight} ();
+633       binaryParms->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_a2885a141b7eb3f3230e9c164265adcab}{SelectedFeatures} (\_features);
+634     \}
+635     \textcolor{keywordflow}{else}
+636     \{
+637       \textcolor{keywordflow}{if}  (\_weight < 0)
+638         \_weight = 1.0f;
+639       \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a7106733ffbda73236008e71baf95b129}{AddBinaryClassParms} (\_class1, \_class2, param, \_features, \_weight);
+640     \}
+641   \}
+642 \}  \textcolor{comment}{/* SetFeatureNums */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Svm\+Param\+To\+String@{Svm\+Param\+To\+String}}
+\index{Svm\+Param\+To\+String@{Svm\+Param\+To\+String}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Svm\+Param\+To\+String(const svm\+\_\+parameter \&\+\_\+param) const }{SvmParamToString(const svm_parameter &_param) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} S\+V\+Mparam\+::\+Svm\+Param\+To\+String (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+parameter} \&}]{\+\_\+param}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a2c79ac20378aedbddf889c356bc3f1bf}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a2c79ac20378aedbddf889c356bc3f1bf}
+
+
+Convert a svm\+\_\+parameter struct to a cmdline str. 
+
+
+
+Definition at line 353 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and S\+V\+M233\+::svm\+\_\+parameter\+::\+To\+Cmd\+Line\+Str().
+
+
+
+Referenced by To\+String().
+
+
+\begin{DoxyCode}
+354 \{
+355   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  cmdStr (300);
+356 
+357   cmdStr << \_param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a16ed3c65151a84ec701684e1e2941549}{ToCmdLineStr} ();
+358 
+359   \textcolor{keywordflow}{return}  cmdStr;
+360 \}  \textcolor{comment}{/* SvmParamToString */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{To\+String() const }{ToString() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} S\+V\+Mparam\+::\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a92293ae68a65e26cd73d2c973a2246f0}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a92293ae68a65e26cd73d2c973a2246f0}
+
+
+Convert all parameters to a command line string. 
+
+
+
+Definition at line 368 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Boost\+S\+VM, K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Encoding\+Method\+To\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Machine\+Type\+To\+Str(), K\+K\+M\+L\+L\+::\+No\+Encoding, K\+K\+B\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+M\+L\+L\+::\+Selection\+Method\+To\+Str(), and Svm\+Param\+To\+String().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+To\+Cmd\+Line\+Str(), and K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+369 \{
+370   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  cmdStr (300);
+371 
+372   cmdStr = \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam_a2c79ac20378aedbddf889c356bc3f1bf}{SvmParamToString} (param);
+373 
+374   \textcolor{keywordflow}{if}  (encodingMethod != \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{SVM\_EncodingMethod::NoEncoding})
+375     cmdStr << \textcolor{stringliteral}{"  -Encode "} + \hyperlink{namespace_k_k_m_l_l_ad6a1e63c0b52f7236e41cee6ce834273}{EncodingMethodToStr} (encodingMethod);
+376 
+377   cmdStr << \textcolor{stringliteral}{"  -MT "} << \hyperlink{namespace_k_k_m_l_l_ae41cf90293bf19b13fbeeb4dcefa09eb}{MachineTypeToStr} (machineType);
+378   cmdStr << \textcolor{stringliteral}{"  -SM "} << \hyperlink{namespace_k_k_m_l_l_a836f83cedfbe3985d00997edec28716f}{SelectionMethodToStr} (selectionMethod);
+379 
+380   \textcolor{keywordflow}{if}  (machineType == \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aac50f90b00bf6f5751f531c1a09093684}{SVM\_MachineType::BoostSVM})
+381   \{
+382     cmdStr << \textcolor{stringliteral}{"  -SamplingRate "} << samplingRate;
+383   \}
+384 
+385   \textcolor{keywordflow}{if}  (useProbabilityToBreakTies)
+386     cmdStr << \textcolor{stringliteral}{"  -UseProbability"};
+387 
+388   \textcolor{keywordflow}{return}  cmdStr;
+389 \}  \textcolor{comment}{/* ToString */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Use\+Probability\+To\+Break\+Ties@{Use\+Probability\+To\+Break\+Ties}}
+\index{Use\+Probability\+To\+Break\+Ties@{Use\+Probability\+To\+Break\+Ties}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Use\+Probability\+To\+Break\+Ties() const }{UseProbabilityToBreakTies() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Use\+Probability\+To\+Break\+Ties (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a2da6c5858675cfd9db51e50f548d5f46}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a2da6c5858675cfd9db51e50f548d5f46}
+
+
+Definition at line 171 of file S\+V\+Mparam.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Use\+Probability\+To\+Break\+Ties().
+
+
+\begin{DoxyCode}
+171 \{\textcolor{keywordflow}{return} useProbabilityToBreakTies;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+S\+V\+Mparam@{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+Mparam\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_s_v_mparam_a1c5b624f8e72edde7bbe2c48f3b5af8e}{}\label{class_k_k_m_l_l_1_1_s_v_mparam_a1c5b624f8e72edde7bbe2c48f3b5af8e}
+
+
+Definition at line 769 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Add(), K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Encoding\+Method\+To\+Str(), K\+K\+M\+L\+L\+::\+Machine\+Type\+To\+Str(), K\+K\+M\+L\+L\+::\+Selection\+Method\+To\+Str(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+To\+String(), S\+V\+M233\+::svm\+\_\+parameter\+::\+To\+Tab\+Del\+Str(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Xml\+Element\+Key\+Value\+Pairs(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+772 \{
+773   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"SVMparam"},  XmlTag::TagTypes::tagStart);
+774   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+775     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+776   startTag.WriteXML (o);
+777   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+778 
+779   \{
+780     \hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs}{XmlElementKeyValuePairs}*   headerFields = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs}{XmlElementKeyValuePairs} ();
+781 
+782     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"EncodingMethod"},             \hyperlink{namespace_k_k_m_l_l_ad6a1e63c0b52f7236e41cee6ce834273}{EncodingMethodToStr} (
+      encodingMethod));
+783     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"FileName"},                   fileName);
+784     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"MachineType"},                \hyperlink{namespace_k_k_m_l_l_ae41cf90293bf19b13fbeeb4dcefa09eb}{MachineTypeToStr} (machineType));
+785     \textcolor{keywordflow}{if}  (selectedFeatures)
+786       headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"SelectedFeatures"},         selectedFeatures->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_num_list_ac96d441218dc767332fff806b0103bc3}{ToString} ());
+787     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"param"},                      param.\hyperlink{struct_s_v_m233_1_1svm__parameter_a427fee117cc153048803a67e34d4d03f}{ToTabDelStr} ());
+788 
+789     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"samplingRate"},               samplingRate);
+790     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"selectionMethod"},            \hyperlink{namespace_k_k_m_l_l_a836f83cedfbe3985d00997edec28716f}{SelectionMethodToStr} (
+      selectionMethod));
+791 
+792 
+793     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a183f57a4bf399567339851b93fa127c9}{Add} (\textcolor{stringliteral}{"useProbabilityToBreakTies"},  useProbabilityToBreakTies);
+794 
+795 
+796     headerFields->\hyperlink{class_k_k_b_1_1_xml_element_key_value_pairs_a4966d11afdfcd60157586c3ca56fcc5e}{WriteXML} (\textcolor{stringliteral}{"HeaderFields"}, o);
+797     \textcolor{keyword}{delete}  headerFields;
+798     headerFields = NULL;
+799   \}
+800 
+801   XmlElementVectorFloat::WriteXML (probClassPairs, \textcolor{stringliteral}{"probClassPairs"}, o);
+802 
+803   \textcolor{keywordflow}{if}  (binaryParmsList)
+804     binaryParmsList->\hyperlink{class_k_k_m_l_l_1_1_binary_class_parms_list_a8ba8095904b370032cd0272f35c83645}{WriteXML} (\textcolor{stringliteral}{"binaryParmsList"}, o);
+805 
+806   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"SVMparam"}, XmlTag::TagTypes::tagEnd);
+807   endTag.WriteXML (o);
+808   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+809 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_s_v_mparam_8h}{S\+V\+Mparam.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_s_v_mparam_8cpp}{S\+V\+Mparam.\+cpp}\end{DoxyCompactItemize}

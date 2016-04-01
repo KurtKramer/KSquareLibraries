@@ -1,0 +1,212 @@
+\hypertarget{class_k_k_m_l_l_1_1_class_statistic}{}\section{K\+K\+M\+LL\+:\+:Class\+Statistic Class Reference}
+\label{class_k_k_m_l_l_1_1_class_statistic}\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+
+
+Used by routines that retrieve Class statistics from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} instances.  
+
+
+
+
+{\ttfamily \#include $<$Class\+Statistic.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_class_statistic_a3d31ff31d4b3f4530b246d62e2020ab4}{Class\+Statistic} (const \hyperlink{class_k_k_m_l_l_1_1_class_statistic}{Class\+Statistic} \&right)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_class_statistic_ae83a0c6a86653dfdaeec74e2213a205f}{Class\+Statistic} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+ml\+Class, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+count)
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}{Count} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_class_statistic_aee13f1470120fef8fb91737e2a83ad6a}{Increment} ()
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}{M\+L\+Class} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7cf87217e07220c5269dbd9f6299bb43}{Name} () const 
+\item 
+const \hyperlink{class_k_k_m_l_l_1_1_class_statistic}{Class\+Statistic} \& \hyperlink{class_k_k_m_l_l_1_1_class_statistic_ab278219c6679a6a5d7a815b92c26a029}{operator+=} (const \hyperlink{class_k_k_m_l_l_1_1_class_statistic}{Class\+Statistic} \&right)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by routines that retrieve Class statistics from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} instances. 
+
+Definition at line 14 of file Class\+Statistic.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!Class\+Statistic@{Class\+Statistic}}
+\index{Class\+Statistic@{Class\+Statistic}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{Class\+Statistic(const Class\+Statistic \&right)}{ClassStatistic(const ClassStatistic &right)}}]{\setlength{\rightskip}{0pt plus 5cm}Class\+Statistic\+::\+Class\+Statistic (
+\begin{DoxyParamCaption}
+\item[{const {\bf Class\+Statistic} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_a3d31ff31d4b3f4530b246d62e2020ab4}{}\label{class_k_k_m_l_l_1_1_class_statistic_a3d31ff31d4b3f4530b246d62e2020ab4}
+
+
+Definition at line 22 of file Class\+Statistic.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::operator+=().
+
+
+\begin{DoxyCode}
+22                                                            :
+23   mlClass (right.mlClass),
+24   count      (right.count)
+25 \{
+26 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!Class\+Statistic@{Class\+Statistic}}
+\index{Class\+Statistic@{Class\+Statistic}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{Class\+Statistic(\+M\+L\+Class\+Ptr \+\_\+ml\+Class, kkuint32 \+\_\+count)}{ClassStatistic(MLClassPtr _mlClass, kkuint32 _count)}}]{\setlength{\rightskip}{0pt plus 5cm}Class\+Statistic\+::\+Class\+Statistic (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+ml\+Class, }
+\item[{{\bf kkuint32}}]{\+\_\+count}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_ae83a0c6a86653dfdaeec74e2213a205f}{}\label{class_k_k_m_l_l_1_1_class_statistic_ae83a0c6a86653dfdaeec74e2213a205f}
+
+
+Definition at line 29 of file Class\+Statistic.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Get\+Class\+Statistics().
+
+
+\begin{DoxyCode}
+31                                 :
+32    mlClass (\_mlClass),
+33    count      (\_count)
+34 \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!Count@{Count}}
+\index{Count@{Count}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{Count() const }{Count() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} K\+K\+M\+L\+L\+::\+Class\+Statistic\+::\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}{}\label{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}
+
+
+Definition at line 23 of file Class\+Statistic.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Avg\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Get\+Class\+Distribution(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Majority\+Class\+Fraction(), K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::\+Class\+Stat\+Sort\+By\+Count\+::operator()(), and operator+=().
+
+
+\begin{DoxyCode}
+23 \{\textcolor{keywordflow}{return}  count;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!Increment@{Increment}}
+\index{Increment@{Increment}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{Increment()}{Increment()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Class\+Statistic\+::\+Increment (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_aee13f1470120fef8fb91737e2a83ad6a}{}\label{class_k_k_m_l_l_1_1_class_statistic_aee13f1470120fef8fb91737e2a83ad6a}
+
+
+Definition at line 26 of file Class\+Statistic.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Get\+Class\+Statistics().
+
+
+\begin{DoxyCode}
+26 \{count++;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!M\+L\+Class@{M\+L\+Class}}
+\index{M\+L\+Class@{M\+L\+Class}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{M\+L\+Class() const }{MLClass() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} K\+K\+M\+L\+L\+::\+Class\+Statistic\+::\+M\+L\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}{}\label{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}
+
+
+Definition at line 24 of file Class\+Statistic.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Avg\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Get\+Class\+Distribution(), K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::\+Class\+Statistic\+Sort\+Comparrison\+::operator()(), K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::\+Class\+Stat\+Sort\+By\+Count\+::operator()(), operator+=(), and K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::operator+=().
+
+
+\begin{DoxyCode}
+24 \{\textcolor{keywordflow}{return}  mlClass;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!Name@{Name}}
+\index{Name@{Name}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& Class\+Statistic\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_a7cf87217e07220c5269dbd9f6299bb43}{}\label{class_k_k_m_l_l_1_1_class_statistic_a7cf87217e07220c5269dbd9f6299bb43}
+
+
+Definition at line 38 of file Class\+Statistic.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+\begin{DoxyCode}
+39 \{
+40   \textcolor{keywordflow}{if}  (mlClass)
+41    \textcolor{keywordflow}{return} mlClass->Name ();
+42   \textcolor{keywordflow}{else}
+43    \textcolor{keywordflow}{return}  KKStr::EmptyStr ();
+44 \}  \textcolor{comment}{/* Name */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!K\+K\+M\+L\+L\+::\+Class\+Statistic@{K\+K\+M\+L\+L\+::\+Class\+Statistic}}
+\subsubsection[{\texorpdfstring{operator+=(const Class\+Statistic \&right)}{operator+=(const ClassStatistic &right)}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Class\+Statistic} \& Class\+Statistic\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Class\+Statistic} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_class_statistic_ab278219c6679a6a5d7a815b92c26a029}{}\label{class_k_k_m_l_l_1_1_class_statistic_ab278219c6679a6a5d7a815b92c26a029}
+
+
+Definition at line 48 of file Class\+Statistic.\+cpp.
+
+
+
+References Count(), and M\+L\+Class().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Class\+Statistic\+List\+::operator+=().
+
+
+\begin{DoxyCode}
+49 \{
+50   \textcolor{keywordflow}{if}  (mlClass != right.\hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7f2775bca7634dd376ffe3c804e65c3e}{MLClass} ())
+51   \{
+52     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+53          << \textcolor{stringliteral}{"ClassStatistic::operator+=        Class Names Do Not Match"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+54          << \textcolor{stringliteral}{"                LeftClass["} << mlClass->Name () << \textcolor{stringliteral}{"]   RightClass["}  << right.
+      \hyperlink{class_k_k_m_l_l_1_1_class_statistic_a7cf87217e07220c5269dbd9f6299bb43}{Name} () << \textcolor{stringliteral}{"["} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+55          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+56     \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+57   \}
+58 
+59   count += right.\hyperlink{class_k_k_m_l_l_1_1_class_statistic_ace228f15b538c012781b4f6800c837c5}{Count} ();
+60 
+61   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+62 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_class_statistic_8h}{Class\+Statistic.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_class_statistic_8cpp}{Class\+Statistic.\+cpp}\end{DoxyCompactItemize}

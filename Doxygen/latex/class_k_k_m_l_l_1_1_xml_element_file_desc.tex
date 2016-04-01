@@ -1,0 +1,162 @@
+\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc}{}\section{K\+K\+M\+LL\+:\+:Xml\+Element\+File\+Desc Class Reference}
+\label{class_k_k_m_l_l_1_1_xml_element_file_desc}\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+
+
+{\ttfamily \#include $<$File\+Desc.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Xml\+Element\+File\+Desc\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_m_l_l_1_1_xml_element_file_desc}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_a603d47a98b90ac385a69d3543d3f044c}{Xml\+Element\+File\+Desc} (\hyperlink{namespace_k_k_b_a9253a3ea8a5da18ca82be4ca2b390ef0}{Xml\+Tag\+Ptr} tag, \hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_afe455e37c15dab92c81b50273e5448b6}{$\sim$\+Xml\+Element\+File\+Desc} ()
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_a184f63011eb522f70e5daec5d5f7e151}{Take\+Ownership} ()
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_aa5277742e64c63e316a7d18c614c5e7f}{Value} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_af1d6321393b529195a75f08e7aec0945}{Write\+X\+ML} (const \hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc} \&file\+Desc, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 314 of file File\+Desc.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}!Xml\+Element\+File\+Desc@{Xml\+Element\+File\+Desc}}
+\index{Xml\+Element\+File\+Desc@{Xml\+Element\+File\+Desc}!K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+\subsubsection[{\texorpdfstring{Xml\+Element\+File\+Desc(\+Xml\+Tag\+Ptr tag, Xml\+Stream \&s, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{XmlElementFileDesc(XmlTagPtr tag, XmlStream &s, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+File\+Desc\+::\+Xml\+Element\+File\+Desc (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Tag\+Ptr}}]{tag, }
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc_a603d47a98b90ac385a69d3543d3f044c}{}\label{class_k_k_m_l_l_1_1_xml_element_file_desc_a603d47a98b90ac385a69d3543d3f044c}
+
+
+Definition at line 925 of file File\+Desc.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Read\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Element\+::\+Xml\+Element().
+
+
+\begin{DoxyCode}
+929                                         :
+930   \hyperlink{class_k_k_b_1_1_xml_element_a66317eff5bd3abcc60755756ba2887d5}{XmlElement} (tag, s, log),
+931   value (NULL)
+932 \{
+933   value = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} ();
+934   value->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a27d7b777aa1350f3959b069b76ede4c7}{ReadXML} (s, tag, cancelFlag, log);
+935   value = \hyperlink{class_k_k_m_l_l_1_1_file_desc_ab64013b479502d2761a9f11570a565bc}{FileDesc::GetExistingFileDesc} (value);
+936 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}!````~Xml\+Element\+File\+Desc@{$\sim$\+Xml\+Element\+File\+Desc}}
+\index{````~Xml\+Element\+File\+Desc@{$\sim$\+Xml\+Element\+File\+Desc}!K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+\subsubsection[{\texorpdfstring{$\sim$\+Xml\+Element\+File\+Desc()}{~XmlElementFileDesc()}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+File\+Desc\+::$\sim$\+Xml\+Element\+File\+Desc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc_afe455e37c15dab92c81b50273e5448b6}{}\label{class_k_k_m_l_l_1_1_xml_element_file_desc_afe455e37c15dab92c81b50273e5448b6}
+
+
+Definition at line 940 of file File\+Desc.\+cpp.
+
+
+\begin{DoxyCode}
+941 \{
+942   \textcolor{comment}{// You can not delete an instance of FileDesc.}
+943   value = NULL;
+944 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}!Take\+Ownership@{Take\+Ownership}}
+\index{Take\+Ownership@{Take\+Ownership}!K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+\subsubsection[{\texorpdfstring{Take\+Ownership()}{TakeOwnership()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Xml\+Element\+File\+Desc\+::\+Take\+Ownership (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc_a184f63011eb522f70e5daec5d5f7e151}{}\label{class_k_k_m_l_l_1_1_xml_element_file_desc_a184f63011eb522f70e5daec5d5f7e151}
+
+
+Definition at line 953 of file File\+Desc.\+cpp.
+
+
+\begin{DoxyCode}
+954 \{
+955   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  v = value;
+956   value = NULL;
+957   \textcolor{keywordflow}{return}  v;
+958 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}!Value@{Value}}
+\index{Value@{Value}!K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+\subsubsection[{\texorpdfstring{Value() const }{Value() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Xml\+Element\+File\+Desc\+::\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc_aa5277742e64c63e316a7d18c614c5e7f}{}\label{class_k_k_m_l_l_1_1_xml_element_file_desc_aa5277742e64c63e316a7d18c614c5e7f}
+
+
+Definition at line 947 of file File\+Desc.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Read\+X\+M\+L(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Read\+X\+M\+L(), and K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+948 \{
+949   \textcolor{keywordflow}{return}  value;
+950 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc@{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const File\+Desc \&file\+Desc, const K\+K\+Str \&var\+Name, std\+::ostream \&o)}{WriteXML(const FileDesc &fileDesc, const KKStr &varName, std::ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Element\+File\+Desc\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf File\+Desc} \&}]{file\+Desc, }
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_xml_element_file_desc_af1d6321393b529195a75f08e7aec0945}{}\label{class_k_k_m_l_l_1_1_xml_element_file_desc_af1d6321393b529195a75f08e7aec0945}
+
+
+Definition at line 962 of file File\+Desc.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+966 \{
+967   fileDesc.\hyperlink{class_k_k_m_l_l_1_1_file_desc_a52dd5520a36027eef50b4d7a613b6fba}{WriteXML} (varName, o);
+968 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_file_desc_8h}{File\+Desc.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_file_desc_8cpp}{File\+Desc.\+cpp}\end{DoxyCompactItemize}

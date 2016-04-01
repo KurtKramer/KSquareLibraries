@@ -1,0 +1,98 @@
+\hypertarget{class_k_k_b_1_1_xml_attribute}{}\section{K\+KB\+:\+:Xml\+Attribute Class Reference}
+\label{class_k_k_b_1_1_xml_attribute}\index{K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}}
+
+
+{\ttfamily \#include $<$Xml\+Stream.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_xml_attribute_a4720547ffcf02ee9f83ef8d1b5138c3e}{Xml\+Attribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+value)
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_xml_attribute_a1028e1a45e72cf7c4b0450f3206f0fe9}{Name} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_xml_attribute_a3f80845535790d617c8d1ef01f134a65}{Value} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 112 of file Xml\+Stream.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}!Xml\+Attribute@{Xml\+Attribute}}
+\index{Xml\+Attribute@{Xml\+Attribute}!K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}}
+\subsubsection[{\texorpdfstring{Xml\+Attribute(const K\+K\+Str \&\+\_\+name, const K\+K\+Str \&\+\_\+value)}{XmlAttribute(const KKStr &_name, const KKStr &_value)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Xml\+Attribute\+::\+Xml\+Attribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_attribute_a4720547ffcf02ee9f83ef8d1b5138c3e}{}\label{class_k_k_b_1_1_xml_attribute_a4720547ffcf02ee9f83ef8d1b5138c3e}
+
+
+Definition at line 115 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Attribute\+List\+::\+Add\+Attribute().
+
+
+\begin{DoxyCode}
+117                   :
+118         name  (\_name),
+119         value (\_value)
+120     \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Xml\+Attribute\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_attribute_a1028e1a45e72cf7c4b0450f3206f0fe9}{}\label{class_k_k_b_1_1_xml_attribute_a1028e1a45e72cf7c4b0450f3206f0fe9}
+
+
+Definition at line 122 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Tag\+::\+To\+String().
+
+
+\begin{DoxyCode}
+122 \{\textcolor{keywordflow}{return} name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}!Value@{Value}}
+\index{Value@{Value}!K\+K\+B\+::\+Xml\+Attribute@{K\+K\+B\+::\+Xml\+Attribute}}
+\subsubsection[{\texorpdfstring{Value() const }{Value() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Xml\+Attribute\+::\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_attribute_a3f80845535790d617c8d1ef01f134a65}{}\label{class_k_k_b_1_1_xml_attribute_a3f80845535790d617c8d1ef01f134a65}
+
+
+Definition at line 123 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Attribute\+List\+::\+Attribute\+Value\+By\+Name(), and K\+K\+B\+::\+Xml\+Tag\+::\+To\+String().
+
+
+\begin{DoxyCode}
+123 \{\textcolor{keywordflow}{return} value;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8h}{Xml\+Stream.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,477 @@
+\hypertarget{class_k_k_b_1_1_blob_list}{}\section{K\+KB\+:\+:Blob\+List Class Reference}
+\label{class_k_k_b_1_1_blob_list}\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+
+
+Maintains a list of blobs.  
+
+
+
+
+{\ttfamily \#include $<$Blob.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Blob\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_blob_list}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_blob_list_a5651e16a693765b626fb6f1b85700045}{Blob\+List} (bool \+\_\+owner)
+\item 
+\hyperlink{class_k_k_b_1_1_blob_list_a8bdcfd3ae7ed5bda5ce42192d37b4f25}{$\sim$\+Blob\+List} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_blob_list_af612dce77d3abecf54f4424b500c42df}{Delete\+Entry} (\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} b)
+\item 
+\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} \hyperlink{class_k_k_b_1_1_blob_list_a68a45d0c30102a70de2bcd96f3aa48a2}{Locate\+Largest\+Blob} ()
+\begin{DoxyCompactList}\small\item\em Will return \hyperlink{class_k_k_b_1_1_blob}{Blob} with largest pixel count. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} \hyperlink{class_k_k_b_1_1_blob_list_a484e59309adbbfa4d39a0f08586b3e83}{Locate\+Most\+Complete} ()
+\begin{DoxyCompactList}\small\item\em Locates the blob that covers the greatest part of the raster; that is the one who has the largest (Height x Width) \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} \hyperlink{class_k_k_b_1_1_blob_list_a3acd3cdb0c08780511f2087f72749b91}{Look\+Up\+By\+Blob\+Id} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} blob\+Id)
+\begin{DoxyCompactList}\small\item\em Will return pointer to blob with \textquotesingle{}blob\+Id\textquotesingle{}; if not found will return N\+U\+LL. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_blob_list_a542ca9592d04a6c7cf1b56127d1c7b4e}{Merge\+Blob\+Ids} (\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} blob, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} blob\+Id, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$$\ast$blob\+Ids)
+\begin{DoxyCompactList}\small\item\em Used by the Connected component analysis to merge two blobs together. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} \hyperlink{class_k_k_b_1_1_blob_list_a6fb445ebcc2275344dd3301cc0b72bb1}{Merge\+Into\+Single\+Blob} (\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} blob1, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} blob2\+Id, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$$\ast$blob\+Ids)
+\item 
+\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} \hyperlink{class_k_k_b_1_1_blob_list_a4542efb8f886b31c58f0a03507d20e69}{New\+Blob} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} row\+Top, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} col\+Left)
+\item 
+void \hyperlink{class_k_k_b_1_1_blob_list_ad180d93de7be82655877d3a3b1fc9116}{Push\+On\+Back} (\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} blob)
+\item 
+void \hyperlink{class_k_k_b_1_1_blob_list_aa61617ae33ca83b22d715ad44af432a7}{Push\+On\+Front} (\hyperlink{namespace_k_k_b_a4fa91a7788b982654fca9d7319b98cb4}{Blob\+Ptr} blob)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Maintains a list of blobs. 
+
+Definition at line 77 of file Blob.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Blob\+List@{Blob\+List}}
+\index{Blob\+List@{Blob\+List}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Blob\+List(bool \+\_\+owner)}{BlobList(bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Blob\+List\+::\+Blob\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a5651e16a693765b626fb6f1b85700045}{}\label{class_k_k_b_1_1_blob_list_a5651e16a693765b626fb6f1b85700045}
+
+
+Definition at line 64 of file Blob.\+cpp.
+
+
+
+References Blob\+List().
+
+
+
+Referenced by Blob\+List(), K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), and K\+K\+B\+::\+Raster\+::\+Extract\+Blobs().
+
+
+\begin{DoxyCode}
+64                                :
+65   availableBlobs (),
+66   nextBlobId     (0)
+67 \{
+68 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!````~Blob\+List@{$\sim$\+Blob\+List}}
+\index{````~Blob\+List@{$\sim$\+Blob\+List}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{$\sim$\+Blob\+List()}{~BlobList()}}]{\setlength{\rightskip}{0pt plus 5cm}Blob\+List\+::$\sim$\+Blob\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a8bdcfd3ae7ed5bda5ce42192d37b4f25}{}\label{class_k_k_b_1_1_blob_list_a8bdcfd3ae7ed5bda5ce42192d37b4f25}
+
+
+Definition at line 72 of file Blob.\+cpp.
+
+
+\begin{DoxyCode}
+73 \{
+74   \textcolor{keywordflow}{while}  (availableBlobs.size () > 0)
+75   \{
+76     \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}  b = availableBlobs.back ();
+77     availableBlobs.pop\_back ();
+78 
+79     \textcolor{keyword}{delete}  b;
+80   \}
+81 
+82   iterator  idx2;
+83   iterator  endIdx = end ();
+84   \textcolor{keywordflow}{for}  (idx2 = begin ();  idx2 != endIdx;  ++idx2)
+85   \{
+86     \hyperlink{class_k_k_b_1_1_blob}{BlobPtr} b = idx2->second;
+87     \textcolor{keyword}{delete}  b;
+88   \}
+89 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Delete\+Entry@{Delete\+Entry}}
+\index{Delete\+Entry@{Delete\+Entry}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Delete\+Entry(\+Blob\+Ptr b)}{DeleteEntry(BlobPtr b)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Blob\+List\+::\+Delete\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob\+Ptr}}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_af612dce77d3abecf54f4424b500c42df}{}\label{class_k_k_b_1_1_blob_list_af612dce77d3abecf54f4424b500c42df}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Locate\+Largest\+Blob@{Locate\+Largest\+Blob}}
+\index{Locate\+Largest\+Blob@{Locate\+Largest\+Blob}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Locate\+Largest\+Blob()}{LocateLargestBlob()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Blob\+Ptr} Blob\+List\+::\+Locate\+Largest\+Blob (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a68a45d0c30102a70de2bcd96f3aa48a2}{}\label{class_k_k_b_1_1_blob_list_a68a45d0c30102a70de2bcd96f3aa48a2}
+
+
+Will return \hyperlink{class_k_k_b_1_1_blob}{Blob} with largest pixel count. 
+
+
+
+Definition at line 230 of file Blob.\+cpp.
+
+
+
+References K\+K\+B\+::\+Blob\+::pixel\+Count.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Connected\+Component(), and K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected().
+
+
+\begin{DoxyCode}
+231 \{
+232   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}   blob        = NULL;
+233   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}   tempBlob    = NULL;
+234   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   largestSize = 0;
+235 
+236   const\_iterator  idx;
+237   const\_iterator  endIdx = end ();
+238 
+239   \textcolor{keywordflow}{for}  (idx = begin ();  idx != endIdx;  ++idx)
+240   \{
+241     tempBlob = idx->second;
+242     \textcolor{keywordflow}{if}  (tempBlob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} > largestSize)
+243     \{
+244       largestSize = tempBlob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount};
+245       blob = tempBlob;
+246     \}
+247   \}
+248   \textcolor{keywordflow}{return}  blob;
+249 \} \textcolor{comment}{/* LocateLargestBlob */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Locate\+Most\+Complete@{Locate\+Most\+Complete}}
+\index{Locate\+Most\+Complete@{Locate\+Most\+Complete}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Locate\+Most\+Complete()}{LocateMostComplete()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Blob\+Ptr} Blob\+List\+::\+Locate\+Most\+Complete (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a484e59309adbbfa4d39a0f08586b3e83}{}\label{class_k_k_b_1_1_blob_list_a484e59309adbbfa4d39a0f08586b3e83}
+
+
+Locates the blob that covers the greatest part of the raster; that is the one who has the largest (Height x Width) 
+
+
+
+Definition at line 253 of file Blob.\+cpp.
+
+
+
+References K\+K\+B\+::\+Blob\+::\+Height(), and K\+K\+B\+::\+Blob\+::\+Width().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Reduce\+To\+Most\+Complete\+Blob().
+
+
+\begin{DoxyCode}
+254 \{
+255   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}   blob        = NULL;
+256   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}   tempBlob    = NULL;
+257   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   largestSize = 0;
+258 
+259   const\_iterator  idx;
+260   const\_iterator  endIdx = end ();
+261 
+262   \textcolor{keywordflow}{for}  (idx = begin ();  idx != endIdx;  ++idx)
+263   \{
+264     tempBlob = idx->second;
+265     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  size = tempBlob->\hyperlink{class_k_k_b_1_1_blob_aa38a04e912ff9abf0abb950a69b65955}{Height} () * tempBlob->\hyperlink{class_k_k_b_1_1_blob_a5cc53690365e2b055c52f159de2efd1b}{Width} ();
+266     \textcolor{keywordflow}{if}  (size > largestSize)
+267     \{
+268       largestSize = size;
+269       blob = tempBlob;
+270     \}
+271   \}
+272   \textcolor{keywordflow}{return}  blob;
+273 \} \textcolor{comment}{/* LocateMostComplete */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Look\+Up\+By\+Blob\+Id@{Look\+Up\+By\+Blob\+Id}}
+\index{Look\+Up\+By\+Blob\+Id@{Look\+Up\+By\+Blob\+Id}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Blob\+Id(kkint32 blob\+Id)}{LookUpByBlobId(kkint32 blobId)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Blob\+Ptr} Blob\+List\+::\+Look\+Up\+By\+Blob\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{blob\+Id}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a3acd3cdb0c08780511f2087f72749b91}{}\label{class_k_k_b_1_1_blob_list_a3acd3cdb0c08780511f2087f72749b91}
+
+
+Will return pointer to blob with \textquotesingle{}blob\+Id\textquotesingle{}; if not found will return N\+U\+LL. 
+
+
+
+Definition at line 53 of file Blob.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), and K\+K\+B\+::\+Raster\+::\+Extract\+Blobs().
+
+
+\begin{DoxyCode}
+54 \{
+55   const\_iterator  idx;
+56   idx = find (blobId);
+57   \textcolor{keywordflow}{if}  (idx == end ())
+58     \textcolor{keywordflow}{return} NULL;
+59   \textcolor{keywordflow}{return} idx->second;
+60 \}  \textcolor{comment}{/* LookUpByBlobId */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Merge\+Blob\+Ids@{Merge\+Blob\+Ids}}
+\index{Merge\+Blob\+Ids@{Merge\+Blob\+Ids}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Merge\+Blob\+Ids(\+Blob\+Ptr blob, kkint32 blob\+Id, kkint32 $\ast$$\ast$blob\+Ids)}{MergeBlobIds(BlobPtr blob, kkint32 blobId, kkint32 **blobIds)}}]{\setlength{\rightskip}{0pt plus 5cm}void Blob\+List\+::\+Merge\+Blob\+Ids (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob\+Ptr}}]{blob, }
+\item[{{\bf kkint32}}]{blob\+Id, }
+\item[{{\bf kkint32} $\ast$$\ast$}]{blob\+Ids}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a542ca9592d04a6c7cf1b56127d1c7b4e}{}\label{class_k_k_b_1_1_blob_list_a542ca9592d04a6c7cf1b56127d1c7b4e}
+
+
+Used by the Connected component analysis to merge two blobs together. 
+
+When the connected component discovers that two separate blobs are actually connected if will call this method to merge them together into a single blob. 
+
+Definition at line 122 of file Blob.\+cpp.
+
+
+
+References K\+K\+B\+::\+Blob\+::col\+Left, K\+K\+B\+::\+Blob\+::col\+Right, K\+K\+B\+::\+Blob\+::\+Id(), K\+K\+B\+::\+Blob\+::pixel\+Count, K\+K\+B\+::\+Blob\+::row\+Bot, and K\+K\+B\+::\+Blob\+::row\+Top.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected().
+
+
+\begin{DoxyCode}
+126 \{                               
+127   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newId = blob->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} ();
+128   
+129   iterator  idx;
+130   idx = find (blobId);
+131   \textcolor{keywordflow}{if}  (idx == end ())
+132     \textcolor{keywordflow}{return};
+133   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}  blobToMerge = idx->second;
+134 
+135   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+136   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+137 
+138   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  rowBot   = blobToMerge->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot};
+139   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  colRight = blobToMerge->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight};
+140 
+141   \textcolor{keywordflow}{for}  (row = blobToMerge->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}; row <= rowBot; row++)
+142   \{
+143     \textcolor{keywordflow}{for}  (col = blobToMerge->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}; col <= colRight; col++)
+144     \{
+145       \textcolor{keywordflow}{if}  (blobIds[row][col] == blobId)
+146         blobIds[row][col] = newId;
+147     \}
+148   \}
+149 
+150   blob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}   = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (blob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop},   blobToMerge->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop});
+151   blob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot}   = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (blob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot},   blobToMerge->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot});
+152   blob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}  = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (blob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft},  blobToMerge->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft});
+153   blob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight} = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (blob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight}, blobToMerge->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight});
+154   blob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} = blob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} + blobToMerge->
+      \hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount};
+155 
+156   erase (idx);
+157   availableBlobs.push\_back (blobToMerge);
+158 \}  \textcolor{comment}{/* MergeBlobIds */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Merge\+Into\+Single\+Blob@{Merge\+Into\+Single\+Blob}}
+\index{Merge\+Into\+Single\+Blob@{Merge\+Into\+Single\+Blob}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Merge\+Into\+Single\+Blob(\+Blob\+Ptr blob1, kkint32 blob2\+Id, kkint32 $\ast$$\ast$blob\+Ids)}{MergeIntoSingleBlob(BlobPtr blob1, kkint32 blob2Id, kkint32 **blobIds)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Blob\+Ptr} Blob\+List\+::\+Merge\+Into\+Single\+Blob (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob\+Ptr}}]{blob1, }
+\item[{{\bf kkint32}}]{blob2\+Id, }
+\item[{{\bf kkint32} $\ast$$\ast$}]{blob\+Ids}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a6fb445ebcc2275344dd3301cc0b72bb1}{}\label{class_k_k_b_1_1_blob_list_a6fb445ebcc2275344dd3301cc0b72bb1}
+
+
+Definition at line 163 of file Blob.\+cpp.
+
+
+
+References K\+K\+B\+::\+Blob\+::col\+Left, K\+K\+B\+::\+Blob\+::col\+Right, K\+K\+B\+::\+Blob\+::\+Id(), K\+K\+B\+::\+Blob\+::\+Pixel\+Count(), K\+K\+B\+::\+Blob\+::pixel\+Count, K\+K\+B\+::\+Blob\+::row\+Bot, and K\+K\+B\+::\+Blob\+::row\+Top.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Extract\+Blobs().
+
+
+\begin{DoxyCode}
+167 \{                               
+168   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  blob1Id = blob1->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} ();
+169   iterator  idx;
+170   idx = find (blob2Id);
+171   \textcolor{keywordflow}{if}  (idx == end ())
+172     \textcolor{keywordflow}{return}  blob1;
+173   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}  blob2 = idx->second;
+174 
+175   \textcolor{keywordflow}{if}  ((blob1Id == blob2Id)  ||  (blob1 == blob2))
+176   \{
+177     \textcolor{keywordflow}{return} blob1;
+178   \}
+179 
+180   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}  srcBlob  = NULL;
+181   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr}  destBlob = NULL;
+182 
+183   \textcolor{keywordflow}{if}  (blob1->\hyperlink{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}{PixelCount} () > blob2->\hyperlink{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}{PixelCount} ())
+184   \{
+185     srcBlob  = blob2;
+186     destBlob = blob1;
+187   \}
+188   \textcolor{keywordflow}{else}
+189   \{
+190     srcBlob = blob1;
+191     destBlob = blob2;
+192   \}
+193 
+194   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}    destBlobId = destBlob->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} ();
+195   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}    srcBlobId  = srcBlob->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} ();
+196 
+197   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col = 0;
+198   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = 0;
+199 
+200   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  rowBot   = srcBlob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot};
+201   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  colRight = srcBlob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight};
+202 
+203   \textcolor{keywordflow}{for}  (row = srcBlob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop};  row <= rowBot;  ++row)
+204   \{
+205     \textcolor{keywordflow}{for}  (col = srcBlob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft};  col <= colRight;  ++col)
+206     \{
+207       \textcolor{keywordflow}{if}  (blobIds[row][col] == srcBlobId)
+208         blobIds[row][col] = destBlobId;
+209     \}
+210   \}
+211 
+212   destBlob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}   = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (destBlob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop},   srcBlob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop});
+213   destBlob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot}   = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (destBlob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot},   srcBlob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot});
+214   destBlob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}  = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (destBlob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft},  srcBlob->
+      \hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft});
+215   destBlob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight} = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (destBlob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight}, srcBlob->
+      \hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight});
+216   destBlob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} = destBlob->\hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} + srcBlob->
+      \hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount};
+217 
+218   idx = find (srcBlobId);
+219   \textcolor{keywordflow}{if}  (idx != end ())
+220     erase (idx);
+221 
+222   availableBlobs.push\_back (srcBlob);
+223   \textcolor{keywordflow}{return}  destBlob;
+224 \}  \textcolor{comment}{/* MergeIntoSingleBlob */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!New\+Blob@{New\+Blob}}
+\index{New\+Blob@{New\+Blob}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{New\+Blob(kkuint32 row\+Top, kkuint32 col\+Left)}{NewBlob(kkuint32 rowTop, kkuint32 colLeft)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Blob\+Ptr} Blob\+List\+::\+New\+Blob (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{row\+Top, }
+\item[{{\bf kkuint32}}]{col\+Left}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_a4542efb8f886b31c58f0a03507d20e69}{}\label{class_k_k_b_1_1_blob_list_a4542efb8f886b31c58f0a03507d20e69}
+
+
+Definition at line 93 of file Blob.\+cpp.
+
+
+
+References K\+K\+B\+::\+Blob\+::col\+Left, K\+K\+B\+::\+Blob\+::col\+Right, Push\+On\+Back(), K\+K\+B\+::\+Blob\+::row\+Bot, and K\+K\+B\+::\+Blob\+::row\+Top.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), and K\+K\+B\+::\+Raster\+::\+Extract\+Blobs().
+
+
+\begin{DoxyCode}
+96 \{
+97   \hyperlink{class_k_k_b_1_1_blob}{BlobPtr} blob = NULL;
+98   \textcolor{keywordflow}{if}  (availableBlobs.size () > 0)
+99   \{
+100     blob = availableBlobs.back ();
+101     blob->\hyperlink{class_k_k_b_1_1_blob_a8d0703b3aacfdc6664f81968468962fb}{InitialzieAsNew} (nextBlobId);
+102     availableBlobs.pop\_back ();
+103   \}
+104   \textcolor{keywordflow}{else}
+105   \{
+106     blob = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_blob}{Blob} (nextBlobId);
+107   \}
+108   
+109   blob->\hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}  = rowTop;
+110   blob->\hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot}  = rowTop;
+111 
+112   blob->\hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}  = colLeft;
+113   blob->\hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight} = colLeft; 
+114   
+115   nextBlobId++;
+116   \hyperlink{class_k_k_b_1_1_blob_list_ad180d93de7be82655877d3a3b1fc9116}{PushOnBack} (blob);
+117   \textcolor{keywordflow}{return}  blob;
+118 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Push\+On\+Back@{Push\+On\+Back}}
+\index{Push\+On\+Back@{Push\+On\+Back}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Push\+On\+Back(\+Blob\+Ptr blob)}{PushOnBack(BlobPtr blob)}}]{\setlength{\rightskip}{0pt plus 5cm}void Blob\+List\+::\+Push\+On\+Back (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob\+Ptr}}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_ad180d93de7be82655877d3a3b1fc9116}{}\label{class_k_k_b_1_1_blob_list_ad180d93de7be82655877d3a3b1fc9116}
+
+
+Definition at line 280 of file Blob.\+cpp.
+
+
+
+Referenced by New\+Blob().
+
+
+\begin{DoxyCode}
+281 \{
+282   insert (BlobIndexPair (blob->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} (), blob));
+283 \}  \textcolor{comment}{/* PushOnBack */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}!Push\+On\+Front@{Push\+On\+Front}}
+\index{Push\+On\+Front@{Push\+On\+Front}!K\+K\+B\+::\+Blob\+List@{K\+K\+B\+::\+Blob\+List}}
+\subsubsection[{\texorpdfstring{Push\+On\+Front(\+Blob\+Ptr blob)}{PushOnFront(BlobPtr blob)}}]{\setlength{\rightskip}{0pt plus 5cm}void Blob\+List\+::\+Push\+On\+Front (
+\begin{DoxyParamCaption}
+\item[{{\bf Blob\+Ptr}}]{blob}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_list_aa61617ae33ca83b22d715ad44af432a7}{}\label{class_k_k_b_1_1_blob_list_aa61617ae33ca83b22d715ad44af432a7}
+
+
+Definition at line 287 of file Blob.\+cpp.
+
+
+\begin{DoxyCode}
+288 \{
+289   insert (BlobIndexPair (blob->\hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} (), blob));
+290 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_blob_8h}{Blob.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_blob_8cpp}{Blob.\+cpp}\end{DoxyCompactItemize}

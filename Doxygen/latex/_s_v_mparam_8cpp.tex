@@ -1,0 +1,56 @@
+\hypertarget{_s_v_mparam_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.cpp File Reference}
+\label{_s_v_mparam_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Global\+Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}S\+V\+Mparam.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Binary\+Class\+Parms.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Class\+Assignments.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Vector.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}File\+Desc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}M\+L\+Class.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+M\+L\+L\+Types.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_s_v_mparam_8cpp_ade5359b24667e685072c9f6555608c99}{Xml\+Factory\+Macro} (\hyperlink{class_k_k_m_l_l_1_1_s_v_mparam}{S\+V\+Mparam}) \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} K\+K\+M\+LL
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{S\+V\+Mparam.\+cpp@{S\+V\+Mparam.\+cpp}!Xml\+Factory\+Macro@{Xml\+Factory\+Macro}}
+\index{Xml\+Factory\+Macro@{Xml\+Factory\+Macro}!S\+V\+Mparam.\+cpp@{S\+V\+Mparam.\+cpp}}
+\subsubsection[{\texorpdfstring{Xml\+Factory\+Macro(\+S\+V\+Mparam) K\+K\+Str K\+K\+M\+LL}{XmlFactoryMacro(SVMparam) KKStr KKMLL}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Factory\+Macro (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+Mparam}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_s_v_mparam_8cpp_ade5359b24667e685072c9f6555608c99}{}\label{_s_v_mparam_8cpp_ade5359b24667e685072c9f6555608c99}
+
+
+Definition at line 877 of file S\+V\+Mparam.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Binary, and K\+K\+M\+L\+L\+::\+Scaled.
+
+
+\begin{DoxyCode}
+886 \{
+887   \textcolor{keywordflow}{if}  (encodingMethod == SVM\_EncodingMethod::Binary)
+888     \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"Binary"};
+889 
+890   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (encodingMethod == SVM\_EncodingMethod::Scaled)
+891     \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"Scale"};
+892 
+893   \textcolor{keywordflow}{else}
+894     \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"None"};
+895 \}  \textcolor{comment}{/* EncodingMethodToStr */}
+\end{DoxyCode}

@@ -1,0 +1,337 @@
+\hypertarget{_o_sservices_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+O\+Sservices.cpp File Reference}
+\label{_o_sservices_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+O\+Sservices.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+O\+Sservices.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$direct.\+h$>$}\\*
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include $<$Lmcons.\+h$>$}\\*
+{\ttfamily \#include $<$conio.\+h$>$}\\*
+{\ttfamily \#include $<$ctype.\+h$>$}\\*
+{\ttfamily \#include $<$errno.\+h$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Image\+I\+O.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_o_sservices_8cpp_a44d01ba0a136b8e27ad362f5a823d14e}{\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS}~64
+\item 
+\#define \hyperlink{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}~((D\+W\+O\+RD)-\/1)
+\item 
+\#define \hyperlink{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}~((D\+W\+O\+RD)-\/1)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_o_sservices_8cpp_aff572bf8defc71ccf108174a0a843b14}{os\+File\+Name\+Matches\+Search\+Fields} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, \hyperlink{namespace_k_k_b_a8f5f50672f37857425120831223888aa}{K\+K\+Str\+List\+Ptr} search\+Fields)
+\item 
+int \hyperlink{_o_sservices_8cpp_aa6a4e1717d864dc6c268af5f9a86569a}{os\+Locate\+Env\+Str\+Start} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&str, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} start\+Idx)
+\item 
+\hyperlink{namespace_k_k_b_a8f5f50672f37857425120831223888aa}{K\+K\+Str\+List\+Ptr} \hyperlink{_o_sservices_8cpp_acae8c3e801d27b64cb9590388e38d9c5}{os\+Parse\+Search\+Spec} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&search\+Spec)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_o_sservices_8cpp_ab91e7b6b320d482a3192a926b1e09da5}{back\+Ground\+Process} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS@{\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS}}
+\index{\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS@{\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{\+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS}{_FILE_OFFSET_BITS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+F\+I\+L\+E\+\_\+\+O\+F\+F\+S\+E\+T\+\_\+\+B\+I\+TS~64}\hypertarget{_o_sservices_8cpp_a44d01ba0a136b8e27ad362f5a823d14e}{}\label{_o_sservices_8cpp_a44d01ba0a136b8e27ad362f5a823d14e}
+
+
+Definition at line 7 of file O\+Sservices.\+cpp.
+
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES@{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}}
+\index{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES@{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}{INVALID_FILE_ATTRIBUTES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES~((D\+W\+O\+RD)-\/1)}\hypertarget{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}{}\label{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES@{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}}
+\index{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES@{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES}{INVALID_FILE_ATTRIBUTES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\+N\+V\+A\+L\+I\+D\+\_\+\+F\+I\+L\+E\+\_\+\+A\+T\+T\+R\+I\+B\+U\+T\+ES~((D\+W\+O\+RD)-\/1)}\hypertarget{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}{}\label{_o_sservices_8cpp_a5c3e148aed786e7d7edf84c4551ebbb5}
+
+
+\subsection{Function Documentation}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!os\+File\+Name\+Matches\+Search\+Fields@{os\+File\+Name\+Matches\+Search\+Fields}}
+\index{os\+File\+Name\+Matches\+Search\+Fields@{os\+File\+Name\+Matches\+Search\+Fields}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{os\+File\+Name\+Matches\+Search\+Fields(const K\+K\+Str \&file\+Name, K\+K\+Str\+List\+Ptr search\+Fields)}{osFileNameMatchesSearchFields(const KKStr &fileName, KKStrListPtr searchFields)}}]{\setlength{\rightskip}{0pt plus 5cm}bool os\+File\+Name\+Matches\+Search\+Fields (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{{\bf K\+K\+Str\+List\+Ptr}}]{search\+Fields}
+\end{DoxyParamCaption}
+)}\hypertarget{_o_sservices_8cpp_aff572bf8defc71ccf108174a0a843b14}{}\label{_o_sservices_8cpp_aff572bf8defc71ccf108174a0a843b14}
+
+
+Definition at line 180 of file O\+Sservices.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Len(), K\+K\+B\+::\+K\+K\+Str\+::operator==(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+\begin{DoxyCode}
+183 \{
+184   \textcolor{keywordflow}{if}  (!searchFields)
+185     \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+186 
+187   \textcolor{keywordflow}{if}  (searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+188     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+189 
+190   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrConstPtr}  field = searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (0);
+191 
+192   \textcolor{keywordflow}{if}  (searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () == 1)
+193   \{
+194     \textcolor{keywordflow}{if}  (*field == \textcolor{stringliteral}{"*"})
+195       \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+196 
+197     \textcolor{keywordflow}{if}  (*field == fileName)
+198       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+199     \textcolor{keywordflow}{else}
+200       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+201   \}
+202  
+203   \textcolor{keywordtype}{bool}  lastFieldAStar = \textcolor{keyword}{false};
+204 
+205   \textcolor{keyword}{const} \textcolor{keywordtype}{char}*  cp = fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ();
+206   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}     lenLeftToCheck = fileName.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+207 
+208   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  fieldNum;
+209 
+210   \textcolor{keywordflow}{for}  (fieldNum = 0;  fieldNum < searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  fieldNum++)
+211   \{
+212     \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  field = *(searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (fieldNum));
+213     
+214     \textcolor{keywordflow}{if}  (field == \textcolor{stringliteral}{"*"})
+215     \{
+216       lastFieldAStar = \textcolor{keyword}{true};
+217     \}
+218     \textcolor{keywordflow}{else}
+219     \{
+220       \textcolor{keywordflow}{if}  (lastFieldAStar)
+221       \{
+222         \textcolor{comment}{// Since last was a '*'  then we can skip over characters until we find a sequence that matches
+       field}
+223 
+224         \textcolor{keywordtype}{bool}  matchFound = \textcolor{keyword}{false};
+225 
+226         \textcolor{keywordflow}{while}  ((!matchFound)  &&  (lenLeftToCheck >= field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ()))
+227         \{
+228           \textcolor{keywordflow}{if}  (strncmp (cp, field.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ()) == 0)
+229           \{
+230             matchFound = \textcolor{keyword}{true};
+231             \textcolor{comment}{// lets move cp beyond where we found field in fileName}
+232             cp = cp + field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+233             \textcolor{keywordflow}{if}  (field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len}() > lenLeftToCheck)
+234               lenLeftToCheck = 0;
+235             \textcolor{keywordflow}{else}
+236               lenLeftToCheck = lenLeftToCheck - field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+237           \}
+238           \textcolor{keywordflow}{else}
+239           \{
+240             ++cp;
+241             --lenLeftToCheck;
+242           \}
+243         \}
+244 
+245         \textcolor{keywordflow}{if}  (!matchFound)
+246         \{
+247           \textcolor{comment}{// There was no match any were else in the rest of the fileName.}
+248           \textcolor{comment}{// way that this fileName is a match.}
+249           \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+250         \}
+251       \}
+252       \textcolor{keywordflow}{else}
+253       \{
+254         \textcolor{comment}{// Since last field was  NOT   a '*' the next field->Len () characters better be an exact match}
+255         \textcolor{keywordflow}{if}  (lenLeftToCheck < field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ())
+256         \{
+257           \textcolor{comment}{// Not enough chars left in fileName to check,  can not possibly be a match}
+258           \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+259         \}
+260 
+261         \textcolor{keywordflow}{if}  (strncmp (cp, field.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ()) != 0)
+262         \{
+263           \textcolor{comment}{// The next field->Len ()  chars were not a match.  This means that fileName is}
+264           \textcolor{comment}{// not a match.}
+265           \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+266         \}
+267         \textcolor{keywordflow}{else}
+268         \{
+269           cp = cp + field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+270           lenLeftToCheck = lenLeftToCheck - field.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+271         \}
+272       \}
+273 
+274       lastFieldAStar = \textcolor{keyword}{false};
+275     \}
+276   \}
+277 
+278 
+279   \textcolor{keywordflow}{if}  (lenLeftToCheck > 0)
+280   \{
+281     \textcolor{comment}{// Since there are some char's left in fileName that we have not checked,  then }
+282     \textcolor{comment}{// the last field had better been a '*'}
+283     \textcolor{keywordflow}{if}  (lastFieldAStar)
+284       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+285     \textcolor{keywordflow}{else}
+286       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+287   \}
+288  
+289   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+290 \}  \textcolor{comment}{/* osFileNameMatchesSearchFields */}
+\end{DoxyCode}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!os\+Locate\+Env\+Str\+Start@{os\+Locate\+Env\+Str\+Start}}
+\index{os\+Locate\+Env\+Str\+Start@{os\+Locate\+Env\+Str\+Start}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{os\+Locate\+Env\+Str\+Start(const K\+K\+Str \&str, kkint32 start\+Idx)}{osLocateEnvStrStart(const KKStr &str, kkint32 startIdx)}}]{\setlength{\rightskip}{0pt plus 5cm}int os\+Locate\+Env\+Str\+Start (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{str, }
+\item[{{\bf kkint32}}]{start\+Idx}
+\end{DoxyParamCaption}
+)}\hypertarget{_o_sservices_8cpp_aa6a4e1717d864dc6c268af5f9a86569a}{}\label{_o_sservices_8cpp_aa6a4e1717d864dc6c268af5f9a86569a}
+Searches a string starting from a specified index for the start of an Environment String Specification. 
+\begin{DoxyCode}
+1                        1         2         3         4         5         6
+2 ex:          0123456789012345678901234567890123456789012345678901234567890123456789 
+3       str = "TrainingDirectory\(\backslash\)$\{LarcosHomeDir\}\(\backslash\)Classifiers\(\backslash\)$\{CurTrainLibrary"
+4 
+5  idx = osLocateEnvStrStart (str, 0);  // returns 18
+6  idx = osLocateEnvStrStart (str, 34)  // returns 47
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & Starting that is to be searched. \\
+\hline
+{\em start\+Idx} & Index search is to start at. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Index of 1st character of a Environment String specifier or -\/1 if none was found. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Idx} & Index in \textquotesingle{}str\textquotesingle{} to start search from. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 948 of file O\+Sservices.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Len(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::os\+Substitute\+In\+Environment\+Variables().
+
+
+\begin{DoxyCode}
+951 \{
+952   \textcolor{keywordtype}{int}  x = startIdx;
+953   \textcolor{keywordtype}{int}  y = startIdx + 1;
+954   \textcolor{keywordtype}{int}  len = str.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+955   \textcolor{keyword}{const} \textcolor{keywordtype}{char}*  s = str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ();
+956 
+957   \textcolor{keywordflow}{while}  (y < len)
+958   \{
+959     \textcolor{keywordflow}{if}  (s[y] == 0)
+960       \textcolor{keywordflow}{return} -1;
+961 
+962     \textcolor{keywordflow}{if}  (s[x] == \textcolor{charliteral}{'$'})
+963     \{
+964       \textcolor{keywordflow}{if}  ((s[y] == \textcolor{charliteral}{'('})  ||  (s[y] == \textcolor{charliteral}{'\{'})  ||  (s[y] == \textcolor{charliteral}{'['}))
+965         \textcolor{keywordflow}{return}  x;
+966     \}
+967 
+968     ++x;
+969     ++y;
+970   \}
+971 
+972   \textcolor{keywordflow}{return}  -1;
+973 \}  \textcolor{comment}{/* LocateEnvStrStart */}
+\end{DoxyCode}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!os\+Parse\+Search\+Spec@{os\+Parse\+Search\+Spec}}
+\index{os\+Parse\+Search\+Spec@{os\+Parse\+Search\+Spec}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{os\+Parse\+Search\+Spec(const K\+K\+Str \&search\+Spec)}{osParseSearchSpec(const KKStr &searchSpec)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+List\+Ptr} os\+Parse\+Search\+Spec (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{search\+Spec}
+\end{DoxyParamCaption}
+)}\hypertarget{_o_sservices_8cpp_acae8c3e801d27b64cb9590388e38d9c5}{}\label{_o_sservices_8cpp_acae8c3e801d27b64cb9590388e38d9c5}
+
+
+Definition at line 131 of file O\+Sservices.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+B\+::\+K\+K\+Str\+List\+::\+K\+K\+Str\+List().
+
+
+\begin{DoxyCode}
+132 \{
+133   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  searchFields = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrList} (\textcolor{keyword}{true});
+134 
+135   \textcolor{keywordflow}{if}  (searchSpec.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+136   \{
+137     searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"*"}));
+138     \textcolor{keywordflow}{return}  searchFields;
+139   \}
+140 
+141 \textcolor{preprocessor}{# ifdef  USE\_SECURE\_FUNCS}
+142     \textcolor{keywordtype}{char}*  workStr = \_strdup (searchSpec.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+143 \textcolor{preprocessor}{# else}
+144     \textcolor{keywordtype}{char}*  workStr = strdup (searchSpec.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+145 \textcolor{preprocessor}{# endif}
+146   
+147   \textcolor{keywordtype}{char}*  cp = workStr;
+148 
+149   \textcolor{keywordtype}{char}*  startOfField = cp;
+150 
+151   \textcolor{keywordflow}{while}  (*cp != 0)
+152   \{
+153     \textcolor{keywordflow}{if}  (*cp == \textcolor{charliteral}{'*'})
+154     \{
+155       *cp = 0;
+156       \textcolor{keywordflow}{if}  (startOfField != cp)
+157          searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (startOfField));
+158 
+159       searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"*"}));
+160       startOfField = cp + 1;
+161     \}
+162     cp++;
+163   \}
+164   
+165   \textcolor{keywordflow}{if}  (cp != startOfField)
+166   \{
+167     \textcolor{comment}{// There is one last field that we need to add,  meaning that there was no '*'s  or}
+168     \textcolor{comment}{// that the last char in the searchField was not a '*'.}
+169     searchFields->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (startOfField));
+170   \}
+171 
+172   \textcolor{keyword}{delete}  workStr;
+173 
+174   \textcolor{keywordflow}{return}  searchFields;
+175 \}  \textcolor{comment}{/*  osParseSearchSpec */}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{O\+Sservices.\+cpp@{O\+Sservices.\+cpp}!back\+Ground\+Process@{back\+Ground\+Process}}
+\index{back\+Ground\+Process@{back\+Ground\+Process}!O\+Sservices.\+cpp@{O\+Sservices.\+cpp}}
+\subsubsection[{\texorpdfstring{back\+Ground\+Process}{backGroundProcess}}]{\setlength{\rightskip}{0pt plus 5cm}bool back\+Ground\+Process = false}\hypertarget{_o_sservices_8cpp_ab91e7b6b320d482a3192a926b1e09da5}{}\label{_o_sservices_8cpp_ab91e7b6b320d482a3192a926b1e09da5}
+
+
+Definition at line 1495 of file O\+Sservices.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::os\+Is\+Back\+Ground\+Process(), K\+K\+B\+::os\+Run\+As\+A\+Back\+Ground\+Process(), and K\+K\+B\+::os\+Wait\+For\+Enter().
+

@@ -1,0 +1,1512 @@
+\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list}{}\section{K\+K\+M\+LL\+:\+:M\+L\+Class\+List Class Reference}
+\label{class_k_k_m_l_l_1_1_m_l_class_list}\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+
+
+Maintains a list of \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} instances.  
+
+
+
+
+{\ttfamily \#include $<$M\+L\+Class.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:M\+L\+Class\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_m_l_l_1_1_m_l_class_list}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_m_l_class_list_1_1_m_l_class_name_comparison}{M\+L\+Class\+Name\+Comparison}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{M\+L\+Class\+List} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a9eba66baab09be1d32fecab55467983e}{M\+L\+Class\+List} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes)
+\begin{DoxyCompactList}\small\item\em Copy constructor; will copy list but not own the contents. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a71f5b8e4566b4a85cbaca9e621dfcb39}{M\+L\+Class\+List} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, bool \&successfull)
+\begin{DoxyCompactList}\small\item\em Construct a \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} object from the contents of a file. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ad05849a325d48d98bfe09082b1e24ffd}{$\sim$\+M\+L\+Class\+List} ()
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{Add\+M\+L\+Class} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+ml\+Class)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a0e4f16e9c738fc435a1110fa71c1cc54}{Clear} ()
+\begin{DoxyCompactList}\small\item\em Clears the contents of this list and updates name\+Index structure. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a9fdbe03268aed67b977f28a48a26a85e}{Extract\+H\+T\+M\+L\+Table\+Header} () const 
+\begin{DoxyCompactList}\small\item\em Will generate a H\+T\+ML formatted string that can be used in a H\+T\+ML table. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a22b580c0a24d6390b4150337209b546b}{Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} level)
+\item 
+\hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae0cea1353e79c3ddb8a483e48ce60424}{Extract\+Mandatory\+Classes} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_abeaa30c17ab7d06277ffb986a462f463}{Extract\+Summarize\+Classes} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}{Extract\+Three\+Title\+Lines} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line1, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line2, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line3) const 
+\begin{DoxyCompactList}\small\item\em Using the class names create three title lines where we split names by \char`\"{}\+\_\+\char`\"{} characters between the three lines. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a65e7622af997a504aa973b7b854b9729}{Extract\+Three\+Title\+Lines} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line1, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line2, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line3, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} field\+Width) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab36deaa540b8c1651d4424604a748dee}{Extract\+Two\+Title\+Lines} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line1, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&title\+Line2) const 
+\begin{DoxyCompactList}\small\item\em Using the class names create two title lines where we split names by \char`\"{}\+\_\+\char`\"{} characters between the two lines. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}{Get\+M\+L\+Class\+Ptr} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name)
+\begin{DoxyCompactList}\small\item\em return pointer to instance with \textquotesingle{}\+\_\+name\textquotesingle{}; if none exists, create one and add to list. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a77141f2b961011b6be8e6f2b0e929706}{Get\+Noise\+Class} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_aa7bab9ad8566d1ae97269775bab02446}{Get\+Un\+Known\+Class} ()
+\begin{DoxyCompactList}\small\item\em Return a pointer to the \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} object that represents the unknown Class in the list. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_acde90816dd424592c0e2971be8a80783}{Load} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, bool \&\+\_\+successfull)
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ac4806e641c090dcc7f572a3774604de4}{Look\+Up\+By\+Class\+Id} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+class\+Id) const 
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}{Look\+Up\+By\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name) const 
+\begin{DoxyCompactList}\small\item\em Returns a pointer of \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} object with name (\+\_\+name); if none in list will then return N\+U\+LL. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a733c0cdb921878aaf5cebd7de4527e09}{Memory\+Consumed\+Estimated} () const 
+\item 
+\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{K\+K\+B\+::kkuint16} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ac97afce475f0a59f57459942d6801b32}{Num\+Hierarchial\+Levels} () const 
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a37ec9af0599de9aaf557d2c6240e5d3d}{operator!=} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right) const 
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \& \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a43a6c846a4aa27e7ceefa0834a8b7b0d}{operator+=} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_afbcb8a473ffd985001811bcece7eb6c5}{operator-\/} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right) const 
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \& \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_adbac987bf2845e17e5910100105cb5db}{operator-\/=} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \& \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_aa113bdf36826306aaddbd168c7475547}{operator=} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right)
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_abf497eeb9a3b4790098f14b3822ea72c}{operator==} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&right) const 
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_add4473f4d1f638b7c9e71506401657a4}{Pop\+From\+Back} ()
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_aa551aed30ac1bcc60b2bdefabc5ea079}{Pop\+From\+Front} ()
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{Push\+On\+Back} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ml\+Class)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ac3022791a21da4fd7779d9b557d094dc}{Push\+On\+Front} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ml\+Class)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a28e7a0cde0d0aa78e0159451be973cfd}{Save} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+file\+Name, bool \&\+\_\+successfull)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a00b4e0ed01e65ca7e6c21c285ea45c02}{Sort\+By\+Name} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ad8e24a6af4317d815a9c190deb3837e7}{To\+Comma\+Delimited\+Quoted\+Str} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a2842ee0f0a658c29988b02bf5cbe19d7}{To\+Comma\+Delimited\+Str} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7456f72caf6033203f30cff0464c5fa7}{To\+String} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a1e736f380a4dc7140350279ff6166d54}{To\+Tab\+Delimited\+Str} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_aaa52f4be75a82ba4b62051e25df4a6f3}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7c3d83212318e7fd8b06d7ae3522d145}{Build\+List\+From\+Delimted\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s, char delimiter)
+\item 
+static \hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_afd0809f283f85dca95cd2c35ea22ac2d}{Merge\+Class\+List} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&list1, const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&list2)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a667e4e193073b2d585bbbc4b10881d91}{M\+L\+Class}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Maintains a list of \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} instances. 
+
+There will be only one instance of each \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} by name and these instances will be owned by M\+L\+Class\+::existing\+M\+L\+Classes. 
+
+Definition at line 233 of file M\+L\+Class.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!M\+L\+Class\+List@{M\+L\+Class\+List}}
+\index{M\+L\+Class\+List@{M\+L\+Class\+List}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{M\+L\+Class\+List()}{MLClassList()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+M\+L\+Class\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}
+
+
+Referenced by Build\+List\+From\+Delimted\+Str(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Build\+List\+Of\+Decendents(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Extract\+Class\+List(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Extract\+Full\+Hierachy\+Of\+Classes(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Extract\+List\+Of\+Classes(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level(), Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level(), Extract\+Mandatory\+Classes(), Extract\+Summarize\+Classes(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Extract\+Training\+Class\+Features(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Global\+Class\+List(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load(), K\+K\+M\+L\+L\+::\+Orderings\+::\+Orderings(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Training\+Configuration2(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List(), and Xml\+Factory\+Macro().
+
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!M\+L\+Class\+List@{M\+L\+Class\+List}}
+\index{M\+L\+Class\+List@{M\+L\+Class\+List}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{M\+L\+Class\+List(const M\+L\+Class\+List \&\+\_\+ml\+Classes)}{MLClassList(const MLClassList &_mlClasses)}}]{\setlength{\rightskip}{0pt plus 5cm}M\+L\+Class\+List\+::\+M\+L\+Class\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a9eba66baab09be1d32fecab55467983e}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a9eba66baab09be1d32fecab55467983e}
+
+
+Copy constructor; will copy list but not own the contents. 
+
+
+
+Definition at line 570 of file M\+L\+Class.\+cpp.
+
+
+
+References M\+L\+Class\+List().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), K\+K\+M\+L\+L\+::\+Classifier2\+::\+Classifier2(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Extract\+Full\+Hierachy\+Of\+Classes(), Merge\+Class\+List(), K\+K\+M\+L\+L\+::\+Model\+::\+M\+L\+Classes\+New\+Instance(), M\+L\+Class\+List(), K\+K\+M\+L\+L\+::\+Model\+::\+Model(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Training\+Configuration2().
+
+
+\begin{DoxyCode}
+570                                                        :
+571   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>} (\textcolor{keyword}{false})
+572 \{
+573   MLClass::AddImageClassList (\textcolor{keyword}{this});
+574 
+575   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numOfClasses = \_mlClasses.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+576   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+577   
+578   \textcolor{keywordflow}{for}  (x = 0; x < numOfClasses; x++)
+579   \{
+580     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (\_mlClasses.\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x));  
+581   \}
+582 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!M\+L\+Class\+List@{M\+L\+Class\+List}}
+\index{M\+L\+Class\+List@{M\+L\+Class\+List}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{M\+L\+Class\+List(const K\+K\+Str \&file\+Name, bool \&successfull)}{MLClassList(const KKStr &fileName, bool &successfull)}}]{\setlength{\rightskip}{0pt plus 5cm}M\+L\+Class\+List\+::\+M\+L\+Class\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{bool \&}]{successfull}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a71f5b8e4566b4a85cbaca9e621dfcb39}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a71f5b8e4566b4a85cbaca9e621dfcb39}
+
+
+Construct a \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} object from the contents of a file. 
+
+
+
+Definition at line 588 of file M\+L\+Class.\+cpp.
+
+
+
+References Add\+M\+L\+Class(), Get\+M\+L\+Class\+Ptr(), Load(), and M\+L\+Class\+List().
+
+
+
+Referenced by M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+590                           :
+591      \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>} (\textcolor{keyword}{false}),
+592      undefinedLoaded (\textcolor{keyword}{false})
+593 \{
+594   MLClass::AddImageClassList (\textcolor{keyword}{this});
+595 
+596   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_acde90816dd424592c0e2971be8a80783}{Load} (\_fileName, \_successfull);
+597 
+598   \textcolor{keywordflow}{if}  (!undefinedLoaded)
+599   \{
+600     \textcolor{comment}{// We have to make sure that there is a UnDefined MLClass.}
+601     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}{MLClassList::GetMLClassPtr} (\textcolor{stringliteral}{"UNKNOWN"}));
+602     undefinedLoaded = \textcolor{keyword}{true};
+603   \}
+604 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!````~M\+L\+Class\+List@{$\sim$\+M\+L\+Class\+List}}
+\index{````~M\+L\+Class\+List@{$\sim$\+M\+L\+Class\+List}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{$\sim$\+M\+L\+Class\+List()}{~MLClassList()}}]{\setlength{\rightskip}{0pt plus 5cm}M\+L\+Class\+List\+::$\sim$\+M\+L\+Class\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ad05849a325d48d98bfe09082b1e24ffd}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ad05849a325d48d98bfe09082b1e24ffd}
+
+
+Definition at line 609 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+610 \{
+611   MLClass::DeleteImageClassList (\textcolor{keyword}{this});
+612 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Add\+M\+L\+Class@{Add\+M\+L\+Class}}
+\index{Add\+M\+L\+Class@{Add\+M\+L\+Class}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Add\+M\+L\+Class(\+M\+L\+Class\+Ptr \+\_\+ml\+Class)}{AddMLClass(MLClassPtr _mlClass)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Add\+M\+L\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+ml\+Class}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}
+
+
+Definition at line 756 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), Get\+M\+L\+Class\+Ptr(), Load(), and M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+757 \{
+758   \textcolor{keywordflow}{if}  (\_mlClass->Name ().Empty ())
+759   \{
+760     cerr << \textcolor{stringliteral}{"MLClassList::AddMLClass   Class Name Empty"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+761   \}
+762   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>::PushOnBack} (\_mlClass);
+763   AddMLClassToNameIndex (\_mlClass);
+764 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Build\+List\+From\+Delimted\+Str@{Build\+List\+From\+Delimted\+Str}}
+\index{Build\+List\+From\+Delimted\+Str@{Build\+List\+From\+Delimted\+Str}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Build\+List\+From\+Delimted\+Str(const K\+K\+Str \&s, char delimiter)}{BuildListFromDelimtedStr(const KKStr &s, char delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List\+Ptr} M\+L\+Class\+List\+::\+Build\+List\+From\+Delimted\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{s, }
+\item[{char}]{delimiter}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a7c3d83212318e7fd8b06d7ae3522d145}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a7c3d83212318e7fd8b06d7ae3522d145}
+
+
+Definition at line 1268 of file M\+L\+Class.\+cpp.
+
+
+
+References M\+L\+Class\+List(), and K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+1271 \{
+1272   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  names = s.\hyperlink{class_k_k_b_1_1_k_k_str_ac06a219a8773d97383baef7cb10ab091}{Split} (\textcolor{charliteral}{','});
+1273   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  classList = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList} ();
+1274 
+1275   VectorKKStr::iterator  idx;
+1276   \textcolor{keywordflow}{for}  (idx = names.begin ();  idx != names.end ();  idx++)
+1277     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} c = classList->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}{GetMLClassPtr} (*idx);
+1278 
+1279   \textcolor{keywordflow}{return}  classList;
+1280 \}  \textcolor{comment}{/* BuildListFromCommaDelimtedStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Clear@{Clear}}
+\index{Clear@{Clear}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Clear()}{Clear()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a0e4f16e9c738fc435a1110fa71c1cc54}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a0e4f16e9c738fc435a1110fa71c1cc54}
+
+
+Clears the contents of this list and updates name\+Index structure. 
+
+
+
+Definition at line 623 of file M\+L\+Class.\+cpp.
+
+
+
+Referenced by operator=().
+
+
+\begin{DoxyCode}
+624 \{
+625   clear ();
+626   nameIndex.clear ();
+627 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+H\+T\+M\+L\+Table\+Header@{Extract\+H\+T\+M\+L\+Table\+Header}}
+\index{Extract\+H\+T\+M\+L\+Table\+Header@{Extract\+H\+T\+M\+L\+Table\+Header}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+H\+T\+M\+L\+Table\+Header() const }{ExtractHTMLTableHeader() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} M\+L\+Class\+List\+::\+Extract\+H\+T\+M\+L\+Table\+Header (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a9fdbe03268aed67b977f28a48a26a85e}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a9fdbe03268aed67b977f28a48a26a85e}
+
+
+Will generate a H\+T\+ML formatted string that can be used in a H\+T\+ML table. 
+
+Using the class name\textquotesingle{}s create one header line for a H\+T\+ML table. The underscore character (\char`\"{}\+\_\+\char`\"{}) will be used to separate levels 
+
+Definition at line 1195 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), and K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+1196 \{
+1197   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  header (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () * 50);
+1198 
+1199   \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} x;
+1200 
+1201   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1202   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+1203   \{
+1204     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1205 
+1206     \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  parts = ic->Name ().Split (\textcolor{charliteral}{'\_'});
+1207 
+1208     header << \textcolor{stringliteral}{"<th>"};
+1209     \textcolor{keywordflow}{for}  (x = 0;  x < parts.size ();  x++)
+1210     \{
+1211       \textcolor{keywordflow}{if}  (x > 0)
+1212         header << \textcolor{stringliteral}{"<br />"};
+1213       header << parts[x];
+1214     \}
+1215     header << \textcolor{stringliteral}{"</th>"};
+1216   \}
+1217 
+1218   \textcolor{keywordflow}{return}  header;
+1219 \}  \textcolor{comment}{/* ExtractHTMLTableHeader */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level@{Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level}}
+\index{Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level@{Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level(kkint32 level)}{ExtractListOfClassesForAGivenHierarchialLevel(kkint32 level)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List\+Ptr} M\+L\+Class\+List\+::\+Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{level}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a22b580c0a24d6390b4150337209b546b}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a22b580c0a24d6390b4150337209b546b}
+
+
+Definition at line 1223 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+M\+L\+Class\+For\+Given\+Hierarchial\+Level(), M\+L\+Class\+List(), and Sort\+By\+Name().
+
+
+\begin{DoxyCode}
+1224 \{
+1225   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  newList = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList} ();
+1226 
+1227   \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{MLClassList::iterator}  idx;
+1228   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+1229   \{
+1230     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} c = *idx;
+1231     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} classForLevel = c->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a739ec0353640c9a40e3a5aea30f8915d}{MLClassForGivenHierarchialLevel} 
+      (level);
+1232 
+1233     \textcolor{keywordflow}{if}  (newList->\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (classForLevel) < 0)
+1234       newList->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (classForLevel);
+1235   \}
+1236 
+1237   newList->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a00b4e0ed01e65ca7e6c21c285ea45c02}{SortByName} ();
+1238   \textcolor{keywordflow}{return}  newList;
+1239 \}  \textcolor{comment}{/* ExtractListOfClassesForAGivenHierarchialLevel */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+Mandatory\+Classes@{Extract\+Mandatory\+Classes}}
+\index{Extract\+Mandatory\+Classes@{Extract\+Mandatory\+Classes}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Mandatory\+Classes() const }{ExtractMandatoryClasses() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List\+Ptr} M\+L\+Class\+List\+::\+Extract\+Mandatory\+Classes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ae0cea1353e79c3ddb8a483e48ce60424}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ae0cea1353e79c3ddb8a483e48ce60424}
+
+
+Definition at line 1018 of file M\+L\+Class.\+cpp.
+
+
+
+References M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+1019 \{
+1020   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList} ();
+1021 
+1022   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{const\_iterator}  idx;
+1023   \textcolor{keywordflow}{for}  (idx = begin();  idx != end ();  ++idx)
+1024   \{
+1025     \textcolor{keywordflow}{if}  ((*idx)->Mandatory ())
+1026       result->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (*idx);
+1027   \}
+1028 
+1029   \textcolor{keywordflow}{return}  result;
+1030 \}  \textcolor{comment}{/* ExtractMandatoryClasses */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+Summarize\+Classes@{Extract\+Summarize\+Classes}}
+\index{Extract\+Summarize\+Classes@{Extract\+Summarize\+Classes}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Summarize\+Classes() const }{ExtractSummarizeClasses() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List\+Ptr} M\+L\+Class\+List\+::\+Extract\+Summarize\+Classes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_abeaa30c17ab7d06277ffb986a462f463}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_abeaa30c17ab7d06277ffb986a462f463}
+
+
+Definition at line 1001 of file M\+L\+Class.\+cpp.
+
+
+
+References M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+1002 \{
+1003   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList} ();
+1004 
+1005   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{const\_iterator}  idx;
+1006   \textcolor{keywordflow}{for}  (idx = begin();  idx != end ();  ++idx)
+1007   \{
+1008     \textcolor{keywordflow}{if}  ((*idx)->Summarize ())
+1009       result->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (*idx);
+1010   \}
+1011 
+1012   \textcolor{keywordflow}{return}  result;
+1013 \}  \textcolor{comment}{/* ExtractSummarizeClasses */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+Three\+Title\+Lines@{Extract\+Three\+Title\+Lines}}
+\index{Extract\+Three\+Title\+Lines@{Extract\+Three\+Title\+Lines}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Three\+Title\+Lines(\+K\+K\+Str \&title\+Line1, K\+K\+Str \&title\+Line2, K\+K\+Str \&title\+Line3) const }{ExtractThreeTitleLines(KKStr &titleLine1, KKStr &titleLine2, KKStr &titleLine3) const }}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Extract\+Three\+Title\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{title\+Line1, }
+\item[{{\bf K\+K\+Str} \&}]{title\+Line2, }
+\item[{{\bf K\+K\+Str} \&}]{title\+Line3}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}
+
+
+Using the class names create three title lines where we split names by \char`\"{}\+\_\+\char`\"{} characters between the three lines. 
+
+
+
+Definition at line 1068 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+K\+K\+Str\+::\+Extract\+Token(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Left(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Adjusted\+Results(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Bias\+Matrix(), and K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Print\+By\+Class\+Collumns().
+
+
+\begin{DoxyCode}
+1072 \{
+1073   titleLine1 = \textcolor{stringliteral}{""};
+1074   titleLine2 = \textcolor{stringliteral}{""};
+1075   titleLine3 = \textcolor{stringliteral}{""};
+1076 
+1077   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1078   \textcolor{keywordflow}{for}  (x = 0;  x < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1079   \{
+1080     \textcolor{keywordflow}{if}  (x > 0)
+1081     \{
+1082       titleLine1 << \textcolor{stringliteral}{"\(\backslash\)t"};
+1083       titleLine2 << \textcolor{stringliteral}{"\(\backslash\)t"};
+1084       titleLine3 << \textcolor{stringliteral}{"\(\backslash\)t"};
+1085     \}
+1086 
+1087     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  part1, part2, part3;
+1088     part1 = part2 = part3 = \textcolor{stringliteral}{""};
+1089     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfParts = 0;
+1090 
+1091     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  className = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x)->Name ();
+1092     className.\hyperlink{class_k_k_b_1_1_k_k_str_af7c102c53103ddff3f48270b4a198c89}{TrimLeft} ();
+1093     className.\hyperlink{class_k_k_b_1_1_k_k_str_aa912161f17871e2d6fec7bbac033221c}{TrimRight} ();
+1094     
+1095     numOfParts = 1;
+1096     part1 = className.\hyperlink{class_k_k_b_1_1_k_k_str_acc31c95308d6d699debde883c11e5802}{ExtractToken} (\textcolor{stringliteral}{"\_"});
+1097     \textcolor{keywordflow}{if}  (!className.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1098     \{
+1099       numOfParts = 2;
+1100       part2 = className.\hyperlink{class_k_k_b_1_1_k_k_str_acc31c95308d6d699debde883c11e5802}{ExtractToken} (\textcolor{stringliteral}{"\_"});
+1101 
+1102       \textcolor{keywordflow}{if}  (!className.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1103       \{
+1104         numOfParts = 3;
+1105         part3 = className;
+1106       \}
+1107     \}
+1108 
+1109 
+1110     \textcolor{keywordflow}{switch}  (numOfParts)
+1111     \{
+1112       \textcolor{keywordflow}{case} 1: titleLine3 << part1;
+1113               \textcolor{keywordflow}{break};
+1114 
+1115       \textcolor{keywordflow}{case} 2: titleLine2 << part1;
+1116               titleLine3 << part2;
+1117               \textcolor{keywordflow}{break};
+1118 
+1119       \textcolor{keywordflow}{case} 3: titleLine1 << part1;
+1120               titleLine2 << part2;
+1121               titleLine3 << part3;
+1122               \textcolor{keywordflow}{break};
+1123     \}
+1124   \}
+1125 \}  \textcolor{comment}{/* ExtractThreeTitleLines */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+Three\+Title\+Lines@{Extract\+Three\+Title\+Lines}}
+\index{Extract\+Three\+Title\+Lines@{Extract\+Three\+Title\+Lines}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Three\+Title\+Lines(\+K\+K\+Str \&title\+Line1, K\+K\+Str \&title\+Line2, K\+K\+Str \&title\+Line3, kkint32 field\+Width) const }{ExtractThreeTitleLines(KKStr &titleLine1, KKStr &titleLine2, KKStr &titleLine3, kkint32 fieldWidth) const }}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Extract\+Three\+Title\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{title\+Line1, }
+\item[{{\bf K\+K\+Str} \&}]{title\+Line2, }
+\item[{{\bf K\+K\+Str} \&}]{title\+Line3, }
+\item[{{\bf kkint32}}]{field\+Width}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a65e7622af997a504aa973b7b854b9729}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a65e7622af997a504aa973b7b854b9729}
+
+
+Definition at line 1130 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+K\+K\+Str\+::\+Extract\+Token(), K\+K\+B\+::\+K\+K\+Str\+::\+Left\+Pad(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+K\+K\+Str\+::\+Right\+Pad(), K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Left(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right().
+
+
+\begin{DoxyCode}
+1135 \{
+1136   titleLine1 = \textcolor{stringliteral}{""};
+1137   titleLine2 = \textcolor{stringliteral}{""};
+1138   titleLine3 = \textcolor{stringliteral}{""};
+1139 
+1140   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} blankField;
+1141   blankField.\hyperlink{class_k_k_b_1_1_k_k_str_aab728b1075242a5728ec4a579979d519}{RightPad} (fieldWidth);
+1142 
+1143   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1144   \textcolor{keywordflow}{for}  (x = 0;  x < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1145   \{
+1146     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  part1, part2, part3;
+1147     part1 = part2 = part3 = \textcolor{stringliteral}{""};
+1148     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfParts = 0;
+1149 
+1150     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  className = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x)->Name ();
+1151     className.\hyperlink{class_k_k_b_1_1_k_k_str_af7c102c53103ddff3f48270b4a198c89}{TrimLeft} ();
+1152     className.\hyperlink{class_k_k_b_1_1_k_k_str_aa912161f17871e2d6fec7bbac033221c}{TrimRight} ();
+1153     
+1154     numOfParts = 1;
+1155     part1 = className.\hyperlink{class_k_k_b_1_1_k_k_str_acc31c95308d6d699debde883c11e5802}{ExtractToken} (\textcolor{stringliteral}{"\_"});
+1156     \textcolor{keywordflow}{if}  (!className.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1157     \{
+1158       numOfParts = 2;
+1159       part2 = className.\hyperlink{class_k_k_b_1_1_k_k_str_acc31c95308d6d699debde883c11e5802}{ExtractToken} (\textcolor{stringliteral}{"\_"});
+1160 
+1161       \textcolor{keywordflow}{if}  (!className.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1162       \{
+1163         numOfParts = 3;
+1164         part3 = className;
+1165       \}
+1166     \}
+1167 
+1168     part1.\hyperlink{class_k_k_b_1_1_k_k_str_a5fc76668dbfe28861b45ecebda941b7c}{LeftPad} (fieldWidth);
+1169     part2.\hyperlink{class_k_k_b_1_1_k_k_str_a5fc76668dbfe28861b45ecebda941b7c}{LeftPad} (fieldWidth);
+1170     part3.\hyperlink{class_k_k_b_1_1_k_k_str_a5fc76668dbfe28861b45ecebda941b7c}{LeftPad} (fieldWidth);
+1171 
+1172     \textcolor{keywordflow}{switch}  (numOfParts)
+1173     \{
+1174       \textcolor{keywordflow}{case} 1: titleLine1 << blankField;
+1175               titleLine2 << blankField;
+1176               titleLine3 << part1;
+1177               \textcolor{keywordflow}{break};
+1178 
+1179       \textcolor{keywordflow}{case} 2: titleLine1 << blankField;
+1180               titleLine2 << part1;
+1181               titleLine3 << part2;
+1182               \textcolor{keywordflow}{break};
+1183 
+1184       \textcolor{keywordflow}{case} 3: titleLine1 << part1;
+1185               titleLine2 << part2;
+1186               titleLine3 << part3;
+1187               \textcolor{keywordflow}{break};
+1188     \}
+1189   \}
+1190 \}  \textcolor{comment}{/* ExtractThreeTitleLines */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Extract\+Two\+Title\+Lines@{Extract\+Two\+Title\+Lines}}
+\index{Extract\+Two\+Title\+Lines@{Extract\+Two\+Title\+Lines}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Two\+Title\+Lines(\+K\+K\+Str \&title\+Line1, K\+K\+Str \&title\+Line2) const }{ExtractTwoTitleLines(KKStr &titleLine1, KKStr &titleLine2) const }}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Extract\+Two\+Title\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&}]{title\+Line1, }
+\item[{{\bf K\+K\+Str} \&}]{title\+Line2}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ab36deaa540b8c1651d4424604a748dee}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ab36deaa540b8c1651d4424604a748dee}
+
+
+Using the class names create two title lines where we split names by \char`\"{}\+\_\+\char`\"{} characters between the two lines. 
+
+
+
+Definition at line 1035 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Locate\+Character(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), and K\+K\+B\+::\+K\+K\+Str\+::\+Sub\+Str\+Part().
+
+
+\begin{DoxyCode}
+1038 \{
+1039   titleLine1 = \textcolor{stringliteral}{""};
+1040   titleLine2 = \textcolor{stringliteral}{""};
+1041 
+1042   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1043   \textcolor{keywordflow}{for}  (x = 0;  x < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1044   \{
+1045     \textcolor{keywordflow}{if}  (x > 0)
+1046     \{
+1047       titleLine1 << \textcolor{stringliteral}{"\(\backslash\)t"};
+1048       titleLine2 << \textcolor{stringliteral}{"\(\backslash\)t"};
+1049     \}
+1050 
+1051     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  className = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x)->Name ();
+1052     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = className.\hyperlink{class_k_k_b_1_1_k_k_str_ad738b238e609887bbf27841f359046cd}{LocateCharacter} (\textcolor{charliteral}{'\_'});
+1053     \textcolor{keywordflow}{if}  (y < 0)
+1054     \{
+1055       titleLine2 << className;
+1056     \}
+1057     \textcolor{keywordflow}{else}
+1058     \{
+1059       titleLine1 << className.\hyperlink{class_k_k_b_1_1_k_k_str_a5f20b2ddfc9f07c8ef99592810332ddb}{SubStrPart} (0, y - 1);
+1060       titleLine2 << className.\hyperlink{class_k_k_b_1_1_k_k_str_a5f20b2ddfc9f07c8ef99592810332ddb}{SubStrPart} (y + 1);
+1061     \}
+1062   \}
+1063 \}  \textcolor{comment}{/* ExtractTwoTitleLines */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Get\+M\+L\+Class\+Ptr@{Get\+M\+L\+Class\+Ptr}}
+\index{Get\+M\+L\+Class\+Ptr@{Get\+M\+L\+Class\+Ptr}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Get\+M\+L\+Class\+Ptr(const K\+K\+Str \&\+\_\+name)}{GetMLClassPtr(const KKStr &_name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Get\+M\+L\+Class\+Ptr (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}
+
+
+return pointer to instance with \textquotesingle{}\+\_\+name\textquotesingle{}; if none exists, create one and add to list. 
+
+
+
+Definition at line 861 of file M\+L\+Class.\+cpp.
+
+
+
+References Add\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), and Look\+Up\+By\+Name().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Column\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+U\+C\+I\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Sparse\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Load\+File(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Column\+::\+Load\+File(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+U\+C\+I\+::\+Load\+File(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Load\+In\+Sub\+Directory\+Tree(), M\+L\+Class\+List(), and K\+K\+M\+L\+L\+::\+Training\+Class\+::\+Training\+Class().
+
+
+\begin{DoxyCode}
+862 \{
+863   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} ic = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}{LookUpByName} (\_name);
+864   \textcolor{keywordflow}{if}  (ic == NULL)
+865   \{
+866     ic = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a9fd24c617c42d89afc92414575e00e9a}{MLClass::CreateNewMLClass} (\_name);
+867     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (ic);
+868   \}
+869   \textcolor{keywordflow}{return}  ic;
+870 \}  \textcolor{comment}{/* GetMLClassPtr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Get\+Noise\+Class@{Get\+Noise\+Class}}
+\index{Get\+Noise\+Class@{Get\+Noise\+Class}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Get\+Noise\+Class() const }{GetNoiseClass() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Get\+Noise\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a77141f2b961011b6be8e6f2b0e929706}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a77141f2b961011b6be8e6f2b0e929706}
+
+
+Definition at line 875 of file M\+L\+Class.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classifier2\+::\+Classifier2().
+
+
+\begin{DoxyCode}
+876 \{
+877   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  noiseClass = NULL;
+878   \textcolor{keywordflow}{for}  (\textcolor{keyword}{auto} idx: *\textcolor{keyword}{this})  
+879   \{
+880     \textcolor{keywordflow}{if}  (idx->UnDefined ())
+881     \{
+882      noiseClass = idx;
+883      \textcolor{keywordflow}{break};
+884     \}
+885   \}
+886   \textcolor{keywordflow}{return}  noiseClass;
+887 \}  \textcolor{comment}{/* GetNoiseClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Get\+Un\+Known\+Class@{Get\+Un\+Known\+Class}}
+\index{Get\+Un\+Known\+Class@{Get\+Un\+Known\+Class}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Get\+Un\+Known\+Class()}{GetUnKnownClass()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Get\+Un\+Known\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_aa7bab9ad8566d1ae97269775bab02446}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_aa7bab9ad8566d1ae97269775bab02446}
+
+
+Return a pointer to the \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} object that represents the unknown Class in the list. 
+
+That is the one with the name \textquotesingle{}U\+N\+K\+N\+O\+WN\textquotesingle{}. If none is found then one will be created and added to the list. 
+
+Definition at line 893 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), Look\+Up\+By\+Name(), and Push\+On\+Back().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classifier2\+::\+Classifier2(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Load\+In\+Sub\+Directory\+Tree().
+
+
+\begin{DoxyCode}
+894 \{
+895   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  unKnownClass = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}{LookUpByName} (\textcolor{stringliteral}{"UNKNOWN"});
+896   \textcolor{keywordflow}{if}  (!unKnownClass)
+897   \{
+898     unKnownClass = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a9fd24c617c42d89afc92414575e00e9a}{MLClass::CreateNewMLClass} (\textcolor{stringliteral}{"UNKNOWN"});
+899     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (unKnownClass);
+900   \}
+901 
+902   \textcolor{keywordflow}{return}  unKnownClass;
+903 \}  \textcolor{comment}{/* GetUnKnownClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Load@{Load}}
+\index{Load@{Load}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Load(const K\+K\+Str \&\+\_\+file\+Name, bool \&\+\_\+successfull)}{Load(const KKStr &_fileName, bool &_successfull)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Load (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{bool \&}]{\+\_\+successfull}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_acde90816dd424592c0e2971be8a80783}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_acde90816dd424592c0e2971be8a80783}
+
+
+Definition at line 681 of file M\+L\+Class.\+cpp.
+
+
+
+References Add\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), K\+K\+B\+::os\+F\+O\+P\+E\+N(), K\+K\+B\+::os\+Read\+Rest\+Of\+Line(), K\+K\+B\+::\+K\+K\+Str\+::\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Un\+Defined().
+
+
+
+Referenced by M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+684 \{
+685   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lineCount = 0;
+686 
+687   FILE*  inputFile = \hyperlink{namespace_k_k_b_abf4050d2916ded8349dafadc80f0ecd1}{osFOPEN} (\_fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), \textcolor{stringliteral}{"r"});
+688   \textcolor{keywordflow}{if}  (!inputFile)
+689   \{
+690     cerr << \textcolor{stringliteral}{"MLClassList::ReadInData    *** ERROR ***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+691          << \textcolor{stringliteral}{"                Input File["} << \_fileName << \textcolor{stringliteral}{"] not Valid."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+692     \_successfull = \textcolor{keyword}{false};
+693     \textcolor{keywordflow}{return};
+694   \}
+695 
+696   \textcolor{keywordtype}{bool} eof = \textcolor{keyword}{false};
+697   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  dataRow = \hyperlink{namespace_k_k_b_a88c95cee7b3dd5c93ab443b2ec20862c}{KKB::osReadRestOfLine} (inputFile, eof);
+698   \textcolor{keywordflow}{while}  (!eof)
+699   \{
+700     dataRow->\hyperlink{class_k_k_b_1_1_k_k_str_aa912161f17871e2d6fec7bbac033221c}{TrimRight} ();
+701 
+702     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  oneRow = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a9fd24c617c42d89afc92414575e00e9a}{MLClass::CreateNewMLClass} (*dataRow);
+703 
+704     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (oneRow);
+705 
+706     \textcolor{keywordflow}{if}  (oneRow->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_add5b7120a94078e1dcd455ad1c103267}{UnDefined} ())
+707       undefinedLoaded = \textcolor{keyword}{true};
+708 
+709     lineCount++;
+710     \textcolor{keyword}{delete}  dataRow;
+711     dataRow = \hyperlink{namespace_k_k_b_a88c95cee7b3dd5c93ab443b2ec20862c}{KKB::osReadRestOfLine} (inputFile, eof);
+712   \}
+713   \textcolor{keyword}{delete}  dataRow;
+714   dataRow = NULL;
+715 
+716   fclose (inputFile);
+717   \_successfull = \textcolor{keyword}{true};
+718 \}  \textcolor{comment}{/* ReadInData */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Look\+Up\+By\+Class\+Id@{Look\+Up\+By\+Class\+Id}}
+\index{Look\+Up\+By\+Class\+Id@{Look\+Up\+By\+Class\+Id}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Class\+Id(kkint32 \+\_\+class\+Id) const }{LookUpByClassId(kkint32 _classId) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Look\+Up\+By\+Class\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+class\+Id}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ac4806e641c090dcc7f572a3774604de4}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ac4806e641c090dcc7f572a3774604de4}
+
+
+Definition at line 843 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Class\+Id().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Get\+By\+Class\+Id().
+
+
+\begin{DoxyCode}
+844 \{
+845   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+846   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass;
+847   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+848   \{
+849     mlClass = *idx;
+850     \textcolor{keywordflow}{if}  (mlClass->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a6f43c806496aaef671a31f7631b45c71}{ClassId} () == \_classId)
+851       \textcolor{keywordflow}{return}  mlClass;
+852   \}
+853 
+854   \textcolor{keywordflow}{return}  NULL;
+855 \}  \textcolor{comment}{/* LookUpClassId */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Look\+Up\+By\+Name@{Look\+Up\+By\+Name}}
+\index{Look\+Up\+By\+Name@{Look\+Up\+By\+Name}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Name(const K\+K\+Str \&\+\_\+name) const }{LookUpByName(const KKStr &_name) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Look\+Up\+By\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}
+
+
+Returns a pointer of \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} object with name (\+\_\+name); if none in list will then return N\+U\+LL. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+name} & Name of \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} to search for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{M\+L\+Class} or N\+U\+LL if not Found. 
+\end{DoxyReturn}
+
+
+Definition at line 830 of file M\+L\+Class.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), Get\+M\+L\+Class\+Ptr(), Get\+Un\+Known\+Class(), operator==(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Reset\+All\+Parents\+To\+All\+Classes().
+
+
+\begin{DoxyCode}
+831 \{
+832   NameIndex::const\_iterator  idx;
+833   idx = nameIndex.find (\_name.\hyperlink{class_k_k_b_1_1_k_k_str_a13ea2544c491c5e93117a8f06deb9eff}{ToUpper} ());
+834   \textcolor{keywordflow}{if}  (idx == nameIndex.end ())
+835     \textcolor{keywordflow}{return} NULL;
+836   \textcolor{keywordflow}{else}
+837     \textcolor{keywordflow}{return} idx->second;
+838 \} \textcolor{comment}{/* LookUpByName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} M\+L\+Class\+List\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a733c0cdb921878aaf5cebd7de4527e09}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a733c0cdb921878aaf5cebd7de4527e09}
+
+
+Definition at line 616 of file M\+L\+Class.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classifier2\+::\+Memory\+Consumed\+Estimated(), K\+K\+M\+L\+L\+::\+Model\+::\+Memory\+Consumed\+Estimated(), and K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+617 \{
+618   \textcolor{keywordflow}{return}  \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList}) + \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}) * size ();
+619 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Merge\+Class\+List@{Merge\+Class\+List}}
+\index{Merge\+Class\+List@{Merge\+Class\+List}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Merge\+Class\+List(const M\+L\+Class\+List \&list1, const M\+L\+Class\+List \&list2)}{MergeClassList(const MLClassList &list1, const MLClassList &list2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List\+Ptr} M\+L\+Class\+List\+::\+Merge\+Class\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{list1, }
+\item[{const {\bf M\+L\+Class\+List} \&}]{list2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_afd0809f283f85dca95cd2c35ea22ac2d}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_afd0809f283f85dca95cd2c35ea22ac2d}
+
+
+Definition at line 1245 of file M\+L\+Class.\+cpp.
+
+
+
+References M\+L\+Class\+List().
+
+
+\begin{DoxyCode}
+1248 \{
+1249   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a8be14759dee3fb308c6809b3eca95a84}{MLClassList} (list1);
+1250   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator} idx;
+1251 
+1252   \textcolor{keywordflow}{for}  (idx = list2.begin ();  idx != list2.end ();  idx++)
+1253   \{
+1254     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1255     \textcolor{keywordflow}{if}  (result->\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (ic) < 0)
+1256     \{
+1257       \textcolor{comment}{// This entry (*idx) from list2 was not in list 1}
+1258       result->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a40d1967d45d8c2b571a5107480be8df7}{AddMLClass} (ic);
+1259     \}
+1260   \}
+1261 
+1262   \textcolor{keywordflow}{return}  result;
+1263 \}  \textcolor{comment}{/* MergeClassList */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Num\+Hierarchial\+Levels@{Num\+Hierarchial\+Levels}}
+\index{Num\+Hierarchial\+Levels@{Num\+Hierarchial\+Levels}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Num\+Hierarchial\+Levels() const }{NumHierarchialLevels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint16} M\+L\+Class\+List\+::\+Num\+Hierarchial\+Levels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ac97afce475f0a59f57459942d6801b32}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ac97afce475f0a59f57459942d6801b32}
+
+
+Definition at line 668 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+669 \{
+670   \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} numHierarchialLevels = 0;
+671   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+672   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+673     numHierarchialLevels = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (numHierarchialLevels, (*idx)->NumHierarchialLevels ());
+674   \textcolor{keywordflow}{return}  numHierarchialLevels;
+675 \}  \textcolor{comment}{/* NumHierarchialLevels*/}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator"!=(const M\+L\+Class\+List \&right) const }{operator!=(const MLClassList &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+L\+Class\+List\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a37ec9af0599de9aaf557d2c6240e5d3d}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a37ec9af0599de9aaf557d2c6240e5d3d}
+
+
+Definition at line 1332 of file M\+L\+Class.\+cpp.
+
+
+
+References operator==().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+1333 \{
+1334   \textcolor{keywordflow}{return}  (!\textcolor{keyword}{operator}== (right));
+1335 \}  \textcolor{comment}{/* operator== */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator+=(const M\+L\+Class\+List \&right)}{operator+=(const MLClassList &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List} \& M\+L\+Class\+List\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a43a6c846a4aa27e7ceefa0834a8b7b0d}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a43a6c846a4aa27e7ceefa0834a8b7b0d}
+add all classes that are in the \textquotesingle{}right\textquotesingle{} parameter 
+
+Definition at line 1362 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+1363 \{
+1364   \textcolor{keywordflow}{if}  (\textcolor{keyword}{this} == &right)
+1365     \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+1366 
+1367   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1368   \textcolor{keywordflow}{for}  (idx = right.begin ();  idx != right.end ();  idx++)
+1369   \{
+1370     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1371     \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (ic) < 0)
+1372       \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (ic);
+1373   \}
+1374 
+1375   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+1376 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator-\/(const M\+L\+Class\+List \&right) const }{operator-(const MLClassList &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List} M\+L\+Class\+List\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_afbcb8a473ffd985001811bcece7eb6c5}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_afbcb8a473ffd985001811bcece7eb6c5}
+remove all classes that in the \textquotesingle{}right\textquotesingle{} parameter 
+
+Definition at line 1400 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+1401 \{
+1402   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassList}  result;
+1403 
+1404   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1405   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+1406   \{
+1407     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1408     \textcolor{keywordflow}{if}  (right.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (ic) < 0)
+1409        result.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (ic);
+1410   \}
+1411 
+1412   \textcolor{keywordflow}{return}  result;
+1413 \}  \textcolor{comment}{/* operator- */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator-\/=(const M\+L\+Class\+List \&right)}{operator-=(const MLClassList &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List} \& M\+L\+Class\+List\+::operator-\/= (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_adbac987bf2845e17e5910100105cb5db}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_adbac987bf2845e17e5910100105cb5db}
+remove all classes that in the \textquotesingle{}right\textquotesingle{} parameter 
+
+Definition at line 1340 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+1341 \{
+1342   \textcolor{keywordflow}{if}  (&right == \textcolor{keyword}{this})
+1343   \{
+1344     \textcolor{keywordflow}{while}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () > 0)
+1345       \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_add4473f4d1f638b7c9e71506401657a4}{PopFromBack} ();
+1346     \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+1347   \}
+1348 
+1349 
+1350   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1351   \textcolor{keywordflow}{for}  (idx = right.begin ();  idx != right.end ();  idx++)
+1352   \{
+1353     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1354     \hyperlink{class_k_k_b_1_1_k_k_queue_ae362e3b0a128e8a09182e167befda088}{DeleteEntry} (ic);  \textcolor{comment}{// if  'ic'  exists in our list it will be deleted.}
+1355   \}
+1356 
+1357   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+1358 \}  \textcolor{comment}{/* operator=-  */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator=(const M\+L\+Class\+List \&right)}{operator=(const MLClassList &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+List} \& M\+L\+Class\+List\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_aa113bdf36826306aaddbd168c7475547}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_aa113bdf36826306aaddbd168c7475547}
+
+
+Definition at line 1381 of file M\+L\+Class.\+cpp.
+
+
+
+References Clear(), and Push\+On\+Back().
+
+
+\begin{DoxyCode}
+1382 \{
+1383   \textcolor{keywordflow}{if}  (&right == \textcolor{keyword}{this})
+1384     \textcolor{keywordflow}{return} *\textcolor{keyword}{this};
+1385 
+1386   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a0e4f16e9c738fc435a1110fa71c1cc54}{Clear} ();
+1387 
+1388   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1389   \textcolor{keywordflow}{for}  (idx = right.begin ();  idx != right.end ();  idx++)
+1390   \{
+1391     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = *idx;
+1392     \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{PushOnBack} (ic);
+1393   \}
+1394 
+1395   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+1396 \}  \textcolor{comment}{/* operator= */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!operator==@{operator==}}
+\index{operator==@{operator==}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{operator==(const M\+L\+Class\+List \&right) const }{operator==(const MLClassList &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool M\+L\+Class\+List\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_abf497eeb9a3b4790098f14b3822ea72c}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_abf497eeb9a3b4790098f14b3822ea72c}
+
+
+Definition at line 1313 of file M\+L\+Class.\+cpp.
+
+
+
+References Look\+Up\+By\+Name(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+
+Referenced by operator!=().
+
+
+\begin{DoxyCode}
+1314 \{
+1315   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () != right.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ())
+1316     \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+1317 
+1318   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  i++)
+1319   \{
+1320     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i);
+1321 
+1322     \textcolor{keywordflow}{if}  (right.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7e0cacbce01e93066c8dc89acb232e3c}{LookUpByName} (mlClass->Name ()) == NULL)
+1323       \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+1324   \}
+1325 
+1326   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+1327 \}  \textcolor{comment}{/* operator== */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Pop\+From\+Back@{Pop\+From\+Back}}
+\index{Pop\+From\+Back@{Pop\+From\+Back}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Pop\+From\+Back()}{PopFromBack()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Pop\+From\+Back (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_add4473f4d1f638b7c9e71506401657a4}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_add4473f4d1f638b7c9e71506401657a4}
+Removes the last element in the container and returns its pointer. If the container is empty will return N\+U\+LL. 
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_k_k_queue_a03844c19a838fed7e7bcc5816846dcfd}{K\+K\+B\+::\+K\+K\+Queue$<$ M\+L\+Class $>$}.
+
+
+
+Definition at line 768 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+769 \{
+770   NameIndex::iterator  idx;
+771   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} ic = \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>::PopFromBack} ();
+772   \textcolor{keywordflow}{if}  (!ic)
+773     \textcolor{keywordflow}{return} NULL;
+774 
+775   idx = nameIndex.find (ic->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a3e688259223abd20da71a18a9877fbc4}{UpperName} ());
+776   \textcolor{keywordflow}{if}  (idx != nameIndex.end ())
+777     nameIndex.erase (idx);
+778   \textcolor{keywordflow}{return}  ic;
+779 \}  \textcolor{comment}{/* PopFromBack*/}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Pop\+From\+Front@{Pop\+From\+Front}}
+\index{Pop\+From\+Front@{Pop\+From\+Front}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Pop\+From\+Front()}{PopFromFront()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} M\+L\+Class\+List\+::\+Pop\+From\+Front (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_aa551aed30ac1bcc60b2bdefabc5ea079}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_aa551aed30ac1bcc60b2bdefabc5ea079}
+Removes the first element in the container and returns its pointer. If the container is empty will return N\+U\+LL. 
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_k_k_queue_a2b2205f34516ac1f2950f441625d3ec7}{K\+K\+B\+::\+K\+K\+Queue$<$ M\+L\+Class $>$}.
+
+
+
+Definition at line 783 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+784 \{
+785   NameIndex::iterator  idx;
+786   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} ic = \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>::PopFromFront} ();
+787   \textcolor{keywordflow}{if}  (!ic)
+788     \textcolor{keywordflow}{return} NULL;
+789 
+790   idx = nameIndex.find (ic->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a3e688259223abd20da71a18a9877fbc4}{UpperName} ());
+791   \textcolor{keywordflow}{if}  (idx != nameIndex.end ())
+792     nameIndex.erase (idx);
+793   \textcolor{keywordflow}{return}  ic;
+794 \}  \textcolor{comment}{/* PopFromFront*/}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Push\+On\+Back@{Push\+On\+Back}}
+\index{Push\+On\+Back@{Push\+On\+Back}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Push\+On\+Back(\+M\+L\+Class\+Ptr ml\+Class)}{PushOnBack(MLClassPtr mlClass)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Push\+On\+Back (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ml\+Class}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ae46d4f51c041d7d4d544bf514c484295}
+
+
+Definition at line 798 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Build\+List\+Of\+Decendents(), Get\+Un\+Known\+Class(), operator=(), and K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List().
+
+
+\begin{DoxyCode}
+799   \{
+800   \textcolor{keywordflow}{if}  (\_mlClass->Name ().Empty ())
+801     \{
+802     cerr << \textcolor{stringliteral}{"MLClassList::PushOnBack   Class Name Empty"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+803     \}
+804 
+805   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>::PushOnBack} (\_mlClass);
+806   AddMLClassToNameIndex (\_mlClass);
+807   \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Push\+On\+Front@{Push\+On\+Front}}
+\index{Push\+On\+Front@{Push\+On\+Front}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Push\+On\+Front(\+M\+L\+Class\+Ptr ml\+Class)}{PushOnFront(MLClassPtr mlClass)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Push\+On\+Front (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ml\+Class}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ac3022791a21da4fd7779d9b557d094dc}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ac3022791a21da4fd7779d9b557d094dc}
+
+
+Definition at line 811 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+\begin{DoxyCode}
+812 \{
+813   \textcolor{keywordflow}{if}  (\_mlClass->Name ().Empty ())
+814   \{
+815     cerr << \textcolor{stringliteral}{"MLClassList::PushOnFront   Class Name Empty"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+816   \}
+817 
+818   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<MLClass>::PushOnBack} (\_mlClass);
+819   AddMLClassToNameIndex (\_mlClass);
+820 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Save@{Save}}
+\index{Save@{Save}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Save(\+K\+K\+Str \+\_\+file\+Name, bool \&\+\_\+successfull)}{Save(KKStr _fileName, bool &_successfull)}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Save (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str}}]{\+\_\+file\+Name, }
+\item[{bool \&}]{\+\_\+successfull}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a28e7a0cde0d0aa78e0159451be973cfd}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a28e7a0cde0d0aa78e0159451be973cfd}
+
+
+Definition at line 723 of file M\+L\+Class.\+cpp.
+
+
+\begin{DoxyCode}
+726 \{
+727   ofstream outFile (\_fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+728 
+729   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}         idx;
+730   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}         qSize = \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+731   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}   mlClass = NULL;
+732 
+733   \textcolor{keywordflow}{for}  (idx = 0; idx < qSize; idx++)
+734   \{
+735     mlClass = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx);
+736     outFile << mlClass->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_af7f30e5b205346aea3e524b1589a8bba}{ToString} ().\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} () << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+737   \}
+738 
+739   \_successfull = \textcolor{keyword}{true};
+740   \textcolor{keywordflow}{return};
+741 \}  \textcolor{comment}{/* WriteOutData */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Sort\+By\+Name@{Sort\+By\+Name}}
+\index{Sort\+By\+Name@{Sort\+By\+Name}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Sort\+By\+Name()}{SortByName()}}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Sort\+By\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a00b4e0ed01e65ca7e6c21c285ea45c02}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a00b4e0ed01e65ca7e6c21c285ea45c02}
+
+
+Definition at line 926 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+M\+L\+Class\+Name\+Comparison\+::\+M\+L\+Class\+Name\+Comparison().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Create\+From\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Create\+List\+For\+A\+Given\+Level(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Extract\+Class\+List(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Extract\+Full\+Hierachy\+Of\+Classes(), Extract\+List\+Of\+Classes\+For\+A\+Given\+Hierarchial\+Level(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Extract\+Random\+Sampling(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Roberts\+::\+Save\+File(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Train\+Model(), and K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+927 \{
+928   MLClassNameComparison* c = \textcolor{keyword}{new} MLClassNameComparison ();
+929   sort (begin (), end (), *c);
+930   \textcolor{keyword}{delete}  c;
+931 \}  \textcolor{comment}{/* SortByName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!To\+Comma\+Delimited\+Quoted\+Str@{To\+Comma\+Delimited\+Quoted\+Str}}
+\index{To\+Comma\+Delimited\+Quoted\+Str@{To\+Comma\+Delimited\+Quoted\+Str}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{To\+Comma\+Delimited\+Quoted\+Str() const }{ToCommaDelimitedQuotedStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} M\+L\+Class\+List\+::\+To\+Comma\+Delimited\+Quoted\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_ad8e24a6af4317d815a9c190deb3837e7}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_ad8e24a6af4317d815a9c190deb3837e7}
+
+
+Definition at line 985 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+986 \{
+987   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (10 * \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ());
+988   \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  i++)
+989   \{
+990     \textcolor{keywordflow}{if}  (i > 0)  s << \textcolor{stringliteral}{","};
+991     s << \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i)->Name ().QuotedStr ();
+992   \}
+993 
+994   \textcolor{keywordflow}{return}  s;
+995 \}  \textcolor{comment}{/* ToCommaDelimitedQuotedStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!To\+Comma\+Delimited\+Str@{To\+Comma\+Delimited\+Str}}
+\index{To\+Comma\+Delimited\+Str@{To\+Comma\+Delimited\+Str}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{To\+Comma\+Delimited\+Str() const }{ToCommaDelimitedStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} M\+L\+Class\+List\+::\+To\+Comma\+Delimited\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a2842ee0f0a658c29988b02bf5cbe19d7}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a2842ee0f0a658c29988b02bf5cbe19d7}
+
+
+Definition at line 970 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+\begin{DoxyCode}
+971 \{
+972   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (10 * \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ());
+973   \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  i++)
+974   \{
+975     \textcolor{keywordflow}{if}  (i > 0)  s << \textcolor{stringliteral}{","};
+976     s << \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i)->Name ();
+977   \}
+978 
+979   \textcolor{keywordflow}{return}  s;
+980 \}  \textcolor{comment}{/* ToCommaDelimitedStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{To\+String() const }{ToString() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} M\+L\+Class\+List\+::\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a7456f72caf6033203f30cff0464c5fa7}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a7456f72caf6033203f30cff0464c5fa7}
+
+
+Definition at line 937 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+938 \{
+939   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (10 * \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ());
+940 
+941   \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  i++)
+942   \{
+943     \textcolor{keywordflow}{if}  (i > 0)
+944       s << \textcolor{stringliteral}{"\(\backslash\)t"};
+945 
+946     s << \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i)->Name ();
+947   \}
+948 
+949   \textcolor{keywordflow}{return}  s;
+950 \}  \textcolor{comment}{/* ToString */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!To\+Tab\+Delimited\+Str@{To\+Tab\+Delimited\+Str}}
+\index{To\+Tab\+Delimited\+Str@{To\+Tab\+Delimited\+Str}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{To\+Tab\+Delimited\+Str() const }{ToTabDelimitedStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} M\+L\+Class\+List\+::\+To\+Tab\+Delimited\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a1e736f380a4dc7140350279ff6166d54}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a1e736f380a4dc7140350279ff6166d54}
+
+
+Definition at line 955 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+\begin{DoxyCode}
+956 \{
+957   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (10 * \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ());
+958   \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  i++)
+959   \{
+960     \textcolor{keywordflow}{if}  (i > 0)  s << \textcolor{stringliteral}{"\(\backslash\)t"};
+961     s << \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (i)->Name ();
+962   \}
+963 
+964   \textcolor{keywordflow}{return}  s;
+965 \}  \textcolor{comment}{/* ToTabDelimitedStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void M\+L\+Class\+List\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_aaa52f4be75a82ba4b62051e25df4a6f3}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_aaa52f4be75a82ba4b62051e25df4a6f3}
+
+
+Definition at line 1286 of file M\+L\+Class.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+1289 \{
+1290   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag} startTag (\textcolor{stringliteral}{"MLClassList"}, XmlTag::TagTypes::tagStart);
+1291   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty}())
+1292     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+1293   startTag.AddAtribute (\textcolor{stringliteral}{"Count"}, (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})size ());
+1294   startTag.WriteXML (o);
+1295   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1296 
+1297   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+1298   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  idx++)
+1299   \{
+1300     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  c = *idx;
+1301     c->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a3ba7c0c32b973c8cd0231d7ef8f7e122}{WriteXML} (\textcolor{stringliteral}{""}, o);
+1302   \}
+1303 
+1304   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endtag (\textcolor{stringliteral}{"MLClassList"}, XmlTag::TagTypes::tagEnd);
+1305   endtag.WriteXML (o);
+1306   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1307 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}!M\+L\+Class@{M\+L\+Class}}
+\index{M\+L\+Class@{M\+L\+Class}!K\+K\+M\+L\+L\+::\+M\+L\+Class\+List@{K\+K\+M\+L\+L\+::\+M\+L\+Class\+List}}
+\subsubsection[{\texorpdfstring{M\+L\+Class}{MLClass}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf M\+L\+Class}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_m_l_l_1_1_m_l_class_list_a667e4e193073b2d585bbbc4b10881d91}{}\label{class_k_k_m_l_l_1_1_m_l_class_list_a667e4e193073b2d585bbbc4b10881d91}
+
+
+Definition at line 397 of file M\+L\+Class.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_m_l_class_8h}{M\+L\+Class.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_m_l_class_8cpp}{M\+L\+Class.\+cpp}\end{DoxyCompactItemize}

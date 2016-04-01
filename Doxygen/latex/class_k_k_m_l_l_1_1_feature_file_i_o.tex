@@ -1,0 +1,1657 @@
+\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o}{}\section{K\+K\+M\+LL\+:\+:Feature\+File\+IO Class Reference}
+\label{class_k_k_m_l_l_1_1_feature_file_i_o}\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+
+
+Base class for all \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} classes.  
+
+
+
+
+{\ttfamily \#include $<$Feature\+File\+I\+O.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Feature\+File\+IO\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.851064cm]{class_k_k_m_l_l_1_1_feature_file_i_o}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{Feature\+File\+I\+O\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a820170380cfca6a036a29d2c51b8441a}{Feature\+File\+IO} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+driver\+Name, bool \+\_\+can\+Read, bool \+\_\+can\+Write)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a8950552656c29473a293f1e784d08089}{$\sim$\+Feature\+File\+IO} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a6bdcfb8abc28308e215e9c2bd0b9d778}{Append\+To\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+sel\+Features, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \&\+\_\+num\+Examples\+Written, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}{Can\+Read} ()
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{Can\+Write} ()
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{Driver\+Name} ()
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a287df1dbb04495d7a4dc23b3af1a2ca6}{Feature\+Data\+Re\+Sink} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} \+\_\+fv\+Producer\+Factory, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+dir\+Name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+unknown\+Class, bool \+\_\+use\+Directory\+Name\+For\+Class\+Name, \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+changes\+Made, \hyperlink{class_k_k_b_1_1_date_time}{K\+K\+B\+::\+Date\+Time} \&\+\_\+time\+Stamp, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Synchronizes the contents of a feature data file with a directory of images. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a485b98b04884febb9423e7c613e2d654}{Get\+File\+Desc} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, std\+::istream \&\+\_\+in, \hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \+\_\+classes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&\+\_\+est\+Size, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+error\+Message, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)=0
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc} object from the input stream \textquotesingle{}\+\_\+in\textquotesingle{}. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a75a8d10d3981811ab10357f6a95c9bc1}{Load\+Feature\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+max\+Count, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, bool \&\+\_\+changes\+Made, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Loads the contents of a feature data file and returns a Image\+Features\+List container object. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a49e80ac6eff874c8145559d9453b68d5}{Load\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, const \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc, \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+classes, std\+::istream \&\+\_\+in, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+max\+Count, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+changes\+Made, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+error\+Message, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)=0
+\begin{DoxyCompactList}\small\item\em To be implemented by derived classes; loads the contents of a feature data file and returns a Image\+Features\+List container object. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_abce09712a763ba49bf0cc55d0fdae784}{Load\+In\+Sub\+Directory\+Tree} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} \+\_\+fv\+Producer\+Factory, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+root\+Dir, \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, bool \+\_\+use\+Directory\+Name\+For\+Class\+Name, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \+\_\+rewite\+Root\+Feature\+File, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Creates a feature vector list of all images located in the specified sub-\/directory tree. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{Save\+Feature\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+sel\+Features, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \&\+\_\+num\+Examples\+Written, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Save examples to \textquotesingle{}file\+Name\textquotesingle{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a56dd8e3853e6e14f1c966dab94460681}{Save\+Feature\+File\+Multiple\+Parts} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+sel\+Features, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Saves the feature file in multiple parts with no one single part larger that 64k examples. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a7cf4a67f6dd6985f5c052dc40ffd0ec0}{Save\+File} (\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+data, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, \hyperlink{namespace_k_k_m_l_l_ad276a9ed309552a63300bce930bdfebd}{Feature\+Num\+List\+Const} \&\+\_\+sel\+Features, std\+::ostream \&\+\_\+out, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \&\+\_\+num\+Examples\+Written, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+error\+Message, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)=0
+\begin{DoxyCompactList}\small\item\em To be implemented by derived classes; save examples to output stream \textquotesingle{}\+\_\+out\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{Feature\+File\+I\+O\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a0402c7bc9a8d6cfeb0bedcfac4a28e38}{File\+Format\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Format\+Str)
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{Feature\+File\+I\+O\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a61e282537967f78944f90d65820fb13d}{File\+Format\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Format\+Str, bool \+\_\+can\+Read, bool \+\_\+can\+Write)
+\item 
+static \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_abd247f9526f3363b1f14ae11c56e4c86}{File\+Formats\+Read\+And\+Write\+Options\+Str} ()
+\item 
+static \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_adbd141359ab0d88de75f3806626d57c1}{File\+Formats\+Read\+Options\+Str} ()
+\item 
+static \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a9e9499112a82850cb3a36b609963e71b}{File\+Formats\+Written\+Options\+Str} ()
+\item 
+static void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_aeb842177c7e2152e93e1f69eeaf84ed0}{Final\+Clean\+Up} ()
+\begin{DoxyCompactList}\small\item\em Before you terminate your application and after all \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} activity is done call this method to destroy statically dynamically allocated data structures. \end{DoxyCompactList}\item 
+static \hyperlink{class_k_k_b_1_1_vector_k_k_str}{Vector\+K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a37a95e4e9217a03b2766e2a1c595e564}{Registered\+Driver\+Names} (bool can\+Read, bool can\+Write)
+\item 
+static void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_adbfa02f160488be79107e018e5143676}{Register\+Feature\+File\+I\+O\+Driver} (\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{Feature\+File\+I\+O\+Ptr} \+\_\+driver)
+\begin{DoxyCompactList}\small\item\em For each feature file format register the appropriate driver through this static method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a61ca11485d2c14368c1019bfcc53ab16}{Get\+Line} (std\+::istream \&\+\_\+in, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+line, bool \&\+\_\+eof)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ae79ac82b32e63fa7e7d96c833b5631f2}{Get\+Token} (std\+::istream \&\+\_\+in, const char $\ast$\+\_\+delimiters, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+token, bool \&\+\_\+eof, bool \&\+\_\+eol)
+\begin{DoxyCompactList}\small\item\em Will retrieve the next token from the input stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a7fe96188c22f2a224da1963810c17fcc}{Register\+Driver} (\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{Feature\+File\+I\+O\+Ptr} driver)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Base class for all \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} classes. 
+
+This is a abstract class. For each type of Feature\+File you will need to implement a separate class derived from this class that supports the specific file format. You only need to implement the pure virtual functions.
+
+If you create a new \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} class you will need to modify \textquotesingle{}Register\+All\+Drivers\textquotesingle{} method in \hyperlink{_feature_file_i_o_8cpp}{Feature\+File\+I\+O.\+cpp}. 
+
+Definition at line 48 of file Feature\+File\+I\+O.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Feature\+File\+I\+O\+Ptr@{Feature\+File\+I\+O\+Ptr}}
+\index{Feature\+File\+I\+O\+Ptr@{Feature\+File\+I\+O\+Ptr}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Feature\+File\+I\+O\+Ptr}{FeatureFileIOPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Feature\+File\+IO}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+File\+I\+O\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a12e6dd6bcaf2576238622568d92f981f}
+
+
+Definition at line 51 of file Feature\+File\+I\+O.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Feature\+File\+IO@{Feature\+File\+IO}}
+\index{Feature\+File\+IO@{Feature\+File\+IO}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Feature\+File\+I\+O(const K\+K\+Str \&\+\_\+driver\+Name, bool \+\_\+can\+Read, bool \+\_\+can\+Write)}{FeatureFileIO(const KKStr &_driverName, bool _canRead, bool _canWrite)}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+File\+I\+O\+::\+Feature\+File\+IO (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+driver\+Name, }
+\item[{bool}]{\+\_\+can\+Read, }
+\item[{bool}]{\+\_\+can\+Write}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a820170380cfca6a036a29d2c51b8441a}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a820170380cfca6a036a29d2c51b8441a}
+
+
+Definition at line 322 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Lower().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Arff\+::\+Feature\+File\+I\+O\+Arff(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Feature\+File\+I\+O\+C45(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Column\+::\+Feature\+File\+I\+O\+Column(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Feature\+File\+I\+O\+Dst\+Web(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Roberts\+::\+Feature\+File\+I\+O\+Roberts(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Sparse\+::\+Feature\+File\+I\+O\+Sparse(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+U\+C\+I\+::\+Feature\+File\+I\+O\+U\+C\+I().
+
+
+\begin{DoxyCode}
+325                               :
+326    canRead         (\_canRead),
+327    canWrite        (\_canWrite),
+328    driverName      (\_driverName),
+329    driverNameLower (\_driverName.\hyperlink{class_k_k_b_1_1_k_k_str_a4ccb635ec40c006f2bc2635958d41f5b}{ToLower} ())
+330 \{
+331 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!````~Feature\+File\+IO@{$\sim$\+Feature\+File\+IO}}
+\index{````~Feature\+File\+IO@{$\sim$\+Feature\+File\+IO}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{$\sim$\+Feature\+File\+I\+O()}{~FeatureFileIO()}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+File\+I\+O\+::$\sim$\+Feature\+File\+IO (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a8950552656c29473a293f1e784d08089}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a8950552656c29473a293f1e784d08089}
+
+
+Definition at line 335 of file Feature\+File\+I\+O.\+cpp.
+
+
+\begin{DoxyCode}
+336 \{
+337 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Append\+To\+File@{Append\+To\+File}}
+\index{Append\+To\+File@{Append\+To\+File}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Append\+To\+File(const K\+K\+Str \&\+\_\+file\+Name, Feature\+Num\+List\+Const \&\+\_\+sel\+Features, Feature\+Vector\+List \&\+\_\+examples, kkuint32 \&\+\_\+num\+Examples\+Written, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, Run\+Log \&log)}{AppendToFile(const KKStr &_fileName, FeatureNumListConst &_selFeatures, FeatureVectorList &_examples, kkuint32 &_numExamplesWritten, VolConstBool &_cancelFlag, bool &_successful, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Append\+To\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+sel\+Features, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf kkuint32} \&}]{\+\_\+num\+Examples\+Written, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+successful, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a6bdcfb8abc28308e215e9c2bd0b9d778}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a6bdcfb8abc28308e215e9c2bd0b9d778}
+
+
+Definition at line 523 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc().
+
+
+\begin{DoxyCode}
+531 \{
+532   \_log.Level (10) << \textcolor{stringliteral}{"FeatureFileIO::AppendToFile - File["} << \_fileName << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+533 
+534   \_successful = \textcolor{keyword}{true};
+535 
+536   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDesc = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ();
+537 
+538   ofstream out (\_fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), ios::app);
+539 
+540   \textcolor{keywordflow}{if}  (!out.is\_open())
+541   \{
+542     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  err;
+543     err << \textcolor{stringliteral}{"AppendToFile  Error Opening File["} << \_fileName << \textcolor{stringliteral}{"]"};
+544     \_log.Level (-1)  << endl
+545                      << \textcolor{stringliteral}{"FeatureFileIO::AppendToFile    ***ERROR***"}  << endl
+546                      << endl
+547                      << \textcolor{stringliteral}{"                   "} << err  << endl
+548                      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+549     \hyperlink{namespace_k_k_b_acf68123327314e60e8213d162c80883f}{osDisplayWarning} (err);
+550     \_successful = \textcolor{keyword}{false};
+551     \textcolor{keywordflow}{return};
+552   \}
+553 
+554   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errorMessage;
+555   \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a7cf4a67f6dd6985f5c052dc40ffd0ec0}{SaveFile} (\_examples, \_fileName,  \_selFeatures, out, \_numExamplesWritten, \_cancelFlag, \_successful
+      , errorMessage, \_log);
+556 
+557   out.close ();
+558 
+559   \textcolor{keywordflow}{return};
+560 \}  \textcolor{comment}{/* AppendToFile */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Can\+Read@{Can\+Read}}
+\index{Can\+Read@{Can\+Read}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Can\+Read()}{CanRead()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Can\+Read (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}
+
+
+Definition at line 60 of file Feature\+File\+I\+O.\+h.
+
+
+
+Referenced by File\+Format\+From\+Str(), File\+Formats\+Read\+Options\+Str(), and Registered\+Driver\+Names().
+
+
+\begin{DoxyCode}
+60 \{\textcolor{keywordflow}{return}  canRead;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Can\+Write@{Can\+Write}}
+\index{Can\+Write@{Can\+Write}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Can\+Write()}{CanWrite()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Can\+Write (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}
+
+
+Definition at line 61 of file Feature\+File\+I\+O.\+h.
+
+
+
+Referenced by File\+Format\+From\+Str(), File\+Formats\+Read\+And\+Write\+Options\+Str(), File\+Formats\+Written\+Options\+Str(), and Registered\+Driver\+Names().
+
+
+\begin{DoxyCode}
+61 \{\textcolor{keywordflow}{return}  canWrite;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Driver\+Name@{Driver\+Name}}
+\index{Driver\+Name@{Driver\+Name}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Driver\+Name()}{DriverName()}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Driver\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}
+
+
+Definition at line 284 of file Feature\+File\+I\+O.\+h.
+
+
+
+Referenced by File\+Formats\+Read\+And\+Write\+Options\+Str(), File\+Formats\+Read\+Options\+Str(), and File\+Formats\+Written\+Options\+Str().
+
+
+\begin{DoxyCode}
+284 \{\textcolor{keywordflow}{return}  driverName;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Feature\+Data\+Re\+Sink@{Feature\+Data\+Re\+Sink}}
+\index{Feature\+Data\+Re\+Sink@{Feature\+Data\+Re\+Sink}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Feature\+Data\+Re\+Sink(\+Factory\+F\+V\+Producer\+Ptr \+\_\+fv\+Producer\+Factory, const K\+K\+Str \&\+\_\+dir\+Name, const K\+K\+Str \&\+\_\+file\+Name, M\+L\+Class\+Ptr \+\_\+unknown\+Class, bool \+\_\+use\+Directory\+Name\+For\+Class\+Name, M\+L\+Class\+List \&\+\_\+ml\+Classes, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+changes\+Made, K\+K\+B\+::\+Date\+Time \&\+\_\+time\+Stamp, Run\+Log \&\+\_\+log)}{FeatureDataReSink(FactoryFVProducerPtr _fvProducerFactory, const KKStr &_dirName, const KKStr &_fileName, MLClassPtr _unknownClass, bool _useDirectoryNameForClassName, MLClassList &_mlClasses, VolConstBool &_cancelFlag, bool &_changesMade, KKB::DateTime &_timeStamp, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{\+\_\+fv\+Producer\+Factory, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+dir\+Name, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+unknown\+Class, }
+\item[{bool}]{\+\_\+use\+Directory\+Name\+For\+Class\+Name, }
+\item[{{\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+changes\+Made, }
+\item[{{\bf K\+K\+B\+::\+Date\+Time} \&}]{\+\_\+time\+Stamp, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a287df1dbb04495d7a4dc23b3af1a2ca6}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a287df1dbb04495d7a4dc23b3af1a2ca6}
+
+
+Synchronizes the contents of a feature data file with a directory of images. 
+
+Feature\+Data\+Re\+Sink
+
+Used with applications to verify that feature file is up-\/to-\/date. Was specifically meant to work with training libraries, to account for images being added and deleted from training library. If there are no changes, then function will run very quickly. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+fv\+Producer\+Factory} & Factory that specifies the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{}s we want to produce. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+dir\+Name,Directory} & where source images are located. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Name,Feature} & file that is being synchronized. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+unknown\+Class,Class} & to be used when class is unknown \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+use\+Directory\+Name\+For\+Class\+Name,if} & true then class name of each entry will be set to directory name. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+ml\+Classes,list} & of classes \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & Will be monitored; if it goes to \textquotesingle{}true\textquotesingle{} will exit as soon as possible. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+changes\+Made,If} & returns as true then there were changes made to the feature file \textquotesingle{}file\+Name\textquotesingle{}. If set to false, then no changes were made. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+time\+Stamp} & of feature file. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & where to send diagnostic messages to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} derived instance ; This object will own all the examples loaded
+\end{DoxyReturn}
+A change in feature file version number would also cause all entries in the feature file to be recomputed. The feature file version number gets incremented whenever we change the feature file computation routine. 
+
+Definition at line 799 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+All\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Binary\+Search\+By\+Name(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+Compute\+Feature\+Vector(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Date\+Time\+::\+Date\+Time(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Example\+File\+Name(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Feature\+Vector\+List\+Type\+Id(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Get\+Un\+Known\+Class\+Static(), Load\+Feature\+File(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufacture\+Instance(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufactur\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+Date\+Time\+::operator=(), K\+K\+M\+L\+L\+::\+File\+Desc\+::operator==(), K\+K\+B\+::os\+Add\+Slash(), K\+K\+B\+::os\+Get\+File\+Date\+Time(), K\+K\+B\+::os\+Get\+List\+Of\+Files(), K\+K\+B\+::os\+Get\+Local\+Date\+Time(), K\+K\+B\+::os\+Get\+Root\+Name(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back(), K\+K\+B\+::\+Read\+Image(), Save\+Feature\+File(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Sort(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Sort\+By\+Root\+Name(), K\+K\+B\+::\+Supported\+Image\+File\+Format(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Un\+Defined(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+Version(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Version().
+
+
+
+Referenced by Load\+In\+Sub\+Directory\+Tree(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load\+Other\+Classs\+Examples().
+
+
+\begin{DoxyCode}
+810 \{
+811   \_changesMade = \textcolor{keyword}{false};
+812   \_timeStamp = \hyperlink{class_k_k_b_1_1_date_time}{DateTime} ();
+813 
+814   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDesc = \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{FileDesc} ();
+815   \textcolor{keywordflow}{if}  (\_unknownClass == NULL)
+816     \_unknownClass = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_adb5daed2642585c91e0cdc5e9d472c7e}{MLClass::GetUnKnownClassStatic} ();
+817 
+818   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  className = \_unknownClass->Name ();
+819 
+820   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"FeatureFileIO::FeatureDataReSink  dirName: "} << \_dirName << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+821                   << \textcolor{stringliteral}{"               fileName: "} << \_fileName << \textcolor{stringliteral}{"  UnKnownClass: "} << className << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+822 
+823   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fullFeatureFileName = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_dirName) +  \_fileName;
+824 
+825   \textcolor{keywordtype}{bool}  successful = \textcolor{keyword}{true};
+826 
+827   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} fileNameToOpen;
+828   \textcolor{keywordflow}{if}  (\_dirName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+829     fileNameToOpen = \_fileName;
+830   \textcolor{keywordflow}{else}
+831     fileNameToOpen = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_dirName) + \_fileName;
+832 
+833   \textcolor{keywordtype}{bool}  versionsAreSame = \textcolor{keyword}{false};
+834 
+835   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  origFeatureVectorData 
+836         = \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a75a8d10d3981811ab10357f6a95c9bc1}{LoadFeatureFile} (fileNameToOpen, \_mlClasses, -1, \_cancelFlag, successful, 
+      \_changesMade, \_log);
+837 
+838   \textcolor{keywordflow}{if}  (origFeatureVectorData == NULL)
+839   \{
+840     successful = \textcolor{keyword}{false};
+841     origFeatureVectorData = \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{
+      true}, \_log);
+842   \}
+843 
+844   \textcolor{keywordflow}{if}  (\_cancelFlag)
+845   \{
+846     \textcolor{keyword}{delete}  origFeatureVectorData;  origFeatureVectorData = NULL;
+847     \textcolor{keywordflow}{return}  \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, \_log);
+848   \}
+849 
+850   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  origFeatureData = NULL;
+851 
+852   \textcolor{keywordflow}{if}  (successful  &&
+853        (&\textcolor{keyword}{typeid} (*origFeatureVectorData) == \_fvProducerFactory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a066a7019c56163b37b15ace4ba7cb39a}{FeatureVectorListTypeId} ())  &&
+854        ((*(origFeatureVectorData->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ())) ==  (*(\_fvProducerFactory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{FileDesc} ())))
+855       )
+856   \{
+857      origFeatureData = origFeatureVectorData;
+858   \}
+859   \textcolor{keywordflow}{else}
+860   \{
+861     origFeatureData = \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, 
+      \_log);
+862     \textcolor{keyword}{delete}  origFeatureVectorData;
+863     origFeatureVectorData = NULL;
+864   \}
+865 
+866   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fileSpec = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_dirName) + \textcolor{stringliteral}{"*.*"};
+867   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}   fileNameList = \hyperlink{namespace_k_k_b_a47f37fe64afeebf0baffdf389148c3ba}{osGetListOfFiles} (fileSpec);
+868 
+869   \textcolor{keywordflow}{if}  (!fileNameList)
+870   \{
+871     \textcolor{comment}{// There are no Image Files,  so we need to return a Empty List of Image Features.}
+872 
+873     \textcolor{keywordflow}{if}  (origFeatureData->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () > 0)
+874       \_changesMade = \textcolor{keyword}{true};
+875 
+876     \textcolor{keyword}{delete}  origFeatureData;  origFeatureData = NULL;
+877 
+878     \textcolor{keywordflow}{return}  \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, \_log);
+879   \}
+880 
+881   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{FeatureVectorProducerPtr}  fvProducer = \_fvProducerFactory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab69f27aed9bda4917326580ec824e749}{ManufactureInstance} (\_log);
+882 
+883   \textcolor{keywordflow}{if}  (successful)
+884   \{
+885     \textcolor{keywordflow}{if}  (origFeatureData->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a01b3c7a97f5b58639c8aee826fa15dc9}{Version} () == fvProducer->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8e2f54e185b2fb5de854d9978b4fbac8}{Version} ())
+886     \{
+887       versionsAreSame = \textcolor{keyword}{true};
+888       \_timeStamp = \hyperlink{namespace_k_k_b_a0c28dcf4ba36d924a50454c84aee3931}{osGetFileDateTime} (fileNameToOpen);
+889     \}
+890 
+891     \textcolor{keywordflow}{else}
+892     \{
+893       \_changesMade = \textcolor{keyword}{true};
+894     \}
+895   \}
+896   \textcolor{keywordflow}{else}
+897   \{
+898     \textcolor{keyword}{delete}  origFeatureData;
+899     origFeatureData = \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, 
+      \_log);
+900   \}
+901 
+902   origFeatureData->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a87e679a6419e6d7a1dc28a28d4cb96cb}{SortByRootName} (\textcolor{keyword}{false});
+903 
+904   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  extractedFeatures = \_fvProducerFactory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, \_log);
+905   extractedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a01b3c7a97f5b58639c8aee826fa15dc9}{Version} (fvProducer->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8e2f54e185b2fb5de854d9978b4fbac8}{Version} ());
+906 
+907   fileNameList->\hyperlink{class_k_k_b_1_1_k_k_str_list_a239828772f41e47f3a136ea15e40f5d6}{Sort} (\textcolor{keyword}{false});
+908 
+909   KKStrList::iterator  fnIDX;
+910   fnIDX = fileNameList->begin ();   \textcolor{comment}{// fileNameList}
+911 
+912   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  imageFileName;
+913 
+914   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numImagesFoundInOrigFeatureData = 0;
+915   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfNewFeatureExtractions = 0;
+916 
+917   \textcolor{keywordflow}{for}  (fnIDX = fileNameList->begin ();  (fnIDX != fileNameList->end ())  &&  (!\_cancelFlag);  ++fnIDX)
+918   \{
+919     imageFileName = *fnIDX;
+920 
+921     \textcolor{comment}{// pv414-\_002\_20140414-162243\_02068814-1261.bmp}
+922     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  rootName = \hyperlink{namespace_k_k_b_af5b668ed9902d7f93b62529664a739f0}{osGetRootName} (*imageFileName);
+923     \textcolor{keywordflow}{if}  (rootName == \textcolor{stringliteral}{"pv414-\_002\_20140414-162243\_02068814-1261"})
+924       cout << \textcolor{stringliteral}{"Stop Here."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+925 
+926     \textcolor{keywordtype}{bool} validImageFileFormat = \hyperlink{namespace_k_k_b_a8cc2b9d78aae6ffccb1d2c625f471f90}{SupportedImageFileFormat} (*imageFileName);
+927     
+928     \textcolor{keywordflow}{if}  (!validImageFileFormat)
+929       \textcolor{keywordflow}{continue};
+930 
+931     \textcolor{keywordtype}{bool}  featureVectorCoputaionSuccessful = \textcolor{keyword}{false};
+932 
+933     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  origFV = origFeatureData->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a33a695d38d4b2ad71048f3c0b75f554a}{BinarySearchByName} (*imageFileName);
+934     \textcolor{keywordflow}{if}  (origFV)
+935       numImagesFoundInOrigFeatureData++;
+936 
+937     \textcolor{keywordflow}{if}  (origFV  &&  versionsAreSame)
+938     \{
+939       featureVectorCoputaionSuccessful = \textcolor{keyword}{true};
+940       \textcolor{keywordflow}{if}  (\_useDirectoryNameForClassName)
+941       \{
+942         \textcolor{keywordflow}{if}  (origFV->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} () != \_unknownClass)
+943         \{
+944           \_changesMade = \textcolor{keyword}{true};
+945           origFV->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (\_unknownClass);
+946         \}
+947       \}
+948 
+949       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((origFV->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} ()->UnDefined ())  &&  (origFV->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} () != \_unknownClass)
+      )
+950       \{
+951         \_changesMade = \textcolor{keyword}{true};
+952         origFV->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (\_unknownClass);
+953       \}
+954 
+955       extractedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (origFV);
+956       origFeatureData->\hyperlink{class_k_k_b_1_1_k_k_queue_ae362e3b0a128e8a09182e167befda088}{DeleteEntry} (origFV);
+957     \}
+958     \textcolor{keywordflow}{else}
+959     \{
+960       \textcolor{comment}{// We either  DON'T have an original image    or    versions are not the same.}
+961 
+962       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fullFileName = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_dirName) + (*imageFileName);
+963       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} fv = NULL;
+964       \textcolor{keywordflow}{try}
+965       \{
+966         \hyperlink{class_k_k_b_1_1_raster}{RasterPtr} image = \hyperlink{namespace_k_k_b_ac16e808442fd255d2b7d09df8f11ae07}{ReadImage} (fullFileName);
+967         \textcolor{keywordflow}{if}  (image)
+968           fv = fvProducer->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8f93296a46432624867b12ed8631df0f}{ComputeFeatureVector} (*image, \_unknownClass, NULL, 1.0f, 
+      \_log);
+969         \textcolor{keyword}{delete} image;
+970         image = NULL;
+971         \textcolor{keywordflow}{if}  (fv)
+972           featureVectorCoputaionSuccessful = \textcolor{keyword}{true};
+973         \textcolor{keywordflow}{else}
+974           featureVectorCoputaionSuccessful = \textcolor{keyword}{false};
+975       \}
+976       \textcolor{keywordflow}{catch}  (...)
+977       \{
+978         \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << endl << endl
+979           << \textcolor{stringliteral}{"FeatureDataReSink   ***ERROR***"}  << endl
+980           << \textcolor{stringliteral}{"       Exception occurred calling constructor 'ComputeFeatureVector'."} << endl
+981           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+982         featureVectorCoputaionSuccessful = \textcolor{keyword}{false};
+983         fv = NULL;
+984       \}
+985 
+986       \textcolor{keywordflow}{if}  (!featureVectorCoputaionSuccessful)
+987       \{
+988         \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{" FeatureFileIOKK::FeatureDataReSink  *** ERROR ***, Processing Image File[
+      "}
+989                        << imageFileName << \textcolor{stringliteral}{"]."}
+990                        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+991         \textcolor{keyword}{delete}  fv;
+992         fv = NULL;
+993       \}
+994 
+995       \textcolor{keywordflow}{else}
+996       \{
+997         \_changesMade = \textcolor{keyword}{true};
+998         fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} (*imageFileName);
+999         \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (30) << fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"  "} << fv->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_a5ea23a16266bc34a289824042a836c06}{OrigSize} () << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1000         extractedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (fv);
+1001         numOfNewFeatureExtractions++;
+1002 
+1003         \textcolor{keywordflow}{if}  ((numOfNewFeatureExtractions % 100) == 0)
+1004           cout << numOfNewFeatureExtractions << \textcolor{stringliteral}{" Images Extracted."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1005       \}
+1006     \}
+1007   \}
+1008 
+1009   \textcolor{keywordflow}{if}  (numImagesFoundInOrigFeatureData != extractedFeatures->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ())
+1010     \_changesMade = \textcolor{keyword}{true};
+1011   
+1012   extractedFeatures->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a01b3c7a97f5b58639c8aee826fa15dc9}{Version} (fvProducer->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8e2f54e185b2fb5de854d9978b4fbac8}{Version} ());
+1013 
+1014   \textcolor{keywordflow}{if}  ((\_changesMade)  &&  (!\_cancelFlag))
+1015   \{
+1016     \textcolor{comment}{//extractedFeatures->WriteImageFeaturesToFile (fullFeatureFileName, RawFormat,
+       FeatureNumList::AllFeatures (extractedFeatures->FileDesc ()));}
+1017 
+1018     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numExamplesWritten = 0;
+1019 
+1020     \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{SaveFeatureFile} (fullFeatureFileName,  
+1021                      \hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a90cdbdaaa9bff280cb23c6e3f4cec29d}{FeatureNumList::AllFeatures} (extractedFeatures->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ()),
+1022                      *extractedFeatures,
+1023                      numExamplesWritten,
+1024                      \_cancelFlag,
+1025                      successful,
+1026                      \_log
+1027                     );
+1028 
+1029     \_timeStamp = \hyperlink{namespace_k_k_b_af54c205cde0465bcb2c74f3881a96413}{osGetLocalDateTime} ();
+1030   \}
+1031 
+1032   \textcolor{keyword}{delete} fvProducer;       fvProducer      = NULL;
+1033   \textcolor{keyword}{delete} fileNameList;     fileNameList    = NULL;
+1034   \textcolor{keyword}{delete} origFeatureData;  origFeatureData = NULL;
+1035 
+1036   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"FeatureDataReSink  Exiting  Dir: "}  << \_dirName << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1037 
+1038   \textcolor{keywordflow}{return}  extractedFeatures;
+1039 \}  \textcolor{comment}{/* FeatureDataReSink */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!File\+Format\+From\+Str@{File\+Format\+From\+Str}}
+\index{File\+Format\+From\+Str@{File\+Format\+From\+Str}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{File\+Format\+From\+Str(const K\+K\+Str \&\+\_\+file\+Format\+Str)}{FileFormatFromStr(const KKStr &_fileFormatStr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+File\+I\+O\+Ptr} Feature\+File\+I\+O\+::\+File\+Format\+From\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Format\+Str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a0402c7bc9a8d6cfeb0bedcfac4a28e38}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a0402c7bc9a8d6cfeb0bedcfac4a28e38}
+
+
+Definition at line 197 of file Feature\+File\+I\+O.\+cpp.
+
+
+\begin{DoxyCode}
+198 \{
+199   \textcolor{keywordflow}{return}  LookUpDriver (\_fileFormatStr);
+200 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!File\+Format\+From\+Str@{File\+Format\+From\+Str}}
+\index{File\+Format\+From\+Str@{File\+Format\+From\+Str}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{File\+Format\+From\+Str(const K\+K\+Str \&\+\_\+file\+Format\+Str, bool \+\_\+can\+Read, bool \+\_\+can\+Write)}{FileFormatFromStr(const KKStr &_fileFormatStr, bool _canRead, bool _canWrite)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+File\+I\+O\+Ptr} Feature\+File\+I\+O\+::\+File\+Format\+From\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Format\+Str, }
+\item[{bool}]{\+\_\+can\+Read, }
+\item[{bool}]{\+\_\+can\+Write}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a61e282537967f78944f90d65820fb13d}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a61e282537967f78944f90d65820fb13d}
+
+
+Definition at line 205 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Can\+Read(), and Can\+Write().
+
+
+\begin{DoxyCode}
+209 \{
+210   \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}   driver = LookUpDriver (\_fileFormatStr);
+211   \textcolor{keywordflow}{if}  (!driver)
+212     \textcolor{keywordflow}{return} NULL;
+213 
+214   \textcolor{keywordflow}{if}  (\_canRead  &&  (!driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}{CanRead} ()))
+215     \textcolor{keywordflow}{return} NULL;
+216 
+217   \textcolor{keywordflow}{if}  (\_canWrite  &&  (!driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{CanWrite} ()))
+218     \textcolor{keywordflow}{return} NULL;
+219 
+220   \textcolor{keywordflow}{return}  driver;
+221 \}  \textcolor{comment}{/* FileFormatFromStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!File\+Formats\+Read\+And\+Write\+Options\+Str@{File\+Formats\+Read\+And\+Write\+Options\+Str}}
+\index{File\+Formats\+Read\+And\+Write\+Options\+Str@{File\+Formats\+Read\+And\+Write\+Options\+Str}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{File\+Formats\+Read\+And\+Write\+Options\+Str()}{FileFormatsReadAndWriteOptionsStr()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Feature\+File\+I\+O\+::\+File\+Formats\+Read\+And\+Write\+Options\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_abd247f9526f3363b1f14ae11c56e4c86}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_abd247f9526f3363b1f14ae11c56e4c86}
+
+
+Definition at line 272 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Can\+Write(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Driver\+Name(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+273 \{
+274   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  driversThatCanReadAndWrite (128);
+275 
+276   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+277 
+278   vector<FeatureFileIOPtr>::const\_iterator  idx;
+279   \textcolor{keywordflow}{for}  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+280   \{
+281     \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  driver = *idx;
+282     \textcolor{keywordflow}{if}  (driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{CanWrite} ()  &&  driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{CanWrite} ())
+283     \{
+284       \textcolor{keywordflow}{if}  (!driversThatCanReadAndWrite.Empty ())
+285         driversThatCanReadAndWrite << \textcolor{stringliteral}{", "};
+286       driversThatCanReadAndWrite << driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{DriverName} ();
+287     \}
+288   \}
+289   \textcolor{keywordflow}{return} driversThatCanReadAndWrite;
+290 \}  \textcolor{comment}{/* FileFormatsReadAndWriteOptionsStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!File\+Formats\+Read\+Options\+Str@{File\+Formats\+Read\+Options\+Str}}
+\index{File\+Formats\+Read\+Options\+Str@{File\+Formats\+Read\+Options\+Str}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{File\+Formats\+Read\+Options\+Str()}{FileFormatsReadOptionsStr()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Feature\+File\+I\+O\+::\+File\+Formats\+Read\+Options\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_adbd141359ab0d88de75f3806626d57c1}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_adbd141359ab0d88de75f3806626d57c1}
+
+
+Definition at line 227 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Can\+Read(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Driver\+Name(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+228 \{
+229   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+230 
+231   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  driversThatCanRead (128);
+232 
+233   vector<FeatureFileIOPtr>::const\_iterator  idx;
+234   \textcolor{keywordflow}{for}  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+235   \{
+236     \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  driver = *idx;
+237     \textcolor{keywordflow}{if}  (driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}{CanRead} ())
+238     \{
+239       \textcolor{keywordflow}{if}  (!driversThatCanRead.Empty ())
+240         driversThatCanRead << \textcolor{stringliteral}{", "};
+241       driversThatCanRead << driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{DriverName} ();
+242     \}
+243   \}
+244   \textcolor{keywordflow}{return} driversThatCanRead;
+245 \}  \textcolor{comment}{/* FileFormatsReadOptionsStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!File\+Formats\+Written\+Options\+Str@{File\+Formats\+Written\+Options\+Str}}
+\index{File\+Formats\+Written\+Options\+Str@{File\+Formats\+Written\+Options\+Str}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{File\+Formats\+Written\+Options\+Str()}{FileFormatsWrittenOptionsStr()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Feature\+File\+I\+O\+::\+File\+Formats\+Written\+Options\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a9e9499112a82850cb3a36b609963e71b}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a9e9499112a82850cb3a36b609963e71b}
+
+
+Definition at line 249 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Can\+Write(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Driver\+Name(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+250 \{
+251   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+252 
+253   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  driversThatCanWrite (128);
+254 
+255   vector<FeatureFileIOPtr>::const\_iterator  idx;
+256   \textcolor{keywordflow}{for}  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+257   \{
+258     \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  driver = *idx;
+259     \textcolor{keywordflow}{if}  (driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{CanWrite} ())
+260     \{
+261       \textcolor{keywordflow}{if}  (!driversThatCanWrite.Empty ())
+262         driversThatCanWrite << \textcolor{stringliteral}{", "};
+263       driversThatCanWrite << driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{DriverName} ();
+264     \}
+265   \}
+266   \textcolor{keywordflow}{return} driversThatCanWrite;
+267 \}  \textcolor{comment}{/* FileFormatsWrittenOptionsStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Final\+Clean\+Up@{Final\+Clean\+Up}}
+\index{Final\+Clean\+Up@{Final\+Clean\+Up}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Final\+Clean\+Up()}{FinalCleanUp()}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Final\+Clean\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_aeb842177c7e2152e93e1f69eeaf84ed0}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_aeb842177c7e2152e93e1f69eeaf84ed0}
+
+
+Before you terminate your application and after all \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{Feature\+File\+IO} activity is done call this method to destroy statically dynamically allocated data structures. 
+
+This method undoes everything that \textquotesingle{}Register\+All\+Drivers\textquotesingle{} does. Its primary usefulness is aid in tracking down memory leaks. This way the \textquotesingle{}\+\_\+\+Crt\+Set\+Dbg\+Flag\textquotesingle{} debugging functionality will not report the memory allocated by the different feature File\+IO drivers. 
+
+Definition at line 157 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+158 \{
+159   GlobalGoalKeeper::StartBlock ();
+160 
+161   \textcolor{keywordflow}{if}  (registeredDrivers)
+162   \{
+163     \textcolor{keywordflow}{while}  (registeredDrivers->size () > 0)
+164     \{
+165       \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  f = registeredDrivers->back ();
+166       registeredDrivers->pop\_back ();
+167       \textcolor{keyword}{delete}  f;
+168     \}
+169 
+170     \textcolor{keyword}{delete}  registeredDrivers;
+171     registeredDrivers = NULL;
+172   \}
+173 
+174   GlobalGoalKeeper::EndBlock ();
+175 \}  \textcolor{comment}{/* CleanUpFeatureFileIO */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Get\+File\+Desc@{Get\+File\+Desc}}
+\index{Get\+File\+Desc@{Get\+File\+Desc}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Get\+File\+Desc(const K\+K\+Str \&\+\_\+file\+Name, std\+::istream \&\+\_\+in, M\+L\+Class\+List\+Ptr \+\_\+classes, kkint32 \&\+\_\+est\+Size, K\+K\+Str \&\+\_\+error\+Message, Run\+Log \&\+\_\+log)=0}{GetFileDesc(const KKStr &_fileName, std::istream &_in, MLClassListPtr _classes, kkint32 &_estSize, KKStr &_errorMessage, RunLog &_log)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf File\+Desc\+Ptr} K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Get\+File\+Desc (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{std\+::istream \&}]{\+\_\+in, }
+\item[{{\bf M\+L\+Class\+List\+Ptr}}]{\+\_\+classes, }
+\item[{{\bf kkint32} \&}]{\+\_\+est\+Size, }
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+error\+Message, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a485b98b04884febb9423e7c613e2d654}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a485b98b04884febb9423e7c613e2d654}
+
+
+Create a \hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc} object from the input stream \textquotesingle{}\+\_\+in\textquotesingle{}. 
+
+All derived classes must implement this method. It is called by \textquotesingle{}Load\+Feature\+File\textquotesingle{} before it starts reading in the feature data. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file to read top get \hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc} data from. Ex in c45 this would be the names file. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+in} & Input Stream t read from. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+classes} & Must be pointing to a valid \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} object. As class names are encountered add them to this list. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+est\+Size} & If you can drive the number of examples in the feature file populate this parameter. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+error\+Message} & If a error in processing occurs; place a description of the error in this parameter. \\
+\hline
+ & {\em \+\_\+log} & \\
+\hline
+\end{DoxyParams}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Get\+Line@{Get\+Line}}
+\index{Get\+Line@{Get\+Line}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Get\+Line(std\+::istream \&\+\_\+in, K\+K\+Str \&\+\_\+line, bool \&\+\_\+eof)}{GetLine(std::istream &_in, KKStr &_line, bool &_eof)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Get\+Line (
+\begin{DoxyParamCaption}
+\item[{std\+::istream \&}]{\+\_\+in, }
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+line, }
+\item[{bool \&}]{\+\_\+eof}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a61ca11485d2c14368c1019bfcc53ab16}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a61ca11485d2c14368c1019bfcc53ab16}
+
+
+Definition at line 341 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+U\+C\+I\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Load\+File(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+U\+C\+I\+::\+Load\+File().
+
+
+\begin{DoxyCode}
+345 \{
+346   \_line = \textcolor{stringliteral}{""};
+347   \textcolor{keywordflow}{if}  (\_in.eof ())
+348   \{
+349     \_eof = \textcolor{keyword}{true};
+350     \textcolor{keywordflow}{return};
+351   \}
+352 
+353   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  ch = \_in.peek ();
+354   \textcolor{keywordflow}{while}  ((ch != \textcolor{charliteral}{'\(\backslash\)n'})  &&  (ch != \textcolor{charliteral}{'\(\backslash\)r'})  &&  (!\_in.eof ()))
+355   \{
+356     ch = \_in.get ();
+357     \_line.\hyperlink{class_k_k_b_1_1_k_k_str_ad23c5c4dccd6122f8629ce95b762f247}{Append} (ch);
+358     ch = \_in.peek ();
+359   \}
+360 
+361   \textcolor{keywordflow}{if}  (!\_in.eof ())
+362   \{
+363     \_in.get ();  \textcolor{comment}{// Skip over end of line character.}
+364     \textcolor{keywordflow}{if}  (ch == \textcolor{charliteral}{'\(\backslash\)n'})
+365     \{
+366       ch = \_in.peek ();
+367       \textcolor{keywordflow}{if}  (ch == \textcolor{charliteral}{'\(\backslash\)r'})
+368         \_in.get ();  \textcolor{comment}{// line is terminated by LineFeed + CarrageReturn;  we need to skip over both.}
+369     \}
+370     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (ch  == \textcolor{charliteral}{'\(\backslash\)r'})
+371     \{
+372       ch = \_in.peek ();
+373       \textcolor{keywordflow}{if}  (ch == \textcolor{charliteral}{'\(\backslash\)n'})
+374         \_in.get ();  \textcolor{comment}{// line is terminated by CarrageReturn + LineFeed;  we need to skip over both.}
+375     \}
+376   \}
+377 
+378   \_eof = \textcolor{keyword}{false};
+379 
+380   \textcolor{keywordflow}{return};
+381 \}  \textcolor{comment}{/* GetLine */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Get\+Token@{Get\+Token}}
+\index{Get\+Token@{Get\+Token}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Get\+Token(std\+::istream \&\+\_\+in, const char $\ast$\+\_\+delimiters, K\+K\+Str \&\+\_\+token, bool \&\+\_\+eof, bool \&\+\_\+eol)}{GetToken(std::istream &_in, const char *_delimiters, KKStr &_token, bool &_eof, bool &_eol)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Get\+Token (
+\begin{DoxyParamCaption}
+\item[{std\+::istream \&}]{\+\_\+in, }
+\item[{const char $\ast$}]{\+\_\+delimiters, }
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+token, }
+\item[{bool \&}]{\+\_\+eof, }
+\item[{bool \&}]{\+\_\+eol}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_ae79ac82b32e63fa7e7d96c833b5631f2}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_ae79ac82b32e63fa7e7d96c833b5631f2}
+
+
+Will retrieve the next token from the input stream. 
+
+Leading and trailing blank characters will be skipped. A token will be separated by any character in \textquotesingle{}\+\_\+delimiters\textquotesingle{} or \textquotesingle{}End\+Of\+Line\textquotesingle{}, or \textquotesingle{}End\+Of\+File\textquotesingle{}. If a \textquotesingle{}End\+Of\+Line\textquotesingle{} or \textquotesingle{}End\+Of\+File\textquotesingle{} occur while reading in a token the respective flags \textquotesingle{}\+\_\+eol\textquotesingle{} and \textquotesingle{}\+\_\+eof\textquotesingle{} will be set to false but the following call to this function will set the respective flag to true and return a empty token.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+in} & Stream to read from, \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+delimiters} & List of valid delimiter characters. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+token} & token extracted from \textquotesingle{}\+\_\+in\textquotesingle{}. If either \textquotesingle{}\+\_\+eof\textquotesingle{} or \textquotesingle{}\+\_\+eol\textquotesingle{} are set to true; then token will be empty. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+eof} & Set true if at end of file; \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+eol} & Set true if at end of line. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 385 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Column\+::\+Get\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Sparse\+::\+Get\+File\+Desc(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Column\+::\+Load\+File().
+
+
+\begin{DoxyCode}
+391 \{
+392   \_token = \textcolor{stringliteral}{""};
+393   \_eof = \textcolor{keyword}{false};
+394   \_eol = \textcolor{keyword}{false};
+395 
+396   \textcolor{keywordflow}{if}  (\_in.eof ())
+397   \{
+398     \_eof = \textcolor{keyword}{true};
+399     \_eol = \textcolor{keyword}{true};
+400     \textcolor{keywordflow}{return};
+401   \}
+402 
+403   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  ch;
+404 
+405   \textcolor{comment}{// Skip past any leading white space.}
+406   ch = \_in.peek ();
+407   \textcolor{keywordflow}{while}  ((ch == \textcolor{charliteral}{' '})  &&  (!\_in.eof ()))
+408   \{
+409     \_in.get ();
+410     ch = \_in.peek ();
+411   \}
+412 
+413   \textcolor{keywordflow}{if}  (\_in.eof ())
+414   \{
+415     \_eof = \textcolor{keyword}{true};
+416     \_eol = \textcolor{keyword}{true};
+417     \textcolor{keywordflow}{return};
+418   \}
+419 
+420   \textcolor{keywordflow}{if}  (ch == \textcolor{charliteral}{'\(\backslash\)n'})
+421   \{
+422     \_eol = \textcolor{keyword}{true};
+423     \_in.get ();
+424     \textcolor{keywordflow}{if}  (\_in.peek () == \textcolor{charliteral}{'\(\backslash\)r'})
+425       \_in.get ();
+426     \textcolor{keywordflow}{return};
+427   \}
+428 
+429   \textcolor{keywordflow}{if}  (ch == \textcolor{charliteral}{'\(\backslash\)r'})
+430   \{
+431     \_eol = \textcolor{keyword}{true};
+432     \_in.get ();
+433     \textcolor{keywordflow}{if}  (\_in.peek () == \textcolor{charliteral}{'\(\backslash\)n'})
+434       \_in.get ();
+435     \textcolor{keywordflow}{return};
+436   \}
+437 
+438 
+439   \textcolor{keywordflow}{while}  ((!\_in.eof ())  &&  (ch != \textcolor{charliteral}{'\(\backslash\)n'})  &&  (ch != \textcolor{charliteral}{'\(\backslash\)r'})  &&  (strchr (\_delimiters, ch) == NULL))
+440   \{
+441     \_in.get ();
+442     \_token.\hyperlink{class_k_k_b_1_1_k_k_str_ad23c5c4dccd6122f8629ce95b762f247}{Append} ((\textcolor{keywordtype}{char})ch);
+443     ch = \_in.peek ();
+444   \}
+445 
+446   \textcolor{keywordflow}{if}  (strchr (\_delimiters, ch) != NULL)
+447   \{
+448     \textcolor{comment}{// the next character was a delimiter;  in this case we want to remove from stream.}
+449     \_in.get ();
+450   \}
+451 
+452 
+453   \textcolor{keywordflow}{return};
+454 \}  \textcolor{comment}{/* GetToken */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Load\+Feature\+File@{Load\+Feature\+File}}
+\index{Load\+Feature\+File@{Load\+Feature\+File}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Load\+Feature\+File(const K\+K\+Str \&\+\_\+file\+Name, M\+L\+Class\+List \&\+\_\+ml\+Classes, kkint32 \+\_\+max\+Count, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, bool \&\+\_\+changes\+Made, Run\+Log \&\+\_\+log)}{LoadFeatureFile(const KKStr &_fileName, MLClassList &_mlClasses, kkint32 _maxCount, VolConstBool &_cancelFlag, bool &_successful, bool &_changesMade, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+File\+I\+O\+::\+Load\+Feature\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{{\bf kkint32}}]{\+\_\+max\+Count, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+successful, }
+\item[{bool \&}]{\+\_\+changes\+Made, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a75a8d10d3981811ab10357f6a95c9bc1}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a75a8d10d3981811ab10357f6a95c9bc1}
+
+
+Loads the contents of a feature data file and returns a Image\+Features\+List container object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Feature file that is being synchronized. \\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+ml\+Classes} & All classes encountered during the loading of the feature file will be added to this list. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+max\+Count} & Maximum number of examples to load, -\/1 = load all \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If this flag turns true the load will terminate and return to caller. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+successful} & False will be returned if load failed. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+changes\+Made} & If the routine had loaded the feature data determined that it needed to make changes this flag will be set \textquotesingle{}true\textquotesingle{}. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & Where to send diagnostic messages to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Image\+Features\+List container object; this object will own all the examples loaded. 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_c45_a5223da28157b11024119c1edd93143c2}{K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45}.
+
+
+
+Definition at line 463 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc().
+
+
+
+Referenced by Feature\+Data\+Re\+Sink(), and K\+K\+M\+L\+L\+::\+Orderings\+::\+Orderings().
+
+
+\begin{DoxyCode}
+471 \{
+472   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"LoadFeatureFile  File["} << \_fileName << \textcolor{stringliteral}{"]  FileFormat["} << driverName << \textcolor{stringliteral}{"]"} <<
+       \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+473   
+474   \_changesMade = \textcolor{keyword}{false};
+475 
+476   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  estimatedNumOfDataItems = -1;
+477   
+478   \_successful = \textcolor{keyword}{true};
+479 
+480   ifstream  in (\_fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), ios\_base::in);
+481   \textcolor{keywordflow}{if}  (!in.is\_open ())
+482   \{
+483     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"LoadFeatureFile   ***ERROR***      Error Opening File["} << \_fileName << \textcolor{stringliteral}{"]."} <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+484     \_successful = \textcolor{keyword}{false};
+485     \textcolor{keywordflow}{return}  NULL;
+486   \}
+487 
+488   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errorMessage;
+489   
+490   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDescFromFile = \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a485b98b04884febb9423e7c613e2d654}{GetFileDesc} (\_fileName, in, &\_mlClasses, 
+      estimatedNumOfDataItems, errorMessage, \_log);
+491   \textcolor{keywordflow}{if}  (fileDescFromFile == NULL)
+492   \{
+493     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << endl << endl 
+494                    << \textcolor{stringliteral}{"FeatureFileIO::LoadFeatureFile    ***ERROR***     Loading Feature File["} << 
+      \_fileName << \textcolor{stringliteral}{"]"} << endl
+495                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+496     \_successful = \textcolor{keyword}{false};
+497     \textcolor{keywordflow}{return} NULL;
+498   \}
+499 
+500   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr} fileDesc = \hyperlink{class_k_k_m_l_l_1_1_file_desc_ab64013b479502d2761a9f11570a565bc}{FileDesc::GetExistingFileDesc} (
+      fileDescFromFile);
+501 
+502   in.clear ();
+503   in.seekg (0, ios::beg);
+504 
+505   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  examples = \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a49e80ac6eff874c8145559d9453b68d5}{LoadFile} (\_fileName, fileDesc, \_mlClasses, 
+      in, \_maxCount, \_cancelFlag, \_changesMade, errorMessage, \_log);
+506   \textcolor{keywordflow}{if}  (examples == NULL)
+507   \{
+508     \_successful = \textcolor{keyword}{false};
+509   \}
+510   \textcolor{keywordflow}{else}
+511   \{
+512     \_successful = \textcolor{keyword}{true};
+513   \}
+514 
+515   in.close ();
+516 
+517   \textcolor{keywordflow}{return}  examples;
+518 \}  \textcolor{comment}{/* LoadFeatureFile */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Load\+File@{Load\+File}}
+\index{Load\+File@{Load\+File}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Load\+File(const K\+K\+Str \&\+\_\+file\+Name, const File\+Desc\+Ptr \+\_\+file\+Desc, M\+L\+Class\+List \&\+\_\+classes, std\+::istream \&\+\_\+in, kkint32 \+\_\+max\+Count, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+changes\+Made, K\+K\+Str \&\+\_\+error\+Message, Run\+Log \&\+\_\+log)=0}{LoadFile(const KKStr &_fileName, const FileDescPtr _fileDesc, MLClassList &_classes, std::istream &_in, kkint32 _maxCount, VolConstBool &_cancelFlag, bool &_changesMade, KKStr &_errorMessage, RunLog &_log)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Feature\+Vector\+List\+Ptr} K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Load\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{const {\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc, }
+\item[{{\bf M\+L\+Class\+List} \&}]{\+\_\+classes, }
+\item[{std\+::istream \&}]{\+\_\+in, }
+\item[{{\bf kkint32}}]{\+\_\+max\+Count, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+changes\+Made, }
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+error\+Message, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a49e80ac6eff874c8145559d9453b68d5}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a49e80ac6eff874c8145559d9453b68d5}
+
+
+To be implemented by derived classes; loads the contents of a feature data file and returns a Image\+Features\+List container object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Feature file that is being loaded. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Desc} & Description of feature data that is to be loaded. \\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+classes} & All classes encountered during the loading of the feature file will be added to this list. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+in} & input stream that feature data is to be loaded/read from. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+max\+Count} & Maximum number of examples to load, -\/1 = load all \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If this flag turns true the load will terminate and return to caller. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+changes\+Made} & If the routine had loaded the feature data determined that it needed to make changes this flag will be set \textquotesingle{}true\textquotesingle{}. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+error\+Message} & If an error occurs during the loading a description of this error will be placed here. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & Where to send diagnostic messages to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A Image\+Features\+List container object; this object will own all the examples loaded; if an error occurs N\+U\+LL will be returned. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+max\+Count} & Maximum \# images to load. \\
+\hline
+\end{DoxyParams}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Load\+In\+Sub\+Directory\+Tree@{Load\+In\+Sub\+Directory\+Tree}}
+\index{Load\+In\+Sub\+Directory\+Tree@{Load\+In\+Sub\+Directory\+Tree}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Load\+In\+Sub\+Directory\+Tree(\+Factory\+F\+V\+Producer\+Ptr \+\_\+fv\+Producer\+Factory, K\+K\+Str \+\_\+root\+Dir, M\+L\+Class\+List \&\+\_\+ml\+Classes, bool \+\_\+use\+Directory\+Name\+For\+Class\+Name, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \+\_\+rewite\+Root\+Feature\+File, Run\+Log \&\+\_\+log)}{LoadInSubDirectoryTree(FactoryFVProducerPtr _fvProducerFactory, KKStr _rootDir, MLClassList &_mlClasses, bool _useDirectoryNameForClassName, VolConstBool &_cancelFlag, bool _rewiteRootFeatureFile, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+File\+I\+O\+::\+Load\+In\+Sub\+Directory\+Tree (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{\+\_\+fv\+Producer\+Factory, }
+\item[{{\bf K\+K\+Str}}]{\+\_\+root\+Dir, }
+\item[{{\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{bool}]{\+\_\+use\+Directory\+Name\+For\+Class\+Name, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool}]{\+\_\+rewite\+Root\+Feature\+File, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_abce09712a763ba49bf0cc55d0fdae784}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_abce09712a763ba49bf0cc55d0fdae784}
+
+
+Creates a feature vector list of all images located in the specified sub-\/directory tree. 
+
+Load\+In\+Sub\+Directory\+Tree
+
+Meant to work with images, it starts at a specified sub-\/directory and processes all sub-\/directories. It makes use of Feature\+Data\+Re\+Sink for each specific sub-\/directory. Will make use of Feature\+Data files that already exist in any of the sub-\/directories. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+fv\+Producer\+Factory} & Factory that specifies the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{}s we want to produce. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+root\+Dir} & Starting directory. \\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+ml\+Classes,List} & of classes, any new classes in file\+Name will be added. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+use\+Directory\+Name\+For\+Class\+Name,if} & true set class names to sub-\/directory name. This happens because the user may manually move images between directories using the sub-\/directory name as the class name. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If turns to \textquotesingle{}true\textquotesingle{} method is to exit asap. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+rewite\+Root\+Feature\+File,If} & true rewrite the feature file in the specified \textquotesingle{}root\+Dir\textquotesingle{}. This feature file will contain all entries from all sub-\/directories below it. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log,where} & to send diagnostic messages to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ A Post\+Larvae\+F\+V\+List container object. This object will own all the examples loaded. 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+cancel\+Flag} & will be monitored, if set to True Load will terminate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 649 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Add\+Queue(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+All\+Features(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Example\+File\+Name(), Feature\+Data\+Re\+Sink(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Get\+Class\+Name\+From\+Dir\+Name(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Get\+M\+L\+Class\+Ptr(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Get\+Un\+Known\+Class(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), Load\+In\+Sub\+Directory\+Tree(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufactur\+Feature\+Vector\+List(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+K\+K\+Str\+::operator==(), K\+K\+B\+::os\+Add\+Last\+Slash(), K\+K\+B\+::os\+Add\+Slash(), K\+K\+B\+::os\+Get\+List\+Of\+Directories(), K\+K\+B\+::os\+Get\+Root\+Name\+Of\+Directory(), and Save\+Feature\+File().
+
+
+
+Referenced by Load\+In\+Sub\+Directory\+Tree().
+
+
+\begin{DoxyCode}
+657 \{
+658   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"FeatureFileIO::LoadInSubDirectoryTree    rootDir["} << \_rootDir << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+659 
+660   \hyperlink{namespace_k_k_b_a60e413a66cd7d3a5679d2844dd5e3d97}{osAddLastSlash} (\_rootDir);
+661 
+662   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  featureFileName (\textcolor{stringliteral}{""});
+663   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fullFeatureFileName (\textcolor{stringliteral}{""});
+664 
+665   \textcolor{keywordflow}{if}  (!\_rootDir.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+666   \{
+667     featureFileName = \hyperlink{namespace_k_k_b_a456628fbc248c742b076e5f8b2456c98}{osGetRootNameOfDirectory} (\_rootDir) + \textcolor{stringliteral}{".data"};
+668     fullFeatureFileName = \_rootDir + featureFileName;
+669   \}
+670   \textcolor{keywordflow}{else}
+671   \{
+672     featureFileName     = \textcolor{stringliteral}{"Root.data"};
+673     fullFeatureFileName = \textcolor{stringliteral}{"Root.data"};
+674   \}
+675 
+676   \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  unKnownClass = \_mlClasses.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_aa7bab9ad8566d1ae97269775bab02446}{GetUnKnownClass} ();
+677   \textcolor{keywordflow}{if}  (\_useDirectoryNameForClassName)
+678   \{
+679     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} className = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_a7e2cfcd8b8ad56e2822668f96c7f8d1e}{MLClass::GetClassNameFromDirName} (\_rootDir);
+680     unKnownClass    = \_mlClasses.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab751a744d6e0d8937ca64b9cdde1488b}{GetMLClassPtr} (className);
+681   \}
+682 
+683   \textcolor{keywordtype}{bool}  changesMade = \textcolor{keyword}{false};
+684 
+685   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  dirImages = NULL;
+686 
+687   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDesc = \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{FileDesc} ();
+688 
+689   \textcolor{keywordflow}{if}  (\_rewiteRootFeatureFile)
+690   \{
+691     \hyperlink{class_k_k_b_1_1_date_time}{DateTime}  timeStamp;
+692     dirImages = \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a287df1dbb04495d7a4dc23b3af1a2ca6}{FeatureDataReSink} (\_fvProducerFactory,
+693                                    \_rootDir,
+694                                    featureFileName,
+695                                    unKnownClass,
+696                                    \_useDirectoryNameForClassName,
+697                                    \_mlClasses,
+698                                    \_cancelFlag,
+699                                    changesMade,
+700                                    timeStamp,
+701                                    \_log
+702                                   );
+703     \textcolor{keywordflow}{if}  (\_useDirectoryNameForClassName)
+704     \{
+705       \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{FeatureVectorList::iterator}  idx;
+706       \textcolor{keywordflow}{for}  (idx = dirImages->begin ();  idx != dirImages->end ();  idx++)
+707       \{
+708         \textcolor{keywordflow}{if}  ((*idx)->MLClass () != unKnownClass)
+709         \{
+710           (*idx)->MLClass (unKnownClass);
+711           changesMade = \textcolor{keyword}{true};
+712         \}
+713       \}
+714 
+715       \textcolor{keywordflow}{if}  (changesMade)
+716       \{
+717         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fullFileName = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_rootDir) + featureFileName;
+718         \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numExamplesWritten = 0;
+719         \textcolor{keywordtype}{bool}  cancel     = \textcolor{keyword}{false};
+720         \textcolor{keywordtype}{bool}  successful = \textcolor{keyword}{false};
+721         \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{SaveFeatureFile} (fullFileName, 
+722                          dirImages->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a3ba96acb7cd625dc94958da2ae750a08}{AllFeatures} (), 
+723                          *dirImages, 
+724                          numExamplesWritten,
+725                          cancel,
+726                          successful,
+727                          \_log
+728                         );
+729       \}
+730     \}
+731   \}
+732   \textcolor{keywordflow}{else}
+733   \{
+734     dirImages =  \_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{ManufacturFeatureVectorList} (\textcolor{keyword}{true}, \_log);
+735   \}
+736 
+737   \textcolor{comment}{// Now that we have processed all image files in "rootDir",}
+738   \textcolor{comment}{// lets process any sub-directories.}
+739 
+740   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  dirSearchPath = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_rootDir) + \textcolor{stringliteral}{"*.*"};
+741 
+742   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  subDirectories = \hyperlink{namespace_k_k_b_a5a4fe85032282128eb06725d1f8e8b53}{osGetListOfDirectories} (dirSearchPath);
+743   \textcolor{keywordflow}{if}  (subDirectories)
+744   \{
+745     KKStrList::iterator  idx;
+746 
+747     \textcolor{keywordflow}{for}  (idx = subDirectories->begin ();  (idx != subDirectories->end ()  &&  (!\_cancelFlag));   idx++)
+748     \{
+749       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  subDirName (**idx);
+750       \textcolor{keywordflow}{if}  (subDirName == \textcolor{stringliteral}{"BorderImages"})
+751       \{
+752         \textcolor{comment}{// We ignore this director}
+753         \textcolor{keywordflow}{continue};
+754       \}
+755 
+756       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  newDirPath = \hyperlink{namespace_k_k_b_aa0d40119b911df4283399a1724cab1ef}{osAddSlash} (\_rootDir) + subDirName;
+757 
+758       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  subDirImages = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_abce09712a763ba49bf0cc55d0fdae784}{LoadInSubDirectoryTree} (\_fvProducerFactory,
+759                                                                    newDirPath, 
+760                                                                    \_mlClasses, 
+761                                                                    \_useDirectoryNameForClassName, 
+762                                                                    \_cancelFlag,
+763                                                                    \textcolor{keyword}{true},     \textcolor{comment}{// true =
+       ReWriteRootFeatureFile}
+764                                                                    \_log
+765                                                                   );
+766       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  fv = NULL;
+767 
+768       \hyperlink{namespace_k_k_b_a60e413a66cd7d3a5679d2844dd5e3d97}{osAddLastSlash} (subDirName);
+769 
+770       \textcolor{comment}{// We want to add the directory path to the ExampleFileName so that we can later locate the source
+       image.}
+771       \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{FeatureVectorList::iterator}  idx = subDirImages->begin ();
+772       \textcolor{keywordflow}{for}  (idx = subDirImages->begin ();  idx != subDirImages->end ();  idx++)
+773       \{
+774         fv = *idx;
+775         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  newImageFileName = subDirName + fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} ();
+776         fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} (newImageFileName);
+777       \}
+778 
+779       dirImages->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a90809e07f7e33e591da0d266c1907ca9}{AddQueue} (*subDirImages);
+780       subDirImages->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+781       \textcolor{keyword}{delete}  subDirImages;
+782     \}
+783 
+784     \textcolor{keyword}{delete}  subDirectories;  subDirectories = NULL;
+785   \}
+786 
+787   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"LoadInSubDirectoryTree - Done"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+788 
+789   \textcolor{keywordflow}{return}  dirImages;
+790 \}  \textcolor{comment}{/* LoadInSubDirectoryTree */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Register\+Driver@{Register\+Driver}}
+\index{Register\+Driver@{Register\+Driver}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Register\+Driver(\+Feature\+File\+I\+O\+Ptr driver)}{RegisterDriver(FeatureFileIOPtr driver)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Register\+Driver (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+File\+I\+O\+Ptr}}]{driver}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a7fe96188c22f2a224da1963810c17fcc}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a7fe96188c22f2a224da1963810c17fcc}
+
+
+Definition at line 120 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+121 \{
+122   GlobalGoalKeeper::StartBlock ();
+123 
+124   \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  existingDriver = LookUpDriver (\_driver->driverName);
+125   \textcolor{keywordflow}{if}  (existingDriver)
+126   \{
+127     \textcolor{comment}{// We are trying to register two drivers with the same name;  we can not do that.}
+128     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+129          << \textcolor{stringliteral}{"FeatureFileIO::RegisterDriver     ***ERROR***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+130          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+131          << \textcolor{stringliteral}{"             trying to register more than one FeatureFileIO driver with "} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+132          << \textcolor{stringliteral}{"             the same name["} << \_driver->driverName << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+133          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+134   \}
+135   \textcolor{keywordflow}{else}
+136   \{
+137     registeredDrivers->push\_back (\_driver);
+138   \}
+139 
+140   GlobalGoalKeeper::EndBlock ();
+141 \}  \textcolor{comment}{/* RegisterDriver */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Registered\+Driver\+Names@{Registered\+Driver\+Names}}
+\index{Registered\+Driver\+Names@{Registered\+Driver\+Names}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Registered\+Driver\+Names(bool can\+Read, bool can\+Write)}{RegisteredDriverNames(bool canRead, bool canWrite)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+K\+K\+Str} Feature\+File\+I\+O\+::\+Registered\+Driver\+Names (
+\begin{DoxyParamCaption}
+\item[{bool}]{can\+Read, }
+\item[{bool}]{can\+Write}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a37a95e4e9217a03b2766e2a1c595e564}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a37a95e4e9217a03b2766e2a1c595e564}
+
+
+Definition at line 295 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Can\+Read(), and Can\+Write().
+
+
+\begin{DoxyCode}
+298 \{
+299   vector<FeatureFileIOPtr>*  drivers = RegisteredDrivers ();
+300   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  names;
+301   vector<FeatureFileIOPtr>::iterator  idx;
+302 
+303   \textcolor{keywordflow}{for}  (idx = drivers->begin ();  idx != drivers->end ();  idx++)
+304   \{
+305     \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{FeatureFileIOPtr}  driver = *idx;
+306     \textcolor{keywordflow}{if}  (canRead  &&  (!driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab2cccc2f82282c5b445f7e75d0e8008c}{CanRead} ()))
+307       \textcolor{keywordflow}{continue};
+308 
+309     \textcolor{keywordflow}{if}  (canWrite  &&  (!driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a2ba558a088190e39da61ba2c8cb47657}{CanWrite} ()))
+310       \textcolor{keywordflow}{continue};
+311 
+312     names.push\_back (driver->\hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a98951a8ef9ae5fe5fca831afb57dc1c7}{DriverName} ());
+313   \}
+314 
+315   \textcolor{keywordflow}{return}  names;
+316 \}  \textcolor{comment}{/* RegisteredDriverNames */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Register\+Feature\+File\+I\+O\+Driver@{Register\+Feature\+File\+I\+O\+Driver}}
+\index{Register\+Feature\+File\+I\+O\+Driver@{Register\+Feature\+File\+I\+O\+Driver}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Register\+Feature\+File\+I\+O\+Driver(\+Feature\+File\+I\+O\+Ptr \+\_\+driver)}{RegisterFeatureFileIODriver(FeatureFileIOPtr _driver)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Register\+Feature\+File\+I\+O\+Driver (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+File\+I\+O\+Ptr}}]{\+\_\+driver}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_adbfa02f160488be79107e018e5143676}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_adbfa02f160488be79107e018e5143676}
+
+
+For each feature file format register the appropriate driver through this static method. 
+
+You will be giving ownership of the driver to this class; it will call the destructor when the application shutdown. 
+
+Definition at line 79 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+80 \{
+81   GlobalGoalKeeper::StartBlock ();
+82 
+83   \textcolor{keywordflow}{if}  (!registeredDrivers)
+84   \{
+85     RegisterAllDrivers ();
+86     registeredDrivers = \textcolor{keyword}{new} std::vector<FeatureFileIOPtr> ();
+87   \}
+88 
+89   registeredDrivers->push\_back (\_driver);
+90 
+91   GlobalGoalKeeper::EndBlock ();
+92 \} \textcolor{comment}{/* RegisterFeatureFileIODriver */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Save\+Feature\+File@{Save\+Feature\+File}}
+\index{Save\+Feature\+File@{Save\+Feature\+File}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Save\+Feature\+File(const K\+K\+Str \&\+\_\+file\+Name, Feature\+Num\+List\+Const \&\+\_\+sel\+Features, Feature\+Vector\+List \&\+\_\+examples, kkuint32 \&\+\_\+num\+Examples\+Written, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, Run\+Log \&\+\_\+log)}{SaveFeatureFile(const KKStr &_fileName, FeatureNumListConst &_selFeatures, FeatureVectorList &_examples, kkuint32 &_numExamplesWritten, VolConstBool &_cancelFlag, bool &_successful, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Save\+Feature\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+sel\+Features, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf kkuint32} \&}]{\+\_\+num\+Examples\+Written, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+successful, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}
+
+
+Save examples to \textquotesingle{}file\+Name\textquotesingle{}. 
+
+Save\+Feature\+File 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file top same examples/images to. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+sel\+Features} & Specify specific features to save, typically all features. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+examples} & Examples that are to be saved. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+num\+Examples\+Written} & Will reflect the number of examples written, caller will be able to monitor. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If this flag turns true the writing of data will terminate and return to caller. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+successful} & False will be returned if the save failed. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & log file to send messages to. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+num\+Examples\+Written} & caller will be able to monitor this variable. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 565 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc().
+
+
+
+Referenced by Feature\+Data\+Re\+Sink(), Load\+In\+Sub\+Directory\+Tree(), and Save\+Feature\+File\+Multiple\+Parts().
+
+
+\begin{DoxyCode}
+573 \{
+574   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"FeatureFileIO::SaveFeatureFile - File["} << \_fileName << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+575 
+576   ofstream  out (\_fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+577   \textcolor{keywordflow}{if}  (!out.is\_open())
+578   \{
+579     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"***ERROR***, SaveFeatureFile, Opening File["} << \_fileName << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+580     \_successful = \textcolor{keyword}{false};
+581   \}
+582 
+583   out.precision (9);
+584 
+585   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  fileDesc = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ();
+586 
+587   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errorMessage;
+588   \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_a7cf4a67f6dd6985f5c052dc40ffd0ec0}{SaveFile} (\_examples, \_fileName, \_selFeatures, out, \_numExamplesWritten, \_cancelFlag, \_successful,
+       errorMessage, \_log);
+589 
+590   out.close ();
+591 \}  \textcolor{comment}{/* SaveFeatureFile */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Save\+Feature\+File\+Multiple\+Parts@{Save\+Feature\+File\+Multiple\+Parts}}
+\index{Save\+Feature\+File\+Multiple\+Parts@{Save\+Feature\+File\+Multiple\+Parts}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Save\+Feature\+File\+Multiple\+Parts(const K\+K\+Str \&\+\_\+file\+Name, Feature\+Num\+List\+Const \&\+\_\+sel\+Features, Feature\+Vector\+List \&\+\_\+examples, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, Run\+Log \&\+\_\+log)}{SaveFeatureFileMultipleParts(const KKStr &_fileName, FeatureNumListConst &_selFeatures, FeatureVectorList &_examples, VolConstBool &_cancelFlag, bool &_successful, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Feature\+File\+I\+O\+::\+Save\+Feature\+File\+Multiple\+Parts (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+sel\+Features, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+successful, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a56dd8e3853e6e14f1c966dab94460681}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a56dd8e3853e6e14f1c966dab94460681}
+
+
+Saves the feature file in multiple parts with no one single part larger that 64k examples. 
+
+Same as \textquotesingle{}Save\+Feature\+File\textquotesingle{}, if more than 64k examples will break into multiple files. If there are more than 64k examples, will save all images into \textquotesingle{}file\+Name\textquotesingle{}, but also a second copy of them into files with same name plus seq number with max of 64k samples in each one.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file top same examples/images to. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+sel\+Features} & Specify specific features to save, typically all features. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+examples} & Examples that are to be saved. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If this flag turns true the writing of data will terminate and return to caller. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+successful} & False will be returned if the save failed. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & log file to send messages to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 597 of file Feature\+File\+I\+O.\+cpp.
+
+
+
+References Save\+Feature\+File().
+
+
+\begin{DoxyCode}
+604 \{
+605   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numExamplesWritten = 0;
+606   \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{SaveFeatureFile} (\_fileName, \_selFeatures, \_examples, numExamplesWritten, \_cancelFlag, 
+      \_successful, \_log);
+607 
+608   \textcolor{keywordflow}{if}  (\_cancelFlag  ||  (!\_successful))
+609     \textcolor{keywordflow}{return};
+610 
+611   \textcolor{keywordflow}{if}  (\_examples.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () > 64000)
+612   \{
+613     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numPartsNeeded = (\_examples.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () / 64000);
+614     \textcolor{keywordflow}{if}  ((\_examples.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () % 64000) > 0)
+615       numPartsNeeded++;
+616 
+617     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxPartSize = (\_examples.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () / numPartsNeeded) + 1;
+618 
+619     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  partNum = 0;
+620     \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator} idx = \_examples.begin ();
+621 
+622     \textcolor{keywordflow}{while}  ((idx != \_examples.end ())  &&  (\_successful)  &&  (!\_cancelFlag))
+623     \{
+624       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  part = \_examples.
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af533da1b34e4123f4fcb1343d5f48e37}{ManufactureEmptyList} (\textcolor{keyword}{false});
+625 
+626       \textcolor{keywordflow}{while}  ((idx != \_examples.end ())  &&  (part->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < maxPartSize))
+627       \{
+628         part->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (*idx);
+629         idx++;
+630       \}
+631 
+632       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  partFileName = \hyperlink{namespace_k_k_b_a13b1a6f4e074969602dbe4bf9022a9c6}{osRemoveExtension} (\_fileName) + \textcolor{stringliteral}{"-"} + 
+633                             \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (partNum, \textcolor{stringliteral}{"00"}) + \textcolor{stringliteral}{"."} +
+634                             \hyperlink{namespace_k_k_b_ac66b0fee156008ea19ba4a0068378743}{osGetFileExtension} (\_fileName);
+635 
+636       \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o_ab4ad6c5a641f1f8f7c72c1be98bc1da8}{SaveFeatureFile} (partFileName, \_selFeatures, *part, numExamplesWritten, \_cancelFlag, 
+      \_successful, \_log);
+637 
+638       partNum++;
+639       \textcolor{keyword}{delete}  part; part = NULL;
+640     \}
+641   \}
+642 \}  \textcolor{comment}{/* SaveFeatureFileMultipleParts */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}!Save\+File@{Save\+File}}
+\index{Save\+File@{Save\+File}!K\+K\+M\+L\+L\+::\+Feature\+File\+IO@{K\+K\+M\+L\+L\+::\+Feature\+File\+IO}}
+\subsubsection[{\texorpdfstring{Save\+File(\+Feature\+Vector\+List \&\+\_\+data, const K\+K\+Str \&\+\_\+file\+Name, Feature\+Num\+List\+Const \&\+\_\+sel\+Features, std\+::ostream \&\+\_\+out, kkuint32 \&\+\_\+num\+Examples\+Written, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, bool \&\+\_\+successful, K\+K\+Str \&\+\_\+error\+Message, Run\+Log \&\+\_\+log)=0}{SaveFile(FeatureVectorList &_data, const KKStr &_fileName, FeatureNumListConst &_selFeatures, std::ostream &_out, kkuint32 &_numExamplesWritten, VolConstBool &_cancelFlag, bool &_successful, KKStr &_errorMessage, RunLog &_log)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Save\+File (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+data, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{{\bf Feature\+Num\+List\+Const} \&}]{\+\_\+sel\+Features, }
+\item[{std\+::ostream \&}]{\+\_\+out, }
+\item[{{\bf kkuint32} \&}]{\+\_\+num\+Examples\+Written, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{bool \&}]{\+\_\+successful, }
+\item[{{\bf K\+K\+Str} \&}]{\+\_\+error\+Message, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_feature_file_i_o_a7cf4a67f6dd6985f5c052dc40ffd0ec0}{}\label{class_k_k_m_l_l_1_1_feature_file_i_o_a7cf4a67f6dd6985f5c052dc40ffd0ec0}
+
+
+To be implemented by derived classes; save examples to output stream \textquotesingle{}\+\_\+out\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+data} & Examples that are to be written to saved to the output stream. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file top same examples/images to. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+sel\+Features} & Specify specific features to save, typically all features. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+out} & Output stream to save feature data to. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+num\+Examples\+Written} & Will reflect the number examples written, caller will be able to monitor. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+cancel\+Flag} & If this flag turns true the writing of data will terminate and return to caller. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+successful} & False will be returned if the save failed. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+error\+Message} & If the save fails (\+\_\+successful == false) then a description of the error will be placed here. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & log file to send messages to. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_file_i_o_8h}{Feature\+File\+I\+O.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_file_i_o_8cpp}{Feature\+File\+I\+O.\+cpp}\end{DoxyCompactItemize}

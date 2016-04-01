@@ -8,8 +8,10 @@
 
 
 #if  defined(WIN32)
-#define  OS_WINDOWS
-#include <windows.h>
+  #define  OS_WINDOWS
+  #if  !defined(DOXYGEN)
+    #include <windows.h>
+  #endif
 #endif
 
 #if  defined(WIN64)

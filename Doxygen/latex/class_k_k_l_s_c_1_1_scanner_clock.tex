@@ -1,0 +1,124 @@
+\hypertarget{class_k_k_l_s_c_1_1_scanner_clock}{}\section{K\+K\+L\+SC\+:\+:Scanner\+Clock Class Reference}
+\label{class_k_k_l_s_c_1_1_scanner_clock}\index{K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}}
+
+
+Used by Scanner file routines to keep track of most current buffers.  
+
+
+
+
+{\ttfamily \#include $<$Scanner\+Clock.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_l_s_c_1_1_scanner_clock}{Scanner\+Clock} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_scanner_clock_ae9f5ad56e5e47142e6759e406c55a9ea}{Scanner\+Clock\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_clock_ae4605aa3e27795a4202b29d686f56599}{Scanner\+Clock} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_clock_a02f0579dc7f96b439f6f5b8985f5509a}{Time} ()
+\begin{DoxyCompactList}\small\item\em Returns the current value of \textquotesingle{}time\textquotesingle{} them increments by 1. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_clock_ae6768a96ee2988552cd363827983e8c4}{Time} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+time)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by Scanner file routines to keep track of most current buffers. 
+
+
+\begin{DoxyCode}
+Used by SscannerFileBuffered to keep track of age \textcolor{keywordflow}{if} Buffered Frames     *
+Every time a buffered frame is accessed it will update its TimeStamp     *
+from a global instance of \textcolor{stringliteral}{'UmiScannerClock'}                              *
+\end{DoxyCode}
+ 
+
+Definition at line 23 of file Scanner\+Clock.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}!Scanner\+Clock\+Ptr@{Scanner\+Clock\+Ptr}}
+\index{Scanner\+Clock\+Ptr@{Scanner\+Clock\+Ptr}!K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}}
+\subsubsection[{\texorpdfstring{Scanner\+Clock\+Ptr}{ScannerClockPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Scanner\+Clock}$\ast$ {\bf K\+K\+L\+S\+C\+::\+Scanner\+Clock\+::\+Scanner\+Clock\+Ptr}}\hypertarget{class_k_k_l_s_c_1_1_scanner_clock_ae9f5ad56e5e47142e6759e406c55a9ea}{}\label{class_k_k_l_s_c_1_1_scanner_clock_ae9f5ad56e5e47142e6759e406c55a9ea}
+
+
+Definition at line 26 of file Scanner\+Clock.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}!Scanner\+Clock@{Scanner\+Clock}}
+\index{Scanner\+Clock@{Scanner\+Clock}!K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}}
+\subsubsection[{\texorpdfstring{Scanner\+Clock()}{ScannerClock()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+Clock\+::\+Scanner\+Clock (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_clock_ae4605aa3e27795a4202b29d686f56599}{}\label{class_k_k_l_s_c_1_1_scanner_clock_ae4605aa3e27795a4202b29d686f56599}
+
+
+Definition at line 13 of file Scanner\+Clock.\+cpp.
+
+
+\begin{DoxyCode}
+13                            :
+14    time (0)
+15 \{
+16 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}!Time@{Time}}
+\index{Time@{Time}!K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}}
+\subsubsection[{\texorpdfstring{Time()}{Time()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Scanner\+Clock\+::\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_clock_a02f0579dc7f96b439f6f5b8985f5509a}{}\label{class_k_k_l_s_c_1_1_scanner_clock_a02f0579dc7f96b439f6f5b8985f5509a}
+
+
+Returns the current value of \textquotesingle{}time\textquotesingle{} them increments by 1. 
+
+
+
+Definition at line 19 of file Scanner\+Clock.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+Frame\+::\+Scan\+Lines().
+
+
+\begin{DoxyCode}
+20 \{
+21   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = time;
+22   time++;
+23   \textcolor{keywordflow}{return}  x;
+24 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}!Time@{Time}}
+\index{Time@{Time}!K\+K\+L\+S\+C\+::\+Scanner\+Clock@{K\+K\+L\+S\+C\+::\+Scanner\+Clock}}
+\subsubsection[{\texorpdfstring{Time(kkint32 \+\_\+time)}{Time(kkint32 _time)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Clock\+::\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+time}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_clock_ae6768a96ee2988552cd363827983e8c4}{}\label{class_k_k_l_s_c_1_1_scanner_clock_ae6768a96ee2988552cd363827983e8c4}
+
+
+Definition at line 28 of file Scanner\+Clock.\+cpp.
+
+
+\begin{DoxyCode}
+29 \{
+30   time = \_time;
+31 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_clock_8h}{Scanner\+Clock.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_clock_8cpp}{Scanner\+Clock.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,1083 @@
+\hypertarget{class_k_k_b_1_1_k_k_str_parser}{}\section{K\+KB\+:\+:K\+K\+Str\+Parser Class Reference}
+\label{class_k_k_b_1_1_k_k_str_parser}\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+
+
+Class that manages the extraction of tokens from a String without being destructive to the original string.  
+
+
+
+
+{\ttfamily \#include $<$K\+K\+Str\+Parser.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_parser_a0d50d5eeb72265e1eef03996ab5304ac}{K\+K\+Str\+Parser} (const \hyperlink{class_k_k_b_1_1_k_k_str_parser}{K\+K\+Str\+Parser} \&\+\_\+str\+Parser)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_parser_a1476b2b9482a12e9ba4fe59beb82ce82}{K\+K\+Str\+Parser} (const char $\ast$\+\_\+str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_parser_a1f1d717a1128f49bac053ab895ee76c3}{K\+K\+Str\+Parser} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_parser_a92dddf25fcaa5d355fd5de436bb8bf54}{K\+K\+Str\+Parser} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\&\+\_\+str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_parser_a3aeca12630e7072456b7ee56c2bd2e79}{$\sim$\+K\+K\+Str\+Parser} ()
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_a49b50fe61e4715f842ccaa2cefb448d3}{Get\+Last\+Char} ()
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_aa304a5187725efee272ad9b9e548a54a}{Get\+Next\+Char} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{Get\+Next\+Token} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\begin{DoxyCompactList}\small\item\em Extract next Token from string, tokens will be separated by delimiter characters. \end{DoxyCompactList}\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_str_parser_a762331bbeff40f11637b3f5fa79afed0}{Get\+Next\+Token\+Bool} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_ab9be1a13e5b51467aa0bfe52b6472e01}{Get\+Next\+Token\+Char} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{K\+K\+B\+::\+Date\+Time} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a01ca60284bd2d1e791e1a5f101eab930}{Get\+Next\+Token\+Date\+Time} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+double \hyperlink{class_k_k_b_1_1_k_k_str_parser_a5a7993d387c6d475efbd1c7367f0fb7c}{Get\+Next\+Token\+Double} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+float \hyperlink{class_k_k_b_1_1_k_k_str_parser_ab2328419a6ca4c74b3bc641ad6d922e0}{Get\+Next\+Token\+Float} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a99f21d7feec263b53178b10bbca8ef38}{Get\+Next\+Token\+Int} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+long \hyperlink{class_k_k_b_1_1_k_k_str_parser_aabbe674ef3691bb997942f39a02919dc}{Get\+Next\+Token\+Long} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a2e4af04433f60d474871d90d83f4752d}{Get\+Next\+Token\+Uint} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a1792f00ba50c9c8fc990248a052997e1}{Get\+Rest\+Of\+Line} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a5a36bdebbb082403db0c92348f126a39}{Get\+Rest\+Of\+Str} ()
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_a94660c28f9c18938914d20adb640c1a4}{Last\+Delimiter} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_str_parser_a4a2eb79f712e5993379c93dc16059332}{More\+Tokens} () const 
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_a2e81869142abfe060786cb358a2e82ca}{Peek\+Last\+Char} () const 
+\item 
+char \hyperlink{class_k_k_b_1_1_k_k_str_parser_a2086ce83af683571ac79d9e0b517975f}{Peek\+Next\+Char} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a5492be515d0d7968eb16f3353c7b1283}{Peek\+Next\+Token} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{}) const 
+\begin{DoxyCompactList}\small\item\em Will use the same rules as \char`\"{}\+Get\+Next\+Token\char`\"{} to retrieve the next token n the string but will not advance the next character pointer. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_parser_a67bd099f770d4a46a3d6f65c4112c00c}{Reset} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8e19e3cdb9d6c2aa6058d527fef76d01}{Skip\+White\+Space} (const char $\ast$white\+Space=\char`\"{} \char`\"{})
+\begin{DoxyCompactList}\small\item\em Advances the next-\/character pointer to the next N\+OT white space character. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_vector_k_k_str}{Vector\+K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a625b103381cce53ddb55afe60abec4c2}{Split} (const char $\ast$del\+Str=\char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r \char`\"{})
+\item 
+const char $\ast$ \hyperlink{class_k_k_b_1_1_k_k_str_parser_a5928dc8eeb0d7e8517b5ccf0f4778d24}{Str} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a53939f3c505769182d8fef1fcf132031}{Sub\+Str\+Part} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} first\+Char, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} last\+Char) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k_str_parser_a47aa0c337cc8b00c733ed59f95679aa6}{Trim\+White\+Space} (const char $\ast$\+\_\+white\+Space=\char`\"{} \char`\"{})
+\begin{DoxyCompactList}\small\item\em After this call all leading and trailing whitespace will be trimmed from tokens. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class that manages the extraction of tokens from a String without being destructive to the original string. 
+
+Definition at line 18 of file K\+K\+Str\+Parser.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!K\+K\+Str\+Parser@{K\+K\+Str\+Parser}}
+\index{K\+K\+Str\+Parser@{K\+K\+Str\+Parser}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+Parser(const K\+K\+Str\+Parser \&\+\_\+str\+Parser)}{KKStrParser(const KKStrParser &_strParser)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str\+Parser} \&}]{\+\_\+str\+Parser}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a0d50d5eeb72265e1eef03996ab5304ac}{}\label{class_k_k_b_1_1_k_k_str_parser_a0d50d5eeb72265e1eef03996ab5304ac}
+
+
+Definition at line 28 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+Str\+Parser(), and K\+K\+B\+::\+S\+T\+R\+D\+U\+P().
+
+
+
+Referenced by K\+K\+Str\+Parser().
+
+
+\begin{DoxyCode}
+28                                                        :
+29     len            ((\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})strlen (\_strParser.str)),
+30     nextPos        (\_strParser.nextPos),
+31     str            (\_strParser.str),
+32     trimWhiteSpace (\_strParser.trimWhiteSpace),
+33     weOwnStr       (\textcolor{keyword}{false}),
+34     whiteSpace     (NULL)
+35 \{
+36   \textcolor{keywordflow}{if}  (\_strParser.whiteSpace)
+37     whiteSpace = \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{STRDUP} (\_strParser.whiteSpace);
+38 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!K\+K\+Str\+Parser@{K\+K\+Str\+Parser}}
+\index{K\+K\+Str\+Parser@{K\+K\+Str\+Parser}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+Parser(const char $\ast$\+\_\+str)}{KKStrParser(const char *_str)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\+\_\+str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a1476b2b9482a12e9ba4fe59beb82ce82}{}\label{class_k_k_b_1_1_k_k_str_parser_a1476b2b9482a12e9ba4fe59beb82ce82}
+
+
+Definition at line 54 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+Str\+Parser().
+
+
+
+Referenced by K\+K\+Str\+Parser(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Vector\+Int32().
+
+
+\begin{DoxyCode}
+54                                           :
+55     len            ((\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16})strlen (\_str)),
+56     nextPos        (0),
+57     str            (\_str),
+58     trimWhiteSpace (\textcolor{keyword}{false}),
+59     weOwnStr       (\textcolor{keyword}{false}),
+60     whiteSpace     (NULL)
+61 \{
+62 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!K\+K\+Str\+Parser@{K\+K\+Str\+Parser}}
+\index{K\+K\+Str\+Parser@{K\+K\+Str\+Parser}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+Parser(const K\+K\+Str \&\+\_\+str)}{KKStrParser(const KKStr &_str)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a1f1d717a1128f49bac053ab895ee76c3}{}\label{class_k_k_b_1_1_k_k_str_parser_a1f1d717a1128f49bac053ab895ee76c3}
+
+
+Definition at line 42 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Len(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Date\+Time\+::\+Date\+Time(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Parse\+Class\+Index\+List(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Read\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Xml\+Element\+Key\+Value\+Pairs(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+42                                            :
+43     len            (\_str.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ()),
+44     nextPos        (0),
+45     str            (\_str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ()),
+46     trimWhiteSpace (\textcolor{keyword}{false}),
+47     weOwnStr       (\textcolor{keyword}{false}),
+48     whiteSpace     (NULL)
+49 \{
+50 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!K\+K\+Str\+Parser@{K\+K\+Str\+Parser}}
+\index{K\+K\+Str\+Parser@{K\+K\+Str\+Parser}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{K\+K\+Str\+Parser(\+K\+K\+Str \&\&\+\_\+str)}{KKStrParser(KKStr &&_str)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str} \&\&}]{\+\_\+str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a92dddf25fcaa5d355fd5de436bb8bf54}{}\label{class_k_k_b_1_1_k_k_str_parser_a92dddf25fcaa5d355fd5de436bb8bf54}
+
+
+Definition at line 66 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Len(), K\+K\+B\+::\+K\+K\+Str\+::\+Str(), and K\+K\+B\+::\+S\+T\+R\+D\+U\+P().
+
+
+\begin{DoxyCode}
+66                                       :
+67     len            (\_str.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ()),
+68     nextPos        (0),
+69     str            (\_str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ()),
+70     trimWhiteSpace (\textcolor{keyword}{false}),
+71     weOwnStr       (\textcolor{keyword}{true}),
+72     whiteSpace     (NULL)
+73 \{
+74   str = \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{KKB::STRDUP} (\_str.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+75   weOwnStr = \textcolor{keyword}{true};
+76 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!````~K\+K\+Str\+Parser@{$\sim$\+K\+K\+Str\+Parser}}
+\index{````~K\+K\+Str\+Parser@{$\sim$\+K\+K\+Str\+Parser}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{$\sim$\+K\+K\+Str\+Parser()}{~KKStrParser()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+Parser\+::$\sim$\+K\+K\+Str\+Parser (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a3aeca12630e7072456b7ee56c2bd2e79}{}\label{class_k_k_b_1_1_k_k_str_parser_a3aeca12630e7072456b7ee56c2bd2e79}
+
+
+Definition at line 82 of file K\+K\+Str\+Parser.\+cpp.
+
+
+\begin{DoxyCode}
+83 \{
+84   \textcolor{keyword}{delete}  whiteSpace;
+85   \textcolor{keywordflow}{if}  (weOwnStr)
+86   \{
+87     \textcolor{keyword}{delete} str;
+88     str = NULL;
+89   \}
+90 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Last\+Char@{Get\+Last\+Char}}
+\index{Get\+Last\+Char@{Get\+Last\+Char}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Last\+Char()}{GetLastChar()}}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+Str\+Parser\+::\+Get\+Last\+Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a49b50fe61e4715f842ccaa2cefb448d3}{}\label{class_k_k_b_1_1_k_k_str_parser_a49b50fe61e4715f842ccaa2cefb448d3}
+
+
+Definition at line 350 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+351 \{
+352   \textcolor{keywordtype}{char}  lastChar = 0;
+353   \textcolor{keywordflow}{if}  (nextPos < len)
+354   \{
+355     --len;
+356     lastChar = str[len];
+357   \}
+358   \textcolor{keywordflow}{return}  lastChar;
+359 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Char@{Get\+Next\+Char}}
+\index{Get\+Next\+Char@{Get\+Next\+Char}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Char()}{GetNextChar()}}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+Str\+Parser\+::\+Get\+Next\+Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_aa304a5187725efee272ad9b9e548a54a}{}\label{class_k_k_b_1_1_k_k_str_parser_aa304a5187725efee272ad9b9e548a54a}
+
+
+Definition at line 337 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+338 \{
+339   \textcolor{keywordtype}{char}  nextChar = 0;
+340   \textcolor{keywordflow}{if}  (nextPos < len)
+341   \{
+342     nextChar = str[nextPos];
+343     ++nextPos;
+344   \}
+345   \textcolor{keywordflow}{return}  nextChar;
+346 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token@{Get\+Next\+Token}}
+\index{Get\+Next\+Token@{Get\+Next\+Token}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextToken(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} K\+K\+Str\+Parser\+::\+Get\+Next\+Token (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{}\label{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}
+
+
+Extract next Token from string, tokens will be separated by delimiter characters. 
+
+Removes next Token from string. The token will be terminated by end of string or the first occurrence of a delimiter character. If no more tokens left will return a Empty \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str}. If you want to remove leading and trailing whitespace characters you need to call the \char`\"{}\+Trim\+White\+Space\char`\"{} method.
+
+Quoted Strings will be treated differently. If the first character in the token is a quote(") or apostrophe(\textquotesingle{}) character then the token will include all characters until the matching quote character. The quote characters will be N\+OT be included in the token. The next character pointer will be set to the following delimiter character. The quote characters must match. That is if the first quote character was (\textquotesingle{}) then the terminating quote character also be (\textquotesingle{}). The special escape sequences (\char`\"{}\textbackslash{}t\char`\"{}, \char`\"{}\textbackslash{}n\char`\"{}, \char`\"{}\textbackslash{}r\char`\"{}, \char`\"{}\textbackslash{}\textbackslash{}\char`\"{}, \textquotesingle{}"\textquotesingle{}, and \char`\"{}\textbackslash{}\textquotesingle{}\char`\"{} will be translated into (tab), (line-\/feed), (carriage-\/return), (back-\/slash), (quote), and (apostrophe).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em del\+Str} & List of delimiter characters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Extracted Token. 
+\end{DoxyReturn}
+
+
+Definition at line 131 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Date\+Time\+::\+Date\+Time(), Get\+Next\+Token\+Bool(), Get\+Next\+Token\+Char(), Get\+Next\+Token\+Date\+Time(), Get\+Next\+Token\+Double(), Get\+Next\+Token\+Float(), Get\+Next\+Token\+Int(), Get\+Next\+Token\+Long(), Get\+Next\+Token\+Uint(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Parse\+Class\+Index\+List(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Read\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+To\+Vector\+Int32(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Xml\+Element\+Key\+Value\+Pairs(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+132 \{
+133   lastDelimiter = 0;
+134 
+135   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+136   \{
+137     \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+138       nextPos++;
+139   \}
+140 
+141   \textcolor{keywordflow}{if} (nextPos >= len)
+142     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+143 
+144   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  startPos = nextPos;
+145   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  endPos   = startPos;
+146 
+147   \textcolor{keywordtype}{char} ch = str[endPos];
+148   \textcolor{keywordflow}{if}  ((ch == \textcolor{charliteral}{'\(\backslash\)''})  ||  (ch == \textcolor{charliteral}{'"'}))
+149   \{
+150     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  token (30);
+151     \textcolor{comment}{// Token is a string}
+152     \textcolor{keywordtype}{char}  quoteChar = ch;
+153 
+154     \textcolor{comment}{// We have a quoted String need to skip to end of quote.}
+155 
+156     ++endPos;  \textcolor{comment}{// Skipped past initial quote character.}
+157     \textcolor{keywordflow}{while}  (endPos < len)
+158     \{
+159       ch = str[endPos];
+160       \textcolor{keywordflow}{if}  (ch == quoteChar)
+161         \textcolor{keywordflow}{break};
+162 
+163       \textcolor{keywordflow}{if}  ((ch == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})  &&  (endPos < (len - 1)))
+164       \{
+165         ++endPos;
+166         \textcolor{keywordtype}{char}  ec = str[endPos];
+167         \textcolor{keywordflow}{switch}  (ec)
+168         \{
+169         \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}:  ch = \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};  \textcolor{keywordflow}{break};
+170         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'"'}:  ch = \textcolor{charliteral}{'"'};  \textcolor{keywordflow}{break};
+171         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'r'}:  ch = \textcolor{charliteral}{'\(\backslash\)r'};  \textcolor{keywordflow}{break};
+172         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'n'}:  ch = \textcolor{charliteral}{'\(\backslash\)n'};  \textcolor{keywordflow}{break};
+173         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'t'}:  ch = \textcolor{charliteral}{'\(\backslash\)t'};  \textcolor{keywordflow}{break};
+174         \}
+175       \}
+176 
+177       token.Append (ch);
+178       ++endPos;
+179     \}
+180 
+181     \textcolor{keywordflow}{if}  (endPos >= len)
+182     \{
+183       nextPos = len;
+184     \}
+185     \textcolor{keywordflow}{else}
+186     \{
+187       \textcolor{comment}{// Now that we are at the end of the quoted String we need set the next character pointer to just
+       past the following delimiter character.}
+188       nextPos = endPos + 1;
+189       \textcolor{keywordflow}{if}  (trimWhiteSpace)
+190       \{
+191         \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+192           nextPos++;
+193       \}
+194 
+195       \textcolor{keywordflow}{if}  ((nextPos < len)  &&  (strchr (delStr, str[nextPos]) != NULL))
+196       \{
+197         lastDelimiter =  str[nextPos];
+198         ++nextPos;
+199       \}
+200     \}  
+201     \textcolor{keywordflow}{return}  token;
+202   \}
+203   \textcolor{keywordflow}{else}
+204   \{
+205     \textcolor{comment}{// scan until end of string or next delimiter}
+206     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  delimeterIdx = 0;
+207     \textcolor{keywordtype}{bool}      delimeterFound = \textcolor{keyword}{false};
+208     \textcolor{keywordflow}{while}  (endPos < len)
+209     \{
+210       ch = str[endPos];
+211       \textcolor{keywordflow}{if}  (strchr (delStr, ch) != NULL)
+212       \{
+213         lastDelimiter = ch;
+214         delimeterFound = \textcolor{keyword}{true};
+215         delimeterIdx = endPos;
+216         \textcolor{keywordflow}{break};
+217       \}
+218       ++endPos;
+219     \}
+220 
+221     endPos--;  \textcolor{comment}{// Move endPos back to last character in token.}
+222 
+223     \textcolor{keywordflow}{if}  (trimWhiteSpace)
+224     \{
+225       \textcolor{keywordflow}{while}  ((endPos >= startPos)  &&  (strchr (whiteSpace, str[endPos]) != NULL))
+226         endPos--;
+227     \}
+228 
+229 
+230     \textcolor{keywordflow}{if}  (delimeterFound)
+231       nextPos = delimeterIdx + 1;
+232 
+233     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (endPos >= len)
+234       nextPos = len;
+235 
+236     \textcolor{keywordflow}{else}
+237       nextPos = endPos + 1;
+238 
+239     \textcolor{keywordflow}{if}  (trimWhiteSpace)
+240     \{
+241       \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+242         ++nextPos;
+243     \}
+244 
+245     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (str, startPos, endPos);
+246   \}
+247 \}  \textcolor{comment}{/* GetNextToken */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Bool@{Get\+Next\+Token\+Bool}}
+\index{Get\+Next\+Token\+Bool@{Get\+Next\+Token\+Bool}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Bool(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenBool(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Bool (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a762331bbeff40f11637b3f5fa79afed0}{}\label{class_k_k_b_1_1_k_k_str_parser_a762331bbeff40f11637b3f5fa79afed0}
+
+
+Definition at line 438 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Bool().
+
+
+\begin{DoxyCode}
+439 \{
+440   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_a84e903540729b01cd2d712dc7050044a}{ToBool} ();
+441 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Char@{Get\+Next\+Token\+Char}}
+\index{Get\+Next\+Token\+Char@{Get\+Next\+Token\+Char}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Char(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenChar(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Char (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_ab9be1a13e5b51467aa0bfe52b6472e01}{}\label{class_k_k_b_1_1_k_k_str_parser_ab9be1a13e5b51467aa0bfe52b6472e01}
+
+
+Definition at line 388 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::operator\mbox{[}$\,$\mbox{]}().
+
+
+\begin{DoxyCode}
+389 \{
+390   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  nextToken = \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr);
+391   \textcolor{keywordtype}{char} nextTokenChar = nextToken[0];
+392   \textcolor{keywordflow}{return}  nextTokenChar;
+393 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Date\+Time@{Get\+Next\+Token\+Date\+Time}}
+\index{Get\+Next\+Token\+Date\+Time@{Get\+Next\+Token\+Date\+Time}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Date\+Time(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenDateTime(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+B\+::\+Date\+Time} K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a01ca60284bd2d1e791e1a5f101eab930}{}\label{class_k_k_b_1_1_k_k_str_parser_a01ca60284bd2d1e791e1a5f101eab930}
+
+
+Definition at line 396 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+Date\+Time(), and Get\+Next\+Token().
+
+
+\begin{DoxyCode}
+397 \{
+398   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_date_time}{KKB::DateTime} (\hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr));
+399 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Double@{Get\+Next\+Token\+Double}}
+\index{Get\+Next\+Token\+Double@{Get\+Next\+Token\+Double}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Double(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenDouble(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Double (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a5a7993d387c6d475efbd1c7367f0fb7c}{}\label{class_k_k_b_1_1_k_k_str_parser_a5a7993d387c6d475efbd1c7367f0fb7c}
+
+
+Definition at line 418 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Double().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Read\+X\+M\+L(), and S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+419 \{
+420   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_a95207190bd6a470ca0ef25ebea459c80}{ToDouble} ();
+421 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Float@{Get\+Next\+Token\+Float}}
+\index{Get\+Next\+Token\+Float@{Get\+Next\+Token\+Float}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Float(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenFloat(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Float (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_ab2328419a6ca4c74b3bc641ad6d922e0}{}\label{class_k_k_b_1_1_k_k_str_parser_ab2328419a6ca4c74b3bc641ad6d922e0}
+
+
+Definition at line 424 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Float().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+425 \{
+426   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_a09b54184fdc585259d265db3deb28e79}{ToFloat} ();
+427 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Int@{Get\+Next\+Token\+Int}}
+\index{Get\+Next\+Token\+Int@{Get\+Next\+Token\+Int}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Int(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenInt(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Int (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a99f21d7feec263b53178b10bbca8ef38}{}\label{class_k_k_b_1_1_k_k_str_parser_a99f21d7feec263b53178b10bbca8ef38}
+
+
+Definition at line 404 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Int().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), and S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+405 \{
+406   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_a4d1582f17461a3fe481fc4a37e8c65c7}{ToInt} ();
+407 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Long@{Get\+Next\+Token\+Long}}
+\index{Get\+Next\+Token\+Long@{Get\+Next\+Token\+Long}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Long(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenLong(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}long K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Long (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_aabbe674ef3691bb997942f39a02919dc}{}\label{class_k_k_b_1_1_k_k_str_parser_aabbe674ef3691bb997942f39a02919dc}
+
+
+Definition at line 411 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Long().
+
+
+\begin{DoxyCode}
+412 \{
+413   \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_af92a2693941e9bdfb75d9d54819ab470}{ToLong} ();
+414 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Next\+Token\+Uint@{Get\+Next\+Token\+Uint}}
+\index{Get\+Next\+Token\+Uint@{Get\+Next\+Token\+Uint}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token\+Uint(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{GetNextTokenUint(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} K\+K\+Str\+Parser\+::\+Get\+Next\+Token\+Uint (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a2e4af04433f60d474871d90d83f4752d}{}\label{class_k_k_b_1_1_k_k_str_parser_a2e4af04433f60d474871d90d83f4752d}
+
+
+Definition at line 431 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Get\+Next\+Token(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Uint().
+
+
+\begin{DoxyCode}
+432 \{
+433   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr).\hyperlink{class_k_k_b_1_1_k_k_str_ae162a3af0eed323879e746717a20b371}{ToUint} ();
+434 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Rest\+Of\+Line@{Get\+Rest\+Of\+Line}}
+\index{Get\+Rest\+Of\+Line@{Get\+Rest\+Of\+Line}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Rest\+Of\+Line()}{GetRestOfLine()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} K\+K\+Str\+Parser\+::\+Get\+Rest\+Of\+Line (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a1792f00ba50c9c8fc990248a052997e1}{}\label{class_k_k_b_1_1_k_k_str_parser_a1792f00ba50c9c8fc990248a052997e1}
+
+
+Definition at line 445 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right().
+
+
+\begin{DoxyCode}
+446 \{
+447   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+448   \{
+449     \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+450       nextPos++;
+451   \}
+452 
+453   \textcolor{keywordflow}{if} (nextPos >= len)
+454     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+455 
+456   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (1 + len - nextPos);
+457   \textcolor{keywordtype}{char}  lastChar = 0;
+458 
+459   \textcolor{keywordflow}{while}  (nextPos < len)  
+460   \{
+461     lastChar = str[nextPos];
+462     \textcolor{keywordflow}{if}  (lastChar == \textcolor{charliteral}{'\(\backslash\)n'})
+463       \textcolor{keywordflow}{break};
+464 
+465     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lastChar == \textcolor{charliteral}{'\(\backslash\)r'})
+466       \textcolor{keywordflow}{break};
+467 
+468     result.Append (lastChar);
+469     nextPos++;
+470   \}
+471 
+472   \textcolor{keywordflow}{if}  (nextPos < len)
+473   \{
+474     \textcolor{keywordflow}{if}  (lastChar == \textcolor{charliteral}{'\(\backslash\)n'})
+475     \{
+476       \textcolor{keywordflow}{if}  (str[nextPos] == \textcolor{charliteral}{'\(\backslash\)r'})
+477         nextPos++;
+478     \}
+479     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lastChar == \textcolor{charliteral}{'\(\backslash\)r'})
+480     \{
+481       \textcolor{keywordflow}{if}  (str[nextPos] == \textcolor{charliteral}{'\(\backslash\)n'})
+482         nextPos ++;
+483     \}
+484   \}
+485 
+486   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+487     result.TrimRight (whiteSpace);
+488 
+489   \textcolor{keywordflow}{return}  result;
+490 \}  \textcolor{comment}{/* GetRestOfLine */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Get\+Rest\+Of\+Str@{Get\+Rest\+Of\+Str}}
+\index{Get\+Rest\+Of\+Str@{Get\+Rest\+Of\+Str}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Get\+Rest\+Of\+Str()}{GetRestOfStr()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} K\+K\+Str\+Parser\+::\+Get\+Rest\+Of\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a5a36bdebbb082403db0c92348f126a39}{}\label{class_k_k_b_1_1_k_k_str_parser_a5a36bdebbb082403db0c92348f126a39}
+
+
+Definition at line 494 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+Trim\+Right().
+
+
+
+Referenced by K\+K\+B\+::\+Date\+Time\+::\+Date\+Time().
+
+
+\begin{DoxyCode}
+495 \{
+496   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+497   \{
+498     \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+499       nextPos++;
+500   \}
+501 
+502   \textcolor{keywordflow}{if} (nextPos >= len)
+503     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+504 
+505   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (1 + len - nextPos);
+506   \textcolor{keywordflow}{while}  (nextPos < len)  
+507   \{
+508     result.Append (str[nextPos]);
+509     nextPos++;
+510   \}
+511 
+512   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+513     result.TrimRight (whiteSpace);
+514 
+515   \textcolor{keywordflow}{return}  result;
+516 \}  \textcolor{comment}{/* GetRestOfStr */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Last\+Delimiter@{Last\+Delimiter}}
+\index{Last\+Delimiter@{Last\+Delimiter}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Last\+Delimiter() const }{LastDelimiter() const }}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Last\+Delimiter (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a94660c28f9c18938914d20adb640c1a4}{}\label{class_k_k_b_1_1_k_k_str_parser_a94660c28f9c18938914d20adb640c1a4}
+
+
+Definition at line 72 of file K\+K\+Str\+Parser.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Parse\+Class\+Index\+List().
+
+
+\begin{DoxyCode}
+72 \{\textcolor{keywordflow}{return}  lastDelimiter;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!More\+Tokens@{More\+Tokens}}
+\index{More\+Tokens@{More\+Tokens}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{More\+Tokens() const }{MoreTokens() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+More\+Tokens (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a4a2eb79f712e5993379c93dc16059332}{}\label{class_k_k_b_1_1_k_k_str_parser_a4a2eb79f712e5993379c93dc16059332}
+
+
+Definition at line 74 of file K\+K\+Str\+Parser.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Parse\+Class\+Index\+List(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Read\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Xml\+Element\+Key\+Value\+Pairs(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+74 \{\textcolor{keywordflow}{return}  (nextPos < len);\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Peek\+Last\+Char@{Peek\+Last\+Char}}
+\index{Peek\+Last\+Char@{Peek\+Last\+Char}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Peek\+Last\+Char() const }{PeekLastChar() const }}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+Str\+Parser\+::\+Peek\+Last\+Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a2e81869142abfe060786cb358a2e82ca}{}\label{class_k_k_b_1_1_k_k_str_parser_a2e81869142abfe060786cb358a2e82ca}
+
+
+Definition at line 375 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+376 \{
+377   \textcolor{keywordtype}{char}  lastChar = 0;
+378   \textcolor{keywordflow}{if}  (nextPos < len)
+379   \{
+380     lastChar = str[len - 1];
+381   \}
+382   \textcolor{keywordflow}{return}  lastChar;
+383 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Peek\+Next\+Char@{Peek\+Next\+Char}}
+\index{Peek\+Next\+Char@{Peek\+Next\+Char}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Peek\+Next\+Char() const }{PeekNextChar() const }}]{\setlength{\rightskip}{0pt plus 5cm}char K\+K\+Str\+Parser\+::\+Peek\+Next\+Char (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a2086ce83af683571ac79d9e0b517975f}{}\label{class_k_k_b_1_1_k_k_str_parser_a2086ce83af683571ac79d9e0b517975f}
+
+
+Definition at line 363 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+364 \{
+365   \textcolor{keywordtype}{char}  nextChar = 0;
+366   \textcolor{keywordflow}{if}  (nextPos < len)
+367   \{
+368     nextChar = str[nextPos];
+369   \}
+370   \textcolor{keywordflow}{return}  nextChar;
+371 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Peek\+Next\+Token@{Peek\+Next\+Token}}
+\index{Peek\+Next\+Token@{Peek\+Next\+Token}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Peek\+Next\+Token(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "") const }{PeekNextToken(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ") const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} K\+K\+Str\+Parser\+::\+Peek\+Next\+Token (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a5492be515d0d7968eb16f3353c7b1283}{}\label{class_k_k_b_1_1_k_k_str_parser_a5492be515d0d7968eb16f3353c7b1283}
+
+
+Will use the same rules as \char`\"{}\+Get\+Next\+Token\char`\"{} to retrieve the next token n the string but will not advance the next character pointer. 
+
+Returns what the next token that \textquotesingle{}Get\+Next\+Token\textquotesingle{} will without updating the position in the string buffer.
+
+Allows you to see what the token would be without updating the \hyperlink{class_k_k_b_1_1_k_k_str_parser}{K\+K\+Str\+Parser} instance. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em del\+Str} & List of delimiting characters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Next Token to be returned by \textquotesingle{}Get\+Next\+Token\textquotesingle{}. 
+\end{DoxyReturn}
+
+
+Definition at line 258 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+259 \{
+260   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  nextPosP = nextPos;
+261 
+262   \textcolor{keywordflow}{if}  (trimWhiteSpace)
+263   \{
+264     \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPosP]) != NULL))
+265       nextPosP++;
+266   \}
+267 
+268   \textcolor{keywordflow}{if} (nextPosP >= len)
+269     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+270 
+271   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  startPos = nextPosP;
+272   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  endPos   = startPos;
+273 
+274   \textcolor{keywordtype}{char} ch = str[endPos];
+275   \textcolor{keywordflow}{if}  ((ch == \textcolor{charliteral}{'\(\backslash\)''})  ||  (ch == \textcolor{charliteral}{'"'}))
+276   \{
+277     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  token (30);
+278     \textcolor{comment}{// Token is a string}
+279     \textcolor{keywordtype}{char}  quoteChar = ch;
+280     \textcolor{comment}{// We have a quoted String need to skip to end of quote.}
+281     ++endPos;
+282     \textcolor{keywordflow}{while}  (endPos < len)
+283     \{
+284       ch = str[endPos];
+285       \textcolor{keywordflow}{if}  (ch == quoteChar)
+286       \{
+287         ++endPos;
+288         \textcolor{keywordflow}{break};
+289       \}
+290 
+291       \textcolor{keywordflow}{if}  ((ch == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})  &&  (endPos < (len - 1)))
+292       \{
+293         ++endPos;
+294         \textcolor{keywordtype}{char}  ec = str[endPos];
+295         \textcolor{keywordflow}{switch}  (ec)
+296         \{
+297         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'"'}:  ch =  \textcolor{charliteral}{'"'};  \textcolor{keywordflow}{break};
+298         \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}:  ch = \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};  \textcolor{keywordflow}{break};
+299         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'r'}:  ch = \textcolor{charliteral}{'\(\backslash\)r'};  \textcolor{keywordflow}{break};
+300         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'n'}:  ch = \textcolor{charliteral}{'\(\backslash\)n'};  \textcolor{keywordflow}{break};
+301         \textcolor{keywordflow}{case}  \textcolor{charliteral}{'t'}:  ch = \textcolor{charliteral}{'\(\backslash\)t'};  \textcolor{keywordflow}{break};
+302         \}
+303       \}
+304 
+305       token.Append (ch);
+306       ++endPos;
+307     \}
+308     \textcolor{keywordflow}{return}  token;
+309   \}
+310   \textcolor{keywordflow}{else}
+311   \{
+312     \textcolor{comment}{// scan until end of string or next delimiter}
+313     \textcolor{keywordflow}{while}  (endPos < len)
+314     \{
+315       ch = str[endPos];
+316       \textcolor{keywordflow}{if}  (strchr (delStr, ch) != NULL)
+317       \{
+318         \textcolor{keywordflow}{break};
+319       \}
+320       ++endPos;
+321     \}
+322 
+323     endPos--;  \textcolor{comment}{// Move endPos back to last character in token.}
+324 
+325     \textcolor{keywordflow}{if}  (trimWhiteSpace)
+326     \{
+327       \textcolor{keywordflow}{while}  ((endPos >= startPos)  &&  (strchr (whiteSpace, str[endPos]) != NULL))
+328         endPos--;
+329     \}
+330 
+331     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (str, startPos, endPos);
+332   \}
+333 \}  \textcolor{comment}{/* PeekNextToken */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Reset@{Reset}}
+\index{Reset@{Reset}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Reset()}{Reset()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+Parser\+::\+Reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a67bd099f770d4a46a3d6f65c4112c00c}{}\label{class_k_k_b_1_1_k_k_str_parser_a67bd099f770d4a46a3d6f65c4112c00c}
+
+
+Definition at line 520 of file K\+K\+Str\+Parser.\+cpp.
+
+
+\begin{DoxyCode}
+521 \{
+522   nextPos = 0;
+523 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Skip\+White\+Space@{Skip\+White\+Space}}
+\index{Skip\+White\+Space@{Skip\+White\+Space}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Skip\+White\+Space(const char $\ast$white\+Space="" "")}{SkipWhiteSpace(const char *whiteSpace=" ")}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+Parser\+::\+Skip\+White\+Space (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{white\+Space = {\ttfamily \char`\"{}~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a8e19e3cdb9d6c2aa6058d527fef76d01}{}\label{class_k_k_b_1_1_k_k_str_parser_a8e19e3cdb9d6c2aa6058d527fef76d01}
+
+
+Advances the next-\/character pointer to the next N\+OT white space character. 
+
+
+
+Definition at line 111 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+Referenced by Trim\+White\+Space(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+112 \{
+113   \textcolor{keywordflow}{while}  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+114     nextPos++;
+115 \}  \textcolor{comment}{/* SkipWhiteSpce */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Split@{Split}}
+\index{Split@{Split}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Split(const char $\ast$del\+Str=""\textbackslash{}n\textbackslash{}t\textbackslash{}r "")}{Split(const char *delStr="\textbackslash{}n\textbackslash{}t\textbackslash{}r ")}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+K\+K\+Str} K\+K\+Str\+Parser\+::\+Split (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{del\+Str = {\ttfamily \char`\"{}\textbackslash{}n\textbackslash{}t\textbackslash{}r~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a625b103381cce53ddb55afe60abec4c2}{}\label{class_k_k_b_1_1_k_k_str_parser_a625b103381cce53ddb55afe60abec4c2}
+
+
+Definition at line 119 of file K\+K\+Str\+Parser.\+cpp.
+
+
+\begin{DoxyCode}
+120 \{
+121   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  tokens;
+122   \textcolor{keywordflow}{while}  (\hyperlink{class_k_k_b_1_1_k_k_str_parser_a4a2eb79f712e5993379c93dc16059332}{MoreTokens} ())
+123    tokens.push\_back (this->\hyperlink{class_k_k_b_1_1_k_k_str_parser_a8be34e183eb27872a3813fdd118fc90c}{GetNextToken} (delStr));
+124   \textcolor{keywordflow}{return}  tokens;
+125 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Str@{Str}}
+\index{Str@{Str}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Str() const }{Str() const }}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a5928dc8eeb0d7e8517b5ccf0f4778d24}{}\label{class_k_k_b_1_1_k_k_str_parser_a5928dc8eeb0d7e8517b5ccf0f4778d24}
+
+
+Definition at line 96 of file K\+K\+Str\+Parser.\+h.
+
+
+\begin{DoxyCode}
+96 \{\textcolor{keywordflow}{return} str;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Sub\+Str\+Part@{Sub\+Str\+Part}}
+\index{Sub\+Str\+Part@{Sub\+Str\+Part}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Sub\+Str\+Part(kkuint32 first\+Char, kkuint32 last\+Char) const }{SubStrPart(kkuint32 firstChar, kkuint32 lastChar) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} K\+K\+Str\+Parser\+::\+Sub\+Str\+Part (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{first\+Char, }
+\item[{{\bf kkuint32}}]{last\+Char}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a53939f3c505769182d8fef1fcf132031}{}\label{class_k_k_b_1_1_k_k_str_parser_a53939f3c505769182d8fef1fcf132031}
+
+
+Definition at line 528 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+531 \{
+532   \textcolor{keywordflow}{if}  (lastChar < firstChar)
+533     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_k_k_str_ab6e416b3ef54ef632bd10c3f7a2f7994}{KKStr::EmptyStr} ();
+534 
+535   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  subStrLen = (1 + lastChar - firstChar);
+536   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (subStrLen + 1);
+537 
+538   \textcolor{keywordflow}{if}  (lastChar >= len)
+539     lastChar = len - 1;
+540 
+541   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  idx = 0;
+542   \textcolor{keywordflow}{for}  (idx = firstChar;  idx <= lastChar;  idx++)
+543     result.Append (str[idx]);
+544 
+545   \textcolor{keywordflow}{return}  result;
+546 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}!Trim\+White\+Space@{Trim\+White\+Space}}
+\index{Trim\+White\+Space@{Trim\+White\+Space}!K\+K\+B\+::\+K\+K\+Str\+Parser@{K\+K\+B\+::\+K\+K\+Str\+Parser}}
+\subsubsection[{\texorpdfstring{Trim\+White\+Space(const char $\ast$\+\_\+white\+Space="" "")}{TrimWhiteSpace(const char *_whiteSpace=" ")}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Str\+Parser\+::\+Trim\+White\+Space (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\+\_\+white\+Space = {\ttfamily \char`\"{}~\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_parser_a47aa0c337cc8b00c733ed59f95679aa6}{}\label{class_k_k_b_1_1_k_k_str_parser_a47aa0c337cc8b00c733ed59f95679aa6}
+
+
+After this call all leading and trailing whitespace will be trimmed from tokens. 
+
+The next character pointer will be advanced to the next N\+ON whitespace character. 
+
+Definition at line 95 of file K\+K\+Str\+Parser.\+cpp.
+
+
+
+References Skip\+White\+Space(), and K\+K\+B\+::\+S\+T\+R\+D\+U\+P().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Parse\+Class\+Index\+List(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Read\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Xml\+Element\+Key\+Value\+Pairs(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Xml\+Element\+M\+L\+Class\+Name\+List(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+96 \{
+97   \textcolor{keyword}{delete}  whiteSpace;  
+98   whiteSpace = NULL;
+99 
+100   trimWhiteSpace = \textcolor{keyword}{true};
+101   \textcolor{keywordflow}{if}  (\_whiteSpace)
+102     whiteSpace = \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{STRDUP} (\_whiteSpace);
+103   \textcolor{keywordflow}{else}
+104     whiteSpace = \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{STRDUP} (\textcolor{stringliteral}{" "});
+105 
+106   \hyperlink{class_k_k_b_1_1_k_k_str_parser_a8e19e3cdb9d6c2aa6058d527fef76d01}{SkipWhiteSpace} (whiteSpace);
+107 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_parser_8h}{K\+K\+Str\+Parser.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_parser_8cpp}{K\+K\+Str\+Parser.\+cpp}\end{DoxyCompactItemize}

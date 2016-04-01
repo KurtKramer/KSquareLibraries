@@ -1,0 +1,1412 @@
+\hypertarget{class_k_k_b_1_1_matrix}{}\section{K\+KB\+:\+:Matrix Class Reference}
+\label{class_k_k_b_1_1_matrix}\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+
+
+Supports two dimensional matrices.  
+
+
+
+
+{\ttfamily \#include $<$Matrix.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_matrix}{Matrix} $\ast$ \hyperlink{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{Matrix\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{Matrix} ()
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_a900e01eb3c4f0b082a5457163c6cf2ef}{Matrix} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Rows, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Cols)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_affaa8d1a1cb7710cc0bc72ec73aaea2c}{Matrix} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&\+\_\+matrix)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_a0f87edf7b68d5920fa0bde6fe377d997}{Matrix} (const \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} \&\+\_\+v)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_a9b1c3627f573d78a2f08623fdfef990f}{$\sim$\+Matrix} ()
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{Matrix\+Ptr} \hyperlink{class_k_k_b_1_1_matrix_a70393cf0584a8a4a2735ad5eba9ae4d0}{Calc\+Co\+Factor\+Matrix} ()
+\item 
+\hyperlink{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{Matrix\+Ptr} \hyperlink{class_k_k_b_1_1_matrix_a99d8b32816b488a4d76597800f30ea70}{Covariance} () const 
+\begin{DoxyCompactList}\small\item\em Returns a Covariance matrix. \end{DoxyCompactList}\item 
+double $\ast$$\ast$const \hyperlink{class_k_k_b_1_1_matrix_ac9fff89f779f11e382a3ff030e533474}{Data} () const 
+\item 
+double \hyperlink{class_k_k_b_1_1_matrix_ae93ec6a085d62a87d237786ae1d5657d}{Determinant} ()
+\item 
+double \hyperlink{class_k_k_b_1_1_matrix_ad93cf1c0613661466547e9f40f0d5b49}{Determinant\+Slow} ()
+\begin{DoxyCompactList}\small\item\em Recursive Implementation. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_matrix_a1d9e7525cebca179d2cefa3c68beb523}{Eigen\+Vectors} (\hyperlink{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{Matrix\+Ptr} \&eigen\+Vectors, \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} $\ast$\&eigen\+Values) const 
+\begin{DoxyCompactList}\small\item\em Will derive the Eigen vectors and values of the matrix. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_matrix_ac4861e80e5f5f5a03bc61fd756538af5}{Find\+Max\+Value} (double \&max\+Val, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&row, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&col)
+\begin{DoxyCompactList}\small\item\em Locates the maximum value in a matrix along with the row and column that is located. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} \hyperlink{class_k_k_b_1_1_matrix_aa0e75f188938ed8b108999e432704c6f}{Get\+Col} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col) const 
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_ac1e575ac083839c44cd50f56e627a320}{Inverse} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_matrix_a8f90bb60f11d7a3836729aba4aba5477}{Num\+Of\+Cols} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_matrix_adb748900cbb5c55303eb71c682b0089f}{Num\+Of\+Rows} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_a5535a4b47a346d0a0afe78528d693f83}{operator$\ast$} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_a2a3c2b453687cbf862210711ed28b289}{operator$\ast$} (double right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \& \hyperlink{class_k_k_b_1_1_matrix_a4471b49ab8feb48be8d5b4225de16fb1}{operator$\ast$=} (double right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_ac8947020d9f5f738de7d771cd8fb19f0}{operator+} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_a585e5b98def5fa06e565ff0bdbcfd848}{operator+} (double right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \& \hyperlink{class_k_k_b_1_1_matrix_a86ef5684a657a07509a1f99ba0acf144}{operator+=} (double right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \& \hyperlink{class_k_k_b_1_1_matrix_a4612e586fd64b716842cd964b2f3cdbc}{operator+=} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_a515dad949068dde646ca73d9d69d9672}{operator-\/} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_abdae6b017f749792e303749cbe74f57a}{operator-\/} (double right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \& \hyperlink{class_k_k_b_1_1_matrix_a127463de2d624abeaf5924c0f2fe798d}{operator=} (const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \& \hyperlink{class_k_k_b_1_1_matrix_acd15e0e4eb7b499030cd8af1dfd3f409}{operator=} (const \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_row}{Row} \& \hyperlink{class_k_k_b_1_1_matrix_a5bc7829435bc1063b82a91c1b82d5be5}{operator\mbox{[}$\,$\mbox{]}} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row\+I\+DX) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_matrix_ac2d0c31477e85bad55e6a1cd5be1b302}{Re\+Size} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Rows, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Cols)
+\item 
+bool \hyperlink{class_k_k_b_1_1_matrix_a68ce1e9491bb1c1a69ce16bbd12bb6db}{Symmetric} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_af9b74b284027c584dc75ae674e65f58d}{Transpose} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\static \hyperlink{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{Matrix\+Ptr} \hyperlink{class_k_k_b_1_1_matrix_a4bda3a321f99acd63746661b2f7a8ea8}{Build\+From\+Array} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Rows, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Cols, T $\ast$$\ast$data)
+\begin{DoxyCompactList}\small\item\em Will create a new matrix using the 2d\+Array \char`\"{}data\char`\"{} for source. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_matrix}{Matrix} \hyperlink{class_k_k_b_1_1_matrix_aa6ed460f16c161718d4178f62cc3afbf}{operator-\/} (double left, const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&right)
+\item 
+std\+::ostream \& \hyperlink{class_k_k_b_1_1_matrix_a9597a390480e6b835e8b6c3c22d00d93}{operator$<$$<$} (std\+::ostream \&os, const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&matrix)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Supports two dimensional matrices. 
+
+Developed for Machine Learning Project for support of Import Vector Machine. Handles two dimensional matrices. Functions supported are matrix addition, subtraction multiplication, transpose, determinant, and inversion. Where appropriate arithmetic arithmetic operators +, -\/, $\ast$ were overloaded. Addition, Subtraction and Multiplication can be done against either another matrix or scaler. Also Transpose and Determinant operations are supported. 
+
+Definition at line 46 of file Matrix.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Matrix\+Ptr@{Matrix\+Ptr}}
+\index{Matrix\+Ptr@{Matrix\+Ptr}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Matrix\+Ptr}{MatrixPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Matrix}$\ast$ {\bf K\+K\+B\+::\+Matrix\+::\+Matrix\+Ptr}}\hypertarget{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}{}\label{class_k_k_b_1_1_matrix_ad532bd6e9d0aa9b54e78f0feec5741a3}
+
+
+Definition at line 49 of file Matrix.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Matrix()}{Matrix()}}]{\setlength{\rightskip}{0pt plus 5cm}Matrix\+::\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{}\label{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}
+
+
+Definition at line 94 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+94                :
+95 
+96   data        (NULL),
+97   dataArea    (NULL),
+98   numOfCols   (0),
+99   numOfRows   (0),
+100   rows        (NULL),
+101   totNumCells (0)
+102 \{
+103 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Matrix(kkint32 \+\_\+num\+Of\+Rows, kkint32 \+\_\+num\+Of\+Cols)}{Matrix(kkint32 _numOfRows, kkint32 _numOfCols)}}]{\setlength{\rightskip}{0pt plus 5cm}Matrix\+::\+Matrix (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Rows, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Cols}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a900e01eb3c4f0b082a5457163c6cf2ef}{}\label{class_k_k_b_1_1_matrix_a900e01eb3c4f0b082a5457163c6cf2ef}
+
+
+Definition at line 108 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Build\+Gaussian2d\+Kernel(), Calc\+Co\+Factor\+Matrix(), Covariance(), K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T(), K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T\+On\+Masked\+Area(), operator$\ast$(), K\+K\+B\+::operator-\/(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Perform\+Adjustmnts(), and Transpose().
+
+
+\begin{DoxyCode}
+110                 :
+111 
+112   data        (NULL),
+113   dataArea    (NULL),
+114   numOfCols   (\_numOfCols),
+115   numOfRows   (\_numOfRows),
+116   rows        (NULL),
+117   totNumCells (0)
+118 
+119 \{
+120   \textcolor{keywordflow}{if}  (\_numOfRows < 0)
+121   \{
+122     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg(80);
+123     msg << \textcolor{stringliteral}{"Matrix::Matrix   **** ERROR ****,  Row Dimension["} << \_numOfRows << \textcolor{stringliteral}{"]  Invalid."};
+124     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg <<\hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+125     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+126   \}
+127 
+128   \textcolor{keywordflow}{if}  (\_numOfCols < 0)
+129   \{
+130     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg(80);
+131     msg << \textcolor{stringliteral}{"Matrix::Matrix   **** ERROR ****,  Col Dimension["} << \_numOfCols << \textcolor{stringliteral}{"]  Invalid."};
+132     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg <<\hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+133     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+134   \}
+135 
+136   AllocateStorage ();
+137 \}  \textcolor{comment}{/*  Matrix::Matrix  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Matrix(const Matrix \&\+\_\+matrix)}{Matrix(const Matrix &_matrix)}}]{\setlength{\rightskip}{0pt plus 5cm}Matrix\+::\+Matrix (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{\+\_\+matrix}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_affaa8d1a1cb7710cc0bc72ec73aaea2c}{}\label{class_k_k_b_1_1_matrix_affaa8d1a1cb7710cc0bc72ec73aaea2c}
+
+
+Definition at line 142 of file Matrix.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), Eigen\+Vectors(), operator$\ast$(), operator+(), and operator-\/().
+
+
+\begin{DoxyCode}
+142                                      :
+143   data        (NULL),
+144   dataArea    (NULL),
+145   numOfCols   (\_matrix.numOfCols),
+146   numOfRows   (\_matrix.numOfRows),
+147   rows        (NULL),
+148   totNumCells (0)
+149 
+150 \{
+151   AllocateStorage ();
+152   memcpy (dataArea, \_matrix.dataArea, totNumCells * sizeof (\textcolor{keywordtype}{double}));
+153 \} \textcolor{comment}{/* Matrix::Matrix  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Matrix@{Matrix}}
+\index{Matrix@{Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Matrix(const Vector\+Double \&\+\_\+v)}{Matrix(const VectorDouble &_v)}}]{\setlength{\rightskip}{0pt plus 5cm}Matrix\+::\+Matrix (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector\+Double} \&}]{\+\_\+v}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a0f87edf7b68d5920fa0bde6fe377d997}{}\label{class_k_k_b_1_1_matrix_a0f87edf7b68d5920fa0bde6fe377d997}
+
+
+Definition at line 157 of file Matrix.\+cpp.
+
+
+
+References Matrix().
+
+
+
+Referenced by Matrix().
+
+
+\begin{DoxyCode}
+157                                       :
+158   data      (NULL),
+159   dataArea  (NULL),
+160   numOfCols (1),
+161   numOfRows (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} (\_v.size ())),
+162   rows      (NULL)
+163 \{
+164   AllocateStorage ();
+165   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+166   \textcolor{keywordflow}{for}  (row = 0;  row < numOfRows;  ++row)
+167     dataArea[row] = \_v[row];
+168 \} \textcolor{comment}{/* Matrix::Matrix  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!````~Matrix@{$\sim$\+Matrix}}
+\index{````~Matrix@{$\sim$\+Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{$\sim$\+Matrix()}{~Matrix()}}]{\setlength{\rightskip}{0pt plus 5cm}Matrix\+::$\sim$\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a9b1c3627f573d78a2f08623fdfef990f}{}\label{class_k_k_b_1_1_matrix_a9b1c3627f573d78a2f08623fdfef990f}
+
+
+Definition at line 173 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+174 \{
+175   Destroy ();
+176 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Build\+From\+Array@{Build\+From\+Array}}
+\index{Build\+From\+Array@{Build\+From\+Array}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Build\+From\+Array(kkint32 num\+Of\+Rows, kkint32 num\+Of\+Cols, T $\ast$$\ast$data)}{BuildFromArray(kkint32 numOfRows, kkint32 numOfCols, T **data)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf Matrix\+Ptr} Matrix\+::\+Build\+From\+Array (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{num\+Of\+Rows, }
+\item[{{\bf kkint32}}]{num\+Of\+Cols, }
+\item[{T $\ast$$\ast$}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_matrix_a4bda3a321f99acd63746661b2f7a8ea8}{}\label{class_k_k_b_1_1_matrix_a4bda3a321f99acd63746661b2f7a8ea8}
+
+
+Will create a new matrix using the 2d\+Array \char`\"{}data\char`\"{} for source. 
+
+If any row in \char`\"{}data\char`\"{} is equal to N\+U\+LL then the corresponding row in the returned matrix will be initialized to zeros. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em num\+Of\+Rows} & Number of rows in resultant matrix. \\
+\hline
+\mbox{\tt in}  & {\em num\+Of\+Cols} & Number of cols if resultant matrix. \\
+\hline
+\mbox{\tt in}  & {\em data} & A two dimensional array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A matrix that is initialized with the contents of \char`\"{}data\char`\"{}. 
+\end{DoxyReturn}
+
+
+Definition at line 190 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+194 \{
+195   \textcolor{keywordflow}{if}  ((numOfRows < 1)  ||  (numOfCols < 1))
+196   \{
+197     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::BuildFromArray   ***ERROR***    NumOfRows[
+      "} << numOfRows << \textcolor{stringliteral}{"]  or  NumOfCols["} << numOfCols << \textcolor{stringliteral}{"] is invalid."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+198     \textcolor{keywordflow}{return}  NULL;
+199   \}
+200 
+201   \textcolor{keywordflow}{if}  (!data)
+202   \{
+203     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::BuildFromArray   ***ERROR***    No source
+       data (data == NULL)."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+204     \textcolor{keywordflow}{return}  NULL;
+205   \}
+206 
+207   \hyperlink{class_k_k_b_1_1_matrix}{MatrixPtr}  m = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{Matrix} (numOfRows, numOfCols);
+208 
+209   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row = 0;  row < numOfRows;  ++row)
+210   \{
+211     T*       srcRow  = data[row];
+212     \textcolor{keywordtype}{double}*  destRow = m->data[row];
+213     \textcolor{keywordflow}{if}  (srcRow)
+214     \{
+215       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = 0;  col < numOfCols;  ++col)
+216         destRow[col] = (\textcolor{keywordtype}{double})(srcRow[col]);
+217     \}
+218   \}
+219   \textcolor{keywordflow}{return}  m; 
+220 \}  \textcolor{comment}{/* BuildFromArray */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Calc\+Co\+Factor\+Matrix@{Calc\+Co\+Factor\+Matrix}}
+\index{Calc\+Co\+Factor\+Matrix@{Calc\+Co\+Factor\+Matrix}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Calc\+Co\+Factor\+Matrix()}{CalcCoFactorMatrix()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix\+Ptr} Matrix\+::\+Calc\+Co\+Factor\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a70393cf0584a8a4a2735ad5eba9ae4d0}{}\label{class_k_k_b_1_1_matrix_a70393cf0584a8a4a2735ad5eba9ae4d0}
+
+
+Definition at line 606 of file Matrix.\+cpp.
+
+
+
+References Determinant(), Matrix(), operator\mbox{[}$\,$\mbox{]}(), K\+K\+B\+::\+Row\+::operator\mbox{[}$\,$\mbox{]}(), and K\+K\+B\+::os\+Wait\+For\+Enter().
+
+
+
+Referenced by Inverse().
+
+
+\begin{DoxyCode}
+607 \{
+608   \textcolor{keywordflow}{if}  (numOfCols != numOfRows)
+609   \{
+610     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+611          << \textcolor{stringliteral}{"Matrix::CalcCoFactors   **** ERROR ****,  Matrix not a Square["}
+612          << numOfRows << \textcolor{stringliteral}{","} << numOfCols << \textcolor{stringliteral}{"]."}
+613          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+614          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+615     \hyperlink{namespace_k_k_b_a255aa69aade7f429585349d08973e09f}{osWaitForEnter} ();
+616     exit (1);
+617   \}
+618 
+619   \hyperlink{class_k_k_b_1_1_matrix}{MatrixPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{Matrix} (numOfRows, numOfCols);
+620 
+621   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newSize = numOfCols - 1;
+622 
+623   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  colMap = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} [newSize];
+624   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  rowMap = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} [newSize];
+625 
+626   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+627   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+628   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+629 
+630 
+631   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  sign;  
+632 
+633   \textcolor{keywordflow}{for}  (row = 0; row < numOfRows; row++)
+634   \{
+635     \textcolor{comment}{// Create a map of all rows except row we are calculating }
+636     \textcolor{comment}{// CoFactors for.}
+637 
+638     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newRow = 0;
+639     \textcolor{keywordflow}{for}  (x = 0; x < numOfRows; x++)
+640     \{
+641       \textcolor{keywordflow}{if}  (x != row)
+642       \{
+643         rowMap[newRow] = x;
+644         newRow++;
+645       \}
+646     \}
+647 
+648     \textcolor{keywordflow}{for}  (col = 0; col < numOfCols; col++)
+649     \{
+650       \textcolor{comment}{// Create a map of all cells except row we are calculating }
+651       \textcolor{comment}{// CoFactor for.}
+652 
+653       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newCol = 0;
+654       \textcolor{keywordflow}{for}  (x = 0; x < numOfCols; x++)
+655       \{
+656         \textcolor{keywordflow}{if}  (x != col)
+657         \{
+658           colMap[newCol] = x;
+659           newCol++;
+660         \}
+661       \}
+662 
+663       \textcolor{keywordflow}{if}  (((row + col) % 2) == 0)
+664         sign = 1;
+665       \textcolor{keywordflow}{else} 
+666         sign = -1;
+667 
+668 
+669       \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  temp (newSize, newSize);
+670       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} r = 0;  r < newSize;  r++)
+671       \{
+672         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  tempR = rowMap[r];
+673         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} c = 0;  c < newSize;  c++)
+674           temp[r][c] = data[tempR][colMap[c]]; 
+675       \}
+676 
+677       result->data[row][col] = temp.Determinant () * sign;
+678     \}
+679   \}
+680 
+681   \textcolor{keywordflow}{return}  result;
+682 \} \textcolor{comment}{/* CalcCoFactor  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Covariance@{Covariance}}
+\index{Covariance@{Covariance}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Covariance() const }{Covariance() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix\+Ptr} Matrix\+::\+Covariance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_matrix_a99d8b32816b488a4d76597800f30ea70}{}\label{class_k_k_b_1_1_matrix_a99d8b32816b488a4d76597800f30ea70}
+
+
+Returns a Covariance matrix. 
+
+Each column represents a variable and each row represents an instance of each variable. \begin{DoxyReturn}{Returns}
+Returns a symmetric matrix that will be (num\+Of\+Rows x num\+Of\+Rows) where each element will represent the covariance between their respective variables. 
+\end{DoxyReturn}
+
+
+Definition at line 1004 of file Matrix.\+cpp.
+
+
+
+References Matrix(), operator\mbox{[}$\,$\mbox{]}(), and K\+K\+B\+::\+Row\+::operator\mbox{[}$\,$\mbox{]}().
+
+
+\begin{DoxyCode}
+1005 \{
+1006   \textcolor{keywordflow}{if}  ((data == NULL)  ||  (numOfRows < 1))
+1007   \{
+1008     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::Covariance   ***ERROR***   'data' not defined in Matrix."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1009     \textcolor{keywordflow}{return} NULL;
+1010   \}
+1011 
+1012   \textcolor{comment}{// Used web site below to help with Covariance calculations}
+1013   \textcolor{comment}{//  http://www.itl.nist.gov/div898/handbook/pmc/section5/pmc541.htm}
+1014 
+1015   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col = 0;
+1016   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = 0;
+1017 
+1018   \textcolor{keywordtype}{double}*   totals       = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfCols];
+1019   \textcolor{keywordtype}{double}*   means        = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfCols];
+1020   \textcolor{keywordtype}{double}**  centeredVals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}*[numOfCols];
+1021   \textcolor{keywordflow}{for}  (col = 0;  col < numOfCols;  ++col)
+1022   \{
+1023     totals[col] = 0.0;
+1024     centeredVals[col] = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfRows];
+1025   \}
+1026 
+1027   \textcolor{keywordflow}{for}  (row = 0;  row < numOfRows;  ++row)
+1028   \{
+1029     \textcolor{keywordtype}{double}*  rowData = data[row];
+1030     \textcolor{keywordflow}{for}  (col = 0;  col < numOfCols;  ++col)
+1031       totals[col] += rowData[col];
+1032   \}
+1033 
+1034   \textcolor{keywordflow}{for}  (col = 0;  col < numOfCols;  ++col)
+1035     means[col] = totals[col] / numOfRows;
+1036 
+1037   \textcolor{keywordflow}{for}  (row = 0;  row < numOfRows;  ++row)
+1038   \{
+1039     \textcolor{keywordtype}{double}*  rowData = data[row];
+1040     \textcolor{keywordflow}{for}  (col = 0;  col < numOfCols;  ++col)
+1041       centeredVals[col][row] = rowData[col] - means[col];
+1042   \}
+1043  
+1044   \hyperlink{class_k_k_b_1_1_matrix}{MatrixPtr}  covariances = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{Matrix} (numOfCols, numOfCols);
+1045 
+1046   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} varIdxX = 0;  varIdxX < numOfCols;  ++varIdxX)
+1047   \{
+1048     \textcolor{keywordtype}{double}*  varXs = centeredVals[varIdxX];
+1049     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} varIdxY = varIdxX;  varIdxY < numOfCols;  ++varIdxY)
+1050     \{
+1051       \textcolor{comment}{// Calculate the covariance between chanIdx0 and chanIdx1}
+1052 
+1053       \textcolor{keywordtype}{double}*  varYs = centeredVals[varIdxY];
+1054       \textcolor{keywordtype}{double} total = 0.0f;
+1055       \textcolor{keywordflow}{for}  (row = 0;  row < numOfRows;  ++row)
+1056         total += varXs[row] * varYs[row];
+1057       (*covariances)[varIdxX][varIdxY] = total / (numOfRows - 1);
+1058       (*covariances)[varIdxY][varIdxX]  = (*covariances)[varIdxX][varIdxY];
+1059     \}
+1060   \}
+1061 
+1062   \textcolor{keywordflow}{for}  (col = 0;  col < numOfCols;  col++)
+1063   \{
+1064     \textcolor{keyword}{delete}[]  centeredVals[col];
+1065     centeredVals[col] = NULL;
+1066   \}
+1067   \textcolor{keyword}{delete}[]  centeredVals;   centeredVals = NULL;
+1068   \textcolor{keyword}{delete}[]  means;          means  = NULL;
+1069   \textcolor{keyword}{delete}[]  totals;         totals = NULL;
+1070 
+1071   \textcolor{keywordflow}{return}  covariances;
+1072 \}  \textcolor{comment}{/* Covariance */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Data@{Data}}
+\index{Data@{Data}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Data() const }{Data() const }}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ const K\+K\+B\+::\+Matrix\+::\+Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_matrix_ac9fff89f779f11e382a3ff030e533474}{}\label{class_k_k_b_1_1_matrix_ac9fff89f779f11e382a3ff030e533474}
+
+
+Definition at line 106 of file Matrix.\+h.
+
+
+\begin{DoxyCode}
+106 \{\textcolor{keywordflow}{return}  data;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Determinant@{Determinant}}
+\index{Determinant@{Determinant}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Determinant()}{Determinant()}}]{\setlength{\rightskip}{0pt plus 5cm}double Matrix\+::\+Determinant (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ae93ec6a085d62a87d237786ae1d5657d}{}\label{class_k_k_b_1_1_matrix_ae93ec6a085d62a87d237786ae1d5657d}
+\begin{DoxyReturn}{Returns}
+the determinant of mat 
+\end{DoxyReturn}
+
+
+Definition at line 945 of file Matrix.\+cpp.
+
+
+
+Referenced by Calc\+Co\+Factor\+Matrix(), and Inverse().
+
+
+\begin{DoxyCode}
+946 \{
+947   \textcolor{keywordflow}{if}  (numOfCols != numOfRows)
+948     \textcolor{keywordflow}{return} -999999.99;
+949 
+950   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  r, c;
+951 
+952   \textcolor{keywordtype}{double}** mat = \textcolor{keyword}{new} \textcolor{keywordtype}{double}*[numOfRows];
+953   \textcolor{keywordflow}{for}  (r = 0;  r < numOfRows;  r++)
+954   \{
+955     mat[r] = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfCols];
+956     \textcolor{keywordflow}{for}  (c = 0;  c < numOfCols;  c++)
+957     \{
+958       mat[r][c] = data[r][c];
+959     \}
+960   \}
+961 
+962     \textcolor{keywordtype}{double} det = 1.0;
+963     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} i = 0;
+964 
+965     \textcolor{keywordflow}{for}  (i = 0;  i < numOfRows;  i++)
+966     \{
+967         \textcolor{keyword}{const} \textcolor{keywordtype}{double}  Aii = DeterminantSwap (mat, i);
+968         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} j = 0;
+969 
+970         \textcolor{keywordflow}{if}  (fabs (Aii) < \hyperlink{_matrix_8cpp_ab701824136346377b44fc3adb8050b29}{DBL\_EPSILON})
+971         \{
+972             det = 0.0;
+973             \textcolor{keywordflow}{break};
+974         \}
+975 
+976         det *= Aii;
+977         
+978         \textcolor{comment}{//Do elimination}
+979         \textcolor{keywordflow}{for}  (j = i + 1;  j < numOfRows;  j++)
+980         \{
+981             \textcolor{keyword}{const} \textcolor{keywordtype}{double} pivot = mat[j][i] / Aii;
+982             \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a4a7e2d1bab49f38edf25c38a8dc20012}{ushort} k = i;  k < numOfRows;  k++)
+983                 mat[j][k] -= pivot * mat[i][k];
+984         \}
+985     \}
+986 
+987   \textcolor{keywordflow}{for}  (r = 0;  r < numOfRows;  r++)
+988   \{
+989     \textcolor{keyword}{delete}  mat[r];
+990     mat[r] = NULL;
+991   \}
+992   \textcolor{keyword}{delete}[]  mat;
+993   mat = NULL;
+994     \textcolor{keywordflow}{return} (det);
+995 \}  \textcolor{comment}{/* Determinant */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Determinant\+Slow@{Determinant\+Slow}}
+\index{Determinant\+Slow@{Determinant\+Slow}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Determinant\+Slow()}{DeterminantSlow()}}]{\setlength{\rightskip}{0pt plus 5cm}double Matrix\+::\+Determinant\+Slow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ad93cf1c0613661466547e9f40f0d5b49}{}\label{class_k_k_b_1_1_matrix_ad93cf1c0613661466547e9f40f0d5b49}
+
+
+Recursive Implementation. 
+
+
+
+Definition at line 286 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+287 \{
+288   \textcolor{keywordflow}{if}  (numOfCols != numOfRows)
+289   \{
+290     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (80);
+291     msg << \textcolor{stringliteral}{"Matrix::Determinant   *** ERROR ***   Dimensions are not Square["} << numOfRows << \textcolor{stringliteral}{","} << 
+      numOfCols << \textcolor{stringliteral}{"]  Invalid."};
+292     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+293     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+294   \}
+295 
+296   \textcolor{keywordflow}{if}  (numOfCols == 1)
+297   \{
+298     \textcolor{comment}{// return  rows[0]->cells[0];}
+299     \textcolor{keywordflow}{return} data[0][0];
+300   \}
+301 
+302   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+303 
+304   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  rowMap = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfRows];
+305   \textcolor{keywordflow}{for}  (x = 0; x < numOfRows; x++)
+306     rowMap[x] = x;
+307 
+308   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  colMap = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfCols];
+309   \textcolor{keywordflow}{for}  (x = 0; x < numOfCols; x++)
+310     colMap[x] = x;
+311 
+312   \textcolor{keywordtype}{double} det = CalcDeterminent (rowMap, colMap, numOfCols);
+313 
+314   \textcolor{keyword}{delete}[]  colMap;
+315   \textcolor{keywordflow}{return}  det;
+316 \}  \textcolor{comment}{/* Determinant */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Eigen\+Vectors@{Eigen\+Vectors}}
+\index{Eigen\+Vectors@{Eigen\+Vectors}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Eigen\+Vectors(\+Matrix\+Ptr \&eigen\+Vectors, Vector\+Double $\ast$\&eigen\+Values) const }{EigenVectors(MatrixPtr &eigenVectors, VectorDouble *&eigenValues) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Matrix\+::\+Eigen\+Vectors (
+\begin{DoxyParamCaption}
+\item[{{\bf Matrix\+Ptr} \&}]{eigen\+Vectors, }
+\item[{{\bf Vector\+Double} $\ast$\&}]{eigen\+Values}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_matrix_a1d9e7525cebca179d2cefa3c68beb523}{}\label{class_k_k_b_1_1_matrix_a1d9e7525cebca179d2cefa3c68beb523}
+
+
+Will derive the Eigen vectors and values of the matrix. 
+
+Will make use of routines from Numerical Recipes for c++, ex\+: Tred2 and Tqli. 
+
+Definition at line 768 of file Matrix.\+cpp.
+
+
+
+References Matrix(), and Symmetric().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T(), and K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T\+On\+Masked\+Area().
+
+
+\begin{DoxyCode}
+771 \{
+772   eigenVectors = NULL;
+773   eigenValues  = NULL;
+774   \textcolor{keywordflow}{if}  ((data == NULL)  ||  (numOfRows < 1))
+775   \{
+776     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::EigenVectors   ***ERROR***   'data' not defined in Matrix."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+777     \textcolor{keywordflow}{return};
+778   \}
+779   
+780   \textcolor{keywordflow}{if}  (numOfRows != numOfCols)
+781   \{
+782     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::EigenVectors   ***ERROR***   Not a square matrix  NumOfRows["} <<
+       numOfRows << \textcolor{stringliteral}{"]  NumOfCols["} << numOfCols << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+783     \textcolor{keywordflow}{return};
+784   \}
+785 
+786   eigenVectors = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_matrix_a2dba13c45127354c9f75ef576f49269b}{Matrix} (*\textcolor{keyword}{this});
+787 
+788   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_matrix_a68ce1e9491bb1c1a69ce16bbd12bb6db}{Symmetric} ())
+789   \{
+790     \textcolor{keywordtype}{double}*  d = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfRows];
+791     \textcolor{keywordtype}{double}*  e = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfRows];
+792     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < numOfRows;  ++x)
+793     \{
+794       d[x] = 0.0;
+795       e[x] = 0.0;
+796     \}
+797     \hyperlink{namespace_k_k_b_a2a2800ef0c9757025d696bcd2fb289b8}{Tred2} (eigenVectors->data, numOfRows, d, e);
+798     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  successful = Tqli (d, e, numOfRows, eigenVectors->data);
+799     \textcolor{keywordflow}{if}  (successful != 1)
+800     \{
+801       \textcolor{keyword}{delete}  eigenVectors;  eigenVectors = NULL;
+802       \textcolor{keyword}{delete}[] d;            d = NULL;
+803       \textcolor{keyword}{delete}[] e;            e = NULL;
+804       \textcolor{keywordflow}{return};
+805     \}
+806 
+807     eigenValues = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{VectorDouble} ();
+808     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < numOfRows;  ++x)
+809       eigenValues->push\_back (d[x]);
+810 
+811     \textcolor{keyword}{delete}[]  d;  d = NULL;
+812     \textcolor{keyword}{delete}[]  e;  e = NULL;
+813   \}
+814 \}  \textcolor{comment}{/* GetEigenVectors */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Find\+Max\+Value@{Find\+Max\+Value}}
+\index{Find\+Max\+Value@{Find\+Max\+Value}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Find\+Max\+Value(double \&max\+Val, kkint32 \&row, kkint32 \&col)}{FindMaxValue(double &maxVal, kkint32 &row, kkint32 &col)}}]{\setlength{\rightskip}{0pt plus 5cm}void Matrix\+::\+Find\+Max\+Value (
+\begin{DoxyParamCaption}
+\item[{double \&}]{max\+Val, }
+\item[{{\bf kkint32} \&}]{row, }
+\item[{{\bf kkint32} \&}]{col}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ac4861e80e5f5f5a03bc61fd756538af5}{}\label{class_k_k_b_1_1_matrix_ac4861e80e5f5f5a03bc61fd756538af5}
+
+
+Locates the maximum value in a matrix along with the row and column that is located. 
+
+
+
+Definition at line 818 of file Matrix.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Image(), and K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Masked\+Image().
+
+
+\begin{DoxyCode}
+822 \{
+823   rowIdx = -1;
+824   colIdx = -1;
+825   maxVal = DBL\_MIN;
+826 
+827   \textcolor{keywordflow}{if}  (!data)
+828     \textcolor{keywordflow}{return};
+829 
+830   maxVal = data[0][0];
+831   rowIdx = colIdx = 0;
+832 
+833   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row = 0;  row < numOfRows;  ++row)
+834   \{
+835     \textcolor{keywordtype}{double}*  dataRow = data[row];
+836     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = 0;  col < numOfCols;  ++col)
+837     \{
+838       \textcolor{keywordflow}{if}  (dataRow[col] > maxVal)
+839       \{
+840         maxVal = dataRow[col];
+841         colIdx = col;
+842         rowIdx = row;
+843       \}
+844     \}
+845   \}
+846 
+847   \textcolor{keywordflow}{return};
+848 \}  \textcolor{comment}{/* FindMaxValue */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Get\+Col@{Get\+Col}}
+\index{Get\+Col@{Get\+Col}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Get\+Col(kkint32 col) const }{GetCol(kkint32 col) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+Double} Matrix\+::\+Get\+Col (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{col}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_matrix_aa0e75f188938ed8b108999e432704c6f}{}\label{class_k_k_b_1_1_matrix_aa0e75f188938ed8b108999e432704c6f}
+
+
+Definition at line 891 of file Matrix.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T(), and K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T\+On\+Masked\+Area().
+
+
+\begin{DoxyCode}
+892 \{
+893   \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{VectorDouble}  colResult (numOfRows, 0.0);
+894   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} r = 0;  r < numOfRows;  r++)
+895     colResult[r] = data[r][col];
+896 
+897   \textcolor{keywordflow}{return}  colResult;
+898 \}  \textcolor{comment}{/* GetCol */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Inverse@{Inverse}}
+\index{Inverse@{Inverse}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Inverse()}{Inverse()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::\+Inverse (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ac1e575ac083839c44cd50f56e627a320}{}\label{class_k_k_b_1_1_matrix_ac1e575ac083839c44cd50f56e627a320}
+
+
+Definition at line 731 of file Matrix.\+cpp.
+
+
+
+References Calc\+Co\+Factor\+Matrix(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Determinant(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), operator$\ast$=(), and Transpose().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Perform\+Adjustmnts().
+
+
+\begin{DoxyCode}
+732 \{
+733   \textcolor{keywordflow}{if}  (numOfCols != numOfRows)
+734   \{
+735     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (80);
+736     msg <<  \textcolor{stringliteral}{"Matrix::Inverse   *** ERROR ***   Dimensions are not Square["} << numOfRows << \textcolor{stringliteral}{","} << numOfCols
+       << \textcolor{stringliteral}{"]  Invalid."};
+737 
+738     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+739     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+740   \}
+741 
+742   \textcolor{keywordtype}{double}  det = \hyperlink{class_k_k_b_1_1_matrix_ae93ec6a085d62a87d237786ae1d5657d}{Determinant} ();
+743   \textcolor{keywordflow}{if}  (det == 0)
+744   \{
+745     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"Matrix::Inverse   *** ERROR ***   Determinant of Matrix is Zero."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+746   \}
+747 
+748   \hyperlink{class_k_k_b_1_1_matrix}{MatrixPtr}  coFactors = \hyperlink{class_k_k_b_1_1_matrix_a70393cf0584a8a4a2735ad5eba9ae4d0}{CalcCoFactorMatrix} ();
+749 
+750   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result = coFactors->\hyperlink{class_k_k_b_1_1_matrix_af9b74b284027c584dc75ae674e65f58d}{Transpose} ();
+751 
+752   \textcolor{keyword}{delete}  coFactors;
+753 
+754   \textcolor{keywordflow}{if}  (det == 0.0)
+755     result *= 0.0;
+756   \textcolor{keywordflow}{else}
+757     result *= (1.0 / det);
+758 
+759   \textcolor{keywordflow}{return}  result;
+760 \} \textcolor{comment}{/* Inverse */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Num\+Of\+Cols@{Num\+Of\+Cols}}
+\index{Num\+Of\+Cols@{Num\+Of\+Cols}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Cols() const }{NumOfCols() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Matrix\+::\+Num\+Of\+Cols (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_matrix_a8f90bb60f11d7a3836729aba4aba5477}{}\label{class_k_k_b_1_1_matrix_a8f90bb60f11d7a3836729aba4aba5477}
+
+
+Definition at line 126 of file Matrix.\+h.
+
+
+
+Referenced by K\+K\+B\+::operator-\/(), and operator$<$$<$().
+
+
+\begin{DoxyCode}
+126 \{\textcolor{keywordflow}{return} numOfCols;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Num\+Of\+Rows@{Num\+Of\+Rows}}
+\index{Num\+Of\+Rows@{Num\+Of\+Rows}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Rows() const }{NumOfRows() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Matrix\+::\+Num\+Of\+Rows (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_matrix_adb748900cbb5c55303eb71c682b0089f}{}\label{class_k_k_b_1_1_matrix_adb748900cbb5c55303eb71c682b0089f}
+
+
+Definition at line 128 of file Matrix.\+h.
+
+
+
+Referenced by K\+K\+B\+::operator-\/(), and operator$<$$<$().
+
+
+\begin{DoxyCode}
+128 \{\textcolor{keywordflow}{return} numOfRows;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator$\ast$(const Matrix \&right)}{operator*(const Matrix &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a5535a4b47a346d0a0afe78528d693f83}{}\label{class_k_k_b_1_1_matrix_a5535a4b47a346d0a0afe78528d693f83}
+
+
+Definition at line 478 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and Matrix().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Perform\+Adjustmnts().
+
+
+\begin{DoxyCode}
+479 \{
+480   \textcolor{keywordflow}{if}  (numOfCols != right.numOfRows)
+481   \{
+482     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (100);
+483     msg << \textcolor{stringliteral}{"Matrix::operator*   **** ERROR ****,  Dimension Mismatch  Left["}  << numOfRows << \textcolor{stringliteral}{","} << 
+      numOfCols << \textcolor{stringliteral}{"]  Right["} << right.numOfRows << \textcolor{stringliteral}{","} << right.numOfCols << \textcolor{stringliteral}{"]."};
+484     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+485     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+486   \}
+487 
+488   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+489   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+490 
+491   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  rRows = numOfRows;
+492   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  rCols = right.numOfCols;
+493 
+494   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (rRows, rCols);
+495 
+496   \textcolor{keywordtype}{double}**  resultData = result.data;
+497   \textcolor{keywordtype}{double}**  rightData  = right.data;
+498 
+499   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  innerDim = numOfCols;
+500 
+501   \textcolor{keywordflow}{for}  (row = 0;   row < rRows;  row++)
+502   \{
+503     \textcolor{keywordflow}{for}  (col = 0;  col < rCols;  col++)
+504     \{
+505        \textcolor{keywordtype}{double}  val = 0;
+506        \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x   = 0;
+507        \textcolor{keywordflow}{for}  (x = 0; x < innerDim; x++)
+508          val = val + data[row][x] * rightData[x][col];
+509        resultData[row][col] = val;
+510     \}
+511   \}
+512 
+513   \textcolor{keywordflow}{return}  result;
+514 \}  \textcolor{comment}{/* Matrix::operator */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator$\ast$(double right)}{operator*(double right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{double}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a2a3c2b453687cbf862210711ed28b289}{}\label{class_k_k_b_1_1_matrix_a2a3c2b453687cbf862210711ed28b289}
+
+
+Definition at line 530 of file Matrix.\+cpp.
+
+
+
+References Matrix().
+
+
+\begin{DoxyCode}
+531 \{
+532   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (*\textcolor{keyword}{this});
+533   \textcolor{keywordtype}{double}*  resultDataArea = result.dataArea;
+534   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+535     resultDataArea[x] = dataArea[x] * right;
+536   \textcolor{keywordflow}{return}  result;
+537 \}  \textcolor{comment}{/* operator* */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator$\ast$=@{operator$\ast$=}}
+\index{operator$\ast$=@{operator$\ast$=}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator$\ast$=(double right)}{operator*=(double right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} \& Matrix\+::operator$\ast$= (
+\begin{DoxyParamCaption}
+\item[{double}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a4471b49ab8feb48be8d5b4225de16fb1}{}\label{class_k_k_b_1_1_matrix_a4471b49ab8feb48be8d5b4225de16fb1}
+
+
+Definition at line 349 of file Matrix.\+cpp.
+
+
+
+Referenced by Inverse().
+
+
+\begin{DoxyCode}
+350 \{
+351   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+352   \textcolor{keywordflow}{for}  (x = 0;  x < totNumCells;  ++x)
+353     dataArea[x] *= right;
+354   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+355 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator+@{operator+}}
+\index{operator+@{operator+}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator+(const Matrix \&right)}{operator+(const Matrix &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ac8947020d9f5f738de7d771cd8fb19f0}{}\label{class_k_k_b_1_1_matrix_ac8947020d9f5f738de7d771cd8fb19f0}
+
+
+Definition at line 369 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and Matrix().
+
+
+
+Referenced by K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Image(), and K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Masked\+Image().
+
+
+\begin{DoxyCode}
+370 \{
+371   \textcolor{keywordflow}{if}  ((numOfRows != right.numOfRows)  ||
+372        (numOfCols != right.numOfCols))
+373   \{
+374     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (100);
+375     msg << \textcolor{stringliteral}{"Matrix::operator+   **** ERROR ****,  Dimensions Don't Match ["} << numOfRows << \textcolor{stringliteral}{","} << 
+      numOfCols << \textcolor{stringliteral}{"] + ["} << right.numOfRows << \textcolor{stringliteral}{","} << right.numOfCols << \textcolor{stringliteral}{"]."};
+376     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+377     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+378   \}
+379 
+380   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (*\textcolor{keyword}{this});
+381 
+382   \textcolor{keywordtype}{double}*  resultDataArea = result.dataArea;
+383   \textcolor{keywordtype}{double}*  rightDataArea  = right.dataArea;
+384 
+385   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+386     resultDataArea[x] = dataArea[x] + rightDataArea[x];
+387 
+388   \textcolor{keywordflow}{return}  result;
+389 \}  \textcolor{comment}{/* Matrix::operator+ */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator+@{operator+}}
+\index{operator+@{operator+}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator+(double right)}{operator+(double right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator+ (
+\begin{DoxyParamCaption}
+\item[{double}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a585e5b98def5fa06e565ff0bdbcfd848}{}\label{class_k_k_b_1_1_matrix_a585e5b98def5fa06e565ff0bdbcfd848}
+
+
+Definition at line 519 of file Matrix.\+cpp.
+
+
+
+References Matrix().
+
+
+\begin{DoxyCode}
+520 \{
+521   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (*\textcolor{keyword}{this});
+522   \textcolor{keywordtype}{double}*  resultDataArea = result.dataArea;
+523   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+524     resultDataArea[x] = dataArea[x] + right;
+525   \textcolor{keywordflow}{return}  result;
+526 \}  \textcolor{comment}{/* operator+ */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator+=(double right)}{operator+=(double right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} \& Matrix\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{double}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a86ef5684a657a07509a1f99ba0acf144}{}\label{class_k_k_b_1_1_matrix_a86ef5684a657a07509a1f99ba0acf144}
+
+
+Definition at line 359 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+360 \{
+361   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+362   \textcolor{keywordflow}{for}  (x = 0;  x < totNumCells;  ++x)
+363     dataArea[x] += right;
+364   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+365 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator+=(const Matrix \&right)}{operator+=(const Matrix &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} \& Matrix\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a4612e586fd64b716842cd964b2f3cdbc}{}\label{class_k_k_b_1_1_matrix_a4612e586fd64b716842cd964b2f3cdbc}
+
+
+Definition at line 396 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+397 \{
+398   \textcolor{keywordflow}{if}  ((numOfRows != right.numOfRows)  ||
+399        (numOfCols != right.numOfCols))
+400   \{
+401     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (100);
+402     msg << \textcolor{stringliteral}{"Matrix::operator+=   **** ERROR ****,  Dimensions Don't Match ["} << numOfRows << \textcolor{stringliteral}{","} << 
+      numOfCols << \textcolor{stringliteral}{"] + ["} << right.numOfRows << \textcolor{stringliteral}{","} << right.numOfCols << \textcolor{stringliteral}{"]."};
+403     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+404     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+405   \}
+406 
+407   \textcolor{keywordtype}{double}*  rightDataArea  = right.dataArea;
+408 
+409   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+410     dataArea[x] += rightDataArea[x];
+411 
+412   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+413 \}  \textcolor{comment}{/* Matrix::operator+ */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator-\/(const Matrix \&right)}{operator-(const Matrix &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a515dad949068dde646ca73d9d69d9672}{}\label{class_k_k_b_1_1_matrix_a515dad949068dde646ca73d9d69d9672}
+
+
+Definition at line 419 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and Matrix().
+
+
+
+Referenced by K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Image(), and K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Masked\+Image().
+
+
+\begin{DoxyCode}
+420 \{
+421   \textcolor{keywordflow}{if}  ((numOfRows != right.numOfRows)  ||
+422        (numOfCols != right.numOfCols))
+423   \{
+424     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (100);
+425     msg << \textcolor{stringliteral}{"Matrix::operator-   **** ERROR ****,  Dimensions Don't Match ["} << numOfRows << \textcolor{stringliteral}{","} << 
+      numOfCols << \textcolor{stringliteral}{"] + ["} << right.numOfRows << \textcolor{stringliteral}{","} << right.numOfCols << \textcolor{stringliteral}{"]."};
+426     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+427     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+428   \}
+429 
+430   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (*\textcolor{keyword}{this});
+431 
+432   \textcolor{keywordtype}{double}*  resultDataArea = result.dataArea;
+433   \textcolor{keywordtype}{double}*  rightDataArea  = right.dataArea;
+434 
+435   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+436     resultDataArea[x] = dataArea[x] - rightDataArea[x];
+437 
+438   \textcolor{keywordflow}{return}  result;
+439 \} \textcolor{comment}{/* operator- */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator-\/(double right)}{operator-(double right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::operator-\/ (
+\begin{DoxyParamCaption}
+\item[{double}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_abdae6b017f749792e303749cbe74f57a}{}\label{class_k_k_b_1_1_matrix_abdae6b017f749792e303749cbe74f57a}
+
+
+Definition at line 443 of file Matrix.\+cpp.
+
+
+
+References Matrix().
+
+
+
+Referenced by K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Image(), and K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Segment\+Masked\+Image().
+
+
+\begin{DoxyCode}
+444 \{
+445   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (*\textcolor{keyword}{this});
+446   \textcolor{keywordtype}{double}*  resultDataArea = result.dataArea;
+447   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < totNumCells;  ++x)
+448     resultDataArea[x] = dataArea[x] - right;
+449 
+450   \textcolor{keywordflow}{return}  result;
+451 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator=(const Matrix \&right)}{operator=(const Matrix &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} \& Matrix\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_a127463de2d624abeaf5924c0f2fe798d}{}\label{class_k_k_b_1_1_matrix_a127463de2d624abeaf5924c0f2fe798d}
+
+
+Definition at line 329 of file Matrix.\+cpp.
+
+
+
+References Re\+Size().
+
+
+\begin{DoxyCode}
+330 \{
+331   \hyperlink{class_k_k_b_1_1_matrix_ac2d0c31477e85bad55e6a1cd5be1b302}{ReSize} (right.numOfRows, right.numOfCols);
+332   memcpy (dataArea, right.dataArea, totNumCells * sizeof (\textcolor{keywordtype}{double}));
+333   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+334 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator=(const Vector\+Double \&right)}{operator=(const VectorDouble &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} \& Matrix\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector\+Double} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_acd15e0e4eb7b499030cd8af1dfd3f409}{}\label{class_k_k_b_1_1_matrix_acd15e0e4eb7b499030cd8af1dfd3f409}
+
+
+Definition at line 337 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+338 \{
+339   \hyperlink{class_k_k_b_1_1_matrix_ac2d0c31477e85bad55e6a1cd5be1b302}{ReSize} ((\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})right.size (), 1);
+340   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row = 0; row < numOfRows; row++)
+341     dataArea[row] = right[row];
+342 
+343   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+344 \}  \textcolor{comment}{/* operator= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator[](kkint32 row\+I\+D\+X) const }{operator[](kkint32 rowIDX) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Row} \& Matrix\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row\+I\+DX}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_matrix_a5bc7829435bc1063b82a91c1b82d5be5}{}\label{class_k_k_b_1_1_matrix_a5bc7829435bc1063b82a91c1b82d5be5}
+
+
+Definition at line 270 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Build\+Gaussian2d\+Kernel(), Calc\+Co\+Factor\+Matrix(), Covariance(), K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T(), K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T\+On\+Masked\+Area(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Perform\+Adjustmnts(), and K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Bias\+Matrix().
+
+
+\begin{DoxyCode}
+271 \{
+272   \textcolor{keywordflow}{if}  ((rowIDX < 0)  ||  (rowIDX >= numOfRows))
+273   \{
+274     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (80);
+275     msg << \textcolor{stringliteral}{"Matrix::operator[]   **** ERROR ****,  Row Index["} << rowIDX << \textcolor{stringliteral}{"]  Invalid."};
+276     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << msg  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+277     \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+278   \}
+279 
+280   \textcolor{keywordflow}{return}  (rows[rowIDX]);
+281 \} \textcolor{comment}{/* Matrix::operator[] */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Re\+Size@{Re\+Size}}
+\index{Re\+Size@{Re\+Size}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Re\+Size(kkint32 \+\_\+num\+Of\+Rows, kkint32 \+\_\+num\+Of\+Cols)}{ReSize(kkint32 _numOfRows, kkint32 _numOfCols)}}]{\setlength{\rightskip}{0pt plus 5cm}void Matrix\+::\+Re\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Rows, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Cols}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_ac2d0c31477e85bad55e6a1cd5be1b302}{}\label{class_k_k_b_1_1_matrix_ac2d0c31477e85bad55e6a1cd5be1b302}
+
+
+Definition at line 224 of file Matrix.\+cpp.
+
+
+
+Referenced by operator=().
+
+
+\begin{DoxyCode}
+227 \{
+228   Destroy ();
+229   numOfRows = \_numOfRows;
+230   numOfCols = \_numOfCols;
+231   AllocateStorage ();
+232 \}  \textcolor{comment}{/* ReSize */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Symmetric@{Symmetric}}
+\index{Symmetric@{Symmetric}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Symmetric() const }{Symmetric() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Matrix\+::\+Symmetric (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_matrix_a68ce1e9491bb1c1a69ce16bbd12bb6db}{}\label{class_k_k_b_1_1_matrix_a68ce1e9491bb1c1a69ce16bbd12bb6db}
+Returns true is the matrix is Symmetric 
+
+Definition at line 688 of file Matrix.\+cpp.
+
+
+
+Referenced by Eigen\+Vectors().
+
+
+\begin{DoxyCode}
+689 \{
+690   \textcolor{keywordflow}{if}  ((data == NULL)  ||  (numOfRows != numOfCols))
+691     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+692 
+693   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row = 0;  row < numOfRows;  ++row)
+694   \{
+695     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = row + 1;   col < numOfCols;  ++col)
+696     \{
+697       \textcolor{keywordflow}{if}  (data[row][col] != data[col][row])
+698         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+699     \}
+700   \}
+701   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+702 \}  \textcolor{comment}{/* Symmetric */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!Transpose@{Transpose}}
+\index{Transpose@{Transpose}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{Transpose()}{Transpose()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} Matrix\+::\+Transpose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_matrix_af9b74b284027c584dc75ae674e65f58d}{}\label{class_k_k_b_1_1_matrix_af9b74b284027c584dc75ae674e65f58d}
+
+
+Definition at line 707 of file Matrix.\+cpp.
+
+
+
+References Matrix().
+
+
+
+Referenced by Inverse(), and K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Perform\+Adjustmnts().
+
+
+\begin{DoxyCode}
+708 \{
+709   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col;
+710   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row;
+711 
+712   \hyperlink{class_k_k_b_1_1_matrix}{Matrix}  result (numOfCols, numOfRows);
+713 
+714   \textcolor{keywordtype}{double}**  resultData = result.data;
+715 
+716   \textcolor{keywordflow}{for}  (row = 0; row < numOfRows; row++)
+717   \{
+718     \textcolor{keywordflow}{for}  (col = 0; col < numOfCols; col++)
+719     \{
+720       resultData[col][row] = data[row][col];
+721     \}
+722   \}
+723 
+724   \textcolor{keywordflow}{return}  result;
+725 \}  \textcolor{comment}{/* Transpose */}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator-\/}{operator-}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Matrix} operator-\/ (
+\begin{DoxyParamCaption}
+\item[{double}]{left, }
+\item[{const {\bf Matrix} \&}]{right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_matrix_aa6ed460f16c161718d4178f62cc3afbf}{}\label{class_k_k_b_1_1_matrix_aa6ed460f16c161718d4178f62cc3afbf}
+\index{K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!K\+K\+B\+::\+Matrix@{K\+K\+B\+::\+Matrix}}
+\subsubsection[{\texorpdfstring{operator$<$$<$}{operator<<}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{os, }
+\item[{const {\bf Matrix} \&}]{matrix}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_matrix_a9597a390480e6b835e8b6c3c22d00d93}{}\label{class_k_k_b_1_1_matrix_a9597a390480e6b835e8b6c3c22d00d93}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_matrix_8h}{Matrix.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_matrix_8cpp}{Matrix.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,1206 @@
+\hypertarget{class_k_k_b_1_1_bit_string}{}\section{K\+KB\+:\+:Bit\+String Class Reference}
+\label{class_k_k_b_1_1_bit_string}\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+
+
+Allows you to manage very long bit strings.  
+
+
+
+
+{\ttfamily \#include $<$Bit\+String.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Bit\+String\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_bit_string}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_bit_string_a129b293aa7369637810c1d54471e1258}{Bit\+String} ()
+\begin{DoxyCompactList}\small\item\em Instantiates a empty bit-\/string of length 0; needed for Read\+X\+ML. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string_ab5d7f4ff230b20e46451bf7322ef31b8}{Bit\+String} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+bit\+Len)
+\begin{DoxyCompactList}\small\item\em Construct a bit string of length \+\_\+bin\+Len with all bits set to \textquotesingle{}0\textquotesingle{}. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string_aaae20c7515dc5ddd98e4ffa65a3a379a}{Bit\+String} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&b)
+\begin{DoxyCompactList}\small\item\em Copy constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string_a934828473e02585ddc44ff46ee0ea637}{Bit\+String} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+bit\+Len, \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} $\ast$\+\_\+bit\+Nums, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \+\_\+bit\+Nums\+Len)
+\begin{DoxyCompactList}\small\item\em Construct a \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} of length \+\_\+bit\+Len with bits indicated by \textquotesingle{}\+\_\+bit\+Nums\textquotesingle{} set to \textquotesingle{}1\textquotesingle{}. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string_a80cc99cfa92f334852ff43f44ff36f4f}{$\sim$\+Bit\+String} ()
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_bit_string_a989985f5b1d32ae42722f19852894605}{Bit\+Len} () const 
+\begin{DoxyCompactList}\small\item\em Returns the length of the bit-\/string. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{class_k_k_b_1_1_bit_string_a610a7f712c54ecdde050c4c64e3f460e}{Class\+Name} () const 
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_bit_string_aff2c39f8780ecdd66261a853652f7bc4}{Count} () const 
+\begin{DoxyCompactList}\small\item\em Returns number of bits set to \textquotesingle{}1\textquotesingle{}. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} $\ast$ \hyperlink{class_k_k_b_1_1_bit_string_afbd70179ae53fb7326b129758e0e6521}{Duplicate} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_bit_string_a100eecb241e6df9b39ce197b5b38f635}{Hex\+Str} () const 
+\begin{DoxyCompactList}\small\item\em Returns a Hex-\/\+String representation. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_a445228d8a399dc91cbd409d7a93f687e}{List\+Of\+Set\+Bits16} (\hyperlink{namespace_k_k_b_a4f57cb1872dd1448f1e20798475afc06}{Vector\+Uint16} \&set\+Bits) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_aefe93ad98bf139928d15f55b7e0793ec}{List\+Of\+Set\+Bits32} (\hyperlink{namespace_k_k_b_ab5f0d7bc82b746e1e75e48a6394ccb60}{Vector\+Uint32} \&set\+Bits) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_a4d11b7cbefa8f1dd80a6f2603e5fe723}{operator!=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_a38b408da033b933e567b66c26c892fe2}{operator\&=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise A\+ND against the left operand. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_a816e8582a6207f71528ef27f95485ace}{operator$\ast$=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise A\+ND against the left operand. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_a8c697a5e1cfd70f326419c0b11d402f3}{operator+=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise OR against the left operand. \end{DoxyCompactList}\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_a92d6491b82ffcc6e48380bcf9a96b855}{operator$<$} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_a69dca05db1f9aaec971b2b43f9a0fb59}{operator$<$=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_a07268ed7a0fac77e1acfc3b34eb828c5}{operator=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_ac436c72481bec0f73ef3d7e565c5f2dd}{operator==} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_af901028ada8c1bd2e22562157158e6c1}{operator$>$} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_a22da340205227de5bb327cb64ee5082c}{operator$>$=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \hyperlink{class_k_k_b_1_1_bit_string_a5f9d741f91e71f59bfd148773af5050f}{operator$^\wedge$} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise X\+OR between two operands returning a new \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String}. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_ab2806a5d5386ff44ead5463528aff5ff}{operator$^\wedge$=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise X\+OR against the left operand. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \& \hyperlink{class_k_k_b_1_1_bit_string_a596dbd93da7626d59ca53ea5ca5bbd7d}{operator$\vert$=} (const \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \&right)
+\begin{DoxyCompactList}\small\item\em Performs a bitwise OR against the left operand. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_a39ddda1f72f0f2106cb6352efdcca3be}{Populate\+Vector\+Bool} (\hyperlink{namespace_k_k_b_a14c7fc0d2e2c8b80878017f195980b89}{Vector\+Bool} \&bool\+Vector) const 
+\begin{DoxyCompactList}\small\item\em Populates a boolean vector where each element reflects whether the corresponding bit is set. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_b_1_1_bit_string_a63fa7f49ff50431c75443fe287fe5d4f}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_a3a1d4d31e09c629708e1fab7b61d5827}{Re\+Set} ()
+\begin{DoxyCompactList}\small\item\em Set all bits to \textquotesingle{}0\textquotesingle{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_ae227683a35784b738e238fcba450e2b3}{Re\+Set} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} bit\+Num)
+\begin{DoxyCompactList}\small\item\em Set the bit indicated by \textquotesingle{}bit\+Num\textquotesingle{} to \textquotesingle{}0\textquotesingle{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_a408197f10d8ef4b235896c9bf4f9ff2a}{Set} ()
+\begin{DoxyCompactList}\small\item\em Set all bits to \textquotesingle{}1\textquotesingle{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bit_string_a1fd0485391733f37acfe04205cbb9f7b}{Set} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} bit\+Num)
+\begin{DoxyCompactList}\small\item\em Set the bit indicated by \textquotesingle{}bit\+Num\textquotesingle{} to \textquotesingle{}1\textquotesingle{}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_k_k_b_1_1_bit_string_a22ca08eb89f3ddcceade7490485cc5e8}{Test} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} bit\+Num) const 
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_bit_string_a4c0c3f7bf53ef6ca2558927f2cb500fc}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} \hyperlink{class_k_k_b_1_1_bit_string_aef2308cabde1b30fc5efd50040fa4e40}{From\+Hex\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&hex\+Str, bool \&valid\+Hex\+Str)
+\begin{DoxyCompactList}\small\item\em Create a bit-\/string from a Hex String. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Allows you to manage very long bit strings. 
+
+\begin{DoxyAuthor}{Author}
+Kurt Kramer
+\end{DoxyAuthor}
+Useful when you need to deal with very large yes/no decisions. For example performing Feature Selection on a D\+NA dataset where you can have 50,000+ features. You need to keep a list of which feature combinations have been tried. You can use a \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} to do this where a particular bit indicates a particular feature. In the feature selection case you may want to track several thousand feature combinations. If you did this using arrays you would require very large amount of memory to accomplish this. With \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String}\textquotesingle{}s the memory requirement is reduced to 1/8\textquotesingle{}the allowing for more efficient use of memory.
+
+This class will manage Bit-\/\+Strings up to U\+I\+N\+T\+\_\+\+M\+AX in length. Logical operations such as bitwise A\+ND, OR, and N\+OT are supported plus others. An example of where this class is used is in \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{K\+K\+M\+L\+L\+::\+Feature\+Num\+List}. 
+
+Definition at line 31 of file Bit\+String.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Bit\+String@{Bit\+String}}
+\index{Bit\+String@{Bit\+String}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Bit\+String()}{BitString()}}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+String\+::\+Bit\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a129b293aa7369637810c1d54471e1258}{}\label{class_k_k_b_1_1_bit_string_a129b293aa7369637810c1d54471e1258}
+
+
+Instantiates a empty bit-\/string of length 0; needed for Read\+X\+ML. 
+
+
+
+Definition at line 58 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+58                      :
+59   bitLen  (0),
+60   byteLen (0)
+61 \{
+62   byteLen = ((bitLen - 1) / 8) + 1;
+63   str = NULL;
+64 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Bit\+String@{Bit\+String}}
+\index{Bit\+String@{Bit\+String}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Bit\+String(kkuint32 \+\_\+bit\+Len)}{BitString(kkuint32 _bitLen)}}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+String\+::\+Bit\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{\+\_\+bit\+Len}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_ab5d7f4ff230b20e46451bf7322ef31b8}{}\label{class_k_k_b_1_1_bit_string_ab5d7f4ff230b20e46451bf7322ef31b8}
+
+
+Construct a bit string of length \+\_\+bin\+Len with all bits set to \textquotesingle{}0\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+bit\+Len} & Length of bit string to allocate. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file Bit\+String.\+cpp.
+
+
+
+Referenced by From\+Hex\+Str(), and K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+To\+Hex\+String().
+
+
+\begin{DoxyCode}
+68                                       :
+69   bitLen  (\_bitLen),
+70   byteLen (0)
+71 \{
+72   byteLen = ((bitLen - 1) / 8) + 1;
+73   str = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[byteLen];
+74   memset (str, 0, byteLen);
+75 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Bit\+String@{Bit\+String}}
+\index{Bit\+String@{Bit\+String}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Bit\+String(const Bit\+String \&b)}{BitString(const BitString &b)}}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+String\+::\+Bit\+String (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{b}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_aaae20c7515dc5ddd98e4ffa65a3a379a}{}\label{class_k_k_b_1_1_bit_string_aaae20c7515dc5ddd98e4ffa65a3a379a}
+
+
+Copy constructor. 
+
+
+
+Definition at line 78 of file Bit\+String.\+cpp.
+
+
+
+Referenced by Duplicate().
+
+
+\begin{DoxyCode}
+78                                          :
+79   bitLen  (bs.bitLen),
+80   byteLen (bs.byteLen),
+81   str     (NULL)
+82 \{
+83   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*   str;
+84   str = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[byteLen];
+85   memcpy (str, bs.str, byteLen);
+86 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Bit\+String@{Bit\+String}}
+\index{Bit\+String@{Bit\+String}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Bit\+String(kkuint32 \+\_\+bit\+Len, kkuint16 $\ast$\+\_\+bit\+Nums, kkuint32 \+\_\+bit\+Nums\+Len)}{BitString(kkuint32 _bitLen, kkuint16 *_bitNums, kkuint32 _bitNumsLen)}}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+String\+::\+Bit\+String (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{\+\_\+bit\+Len, }
+\item[{{\bf kkuint16} $\ast$}]{\+\_\+bit\+Nums, }
+\item[{{\bf kkuint32}}]{\+\_\+bit\+Nums\+Len}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a934828473e02585ddc44ff46ee0ea637}{}\label{class_k_k_b_1_1_bit_string_a934828473e02585ddc44ff46ee0ea637}
+
+
+Construct a \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} of length \+\_\+bit\+Len with bits indicated by \textquotesingle{}\+\_\+bit\+Nums\textquotesingle{} set to \textquotesingle{}1\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+bin\+Len} & Length of bit string. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+bit\+Nums} & List if bit positions to set to \textquotesingle{}1\textquotesingle{}. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+bit\+Nums\+Len} & Size of \textquotesingle{}\+\_\+bit\+Nums\textquotesingle{} array. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 89 of file Bit\+String.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and Set().
+
+
+\begin{DoxyCode}
+92                       :
+93     bitLen  (\_bitLen),
+94     byteLen (0),
+95     str     (NULL)
+96 \{
+97   byteLen = ((bitLen - 1) / 8) + 1;
+98   str = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[byteLen];
+99   memset (str, 0, byteLen);
+100   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+101   \textcolor{keywordflow}{for}  (x = 0;  x < bitNumsLen;  x++)
+102   \{
+103     \textcolor{keywordflow}{if}  (bitNums[x] >= bitLen)
+104     \{
+105       \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (128);
+106       msg << \textcolor{stringliteral}{"BitString   Constructing from list of numbers:  bitNums["} << x << \textcolor{stringliteral}{"] = ["} << bitNums[x] << \textcolor{stringliteral}{"]
+       which is >= bitLen["} << bitLen << \textcolor{stringliteral}{"]."};
+107       cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"BitString   ***ERROR***  "} << msg << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+108       \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+109     \}
+110     \hyperlink{class_k_k_b_1_1_bit_string_a408197f10d8ef4b235896c9bf4f9ff2a}{Set} (bitNums[x]);
+111   \}
+112 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!````~Bit\+String@{$\sim$\+Bit\+String}}
+\index{````~Bit\+String@{$\sim$\+Bit\+String}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{$\sim$\+Bit\+String()}{~BitString()}}]{\setlength{\rightskip}{0pt plus 5cm}Bit\+String\+::$\sim$\+Bit\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a80cc99cfa92f334852ff43f44ff36f4f}{}\label{class_k_k_b_1_1_bit_string_a80cc99cfa92f334852ff43f44ff36f4f}
+
+
+Definition at line 116 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+117 \{
+118   \textcolor{keyword}{delete}  str;
+119   str = NULL;
+120 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Bit\+Len@{Bit\+Len}}
+\index{Bit\+Len@{Bit\+Len}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Bit\+Len() const }{BitLen() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} K\+K\+B\+::\+Bit\+String\+::\+Bit\+Len (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bit_string_a989985f5b1d32ae42722f19852894605}{}\label{class_k_k_b_1_1_bit_string_a989985f5b1d32ae42722f19852894605}
+
+
+Returns the length of the bit-\/string. 
+
+
+
+Definition at line 64 of file Bit\+String.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List().
+
+
+\begin{DoxyCode}
+64 \{\textcolor{keywordflow}{return} bitLen;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Class\+Name@{Class\+Name}}
+\index{Class\+Name@{Class\+Name}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Class\+Name() const }{ClassName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ K\+K\+B\+::\+Bit\+String\+::\+Class\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_bit_string_a610a7f712c54ecdde050c4c64e3f460e}{}\label{class_k_k_b_1_1_bit_string_a610a7f712c54ecdde050c4c64e3f460e}
+
+
+Implements \hyperlink{class_k_k_b_1_1_atom_ae590752a285480b6b342def2f09b175f}{K\+K\+B\+::\+Atom}.
+
+
+
+Definition at line 66 of file Bit\+String.\+h.
+
+
+\begin{DoxyCode}
+66 \{\textcolor{keywordflow}{return} \textcolor{stringliteral}{"BitString"};\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Count@{Count}}
+\index{Count@{Count}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Count() const }{Count() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} Bit\+String\+::\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_aff2c39f8780ecdd66261a853652f7bc4}{}\label{class_k_k_b_1_1_bit_string_aff2c39f8780ecdd66261a853652f7bc4}
+
+
+Returns number of bits set to \textquotesingle{}1\textquotesingle{}. 
+
+summary$>$ Returns true if bit indicated by {\itshape bit\+Num}  is set to 1. 
+
+Definition at line 142 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+143 \{
+144   BuildBitCounts ();
+145 
+146   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  count = 0;
+147   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  byteOffset = 0;
+148 
+149   \textcolor{keywordflow}{for}  (byteOffset = 0;  byteOffset < byteLen;  byteOffset++)
+150     count += bitCounts[str[byteOffset]];
+151 
+152   \textcolor{keywordflow}{return}  count;
+153 \}  \textcolor{comment}{/* Count */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Duplicate() const }{Duplicate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} $\ast$ Bit\+String\+::\+Duplicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_bit_string_afbd70179ae53fb7326b129758e0e6521}{}\label{class_k_k_b_1_1_bit_string_afbd70179ae53fb7326b129758e0e6521}
+
+
+Implements \hyperlink{class_k_k_b_1_1_atom_a990c54fb9a7fd0928a479987fa499065}{K\+K\+B\+::\+Atom}.
+
+
+
+Definition at line 124 of file Bit\+String.\+cpp.
+
+
+
+References Bit\+String().
+
+
+\begin{DoxyCode}
+125 \{
+126   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_bit_string_a129b293aa7369637810c1d54471e1258}{BitString} (*\textcolor{keyword}{this});
+127 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!From\+Hex\+Str@{From\+Hex\+Str}}
+\index{From\+Hex\+Str@{From\+Hex\+Str}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{From\+Hex\+Str(const K\+K\+Str \&hex\+Str, bool \&valid\+Hex\+Str)}{FromHexStr(const KKStr &hexStr, bool &validHexStr)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} Bit\+String\+::\+From\+Hex\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{hex\+Str, }
+\item[{bool \&}]{valid\+Hex\+Str}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_bit_string_aef2308cabde1b30fc5efd50040fa4e40}{}\label{class_k_k_b_1_1_bit_string_aef2308cabde1b30fc5efd50040fa4e40}
+
+
+Create a bit-\/string from a Hex String. 
+
+Will convert the Hex String stored in the parameter \textquotesingle{}hex\+Str\textquotesingle{} and create a bit string from it.~\newline
+ ex\+: \char`\"{}\+A189\char`\"{} will be converted into \char`\"{}1010000110001001\char`\"{} 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hex\+Str} & String containing hex characters \textquotesingle{}0\textquotesingle{} -\/ \textquotesingle{}9\textquotesingle{}, \textquotesingle{}A\textquotesingle{} -\/ \textquotesingle{}F\textquotesingle{} \\
+\hline
+\mbox{\tt out}  & {\em valid\+Hex\+Str} & returns \textquotesingle{}T\+R\+UE\textquotesingle{} if no invalid characters. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String} with the appropriate bits set to represent the hex number in \textquotesingle{}hex\+Str\textquotesingle{}. 
+\end{DoxyReturn}
+
+
+Definition at line 399 of file Bit\+String.\+cpp.
+
+
+
+References Bit\+String(), K\+K\+B\+::\+K\+K\+Str\+::\+Len(), and K\+K\+B\+::\+K\+K\+Str\+::operator\mbox{[}$\,$\mbox{]}().
+
+
+\begin{DoxyCode}
+402 \{
+403   \hyperlink{class_k_k_b_1_1_bit_string}{BitString}  bs (hexStr.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} () * 4);
+404   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  byteNum = 0;
+405   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  hexStrLen = hexStr.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();
+406   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  high4Bits = 0;
+407   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  low4Bits  = 0;
+408   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+409 
+410   validHexStr = \textcolor{keyword}{true};
+411 
+412   \textcolor{keywordflow}{while}  (x < hexStrLen)
+413   \{
+414     low4Bits = HexCharToInt (hexStr[x]);
+415     x++;
+416     \textcolor{keywordflow}{if}  (low4Bits < 0)
+417       validHexStr = \textcolor{keyword}{false};
+418 
+419     \textcolor{keywordflow}{if}  (x < hexStrLen)
+420     \{
+421       high4Bits = HexCharToInt (hexStr[x]);
+422       x++;
+423       \textcolor{keywordflow}{if}  (high4Bits < 0)
+424         validHexStr = \textcolor{keyword}{false};
+425     \}
+426     \textcolor{keywordflow}{else}
+427     \{
+428       high4Bits = 0;
+429     \}
+430 
+431     bs.str[byteNum] = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})low4Bits + (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})high4Bits * 16;
+432     byteNum++;
+433   \}
+434 
+435   \textcolor{keywordflow}{return}  bs;
+436 \} \textcolor{comment}{/* FromHexStr */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Hex\+Str@{Hex\+Str}}
+\index{Hex\+Str@{Hex\+Str}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Hex\+Str() const }{HexStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Bit\+String\+::\+Hex\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a100eecb241e6df9b39ce197b5b38f635}{}\label{class_k_k_b_1_1_bit_string_a100eecb241e6df9b39ce197b5b38f635}
+
+
+Returns a Hex-\/\+String representation. 
+
+ex\+: \char`\"{}1110 0000 0101 1011\char`\"{} would return \char`\"{}\+E09\+B\char`\"{}. 
+
+Definition at line 361 of file Bit\+String.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+To\+Hex\+String(), and Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+362 \{
+363   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  hexStr (byteLen * 2);  \textcolor{comment}{// There will be 2 hex characters for every byte in bit string}
+364 
+365   \textcolor{keyword}{static} \textcolor{keywordtype}{char}  hexChars[] = \{\textcolor{charliteral}{'0'}, \textcolor{charliteral}{'1'}, \textcolor{charliteral}{'2'}, \textcolor{charliteral}{'3'}, \textcolor{charliteral}{'4'}, \textcolor{charliteral}{'5'}, \textcolor{charliteral}{'6'}, \textcolor{charliteral}{'7'},\textcolor{charliteral}{'8'}, \textcolor{charliteral}{'9'}, \textcolor{charliteral}{'a'}, \textcolor{charliteral}{'b'}, \textcolor{charliteral}{'c'}, \textcolor{charliteral}{'d'}, \textcolor{charliteral}{'e'}, \textcolor{charliteral}{'f'}\}
+      ;
+366 
+367   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  byteOffset = 0;
+368   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   high4Bits;
+369   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   low4Bits;
+370 
+371   \textcolor{keywordflow}{for}  (byteOffset = 0;  byteOffset < byteLen;  byteOffset++)
+372   \{
+373     high4Bits = str[byteOffset] / 16;
+374     low4Bits  = str[byteOffset] % 16;
+375 
+376     hexStr.Append (hexChars[low4Bits]);
+377     hexStr.Append (hexChars[high4Bits]);
+378   \}
+379 
+380   \textcolor{keywordflow}{return} hexStr;
+381 \}  \textcolor{comment}{/* HexStr */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!List\+Of\+Set\+Bits16@{List\+Of\+Set\+Bits16}}
+\index{List\+Of\+Set\+Bits16@{List\+Of\+Set\+Bits16}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{List\+Of\+Set\+Bits16(\+Vector\+Uint16 \&set\+Bits) const }{ListOfSetBits16(VectorUint16 &setBits) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+List\+Of\+Set\+Bits16 (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector\+Uint16} \&}]{set\+Bits}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a445228d8a399dc91cbd409d7a93f687e}{}\label{class_k_k_b_1_1_bit_string_a445228d8a399dc91cbd409d7a93f687e}
+summary$>$ Get Bit positions that are set to "1". The parameter {\itshape set\+Bits}  will be populated with the list of bits that are set to "1" for bit strings that are up to 2$^\wedge$32-\/1 bits long. /summary$>$ example$>$ ex\+: Bit String "001200110011" will produce a vector $<$2, 3, 6, 7, 10, 11$>$ /example$>$ param in=\char`\"{}set\+Bits\char`\"{}$>$ Will be populated with all bits that are set to "1", will be cleared first. 
+
+Definition at line 266 of file Bit\+String.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List().
+
+
+\begin{DoxyCode}
+267 \{
+268   \textcolor{keywordflow}{if}  (bitLen > 65535)
+269   \{
+270     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  msg (50);
+271     msg << \textcolor{stringliteral}{"BitString::ListOfSetBits  BitLen["} << bitLen << \textcolor{stringliteral}{"] of this instance of BitString exceeds
+       capacity of 'VectorUint16'."};
+272     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \textcolor{stringliteral}{"BitString::ListOfSetBits   ***ERROR***   "} << msg << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+273     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (msg);
+274   \}
+275 
+276   setBits.clear ();
+277 
+278   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  byteOffset = 0;
+279   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numOfBits  = 0;
+280   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  bitNum     = 0;
+281 
+282   \textcolor{keywordflow}{for}  (byteOffset = 0;  byteOffset < byteLen;  byteOffset++)
+283   \{
+284     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  br = str[byteOffset];
+285     \textcolor{keywordflow}{if}  (br == 0)
+286     \{
+287       bitNum = bitNum + 8;
+288       \textcolor{keywordflow}{continue};
+289     \}
+290     \textcolor{keywordflow}{else}
+291     \{
+292       \textcolor{keywordflow}{if}  (byteOffset < (byteLen - 1))
+293         numOfBits = 8;
+294       \textcolor{keywordflow}{else}
+295       \{
+296         numOfBits = bitLen % 8;
+297         \textcolor{keywordflow}{if}  (numOfBits == 0)
+298           numOfBits = 8;
+299       \}
+300 
+301       \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x;
+302       \textcolor{keywordflow}{for}  (x = 0;  x < numOfBits;  x++)
+303       \{
+304         \textcolor{keywordflow}{if}  ((br % 2) == 1)
+305         \{
+306           setBits.push\_back ((\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16})bitNum);
+307         \}
+308 
+309         br = br / 2;
+310         bitNum++;
+311       \}
+312     \}
+313   \}
+314 \}  \textcolor{comment}{/* ListOfSetBits16 */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!List\+Of\+Set\+Bits32@{List\+Of\+Set\+Bits32}}
+\index{List\+Of\+Set\+Bits32@{List\+Of\+Set\+Bits32}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{List\+Of\+Set\+Bits32(\+Vector\+Uint32 \&set\+Bits) const }{ListOfSetBits32(VectorUint32 &setBits) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+List\+Of\+Set\+Bits32 (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector\+Uint32} \&}]{set\+Bits}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_aefe93ad98bf139928d15f55b7e0793ec}{}\label{class_k_k_b_1_1_bit_string_aefe93ad98bf139928d15f55b7e0793ec}
+
+
+Definition at line 317 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+318 \{
+319   setBits.clear ();
+320 
+321   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  byteOffset = 0;
+322   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numOfBits  = 0;
+323   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  bitNum     = 0;
+324 
+325   \textcolor{keywordflow}{for}  (byteOffset = 0;  byteOffset < byteLen;  byteOffset++)
+326   \{
+327     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  br = str[byteOffset];
+328     \textcolor{keywordflow}{if}  (br == 0)
+329     \{
+330       bitNum = bitNum + 8;
+331       \textcolor{keywordflow}{continue};
+332     \}
+333     \textcolor{keywordflow}{else}
+334     \{
+335       \textcolor{keywordflow}{if}  (byteOffset < (byteLen - 1))
+336         numOfBits = 8;
+337       \textcolor{keywordflow}{else}
+338       \{
+339         numOfBits = bitLen % 8;
+340         \textcolor{keywordflow}{if}  (numOfBits == 0)
+341           numOfBits = 8;
+342       \}
+343 
+344       \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x;
+345       \textcolor{keywordflow}{for}  (x = 0;  x < numOfBits;  x++)
+346       \{
+347         \textcolor{keywordflow}{if}  ((br % 2) == 1)
+348         \{
+349           setBits.push\_back (bitNum);
+350         \}
+351 
+352         br = br / 2;
+353         bitNum++;
+354       \}
+355     \}
+356   \}
+357 \}  \textcolor{comment}{/* ListOfSetBits32 */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator"!=(const Bit\+String \&right) const }{operator!=(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a4d11b7cbefa8f1dd80a6f2603e5fe723}{}\label{class_k_k_b_1_1_bit_string_a4d11b7cbefa8f1dd80a6f2603e5fe723}
+
+
+Definition at line 552 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+553 \{
+554   \textcolor{keywordflow}{return} (Compare (right) != 0);
+555 \}  \textcolor{comment}{/* operator!= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator\&=@{operator\&=}}
+\index{operator\&=@{operator\&=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator\&=(const Bit\+String \&right)}{operator&=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator\&= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a38b408da033b933e567b66c26c892fe2}{}\label{class_k_k_b_1_1_bit_string_a38b408da033b933e567b66c26c892fe2}
+
+
+Performs a bitwise A\+ND against the left operand. 
+
+
+
+Definition at line 484 of file Bit\+String.\+cpp.
+
+
+
+Referenced by operator$\ast$=().
+
+
+\begin{DoxyCode}
+485 \{
+486   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} shortestByteLen = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (byteLen, right.byteLen);
+487 
+488   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+489 
+490   \textcolor{keywordflow}{for}  (x = 0;  x < shortestByteLen;  x++)
+491   \{
+492     str[x] = str[x] & right.str[x];
+493   \}
+494   \textcolor{keywordflow}{for}  (x = shortestByteLen;  x < byteLen;  ++x)
+495   \{
+496     str[x] = 0;
+497   \}
+498 
+499   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+500 \} \textcolor{comment}{/* operator&= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$\ast$=@{operator$\ast$=}}
+\index{operator$\ast$=@{operator$\ast$=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$\ast$=(const Bit\+String \&right)}{operator*=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator$\ast$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a816e8582a6207f71528ef27f95485ace}{}\label{class_k_k_b_1_1_bit_string_a816e8582a6207f71528ef27f95485ace}
+
+
+Performs a bitwise A\+ND against the left operand. 
+
+
+
+Definition at line 504 of file Bit\+String.\+cpp.
+
+
+
+References operator\&=().
+
+
+\begin{DoxyCode}
+505 \{
+506   \hyperlink{class_k_k_b_1_1_bit_string_a38b408da033b933e567b66c26c892fe2}{operator&= }(right);
+507   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+508 \} \textcolor{comment}{/* operator*= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator+=(const Bit\+String \&right)}{operator+=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator+= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a8c697a5e1cfd70f326419c0b11d402f3}{}\label{class_k_k_b_1_1_bit_string_a8c697a5e1cfd70f326419c0b11d402f3}
+
+
+Performs a bitwise OR against the left operand. 
+
+
+
+Definition at line 475 of file Bit\+String.\+cpp.
+
+
+
+References operator$\vert$=().
+
+
+\begin{DoxyCode}
+476 \{
+477   \hyperlink{class_k_k_b_1_1_bit_string_a596dbd93da7626d59ca53ea5ca5bbd7d}{operator|= }(right);
+478   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+479 \} \textcolor{comment}{/* operator+= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$<$(const Bit\+String \&right) const }{operator<(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a92d6491b82ffcc6e48380bcf9a96b855}{}\label{class_k_k_b_1_1_bit_string_a92d6491b82ffcc6e48380bcf9a96b855}
+
+
+Definition at line 573 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+574 \{
+575   \textcolor{keywordflow}{return} (Compare (right) < 0);
+576 \}  \textcolor{comment}{/* operator< */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$<$=@{operator$<$=}}
+\index{operator$<$=@{operator$<$=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$<$=(const Bit\+String \&right) const }{operator<=(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+Bit\+String\+::operator$<$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a69dca05db1f9aaec971b2b43f9a0fb59}{}\label{class_k_k_b_1_1_bit_string_a69dca05db1f9aaec971b2b43f9a0fb59}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator=(const Bit\+String \&right)}{operator=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a07268ed7a0fac77e1acfc3b34eb828c5}{}\label{class_k_k_b_1_1_bit_string_a07268ed7a0fac77e1acfc3b34eb828c5}
+
+
+Definition at line 441 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+442 \{
+443   \textcolor{keyword}{delete}  str;
+444   
+445   bitLen  = right.bitLen;
+446   byteLen = right.byteLen;
+447   str = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[byteLen];
+448 
+449   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+450   \textcolor{keywordflow}{for}  (x = 0;  x < byteLen;  x++)
+451     str[x] = right.str[x];
+452 
+453   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+454 \}  \textcolor{comment}{/* operator= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator==@{operator==}}
+\index{operator==@{operator==}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator==(const Bit\+String \&right) const }{operator==(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_ac436c72481bec0f73ef3d7e565c5f2dd}{}\label{class_k_k_b_1_1_bit_string_ac436c72481bec0f73ef3d7e565c5f2dd}
+
+
+Definition at line 545 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+546 \{
+547   \textcolor{keywordflow}{return} (Compare (right) == 0);
+548 \}  \textcolor{comment}{/* operator== */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$>$@{operator$>$}}
+\index{operator$>$@{operator$>$}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$>$(const Bit\+String \&right) const }{operator>(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::operator$>$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_af901028ada8c1bd2e22562157158e6c1}{}\label{class_k_k_b_1_1_bit_string_af901028ada8c1bd2e22562157158e6c1}
+
+
+Definition at line 559 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+560 \{
+561   \textcolor{keywordflow}{return} (Compare (right) > 0);
+562 \}  \textcolor{comment}{/* operator> */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$>$=@{operator$>$=}}
+\index{operator$>$=@{operator$>$=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$>$=(const Bit\+String \&right) const }{operator>=(const BitString &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::operator$>$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a22da340205227de5bb327cb64ee5082c}{}\label{class_k_k_b_1_1_bit_string_a22da340205227de5bb327cb64ee5082c}
+
+
+Definition at line 566 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+567 \{
+568   \textcolor{keywordflow}{return} (Compare (right) >= 0);
+569 \}  \textcolor{comment}{/* operator>= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$^\wedge$@{operator$^\wedge$}}
+\index{operator$^\wedge$@{operator$^\wedge$}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$^\wedge$(const Bit\+String \&right)}{operator^(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} Bit\+String\+::operator$^\wedge$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a5f9d741f91e71f59bfd148773af5050f}{}\label{class_k_k_b_1_1_bit_string_a5f9d741f91e71f59bfd148773af5050f}
+
+
+Performs a bitwise X\+OR between two operands returning a new \hyperlink{class_k_k_b_1_1_bit_string}{Bit\+String}. 
+
+
+
+Definition at line 598 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+599 \{
+600   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} shortestByteLen = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (byteLen, right.byteLen);
+601   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} longestByteLen  = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (byteLen, right.byteLen);
+602 
+603   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+604 
+605   \hyperlink{class_k_k_b_1_1_bit_string}{BitString} result (\hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (bitLen, right.bitLen));
+606 
+607   \textcolor{keywordflow}{for}  (x = 0;  x < shortestByteLen;  x++)
+608     result.str[x] = str[x] ^ right.str[x];
+609 
+610   for  (x = shortestByteLen;  x < longestByteLen;  x++)
+611     result.str[x] = 0;
+612 
+613   \textcolor{keywordflow}{return}  result;
+614 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator$^\wedge$=@{operator$^\wedge$=}}
+\index{operator$^\wedge$=@{operator$^\wedge$=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator$^\wedge$=(const Bit\+String \&right)}{operator^=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator$^\wedge$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_ab2806a5d5386ff44ead5463528aff5ff}{}\label{class_k_k_b_1_1_bit_string_ab2806a5d5386ff44ead5463528aff5ff}
+
+
+Performs a bitwise X\+OR against the left operand. 
+
+
+
+Definition at line 580 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+581 \{
+582   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} shortestByteLen = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (byteLen, right.byteLen);
+583   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} longestByteLen  = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (byteLen, right.byteLen);
+584 
+585   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+586 
+587   \textcolor{keywordflow}{for}  (x = 0;  x < shortestByteLen;  x++)
+588     str[x] = str[x] ^ right.str[x];
+589 
+590   for  (x = shortestByteLen;  x < longestByteLen;  x++)
+591     str[x] = 0;
+592 
+593   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+594 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!operator\texttt{"|}=@{operator\texttt{"|}=}}
+\index{operator\texttt{"|}=@{operator\texttt{"|}=}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{operator\texttt{"|}=(const Bit\+String \&right)}{operator|=(const BitString &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bit\+String} \& Bit\+String\+::operator$\vert$= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Bit\+String} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a596dbd93da7626d59ca53ea5ca5bbd7d}{}\label{class_k_k_b_1_1_bit_string_a596dbd93da7626d59ca53ea5ca5bbd7d}
+
+
+Performs a bitwise OR against the left operand. 
+
+
+
+Definition at line 459 of file Bit\+String.\+cpp.
+
+
+
+Referenced by operator+=().
+
+
+\begin{DoxyCode}
+460 \{
+461   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} shortestByteLen = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (byteLen, right.byteLen);
+462 
+463   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+464 
+465   \textcolor{keywordflow}{for}  (x = 0;  x < shortestByteLen;  x++)
+466   \{
+467     str[x] = str[x] | right.str[x];
+468   \}
+469 
+470   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+471 \} \textcolor{comment}{/* operator|= */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Populate\+Vector\+Bool@{Populate\+Vector\+Bool}}
+\index{Populate\+Vector\+Bool@{Populate\+Vector\+Bool}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Populate\+Vector\+Bool(\+Vector\+Bool \&bool\+Vector) const }{PopulateVectorBool(VectorBool &boolVector) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Populate\+Vector\+Bool (
+\begin{DoxyParamCaption}
+\item[{{\bf Vector\+Bool} \&}]{bool\+Vector}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a39ddda1f72f0f2106cb6352efdcca3be}{}\label{class_k_k_b_1_1_bit_string_a39ddda1f72f0f2106cb6352efdcca3be}
+
+
+Populates a boolean vector where each element reflects whether the corresponding bit is set. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em bool\+Vector} & Vector to be populated reflecting which bits are set to \textquotesingle{}1\textquotesingle{}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 239 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+240 \{
+241   boolVector.erase (boolVector.begin (), boolVector.end ());
+242 
+243   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  byteOffset = 0;
+244   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  numOfBits  = 0;
+245   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  x;
+246 
+247   \textcolor{keywordflow}{for}  (byteOffset = 0;  byteOffset < byteLen;  byteOffset++)
+248   \{
+249     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  br = str[byteOffset];
+250     \textcolor{keywordflow}{if}  (byteOffset < (byteLen - 1))
+251       numOfBits = 8;
+252     \textcolor{keywordflow}{else}
+253       numOfBits = bitLen % 8;
+254 
+255     \textcolor{keywordflow}{for}  (x = 0;  x < numOfBits;  x++)
+256     \{
+257       boolVector.push\_back ((br % 2) == 1);
+258       br = br / 2;
+259     \}
+260   \}
+261 \}  \textcolor{comment}{/* PopulateVectorBool */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_bit_string_a63fa7f49ff50431c75443fe287fe5d4f}{}\label{class_k_k_b_1_1_bit_string_a63fa7f49ff50431c75443fe287fe5d4f}
+T\+O\+DO decode text block into list of bits. 
+
+Implements \hyperlink{class_k_k_b_1_1_atom_add1971b30cf26b54ca37d56adbac9c82}{K\+K\+B\+::\+Atom}.
+
+
+
+Definition at line 618 of file Bit\+String.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Content\+::\+Content(), and K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token().
+
+
+\begin{DoxyCode}
+623 \{
+624   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bitIndex = 0;
+625   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+626   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+627   \{
+628     \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*t) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_b_1_1_xml_content}{XmlContent}))
+629     \{
+630       \hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr} c = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr}\textcolor{keyword}{>} (t);
+631       \textcolor{keywordflow}{if}  (c  &&  c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} ())
+632       \{
+633         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrConstPtr}  text = c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} ();\textcolor{comment}{}
+634 \textcolor{comment}{        /** TODO decode text block into list of bits. */}
+635         \textcolor{comment}{//ParseClassIndexList (*text, log);}
+636         \textcolor{keyword}{delete} text;
+637         text = NULL;
+638       \}
+639     \}
+640     \textcolor{keyword}{delete}  t;
+641     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+642   \}
+643   \textcolor{keyword}{delete}  t;
+644   t = NULL;
+645 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Re\+Set@{Re\+Set}}
+\index{Re\+Set@{Re\+Set}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Re\+Set()}{ReSet()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Re\+Set (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a3a1d4d31e09c629708e1fab7b61d5827}{}\label{class_k_k_b_1_1_bit_string_a3a1d4d31e09c629708e1fab7b61d5827}
+
+
+Set all bits to \textquotesingle{}0\textquotesingle{}. 
+
+
+
+Definition at line 207 of file Bit\+String.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+To\+Bit\+String().
+
+
+\begin{DoxyCode}
+208 \{
+209   memset (str, 0, byteLen);
+210 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Re\+Set@{Re\+Set}}
+\index{Re\+Set@{Re\+Set}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Re\+Set(kkuint32 bit\+Num)}{ReSet(kkuint32 bitNum)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Re\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{bit\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_ae227683a35784b738e238fcba450e2b3}{}\label{class_k_k_b_1_1_bit_string_ae227683a35784b738e238fcba450e2b3}
+
+
+Set the bit indicated by \textquotesingle{}bit\+Num\textquotesingle{} to \textquotesingle{}0\textquotesingle{}. 
+
+
+
+Definition at line 215 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+216 \{
+217   \textcolor{keywordflow}{if}  (bitNum >= bitLen)
+218   \{
+219     \textcolor{comment}{// Index violation.}
+220     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+221          << \textcolor{stringliteral}{"BitString::Set    Invalid Index["} << bitNum << \textcolor{stringliteral}{"]  BitString::bitLen["} << bitLen << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+222          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+223     exit (-1);
+224   \}
+225 
+226   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} byteOffset;
+227   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}   bitOffset;
+228 
+229   CalcByteAndBitOffsets (bitNum, byteOffset, bitOffset);
+230 
+231   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}&  br = str[byteOffset];
+232     
+233   br = (br & bitMasksRev[bitOffset]);
+234 \}  \textcolor{comment}{/* ReSet */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Set@{Set}}
+\index{Set@{Set}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Set()}{Set()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Set (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a408197f10d8ef4b235896c9bf4f9ff2a}{}\label{class_k_k_b_1_1_bit_string_a408197f10d8ef4b235896c9bf4f9ff2a}
+
+
+Set all bits to \textquotesingle{}1\textquotesingle{}. 
+
+
+
+Definition at line 173 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+174 \{
+175   memset (str, 255, byteLen);
+176 \}  \textcolor{comment}{/* Set */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Set@{Set}}
+\index{Set@{Set}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Set(kkuint32 bit\+Num)}{Set(kkuint32 bitNum)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Set (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{bit\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bit_string_a1fd0485391733f37acfe04205cbb9f7b}{}\label{class_k_k_b_1_1_bit_string_a1fd0485391733f37acfe04205cbb9f7b}
+
+
+Set the bit indicated by \textquotesingle{}bit\+Num\textquotesingle{} to \textquotesingle{}1\textquotesingle{}. 
+
+
+
+Definition at line 182 of file Bit\+String.\+cpp.
+
+
+
+Referenced by Bit\+String(), and K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+To\+Bit\+String().
+
+
+\begin{DoxyCode}
+183 \{
+184   \textcolor{keywordflow}{if}  (bitNum >= bitLen)
+185   \{
+186     \textcolor{comment}{// Index violation.}
+187     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+188          << \textcolor{stringliteral}{"BitString::Set    Invalid Index["} << bitNum << \textcolor{stringliteral}{"]  BitString::bitLen["} << bitLen << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+189          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+190     exit (-1);
+191   \}
+192 
+193   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} byteOffset;
+194   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}   bitOffset;
+195 
+196   CalcByteAndBitOffsets (bitNum, byteOffset, bitOffset);
+197 
+198   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}&  br = str[byteOffset];
+199     
+200   br = (br | bitMasks[bitOffset]);
+201 \}  \textcolor{comment}{/* Set */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Test@{Test}}
+\index{Test@{Test}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Test(kkuint32 bit\+Num) const }{Test(kkuint32 bitNum) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Bit\+String\+::\+Test (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{bit\+Num}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bit_string_a22ca08eb89f3ddcceade7490485cc5e8}{}\label{class_k_k_b_1_1_bit_string_a22ca08eb89f3ddcceade7490485cc5e8}
+summary$>$ Get Bit positions that are set to 1; The parameter {\itshape set\+Bits}  will be populated with the list of bits that are set to 1 for bit strings that are up to 2$^\wedge$16-\/1 bits long. /summary$>$ code$>$ ex\+: Bit String "001200110011" will produce a vector $<$2, 3, 6, 7, 10, 11$>$ /code$>$ param name=\textquotesingle{}set\+Bits\textquotesingle{}$>$ Will be populated with all bits that are set to \textquotesingle{}1\textquotesingle{}, will be cleared first.
+
+Definition at line 158 of file Bit\+String.\+cpp.
+
+
+\begin{DoxyCode}
+159 \{
+160   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} byteOffset;
+161   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}   bitOffset;
+162 
+163   CalcByteAndBitOffsets (bitNum, byteOffset, bitOffset);
+164 
+165   \textcolor{keywordtype}{bool}  bit = ((str[byteOffset] & bitMasks[bitOffset]) != 0);
+166 
+167   \textcolor{keywordflow}{return} bit;
+168 \}  \textcolor{comment}{/* IsSet */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+B\+::\+Bit\+String@{K\+K\+B\+::\+Bit\+String}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Bit\+String\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_bit_string_a4c0c3f7bf53ef6ca2558927f2cb500fc}{}\label{class_k_k_b_1_1_bit_string_a4c0c3f7bf53ef6ca2558927f2cb500fc}
+
+
+Implements \hyperlink{class_k_k_b_1_1_atom_a6af114f9ae398f653b506e765e4e1eb6}{K\+K\+B\+::\+Atom}.
+
+
+
+Definition at line 650 of file Bit\+String.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), Hex\+Str(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Content\+::\+Write\+Xml(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+653 \{
+654   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"BitString"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{XmlTag::TagTypes::tagStart});
+655   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+656     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+657   startTag.WriteXML (o);
+658   \hyperlink{class_k_k_b_1_1_xml_content_ab0e370562d215b8e19dac6d18c4a95e1}{XmlContent::WriteXml} (this->\hyperlink{class_k_k_b_1_1_bit_string_a100eecb241e6df9b39ce197b5b38f635}{HexStr}(), o);
+659   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"BitString"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{XmlTag::TagTypes::tagEnd});
+660   endTag.WriteXML (o);
+661   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+662 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_bit_string_8h}{Bit\+String.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_bit_string_8cpp}{Bit\+String.\+cpp}\end{DoxyCompactItemize}

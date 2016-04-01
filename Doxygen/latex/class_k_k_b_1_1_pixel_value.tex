@@ -1,0 +1,709 @@
+\hypertarget{class_k_k_b_1_1_pixel_value}{}\section{K\+KB\+:\+:Pixel\+Value Class Reference}
+\label{class_k_k_b_1_1_pixel_value}\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+
+
+Used by the \hyperlink{class_k_k_b_1_1_raster}{Raster} Class to represent the contents of one pixel.  
+
+
+
+
+{\ttfamily \#include $<$Pixel\+Value.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}{Pixel\+Value} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \textquotesingle{}\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value}\textquotesingle{} instance from the the three provided values. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_pixel_value_a472a67aa0defc4b2d3b4f743e71aa18e}{Pixel\+Value} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+r, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+g, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \+\_\+b)
+\begin{DoxyCompactList}\small\item\em Constructs a \textquotesingle{}\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value}\textquotesingle{} instance using the provided values for the color components. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_pixel_value_ae9af8faf5436ce01c7b0ffe4e38e55cb}{Pixel\+Value} (const \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \&pixel\+Value)
+\item 
+bool \hyperlink{class_k_k_b_1_1_pixel_value_ac8a481df12eec3a256a6d8603dabbd54}{operator!=} (const \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \&right) const 
+\item 
+\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_aae3fb46e958c91cff8ccdc5b661f6fc5}{operator$\ast$} (double fact) const 
+\item 
+\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \& \hyperlink{class_k_k_b_1_1_pixel_value_ae4d03fa909db025531179e48210eba70}{operator=} (const \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \&right)
+\item 
+bool \hyperlink{class_k_k_b_1_1_pixel_value_a5d73a568790bcd5cda1d2159ce29dbae}{operator==} (const \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \&right) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_pixel_value_ac0e01fee6a5f4054b5fac3a4e5393857}{To\+H\+SI} (float \&hue, float \&sat, float \&intensity) const 
+\begin{DoxyCompactList}\small\item\em Computes the equivalent H\+SI values; R\+GB -\/$>$ H\+SI. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_pixel_value_abf595bf550096b553018c02e9f85733e}{To\+Str} () const 
+\begin{DoxyCompactList}\small\item\em Creates a displayable string reflecting the values of the three R\+GB components. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a1aed38456fe38d925a5fdeb25d94cd6f}{From\+H\+SI} (float hue, float sat, float intensity)
+\begin{DoxyCompactList}\small\item\em Will create an instance of \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} from the H\+SI values provided (H\+SI -\/$>$ R\+GB). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g}
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a51fc16a4bf4f2c1470b793db00e51db9}{Aqua}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_af2eb1c2546e02ff0f6c14ab76e604e19}{Black}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a95467b558e03495bcedbbcb3b000cfd2}{Blue}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_aa9a5b8bef81ff8c7c88d6d5af5fd7761}{Brown}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_ac5a75718582075ab569462dddf7b8deb}{Cyan}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a81ee11998b9a53025dffa8ef409cc0ee}{Fire\+Brick}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a151caa1579d95170de6eccdd0947bf58}{Green}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a4019d9eba808e36449e32bdfdf1a4c38}{Indigo}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a39b5f23dae5d2065b943e5faa546879c}{Magenta}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_adfa545c41c42b0a959e9e118a88a850b}{Orange}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a1eff1072e211955fffb26b91bb7d80e4}{Pink}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_ad957c67e590c8abf653217642afebbac}{Purple}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a9d2c067be56aec7c69d00ec701020fca}{Red}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a3fab97045e7187877973856b6b38d9df}{Teal}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_accdb252cf7b2c1815901dd432f1e26c9}{Violet}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_acc6b911dd3a96eb1dc6eb0baf42047ed}{White}
+\item 
+static \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \hyperlink{class_k_k_b_1_1_pixel_value_a27b4eed1835edf9ed4dd82b1d81319ef}{Yellow}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by the \hyperlink{class_k_k_b_1_1_raster}{Raster} Class to represent the contents of one pixel. 
+
+There are several predefined colors to pick from or you can work with the individual color channels separately. \begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_b_1_1_raster}{Raster} 
+\end{DoxySeeAlso}
+
+
+Definition at line 22 of file Pixel\+Value.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Pixel\+Value@{Pixel\+Value}}
+\index{Pixel\+Value@{Pixel\+Value}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Pixel\+Value()}{PixelValue()}}]{\setlength{\rightskip}{0pt plus 5cm}Pixel\+Value\+::\+Pixel\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}{}\label{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}
+
+
+Constructs a \textquotesingle{}\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value}\textquotesingle{} instance from the the three provided values. 
+
+
+
+Definition at line 44 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+\begin{DoxyCode}
+44                        :
+45   \hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} (0),
+46   \hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} (0),
+47   \hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} (0)
+48 \{
+49 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Pixel\+Value@{Pixel\+Value}}
+\index{Pixel\+Value@{Pixel\+Value}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Pixel\+Value(uchar \+\_\+r, uchar \+\_\+g, uchar \+\_\+b)}{PixelValue(uchar _r, uchar _g, uchar _b)}}]{\setlength{\rightskip}{0pt plus 5cm}Pixel\+Value\+::\+Pixel\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf uchar}}]{\+\_\+r, }
+\item[{{\bf uchar}}]{\+\_\+g, }
+\item[{{\bf uchar}}]{\+\_\+b}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_pixel_value_a472a67aa0defc4b2d3b4f743e71aa18e}{}\label{class_k_k_b_1_1_pixel_value_a472a67aa0defc4b2d3b4f743e71aa18e}
+
+
+Constructs a \textquotesingle{}\hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value}\textquotesingle{} instance using the provided values for the color components. 
+
+
+
+Definition at line 60 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+
+Referenced by K\+K\+B\+::\+Segmentor\+O\+T\+S\+U\+::\+Class\+Average\+R\+G\+B(), K\+K\+B\+::\+Chart\+::\+Create\+Raster(), From\+H\+S\+I(), operator$\ast$(), and K\+K\+B\+::\+Raster\+::\+Threshold\+In\+H\+S\+I().
+
+
+\begin{DoxyCode}
+60                                                      : 
+61     \hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r}(\_r), \hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g}(\_g), \hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}(\_b)  
+62 \{
+63 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Pixel\+Value@{Pixel\+Value}}
+\index{Pixel\+Value@{Pixel\+Value}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Pixel\+Value(const Pixel\+Value \&pixel\+Value)}{PixelValue(const PixelValue &pixelValue)}}]{\setlength{\rightskip}{0pt plus 5cm}Pixel\+Value\+::\+Pixel\+Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pixel\+Value} \&}]{pixel\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_pixel_value_ae9af8faf5436ce01c7b0ffe4e38e55cb}{}\label{class_k_k_b_1_1_pixel_value_ae9af8faf5436ce01c7b0ffe4e38e55cb}
+
+
+Definition at line 52 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+
+Referenced by K\+K\+B\+::\+Chart\+::\+Series\+::\+Series().
+
+
+\begin{DoxyCode}
+52                                                      :
+53     \hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r}(pixelValue.\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r}), 
+54     \hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g}(pixelValue.\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g}), 
+55     \hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}(pixelValue.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b})  
+56 \{
+57 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!From\+H\+SI@{From\+H\+SI}}
+\index{From\+H\+SI@{From\+H\+SI}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{From\+H\+S\+I(float hue, float sat, float intensity)}{FromHSI(float hue, float sat, float intensity)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+From\+H\+SI (
+\begin{DoxyParamCaption}
+\item[{float}]{hue, }
+\item[{float}]{sat, }
+\item[{float}]{intensity}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a1aed38456fe38d925a5fdeb25d94cd6f}{}\label{class_k_k_b_1_1_pixel_value_a1aed38456fe38d925a5fdeb25d94cd6f}
+
+
+Will create an instance of \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} from the H\+SI values provided (H\+SI -\/$>$ R\+GB). 
+
+Used \char`\"{}http\+://www.\+codeguru.\+com/forum/archive/index.\+php/t-\/134892.\+html\char`\"{} for inspiration. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em hue} & Angle between 0 and (2 x Pi). \\
+\hline
+\mbox{\tt in}  & {\em sat} & Saturation of color, a number between 0.\+0 and 1.\+0. \\
+\hline
+\mbox{\tt in}  & {\em intensity} & Intensity. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 133 of file Pixel\+Value.\+cpp.
+
+
+
+References Black, and Pixel\+Value().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color(), and K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels().
+
+
+\begin{DoxyCode}
+137 \{
+138   \textcolor{comment}{// Used "http://www.codeguru.com/forum/archive/index.php/t-134892.html"  for inspiration.}
+139   \textcolor{keywordflow}{if}  (intensity == 0.0f) 
+140     \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_pixel_value_af2eb1c2546e02ff0f6c14ab76e604e19}{PixelValue::Black};
+141 
+142   \textcolor{keywordflow}{if}  (sat == 0.0f) 
+143   \{
+144     \textcolor{comment}{// gray-scale image}
+145     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  greyValue = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(0.5f + intensity * 255.0f);
+146     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  gv = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})greyValue;
+147     \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}{PixelValue} (gv, gv, gv);
+148   \}
+149 
+150   \textcolor{keywordtype}{float}  domainOffset = 0.0f;
+151   \textcolor{keywordtype}{float}  red = 0.0, green = 0.0, blue = 0.0;
+152   \textcolor{keywordflow}{if}  (hue < (1.0f / 6.0f)) 
+153   \{ 
+154     \textcolor{comment}{//domainOffset = H;}
+155     \textcolor{comment}{//R = I;}
+156     \textcolor{comment}{//B = I * (1-S);}
+157     \textcolor{comment}{//G = B + (I-B)*domainOffset*6;}
+158     domainOffset = hue;
+159     red  = intensity;
+160     blue = intensity * (1.0f - sat);
+161     green = blue + (intensity - blue) * domainOffset * 6.0f;
+162   \}
+163   
+164   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (hue < (2.0f / 6.0f)) 
+165   \{
+166     \textcolor{comment}{//domainOffset = H - 1.0/6.0;}
+167     \textcolor{comment}{//G = I;}
+168     \textcolor{comment}{//B = I * (1-S);}
+169     \textcolor{comment}{//R = G - (I-B)*domainOffset*6;}
+170 
+171     \textcolor{comment}{// yellow domain; red ascending}
+172     domainOffset = hue - 1.0f / 6.0f;
+173     green = intensity;
+174     blue = intensity * (1.0f - sat);
+175     red = green - (intensity - blue) * domainOffset * 6.0f;
+176   \}
+177 
+178   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (hue < (3.0f / 6.0f))
+179   \{
+180     \textcolor{comment}{//domainOffset = H-2.0/6;}
+181     \textcolor{comment}{//G = I;}
+182     \textcolor{comment}{//R = I * (1-S);}
+183     \textcolor{comment}{//B = R + (I-R)*domainOffset * 6;    // green domain; blue descending}
+184     domainOffset = hue - (2.0f / 6.0f);
+185     green = intensity;
+186     red = intensity * (1.0f - sat);
+187     blue = red - (intensity - red) * domainOffset * 6.0f;
+188   \}
+189 
+190   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (hue < (4.0f / 6.0f))
+191   \{
+192     \textcolor{comment}{//domainOffset = H - 3.0/6;}
+193     \textcolor{comment}{//B = I;}
+194     \textcolor{comment}{//R = I * (1-S);}
+195     \textcolor{comment}{//G = B - (I-R) * domainOffset * 6;}
+196     \textcolor{comment}{// cyan domain, green ascending}
+197     domainOffset = hue - (3.0f / 6.0f);
+198     blue = intensity;
+199     red = intensity * (1.0f - sat);
+200     green = blue - (intensity - red) * domainOffset * 6.0f;
+201   \}
+202 
+203   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (hue < (5.0f / 6.0f))
+204   \{
+205     \textcolor{comment}{//domainOffset = H - 4.0/6;}
+206     \textcolor{comment}{//B = I;}
+207     \textcolor{comment}{//G = I * (1-S);}
+208     \textcolor{comment}{//R = G + (I-G) * domainOffset * 6;}
+209     \textcolor{comment}{// blue domain, red ascending}
+210     domainOffset = hue - (4.0f / 6.0f);
+211     blue = intensity;
+212     green = intensity * (1.0f - sat);
+213     red = green + (intensity - green) * domainOffset * 6.0f;
+214   \}
+215 
+216   \textcolor{keywordflow}{else} 
+217   \{ 
+218     \textcolor{comment}{//domainOffset = H - 5.0/6;}
+219     \textcolor{comment}{//R = I;}
+220     \textcolor{comment}{//G = I * (1-S);}
+221     \textcolor{comment}{//B = R - (I-G) * domainOffset * 6;}
+222     \textcolor{comment}{// Magenta domain, blue descending}
+223     domainOffset = hue - (5.0f / 6.0f);
+224     red = intensity;
+225     green = intensity * (1.0f - sat);
+226     blue = red - (intensity - green) * domainOffset * 6.0f;
+227   \}
+228 
+229   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}{PixelValue} ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})(0.5f + red   * 255.0f), 
+230                       (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})(0.5f + green * 255.0f), 
+231                       (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})(0.5f + blue  * 255.0f)
+232                      );
+233 \}  \textcolor{comment}{/* FromHSI */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{operator"!=(const Pixel\+Value \&right) const }{operator!=(const PixelValue &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Pixel\+Value\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pixel\+Value} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_pixel_value_ac8a481df12eec3a256a6d8603dabbd54}{}\label{class_k_k_b_1_1_pixel_value_ac8a481df12eec3a256a6d8603dabbd54}
+
+
+Definition at line 95 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+\begin{DoxyCode}
+96 \{
+97   \textcolor{keywordflow}{return}  ((\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} != right.\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r})  ||  (\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} != right.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b})  ||  (\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} != right.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}));
+98 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{operator$\ast$(double fact) const }{operator*(double fact) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{double}]{fact}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_pixel_value_aae3fb46e958c91cff8ccdc5b661f6fc5}{}\label{class_k_k_b_1_1_pixel_value_aae3fb46e958c91cff8ccdc5b661f6fc5}
+Will multiply the individual color channels by the right operand and return the resultant new \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value}. 
+
+Definition at line 78 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, Pixel\+Value(), and r.
+
+
+\begin{DoxyCode}
+79 \{
+80   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} newR = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})((\textcolor{keywordtype}{double})\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} * fact + 0.5);
+81   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} newG = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})((\textcolor{keywordtype}{double})\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} * fact + 0.5);
+82   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} newB = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})((\textcolor{keywordtype}{double})\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} * fact + 0.5);
+83   \textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_pixel_value_a3e6b509cdcc604c2df9cdde0d9b7f30e}{PixelValue} (newR, newG, newB);
+84 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{operator=(const Pixel\+Value \&right)}{operator=(const PixelValue &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} \& Pixel\+Value\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pixel\+Value} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_pixel_value_ae4d03fa909db025531179e48210eba70}{}\label{class_k_k_b_1_1_pixel_value_ae4d03fa909db025531179e48210eba70}
+
+
+Definition at line 66 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color(), K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels(), and K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+
+\begin{DoxyCode}
+67 \{
+68   \hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} = right.\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r};
+69   \hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} = right.\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g};
+70   \hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} = right.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b};
+71   \textcolor{keywordflow}{return} *\textcolor{keyword}{this};
+72 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!operator==@{operator==}}
+\index{operator==@{operator==}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{operator==(const Pixel\+Value \&right) const }{operator==(const PixelValue &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Pixel\+Value\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Pixel\+Value} \&}]{right}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_pixel_value_a5d73a568790bcd5cda1d2159ce29dbae}{}\label{class_k_k_b_1_1_pixel_value_a5d73a568790bcd5cda1d2159ce29dbae}
+
+
+Definition at line 88 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+\begin{DoxyCode}
+89 \{
+90   \textcolor{keywordflow}{return}  ((\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} == right.\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r})  &&  (\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} == right.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b})  &&  (\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} == right.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}));
+91 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!To\+H\+SI@{To\+H\+SI}}
+\index{To\+H\+SI@{To\+H\+SI}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{To\+H\+S\+I(float \&hue, float \&sat, float \&intensity) const }{ToHSI(float &hue, float &sat, float &intensity) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Pixel\+Value\+::\+To\+H\+SI (
+\begin{DoxyParamCaption}
+\item[{float \&}]{hue, }
+\item[{float \&}]{sat, }
+\item[{float \&}]{intensity}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_pixel_value_ac0e01fee6a5f4054b5fac3a4e5393857}{}\label{class_k_k_b_1_1_pixel_value_ac0e01fee6a5f4054b5fac3a4e5393857}
+
+
+Computes the equivalent H\+SI values; R\+GB -\/$>$ H\+SI. 
+
+Used \char`\"{}http\+://www.\+codeguru.\+com/forum/archive/index.\+php/t-\/134892.\+html\char`\"{} for inspiration. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em hue} & Angle in radians. \\
+\hline
+\mbox{\tt out}  & {\em sat} & Saturation between 0.\+0 and 1.\+0. \\
+\hline
+\mbox{\tt out}  & {\em intensity} & Intensity between 0.\+0 and 1.\+0. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 102 of file Pixel\+Value.\+cpp.
+
+
+
+References b, g, and r.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Threshold\+In\+H\+S\+I().
+
+
+\begin{DoxyCode}
+106 \{
+107   \textcolor{keywordtype}{float}  redF    = (float)\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r} / 255.0f;
+108   \textcolor{keywordtype}{float}  greenF  = (float)\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g} / 255.0f;
+109   \textcolor{keywordtype}{float}  blueF   = (float)\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b} / 255.0f;
+110 
+111   \textcolor{keywordflow}{if} (blueF <= greenF)
+112   \{
+113     \textcolor{comment}{// compute hue with this formula}
+114     hue = (float)acos ((0.5 * ((redF - greenF) + (redF - blueF))) / sqrt ((pow ((redF - greenF), 2) + (redF
+       - blueF) * (greenF - blueF))));
+115   \}
+116 
+117   \textcolor{comment}{// Otherwise}
+118   \textcolor{keywordflow}{else}
+119   \{
+120     \textcolor{comment}{// compute hue with this formula}
+121     hue = (float)(2.0f * 3.1415926535897932384626433832795 - acos ((0.5 * ((redF - greenF) + (redF - blueF)
+      ))) / sqrt ((pow ((redF - greenF), 2) + (redF - blueF) * (greenF - blueF))));
+122   \}
+123 
+124   \textcolor{comment}{// compute saturation}
+125   sat = 1 - 3 * \hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min} (\hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min} (redF, greenF), blueF) / (redF + greenF + blueF);
+126 
+127   \textcolor{comment}{// compute intensity}
+128   intensity = (redF + greenF + blueF) / 3;
+129 \}  \textcolor{comment}{/* ToHSI */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!To\+Str@{To\+Str}}
+\index{To\+Str@{To\+Str}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{To\+Str() const }{ToStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Pixel\+Value\+::\+To\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_pixel_value_abf595bf550096b553018c02e9f85733e}{}\label{class_k_k_b_1_1_pixel_value_abf595bf550096b553018c02e9f85733e}
+
+
+Creates a displayable string reflecting the values of the three R\+GB components. 
+
+
+
+Definition at line 237 of file Pixel\+Value.\+cpp.
+
+
+
+References b, K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), g, K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), r, and K\+K\+B\+::\+Str\+Format\+Int().
+
+
+\begin{DoxyCode}
+238 \{
+239   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s = \textcolor{stringliteral}{"("} + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{KKB::StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r}, \textcolor{stringliteral}{"ZZ0"}) + \textcolor{stringliteral}{","}
+240                  + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{KKB::StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g}, \textcolor{stringliteral}{"ZZ0"}) + \textcolor{stringliteral}{","}
+241                  + \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{KKB::StrFormatInt} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b}, \textcolor{stringliteral}{"ZZ0"}) + \textcolor{stringliteral}{")"};
+242   \textcolor{keywordflow}{return} s;
+243 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Aqua@{Aqua}}
+\index{Aqua@{Aqua}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Aqua}{Aqua}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Aqua\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a51fc16a4bf4f2c1470b793db00e51db9}{}\label{class_k_k_b_1_1_pixel_value_a51fc16a4bf4f2c1470b793db00e51db9}
+
+
+Definition at line 34 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!b@{b}}
+\index{b@{b}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{b}{b}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Pixel\+Value\+::b}\hypertarget{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{}\label{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}
+
+
+Definition at line 54 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels(), K\+K\+B\+::\+Raster\+::\+Draw\+Connected\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Draw\+Line(), K\+K\+B\+::\+Raster\+::\+Draw\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Fill\+Rectangle(), K\+K\+B\+::\+Raster\+::\+Get\+Pixel\+Value(), operator!=(), operator$\ast$(), operator=(), operator==(), Pixel\+Value(), K\+K\+B\+::\+Raster\+::\+Set\+Pixel\+Value(), To\+H\+S\+I(), and To\+Str().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Black@{Black}}
+\index{Black@{Black}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Black}{Black}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Black\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_af2eb1c2546e02ff0f6c14ab76e604e19}{}\label{class_k_k_b_1_1_pixel_value_af2eb1c2546e02ff0f6c14ab76e604e19}
+
+
+Definition at line 35 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels(), and From\+H\+S\+I().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Blue@{Blue}}
+\index{Blue@{Blue}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Blue}{Blue}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Blue\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a95467b558e03495bcedbbcb3b000cfd2}{}\label{class_k_k_b_1_1_pixel_value_a95467b558e03495bcedbbcb3b000cfd2}
+
+
+Definition at line 36 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Brown@{Brown}}
+\index{Brown@{Brown}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Brown}{Brown}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Brown\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_aa9a5b8bef81ff8c7c88d6d5af5fd7761}{}\label{class_k_k_b_1_1_pixel_value_aa9a5b8bef81ff8c7c88d6d5af5fd7761}
+
+
+Definition at line 37 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Cyan@{Cyan}}
+\index{Cyan@{Cyan}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Cyan}{Cyan}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Cyan\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_ac5a75718582075ab569462dddf7b8deb}{}\label{class_k_k_b_1_1_pixel_value_ac5a75718582075ab569462dddf7b8deb}
+
+
+Definition at line 38 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Fire\+Brick@{Fire\+Brick}}
+\index{Fire\+Brick@{Fire\+Brick}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Fire\+Brick}{FireBrick}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Fire\+Brick\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a81ee11998b9a53025dffa8ef409cc0ee}{}\label{class_k_k_b_1_1_pixel_value_a81ee11998b9a53025dffa8ef409cc0ee}
+
+
+Definition at line 39 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!g@{g}}
+\index{g@{g}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{g}{g}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Pixel\+Value\+::g}\hypertarget{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{}\label{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}
+
+
+Definition at line 53 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels(), K\+K\+B\+::\+Raster\+::\+Draw\+Connected\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Draw\+Line(), K\+K\+B\+::\+Raster\+::\+Draw\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Fill\+Rectangle(), K\+K\+B\+::\+Raster\+::\+Get\+Pixel\+Value(), operator!=(), operator$\ast$(), operator=(), operator==(), Pixel\+Value(), K\+K\+B\+::\+Raster\+::\+Set\+Pixel\+Value(), To\+H\+S\+I(), and To\+Str().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Green@{Green}}
+\index{Green@{Green}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Green}{Green}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Green\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a151caa1579d95170de6eccdd0947bf58}{}\label{class_k_k_b_1_1_pixel_value_a151caa1579d95170de6eccdd0947bf58}
+
+
+Definition at line 40 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Indigo@{Indigo}}
+\index{Indigo@{Indigo}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Indigo}{Indigo}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Indigo\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a4019d9eba808e36449e32bdfdf1a4c38}{}\label{class_k_k_b_1_1_pixel_value_a4019d9eba808e36449e32bdfdf1a4c38}
+
+
+Definition at line 41 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Magenta@{Magenta}}
+\index{Magenta@{Magenta}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Magenta}{Magenta}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Magenta\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a39b5f23dae5d2065b943e5faa546879c}{}\label{class_k_k_b_1_1_pixel_value_a39b5f23dae5d2065b943e5faa546879c}
+
+
+Definition at line 42 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Orange@{Orange}}
+\index{Orange@{Orange}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Orange}{Orange}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Orange\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_adfa545c41c42b0a959e9e118a88a850b}{}\label{class_k_k_b_1_1_pixel_value_adfa545c41c42b0a959e9e118a88a850b}
+
+
+Definition at line 43 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Pink@{Pink}}
+\index{Pink@{Pink}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Pink}{Pink}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Pink\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a1eff1072e211955fffb26b91bb7d80e4}{}\label{class_k_k_b_1_1_pixel_value_a1eff1072e211955fffb26b91bb7d80e4}
+
+
+Definition at line 44 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Purple@{Purple}}
+\index{Purple@{Purple}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Purple}{Purple}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Purple\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_ad957c67e590c8abf653217642afebbac}{}\label{class_k_k_b_1_1_pixel_value_ad957c67e590c8abf653217642afebbac}
+
+
+Definition at line 45 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!r@{r}}
+\index{r@{r}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{r}{r}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Pixel\+Value\+::r}\hypertarget{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{}\label{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}
+
+
+Definition at line 52 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+Image\+From\+Labels(), K\+K\+B\+::\+Raster\+::\+Draw\+Connected\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Draw\+Line(), K\+K\+B\+::\+Raster\+::\+Draw\+Point\+List(), K\+K\+B\+::\+Raster\+::\+Fill\+Rectangle(), K\+K\+B\+::\+Raster\+::\+Get\+Pixel\+Value(), operator!=(), operator$\ast$(), operator=(), operator==(), Pixel\+Value(), K\+K\+B\+::\+Raster\+::\+Set\+Pixel\+Value(), To\+H\+S\+I(), and To\+Str().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Red@{Red}}
+\index{Red@{Red}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Red}{Red}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Red\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a9d2c067be56aec7c69d00ec701020fca}{}\label{class_k_k_b_1_1_pixel_value_a9d2c067be56aec7c69d00ec701020fca}
+
+
+Definition at line 46 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Teal@{Teal}}
+\index{Teal@{Teal}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Teal}{Teal}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Teal\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a3fab97045e7187877973856b6b38d9df}{}\label{class_k_k_b_1_1_pixel_value_a3fab97045e7187877973856b6b38d9df}
+
+
+Definition at line 47 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Violet@{Violet}}
+\index{Violet@{Violet}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Violet}{Violet}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Violet\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_accdb252cf7b2c1815901dd432f1e26c9}{}\label{class_k_k_b_1_1_pixel_value_accdb252cf7b2c1815901dd432f1e26c9}
+
+
+Definition at line 48 of file Pixel\+Value.\+h.
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!White@{White}}
+\index{White@{White}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{White}{White}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+White\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_acc6b911dd3a96eb1dc6eb0baf42047ed}{}\label{class_k_k_b_1_1_pixel_value_acc6b911dd3a96eb1dc6eb0baf42047ed}
+
+
+Definition at line 49 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color().
+
+\index{K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}!Yellow@{Yellow}}
+\index{Yellow@{Yellow}!K\+K\+B\+::\+Pixel\+Value@{K\+K\+B\+::\+Pixel\+Value}}
+\subsubsection[{\texorpdfstring{Yellow}{Yellow}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Pixel\+Value} Pixel\+Value\+::\+Yellow\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_pixel_value_a27b4eed1835edf9ed4dd82b1d81319ef}{}\label{class_k_k_b_1_1_pixel_value_a27b4eed1835edf9ed4dd82b1d81319ef}
+
+
+Definition at line 50 of file Pixel\+Value.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_pixel_value_8h}{Pixel\+Value.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_pixel_value_8cpp}{Pixel\+Value.\+cpp}\end{DoxyCompactItemize}

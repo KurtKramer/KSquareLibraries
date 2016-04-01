@@ -1,0 +1,172 @@
+\hypertarget{class_k_k_b_1_1_raster_list}{}\section{K\+KB\+:\+:Raster\+List Class Reference}
+\label{class_k_k_b_1_1_raster_list}\index{K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}}
+
+
+{\ttfamily \#include $<$Raster.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Raster\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_b_1_1_raster_list}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_raster_list_a3f72041983afaa927389a17b6f02a1d8}{Raster\+List} (bool owner)
+\item 
+\hyperlink{class_k_k_b_1_1_raster_list_a4dbbd5f4dd147a02fff4b93502c081c5}{Raster\+List} (const \hyperlink{class_k_k_b_1_1_raster_list}{Raster\+List} \&raster\+List, bool \+\_\+owner)
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_raster_list_af78097714e1b932b443fccfe7f8baf56}{Create\+Smoothed\+Frame} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 1387 of file Raster.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}!Raster\+List@{Raster\+List}}
+\index{Raster\+List@{Raster\+List}!K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}}
+\subsubsection[{\texorpdfstring{Raster\+List(bool owner)}{RasterList(bool owner)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Raster\+List\+::\+Raster\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{owner}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_raster_list_a3f72041983afaa927389a17b6f02a1d8}{}\label{class_k_k_b_1_1_raster_list_a3f72041983afaa927389a17b6f02a1d8}
+
+
+Definition at line 1390 of file Raster.\+h.
+
+
+
+References Raster\+List().
+
+
+
+Referenced by Raster\+List(), and K\+K\+B\+::\+Raster\+::\+Split\+Image\+Into\+Equal\+Parts().
+
+
+\begin{DoxyCode}
+1390                             :
+1391         KKQueue<Raster> (owner)
+1392         \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}!Raster\+List@{Raster\+List}}
+\index{Raster\+List@{Raster\+List}!K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}}
+\subsubsection[{\texorpdfstring{Raster\+List(const Raster\+List \&raster\+List, bool \+\_\+owner)}{RasterList(const RasterList &rasterList, bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Raster\+List\+::\+Raster\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Raster\+List} \&}]{raster\+List, }
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_raster_list_a4dbbd5f4dd147a02fff4b93502c081c5}{}\label{class_k_k_b_1_1_raster_list_a4dbbd5f4dd147a02fff4b93502c081c5}
+
+
+Definition at line 1400 of file Raster.\+h.
+
+
+
+References Raster\+List().
+
+
+
+Referenced by Raster\+List().
+
+
+\begin{DoxyCode}
+1402                 :
+1403         KKQueue<Raster> (rasterList, \_owner)
+1404         \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}!Create\+Smoothed\+Frame@{Create\+Smoothed\+Frame}}
+\index{Create\+Smoothed\+Frame@{Create\+Smoothed\+Frame}!K\+K\+B\+::\+Raster\+List@{K\+K\+B\+::\+Raster\+List}}
+\subsubsection[{\texorpdfstring{Create\+Smoothed\+Frame()}{CreateSmoothedFrame()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Raster\+List\+::\+Create\+Smoothed\+Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_list_af78097714e1b932b443fccfe7f8baf56}{}\label{class_k_k_b_1_1_raster_list_af78097714e1b932b443fccfe7f8baf56}
+
+
+Definition at line 8950 of file Raster.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Allocate\+A\+Raster\+Instance(), K\+K\+B\+::\+Raster\+::\+Blue\+Area(), K\+K\+B\+::\+Raster\+::\+Color(), K\+K\+B\+::\+Raster\+::\+Green\+Area(), K\+K\+B\+::\+Raster\+::\+Height(), K\+K\+B\+::\+Raster\+::\+Red\+Area(), and K\+K\+B\+::\+Raster\+::\+Width().
+
+
+\begin{DoxyCode}
+8951 \{
+8952   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+8953     \textcolor{keywordflow}{return} NULL;
+8954 
+8955   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+8956 
+8957   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  firstRaster = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (0);
+8958   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} height = firstRaster->\hyperlink{class_k_k_b_1_1_raster_af8d10d15697d5b92fb9595c48b529feb}{Height} ();
+8959   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} width  = firstRaster->\hyperlink{class_k_k_b_1_1_raster_af8d10d15697d5b92fb9595c48b529feb}{Height} ();
+8960   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} totPixels = height * width;
+8961 
+8962   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}*  totGreenArea = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}[totPixels];
+8963   memset (totGreenArea, 0, totPixels * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}));
+8964 
+8965   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;
+8966   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} rastersAdded = 0;
+8967 
+8968   \textcolor{keywordflow}{for}  (idx = 0;  idx < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  idx++)
+8969   \{
+8970     \hyperlink{class_k_k_b_1_1_raster}{RasterPtr} raster = \hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx);
+8971     \textcolor{keywordflow}{if}  ((raster->\hyperlink{class_k_k_b_1_1_raster_af8d10d15697d5b92fb9595c48b529feb}{Height} () != height)  ||
+8972          (raster->\hyperlink{class_k_k_b_1_1_raster_aa2780c0b7ae75b7b595f99329689c1f6}{Width}  () != width)
+8973         )
+8974     \{
+8975       \textcolor{keywordflow}{continue};
+8976     \}
+8977 
+8978     \textcolor{keywordflow}{if}  (raster->\hyperlink{class_k_k_b_1_1_raster_a644248f99009d64ac4b8fef4a22aff25}{Color} ())
+8979     \{
+8980       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  redArea   = raster->\hyperlink{class_k_k_b_1_1_raster_aa3d0f9b4ce0fdd8ac97f996058d09b22}{RedArea} ();
+8981       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  greenArea = raster->\hyperlink{class_k_k_b_1_1_raster_af6ceacfa7835a295d239d141627dbec7}{GreenArea} ();
+8982       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  blueArea  = raster->\hyperlink{class_k_k_b_1_1_raster_ade7c77867e6b3833e96f5f86aefcffec}{BlueArea} ();
+8983       \textcolor{keywordflow}{for} (x = 0;  x < totPixels;  x++)
+8984       \{
+8985         totGreenArea[x] += (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})((\textcolor{keywordtype}{float})redArea[x]   * 0.39f +
+8986                                   (float)greenArea[x] * 0.59f +
+8987                                   (\textcolor{keywordtype}{float})blueArea[x]  * 0.11f +
+8988                                   0.5f
+8989                                  );
+8990       \}
+8991     \}
+8992     \textcolor{keywordflow}{else}
+8993     \{
+8994       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  greenArea = raster->\hyperlink{class_k_k_b_1_1_raster_af6ceacfa7835a295d239d141627dbec7}{GreenArea} ();
+8995       \textcolor{keywordflow}{for} (x = 0;  x < totPixels;  x++)
+8996         totGreenArea[x] += greenArea[x];
+8997     \}
+8998 
+8999     rastersAdded++;
+9000   \}
+9001 
+9002   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  smoothedRaster = firstRaster->\hyperlink{class_k_k_b_1_1_raster_aa879980d112c01cb7ad9a3cfc7cd6f64}{AllocateARasterInstance} (height,
+       width, \textcolor{keyword}{false});
+9003 
+9004   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  newGreenArea = smoothedRaster->\hyperlink{class_k_k_b_1_1_raster_af6ceacfa7835a295d239d141627dbec7}{GreenArea} ();
+9005   \textcolor{keywordflow}{for}  (x = 0;  x < totPixels;  x++)
+9006     newGreenArea[x] = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})  (totGreenArea[x] / rastersAdded);
+9007 
+9008   \textcolor{keyword}{delete}[]  totGreenArea;
+9009 
+9010   \textcolor{keywordflow}{return}  smoothedRaster;
+9011 \}  \textcolor{comment}{/* CreateSmoothedFrame */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_raster_8h}{Raster.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_raster_8cpp}{Raster.\+cpp}\end{DoxyCompactItemize}

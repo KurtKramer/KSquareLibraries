@@ -1,0 +1,126 @@
+\hypertarget{_k_k_str_8h}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Str.h File Reference}
+\label{_k_k_str_8h}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Str.\+h@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Str.\+h}}
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$ostream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Queue.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+B\+::\+K\+K\+Str}
+\item 
+class \hyperlink{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator}{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}
+\item 
+class \hyperlink{class_k_k_b_1_1_k_k_str_list}{K\+K\+B\+::\+K\+K\+Str\+List}
+\item 
+class \hyperlink{class_k_k_b_1_1_k_k_str_list_indexed}{K\+K\+B\+::\+K\+K\+Str\+List\+Indexed}
+\item 
+class \hyperlink{class_k_k_b_1_1_vector_k_k_str}{K\+K\+B\+::\+Vector\+K\+K\+Str}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_b}{K\+KB}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespace_k_k_b}{K\+KB} The namespace for K\+K\+Base Library supporting general functionality needed by almost any application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_k_k_str_8h_aa654bee7cdb6eb72abcd5bcd43aa632e}{Enter\+Char}~13
+\item 
+\#define \hyperlink{_k_k_str_8h_a88867d2f650ef0c94b5c5047585c730b}{Escape\+Char}~27
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef K\+K\+Str\+::\+K\+K\+Str\+Const\+Ptr \hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+B\+::\+K\+K\+Str\+Const\+Ptr}
+\item 
+typedef K\+K\+Str\+List\+::\+K\+K\+Str\+List\+Ptr \hyperlink{namespace_k_k_b_a8f5f50672f37857425120831223888aa}{K\+K\+B\+::\+K\+K\+Str\+List\+Ptr}
+\item 
+typedef std\+::pair$<$ K\+K\+Str, K\+K\+Str $>$ \hyperlink{namespace_k_k_b_a19bc771df76ae3c010ce487b355b02b5}{K\+K\+B\+::\+K\+K\+Str\+Pair}
+\item 
+typedef K\+K\+Str\+::\+K\+K\+Str\+Ptr \hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+B\+::\+K\+K\+Str\+Ptr}
+\item 
+typedef K\+K\+Str\+List\+::\+K\+K\+Str\+List\+Ptr \hyperlink{namespace_k_k_b_a8a9b957cedcc26019cc08c75bfc15070}{K\+K\+B\+::\+String\+List\+Ptr}
+\begin{DoxyCompactList}\small\item\em summary$>$ Maintains a list of ordered \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} instances that can be recalled by either string of index. \end{DoxyCompactList}\item 
+typedef Xml\+Tag const $\ast$ \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{K\+K\+B\+::\+Xml\+Tag\+Const\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_adebce4bd76311aae0f763d2b328efad7}{K\+K\+B\+::operator+} (const char left, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&right)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_aa9d1d5da0714c92ef76ff24faeae50dd}{K\+K\+B\+::operator+} (const char $\ast$left, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&right)
+\item 
+std\+::ostream \&\+\_\+\+\_\+cdecl \hyperlink{namespace_k_k_b_a186440c7d3c43e772dcd6fb5699b5544}{K\+K\+B\+::operator$<$$<$} (std\+::ostream \&os, const K\+K\+Str \&str)
+\item 
+std\+::istream \&\+\_\+\+\_\+cdecl \hyperlink{namespace_k_k_b_aa22d106664a6361ae43bc4198300bc15}{K\+K\+B\+::operator$>$$>$} (std\+::istream \&is, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&str)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a8873481c8aabf0bd85dd15dd6087d374}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a651e072586e3d155b8893165918bd635}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a60afdd0c2c3321d9a6c0d25f3de93553}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a1765bfe25c445dd195155580f6f46ea6}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_afdc8754b6c45bc670b6298cb1d7b193f}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a049b331ad63758ebb8b2619860c7d359}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a96de8cda5baf4912fcb3d2fc819a42f5}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, const char $\ast$format\+Spec, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} precision, double d)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a8e0b37f8ecc614eeda3fe341a7b14a4f}{K\+K\+B\+::\+S\+P\+R\+I\+N\+TF} (char $\ast$buff, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} buff\+Size, char const $\ast$format\+Spec, double d)
+\item 
+char $\ast$ \hyperlink{namespace_k_k_b_add907783ece6b98ee513a7df340f27f4}{K\+K\+B\+::\+S\+T\+R\+C\+AT} (char $\ast$dest, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} dest\+Size, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{namespace_k_k_b_a9fae0fac72d1e210c67d62c4992847e0}{K\+K\+B\+::\+S\+T\+R\+C\+O\+PY} (char $\ast$dest, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} dest\+Size, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{namespace_k_k_b_a5c53f9cd369733e7835ee7d1ebce7291}{K\+K\+B\+::\+S\+T\+R\+C\+O\+PY} (char $\ast$dest, \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} dest\+Size, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{K\+K\+B\+::\+S\+T\+R\+D\+UP} (const char $\ast$src)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{K\+K\+B\+::\+Str\+Format\+Double} (double val, const char $\ast$mask)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{K\+K\+B\+::\+Str\+Format\+Int} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} val, const char $\ast$mask)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a5a61958a2cb00ae5c697a1547ad01121}{K\+K\+B\+::\+Str\+Format\+Int64} (\hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} val, const char $\ast$mask)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a064d022f1f3d94c191e11c5e4bceb4a7}{K\+K\+B\+::\+Str\+From\+Double} (double d)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_aa19267de8ebca7b146b5aef6b2c27df9}{K\+K\+B\+::\+Str\+From\+Float} (float f)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a197206fb786776e54355a462b6181aac}{K\+K\+B\+::\+Str\+From\+Int16} (\hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{kkint16} i)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{K\+K\+B\+::\+Str\+From\+Int32} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_ad007937ca83cb95064fa2f74531481aa}{K\+K\+B\+::\+Str\+From\+Int64} (\hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} i)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a4341de514fd3446b577dde3220ee0f75}{K\+K\+B\+::\+Str\+From\+Uint16} (\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} ui)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_a3cfc4769d4e2de370b13062faefc8235}{K\+K\+B\+::\+Str\+From\+Uint32} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} ui)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_ad5e46dcf9ae747e21042343ec5f9085c}{K\+K\+B\+::\+Str\+From\+Uint64} (\hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} ui)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_a94c71ca99ba76f5e731e9851ccd7d518}{K\+K\+B\+::\+S\+T\+R\+I\+C\+MP} (const char $\ast$left, const char $\ast$right)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_aa068d67352827e603547d10c12596c97}{K\+K\+B\+::\+S\+T\+R\+N\+I\+C\+MP} (const char $\ast$left, const char $\ast$right, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} len)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{K\+K\+Str.\+h@{K\+K\+Str.\+h}!Enter\+Char@{Enter\+Char}}
+\index{Enter\+Char@{Enter\+Char}!K\+K\+Str.\+h@{K\+K\+Str.\+h}}
+\subsubsection[{\texorpdfstring{Enter\+Char}{EnterChar}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Enter\+Char~13}\hypertarget{_k_k_str_8h_aa654bee7cdb6eb72abcd5bcd43aa632e}{}\label{_k_k_str_8h_aa654bee7cdb6eb72abcd5bcd43aa632e}
+
+
+Definition at line 30 of file K\+K\+Str.\+h.
+
+\index{K\+K\+Str.\+h@{K\+K\+Str.\+h}!Escape\+Char@{Escape\+Char}}
+\index{Escape\+Char@{Escape\+Char}!K\+K\+Str.\+h@{K\+K\+Str.\+h}}
+\subsubsection[{\texorpdfstring{Escape\+Char}{EscapeChar}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Escape\+Char~27}\hypertarget{_k_k_str_8h_a88867d2f650ef0c94b5c5047585c730b}{}\label{_k_k_str_8h_a88867d2f650ef0c94b5c5047585c730b}
+
+
+Definition at line 31 of file K\+K\+Str.\+h.
+

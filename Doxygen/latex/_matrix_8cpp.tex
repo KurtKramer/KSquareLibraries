@@ -1,0 +1,138 @@
+\hypertarget{_matrix_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Matrix.cpp File Reference}
+\label{_matrix_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Matrix.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Matrix.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$ostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Matrix.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Exception.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_matrix_8cpp_ab701824136346377b44fc3adb8050b29}{D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON}~2.\+2204460492503131e-\/016
+\item 
+\#define \hyperlink{_matrix_8cpp_a2eb03319e5ccdc1a14b73a7d8b1724de}{S\+QR}(X)~((X) $\ast$ (X))
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+ostream \& \hyperlink{_matrix_8cpp_a85a2865bcc2b7c641162bbd4aa13a7c6}{operator$<$$<$} (ostream \&os, const \hyperlink{class_k_k_b_1_1_matrix}{Matrix} \&matrix)
+\item 
+{\footnotesize template$<$class T $>$ }\\const T \hyperlink{_matrix_8cpp_a73ed9c206e7e0031e9afbd17366ee779}{S\+I\+GN} (const T \&a, const T \&b)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{Matrix.\+cpp@{Matrix.\+cpp}!D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON@{D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON}}
+\index{D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON@{D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON}!Matrix.\+cpp@{Matrix.\+cpp}}
+\subsubsection[{\texorpdfstring{D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON}{DBL_EPSILON}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+B\+L\+\_\+\+E\+P\+S\+I\+L\+ON~2.\+2204460492503131e-\/016}\hypertarget{_matrix_8cpp_ab701824136346377b44fc3adb8050b29}{}\label{_matrix_8cpp_ab701824136346377b44fc3adb8050b29}
+
+
+Definition at line 902 of file Matrix.\+cpp.
+
+\index{Matrix.\+cpp@{Matrix.\+cpp}!S\+QR@{S\+QR}}
+\index{S\+QR@{S\+QR}!Matrix.\+cpp@{Matrix.\+cpp}}
+\subsubsection[{\texorpdfstring{S\+QR}{SQR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\+QR(
+\begin{DoxyParamCaption}
+\item[{}]{X}
+\end{DoxyParamCaption}
+)~((X) $\ast$ (X))}\hypertarget{_matrix_8cpp_a2eb03319e5ccdc1a14b73a7d8b1724de}{}\label{_matrix_8cpp_a2eb03319e5ccdc1a14b73a7d8b1724de}
+
+
+Definition at line 1218 of file Matrix.\+cpp.
+
+
+
+\subsection{Function Documentation}
+\index{Matrix.\+cpp@{Matrix.\+cpp}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Matrix.\+cpp@{Matrix.\+cpp}}
+\subsubsection[{\texorpdfstring{operator$<$$<$(ostream \&os, const Matrix \&matrix)}{operator<<(ostream &os, const Matrix &matrix)}}]{\setlength{\rightskip}{0pt plus 5cm}ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{os, }
+\item[{const {\bf Matrix} \&}]{matrix}
+\end{DoxyParamCaption}
+)}\hypertarget{_matrix_8cpp_a85a2865bcc2b7c641162bbd4aa13a7c6}{}\label{_matrix_8cpp_a85a2865bcc2b7c641162bbd4aa13a7c6}
+
+
+Definition at line 853 of file Matrix.\+cpp.
+
+
+
+References K\+K\+B\+::\+Matrix\+::\+Num\+Of\+Cols(), K\+K\+B\+::\+Matrix\+::\+Num\+Of\+Rows(), and K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+856 \{
+857   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+858   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+859 
+860   os << \textcolor{stringliteral}{"["} << matrix.\hyperlink{class_k_k_b_1_1_matrix_adb748900cbb5c55303eb71c682b0089f}{NumOfRows} () << \textcolor{stringliteral}{","} << matrix.\hyperlink{class_k_k_b_1_1_matrix_a8f90bb60f11d7a3836729aba4aba5477}{NumOfCols} () << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+861 
+862   os << \textcolor{stringliteral}{"["};
+863 
+864   \textcolor{keywordflow}{for}  (row = 0; row < matrix.\hyperlink{class_k_k_b_1_1_matrix_adb748900cbb5c55303eb71c682b0089f}{NumOfRows} (); row++)
+865   \{
+866     \textcolor{keywordflow}{if}  (row  > 0)
+867       os << \textcolor{stringliteral}{" "};
+868 
+869     os << \textcolor{stringliteral}{"["};
+870 
+871     \textcolor{keywordflow}{for}  (col = 0; col < matrix.\hyperlink{class_k_k_b_1_1_matrix_a8f90bb60f11d7a3836729aba4aba5477}{NumOfCols} (); col++)
+872     \{
+873       \textcolor{keywordflow}{if}  (col > 0)
+874         os << \textcolor{stringliteral}{", "};
+875 
+876       os.width (8);
+877       os.precision (6);
+878       os << matrix[row][col];
+879     \}
+880 
+881     os << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+882   \}
+883 
+884   os << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+885 
+886   \textcolor{keywordflow}{return} os;
+887 \}  \textcolor{comment}{/* operator<< */}
+\end{DoxyCode}
+\index{Matrix.\+cpp@{Matrix.\+cpp}!S\+I\+GN@{S\+I\+GN}}
+\index{S\+I\+GN@{S\+I\+GN}!Matrix.\+cpp@{Matrix.\+cpp}}
+\subsubsection[{\texorpdfstring{S\+I\+G\+N(const T \&a, const T \&b)}{SIGN(const T &a, const T &b)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class T $>$ const T S\+I\+GN (
+\begin{DoxyParamCaption}
+\item[{const T \&}]{a, }
+\item[{const T \&}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{_matrix_8cpp_a73ed9c206e7e0031e9afbd17366ee779}{}\label{_matrix_8cpp_a73ed9c206e7e0031e9afbd17366ee779}
+
+
+Definition at line 1196 of file Matrix.\+cpp.
+
+
+\begin{DoxyCode}
+1199 \{
+1200   \textcolor{keywordflow}{if}  (b >= 0)
+1201   \{
+1202     \textcolor{keywordflow}{if}  (a >= 0)
+1203       \textcolor{keywordflow}{return}  a;
+1204     \textcolor{keywordflow}{else}
+1205       \textcolor{keywordflow}{return} -a;
+1206   \}
+1207 
+1208   \textcolor{keywordflow}{else}
+1209   \{
+1210     \textcolor{keywordflow}{if}  (a >- 0)
+1211       \textcolor{keywordflow}{return} -a;
+1212     \textcolor{keywordflow}{else}
+1213       \textcolor{keywordflow}{return}  a;
+1214   \}
+1215 \}  \textcolor{comment}{/* SIGN */}
+\end{DoxyCode}

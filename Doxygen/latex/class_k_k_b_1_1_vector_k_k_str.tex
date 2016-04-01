@@ -1,0 +1,189 @@
+\hypertarget{class_k_k_b_1_1_vector_k_k_str}{}\section{K\+KB\+:\+:Vector\+K\+K\+Str Class Reference}
+\label{class_k_k_b_1_1_vector_k_k_str}\index{K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}}
+
+
+{\ttfamily \#include $<$K\+K\+Str.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Vector\+K\+K\+Str\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_vector_k_k_str}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_vector_k_k_str_a8fffb71b681560151fdc653f39c3f7dc}{Vector\+K\+K\+Str} ()
+\item 
+\hyperlink{class_k_k_b_1_1_vector_k_k_str_a9b4aed0260683b87aacd9cbaeb6cb223}{Vector\+K\+K\+Str} (const \hyperlink{class_k_k_b_1_1_vector_k_k_str}{Vector\+K\+K\+Str} \&v)
+\item 
+void \hyperlink{class_k_k_b_1_1_vector_k_k_str_a8c1a3b54afb48156b5d462dc2faa0307}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+void \hyperlink{class_k_k_b_1_1_vector_k_k_str_a3e90bf5fd9c23a8c16f0fdee98946395}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+summary$>$ A string class providing safe runtime management; strings can be used as stream and String\+Builder objects. Simple token parsing is supported as well as various translations to other formats such as \textquotesingle{}int\textquotesingle{}, \textquotesingle{}double\textquotesingle{}, and others. Allocation is done dynamically increasing as needs warrant. All methods ensure that there is no accessing outside the bounds of the allocated string. /summary$>$ todo$>$ Should subclass the class from the stl class \textquotesingle{}string\textquotesingle{}. $<$/todo$>$ 
+
+Definition at line 54 of file K\+K\+Str.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}!Vector\+K\+K\+Str@{Vector\+K\+K\+Str}}
+\index{Vector\+K\+K\+Str@{Vector\+K\+K\+Str}!K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}}
+\subsubsection[{\texorpdfstring{Vector\+K\+K\+Str()}{VectorKKStr()}}]{\setlength{\rightskip}{0pt plus 5cm}Vector\+K\+K\+Str\+::\+Vector\+K\+K\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_vector_k_k_str_a8fffb71b681560151fdc653f39c3f7dc}{}\label{class_k_k_b_1_1_vector_k_k_str_a8fffb71b681560151fdc653f39c3f7dc}
+
+
+Definition at line 5264 of file K\+K\+Str.\+cpp.
+
+
+
+References Vector\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Config\+File\+Format\+Errors(), K\+K\+B\+::\+Configuration\+::\+Configuration(), K\+K\+M\+L\+L\+::\+Training\+Class\+::\+Training\+Class(), Vector\+K\+K\+Str(), and K\+K\+B\+::\+Xml\+Stream\+::\+Xml\+Stream().
+
+
+\begin{DoxyCode}
+5264                          :
+5265   vector<KKStr> ()
+5266 \{
+5267 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}!Vector\+K\+K\+Str@{Vector\+K\+K\+Str}}
+\index{Vector\+K\+K\+Str@{Vector\+K\+K\+Str}!K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}}
+\subsubsection[{\texorpdfstring{Vector\+K\+K\+Str(const Vector\+K\+K\+Str \&v)}{VectorKKStr(const VectorKKStr &v)}}]{\setlength{\rightskip}{0pt plus 5cm}Vector\+K\+K\+Str\+::\+Vector\+K\+K\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector\+K\+K\+Str} \&}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_vector_k_k_str_a9b4aed0260683b87aacd9cbaeb6cb223}{}\label{class_k_k_b_1_1_vector_k_k_str_a9b4aed0260683b87aacd9cbaeb6cb223}
+
+
+Definition at line 5270 of file K\+K\+Str.\+cpp.
+
+
+
+References Vector\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Configuration\+::\+Configuration(), K\+K\+M\+L\+L\+::\+Training\+Class\+::\+Training\+Class(), and Vector\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+5270                                               :
+5271   vector<KKStr> (v)
+5272 \{
+5273 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Vector\+K\+K\+Str\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_vector_k_k_str_a8c1a3b54afb48156b5d462dc2faa0307}{}\label{class_k_k_b_1_1_vector_k_k_str_a8c1a3b54afb48156b5d462dc2faa0307}
+
+
+Definition at line 5277 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Value\+Int32(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Xml\+Content\+::\+Content(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Token(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+More\+Tokens(), K\+K\+B\+::\+Xml\+Token\+::tok\+Content, K\+K\+B\+::\+Xml\+Token\+::\+Token\+Type(), and K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Trim\+White\+Space().
+
+
+\begin{DoxyCode}
+5282 \{
+5283   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  count = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})tag->AttributeValueInt32 (\textcolor{stringliteral}{"Count"});
+5284 
+5285   clear ();
+5286 
+5287   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+5288 
+5289   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+5290   \{
+5291     \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_ae98e2c1a798882647578cae4adcd7176}{TokenType} () == \hyperlink{class_k_k_b_1_1_xml_token_a18b6e90c919f4b92e3b024f50f247f62aff369b5479984ca659548f37ad4caec9}{XmlToken::TokenTypes::tokContent})
+5292     \{
+5293       \hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr}  c = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_content}{XmlContentPtr}\textcolor{keyword}{>}(t);
+5294       \textcolor{keywordflow}{if}  ((c != NULL)  &&  (c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} () != NULL))
+5295       \{
+5296         \hyperlink{class_k_k_b_1_1_k_k_str_parser}{KKStrParser}  parser (*(c->\hyperlink{class_k_k_b_1_1_xml_content_a1d0730aae45b069e8604bef19b8c0098}{Content} ()));
+5297         parser.TrimWhiteSpace (\textcolor{stringliteral}{" "});
+5298         \textcolor{keywordflow}{while}  (parser.MoreTokens ())
+5299         \{
+5300           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} field = parser.GetNextToken (\textcolor{stringliteral}{"\(\backslash\)t"});
+5301           push\_back (field);
+5302         \}
+5303       \}
+5304     \}
+5305 
+5306     \textcolor{keyword}{delete} t;
+5307     \textcolor{keywordflow}{if}  (cancelFlag)
+5308       t = NULL;
+5309     \textcolor{keywordflow}{else}
+5310       t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+5311   \}
+5312   \textcolor{keyword}{delete}  t;
+5313   t = NULL;
+5314 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+B\+::\+Vector\+K\+K\+Str@{K\+K\+B\+::\+Vector\+K\+K\+Str}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Vector\+K\+K\+Str\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_vector_k_k_str_a3e90bf5fd9c23a8c16f0fdee98946395}{}\label{class_k_k_b_1_1_vector_k_k_str_a3e90bf5fd9c23a8c16f0fdee98946395}
+
+
+Definition at line 5319 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::operator$<$$<$(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+5322 \{
+5323   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"VectorKKStr"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{XmlTag::TagTypes::tagStart});
+5324   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+5325     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+5326   startTag.AddAtribute (\textcolor{stringliteral}{"Count"}, (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})size ());
+5327   startTag.WriteXML (o);
+5328 
+5329   const\_iterator  idx;
+5330   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;
+5331   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx, ++x)
+5332   \{
+5333     \textcolor{keywordflow}{if}  (x > 0)  o << \textcolor{stringliteral}{"\(\backslash\)t"};
+5334     \hyperlink{class_k_k_b_1_1_xml_content_ab0e370562d215b8e19dac6d18c4a95e1}{XmlContent::WriteXml} (idx->QuotedStr (), o);
+5335   \}
+5336   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"VectorKKStr"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{XmlTag::TagTypes::tagEnd});
+5337   endTag.WriteXML (o);
+5338   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+5339 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8h}{K\+K\+Str.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8cpp}{K\+K\+Str.\+cpp}\end{DoxyCompactItemize}

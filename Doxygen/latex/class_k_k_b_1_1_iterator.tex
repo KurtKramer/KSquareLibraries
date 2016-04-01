@@ -1,0 +1,355 @@
+\hypertarget{class_k_k_b_1_1_iterator}{}\section{K\+KB\+:\+:Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$ Class Template Reference}
+\label{class_k_k_b_1_1_iterator}\index{K\+K\+B\+::\+Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$@{K\+K\+B\+::\+Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}}
+
+
+{\ttfamily \#include $<$R\+B\+Tree.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef Entry $\ast$ \hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode}$<$ Entry $>$ $\ast$ \hyperlink{class_k_k_b_1_1_iterator_aa840c0dd987e462281441126f7f36f19}{Node\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_r_b_tree}{R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$ $\ast$ \hyperlink{class_k_k_b_1_1_iterator_a18f7c2f566b76a14bb6306a928b7b194}{Tree\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a37bd34fa66e93b3614979d822efc9fa7}{Iterator} (\hyperlink{class_k_k_b_1_1_iterator_a18f7c2f566b76a14bb6306a928b7b194}{Tree\+Ptr} \+\_\+tree)
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a6f8691fec032408e0cc127fa196dd152}{$\sim$\+Iterator} ()
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_a74be80b6c86749d95dfaf0b30c59673c}{Get\+Equal} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_a7c546cbf1b724ff715ff947e4ba0fae7}{Get\+First} ()
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_a54e8309c194850b58ed5bbd1ec15f085}{Get\+Greater} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_a8d4853e9a8cbf9c77e8eaad8cf022967}{Get\+Greater\+Or\+Equal} (const Key\+Type \&key)
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_ab8c611f2a17d109cc896710836aad844}{Get\+Last} ()
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_af78ec93edd4c357c6406effa931eae92}{Get\+Next} ()
+\item 
+\hyperlink{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{Entry\+Ptr} \hyperlink{class_k_k_b_1_1_iterator_a5516fa6342e96a6309ad8b55867a4fb4}{Get\+Prev} ()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_iterator_aa42becdc72b54f00ba2c0f0e3c2f5717}{R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Entry, class Compare\+Nodes, typename Key\+Type$>$\\*
+class K\+K\+B\+::\+Iterator$<$ Entry, Compare\+Nodes, Key\+Type $>$}
+
+
+
+Definition at line 72 of file R\+B\+Tree.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Entry\+Ptr@{Entry\+Ptr}}
+\index{Entry\+Ptr@{Entry\+Ptr}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Entry\+Ptr}{EntryPtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ typedef Entry$\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Entry\+Ptr}}\hypertarget{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}{}\label{class_k_k_b_1_1_iterator_a5ef3b16d0bdf3de41ca114c2eebd6e1e}
+
+
+Definition at line 77 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Node\+Ptr@{Node\+Ptr}}
+\index{Node\+Ptr@{Node\+Ptr}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Node\+Ptr}{NodePtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ typedef {\bf R\+Bnode}$<$Entry$>$$\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Node\+Ptr}}\hypertarget{class_k_k_b_1_1_iterator_aa840c0dd987e462281441126f7f36f19}{}\label{class_k_k_b_1_1_iterator_aa840c0dd987e462281441126f7f36f19}
+
+
+Definition at line 79 of file R\+B\+Tree.\+h.
+
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Tree\+Ptr@{Tree\+Ptr}}
+\index{Tree\+Ptr@{Tree\+Ptr}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Tree\+Ptr}{TreePtr}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ typedef {\bf R\+B\+Tree}$<$Entry,Compare\+Nodes,Key\+Type$>$$\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Tree\+Ptr}}\hypertarget{class_k_k_b_1_1_iterator_a18f7c2f566b76a14bb6306a928b7b194}{}\label{class_k_k_b_1_1_iterator_a18f7c2f566b76a14bb6306a928b7b194}
+
+
+Definition at line 75 of file R\+B\+Tree.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Iterator@{Iterator}}
+\index{Iterator@{Iterator}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Iterator(\+Tree\+Ptr \+\_\+tree)}{Iterator(TreePtr _tree)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::{\bf Iterator} (
+\begin{DoxyParamCaption}
+\item[{{\bf Tree\+Ptr}}]{\+\_\+tree}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a37bd34fa66e93b3614979d822efc9fa7}{}\label{class_k_k_b_1_1_iterator_a37bd34fa66e93b3614979d822efc9fa7}
+
+
+Definition at line 1641 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1642 \{
+1643   tree = \_tree;
+1644 
+1645   prevNode = tree->nil;
+1646   curNode  = tree->nil;
+1647   nextNode = tree->Minimum ();
+1648 
+1649   tree->IteratorAdd (\textcolor{keyword}{this});
+1650 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!````~Iterator@{$\sim$\+Iterator}}
+\index{````~Iterator@{$\sim$\+Iterator}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{$\sim$\+Iterator()}{~Iterator()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::$\sim${\bf Iterator} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a6f8691fec032408e0cc127fa196dd152}{}\label{class_k_k_b_1_1_iterator_a6f8691fec032408e0cc127fa196dd152}
+
+
+Definition at line 1655 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1656 \{
+1657   \textcolor{keywordflow}{if}  (tree)
+1658     tree->IteratorDelete (\textcolor{keyword}{this});
+1659 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Equal@{Get\+Equal}}
+\index{Get\+Equal@{Get\+Equal}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Equal(const Key\+Type \&key)}{GetEqual(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Equal (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a74be80b6c86749d95dfaf0b30c59673c}{}\label{class_k_k_b_1_1_iterator_a74be80b6c86749d95dfaf0b30c59673c}
+
+
+Definition at line 1684 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1685 \{
+1686   IsTreeStillThere ();
+1687 
+1688   curNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a9f157c30cce4885b8abac7f4981321e9}{GetEqual} (tree->root, key);
+1689 
+1690   \textcolor{keywordflow}{if}  (curNode == tree.nil)
+1691   \{
+1692     nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}{GetGreater} (tree->root, key);
+1693     \textcolor{keywordflow}{if}  (nextNode == tree.nil)
+1694       prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a0e2fc0cb7fd4091c8abde407edd84351}{GetLess} (tree->root, key);
+1695 
+1696     \textcolor{keywordflow}{else}
+1697       prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (nextNode);
+1698   
+1699     \textcolor{keywordflow}{return} NULL;
+1700   \}
+1701 
+1702 
+1703   prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+1704   nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+1705 
+1706   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+1707 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+First@{Get\+First}}
+\index{Get\+First@{Get\+First}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+First()}{GetFirst()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+First (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a7c546cbf1b724ff715ff947e4ba0fae7}{}\label{class_k_k_b_1_1_iterator_a7c546cbf1b724ff715ff947e4ba0fae7}
+
+
+Definition at line 1765 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1766 \{
+1767   IsTreeStillThere ();
+1768 
+1769   prevNode = tree->nil;
+1770   curNode  = tree->Minimum ();
+1771   nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+1772 
+1773   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+1774 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Greater@{Get\+Greater}}
+\index{Get\+Greater@{Get\+Greater}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Greater(const Key\+Type \&key)}{GetGreater(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Greater (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a54e8309c194850b58ed5bbd1ec15f085}{}\label{class_k_k_b_1_1_iterator_a54e8309c194850b58ed5bbd1ec15f085}
+
+
+Definition at line 1713 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1714 \{
+1715   IsTreeStillThere ();
+1716 
+1717   curNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_aed0e37c807c74bda44fd9ad7fe92922a}{GetGreater} (tree->root, key);
+1718 
+1719   \textcolor{keywordflow}{if}  (curNode == tree->nil)
+1720   \{
+1721     nextNode = tree->nil;
+1722     prevNode = tree->Maximum (tree->root);
+1723   \}
+1724 
+1725   \textcolor{keywordflow}{else}
+1726   \{
+1727     nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+1728     prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+1729   \}
+1730 
+1731   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+1732 \}  \textcolor{comment}{/* Iterator::GetGreater */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Greater\+Or\+Equal@{Get\+Greater\+Or\+Equal}}
+\index{Get\+Greater\+Or\+Equal@{Get\+Greater\+Or\+Equal}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Greater\+Or\+Equal(const Key\+Type \&key)}{GetGreaterOrEqual(const KeyType &key)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Greater\+Or\+Equal (
+\begin{DoxyParamCaption}
+\item[{const Key\+Type \&}]{key}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a8d4853e9a8cbf9c77e8eaad8cf022967}{}\label{class_k_k_b_1_1_iterator_a8d4853e9a8cbf9c77e8eaad8cf022967}
+
+
+Definition at line 1738 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1739 \{
+1740   IsTreeStillThere ();
+1741 
+1742   curNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ac9365b1ea43d7306c8231ee200758d3e}{GetGreaterOrEqual} (tree->root, key);
+1743 
+1744   \textcolor{keywordflow}{if}  (curNode == tree->nil)
+1745   \{
+1746     nextNode = tree->nil;
+1747     prevNode = tree->Maximum (tree->root);
+1748   \}
+1749 
+1750   \textcolor{keywordflow}{else}
+1751   \{
+1752     nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (tree.curMode);
+1753     prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (tree.curNode);
+1754   \}
+1755 
+1756   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+1757 \}  \textcolor{comment}{/* Iterator::GetGreaterOrEqual */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Last@{Get\+Last}}
+\index{Get\+Last@{Get\+Last}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Last()}{GetLast()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Last (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_ab8c611f2a17d109cc896710836aad844}{}\label{class_k_k_b_1_1_iterator_ab8c611f2a17d109cc896710836aad844}
+
+
+Definition at line 1780 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1781 \{
+1782   IsTreeStillThere ();
+1783   
+1784   curNode  = tree->Maximum ();
+1785   prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+1786   nextNode = tree->nil;
+1787 
+1788   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();
+1789 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Next@{Get\+Next}}
+\index{Get\+Next@{Get\+Next}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Next()}{GetNext()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_af78ec93edd4c357c6406effa931eae92}{}\label{class_k_k_b_1_1_iterator_af78ec93edd4c357c6406effa931eae92}
+
+
+Definition at line 1795 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1796 \{
+1797   IsTreeStillThere ();
+1798 
+1799 
+1800   \textcolor{keywordflow}{if}  (nextNode == tree->nil)
+1801   \{
+1802     \textcolor{keywordflow}{return} NULL;
+1803   \}
+1804 
+1805   prevNode = curNode;
+1806   curNode = nextNode;
+1807 
+1808   \textcolor{keywordflow}{if}  (prevNode == tree->nil)
+1809   \{
+1810     prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+1811   \}
+1812 
+1813   nextNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+1814   
+1815   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();  
+1816 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!Get\+Prev@{Get\+Prev}}
+\index{Get\+Prev@{Get\+Prev}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{Get\+Prev()}{GetPrev()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ Entry $\ast$ {\bf K\+K\+B\+::\+Iterator}$<$ Entry, Compare\+Nodes, Key\+Type $>$\+::Get\+Prev (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_iterator_a5516fa6342e96a6309ad8b55867a4fb4}{}\label{class_k_k_b_1_1_iterator_a5516fa6342e96a6309ad8b55867a4fb4}
+
+
+Definition at line 1822 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+1823 \{
+1824   IsTreeStillThere ();
+1825 
+1826   \textcolor{keywordflow}{if}  (prevNode == tree->nil)
+1827   \{
+1828     \textcolor{keywordflow}{return} NULL;
+1829   \}
+1830 
+1831   nextNode = curNode;
+1832   curNode = prevNode;
+1833 
+1834   \textcolor{keywordflow}{if}  (nextNode == tree->nil)
+1835   \{
+1836     prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_ab1d21c68ef6c6a58b0317f9986e66804}{Successor} (curNode);
+1837   \}
+1838 
+1839   prevNode = tree->\hyperlink{class_k_k_b_1_1_r_b_tree_a3a5c20c3087b62c7a68a48878eb8fe82}{Predecessor} (curNode);
+1840   
+1841   \textcolor{keywordflow}{return}  curNode->\hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ();  
+1842 \}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}!R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$@{R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}}
+\index{R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$@{R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}!K\+K\+B\+::\+Iterator@{K\+K\+B\+::\+Iterator}}
+\subsubsection[{\texorpdfstring{R\+B\+Tree$<$ Entry, Compare\+Nodes, Key\+Type $>$}{RBTree< Entry, CompareNodes, KeyType >}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry , class Compare\+Nodes , typename Key\+Type $>$ friend class {\bf R\+B\+Tree}$<$ Entry, Compare\+Nodes, Key\+Type $>$\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_iterator_aa42becdc72b54f00ba2c0f0e3c2f5717}{}\label{class_k_k_b_1_1_iterator_aa42becdc72b54f00ba2c0f0e3c2f5717}
+
+
+Definition at line 81 of file R\+B\+Tree.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_r_b_tree_8h}{R\+B\+Tree.\+h}\end{DoxyCompactItemize}

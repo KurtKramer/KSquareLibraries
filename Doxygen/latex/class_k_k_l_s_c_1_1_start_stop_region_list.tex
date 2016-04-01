@@ -1,0 +1,159 @@
+\hypertarget{class_k_k_l_s_c_1_1_start_stop_region_list}{}\section{K\+K\+L\+SC\+:\+:Start\+Stop\+Region\+List Class Reference}
+\label{class_k_k_l_s_c_1_1_start_stop_region_list}\index{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}}
+
+
+{\ttfamily \#include $<$Start\+Stop\+Point.\+h$>$}
+
+Inheritance diagram for K\+K\+L\+SC\+:\+:Start\+Stop\+Region\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_l_s_c_1_1_start_stop_region_list}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_start_stop_region_list_afe004033988e8ec563090d2ca27d043f}{Start\+Stop\+Region\+List} (bool \+\_\+owner)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_start_stop_region_list_a88c7c2dccbe3b2a609971baf216846aa}{Start\+Stop\+Region\+List} (const \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_list}{Start\+Stop\+Point\+List} \&start\+Stop\+Points)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_start_stop_region_list_a5b05fa2d63bf9c81a0e52fd4077acf18}{$\sim$\+Start\+Stop\+Region\+List} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 138 of file Start\+Stop\+Point.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}!Start\+Stop\+Region\+List@{Start\+Stop\+Region\+List}}
+\index{Start\+Stop\+Region\+List@{Start\+Stop\+Region\+List}!K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}}
+\subsubsection[{\texorpdfstring{Start\+Stop\+Region\+List(bool \+\_\+owner)}{StartStopRegionList(bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Start\+Stop\+Region\+List\+::\+Start\+Stop\+Region\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_start_stop_region_list_afe004033988e8ec563090d2ca27d043f}{}\label{class_k_k_l_s_c_1_1_start_stop_region_list_afe004033988e8ec563090d2ca27d043f}
+
+
+Definition at line 386 of file Start\+Stop\+Point.\+cpp.
+
+
+
+References Start\+Stop\+Region\+List().
+
+
+
+Referenced by Start\+Stop\+Region\+List().
+
+
+\begin{DoxyCode}
+386                                                      :
+387     \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<StartStopRegion>} (\_owner)
+388 \{
+389 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}!Start\+Stop\+Region\+List@{Start\+Stop\+Region\+List}}
+\index{Start\+Stop\+Region\+List@{Start\+Stop\+Region\+List}!K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}}
+\subsubsection[{\texorpdfstring{Start\+Stop\+Region\+List(const Start\+Stop\+Point\+List \&start\+Stop\+Points)}{StartStopRegionList(const StartStopPointList &startStopPoints)}}]{\setlength{\rightskip}{0pt plus 5cm}Start\+Stop\+Region\+List\+::\+Start\+Stop\+Region\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Start\+Stop\+Point\+List} \&}]{start\+Stop\+Points}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_start_stop_region_list_a88c7c2dccbe3b2a609971baf216846aa}{}\label{class_k_k_l_s_c_1_1_start_stop_region_list_a88c7c2dccbe3b2a609971baf216846aa}
+
+
+Definition at line 393 of file Start\+Stop\+Point.\+cpp.
+
+
+
+References Start\+Stop\+Region\+List().
+
+
+
+Referenced by Start\+Stop\+Region\+List().
+
+
+\begin{DoxyCode}
+393                                                                                    :
+394     \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<StartStopRegion>} (\textcolor{keyword}{true})
+395 \{
+396   \textcolor{keywordflow}{if}  (startStopPoints.size () < 1)
+397   \{
+398     \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_l_s_c_1_1_start_stop_region}{StartStopRegion} (0, \hyperlink{_k_k_base_types_8h_ab1240c5d3fea865121ed4684f8e968f6}{int32\_max}));
+399   \}
+400   \textcolor{keywordflow}{else}
+401   \{
+402     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  prevLineNum = 0;
+403     \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680}{StartStopPoint::StartStopType}  prevType = 
+      \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680a66ebb760a5bef13b69ceac0feb004d2a}{StartStopPoint::StartStopType::StartPoint};
+404 
+405     StartStopPointList::const\_iterator  idx = startStopPoints.begin ();
+406     \textcolor{keywordflow}{while}  (idx != startStopPoints.end ())
+407     \{
+408       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextLineNum = (*idx)->ScanLineNum ();
+409       \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680}{StartStopPoint::StartStopType}  nextType = (*idx)->Type ();
+410 
+411       \textcolor{keywordflow}{if}  (prevType == \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680a66ebb760a5bef13b69ceac0feb004d2a}{StartStopPoint::StartStopType::StartPoint})
+412       \{
+413         \textcolor{keywordflow}{if}  (nextType == \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680a4fa60ea4d5684f76f0f766d39f06de4f}{StartStopPoint::StartStopType::StopPoint})
+414         \{
+415           \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_l_s_c_1_1_start_stop_region}{StartStopRegion} (prevLineNum, nextLineNum));
+416           prevType = nextType;
+417           prevLineNum = nextLineNum;
+418         \}
+419         \textcolor{keywordflow}{else}
+420         \{
+421           \textcolor{comment}{// Since we appear to have two start points in a row we will ignore the second one.}
+422         \}
+423       \}
+424       \textcolor{keywordflow}{else}
+425       \{
+426         \textcolor{comment}{// previous point was StopPoint.}
+427         \textcolor{keywordflow}{if}  (nextType == \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680a4fa60ea4d5684f76f0f766d39f06de4f}{StartStopPoint::StartStopType::StopPoint})
+428         \{
+429           \textcolor{comment}{// We have two stop points in a row;  will ignore}
+430         \}
+431         \textcolor{keywordflow}{else}
+432         \{
+433           \textcolor{comment}{// We have the beginnings of a new StartStopregion.}
+434           prevType = nextType;
+435           prevLineNum = nextLineNum;
+436         \}
+437       \}
+438 
+439       ++idx;
+440     \}
+441 
+442     \textcolor{keywordflow}{if}  (prevType == \hyperlink{class_k_k_l_s_c_1_1_start_stop_point_aca5818602fc58bfe4c9794b311288680a66ebb760a5bef13b69ceac0feb004d2a}{StartStopPoint::StartStopType::StartPoint})
+443     \{
+444       \hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_l_s_c_1_1_start_stop_region}{StartStopRegion} (prevLineNum, 
+      \hyperlink{_k_k_base_types_8h_ab1240c5d3fea865121ed4684f8e968f6}{int32\_max}));
+445     \}
+446   \}
+447 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}!````~Start\+Stop\+Region\+List@{$\sim$\+Start\+Stop\+Region\+List}}
+\index{````~Start\+Stop\+Region\+List@{$\sim$\+Start\+Stop\+Region\+List}!K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List@{K\+K\+L\+S\+C\+::\+Start\+Stop\+Region\+List}}
+\subsubsection[{\texorpdfstring{$\sim$\+Start\+Stop\+Region\+List()}{~StartStopRegionList()}}]{\setlength{\rightskip}{0pt plus 5cm}Start\+Stop\+Region\+List\+::$\sim$\+Start\+Stop\+Region\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_start_stop_region_list_a5b05fa2d63bf9c81a0e52fd4077acf18}{}\label{class_k_k_l_s_c_1_1_start_stop_region_list_a5b05fa2d63bf9c81a0e52fd4077acf18}
+
+
+Definition at line 451 of file Start\+Stop\+Point.\+cpp.
+
+
+\begin{DoxyCode}
+452 \{
+453 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_start_stop_point_8h}{Start\+Stop\+Point.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_start_stop_point_8cpp}{Start\+Stop\+Point.\+cpp}\end{DoxyCompactItemize}

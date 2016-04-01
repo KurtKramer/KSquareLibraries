@@ -1,0 +1,101 @@
+\hypertarget{class_k_k_b_1_1_chart_1_1_series}{}\section{K\+KB\+:\+:Chart\+:\+:Series Class Reference}
+\label{class_k_k_b_1_1_chart_1_1_series}\index{K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_chart_1_1_series_a969f40dbaca55129baf3b9ab86be0ab3}{Series} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+name, \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \+\_\+color)
+\item 
+void \hyperlink{class_k_k_b_1_1_chart_1_1_series_ab4f946ab502be405353a54f54def5aff}{Add\+A\+Value} (float \+\_\+x\+Val, float \+\_\+y\+Val)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_chart_1_1_series_aa2e62bab6f5f125aab6e2184c6231610}{Size} ()
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_chart_1_1_series_a3143793912f47f1c0340d5a92a5184fe}{Chart}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 59 of file Chart.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}!Series@{Series}}
+\index{Series@{Series}!K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}}
+\subsubsection[{\texorpdfstring{Series(\+K\+K\+Str \+\_\+name, Pixel\+Value \+\_\+color)}{Series(KKStr _name, PixelValue _color)}}]{\setlength{\rightskip}{0pt plus 5cm}Chart\+::\+Series\+::\+Series (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str}}]{\+\_\+name, }
+\item[{{\bf Pixel\+Value}}]{\+\_\+color}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_chart_1_1_series_a969f40dbaca55129baf3b9ab86be0ab3}{}\label{class_k_k_b_1_1_chart_1_1_series_a969f40dbaca55129baf3b9ab86be0ab3}
+
+
+Definition at line 120 of file Chart.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+B\+::\+Pixel\+Value\+::\+Pixel\+Value().
+
+
+\begin{DoxyCode}
+122                        :
+123    name  (\_name),
+124    color (\_color)
+125 \{
+126 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}!Add\+A\+Value@{Add\+A\+Value}}
+\index{Add\+A\+Value@{Add\+A\+Value}!K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}}
+\subsubsection[{\texorpdfstring{Add\+A\+Value(float \+\_\+x\+Val, float \+\_\+y\+Val)}{AddAValue(float _xVal, float _yVal)}}]{\setlength{\rightskip}{0pt plus 5cm}void Chart\+::\+Series\+::\+Add\+A\+Value (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+x\+Val, }
+\item[{float}]{\+\_\+y\+Val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_chart_1_1_series_ab4f946ab502be405353a54f54def5aff}{}\label{class_k_k_b_1_1_chart_1_1_series_ab4f946ab502be405353a54f54def5aff}
+
+
+Definition at line 130 of file Chart.\+cpp.
+
+
+\begin{DoxyCode}
+133 \{
+134   points.push\_back (PlotPoint (\_xVal, \_yVal));
+135 \}  \textcolor{comment}{/* AddAValue */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}!Size@{Size}}
+\index{Size@{Size}!K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}}
+\subsubsection[{\texorpdfstring{Size()}{Size()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Chart\+::\+Series\+::\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_chart_1_1_series_aa2e62bab6f5f125aab6e2184c6231610}{}\label{class_k_k_b_1_1_chart_1_1_series_aa2e62bab6f5f125aab6e2184c6231610}
+
+
+Definition at line 71 of file Chart.\+cpp.
+
+
+\begin{DoxyCode}
+71 \{\textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})points.size ();\}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}!Chart@{Chart}}
+\index{Chart@{Chart}!K\+K\+B\+::\+Chart\+::\+Series@{K\+K\+B\+::\+Chart\+::\+Series}}
+\subsubsection[{\texorpdfstring{Chart}{Chart}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Chart}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_chart_1_1_series_a3143793912f47f1c0340d5a92a5184fe}{}\label{class_k_k_b_1_1_chart_1_1_series_a3143793912f47f1c0340d5a92a5184fe}
+
+
+Definition at line 79 of file Chart.\+cpp.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_chart_8cpp}{Chart.\+cpp}\end{DoxyCompactItemize}

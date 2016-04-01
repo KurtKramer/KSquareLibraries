@@ -1,0 +1,417 @@
+\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting}{}\section{K\+K\+M\+LL\+:\+:Cross\+Validation\+Voting Class Reference}
+\label{class_k_k_m_l_l_1_1_cross_validation_voting}\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+
+
+{\ttfamily \#include $<$Cross\+Validation\+Voting.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a4c9f4754ddea1b67ea5668f6295984bf}{Cross\+Validation\+Voting} (\hyperlink{namespace_k_k_m_l_l_a77bfbdd70b510fed053cec865434ba28}{Training\+Configuration2\+List\+Ptr} \+\_\+configs, \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \+\_\+examples, \hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} \+\_\+ml\+Classes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Folds, bool \+\_\+features\+Are\+Already\+Normalized, \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a9bfe73a47df2c53023da0a982a84b44c}{$\sim$\+Cross\+Validation\+Voting} ()
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a8c566b5bd2a82641816ac30ad03b5189}{Accuracy} ()
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a6152eb03e232e616edd1516b37f86901}{Classification\+Time} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a724c9a3c5315800e128adf68253e91ae}{Confusion\+Matrix2\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a79dfd272802dcb1477223436e1963047}{Confussion\+Matrix} ()
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_ae3ed157e7d9d1df5d03bfdb83c78658a}{Fold\+Accuracy} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} fold\+Num) const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a306e9659d3304d8ed2f516008bc76254}{Fold\+Accuracys\+To\+Str} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_ad9e9274de2caf022d13cf34823460b56}{Fold\+Str} () const 
+\item 
+kkint32 \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a06f59bb683a50a89ef502bf0290bdadc}{Num\+Of\+Support\+Vectors} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_aa9f37c9e613600a118642bbc971126b0}{Run\+Cross\+Validation} (\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a3f906c4d42415b2dbffc9d0722c760af}{Run\+Validation\+Only} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} validation\+Data, bool $\ast$classed\+Correctly, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_cross_validation_voting_a8cea2adb926da698249f28db875402b4}{Training\+Time} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 55 of file Cross\+Validation\+Voting.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Cross\+Validation\+Voting@{Cross\+Validation\+Voting}}
+\index{Cross\+Validation\+Voting@{Cross\+Validation\+Voting}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Cross\+Validation\+Voting(\+Training\+Configuration2\+List\+Ptr \+\_\+configs, Feature\+Vector\+List\+Ptr \+\_\+examples, M\+L\+Class\+List\+Ptr \+\_\+ml\+Classes, kkint32 \+\_\+num\+Of\+Folds, bool \+\_\+features\+Are\+Already\+Normalized, File\+Desc\+Ptr \+\_\+file\+Desc)}{CrossValidationVoting(TrainingConfiguration2ListPtr _configs, FeatureVectorListPtr _examples, MLClassListPtr _mlClasses, kkint32 _numOfFolds, bool _featuresAreAlreadyNormalized, FileDescPtr _fileDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}Cross\+Validation\+Voting\+::\+Cross\+Validation\+Voting (
+\begin{DoxyParamCaption}
+\item[{{\bf Training\+Configuration2\+List\+Ptr}}]{\+\_\+configs, }
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{\+\_\+examples, }
+\item[{{\bf M\+L\+Class\+List\+Ptr}}]{\+\_\+ml\+Classes, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Folds, }
+\item[{bool}]{\+\_\+features\+Are\+Already\+Normalized, }
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a4c9f4754ddea1b67ea5668f6295984bf}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a4c9f4754ddea1b67ea5668f6295984bf}
+
+
+Definition at line 31 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Extract\+Examples\+For\+Class\+List().
+
+
+\begin{DoxyCode}
+37                                               :
+38 
+39    configs                      (\_configs),
+40    featuresAreAlreadyNormalized (\_featuresAreAlreadyNormalized),
+41    fileDesc                     (\_fileDesc),
+42    foldAccuracies               (NULL),
+43    foldCounts                   (NULL),
+44    confusionMatrix              (NULL),
+45    cmByNumOfConflicts           (NULL),
+46    examples                     (NULL),
+47    mlClasses                    (\_mlClasses),
+48    examplesPerClass             (0),
+49    maxNumOfConflicts            (0),
+50    numOfFolds                   (\_numOfFolds),
+51    numOfSupportVectors          (0),
+52    numOfWinnersCounts           (NULL),
+53    numOfWinnersCorrects         (NULL),
+54    numOfWinnersOneOfTheWinners  (NULL),
+55    classificationTime           (0.0),
+56    trainingTime                 (0.0)
+57  
+58 \{
+59   examples = \_examples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_aefe3f4ebf6eeff999b291799195b76c0}{ExtractExamplesForClassList} (mlClasses);
+60   examplesPerClass = 999999;
+61 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!````~Cross\+Validation\+Voting@{$\sim$\+Cross\+Validation\+Voting}}
+\index{````~Cross\+Validation\+Voting@{$\sim$\+Cross\+Validation\+Voting}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{$\sim$\+Cross\+Validation\+Voting()}{~CrossValidationVoting()}}]{\setlength{\rightskip}{0pt plus 5cm}Cross\+Validation\+Voting\+::$\sim$\+Cross\+Validation\+Voting (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a9bfe73a47df2c53023da0a982a84b44c}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a9bfe73a47df2c53023da0a982a84b44c}
+
+
+Definition at line 65 of file Cross\+Validation\+Voting.\+cpp.
+
+
+\begin{DoxyCode}
+66 \{
+67   DeleteAllocatedMemory ();
+68   \textcolor{keyword}{delete}  examples;  examples = NULL;
+69 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Accuracy@{Accuracy}}
+\index{Accuracy@{Accuracy}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Accuracy()}{Accuracy()}}]{\setlength{\rightskip}{0pt plus 5cm}float Cross\+Validation\+Voting\+::\+Accuracy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a8c566b5bd2a82641816ac30ad03b5189}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a8c566b5bd2a82641816ac30ad03b5189}
+
+
+Definition at line 467 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+Accuracy().
+
+
+\begin{DoxyCode}
+468 \{
+469   \textcolor{keywordflow}{if}  (confusionMatrix)
+470     \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})confusionMatrix->\hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ab1c460627788135c3c15227115226733}{Accuracy} ();
+471   \textcolor{keywordflow}{else}
+472     \textcolor{keywordflow}{return} 0.0;
+473 \}  \textcolor{comment}{/* Accuracy */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Classification\+Time@{Classification\+Time}}
+\index{Classification\+Time@{Classification\+Time}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Classification\+Time() const }{ClassificationTime() const }}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting\+::\+Classification\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a6152eb03e232e616edd1516b37f86901}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a6152eb03e232e616edd1516b37f86901}
+
+
+Definition at line 79 of file Cross\+Validation\+Voting.\+h.
+
+
+\begin{DoxyCode}
+79 \{\textcolor{keywordflow}{return}  classificationTime;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Confussion\+Matrix@{Confussion\+Matrix}}
+\index{Confussion\+Matrix@{Confussion\+Matrix}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Confussion\+Matrix()}{ConfussionMatrix()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Confusion\+Matrix2\+Ptr} K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting\+::\+Confussion\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a79dfd272802dcb1477223436e1963047}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a79dfd272802dcb1477223436e1963047}
+
+
+Definition at line 76 of file Cross\+Validation\+Voting.\+h.
+
+
+\begin{DoxyCode}
+76 \{\textcolor{keywordflow}{return}  confusionMatrix;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Fold\+Accuracy@{Fold\+Accuracy}}
+\index{Fold\+Accuracy@{Fold\+Accuracy}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Fold\+Accuracy(kkint32 fold\+Num) const }{FoldAccuracy(kkint32 foldNum) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Cross\+Validation\+Voting\+::\+Fold\+Accuracy (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{fold\+Num}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_ae3ed157e7d9d1df5d03bfdb83c78658a}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_ae3ed157e7d9d1df5d03bfdb83c78658a}
+
+
+Definition at line 496 of file Cross\+Validation\+Voting.\+cpp.
+
+
+\begin{DoxyCode}
+497 \{
+498   \textcolor{keywordflow}{if}  (!foldAccuracies)
+499     \textcolor{keywordflow}{return} 0.0f;
+500 
+501   \textcolor{keywordflow}{if}  ((foldNum < 0)  ||  (foldNum >= numOfFolds))
+502     \textcolor{keywordflow}{return} 0.0f;
+503 
+504   \textcolor{keywordflow}{return}  foldAccuracies[foldNum];
+505 \}  \textcolor{comment}{/* FoldAccuracy */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Fold\+Accuracys\+To\+Str@{Fold\+Accuracys\+To\+Str}}
+\index{Fold\+Accuracys\+To\+Str@{Fold\+Accuracys\+To\+Str}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Fold\+Accuracys\+To\+Str() const }{FoldAccuracysToStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Cross\+Validation\+Voting\+::\+Fold\+Accuracys\+To\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a306e9659d3304d8ed2f516008bc76254}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a306e9659d3304d8ed2f516008bc76254}
+
+
+Definition at line 478 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+B\+::\+Str\+Format\+Double().
+
+
+\begin{DoxyCode}
+479 \{
+480   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  foldAccuracyStr (9 * numOfFolds);  \textcolor{comment}{// Pre Reserving enough space for all Accuracies.}
+481 
+482   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} foldNum = 0;  foldNum < numOfFolds;  foldNum++)
+483   \{
+484     \textcolor{keywordflow}{if}  (foldNum > 0)
+485       foldAccuracyStr << \textcolor{stringliteral}{"\(\backslash\)t"};
+486     foldAccuracyStr << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (foldAccuracies[foldNum], \textcolor{stringliteral}{"ZZ,ZZ0.00%"});
+487   \}
+488 
+489   \textcolor{keywordflow}{return}  foldAccuracyStr;
+490 \}  \textcolor{comment}{/* FoldAccuracysToStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Fold\+Str@{Fold\+Str}}
+\index{Fold\+Str@{Fold\+Str}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Fold\+Str() const }{FoldStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Cross\+Validation\+Voting\+::\+Fold\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_ad9e9274de2caf022d13cf34823460b56}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_ad9e9274de2caf022d13cf34823460b56}
+
+
+Definition at line 510 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+511 \{
+512   \textcolor{keywordflow}{if}  ((numOfFolds <= 0)  ||  (!foldAccuracies))
+513     \textcolor{keywordflow}{return}  \textcolor{stringliteral}{""};
+514 
+515   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+516 
+517   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (numOfFolds + 10);
+518 
+519   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFolds;  x++)
+520   \{
+521     \textcolor{keywordflow}{if}  (x > 0)
+522       result << \textcolor{stringliteral}{","};
+523     result << foldAccuracies[x];
+524   \}
+525 
+526   \textcolor{keywordflow}{return}  result;
+527 \}  \textcolor{comment}{/* FoldStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Num\+Of\+Support\+Vectors@{Num\+Of\+Support\+Vectors}}
+\index{Num\+Of\+Support\+Vectors@{Num\+Of\+Support\+Vectors}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Support\+Vectors() const }{NumOfSupportVectors() const }}]{\setlength{\rightskip}{0pt plus 5cm}kkint32 K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting\+::\+Num\+Of\+Support\+Vectors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a06f59bb683a50a89ef502bf0290bdadc}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a06f59bb683a50a89ef502bf0290bdadc}
+
+
+Definition at line 83 of file Cross\+Validation\+Voting.\+h.
+
+
+\begin{DoxyCode}
+83 \{\textcolor{keywordflow}{return}  numOfSupportVectors;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Run\+Cross\+Validation@{Run\+Cross\+Validation}}
+\index{Run\+Cross\+Validation@{Run\+Cross\+Validation}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Run\+Cross\+Validation(\+Run\+Log \&log)}{RunCrossValidation(RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Cross\+Validation\+Voting\+::\+Run\+Cross\+Validation (
+\begin{DoxyParamCaption}
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_aa9f37c9e613600a118642bbc971126b0}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_aa9f37c9e613600a118642bbc971126b0}
+
+
+Definition at line 144 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Manufacture\+Empty\+List(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back().
+
+
+\begin{DoxyCode}
+145 \{
+146   log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"CrossValidationVoting::RunCrossValidationVoting"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+147 
+148   \textcolor{keywordflow}{if}  (numOfFolds < 1)
+149   \{
+150     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+151                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+152                    << \textcolor{stringliteral}{"CrossValidationVoting::RunCrossValidationVoting     **** ERROR ****"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+153                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+154                    << \textcolor{stringliteral}{"                                  Invalid  numOfFolds["} << numOfFolds << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+155                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+156     \textcolor{keywordflow}{return};
+157   \}
+158 
+159   DeleteAllocatedMemory ();
+160   AllocateMemory (log);
+161 
+162   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  imageCount       = examples->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+163   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
+164   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  firstInGroup     = 0;
+165 
+166   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  foldNum;
+167 
+168   \textcolor{keywordflow}{for}  (foldNum = 0;  foldNum < numOfFolds;  foldNum++)
+169   \{
+170     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastInGroup;
+171 
+172     \textcolor{comment}{// If We are doing the last Fold Make sure that we are including all the examples }
+173     \textcolor{comment}{// that have not been tested.}
+174     \textcolor{keywordflow}{if}  (foldNum == (numOfFolds - 1))
+175       lastInGroup = imageCount;
+176     \textcolor{keywordflow}{else}
+177       lastInGroup = firstInGroup + numImagesPerFold - 1;
+178 
+179 
+180     cout << \textcolor{stringliteral}{"Fold ["} << (foldNum + 1) << \textcolor{stringliteral}{"]  of  ["} << numOfFolds << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+181 
+182     \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  trainingExamples = examples->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af533da1b34e4123f4fcb1343d5f48e37}{ManufactureEmptyList} (\textcolor{keyword}{true});
+183     \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  testImages       = examples->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af533da1b34e4123f4fcb1343d5f48e37}{ManufactureEmptyList} (\textcolor{keyword}{true});
+184 
+185     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (30) << \textcolor{stringliteral}{"Fold Num["}        << foldNum        << \textcolor{stringliteral}{"]   "}
+186                    << \textcolor{stringliteral}{"FirstTestImage["}  << firstInGroup   << \textcolor{stringliteral}{"]   "}
+187                    << \textcolor{stringliteral}{"LastInGroup["}     << lastInGroup    << \textcolor{stringliteral}{"]."}
+188                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+189 
+190     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0; x < imageCount; x++)
+191     \{
+192       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  newImage = examples->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x)->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_a7be1e7f38a9d57f3be9bea904cf60be9}{Duplicate} ();
+193       \textcolor{keywordflow}{if}  ((x >= firstInGroup)  &&  (x <= lastInGroup))
+194         testImages->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (newImage);
+195       \textcolor{keywordflow}{else}
+196         trainingExamples->PushOnBack (newImage);
+197     \}
+198 
+199     cout << \textcolor{stringliteral}{"Number Of Training Images : "} << trainingExamples->QueueSize () << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+200     cout << \textcolor{stringliteral}{"Number Of Test Images     : "} << testImages->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ()     << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+201 
+202     CrossValidate (testImages, trainingExamples, foldNum, NULL, log);
+203 
+204     \textcolor{keyword}{delete}  trainingExamples;  trainingExamples = NULL;
+205     \textcolor{keyword}{delete}  testImages;        testImages       = NULL;
+206     firstInGroup = firstInGroup + numImagesPerFold;
+207   \}
+208 \}  \textcolor{comment}{/* RunCrossValidationVoting */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Run\+Validation\+Only@{Run\+Validation\+Only}}
+\index{Run\+Validation\+Only@{Run\+Validation\+Only}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Run\+Validation\+Only(\+Feature\+Vector\+List\+Ptr validation\+Data, bool $\ast$classed\+Correctly, Run\+Log \&log)}{RunValidationOnly(FeatureVectorListPtr validationData, bool *classedCorrectly, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Cross\+Validation\+Voting\+::\+Run\+Validation\+Only (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{validation\+Data, }
+\item[{bool $\ast$}]{classed\+Correctly, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a3f906c4d42415b2dbffc9d0722c760af}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a3f906c4d42415b2dbffc9d0722c760af}
+
+
+Definition at line 214 of file Cross\+Validation\+Voting.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Duplicate\+List\+And\+Contents().
+
+
+\begin{DoxyCode}
+218 \{
+219   log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"CrossValidationVoting::RunValidationOnly"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+220   DeleteAllocatedMemory ();
+221   AllocateMemory (log);
+222 
+223   \textcolor{comment}{// We need to get a duplicate copy of each image data because the trainer and classifier}
+224   \textcolor{comment}{// will normalize the data.}
+225   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  trainingExamples = examples->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af14ad0946bbc6de8abdc4b513b6cf859}{DuplicateListAndContents} ();
+226   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  testImages       = validationData->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af14ad0946bbc6de8abdc4b513b6cf859}{DuplicateListAndContents} ();
+227 
+228   CrossValidate (testImages, trainingExamples, 0, classedCorrectly, log);
+229 
+230   \textcolor{keyword}{delete}  trainingExamples;
+231   \textcolor{keyword}{delete}  testImages;
+232 \}  \textcolor{comment}{/* RunValidationOnly */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}!Training\+Time@{Training\+Time}}
+\index{Training\+Time@{Training\+Time}!K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting@{K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting}}
+\subsubsection[{\texorpdfstring{Training\+Time() const }{TrainingTime() const }}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting\+::\+Training\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_cross_validation_voting_a8cea2adb926da698249f28db875402b4}{}\label{class_k_k_m_l_l_1_1_cross_validation_voting_a8cea2adb926da698249f28db875402b4}
+
+
+Definition at line 84 of file Cross\+Validation\+Voting.\+h.
+
+
+\begin{DoxyCode}
+84 \{\textcolor{keywordflow}{return}  trainingTime;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_cross_validation_voting_8h}{Cross\+Validation\+Voting.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_cross_validation_voting_8cpp}{Cross\+Validation\+Voting.\+cpp}\end{DoxyCompactItemize}

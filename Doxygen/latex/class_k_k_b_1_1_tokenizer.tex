@@ -1,0 +1,369 @@
+\hypertarget{class_k_k_b_1_1_tokenizer}{}\section{K\+KB\+:\+:Tokenizer Class Reference}
+\label{class_k_k_b_1_1_tokenizer}\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+
+
+Class is meant to break down a stream into a set of logical tokens.  
+
+
+
+
+{\ttfamily \#include $<$Tokenizer.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_tokenizer_a6cb70351213d78ec1b36da76f447246e}{Tokenizer} (\hyperlink{namespace_k_k_b_ae97804d25124b4a5dba3b3637beb814a}{Token\+Buffer\+Ptr} \+\_\+in)
+\item 
+\hyperlink{class_k_k_b_1_1_tokenizer_a9ed287f03edb99625cdfc99ae61dd8ad}{Tokenizer} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+str)
+\item 
+\hyperlink{class_k_k_b_1_1_tokenizer_ad134e856be2766eaff989fa2dcc862ca}{Tokenizer} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, bool \&\+\_\+file\+Opened)
+\item 
+\hyperlink{class_k_k_b_1_1_tokenizer_a3f60f887953edf0f95ba5f36102f7017}{$\sim$\+Tokenizer} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_tokenizer_a273eb0f0ad85cef3757866bf9957a52e}{Define\+Operator\+Chars} (char $\ast$const \+\_\+operator\+Chars)
+\item 
+bool \hyperlink{class_k_k_b_1_1_tokenizer_a0b04dca4dfbf584e58082cad41d0457b}{End\+Of\+File} ()
+\item 
+\hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+Str\+Ptr} \hyperlink{class_k_k_b_1_1_tokenizer_aea0a06cf4683bcd6e1c3b42e76f9324f}{Get\+Next\+Token} ()
+\item 
+\hyperlink{namespace_k_k_b_a8f5f50672f37857425120831223888aa}{K\+K\+Str\+List\+Ptr} \hyperlink{class_k_k_b_1_1_tokenizer_a4b5e1c31228130d3308f6f0d7dbca6ce}{Get\+Next\+Tokens} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&del\+Token)
+\begin{DoxyCompactList}\small\item\em Returns a list of tokens up to and including the first occurrence of \textquotesingle{}del\+Token\textquotesingle{}. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_tokenizer_ac82c5fd6107aa964dcbdbab6df0f5293}{operator\mbox{[}$\,$\mbox{]}} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} idx)
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_tokenizer_aa68ada340bc52bf6839939cec99e63db}{Peek} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} idx)
+\item 
+void \hyperlink{class_k_k_b_1_1_tokenizer_a6395ce549184bd1bcc1e2c0987f9ae47}{Push\+Token\+On\+Front} (\hyperlink{namespace_k_k_b_a9adbef5a6b3be0867f5570df2a08f388}{K\+K\+Str\+Ptr} t)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class is meant to break down a stream into a set of logical tokens. 
+
+\begin{DoxyAuthor}{Author}
+Kurt Kramer
+\end{DoxyAuthor}
+This class was originally created while taking Non Linear Systems. It breaks up a source \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} or text file into logical tokens. You can create your own source of characters by creating a Class derived from \hyperlink{class_k_k_b_1_1_token_buffer}{K\+K\+B\+::\+Token\+Buffer}. 
+
+Definition at line 23 of file Tokenizer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Tokenizer@{Tokenizer}}
+\index{Tokenizer@{Tokenizer}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Tokenizer(\+Token\+Buffer\+Ptr \+\_\+in)}{Tokenizer(TokenBufferPtr _in)}}]{\setlength{\rightskip}{0pt plus 5cm}Tokenizer\+::\+Tokenizer (
+\begin{DoxyParamCaption}
+\item[{{\bf Token\+Buffer\+Ptr}}]{\+\_\+in}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a6cb70351213d78ec1b36da76f447246e}{}\label{class_k_k_b_1_1_tokenizer_a6cb70351213d78ec1b36da76f447246e}
+
+
+Definition at line 22 of file Tokenizer.\+cpp.
+
+
+
+References Tokenizer().
+
+
+
+Referenced by Tokenizer().
+
+
+\begin{DoxyCode}
+22                                         :
+23 
+24   atEndOfFile           (\textcolor{keyword}{false}),
+25   in                    (\_in),
+26   secondCharAtEndOfFile (\textcolor{keyword}{false}),
+27   operatorChars         (NULL),
+28   tokenList             (\textcolor{keyword}{true}),
+29   weOwnTokenBuffer      (\textcolor{keyword}{false})
+30 \{
+31   Initialize ();
+32 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Tokenizer@{Tokenizer}}
+\index{Tokenizer@{Tokenizer}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Tokenizer(const K\+K\+Str \&\+\_\+str)}{Tokenizer(const KKStr &_str)}}]{\setlength{\rightskip}{0pt plus 5cm}Tokenizer\+::\+Tokenizer (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a9ed287f03edb99625cdfc99ae61dd8ad}{}\label{class_k_k_b_1_1_tokenizer_a9ed287f03edb99625cdfc99ae61dd8ad}
+
+
+Definition at line 36 of file Tokenizer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Token\+Buffer\+Str\+::\+Token\+Buffer\+Str(), and Tokenizer().
+
+
+
+Referenced by Tokenizer().
+
+
+\begin{DoxyCode}
+36                                        :
+37 
+38   atEndOfFile           (\textcolor{keyword}{false}),
+39   in                    (NULL),
+40   secondCharAtEndOfFile (\textcolor{keyword}{false}),
+41   operatorChars         (NULL),
+42   tokenList             (\textcolor{keyword}{true}),
+43   weOwnTokenBuffer      (\textcolor{keyword}{false})
+44 \{
+45   in = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_token_buffer_str}{TokenBufferStr} (\_str);
+46   weOwnTokenBuffer = \textcolor{keyword}{true};
+47   Initialize ();
+48 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Tokenizer@{Tokenizer}}
+\index{Tokenizer@{Tokenizer}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Tokenizer(const K\+K\+Str \&\+\_\+file\+Name, bool \&\+\_\+file\+Opened)}{Tokenizer(const KKStr &_fileName, bool &_fileOpened)}}]{\setlength{\rightskip}{0pt plus 5cm}Tokenizer\+::\+Tokenizer (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{bool \&}]{\+\_\+file\+Opened}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_ad134e856be2766eaff989fa2dcc862ca}{}\label{class_k_k_b_1_1_tokenizer_ad134e856be2766eaff989fa2dcc862ca}
+
+
+Definition at line 52 of file Tokenizer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Token\+Buffer\+Stream\+::\+Token\+Buffer\+Stream(), Tokenizer(), and K\+K\+B\+::\+Token\+Buffer\+::\+Valid().
+
+
+
+Referenced by Tokenizer().
+
+
+\begin{DoxyCode}
+54                       :
+55 
+56   atEndOfFile           (\textcolor{keyword}{false}),
+57   in                    (NULL),
+58   secondCharAtEndOfFile (\textcolor{keyword}{false}),
+59   operatorChars         (NULL),
+60   tokenList             (\textcolor{keyword}{true}),
+61   weOwnTokenBuffer      (\textcolor{keyword}{false})
+62 \{
+63   in = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_token_buffer_stream}{TokenBufferStream} (\_fileName);
+64   \_fileOpened = (in->\hyperlink{class_k_k_b_1_1_token_buffer_ac7ef10355bd2fb7413055ce334901a28}{Valid} ());
+65   \textcolor{keywordflow}{if}  (\_fileOpened)
+66   \{
+67     weOwnTokenBuffer = \textcolor{keyword}{true};
+68     Initialize ();
+69   \}
+70 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!````~Tokenizer@{$\sim$\+Tokenizer}}
+\index{````~Tokenizer@{$\sim$\+Tokenizer}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{$\sim$\+Tokenizer()}{~Tokenizer()}}]{\setlength{\rightskip}{0pt plus 5cm}Tokenizer\+::$\sim$\+Tokenizer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a3f60f887953edf0f95ba5f36102f7017}{}\label{class_k_k_b_1_1_tokenizer_a3f60f887953edf0f95ba5f36102f7017}
+
+
+Definition at line 75 of file Tokenizer.\+cpp.
+
+
+\begin{DoxyCode}
+76 \{
+77   \textcolor{keywordflow}{if}  (weOwnTokenBuffer)
+78   \{
+79     \textcolor{keyword}{delete}  in;
+80     in = NULL;
+81   \}
+82   \textcolor{keyword}{delete}  operatorChars;
+83   operatorChars = NULL;
+84 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Define\+Operator\+Chars@{Define\+Operator\+Chars}}
+\index{Define\+Operator\+Chars@{Define\+Operator\+Chars}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Define\+Operator\+Chars(char $\ast$const \+\_\+operator\+Chars)}{DefineOperatorChars(char *const _operatorChars)}}]{\setlength{\rightskip}{0pt plus 5cm}void Tokenizer\+::\+Define\+Operator\+Chars (
+\begin{DoxyParamCaption}
+\item[{char $\ast$const}]{\+\_\+operator\+Chars}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a273eb0f0ad85cef3757866bf9957a52e}{}\label{class_k_k_b_1_1_tokenizer_a273eb0f0ad85cef3757866bf9957a52e}
+
+
+Definition at line 109 of file Tokenizer.\+cpp.
+
+
+
+References K\+K\+B\+::\+S\+T\+R\+D\+U\+P().
+
+
+\begin{DoxyCode}
+110 \{
+111   \textcolor{keyword}{delete}  operatorChars ;
+112   operatorChars = \hyperlink{namespace_k_k_b_a24920fb971ac6f99f94e9fb8ee8343d3}{KKB::STRDUP} (\_operatorChars);
+113 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!End\+Of\+File@{End\+Of\+File}}
+\index{End\+Of\+File@{End\+Of\+File}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{End\+Of\+File()}{EndOfFile()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Tokenizer\+::\+End\+Of\+File (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a0b04dca4dfbf584e58082cad41d0457b}{}\label{class_k_k_b_1_1_tokenizer_a0b04dca4dfbf584e58082cad41d0457b}
+
+
+Definition at line 175 of file Tokenizer.\+cpp.
+
+
+\begin{DoxyCode}
+176 \{
+177 \textcolor{comment}{//  if  (tokenList.QueueSize () == 0)}
+178 \textcolor{comment}{//    return true;}
+179   \textcolor{keywordflow}{while}  ((tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)  &&  (!atEndOfFile))
+180     ReadInNextLogicalToken ();
+181 
+182   \textcolor{keywordflow}{return}  (tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1);
+183 \}  \textcolor{comment}{/* EndOfFile */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Get\+Next\+Token@{Get\+Next\+Token}}
+\index{Get\+Next\+Token@{Get\+Next\+Token}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Token()}{GetNextToken()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Ptr} Tokenizer\+::\+Get\+Next\+Token (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_aea0a06cf4683bcd6e1c3b42e76f9324f}{}\label{class_k_k_b_1_1_tokenizer_aea0a06cf4683bcd6e1c3b42e76f9324f}
+
+
+Definition at line 116 of file Tokenizer.\+cpp.
+
+
+
+Referenced by Get\+Next\+Tokens().
+
+
+\begin{DoxyCode}
+117 \{
+118   \textcolor{keywordflow}{while}  (tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+119     ReadInNextLogicalToken ();
+120 
+121   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr} t = tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a2b2205f34516ac1f2950f441625d3ec7}{PopFromFront} ();
+122   \textcolor{keywordflow}{return}  t;
+123 \}  \textcolor{comment}{/* GetNextToken */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Get\+Next\+Tokens@{Get\+Next\+Tokens}}
+\index{Get\+Next\+Tokens@{Get\+Next\+Tokens}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Tokens(const K\+K\+Str \&del\+Token)}{GetNextTokens(const KKStr &delToken)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+List\+Ptr} Tokenizer\+::\+Get\+Next\+Tokens (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{del\+Token}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a4b5e1c31228130d3308f6f0d7dbca6ce}{}\label{class_k_k_b_1_1_tokenizer_a4b5e1c31228130d3308f6f0d7dbca6ce}
+
+
+Returns a list of tokens up to and including the first occurrence of \textquotesingle{}del\+Token\textquotesingle{}. 
+
+Will return a list of tokens up to and including the first occurrence if \textquotesingle{}del\+Token\textquotesingle{}.
+
+Caller will take ownership of the returned tokens, and be responsible for deleting them. 
+
+Definition at line 130 of file Tokenizer.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+K\+K\+Str\+List(), and K\+K\+B\+::\+K\+K\+Str\+::operator!=().
+
+
+\begin{DoxyCode}
+131 \{
+132   \textcolor{keywordflow}{if}  (delToken.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+133     \textcolor{keywordflow}{return} NULL;
+134 
+135   \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrListPtr}  tokens = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list}{KKStrList} (\textcolor{keyword}{true});
+136   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrPtr}  t = \hyperlink{class_k_k_b_1_1_tokenizer_aea0a06cf4683bcd6e1c3b42e76f9324f}{GetNextToken} ();
+137   \textcolor{keywordflow}{if}  (t == NULL)
+138     \textcolor{keywordflow}{return} NULL;
+139 
+140   \textcolor{keywordflow}{while}  ((t != NULL)  &&  (*t != delToken))
+141   \{
+142     tokens->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (t);
+143     t = \hyperlink{class_k_k_b_1_1_tokenizer_aea0a06cf4683bcd6e1c3b42e76f9324f}{GetNextToken} ();
+144   \}
+145 
+146   \textcolor{keywordflow}{if}  (t)
+147     tokens->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (t);
+148 
+149   \textcolor{keywordflow}{return}  tokens;
+150 \}  \textcolor{comment}{/* GetNextTokens */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!operator\mbox{[}$\,$\mbox{]}@{operator[]}}
+\index{operator\mbox{[}$\,$\mbox{]}@{operator[]}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{operator[](kkuint32 idx)}{operator[](kkuint32 idx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} Tokenizer\+::operator\mbox{[}$\,$\mbox{]} (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{idx}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_ac82c5fd6107aa964dcbdbab6df0f5293}{}\label{class_k_k_b_1_1_tokenizer_ac82c5fd6107aa964dcbdbab6df0f5293}
+Returns pointers to following Tokens in the stream where idx==0 indicates the next token. 
+
+Definition at line 419 of file Tokenizer.\+cpp.
+
+
+
+References Peek().
+
+
+\begin{DoxyCode}
+420 \{
+421   \textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_tokenizer_aa68ada340bc52bf6839939cec99e63db}{Peek} (idx);
+422 \}  \textcolor{comment}{/* operator[] */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Peek@{Peek}}
+\index{Peek@{Peek}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Peek(kkuint32 idx)}{Peek(kkuint32 idx)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} Tokenizer\+::\+Peek (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{idx}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_aa68ada340bc52bf6839939cec99e63db}{}\label{class_k_k_b_1_1_tokenizer_aa68ada340bc52bf6839939cec99e63db}
+
+
+Definition at line 162 of file Tokenizer.\+cpp.
+
+
+
+Referenced by operator\mbox{[}$\,$\mbox{]}().
+
+
+\begin{DoxyCode}
+163 \{
+164   \textcolor{keywordflow}{while}  ((tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(idx + 1))  &&  !atEndOfFile)
+165     ReadInNextLogicalToken ();
+166 
+167   \textcolor{keywordflow}{if}  (idx >= tokenList.size ())
+168     \textcolor{keywordflow}{return} NULL;
+169 
+170   \textcolor{keywordflow}{return}  tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})idx);
+171 \}  \textcolor{comment}{/* Peek */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}!Push\+Token\+On\+Front@{Push\+Token\+On\+Front}}
+\index{Push\+Token\+On\+Front@{Push\+Token\+On\+Front}!K\+K\+B\+::\+Tokenizer@{K\+K\+B\+::\+Tokenizer}}
+\subsubsection[{\texorpdfstring{Push\+Token\+On\+Front(\+K\+K\+Str\+Ptr t)}{PushTokenOnFront(KKStrPtr t)}}]{\setlength{\rightskip}{0pt plus 5cm}void Tokenizer\+::\+Push\+Token\+On\+Front (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str\+Ptr}}]{t}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_tokenizer_a6395ce549184bd1bcc1e2c0987f9ae47}{}\label{class_k_k_b_1_1_tokenizer_a6395ce549184bd1bcc1e2c0987f9ae47}
+
+
+Definition at line 154 of file Tokenizer.\+cpp.
+
+
+\begin{DoxyCode}
+155 \{
+156   tokenList.\hyperlink{class_k_k_b_1_1_k_k_queue_a07b83a99241a167f7a395a40d32f6380}{PushOnFront} (t);
+157 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_tokenizer_8h}{Tokenizer.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_tokenizer_8cpp}{Tokenizer.\+cpp}\end{DoxyCompactItemize}

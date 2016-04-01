@@ -1,0 +1,735 @@
+\hypertarget{class_k_k_b_1_1_goal_keeper}{}\section{K\+KB\+:\+:Goal\+Keeper Class Reference}
+\label{class_k_k_b_1_1_goal_keeper}\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+
+
+{\ttfamily \#include $<$Goal\+Keeper.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} $\ast$ \hyperlink{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}{Goal\+Keeper\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_k_k_b_1_1_goal_keeper_a8ee2cc75ff5c554ea0a7539bf7320d04}{Blocked} ()
+\begin{DoxyCompactList}\small\item\em Will return true if any thread lock on this instance of \char`\"{}\+Goal\+Keeper\char`\"{}. \end{DoxyCompactList}\item 
+bool \hyperlink{class_k_k_b_1_1_goal_keeper_a7a5b25e61ce3bea2d7b0dec906f21fc8}{Blocked\+By\+Another\+Thread} ()
+\begin{DoxyCompactList}\small\item\em Returns true if a different thread has this instance of \char`\"{}\+Goal\+Keeper\char`\"{} locked. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_goal_keeper_a3337ef9e140587a0958616654d99f554}{Blocker\+Thread\+Id} ()
+\begin{DoxyCompactList}\small\item\em Thread\+Id of thread that currently holds the Block -\/1 indicates no Block. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{End\+Block} ()
+\begin{DoxyCompactList}\small\item\em Ends the block and allows other threads to pass through Stat\+Block. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_goal_keeper_a18cb2b73ae95e26d5c50758f440bb259}{Memory\+Consumed\+Estimated} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_goal_keeper_a5ba617538f55a84fd23e5af404e2fbce}{Name} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_goal_keeper_a1d28630998cac7f65563ae522cf28dfc}{Num\+Blocked\+Threads} ()
+\begin{DoxyCompactList}\small\item\em Returns the number of threads that are waiting to establish a lock on this instance. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{Start\+Block} ()
+\begin{DoxyCompactList}\small\item\em Initiates a Block as long as another thread has not already locked this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_k_k_b_1_1_goal_keeper_a46f564dd14177c3e6c413a2853e8de2b}{Create} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, volatile \hyperlink{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}{Goal\+Keeper\+Ptr} \&\+\_\+new\+Goal\+Keeper)
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object and avoid a race condition doing it. \end{DoxyCompactList}\item 
+static void \hyperlink{class_k_k_b_1_1_goal_keeper_abbad335db421567cde3601e364fe1a76}{Create\+And\+Start\+Block} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, volatile \hyperlink{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}{Goal\+Keeper\+Ptr} \&\+\_\+new\+Goal\+Keeper, bool \&\+\_\+did\+Not\+Exist\+Yet)
+\begin{DoxyCompactList}\small\item\em Create a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object and avoid a race condition doing it. \end{DoxyCompactList}\item 
+static void \hyperlink{class_k_k_b_1_1_goal_keeper_a160956bdf558db46a1e0f34b658d0d14}{Destroy} (volatile \hyperlink{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}{Goal\+Keeper\+Ptr} \&\+\_\+goal\+Keeper\+Instance)
+\begin{DoxyCompactList}\small\item\em Destroys an existing instance of \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper}. \end{DoxyCompactList}\item 
+static void \hyperlink{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{Final\+Clean\+Up} ()
+\begin{DoxyCompactList}\small\item\em Will be registered with \textquotesingle{}atexit\textquotesingle{} so that it will be called when program is unloaded from memory. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_goal_keeper_a5193b500dc09bd87a7d54ba00e25d191}{K\+K\+Queue$<$ Goal\+Keeper $>$}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 38 of file Goal\+Keeper.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Goal\+Keeper\+Ptr@{Goal\+Keeper\+Ptr}}
+\index{Goal\+Keeper\+Ptr@{Goal\+Keeper\+Ptr}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Goal\+Keeper\+Ptr}{GoalKeeperPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Goal\+Keeper}$\ast$ {\bf K\+K\+B\+::\+Goal\+Keeper\+::\+Goal\+Keeper\+Ptr}}\hypertarget{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}{}\label{class_k_k_b_1_1_goal_keeper_a03e9ff735713903c739d1cf9734b5dda}
+
+
+Definition at line 41 of file Goal\+Keeper.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Blocked@{Blocked}}
+\index{Blocked@{Blocked}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Blocked()}{Blocked()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Goal\+Keeper\+::\+Blocked (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_a8ee2cc75ff5c554ea0a7539bf7320d04}{}\label{class_k_k_b_1_1_goal_keeper_a8ee2cc75ff5c554ea0a7539bf7320d04}
+
+
+Will return true if any thread lock on this instance of \char`\"{}\+Goal\+Keeper\char`\"{}. 
+
+
+
+Definition at line 173 of file Goal\+Keeper.\+cpp.
+
+
+\begin{DoxyCode}
+174 \{
+175   \textcolor{keywordflow}{return}  blocked;
+176 \}  \textcolor{comment}{/* Blocked */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Blocked\+By\+Another\+Thread@{Blocked\+By\+Another\+Thread}}
+\index{Blocked\+By\+Another\+Thread@{Blocked\+By\+Another\+Thread}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Blocked\+By\+Another\+Thread()}{BlockedByAnotherThread()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Goal\+Keeper\+::\+Blocked\+By\+Another\+Thread (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_a7a5b25e61ce3bea2d7b0dec906f21fc8}{}\label{class_k_k_b_1_1_goal_keeper_a7a5b25e61ce3bea2d7b0dec906f21fc8}
+
+
+Returns true if a different thread has this instance of \char`\"{}\+Goal\+Keeper\char`\"{} locked. 
+
+\hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} keeps track of which thread has a lock on this instance of \textquotesingle{}\hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper}\textquotesingle{}. This way we know if the calling thread is not the one to have a lock on the thread. 
+
+Definition at line 180 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::os\+Get\+Thread\+Id().
+
+
+\begin{DoxyCode}
+181 \{
+182   \textcolor{keywordflow}{if}  (!blocked)
+183     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+184 
+185   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curThreadId = \hyperlink{namespace_k_k_b_aa1d581b15163a41037c43bdbd800d0f8}{KKB::osGetThreadId} ();
+186   \textcolor{keywordflow}{return}  (blocked  &&  (curThreadId != blockerThreadId));
+187 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Blocker\+Thread\+Id@{Blocker\+Thread\+Id}}
+\index{Blocker\+Thread\+Id@{Blocker\+Thread\+Id}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Blocker\+Thread\+Id()}{BlockerThreadId()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Goal\+Keeper\+::\+Blocker\+Thread\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_a3337ef9e140587a0958616654d99f554}{}\label{class_k_k_b_1_1_goal_keeper_a3337ef9e140587a0958616654d99f554}
+
+
+Thread\+Id of thread that currently holds the Block -\/1 indicates no Block. 
+
+
+
+Definition at line 588 of file Goal\+Keeper.\+cpp.
+
+
+\begin{DoxyCode}
+589 \{
+590   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+591   x =  blockerThreadId;
+592   \textcolor{keywordflow}{return}  x;
+593 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Create@{Create}}
+\index{Create@{Create}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Create(const K\+K\+Str \&\+\_\+name, volatile Goal\+Keeper\+Ptr \&\+\_\+new\+Goal\+Keeper)}{Create(const KKStr &_name, volatile GoalKeeperPtr &_newGoalKeeper)}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+Create (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{volatile {\bf Goal\+Keeper\+Ptr} \&}]{\+\_\+new\+Goal\+Keeper}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_goal_keeper_a46f564dd14177c3e6c413a2853e8de2b}{}\label{class_k_k_b_1_1_goal_keeper_a46f564dd14177c3e6c413a2853e8de2b}
+
+
+Create a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object and avoid a race condition doing it. 
+
+In case two different threads try to create the same \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} at the same time you only want one of them to succeed and the other to use same Gaol\+Keeper object. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+name} & Name of Goal Keeper object that you want to create. \\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+new\+Goal\+Keeper} & You pass this in. Create will block out the critical region that creates the \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object. If it was already created, that is != N\+U\+LL will just return not changing its value. If it is still N\+U\+LL in the critical section it will create a new instance and set this parameter to its address. \\
+\hline
+\end{DoxyParams}
+$<$ default security attributes
+
+$<$ initially not owned 
+
+Definition at line 346 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+List\+::\+Goal\+Keeper\+List().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Create\+Goalie(), K\+K\+B\+::\+Raster\+::\+Initialize(), K\+K\+B\+::\+Raster\+Buffer\+::\+Raster\+Buffer(), and K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Scanner\+Header\+Fields().
+
+
+\begin{DoxyCode}
+349 \{
+350 \textcolor{preprocessor}{#if  defined(WIN32)}
+351   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 \textcolor{comment}{/**< default security attributes */}
+352                                            \textcolor{keyword}{false},                \textcolor{comment}{/**< initially not owned */}
+353                                            \textcolor{stringliteral}{"GoalKeeperClass"}
+354                                           );
+355   \textcolor{keywordflow}{if}  (mutexCreateHandle == NULL)
+356     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (\textcolor{stringliteral}{"GoalKeeper::Create  failed to get handle to Mutex Object
+       'GoalKeeperClass'."});
+357 
+358   WaitForSingleObject (mutexCreateHandle, INFINITE);
+359 
+360   \textcolor{keywordflow}{if}  (\_newGoalKeeper == NULL)
+361   \{
+362     \_newGoalKeeper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper}{GoalKeeper} (\_name);
+363     \textcolor{keywordflow}{if}  (existingGoalKeepers == NULL)
+364     \{
+365       existingGoalKeepers = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper_list}{GoalKeeperList} (\textcolor{keyword}{true});
+366       atexit (\hyperlink{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{GoalKeeper::FinalCleanUp});
+367     \}
+368     existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_newGoalKeeper);
+369   \}
+370 
+371   ReleaseMutex (mutexCreateHandle);
+372   CloseHandle(mutexCreateHandle);
+373 \textcolor{preprocessor}{#else}
+374   sem\_t*  semHandle = sem\_open (\textcolor{stringliteral}{"GoalKeeperClass"}, O\_CREAT, 0644, 1);
+375   \textcolor{keywordflow}{if}  (semHandle == SEM\_FAILED)
+376   \{
+377     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+378          << \textcolor{stringliteral}{"GoalKeeper::Create  Error["} << errno << \textcolor{stringliteral}{"] opening '/GoalKeeper' Semaphore."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+379          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+380 
+381     perror(\textcolor{stringliteral}{"GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'"});
+382 
+383     \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"GoalKeeper::Create    Error opening 'GoalKeeper'."};
+384   \}
+385 
+386   sem\_wait (semHandle);
+387 
+388   \textcolor{keywordflow}{if}  (\_newGoalKeeper == NULL)
+389   \{
+390     \_newGoalKeeper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper}{GoalKeeper} (\_name);
+391     \textcolor{keywordflow}{if}  (existingGoalKeepers == NULL)
+392     \{
+393       existingGoalKeepers = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper_list}{GoalKeeperList} (\textcolor{keyword}{true});
+394       atexit (\hyperlink{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{GoalKeeper::FinalCleanUp});
+395     \}
+396     existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_newGoalKeeper);
+397   \}
+398 
+399   sem\_post (semHandle);
+400   sem\_close (semHandle);
+401 \textcolor{preprocessor}{#endif}
+402 \}  \textcolor{comment}{/* Create */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Create\+And\+Start\+Block@{Create\+And\+Start\+Block}}
+\index{Create\+And\+Start\+Block@{Create\+And\+Start\+Block}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Create\+And\+Start\+Block(const K\+K\+Str \&\+\_\+name, volatile Goal\+Keeper\+Ptr \&\+\_\+new\+Goal\+Keeper, bool \&\+\_\+did\+Not\+Exist\+Yet)}{CreateAndStartBlock(const KKStr &_name, volatile GoalKeeperPtr &_newGoalKeeper, bool &_didNotExistYet)}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+Create\+And\+Start\+Block (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{volatile {\bf Goal\+Keeper\+Ptr} \&}]{\+\_\+new\+Goal\+Keeper, }
+\item[{bool \&}]{\+\_\+did\+Not\+Exist\+Yet}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_goal_keeper_abbad335db421567cde3601e364fe1a76}{}\label{class_k_k_b_1_1_goal_keeper_abbad335db421567cde3601e364fe1a76}
+
+
+Create a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object and avoid a race condition doing it. 
+
+Create a new instance of a \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object if it has not already been done and locks it if we create it.
+
+Similar to \textquotesingle{}Create\textquotesingle{} except it will also call the Start\+Block method. There is also an additional parameter that will let you know if your call was responsible for creating it.
+
+In case two different threads try to create the same \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} at the same time you only want one of them to succeed and the other to use same Gaol\+Keeper object. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+name} & Name of Goal Keeper object that you want to create.\\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+new\+Goal\+Keeper} & You pass this in. Create will block out the critical region that creates the \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object. If it was already created, that is != N\+U\+LL will just return not changing its value. If it is still N\+U\+LL in the critical section it will create a new instance and set this parameter to its address.\\
+\hline
+\mbox{\tt out}  & {\em \+\_\+did\+Not\+Exist\+Yet} & Indicates if this call had to create the \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} instance; if it already existed will return as false.\\
+\hline
+\mbox{\tt in}  & {\em \+\_\+name} & Name to be assigned to \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} object. \\
+\hline
+\mbox{\tt in,out}  & {\em \+\_\+new\+Goal\+Keeper} & A pointer to the \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} that already exists or to new one that got created. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+did\+Not\+Exist\+Yet} & Indicates if the call to \textquotesingle{}Create\+And\+Start\+Block\textquotesingle{} had to create a new instance. \\
+\hline
+\end{DoxyParams}
+$<$ default security attributes.
+
+$<$ initially not owned. 
+
+Definition at line 413 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+List\+::\+Goal\+Keeper\+List(), and Start\+Block().
+
+
+\begin{DoxyCode}
+417 \{
+418 \textcolor{preprocessor}{#if  defined(WIN32)}
+419   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 \textcolor{comment}{/**< default security attributes. */}
+420                                            \textcolor{keyword}{false},                \textcolor{comment}{/**< initially not owned.         */}
+421                                            \textcolor{stringliteral}{"GoalKeeperClass"}
+422                                           );
+423   \textcolor{keywordflow}{if} (mutexCreateHandle == NULL)
+424     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"GoalKeeper::CreateAndStartBlock  failed to get handle to Mutex Object
+       'GoalKeeperClass'."});
+425 
+426   WaitForSingleObject (mutexCreateHandle, INFINITE);
+427 
+428   \textcolor{keywordflow}{if}  (\_newGoalKeeper == NULL)
+429   \{
+430     \_didNotExistYet = \textcolor{keyword}{true};
+431     \_newGoalKeeper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper}{GoalKeeper} (\_name);
+432 
+433     \textcolor{keywordflow}{if}  (existingGoalKeepers == NULL)
+434     \{
+435       existingGoalKeepers = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper_list}{GoalKeeperList} (\textcolor{keyword}{true});
+436       atexit (\hyperlink{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{GoalKeeper::FinalCleanUp});
+437     \}
+438     existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_newGoalKeeper);
+439   \}
+440   \textcolor{keywordflow}{else}
+441   \{
+442     \_didNotExistYet = \textcolor{keyword}{false};
+443   \}
+444 
+445   \_newGoalKeeper->StartBlock ();
+446 
+447   ReleaseMutex (mutexCreateHandle);
+448   CloseHandle(mutexCreateHandle);
+449 \textcolor{preprocessor}{#else}
+450   sem\_t*  semHandle = sem\_open (\textcolor{stringliteral}{"GoalKeeperClass"}, O\_CREAT, 0644, 1);
+451   \textcolor{keywordflow}{if}  (semHandle == SEM\_FAILED)
+452   \{
+453     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+454          << \textcolor{stringliteral}{"GoalKeeper::Create  Error["} << errno << \textcolor{stringliteral}{"] opening '/GoalKeeper' Semaphore."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+455          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+456 
+457     perror(\textcolor{stringliteral}{"GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'"});
+458 
+459     \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"GoalKeeper::Create    Error opening 'GoalKeeper'."};
+460   \}
+461 
+462   sem\_wait (semHandle);
+463 
+464   \textcolor{keywordflow}{if}  (\_newGoalKeeper == NULL)
+465   \{
+466     \_didNotExistYet = \textcolor{keyword}{true};
+467     \_newGoalKeeper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper}{GoalKeeper} (\_name);
+468     \textcolor{keywordflow}{if}  (existingGoalKeepers == NULL)
+469     \{
+470       existingGoalKeepers = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_goal_keeper_list}{GoalKeeperList} (\textcolor{keyword}{true});
+471       atexit (\hyperlink{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{GoalKeeper::FinalCleanUp});
+472     \}
+473     existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\_newGoalKeeper);
+474   \}
+475   \textcolor{keywordflow}{else}
+476   \{
+477     \_didNotExistYet = \textcolor{keyword}{false};
+478   \}
+479 
+480   \_newGoalKeeper->StartBlock ();
+481 
+482   sem\_post (semHandle);
+483   sem\_close (semHandle);
+484 \textcolor{preprocessor}{#endif}
+485 \}  \textcolor{comment}{/* CreateAndStartBlock */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Destroy@{Destroy}}
+\index{Destroy@{Destroy}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Destroy(volatile Goal\+Keeper\+Ptr \&\+\_\+goal\+Keeper\+Instance)}{Destroy(volatile GoalKeeperPtr &_goalKeeperInstance)}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+Destroy (
+\begin{DoxyParamCaption}
+\item[{volatile {\bf Goal\+Keeper\+Ptr} \&}]{\+\_\+goal\+Keeper\+Instance}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_goal_keeper_a160956bdf558db46a1e0f34b658d0d14}{}\label{class_k_k_b_1_1_goal_keeper_a160956bdf558db46a1e0f34b658d0d14}
+
+
+Destroys an existing instance of \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper}. 
+
+Use this method rather than calling the destructor directly. This way the \textquotesingle{}existing\+Goal\+Keepers\textquotesingle{} data member can be kept up to date. If for some reason two different threads managed to call this method for the same \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} instance only one of them will actually destroy the instance. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em \+\_\+goal\+Keeper\+Instance} & Instance of \hyperlink{class_k_k_b_1_1_goal_keeper}{Goal\+Keeper} that is to be destroyed. Upon return it will be set to N\+U\+LL. \\
+\hline
+\end{DoxyParams}
+$<$ default security attributes
+
+$<$ initially not owned 
+
+Definition at line 491 of file Goal\+Keeper.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Final\+Clean\+Up(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Final\+Clean\+Up(), K\+K\+B\+::\+Raster\+::\+Final\+Clean\+Up(), K\+K\+B\+::\+Raster\+Buffer\+::$\sim$\+Raster\+Buffer(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::$\sim$\+Scanner\+File(), and K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::$\sim$\+Scanner\+Header\+Fields().
+
+
+\begin{DoxyCode}
+492 \{
+493 \textcolor{preprocessor}{#if  defined(WIN32)}
+494   HANDLE  mutexCreateHandle = CreateMutex (NULL,                 \textcolor{comment}{/**< default security attributes */}
+495                                            \textcolor{keyword}{false},                \textcolor{comment}{/**< initially not owned */}
+496                                            \textcolor{stringliteral}{"GoalKeeperClass"}
+497                                           ); 
+498   \textcolor{keywordflow}{if} (mutexCreateHandle == NULL)
+499     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"GoalKeeper::Destroy  failed to get handle to Mutex Object
+       'GoalKeeperClass'."});
+500 
+501   WaitForSingleObject (mutexCreateHandle, INFINITE);
+502 
+503   \textcolor{keywordflow}{if}  (\_goalKeeperInstance == NULL)
+504   \{
+505     \textcolor{comment}{// Some other thread managed to destroy this instance.}
+506   \}
+507   \textcolor{keywordflow}{else}
+508   \{
+509     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  existingInstanceIdx =  existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (\_goalKeeperInstance);
+510     \textcolor{keywordflow}{if}  (existingInstanceIdx < 0)
+511     \{
+512       \textcolor{comment}{// If not in list then a  different thread beat us to destroying this instance or it was never
+       created to start with.}
+513     \}
+514     \textcolor{keywordflow}{else}
+515     \{
+516       existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_ae362e3b0a128e8a09182e167befda088}{DeleteEntry} (\_goalKeeperInstance);
+517       \textcolor{keyword}{delete}  \_goalKeeperInstance;
+518       \_goalKeeperInstance = NULL;
+519     \}
+520   \}
+521 
+522   ReleaseMutex (mutexCreateHandle);
+523   CloseHandle(mutexCreateHandle);
+524 \textcolor{preprocessor}{#else}
+525   sem\_t*  semHandle = sem\_open (\textcolor{stringliteral}{"GoalKeeperClass"}, O\_CREAT, 0644, 1);
+526   \textcolor{keywordflow}{if}  (semHandle == SEM\_FAILED)
+527   \{
+528     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+529          << \textcolor{stringliteral}{"GoalKeeper::Create  Error["} << errno << \textcolor{stringliteral}{"] opening '/GoalKeeper' Semaphore."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+530          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+531 
+532     perror(\textcolor{stringliteral}{"GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'"});
+533 
+534     \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"GoalKeeper::Create    Error opening 'GoalKeeper'."};
+535   \}
+536 
+537   sem\_wait (semHandle);
+538 
+539   \textcolor{keywordflow}{if}  (\_goalKeeperInstance == NULL)
+540   \{
+541     \textcolor{comment}{// Some other thread managed to destroy this instance.}
+542   \}
+543   \textcolor{keywordflow}{else}
+544   \{
+545     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  existingInstanceIdx =  existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (\_goalKeeperInstance);
+546     \textcolor{keywordflow}{if}  (existingInstanceIdx >= 0)
+547     \{
+548       \textcolor{comment}{// If not in list then a  different thread beat us to destroying this instance or it was never
+       created to start with.}
+549     \}
+550     \textcolor{keywordflow}{else}
+551     \{
+552       existingGoalKeepers->\hyperlink{class_k_k_b_1_1_k_k_queue_ae362e3b0a128e8a09182e167befda088}{DeleteEntry} (\_goalKeeperInstance);
+553       \textcolor{keyword}{delete}  \_goalKeeperInstance;
+554       \_goalKeeperInstance = NULL;
+555     \}
+556   \}
+557 
+558   sem\_post (semHandle);
+559   sem\_close (semHandle);
+560 \textcolor{preprocessor}{#endif}
+561 
+562 \}  \textcolor{comment}{/* Destroy */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!End\+Block@{End\+Block}}
+\index{End\+Block@{End\+Block}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{End\+Block()}{EndBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+End\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{}\label{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}
+
+
+Ends the block and allows other threads to pass through Stat\+Block. 
+
+Decrements the variable \textquotesingle{}blocker\+Depth\textquotesingle{} by one. Once \textquotesingle{}blocker\+Depth\textquotesingle{} is equal zero the Block on this instance is removed. The idea is that for each time in a row a Thread calls Start\+Block it has to call End\+Block the same number of times. 
+
+Definition at line 295 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), and K\+K\+B\+::os\+Get\+Thread\+Id().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add(), K\+K\+B\+::\+Raster\+Buffer\+::\+Add\+Raster(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Start\+Stop\+Entry\+To\+Index\+File(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Build\+Frame\+Offsets(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Change\+Name\+Of\+Class(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Clear(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Determine\+Frame\+Offset\+For\+Frame(), K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+End\+Block(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Field\+Exists(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Final\+Clean\+Up(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Final\+Clean\+Up(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Frame\+Read(), K\+K\+B\+::\+Raster\+Buffer\+::\+Get\+Copy\+Of\+Last\+Image(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Frame\+Offset(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Next\+Line(), K\+K\+B\+::\+Raster\+Buffer\+::\+Get\+Next\+Raster(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Get\+Value(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Global\+Class\+List(), K\+K\+B\+::\+Raster\+::\+Initialize(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Memory\+Consumed\+Estimated(), K\+K\+B\+::\+Raster\+Buffer\+::\+Memory\+Consumed\+Estimated(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Reset\+All\+Parents\+To\+All\+Classes(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Skip\+Next\+Line(), and K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Update\+Frame\+Offset().
+
+
+\begin{DoxyCode}
+296 \{
+297   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curProcessorId = \hyperlink{namespace_k_k_b_aa1d581b15163a41037c43bdbd800d0f8}{KKB::osGetThreadId} ();
+298 
+299   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} errorCode = 0;   \textcolor{comment}{// 0=No Error;  }
+300                          \textcolor{comment}{// 1=There is no Block}
+301                          \textcolor{comment}{// 2=Different thread holds the block}
+302                          \textcolor{comment}{// 3=Failure to get a lock}
+303 
+304   \{
+305     CriticalSectionStart ();
+306   
+307     \textcolor{keywordflow}{if}  (!blocked)
+308     \{
+309       errorCode = 1;
+310     \}
+311     
+312     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (curProcessorId != blockerThreadId)
+313     \{
+314       errorCode = 2;
+315     \}
+316 
+317     \textcolor{keywordflow}{else}
+318     \{
+319       blockerDepth--;
+320       \textcolor{keywordflow}{if}  (blockerDepth < 1)
+321       \{
+322         blocked = \textcolor{keyword}{false};
+323         blockerThreadId = -1;
+324         blockerDepth = 0;
+325       \}
+326     \}
+327 
+328     CriticalSectionEnd ();
+329   \}
+330 
+331   \textcolor{keywordflow}{if}  (errorCode == 0)
+332     \textcolor{keywordflow}{return};
+333 
+334   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (errorCode == 1)
+335     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"GoalKeeper::EndBlock    Name["} + name + \textcolor{stringliteral}{"]  There was no block established."});
+336 
+337   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (errorCode == 2)
+338     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"GoalKeeper::EndBlock    Name["} + name + \textcolor{stringliteral}{"]  ThreadId["} + curProcessorId + \textcolor{stringliteral}{"]
+       Currently holds Block;  our ThreadId["} + curProcessorId + \textcolor{stringliteral}{"]"});
+339 
+340   \textcolor{keywordflow}{return};
+341 \}  \textcolor{comment}{/* EndBlock */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Final\+Clean\+Up@{Final\+Clean\+Up}}
+\index{Final\+Clean\+Up@{Final\+Clean\+Up}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Final\+Clean\+Up()}{FinalCleanUp()}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+Final\+Clean\+Up (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}{}\label{class_k_k_b_1_1_goal_keeper_aefe6575fd93ee87f4dba12607d1a1fcf}
+
+
+Will be registered with \textquotesingle{}atexit\textquotesingle{} so that it will be called when program is unloaded from memory. 
+
+
+
+Definition at line 566 of file Goal\+Keeper.\+cpp.
+
+
+\begin{DoxyCode}
+567 \{
+568   \textcolor{keywordflow}{if}  (existingGoalKeepers)
+569   \{
+570     \textcolor{keyword}{delete}  existingGoalKeepers;
+571     existingGoalKeepers = NULL;
+572   \}
+573 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Goal\+Keeper\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_goal_keeper_a18cb2b73ae95e26d5c50758f440bb259}{}\label{class_k_k_b_1_1_goal_keeper_a18cb2b73ae95e26d5c50758f440bb259}
+
+
+Definition at line 166 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Memory\+Consumed\+Estimated().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+Raster\+Buffer\+::\+Raster\+Buffer().
+
+
+\begin{DoxyCode}
+167 \{
+168   \textcolor{keywordflow}{return}  (\textcolor{keyword}{sizeof} (\hyperlink{class_k_k_b_1_1_goal_keeper}{GoalKeeper}) + name.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ());
+169 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Goal\+Keeper\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_goal_keeper_a5ba617538f55a84fd23e5af404e2fbce}{}\label{class_k_k_b_1_1_goal_keeper_a5ba617538f55a84fd23e5af404e2fbce}
+
+
+Definition at line 131 of file Goal\+Keeper.\+h.
+
+
+\begin{DoxyCode}
+131 \{\textcolor{keywordflow}{return}  name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Num\+Blocked\+Threads@{Num\+Blocked\+Threads}}
+\index{Num\+Blocked\+Threads@{Num\+Blocked\+Threads}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Num\+Blocked\+Threads()}{NumBlockedThreads()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Goal\+Keeper\+::\+Num\+Blocked\+Threads (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_a1d28630998cac7f65563ae522cf28dfc}{}\label{class_k_k_b_1_1_goal_keeper_a1d28630998cac7f65563ae522cf28dfc}
+
+
+Returns the number of threads that are waiting to establish a lock on this instance. 
+
+
+
+Definition at line 579 of file Goal\+Keeper.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Build\+Frame\+Offsets().
+
+
+\begin{DoxyCode}
+580 \{
+581   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+582   x =  numBlockedThreads;
+583   \textcolor{keywordflow}{return}  x;
+584 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!Start\+Block@{Start\+Block}}
+\index{Start\+Block@{Start\+Block}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{Start\+Block()}{StartBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Goal\+Keeper\+::\+Start\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{}\label{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}
+
+
+Initiates a Block as long as another thread has not already locked this object. 
+
+If it is already blocked processor will sleep and then try again. As long as the variable \textquotesingle{}blocker\+Depth\textquotesingle{}is greater than zero this instance will be considered blocked. Once a thread has the instance blocked it will increment \textquotesingle{}blocker\+Depth\textquotesingle{} and return to caller. 
+
+Definition at line 214 of file Goal\+Keeper.\+cpp.
+
+
+
+References K\+K\+B\+::os\+Get\+Thread\+Id(), and K\+K\+B\+::os\+Sleep\+Mili\+Secs().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add(), K\+K\+B\+::\+Raster\+Buffer\+::\+Add\+Raster(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Start\+Stop\+Entry\+To\+Index\+File(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Build\+Frame\+Offsets(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Change\+Name\+Of\+Class(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Clear(), Create\+And\+Start\+Block(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Create\+New\+M\+L\+Class(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Determine\+Frame\+Offset\+For\+Frame(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Field\+Exists(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Final\+Clean\+Up(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Final\+Clean\+Up(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Frame\+Read(), K\+K\+B\+::\+Raster\+Buffer\+::\+Get\+Copy\+Of\+Last\+Image(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Frame\+Offset(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Next\+Line(), K\+K\+B\+::\+Raster\+Buffer\+::\+Get\+Next\+Raster(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Get\+Value(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Global\+Class\+List(), K\+K\+B\+::\+Raster\+::\+Initialize(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Memory\+Consumed\+Estimated(), K\+K\+B\+::\+Raster\+Buffer\+::\+Memory\+Consumed\+Estimated(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Reset\+All\+Parents\+To\+All\+Classes(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Skip\+Next\+Line(), K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block(), K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Start\+Block(), and K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Update\+Frame\+Offset().
+
+
+\begin{DoxyCode}
+215 \{
+216   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curThreadId = \hyperlink{namespace_k_k_b_aa1d581b15163a41037c43bdbd800d0f8}{KKB::osGetThreadId} ();
+217   
+218   \textcolor{keywordtype}{bool}    firstPassThruLoop = \textcolor{keyword}{true};
+219   \textcolor{keywordtype}{bool}    weAreBlocked      = \textcolor{keyword}{true};
+220   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  milliSecsBlocked  = 0;
+221 
+222   \textcolor{keywordflow}{while}  (weAreBlocked)
+223   \{
+224     CriticalSectionStart ();
+225 
+226     \textcolor{keywordflow}{if}  (firstPassThruLoop)
+227       numBlockedThreads++;
+228 
+229     \textcolor{keywordflow}{if}  (blocked)
+230     \{
+231       \textcolor{keywordflow}{if}  (curThreadId == blockerThreadId)
+232       \{
+233         \textcolor{comment}{// We are the thread that already holds the block;  so okay for us }
+234         \textcolor{comment}{// to process.}
+235         blockerDepth++;
+236         weAreBlocked = \textcolor{keyword}{false};
+237         numBlockedThreads--;
+238       \}
+239       \textcolor{keywordflow}{else}
+240       \{
+241         weAreBlocked = \textcolor{keyword}{true};
+242 \textcolor{preprocessor}{#if  defined(GOALKEEPER\_DEBUG)}
+243         blockedStats->PushOnBack (\textcolor{keyword}{new} BlockedStat (curThreadId, blockerThreadId, milliSecsBlocked, 
+      numBlockedThreads));
+244 \textcolor{preprocessor}{#endif}
+245       \}
+246     \}
+247     \textcolor{keywordflow}{else}
+248     \{
+249       \textcolor{comment}{// No one holds the lock;  so we can take it.}
+250       blocked = \textcolor{keyword}{true};
+251       blockerDepth = 1;
+252       blockerThreadId = curThreadId;
+253       weAreBlocked = \textcolor{keyword}{false};
+254       numBlockedThreads--;
+255     \}
+256 
+257     CriticalSectionEnd ();
+258 
+259     \textcolor{keywordflow}{if}  (weAreBlocked)
+260     \{
+261       \textcolor{keywordflow}{if}  (milliSecsBlocked < 10)
+262       \{
+263         \hyperlink{namespace_k_k_b_a6d3dee6d4727244d65814aaade882c59}{osSleepMiliSecs} (1);
+264         milliSecsBlocked++;
+265       \}
+266 
+267       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (milliSecsBlocked < 200)
+268       \{
+269         \hyperlink{namespace_k_k_b_a6d3dee6d4727244d65814aaade882c59}{osSleepMiliSecs} (10);
+270         milliSecsBlocked += 10;
+271       \}
+272 
+273       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (milliSecsBlocked < 10000)
+274       \{
+275         \hyperlink{namespace_k_k_b_a6d3dee6d4727244d65814aaade882c59}{osSleepMiliSecs} (100);
+276         milliSecsBlocked += 100;
+277       \}
+278 
+279       \textcolor{keywordflow}{else}
+280       \{
+281         \hyperlink{namespace_k_k_b_a6d3dee6d4727244d65814aaade882c59}{osSleepMiliSecs} (400);
+282         milliSecsBlocked += 400;
+283       \}
+284     \}
+285 
+286     firstPassThruLoop = \textcolor{keyword}{false};
+287   \}
+288 
+289   \textcolor{keywordflow}{return};
+290 \}   \textcolor{comment}{/* StartBlock */}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}!K\+K\+Queue$<$ Goal\+Keeper $>$@{K\+K\+Queue$<$ Goal\+Keeper $>$}}
+\index{K\+K\+Queue$<$ Goal\+Keeper $>$@{K\+K\+Queue$<$ Goal\+Keeper $>$}!K\+K\+B\+::\+Goal\+Keeper@{K\+K\+B\+::\+Goal\+Keeper}}
+\subsubsection[{\texorpdfstring{K\+K\+Queue$<$ Goal\+Keeper $>$}{KKQueue< GoalKeeper >}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf K\+K\+Queue}$<$ {\bf Goal\+Keeper} $>$\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_goal_keeper_a5193b500dc09bd87a7d54ba00e25d191}{}\label{class_k_k_b_1_1_goal_keeper_a5193b500dc09bd87a7d54ba00e25d191}
+
+
+Definition at line 50 of file Goal\+Keeper.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_goal_keeper_8h}{Goal\+Keeper.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_goal_keeper_8cpp}{Goal\+Keeper.\+cpp}\end{DoxyCompactItemize}

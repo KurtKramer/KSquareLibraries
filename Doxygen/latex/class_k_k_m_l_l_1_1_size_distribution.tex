@@ -1,0 +1,375 @@
+\hypertarget{class_k_k_m_l_l_1_1_size_distribution}{}\section{K\+K\+M\+LL\+:\+:Size\+Distribution Class Reference}
+\label{class_k_k_m_l_l_1_1_size_distribution}\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+
+
+Used to keep track of examples by size; typically used by \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_cross_validation}{Cross\+Validation}\textquotesingle{}; for each example predicted it would call the ;Increment\textquotesingle{} method keeping track.  
+
+
+
+
+{\ttfamily \#include $<$Size\+Distribution.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_size_distribution_1_1_class_totals}{Class\+Totals}
+\item 
+class \hyperlink{class_size_distribution_1_1_class_totals_list}{Class\+Totals\+List}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_size_distribution_ad7a351e184b07909df7fb6712b036279}{Size\+Distribution} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+bucket\+Count, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+bucket\+Size, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_size_distribution_ac440c714d6088a049d91a24cd41f6d8a}{$\sim$\+Size\+Distribution} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_size_distribution_a51716c82e9fceab27ab5791073143d4a}{Increment} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ml\+Class, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} size)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_size_distribution_abb5391cadeee9c6a70c6ffa4e7584432}{Print\+By\+Class\+Collumns} (ostream \&o, \hyperlink{namespace_k_k_b_ac8e4b77afddb0db278beb180dae0b6dc}{Vector\+Ulong} $\ast$scan\+Lines\+Per\+Meter) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_size_distribution_a469d784eb82dbce90af7b9a2f90697e8}{Print\+C\+S\+V\+Distribution\+Matrix} (ostream \&\+\_\+out\+File) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_size_distribution_a3a1017d7e7216e497fb5c8d4091f99c3}{Print\+Formated\+Distribution\+Matrix} (ostream \&\+\_\+out\+File) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_size_distribution_a2c073b27bb7de079182baf892933d04a}{Print\+Tab\+Del\+Distribution\+Matrix} (ostream \&\+\_\+out\+File) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to keep track of examples by size; typically used by \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_cross_validation}{Cross\+Validation}\textquotesingle{}; for each example predicted it would call the ;Increment\textquotesingle{} method keeping track. 
+
+Definition at line 26 of file Size\+Distribution.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Size\+Distribution@{Size\+Distribution}}
+\index{Size\+Distribution@{Size\+Distribution}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Size\+Distribution(kkint32 \+\_\+bucket\+Count, kkint32 \+\_\+bucket\+Size, Run\+Log \&\+\_\+log)}{SizeDistribution(kkint32 _bucketCount, kkint32 _bucketSize, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Size\+Distribution\+::\+Size\+Distribution (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+bucket\+Count, }
+\item[{{\bf kkint32}}]{\+\_\+bucket\+Size, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_ad7a351e184b07909df7fb6712b036279}{}\label{class_k_k_m_l_l_1_1_size_distribution_ad7a351e184b07909df7fb6712b036279}
+
+
+Definition at line 219 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+List\+::\+Class\+Totals\+List().
+
+
+\begin{DoxyCode}
+222                                     :
+223   bucketCount  (\_bucketCount),
+224   bucketSize   (\_bucketSize),
+225   log          (\_log),
+226   totals (\textcolor{keyword}{new} \hyperlink{class_size_distribution_1_1_class_totals_list}{SizeDistribution::ClassTotalsList} (\textcolor{keyword}{true}))
+227 
+228 \{
+229   \textcolor{keywordflow}{if}  (bucketCount < 1)
+230   \{
+231     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+232                    << \textcolor{stringliteral}{"SizeDistribution::SizeDistribution     *** Invalid Bucket Size["} << bucketSize << \textcolor{stringliteral}{"]
+       ***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+233                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+234   \}
+235 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!````~Size\+Distribution@{$\sim$\+Size\+Distribution}}
+\index{````~Size\+Distribution@{$\sim$\+Size\+Distribution}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{$\sim$\+Size\+Distribution()}{~SizeDistribution()}}]{\setlength{\rightskip}{0pt plus 5cm}Size\+Distribution\+::$\sim$\+Size\+Distribution (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_ac440c714d6088a049d91a24cd41f6d8a}{}\label{class_k_k_m_l_l_1_1_size_distribution_ac440c714d6088a049d91a24cd41f6d8a}
+
+
+Definition at line 239 of file Size\+Distribution.\+cpp.
+
+
+\begin{DoxyCode}
+240 \{
+241   \textcolor{keyword}{delete}  totals;
+242 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Increment@{Increment}}
+\index{Increment@{Increment}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Increment(\+M\+L\+Class\+Ptr ml\+Class, kkint32 size)}{Increment(MLClassPtr mlClass, kkint32 size)}}]{\setlength{\rightskip}{0pt plus 5cm}void Size\+Distribution\+::\+Increment (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ml\+Class, }
+\item[{{\bf kkint32}}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_a51716c82e9fceab27ab5791073143d4a}{}\label{class_k_k_m_l_l_1_1_size_distribution_a51716c82e9fceab27ab5791073143d4a}
+
+
+Definition at line 264 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Class\+Totals(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Get\+Un\+Known\+Class\+Static(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Increment(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+List\+::\+Look\+Up(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+\begin{DoxyCode}
+267 \{
+268   \textcolor{keywordflow}{if}  (mlClass == NULL)
+269     mlClass = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_adb5daed2642585c91e0cdc5e9d472c7e}{MLClass::GetUnKnownClassStatic} ();
+270 
+271   \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = totals->
+      \hyperlink{class_size_distribution_1_1_class_totals_list_a02a7ba9ba316f307794c4a5183fe9fd6}{LookUp} (mlClass->Name ());
+272   \textcolor{keywordflow}{if}  (!classTotals)
+273   \{
+274     classTotals = \textcolor{keyword}{new} ClassTotals (mlClass->Name (), bucketCount, bucketSize);
+275     totals->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (classTotals);
+276   \}    
+277 
+278   classTotals->Increment (size);
+279 \}  \textcolor{comment}{/* Increment */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Print\+By\+Class\+Collumns@{Print\+By\+Class\+Collumns}}
+\index{Print\+By\+Class\+Collumns@{Print\+By\+Class\+Collumns}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Print\+By\+Class\+Collumns(ostream \&o, Vector\+Ulong $\ast$scan\+Lines\+Per\+Meter) const }{PrintByClassCollumns(ostream &o, VectorUlong *scanLinesPerMeter) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Size\+Distribution\+::\+Print\+By\+Class\+Collumns (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{o, }
+\item[{{\bf Vector\+Ulong} $\ast$}]{scan\+Lines\+Per\+Meter}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_abb5391cadeee9c6a70c6ffa4e7584432}{}\label{class_k_k_m_l_l_1_1_size_distribution_abb5391cadeee9c6a70c6ffa4e7584432}
+
+
+Definition at line 438 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Bucket\+Count(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Extract\+Three\+Title\+Lines(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+List\+::\+Look\+Up(), and K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name().
+
+
+\begin{DoxyCode}
+441 \{
+442 
+443   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  hd1, hd2, hd3;
+444 
+445 
+446   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  classes = BuildMLClassList ();
+447   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  cIDX;
+448  
+449 
+450   \textcolor{comment}{// Find the first and last buckets with activity}
+451   
+452   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  firstBucket = -1;
+453   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastBucket = 0;
+454   
+455   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucketIDX = 0;  bucketIDX < bucketCount;  bucketIDX++)
+456   \{
+457     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucketTotal = 0;
+458     \textcolor{keywordflow}{for}  (cIDX = classes->begin ();  cIDX != classes->end ();  cIDX++)
+459     \{
+460       \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = *cIDX;
+461       \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = totals->
+      \hyperlink{class_size_distribution_1_1_class_totals_list_a02a7ba9ba316f307794c4a5183fe9fd6}{LookUp} (mlClass->Name ());
+462       bucketTotal += classTotals->\hyperlink{class_size_distribution_1_1_class_totals_a7f2650dd7bf999bb3bd7d6d47be44205}{BucketCount} (bucketIDX);
+463     \}
+464 
+465     \textcolor{keywordflow}{if}  (bucketTotal > 0)
+466     \{
+467       \textcolor{keywordflow}{if}  (firstBucket < 0)
+468         firstBucket = bucketIDX;
+469       lastBucket = bucketIDX;
+470     \}
+471   \}
+472 
+473   \textcolor{keywordflow}{if}  (firstBucket < 0)
+474   \{
+475     o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+476       << \textcolor{stringliteral}{"SizeDistribution::PrintByClassCollumns     *** There is no SizeDistribution Data ***"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+477       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+478     \textcolor{keywordflow}{return};
+479   \}
+480 
+481 
+482   \hyperlink{namespace_k_k_b_a791ebe73f89917067a7aab9dbd817e45}{VectorInt}  finalTotals (classes->size (), 0);
+483   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}    grandTotal = 0;
+484 
+485   classes->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}{ExtractThreeTitleLines} (hd1, hd2, hd3);
+486 
+487   o << \textcolor{stringliteral}{""}      << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{""}      << \textcolor{stringliteral}{"\(\backslash\)t"} << hd1 << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{""}       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+488     << \textcolor{stringliteral}{""}      << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Scan"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << hd2 << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Bucket"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+489     << \textcolor{stringliteral}{"Depth"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Lines"} << \textcolor{stringliteral}{"\(\backslash\)t"} << hd3 << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Total"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+490 
+491   \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} totalScanLines = 0;
+492   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  imageSize = firstBucket * bucketSize;
+493 
+494   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucketIDX = firstBucket;  bucketIDX <= lastBucket;  bucketIDX++)
+495   \{
+496     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextImageSize = imageSize + bucketSize;
+497     \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{kkuint64} scanLinesDepthForThisBucket = 0;
+498     \textcolor{keywordflow}{if}  (scanLinesPerMeterDepth != NULL)
+499     \{
+500       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = imageSize;  x < \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (nextImageSize, (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})
+      scanLinesPerMeterDepth->size ());  x++)
+501         scanLinesDepthForThisBucket += (*scanLinesPerMeterDepth)[x];
+502     \}
+503 
+504     o <<  imageSize << \textcolor{stringliteral}{"\(\backslash\)t"} << scanLinesDepthForThisBucket;
+505     totalScanLines += scanLinesDepthForThisBucket;
+506 
+507     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucketTotal = 0;
+508 
+509     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  intIDX = 0;
+510     \textcolor{keywordflow}{for}  (cIDX = classes->begin ();  cIDX != classes->end ();  cIDX++)
+511     \{
+512       \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = *cIDX;
+513       \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = totals->
+      \hyperlink{class_size_distribution_1_1_class_totals_list_a02a7ba9ba316f307794c4a5183fe9fd6}{LookUp} (mlClass->Name ());
+514 
+515       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  qtyThisBucket = classTotals->\hyperlink{class_size_distribution_1_1_class_totals_a7f2650dd7bf999bb3bd7d6d47be44205}{BucketCount} (bucketIDX);
+516 
+517       o << \textcolor{stringliteral}{"\(\backslash\)t"} << qtyThisBucket;
+518 
+519       bucketTotal         += qtyThisBucket;
+520       finalTotals[intIDX] += qtyThisBucket;
+521       grandTotal          += qtyThisBucket;
+522 
+523       intIDX++;
+524     \}
+525 
+526     imageSize = nextImageSize;
+527     o << \textcolor{stringliteral}{"\(\backslash\)t"} << bucketTotal << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+528   \}
+529 
+530   \{
+531     o << endl
+532       << \textcolor{stringliteral}{"FinalTotals"}  << \textcolor{stringliteral}{"\(\backslash\)t"}  << totalScanLines;
+533     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;  x < classes->size ();  x++)
+534     \{
+535       o << \textcolor{stringliteral}{"\(\backslash\)t"} << finalTotals[x];
+536     \}
+537     o << \textcolor{stringliteral}{"\(\backslash\)t"} << grandTotal << endl
+538       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+539   \}
+540 
+541   \textcolor{keyword}{delete}  classes;  classes = NULL;
+542 \}  \textcolor{comment}{/* ReportByClassCollumns */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Print\+C\+S\+V\+Distribution\+Matrix@{Print\+C\+S\+V\+Distribution\+Matrix}}
+\index{Print\+C\+S\+V\+Distribution\+Matrix@{Print\+C\+S\+V\+Distribution\+Matrix}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Print\+C\+S\+V\+Distribution\+Matrix(ostream \&\+\_\+out\+File) const }{PrintCSVDistributionMatrix(ostream &_outFile) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Size\+Distribution\+::\+Print\+C\+S\+V\+Distribution\+Matrix (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{\+\_\+out\+File}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_a469d784eb82dbce90af7b9a2f90697e8}{}\label{class_k_k_m_l_l_1_1_size_distribution_a469d784eb82dbce90af7b9a2f90697e8}
+
+
+Definition at line 311 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Add\+In(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Class\+Totals(), and K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Print\+C\+S\+V\+Line().
+
+
+\begin{DoxyCode}
+312 \{
+313   PrintCSVHeader (o);
+314 
+315   \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = NULL;
+316 
+317   ClassTotals  grandTotals (\textcolor{stringliteral}{"Grand Totals"}, bucketCount, bucketSize);
+318 
+319   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx;
+320 
+321   \textcolor{keywordflow}{for}  (idx = 0;  idx < totals->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} (); idx++)
+322   \{
+323     classTotals = totals->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx);
+324     classTotals->PrintCSVLine (o);
+325     grandTotals.AddIn (classTotals);
+326   \}
+327 
+328   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+329   grandTotals.PrintCSVLine (o);
+330 \}  \textcolor{comment}{/* PrintCSVDistributionMatrix */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Print\+Formated\+Distribution\+Matrix@{Print\+Formated\+Distribution\+Matrix}}
+\index{Print\+Formated\+Distribution\+Matrix@{Print\+Formated\+Distribution\+Matrix}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Print\+Formated\+Distribution\+Matrix(ostream \&\+\_\+out\+File) const }{PrintFormatedDistributionMatrix(ostream &_outFile) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Size\+Distribution\+::\+Print\+Formated\+Distribution\+Matrix (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{\+\_\+out\+File}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_a3a1017d7e7216e497fb5c8d4091f99c3}{}\label{class_k_k_m_l_l_1_1_size_distribution_a3a1017d7e7216e497fb5c8d4091f99c3}
+
+
+Definition at line 285 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Add\+In(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Class\+Totals(), and K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Print\+Formated\+Line().
+
+
+\begin{DoxyCode}
+286 \{
+287   PrintFormatedHeader (o);
+288 
+289   \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = NULL;
+290 
+291   ClassTotals  grandTotals (\textcolor{stringliteral}{"Grand Totals"}, bucketCount, bucketSize);
+292 
+293   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx;
+294 
+295   \textcolor{keywordflow}{for}  (idx = 0;  idx < totals->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} (); idx++)
+296   \{
+297     classTotals = totals->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx);
+298     classTotals->PrintFormatedLine (o);
+299     grandTotals.AddIn (classTotals);
+300   \}
+301 
+302   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+303   grandTotals.PrintFormatedLine (o);
+304 \}  \textcolor{comment}{/* PrintFormatedDistributionMatrix */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}!Print\+Tab\+Del\+Distribution\+Matrix@{Print\+Tab\+Del\+Distribution\+Matrix}}
+\index{Print\+Tab\+Del\+Distribution\+Matrix@{Print\+Tab\+Del\+Distribution\+Matrix}!K\+K\+M\+L\+L\+::\+Size\+Distribution@{K\+K\+M\+L\+L\+::\+Size\+Distribution}}
+\subsubsection[{\texorpdfstring{Print\+Tab\+Del\+Distribution\+Matrix(ostream \&\+\_\+out\+File) const }{PrintTabDelDistributionMatrix(ostream &_outFile) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Size\+Distribution\+::\+Print\+Tab\+Del\+Distribution\+Matrix (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{\+\_\+out\+File}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_size_distribution_a2c073b27bb7de079182baf892933d04a}{}\label{class_k_k_m_l_l_1_1_size_distribution_a2c073b27bb7de079182baf892933d04a}
+
+
+Definition at line 335 of file Size\+Distribution.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Add\+In(), K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Class\+Totals(), and K\+K\+M\+L\+L\+::\+Size\+Distribution\+::\+Class\+Totals\+::\+Print\+Tab\+Del\+Line().
+
+
+\begin{DoxyCode}
+336 \{
+337   PrintTabDelHeader (o);
+338 
+339   \hyperlink{class_size_distribution_1_1_class_totals_a2686de1099514e243ffe29eef7c0ed03}{ClassTotals::ClassTotalsPtr}  classTotals = NULL;
+340 
+341   ClassTotals  grandTotals (\textcolor{stringliteral}{"Grand Totals"}, bucketCount, bucketSize);
+342 
+343   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx;
+344 
+345   \textcolor{keywordflow}{for}  (idx = 0;  idx < totals->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} (); idx++)
+346   \{
+347     classTotals = totals->\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (idx);
+348     classTotals->PrintTabDelLine (o);
+349     grandTotals.AddIn (classTotals);
+350   \}
+351 
+352   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+353   grandTotals.PrintTabDelLine (o);
+354 \}  \textcolor{comment}{/* PrintTabDelDistributionMatrix */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_size_distribution_8h}{Size\+Distribution.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_size_distribution_8cpp}{Size\+Distribution.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,364 @@
+\hypertarget{class_s_v_m289___b_f_s_1_1_kernel}{}\section{S\+V\+M289\+\_\+\+B\+FS\+:\+:Kernel Class Reference}
+\label{class_s_v_m289___b_f_s_1_1_kernel}\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+Inheritance diagram for S\+V\+M289\+\_\+\+B\+FS\+:\+:Kernel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.828283cm]{class_s_v_m289___b_f_s_1_1_kernel}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_v_m289___b_f_s_1_1_kernel_add18840e1716a1f32e291de3096ae560}{Kernel} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+x, const \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \&\+\_\+sel\+Features, const \hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+virtual \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a888c0813c87096b4de12f5387c428d6f}{$\sim$\+Kernel} ()
+\item 
+virtual \hyperlink{namespace_s_v_m289___b_f_s_a8b0a7657dcefcb6e9a857c9b5e2fd2ef}{Qfloat} $\ast$ \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a8bed33493f8e35c6a93b7945f3e3bd19}{get\+\_\+Q} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} column, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} len) const  =0
+\item 
+virtual \hyperlink{namespace_s_v_m289___b_f_s_a8b0a7657dcefcb6e9a857c9b5e2fd2ef}{Qfloat} $\ast$ \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a8b5e82405c791e60243be855b76a26fc}{get\+\_\+\+QD} () const  =0
+\item 
+virtual void \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a40e0edd7d2e5f3faef5a6c31f05ca1b2}{swap\+\_\+index} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static double \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}{Dot\+Static} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&px, const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&py, const \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \&sel\+Features)
+\item 
+static double \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_aca1884c528ca8bb19f764e16a51a0acd}{k\+\_\+function} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&x, const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&y, const \hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter}{svm\+\_\+parameter} \&param, const \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \&sel\+Features)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_s_v_m289___b_f_s_1_1_kernel}{Kernel} evaluation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double(Kernel\+::$\ast$ \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\+\_\+function} )(\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 848 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!Kernel@{Kernel}}
+\index{Kernel@{Kernel}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{Kernel(const Feature\+Vector\+List \&\+\_\+x, const Feature\+Num\+List \&\+\_\+sel\+Features, const svm\+\_\+parameter \&\+\_\+param, Run\+Log \&\+\_\+log)}{Kernel(const FeatureVectorList &_x, const FeatureNumList &_selFeatures, const svm_parameter &_param, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::\+Kernel (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List} \&}]{\+\_\+x, }
+\item[{const {\bf Feature\+Num\+List} \&}]{\+\_\+sel\+Features, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{\+\_\+param, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_add18840e1716a1f32e291de3096ae560}{}\label{class_s_v_m289___b_f_s_1_1_kernel_add18840e1716a1f32e291de3096ae560}
+
+
+Definition at line 945 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::coef0, S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::degree, K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::gamma, Kernel(), kernel\+\_\+function, S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::kernel\+\_\+type, S\+V\+M289\+\_\+\+B\+F\+S\+::\+L\+I\+N\+E\+AR, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Sel\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+P\+O\+LY, S\+V\+M289\+\_\+\+B\+F\+S\+::\+P\+R\+E\+C\+O\+M\+P\+U\+T\+ED, S\+V\+M289\+\_\+\+B\+F\+S\+::\+R\+BF, and S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+I\+G\+M\+O\+ID.
+
+
+
+Referenced by Kernel().
+
+
+\begin{DoxyCode}
+949                         :
+950 
+951    coef0          (\_param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_af0131a9fb06c4e9a071e51685632ad91}{coef0}),
+952    degree         (\_param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_af2526e310e1a21859ad4aaa9de7bd6ce}{degree}),
+953    gamma          (\_param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a88d6cddc31287ac0483272ff3fb9ea45}{gamma}), 
+954    kernel\_type    (\_param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a0855dd528ea40f3bb15d9de18c87a974}{kernel\_type}), 
+955    l              (\_x.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ()),
+956    numSelFeatures (0),
+957    preComputed    (NULL),
+958    selFeatures    (NULL),
+959    x              (NULL)
+960 
+961 \{
+962   x = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (\_x, \textcolor{keyword}{false});
+963 
+964   numSelFeatures = \_selFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a1c1a2cb406970e8841e67cbc89c4871c}{NumSelFeatures} ();
+965   selFeatures = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numSelFeatures];
+966   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  zed < numSelFeatures;  zed++)
+967     selFeatures[zed] = \_selFeatures[zed];
+968 
+969   \textcolor{keywordflow}{switch}  (kernel\_type)
+970   \{
+971     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6daf8a1f240b55fde36b51b3b778b9707d1}{LINEAR}:
+972       \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\_function} = &Kernel::kernel\_linear;
+973       \textcolor{keywordflow}{break};
+974 
+975     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6dab74c84d37477dff28b72b133217cc5e7}{POLY}:
+976       \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\_function} = &Kernel::kernel\_poly;
+977       \textcolor{keywordflow}{break};
+978 
+979     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da7d4cc9bb6c3d975e52b4240ab829f274}{RBF}:
+980       \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\_function} = &Kernel::kernel\_rbf;
+981       \textcolor{keywordflow}{break};
+982 
+983     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da37e49065854fb11a46e1faf3650faf1f}{SIGMOID}:
+984       \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\_function} = &Kernel::kernel\_sigmoid;
+985       \textcolor{keywordflow}{break};
+986 
+987     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da1ebdedc07ee45f15e4cdad22dd1fd4d5}{PRECOMPUTED}:
+988       \{
+989         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  z1 = 0;
+990         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  z2 = 0;
+991         \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{kernel\_function} = &Kernel::kernel\_precomputed;
+992         preComputed = \textcolor{keyword}{new} \textcolor{keywordtype}{float}*[l];
+993         \textcolor{keywordflow}{for}  (z1 = 0;  z1 < l;  z1++)
+994         \{
+995           preComputed[z1] = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[l];
+996           \textcolor{keywordflow}{for}  (z2 = 0;  z2 < l;  z2++)
+997             preComputed[z1][z2] = 0.0f;
+998         \}
+999       \}
+1000       \textcolor{keywordflow}{break};
+1001   \}
+1002 
+1003   \textcolor{keywordflow}{if}  (kernel\_type == \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da7d4cc9bb6c3d975e52b4240ab829f274}{RBF})
+1004   \{
+1005     x\_square = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[l];
+1006     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < l;  i++)
+1007       x\_square[i] = dot ((*x)[i], (*x)[i]);
+1008   \}
+1009 
+1010   \textcolor{keywordflow}{else}
+1011   \{
+1012     x\_square = 0;
+1013   \}
+1014 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!````~Kernel@{$\sim$\+Kernel}}
+\index{````~Kernel@{$\sim$\+Kernel}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{$\sim$\+Kernel()}{~Kernel()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::$\sim$\+Kernel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_a888c0813c87096b4de12f5387c428d6f}{}\label{class_s_v_m289___b_f_s_1_1_kernel_a888c0813c87096b4de12f5387c428d6f}
+
+
+Definition at line 1019 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+\begin{DoxyCode}
+1020 \{
+1021   \textcolor{keyword}{delete}[] selFeatures;    selFeatures = NULL;
+1022   \textcolor{keyword}{delete}[] x\_square;       x\_square    = NULL;
+1023 
+1024   \textcolor{keywordflow}{if}  (preComputed)
+1025   \{
+1026     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  n = x->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1027     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z1 = 0;
+1028     \textcolor{keywordflow}{for}  (z1 = 0;  z1 < l;  z1++)
+1029       \textcolor{keyword}{delete}  preComputed[z1];
+1030     \textcolor{keyword}{delete}  preComputed;
+1031     preComputed = NULL;
+1032   \}
+1033 
+1034   \textcolor{keyword}{delete}  x;
+1035   x = NULL;
+1036 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!Dot\+Static@{Dot\+Static}}
+\index{Dot\+Static@{Dot\+Static}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{Dot\+Static(const Feature\+Vector \&px, const Feature\+Vector \&py, const Feature\+Num\+List \&sel\+Features)}{DotStatic(const FeatureVector &px, const FeatureVector &py, const FeatureNumList &selFeatures)}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::\+Dot\+Static (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector} \&}]{px, }
+\item[{const {\bf Feature\+Vector} \&}]{py, }
+\item[{const {\bf Feature\+Num\+List} \&}]{sel\+Features}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}{}\label{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}
+
+
+Definition at line 1063 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Sel\+Features(), and K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}().
+
+
+
+Referenced by k\+\_\+function().
+
+
+\begin{DoxyCode}
+1067 \{
+1068   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numFeatures = selFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a1c1a2cb406970e8841e67cbc89c4871c}{NumSelFeatures} ();
+1069 
+1070   \textcolor{keywordtype}{double}  sum = 0;
+1071   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  fn = 0;
+1072   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx = 0;
+1073 
+1074   \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  fvX  = px.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+1075   \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  fvY  = py.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+1076 
+1077   \textcolor{keywordflow}{for}  (idx = 0;  idx < numFeatures;  idx++)
+1078   \{
+1079     fn = selFeatures[idx];
+1080     sum += fvX[fn] * fvY[fn];
+1081   \}
+1082 
+1083   \textcolor{keywordflow}{return} sum;
+1084 \}  \textcolor{comment}{/* dot */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!get\+\_\+Q@{get\+\_\+Q}}
+\index{get\+\_\+Q@{get\+\_\+Q}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{get\+\_\+\+Q(kkint32 column, kkint32 len) const  =0}{get_Q(kkint32 column, kkint32 len) const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Qfloat}$\ast$ S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::get\+\_\+Q (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{column, }
+\item[{{\bf kkint32}}]{len}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_a8bed33493f8e35c6a93b7945f3e3bd19}{}\label{class_s_v_m289___b_f_s_1_1_kernel_a8bed33493f8e35c6a93b7945f3e3bd19}
+
+
+Implements \hyperlink{class_s_v_m289___b_f_s_1_1_q_matrix_a5c3621d65b8135452db286640f53cbe0}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Q\+Matrix}.
+
+
+
+Implemented in \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_r___q_a80f9581a87fcade141aa121ae5150163}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+R\+\_\+Q}, \hyperlink{class_s_v_m289___b_f_s_1_1_o_n_e___c_l_a_s_s___q_a90163690e3398fa8335db5564cb0f669}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_c___q_a07039d2ce81484ea2d2f0743ea66e506}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+Q}.
+
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!get\+\_\+\+QD@{get\+\_\+\+QD}}
+\index{get\+\_\+\+QD@{get\+\_\+\+QD}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{get\+\_\+\+Q\+D() const  =0}{get_QD() const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Qfloat}$\ast$ S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::get\+\_\+\+QD (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_a8b5e82405c791e60243be855b76a26fc}{}\label{class_s_v_m289___b_f_s_1_1_kernel_a8b5e82405c791e60243be855b76a26fc}
+
+
+Implements \hyperlink{class_s_v_m289___b_f_s_1_1_q_matrix_af3adb6bdfd15b356ee6c834efe58b7a6}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Q\+Matrix}.
+
+
+
+Implemented in \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_r___q_a1c12666ee93dccbd4c9f03d62a405336}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+R\+\_\+Q}, \hyperlink{class_s_v_m289___b_f_s_1_1_o_n_e___c_l_a_s_s___q_a25c2adac12d6acb87decfb7db56a27a6}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_c___q_a5321cdf78a35cb30dda241d3aa61c1af}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+Q}.
+
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!k\+\_\+function@{k\+\_\+function}}
+\index{k\+\_\+function@{k\+\_\+function}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{k\+\_\+function(const Feature\+Vector \&x, const Feature\+Vector \&y, const svm\+\_\+parameter \&param, const Feature\+Num\+List \&sel\+Features)}{k_function(const FeatureVector &x, const FeatureVector &y, const svm_parameter &param, const FeatureNumList &selFeatures)}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::k\+\_\+function (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector} \&}]{x, }
+\item[{const {\bf Feature\+Vector} \&}]{y, }
+\item[{const {\bf svm\+\_\+parameter} \&}]{param, }
+\item[{const {\bf Feature\+Num\+List} \&}]{sel\+Features}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_aca1884c528ca8bb19f764e16a51a0acd}{}\label{class_s_v_m289___b_f_s_1_1_kernel_aca1884c528ca8bb19f764e16a51a0acd}
+
+
+\hyperlink{class_s_v_m289___b_f_s_1_1_kernel}{Kernel} evaluation. 
+
+The static method k\+\_\+function is for doing single kernel evaluation the constructor of \hyperlink{class_s_v_m289___b_f_s_1_1_kernel}{Kernel} prepares to calculate the l$\ast$l kernel matrix the member function get\+\_\+Q is for getting one column from the Q Matrix 
+
+Definition at line 1092 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::coef0, S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::degree, Dot\+Static(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::gamma, S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+parameter\+::kernel\+\_\+type, S\+V\+M289\+\_\+\+B\+F\+S\+::\+L\+I\+N\+E\+AR, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Sel\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+P\+O\+LY, S\+V\+M289\+\_\+\+B\+F\+S\+::powi(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+P\+R\+E\+C\+O\+M\+P\+U\+T\+ED, S\+V\+M289\+\_\+\+B\+F\+S\+::\+R\+BF, and S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+I\+G\+M\+O\+ID.
+
+
+\begin{DoxyCode}
+1097 \{
+1098   \textcolor{keywordflow}{switch}  (param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a0855dd528ea40f3bb15d9de18c87a974}{kernel\_type})
+1099   \{
+1100     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6daf8a1f240b55fde36b51b3b778b9707d1}{LINEAR}:
+1101       \textcolor{keywordflow}{return} \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}{DotStatic}(x, y, selFeatures);
+1102 
+1103     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6dab74c84d37477dff28b72b133217cc5e7}{POLY}:
+1104       \textcolor{keywordflow}{return} \hyperlink{namespace_s_v_m289___b_f_s_ac4f2bb7782ed887ee0589d5bcbdd731d}{powi} (param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a88d6cddc31287ac0483272ff3fb9ea45}{gamma} * \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}{DotStatic} (x, y, selFeatures) + param.
+      \hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_af0131a9fb06c4e9a071e51685632ad91}{coef0},param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_af2526e310e1a21859ad4aaa9de7bd6ce}{degree});
+1105 
+1106     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da7d4cc9bb6c3d975e52b4240ab829f274}{RBF}:
+1107     \{
+1108       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numSelFeatures = selFeatures.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a1c1a2cb406970e8841e67cbc89c4871c}{NumSelFeatures} ();
+1109       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  fn  = 0;
+1110       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx = 0;
+1111       \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  fvX = x.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+1112       \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  fvY = y.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+1113 
+1114       \textcolor{keywordtype}{double} sum = 0;
+1115       \textcolor{keywordflow}{for}  (idx = 0;  idx < numSelFeatures;  idx++)
+1116       \{
+1117         fn = selFeatures[idx];
+1118         \textcolor{keywordtype}{double} d = fvX[fn] - fvY[fn];
+1119         sum += d * d;
+1120       \}
+1121       
+1122       \textcolor{keywordflow}{return} exp (-param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a88d6cddc31287ac0483272ff3fb9ea45}{gamma} * sum);
+1123     \}
+1124 
+1125     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da37e49065854fb11a46e1faf3650faf1f}{SIGMOID}:
+1126       \textcolor{keywordflow}{return} tanh(param.\hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_a88d6cddc31287ac0483272ff3fb9ea45}{gamma} * \hyperlink{class_s_v_m289___b_f_s_1_1_kernel_ab1c134f73d41dc218d34e7c2f956a1ba}{DotStatic} (x, y, selFeatures) + param.
+      \hyperlink{struct_s_v_m289___b_f_s_1_1svm__parameter_af0131a9fb06c4e9a071e51685632ad91}{coef0});
+1127 
+1128     \textcolor{keywordflow}{case} \hyperlink{namespace_s_v_m289___b_f_s_aad17f5250658b3fe42ba842df2ef2c6da1ebdedc07ee45f15e4cdad22dd1fd4d5}{PRECOMPUTED}:  \textcolor{comment}{//x: test (validation), y: SV}
+1129       \{
+1130         cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1131              << \textcolor{stringliteral}{"SVM289\_BFS::Kernel::k\_function   ***ERROR*** does not support 'PRECOMPUTED'."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1132              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1133         \textcolor{keywordflow}{return} 0;
+1134       \}
+1135 
+1136     \textcolor{keywordflow}{default}:
+1137       \textcolor{keywordflow}{return} 0;  \textcolor{comment}{// Unreachable }
+1138   \}
+1139 \}  \textcolor{comment}{/* k\_function */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!swap\+\_\+index@{swap\+\_\+index}}
+\index{swap\+\_\+index@{swap\+\_\+index}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{swap\+\_\+index(kkint32 i, kkint32 j)}{swap_index(kkint32 i, kkint32 j)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::swap\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i, }
+\item[{{\bf kkint32}}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_a40e0edd7d2e5f3faef5a6c31f05ca1b2}{}\label{class_s_v_m289___b_f_s_1_1_kernel_a40e0edd7d2e5f3faef5a6c31f05ca1b2}
+
+
+Implements \hyperlink{class_s_v_m289___b_f_s_1_1_q_matrix_a49485150269598921a3a53bae3158c30}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Q\+Matrix}.
+
+
+
+Reimplemented in \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_r___q_af59859cc6164180ac249b6e01ff309a7}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+R\+\_\+Q}, \hyperlink{class_s_v_m289___b_f_s_1_1_o_n_e___c_l_a_s_s___q_ab35df03535908bed2a005d9bbf6d427a}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+Q}, and \hyperlink{class_s_v_m289___b_f_s_1_1_s_v_c___q_a4ff1abb91d8345093e6e66c01a09bb33}{S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+Q}.
+
+
+
+Definition at line 878 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+Referenced by S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+\+Q\+::swap\+\_\+index(), and S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q\+::swap\+\_\+index().
+
+
+\begin{DoxyCode}
+879   \{
+880     \textcolor{comment}{//swap (x[i], x[j]);}
+881     x->\hyperlink{class_k_k_b_1_1_k_k_queue_a7a848286a5d2ddd9b0d320557a458f66}{SwapIndexes} (i, j);
+882     \textcolor{keywordflow}{if}  (x\_square) 
+883       \hyperlink{namespace_s_v_m289___b_f_s_ab3100b6a2a7917c5fb6ef6aae0af496f}{swap} (x\_square[i], x\_square[j]);
+884   \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}!kernel\+\_\+function@{kernel\+\_\+function}}
+\index{kernel\+\_\+function@{kernel\+\_\+function}!S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel@{S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel}}
+\subsubsection[{\texorpdfstring{kernel\+\_\+function}{kernel_function}}]{\setlength{\rightskip}{0pt plus 5cm}double(Kernel\+::$\ast$ S\+V\+M289\+\_\+\+B\+F\+S\+::\+Kernel\+::kernel\+\_\+function) ({\bf kkint32} i, {\bf kkint32} j) const \hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}{}\label{class_s_v_m289___b_f_s_1_1_kernel_a53bab2e9f1cf2a9c8ade1e80237cda65}
+
+
+Definition at line 887 of file svm289\+\_\+\+B\+F\+S.\+cpp.
+
+
+
+Referenced by S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+\+Q\+::get\+\_\+\+Q(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q\+::get\+\_\+\+Q(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+R\+\_\+\+Q\+::get\+\_\+\+Q(), Kernel(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q(), S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+C\+\_\+\+Q\+::\+S\+V\+C\+\_\+\+Q(), and S\+V\+M289\+\_\+\+B\+F\+S\+::\+S\+V\+R\+\_\+\+Q\+::\+S\+V\+R\+\_\+\+Q().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm289___b_f_s_8cpp}{svm289\+\_\+\+B\+F\+S.\+cpp}\end{DoxyCompactItemize}

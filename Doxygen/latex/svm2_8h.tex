@@ -1,0 +1,119 @@
+\hypertarget{svm2_8h}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/svm2.h File Reference}
+\label{svm2_8h}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/svm2.\+h@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/svm2.\+h}}
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+M\+L\+L\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Num\+List.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Vector.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}
+\item 
+struct \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter}
+\item 
+struct \hyperlink{struct_s_v_m289___m_f_s_1_1svm__problem}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+problem}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_s_v_m289___m_f_s}{S\+V\+M289\+\_\+\+M\+FS}
+\begin{DoxyCompactList}\small\item\em Namespce used to wrap implementation of lib\+S\+VM version 2.\+89. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{svm2_8h_ac7f5361b69ddd196a885f142b3c1d261}{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}~289
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef float \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Qfloat}
+\item 
+typedef signed char \hyperlink{namespace_s_v_m289___m_f_s_a27545e8471784d831870feacd3e831ff}{S\+V\+M289\+\_\+\+M\+F\+S\+::schar}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_xml_element_template}{Xml\+Element\+Template}$<$ Svm\+\_\+\+Model $>$ \hyperlink{namespace_s_v_m289___m_f_s_a4d0f861b3add61d2800b4dfbc4150186}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Xml\+Element\+Svm\+\_\+\+Model}
+\item 
+typedef Xml\+Element\+Svm\+\_\+\+Model $\ast$ \hyperlink{namespace_s_v_m289___m_f_s_ae91ce5ddb69b689aabd2a9b356603b49}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Xml\+Element\+Svm\+\_\+\+Model\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type} \{ \\*
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a5670820806847f66240b7d2af4bea9b6}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+Kernel\+\_\+\+N\+U\+LL}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29aaac544aacc3615aada24897a215f5046}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+L\+I\+N\+E\+AR}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a711f44effcbd8619148b829b6aa2ed4f}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+P\+O\+LY}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a745b490764f14c1bbcb73987f0885a37}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+R\+BF}, 
+\\*
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29ab299f45b5de2a8f7c45192590290742b}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+S\+I\+G\+M\+O\+ID}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a7357b64ad4590cd3fd5f9eb934f58e67}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+::\+P\+R\+E\+C\+O\+M\+P\+U\+T\+ED}
+ \}
+\item 
+enum \hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type} \{ \\*
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aa6bb560c86a8cbe6ebb4904b16c9c3861}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+S\+V\+M\+\_\+\+N\+U\+LL}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aa87e006eda383b384698dcae5a836951a}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+C\+\_\+\+S\+VC}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aa675f4e0989ded8312f4219b09dceb508}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+N\+U\+\_\+\+S\+VC}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aa7dd72415f425dc4258e6ab9b7a72b34b}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+O\+N\+E\+\_\+\+C\+L\+A\+SS}, 
+\\*
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aa9897563968940eea8a211d616ada0cfb}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+E\+P\+S\+I\+L\+O\+N\+\_\+\+S\+VR}, 
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72aac6ca79ef961e189289fc39c8d344cd91}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+::\+N\+U\+\_\+\+S\+VR}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class S , class T $>$ }\\void \hyperlink{namespace_s_v_m289___m_f_s_a24fe982127a2481d42534c0b399fb4e8}{S\+V\+M289\+\_\+\+M\+F\+S\+::clone} (T $\ast$\&dst, S $\ast$src, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} n)
+\item 
+\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{Kernel\+\_\+\+Type} \hyperlink{namespace_s_v_m289___m_f_s_af159fcbaa5a7d27c95f0d0e04da90d5e}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+\_\+\+From\+Str} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} s)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_s_v_m289___m_f_s_acb87b87039ae2f543109394ca6cecdef}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+\_\+\+To\+Str} (\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{Kernel\+\_\+\+Type} kernel\+Type)
+\item 
+double \hyperlink{namespace_s_v_m289___m_f_s_ac9cc81b09c9e5320dd937f9eb86f00b2}{S\+V\+M289\+\_\+\+M\+F\+S\+::powi} (double base, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} times)
+\item 
+const char $\ast$ \hyperlink{namespace_s_v_m289___m_f_s_a4a8f1039bd9cd93b326ce38f1d8d2576}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+check\+\_\+parameter} (const struct svm\+\_\+problem $\ast$prob, const struct svm\+\_\+parameter $\ast$param)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_s_v_m289___m_f_s_a17db0ee9e93b4b46b13442421ce4eb95}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+check\+\_\+probability\+\_\+model} (const struct Svm\+\_\+\+Model $\ast$model)
+\item 
+void \hyperlink{namespace_s_v_m289___m_f_s_ae8561fd664b5cc379197632fee9b19f8}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+destroy\+\_\+model} (struct \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} $\ast$\&model)
+\item 
+void \hyperlink{namespace_s_v_m289___m_f_s_a45b966eee48191c9f06603638dfde3fa}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+destroy\+\_\+param} (struct \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{svm\+\_\+parameter} $\ast$\&param)
+\item 
+void \hyperlink{namespace_s_v_m289___m_f_s_a59a68fd9d17140c9ad4f083cdbffcd6d}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+get\+\_\+labels} (const struct Svm\+\_\+\+Model $\ast$model, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$label)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_s_v_m289___m_f_s_af5e4bed2c567aa1e5f8b0cd3cc79d43f}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+get\+\_\+nr\+\_\+class} (const struct Svm\+\_\+\+Model $\ast$model)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_s_v_m289___m_f_s_a79c5ffa4a73db5bfa5ce8764b645b9d7}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+get\+\_\+svm\+\_\+type} (const struct Svm\+\_\+\+Model $\ast$model)
+\item 
+double \hyperlink{namespace_s_v_m289___m_f_s_a73e59fb264805cfdf55934e2b29d9ed1}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+get\+\_\+svr\+\_\+probability} (const struct Svm\+\_\+\+Model $\ast$model)
+\item 
+double \hyperlink{namespace_s_v_m289___m_f_s_a136a98397b8b552cb5ddcc8691cb7dd1}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict} (const struct Svm\+\_\+\+Model $\ast$model, const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&x)
+\item 
+double \hyperlink{namespace_s_v_m289___m_f_s_ac0623d29bd02989f751e50d1cb3c8855}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} $\ast$model, const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&x, double $\ast$prob\+\_\+estimates, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$votes)
+\item 
+void \hyperlink{namespace_s_v_m289___m_f_s_a669dd565b35133cf6dfcc6e8614c2aa5}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values} (const \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} $\ast$model, const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&x, double $\ast$dec\+\_\+values)
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} $\ast$ \hyperlink{namespace_s_v_m289___m_f_s_a43df769c212177853bd5e2c8daed723b}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train} (const \hyperlink{struct_s_v_m289___m_f_s_1_1svm__problem}{svm\+\_\+problem} \&prob, const \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{svm\+\_\+parameter} \&param, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M\+\_\+\+Type} \hyperlink{namespace_s_v_m289___m_f_s_ab3335386b366f4ff28920aa6e6d44598}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+\_\+\+From\+Str} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} s)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_s_v_m289___m_f_s_a5ad9e7545ab923f8b12253f258b012db}{S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+\_\+\+To\+Str} (\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M\+\_\+\+Type} svm\+Type)
+\item 
+{\footnotesize template$<$class T $>$ }\\void \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{S\+V\+M289\+\_\+\+M\+F\+S\+::swap} (T \&x, T \&y)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+kkint32 \hyperlink{namespace_s_v_m289___m_f_s_afdc01801816d6a5b3d166a66117c10d3}{S\+V\+M289\+\_\+\+M\+F\+S\+::libsvm\+\_\+version}
+\item 
+void($\ast$ \hyperlink{namespace_s_v_m289___m_f_s_a47187ad3b94392a15a5bea09b45b45f4}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+print\+\_\+string} )(const char $\ast$) = \&\hyperlink{svm289___b_f_s_8cpp_a4edee28127eebfbcdab94b75c57341c5}{print\+\_\+string\+\_\+stdout}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{svm2.\+h@{svm2.\+h}!L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON@{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}}
+\index{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON@{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}!svm2.\+h@{svm2.\+h}}
+\subsubsection[{\texorpdfstring{L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON}{LIBSVM_VERSION}}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\+I\+B\+S\+V\+M\+\_\+\+V\+E\+R\+S\+I\+ON~289}\hypertarget{svm2_8h_ac7f5361b69ddd196a885f142b3c1d261}{}\label{svm2_8h_ac7f5361b69ddd196a885f142b3c1d261}
+
+
+Definition at line 8 of file svm2.\+h.
+

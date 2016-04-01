@@ -1,0 +1,1624 @@
+\hypertarget{class_k_k_b_1_1_bmp_image}{}\section{K\+KB\+:\+:Bmp\+Image Class Reference}
+\label{class_k_k_b_1_1_bmp_image}\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+
+
+Used to encode and decode B\+MP Images.  
+
+
+
+
+{\ttfamily \#include $<$B\+M\+P\+Image.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_bmp_image_1_1_bmp1_bit_rec}{Bmp1\+Bit\+Rec}
+\item 
+struct \hyperlink{struct_bmp_image_1_1_bmp4_bit_recs}{Bmp4\+Bit\+Recs}
+\item 
+struct \hyperlink{struct_bmp_image_1_1_b_m_p__24_bit_pixel}{B\+M\+P\+\_\+24\+Bit\+Pixel}
+\item 
+class \hyperlink{class_bmp_image_1_1_coded_pixels}{Coded\+Pixels}
+\begin{DoxyCompactList}\small\item\em This object is used to help encode the data stored in B\+M\+P\+Image\+::image into 8 or 4 bit compressed formats used by B\+MP files. $\ast$. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_bmp_image_1_1_code_pair}{Code\+Pair}
+\item 
+class \hyperlink{class_bmp_image_1_1_pallet_builder}{Pallet\+Builder}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{struct_bmp_image_1_1_code_pair}{Code\+Pair} $\ast$ \hyperlink{class_k_k_b_1_1_bmp_image_ac6ba8d374fb0f84c2953aa1b516da34c}{Code\+Pair\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_bmp_image_abe1aec4ebeffe7bc960a85868310fe0f}{Bmp\+Image} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+height, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+width, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Colors)
+\item 
+\hyperlink{class_k_k_b_1_1_bmp_image_a5d34118309b6a7d06c5ce368be455f3e}{Bmp\+Image} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, bool \&successful)
+\begin{DoxyCompactList}\small\item\em Constructs a B\+MP image from the file specified by \textquotesingle{}\+\_\+file\+Name\textquotesingle{}. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bmp_image_a4909a1187900404c57b62ea87f164e57}{Bmp\+Image} (const \hyperlink{class_k_k_b_1_1_raster}{Raster} \&raster)
+\begin{DoxyCompactList}\small\item\em Constructs a B\+M\+P\+Image instance from a \hyperlink{class_k_k_b_1_1_raster}{Raster} image; this is one way to save a \hyperlink{class_k_k_b_1_1_raster}{Raster} image to disk. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_bmp_image_a6e919d5e31884577cb4f944217673559}{$\sim$\+Bmp\+Image} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_ae55d99adbcfef1ce787b0f03353a2493}{Add\+Pixel} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} row, \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} col, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} pix\+Value)
+\item 
+bool \hyperlink{class_k_k_b_1_1_bmp_image_a84b952d5e45b69cc76f1b0f548ac6aac}{Are\+There\+Edge\+Pixels} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a06b9cd777bb3731a4bc2b9fc7832f6b9}{Binarize} ()
+\item 
+const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_k_k_b_1_1_bmp_image_a8b6bd225b80088718f631a7646f0d7d5}{Blue\+Row} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row) const 
+\begin{DoxyCompactList}\small\item\em Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Blue Channel. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a114cdc4a156e8a1425afd8d16bf30cfe}{Clear\+Image} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_bmp_image_ada730c1253be818b247e711665b0114b}{Color} () const 
+\begin{DoxyCompactList}\small\item\em Returns true if a Color image. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a355c29ac18b346f1ded3adaa95b20bcb}{Double\+Size} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_af3a143d6c740df57a5b79945d027b443}{Down\+Size} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a182bbf22f3eb361e669073617172d2a7}{Eliminate\+Vertical\+Lines} ()
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_bmp_image_a59ed1f99c1554aa3b12b3a90195d9b51}{File\+Name} () const 
+\item 
+bool \hyperlink{class_k_k_b_1_1_bmp_image_a5b290fe260379e4665b5d5e2261175cf}{Four\+Bit\+Uncompressed} ()
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{Height} () const 
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$$\ast$ \hyperlink{class_k_k_b_1_1_bmp_image_a122d01d6b6996cd9b0df01e856746234}{Image} ()
+\begin{DoxyCompactList}\small\item\em Returns back two dimension matrix of image; if color it will be the green channel. \end{DoxyCompactList}\item 
+const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_k_k_b_1_1_bmp_image_ab0d6fac104e1b68ac72e4c7b57dc5ead}{Image\+Row} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row) const 
+\begin{DoxyCompactList}\small\item\em Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Green Channel. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_ac00d5d64ef0ed8db88445ccea0e94048}{Initialize\+Fields} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+height, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+width)
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{class_k_k_b_1_1_bmp_image_a8439bd1ef5dc0298a9a1a67028cf0276}{Max\+Pix\+Val} () const 
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \& \hyperlink{class_k_k_b_1_1_bmp_image_a1531bd3f74bbec5cc0df9a00d9c5b754}{Pixel} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col)
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a18f534b5dca835a55b3d9d57fa70b620}{Print} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a54e61e820363b542ef0564d7a409d76b}{Re\+Allocate\+For\+Bigger\+Screen} ()
+\begin{DoxyCompactList}\small\item\em Used to expand dimensions of image by 6 pixels so as to make sure that no image is along the edge. \end{DoxyCompactList}\item 
+const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$ \hyperlink{class_k_k_b_1_1_bmp_image_aa871576b403fb4bfa8a4e33a82c25549}{Red\+Row} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row) const 
+\begin{DoxyCompactList}\small\item\em Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Red Channel. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a342f7a1df5ee3048c7f98e6e67b544de}{Save} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name)
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_a12c3d85cc2b31af13acd7467680c50ce}{Save\+Grayscale\+Inverted4\+Bit} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name)
+\begin{DoxyCompactList}\small\item\em Saves image using 4 bit compressed gray-\/scale where Background = 255 and foreground = 0. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_ae778e224d47083032112f66f33587ba6}{Save\+Grayscale\+Inverted8\+Bit} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name)
+\begin{DoxyCompactList}\small\item\em Saves image using compressed gray-\/scale where Background = 255 and foreground = 0. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_ae26fb37aebe1bd85a576330479a05742}{Set16\+Colors} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_abb977b9e38c835db3971ef00092f3204}{Set256\+Colors} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_abd39b778ffac08f2d64179a2897b40ff}{Set\+Palette\+Entry} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} pallet\+Index, const \hyperlink{class_k_k_b_1_1_pixel_value}{Pixel\+Value} \&pix\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_bmp_image_aee0626356433f630910bc5d4259cd2eb}{Set\+Pixel\+Value} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} pixel)
+\begin{DoxyCompactList}\small\item\em Will set the pixel value of the specified row and col to \textquotesingle{}pixel\textquotesingle{}. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} \hyperlink{class_k_k_b_1_1_bmp_image_a843e1821a1191100b03da9258e77e356}{Width} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to encode and decode B\+MP Images. 
+
+Purpose of this class it to facilitate the loading and saving of B\+MP Image files. Not all formats are supported, but the compressed version is, which most others don\textquotesingle{}t support. As a result this class will write considerably smaller B\+MP files than other utilities that I have tried. This results in faster writing images due to less disk-\/io.
+
+This object was originally designed to work in conjunction with Image Extraction. It requires no other libraries and can read and write B\+MP files.
+
+When Image\+Extraction creates a Bmp file it will provide pixel values between 0 and 7, where 0 is the background and 7 is the foreground. This is a result of the S\+I\+P\+P\+ER 2 and 3 Formats and may change in the future. When saving the B\+MP file B\+M\+P\+Image will map these values through the palette to 0=255, 1=219, 2=182, 3=146, 4=109, 5=73, 6=36, 7=0 resulting in a white background and a Black foreground. 
+
+Definition at line 49 of file B\+M\+P\+Image.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Code\+Pair\+Ptr@{Code\+Pair\+Ptr}}
+\index{Code\+Pair\+Ptr@{Code\+Pair\+Ptr}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Code\+Pair\+Ptr}{CodePairPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Code\+Pair}$\ast$ {\bf K\+K\+B\+::\+Bmp\+Image\+::\+Code\+Pair\+Ptr}}\hypertarget{class_k_k_b_1_1_bmp_image_ac6ba8d374fb0f84c2953aa1b516da34c}{}\label{class_k_k_b_1_1_bmp_image_ac6ba8d374fb0f84c2953aa1b516da34c}
+
+
+Definition at line 214 of file B\+M\+P\+Image.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Bmp\+Image@{Bmp\+Image}}
+\index{Bmp\+Image@{Bmp\+Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Bmp\+Image(kkint32 \+\_\+height, kkint32 \+\_\+width, kkint32 \+\_\+num\+Of\+Colors)}{BmpImage(kkint32 _height, kkint32 _width, kkint32 _numOfColors)}}]{\setlength{\rightskip}{0pt plus 5cm}Bmp\+Image\+::\+Bmp\+Image (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+height, }
+\item[{{\bf kkint32}}]{\+\_\+width, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Colors}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_abe1aec4ebeffe7bc960a85868310fe0f}{}\label{class_k_k_b_1_1_bmp_image_abe1aec4ebeffe7bc960a85868310fe0f}
+
+
+Definition at line 687 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References Initialize\+Fields(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+690                     :
+691    
+692    color       (\textcolor{keyword}{false}),
+693    fileName    (),
+694    red         (NULL),
+695    image       (NULL),
+696    blue        (NULL),
+697    numOfColors (\_numOfColors),
+698    palette     (NULL)
+699 \{
+700   \hyperlink{class_k_k_b_1_1_bmp_image_ac00d5d64ef0ed8db88445ccea0e94048}{InitializeFields} (\_height, \_width);
+701 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Bmp\+Image@{Bmp\+Image}}
+\index{Bmp\+Image@{Bmp\+Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Bmp\+Image(const K\+K\+Str \&\+\_\+file\+Name, bool \&successful)}{BmpImage(const KKStr &_fileName, bool &successful)}}]{\setlength{\rightskip}{0pt plus 5cm}Bmp\+Image\+::\+Bmp\+Image (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{bool \&}]{successful}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a5d34118309b6a7d06c5ce368be455f3e}{}\label{class_k_k_b_1_1_bmp_image_a5d34118309b6a7d06c5ce368be455f3e}
+
+
+Constructs a B\+MP image from the file specified by \textquotesingle{}\+\_\+file\+Name\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file to load B\+MP image from. \\
+\hline
+\mbox{\tt out}  & {\em successful} & Returns true if file successful in loading. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 449 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::os\+F\+O\+P\+E\+N(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Read\+Image().
+
+
+\begin{DoxyCode}
+451                     :
+452 
+453   color          (\textcolor{keyword}{false}),
+454   fileName       (\_fileName),
+455   red            (NULL),
+456   image          (NULL),
+457   blue           (NULL),
+458   numOfColors    (16),
+459   palette        (NULL),
+460   paletteEntries (0)
+461 
+462 \{
+463   FILE*  inFile = \hyperlink{namespace_k_k_b_abf4050d2916ded8349dafadc80f0ecd1}{osFOPEN} (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), \textcolor{stringliteral}{"rb"});
+464   \textcolor{keywordflow}{if}  (!inFile)
+465   \{
+466     successfull = \textcolor{keyword}{false};
+467     \textcolor{keywordflow}{return};
+468   \}
+469 
+470   successfull = \textcolor{keyword}{true};
+471 
+472   \textcolor{keywordtype}{size\_t}   x;
+473   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y;
+474 
+475   x = fread (&hdr, \textcolor{keyword}{sizeof} (hdr), 1, inFile);
+476   \textcolor{keywordflow}{if}  (x <= 0)
+477   \{
+478     successfull = \textcolor{keyword}{false};
+479     fclose (inFile);
+480     \textcolor{keywordflow}{return};
+481   \}
+482 
+483   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  buff[4];
+484   memcpy (buff, &hdr, \textcolor{keyword}{sizeof} (buff));
+485   \textcolor{keywordflow}{if}  ((buff[0] == \textcolor{charliteral}{'B'})  &&  (buff[1] == \textcolor{charliteral}{'M'}))
+486   \{
+487     \textcolor{comment}{// We have a Bit Map file.}
+488   \}
+489   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((buff[0] == 137)  &&  (buff[1] == \textcolor{charliteral}{'P'})  &&  (buff[2] == \textcolor{charliteral}{'N'})  &&  (buff[3] == \textcolor{charliteral}{'G'}))
+490   \{
+491     \textcolor{comment}{// We are looking at a PNG (Portable Network Graphics) file.}
+492     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+493          << \textcolor{stringliteral}{"File["} << \_fileName << \textcolor{stringliteral}{"]  is a PNG formatted file."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+494          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+495     successfull = \textcolor{keyword}{false};
+496     fclose (inFile);
+497     \textcolor{keywordflow}{return};
+498   \}
+499   \textcolor{keywordflow}{else}
+500   \{
+501     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+502          << \textcolor{stringliteral}{"File["} << \_fileName << \textcolor{stringliteral}{"]  is of a unknown file format."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+503          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+504     successfull = \textcolor{keyword}{false};
+505     fclose (inFile);
+506     \textcolor{keywordflow}{return};
+507   \}
+508 
+509 
+510   x = fread (&bmh, \textcolor{keyword}{sizeof} (bmh), 1, inFile);
+511   \textcolor{keywordflow}{if}  (x <= 0)
+512   \{
+513     successfull = \textcolor{keyword}{false};
+514     fclose (inFile);
+515     \textcolor{keywordflow}{return};
+516   \}
+517 
+518   \textcolor{keywordflow}{if}  ((bmh.biCompression == BI\_RGB)  &&  (bmh.biBitCount == 24))
+519   \{
+520     numOfColors = 16777216;
+521     color = \textcolor{keyword}{true};
+522     \textcolor{keyword}{delete}  palette;
+523     palette = NULL;
+524     Load24BitColor (inFile, successfull);
+525     fclose (inFile);
+526     \textcolor{keywordflow}{return};
+527   \}
+528 
+529   \textcolor{keywordflow}{if}  ((bmh.biCompression == BI\_RGB)  &&  (bmh.biBitCount == 8))
+530   \{
+531     Load8BitColor (inFile, successfull);
+532     fclose (inFile);
+533     \textcolor{keywordflow}{return};
+534   \}
+535 
+536   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((bmh.biCompression == BI\_RGB)  ||  (bmh.biCompression == BI\_RLE4))
+537     numOfColors = 16;
+538 
+539   \textcolor{keywordflow}{else}  \textcolor{keywordflow}{if}  (bmh.biBitCount == 1)
+540     numOfColors = 16;
+541 
+542   \textcolor{keywordflow}{else}
+543     numOfColors = 256;
+544 
+545 
+546   paletteEntries = BMIcolorArraySize (bmh);
+547   \textcolor{keywordflow}{if}  (paletteEntries < 0)
+548   \{
+549     successfull = \textcolor{keyword}{false};
+550     fclose (inFile);
+551     \textcolor{keywordflow}{return};
+552   \}
+553 
+554   \textcolor{keywordtype}{bool}  imageIsRevGrayscale = \textcolor{keyword}{false};
+555   \textcolor{keywordflow}{if}  (paletteEntries)
+556   \{
+557     palette =  \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+558     x = fread (palette, \textcolor{keyword}{sizeof} (RGBQUAD), paletteEntries, inFile);
+559     imageIsRevGrayscale = ReversedGrayscaleImage ();
+560   \}
+561   \textcolor{keywordflow}{else}
+562   \{
+563     numOfColors   = 256;
+564     paletteEntries = 256;
+565     palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+566     SetUp256BitPalette (palette);
+567   \}
+568 
+569   \textcolor{comment}{// Lets Build Palette Map}
+570   \textcolor{keywordflow}{for}  (x = 0; x < 256; x++)
+571     paletteMap[x] = 0;
+572 
+573   \textcolor{keywordflow}{if}  (numOfColors == 16)
+574   \{
+575     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
+576     \{
+577       \textcolor{keywordflow}{if}  (imageIsRevGrayscale)
+578         y = 255 - palette[palletIdx].rgbGreen;
+579       \textcolor{keywordflow}{else}
+580         y = palette[palletIdx].rgbGreen;
+581       \textcolor{keywordflow}{if}  (y < 0)  y = 0;  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (y > 255)  y = 255;
+582       paletteMap[palletIdx] = y;
+583     \}
+584   \}
+585   \textcolor{keywordflow}{else}
+586   \{
+587     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} palletIdx = 0; palletIdx < paletteEntries; palletIdx++)
+588     \{
+589       \textcolor{keywordflow}{if}  (imageIsRevGrayscale)
+590         y = 255 - palette[palletIdx].rgbGreen;
+591       \textcolor{keywordflow}{else}
+592         y = palette[palletIdx].rgbGreen;
+593       \textcolor{keywordflow}{if}  (y < 0)  y = 0;  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (y > 255)  y = 255;
+594       paletteMap[palletIdx] = y;
+595     \}
+596   \}
+597 
+598   \textcolor{keyword}{delete} palette;
+599   paletteEntries = 256;
+600   palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+601   SetUp256BitPalette (palette);
+602 
+603   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+604 
+605   image = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[bmh.biHeight];
+606   \textcolor{keywordflow}{for}  (row = 0; row < bmh.biHeight; row++)
+607   \{
+608     image[row] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[bmh.biWidth];
+609     memset (image[row], 0, bmh.biWidth);
+610   \}
+611 
+612   x = fseek (inFile, hdr.bfOffBits, SEEK\_SET);
+613 
+614   \textcolor{keywordflow}{if}  (bmh.biBitCount == 1)
+615   \{
+616     Load1BitColor (inFile, successfull);
+617   \}
+618 
+619   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biBitCount == 4)
+620   \{
+621     \textcolor{keywordflow}{if}  (bmh.biCompression == BI\_RGB)
+622     \{
+623       Load4BitColor (inFile, successfull);
+624     \}
+625 
+626     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biCompression == BI\_RLE4)
+627     \{
+628       Load4BitColorCompressed (inFile, successfull);
+629     \}
+630 
+631     \textcolor{keywordflow}{else}
+632     \{
+633       cerr << \textcolor{stringliteral}{"***ERROR***  Invalid Compression Mode["} << bmh.biCompression 
+634            << \textcolor{stringliteral}{"] Specified for 4 bit File["}
+635            << fileName << \textcolor{stringliteral}{"]."}
+636            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+637       successfull = \textcolor{keyword}{false};
+638       \textcolor{comment}{// WaitForEnter ();}
+639     \}
+640   \}
+641 
+642   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biBitCount == 8)
+643   \{
+644     \textcolor{keywordflow}{if}  (bmh.biCompression == BI\_RGB)
+645     \{
+646       Load8BitColor (inFile, successfull);
+647     \}
+648 
+649     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biCompression == BI\_RLE8)
+650     \{
+651       Load8BitColorCompressed (inFile, successfull);
+652     \}
+653 
+654     \textcolor{keywordflow}{else}
+655     \{
+656       cerr << \textcolor{stringliteral}{"***ERROR***  Invalid Compression Mode["} << bmh.biCompression 
+657            << \textcolor{stringliteral}{"] Specified for 8 bit File["}
+658            << fileName << \textcolor{stringliteral}{"]."}
+659            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+660       successfull = \textcolor{keyword}{false};
+661     \}
+662   \}
+663 
+664   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biBitCount == 16)
+665   \{
+666     cerr << \textcolor{stringliteral}{"***ERROR***  16 Bit Not Supported.  File["} << fileName << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+667     \textcolor{comment}{// WaitForEnter ();}
+668   \}
+669 
+670   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biBitCount == 24)
+671   \{
+672     cerr << \textcolor{stringliteral}{"***ERROR***  24 Bit Not Supported.  File["} << fileName << \textcolor{stringliteral}{"]."}  << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+673   \}
+674 
+675   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bmh.biBitCount == 32)
+676   \{
+677     cerr << \textcolor{stringliteral}{"***ERROR***  32 Bit Not Supported.  File["} << fileName << \textcolor{stringliteral}{"]."}  << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+678     \textcolor{comment}{// WaitForEnter ();}
+679   \}
+680 
+681   fclose (inFile);
+682 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Bmp\+Image@{Bmp\+Image}}
+\index{Bmp\+Image@{Bmp\+Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Bmp\+Image(const Raster \&raster)}{BmpImage(const Raster &raster)}}]{\setlength{\rightskip}{0pt plus 5cm}Bmp\+Image\+::\+Bmp\+Image (
+\begin{DoxyParamCaption}
+\item[{const {\bf Raster} \&}]{raster}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a4909a1187900404c57b62ea87f164e57}{}\label{class_k_k_b_1_1_bmp_image_a4909a1187900404c57b62ea87f164e57}
+
+
+Constructs a B\+M\+P\+Image instance from a \hyperlink{class_k_k_b_1_1_raster}{Raster} image; this is one way to save a \hyperlink{class_k_k_b_1_1_raster}{Raster} image to disk. 
+
+
+
+Definition at line 706 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Blue(), K\+K\+B\+::\+Raster\+::\+Color(), K\+K\+B\+::\+Raster\+::\+Height(), Initialize\+Fields(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+Raster\+::\+Red(), K\+K\+B\+::\+Raster\+::\+Rows(), and K\+K\+B\+::\+Raster\+::\+Width().
+
+
+
+Referenced by K\+K\+B\+::\+Save\+Image(), K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted4\+Bit(), and K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted8\+Bit().
+
+
+\begin{DoxyCode}
+706                                         :
+707   color   (\textcolor{keyword}{false}),
+708   red     (NULL),
+709   image   (NULL),
+710   blue    (NULL),
+711   palette (NULL)
+712 \{
+713   numOfColors = 256;  \textcolor{comment}{// kk 2005-03-10}
+714 
+715   color = raster.\hyperlink{class_k_k_b_1_1_raster_a644248f99009d64ac4b8fef4a22aff25}{Color} ();
+716 
+717   \hyperlink{class_k_k_b_1_1_bmp_image_ac00d5d64ef0ed8db88445ccea0e94048}{InitializeFields} (raster.\hyperlink{class_k_k_b_1_1_raster_af8d10d15697d5b92fb9595c48b529feb}{Height} (), raster.\hyperlink{class_k_k_b_1_1_raster_aa2780c0b7ae75b7b595f99329689c1f6}{Width} ());
+718   fileName = \textcolor{stringliteral}{""};
+719 
+720   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+721   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+722 
+723   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}** rasterData = raster.\hyperlink{class_k_k_b_1_1_raster_a2460989f656e5222d6074cd0ba85ed72}{Rows} ();
+724   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}** rasterRed  = raster.\hyperlink{class_k_k_b_1_1_raster_a337a5a064b27693eec6e380789680239}{Red} ();
+725   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}** rasterBlue = raster.\hyperlink{class_k_k_b_1_1_raster_ae289ec3ad3a27339cd30e9ac3b488004}{Blue} ();
+726 
+727   \textcolor{keywordflow}{for}  (row = 0; row < bmh.biHeight; row++)
+728   \{
+729     \textcolor{keywordflow}{for}  (col = 0; col < bmh.biWidth; col++)
+730     \{
+731       image[row][col] = rasterData[row][col];
+732       \textcolor{keywordflow}{if}  (color)
+733       \{
+734         red[row][col]  = rasterRed [row][col];
+735         blue[row][col] = rasterBlue[row][col];
+736       \}
+737     \}
+738   \}
+739 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!````~Bmp\+Image@{$\sim$\+Bmp\+Image}}
+\index{````~Bmp\+Image@{$\sim$\+Bmp\+Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{$\sim$\+Bmp\+Image()}{~BmpImage()}}]{\setlength{\rightskip}{0pt plus 5cm}Bmp\+Image\+::$\sim$\+Bmp\+Image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a6e919d5e31884577cb4f944217673559}{}\label{class_k_k_b_1_1_bmp_image_a6e919d5e31884577cb4f944217673559}
+
+
+Definition at line 743 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+744 \{
+745   CleanUpMemory ();
+746 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Add\+Pixel@{Add\+Pixel}}
+\index{Add\+Pixel@{Add\+Pixel}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Add\+Pixel(kkuint32 row, kkuint32 col, uchar pix\+Value)}{AddPixel(kkuint32 row, kkuint32 col, uchar pixValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Add\+Pixel (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{row, }
+\item[{{\bf kkuint32}}]{col, }
+\item[{{\bf uchar}}]{pix\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_ae55d99adbcfef1ce787b0f03353a2493}{}\label{class_k_k_b_1_1_bmp_image_ae55d99adbcfef1ce787b0f03353a2493}
+
+
+Definition at line 2630 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+2634 \{
+2635   image[row][col] = pixValue;
+2636 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Are\+There\+Edge\+Pixels@{Are\+There\+Edge\+Pixels}}
+\index{Are\+There\+Edge\+Pixels@{Are\+There\+Edge\+Pixels}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Are\+There\+Edge\+Pixels()}{AreThereEdgePixels()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Bmp\+Image\+::\+Are\+There\+Edge\+Pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a84b952d5e45b69cc76f1b0f548ac6aac}{}\label{class_k_k_b_1_1_bmp_image_a84b952d5e45b69cc76f1b0f548ac6aac}
+
+
+Definition at line 2004 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References Height(), and Width().
+
+
+\begin{DoxyCode}
+2005 \{
+2006   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+2007   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+2008 
+2009   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  height = \hyperlink{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{Height} ();
+2010   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  width  = \hyperlink{class_k_k_b_1_1_bmp_image_a843e1821a1191100b03da9258e77e356}{Width} ();
+2011 
+2012   \textcolor{keywordflow}{if}  (height < 6)
+2013     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+2014 
+2015   \textcolor{keywordflow}{if}  (width  < 6)
+2016     \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+2017 
+2018 
+2019   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  row0 = image[0];
+2020   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  row1 = image[1];
+2021   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  row2 = image[2];
+2022 
+2023   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  rowL0 = image[height - 3];
+2024   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  rowL1 = image[height - 2];
+2025   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  rowL2 = image[height - 1];
+2026 
+2027 
+2028   \textcolor{keywordflow}{for}  (col = 0;  col < width;  col++)
+2029   \{
+2030     \textcolor{keywordflow}{if}  ((row0[col] > 0)   ||
+2031          (row1[col] > 0)   ||
+2032          (row2[col] > 0)   ||
+2033          (rowL0[col] > 0)  ||
+2034          (rowL1[col] > 0)  ||
+2035          (rowL2[col] > 0)
+2036         )
+2037       \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+2038   \}
+2039 
+2040   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol0 = width - 3;
+2041   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol1 = width - 2;
+2042   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol2 = width - 1;
+2043 
+2044   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastRowToCheck = height - 3;
+2045 
+2046   \textcolor{keywordflow}{for}  (row = 3;  row < lastRowToCheck;  row++)
+2047   \{
+2048     \textcolor{keywordflow}{if}  ((image[row][0]        > 0)  ||
+2049          (image[row][1]        > 0)  ||
+2050          (image[row][2]        > 0)  ||
+2051          (image[row][lastCol0] > 0)  ||
+2052          (image[row][lastCol1] > 0)  ||
+2053          (image[row][lastCol2] > 0)
+2054         )
+2055       \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+2056   \}
+2057 
+2058   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+2059 \}  \textcolor{comment}{/* EdgePixels */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Binarize@{Binarize}}
+\index{Binarize@{Binarize}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Binarize()}{Binarize()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Binarize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a06b9cd777bb3731a4bc2b9fc7832f6b9}{}\label{class_k_k_b_1_1_bmp_image_a06b9cd777bb3731a4bc2b9fc7832f6b9}
+
+
+Definition at line 2189 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+2190 \{
+2191   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row;
+2192   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col;
+2193 
+2194   \textcolor{keywordflow}{for}  (row = 0; row < bmh.biHeight; row++)
+2195   \{
+2196     \textcolor{keywordflow}{for}  (col = 0; col < bmh.biWidth; col++)
+2197     \{
+2198       \textcolor{keywordflow}{if}  (image[row][col] < 7)
+2199         image[row][col] = 0;
+2200     \}
+2201   \}
+2202 \}  \textcolor{comment}{/*  Binarize  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Blue\+Row@{Blue\+Row}}
+\index{Blue\+Row@{Blue\+Row}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Blue\+Row(kkint32 row) const }{BlueRow(kkint32 row) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf uchar} $\ast$ Bmp\+Image\+::\+Blue\+Row (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bmp_image_a8b6bd225b80088718f631a7646f0d7d5}{}\label{class_k_k_b_1_1_bmp_image_a8b6bd225b80088718f631a7646f0d7d5}
+
+
+Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Blue Channel. 
+
+
+
+Definition at line 2652 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References Height(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), and K\+K\+B\+::\+Str\+From\+Int32().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Raster().
+
+
+\begin{DoxyCode}
+2653 \{
+2654   \textcolor{keywordflow}{if}  (blue == NULL)
+2655     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"BmpImage::BlueRow  'blue' channel is set to NULL."});
+2656   \textcolor{keywordflow}{if}  ((row < 0)  ||  (row >= (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{Height} ()))
+2657   \{
+2658     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2659          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2660          << \textcolor{stringliteral}{"BmpImage::BlueRow   *** ERROR ***  Invalid Row["} << row << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2661          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2662     \textcolor{comment}{//osWaitForEnter ();}
+2663     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"BmpImage::BlueRow  row:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row) + \textcolor{stringliteral}{" is out of
+       range where Height:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row));
+2664   \}
+2665 
+2666   \textcolor{keywordflow}{return}  blue[row];
+2667 \}  \textcolor{comment}{/* BlueRow */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Clear\+Image@{Clear\+Image}}
+\index{Clear\+Image@{Clear\+Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Clear\+Image()}{ClearImage()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Clear\+Image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a114cdc4a156e8a1425afd8d16bf30cfe}{}\label{class_k_k_b_1_1_bmp_image_a114cdc4a156e8a1425afd8d16bf30cfe}
+
+
+Definition at line 2640 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+2641 \{
+2642     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row;
+2643     \textcolor{keywordflow}{for}  (row = 0; row < bmh.biHeight; row++)
+2644     \{
+2645         memset (image[row], 0, bmh.biWidth );
+2646     \}
+2647 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Color@{Color}}
+\index{Color@{Color}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Color() const }{Color() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+Bmp\+Image\+::\+Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_ada730c1253be818b247e711665b0114b}{}\label{class_k_k_b_1_1_bmp_image_ada730c1253be818b247e711665b0114b}
+
+
+Returns true if a Color image. 
+
+
+
+Definition at line 118 of file B\+M\+P\+Image.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Raster().
+
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Double\+Size@{Double\+Size}}
+\index{Double\+Size@{Double\+Size}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Double\+Size()}{DoubleSize()}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Bmp\+Image\+::\+Double\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a355c29ac18b346f1ded3adaa95b20bcb}{}\label{class_k_k_b_1_1_bmp_image_a355c29ac18b346f1ded3adaa95b20bcb}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Down\+Size@{Down\+Size}}
+\index{Down\+Size@{Down\+Size}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Down\+Size()}{DownSize()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Down\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_af3a143d6c740df57a5b79945d027b443}{}\label{class_k_k_b_1_1_bmp_image_af3a143d6c740df57a5b79945d027b443}
+
+
+Definition at line 1917 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1918 \{
+1919   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newCol;
+1920   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newHeight = bmh.biHeight / 2;
+1921   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newWidth  = bmh.biWidth  / 2;
+1922   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newRow;
+1923 
+1924   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  oldCol;
+1925   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  oldRow;
+1926 
+1927   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}**  newImage = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[newHeight];
+1928   \textcolor{keywordflow}{for}  (newRow = 0; newRow < newHeight; newRow++)
+1929   \{
+1930     oldRow = newRow * 2;
+1931 
+1932     newImage[newRow] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newWidth];
+1933    
+1934     \textcolor{keywordflow}{for}  (newCol = 0; newCol < newWidth;  newCol++)
+1935     \{
+1936       oldCol = newCol * 2;
+1937       newImage[newRow][newCol] = image[oldRow][oldCol];
+1938     \}
+1939   \}
+1940 
+1941   \textcolor{keywordflow}{for}  (oldRow = 0; oldRow < bmh.biHeight; oldRow++)
+1942   \{
+1943     \textcolor{keyword}{delete}  image[oldRow];
+1944     image[oldRow] = NULL;
+1945   \}
+1946 
+1947   \textcolor{keyword}{delete}  image;
+1948 
+1949   image = newImage;
+1950 
+1951   bmh.biHeight = newHeight;
+1952   bmh.biWidth  = newWidth;
+1953 \}  \textcolor{comment}{/* DownSize */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Eliminate\+Vertical\+Lines@{Eliminate\+Vertical\+Lines}}
+\index{Eliminate\+Vertical\+Lines@{Eliminate\+Vertical\+Lines}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Eliminate\+Vertical\+Lines()}{EliminateVerticalLines()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Eliminate\+Vertical\+Lines (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a182bbf22f3eb361e669073617172d2a7}{}\label{class_k_k_b_1_1_bmp_image_a182bbf22f3eb361e669073617172d2a7}
+
+
+Definition at line 2063 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+2064 \{
+2065   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col = 0;
+2066   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = 0;
+2067   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+2068 
+2069 
+2070   \textcolor{keywordtype}{bool}* potVertLine = \textcolor{keyword}{new} \textcolor{keywordtype}{bool}[bmh.biWidth];
+2071   \textcolor{keywordtype}{bool}* pvl = potVertLine;
+2072 
+2073   \textcolor{keywordflow}{for}  (col = 0; col < bmh.biWidth; col++)
+2074   \{
+2075     *pvl = \textcolor{keyword}{true};
+2076     \textcolor{keywordflow}{for}  (row = 0; ((row < bmh.biHeight) && (*pvl));  row++)
+2077     \{
+2078       \textcolor{keywordflow}{if}  (image[row][col] == 7)
+2079         *pvl = \textcolor{keyword}{false};
+2080     \}
+2081     
+2082     pvl++;
+2083   \}
+2084 
+2085 
+2086   col = 0;
+2087 
+2088   \textcolor{keywordflow}{while}  (col < bmh.biWidth)
+2089   \{
+2090     \textcolor{keywordflow}{if}  (potVertLine[col])  
+2091     \{
+2092       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  firstCol = col;
+2093       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol  = col;
+2094 
+2095       \textcolor{keywordflow}{if}  (col < (bmh.biWidth - 1))
+2096       \{
+2097         \textcolor{keywordflow}{while}  ((col < bmh.biWidth)  &&  (potVertLine[col]))
+2098         \{
+2099           col++;
+2100         \}
+2101       \}
+2102 
+2103       \textcolor{keywordflow}{if}  (!potVertLine[col])
+2104       \{
+2105         \textcolor{comment}{// We terminated loop because there were no more potentialVertLine's  not}
+2106         \textcolor{comment}{// because we ran out of columns.}
+2107         lastCol = col - 1;
+2108       \}
+2109 
+2110       \textcolor{comment}{//  Scan down vertically, and any place that we are not in contact both left and right}
+2111       \textcolor{comment}{//  with other pixels erase from picture,}
+2112 
+2113 
+2114       \textcolor{keywordtype}{bool} leftSideIsClear = \textcolor{keyword}{true};
+2115       \textcolor{keywordtype}{bool} rightSizeIsClear = \textcolor{keyword}{true};
+2116 
+2117       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  leftPixel = 0;
+2118       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  rightPixel = 0;
+2119 
+2120       \textcolor{keywordflow}{for}  (row = 0; row < bmh.biHeight; row++)
+2121       \{
+2122         \textcolor{keywordflow}{if}  (firstCol > 0)
+2123         \{
+2124           leftPixel = image[row][firstCol - 1];
+2125           \textcolor{keywordflow}{if}  (leftPixel != 0)
+2126              leftSideIsClear = \textcolor{keyword}{false};
+2127         \}
+2128         \textcolor{keywordflow}{else}
+2129         \{
+2130           leftPixel = 0;
+2131         \}
+2132         
+2133         \textcolor{keywordflow}{if}  (lastCol < (bmh.biWidth - 1))
+2134         \{
+2135           rightPixel = image[row][lastCol + 1];
+2136 
+2137           \textcolor{keywordflow}{if}  (rightPixel != 0)
+2138              rightSizeIsClear = \textcolor{keyword}{false};
+2139         \}
+2140 
+2141         \textcolor{keywordflow}{if}  (leftSideIsClear &&  rightSizeIsClear)
+2142         \{
+2143           \textcolor{keywordflow}{for}  (x = firstCol; x <= lastCol; x++)
+2144             image[row][x] = 0;
+2145         \}
+2146         \textcolor{keywordflow}{else}
+2147         \{
+2148           \textcolor{keywordflow}{for}  (x = firstCol; x <= lastCol; x++)
+2149             image[row][x] = (leftPixel + rightPixel) / 2;
+2150 
+2151           \textcolor{comment}{// Set up boolean for next loop around.}
+2152           leftSideIsClear = \textcolor{keyword}{true};
+2153           rightSizeIsClear = \textcolor{keyword}{true};
+2154         \}
+2155       \}
+2156     \}
+2157 
+2158     col++;
+2159   \}
+2160 
+2161   \textcolor{keyword}{delete}[]  potVertLine;
+2162 \} \textcolor{comment}{/* EliminateVerticalLines */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!File\+Name@{File\+Name}}
+\index{File\+Name@{File\+Name}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{File\+Name() const }{FileName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Bmp\+Image\+::\+File\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_a59ed1f99c1554aa3b12b3a90195d9b51}{}\label{class_k_k_b_1_1_bmp_image_a59ed1f99c1554aa3b12b3a90195d9b51}
+
+
+Definition at line 121 of file B\+M\+P\+Image.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Raster().
+
+
+\begin{DoxyCode}
+121 \{\textcolor{keywordflow}{return} fileName;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Four\+Bit\+Uncompressed@{Four\+Bit\+Uncompressed}}
+\index{Four\+Bit\+Uncompressed@{Four\+Bit\+Uncompressed}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Four\+Bit\+Uncompressed()}{FourBitUncompressed()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Bmp\+Image\+::\+Four\+Bit\+Uncompressed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a5b290fe260379e4665b5d5e2261175cf}{}\label{class_k_k_b_1_1_bmp_image_a5b290fe260379e4665b5d5e2261175cf}
+
+
+Definition at line 2709 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+2710 \{
+2711   \textcolor{keywordflow}{return}  ((bmh.biBitCount == 4)  &&  (bmh.biCompression == BI\_RGB));
+2712 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Height@{Height}}
+\index{Height@{Height}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Height() const }{Height() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} K\+K\+B\+::\+Bmp\+Image\+::\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{}\label{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}
+
+
+Definition at line 125 of file B\+M\+P\+Image.\+h.
+
+
+
+Referenced by Are\+There\+Edge\+Pixels(), Blue\+Row(), K\+K\+B\+::\+Raster\+::\+Create\+Padded\+Raster(), Image\+Row(), K\+K\+B\+::\+Raster\+::\+Raster(), and Red\+Row().
+
+
+\begin{DoxyCode}
+125 \{\textcolor{keywordflow}{return}  bmh.biHeight;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Image@{Image}}
+\index{Image@{Image}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Image()}{Image()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar}$\ast$$\ast$ K\+K\+B\+::\+Bmp\+Image\+::\+Image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_a122d01d6b6996cd9b0df01e856746234}{}\label{class_k_k_b_1_1_bmp_image_a122d01d6b6996cd9b0df01e856746234}
+
+
+Returns back two dimension matrix of image; if color it will be the green channel. 
+
+
+
+Definition at line 130 of file B\+M\+P\+Image.\+h.
+
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Image\+Row@{Image\+Row}}
+\index{Image\+Row@{Image\+Row}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Image\+Row(kkint32 row) const }{ImageRow(kkint32 row) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf uchar} $\ast$ Bmp\+Image\+::\+Image\+Row (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bmp_image_ab0d6fac104e1b68ac72e4c7b57dc5ead}{}\label{class_k_k_b_1_1_bmp_image_ab0d6fac104e1b68ac72e4c7b57dc5ead}
+
+
+Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Green Channel. 
+
+
+
+Definition at line 2672 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References Height(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), and K\+K\+B\+::\+Str\+From\+Int32().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Create\+Padded\+Raster(), and K\+K\+B\+::\+Raster\+::\+Raster().
+
+
+\begin{DoxyCode}
+2673 \{
+2674   \textcolor{keywordflow}{if}  (image == NULL)
+2675     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"::ImageRow  'image' set to NULL."});
+2676   \textcolor{keywordflow}{if}  ((row < 0)  ||  (row >= (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{Height} ()))
+2677   \{
+2678     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2679          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2680          << \textcolor{stringliteral}{"BmpImage   *** ERROR ***  Invalid Row["} << row << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2681          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2682     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"BmpImage::ImageRow  row:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row) + \textcolor{stringliteral}{" is out of
+       range where Height:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row));
+2683   \}
+2684 
+2685   \textcolor{keywordflow}{return}  image[row];
+2686 \}  \textcolor{comment}{/* ImageRow */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Initialize\+Fields@{Initialize\+Fields}}
+\index{Initialize\+Fields@{Initialize\+Fields}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Initialize\+Fields(kkint32 \+\_\+height, kkint32 \+\_\+width)}{InitializeFields(kkint32 _height, kkint32 _width)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Initialize\+Fields (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+height, }
+\item[{{\bf kkint32}}]{\+\_\+width}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_ac00d5d64ef0ed8db88445ccea0e94048}{}\label{class_k_k_b_1_1_bmp_image_ac00d5d64ef0ed8db88445ccea0e94048}
+
+
+Definition at line 1011 of file B\+M\+P\+Image.\+cpp.
+
+
+
+Referenced by Bmp\+Image().
+
+
+\begin{DoxyCode}
+1014 \{
+1015   hdr.bfType            = 19778;
+1016   hdr.bfReserved1       = 0;
+1017   hdr.bfReserved2       = 0;
+1018   \textcolor{comment}{// hdr.bfOffBits         = sizeof (bmh)}
+1019 
+1020 
+1021   bmh.biSize            = \textcolor{keyword}{sizeof} (bmh);
+1022   bmh.biWidth           = \_width;
+1023   bmh.biHeight          = \_height;
+1024   bmh.biPlanes          = 1;
+1025 
+1026   paletteEntries = 0;
+1027 
+1028   AllocateRaster ();
+1029 
+1030   \textcolor{keywordflow}{if}  (numOfColors <= 16)
+1031   \{
+1032     \textcolor{keyword}{delete}  palette;  palette = NULL;
+1033     bmh.biBitCount    = 4;
+1034     paletteEntries    = 16;
+1035     bmh.biCompression = BI\_RLE4; \textcolor{comment}{// BI\_RGB;}
+1036     palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+1037 
+1038     SetUp16BitPallet (palette);
+1039   \}
+1040   \textcolor{keywordflow}{else}
+1041   \{
+1042     \textcolor{keyword}{delete}  palette;  palette = NULL;
+1043     bmh.biBitCount    = 8;
+1044     paletteEntries     = 256;
+1045     bmh.biCompression = BI\_RLE8; \textcolor{comment}{// BI\_RGB;}
+1046     palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+1047     SetUp256BitPalette (palette);
+1048   \}
+1049 
+1050   bmh.biSizeImage       = 0;
+1051   bmh.biXPelsPerMeter   = 2835;
+1052   bmh.biYPelsPerMeter   = 2835;
+1053   bmh.biClrUsed         = 0;
+1054   bmh.biClrImportant    = 0;
+1055 
+1056   \textcolor{comment}{// BITMAPFILEHEADER  hdr;}
+1057   \textcolor{comment}{// BITMAPINFOHEADER  bmh;}
+1058 
+1059   hdr.bfOffBits  = \textcolor{keyword}{sizeof} (bmh) + \textcolor{keyword}{sizeof} (RGBQUAD) * paletteEntries;
+1060 \}  \textcolor{comment}{/* InitializeFields */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Max\+Pix\+Val@{Max\+Pix\+Val}}
+\index{Max\+Pix\+Val@{Max\+Pix\+Val}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Max\+Pix\+Val() const }{MaxPixVal() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+B\+::\+Bmp\+Image\+::\+Max\+Pix\+Val (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_a8439bd1ef5dc0298a9a1a67028cf0276}{}\label{class_k_k_b_1_1_bmp_image_a8439bd1ef5dc0298a9a1a67028cf0276}
+
+
+Definition at line 138 of file B\+M\+P\+Image.\+h.
+
+
+\begin{DoxyCode}
+138 \{\textcolor{keywordflow}{return}  \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} (maxPixVal);\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Pixel@{Pixel}}
+\index{Pixel@{Pixel}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Pixel(kkint32 row, kkint32 col)}{Pixel(kkint32 row, kkint32 col)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} \& Bmp\+Image\+::\+Pixel (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row, }
+\item[{{\bf kkint32}}]{col}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a1531bd3f74bbec5cc0df9a00d9c5b754}{}\label{class_k_k_b_1_1_bmp_image_a1531bd3f74bbec5cc0df9a00d9c5b754}
+
+
+Definition at line 1958 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1960 \{
+1961   \textcolor{keywordflow}{return}  image[row][col];
+1962 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Print@{Print}}
+\index{Print@{Print}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Print()}{Print()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Print (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a18f534b5dca835a55b3d9d57fa70b620}{}\label{class_k_k_b_1_1_bmp_image_a18f534b5dca835a55b3d9d57fa70b620}
+
+
+Definition at line 2168 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+2169 \{
+2170   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+2171   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y;
+2172 
+2173   \textcolor{keywordflow}{for}  (x = 0; x < bmh.biHeight; x++)
+2174   \{
+2175     \textcolor{keywordflow}{for}  (y = 0; y < \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} ((\textcolor{keywordtype}{long})bmh.biWidth, 76L); y++)
+2176     \{
+2177       \textcolor{keywordflow}{if}  (image[x][y])
+2178         cout << \textcolor{stringliteral}{" "};
+2179       \textcolor{keywordflow}{else}
+2180         cout << \textcolor{stringliteral}{"*"};
+2181     \}
+2182 
+2183     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2184   \}
+2185 \}  \textcolor{comment}{/*  Print  */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Re\+Allocate\+For\+Bigger\+Screen@{Re\+Allocate\+For\+Bigger\+Screen}}
+\index{Re\+Allocate\+For\+Bigger\+Screen@{Re\+Allocate\+For\+Bigger\+Screen}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Re\+Allocate\+For\+Bigger\+Screen()}{ReAllocateForBiggerScreen()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Re\+Allocate\+For\+Bigger\+Screen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a54e61e820363b542ef0564d7a409d76b}{}\label{class_k_k_b_1_1_bmp_image_a54e61e820363b542ef0564d7a409d76b}
+
+
+Used to expand dimensions of image by 6 pixels so as to make sure that no image is along the edge. 
+
+
+
+Definition at line 1318 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1319 \{
+1320   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  oldRow;
+1321 
+1322   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newRow;
+1323 
+1324   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newHeight = bmh.biHeight + 6;
+1325   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newWidth  = bmh.biWidth  + 6;
+1326 
+1327 
+1328   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}**  newImage = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[newHeight];
+1329   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}**  newRed = NULL;
+1330   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}**  newBlue = NULL;
+1331   \textcolor{keywordflow}{if}  (color)
+1332   \{
+1333      newRed  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[newHeight];
+1334      newBlue = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[newHeight];
+1335   \}
+1336 
+1337   \textcolor{keywordflow}{for}  (newRow = 0; newRow < newHeight; newRow++)
+1338   \{
+1339     newImage[newRow] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newWidth];
+1340     memset (newImage[newRow], 0, newWidth);
+1341     \textcolor{keywordflow}{if}  (color)
+1342     \{
+1343       newRed [newRow] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newWidth];
+1344       newBlue[newRow] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[newWidth];
+1345       memset (newRed  [newRow], 0, newWidth);
+1346       memset (newBlue [newRow], 0, newWidth);
+1347     \}
+1348   \}
+1349 
+1350   newRow = 3;
+1351   \textcolor{keywordflow}{for}  (oldRow = 0; oldRow < bmh.biHeight; oldRow++)
+1352   \{
+1353     memcpy ((newImage[newRow] + 3), image[oldRow], bmh.biWidth);
+1354     \textcolor{keywordflow}{if}  (color)
+1355     \{
+1356       memcpy ((newRed[newRow]  + 3), red [oldRow], bmh.biWidth);
+1357       memcpy ((newBlue[newRow] + 3), blue[oldRow], bmh.biWidth);
+1358     \}
+1359     newRow++;
+1360   \}
+1361 
+1362   \textcolor{keywordflow}{for}  (oldRow = 0; oldRow < bmh.biHeight; oldRow++)
+1363   \{
+1364     \textcolor{keyword}{delete}  image[oldRow];
+1365     image[oldRow] = NULL;
+1366     \textcolor{keywordflow}{if}  (color)
+1367     \{
+1368       \textcolor{keyword}{delete}  red [oldRow];  red [oldRow] = NULL;
+1369       \textcolor{keyword}{delete}  blue[oldRow];  blue[oldRow] = NULL;
+1370     \}
+1371   \}
+1372   \textcolor{keyword}{delete} image;
+1373   \textcolor{keyword}{delete} red;
+1374   \textcolor{keyword}{delete} blue;
+1375 
+1376   image = newImage;
+1377   \textcolor{keywordflow}{if}  (color)
+1378   \{
+1379     red  = newRed;    newRed  = NULL;
+1380     blue = newBlue;   newBlue = NULL;
+1381   \}
+1382   bmh.biHeight = newHeight;
+1383   bmh.biWidth  = newWidth;
+1384 \}  \textcolor{comment}{/* RealocateForBiggerScreen */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Red\+Row@{Red\+Row}}
+\index{Red\+Row@{Red\+Row}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Red\+Row(kkint32 row) const }{RedRow(kkint32 row) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf uchar} $\ast$ Bmp\+Image\+::\+Red\+Row (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_bmp_image_aa871576b403fb4bfa8a4e33a82c25549}{}\label{class_k_k_b_1_1_bmp_image_aa871576b403fb4bfa8a4e33a82c25549}
+
+
+Returns the specified \hyperlink{class_k_k_b_1_1_row}{Row} from the Red Channel. 
+
+
+
+Definition at line 2690 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References Height(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), and K\+K\+B\+::\+Str\+From\+Int32().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Raster().
+
+
+\begin{DoxyCode}
+2691 \{
+2692   \textcolor{keywordflow}{if} (blue == NULL)
+2693     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"BmpImage::RedRow  'red' channel is set to NULL."});
+2694   \textcolor{keywordflow}{if} ((row < 0) || (row >= (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})\hyperlink{class_k_k_b_1_1_bmp_image_ae9a8a8f35af1c7d4b2fabbea4b92cc23}{Height}()))
+2695   \{
+2696     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2697       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2698       << \textcolor{stringliteral}{"BmpImage::RedRow   *** ERROR ***  Invalid Row["} << row << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+2699       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2700     \textcolor{comment}{//osWaitForEnter ();}
+2701     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}(\textcolor{stringliteral}{"BmpImage::BlueRed  row:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row) + \textcolor{stringliteral}{" is out of
+       range where Height:"} + \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32}(row));
+2702   \}
+2703 
+2704   \textcolor{keywordflow}{return}  red[row];
+2705 \}  \textcolor{comment}{/* RedRow */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Save@{Save}}
+\index{Save@{Save}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Save(const K\+K\+Str \&file\+Name)}{Save(const KKStr &fileName)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Save (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a342f7a1df5ee3048c7f98e6e67b544de}{}\label{class_k_k_b_1_1_bmp_image_a342f7a1df5ee3048c7f98e6e67b544de}
+
+
+Definition at line 2331 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::os\+F\+O\+P\+E\+N(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Save\+Image().
+
+
+\begin{DoxyCode}
+2332 \{
+2333   fileName = \_fileName;
+2334   FILE*  outFile = \hyperlink{namespace_k_k_b_abf4050d2916ded8349dafadc80f0ecd1}{osFOPEN} (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), \textcolor{stringliteral}{"wb"});
+2335   \textcolor{keywordflow}{if}  (!outFile)
+2336   \{
+2337     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg = \textcolor{stringliteral}{"BmpImage::Save,  Error opening BMP File["} + fileName + \textcolor{stringliteral}{"]."};
+2338     cerr << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2339     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+2340   \}
+2341 
+2342   \textcolor{keywordflow}{if}  (color)
+2343   \{
+2344     SaveColor (outFile);
+2345   \}
+2346   \textcolor{keywordflow}{else}
+2347   \{
+2348     SaveGrayScale (outFile);
+2349   \}
+2350 
+2351   fclose (outFile);
+2352 \}  \textcolor{comment}{/* Save */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Save\+Grayscale\+Inverted4\+Bit@{Save\+Grayscale\+Inverted4\+Bit}}
+\index{Save\+Grayscale\+Inverted4\+Bit@{Save\+Grayscale\+Inverted4\+Bit}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Save\+Grayscale\+Inverted4\+Bit(const K\+K\+Str \&\+\_\+file\+Name)}{SaveGrayscaleInverted4Bit(const KKStr &_fileName)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Save\+Grayscale\+Inverted4\+Bit (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_a12c3d85cc2b31af13acd7467680c50ce}{}\label{class_k_k_b_1_1_bmp_image_a12c3d85cc2b31af13acd7467680c50ce}
+
+
+Saves image using 4 bit compressed gray-\/scale where Background = 255 and foreground = 0. 
+
+If image is color will convert to gray-\/scale 1st. Palette will be set to 0 = 255, 1 = 238, 2 = 221, 3 = 204... 255 = 0. 
+
+Definition at line 2207 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Add\+Pixel(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Create\+Pixel\+Data\+Structure4\+Bit(), K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+E\+O\+L(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::os\+F\+O\+P\+E\+N(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted4\+Bit().
+
+
+\begin{DoxyCode}
+2208 \{
+2209   fileName = \_fileName;
+2210   FILE*  outFile = \hyperlink{namespace_k_k_b_abf4050d2916ded8349dafadc80f0ecd1}{osFOPEN} (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), \textcolor{stringliteral}{"wb"});
+2211   \textcolor{keywordflow}{if}  (!outFile)
+2212   \{
+2213     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg = \textcolor{stringliteral}{"BmpImage::SaveGrayscaleInverted4Bit,  Error opening BMP File["} + fileName + \textcolor{stringliteral}{"]."};
+2214     cerr << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2215     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+2216   \}
+2217 
+2218   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+2219   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = 0;
+2220 
+2221   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
+2222 
+2223   \textcolor{keywordflow}{for}  (x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})bmh.biHeight - 1; x >= 0; x--)
+2224   \{
+2225     \textcolor{keywordflow}{for}  (y = 0; y < bmh.biWidth; y++)
+2226     \{
+2227       \textcolor{keywordflow}{if}  (color)
+2228       \{
+2229         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  gsVal = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((\textcolor{keywordtype}{float})(0.5f + red[x][y]) * 0.30f + (\textcolor{keywordtype}{float})(image[x][y]) *
+       0.59f + (\textcolor{keywordtype}{float})(blue[x][y]) * 0.11f);
+2230         pixelData.AddPixel ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})(gsVal >> 4));
+2231       \}
+2232       \textcolor{keywordflow}{else}
+2233       \{
+2234         pixelData.AddPixel (image[x][y] >> 4);
+2235       \}
+2236     \}
+2237 
+2238     pixelData.EOL ();
+2239   \}
+2240 
+2241   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} imageBuffLen  = 0;
+2242   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  imageBuff     = NULL;
+2243 
+2244   numOfColors = 16;
+2245   imageBuff = pixelData.CreatePixelDataStructure4Bit (imageBuffLen);
+2246   bmh.biBitCount    = 4;
+2247   bmh.biCompression = BI\_RLE4; \textcolor{comment}{// BI\_RGB;}
+2248   SetUp4BitPallet ();
+2249 
+2250   bmh.biSizeImage    = imageBuffLen; 
+2251   bmh.biClrUsed      = numOfColors;
+2252   bmh.biClrImportant = numOfColors;
+2253 
+2254   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
+2255   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
+2256 
+2257   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (&hdr,   \textcolor{keyword}{sizeof} (hdr), 1, outFile);
+2258   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (&bmh,   \textcolor{keyword}{sizeof} (bmh), 1, outFile);
+2259   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (palette, \textcolor{keyword}{sizeof} (RGBQUAD), paletteEntries, outFile);
+2260   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (imageBuff, 1, imageBuffLen, outFile);
+2261 
+2262   \textcolor{keyword}{delete}  imageBuff;
+2263   fclose (outFile);
+2264 \}  \textcolor{comment}{/* SaveGrayscaleInverted4Bit */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Save\+Grayscale\+Inverted8\+Bit@{Save\+Grayscale\+Inverted8\+Bit}}
+\index{Save\+Grayscale\+Inverted8\+Bit@{Save\+Grayscale\+Inverted8\+Bit}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Save\+Grayscale\+Inverted8\+Bit(const K\+K\+Str \&\+\_\+file\+Name)}{SaveGrayscaleInverted8Bit(const KKStr &_fileName)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Save\+Grayscale\+Inverted8\+Bit (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_ae778e224d47083032112f66f33587ba6}{}\label{class_k_k_b_1_1_bmp_image_ae778e224d47083032112f66f33587ba6}
+
+
+Saves image using compressed gray-\/scale where Background = 255 and foreground = 0. 
+
+If image is color will convert to gray-\/scale 1st. Palette will be set to 0 = 255, 1 = 254, 2 = 253, ... 255 = 0. 
+
+Definition at line 2268 of file B\+M\+P\+Image.\+cpp.
+
+
+
+References K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Add\+Pixel(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Create\+Pixel\+Data\+Structure8\+Bit(), K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+E\+O\+L(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::os\+F\+O\+P\+E\+N(), and K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted8\+Bit().
+
+
+\begin{DoxyCode}
+2269 \{
+2270   fileName = \_fileName;
+2271   FILE*  outFile = \hyperlink{namespace_k_k_b_abf4050d2916ded8349dafadc80f0ecd1}{osFOPEN} (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} (), \textcolor{stringliteral}{"wb"});
+2272   \textcolor{keywordflow}{if}  (!outFile)
+2273   \{
+2274     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg = \textcolor{stringliteral}{"BmpImage::SaveGrayscaleInverted8Bit,  Error opening BMP File["} + fileName + \textcolor{stringliteral}{"]."};
+2275     cerr << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+2276     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+2277   \}
+2278 
+2279   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+2280   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = 0;
+2281 
+2282   CodedPixels pixelData (bmh.biHeight, bmh.biWidth);
+2283 
+2284   \textcolor{keywordflow}{for}  (x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})bmh.biHeight - 1; x >= 0; x--)
+2285   \{
+2286     \textcolor{keywordflow}{for}  (y = 0; y < bmh.biWidth; y++)
+2287     \{
+2288       \textcolor{keywordflow}{if}  (color)
+2289       \{
+2290         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  gsVal = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((\textcolor{keywordtype}{float})(0.5f + red[x][y]) * 0.30f + (\textcolor{keywordtype}{float})(image[x][y]) *
+       0.59f + (\textcolor{keywordtype}{float})(blue[x][y]) * 0.11f);
+2291         pixelData.AddPixel ((\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})(gsVal));
+2292       \}
+2293       \textcolor{keywordflow}{else}
+2294       \{
+2295         pixelData.AddPixel (image[x][y]);
+2296       \}
+2297     \}
+2298 
+2299     pixelData.EOL ();
+2300   \}
+2301 
+2302   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} imageBuffLen = 0;
+2303   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  imageBuff    = NULL;
+2304 
+2305   numOfColors = 256;
+2306   imageBuff = pixelData.CreatePixelDataStructure8Bit (imageBuffLen);
+2307   bmh.biBitCount    = 8;
+2308   bmh.biCompression = BI\_RLE8; \textcolor{comment}{// BI\_RGB;}
+2309   SetUp8BitPallet ();
+2310 
+2311   bmh.biSizeImage    = imageBuffLen; 
+2312   bmh.biClrUsed      = numOfColors;
+2313   bmh.biClrImportant = numOfColors;
+2314 
+2315   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
+2316   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
+2317 
+2318   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (&hdr,   \textcolor{keyword}{sizeof} (hdr), 1, outFile);
+2319   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (&bmh,   \textcolor{keyword}{sizeof} (bmh), 1, outFile);
+2320   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (palette, \textcolor{keyword}{sizeof} (RGBQUAD), paletteEntries, outFile);
+2321   x = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fwrite (imageBuff, 1, imageBuffLen, outFile);
+2322 
+2323   \textcolor{keyword}{delete}  imageBuff;
+2324   fclose (outFile);
+2325 \}  \textcolor{comment}{/* SaveGrayscaleInverted8Bit */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Set16\+Colors@{Set16\+Colors}}
+\index{Set16\+Colors@{Set16\+Colors}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Set16\+Colors()}{Set16Colors()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Set16\+Colors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_ae26fb37aebe1bd85a576330479a05742}{}\label{class_k_k_b_1_1_bmp_image_ae26fb37aebe1bd85a576330479a05742}
+
+
+Definition at line 1194 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1195 \{
+1196   \textcolor{keywordflow}{if}  (palette)
+1197     \textcolor{keyword}{delete} palette;
+1198 
+1199   numOfColors = 16;
+1200   paletteEntries = 16;
+1201   palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+1202   SetUp16BitPallet (palette);
+1203 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Set256\+Colors@{Set256\+Colors}}
+\index{Set256\+Colors@{Set256\+Colors}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Set256\+Colors()}{Set256Colors()}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Set256\+Colors (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_abb977b9e38c835db3971ef00092f3204}{}\label{class_k_k_b_1_1_bmp_image_abb977b9e38c835db3971ef00092f3204}
+
+
+Definition at line 1208 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1209 \{
+1210   \textcolor{keywordflow}{if}  (palette)
+1211     \textcolor{keyword}{delete} palette;
+1212 
+1213   numOfColors   = 256;
+1214   paletteEntries = 256;
+1215   palette = \textcolor{keyword}{new} RGBQUAD[paletteEntries];
+1216   SetUp256BitPalette (palette);
+1217 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Set\+Palette\+Entry@{Set\+Palette\+Entry}}
+\index{Set\+Palette\+Entry@{Set\+Palette\+Entry}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Set\+Palette\+Entry(kkint32 pallet\+Index, const Pixel\+Value \&pix\+Value)}{SetPaletteEntry(kkint32 palletIndex, const PixelValue &pixValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Set\+Palette\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{pallet\+Index, }
+\item[{const {\bf Pixel\+Value} \&}]{pix\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_abd39b778ffac08f2d64179a2897b40ff}{}\label{class_k_k_b_1_1_bmp_image_abd39b778ffac08f2d64179a2897b40ff}
+
+
+Definition at line 935 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+938 \{
+939   \textcolor{keywordflow}{if}  ((palletIndex < 0)  ||  (palletIndex >  255))
+940   \{
+941     \textcolor{comment}{// Invalid Entry specified}
+942     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+943          << \textcolor{stringliteral}{"BmpImage::SetPaletteEntry      Invalid PalletIndex["} << palletIndex << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+944          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+945 
+946     \textcolor{keywordflow}{return};
+947   \}
+948 
+949   \textcolor{keywordflow}{if}  (!palette)
+950   \{
+951     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+952          << \textcolor{stringliteral}{"BmpImage::SetPaletteEntry      The palette is not defined!"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+953          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+954 
+955     \textcolor{keywordflow}{return};
+956   \}
+957 
+958   palette[palletIndex].rgbBlue  = pixValue.\hyperlink{class_k_k_b_1_1_pixel_value_ac43e49760f71b756dba6c40e80e7917a}{b};
+959   palette[palletIndex].rgbGreen = pixValue.\hyperlink{class_k_k_b_1_1_pixel_value_ab9b7056f3cf6f67a5987a8119ceaab67}{g};
+960   palette[palletIndex].rgbRed   = pixValue.\hyperlink{class_k_k_b_1_1_pixel_value_a734e16b4afd9a270df67aa1ce726e2d0}{r};
+961 \}  \textcolor{comment}{/*   SetPaletteEntry */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Set\+Pixel\+Value@{Set\+Pixel\+Value}}
+\index{Set\+Pixel\+Value@{Set\+Pixel\+Value}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Set\+Pixel\+Value(kkint32 row, kkint32 col, kkint32 pixel)}{SetPixelValue(kkint32 row, kkint32 col, kkint32 pixel)}}]{\setlength{\rightskip}{0pt plus 5cm}void Bmp\+Image\+::\+Set\+Pixel\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{row, }
+\item[{{\bf kkint32}}]{col, }
+\item[{{\bf kkint32}}]{pixel}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_bmp_image_aee0626356433f630910bc5d4259cd2eb}{}\label{class_k_k_b_1_1_bmp_image_aee0626356433f630910bc5d4259cd2eb}
+
+
+Will set the pixel value of the specified row and col to \textquotesingle{}pixel\textquotesingle{}. 
+
+
+
+Definition at line 1967 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1971 \{
+1972   \textcolor{keywordflow}{if}  (pixel < 0)
+1973   \{
+1974     cerr << \textcolor{stringliteral}{"BmpImage::SetPixelValue    ***ERROR***   pixel["} << pixel << \textcolor{stringliteral}{"] out of range.  Needs to be in
+       range of 0..255."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1975     pixel = 0;
+1976   \}
+1977   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (pixel > 255)
+1978   \{
+1979     cerr << \textcolor{stringliteral}{"BmpImage::SetPixelValue    ***ERROR***   pixel["} << pixel << \textcolor{stringliteral}{"] out of range.  Needs to be in
+       range of 0..255."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1980     pixel = 255;
+1981   \}
+1982 
+1983   \textcolor{keywordflow}{if}  ((row < 0)  ||  (row >= bmh.biHeight))
+1984   \{
+1985     cerr << \textcolor{stringliteral}{"BmpImage::SetPixelValue  *** Error ***, Row["} << row 
+1986          << \textcolor{stringliteral}{"] out of range[0-"} << bmh.biHeight << \textcolor{stringliteral}{"]."}
+1987          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1988     \textcolor{keywordflow}{return};
+1989   \}
+1990 
+1991   \textcolor{keywordflow}{if}  ((col < 0)  ||  (col >= bmh.biWidth))
+1992   \{
+1993     cerr << \textcolor{stringliteral}{"BmpImage::SetPixelValue  *** Error ***, Col["} << col 
+1994          << \textcolor{stringliteral}{"] out of range[0-"} << bmh.biWidth << \textcolor{stringliteral}{"]."}
+1995          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1996     \textcolor{keywordflow}{return};
+1997   \}
+1998   image[row][col] = (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})pixel;
+1999 \}  \textcolor{comment}{/* SetPixelValue */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}!Width@{Width}}
+\index{Width@{Width}!K\+K\+B\+::\+Bmp\+Image@{K\+K\+B\+::\+Bmp\+Image}}
+\subsubsection[{\texorpdfstring{Width() const }{Width() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32} K\+K\+B\+::\+Bmp\+Image\+::\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_bmp_image_a843e1821a1191100b03da9258e77e356}{}\label{class_k_k_b_1_1_bmp_image_a843e1821a1191100b03da9258e77e356}
+
+
+Definition at line 140 of file B\+M\+P\+Image.\+h.
+
+
+
+Referenced by Are\+There\+Edge\+Pixels(), K\+K\+B\+::\+Raster\+::\+Create\+Padded\+Raster(), and K\+K\+B\+::\+Raster\+::\+Raster().
+
+
+\begin{DoxyCode}
+140 \{\textcolor{keywordflow}{return}  bmh.biWidth;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_b_m_p_image_8h}{B\+M\+P\+Image.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_b_m_p_image_8cpp}{B\+M\+P\+Image.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,617 @@
+\hypertarget{class_k_k_m_l_l_1_1_model_knn}{}\section{K\+K\+M\+LL\+:\+:Model\+Knn Class Reference}
+\label{class_k_k_m_l_l_1_1_model_knn}\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+
+
+{\ttfamily \#include $<$Model\+Knn.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Model\+Knn\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_model_knn}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_model_knn}{Model\+Knn} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_model_knn_a1abfb9166a9e53ff6116716105876001}{Model\+Knn\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_knn_a9b5b6cb1ab65681122240641a288af71}{Model\+Knn} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_knn_a90bb8fcb6998c7d3f555712d73455acf}{Model\+Knn} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} \+\_\+factory\+F\+V\+Producer)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_knn_adb144b477923925295d1ee1fa4c779be}{Model\+Knn} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, const \hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{Model\+Param\+Knn} \&\+\_\+param, \hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} \+\_\+factory\+F\+V\+Producer)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_knn_af3d02d70497a6a9abb884c3b5d278c82}{Model\+Knn} (const \hyperlink{class_k_k_m_l_l_1_1_model_knn}{Model\+Knn} \&\+\_\+madel)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_knn_a5eea7e2b55ed5c349c77754e6e687c10}{$\sim$\+Model\+Knn} ()
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_knn_a1abfb9166a9e53ff6116716105876001}{Model\+Knn\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_knn_abe7c276bc7ea2a3478f605c6ea383103}{Duplicate} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_aeda4060e088c67446ca993eefcecea06}{Model\+Types} \hyperlink{class_k_k_m_l_l_1_1_model_knn_a563d722a4cf9db5d4cc111d660d0e21c}{Model\+Type} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a9a43d46912e7043762296efe4f99bac9}{Model\+Param\+Knn\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_knn_a11663b01826849ae7a3b8b7abb833951}{Param} ()
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_knn_a74923dc90428817efb8f542cf3a12a82}{Predict} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a83ad87c766cd6927267f7a271d52d74f}{Predict} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} known\+Class, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \&pred\+Class1, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \&pred\+Class2, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&pred\+Class1\+Votes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&pred\+Class2\+Votes, double \&prob\+Of\+Known\+Class, double \&pred\+Class1\+Prob, double \&pred\+Class2\+Prob, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&num\+Of\+Winners, bool \&known\+Class\+One\+Of\+The\+Winners, double \&break\+Tie, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_a60f96a524ddb189eff2b4391cf0b651c}{Class\+Prob\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_knn_a45c6ac9ae90dec50431f74de47b656ac}{Probabilities\+By\+Class} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a9fed09ede10a5ce0540e222e3687a0b0}{Probabilities\+By\+Class} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example, const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$\+\_\+votes, double $\ast$\+\_\+probabilities, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a7eb25717610720ec93326ae1898b5ef1}{Probabilities\+By\+Class} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \+\_\+example, const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, double $\ast$\+\_\+probabilities, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Derives predicted probabilities by class. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a51dcb3399032bf92901278e43c4e907c}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\begin{DoxyCompactList}\small\item\em To be implemented by derived classes; the parent classes fields will be updated by the derived class calling Read\+X\+M\+L\+Model\+Token. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a4dac911ec83b0967ec87062beb2697d7}{Train\+Model} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \+\_\+train\+Examples, bool \+\_\+already\+Normalized, bool \+\_\+take\+Ownership, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\+\_\+cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Performs operations such as Feature\+Encoding, and Normalization. The actual training of models occurs in the specific derived implementation of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_model}{Model}\textquotesingle{}. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_m_l_l_1_1_model_knn_a53d42c5f481669518e7d257372a9dd52}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 10 of file Model\+Knn.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Knn\+Ptr@{Model\+Knn\+Ptr}}
+\index{Model\+Knn\+Ptr@{Model\+Knn\+Ptr}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Knn\+Ptr}{ModelKnnPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Model\+Knn}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Model\+Knn\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a1abfb9166a9e53ff6116716105876001}{}\label{class_k_k_m_l_l_1_1_model_knn_a1abfb9166a9e53ff6116716105876001}
+
+
+Definition at line 13 of file Model\+Knn.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Knn@{Model\+Knn}}
+\index{Model\+Knn@{Model\+Knn}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Knn()}{ModelKnn()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Knn\+::\+Model\+Knn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a9b5b6cb1ab65681122240641a288af71}{}\label{class_k_k_m_l_l_1_1_model_knn_a9b5b6cb1ab65681122240641a288af71}
+
+
+Definition at line 35 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Model().
+
+
+\begin{DoxyCode}
+35                    :
+36   \hyperlink{class_k_k_m_l_l_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{Model} (),
+37   param (NULL)
+38 \{
+39 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Knn@{Model\+Knn}}
+\index{Model\+Knn@{Model\+Knn}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Knn(\+Factory\+F\+V\+Producer\+Ptr \+\_\+factory\+F\+V\+Producer)}{ModelKnn(FactoryFVProducerPtr _factoryFVProducer)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Knn\+::\+Model\+Knn (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{\+\_\+factory\+F\+V\+Producer}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a90bb8fcb6998c7d3f555712d73455acf}{}\label{class_k_k_m_l_l_1_1_model_knn_a90bb8fcb6998c7d3f555712d73455acf}
+
+
+Definition at line 43 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Model().
+
+
+\begin{DoxyCode}
+43                                                            :
+44   \hyperlink{class_k_k_m_l_l_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{Model} (\_factoryFVProducer),
+45   param (NULL)
+46 \{
+47 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Knn@{Model\+Knn}}
+\index{Model\+Knn@{Model\+Knn}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Knn(const K\+K\+Str \&\+\_\+name, const Model\+Param\+Knn \&\+\_\+param, Factory\+F\+V\+Producer\+Ptr \+\_\+factory\+F\+V\+Producer)}{ModelKnn(const KKStr &_name, const ModelParamKnn &_param, FactoryFVProducerPtr _factoryFVProducer)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Knn\+::\+Model\+Knn (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{const {\bf Model\+Param\+Knn} \&}]{\+\_\+param, }
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{\+\_\+factory\+F\+V\+Producer}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_knn_adb144b477923925295d1ee1fa4c779be}{}\label{class_k_k_m_l_l_1_1_model_knn_adb144b477923925295d1ee1fa4c779be}
+
+
+Definition at line 52 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Model(), and K\+K\+M\+L\+L\+::\+Model\+::param.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Create\+A\+Model().
+
+
+\begin{DoxyCode}
+55                     :
+56   \hyperlink{class_k_k_m_l_l_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{Model} (\_name, \_param, \_factoryFVProducer),
+57   param (NULL)
+58 \{
+59   param = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{ModelParamKnnPtr}\textcolor{keyword}{>} (\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param});
+60 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Knn@{Model\+Knn}}
+\index{Model\+Knn@{Model\+Knn}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Knn(const Model\+Knn \&\+\_\+madel)}{ModelKnn(const ModelKnn &_madel)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Knn\+::\+Model\+Knn (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Knn} \&}]{\+\_\+madel}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_knn_af3d02d70497a6a9abb884c3b5d278c82}{}\label{class_k_k_m_l_l_1_1_model_knn_af3d02d70497a6a9abb884c3b5d278c82}
+
+
+Definition at line 65 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Model(), and K\+K\+M\+L\+L\+::\+Model\+::param.
+
+
+
+Referenced by Duplicate().
+
+
+\begin{DoxyCode}
+65                                            :
+66   \hyperlink{class_k_k_m_l_l_1_1_model_ae3b375de5f6df4faf74a95d64748e048}{Model} (\_model),
+67   param (NULL)
+68 \{
+69   param = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{ModelParamKnnPtr}\textcolor{keyword}{>} (\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param});
+70 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!````~Model\+Knn@{$\sim$\+Model\+Knn}}
+\index{````~Model\+Knn@{$\sim$\+Model\+Knn}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{$\sim$\+Model\+Knn()}{~ModelKnn()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Knn\+::$\sim$\+Model\+Knn (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a5eea7e2b55ed5c349c77754e6e687c10}{}\label{class_k_k_m_l_l_1_1_model_knn_a5eea7e2b55ed5c349c77754e6e687c10}
+
+
+Definition at line 74 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+75 \{
+76 
+77 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Duplicate() const }{Duplicate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Knn\+Ptr} Model\+Knn\+::\+Duplicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_abe7c276bc7ea2a3478f605c6ea383103}{}\label{class_k_k_m_l_l_1_1_model_knn_abe7c276bc7ea2a3478f605c6ea383103}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_ab45f8caa5e4ad12250c1f737c8b79278}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 82 of file Model\+Knn.\+cpp.
+
+
+
+References Model\+Knn().
+
+
+\begin{DoxyCode}
+83 \{
+84   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_model_knn_a9b5b6cb1ab65681122240641a288af71}{ModelKnn} (*\textcolor{keyword}{this});
+85 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Model\+Type@{Model\+Type}}
+\index{Model\+Type@{Model\+Type}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Model\+Type() const }{ModelType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Model\+Types} K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Model\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a563d722a4cf9db5d4cc111d660d0e21c}{}\label{class_k_k_m_l_l_1_1_model_knn_a563d722a4cf9db5d4cc111d660d0e21c}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_af2e8e6fa4163bc16d07a3a1fa20ea3f9}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 32 of file Model\+Knn.\+h.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+K\+NN.
+
+
+\begin{DoxyCode}
+32 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_aeda4060e088c67446ca993eefcecea06ab602e23c0ec2466f3aa6cade0cd5ce05}{ModelTypes::KNN};\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Param@{Param}}
+\index{Param@{Param}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Param()}{Param()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Param\+Knn\+Ptr} Model\+Knn\+::\+Param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a11663b01826849ae7a3b8b7abb833951}{}\label{class_k_k_m_l_l_1_1_model_knn_a11663b01826849ae7a3b8b7abb833951}
+
+
+Definition at line 88 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+89 \{
+90   \textcolor{keywordflow}{return}  param;
+91 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Predict@{Predict}}
+\index{Predict@{Predict}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Predict(\+Feature\+Vector\+Ptr example, Run\+Log \&log)}{Predict(FeatureVectorPtr example, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} Model\+Knn\+::\+Predict (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a74923dc90428817efb8f542cf3a12a82}{}\label{class_k_k_m_l_l_1_1_model_knn_a74923dc90428817efb8f542cf3a12a82}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_a58ced625000ae9bffffb339e3c73d259}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 94 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+97 \{
+98   \textcolor{keywordflow}{return} NULL;
+99 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Predict@{Predict}}
+\index{Predict@{Predict}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Predict(\+Feature\+Vector\+Ptr example, M\+L\+Class\+Ptr known\+Class, M\+L\+Class\+Ptr \&pred\+Class1, M\+L\+Class\+Ptr \&pred\+Class2, kkint32 \&pred\+Class1\+Votes, kkint32 \&pred\+Class2\+Votes, double \&prob\+Of\+Known\+Class, double \&pred\+Class1\+Prob, double \&pred\+Class2\+Prob, kkint32 \&num\+Of\+Winners, bool \&known\+Class\+One\+Of\+The\+Winners, double \&break\+Tie, Run\+Log \&log)}{Predict(FeatureVectorPtr example, MLClassPtr knownClass, MLClassPtr &predClass1, MLClassPtr &predClass2, kkint32 &predClass1Votes, kkint32 &predClass2Votes, double &probOfKnownClass, double &predClass1Prob, double &predClass2Prob, kkint32 &numOfWinners, bool &knownClassOneOfTheWinners, double &breakTie, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Predict (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{known\+Class, }
+\item[{{\bf M\+L\+Class\+Ptr} \&}]{pred\+Class1, }
+\item[{{\bf M\+L\+Class\+Ptr} \&}]{pred\+Class2, }
+\item[{{\bf kkint32} \&}]{pred\+Class1\+Votes, }
+\item[{{\bf kkint32} \&}]{pred\+Class2\+Votes, }
+\item[{double \&}]{prob\+Of\+Known\+Class, }
+\item[{double \&}]{pred\+Class1\+Prob, }
+\item[{double \&}]{pred\+Class2\+Prob, }
+\item[{{\bf kkint32} \&}]{num\+Of\+Winners, }
+\item[{bool \&}]{known\+Class\+One\+Of\+The\+Winners, }
+\item[{double \&}]{break\+Tie, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a83ad87c766cd6927267f7a271d52d74f}{}\label{class_k_k_m_l_l_1_1_model_knn_a83ad87c766cd6927267f7a271d52d74f}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_a631de950cab4c8cbcbc1bbdb252964d7}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 103 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+117 \{
+118 \}  \textcolor{comment}{/* Predict */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Probabilities\+By\+Class@{Probabilities\+By\+Class}}
+\index{Probabilities\+By\+Class@{Probabilities\+By\+Class}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Probabilities\+By\+Class(\+Feature\+Vector\+Ptr example, Run\+Log \&log)}{ProbabilitiesByClass(FeatureVectorPtr example, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Class\+Prob\+List\+Ptr} Model\+Knn\+::\+Probabilities\+By\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a45c6ac9ae90dec50431f74de47b656ac}{}\label{class_k_k_m_l_l_1_1_model_knn_a45c6ac9ae90dec50431f74de47b656ac}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_a8d5638034838f63a5091978166d99d04}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 123 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::classes\+Index, K\+K\+M\+L\+L\+::\+Class\+Prob\+::\+Class\+Prob(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Class\+Prob\+List(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Get\+M\+L\+Class(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+M\+L\+L\+::\+Model\+::num\+Of\+Classes, K\+K\+M\+L\+L\+::\+Model\+::\+Prep\+Example\+For\+Prediction(), and K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Push\+On\+Back().
+
+
+\begin{DoxyCode}
+126 \{
+127   \textcolor{keywordflow}{if}  (!\hyperlink{class_k_k_m_l_l_1_1_model_adbb9475e16bb2c3eef52170485e3018e}{classesIndex})
+128   \{
+129     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg = \textcolor{stringliteral}{"ModelKnn::ProbabilitiesByClass   ***ERROR***      (classLabelAssigments == NULL)"};
+130     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+131     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+132   \}
+133 
+134   \textcolor{keywordtype}{bool}  newExampleCreated = \textcolor{keyword}{false};
+135   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedExample = \hyperlink{class_k_k_m_l_l_1_1_model_a31b972adfb64769b3ae966debec824fd}{PrepExampleForPrediction} (
+      example, newExampleCreated);
+136 
+137   \textcolor{comment}{//  double  y = SVM289::svm\_predict\_probability (svmModel,  *encodedExample, classProbs, votes);}
+138 
+139   \textcolor{keywordflow}{if}  (newExampleCreated)
+140   \{
+141     \textcolor{keyword}{delete} encodedExample;
+142     encodedExample = NULL;
+143   \}
+144 
+145   \hyperlink{class_k_k_m_l_l_1_1_class_prob_list}{ClassProbListPtr}  results = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_class_prob_list}{ClassProbList} ();
+146   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx;
+147   \textcolor{keywordflow}{for}  (idx = 0;  idx < \hyperlink{class_k_k_m_l_l_1_1_model_ad41340e916a5ccdae7ed38d9546a8445}{numOfClasses};  idx++)
+148   \{
+149     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  ic = \hyperlink{class_k_k_m_l_l_1_1_model_adbb9475e16bb2c3eef52170485e3018e}{classesIndex}->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_index_list_af8d2827c2ea25d27a74edc1715aadca5}{GetMLClass} (idx);
+150     results->\hyperlink{class_k_k_m_l_l_1_1_class_prob_list_a9fd88e9e49fd9b46142f1557d74e56ed}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_class_prob}{ClassProb} (ic, 0.0, 0.0f));
+151   \}
+152 
+153   \textcolor{keywordflow}{return}  results;
+154 \}  \textcolor{comment}{/* ProbabilitiesByClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Probabilities\+By\+Class@{Probabilities\+By\+Class}}
+\index{Probabilities\+By\+Class@{Probabilities\+By\+Class}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Probabilities\+By\+Class(\+Feature\+Vector\+Ptr example, const M\+L\+Class\+List \&\+\_\+ml\+Classes, kkint32 $\ast$\+\_\+votes, double $\ast$\+\_\+probabilities, Run\+Log \&log)}{ProbabilitiesByClass(FeatureVectorPtr example, const MLClassList &_mlClasses, kkint32 *_votes, double *_probabilities, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Probabilities\+By\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example, }
+\item[{const {\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{{\bf kkint32} $\ast$}]{\+\_\+votes, }
+\item[{double $\ast$}]{\+\_\+probabilities, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a9fed09ede10a5ce0540e222e3687a0b0}{}\label{class_k_k_m_l_l_1_1_model_knn_a9fed09ede10a5ce0540e222e3687a0b0}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_ab0633c9d78133a4dafe1cf8f86a9f255}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 159 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+165 \{
+166 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Probabilities\+By\+Class@{Probabilities\+By\+Class}}
+\index{Probabilities\+By\+Class@{Probabilities\+By\+Class}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Probabilities\+By\+Class(\+Feature\+Vector\+Ptr \+\_\+example, const M\+L\+Class\+List \&\+\_\+ml\+Classes, double $\ast$\+\_\+probabilities, Run\+Log \&\+\_\+log)}{ProbabilitiesByClass(FeatureVectorPtr _example, const MLClassList &_mlClasses, double *_probabilities, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Probabilities\+By\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{\+\_\+example, }
+\item[{const {\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{double $\ast$}]{\+\_\+probabilities, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a7eb25717610720ec93326ae1898b5ef1}{}\label{class_k_k_m_l_l_1_1_model_knn_a7eb25717610720ec93326ae1898b5ef1}
+
+
+Derives predicted probabilities by class. 
+
+Will get the probabilities assigned to each class by the classifier. The \textquotesingle{}\+\_\+ml\+Classes\textquotesingle{} parameter dictates the order of the classes. That is the probabilities for any given index in \textquotesingle{}\+\_\+probabilities\textquotesingle{} will be for the class specified in the same index in \textquotesingle{}\+\_\+ml\+Classes\textquotesingle{}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+example} & \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} object to calculate predicted probabilities for. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+ml\+Classes} & List image classes that caller is aware of. This should be the same list that was used when constructing this \hyperlink{class_k_k_m_l_l_1_1_model}{Model} object. The list must be the same but not necessarily in the same order as when \hyperlink{class_k_k_m_l_l_1_1_model}{Model} was 1st constructed. \\
+\hline
+\mbox{\tt out}  & {\em \+\_\+probabilities} & An array that must be as big as the number of classes as in ml\+Classes. The probability of class in ml\+Classes\mbox{[}x\mbox{]} will be returned in probabilities\mbox{[}x\mbox{]}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_a7d67e85653e0bf4e60f20e5127fa97a2}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 169 of file Model\+Knn.\+cpp.
+
+
+\begin{DoxyCode}
+174 \{
+175 \}  \textcolor{comment}{/* ProbabilitiesByClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a51dcb3399032bf92901278e43c4e907c}{}\label{class_k_k_m_l_l_1_1_model_knn_a51dcb3399032bf92901278e43c4e907c}
+
+
+To be implemented by derived classes; the parent classes fields will be updated by the derived class calling Read\+X\+M\+L\+Model\+Token. 
+
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_ab7f1d1441936048db8cec7e9ec987f34}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 225 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Add\+Error\+Msg(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param\+Type\+Str(), K\+K\+M\+L\+L\+::\+Model\+::param, K\+K\+M\+L\+L\+::\+Model\+::\+Read\+X\+M\+L\+Model\+Post(), K\+K\+M\+L\+L\+::\+Model\+::\+Read\+X\+M\+L\+Model\+Token(), and K\+K\+B\+::\+Xml\+Token\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+230 \{
+231   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+232   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+233   \{
+234     t = \hyperlink{class_k_k_m_l_l_1_1_model_a9feaeb8870d1f137b74586bb434b09d2}{ReadXMLModelToken} (t, log);
+235     \textcolor{keywordflow}{if}  (t)
+236     \{
+237       \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  varName = t->\hyperlink{class_k_k_b_1_1_xml_token_a28b39cfdfa2ed63048a812b1cb52263c}{VarName} ();
+238 
+239       \textcolor{keywordflow}{if}  ((varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Param"}))  &&  (\textcolor{keyword}{typeid} (*t) == \textcolor{keyword}{typeid} (
+      \hyperlink{namespace_k_k_m_l_l_af998b0f3ec84644bcd076fc2a31a8ec2}{XmlElementModelParamKnn})))
+240       \{
+241         \textcolor{keyword}{delete}  param;
+242         param = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_xml_element_model_param_template}{XmlElementModelParamKnnPtr}\textcolor{keyword}{>} (t)->TakeOwnership ();
+243       \}
+244       \textcolor{keywordflow}{else}
+245       \{
+246         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg (256);
+247         errMsg << \textcolor{stringliteral}{"Invalid XmlElement Encountered:  Section: "} << t->\hyperlink{class_k_k_b_1_1_xml_token_a20aa05209eeafb58c1c595c15f07d504}{SectionName} () << \textcolor{stringliteral}{" 
+       VarName: "} << varName;
+248         log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+249         \hyperlink{class_k_k_m_l_l_1_1_model_adb50e734c8b33aff714bc2071b4800bb}{AddErrorMsg} (errMsg, 0);
+250       \}
+251     \}
+252     \textcolor{keyword}{delete}  t;
+253     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+254   \}
+255 
+256   \textcolor{keyword}{delete}  t;
+257   t = NULL;
+258 
+259   \textcolor{keywordflow}{if}  (!param)
+260     param = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{ModelParamKnnPtr}\textcolor{keyword}{>} (\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param});
+261 
+262   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param} == NULL)
+263   \{
+264     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg (128);
+265     errMsg << \textcolor{stringliteral}{"ModelKnn::ReadXML  ***ERROR***  Base class 'Model' does not have 'param' defined."};
+266     \hyperlink{class_k_k_m_l_l_1_1_model_adb50e734c8b33aff714bc2071b4800bb}{AddErrorMsg} (errMsg, 0);
+267     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+268   \}
+269 
+270   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param}) != \textcolor{keyword}{typeid}(\hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{ModelParamKnn}))
+271   \{
+272     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg (128);
+273     errMsg << \textcolor{stringliteral}{"ModelKnn::ReadXML  ***ERROR***  Base class 'Model' param parameter is of the wrong type; 
+       found: "} << \hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param}->\hyperlink{class_k_k_m_l_l_1_1_model_param_a44132ad062b9b73b1e53959a282dfaea}{ModelParamTypeStr} ();
+274     \hyperlink{class_k_k_m_l_l_1_1_model_adb50e734c8b33aff714bc2071b4800bb}{AddErrorMsg} (errMsg, 0);
+275     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+276   \}
+277 
+278   \textcolor{keywordflow}{else}
+279   \{
+280     param = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_model_param_knn}{ModelParamKnnPtr}\textcolor{keyword}{>} (\hyperlink{class_k_k_m_l_l_1_1_model_a46bd4d1b3ab8d3d9847c1b00b7c0b66f}{Model::param});
+281   \}
+282 
+283   \hyperlink{class_k_k_m_l_l_1_1_model_a8e5709f57258442f969f8c5164d4b755}{ReadXMLModelPost} (log);
+284 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Train\+Model@{Train\+Model}}
+\index{Train\+Model@{Train\+Model}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Train\+Model(\+Feature\+Vector\+List\+Ptr \+\_\+train\+Examples, bool \+\_\+already\+Normalized, bool \+\_\+take\+Ownership, Vol\+Const\+Bool \&\+\_\+cancel\+Flag, Run\+Log \&\+\_\+log)}{TrainModel(FeatureVectorListPtr _trainExamples, bool _alreadyNormalized, bool _takeOwnership, VolConstBool &_cancelFlag, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Train\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{\+\_\+train\+Examples, }
+\item[{bool}]{\+\_\+already\+Normalized, }
+\item[{bool}]{\+\_\+take\+Ownership, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{\+\_\+cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a4dac911ec83b0967ec87062beb2697d7}{}\label{class_k_k_m_l_l_1_1_model_knn_a4dac911ec83b0967ec87062beb2697d7}
+
+
+Performs operations such as Feature\+Encoding, and Normalization. The actual training of models occurs in the specific derived implementation of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_model}{Model}\textquotesingle{}. 
+
+Performs operations such as Feature\+Encoding, and Normalization; the actual training of models occurs in the specific implementation of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_model}{Model}\textquotesingle{}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+train\+Examples} & Training data that classifier will be built from. If the examples need to be normalized or encoded and we are not taking ownership then a duplicate list of examples will be created that this method and class will be free to modify. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+already\+Normalized} & Indicates if contents of \textquotesingle{}\+\_\+train\+Examples\textquotesingle{} are normalized already; if not they will be normalized. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+take\+Ownership} & This instance of \hyperlink{class_k_k_m_l_l_1_1_model}{Model} will take ownership of \textquotesingle{}\+\_\+examples\textquotesingle{} and is free to modify its contents. \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+take\+Ownership} & \hyperlink{class_k_k_m_l_l_1_1_model}{Model} will take ownership of these examples \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_a1341c2cdd41a271e4b84ebf25838d389}{K\+K\+M\+L\+L\+::\+Model}.
+
+
+
+Definition at line 180 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model(), and K\+K\+M\+L\+L\+::\+Model\+::valid\+Model.
+
+
+\begin{DoxyCode}
+186 \{
+187   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"ModelKnn::TrainModel    alreadyNormalized["} << \_alreadyNormalized << \textcolor{stringliteral}{"] 
+       \_takeOwnership["} << \_takeOwnership << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+188 
+189   \textcolor{keywordflow}{try}
+190   \{
+191     \hyperlink{class_k_k_m_l_l_1_1_model_a1341c2cdd41a271e4b84ebf25838d389}{Model::TrainModel} (\_trainExamples, \_alreadyNormalized, \_takeOwnership, \_cancelFlag, 
+      \_log);
+192   \}
+193   \textcolor{keywordflow}{catch}  (\textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException}& e)
+194   \{
+195     \hyperlink{class_k_k_m_l_l_1_1_model_af881a051b703412686fa3b4a62b6d68a}{validModel} = \textcolor{keyword}{false};
+196     \textcolor{keywordflow}{throw} e;
+197   \}
+198 \}  \textcolor{comment}{/* TrainModel */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Knn@{K\+K\+M\+L\+L\+::\+Model\+Knn}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, ostream \&o) const }{WriteXML(const KKStr &varName, ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Knn\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_model_knn_a53d42c5f481669518e7d257372a9dd52}{}\label{class_k_k_m_l_l_1_1_model_knn_a53d42c5f481669518e7d257372a9dd52}
+
+
+Definition at line 202 of file Model\+Knn.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+Model\+::\+Write\+Model\+X\+M\+L\+Fields(), K\+K\+M\+L\+L\+::\+Model\+Param\+Knn\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+205 \{
+206   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"ModelParamDual"},  XmlTag::TagTypes::tagStart);
+207   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+208     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+209   startTag.WriteXML (o);
+210   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+211 
+212   \hyperlink{class_k_k_m_l_l_1_1_model_a560829876c8ca002f00592e428a780a2}{WriteModelXMLFields} (o); \textcolor{comment}{// Write the base class data fields 1st.}
+213   \textcolor{keywordflow}{if}  (param)
+214     param->\hyperlink{class_k_k_m_l_l_1_1_model_param_knn_a69fd33f58382121ab5137d6d912f2610}{WriteXML} (\textcolor{stringliteral}{"Param"}, o);
+215 
+216   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"ModelParamDual"}, XmlTag::TagTypes::tagEnd);
+217   endTag.WriteXML (o);
+218   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+219 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_knn_8h}{Model\+Knn.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_knn_8cpp}{Model\+Knn.\+cpp}\end{DoxyCompactItemize}

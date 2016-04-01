@@ -1,0 +1,76 @@
+\hypertarget{_s_v_mparam_8h}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.h File Reference}
+\label{_s_v_mparam_8h}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.\+h@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+S\+V\+Mparam.\+h}}
+{\ttfamily \#include \char`\"{}Class\+Assignments.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Num\+List.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}File\+Desc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}M\+L\+Class.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}svm.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_m_l_l_1_1_s_v_mparam}{K\+K\+M\+L\+L\+::\+S\+V\+Mparam}
+\begin{DoxyCompactList}\small\item\em This class encapsulates are the information necessary to build a \hyperlink{class_k_k_m_l_l_1_1_s_v_m_model}{S\+V\+M\+Model} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_m_l_l}{K\+K\+M\+LL}
+\begin{DoxyCompactList}\small\item\em Namespace for all K$^\wedge$2 Machine Learning code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef S\+V\+Mparam $\ast$ \hyperlink{namespace_k_k_m_l_l_a54fe1e609c2f04a7f05181a535bf4f92}{K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+Ptr}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_xml_element_template}{Xml\+Element\+Template}$<$ S\+V\+Mparam $>$ \hyperlink{namespace_k_k_m_l_l_a5ddff9706fdda9d572717e645b404bf1}{K\+K\+M\+L\+L\+::\+Xml\+Element\+S\+V\+Mparam}
+\item 
+typedef Xml\+Element\+S\+V\+Mparam $\ast$ \hyperlink{namespace_k_k_m_l_l_a087a995a76788f9d62f2bf4dde972646}{K\+K\+M\+L\+L\+::\+Xml\+Element\+S\+V\+Mparam\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64c}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Encoding\+Method} \+: int \{ \hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64cabbb93ef26e3c101ff11cdd21cab08a94}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Encoding\+Method\+::\+Null}, 
+\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca3f6e102acead54bbbf4c704dd88fb94b}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Encoding\+Method\+::\+No\+Encoding}, 
+\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca6ce976e8f061b2b5cfe4d0c50c3405dd}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Encoding\+Method\+::\+Binary}, 
+\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64ca7380ae6c5e1189eef50cfd0557d74e99}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Encoding\+Method\+::\+Scaled}
+ \}
+\item 
+enum \hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Kernal\+Type} \+: int \{ \hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569abbb93ef26e3c101ff11cdd21cab08a94}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Kernal\+Type\+::\+Null}, 
+\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569a32a843da6ea40ab3b17a3421ccdf671b}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Kernal\+Type\+::\+Linear}, 
+\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569a24ecfbe376a82f09ad48bffc6b8d6a87}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Kernal\+Type\+::\+Polynomial}, 
+\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569a745b490764f14c1bbcb73987f0885a37}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Kernal\+Type\+::\+R\+BF}
+ \}
+\item 
+enum \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9a}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type} \+: int \{ \\*
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aabbb93ef26e3c101ff11cdd21cab08a94}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type\+::\+Null}, 
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa2cb1a8e8122853731a8eb99f1bd56630}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type\+::\+One\+Vs\+One}, 
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa0bf7132f9ec5b2de535b831afd3ae75c}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type\+::\+One\+Vs\+All}, 
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aa01ad67463554c5f5552dcc6b5f4a553f}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type\+::\+Binary\+Combos}, 
+\\*
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aac50f90b00bf6f5751f531c1a09093684}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Machine\+Type\+::\+Boost\+S\+VM}
+ \}
+\item 
+enum \hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Selection\+Method} \+: int \{ \hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8abbb93ef26e3c101ff11cdd21cab08a94}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Selection\+Method\+::\+Null}, 
+\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8ab6fb89142b836f54bb0062e2bdce2e49}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Selection\+Method\+::\+Voting}, 
+\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8a0d2765b30694ee9f4fb7be2ae3b676dc}{K\+K\+M\+L\+L\+::\+S\+V\+M\+\_\+\+Selection\+Method\+::\+Probability}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_m_l_l_a1994af1d94ca5bf6e27f0cf803a8d64c}{S\+V\+M\+\_\+\+Encoding\+Method} \hyperlink{namespace_k_k_m_l_l_a100cc09ba8368cc433f3f8643e3d0abb}{K\+K\+M\+L\+L\+::\+Encoding\+Method\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&encoding\+Method\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_m_l_l_ad6a1e63c0b52f7236e41cee6ce834273}{K\+K\+M\+L\+L\+::\+Encoding\+Method\+To\+Str} (S\+V\+M\+\_\+\+Encoding\+Method encoding\+Method)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{S\+V\+M\+\_\+\+Kernal\+Type} \hyperlink{namespace_k_k_m_l_l_a2d42a58e2c259554ae123c1b55c7af9f}{K\+K\+M\+L\+L\+::\+Kernal\+Type\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&kernal\+Type\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_m_l_l_a67f1792cc365c2a57f00ab5ee2470ea4}{K\+K\+M\+L\+L\+::\+Kernal\+Type\+To\+Str} (\hyperlink{namespace_k_k_m_l_l_a14bbc982261fe6adeaf682c543ef9569}{S\+V\+M\+\_\+\+Kernal\+Type} kernal\+Type)
+\item 
+\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9a}{S\+V\+M\+\_\+\+Machine\+Type} \hyperlink{namespace_k_k_m_l_l_a05f26527ddefaf91b278afcd8e7981e2}{K\+K\+M\+L\+L\+::\+Machine\+Type\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&machine\+Type\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_m_l_l_ae41cf90293bf19b13fbeeb4dcefa09eb}{K\+K\+M\+L\+L\+::\+Machine\+Type\+To\+Str} (\hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9a}{S\+V\+M\+\_\+\+Machine\+Type} machine\+Type)
+\item 
+\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8}{S\+V\+M\+\_\+\+Selection\+Method} \hyperlink{namespace_k_k_m_l_l_af92818c3487e45a3debbd91aa263cca6}{K\+K\+M\+L\+L\+::\+Selection\+Method\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&selection\+Method\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_m_l_l_a836f83cedfbe3985d00997edec28716f}{K\+K\+M\+L\+L\+::\+Selection\+Method\+To\+Str} (\hyperlink{namespace_k_k_m_l_l_afab7be632987641e5805e770be7f6bf8}{S\+V\+M\+\_\+\+Selection\+Method} selection\+Method)
+\end{DoxyCompactItemize}

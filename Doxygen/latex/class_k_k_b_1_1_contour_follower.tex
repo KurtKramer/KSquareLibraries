@@ -1,0 +1,1185 @@
+\hypertarget{class_k_k_b_1_1_contour_follower}{}\section{K\+KB\+:\+:Contour\+Follower Class Reference}
+\label{class_k_k_b_1_1_contour_follower}\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+
+
+{\ttfamily \#include $<$Contour\+Follower.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_contour_follower_ad448455edc54f2bcb783cd16495ca9ba}{Contour\+Follower} (\hyperlink{class_k_k_b_1_1_raster}{Raster} \&\+\_\+raster, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_contour_follower_a2ec611c3cee8c1a1ba8482f26130c254}{Create\+Fourier\+Descriptor\+By\+Sampling} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Buckets, float $\ast$countour\+Freq, bool \&successful)
+\item 
+std\+::vector$<$ \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{Complex\+Double} $>$ \hyperlink{class_k_k_b_1_1_contour_follower_a2d374e30200b7452cb0fc4eff96e0d51}{Create\+Fourier\+From\+Point\+List} (const \hyperlink{class_k_k_b_1_1_point_list}{Point\+List} \&points)
+\item 
+\hyperlink{namespace_k_k_b_ad6b8056511ec9a218dd5ef30b57d1415}{Point\+List\+Ptr} \hyperlink{class_k_k_b_1_1_contour_follower_a777f2444405ce218e05097c044488f02}{Create\+Point\+List\+From\+Fourier} (std\+::vector$<$ \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{Complex\+Double} $>$ fourier, \hyperlink{class_k_k_b_1_1_point_list}{Point\+List} \&orig\+Point\+List)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_contour_follower_aff3d61b95ed022794fd58f8be5032096}{Follow\+Contour} (float $\ast$countour\+Freq, float fourier\+Descriptors\mbox{[}15\mbox{]}, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} total\+Pixels, bool \&successful)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_contour_follower_a2cdac24cea0e70a7eb5087b13d95027e}{Follow\+Contour2} (float $\ast$countour\+Freq, bool \&successful)
+\item 
+\hyperlink{namespace_k_k_b_ad6b8056511ec9a218dd5ef30b57d1415}{Point\+List\+Ptr} \hyperlink{class_k_k_b_1_1_contour_follower_a34906be662b959eda2b11a45f49c5aa9}{Generate\+Contour\+List} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_contour_follower_a360f7f500c25cbf3575da51f73392c1c}{Histogram\+Distance\+From\+A\+Point\+Of\+Edge} (float point\+Row, float point\+Col, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Buckets, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$buckets, float \&min\+Distance, float \&max\+Distance, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&num\+Of\+Edge\+Pixels)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 32 of file Contour\+Follower.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Contour\+Follower@{Contour\+Follower}}
+\index{Contour\+Follower@{Contour\+Follower}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Contour\+Follower(\+Raster \&\+\_\+raster, Run\+Log \&\+\_\+log)}{ContourFollower(Raster &_raster, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Contour\+Follower\+::\+Contour\+Follower (
+\begin{DoxyParamCaption}
+\item[{{\bf Raster} \&}]{\+\_\+raster, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_ad448455edc54f2bcb783cd16495ca9ba}{}\label{class_k_k_b_1_1_contour_follower_ad448455edc54f2bcb783cd16495ca9ba}
+
+
+Definition at line 47 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Background\+Pixel\+T\+H(), K\+K\+B\+::\+Raster\+::\+Height(), K\+K\+B\+::\+Raster\+::\+Rows(), and K\+K\+B\+::\+Raster\+::\+Width().
+
+
+\begin{DoxyCode}
+49                                   :
+50   backgroundPixelTH (\_raster.\hyperlink{class_k_k_b_1_1_raster_a96e0ed160e633c316cf83890ef3438eb}{BackgroundPixelTH} ()),
+51   curCol            (-1),
+52   curRow            (-1),
+53   fromDir           (),
+54   height            (\_raster.\hyperlink{class_k_k_b_1_1_raster_af8d10d15697d5b92fb9595c48b529feb}{Height} ()),
+55   lastDir           (0),
+56   log               (\_log),
+57   raster            (\_raster),
+58   rows              (\_raster.\hyperlink{class_k_k_b_1_1_raster_a2460989f656e5222d6074cd0ba85ed72}{Rows}   ()),
+59   width             (\_raster.\hyperlink{class_k_k_b_1_1_raster_aa2780c0b7ae75b7b595f99329689c1f6}{Width}  ())
+60 \{
+61 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Create\+Fourier\+Descriptor\+By\+Sampling@{Create\+Fourier\+Descriptor\+By\+Sampling}}
+\index{Create\+Fourier\+Descriptor\+By\+Sampling@{Create\+Fourier\+Descriptor\+By\+Sampling}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Create\+Fourier\+Descriptor\+By\+Sampling(kkint32 num\+Of\+Buckets, float $\ast$countour\+Freq, bool \&successful)}{CreateFourierDescriptorBySampling(kkint32 numOfBuckets, float *countourFreq, bool &successful)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Contour\+Follower\+::\+Create\+Fourier\+Descriptor\+By\+Sampling (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{num\+Of\+Buckets, }
+\item[{float $\ast$}]{countour\+Freq, }
+\item[{bool \&}]{successful}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a2ec611c3cee8c1a1ba8482f26130c254}{}\label{class_k_k_b_1_1_contour_follower_a2ec611c3cee8c1a1ba8482f26130c254}
+
+
+Definition at line 1004 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), K\+K\+B\+::\+Point\+List\+::\+Point\+List(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+\begin{DoxyCode}
+1008 \{
+1009   \textcolor{comment}{// startRow and startCol is assumed to come from the left (6)}
+1010   \textcolor{comment}{// kkint32  numOfBuckets = 8;}
+1011   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startRow;
+1012   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startCol;
+1013 
+1014   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndRow;
+1015   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndCol;
+1016 
+1017   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastRow;
+1018   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol;
+1019 
+1020   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextRow;
+1021   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextCol;
+1022 
+1023   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBorderPixels = 0;
+1024 
+1025   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1026 
+1027   successful = \textcolor{keyword}{true};
+1028 
+1029   \hyperlink{class_k_k_b_1_1_point_list}{PointListPtr}  points = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point_list}{PointList} (\textcolor{keyword}{true});
+1030 
+1031   GetFirstPixel (startRow, startCol);
+1032   \textcolor{keywordflow}{if}  ((startRow < 0)  ||  (startCol < 0)  ||  (PixelCountIn9PixelNeighborhood (startRow, startCol) < 2))
+1033   \{
+1034     cout << \textcolor{stringliteral}{"Vary Bad Starting Point"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1035     successful = \textcolor{keyword}{false};
+1036     \textcolor{keywordflow}{return}  0;
+1037   \}
+1038    
+1039   GetNextPixel (scndRow, scndCol);
+1040 
+1041   nextRow = scndRow;
+1042   nextCol = scndCol;
+1043 
+1044   lastRow = startRow;
+1045   lastCol = startCol;
+1046 
+1047 
+1048   \textcolor{keywordflow}{while}  (\textcolor{keyword}{true})  
+1049   \{
+1050     lastRow = nextRow;
+1051     lastCol = nextCol;
+1052 
+1053     GetNextPixel (nextRow, nextCol);
+1054 
+1055     \textcolor{keywordflow}{if}  ((nextRow == scndRow)   &&  (nextCol == scndCol)  &&
+1056          (lastRow == startRow)  &&  (lastCol == startCol))
+1057     \{
+1058       \textcolor{keywordflow}{break};
+1059     \}
+1060  
+1061     points->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (nextRow, nextCol));
+1062 
+1063     numOfBorderPixels++;
+1064   \}
+1065 
+1066 
+1067 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1068     fftwf\_complex*  src = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * numOfBuckets);
+1069 \textcolor{preprocessor}{  #else}
+1070     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  src = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[numOfBuckets];
+1071 \textcolor{preprocessor}{  #endif}
+1072 
+1073   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalRow = 0;
+1074   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalCol = 0;
+1075 
+1076   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+1077   \{
+1078     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  borderPixelIdx = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(((\textcolor{keywordtype}{double})x * (double)numOfBorderPixels) /  (double)
+      numOfBuckets);
+1079 
+1080     \hyperlink{class_k_k_b_1_1_point}{Point}&  point = (*points)[borderPixelIdx];
+1081 
+1082 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1083       src[x][0] = (float)point.\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ();
+1084       src[x][1] = (float)point.\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+1085 \textcolor{preprocessor}{    #else}
+1086       src[x].real ((\textcolor{keywordtype}{float})point.\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ());
+1087       src[x].imag ((\textcolor{keywordtype}{float})point.\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ());
+1088 \textcolor{preprocessor}{    #endif}
+1089 
+1090     totalRow += point.\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} ();
+1091     totalCol += point.\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} ();
+1092   \}
+1093 
+1094   \textcolor{keyword}{delete}  points;
+1095   points = NULL;
+1096 
+1097   \textcolor{keywordtype}{float}  centerRow = (float)totalRow / (\textcolor{keywordtype}{float})numOfBuckets;
+1098   \textcolor{keywordtype}{float}  centerCol = (float)totalCol / (\textcolor{keywordtype}{float})numOfBuckets;
+1099 
+1100   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+1101   \{
+1102 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1103       src[x][0] = src[x][0] - centerRow;
+1104       src[x][1] = src[x][1] - centerCol;
+1105 \textcolor{preprocessor}{    #else}
+1106       src[x].real (src[x].real () - centerRow);
+1107       src[x].imag (src[x].imag () - centerCol);
+1108 \textcolor{preprocessor}{    #endif}
+1109   \}
+1110 
+1111 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1112     fftwf\_complex*  dest = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * numOfBuckets);
+1113     fftwf\_plan  plan = fftwCreateOneDPlan (numOfBuckets, src, dest, FFTW\_FORWARD, FFTW\_ESTIMATE);
+1114     fftwf\_execute (plan);
+1115     fftwDestroyPlan (plan);
+1116     plan = NULL;
+1117 \textcolor{preprocessor}{  #else}
+1118     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d}{KK\_DFT1D\_Float}  plan (numOfBuckets, \textcolor{keyword}{true});
+1119     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  dest = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[numOfBuckets];
+1120     plan.Transform (src, dest);
+1121 \textcolor{preprocessor}{  #endif}
+1122 
+1123   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+1124   \{
+1125 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1126       \textcolor{keywordtype}{float} real = dest[x][0];
+1127       \textcolor{keywordtype}{float} imag = dest[x][1];
+1128 \textcolor{preprocessor}{    #else}
+1129       \textcolor{keywordtype}{float} real = dest[x].real ();
+1130       \textcolor{keywordtype}{float} imag = dest[x].imag ();
+1131 \textcolor{preprocessor}{    #endif}
+1132 
+1133     countourFreq[x] = (float)(sqrt (real * real + imag * imag));
+1134   \}
+1135 
+1136 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1137     fftwf\_free (src);
+1138     fftwf\_free (dest);
+1139 \textcolor{preprocessor}{  #else}
+1140     \textcolor{keyword}{delete}[]  src;   src  = NULL;
+1141     \textcolor{keyword}{delete}[]  dest;  dest = NULL;
+1142 \textcolor{preprocessor}{  #endif}
+1143 
+1144   \textcolor{keywordflow}{return}  numOfBorderPixels;
+1145 \}  \textcolor{comment}{/* CreateFourierDescriptorBySampling */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Create\+Fourier\+From\+Point\+List@{Create\+Fourier\+From\+Point\+List}}
+\index{Create\+Fourier\+From\+Point\+List@{Create\+Fourier\+From\+Point\+List}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Create\+Fourier\+From\+Point\+List(const Point\+List \&points)}{CreateFourierFromPointList(const PointList &points)}}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ {\bf Complex\+Double} $>$ Contour\+Follower\+::\+Create\+Fourier\+From\+Point\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Point\+List} \&}]{points}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a2d374e30200b7452cb0fc4eff96e0d51}{}\label{class_k_k_b_1_1_contour_follower_a2d374e30200b7452cb0fc4eff96e0d51}
+
+
+Definition at line 1211 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+\begin{DoxyCode}
+1212 \{
+1213   \textcolor{comment}{//ComplexDouble*  src = new ComplexDouble[points.QueueSize ()];}
+1214 
+1215 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1216      fftw\_complex*  src = (fftw\_complex*)fftw\_malloc (\textcolor{keyword}{sizeof} (fftw\_complex) * points.
+      \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ());
+1217 \textcolor{preprocessor}{  #else}
+1218      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}*  src = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}[points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize}()];
+1219 \textcolor{preprocessor}{  #endif}
+1220 
+1221 
+1222   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalRow = 0;
+1223   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalCol = 0;
+1224 
+1225   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+1226 
+1227   \textcolor{keywordflow}{for}  (x = 0;  x < points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1228   \{
+1229     \hyperlink{class_k_k_b_1_1_point}{Point}&  point (points[x]);
+1230 
+1231     \textcolor{comment}{//src[x] = ComplexDouble ((double)point.Row (), (double)point.Col ());}
+1232 
+1233 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1234       src[x][0] = (double)point.Row ();
+1235       src[x][1] = (double)point.Col ();
+1236 \textcolor{preprocessor}{    #else}
+1237       src[x].real ((\textcolor{keywordtype}{double})point.Row ());
+1238       src[x].imag ((\textcolor{keywordtype}{double})point.Col ());
+1239 \textcolor{preprocessor}{    #endif}
+1240 
+1241     totalRow += point.Row ();
+1242     totalCol += point.Col ();
+1243   \}
+1244 
+1245   \textcolor{comment}{//double  centerRow = (double)totalRow / (double)(points.QueueSize ());}
+1246   \textcolor{comment}{//double  centerCol = (double)totalCol / (double)(points.QueueSize ());}
+1247 
+1248 \textcolor{comment}{//  for  (x = 0;  x < points.QueueSize ();  x++)}
+1249 \textcolor{comment}{//  \{}
+1250 \textcolor{comment}{//    src[x] = ComplexDouble ((double)(src[x].real () - centerRow), (double)(src[x].imag () - centerCol));}
+1251 \textcolor{comment}{//  \}}
+1252 \textcolor{comment}{//}
+1253 
+1254 
+1255 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1256     fftw\_complex*   destFFTW = (fftw\_complex*)fftw\_malloc(\textcolor{keyword}{sizeof}(fftw\_complex) * points.
+      \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize}());
+1257     fftw\_plan       plan;
+1258     plan = fftw\_plan\_dft\_1d (points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} (), src, destFFTW, FFTW\_FORWARD, FFTW\_ESTIMATE);
+1259     fftw\_execute (plan);
+1260     fftw\_destroy\_plan (plan);  
+1261 \textcolor{preprocessor}{#else}
+1262     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}*  destFFTW = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}[points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize}()];
+1263     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d}{KK\_DFT1D\_Double}  plan(points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize}(), \textcolor{keyword}{true});
+1264     plan.\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a97bb58639bdc8f8bf1c11bda9bbd9d3d}{Transform} (src, destFFTW);
+1265 \textcolor{preprocessor}{  #endif}
+1266 
+1267   vector<ComplexDouble>  dest;
+1268 
+1269   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  l = 0;  l < points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  l++)
+1270   \{
+1271 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1272     dest.push\_back (\hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble} (destFFTW[l][0] / (\textcolor{keywordtype}{double})(points.
+      \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ()), destFFTW[l][1] / (\textcolor{keywordtype}{double})(points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ())));
+1273 \textcolor{preprocessor}{    #else}
+1274     dest.push\_back (\hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble} (destFFTW[l].real () / (\textcolor{keywordtype}{double})(points.
+      \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ()), destFFTW[l].imag () / (double)(points.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ())));
+1275 \textcolor{preprocessor}{    #endif}
+1276   \}
+1277   \textcolor{keyword}{delete}[]  destFFTW;
+1278   \textcolor{keyword}{delete}[]  src;
+1279 
+1280   \textcolor{keywordflow}{return}  dest;
+1281 \}  \textcolor{comment}{/* CreateFourierFromPointList */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Create\+Point\+List\+From\+Fourier@{Create\+Point\+List\+From\+Fourier}}
+\index{Create\+Point\+List\+From\+Fourier@{Create\+Point\+List\+From\+Fourier}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Create\+Point\+List\+From\+Fourier(std\+::vector$<$ Complex\+Double $>$ fourier, Point\+List \&orig\+Point\+List)}{CreatePointListFromFourier(std::vector< ComplexDouble > fourier, PointList &origPointList)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+List\+Ptr} Contour\+Follower\+::\+Create\+Point\+List\+From\+Fourier (
+\begin{DoxyParamCaption}
+\item[{std\+::vector$<$ {\bf Complex\+Double} $>$}]{fourier, }
+\item[{{\bf Point\+List} \&}]{orig\+Point\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a777f2444405ce218e05097c044488f02}{}\label{class_k_k_b_1_1_contour_follower_a777f2444405ce218e05097c044488f02}
+
+
+Definition at line 1287 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+List\+::\+Box\+Coordinites(), K\+K\+B\+::\+Point\+::\+Point(), and K\+K\+B\+::\+Point\+List\+::\+Point\+List().
+
+
+\begin{DoxyCode}
+1290 \{
+1291   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  minRow, maxRow, minCol, maxCol;
+1292   origPointList.\hyperlink{class_k_k_b_1_1_point_list_a88e04c04e513be256b1528e1f56db795}{BoxCoordinites} (minRow, minCol, maxRow, maxCol);
+1293 
+1294   \hyperlink{class_k_k_b_1_1_point_list}{PointListPtr}  points = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point_list}{PointList} (\textcolor{keyword}{true});
+1295 
+1296   \textcolor{keywordtype}{size\_t}  numOfEdgePixels = origPointList.size ();
+1297 
+1298 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1299      fftw\_complex*  src = (fftw\_complex*)fftw\_malloc (\textcolor{keyword}{sizeof} (fftw\_complex) * numOfEdgePixels);
+1300 \textcolor{preprocessor}{  #else}
+1301      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}*  src = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}[numOfEdgePixels];
+1302 \textcolor{preprocessor}{  #endif}
+1303 
+1304   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  l = 0;  l < (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fourier.size ();  l++)
+1305   \{
+1306 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1307     src[l][0] = fourier[l].real ();
+1308     src[l][1] = fourier[l].imag ();
+1309 \textcolor{preprocessor}{    #else}
+1310     src[l].real (fourier[l].real());
+1311     src[l].imag (fourier[l].imag ());
+1312 \textcolor{preprocessor}{    #endif}
+1313   \}
+1314 
+1315 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+1316     fftw\_complex*   destFFTW = (fftw\_complex*)fftw\_malloc (\textcolor{keyword}{sizeof} (fftw\_complex) * numOfEdgePixels);
+1317     fftw\_plan       plan;
+1318     plan = fftw\_plan\_dft\_1d (numOfEdgePixels, src, destFFTW, FFTW\_FORWARD, FFTW\_ESTIMATE);
+1319     fftw\_execute (plan);
+1320     fftw\_destroy\_plan (plan);  
+1321 \textcolor{preprocessor}{  #else}
+1322     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}*  destFFTW = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Double::DftComplexType}[numOfEdgePixels];
+1323     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d}{KK\_DFT1D\_Double}  plan(numOfEdgePixels, \textcolor{keyword}{false});
+1324     plan.Transform(src, destFFTW);
+1325 \textcolor{preprocessor}{  #endif}
+1326 
+1327 
+1328   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  largestRow  = -1;
+1329   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  largestCol  = -1;
+1330   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  smallestRow = 999999;
+1331   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  smallestCol = 999999;
+1332 
+1333   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  l = 0;  l < (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fourier.size ();  l++)
+1334   \{
+1335 
+1336 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+1337        \textcolor{keywordtype}{double}  realPart = (double)destFFTW[l][0];
+1338        \textcolor{keywordtype}{double}  imagPart = (double)destFFTW[l][1];
+1339        \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  z (realPart, imagPart);
+1340 \textcolor{preprocessor}{    #else}
+1341        \textcolor{keywordtype}{double}  realPart = (double)destFFTW[l].real ();
+1342        \textcolor{keywordtype}{double}  imagPart = (double)destFFTW[l].imag ();
+1343        \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  z (realPart, imagPart);
+1344 \textcolor{preprocessor}{    #endif}
+1345 
+1346     
+1347     \textcolor{comment}{//  z = z / (double)(fourier.size ());}
+1348 
+1349     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(z.real () + 0.5);
+1350     \textcolor{keywordflow}{if}  (row > largestRow)
+1351       largestRow = row;
+1352     \textcolor{keywordflow}{if}  (row < smallestRow)
+1353       smallestRow = row;
+1354 
+1355     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(z.imag () + 0.5);
+1356     \textcolor{keywordflow}{if}  (col > largestCol)
+1357       largestCol = col;
+1358     \textcolor{keywordflow}{if}  (col < smallestCol)
+1359       smallestCol = col;
+1360 
+1361     \hyperlink{class_k_k_b_1_1_point}{PointPtr} p = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (row, col);
+1362     points->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (p);
+1363   \}
+1364 
+1365   \textcolor{keyword}{delete}[]  src;
+1366   \textcolor{keyword}{delete}[]  destFFTW;
+1367 
+1368   \textcolor{keywordflow}{return}  points;
+1369 \}  \textcolor{comment}{/* CreatePointListFromFourier */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Follow\+Contour@{Follow\+Contour}}
+\index{Follow\+Contour@{Follow\+Contour}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Follow\+Contour(float $\ast$countour\+Freq, float fourier\+Descriptors[15], kkint32 total\+Pixels, bool \&successful)}{FollowContour(float *countourFreq, float fourierDescriptors[15], kkint32 totalPixels, bool &successful)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Contour\+Follower\+::\+Follow\+Contour (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{countour\+Freq, }
+\item[{float}]{fourier\+Descriptors\mbox{[}15\mbox{]}, }
+\item[{{\bf kkint32}}]{total\+Pixels, }
+\item[{bool \&}]{successful}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_aff3d61b95ed022794fd58f8be5032096}{}\label{class_k_k_b_1_1_contour_follower_aff3d61b95ed022794fd58f8be5032096}
+
+
+Definition at line 220 of file Contour\+Follower.\+cpp.
+
+
+\begin{DoxyCode}
+225 \{
+226   \textcolor{comment}{// startRow and startCol is assumed to come from the left (6)}
+227 
+228   \textcolor{comment}{// I am having a problem;  }
+229   \textcolor{comment}{//     We sometimes locate a separate piece of the image and end of with a contour of only that}
+230   \textcolor{comment}{//     one piece.  This results in two problems.}
+231   \textcolor{comment}{//                    1) The Fourier Descriptors do not even begin to represent the image}
+232   \textcolor{comment}{//                    2) If the number of border pixels are small enough; then we could end}
+233   \textcolor{comment}{//                       up causing a memory access fault when we access a negative index.}
+234 
+235 
+236   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBuckets = 5;
+237 
+238   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startRow;
+239   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startCol;
+240 
+241   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndRow;
+242   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndCol;
+243 
+244   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastRow;
+245   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol;
+246 
+247   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextRow;
+248   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextCol;
+249 
+250   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  absoluteMaximumEdgePixels = totalPixels * 3;
+251 
+252   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxNumOfBorderPoints = 3 * (height + width);
+253   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBorderPixels = 0;
+254 
+255   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+256 
+257   successful = \textcolor{keyword}{true};
+258 
+259   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalRow = 0;
+260   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalCol = 0;
+261 
+262 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+263   fftwf\_complex*  src = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * maxNumOfBorderPoints);
+264 \textcolor{preprocessor}{  #else}
+265   \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  src = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[maxNumOfBorderPoints];
+266 \textcolor{preprocessor}{  #endif}
+267 
+268 
+269   GetFirstPixel (startRow, startCol);
+270   \textcolor{keywordflow}{if}  ((startRow < 0)  ||  (startCol < 0)  ||  (PixelCountIn9PixelNeighborhood (startRow, startCol) < 2))
+271   \{
+272     cout << \textcolor{stringliteral}{"Very Bad Starting Point"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+273     successful = \textcolor{keyword}{false};
+274     \textcolor{keywordflow}{return} 0;
+275   \}
+276 
+277   GetNextPixel (scndRow, scndCol);
+278 
+279   nextRow = scndRow;
+280   nextCol = scndCol;
+281 
+282   lastRow = startRow;
+283   lastCol = startCol;
+284 
+285 
+286   \textcolor{keywordflow}{while}  (\textcolor{keyword}{true})  
+287   \{
+288     \textcolor{keywordflow}{if}  (numOfBorderPixels > absoluteMaximumEdgePixels)
+289     \{
+290       \textcolor{comment}{// Something must be wrong;  somehow we missed the starting point.}
+291 
+292       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+293                      << \textcolor{stringliteral}{"ContourFollower::FollowContour   ***ERROR***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+294                      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+295                      << \textcolor{stringliteral}{"     We exceeded the absolute maximum number of possible edge pixels."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+296                      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+297                      << \textcolor{stringliteral}{"     FileName          ["} << raster.\hyperlink{class_k_k_b_1_1_raster_a847b09bd1487b61bf126d7732f3694f2}{FileName} () << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+298                      << \textcolor{stringliteral}{"     numOfBorderPixels ["} << numOfBorderPixels  << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+299                      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+300 
+301       ofstream r (\textcolor{stringliteral}{"c:\(\backslash\)\(\backslash\)temp\(\backslash\)\(\backslash\)ContourFollowerFollowContour.log"}, std::ios\_base::ate);
+302       r << \textcolor{stringliteral}{"FileName  ["} << raster.\hyperlink{class_k_k_b_1_1_raster_a847b09bd1487b61bf126d7732f3694f2}{FileName} ()        << \textcolor{stringliteral}{"]  "};  
+303       r << \textcolor{stringliteral}{"totalPixels ["} << totalPixels             << \textcolor{stringliteral}{"]  "};
+304       r << \textcolor{stringliteral}{"numOfBorderPixels ["} << numOfBorderPixels << \textcolor{stringliteral}{"]"};
+305       r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+306       r.close ();
+307       \textcolor{keywordflow}{break};
+308     \}
+309 
+310     lastRow = nextRow;
+311     lastCol = nextCol;
+312 
+313     GetNextPixel (nextRow, nextCol);
+314 
+315     \textcolor{keywordflow}{if}  ((nextRow == scndRow)   &&  (nextCol == scndCol)  &&
+316          (lastRow == startRow)  &&  (lastCol == startCol))
+317     \{
+318       \textcolor{keywordflow}{break};
+319     \}
+320 
+321     \textcolor{keywordflow}{if}  (numOfBorderPixels >= maxNumOfBorderPoints)
+322     \{
+323       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
+324 
+325 \textcolor{preprocessor}{      #if  defined(FFTW\_AVAILABLE)}
+326         fftwf\_complex*  newSrc = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * newMaxNumOfAngles);
+327 \textcolor{preprocessor}{      #else}
+328         \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  newSrc = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[newMaxNumOfAngles];
+329 \textcolor{preprocessor}{      #endif}
+330 
+331       \textcolor{keywordflow}{if}  (newSrc == NULL)
+332       \{
+333         log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << endl << endl
+334                        << \textcolor{stringliteral}{"FollowContour     ***ERROR***"} << endl
+335                        << endl
+336                        << \textcolor{stringliteral}{"Could not allocate memory needed for contour points."} << endl
+337                        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+338         successful = \textcolor{keyword}{false};
+339         \textcolor{keywordflow}{return} 0;
+340       \}
+341 
+342       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+343       \textcolor{keywordflow}{for}  (x = 0; x < maxNumOfBorderPoints; x++)
+344       \{
+345 \textcolor{preprocessor}{        #if  defined(FFTW\_AVAILABLE)}
+346           newSrc[x][0] = src[x][0];
+347           newSrc[x][1] = src[x][1];
+348 \textcolor{preprocessor}{        #else}
+349           newSrc[x].real (src[x].real ());
+350           newSrc[x].imag (src[x].imag ());
+351 \textcolor{preprocessor}{        #endif}
+352       \}
+353 
+354 
+355 \textcolor{preprocessor}{      #if  defined(FFTW\_AVAILABLE)}
+356         fftwf\_free (src);
+357         src = newSrc;
+358         newSrc = NULL;
+359 \textcolor{preprocessor}{      #else}
+360         \textcolor{keyword}{delete}  src;
+361         src = newSrc;
+362         newSrc = NULL;
+363 \textcolor{preprocessor}{      #endif}
+364 
+365       maxNumOfBorderPoints = newMaxNumOfAngles;
+366     \}
+367 
+368 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+369       src[numOfBorderPixels][0] = (float)nextRow;
+370       src[numOfBorderPixels][1] = (float)nextCol;
+371 \textcolor{preprocessor}{    #else}
+372       src[numOfBorderPixels].real ((\textcolor{keywordtype}{float})nextRow);
+373       src[numOfBorderPixels].imag ((\textcolor{keywordtype}{float})nextCol);
+374 \textcolor{preprocessor}{    #endif}
+375 
+376     totalRow += nextRow;
+377     totalCol += nextCol;
+378 
+379     numOfBorderPixels++;
+380   \}
+381 
+382   \textcolor{keywordtype}{float}  centerRow = (float)totalRow / (\textcolor{keywordtype}{float})numOfBorderPixels;
+383   \textcolor{keywordtype}{float}  centerCol = (float)totalCol / (\textcolor{keywordtype}{float})numOfBorderPixels;
+384 
+385   \textcolor{keywordtype}{float}  totalRe = 0.0;
+386   \textcolor{keywordtype}{float}  totalIm = 0.0;
+387 
+388   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBorderPixels;  x++)
+389   \{
+390 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+391       src[x][0] = (src[x][0] - centerRow);
+392       src[x][1] = (src[x][1] - centerCol);
+393       totalRe += src[x][0];
+394       totalIm += src[x][1];
+395 \textcolor{preprocessor}{    #else}
+396       src[x].real ((src[x].real () - centerRow));
+397       src[x].imag ((src[x].imag () - centerCol));
+398       totalRe += src[x].real ();
+399       totalIm += src[x].imag ();
+400 \textcolor{preprocessor}{    #endif}
+401   \}
+402 
+403 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+404     fftwf\_complex*  dest = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * maxNumOfBorderPoints);
+405     fftwf\_plan plan = fftwCreateOneDPlan (numOfBorderPixels, src, dest, FFTW\_FORWARD, FFTW\_ESTIMATE);
+406     fftwf\_execute (plan);
+407     fftwDestroyPlan (plan);
+408     plan = NULL;
+409 \textcolor{preprocessor}{  #else}
+410     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d}{KK\_DFT1D\_Float}  plan (numOfBorderPixels, \textcolor{keyword}{true});
+411     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  dest = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[numOfBorderPixels];
+412     plan.Transform (src, dest);
+413 \textcolor{preprocessor}{  #endif}
+414 
+415   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfedgePixels = numOfBorderPixels;
+416 
+417   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  count = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} [numOfBuckets];
+418 
+419   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+420   \{
+421     countourFreq[x] = 0.0f;
+422     count[x] = 0;
+423   \}
+424 
+425   \textcolor{comment}{// Original Region Areas,  as reflected in ICPR paper}
+426   \textcolor{keywordtype}{float}  middle = numOfBorderPixels / (float)2.0;
+427   \textcolor{keywordtype}{float}  r1 = middle / (float)2.0;
+428   \textcolor{keywordtype}{float}  r2 = middle * ( (float)3.0  /   (\textcolor{keywordtype}{float})4.0);
+429   \textcolor{keywordtype}{float}  r3 = middle * ( (float)7.0  /   (\textcolor{keywordtype}{float})8.0);
+430   \textcolor{keywordtype}{float}  r4 = middle * ((float)15.0  /  (\textcolor{keywordtype}{float})16.0);
+431 
+432   \textcolor{keywordtype}{float}  deltaX = 0.0f;
+433   \textcolor{keywordtype}{float}  mag    = 0.0f;
+434 
+435   \textcolor{keywordflow}{if}  (numOfBorderPixels < 8)
+436   \{
+437     successful = \textcolor{keyword}{false};
+438   \}
+439   \textcolor{keywordflow}{else}
+440   \{
+441     \textcolor{keywordtype}{float} normalizationFactor = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 1);
+442 
+443     fourierDescriptors[ 0] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 1) / normalizationFactor
+      ;
+444 
+445     fourierDescriptors[ 1] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 2)                     / normalizationFactor
+      ;
+446     fourierDescriptors[ 2] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 2) / normalizationFactor
+      ;
+447 
+448     fourierDescriptors[ 3] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 3)                     / normalizationFactor
+      ;
+449     fourierDescriptors[ 4] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 3) / normalizationFactor
+      ;
+450 
+451     fourierDescriptors[ 5] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 4)                     / normalizationFactor
+      ;
+452     fourierDescriptors[ 6] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 4) / normalizationFactor
+      ;
+453 
+454     fourierDescriptors[ 7] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 5)                     / normalizationFactor
+      ;
+455     fourierDescriptors[ 8] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 5) / normalizationFactor
+      ;
+456 
+457     fourierDescriptors[ 9] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 6)                     / normalizationFactor
+      ;
+458     fourierDescriptors[10] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 6) / normalizationFactor
+      ;
+459 
+460     fourierDescriptors[11] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 7)                     / normalizationFactor
+      ;
+461     fourierDescriptors[12] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 7) / normalizationFactor
+      ;
+462 
+463     fourierDescriptors[13] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, 8)                     / normalizationFactor
+      ;
+464     fourierDescriptors[14] = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, numOfBorderPixels - 8) / normalizationFactor
+      ;
+465   \}
+466 
+467   \textcolor{keywordflow}{for}  (x = 1; x < (numOfBorderPixels - 1); x++)
+468   \{
+469     \textcolor{comment}{//mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im));}
+470     \textcolor{comment}{//mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im) + 1.0);}
+471  
+472     mag = \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{CalcMagnitude} (dest, x);
+473 
+474     deltaX = (float)fabs ((\textcolor{keywordtype}{float})x - middle);
+475 
+476     \textcolor{keywordflow}{if}  (deltaX < r1)
+477     \{
+478       countourFreq[0] = countourFreq[0] + mag;
+479       count[0]++;
+480     \}
+481 
+482     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX < r2)
+483     \{
+484       countourFreq[1] = countourFreq[1] + mag;
+485       count[1]++;
+486     \}
+487 
+488     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX < r3)
+489     \{
+490       countourFreq[2] = countourFreq[2] + mag;
+491       count[2]++;
+492     \}
+493 
+494     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX < r4)
+495     \{
+496       countourFreq[3] = countourFreq[3] + mag;
+497       count[3]++;
+498     \}
+499 
+500     \textcolor{keywordflow}{else}
+501     \{
+502       countourFreq[4] = countourFreq[4] + mag;
+503       count[4]++;
+504     \}
+505   \}
+506 
+507   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  ++x)
+508   \{
+509     \textcolor{keywordflow}{if}  (count[x] <= 0)
+510     \{
+511       countourFreq[x] = 0.0;
+512     \}
+513     \textcolor{keywordflow}{else}
+514     \{
+515       countourFreq[x] = countourFreq[x] / (float)count[x];
+516     \}
+517   \}
+518 
+519 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+520     fftwf\_free (src);   src   = NULL;
+521     fftwf\_free (dest);  dest  = NULL;
+522 \textcolor{preprocessor}{  #else}
+523     \textcolor{keyword}{delete}  src;  src  = NULL;
+524     \textcolor{keyword}{delete}  dest; dest = NULL;
+525 \textcolor{preprocessor}{  #endif}
+526   \textcolor{keyword}{delete}[]  count;      count = NULL;
+527 
+528   \textcolor{keywordflow}{return}  numOfedgePixels;
+529 \}  \textcolor{comment}{/* FollowContour */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Follow\+Contour2@{Follow\+Contour2}}
+\index{Follow\+Contour2@{Follow\+Contour2}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Follow\+Contour2(float $\ast$countour\+Freq, bool \&successful)}{FollowContour2(float *countourFreq, bool &successful)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Contour\+Follower\+::\+Follow\+Contour2 (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{countour\+Freq, }
+\item[{bool \&}]{successful}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a2cdac24cea0e70a7eb5087b13d95027e}{}\label{class_k_k_b_1_1_contour_follower_a2cdac24cea0e70a7eb5087b13d95027e}
+
+
+Definition at line 533 of file Contour\+Follower.\+cpp.
+
+
+\begin{DoxyCode}
+536 \{
+537   \textcolor{comment}{// A different Version of FollowContour}
+538 
+539   \textcolor{comment}{// startRow and startCol is assumed to come from the left (6)}
+540 
+541   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBuckets = 16;
+542 
+543   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startRow;
+544   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startCol;
+545 
+546   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndRow;
+547   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndCol;
+548 
+549   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastRow;
+550   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol;
+551 
+552   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextRow;
+553   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextCol;
+554 
+555   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxNumOfBorderPoints = 3 * (height + width);
+556   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBorderPixels = 0;
+557 
+558   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+559 
+560   successful = \textcolor{keyword}{true};
+561 
+562   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalRow = 0;
+563   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  totalCol = 0;
+564 
+565 
+566 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+567   fftwf\_complex*  src = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * maxNumOfBorderPoints);
+568 \textcolor{preprocessor}{  #else}
+569   \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  src = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[maxNumOfBorderPoints];
+570 \textcolor{preprocessor}{  #endif}
+571 
+572   GetFirstPixel (startRow, startCol);
+573   \textcolor{keywordflow}{if}  ((startRow < 0)  ||  (startCol < 0)  ||  (PixelCountIn9PixelNeighborhood (startRow, startCol) < 2))
+574   \{
+575     cout << \textcolor{stringliteral}{"Very Bad Starting Point"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+576     successful = \textcolor{keyword}{false};
+577     \textcolor{keywordflow}{return} 0;
+578   \}
+579 
+580   GetNextPixel (scndRow, scndCol);
+581 
+582   nextRow = scndRow;
+583   nextCol = scndCol;
+584 
+585   lastRow = startRow;
+586   lastCol = startCol;
+587 
+588   \textcolor{keywordflow}{while}  (\textcolor{keyword}{true})  
+589   \{
+590     lastRow = nextRow;
+591     lastCol = nextCol;
+592 
+593     GetNextPixel (nextRow, nextCol);
+594 
+595     \textcolor{keywordflow}{if}  ((nextRow == scndRow)   &&  (nextCol == scndCol)  &&
+596          (lastRow == startRow)  &&  (lastCol == startCol))
+597     \{
+598       \textcolor{keywordflow}{break};
+599     \}
+600 
+601     \textcolor{keywordflow}{if}  (numOfBorderPixels >= maxNumOfBorderPoints)
+602     \{
+603       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  newMaxNumOfAngles = maxNumOfBorderPoints * 2;
+604 
+605 \textcolor{preprocessor}{      #if  defined(FFTW\_AVAILABLE)}
+606         fftwf\_complex*  newSrc = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * newMaxNumOfAngles);
+607 \textcolor{preprocessor}{      #else}
+608         \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  newSrc = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[newMaxNumOfAngles];
+609 \textcolor{preprocessor}{      #endif}
+610 
+611       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+612       \textcolor{keywordflow}{for}  (x = 0; x < maxNumOfBorderPoints; x++)
+613       \{
+614 \textcolor{preprocessor}{        #if  defined(FFTW\_AVAILABLE)}
+615           newSrc[x][0] = src[x][0];
+616           newSrc[x][1] = src[x][1];
+617 \textcolor{preprocessor}{        #else}
+618           newSrc[x].real (src[x].real ());
+619           newSrc[x].imag (src[x].imag ());
+620 \textcolor{preprocessor}{        #endif}
+621       \}
+622 
+623 \textcolor{preprocessor}{      #if  defined(FFTW\_AVAILABLE)}
+624         fftwf\_free (src);
+625         src = newSrc;
+626         newSrc = NULL;
+627 \textcolor{preprocessor}{      #else}
+628         \textcolor{keyword}{delete}  src;
+629         src = newSrc;
+630         newSrc = NULL;
+631 \textcolor{preprocessor}{      #endif}
+632 
+633       maxNumOfBorderPoints = newMaxNumOfAngles;
+634     \}
+635 
+636 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+637       src[numOfBorderPixels][0] = (float)nextRow;
+638       src[numOfBorderPixels][1] = (float)nextCol;
+639 \textcolor{preprocessor}{    #else}
+640       src[numOfBorderPixels].real ((\textcolor{keywordtype}{float})nextRow);
+641       src[numOfBorderPixels].imag ((\textcolor{keywordtype}{float})nextCol);
+642 \textcolor{preprocessor}{    #endif}
+643 
+644     totalRow += nextRow;
+645     totalCol += nextCol;
+646 
+647     numOfBorderPixels++;
+648   \}
+649 
+650   \textcolor{keywordtype}{float}  centerRow = (float)totalRow / (\textcolor{keywordtype}{float})numOfBorderPixels;
+651   \textcolor{keywordtype}{float}  centerCol = (float)totalCol / (\textcolor{keywordtype}{float})numOfBorderPixels;
+652 
+653   \textcolor{keywordtype}{float}  totalRe = 0.0;
+654   \textcolor{keywordtype}{float}  totalIm = 0.0;
+655 
+656   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBorderPixels;  x++)
+657   \{
+658 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+659       src[x][0] = src[x][0] - centerRow;
+660       src[x][1] = src[x][1] - centerCol;
+661       totalRe+= (float)src[x][0];
+662       totalIm+= (float)src[x][1];
+663 \textcolor{preprocessor}{    #else}
+664       src[x].real (src[x].real () - centerRow);
+665       src[x].imag (src[x].imag () - centerCol);
+666       totalRe+= (float)src[x].real ();
+667       totalIm+= (float)src[x].imag ();
+668 \textcolor{preprocessor}{    #endif}
+669   \}
+670 
+671   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfedgePixels = numOfBorderPixels;
+672 
+673 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+674     fftwf\_complex*  dest = (fftwf\_complex*)fftwf\_malloc (\textcolor{keyword}{sizeof} (fftwf\_complex) * maxNumOfBorderPoints);
+675     fftwf\_plan plan = fftwCreateOneDPlan (numOfBorderPixels, src, dest, FFTW\_FORWARD, FFTW\_ESTIMATE);
+676     fftwf\_execute (plan);
+677     fftwDestroyPlan (plan);
+678     plan = NULL;
+679 \textcolor{preprocessor}{  #else}
+680     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d}{KK\_DFT1D\_Float}  plan (numOfBorderPixels, \textcolor{keyword}{true});
+681     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}*  dest = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{KK\_DFT1D\_Float::DftComplexType}[numOfBorderPixels];
+682     plan.Transform (src, dest);
+683 \textcolor{preprocessor}{  #endif}
+684 
+685   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}*  count = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} [numOfBuckets];
+686 
+687   \textcolor{keywordflow}{for}  (x = 0; x < numOfBuckets; x++)
+688   \{
+689     countourFreq[x] = 0.0;
+690     count[x] = 0;
+691   \}
+692 
+693   \textcolor{keywordtype}{float}  middle = (float)numOfBorderPixels / (\textcolor{keywordtype}{float})2.0;
+694 
+695   \textcolor{keywordtype}{float}  r0 = middle * ( (float) 8.0  /   (\textcolor{keywordtype}{float})16.0);
+696   \textcolor{keywordtype}{float}  r1 = middle * ( (float)10.0  /   (\textcolor{keywordtype}{float})16.0);
+697   \textcolor{keywordtype}{float}  r2 = middle * ( (float)12.0  /   (\textcolor{keywordtype}{float})16.0);
+698   \textcolor{keywordtype}{float}  r3 = middle * ( (float)13.0  /   (\textcolor{keywordtype}{float})16.0);
+699 
+700 
+701   \textcolor{keywordtype}{float}  deltaX;
+702   \textcolor{keywordtype}{float}  mag;
+703 
+704   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  region = 0;
+705 
+706   \textcolor{keywordflow}{for}  (x = 1; x < numOfBorderPixels; x++)
+707   \{
+708     \textcolor{comment}{//mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im));}
+709     \textcolor{comment}{//mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im) + 1.0);}
+710 
+711 
+712 \textcolor{preprocessor}{    #if  defined(FFTW\_AVAILABLE)}
+713       mag = (float)sqrt (dest[x][0] * dest[x][0] + dest[x][1] * dest[x][1]);
+714 \textcolor{preprocessor}{    #else}
+715       mag = (float)sqrt (dest[x].real () * dest[x].real () + dest[x].imag () * dest[x].imag ());
+716 \textcolor{preprocessor}{    #endif}
+717 
+718     deltaX = (float)x - middle;
+719 
+720     \textcolor{keywordflow}{if}  (fabs (deltaX) < r0)
+721       \textcolor{keywordflow}{continue};
+722 
+723     \textcolor{keywordflow}{if}  (deltaX < 0)
+724     \{
+725       \textcolor{comment}{// We are on the Left half.}
+726       deltaX = fabs (deltaX);
+727 
+728       \textcolor{keywordflow}{if}       (x == 1)        region = 0;
+729       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == 2)        region = 1;
+730       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == 3)        region = 2;
+731       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == 4)        region = 3;
+732       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r3)  region = 4;
+733       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r2)  region = 5;
+734       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r1)  region = 6;
+735       \textcolor{keywordflow}{else}                     region = 7;
+736     \}
+737     \textcolor{keywordflow}{else}
+738     \{
+739       \textcolor{comment}{// We are on Right Half of array}
+740       \textcolor{keywordflow}{if}       (x == (numOfBorderPixels - 1))  region = 15;
+741       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == (numOfBorderPixels - 2))  region = 14;
+742       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == (numOfBorderPixels - 3))  region = 13;
+743       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (x == (numOfBorderPixels - 4))  region = 12;
+744       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r3)                  region = 11;
+745       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r2)                  region = 10;
+746       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (deltaX >= r1)                  region =  9;
+747       \textcolor{keywordflow}{else}                                     region =  8;
+748     \}
+749 
+750     countourFreq[region] = countourFreq[region] + mag;
+751     count[region]++;
+752   \}
+753 
+754   \textcolor{keywordflow}{for}  (x = 0; x < numOfBuckets; x++)
+755   \{
+756     \textcolor{keywordflow}{if}  (count[x] <= 0)
+757     \{
+758       countourFreq[x] = 0.0;
+759     \}
+760     \textcolor{keywordflow}{else}
+761     \{
+762       countourFreq[x] = countourFreq[x] / (float)count[x];
+763     \}
+764   \}
+765 
+766 \textcolor{preprocessor}{  #if  defined(FFTW\_AVAILABLE)}
+767     fftwf\_free (src);   src   = NULL;
+768     fftwf\_free (dest);  dest  = NULL;
+769 \textcolor{preprocessor}{  #else}
+770     \textcolor{keyword}{delete}[] src;   src  = NULL;
+771     \textcolor{keyword}{delete}[] dest;  dest = NULL;
+772 \textcolor{preprocessor}{  #endif}
+773   
+774   \textcolor{keyword}{delete}[]  count;
+775   count = NULL;
+776   
+777   
+778   \textcolor{keywordflow}{return}  numOfedgePixels;
+779 \}  \textcolor{comment}{/* FollowContour2 */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Generate\+Contour\+List@{Generate\+Contour\+List}}
+\index{Generate\+Contour\+List@{Generate\+Contour\+List}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Generate\+Contour\+List()}{GenerateContourList()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+List\+Ptr} Contour\+Follower\+::\+Generate\+Contour\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a34906be662b959eda2b11a45f49c5aa9}{}\label{class_k_k_b_1_1_contour_follower_a34906be662b959eda2b11a45f49c5aa9}
+
+
+Definition at line 783 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+List\+::\+Point\+List().
+
+
+
+Referenced by Histogram\+Distance\+From\+A\+Point\+Of\+Edge().
+
+
+\begin{DoxyCode}
+784 \{
+785   \textcolor{comment}{// startRow and startCol is assumed to come from the left (6)}
+786 
+787   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startRow = 0;
+788   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startCol = 0;
+789 
+790   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndRow  = 0;
+791   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  scndCol  = 0;
+792 
+793   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastRow  = 0;
+794   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastCol  = 0;
+795 
+796   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextRow  = 0;
+797   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nextCol  = 0;
+798 
+799   \hyperlink{class_k_k_b_1_1_point_list}{PointListPtr}  points = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point_list}{PointList} (\textcolor{keyword}{true});
+800 
+801   GetFirstPixel (startRow, startCol);
+802   \textcolor{keywordflow}{if}  ((startRow < 0)  ||  (startCol < 0)  ||  (PixelCountIn9PixelNeighborhood (startRow, startCol) < 2))
+803   \{
+804     \textcolor{keyword}{delete}  points;
+805     points = NULL;
+806     cout << \textcolor{stringliteral}{"Very Bad Starting Point"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+807     \textcolor{keywordflow}{return}  NULL;
+808   \}
+809 
+810   GetNextPixel (scndRow, scndCol);
+811 
+812   nextRow = scndRow;
+813   nextCol = scndCol;
+814 
+815   lastRow = startRow;
+816   lastCol = startCol;
+817 
+818   \textcolor{keywordflow}{while}  (\textcolor{keyword}{true})  
+819   \{
+820     lastRow = nextRow;
+821     lastCol = nextCol;
+822 
+823     GetNextPixel (nextRow, nextCol);
+824 
+825     \textcolor{keywordflow}{if}  ((nextRow == scndRow)   &&  (nextCol == scndCol)  &&
+826          (lastRow == startRow)  &&  (lastCol == startCol))
+827     \{
+828       \textcolor{keywordflow}{break};
+829     \}
+830 
+831     points->\hyperlink{class_k_k_b_1_1_k_k_queue_aa9fba4632b54268bf71ecb42dee0b575}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_point}{Point} (nextRow, nextCol));
+832   \}
+833 
+834   \textcolor{keywordflow}{return}  points;
+835 \}  \textcolor{comment}{/* GenerateContourList */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}!Histogram\+Distance\+From\+A\+Point\+Of\+Edge@{Histogram\+Distance\+From\+A\+Point\+Of\+Edge}}
+\index{Histogram\+Distance\+From\+A\+Point\+Of\+Edge@{Histogram\+Distance\+From\+A\+Point\+Of\+Edge}!K\+K\+B\+::\+Contour\+Follower@{K\+K\+B\+::\+Contour\+Follower}}
+\subsubsection[{\texorpdfstring{Histogram\+Distance\+From\+A\+Point\+Of\+Edge(float point\+Row, float point\+Col, kkint32 num\+Of\+Buckets, kkint32 $\ast$buckets, float \&min\+Distance, float \&max\+Distance, kkint32 \&num\+Of\+Edge\+Pixels)}{HistogramDistanceFromAPointOfEdge(float pointRow, float pointCol, kkint32 numOfBuckets, kkint32 *buckets, float &minDistance, float &maxDistance, kkint32 &numOfEdgePixels)}}]{\setlength{\rightskip}{0pt plus 5cm}void Contour\+Follower\+::\+Histogram\+Distance\+From\+A\+Point\+Of\+Edge (
+\begin{DoxyParamCaption}
+\item[{float}]{point\+Row, }
+\item[{float}]{point\+Col, }
+\item[{{\bf kkint32}}]{num\+Of\+Buckets, }
+\item[{{\bf kkint32} $\ast$}]{buckets, }
+\item[{float \&}]{min\+Distance, }
+\item[{float \&}]{max\+Distance, }
+\item[{{\bf kkint32} \&}]{num\+Of\+Edge\+Pixels}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_contour_follower_a360f7f500c25cbf3575da51f73392c1c}{}\label{class_k_k_b_1_1_contour_follower_a360f7f500c25cbf3575da51f73392c1c}
+
+
+Definition at line 1150 of file Contour\+Follower.\+cpp.
+
+
+
+References K\+K\+B\+::\+Point\+::\+Col(), K\+K\+B\+::\+Float\+Max, K\+K\+B\+::\+Float\+Min, Generate\+Contour\+List(), and K\+K\+B\+::\+Point\+::\+Row().
+
+
+\begin{DoxyCode}
+1158 \{
+1159   \hyperlink{class_k_k_b_1_1_point_list}{PointListPtr}  points = \hyperlink{class_k_k_b_1_1_contour_follower_a34906be662b959eda2b11a45f49c5aa9}{GenerateContourList} ();
+1160 
+1161   numOfEdgePixels = points->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1162   
+1163   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+1164 
+1165   minDistance = \hyperlink{namespace_k_k_b_ae17198c2bfe6bff1db2be8bb83f51929}{FloatMax};
+1166   maxDistance = \hyperlink{namespace_k_k_b_ab02e2be56dc2602d9fe757f5261ebc4c}{FloatMin};
+1167 
+1168   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+1169     buckets[x] = 0;
+1170 
+1171   \textcolor{keywordtype}{float}*  distances = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[points->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ()];
+1172 
+1173   \textcolor{keywordflow}{for}  (x = 0;  x < points->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1174   \{
+1175     \hyperlink{class_k_k_b_1_1_point}{Point}& point = (*points)[x];
+1176 
+1177     \textcolor{keywordtype}{float}  deltaCol = (float)point.\hyperlink{class_k_k_b_1_1_point_afb196b03757fc697f6ade0129a1c7fcf}{Col} () - pointCol;
+1178     \textcolor{keywordtype}{float}  deltaRow = (float)point.\hyperlink{class_k_k_b_1_1_point_abfc34bcf809fc9fb95baf5c745b07549}{Row} () - pointRow;
+1179 
+1180     \textcolor{keywordtype}{float}  distance = (float)sqrt (deltaCol * deltaCol  +  deltaRow  * deltaRow);
+1181 
+1182     distances[x] = distance;
+1183 
+1184     minDistance = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} (minDistance, distance);
+1185     maxDistance = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (maxDistance, distance);
+1186   \}
+1187 
+1188   \textcolor{keywordtype}{float}  bucketSize = (maxDistance - minDistance) / numOfBuckets;
+1189 
+1190   \textcolor{keywordflow}{if}  (bucketSize == 0.0)
+1191   \{
+1192      buckets[numOfBuckets / 2] = points->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1193   \}
+1194   \textcolor{keywordflow}{else}
+1195   \{
+1196     \textcolor{keywordflow}{for}  (x = 0;  x < points->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  x++)
+1197     \{
+1198       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucketIDX = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((distances[x] - minDistance) / bucketSize);
+1199       buckets[bucketIDX]++;
+1200     \}
+1201   \}
+1202 
+1203   \textcolor{keyword}{delete}    points;     points    = NULL;
+1204   \textcolor{keyword}{delete}[]  distances;  distances = NULL;
+1205 
+1206   \textcolor{keywordflow}{return};
+1207 \}  \textcolor{comment}{/* HistogramDistanceFromAPoint */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_contour_follower_8h}{Contour\+Follower.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_contour_follower_8cpp}{Contour\+Follower.\+cpp}\end{DoxyCompactItemize}

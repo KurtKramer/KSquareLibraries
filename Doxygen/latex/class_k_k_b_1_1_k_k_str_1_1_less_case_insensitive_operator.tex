@@ -1,0 +1,84 @@
+\hypertarget{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator}{}\section{K\+KB\+:\+:K\+K\+Str\+:\+:Less\+Case\+Insensitive\+Operator Class Reference}
+\label{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator}\index{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator@{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}}
+
+
+{\ttfamily \#include $<$K\+K\+Str.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a73137bb53032504c91e90bbebf13486f}{Less\+Case\+Insensitive\+Operator} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a5a5068f45c2ce18a7cc5e7027ce79d14}{operator()} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s1, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s2)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 706 of file K\+K\+Str.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator@{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}!Less\+Case\+Insensitive\+Operator@{Less\+Case\+Insensitive\+Operator}}
+\index{Less\+Case\+Insensitive\+Operator@{Less\+Case\+Insensitive\+Operator}!K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator@{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}}
+\subsubsection[{\texorpdfstring{Less\+Case\+Insensitive\+Operator()}{LessCaseInsensitiveOperator()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator\+::\+Less\+Case\+Insensitive\+Operator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a73137bb53032504c91e90bbebf13486f}{}\label{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a73137bb53032504c91e90bbebf13486f}
+
+
+Definition at line 496 of file K\+K\+Str.\+cpp.
+
+
+\begin{DoxyCode}
+497 \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator@{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}!operator()@{operator()}}
+\index{operator()@{operator()}!K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator@{K\+K\+B\+::\+K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator}}
+\subsubsection[{\texorpdfstring{operator()(const K\+K\+Str \&s1, const K\+K\+Str \&s2)}{operator()(const KKStr &s1, const KKStr &s2)}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Str\+::\+Less\+Case\+Insensitive\+Operator\+::operator() (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{s1, }
+\item[{const {\bf K\+K\+Str} \&}]{s2}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a5a5068f45c2ce18a7cc5e7027ce79d14}{}\label{class_k_k_b_1_1_k_k_str_1_1_less_case_insensitive_operator_a5a5068f45c2ce18a7cc5e7027ce79d14}
+
+
+Definition at line 501 of file K\+K\+Str.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+\begin{DoxyCode}
+504 \{
+505   \textcolor{keywordtype}{char}* s1Ptr = (\textcolor{keywordtype}{char}*)s1.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ();
+506   \textcolor{keywordtype}{char}* s2Ptr = (\textcolor{keywordtype}{char}*)s2.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ();
+507 
+508   \textcolor{keywordflow}{if}  (s1Ptr == NULL)
+509     \textcolor{keywordflow}{return} (s2Ptr != NULL);
+510 
+511   \textcolor{keywordflow}{if}  (s2Ptr == NULL)
+512     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+513 
+514   \textcolor{keywordflow}{while}  ((*s1Ptr != 0)  &&  (tolower (*s1Ptr) == tolower (*s2Ptr)))
+515   \{
+516     ++s1Ptr;
+517     ++s2Ptr;
+518   \}
+519 
+520   \textcolor{keywordflow}{return}  (*s1Ptr) < (*s2Ptr);
+521 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8h}{K\+K\+Str.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_str_8cpp}{K\+K\+Str.\+cpp}\end{DoxyCompactItemize}

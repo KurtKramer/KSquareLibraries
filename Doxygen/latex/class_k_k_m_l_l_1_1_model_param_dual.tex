@@ -1,0 +1,582 @@
+\hypertarget{class_k_k_m_l_l_1_1_model_param_dual}{}\section{K\+K\+M\+LL\+:\+:Model\+Param\+Dual Class Reference}
+\label{class_k_k_m_l_l_1_1_model_param_dual}\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+
+
+{\ttfamily \#include $<$Model\+Param\+Dual.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Model\+Param\+Dual\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_model_param_dual}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_model_param_dual}{Model\+Param\+Dual} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a83c76ba9be647e769ae21200719f9a23}{Model\+Param\+Dual\+Ptr}
+\item 
+enum \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930af}{Prob\+Fusion\+Method} \{ \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afabbb93ef26e3c101ff11cdd21cab08a94}{Prob\+Fusion\+Method\+::\+Null}, 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{Prob\+Fusion\+Method\+::\+Or}, 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}{Prob\+Fusion\+Method\+::\+And}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_af5d858c18bbbeab7abd6cefc5beafdb9}{Model\+Param\+Dual} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a034509b44dc95c52a4e374cc9f8eadc6}{Model\+Param\+Dual} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+config\+File\+Name1, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+config\+File\+Name2, bool \+\_\+full\+Hierarchy\+Must\+Match)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a6689047fe5fea427af77f30518d49019}{Model\+Param\+Dual} (const \hyperlink{class_k_k_m_l_l_1_1_model_param_dual}{Model\+Param\+Dual} \&\+\_\+param)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a2baec1df536a27807b70b87daf54fded}{$\sim$\+Model\+Param\+Dual} ()
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_af2900e50f7a1ea37e236b50f8f005837}{Config\+File\+Name1} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab8f04150ca014f0d8244b0f01a10503a}{Config\+File\+Name2} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a83c76ba9be647e769ae21200719f9a23}{Model\+Param\+Dual\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab11ce0c651445d53bd58f458f9ad42f5}{Duplicate} () const 
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab358ce3c1c30ecb0ec22dd269d0d8098}{Full\+Hierarchy\+Must\+Match} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_a5984a5fe225fdbe8e40fb5ec746a42d0}{Model\+Param\+Types} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_adebfade6e2e2d0423397dd9a0e5aba08}{Model\+Param\+Type} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a5069c91281030811fb8563009ed0c488}{Other\+Class} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_afb94ad207c21bec2c6a56dfb33de2386}{Other\+Class} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+other\+Class)
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_aab4c499ddc06789ad9f51eeb0213401f}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ac60d7249bbd474220b45534335a0b389}{To\+Cmd\+Line\+Str} () const 
+\begin{DoxyCompactList}\small\item\em Creates a Command Line String that represents these parameters. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_aac80a5c4dbdd177e9d52dab25c22504f}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930af}{Prob\+Fusion\+Method} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a7d3cfcefe1290cf84a76c1ffaad21d92}{Prob\+Fusion\+Method\+From\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&s)
+\item 
+static \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab51c6549d440fbc01a53d68447c3ae95}{Prob\+Fusion\+Method\+To\+Str} (\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930af}{Prob\+Fusion\+Method} pfm)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Parameters used for the Dual Classifier. $\ast$
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_m_l_l_1_1_model}{Model} 
+\end{DoxySeeAlso}
+
+
+Definition at line 17 of file Model\+Param\+Dual.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Model\+Param\+Dual\+Ptr@{Model\+Param\+Dual\+Ptr}}
+\index{Model\+Param\+Dual\+Ptr@{Model\+Param\+Dual\+Ptr}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Dual\+Ptr}{ModelParamDualPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Model\+Param\+Dual}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Model\+Param\+Dual\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a83c76ba9be647e769ae21200719f9a23}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a83c76ba9be647e769ae21200719f9a23}
+
+
+Definition at line 20 of file Model\+Param\+Dual.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Prob\+Fusion\+Method@{Prob\+Fusion\+Method}}
+\index{Prob\+Fusion\+Method@{Prob\+Fusion\+Method}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Prob\+Fusion\+Method}{ProbFusionMethod}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Prob\+Fusion\+Method}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930af}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930af}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Null@{Null}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Null@{Null}}\item[{\em 
+Null\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afabbb93ef26e3c101ff11cdd21cab08a94}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afabbb93ef26e3c101ff11cdd21cab08a94}
+}]\index{Or@{Or}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Or@{Or}}\item[{\em 
+Or\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}
+}]\index{And@{And}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!And@{And}}\item[{\em 
+And\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 22 of file Model\+Param\+Dual.\+h.
+
+
+\begin{DoxyCode}
+23     \{
+24       \hyperlink{namespace_k_k_m_l_l_ad917464bc631109a3021cf02cd27af9aabbb93ef26e3c101ff11cdd21cab08a94}{Null},
+25       Or,
+26       And
+27     \};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Model\+Param\+Dual@{Model\+Param\+Dual}}
+\index{Model\+Param\+Dual@{Model\+Param\+Dual}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Dual()}{ModelParamDual()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Dual\+::\+Model\+Param\+Dual (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_af5d858c18bbbeab7abd6cefc5beafdb9}{}\label{class_k_k_m_l_l_1_1_model_param_dual_af5d858c18bbbeab7abd6cefc5beafdb9}
+
+
+Definition at line 31 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param(), and Or.
+
+
+\begin{DoxyCode}
+31                                 :
+32   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam} (),
+33   configFileName1        (),
+34   configFileName2        (),
+35   fullHierarchyMustMatch (\textcolor{keyword}{false}),
+36   otherClass             (NULL),
+37   probFusionMethod       (\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{ProbFusionMethod::Or})
+38 \{
+39 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Model\+Param\+Dual@{Model\+Param\+Dual}}
+\index{Model\+Param\+Dual@{Model\+Param\+Dual}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Dual(const K\+K\+Str \&\+\_\+config\+File\+Name1, const K\+K\+Str \&\+\_\+config\+File\+Name2, bool \+\_\+full\+Hierarchy\+Must\+Match)}{ModelParamDual(const KKStr &_configFileName1, const KKStr &_configFileName2, bool _fullHierarchyMustMatch)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Dual\+::\+Model\+Param\+Dual (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+config\+File\+Name1, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+config\+File\+Name2, }
+\item[{bool}]{\+\_\+full\+Hierarchy\+Must\+Match}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a034509b44dc95c52a4e374cc9f8eadc6}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a034509b44dc95c52a4e374cc9f8eadc6}
+
+
+Definition at line 44 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param(), and Or.
+
+
+\begin{DoxyCode}
+47                                  :
+48 
+49   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam}             (),
+50   configFileName1        (\_configFileName1),
+51   configFileName2        (\_configFileName2),
+52   fullHierarchyMustMatch (\_fullHierarchyMustMatch),
+53   otherClass             (NULL),
+54   probFusionMethod       (\hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{ProbFusionMethod::Or})
+55 \{
+56 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Model\+Param\+Dual@{Model\+Param\+Dual}}
+\index{Model\+Param\+Dual@{Model\+Param\+Dual}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Dual(const Model\+Param\+Dual \&\+\_\+param)}{ModelParamDual(const ModelParamDual &_param)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Dual\+::\+Model\+Param\+Dual (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Param\+Dual} \&}]{\+\_\+param}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a6689047fe5fea427af77f30518d49019}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a6689047fe5fea427af77f30518d49019}
+
+
+Definition at line 65 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param().
+
+
+
+Referenced by Duplicate().
+
+
+\begin{DoxyCode}
+65                                                              :
+66   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam}             (\_param),
+67   configFileName1        (\_param.configFileName1),
+68   configFileName2        (\_param.configFileName2),
+69   fullHierarchyMustMatch (\_param.fullHierarchyMustMatch),
+70   otherClass             (\_param.otherClass),
+71   probFusionMethod       (\_param.probFusionMethod)
+72 \{
+73 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!````~Model\+Param\+Dual@{$\sim$\+Model\+Param\+Dual}}
+\index{````~Model\+Param\+Dual@{$\sim$\+Model\+Param\+Dual}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{$\sim$\+Model\+Param\+Dual()}{~ModelParamDual()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Dual\+::$\sim$\+Model\+Param\+Dual (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a2baec1df536a27807b70b87daf54fded}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a2baec1df536a27807b70b87daf54fded}
+
+
+Definition at line 77 of file Model\+Param\+Dual.\+cpp.
+
+
+\begin{DoxyCode}
+78 \{
+79 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Config\+File\+Name1@{Config\+File\+Name1}}
+\index{Config\+File\+Name1@{Config\+File\+Name1}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Config\+File\+Name1() const }{ConfigFileName1() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Config\+File\+Name1 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_af2900e50f7a1ea37e236b50f8f005837}{}\label{class_k_k_m_l_l_1_1_model_param_dual_af2900e50f7a1ea37e236b50f8f005837}
+
+
+Definition at line 49 of file Model\+Param\+Dual.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+49 \{\textcolor{keywordflow}{return} configFileName1;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Config\+File\+Name2@{Config\+File\+Name2}}
+\index{Config\+File\+Name2@{Config\+File\+Name2}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Config\+File\+Name2() const }{ConfigFileName2() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Config\+File\+Name2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_ab8f04150ca014f0d8244b0f01a10503a}{}\label{class_k_k_m_l_l_1_1_model_param_dual_ab8f04150ca014f0d8244b0f01a10503a}
+
+
+Definition at line 50 of file Model\+Param\+Dual.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+50 \{\textcolor{keywordflow}{return} configFileName2;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Duplicate() const }{Duplicate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Param\+Dual\+Ptr} Model\+Param\+Dual\+::\+Duplicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_ab11ce0c651445d53bd58f458f9ad42f5}{}\label{class_k_k_m_l_l_1_1_model_param_dual_ab11ce0c651445d53bd58f458f9ad42f5}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_ae2a628483ddd27f4c5401934ec8cbb4b}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 117 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References Model\+Param\+Dual().
+
+
+\begin{DoxyCode}
+118 \{
+119   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_af5d858c18bbbeab7abd6cefc5beafdb9}{ModelParamDual} (*\textcolor{keyword}{this});
+120 \}  \textcolor{comment}{/* Duplicate */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Full\+Hierarchy\+Must\+Match@{Full\+Hierarchy\+Must\+Match}}
+\index{Full\+Hierarchy\+Must\+Match@{Full\+Hierarchy\+Must\+Match}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Full\+Hierarchy\+Must\+Match() const }{FullHierarchyMustMatch() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Full\+Hierarchy\+Must\+Match (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_ab358ce3c1c30ecb0ec22dd269d0d8098}{}\label{class_k_k_m_l_l_1_1_model_param_dual_ab358ce3c1c30ecb0ec22dd269d0d8098}
+
+
+Definition at line 51 of file Model\+Param\+Dual.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Reconcile\+Predictions().
+
+
+\begin{DoxyCode}
+51 \{\textcolor{keywordflow}{return} fullHierarchyMustMatch;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Model\+Param\+Type@{Model\+Param\+Type}}
+\index{Model\+Param\+Type@{Model\+Param\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Type() const }{ModelParamType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Model\+Param\+Types} K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Model\+Param\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_adebfade6e2e2d0423397dd9a0e5aba08}{}\label{class_k_k_m_l_l_1_1_model_param_dual_adebfade6e2e2d0423397dd9a0e5aba08}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_a5242ed04961c16c12068f02044af20a8}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 54 of file Model\+Param\+Dual.\+h.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Dual.
+
+
+\begin{DoxyCode}
+54 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_param_a5984a5fe225fdbe8e40fb5ec746a42d0acf53591af1208ddd535806600273099a}{ModelParamTypes::Dual};\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Other\+Class@{Other\+Class}}
+\index{Other\+Class@{Other\+Class}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Other\+Class() const }{OtherClass() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+Class\+Ptr} K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Other\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a5069c91281030811fb8563009ed0c488}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a5069c91281030811fb8563009ed0c488}
+
+
+Definition at line 52 of file Model\+Param\+Dual.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Reconcile\+Predictions().
+
+
+\begin{DoxyCode}
+52 \{\textcolor{keywordflow}{return} otherClass;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Other\+Class@{Other\+Class}}
+\index{Other\+Class@{Other\+Class}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Other\+Class(\+M\+L\+Class\+Ptr \+\_\+other\+Class)}{OtherClass(MLClassPtr _otherClass)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Other\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+other\+Class}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_afb94ad207c21bec2c6a56dfb33de2386}{}\label{class_k_k_m_l_l_1_1_model_param_dual_afb94ad207c21bec2c6a56dfb33de2386}
+
+
+Definition at line 56 of file Model\+Param\+Dual.\+h.
+
+
+\begin{DoxyCode}
+56 \{otherClass = \_otherClass;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Prob\+Fusion\+Method\+From\+Str@{Prob\+Fusion\+Method\+From\+Str}}
+\index{Prob\+Fusion\+Method\+From\+Str@{Prob\+Fusion\+Method\+From\+Str}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Prob\+Fusion\+Method\+From\+Str(const K\+K\+Str \&s)}{ProbFusionMethodFromStr(const KKStr &s)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Param\+Dual\+::\+Prob\+Fusion\+Method} Model\+Param\+Dual\+::\+Prob\+Fusion\+Method\+From\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_a7d3cfcefe1290cf84a76c1ffaad21d92}{}\label{class_k_k_m_l_l_1_1_model_param_dual_a7d3cfcefe1290cf84a76c1ffaad21d92}
+
+
+Definition at line 82 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References And, K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), Null, and Or.
+
+
+\begin{DoxyCode}
+83 \{
+84   \textcolor{keywordflow}{if}  (s.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"And"}))
+85     \textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}{ProbFusionMethod::And};
+86 
+87   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (s.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Or"}))
+88     \textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{ProbFusionMethod::Or};
+89 
+90   \textcolor{keywordflow}{else}
+91     \textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afabbb93ef26e3c101ff11cdd21cab08a94}{ProbFusionMethod::Null};
+92 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Prob\+Fusion\+Method\+To\+Str@{Prob\+Fusion\+Method\+To\+Str}}
+\index{Prob\+Fusion\+Method\+To\+Str@{Prob\+Fusion\+Method\+To\+Str}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Prob\+Fusion\+Method\+To\+Str(\+Prob\+Fusion\+Method pfm)}{ProbFusionMethodToStr(ProbFusionMethod pfm)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Model\+Param\+Dual\+::\+Prob\+Fusion\+Method\+To\+Str (
+\begin{DoxyParamCaption}
+\item[{{\bf Prob\+Fusion\+Method}}]{pfm}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_ab51c6549d440fbc01a53d68447c3ae95}{}\label{class_k_k_m_l_l_1_1_model_param_dual_ab51c6549d440fbc01a53d68447c3ae95}
+
+
+Definition at line 95 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References And, K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), Null, and Or.
+
+
+
+Referenced by To\+Cmd\+Line\+Str(), and Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+96 \{
+97   \textcolor{keywordflow}{if}  ((pfm <   \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afabbb93ef26e3c101ff11cdd21cab08a94}{ProbFusionMethod::Null})  ||  (pfm > 
+      \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}{ProbFusionMethod::And}))
+98     \textcolor{keywordflow}{return} KKStr::EmptyStr ();
+99 
+100   \textcolor{keywordflow}{switch}  (pfm)
+101   \{
+102   \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afac33315685a0cba3ce53be378b3c7874b}{ProbFusionMethod::And}:
+103       \textcolor{keywordflow}{return} \textcolor{stringliteral}{"And"};
+104       \textcolor{keywordflow}{break};
+105 
+106     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a15565502cd267eb5c34afd4fd08930afa3a2d5fe857d8f9541136a124c2edec6c}{ProbFusionMethod::Or}:
+107      \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"Or"};
+108      \textcolor{keywordflow}{break};
+109   \}
+110 
+111   \textcolor{keywordflow}{return}  KKStr::EmptyStr ();
+112 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Dual\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_aab4c499ddc06789ad9f51eeb0213401f}{}\label{class_k_k_m_l_l_1_1_model_param_dual_aab4c499ddc06789ad9f51eeb0213401f}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_a671c3ef465614d548e3730ca0427eb67}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 278 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Read\+X\+M\+L\+Model\+Param\+Token(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Value(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+::\+Value(), and K\+K\+B\+::\+Xml\+Token\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+283 \{
+284   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+285   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+286   \{
+287     t = \hyperlink{class_k_k_m_l_l_1_1_model_param_a6d51128c4b26cb4c432091dc2e21415d}{ReadXMLModelParamToken} (t);
+288     \textcolor{keywordflow}{if}  (t)
+289     \{
+290       \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  varName = t->\hyperlink{class_k_k_b_1_1_xml_token_a28b39cfdfa2ed63048a812b1cb52263c}{VarName} ();
+291 
+292       \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"ConfigFileName1"}))
+293         configFileName1 = *(dynamic\_cast<XmlElementKKStrPtr> (t)->Value ());
+294 
+295       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"ConfigFileName2"}))
+296         configFileName2 = *(dynamic\_cast<XmlElementKKStrPtr> (t)->Value ());
+297 
+298       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"FullHierarchyMustMatch"}))
+299         fullHierarchyMustMatch = dynamic\_cast<XmlElementBoolPtr> (t)->Value ();
+300 
+301       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"OtherClass"}))  &&  (\textcolor{keyword}{typeid} (*t) == \textcolor{keyword}{typeid} (
+      \hyperlink{class_k_k_m_l_l_1_1_xml_element_m_l_class}{XmlElementMLClass})))
+302         otherClass = dynamic\_cast<XmlElementMLClassPtr> (t)->Value ();
+303 
+304       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"ProbFusionMethod"}))
+305         probFusionMethod = \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_a7d3cfcefe1290cf84a76c1ffaad21d92}{ProbFusionMethodFromStr} (*(
+      dynamic\_cast<XmlElementKKStrPtr> (t)->Value ()));
+306     \}
+307     \textcolor{keyword}{delete}  t;
+308     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+309   \}
+310   \textcolor{keyword}{delete}  t;
+311   t = NULL;
+312 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!To\+Cmd\+Line\+Str@{To\+Cmd\+Line\+Str}}
+\index{To\+Cmd\+Line\+Str@{To\+Cmd\+Line\+Str}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{To\+Cmd\+Line\+Str() const }{ToCmdLineStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Model\+Param\+Dual\+::\+To\+Cmd\+Line\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_ac60d7249bbd474220b45534335a0b389}{}\label{class_k_k_m_l_l_1_1_model_param_dual_ac60d7249bbd474220b45534335a0b389}
+
+
+Creates a Command Line String that represents these parameters. 
+
+Convert all parameters to a command line string.
+
+All derived classes should implement this method. They should first call this method and then append there own parameters that are specific to their implementation. 
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_aa4d9a12b145ecccb1eea6a373bcf5a34}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 222 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), Prob\+Fusion\+Method\+To\+Str(), and K\+K\+M\+L\+L\+::\+Model\+Param\+::\+To\+Cmd\+Line\+Str().
+
+
+\begin{DoxyCode}
+223 \{
+224   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  cmdStr (300);
+225   cmdStr = \hyperlink{class_k_k_m_l_l_1_1_model_param_aa4d9a12b145ecccb1eea6a373bcf5a34}{ModelParam::ToCmdLineStr} ();
+226 
+227   \textcolor{keywordflow}{if}  (!configFileName1.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+228     cmdStr << \textcolor{stringliteral}{"  "} << \textcolor{stringliteral}{"-Classifier1"} << \textcolor{stringliteral}{" "} << configFileName1;
+229 
+230   \textcolor{keywordflow}{if}  (!configFileName2.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+231     cmdStr << \textcolor{stringliteral}{"  "} << \textcolor{stringliteral}{"-Classifier2"} << \textcolor{stringliteral}{" "} << configFileName2;
+232 
+233   \textcolor{keywordflow}{if}  (fullHierarchyMustMatch)
+234     cmdStr << \textcolor{stringliteral}{"  "} << \textcolor{stringliteral}{"-FullHierarchyMustMatch"} << \textcolor{stringliteral}{" "} << \textcolor{stringliteral}{"Yes"};
+235 
+236   \textcolor{keywordflow}{if}  (otherClass)
+237     cmdStr << \textcolor{stringliteral}{"  "} << \textcolor{stringliteral}{"-OtherClass"} << \textcolor{stringliteral}{" "} << otherClass->Name ();
+238 
+239   cmdStr << \textcolor{stringliteral}{"  "} << \textcolor{stringliteral}{"-ProbFusionMethod"} << \textcolor{stringliteral}{" "}  << \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab51c6549d440fbc01a53d68447c3ae95}{ProbFusionMethodToStr} (this->
+      probFusionMethod);
+240 
+241   \textcolor{keywordflow}{return}  cmdStr;
+242 \}  \textcolor{comment}{/* ToCmdLineStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Param\+Dual@{K\+K\+M\+L\+L\+::\+Model\+Param\+Dual}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, ostream \&o) const }{WriteXML(const KKStr &varName, ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Dual\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_dual_aac80a5c4dbdd177e9d52dab25c22504f}{}\label{class_k_k_m_l_l_1_1_model_param_dual_aac80a5c4dbdd177e9d52dab25c22504f}
+
+
+Definition at line 247 of file Model\+Param\+Dual.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), Prob\+Fusion\+Method\+To\+Str(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Write\+X\+M\+L\+Fields(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+250 \{
+251   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"ModelParamDual"},  XmlTag::TagTypes::tagStart);
+252   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+253     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+254   startTag.WriteXML (o);
+255   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+256 
+257 
+258   \hyperlink{class_k_k_m_l_l_1_1_model_param_a91dc06ec604cf9c2a045991e9b88b5d3}{WriteXMLFields} (o);
+259 
+260   configFileName1.\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"ConfigFileName1"}, o);
+261   configFileName2.\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"ConfigFileName1"}, o);
+262 
+263   XmlElementBool::WriteXML (fullHierarchyMustMatch, \textcolor{stringliteral}{"FullHierarchyMustMatch"}, o);
+264   \textcolor{keywordflow}{if}  (otherClass)
+265     otherClass->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a3ba7c0c32b973c8cd0231d7ef8f7e122}{WriteXML} (\textcolor{stringliteral}{"OtherClass"}, o);
+266 
+267   \hyperlink{class_k_k_m_l_l_1_1_model_param_dual_ab51c6549d440fbc01a53d68447c3ae95}{ProbFusionMethodToStr} (probFusionMethod).\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"ProbFusionMethod"}, o);
+268 
+269   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"ModelParamDual"}, XmlTag::TagTypes::tagEnd);
+270   endTag.WriteXML (o);
+271   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+272 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_param_dual_8h}{Model\+Param\+Dual.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_param_dual_8cpp}{Model\+Param\+Dual.\+cpp}\end{DoxyCompactItemize}

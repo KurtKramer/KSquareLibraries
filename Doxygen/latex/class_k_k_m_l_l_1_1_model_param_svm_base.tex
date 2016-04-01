@@ -1,0 +1,546 @@
+\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base}{}\section{K\+K\+M\+LL\+:\+:Model\+Param\+Svm\+Base Class Reference}
+\label{class_k_k_m_l_l_1_1_model_param_svm_base}\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+
+
+{\ttfamily \#include $<$Model\+Param\+Svm\+Base.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Model\+Param\+Svm\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_model_param_svm_base}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base}{Model\+Param\+Svm\+Base} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a5ad5361c21775170f41e908b5bf924d0}{Model\+Param\+Svm\+Base\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a20408047e2d1914b1142bdb61a428a94}{Model\+Param\+Svm\+Base} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_aa0d301b0b3239ffa7fa0ada9835fa756}{Model\+Param\+Svm\+Base} (\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M\+\_\+\+Type} \+\_\+svm\+\_\+type, \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{Kernel\+\_\+\+Type} \+\_\+kernel\+Type, double \+\_\+cost, double \+\_\+gamma)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a6321b50611f65ae4ad0a8e5642b23b0d}{Model\+Param\+Svm\+Base} (const \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base}{Model\+Param\+Svm\+Base} \&\+\_\+param)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a268c1e49483cbb628d431e10479ec39d}{$\sim$\+Model\+Param\+Svm\+Base} ()
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a789aab0b698244d513a922fcbc3c8ff3}{Cost} (double \+\_\+cost)
+\item 
+virtual double \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_af330a8c4bc75498b6ec4f44de5e33f00}{Cost} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a5ad5361c21775170f41e908b5bf924d0}{Model\+Param\+Svm\+Base\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a842df60200522b2356ab24a22531fd5b}{Duplicate} () const 
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a69e39030fbc034ca005bce629a0f2d6f}{Gamma} (double \+\_\+gamma)
+\item 
+virtual double \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a17f748987931cb1048b79a55e906b002}{Gamma} () const 
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_aaa5bab312290229080771f3d862927cb}{Kernal\+Type} (\hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{Kernel\+\_\+\+Type} \+\_\+kernal\+Type)
+\item 
+virtual \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29}{Kernel\+\_\+\+Type} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a5429dc026764980ed8f94ea5be64cc12}{Kernal\+Type} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_model_param_a5984a5fe225fdbe8e40fb5ec746a42d0}{Model\+Param\+Types} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_aef389b1a5bb7a67c946a5d055daa3549}{Model\+Param\+Type} () const 
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a80074942967119640114a0e27b18a4c9}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+const \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter} \& \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a5d2a9e1e1ef64f6f764fdd80ac7e9640}{Svm\+Param} ()
+\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_ac1823f50e1777c0531828e7b59246a4a}{Svm\+Type} (\hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M\+\_\+\+Type} \+\_\+svm\+\_\+type)
+\item 
+virtual \hyperlink{namespace_s_v_m289___m_f_s_ace392faef6440cf56ebff6b360e7d72a}{S\+V\+M\+\_\+\+Type} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a683311de55910a8e3b1b069957bff77e}{Svm\+Type} () const 
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a9984261fa1a40e128d1abfa380ffe885}{To\+Cmd\+Line\+Str} () const 
+\begin{DoxyCompactList}\small\item\em Creates a Command Line String that represents these parameters. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a7d54f5563c5df6fa2073cc4a69e54e7f}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+This class encapsulates general parameters that are common to all Machine Learning Models. $\ast$
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_m_l_l_1_1_model}{Model} 
+\end{DoxySeeAlso}
+
+
+Definition at line 18 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Model\+Param\+Svm\+Base\+Ptr@{Model\+Param\+Svm\+Base\+Ptr}}
+\index{Model\+Param\+Svm\+Base\+Ptr@{Model\+Param\+Svm\+Base\+Ptr}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Svm\+Base\+Ptr}{ModelParamSvmBasePtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Model\+Param\+Svm\+Base}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Model\+Param\+Svm\+Base\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a5ad5361c21775170f41e908b5bf924d0}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a5ad5361c21775170f41e908b5bf924d0}
+
+
+Definition at line 21 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}}
+\index{Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Svm\+Base()}{ModelParamSvmBase()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Svm\+Base\+::\+Model\+Param\+Svm\+Base (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a20408047e2d1914b1142bdb61a428a94}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a20408047e2d1914b1142bdb61a428a94}
+
+
+Definition at line 28 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter().
+
+
+\begin{DoxyCode}
+28                                       :
+29 
+30   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam} (),
+31   svmParam   ()
+32 \{
+33 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}}
+\index{Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Svm\+Base(\+S\+V\+M\+\_\+\+Type \+\_\+svm\+\_\+type, Kernel\+\_\+\+Type \+\_\+kernel\+Type, double \+\_\+cost, double \+\_\+gamma)}{ModelParamSvmBase(SVM_Type _svm_type, Kernel_Type _kernelType, double _cost, double _gamma)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Svm\+Base\+::\+Model\+Param\+Svm\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Type}}]{\+\_\+svm\+\_\+type, }
+\item[{{\bf Kernel\+\_\+\+Type}}]{\+\_\+kernel\+Type, }
+\item[{double}]{\+\_\+cost, }
+\item[{double}]{\+\_\+gamma}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_aa0d301b0b3239ffa7fa0ada9835fa756}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_aa0d301b0b3239ffa7fa0ada9835fa756}
+
+
+Definition at line 38 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Cost(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Gamma(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Kernal\+Type(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Svm\+Type().
+
+
+\begin{DoxyCode}
+42                                        :
+43 
+44   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam} (),
+45   svmParam   ()
+46 \{
+47   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_acf7b4257d776af2f508966ff1d584b26}{SvmType}    (\_svm\_type);
+48   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a44599c9e724b08ed8285dfd253d415b3}{KernalType} (\_kernelType);
+49   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a5cdeb88049c4480323405e304c8422d7}{Cost}       (\_cost);
+50   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a1fa20dd4a76fb890b010602667927015}{Gamma}      (\_gamma);
+51 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}}
+\index{Model\+Param\+Svm\+Base@{Model\+Param\+Svm\+Base}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Svm\+Base(const Model\+Param\+Svm\+Base \&\+\_\+param)}{ModelParamSvmBase(const ModelParamSvmBase &_param)}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Svm\+Base\+::\+Model\+Param\+Svm\+Base (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Param\+Svm\+Base} \&}]{\+\_\+param}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a6321b50611f65ae4ad0a8e5642b23b0d}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a6321b50611f65ae4ad0a8e5642b23b0d}
+
+
+Definition at line 57 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Model\+Param(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter().
+
+
+
+Referenced by Duplicate().
+
+
+\begin{DoxyCode}
+57                                                                       :
+58   \hyperlink{class_k_k_m_l_l_1_1_model_param_a8edb2690da90e0af5d836f606e7eaa67}{ModelParam} (\_param),
+59   svmParam   (\_param.svmParam)
+60 \{
+61 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!````~Model\+Param\+Svm\+Base@{$\sim$\+Model\+Param\+Svm\+Base}}
+\index{````~Model\+Param\+Svm\+Base@{$\sim$\+Model\+Param\+Svm\+Base}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{$\sim$\+Model\+Param\+Svm\+Base()}{~ModelParamSvmBase()}}]{\setlength{\rightskip}{0pt plus 5cm}Model\+Param\+Svm\+Base\+::$\sim$\+Model\+Param\+Svm\+Base (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a268c1e49483cbb628d431e10479ec39d}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a268c1e49483cbb628d431e10479ec39d}
+
+
+Definition at line 65 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+\begin{DoxyCode}
+66 \{
+67 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Cost@{Cost}}
+\index{Cost@{Cost}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Cost(double \+\_\+cost)}{Cost(double _cost)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Svm\+Base\+::\+Cost (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+cost}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a789aab0b698244d513a922fcbc3c8ff3}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a789aab0b698244d513a922fcbc3c8ff3}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_a72731de96a5da66f736ecfa28f303acb}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 77 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Cost(), and K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Cost().
+
+
+\begin{DoxyCode}
+78 \{
+79   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a5cdeb88049c4480323405e304c8422d7}{Cost} (\_cost);
+80   \hyperlink{class_k_k_m_l_l_1_1_model_param_aa857203676a55864d0202b61bc2403bc}{ModelParam::Cost} (\_cost);
+81 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Cost@{Cost}}
+\index{Cost@{Cost}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Cost() const }{Cost() const }}]{\setlength{\rightskip}{0pt plus 5cm}double Model\+Param\+Svm\+Base\+::\+Cost (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_af330a8c4bc75498b6ec4f44de5e33f00}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_af330a8c4bc75498b6ec4f44de5e33f00}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_aa857203676a55864d0202b61bc2403bc}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 91 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Cost().
+
+
+\begin{DoxyCode}
+92 \{
+93   \textcolor{keywordflow}{return}  svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a5cdeb88049c4480323405e304c8422d7}{Cost} ();
+94 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Duplicate() const }{Duplicate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Model\+Param\+Svm\+Base\+Ptr} Model\+Param\+Svm\+Base\+::\+Duplicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a842df60200522b2356ab24a22531fd5b}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a842df60200522b2356ab24a22531fd5b}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_ae2a628483ddd27f4c5401934ec8cbb4b}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 70 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References Model\+Param\+Svm\+Base().
+
+
+\begin{DoxyCode}
+71 \{
+72   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_model_param_svm_base_a20408047e2d1914b1142bdb61a428a94}{ModelParamSvmBase} (*\textcolor{keyword}{this});
+73 \}  \textcolor{comment}{/* Duplicate */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Gamma@{Gamma}}
+\index{Gamma@{Gamma}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Gamma(double \+\_\+gamma)}{Gamma(double _gamma)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Svm\+Base\+::\+Gamma (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+gamma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a69e39030fbc034ca005bce629a0f2d6f}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a69e39030fbc034ca005bce629a0f2d6f}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_a9a368e6e7b7d8cbde615ce466fb61fa2}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 84 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Gamma(), and K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Gamma().
+
+
+\begin{DoxyCode}
+85 \{
+86   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a1fa20dd4a76fb890b010602667927015}{Gamma} (\_gamma);
+87   \hyperlink{class_k_k_m_l_l_1_1_model_param_ac128898ae19311796228c07e6a7923bd}{ModelParam::Gamma} (\_gamma);
+88 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Gamma@{Gamma}}
+\index{Gamma@{Gamma}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Gamma() const }{Gamma() const }}]{\setlength{\rightskip}{0pt plus 5cm}double Model\+Param\+Svm\+Base\+::\+Gamma (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a17f748987931cb1048b79a55e906b002}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a17f748987931cb1048b79a55e906b002}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_ac128898ae19311796228c07e6a7923bd}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 97 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Gamma().
+
+
+\begin{DoxyCode}
+98 \{
+99   \textcolor{keywordflow}{return}  svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a1fa20dd4a76fb890b010602667927015}{Gamma} ();
+100 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Kernal\+Type@{Kernal\+Type}}
+\index{Kernal\+Type@{Kernal\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Kernal\+Type(\+Kernel\+\_\+\+Type \+\_\+kernal\+Type)}{KernalType(Kernel_Type _kernalType)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Kernal\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf Kernel\+\_\+\+Type}}]{\+\_\+kernal\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_aaa5bab312290229080771f3d862927cb}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_aaa5bab312290229080771f3d862927cb}
+
+
+Definition at line 45 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Kernal\+Type().
+
+
+\begin{DoxyCode}
+45 \{svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a44599c9e724b08ed8285dfd253d415b3}{KernalType} (\_kernalType);\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Kernal\+Type@{Kernal\+Type}}
+\index{Kernal\+Type@{Kernal\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Kernal\+Type() const }{KernalType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Kernel\+\_\+\+Type} K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Kernal\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a5429dc026764980ed8f94ea5be64cc12}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a5429dc026764980ed8f94ea5be64cc12}
+
+
+Definition at line 50 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Kernal\+Type().
+
+
+\begin{DoxyCode}
+50 \{\textcolor{keywordflow}{return}  svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a44599c9e724b08ed8285dfd253d415b3}{KernalType} ();\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Model\+Param\+Type@{Model\+Param\+Type}}
+\index{Model\+Param\+Type@{Model\+Param\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Model\+Param\+Type() const }{ModelParamType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Model\+Param\+Types} K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Model\+Param\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_aef389b1a5bb7a67c946a5d055daa3549}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_aef389b1a5bb7a67c946a5d055daa3549}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_a5242ed04961c16c12068f02044af20a8}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 38 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+References K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Svm\+Base.
+
+
+\begin{DoxyCode}
+38 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_model_param_a5984a5fe225fdbe8e40fb5ec746a42d0ac59ef2743d310cad5d7bbb7b53773bb4}{ModelParamTypes::SvmBase};\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Svm\+Base\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a80074942967119640114a0e27b18a4c9}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a80074942967119640114a0e27b18a4c9}
+
+
+Implements \hyperlink{class_k_k_m_l_l_1_1_model_param_a671c3ef465614d548e3730ca0427eb67}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 166 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Read\+X\+M\+L\+Model\+Param\+Token(), and K\+K\+B\+::\+Xml\+Token\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+171 \{
+172   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+173   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+174   \{
+175     t = \hyperlink{class_k_k_m_l_l_1_1_model_param_a6d51128c4b26cb4c432091dc2e21415d}{ReadXMLModelParamToken} (t);
+176     \textcolor{keywordflow}{if}  (t)
+177     \{
+178       \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_a28b39cfdfa2ed63048a812b1cb52263c}{VarName} ().\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"SvmParam"}))
+179       \{
+180         svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_adb063e5121b891b0b02b3ef73e93aeff}{ParseTabDelStr} (*(dynamic\_cast<XmlElementKKStrPtr> (t)->Value ()));
+181       \}
+182     \}
+183     \textcolor{keyword}{delete}  t;
+184     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+185   \}
+186   \textcolor{keyword}{delete}  t;
+187   t = NULL;
+188 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Svm\+Param@{Svm\+Param}}
+\index{Svm\+Param@{Svm\+Param}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Svm\+Param()}{SvmParam()}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter}\& K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Svm\+Param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a5d2a9e1e1ef64f6f764fdd80ac7e9640}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a5d2a9e1e1ef64f6f764fdd80ac7e9640}
+
+
+Definition at line 41 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Description(), and K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+41 \{\textcolor{keywordflow}{return} svmParam;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Svm\+Type@{Svm\+Type}}
+\index{Svm\+Type@{Svm\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Svm\+Type(\+S\+V\+M\+\_\+\+Type \+\_\+svm\+\_\+type)}{SvmType(SVM_Type _svm_type)}}]{\setlength{\rightskip}{0pt plus 5cm}virtual void K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Svm\+Type (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+V\+M\+\_\+\+Type}}]{\+\_\+svm\+\_\+type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_ac1823f50e1777c0531828e7b59246a4a}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_ac1823f50e1777c0531828e7b59246a4a}
+
+
+Definition at line 46 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Svm\+Type().
+
+
+\begin{DoxyCode}
+46 \{svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_acf7b4257d776af2f508966ff1d584b26}{SvmType}    (\_svm\_type);\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Svm\+Type@{Svm\+Type}}
+\index{Svm\+Type@{Svm\+Type}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Svm\+Type() const }{SvmType() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf S\+V\+M\+\_\+\+Type} K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Svm\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a683311de55910a8e3b1b069957bff77e}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a683311de55910a8e3b1b069957bff77e}
+
+
+Definition at line 51 of file Model\+Param\+Svm\+Base.\+h.
+
+
+
+References S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+Svm\+Type().
+
+
+\begin{DoxyCode}
+51 \{\textcolor{keywordflow}{return}  svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_acf7b4257d776af2f508966ff1d584b26}{SvmType}    ();\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!To\+Cmd\+Line\+Str@{To\+Cmd\+Line\+Str}}
+\index{To\+Cmd\+Line\+Str@{To\+Cmd\+Line\+Str}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{To\+Cmd\+Line\+Str() const }{ToCmdLineStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Model\+Param\+Svm\+Base\+::\+To\+Cmd\+Line\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a9984261fa1a40e128d1abfa380ffe885}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a9984261fa1a40e128d1abfa380ffe885}
+
+
+Creates a Command Line String that represents these parameters. 
+
+Convert all parameters to a command line string.
+
+All derived classes should implement this method. They should first call this method and then append there own parameters that are specific to their implementation. 
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_model_param_aa4d9a12b145ecccb1eea6a373bcf5a34}{K\+K\+M\+L\+L\+::\+Model\+Param}.
+
+
+
+Definition at line 131 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+To\+Cmd\+Line\+Str(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+To\+Cmd\+Line\+Str().
+
+
+\begin{DoxyCode}
+132 \{
+133   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  cmdStr (300);
+134   cmdStr = \hyperlink{class_k_k_m_l_l_1_1_model_param_aa4d9a12b145ecccb1eea6a373bcf5a34}{ModelParam::ToCmdLineStr} () + \textcolor{stringliteral}{" "} + svmParam.
+      \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aa452d9976e7c1da9362538a758eb7837}{ToCmdLineStr} ();
+135   \textcolor{keywordflow}{return}  cmdStr;
+136 \}  \textcolor{comment}{/* ToCmdLineStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base@{K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, ostream \&o) const }{WriteXML(const KKStr &varName, ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Model\+Param\+Svm\+Base\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_model_param_svm_base_a7d54f5563c5df6fa2073cc4a69e54e7f}{}\label{class_k_k_m_l_l_1_1_model_param_svm_base_a7d54f5563c5df6fa2073cc4a69e54e7f}
+
+
+Definition at line 142 of file Model\+Param\+Svm\+Base.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::\+To\+Tab\+Del\+Str(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Write\+X\+M\+L\+Fields(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+\begin{DoxyCode}
+145 \{
+146   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"ModelParamOldSVM"},  XmlTag::TagTypes::tagStart);
+147   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+148     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+149   startTag.WriteXML (o);
+150   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+151 
+152   \hyperlink{class_k_k_m_l_l_1_1_model_param_a91dc06ec604cf9c2a045991e9b88b5d3}{WriteXMLFields} (o);
+153 
+154 
+155   svmParam.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_ad3699cafbed5bd49a345b4be3ffe65a8}{ToTabDelStr} ().\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"SvmParam"}, o);
+156 
+157   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"ModelParamOldSVM"}, XmlTag::TagTypes::tagEnd);
+158   endTag.WriteXML (o);
+159   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+160 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_param_svm_base_8h}{Model\+Param\+Svm\+Base.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_model_param_svm_base_8cpp}{Model\+Param\+Svm\+Base.\+cpp}\end{DoxyCompactItemize}

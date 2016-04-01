@@ -1,0 +1,520 @@
+\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer}{}\section{K\+K\+M\+LL\+:\+:Factory\+F\+V\+Producer Class Reference}
+\label{class_k_k_m_l_l_1_1_factory_f_v_producer}\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+
+
+Responsible for creating a Feature\+Fector\+Producer instance.  
+
+
+
+
+{\ttfamily \#include $<$Factory\+F\+V\+Producer.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Factory\+F\+V\+Producer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_factory_f_v_producer}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a5a9f1ef1b6789f2b6379a8cdb81ac964}{Factory\+F\+V\+Producer\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a6840464e9954d43ebbcb75b02abf5531}{Factory\+F\+V\+Producer} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+fv\+Class\+Name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+description)
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_aa005d92db87866fad489feb5ff4b2dfa}{Feature\+File\+I\+O\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a22605809beffdb9e6b1df75106140458}{Default\+Feature\+File\+IO} () const  =0
+\item 
+const K\+K\+Str \& \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a80d44a99f38097839c2be1b0c5db4c6a}{Description} () const 
+\item 
+virtual const type\+\_\+info $\ast$ \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a066a7019c56163b37b15ace4ba7cb39a}{Feature\+Vector\+List\+Type\+Id} () const  =0
+\begin{DoxyCompactList}\small\item\em Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} that this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} will create. \end{DoxyCompactList}\item 
+virtual const type\+\_\+info $\ast$ \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a412bef4afc38267281bb22fc3d3d7ce8}{Feature\+Vector\+Type\+Id} () const  =0
+\begin{DoxyCompactList}\small\item\em Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} that this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} works with. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{File\+Desc} () const  =0
+\item 
+const K\+K\+Str \& \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a34344a8585523f7e7d4d920ca61c620b}{Fv\+Class\+Name} () const 
+\item 
+virtual \hyperlink{namespace_k_k_m_l_l_a5fcda00f9ffbd9fb40e02f013be900e3}{Feature\+Vector\+Producer\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab69f27aed9bda4917326580ec824e749}{Manufacture\+Instance} (Run\+Log \&run\+Log)=0
+\begin{DoxyCompactList}\small\item\em Derived classes will instantiate appropriate instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{}. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a5492ebd18425cbb7c4d217506691b69a}{Manufactur\+Feature\+Vector} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Featires, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&run\+Log)
+\begin{DoxyCompactList}\small\item\em Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors produced by the associated \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{Manufactur\+Feature\+Vector\+List} (bool owner, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&run\+Log) const 
+\begin{DoxyCompactList}\small\item\em Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors produced by the associated \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. \end{DoxyCompactList}\item 
+virtual \hyperlink{namespace_k_k_m_l_l_a5da4b334417f8c9e4e2fd5924da7fe62}{Training\+Configuration2\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a3638e312813fd78c2a4ead4fb71e2537}{Manufactur\+Training\+Configuration} () const 
+\begin{DoxyCompactList}\small\item\em Returns a \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_training_configuration2}{Training\+Configuration2}\textquotesingle{} derived instance. \end{DoxyCompactList}\item 
+const K\+K\+Str \& \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{Name} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a5a9f1ef1b6789f2b6379a8cdb81ac964}{Factory\+F\+V\+Producer\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab568f702e72172335c791744123bd63d}{Look\+Up\+Factory} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&name)
+\begin{DoxyCompactList}\small\item\em Returns pointer to existing instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} that was previously registered with \textquotesingle{}name\textquotesingle{}. \end{DoxyCompactList}\item 
+static \hyperlink{namespace_k_k_m_l_l_a5fcda00f9ffbd9fb40e02f013be900e3}{Feature\+Vector\+Producer\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a2044e7ede397e8b0df62d01b79e83e05}{Manufacture\+Instance} (const K\+K\+Str \&name, Run\+Log \&run\+Log)
+\begin{DoxyCompactList}\small\item\em Will instantiate a new instance of the appropriate \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} class given the supplied name. \end{DoxyCompactList}\item 
+static void \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_af101ca518d5ca7083966502ed6ba2ee4}{Register\+Factory} (\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a5a9f1ef1b6789f2b6379a8cdb81ac964}{Factory\+F\+V\+Producer\+Ptr} factory, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} $\ast$run\+Log)
+\begin{DoxyCompactList}\small\item\em This is where you register newly instantiated instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} derived classes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a2103d5639265b3aa1953310c4a6e8021}{$\sim$\+Factory\+F\+V\+Producer} ()
+\begin{DoxyCompactList}\small\item\em A Factory can near be deleted until the application terminates; the atexit method will perform the deletes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Responsible for creating a Feature\+Fector\+Producer instance. 
+
+To make the \textquotesingle{}\hyperlink{namespace_k_k_m_l_l}{K\+K\+M\+LL}\textquotesingle{} library independent of the actual details of the Feature\+Vetir computations and their underlying source data a Factory -\/ Producer strategy was implemented. For every \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} derived class there will be at least one \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} derived class and one \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} derived class.
+
+-\/\+Feature\+Vector\+Producer Responsible for computing instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} derived classes from source data such as a \char`\"{}\+Raster\char`\"{} instance. -\/\+Factory\+F\+V\+Producer Responsible for creating new instances of the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} derived classes. Will also provide the appropriate \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc}\textquotesingle{} instance that describes the features computed and Instantiate new \char`\"{}\+Feature\+Vector\+List\char`\"{} derived instances for containing the produced Feature\+Fevtor derived instances.
+
+New \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} instances will be computed by a instance of the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} class. The appropriate \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} derived class will be manufactured by a corresponding \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} class. This class(\+Factory\+F\+V\+Producer) will maintain a list of all \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} derived classes created in the \textquotesingle{}factories\textquotesingle{} static data member.
+
+The idea is for each class derived from \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} there will be a corresponding \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} and \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{}. The \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} will be responsible for generating \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} instances from source data(\+Images) and the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} class will generate the correct \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} to do these computations. Other functions of this class are to return the corresponding \char`\"{}\+File\+Desc\char`\"{} instance, that describes the features that are going to be computed, and the appropriate \textquotesingle{}Feature\+Fector\+List\textquotesingle{} derived container. 
+
+Definition at line 72 of file Factory\+F\+V\+Producer.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Factory\+F\+V\+Producer\+Ptr@{Factory\+F\+V\+Producer\+Ptr}}
+\index{Factory\+F\+V\+Producer\+Ptr@{Factory\+F\+V\+Producer\+Ptr}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Factory\+F\+V\+Producer\+Ptr}{FactoryFVProducerPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Factory\+F\+V\+Producer}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Factory\+F\+V\+Producer\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a5a9f1ef1b6789f2b6379a8cdb81ac964}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a5a9f1ef1b6789f2b6379a8cdb81ac964}
+
+
+Definition at line 75 of file Factory\+F\+V\+Producer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Factory\+F\+V\+Producer@{Factory\+F\+V\+Producer}}
+\index{Factory\+F\+V\+Producer@{Factory\+F\+V\+Producer}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Factory\+F\+V\+Producer(const K\+K\+Str \&\+\_\+name, const K\+K\+Str \&\+\_\+fv\+Class\+Name, const K\+K\+Str \&\+\_\+description)}{FactoryFVProducer(const KKStr &_name, const KKStr &_fvClassName, const KKStr &_description)}}]{\setlength{\rightskip}{0pt plus 5cm}Factory\+F\+V\+Producer\+::\+Factory\+F\+V\+Producer (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+fv\+Class\+Name, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+description}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a6840464e9954d43ebbcb75b02abf5531}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a6840464e9954d43ebbcb75b02abf5531}
+
+
+Definition at line 32 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+35                                       :
+36      description (\_description),
+37      fvClassName (\_fvClassName),
+38      name        (\_name)
+39 \{
+40 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!````~Factory\+F\+V\+Producer@{$\sim$\+Factory\+F\+V\+Producer}}
+\index{````~Factory\+F\+V\+Producer@{$\sim$\+Factory\+F\+V\+Producer}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{$\sim$\+Factory\+F\+V\+Producer()}{~FactoryFVProducer()}}]{\setlength{\rightskip}{0pt plus 5cm}Factory\+F\+V\+Producer\+::$\sim$\+Factory\+F\+V\+Producer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a2103d5639265b3aa1953310c4a6e8021}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a2103d5639265b3aa1953310c4a6e8021}
+
+
+A Factory can near be deleted until the application terminates; the atexit method will perform the deletes. 
+
+
+
+Definition at line 45 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+\begin{DoxyCode}
+46 \{
+47 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Default\+Feature\+File\+IO@{Default\+Feature\+File\+IO}}
+\index{Default\+Feature\+File\+IO@{Default\+Feature\+File\+IO}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Default\+Feature\+File\+I\+O() const  =0}{DefaultFeatureFileIO() const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Feature\+File\+I\+O\+Ptr} K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Default\+Feature\+File\+IO (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a22605809beffdb9e6b1df75106140458}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a22605809beffdb9e6b1df75106140458}
+
+
+Implemented in \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_factory_aaa0d8fc9be591a1a0882ced7a72b8991}{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory}.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load\+Other\+Classs\+Examples().
+
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Description@{Description}}
+\index{Description@{Description}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Description() const }{Description() const }}]{\setlength{\rightskip}{0pt plus 5cm}const K\+K\+Str\& K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Description (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a80d44a99f38097839c2be1b0c5db4c6a}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a80d44a99f38097839c2be1b0c5db4c6a}
+
+
+Definition at line 89 of file Factory\+F\+V\+Producer.\+h.
+
+
+\begin{DoxyCode}
+89 \{\textcolor{keywordflow}{return} description;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Feature\+Vector\+List\+Type\+Id@{Feature\+Vector\+List\+Type\+Id}}
+\index{Feature\+Vector\+List\+Type\+Id@{Feature\+Vector\+List\+Type\+Id}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Feature\+Vector\+List\+Type\+Id() const  =0}{FeatureVectorListTypeId() const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const type\+\_\+info$\ast$ K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Feature\+Vector\+List\+Type\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a066a7019c56163b37b15ace4ba7cb39a}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a066a7019c56163b37b15ace4ba7cb39a}
+
+
+Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} that this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} will create. 
+
+
+
+Implemented in \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_factory_aab7b94d69c81f90a245d35955918a1c9}{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory}.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink().
+
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Feature\+Vector\+Type\+Id@{Feature\+Vector\+Type\+Id}}
+\index{Feature\+Vector\+Type\+Id@{Feature\+Vector\+Type\+Id}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Feature\+Vector\+Type\+Id() const  =0}{FeatureVectorTypeId() const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual const type\+\_\+info$\ast$ K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Feature\+Vector\+Type\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a412bef4afc38267281bb22fc3d3d7ce8}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a412bef4afc38267281bb22fc3d3d7ce8}
+
+
+Returns the \textquotesingle{}type\+\_\+info\textquotesingle{} of the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} that this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} works with. 
+
+
+
+Implemented in \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_factory_a3d37f5fb6bfee17c233e080a919b1ff3}{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory}.
+
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!File\+Desc@{File\+Desc}}
+\index{File\+Desc@{File\+Desc}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{File\+Desc() const  =0}{FileDesc() const  =0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf File\+Desc\+Ptr} K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+File\+Desc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}
+
+
+Implemented in \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_producer_factory_a8a6cc390f3dad34892a3c8a46831b984}{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory}.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Create\+Models\+From\+Training\+Data(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Load\+In\+Sub\+Directory\+Tree(), Manufactur\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+Model\+::\+Model(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Read\+X\+M\+L\+Post(), and K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Training\+Configuration2().
+
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Fv\+Class\+Name@{Fv\+Class\+Name}}
+\index{Fv\+Class\+Name@{Fv\+Class\+Name}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Fv\+Class\+Name() const }{FvClassName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const K\+K\+Str\& K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Fv\+Class\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a34344a8585523f7e7d4d920ca61c620b}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a34344a8585523f7e7d4d920ca61c620b}
+
+
+Definition at line 90 of file Factory\+F\+V\+Producer.\+h.
+
+
+\begin{DoxyCode}
+90 \{\textcolor{keywordflow}{return} fvClassName;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Look\+Up\+Factory@{Look\+Up\+Factory}}
+\index{Look\+Up\+Factory@{Look\+Up\+Factory}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Look\+Up\+Factory(const K\+K\+Str \&name)}{LookUpFactory(const KKStr &name)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Factory\+F\+V\+Producer\+Ptr} Factory\+F\+V\+Producer\+::\+Look\+Up\+Factory (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_ab568f702e72172335c791744123bd63d}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_ab568f702e72172335c791744123bd63d}
+
+
+Returns pointer to existing instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} that was previously registered with \textquotesingle{}name\textquotesingle{}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & The name of the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} that you are locking for; this is the same name as would have been passed to the constructor. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The existing \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} instance of found otherwise N\+U\+LL. 
+\end{DoxyReturn}
+
+
+Definition at line 89 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+90 \{
+91   \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{FactoryFVProducerPtr}  factory = NULL;
+92 
+93   GlobalGoalKeeper::StartBlock ();
+94 
+95   \textcolor{keywordflow}{if}  (!factories)
+96   \{
+97     factories = \textcolor{keyword}{new} FactoryMap ();
+98     atexit (FactoryFVProducer::FinaleCleanUp);
+99     atExitDefined = \textcolor{keyword}{true};
+100   \}
+101 
+102   FactoryMap::iterator idx;
+103 
+104   idx = factories->find (\_name);
+105   \textcolor{keywordflow}{if}  (idx != factories->end ())
+106     factory = idx->second;
+107 
+108   GlobalGoalKeeper::EndBlock ();
+109   \textcolor{keywordflow}{return}  factory;
+110 \}  \textcolor{comment}{/* LookUpFactory */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Manufacture\+Instance@{Manufacture\+Instance}}
+\index{Manufacture\+Instance@{Manufacture\+Instance}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufacture\+Instance(\+Run\+Log \&run\+Log)=0}{ManufactureInstance(RunLog &runLog)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Feature\+Vector\+Producer\+Ptr} K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufacture\+Instance (
+\begin{DoxyParamCaption}
+\item[{Run\+Log \&}]{run\+Log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_ab69f27aed9bda4917326580ec824e749}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_ab69f27aed9bda4917326580ec824e749}
+
+
+Derived classes will instantiate appropriate instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{}. 
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Manufacture\+Instance@{Manufacture\+Instance}}
+\index{Manufacture\+Instance@{Manufacture\+Instance}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufacture\+Instance(const K\+K\+Str \&name, Run\+Log \&run\+Log)}{ManufactureInstance(const KKStr &name, RunLog &runLog)}}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Feature\+Vector\+Producer\+Ptr} K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufacture\+Instance (
+\begin{DoxyParamCaption}
+\item[{const K\+K\+Str \&}]{name, }
+\item[{Run\+Log \&}]{run\+Log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a2044e7ede397e8b0df62d01b79e83e05}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a2044e7ede397e8b0df62d01b79e83e05}
+
+
+Will instantiate a new instance of the appropriate \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} class given the supplied name. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em name} & The name given the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} instance when originally instantiated; this will typically be the name of the \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} derived Class. \\
+\hline
+\mbox{\tt in}  & {\em run\+Log} & reference to the logger where messages will be written to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns a new instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}\textquotesingle{} that will be generated by registered \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{}; If \textquotesingle{}name\textquotesingle{} is not found will return N\+U\+LL. 
+\end{DoxyReturn}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Manufactur\+Feature\+Vector@{Manufactur\+Feature\+Vector}}
+\index{Manufactur\+Feature\+Vector@{Manufactur\+Feature\+Vector}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufactur\+Feature\+Vector(kkint32 num\+Of\+Featires, Run\+Log \&run\+Log)}{ManufacturFeatureVector(kkint32 numOfFeatires, RunLog &runLog)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+Ptr} Factory\+F\+V\+Producer\+::\+Manufactur\+Feature\+Vector (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{num\+Of\+Featires, }
+\item[{{\bf Run\+Log} \&}]{run\+Log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a5492ebd18425cbb7c4d217506691b69a}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a5492ebd18425cbb7c4d217506691b69a}
+
+
+Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors produced by the associated \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. 
+
+
+
+Definition at line 50 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector().
+
+
+\begin{DoxyCode}
+53 \{
+54   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (numOfFeatires);
+55 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Manufactur\+Feature\+Vector\+List@{Manufactur\+Feature\+Vector\+List}}
+\index{Manufactur\+Feature\+Vector\+List@{Manufactur\+Feature\+Vector\+List}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufactur\+Feature\+Vector\+List(bool owner, Run\+Log \&run\+Log) const }{ManufacturFeatureVectorList(bool owner, RunLog &runLog) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Factory\+F\+V\+Producer\+::\+Manufactur\+Feature\+Vector\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{owner, }
+\item[{{\bf Run\+Log} \&}]{run\+Log}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a96126b7adb55f6751450ede393c93086}
+
+
+Manufactures a instance of a derived \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}\textquotesingle{} class that is appropriate for containing instances of Feature\+Vectors produced by the associated \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{Feature\+Vector\+Producer}. 
+
+
+
+Definition at line 58 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), and File\+Desc().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Extract\+Training\+Class\+Features(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Feature\+Data\+Re\+Sink(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Load\+Feature\+Data\+From\+Training\+Libraries(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+::\+Load\+In\+Sub\+Directory\+Tree().
+
+
+\begin{DoxyCode}
+62 \{
+63   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (\hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} (), owner);
+64 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Manufactur\+Training\+Configuration@{Manufactur\+Training\+Configuration}}
+\index{Manufactur\+Training\+Configuration@{Manufactur\+Training\+Configuration}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Manufactur\+Training\+Configuration() const }{ManufacturTrainingConfiguration() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Training\+Configuration2\+Ptr} Factory\+F\+V\+Producer\+::\+Manufactur\+Training\+Configuration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_a3638e312813fd78c2a4ead4fb71e2537}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_a3638e312813fd78c2a4ead4fb71e2537}
+
+
+Returns a \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_training_configuration2}{Training\+Configuration2}\textquotesingle{} derived instance. 
+
+
+
+Definition at line 68 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Training\+Configuration2().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Create\+From\+Directory\+Structure(), and K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+69 \{
+70   \textcolor{keywordflow}{return}  \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_training_configuration2}{TrainingConfiguration2} ();
+71 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Name@{Name}}
+\index{Name@{Name}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const K\+K\+Str\& K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}
+
+
+Definition at line 91 of file Factory\+F\+V\+Producer.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+91 \{\textcolor{keywordflow}{return} name;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}!Register\+Factory@{Register\+Factory}}
+\index{Register\+Factory@{Register\+Factory}!K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer@{K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer}}
+\subsubsection[{\texorpdfstring{Register\+Factory(\+Factory\+F\+V\+Producer\+Ptr factory, Run\+Log $\ast$run\+Log)}{RegisterFactory(FactoryFVProducerPtr factory, RunLog *runLog)}}]{\setlength{\rightskip}{0pt plus 5cm}void Factory\+F\+V\+Producer\+::\+Register\+Factory (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{factory, }
+\item[{{\bf Run\+Log} $\ast$}]{run\+Log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_factory_f_v_producer_af101ca518d5ca7083966502ed6ba2ee4}{}\label{class_k_k_m_l_l_1_1_factory_f_v_producer_af101ca518d5ca7083966502ed6ba2ee4}
+
+
+This is where you register newly instantiated instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer}{Factory\+F\+V\+Producer}\textquotesingle{} derived classes. 
+
+The instance will be added to a list of existing factories \char`\"{}\+Factory\+F\+V\+Producer\+::factories\char`\"{}. This list is a map structure indexed by \char`\"{}\+Factory\+F\+V\+Producer\+::\+Name()\char`\"{}. If an instance with the same name already exists a appropriate error message will be written to the \char`\"{}run\+Log\char`\"{} and will not be added to \char`\"{}\+Factory\+F\+V\+Producer\+::factories\char`\"{}. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em factory} & The newly created instance of a \char`\"{}\+Factory\+F\+V\+Producer\char`\"{} derived class that you want to register. \\
+\hline
+\mbox{\tt in}  & {\em run\+Log} & Pointer to logger; if equal N\+U\+LL will write messages to temp created instance. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 116 of file Factory\+F\+V\+Producer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), K\+K\+B\+::\+Run\+Log\+::\+Run\+Log(), and K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+Factory\+::\+Factory().
+
+
+\begin{DoxyCode}
+119 \{
+120   \textcolor{keywordtype}{bool}  weOwnRunLog = \textcolor{keyword}{false};
+121   \textcolor{keywordflow}{if}  (runLog == NULL)
+122   \{
+123     runLog = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_run_log}{RunLog} ();
+124     weOwnRunLog = \textcolor{keyword}{true};
+125   \}
+126 
+127   \textcolor{keywordflow}{if}  (factory == NULL)
+128   \{
+129     runLog->\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"FactoryFVProducer::RegisterFactory   ***ERROR***   factory==NULL"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+130   \}
+131   \textcolor{keywordflow}{else}
+132   \{
+133     GlobalGoalKeeper::StartBlock ();
+134 
+135     runLog->\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (30) << \textcolor{stringliteral}{"FactoryFVProducer::RegisterFactory  Name: "} << factory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{Name} () << \textcolor{stringliteral}{"  Description: "} << factory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_a80d44a99f38097839c2be1b0c5db4c6a}{Description} () << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+136 
+137     \textcolor{keywordflow}{if}  (!factories)
+138     \{
+139       factories = \textcolor{keyword}{new} FactoryMap ();
+140       atexit (FactoryFVProducer::FinaleCleanUp);
+141       atExitDefined = \textcolor{keyword}{true};
+142     \}
+143 
+144     FactoryMap::iterator idx;
+145 
+146     idx = factories->find (factory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{Name} ());
+147     \textcolor{keywordflow}{if}  (idx != factories->end ())
+148     \{
+149       runLog->\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"FactoryFVProducer::RegisterFactory   ***ERROR***   Factory With Name: "} <
+      < factory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{Name} () << \textcolor{stringliteral}{" already defined."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+150     \}
+151     \textcolor{keywordflow}{else}
+152     \{
+153       factories->insert (pair<KKStr,FactoryFVProducerPtr> (factory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_adbdfab027b335694c46d969d84ea1213}{Name} (), factory));
+154     \}
+155 
+156     GlobalGoalKeeper::EndBlock ();
+157   \}
+158 
+159   \textcolor{keywordflow}{if}  (weOwnRunLog)
+160   \{
+161     \textcolor{keyword}{delete}  runLog;
+162     runLog = NULL;
+163   \}
+164   \textcolor{keywordflow}{return};
+165 \}  \textcolor{comment}{/* RegisterFactory */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_factory_f_v_producer_8h}{Factory\+F\+V\+Producer.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_factory_f_v_producer_8cpp}{Factory\+F\+V\+Producer.\+cpp}\end{DoxyCompactItemize}

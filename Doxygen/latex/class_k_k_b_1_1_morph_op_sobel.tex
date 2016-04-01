@@ -1,0 +1,149 @@
+\hypertarget{class_k_k_b_1_1_morph_op_sobel}{}\section{K\+KB\+:\+:Morph\+Op\+Sobel Class Reference}
+\label{class_k_k_b_1_1_morph_op_sobel}\index{K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}}
+
+
+{\ttfamily \#include $<$Morph\+Op\+Sobel.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Morph\+Op\+Sobel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_morph_op_sobel}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_morph_op_sobel_a675a53713bf9f9c1d37caa917e14d051}{Morph\+Op\+Sobel} ()
+\item 
+\hyperlink{class_k_k_b_1_1_morph_op_sobel_a93d249ab7be5efa900efa9d87a740fd3}{$\sim$\+Morph\+Op\+Sobel} (void)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_morph_op_a32070d9c14d16849873a8a409f5b0d69}{Operation\+Type} \hyperlink{class_k_k_b_1_1_morph_op_sobel_a0c11ea47d46bbe8c365db296672f0595}{Operation} () const 
+\item 
+virtual \hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_morph_op_sobel_a0e58b3ecae29af573c719b8d79c8dbd4}{Perform\+Operation} (\hyperlink{class_k_k_b_1_1_raster}{Raster} const $\ast$\+\_\+image)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 18 of file Morph\+Op\+Sobel.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}!Morph\+Op\+Sobel@{Morph\+Op\+Sobel}}
+\index{Morph\+Op\+Sobel@{Morph\+Op\+Sobel}!K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}}
+\subsubsection[{\texorpdfstring{Morph\+Op\+Sobel()}{MorphOpSobel()}}]{\setlength{\rightskip}{0pt plus 5cm}Morph\+Op\+Sobel\+::\+Morph\+Op\+Sobel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_morph_op_sobel_a675a53713bf9f9c1d37caa917e14d051}{}\label{class_k_k_b_1_1_morph_op_sobel_a675a53713bf9f9c1d37caa917e14d051}
+
+
+Definition at line 23 of file Morph\+Op\+Sobel.\+cpp.
+
+
+\begin{DoxyCode}
+23                            :
+24     magnitudeSqrTable (NULL),
+25     maxMagnitude      (0)
+26 \{
+27 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}!````~Morph\+Op\+Sobel@{$\sim$\+Morph\+Op\+Sobel}}
+\index{````~Morph\+Op\+Sobel@{$\sim$\+Morph\+Op\+Sobel}!K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}}
+\subsubsection[{\texorpdfstring{$\sim$\+Morph\+Op\+Sobel(void)}{~MorphOpSobel(void)}}]{\setlength{\rightskip}{0pt plus 5cm}Morph\+Op\+Sobel\+::$\sim$\+Morph\+Op\+Sobel (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_morph_op_sobel_a93d249ab7be5efa900efa9d87a740fd3}{}\label{class_k_k_b_1_1_morph_op_sobel_a93d249ab7be5efa900efa9d87a740fd3}
+
+
+Definition at line 29 of file Morph\+Op\+Sobel.\+cpp.
+
+
+\begin{DoxyCode}
+30 \{
+31   DeleteMagnitudeSqrTable ();
+32 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}!Operation@{Operation}}
+\index{Operation@{Operation}!K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}}
+\subsubsection[{\texorpdfstring{Operation() const }{Operation() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Operation\+Type} K\+K\+B\+::\+Morph\+Op\+Sobel\+::\+Operation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_morph_op_sobel_a0c11ea47d46bbe8c365db296672f0595}{}\label{class_k_k_b_1_1_morph_op_sobel_a0c11ea47d46bbe8c365db296672f0595}
+
+
+Implements \hyperlink{class_k_k_b_1_1_morph_op_abdf6f4bddae0b3cc3dc718559fa60234}{K\+K\+B\+::\+Morph\+Op}.
+
+
+
+Definition at line 25 of file Morph\+Op\+Sobel.\+h.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+::\+Sobel\+Edge\+Detection.
+
+
+\begin{DoxyCode}
+25 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_b_1_1_morph_op_a32070d9c14d16849873a8a409f5b0d69ae9eb5dc5ac36ae1b3a4eb7c17def6093}{OperationType::SobelEdgeDetection};\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}!Perform\+Operation@{Perform\+Operation}}
+\index{Perform\+Operation@{Perform\+Operation}!K\+K\+B\+::\+Morph\+Op\+Sobel@{K\+K\+B\+::\+Morph\+Op\+Sobel}}
+\subsubsection[{\texorpdfstring{Perform\+Operation(\+Raster const $\ast$\+\_\+image)}{PerformOperation(Raster const *_image)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Morph\+Op\+Sobel\+::\+Perform\+Operation (
+\begin{DoxyParamCaption}
+\item[{{\bf Raster} const $\ast$}]{\+\_\+image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_morph_op_sobel_a0e58b3ecae29af573c719b8d79c8dbd4}{}\label{class_k_k_b_1_1_morph_op_sobel_a0e58b3ecae29af573c719b8d79c8dbd4}
+
+
+Implements \hyperlink{class_k_k_b_1_1_morph_op_ae7655bec44b6665fd042216e5cb55843}{K\+K\+B\+::\+Morph\+Op}.
+
+
+
+Definition at line 62 of file Morph\+Op\+Sobel.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Color(), K\+K\+B\+::\+Raster\+::\+Create\+Gray\+Scale\+K\+L\+T(), and K\+K\+B\+::\+Morph\+Op\+::\+Set\+Src\+Raster().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Sobel\+Edge\+Detector().
+
+
+\begin{DoxyCode}
+63 \{
+64   \textcolor{keywordflow}{if}  (!\_image)
+65     \textcolor{keywordflow}{return} NULL;
+66 
+67   \textcolor{keywordtype}{bool}  weOwnRaster = \textcolor{keyword}{false};
+68   \textcolor{keywordflow}{if}  (\_image->Color ())
+69   \{
+70     \_image = \_image->CreateGrayScaleKLT ();
+71     weOwnRaster = \textcolor{keyword}{true};
+72   \}
+73 
+74   \hyperlink{class_k_k_b_1_1_morph_op_a07c75e151d9b95ca13da3bfc2e48dba4}{SetSrcRaster} (\_image);
+75 
+76   BuildMagnitudeSqrTable ();
+77 
+78   \textcolor{keywordflow}{if}  (weOwnRaster)
+79     \textcolor{keyword}{delete}  \_image;
+80   \_image = NULL;
+81 
+82   \textcolor{keywordflow}{return}  BuildMagnitudeImage();
+83 \}  \textcolor{comment}{/* PerformOperation */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_morph_op_sobel_8h}{Morph\+Op\+Sobel.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_morph_op_sobel_8cpp}{Morph\+Op\+Sobel.\+cpp}\end{DoxyCompactItemize}

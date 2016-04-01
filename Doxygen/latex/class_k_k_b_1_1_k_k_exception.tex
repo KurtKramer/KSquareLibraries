@@ -1,0 +1,326 @@
+\hypertarget{class_k_k_b_1_1_k_k_exception}{}\section{K\+KB\+:\+:K\+K\+Exception Class Reference}
+\label{class_k_k_b_1_1_k_k_exception}\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+
+
+{\ttfamily \#include $<$K\+K\+Exception.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:K\+K\+Exception\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_k_k_exception}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a3ab2819dbec1acd42cee965e51aa4ccb}{K\+K\+Exception} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a16aba1c3d205611fa0a5dbc9f78ee84d}{K\+K\+Exception} (const \hyperlink{class_k_k_b_1_1_k_k_exception}{K\+K\+Exception} \&\+\_\+exception)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a9505cf26272a2d7a3ca4a5ed19f46877}{K\+K\+Exception} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+exception\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a1e650cbf594edbd3ee231f11b098df9e}{K\+K\+Exception} (const char $\ast$\+\_\+exception\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a830eb03986c23ef438562bbb7adbdf9b}{K\+K\+Exception} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+exception\+Str, const std\+::exception \&\+\_\+inner\+Exception)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_ae911463f46fef87b623ff7c54a4988cd}{K\+K\+Exception} (const char $\ast$\+\_\+exception\+Str, const std\+::exception \&\+\_\+inner\+Exception)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_a3f9273ed8c1c83d7bc53d2d72238a691}{K\+K\+Exception} (const char $\ast$\+\_\+exception\+Str, const \hyperlink{class_k_k_b_1_1_k_k_exception}{K\+K\+Exception} \&\+\_\+inner\+Exception)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_exception_abebe565c76ebcc389e3506e2399badfd}{K\+K\+Exception} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+exception\+Str, const \hyperlink{class_k_k_b_1_1_k_k_exception}{K\+K\+Exception} \&\+\_\+inner\+Exception)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_exception_a8600cf9e6176fec2dcbb23052c36de8a}{$\sim$\+K\+K\+Exception} ()  throw ()
+\item 
+virtual const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_exception_a9d565e887e90968c5e306c1ea94c6894}{To\+String} () const 
+\item 
+virtual const char $\ast$ \hyperlink{class_k_k_b_1_1_k_k_exception_aae7f05aaeeb741d494fbfbe97bfd3a81}{what} () const   throw ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 27 of file K\+K\+Exception.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception()}{KKException()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a3ab2819dbec1acd42cee965e51aa4ccb}{}\label{class_k_k_b_1_1_k_k_exception_a3ab2819dbec1acd42cee965e51aa4ccb}
+
+
+Definition at line 25 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception().
+
+
+
+Referenced by K\+K\+Exception().
+
+
+\begin{DoxyCode}
+25                          :
+26   std::exception ()
+27 \{
+28 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const K\+K\+Exception \&\+\_\+exception)}{KKException(const KKException &_exception)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Exception} \&}]{\+\_\+exception}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a16aba1c3d205611fa0a5dbc9f78ee84d}{}\label{class_k_k_b_1_1_k_k_exception_a16aba1c3d205611fa0a5dbc9f78ee84d}
+
+
+Definition at line 31 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+Exception().
+
+
+\begin{DoxyCode}
+31                                                        :
+32   std::exception (),
+33   exceptionStr (\_exception.exceptionStr)
+34 \{
+35 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const K\+K\+Str \&\+\_\+exception\+Str)}{KKException(const KKStr &_exceptionStr)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+exception\+Str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a9505cf26272a2d7a3ca4a5ed19f46877}{}\label{class_k_k_b_1_1_k_k_exception_a9505cf26272a2d7a3ca4a5ed19f46877}
+
+
+Definition at line 45 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Nominal\+Value(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Add\+Feature\+Data(), K\+K\+B\+::\+Msg\+Queue\+::\+Add\+Msg(), K\+K\+B\+::\+Raster\+Buffer\+::\+Add\+Raster(), K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Back\+Of\+Queue(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Binary\+Search(), K\+K\+B\+::\+Bit\+String\+::\+Bit\+String(), K\+K\+B\+::\+Bmp\+Image\+::\+Blue\+Row(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Cardinality(), K\+K\+M\+L\+L\+::\+Classifier2\+::\+Classifier2(), K\+K\+M\+L\+L\+::\+Model\+::\+Create\+A\+Model(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Create\+Encoded\+File\+Desc(), K\+K\+B\+::\+Bmp\+Image\+::\+Coded\+Pixels\+::\+Create\+Pixel\+Data\+Structure8\+Bit(), K\+K\+B\+::\+Matrix\+::\+Determinant\+Slow(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+A\+Example(), K\+K\+B\+::\+Goal\+Keeper\+Simple\+::\+End\+Block(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Find\+Worst\+Support\+Vectors2(), K\+K\+B\+::\+K\+K\+Str\+::\+Free\+Up\+Un\+Used\+Space(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List(), K\+K\+B\+::\+Raster\+::\+Histogram(), K\+K\+B\+::\+Bmp\+Image\+::\+Image\+Row(), K\+K\+B\+::\+Matrix\+::\+Inverse(), K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Left\+Pad(), K\+K\+B\+::\+Bit\+String\+::\+List\+Of\+Set\+Bits16(), K\+K\+B\+::\+Matrix\+::\+Matrix(), K\+K\+B\+::\+Matrix\+::operator$\ast$(), K\+K\+B\+::\+Matrix\+::operator+(), K\+K\+B\+::\+Matrix\+::operator+=(), K\+K\+B\+::\+Matrix\+::operator-\/(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+Matrix\+::operator\mbox{[}$\,$\mbox{]}(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Param(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Pop\+From\+Back(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Predict(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Predict(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Predict(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Adjusted\+Results(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Bias\+Matrix(), K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Probabilities\+By\+Class(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Push\+On\+Back(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Push\+On\+Back(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Push\+On\+Front(), K\+K\+M\+L\+L\+::\+Binary\+Class\+Parms\+List\+::\+Push\+On\+Front(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Front(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Bmp\+Image\+::\+Red\+Row(), K\+K\+B\+::\+Xml\+Factory\+Manager\+::\+Register\+Factory(), K\+K\+B\+::\+Xml\+Factory\+::\+Register\+Factory(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Reset\+File\+Desc(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Reset\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Re\+Sync\+Symbolic\+Data(), K\+K\+B\+::\+K\+K\+Str\+::\+Right\+Pad(), K\+K\+B\+::\+Row\+::\+Row(), K\+K\+B\+::\+Bmp\+Image\+::\+Save(), K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted4\+Bit(), K\+K\+B\+::\+Bmp\+Image\+::\+Save\+Grayscale\+Inverted8\+Bit(), K\+K\+B\+::\+Save\+Image(), K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted4\+Bit(), K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted8\+Bit(), K\+K\+B\+::\+Save\+Image\+P\+N\+G(), K\+K\+B\+::\+Save\+Image\+P\+P\+M(), S\+V\+M233\+::svm\+\_\+\+Get\+Support\+Vector\+Statistics(), S\+V\+M289\+\_\+\+B\+F\+S\+::svm\+\_\+train\+\_\+one(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train\+\_\+one(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+S\+V\+Mparam\+R\+E\+F(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Synchronize\+Symbolic\+Data(), K\+K\+B\+::tqli(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model(), and K\+K\+B\+::\+Tred2().
+
+
+\begin{DoxyCode}
+45                                                     :
+46   std::exception (),
+47   exceptionStr (\_exceptionStr)
+48 \{
+49 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const char $\ast$\+\_\+exception\+Str)}{KKException(const char *_exceptionStr)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\+\_\+exception\+Str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a1e650cbf594edbd3ee231f11b098df9e}{}\label{class_k_k_b_1_1_k_k_exception_a1e650cbf594edbd3ee231f11b098df9e}
+
+
+Definition at line 38 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+B\+::\+Bmp\+Image\+::\+Blue\+Row(), K\+K\+M\+L\+L\+::\+Classifier2\+::\+Classifier2(), K\+K\+M\+L\+L\+::\+Model\+::\+Create\+A\+Model(), K\+K\+M\+L\+L\+::\+Model\+::\+Encoder(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), K\+K\+M\+L\+L\+::\+Model\+::\+Get\+Feature\+Nums(), K\+K\+B\+::\+Bmp\+Image\+::\+Image\+Row(), K\+K\+B\+::\+Raster\+::\+Initialize(), K\+K\+Exception(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+::\+Normalize\+Nominal\+Attributes(), K\+K\+B\+::\+K\+K\+Str\+::operator$<$$<$(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Process\+Node(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Bmp\+Image\+::\+Red\+Row(), K\+K\+M\+L\+L\+::\+Model\+::\+Selected\+Features(), K\+K\+B\+::\+K\+K\+Thread\+::\+Start(), and S\+V\+M233\+::\+Svm\+Model233\+::\+Svm\+Model233().
+
+
+\begin{DoxyCode}
+38                                                    :
+39   std::exception (),
+40   exceptionStr (\_exceptionStr)
+41 \{
+42 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const K\+K\+Str \&\+\_\+exception\+Str, const std\+::exception \&\+\_\+inner\+Exception)}{KKException(const KKStr &_exceptionStr, const std::exception &_innerException)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+exception\+Str, }
+\item[{const std\+::exception \&}]{\+\_\+inner\+Exception}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a830eb03986c23ef438562bbb7adbdf9b}{}\label{class_k_k_b_1_1_k_k_exception_a830eb03986c23ef438562bbb7adbdf9b}
+
+
+Definition at line 52 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+Exception(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Adjusted\+Results(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Train\+Model(), and K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+54                           :
+55   std::exception (\_innerException),
+56   exceptionStr ()
+57 \{
+58   exceptionStr << \_exceptionStr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+59                << \_innerException.what ();
+60 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const char $\ast$\+\_\+exception\+Str, const std\+::exception \&\+\_\+inner\+Exception)}{KKException(const char *_exceptionStr, const std::exception &_innerException)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\+\_\+exception\+Str, }
+\item[{const std\+::exception \&}]{\+\_\+inner\+Exception}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_ae911463f46fef87b623ff7c54a4988cd}{}\label{class_k_k_b_1_1_k_k_exception_ae911463f46fef87b623ff7c54a4988cd}
+
+
+Definition at line 64 of file K\+K\+Exception.\+cpp.
+
+
+\begin{DoxyCode}
+67 \{
+68   exceptionStr << \_exceptionStr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+69                << \_innerException.what ();
+70 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const char $\ast$\+\_\+exception\+Str, const K\+K\+Exception \&\+\_\+inner\+Exception)}{KKException(const char *_exceptionStr, const KKException &_innerException)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{\+\_\+exception\+Str, }
+\item[{const {\bf K\+K\+Exception} \&}]{\+\_\+inner\+Exception}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_a3f9273ed8c1c83d7bc53d2d72238a691}{}\label{class_k_k_b_1_1_k_k_exception_a3f9273ed8c1c83d7bc53d2d72238a691}
+
+
+Definition at line 74 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Create\+A\+Model(), and K\+K\+Exception().
+
+
+\begin{DoxyCode}
+76                           :
+77   std::exception (\_innerException),
+78   exceptionStr (\_exceptionStr)
+79 \{
+80 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!K\+K\+Exception@{K\+K\+Exception}}
+\index{K\+K\+Exception@{K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{K\+K\+Exception(const K\+K\+Str \&\+\_\+exception\+Str, const K\+K\+Exception \&\+\_\+inner\+Exception)}{KKException(const KKStr &_exceptionStr, const KKException &_innerException)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+exception\+Str, }
+\item[{const {\bf K\+K\+Exception} \&}]{\+\_\+inner\+Exception}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_exception_abebe565c76ebcc389e3506e2399badfd}{}\label{class_k_k_b_1_1_k_k_exception_abebe565c76ebcc389e3506e2399badfd}
+
+
+Definition at line 83 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+Exception(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+Exception(), K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Print\+Adjusted\+Results(), K\+K\+B\+::\+Save\+Image(), K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted4\+Bit(), K\+K\+B\+::\+Save\+Image\+Grayscale\+Inverted8\+Bit(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Train\+Model(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Train\+Model(), and K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+85                           :
+86   std::exception (\_innerException),
+87   exceptionStr (\_exceptionStr)
+88 \{
+89 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!````~K\+K\+Exception@{$\sim$\+K\+K\+Exception}}
+\index{````~K\+K\+Exception@{$\sim$\+K\+K\+Exception}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{$\sim$\+K\+K\+Exception()}{~KKException()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Exception\+::$\sim$\+K\+K\+Exception (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throw  ) \hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_exception_a8600cf9e6176fec2dcbb23052c36de8a}{}\label{class_k_k_b_1_1_k_k_exception_a8600cf9e6176fec2dcbb23052c36de8a}
+
+
+Definition at line 93 of file K\+K\+Exception.\+cpp.
+
+
+\begin{DoxyCode}
+94 \{
+95 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{To\+String() const }{ToString() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& K\+K\+Exception\+::\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_exception_a9d565e887e90968c5e306c1ea94c6894}{}\label{class_k_k_b_1_1_k_k_exception_a9d565e887e90968c5e306c1ea94c6894}
+
+
+Definition at line 98 of file K\+K\+Exception.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Thread\+Start\+Call\+Back().
+
+
+\begin{DoxyCode}
+99 \{
+100   \textcolor{keywordflow}{return}  exceptionStr;
+101 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}!what@{what}}
+\index{what@{what}!K\+K\+B\+::\+K\+K\+Exception@{K\+K\+B\+::\+K\+K\+Exception}}
+\subsubsection[{\texorpdfstring{what() const }{what() const }}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ K\+K\+Exception\+::what (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const throw  ) \hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_exception_aae7f05aaeeb741d494fbfbe97bfd3a81}{}\label{class_k_k_b_1_1_k_k_exception_aae7f05aaeeb741d494fbfbe97bfd3a81}
+
+
+Definition at line 104 of file K\+K\+Exception.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Str().
+
+
+\begin{DoxyCode}
+105 \{
+106   \textcolor{keywordflow}{return}  exceptionStr.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ();
+107 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_exception_8h}{K\+K\+Exception.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_exception_8cpp}{K\+K\+Exception.\+cpp}\end{DoxyCompactItemize}

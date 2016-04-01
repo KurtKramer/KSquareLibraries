@@ -1,0 +1,46 @@
+\hypertarget{class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred}{}\section{K\+KB\+:\+:Bmp\+Image\+:\+:Pallet\+Builder\+:\+:R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred Class Reference}
+\label{class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred}\index{K\+K\+B\+::\+Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred@{K\+K\+B\+::\+Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred_a91230a4c1b2660761810979f606078fc}{operator()} (const R\+G\+B\+Q\+U\+AD \&left, const R\+G\+B\+Q\+U\+AD \&right) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 1069 of file B\+M\+P\+Image.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred@{Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred}!operator()@{operator()}}
+\index{operator()@{operator()}!Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred@{Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred}}
+\subsubsection[{\texorpdfstring{operator()(const R\+G\+B\+Q\+U\+A\+D \&left, const R\+G\+B\+Q\+U\+A\+D \&right) const }{operator()(const RGBQUAD &left, const RGBQUAD &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+Bmp\+Image\+::\+Pallet\+Builder\+::\+R\+G\+B\+Q\+U\+A\+D\+\_\+\+Pred\+::operator() (
+\begin{DoxyParamCaption}
+\item[{const R\+G\+B\+Q\+U\+AD \&}]{left, }
+\item[{const R\+G\+B\+Q\+U\+AD \&}]{right}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred_a91230a4c1b2660761810979f606078fc}{}\label{class_bmp_image_1_1_pallet_builder_1_1_r_g_b_q_u_a_d___pred_a91230a4c1b2660761810979f606078fc}
+
+
+Definition at line 1072 of file B\+M\+P\+Image.\+cpp.
+
+
+\begin{DoxyCode}
+1075     \{
+1076       \textcolor{keywordflow}{if}  (left.rgbRed != right.rgbRed)
+1077         \textcolor{keywordflow}{return} (left.rgbRed < right.rgbRed);
+1078 
+1079       \textcolor{keywordflow}{if}  (left.rgbGreen != right.rgbGreen)
+1080         \textcolor{keywordflow}{return} (left.rgbGreen < right.rgbGreen);
+1081       
+1082       \textcolor{keywordflow}{return}  (left.rgbBlue < right.rgbBlue);
+1083     \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_b_m_p_image_8cpp}{B\+M\+P\+Image.\+cpp}\end{DoxyCompactItemize}

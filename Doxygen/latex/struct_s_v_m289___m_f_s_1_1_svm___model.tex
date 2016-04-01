@@ -1,0 +1,1077 @@
+\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model}{}\section{S\+V\+M289\+\_\+\+M\+FS\+:\+:Svm\+\_\+\+Model Struct Reference}
+\label{struct_s_v_m289___m_f_s_1_1_svm___model}\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+
+
+{\ttfamily \#include $<$svm2.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_adefa6ab195e26b6c9bebac37a20c6fb4}{Svm\+\_\+\+Model} ()
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56283eda05764386ab87856fe5e4640c}{Svm\+\_\+\+Model} (const \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} \&\+\_\+model, \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc)
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ad7ca34377ca143791661cb80fd609450}{Svm\+\_\+\+Model} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc)
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a98d755bfc9c1e83b467799cf7e3a12b6}{Svm\+\_\+\+Model} (const \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{svm\+\_\+parameter} \&\+\_\+param, const \hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \&\+\_\+sel\+Features, \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc)
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac07bd2d2d472c02c11f407a00b22c40e}{$\sim$\+Svm\+\_\+\+Model} ()
+\item 
+void \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a018038a6d50ceedc7a6690be30dd0b9e}{Cancel\+Flag} (bool \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancel\+Flag})
+\item 
+void \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a38e71bae1b5829f722cbcb19eb3930b1}{Clean\+Up\+Memory} ()
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a534342f92ec4b972b5c1321025223a0f}{Dec\+Values} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a126416e9c696cc6b2f63cabbb84abb98}{Memory\+Consumed\+Estimated} () const 
+\item 
+void \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a130c243047236acbfbe4005416de39a1}{Normalize\+Probability} ()
+\begin{DoxyCompactList}\small\item\em Derives multi-\/class probability. \end{DoxyCompactList}\item 
+double $\ast$$\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0e4118b531080a8e860b76d4eadcfd80}{Pairwise\+Prob} ()
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae167af415613364d71e69cbd4221d4d3}{Prob\+Estimates} ()
+\item 
+virtual void \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a8fa172f2ade18ea362185452644c1754}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancel\+Flag}, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual void \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac0547f02f0aa730420892f4a7897d636}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+volatile bool \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancel\+Flag}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\+\_\+values}
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{file\+Desc}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\+\_\+class}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{n\+SV}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{num\+S\+Vs}
+\item 
+double $\ast$$\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\+\_\+prob}
+\item 
+\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter}{svm\+\_\+parameter} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\+\_\+estimates}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_num_list}{Feature\+Num\+List} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{sel\+Features}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}
+\item 
+double $\ast$$\ast$ \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\+\_\+coef}
+\item 
+bool \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{we\+Own\+Support\+Vectors}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 160 of file svm2.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Svm\+\_\+\+Model@{Svm\+\_\+\+Model}}
+\index{Svm\+\_\+\+Model@{Svm\+\_\+\+Model}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Svm\+\_\+\+Model()}{Svm_Model()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Svm\+\_\+\+Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_adefa6ab195e26b6c9bebac37a20c6fb4}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_adefa6ab195e26b6c9bebac37a20c6fb4}
+
+
+Definition at line 4067 of file svm2.\+cpp.
+
+
+
+References cancel\+Flag, dec\+\_\+values, file\+Desc, label, nr\+\_\+class, n\+SV, num\+S\+Vs, pairwise\+\_\+prob, param, prob\+\_\+estimates, probA, probB, rho, sel\+Features, sv\+\_\+coef, Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and we\+Own\+Support\+Vectors.
+
+
+
+Referenced by Svm\+\_\+\+Model().
+
+
+\begin{DoxyCode}
+4067                                :
+4068   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}          (\textcolor{keyword}{false}),
+4069   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc}            (NULL),
+4070   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}               (),
+4071   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}            (0),
+4072   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}              (0),
+4073   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}                  (),
+4074   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}             (NULL),
+4075   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}                 (NULL),
+4076   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}               (NULL),
+4077   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}               (NULL),
+4078   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}               (NULL),
+4079   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}                 (NULL),     \textcolor{comment}{// number of SVs for each class (nSV[k])}
+4080   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors} (\textcolor{keyword}{true}),
+4081   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}         (),
+4082   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values}          (NULL),
+4083   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}       (NULL),
+4084   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}      (NULL)
+4085 \{
+4086 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Svm\+\_\+\+Model@{Svm\+\_\+\+Model}}
+\index{Svm\+\_\+\+Model@{Svm\+\_\+\+Model}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Svm\+\_\+\+Model(const Svm\+\_\+\+Model \&\+\_\+model, File\+Desc\+Ptr \+\_\+file\+Desc)}{Svm_Model(const Svm_Model &_model, FileDescPtr _fileDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Svm\+\_\+\+Model (
+\begin{DoxyParamCaption}
+\item[{const {\bf Svm\+\_\+\+Model} \&}]{\+\_\+model, }
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a56283eda05764386ab87856fe5e4640c}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a56283eda05764386ab87856fe5e4640c}
+
+
+Definition at line 4089 of file svm2.\+cpp.
+
+
+
+References cancel\+Flag, dec\+\_\+values, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), file\+Desc, label, nr\+\_\+class, n\+SV, num\+S\+Vs, pairwise\+\_\+prob, param, prob\+\_\+estimates, probA, probB, rho, sel\+Features, sv\+\_\+coef, Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and we\+Own\+Support\+Vectors.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Model\+Svm\+Base(), and Svm\+\_\+\+Model().
+
+
+\begin{DoxyCode}
+4091                                   :
+4092   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}          (\textcolor{keyword}{false}),
+4093   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc}            (\_fileDesc),
+4094   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}               (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}),
+4095   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}            (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}),
+4096   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}              (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}),
+4097   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}                  (),
+4098   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}             (NULL),
+4099   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}                 (NULL),
+4100   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}               (NULL),
+4101   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}               (NULL),
+4102   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}               (NULL),
+4103   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}                 (NULL),     \textcolor{comment}{// number of SVs for each class (nSV[k])}
+4104   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors} (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors}),
+4105   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}         (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}),
+4106   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values}          (NULL),
+4107   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}       (NULL),
+4108   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}      (NULL)
+4109 
+4110 \{
+4111   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  m = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1;
+4112   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numBinaryCombos = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) / 2;
+4113 
+4114   \{
+4115     \textcolor{comment}{// Copy over support vectors.}
+4116     FeatureVectorList::const\_iterator idx;
+4117     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors});
+4118     \textcolor{keywordflow}{for}  (idx = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.begin ();  idx != \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.end ();  idx++)
+4119     \{
+4120       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} fv = *idx;
+4121       \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors})
+4122         \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.push\_back (\textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (*fv));
+4123       \textcolor{keywordflow}{else}
+4124         \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.push\_back (fv);
+4125     \}
+4126   \}
+4127 
+4128   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef})
+4129   \{
+4130     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}*[m];
+4131     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j = 0;  j < m;  j++)
+4132     \{
+4133       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[j] = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}];
+4134       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;   i < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs};  ++i)
+4135        \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[j][i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[j][i];
+4136     \}
+4137   \}
+4138 
+4139   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho})
+4140   \{
+4141     \textcolor{comment}{// Copy over RHO}
+4142     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numBinaryCombos];
+4143     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < numBinaryCombos;  i++)
+4144       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}[i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}[i];
+4145   \}
+4146 
+4147   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA})
+4148   \{
+4149     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numBinaryCombos];
+4150     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < numBinaryCombos;  i++)
+4151       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}[i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}[i];
+4152   \}
+4153 
+4154   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB})
+4155   \{
+4156     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numBinaryCombos];
+4157     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < numBinaryCombos;  i++)
+4158       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}[i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}[i];
+4159   \}
+4160 
+4161   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label})
+4162   \{
+4163     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label} = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}];
+4164     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  i++)
+4165       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}[i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}[i];
+4166   \}
+4167 
+4168   \textcolor{keywordflow}{if}  (\_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV})
+4169   \{
+4170     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV} = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}];
+4171     \textcolor{keywordflow}{for} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  i++)
+4172       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}[i] = \_model.\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}[i];
+4173   \}
+4174 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Svm\+\_\+\+Model@{Svm\+\_\+\+Model}}
+\index{Svm\+\_\+\+Model@{Svm\+\_\+\+Model}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Svm\+\_\+\+Model(\+File\+Desc\+Ptr \+\_\+file\+Desc)}{Svm_Model(FileDescPtr _fileDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Svm\+\_\+\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ad7ca34377ca143791661cb80fd609450}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ad7ca34377ca143791661cb80fd609450}
+
+
+Definition at line 4178 of file svm2.\+cpp.
+
+
+
+References cancel\+Flag, dec\+\_\+values, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), file\+Desc, label, nr\+\_\+class, n\+SV, num\+S\+Vs, pairwise\+\_\+prob, param, prob\+\_\+estimates, probA, probB, rho, sel\+Features, sv\+\_\+coef, Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and we\+Own\+Support\+Vectors.
+
+
+
+Referenced by Svm\+\_\+\+Model().
+
+
+\begin{DoxyCode}
+4178                                                     :
+4179    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}          (\textcolor{keyword}{false}),
+4180    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc}            (\_fileDesc),
+4181    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}               (),
+4182    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}            (0),
+4183    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}              (0),
+4184    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}                  (\_fileDesc, \textcolor{keyword}{true}),
+4185    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}             (NULL),
+4186    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}                 (NULL),
+4187    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}               (NULL),
+4188    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}               (NULL),
+4189    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}               (NULL),
+4190    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}                 (NULL),     \textcolor{comment}{// number of SVs for each class (nSV[k])}
+4191    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors} (\textcolor{keyword}{false}),
+4192    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}         (\_fileDesc),
+4193    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values}          (NULL),
+4194    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}       (NULL),
+4195    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}      (NULL)
+4196 \{
+4197 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Svm\+\_\+\+Model@{Svm\+\_\+\+Model}}
+\index{Svm\+\_\+\+Model@{Svm\+\_\+\+Model}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Svm\+\_\+\+Model(const svm\+\_\+parameter \&\+\_\+param, const Feature\+Num\+List \&\+\_\+sel\+Features, File\+Desc\+Ptr \+\_\+file\+Desc)}{Svm_Model(const svm_parameter &_param, const FeatureNumList &_selFeatures, FileDescPtr _fileDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Svm\+\_\+\+Model (
+\begin{DoxyParamCaption}
+\item[{const {\bf svm\+\_\+parameter} \&}]{\+\_\+param, }
+\item[{const {\bf Feature\+Num\+List} \&}]{\+\_\+sel\+Features, }
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a98d755bfc9c1e83b467799cf7e3a12b6}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a98d755bfc9c1e83b467799cf7e3a12b6}
+
+
+Definition at line 4200 of file svm2.\+cpp.
+
+
+
+References cancel\+Flag, dec\+\_\+values, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Feature\+Num\+List(), file\+Desc, label, nr\+\_\+class, n\+SV, num\+S\+Vs, pairwise\+\_\+prob, param, prob\+\_\+estimates, probA, probB, rho, sel\+Features, sv\+\_\+coef, Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+parameter(), and we\+Own\+Support\+Vectors.
+
+
+
+Referenced by Svm\+\_\+\+Model(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train().
+
+
+\begin{DoxyCode}
+4203                                   :
+4204    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}          (\textcolor{keyword}{false}),
+4205    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc}            (\_fileDesc),
+4206    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}               (\_param),
+4207    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}            (0),
+4208    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}              (0),
+4209    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}                  (\_fileDesc, \textcolor{keyword}{true}),
+4210    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}             (NULL),
+4211    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}                 (NULL),
+4212    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}               (NULL),
+4213    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}               (NULL),
+4214    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}               (NULL),
+4215    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}                 (NULL),     \textcolor{comment}{// number of SVs for each class (nSV[k])}
+4216    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors} (\textcolor{keyword}{false}),
+4217    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}         (\_selFeatures),
+4218    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values}          (NULL),
+4219    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}       (NULL),
+4220    \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}      (NULL)
+4221 
+4222 \{
+4223 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!````~Svm\+\_\+\+Model@{$\sim$\+Svm\+\_\+\+Model}}
+\index{````~Svm\+\_\+\+Model@{$\sim$\+Svm\+\_\+\+Model}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{$\sim$\+Svm\+\_\+\+Model()}{~Svm_Model()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::$\sim$\+Svm\+\_\+\+Model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ac07bd2d2d472c02c11f407a00b22c40e}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ac07bd2d2d472c02c11f407a00b22c40e}
+
+
+Definition at line 4229 of file svm2.\+cpp.
+
+
+
+References Clean\+Up\+Memory().
+
+
+\begin{DoxyCode}
+4230 \{
+4231   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a38e71bae1b5829f722cbcb19eb3930b1}{CleanUpMemory} ();
+4232 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Cancel\+Flag@{Cancel\+Flag}}
+\index{Cancel\+Flag@{Cancel\+Flag}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Cancel\+Flag(bool cancel\+Flag)}{CancelFlag(bool cancelFlag)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Cancel\+Flag (
+\begin{DoxyParamCaption}
+\item[{bool}]{cancel\+Flag}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a018038a6d50ceedc7a6690be30dd0b9e}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a018038a6d50ceedc7a6690be30dd0b9e}
+
+
+Definition at line 4277 of file svm2.\+cpp.
+
+
+
+References cancel\+Flag.
+
+
+\begin{DoxyCode}
+4278 \{
+4279   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag} = \_cancelFlag;
+4280 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Clean\+Up\+Memory@{Clean\+Up\+Memory}}
+\index{Clean\+Up\+Memory@{Clean\+Up\+Memory}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Clean\+Up\+Memory()}{CleanUpMemory()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Clean\+Up\+Memory (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a38e71bae1b5829f722cbcb19eb3930b1}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a38e71bae1b5829f722cbcb19eb3930b1}
+
+
+Definition at line 4235 of file svm2.\+cpp.
+
+
+
+References dec\+\_\+values, label, nr\+\_\+class, n\+SV, pairwise\+\_\+prob, prob\+\_\+estimates, probA, probB, rho, and sv\+\_\+coef.
+
+
+
+Referenced by Read\+X\+M\+L(), and $\sim$\+Svm\+\_\+\+Model().
+
+
+\begin{DoxyCode}
+4236 \{
+4237   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors})
+4238     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{true});
+4239   \textcolor{keywordflow}{else}
+4240     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+4241 
+4242   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  i;
+4243 
+4244   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef})
+4245   \{
+4246     \textcolor{keywordflow}{for}  (i = 0;  i < (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1);  i++)
+4247       \textcolor{keyword}{delete} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[i];
+4248     \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef};
+4249     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef} = NULL;
+4250   \}
+4251 
+4252   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho};     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}   = NULL;
+4253   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA};   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA} = NULL;
+4254   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB};   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB} = NULL;
+4255   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label};   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label} = NULL;
+4256   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV};     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}   = NULL;
+4257 
+4258   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob})
+4259   \{
+4260     \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  i++)
+4261     \{
+4262       \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}[i];
+4263       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}[i] = NULL;
+4264     \}
+4265     \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob};
+4266     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob} = NULL;
+4267   \}
+4268 
+4269   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values};
+4270   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values} = NULL;
+4271   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates};
+4272   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates} = NULL;
+4273 \}  \textcolor{comment}{/* CleanUpMemory */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Dec\+Values@{Dec\+Values}}
+\index{Dec\+Values@{Dec\+Values}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Dec\+Values()}{DecValues()}}]{\setlength{\rightskip}{0pt plus 5cm}double $\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Dec\+Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a534342f92ec4b972b5c1321025223a0f}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a534342f92ec4b972b5c1321025223a0f}
+
+
+Definition at line 4303 of file svm2.\+cpp.
+
+
+
+References dec\+\_\+values, and nr\+\_\+class.
+
+
+
+Referenced by S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability().
+
+
+\begin{DoxyCode}
+4304 \{
+4305   \textcolor{keywordflow}{if}  (!\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values})
+4306     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) / 2];
+4307   \textcolor{keywordflow}{return}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values};
+4308 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a126416e9c696cc6b2f63cabbb84abb98}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a126416e9c696cc6b2f63cabbb84abb98}
+
+
+Definition at line 4284 of file svm2.\+cpp.
+
+
+
+References dec\+\_\+values, label, nr\+\_\+class, n\+SV, num\+S\+Vs, pairwise\+\_\+prob, prob\+\_\+estimates, probA, probB, rho, and sv\+\_\+coef.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+4285 \{
+4286   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numBinaryClassCombos = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) / 2;
+4287   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (*this) + \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a5a61112467b437ab3ffa7e302caa17e9}{MemoryConsumedEstimated} ();
+4288 
+4289   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef})         memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * (
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) * \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs};    \textcolor{comment}{// sv\_coef}
+4290   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho})             memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * numBinaryClassCombos;  \textcolor{comment}{// rho}
+4291   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA})           memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * numBinaryClassCombos;  \textcolor{comment}{// probA}
+4292   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB})           memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * numBinaryClassCombos;  \textcolor{comment}{// probB}
+4293   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label})           memoryConsumedEstimated += \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}) * 
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};
+4294   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV})             memoryConsumedEstimated += \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}) * 
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};
+4295   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob})   memoryConsumedEstimated += \textcolor{keyword}{sizeof} (\textcolor{keywordtype}{double}*) * 
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} + \textcolor{keyword}{sizeof} (\textcolor{keywordtype}{double}) * \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};
+4296   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{dec\_values})      memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * numBinaryClassCombos;
+4297   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates})  memoryConsumedEstimated += \textcolor{keyword}{sizeof} (double)  * nr\_class;
+4298   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+4299 \}  \textcolor{comment}{/* Svm\_Model::MemoryConsumedEstimated */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Normalize\+Probability@{Normalize\+Probability}}
+\index{Normalize\+Probability@{Normalize\+Probability}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Normalize\+Probability()}{NormalizeProbability()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Normalize\+Probability (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a130c243047236acbfbe4005416de39a1}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a130c243047236acbfbe4005416de39a1}
+
+
+Derives multi-\/class probability. 
+
+
+
+Definition at line 4581 of file svm2.\+cpp.
+
+
+
+References nr\+\_\+class, pairwise\+\_\+prob, prob\+\_\+estimates, and Prob\+Estimates().
+
+
+
+Referenced by S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability().
+
+
+\begin{DoxyCode}
+4582 \{
+4583   \textcolor{comment}{// Make sure that the ProbEstimates array exists.}
+4584   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae167af415613364d71e69cbd4221d4d3}{ProbEstimates} ();
+4585 
+4586   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob} == NULL)
+4587     \textcolor{keywordflow}{return};
+4588 
+4589   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+4590   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = 0;
+4591   \textcolor{keywordtype}{double}  totalProb = 0.0;
+4592 
+4593   \textcolor{keywordflow}{for}  (x = 0;  x < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  x++)
+4594   \{
+4595     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}[x] = 1.0;
+4596     \textcolor{keywordflow}{for}  (y = 0;  y < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  y++)
+4597     \{
+4598       \textcolor{keywordflow}{if}  (x != y)
+4599         \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}[x] *= \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}[x][y];
+4600     \}
+4601 
+4602     totalProb += \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}[x];
+4603   \}
+4604 
+4605   \textcolor{keywordflow}{for}  (x = 0;  x < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  x++)
+4606     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates}[x] /= totalProb;
+4607 \}  \textcolor{comment}{/* NormalizeProbability */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Pairwise\+Prob@{Pairwise\+Prob}}
+\index{Pairwise\+Prob@{Pairwise\+Prob}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Pairwise\+Prob()}{PairwiseProb()}}]{\setlength{\rightskip}{0pt plus 5cm}double $\ast$$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Pairwise\+Prob (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a0e4118b531080a8e860b76d4eadcfd80}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a0e4118b531080a8e860b76d4eadcfd80}
+
+
+Definition at line 4319 of file svm2.\+cpp.
+
+
+
+References nr\+\_\+class, and pairwise\+\_\+prob.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Retrieve\+Cross\+Prob\+Table(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability().
+
+
+\begin{DoxyCode}
+4320 \{
+4321   \textcolor{keywordflow}{if}  (!\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob})
+4322   \{
+4323     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}*[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}];
+4324     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class};  x++)
+4325       \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob}[x] = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[nr\_class];
+4326   \}
+4327   \textcolor{keywordflow}{return}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{pairwise\_prob};
+4328 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Prob\+Estimates@{Prob\+Estimates}}
+\index{Prob\+Estimates@{Prob\+Estimates}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Prob\+Estimates()}{ProbEstimates()}}]{\setlength{\rightskip}{0pt plus 5cm}double $\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Prob\+Estimates (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ae167af415613364d71e69cbd4221d4d3}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ae167af415613364d71e69cbd4221d4d3}
+
+
+Definition at line 4311 of file svm2.\+cpp.
+
+
+
+References nr\+\_\+class, and prob\+\_\+estimates.
+
+
+
+Referenced by Normalize\+Probability(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability().
+
+
+\begin{DoxyCode}
+4312 \{
+4313   \textcolor{keywordflow}{if}  (!\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates})
+4314     \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}];
+4315   \textcolor{keywordflow}{return}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{prob\_estimates};
+4316 \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a8fa172f2ade18ea362185452644c1754}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a8fa172f2ade18ea362185452644c1754}
+Reading in all the info needed to build the \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model}{Svm\+\_\+\+Model} data structure including allocating needed memory. 
+
+Definition at line 4417 of file svm2.\+cpp.
+
+
+
+References Clean\+Up\+Memory(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::coef0, K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::degree, K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), file\+Desc, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::gamma, K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::kernel\+\_\+type, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+\_\+\+From\+Str(), label, nr\+\_\+class, n\+SV, num\+S\+Vs, param, probA, probB, rho, sv\+\_\+coef, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+type, S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+\_\+\+From\+Str(), K\+K\+B\+::\+Xml\+Token\+::tok\+Element, K\+K\+B\+::\+Xml\+Token\+::\+Token\+Type(), K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc\+::\+Value(), K\+K\+B\+::\+Xml\+Token\+::\+Var\+Name(), and we\+Own\+Support\+Vectors.
+
+
+\begin{DoxyCode}
+4422 \{
+4423   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a38e71bae1b5829f722cbcb19eb3930b1}{CleanUpMemory} ();
+4424   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{true});
+4425   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{weOwnSupportVectors} = \textcolor{keyword}{true};
+4426 
+4427   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numBinaryCombos = 0;
+4428 
+4429   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  svmParametersStr;
+4430   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}, log);
+4431   \textcolor{keywordflow}{while}  (t  &&  (!\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}))
+4432   \{
+4433     \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}& varName = t->\hyperlink{class_k_k_b_1_1_xml_token_a28b39cfdfa2ed63048a812b1cb52263c}{VarName} ();
+4434     \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_ae98e2c1a798882647578cae4adcd7176}{TokenType} () == XmlToken::TokenTypes::tokElement)
+4435     \{
+4436       \hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr} e = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr}\textcolor{keyword}{>} (t);
+4437       \textcolor{keywordflow}{if}  (e)
+4438       \{
+4439         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  valueStr;
+4440         \textcolor{keywordtype}{double}  valueDouble = 0.0;
+4441         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  valueInt32 = 0;
+4442 
+4443         \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid}(*e) == \textcolor{keyword}{typeid}(\hyperlink{class_k_k_b_1_1_xml_element_k_k_str}{XmlElementKKStr}))
+4444           valueStr = *(\textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_k_k_str}{XmlElementKKStrPtr}\textcolor{keyword}{>} (e)->Value ());
+4445 
+4446         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid}(*e) == \textcolor{keyword}{typeid}(\hyperlink{class_k_k_b_1_1_xml_element_int32}{XmlElementInt32}))
+4447           valueInt32 = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_int32}{XmlElementInt32Ptr}\textcolor{keyword}{>} (e)->Value ();
+4448 
+4449         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid}(*e) == \textcolor{keyword}{typeid}(\hyperlink{class_k_k_b_1_1_xml_element_double}{XmlElementDouble}))
+4450           valueDouble = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_double}{XmlElementDoublePtr}\textcolor{keyword}{>} (e)->Value ();
+4451 
+4452         \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"FileDesc"}))
+4453         \{
+4454           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{XmlElementFileDescPtr}\textcolor{keyword}{>} (e)->Value ();
+4455           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a60576f54b108d40bc6ad032b1b773467}{ResetFileDesc} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc});
+4456         \}
+4457 
+4458         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"svm\_type"}))
+4459           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a803dee598ce609cc4ccb4fdbfa99cd1b}{svm\_type} = \hyperlink{namespace_s_v_m289___m_f_s_ab3335386b366f4ff28920aa6e6d44598}{SVM\_Type\_FromStr} (valueStr);
+4460 
+4461         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"kernel\_type"}))
+4462           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} = \hyperlink{namespace_s_v_m289___m_f_s_af159fcbaa5a7d27c95f0d0e04da90d5e}{Kernel\_Type\_FromStr} (valueStr);
+4463 
+4464         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"degree"}))
+4465           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a4c45977ba07de7038c6ecd091a7684f0}{degree} = valueInt32;
+4466 
+4467         \textcolor{keywordflow}{else} if  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"gamma"}))
+4468           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_af967d55614f8fe7c1da5936a9f2b048d}{gamma} = valueDouble;
+4469 
+4470         \textcolor{keywordflow}{else} if  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"coef0"}))
+4471           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a3f9f18f528dc4eb5c499e80c6b6af3c2}{coef0} = valueDouble;
+4472 
+4473         \textcolor{keywordflow}{else} if  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"selFeatures"}))
+4474           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures} = *(dynamic\_cast<XmlElementFeatureNumListPtr> (e)->Value ());
+4475 
+4476         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"nr\_class"}))
+4477         \{
+4478           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} = valueInt32;
+4479           numBinaryCombos = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) / 2;
+4480         \}
+4481 
+4482         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"numSVs"}))
+4483           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs} = valueInt32;
+4484 
+4485         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"rho"}))
+4486         \{
+4487           \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho};
+4488           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}\textcolor{keyword}{>} (e)->TakeOwnership ();
+4489           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs} = valueInt32;
+4490         \}
+4491 
+4492         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"label"}))
+4493         \{
+4494           \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label};
+4495           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_array_int32}{XmlElementArrayInt32Ptr}\textcolor{keyword}{>} (e)->TakeOwnership ();
+4496         \}
+4497 
+4498         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"probA"}))
+4499         \{
+4500           \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA};
+4501           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}\textcolor{keyword}{>} (e)->TakeOwnership ()
+      ;   \textcolor{comment}{// numBinaryCombos}
+4502         \}  
+4503 
+4504         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"probB"}))
+4505         \{
+4506           \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB};
+4507           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}\textcolor{keyword}{>} (e)->TakeOwnership ()
+      ;   \textcolor{comment}{// numBinaryCombos}
+4508         \}
+4509 
+4510         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"nSV"}))
+4511         \{
+4512           \textcolor{keyword}{delete} \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV};
+4513           \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV} = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_array_int32}{XmlElementArrayInt32Ptr}\textcolor{keyword}{>} (e)->TakeOwnership ();   \textcolor{comment}{//
+       numBinaryCombos}
+4514         \}
+4515 
+4516         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"SupportVector"}))
+4517         \{
+4518           \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} m = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1;
+4519           \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0, j = 0;
+4520 
+4521           \textcolor{keywordflow}{if}  (!\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef})
+4522           \{
+4523             \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}*[m];
+4524             \textcolor{keywordflow}{for}  (i = 0;  i < m;  i++)
+4525             \{
+4526               \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[i] = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}];
+4527               \textcolor{keywordflow}{for}  (j = 0;  j < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs};  j++)
+4528                 \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[i][j] = 0.0;
+4529             \}
+4530           \}
+4531 
+4532           \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () >= \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs})
+4533           \{
+4534             \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errorMsg = \textcolor{stringliteral}{"SVM289\_MFS::Svm\_Model::Read   ***ERROR***  To many Support Vector's
+       Defined."};
+4535             log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errorMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4536           \}
+4537           \textcolor{keywordflow}{else}
+4538           \{
+4539             \hyperlink{class_k_k_b_1_1_k_k_str_parser}{KKStrParser} p (valueStr);
+4540             p.TrimWhiteSpace (\textcolor{stringliteral}{" "});
+4541             \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}    imageFileName = p.GetNextToken (\textcolor{stringliteral}{"\(\backslash\)t"});
+4542             \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOffeatures  = p.GetNextTokenInt (\textcolor{stringliteral}{"\(\backslash\)t"});
+4543 
+4544             \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  fv = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (numOffeatures);
+4545 
+4546             \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  j = 0;  (j < (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1))  &&  p.MoreTokens ();  ++j)
+4547               \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[j][i] = p.GetNextTokenDouble (\textcolor{stringliteral}{"\(\backslash\)t"});
+4548 
+4549             \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a7357b64ad4590cd3fd5f9eb934f58e67}{Kernel\_Type::PRECOMPUTED})
+4550             \{
+4551               log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+4552                              << \textcolor{stringliteral}{"SVM289\_MFS::Svm\_Model::Read  ***ERROR***    PRECOMPUTED   Can not Handle."}
+       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+4553                              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4554             \}
+4555             \textcolor{keywordflow}{else}
+4556             \{
+4557               \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  (zed < numOffeatures)  &&  (p.MoreTokens ());  ++zed)
+4558               \{
+4559                 \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  featureField = p.GetNextToken (\textcolor{stringliteral}{"\(\backslash\)t"});
+4560                 \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} featureNumber = featureField.\hyperlink{class_k_k_b_1_1_k_k_str_ae50047144b908273ffd004bd9379f6d0}{ExtractTokenInt} (\textcolor{stringliteral}{":"});
+4561                 \textcolor{keywordtype}{double}  featureValue = featureField.\hyperlink{class_k_k_b_1_1_k_k_str_a975d1cea910c2eb3ee08a4db1f3009d4}{ExtractTokenDouble} (\textcolor{stringliteral}{"\(\backslash\)t"});
+4562                 fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} (featureNumber, (\textcolor{keywordtype}{float})featureValue);
+4563               \}
+4564             \}
+4565             \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (fv);
+4566           \}
+4567         \}
+4568       \}
+4569     \}
+4570     \textcolor{keyword}{delete}  t;
+4571     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{cancelFlag}, log);
+4572   \}
+4573   \textcolor{keyword}{delete}  t;
+4574   t = NULL;
+4575 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, ostream \&o) const }{WriteXML(const KKStr &varName, ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ac0547f02f0aa730420892f4a7897d636}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ac0547f02f0aa730420892f4a7897d636}
+
+
+Definition at line 4332 of file svm2.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::coef0, K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::degree, K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Example\+File\+Name(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), file\+Desc, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::gamma, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::kernel\+\_\+type, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Kernel\+\_\+\+Type\+\_\+\+To\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), label, nr\+\_\+class, n\+SV, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Num\+Of\+Features(), num\+S\+Vs, param, S\+V\+M289\+\_\+\+M\+F\+S\+::\+P\+O\+LY, S\+V\+M289\+\_\+\+M\+F\+S\+::\+P\+R\+E\+C\+O\+M\+P\+U\+T\+ED, probA, probB, S\+V\+M289\+\_\+\+M\+F\+S\+::\+R\+BF, rho, sel\+Features, S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+I\+G\+M\+O\+ID, K\+K\+B\+::\+S\+P\+R\+I\+N\+T\+F(), sv\+\_\+coef, S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+parameter\+::svm\+\_\+type, S\+V\+M289\+\_\+\+M\+F\+S\+::\+S\+V\+M\+\_\+\+Type\+\_\+\+To\+Str(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+4335 \{
+4336   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"Svm\_Model"},  XmlTag::TagTypes::tagStart);
+4337   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+4338     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+4339   startTag.WriteXML (o);
+4340   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4341 
+4342   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{fileDesc}->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a52dd5520a36027eef50b4d7a613b6fba}{WriteXML} (\textcolor{stringliteral}{"FileDesc"}, o);
+4343 
+4344   \hyperlink{namespace_s_v_m289___m_f_s_a5ad9e7545ab923f8b12253f258b012db}{SVM\_Type\_ToStr} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a803dee598ce609cc4ccb4fdbfa99cd1b}{svm\_type}).\hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"svm\_type"}, o);
+4345 
+4346   \hyperlink{namespace_s_v_m289___m_f_s_acb87b87039ae2f543109394ca6cecdef}{Kernel\_Type\_ToStr} (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type}).
+      \hyperlink{class_k_k_b_1_1_k_k_str_a7de8ac49f70cdcdf2cc31786d23b8a62}{WriteXML} (\textcolor{stringliteral}{"kernel\_type"}, o);
+4347 
+4348   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a711f44effcbd8619148b829b6aa2ed4f}{Kernel\_Type::POLY})
+4349     XmlElementInt32::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a4c45977ba07de7038c6ecd091a7684f0}{degree}, \textcolor{stringliteral}{"degree"}, o);
+4350 
+4351   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a711f44effcbd8619148b829b6aa2ed4f}{Kernel\_Type::POLY} || 
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a745b490764f14c1bbcb73987f0885a37}{Kernel\_Type::RBF} || \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.
+      \hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29ab299f45b5de2a8f7c45192590290742b}{Kernel\_Type::SIGMOID})
+4352     XmlElementDouble::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_af967d55614f8fe7c1da5936a9f2b048d}{gamma}, \textcolor{stringliteral}{"gamma"}, o);
+4353 
+4354   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a711f44effcbd8619148b829b6aa2ed4f}{Kernel\_Type::POLY} || 
+      \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29ab299f45b5de2a8f7c45192590290742b}{Kernel\_Type::SIGMOID})
+4355     XmlElementDouble::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_a3f9f18f528dc4eb5c499e80c6b6af3c2}{coef0}, \textcolor{stringliteral}{"coef0"}, o);
+4356 
+4357   \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{selFeatures}.\hyperlink{class_k_k_m_l_l_1_1_feature_num_list_a8119e4ff5c20ad2793df8766c9cb84ea}{WriteXML} (\textcolor{stringliteral}{"selFeatures"}, o);
+4358 
+4359   XmlElementInt32::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}, \textcolor{stringliteral}{"nr\_class"}, o);
+4360 
+4361   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numBinaryCombos = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} * (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1) / 2;
+4362 
+4363   XmlElementInt32::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs}, \textcolor{stringliteral}{"numSVs"}, o);
+4364   
+4365   XmlElementArrayDouble::WriteXML (numBinaryCombos, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{rho}, \textcolor{stringliteral}{"rho"}, o);
+4366   
+4367   XmlElementArrayInt32::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{label}, \textcolor{stringliteral}{"label"}, o);
+4368 
+4369   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}) \textcolor{comment}{// regression has probA only}
+4370      XmlElementArrayDouble::WriteXML (numBinaryCombos, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{probA}, \textcolor{stringliteral}{"probA"}, o);
+4371 
+4372   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB})
+4373      XmlElementArrayDouble::WriteXML (numBinaryCombos, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{probB}, \textcolor{stringliteral}{"probB"}, o);
+4374 
+4375   \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV})
+4376       XmlElementArrayInt32::WriteXML (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class}, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{nSV}, \textcolor{stringliteral}{"nSV"}, o);
+4377 
+4378   \textcolor{keywordtype}{char} buff[128];
+4379 
+4380   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{numSVs};  ++i)
+4381   \{
+4382     \textcolor{keyword}{const}  \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector}&  p = \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV}[i];
+4383 
+4384     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  svStr (512);
+4385     svStr << p.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"\(\backslash\)t"} << p.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a660d9573e5ac78e9c3e09d68cddae7d6}{NumOfFeatures} ();
+4386     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j = 0;  j < \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{nr\_class} - 1;  j++)
+4387     \{
+4388       \hyperlink{namespace_k_k_b_a8873481c8aabf0bd85dd15dd6087d374}{SPRINTF} (buff, \textcolor{keyword}{sizeof} (buff), \textcolor{stringliteral}{"%0.15g"}, \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{sv\_coef}[j][i]);
+4389       svStr << \textcolor{stringliteral}{"\(\backslash\)t"} << buff;
+4390     \}
+4391 
+4392     \textcolor{keywordflow}{if}  (\hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{param}.\hyperlink{struct_s_v_m289___m_f_s_1_1svm__parameter_aeaa6b9df55b7ce77adebe83b1ef797ee}{kernel\_type} == \hyperlink{namespace_s_v_m289___m_f_s_ad985d190115342f6434e0ed8816b6e29a7357b64ad4590cd3fd5f9eb934f58e67}{Kernel\_Type::PRECOMPUTED})
+4393     \{
+4394       svStr << \textcolor{stringliteral}{"\(\backslash\)t"} << p.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} (0);
+4395     \}
+4396     \textcolor{keywordflow}{else}
+4397     \{
+4398       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  zed < p.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a660d9573e5ac78e9c3e09d68cddae7d6}{NumOfFeatures} ();  zed++)
+4399         svStr << \textcolor{stringliteral}{"\(\backslash\)t"} << zed << \textcolor{stringliteral}{":"} << p.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} (zed);
+4400     \}
+4401 
+4402     svStr.WriteXML (\textcolor{stringliteral}{"SupportVector"}, o);
+4403   \}
+4404 
+4405   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"Svm\_Model"}, XmlTag::TagTypes::tagEnd);
+4406   endTag.WriteXML (o);
+4407   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+4408 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!cancel\+Flag@{cancel\+Flag}}
+\index{cancel\+Flag@{cancel\+Flag}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{cancel\+Flag}{cancelFlag}}]{\setlength{\rightskip}{0pt plus 5cm}volatile bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::cancel\+Flag}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a01645368f6800875543d69ce8731d692}
+
+
+Definition at line 202 of file svm2.\+h.
+
+
+
+Referenced by Cancel\+Flag(), and Svm\+\_\+\+Model().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!dec\+\_\+values@{dec\+\_\+values}}
+\index{dec\+\_\+values@{dec\+\_\+values}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{dec\+\_\+values}{dec_values}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::dec\+\_\+values}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a246da513040f5a6ab8c7cdd9dbf442f6}
+
+
+Definition at line 225 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Dec\+Values(), Memory\+Consumed\+Estimated(), and Svm\+\_\+\+Model().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!file\+Desc@{file\+Desc}}
+\index{file\+Desc@{file\+Desc}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{file\+Desc}{fileDesc}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::file\+Desc}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a60df40219f6193cae58891193aa1f44d}
+
+
+Definition at line 203 of file svm2.\+h.
+
+
+
+Referenced by Read\+X\+M\+L(), Svm\+\_\+\+Model(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!label@{label}}
+\index{label@{label}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{label}{label}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::label}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a2f46b2e4f808a25c5f4d15e65c988872}
+
+
+Definition at line 216 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), svm\+\_\+binary\+\_\+svc\+\_\+probability(), svm\+\_\+get\+\_\+labels(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!nr\+\_\+class@{nr\+\_\+class}}
+\index{nr\+\_\+class@{nr\+\_\+class}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{nr\+\_\+class}{nr_class}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::nr\+\_\+class}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a0cf11115996187369bc6152f30f6e64c}
+
+
+Definition at line 205 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Dec\+Values(), Memory\+Consumed\+Estimated(), Normalize\+Probability(), Pairwise\+Prob(), Prob\+Estimates(), Read\+X\+M\+L(), svm\+\_\+get\+\_\+labels(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!n\+SV@{n\+SV}}
+\index{n\+SV@{n\+SV}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{n\+SV}{nSV}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::n\+SV}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a99c49e2824661c212c1599dcd636d2c0}
+
+
+Definition at line 217 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!num\+S\+Vs@{num\+S\+Vs}}
+\index{num\+S\+Vs@{num\+S\+Vs}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{num\+S\+Vs}{numSVs}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::num\+S\+Vs}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a9d1cb317006096158440daf45c809f0c}
+total \hyperlink{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{SV} 
+
+Definition at line 206 of file svm2.\+h.
+
+
+
+Referenced by Memory\+Consumed\+Estimated(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Num\+Of\+Support\+Vectors(), Read\+X\+M\+L(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!pairwise\+\_\+prob@{pairwise\+\_\+prob}}
+\index{pairwise\+\_\+prob@{pairwise\+\_\+prob}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{pairwise\+\_\+prob}{pairwise_prob}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::pairwise\+\_\+prob}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a56bfa09257711ad80e18c3813a515fed}
+
+
+Definition at line 226 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Normalize\+Probability(), Pairwise\+Prob(), and Svm\+\_\+\+Model().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!param@{param}}
+\index{param@{param}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{param}{param}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf svm\+\_\+parameter} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::param}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_af44a309facec24212604b219dc411582}
+
+
+Definition at line 204 of file svm2.\+h.
+
+
+
+Referenced by Read\+X\+M\+L(), svm\+\_\+check\+\_\+probability\+\_\+model(), svm\+\_\+get\+\_\+svm\+\_\+type(), svm\+\_\+get\+\_\+svr\+\_\+probability(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!prob\+\_\+estimates@{prob\+\_\+estimates}}
+\index{prob\+\_\+estimates@{prob\+\_\+estimates}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{prob\+\_\+estimates}{prob_estimates}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::prob\+\_\+estimates}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_af9f2c576c765f5d622dd7bc55454883c}
+
+
+Definition at line 227 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Normalize\+Probability(), Prob\+Estimates(), and Svm\+\_\+\+Model().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!probA@{probA}}
+\index{probA@{probA}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{probA}{probA}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::probA}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ae32212566d46d6d9cafbddd37dcfbada}
+
+
+Definition at line 210 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), svm\+\_\+check\+\_\+probability\+\_\+model(), svm\+\_\+get\+\_\+svr\+\_\+probability(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!probB@{probB}}
+\index{probB@{probB}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{probB}{probB}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::probB}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a4849dabb9dde1adde990980c6c7e1737}
+
+
+Definition at line 211 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), svm\+\_\+check\+\_\+probability\+\_\+model(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+probability(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!rho@{rho}}
+\index{rho@{rho}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{rho}{rho}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::rho}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ac6ee5562a25222e436bb29497cc98525}
+
+
+Definition at line 209 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!sel\+Features@{sel\+Features}}
+\index{sel\+Features@{sel\+Features}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{sel\+Features}{selFeatures}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Num\+List} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::sel\+Features}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a9a7868a9a65154d09d596dd97fb875a2}
+
+
+Definition at line 212 of file svm2.\+h.
+
+
+
+Referenced by Svm\+\_\+\+Model(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!SV@{SV}}
+\index{SV@{SV}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{SV}{SV}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+SV}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_ab2ebe759ca5aabb85fc6deea03706f0a}
+
+
+Definition at line 207 of file svm2.\+h.
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!sv\+\_\+coef@{sv\+\_\+coef}}
+\index{sv\+\_\+coef@{sv\+\_\+coef}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{sv\+\_\+coef}{sv_coef}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::sv\+\_\+coef}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_afc428150716a2373a251c57f7e68bad3}
+
+
+Definition at line 208 of file svm2.\+h.
+
+
+
+Referenced by Clean\+Up\+Memory(), Memory\+Consumed\+Estimated(), Read\+X\+M\+L(), Svm\+\_\+\+Model(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+predict\+\_\+values(), S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train(), and Write\+X\+M\+L().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}!we\+Own\+Support\+Vectors@{we\+Own\+Support\+Vectors}}
+\index{we\+Own\+Support\+Vectors@{we\+Own\+Support\+Vectors}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model}}
+\subsubsection[{\texorpdfstring{we\+Own\+Support\+Vectors}{weOwnSupportVectors}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::we\+Own\+Support\+Vectors}\hypertarget{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}{}\label{struct_s_v_m289___m_f_s_1_1_svm___model_a92c6022c1bf0e7094d7815692f3ec0e9}
+
+
+Definition at line 220 of file svm2.\+h.
+
+
+
+Referenced by Read\+X\+M\+L(), Svm\+\_\+\+Model(), and S\+V\+M289\+\_\+\+M\+F\+S\+::svm\+\_\+train().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm2_8h}{svm2.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm2_8cpp}{svm2.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,463 @@
+\hypertarget{_raster_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Raster.cpp File Reference}
+\label{_raster_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Raster.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Raster.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$limits.\+h$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}kku\+\_\+fftw.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Raster.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Blob.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}B\+M\+P\+Image.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Compressor.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Convex\+Hull.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Eigen\+Vector.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Histogram.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Image\+I\+O.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Exception.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Matrix.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Morph\+Op\+Binarize.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Morph\+Op\+Dilation.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Morph\+Op\+Erosion.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Morph\+Op\+Stretcher.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Simple\+Compressor.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Morph\+Op\+Sobel.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{_raster_8cpp_a74d05f63ae2fa08f5ac747d4b33396ab}{Delta\+Angle} (float ang1, float ang2)
+\begin{DoxyCompactList}\small\item\em Returns the difference between two angles in degrees. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \hyperlink{_raster_8cpp_a87f66b9005f9f4224fa1c553fe5f122f}{Find\+Kth\+Value} (T $\ast$values, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} array\+Size, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} Kth)
+\item 
+bool \hyperlink{_raster_8cpp_a26369c862acddcbd9e8b1eb2913adb20}{k\+\_\+\+Thinning\+Check\+Transitions} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]})
+\item 
+bool \hyperlink{_raster_8cpp_a18dbacc13d461016bbced3e8c9973757}{k\+\_\+\+Thinning\+Step1cd\+Tests} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]})
+\item 
+bool \hyperlink{_raster_8cpp_ad105800cd4251636e5f095579574a73b}{k\+\_\+\+Thinning\+Step2cd\+Tests} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]})
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{_raster_8cpp_a0e995a6614b4e4a98a8e2c4b13c082a1}{Max6} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x1, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x2, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x3, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x4, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x5, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x6)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{_raster_8cpp_a766fd38cd30cb01961bae13a9570307d}{Max9} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x1, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x2, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x3, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x4, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x5, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x6, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x7, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x8, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x9)
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{_raster_8cpp_a35cd27498a34528ebe070556016152f5}{Merge\+Alpfa\+Beta} (float alpha, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} alpha\+Pixel, float beta, \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} beta\+Pixel)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x1, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x2)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{_raster_8cpp_ab019f0b1d3a4bd98c990d75ca190d067}{freq\+Hist16\+Bucket\+Idx} \mbox{[}256\mbox{]}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{_raster_8cpp_af53de902c57701041c19ab771f77f9c2}{freq\+Hist\+Bucket\+Idx} \mbox{[}256\mbox{]}
+\item 
+const \hyperlink{struct_k_k_b_1_1_mov_dir}{Mov\+Dir} \hyperlink{_raster_8cpp_a4c248ea955a609e904037ab98cc73332}{movements} \mbox{[}8\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Raster.\+cpp@{Raster.\+cpp}!Delta\+Angle@{Delta\+Angle}}
+\index{Delta\+Angle@{Delta\+Angle}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Delta\+Angle(float ang1, float ang2)}{DeltaAngle(float ang1, float ang2)}}]{\setlength{\rightskip}{0pt plus 5cm}float Delta\+Angle (
+\begin{DoxyParamCaption}
+\item[{float}]{ang1, }
+\item[{float}]{ang2}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_a74d05f63ae2fa08f5ac747d4b33396ab}{}\label{_raster_8cpp_a74d05f63ae2fa08f5ac747d4b33396ab}
+
+
+Returns the difference between two angles in degrees. 
+
+Given two angles, will determine the angular distance between them, going from the ang1 to ang2. A positive delta indicates that ang2 is in front of ang1, negative means it is behind ang1. The result can be from -\/180 to +180 degrees. 
+
+Definition at line 5328 of file Raster.\+cpp.
+
+
+\begin{DoxyCode}
+5331 \{
+5332   \textcolor{keywordtype}{float}  deltaAng = ang2 - ang1;
+5333 
+5334   \textcolor{keywordflow}{while}  (deltaAng > 180.0)
+5335     deltaAng  = deltaAng - (float)360.0;
+5336 
+5337   \textcolor{keywordflow}{if}  (deltaAng < -180.0)
+5338     deltaAng = deltaAng + (float)360;
+5339 
+5340   \textcolor{keywordflow}{return}  deltaAng;
+5341 \}  \textcolor{comment}{/* DeltaAngle */}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!Find\+Kth\+Value@{Find\+Kth\+Value}}
+\index{Find\+Kth\+Value@{Find\+Kth\+Value}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Find\+Kth\+Value(\+T $\ast$values, kkint32 array\+Size, kkint32 Kth)}{FindKthValue(T *values, kkint32 arraySize, kkint32 Kth)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ T Find\+Kth\+Value (
+\begin{DoxyParamCaption}
+\item[{T $\ast$}]{values, }
+\item[{{\bf kkint32}}]{array\+Size, }
+\item[{{\bf kkint32}}]{Kth}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_a87f66b9005f9f4224fa1c553fe5f122f}{}\label{_raster_8cpp_a87f66b9005f9f4224fa1c553fe5f122f}
+
+
+Definition at line 7175 of file Raster.\+cpp.
+
+
+\begin{DoxyCode}
+7179 \{
+7180   T    pv;
+7181   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  left  = 0;
+7182   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  right = arraySize - 1;
+7183 
+7184 
+7185   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  pivotIndex = right;
+7186 
+7187   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  partitionIndex = -1;
+7188 
+7189   T temp;
+7190 
+7191   \textcolor{keywordflow}{while}  (partitionIndex != Kth)
+7192   \{
+7193     pv = values[pivotIndex];
+7194     
+7195     partitionIndex = left;
+7196     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = left;  i < right;  i++)
+7197     \{
+7198       \textcolor{keywordflow}{if}  (values[i] <= pv)
+7199       \{
+7200         \textcolor{keywordflow}{if}  (i != partitionIndex)
+7201         \{
+7202           temp = values[i];
+7203           values[i] = values[partitionIndex];
+7204           values[partitionIndex] = temp;
+7205         \}
+7206         partitionIndex = partitionIndex + 1;
+7207       \}
+7208     \}
+7209 
+7210     temp = values[partitionIndex];
+7211     values[partitionIndex] = values[right];
+7212     values[right] = temp;
+7213 
+7214     \textcolor{keywordflow}{if}  (Kth < partitionIndex)
+7215       right = partitionIndex - 1;
+7216     \textcolor{keywordflow}{else}
+7217       left  = partitionIndex + 1;
+7218 
+7219     pivotIndex = right;
+7220   \}
+7221 
+7222   \textcolor{keywordflow}{return}  values[Kth];
+7223 \}  \textcolor{comment}{/* FindKthValue */}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!k\+\_\+\+Thinning\+Check\+Transitions@{k\+\_\+\+Thinning\+Check\+Transitions}}
+\index{k\+\_\+\+Thinning\+Check\+Transitions@{k\+\_\+\+Thinning\+Check\+Transitions}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+\_\+\+Thinning\+Check\+Transitions(uchar m\+\_\+\+Matrix22[][3])}{k_ThinningCheckTransitions(uchar m_Matrix22[][3])}}]{\setlength{\rightskip}{0pt plus 5cm}bool k\+\_\+\+Thinning\+Check\+Transitions (
+\begin{DoxyParamCaption}
+\item[{{\bf uchar}}]{m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_a26369c862acddcbd9e8b1eb2913adb20}{}\label{_raster_8cpp_a26369c862acddcbd9e8b1eb2913adb20}
+
+
+Definition at line 8520 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Thin\+Contour().
+
+
+\begin{DoxyCode}
+8521 \{
+8522   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} iTransitions=0;
+8523 
+8524   \textcolor{keywordflow}{if} ((m\_Matrix22[0][0]==1) && (m\_Matrix22[1][0]==0))\{
+8525     ++iTransitions;\}
+8526 
+8527   \textcolor{keywordflow}{if} ((m\_Matrix22[1][0]==1) && (m\_Matrix22[2][0]==0))\{
+8528     ++iTransitions;\}
+8529 
+8530   \textcolor{keywordflow}{if} ((m\_Matrix22[2][0]==1) && (m\_Matrix22[2][1]==0))\{
+8531     ++iTransitions;\}
+8532 
+8533   \textcolor{keywordflow}{if} ((m\_Matrix22[2][1]==1) && (m\_Matrix22[2][2]==0))\{
+8534     ++iTransitions;\}
+8535   
+8536   \textcolor{keywordflow}{if} ((m\_Matrix22[2][2]==1) && (m\_Matrix22[1][2]==0))\{
+8537     ++iTransitions;\}
+8538   
+8539   \textcolor{keywordflow}{if} ((m\_Matrix22[1][2]==1) && (m\_Matrix22[0][2]==0))\{
+8540     ++iTransitions;\}
+8541 
+8542   \textcolor{keywordflow}{if} ((m\_Matrix22[0][2]==1) && (m\_Matrix22[0][1]==0))\{
+8543     ++iTransitions;\}
+8544   
+8545   \textcolor{keywordflow}{if} ((m\_Matrix22[0][1]==1) && (m\_Matrix22[0][0]==0))\{
+8546     ++iTransitions;\}
+8547 
+8548   \textcolor{keywordflow}{if} (iTransitions==1)
+8549     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+8550   \textcolor{keywordflow}{else}
+8551     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+8552 \}  \textcolor{comment}{/* k\_ThinningCheckTransitions */}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!k\+\_\+\+Thinning\+Step1cd\+Tests@{k\+\_\+\+Thinning\+Step1cd\+Tests}}
+\index{k\+\_\+\+Thinning\+Step1cd\+Tests@{k\+\_\+\+Thinning\+Step1cd\+Tests}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+\_\+\+Thinning\+Step1cd\+Tests(uchar m\+\_\+\+Matrix22[][3])}{k_ThinningStep1cdTests(uchar m_Matrix22[][3])}}]{\setlength{\rightskip}{0pt plus 5cm}bool k\+\_\+\+Thinning\+Step1cd\+Tests (
+\begin{DoxyParamCaption}
+\item[{{\bf uchar}}]{m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_a18dbacc13d461016bbced3e8c9973757}{}\label{_raster_8cpp_a18dbacc13d461016bbced3e8c9973757}
+
+
+Definition at line 8507 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Thin\+Contour().
+
+
+\begin{DoxyCode}
+8508 \{
+8509   \textcolor{keywordflow}{if} ((m\_Matrix22[1][0] + m\_Matrix22[2][1] + m\_Matrix22[1][2]) &&
+8510       (m\_Matrix22[2][1] + m\_Matrix22[1][2] + m\_Matrix22[0][1])
+8511      )
+8512     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+8513   \textcolor{keywordflow}{else}
+8514     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+8515 \}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!k\+\_\+\+Thinning\+Step2cd\+Tests@{k\+\_\+\+Thinning\+Step2cd\+Tests}}
+\index{k\+\_\+\+Thinning\+Step2cd\+Tests@{k\+\_\+\+Thinning\+Step2cd\+Tests}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{k\+\_\+\+Thinning\+Step2cd\+Tests(uchar m\+\_\+\+Matrix22[][3])}{k_ThinningStep2cdTests(uchar m_Matrix22[][3])}}]{\setlength{\rightskip}{0pt plus 5cm}bool k\+\_\+\+Thinning\+Step2cd\+Tests (
+\begin{DoxyParamCaption}
+\item[{{\bf uchar}}]{m\+\_\+\+Matrix22\mbox{[}$\,$\mbox{]}\mbox{[}3\mbox{]}}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_ad105800cd4251636e5f095579574a73b}{}\label{_raster_8cpp_ad105800cd4251636e5f095579574a73b}
+
+
+Definition at line 8493 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Thin\+Contour().
+
+
+\begin{DoxyCode}
+8494 \{
+8495   \textcolor{keywordflow}{if} ((m\_Matrix22[1][0] + m\_Matrix22[2][1] + m\_Matrix22[0][1]) &&
+8496       (m\_Matrix22[1][0] + m\_Matrix22[1][2] + m\_Matrix22[0][1])
+8497      )
+8498     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+8499   \textcolor{keywordflow}{else}
+8500     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+8501 \}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!Max6@{Max6}}
+\index{Max6@{Max6}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Max6(kkint32 x1, kkint32 x2, kkint32 x3, kkint32 x4, kkint32 x5, kkint32 x6)}{Max6(kkint32 x1, kkint32 x2, kkint32 x3, kkint32 x4, kkint32 x5, kkint32 x6)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Max6 (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{x1, }
+\item[{{\bf kkint32}}]{x2, }
+\item[{{\bf kkint32}}]{x3, }
+\item[{{\bf kkint32}}]{x4, }
+\item[{{\bf kkint32}}]{x5, }
+\item[{{\bf kkint32}}]{x6}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{_raster_8cpp_a0e995a6614b4e4a98a8e2c4b13c082a1}{}\label{_raster_8cpp_a0e995a6614b4e4a98a8e2c4b13c082a1}
+
+
+Definition at line 240 of file Raster.\+cpp.
+
+
+\begin{DoxyCode}
+243 \{
+244   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  r;
+245   
+246   \textcolor{keywordflow}{if}  (x1 > x2)
+247     r = x1;
+248   \textcolor{keywordflow}{else} 
+249     r = x2;
+250 
+251   \textcolor{keywordflow}{if}  (x3 > r)  r = x3;
+252   \textcolor{keywordflow}{if}  (x4 > r)  r = x4;
+253   \textcolor{keywordflow}{if}  (x5 > r)  r = x5;
+254   \textcolor{keywordflow}{if}  (x6 > r)  r = x6;
+255 
+256   \textcolor{keywordflow}{return}  r;
+257 \}  \textcolor{comment}{/* Max6 */}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!Max9@{Max9}}
+\index{Max9@{Max9}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Max9(kkint32 x1, kkint32 x2, kkint32 x3, kkint32 x4, kkint32 x5, kkint32 x6, kkint32 x7, kkint32 x8, kkint32 x9)}{Max9(kkint32 x1, kkint32 x2, kkint32 x3, kkint32 x4, kkint32 x5, kkint32 x6, kkint32 x7, kkint32 x8, kkint32 x9)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Max9 (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{x1, }
+\item[{{\bf kkint32}}]{x2, }
+\item[{{\bf kkint32}}]{x3, }
+\item[{{\bf kkint32}}]{x4, }
+\item[{{\bf kkint32}}]{x5, }
+\item[{{\bf kkint32}}]{x6, }
+\item[{{\bf kkint32}}]{x7, }
+\item[{{\bf kkint32}}]{x8, }
+\item[{{\bf kkint32}}]{x9}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{_raster_8cpp_a766fd38cd30cb01961bae13a9570307d}{}\label{_raster_8cpp_a766fd38cd30cb01961bae13a9570307d}
+
+
+Definition at line 262 of file Raster.\+cpp.
+
+
+\begin{DoxyCode}
+266 \{
+267   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  r;
+268   
+269   \textcolor{keywordflow}{if}  (x1 > x2)
+270     r = x1;
+271   \textcolor{keywordflow}{else} 
+272     r = x2;
+273 
+274   \textcolor{keywordflow}{if}  (x3 > r)  r = x3;
+275   \textcolor{keywordflow}{if}  (x4 > r)  r = x4;
+276   \textcolor{keywordflow}{if}  (x5 > r)  r = x5;
+277   \textcolor{keywordflow}{if}  (x6 > r)  r = x6;
+278   \textcolor{keywordflow}{if}  (x7 > r)  r = x7;
+279   \textcolor{keywordflow}{if}  (x8 > r)  r = x8;
+280   \textcolor{keywordflow}{if}  (x9 > r)  r = x9;
+281 
+282   \textcolor{keywordflow}{return}  r;
+283 \}  \textcolor{comment}{/* Max9 */}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!Merge\+Alpfa\+Beta@{Merge\+Alpfa\+Beta}}
+\index{Merge\+Alpfa\+Beta@{Merge\+Alpfa\+Beta}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Merge\+Alpfa\+Beta(float alpha, uchar alpha\+Pixel, float beta, uchar beta\+Pixel)}{MergeAlpfaBeta(float alpha, uchar alphaPixel, float beta, uchar betaPixel)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} Merge\+Alpfa\+Beta (
+\begin{DoxyParamCaption}
+\item[{float}]{alpha, }
+\item[{{\bf uchar}}]{alpha\+Pixel, }
+\item[{float}]{beta, }
+\item[{{\bf uchar}}]{beta\+Pixel}
+\end{DoxyParamCaption}
+)}\hypertarget{_raster_8cpp_a35cd27498a34528ebe070556016152f5}{}\label{_raster_8cpp_a35cd27498a34528ebe070556016152f5}
+
+
+Definition at line 6419 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Draw\+Line().
+
+
+\begin{DoxyCode}
+6424 \{
+6425   \textcolor{keywordtype}{int} newPixelValue = (int)(0.5f + alpha * (\textcolor{keywordtype}{float})alphaPixel  + beta  * (float)betaPixel);
+6426   \textcolor{keywordflow}{if}  (newPixelValue > 255)
+6427     newPixelValue = 255;
+6428   \textcolor{keywordflow}{return} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar})newPixelValue;
+6429 \}
+\end{DoxyCode}
+\index{Raster.\+cpp@{Raster.\+cpp}!Min@{Min}}
+\index{Min@{Min}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{Min(kkint32 x1, kkint32 x2)}{Min(kkint32 x1, kkint32 x2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Min (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{x1, }
+\item[{{\bf kkint32}}]{x2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{}\label{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}
+
+
+Definition at line 229 of file Raster.\+cpp.
+
+
+\begin{DoxyCode}
+230 \{
+231   \textcolor{keywordflow}{if}  (x1 < x2)
+232     \textcolor{keywordflow}{return}  x1;
+233   \textcolor{keywordflow}{else}
+234     \textcolor{keywordflow}{return}  x2;
+235 \}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{Raster.\+cpp@{Raster.\+cpp}!freq\+Hist16\+Bucket\+Idx@{freq\+Hist16\+Bucket\+Idx}}
+\index{freq\+Hist16\+Bucket\+Idx@{freq\+Hist16\+Bucket\+Idx}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{freq\+Hist16\+Bucket\+Idx}{freqHist16BucketIdx}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} freq\+Hist16\+Bucket\+Idx\mbox{[}256\mbox{]}}\hypertarget{_raster_8cpp_ab019f0b1d3a4bd98c990d75ca190d067}{}\label{_raster_8cpp_ab019f0b1d3a4bd98c990d75ca190d067}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= 
+          \{0,   0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1, 
+       1,  1,  1,  1,  1,  1,  1,  1, 
+           2,   2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,  3,  3,  3,  3,  3, 
+       3,  3,  3,  3,  3,  3,  3,  3, 
+           4,   4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  5,  5,  5,  5,  5,  5,  5,  5, 
+       5,  5,  5,  5,  5,  5,  5,  5, 
+           6,   6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  6,  7,  7,  7,  7,  7,  7,  7,  7, 
+       7,  7,  7,  7,  7,  7,  7,  7, 
+           8,   8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  8,  9,  9,  9,  9,  9,  9,  9,  9, 
+       9,  9,  9,  9,  9,  9,  9,  9, 
+           10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 11, 11, 11, 
+      11, 11, 11, 11, 11, 11, 11, 11, 
+           12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 13, 13, 13, 
+      13, 13, 13, 13, 13, 13, 13, 13, 
+           14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 15, 15, 15, 
+      15, 15, 15, 15, 15, 15, 15, 15  
+          \}
+\end{DoxyCode}
+
+
+Definition at line 215 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Calc\+Area\+And\+Intensity\+Features16().
+
+\index{Raster.\+cpp@{Raster.\+cpp}!freq\+Hist\+Bucket\+Idx@{freq\+Hist\+Bucket\+Idx}}
+\index{freq\+Hist\+Bucket\+Idx@{freq\+Hist\+Bucket\+Idx}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{freq\+Hist\+Bucket\+Idx}{freqHistBucketIdx}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} freq\+Hist\+Bucket\+Idx\mbox{[}256\mbox{]}}\hypertarget{_raster_8cpp_af53de902c57701041c19ab771f77f9c2}{}\label{_raster_8cpp_af53de902c57701041c19ab771f77f9c2}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= 
+          \{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+           2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+           3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
+           4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 
+           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 
+           6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 
+           7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7  
+          \}
+\end{DoxyCode}
+
+
+Definition at line 204 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Calc\+Area\+And\+Intensity\+Features(), K\+K\+B\+::\+Raster\+::\+Calc\+Area\+And\+Intensity\+Histogram(), and K\+K\+B\+::\+Raster\+::\+Calc\+Area\+And\+Intensity\+Histogram\+White().
+
+\index{Raster.\+cpp@{Raster.\+cpp}!movements@{movements}}
+\index{movements@{movements}!Raster.\+cpp@{Raster.\+cpp}}
+\subsubsection[{\texorpdfstring{movements}{movements}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Mov\+Dir} movements\mbox{[}8\mbox{]}}\hypertarget{_raster_8cpp_a4c248ea955a609e904037ab98cc73332}{}\label{_raster_8cpp_a4c248ea955a609e904037ab98cc73332}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{\{-1,  0\}, 
+                          \{-1,  1\}, 
+                          \{ 0,  1\}, 
+                          \{ 1,  1\}, 
+                          \{ 1,  0\}, 
+                          \{ 1, -1\}, 
+                          \{ 0, -1\}, 
+                          \{-1, -1\}  
+                         \}
+\end{DoxyCode}
+
+
+Definition at line 5346 of file Raster.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Follow\+Contour().
+

@@ -1,0 +1,193 @@
+\hypertarget{class_k_k_b_1_1_morph_op_binarize}{}\section{K\+KB\+:\+:Morph\+Op\+Binarize Class Reference}
+\label{class_k_k_b_1_1_morph_op_binarize}\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+
+
+{\ttfamily \#include $<$Morph\+Op\+Binarize.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Morph\+Op\+Binarize\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_b_1_1_morph_op_binarize}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_morph_op_binarize_aeb4c8e842f2bde9628a8e16e57c08a77}{Morph\+Op\+Binarize} (\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} \+\_\+pixel\+Value\+Min, \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} \+\_\+pixel\+Value\+Max)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_morph_op_binarize_aac7d39b809e44ca6c44d1886765131e4}{$\sim$\+Morph\+Op\+Binarize} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_morph_op_binarize_a42922ac8c4a1fc55c0b93c6a3fcea6b6}{Memory\+Consumed\+Estimated} ()
+\item 
+virtual \hyperlink{class_k_k_b_1_1_morph_op_a32070d9c14d16849873a8a409f5b0d69}{Operation\+Type} \hyperlink{class_k_k_b_1_1_morph_op_binarize_a4f06fa91ef03dca96bf2f1494da85678}{Operation} () const 
+\item 
+virtual \hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_morph_op_binarize_ae8f1b98cf24b7cb143126d5560acbbaf}{Perform\+Operation} (\hyperlink{namespace_k_k_b_a5acfa7402dc4df1769f90d3dc8ddfc2c}{Raster\+Const\+Ptr} \+\_\+image)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 24 of file Morph\+Op\+Binarize.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}!Morph\+Op\+Binarize@{Morph\+Op\+Binarize}}
+\index{Morph\+Op\+Binarize@{Morph\+Op\+Binarize}!K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+\subsubsection[{\texorpdfstring{Morph\+Op\+Binarize(kkuint16 \+\_\+pixel\+Value\+Min, kkuint16 \+\_\+pixel\+Value\+Max)}{MorphOpBinarize(kkuint16 _pixelValueMin, kkuint16 _pixelValueMax)}}]{\setlength{\rightskip}{0pt plus 5cm}Morph\+Op\+Binarize\+::\+Morph\+Op\+Binarize (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint16}}]{\+\_\+pixel\+Value\+Min, }
+\item[{{\bf kkuint16}}]{\+\_\+pixel\+Value\+Max}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_morph_op_binarize_aeb4c8e842f2bde9628a8e16e57c08a77}{}\label{class_k_k_b_1_1_morph_op_binarize_aeb4c8e842f2bde9628a8e16e57c08a77}
+
+
+Definition at line 22 of file Morph\+Op\+Binarize.\+cpp.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+::\+Morph\+Op().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Binarize\+By\+Threshold().
+
+
+\begin{DoxyCode}
+24                                   :
+25   \hyperlink{class_k_k_b_1_1_morph_op_a087902e5cad640c26dfa24804cc2a974}{MorphOp} (),
+26   pixelValueMin (\_pixelValueMin),
+27   pixelValueMax (\_pixelValueMax)
+28 \{
+29 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}!````~Morph\+Op\+Binarize@{$\sim$\+Morph\+Op\+Binarize}}
+\index{````~Morph\+Op\+Binarize@{$\sim$\+Morph\+Op\+Binarize}!K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+\subsubsection[{\texorpdfstring{$\sim$\+Morph\+Op\+Binarize()}{~MorphOpBinarize()}}]{\setlength{\rightskip}{0pt plus 5cm}Morph\+Op\+Binarize\+::$\sim$\+Morph\+Op\+Binarize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_morph_op_binarize_aac7d39b809e44ca6c44d1886765131e4}{}\label{class_k_k_b_1_1_morph_op_binarize_aac7d39b809e44ca6c44d1886765131e4}
+
+
+Definition at line 33 of file Morph\+Op\+Binarize.\+cpp.
+
+
+\begin{DoxyCode}
+34 \{
+35 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Morph\+Op\+Binarize\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_morph_op_binarize_a42922ac8c4a1fc55c0b93c6a3fcea6b6}{}\label{class_k_k_b_1_1_morph_op_binarize_a42922ac8c4a1fc55c0b93c6a3fcea6b6}
+
+
+Definition at line 39 of file Morph\+Op\+Binarize.\+cpp.
+
+
+\begin{DoxyCode}
+40 \{
+41   \textcolor{keywordflow}{return}  \textcolor{keyword}{sizeof} (*this);
+42 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}!Operation@{Operation}}
+\index{Operation@{Operation}!K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+\subsubsection[{\texorpdfstring{Operation() const }{Operation() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Operation\+Type} K\+K\+B\+::\+Morph\+Op\+Binarize\+::\+Operation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_morph_op_binarize_a4f06fa91ef03dca96bf2f1494da85678}{}\label{class_k_k_b_1_1_morph_op_binarize_a4f06fa91ef03dca96bf2f1494da85678}
+
+
+Implements \hyperlink{class_k_k_b_1_1_morph_op_abdf6f4bddae0b3cc3dc718559fa60234}{K\+K\+B\+::\+Morph\+Op}.
+
+
+
+Definition at line 33 of file Morph\+Op\+Binarize.\+h.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+::\+Binarize.
+
+
+\begin{DoxyCode}
+33 \{\textcolor{keywordflow}{return}  \hyperlink{class_k_k_b_1_1_morph_op_a32070d9c14d16849873a8a409f5b0d69a84a4d9fd8033f883ce95cae8c5b9859a}{OperationType::Binarize};\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}!Perform\+Operation@{Perform\+Operation}}
+\index{Perform\+Operation@{Perform\+Operation}!K\+K\+B\+::\+Morph\+Op\+Binarize@{K\+K\+B\+::\+Morph\+Op\+Binarize}}
+\subsubsection[{\texorpdfstring{Perform\+Operation(\+Raster\+Const\+Ptr \+\_\+image)}{PerformOperation(RasterConstPtr _image)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Morph\+Op\+Binarize\+::\+Perform\+Operation (
+\begin{DoxyParamCaption}
+\item[{{\bf Raster\+Const\+Ptr}}]{\+\_\+image}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_morph_op_binarize_ae8f1b98cf24b7cb143126d5560acbbaf}{}\label{class_k_k_b_1_1_morph_op_binarize_ae8f1b98cf24b7cb143126d5560acbbaf}
+
+
+Definition at line 62 of file Morph\+Op\+Binarize.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Background\+Pixel\+Value(), K\+K\+B\+::\+Raster\+::\+Foreground\+Pixel\+Count(), K\+K\+B\+::\+Raster\+::\+Green(), K\+K\+B\+::\+Raster\+::\+Height(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Morph\+Op\+::\+Set\+Src\+Raster(), K\+K\+B\+::\+Morph\+Op\+::src\+Green, K\+K\+B\+::\+Morph\+Op\+::src\+Height, K\+K\+B\+::\+Morph\+Op\+::src\+Raster, K\+K\+B\+::\+Morph\+Op\+::src\+Width, and K\+K\+B\+::\+Raster\+::\+Width().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Binarize\+By\+Threshold().
+
+
+\begin{DoxyCode}
+63 \{
+64   \hyperlink{class_k_k_b_1_1_morph_op_a07c75e151d9b95ca13da3bfc2e48dba4}{SetSrcRaster} (\_image);
+65 
+66   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  r = 0;
+67   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  c = 0;
+68 
+69   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  binarizedForegroundPixelCount = 0;
+70 
+71   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}   binarizedRaster = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_raster}{Raster} (\hyperlink{class_k_k_b_1_1_morph_op_a9af0ebff0135d124c7d1d17e21c4d7e6}{srcRaster}->Height (), 
+      \hyperlink{class_k_k_b_1_1_morph_op_a9af0ebff0135d124c7d1d17e21c4d7e6}{srcRaster}->Width ());
+72 
+73   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*      srcRow     = NULL;
+74   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}**     destGreen  = binarizedRaster->\hyperlink{class_k_k_b_1_1_raster_a2dbd81f2cb60b3716bcf6467050dde93}{Green} ();
+75   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*      destRow    = NULL;
+76 
+77   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}       \hyperlink{class_k_k_b_1_1_morph_op_a0c3862d1c8427c4d246e0bcd56699741}{backgroundPixelValue} = \hyperlink{class_k_k_b_1_1_morph_op_a9af0ebff0135d124c7d1d17e21c4d7e6}{srcRaster}->BackgroundPixelValue ();
+78 
+79   \textcolor{keywordflow}{for}  (r = 0;  r < \hyperlink{class_k_k_b_1_1_morph_op_a54b2ce1b398a80803b4dbe8aef956b51}{srcHeight};  r++)
+80   \{
+81     destRow = destGreen[r];
+82     srcRow  = \hyperlink{class_k_k_b_1_1_morph_op_ab811c702f7e0c8ffccdd21111c8144ab}{srcGreen}[r];
+83 
+84     \textcolor{keywordflow}{for}  (c = 0; c  < \hyperlink{class_k_k_b_1_1_morph_op_aec2cfb3015497e4077751fc5f19559ab}{srcWidth};  c++)
+85     \{
+86       \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  srcCh = srcRow[c];
+87       \textcolor{keywordflow}{if}  ((srcCh >= pixelValueMin)  &&  (srcCh <= pixelValueMax))
+88       \{
+89         destRow[c] = srcCh;
+90         ++binarizedForegroundPixelCount;
+91       \}
+92       \textcolor{keywordflow}{else}
+93       \{
+94         destRow[c] = \hyperlink{class_k_k_b_1_1_morph_op_a0c3862d1c8427c4d246e0bcd56699741}{backgroundPixelValue};
+95       \}
+96     \}  \textcolor{comment}{/* for (c) */}
+97   \}  \textcolor{comment}{/* for (r) */}
+98 
+99   binarizedRaster->\hyperlink{class_k_k_b_1_1_raster_a38425a410e40696276be4f22de702eb6}{ForegroundPixelCount} (binarizedForegroundPixelCount);
+100 
+101   \textcolor{keywordflow}{return}  binarizedRaster;
+102 \}  \textcolor{comment}{/* PerformOperation */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_morph_op_binarize_8h}{Morph\+Op\+Binarize.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_morph_op_binarize_8cpp}{Morph\+Op\+Binarize.\+cpp}\end{DoxyCompactItemize}

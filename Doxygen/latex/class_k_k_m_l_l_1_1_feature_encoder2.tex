@@ -1,0 +1,669 @@
+\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2}{}\section{K\+K\+M\+LL\+:\+:Feature\+Encoder2 Class Reference}
+\label{class_k_k_m_l_l_1_1_feature_encoder2}\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+
+
+{\ttfamily \#include $<$Feature\+Encoder2.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_feature_encoder2_1_1_feature_var2}{Feature\+Var2}
+\item 
+class \hyperlink{class_feature_encoder2_1_1_feature_var2_list}{Feature\+Var2\+List}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2}{Feature\+Encoder2} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a532ca948bcdc2c2bf3ccbce7f323a8a9}{Feature\+Encoder2\+Ptr}
+\item 
+enum \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7}{Fe\+What\+To\+Do} \{ \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{Fe\+What\+To\+Do\+::\+Fe\+As\+Is}, 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}{Fe\+What\+To\+Do\+::\+Fe\+Binary}, 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}{Fe\+What\+To\+Do\+::\+Fe\+Scale}
+ \}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7}{Fe\+What\+To\+Do} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a0d93f1765b83a213a2269185fc66bf97}{Fe\+What\+To\+Do\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a963351c535276de1fa40d992a327415c}{Feature\+Encoder2} (const \hyperlink{class_k_k_m_l_l_1_1_model_param}{Model\+Param} \&\+\_\+param, \hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc)
+\begin{DoxyCompactList}\small\item\em Constructs a Feature Encoder object. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_ad4fec95a705647880c1d6e2bf30bf1da}{Feature\+Encoder2} (const \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2}{Feature\+Encoder2} \&\+\_\+encoder)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a3e85e08fa5117b35634adae5dc8bc6dc}{$\sim$\+Feature\+Encoder2} ()
+\begin{DoxyCompactList}\small\item\em Frees any memory allocated by, and owned by the \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2}{Feature\+Encoder2}. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_ac84f8e89a69256abcb7807f8c0f3aae4}{Coded\+Num\+Of\+Features} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_aa181a5ec394867a56583a701fc429eb4}{Create\+Encoded\+File\+Desc} (ostream $\ast$o, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_ab1b04a29d5bd9338a4564af04fab8dda}{Encode\+A\+Example} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} src) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a094b269cb4d1dd3a8a6930185423e45d}{Encode\+All\+Examples} (const \hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} src\+Data)
+\item 
+\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_aa72d55374e2be4e2e21ae8a67fa750c0}{Encoded\+Feature\+Vector\+List} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&src\+Data) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a63b9cbe0310a4bdf12989a71897fd555}{Memory\+Consumed\+Estimated} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a7a8de2fab0082636b80b61274b023c23}{Num\+Encoded\+Features} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a604d0345f33e6536dfd8a4e50eac4d16}{Read\+X\+ML} (istream \&i)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a3e8ddf756bc58f5e95f82ff470325766}{Write\+X\+ML} (istream \&o)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+\begin{DoxyCode}
+                     \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a963351c535276de1fa40d992a327415c}{FeatureEncoder2}                               *
+                                                                   *
+This will eventually replace \textcolor{stringliteral}{"FeatureEncoder"} when we shift over   *
+to the \textcolor{keyword}{new} paradigm where all Machine Learning Algorithms will be  *
+derived from \textcolor{stringliteral}{'Model'}.                                              *
+\end{DoxyCode}
+ 
+
+Definition at line 27 of file Feature\+Encoder2.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Feature\+Encoder2\+Ptr@{Feature\+Encoder2\+Ptr}}
+\index{Feature\+Encoder2\+Ptr@{Feature\+Encoder2\+Ptr}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Feature\+Encoder2\+Ptr}{FeatureEncoder2Ptr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Feature\+Encoder2}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Feature\+Encoder2\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a532ca948bcdc2c2bf3ccbce7f323a8a9}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a532ca948bcdc2c2bf3ccbce7f323a8a9}
+
+
+Definition at line 30 of file Feature\+Encoder2.\+h.
+
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Fe\+What\+To\+Do\+Ptr@{Fe\+What\+To\+Do\+Ptr}}
+\index{Fe\+What\+To\+Do\+Ptr@{Fe\+What\+To\+Do\+Ptr}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Fe\+What\+To\+Do\+Ptr}{FeWhatToDoPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Fe\+What\+To\+Do}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Fe\+What\+To\+Do\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a0d93f1765b83a213a2269185fc66bf97}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a0d93f1765b83a213a2269185fc66bf97}
+
+
+Definition at line 33 of file Feature\+Encoder2.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Fe\+What\+To\+Do@{Fe\+What\+To\+Do}}
+\index{Fe\+What\+To\+Do@{Fe\+What\+To\+Do}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Fe\+What\+To\+Do}{FeWhatToDo}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Fe\+What\+To\+Do}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Fe\+As\+Is@{Fe\+As\+Is}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Fe\+As\+Is@{Fe\+As\+Is}}\item[{\em 
+Fe\+As\+Is\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}
+}]\index{Fe\+Binary@{Fe\+Binary}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Fe\+Binary@{Fe\+Binary}}\item[{\em 
+Fe\+Binary\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}
+}]\index{Fe\+Scale@{Fe\+Scale}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Fe\+Scale@{Fe\+Scale}}\item[{\em 
+Fe\+Scale\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 32 of file Feature\+Encoder2.\+h.
+
+
+\begin{DoxyCode}
+32 \{\hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43a8fdde05abb9506fd4caa93ddc4490a13}{FeAsIs}, \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43ab88633cd9a2d1569dc1979a5e5cb1752}{FeBinary}, \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43aa6a59adc4c0770972e52a9c13d0720f3}{FeScale}\};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Feature\+Encoder2@{Feature\+Encoder2}}
+\index{Feature\+Encoder2@{Feature\+Encoder2}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Feature\+Encoder2(const Model\+Param \&\+\_\+param, File\+Desc\+Ptr \+\_\+file\+Desc)}{FeatureEncoder2(const ModelParam &_param, FileDescPtr _fileDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder2\+::\+Feature\+Encoder2 (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Param} \&}]{\+\_\+param, }
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a963351c535276de1fa40d992a327415c}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a963351c535276de1fa40d992a327415c}
+
+
+Constructs a Feature Encoder object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+param} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Desc} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & A log-\/file stream. All important events will be output to this stream\\
+\hline
+\mbox{\tt in}  & {\em \+\_\+param} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Desc} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & A log file stream. All important events will be output to this stream \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 33 of file Feature\+Encoder2.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Attribute\+Vector(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Cardinality\+Vector(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Encoding\+Method(), Fe\+As\+Is, K\+K\+M\+L\+L\+::\+File\+Desc\+::\+New\+Continuous\+Data\+Only(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+No\+Encoding, K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Num\+Of\+Features(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::operator\mbox{[}$\,$\mbox{]}(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Scaled, and K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Selected\+Features().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+35                                    :
+36     attributeVector     (\_fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a6dc24b4d315f0c314a4c735d0165798b}{AttributeVector} ()),
+37     cardinalityDest     (NULL),
+38     cardinalityVector   (\_fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a1220ac7417528c460b5c9041275e4c7f}{CardinalityVector} ()),
+39     codedNumOfFeatures  (0),
+40     destFeatureNums     (NULL),
+41     destWhatToDo        (NULL),
+42     encodedFileDesc     (NULL),
+43     encodingMethod      (\hyperlink{class_k_k_m_l_l_1_1_model_param_a09e49f936f411dba6f08bdaf8d6b4a98a3f6e102acead54bbbf4c704dd88fb94b}{ModelParam::EncodingMethodType::NoEncoding}
+      ),
+44     fileDesc            (\_fileDesc),
+45     numOfFeatures       (0),
+46     srcFeatureNums      (NULL),
+47     param               (\_param)
+48     
+49 \{
+50   \hyperlink{namespace_k_k_m_l_l_a81284b0a14973267260023f9a72da94a}{FeatureNumListConstPtr}  selectedFeatures = param.
+      \hyperlink{class_k_k_m_l_l_1_1_model_param_a99ae86303829d99bd252ccf4c4e672f8}{SelectedFeatures} ();
+51   numOfFeatures = param.\hyperlink{class_k_k_m_l_l_1_1_model_param_a99ae86303829d99bd252ccf4c4e672f8}{SelectedFeatures} ()->NumOfFeatures ();
+52 
+53   encodingMethod   = param.\hyperlink{class_k_k_m_l_l_1_1_model_param_a6c9ed6cff0839bca401fa94ecf3b4558}{EncodingMethod} ();
+54 
+55   srcFeatureNums   = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16}  [numOfFeatures];
+56   cardinalityDest  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   [numOfFeatures];
+57   destFeatureNums  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   [numOfFeatures];
+58   destWhatToDo     = \textcolor{keyword}{new} \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo}[numOfFeatures];
+59 
+60   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}   destFieldNames;
+61 
+62   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+63 
+64   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures;  x++)
+65   \{
+66     \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16}  srcFeatureNum = (*selectedFeatures)[x];
+67     srcFeatureNums   [x] = srcFeatureNum;
+68     destFeatureNums  [x] = codedNumOfFeatures;
+69     cardinalityDest  [x] = 1;
+70     destWhatToDo     [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+71 
+72     \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}  srcAttribute = (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ae07aab5d923f4c6bc38de38f1d2b2409}{Attributes} ())[srcFeatureNum];
+73 
+74     \textcolor{keywordflow}{switch} (encodingMethod)
+75     \{
+76       \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_model_param_a09e49f936f411dba6f08bdaf8d6b4a98a6ce976e8f061b2b5cfe4d0c50c3405dd}{ModelParam::EncodingMethodType::Binary}:
+77         \textcolor{keywordflow}{if}  ((attributeVector[srcFeatureNum] == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||
+78              (attributeVector[srcFeatureNum] == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+79             )
+80         \{
+81           destWhatToDo    [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary};
+82           cardinalityDest [x] = cardinalityVector[srcFeatureNums [x]];
+83           codedNumOfFeatures   += cardinalityDest[x];
+84           \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  zed < cardinalityDest[x];  zed++)
+85           \{
+86             \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fieldName = srcAttribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} () + \textcolor{stringliteral}{"\_"} + srcAttribute.
+      \hyperlink{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}{GetNominalValue} (zed);
+87             destFieldNames.push\_back (fieldName);
+88           \}
+89         \}
+90         \textcolor{keywordflow}{else}
+91         \{
+92           codedNumOfFeatures++;
+93           destWhatToDo [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+94           destFieldNames.push\_back (srcAttribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+95         \}
+96         \textcolor{keywordflow}{break};
+97 
+98 
+99       \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_model_param_a09e49f936f411dba6f08bdaf8d6b4a98a7380ae6c5e1189eef50cfd0557d74e99}{ModelParam::EncodingMethodType::Scaled}:
+100         codedNumOfFeatures++;
+101         \textcolor{keywordflow}{if}  ((attributeVector[srcFeatureNums[x]] == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||
+102              (attributeVector[srcFeatureNums[x]] == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+103             )
+104           destWhatToDo [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale};
+105         \textcolor{keywordflow}{else}
+106           destWhatToDo [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+107 
+108         destFieldNames.push\_back (srcAttribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+109         \textcolor{keywordflow}{break};
+110 
+111 
+112       \textcolor{keywordflow}{case}    \hyperlink{class_k_k_m_l_l_1_1_model_param_a09e49f936f411dba6f08bdaf8d6b4a98a3f6e102acead54bbbf4c704dd88fb94b}{ModelParam::EncodingMethodType::NoEncoding}:
+113       \textcolor{keywordflow}{default}:
+114         codedNumOfFeatures++;
+115         destWhatToDo [x] = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs};
+116         destFieldNames.push\_back (srcAttribute.\hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} ());
+117         \textcolor{keywordflow}{break};
+118     \}
+119   \}
+120 
+121   encodedFileDesc = \hyperlink{class_k_k_m_l_l_1_1_file_desc_a743571b092e55a4d5d15531804ccedb9}{FileDesc::NewContinuousDataOnly} (destFieldNames);
+122 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Feature\+Encoder2@{Feature\+Encoder2}}
+\index{Feature\+Encoder2@{Feature\+Encoder2}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Feature\+Encoder2(const Feature\+Encoder2 \&\+\_\+encoder)}{FeatureEncoder2(const FeatureEncoder2 &_encoder)}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder2\+::\+Feature\+Encoder2 (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Encoder2} \&}]{\+\_\+encoder}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_ad4fec95a705647880c1d6e2bf30bf1da}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_ad4fec95a705647880c1d6e2bf30bf1da}
+
+
+Definition at line 127 of file Feature\+Encoder2.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Model().
+
+
+\begin{DoxyCode}
+127                                                                  :
+128     attributeVector    (\_encoder.attributeVector),
+129     cardinalityDest    (NULL),
+130     cardinalityVector  (\_encoder.cardinalityVector),
+131     codedNumOfFeatures (\_encoder.codedNumOfFeatures),
+132     destFeatureNums    (NULL),
+133     destWhatToDo       (NULL),
+134     encodedFileDesc    (\_encoder.encodedFileDesc),
+135     encodingMethod     (\_encoder.encodingMethod),
+136     fileDesc           (\_encoder.fileDesc),
+137     numOfFeatures      (\_encoder.numOfFeatures),
+138     srcFeatureNums     (NULL),
+139     param              (\_encoder.param)
+140 \{
+141   cardinalityDest  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfFeatures];
+142   destFeatureNums  = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfFeatures];
+143   destWhatToDo     = \textcolor{keyword}{new} \hyperlink{namespace_k_k_m_l_l_aa7a52865d78241e93b30731e46f99b43}{FeWhatToDo}[numOfFeatures];
+144   srcFeatureNums   = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16}[numOfFeatures];
+145 
+146   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+147   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures;  x++)
+148   \{
+149     srcFeatureNums   [x] = \_encoder.srcFeatureNums [x];
+150     destFeatureNums  [x] = \_encoder.destFeatureNums[x];
+151     cardinalityDest  [x] = \_encoder.cardinalityDest[x];
+152     destWhatToDo     [x] = \_encoder.destWhatToDo   [x];
+153     srcFeatureNums   [x] = \_encoder.srcFeatureNums [x];
+154   \}
+155 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!````~Feature\+Encoder2@{$\sim$\+Feature\+Encoder2}}
+\index{````~Feature\+Encoder2@{$\sim$\+Feature\+Encoder2}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{$\sim$\+Feature\+Encoder2()}{~FeatureEncoder2()}}]{\setlength{\rightskip}{0pt plus 5cm}Feature\+Encoder2\+::$\sim$\+Feature\+Encoder2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a3e85e08fa5117b35634adae5dc8bc6dc}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a3e85e08fa5117b35634adae5dc8bc6dc}
+
+
+Frees any memory allocated by, and owned by the \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2}{Feature\+Encoder2}. 
+
+
+
+Definition at line 162 of file Feature\+Encoder2.\+cpp.
+
+
+\begin{DoxyCode}
+163 \{
+164   \textcolor{keyword}{delete}  srcFeatureNums;
+165   \textcolor{keyword}{delete}  destFeatureNums;
+166   \textcolor{keyword}{delete}  cardinalityDest;
+167   \textcolor{keyword}{delete}  destWhatToDo;
+168 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Coded\+Num\+Of\+Features@{Coded\+Num\+Of\+Features}}
+\index{Coded\+Num\+Of\+Features@{Coded\+Num\+Of\+Features}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Coded\+Num\+Of\+Features() const }{CodedNumOfFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Coded\+Num\+Of\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_ac84f8e89a69256abcb7807f8c0f3aae4}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_ac84f8e89a69256abcb7807f8c0f3aae4}
+
+
+Definition at line 55 of file Feature\+Encoder2.\+h.
+
+
+\begin{DoxyCode}
+55 \{\textcolor{keywordflow}{return} codedNumOfFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Create\+Encoded\+File\+Desc@{Create\+Encoded\+File\+Desc}}
+\index{Create\+Encoded\+File\+Desc@{Create\+Encoded\+File\+Desc}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Create\+Encoded\+File\+Desc(ostream $\ast$o, Run\+Log \&log) const }{CreateEncodedFileDesc(ostream *o, RunLog &log) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} Feature\+Encoder2\+::\+Create\+Encoded\+File\+Desc (
+\begin{DoxyParamCaption}
+\item[{ostream $\ast$}]{o, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_aa181a5ec394867a56583a701fc429eb4}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_aa181a5ec394867a56583a701fc429eb4}
+If \textquotesingle{}o\textquotesingle{} is not N\+U\+LL will write out a table showing assignments from old to new. 
+
+Definition at line 195 of file Feature\+Encoder2.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Attribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Fe\+As\+Is, Fe\+Binary, Fe\+Scale, K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Field\+Name(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Existing\+File\+Desc(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Nominal\+Value(), K\+K\+M\+L\+L\+::\+Numeric, K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::os\+Wait\+For\+Enter(), K\+K\+B\+::\+Str\+Format\+Int(), and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Type\+Str().
+
+
+\begin{DoxyCode}
+198 \{
+199   log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (40) << \textcolor{stringliteral}{"FeatureEncoder2::CreateEncodedFileDesc"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+200   \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDescPtr}  newFileDesc = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} ();
+201 
+202   \textcolor{keywordflow}{if}  (o)
+203   \{
+204     *o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+205         << \textcolor{stringliteral}{"Orig"}    << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Orig"}      << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Field"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Encoded"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Encoded"}  
+       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+206     *o << \textcolor{stringliteral}{"FieldNum"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldName"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Type"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldNum"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"FieldName"}
+       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+207   \}
+208 
+209   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+210 
+211   \textcolor{keywordtype}{bool}  alreadyExist;
+212   
+213   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures; x++)
+214   \{
+215     \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16}  srcFeatureNum = srcFeatureNums[x];
+216     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = destFeatureNums[x];
+217 
+218     \textcolor{keywordflow}{if}  (y >= codedNumOfFeatures)
+219     \{
+220       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level}(-1) 
+221             << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+222             << \textcolor{stringliteral}{"FeatureEncoder2::CreateEncodedFileDesc     ***ERROR***"}                                   <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+223             << \textcolor{stringliteral}{"             overriding number of encoded features. This should never be able to happen."} <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+224             << \textcolor{stringliteral}{"             Something is wrong with object."}                                             <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+225             << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+226       \hyperlink{namespace_k_k_b_a255aa69aade7f429585349d08973e09f}{osWaitForEnter} ();
+227       exit (-1);
+228     \}
+229 
+230     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  origFieldDesc = \hyperlink{namespace_k_k_b_ae3bde258fa036604fac8bdb0277ab46e}{StrFormatInt} (srcFeatureNum, \textcolor{stringliteral}{"zz0"}) + \textcolor{stringliteral}{"\(\backslash\)t"} +
+231                             fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (srcFeatureNum) + \textcolor{stringliteral}{"\(\backslash\)t"} +
+232                             fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_aab158079a610de24575b40389d7f098c}{TypeStr}   (srcFeatureNum);
+233 
+234     \textcolor{keywordflow}{switch} (destWhatToDo[x])
+235     \{
+236     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs}:
+237       \{
+238         newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x), 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+239         \textcolor{keywordflow}{if}  (o)
+240         \{
+241           *o << origFieldDesc          << \textcolor{stringliteral}{"\(\backslash\)t"} 
+242              << y                      << \textcolor{stringliteral}{"\(\backslash\)t"}
+243              << fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x)
+244              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+245         \}
+246       \}
+247       \textcolor{keywordflow}{break};
+248 
+249     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary}:
+250       \{
+251         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z = 0;  z < cardinalityDest[x];  z++)
+252         \{
+253           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  nominalValue = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a732930fe4786f35e1b9428c90c05d61c}{GetNominalValue} (srcFeatureNums[x], z);
+254           \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  encodedName  = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x) + \textcolor{stringliteral}{"\_"} + nominalValue;
+255           newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (encodedName, 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+256           \textcolor{keywordflow}{if}  (o)
+257           \{
+258             *o << origFieldDesc << \textcolor{stringliteral}{"\(\backslash\)t"} 
+259                 << y             << \textcolor{stringliteral}{"\(\backslash\)t"}
+260                 << encodedName
+261                 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+262           \}
+263 
+264           y++;
+265         \}
+266       \}
+267 
+268       \textcolor{keywordflow}{break};
+269 
+270     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale}:
+271       \{
+272         newFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_ab920163b3e6155197bfc1bf2045555ca}{AddAAttribute} (fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x), 
+      \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{AttributeType::Numeric}, alreadyExist);
+273         \textcolor{keywordflow}{if}  (o)
+274         \{
+275           *o << origFieldDesc << \textcolor{stringliteral}{"\(\backslash\)t"} 
+276               << y             << \textcolor{stringliteral}{"\(\backslash\)t"}
+277               << fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a703b2f8283fc0cd4dfbf03308a9d0938}{FieldName} (x)
+278               << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+279         \}
+280       \}
+281       \textcolor{keywordflow}{break};
+282     \}
+283   \}
+284 
+285   newFileDesc = \hyperlink{class_k_k_m_l_l_1_1_file_desc_ab64013b479502d2761a9f11570a565bc}{FileDesc::GetExistingFileDesc} (newFileDesc);
+286 
+287   \textcolor{keywordflow}{return}  newFileDesc;
+288 \}  \textcolor{comment}{/* CreateEncodedFileDesc */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Encode\+A\+Example@{Encode\+A\+Example}}
+\index{Encode\+A\+Example@{Encode\+A\+Example}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Encode\+A\+Example(\+Feature\+Vector\+Ptr src) const }{EncodeAExample(FeatureVectorPtr src) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+Ptr} Feature\+Encoder2\+::\+Encode\+A\+Example (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{src}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_ab1b04a29d5bd9338a4564af04fab8dda}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_ab1b04a29d5bd9338a4564af04fab8dda}
+
+
+Definition at line 294 of file Feature\+Encoder2.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Add\+Feature\+Data(), Fe\+As\+Is, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector(), Fe\+Binary, Fe\+Scale, K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Predicted\+Class(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Train\+Weight().
+
+
+
+Referenced by Encode\+All\+Examples(), Encoded\+Feature\+Vector\+List(), and K\+K\+M\+L\+L\+::\+Model\+::\+Prep\+Example\+For\+Prediction().
+
+
+\begin{DoxyCode}
+295 \{
+296   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedImage = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (codedNumOfFeatures);
+297   encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass}     (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass}     ());
+298   encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3ec4b39405a2904c966a505c391cff33}{PredictedClass} (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3ec4b39405a2904c966a505c391cff33}{PredictedClass} ());
+299   encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight}    (src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a41a0c12e722a21446dd34f95b49dd82e}{TrainWeight}    ());
+300 
+301   \textcolor{keyword}{const} \textcolor{keywordtype}{float}*  featureData = src->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} ();
+302   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+303 
+304   \textcolor{keywordflow}{for}  (x = 0;  x < numOfFeatures; x++)
+305   \{
+306     \textcolor{keywordtype}{float}  featureVal = featureData [srcFeatureNums[x]];
+307     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = destFeatureNums[x];
+308 
+309     \textcolor{keywordflow}{switch} (destWhatToDo[x])
+310     \{
+311     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7a8fdde05abb9506fd4caa93ddc4490a13}{FeWhatToDo::FeAsIs}:
+312       \{
+313         encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, featureVal);
+314       \}
+315       \textcolor{keywordflow}{break};
+316 
+317     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7ab88633cd9a2d1569dc1979a5e5cb1752}{FeWhatToDo::FeBinary}:
+318       \{
+319         \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} z = 0; z < cardinalityDest[x]; z++)
+320         \{
+321           \textcolor{keywordtype}{float}  bVal = ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})featureVal == z);
+322           encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, bVal);
+323           y++;
+324         \}
+325       \}
+326 
+327       \textcolor{keywordflow}{break};
+328 
+329     \textcolor{keywordflow}{case}  \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7aa6a59adc4c0770972e52a9c13d0720f3}{FeWhatToDo::FeScale}:
+330       \{
+331         encodedImage->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_abf364e3348c041cd7be6f14d6c4567cf}{AddFeatureData} (y, (featureVal / (\textcolor{keywordtype}{float})cardinalityDest[x]));
+332       \}
+333       \textcolor{keywordflow}{break};
+334     \}
+335   \}
+336 
+337   \textcolor{keywordflow}{return}  encodedImage;
+338 \}  \textcolor{comment}{/* EncodeAExample */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Encode\+All\+Examples@{Encode\+All\+Examples}}
+\index{Encode\+All\+Examples@{Encode\+All\+Examples}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Encode\+All\+Examples(const Feature\+Vector\+List\+Ptr src\+Data)}{EncodeAllExamples(const FeatureVectorListPtr srcData)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+Encoder2\+::\+Encode\+All\+Examples (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List\+Ptr}}]{src\+Data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a094b269cb4d1dd3a8a6930185423e45d}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a094b269cb4d1dd3a8a6930185423e45d}
+
+
+Definition at line 344 of file Feature\+Encoder2.\+cpp.
+
+
+
+References Encode\+A\+Example(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+345 \{
+346   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  encodedExamples = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (encodedFileDesc, 
+347                                                                   \textcolor{keyword}{true}                  \textcolor{comment}{// Will own the
+       contents }
+348                                                                 );
+349 
+350   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+351 
+352   \textcolor{keywordflow}{for}  (idx = srcData->begin ();  idx !=  srcData->end ();   idx++)
+353   \{
+354     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} srcExample = *idx;
+355     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedExample = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_ab1b04a29d5bd9338a4564af04fab8dda}{EncodeAExample} (srcExample);
+356     encodedExamples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (encodedExample);
+357   \}
+358 
+359   \textcolor{keywordflow}{return}  encodedExamples;
+360 \}  \textcolor{comment}{/* EncodeAllImages */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Encoded\+Feature\+Vector\+List@{Encoded\+Feature\+Vector\+List}}
+\index{Encoded\+Feature\+Vector\+List@{Encoded\+Feature\+Vector\+List}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Encoded\+Feature\+Vector\+List(const Feature\+Vector\+List \&src\+Data) const }{EncodedFeatureVectorList(const FeatureVectorList &srcData) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+List\+Ptr} Feature\+Encoder2\+::\+Encoded\+Feature\+Vector\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List} \&}]{src\+Data}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_aa72d55374e2be4e2e21ae8a67fa750c0}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_aa72d55374e2be4e2e21ae8a67fa750c0}
+
+
+Definition at line 365 of file Feature\+Encoder2.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+All\+Fields\+Are\+Numeric(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Duplicate\+List\+And\+Contents(), Encode\+A\+Example(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Push\+On\+Back().
+
+
+\begin{DoxyCode}
+366 \{
+367   \textcolor{keywordflow}{if}  (srcData.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a349dffffbca2b8f86120f1cfe2df5cbf}{AllFieldsAreNumeric} ())
+368     \textcolor{keywordflow}{return}  srcData.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af14ad0946bbc6de8abdc4b513b6cf859}{DuplicateListAndContents} ();
+369 
+370   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  encodedFeatureVectorList = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorList} (encodedFileDesc, \textcolor{keyword}{true});
+371 
+372   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+373   \textcolor{keywordflow}{for}  (idx = srcData.begin ();   idx != srcData.end ();  idx++)
+374   \{
+375     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  srcExample = *idx;
+376     \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  encodedFeatureVector = \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_ab1b04a29d5bd9338a4564af04fab8dda}{EncodeAExample} (srcExample);
+377     encodedFeatureVector->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (srcExample->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} ());
+378     encodedFeatureVectorList->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (encodedFeatureVector);
+379   \}
+380 
+381   \textcolor{keywordflow}{return}  encodedFeatureVectorList;
+382 \}  \textcolor{comment}{/* EncodedFeatureVectorList */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Feature\+Encoder2\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a63b9cbe0310a4bdf12989a71897fd555}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a63b9cbe0310a4bdf12989a71897fd555}
+
+
+Definition at line 171 of file Feature\+Encoder2.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+172 \{
+173   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a963351c535276de1fa40d992a327415c}{FeatureEncoder2})
+174     +  attributeVector.size ()   * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555ab}{AttributeType})
+175     +  cardinalityVector.size () * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32});
+176 
+177   \textcolor{keywordflow}{if}  (cardinalityDest)   memoryConsumedEstimated += 2 * numOfFeatures * \textcolor{keyword}{sizeof} (
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32});  \textcolor{comment}{// For 'cardinalityDest', 'destFeatureNums'}
+178   \textcolor{keywordflow}{if}  (destFeatureNums)   memoryConsumedEstimated += numOfFeatures * \textcolor{keyword}{sizeof} (
+      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32});
+179   \textcolor{keywordflow}{if}  (destWhatToDo)      memoryConsumedEstimated += numOfFeatures * \textcolor{keyword}{sizeof} (
+      \hyperlink{class_k_k_m_l_l_1_1_feature_encoder2_a590f2b852b63095e7347e4cb39d888a7}{FeWhatToDo});
+180   \textcolor{keywordflow}{if}  (srcFeatureNums)    memoryConsumedEstimated += numOfFeatures * \textcolor{keyword}{sizeof} (
+      \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16});
+181   
+182   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+183 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Num\+Encoded\+Features@{Num\+Encoded\+Features}}
+\index{Num\+Encoded\+Features@{Num\+Encoded\+Features}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Num\+Encoded\+Features() const }{NumEncodedFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Feature\+Encoder2\+::\+Num\+Encoded\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a7a8de2fab0082636b80b61274b023c23}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a7a8de2fab0082636b80b61274b023c23}
+
+
+Definition at line 187 of file Feature\+Encoder2.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Num\+Of\+Fields().
+
+
+\begin{DoxyCode}
+188 \{
+189   \textcolor{keywordflow}{return}  encodedFileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a07abdfb77949dee565c555c7651581c2}{NumOfFields} ();
+190 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(istream \&i)}{ReadXML(istream &i)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{istream \&}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a604d0345f33e6536dfd8a4e50eac4d16}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a604d0345f33e6536dfd8a4e50eac4d16}
+\index{K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Feature\+Encoder2@{K\+K\+M\+L\+L\+::\+Feature\+Encoder2}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(istream \&o)}{WriteXML(istream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Feature\+Encoder2\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{istream \&}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_feature_encoder2_a3e8ddf756bc58f5e95f82ff470325766}{}\label{class_k_k_m_l_l_1_1_feature_encoder2_a3e8ddf756bc58f5e95f82ff470325766}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_encoder2_8h}{Feature\+Encoder2.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_feature_encoder2_8cpp}{Feature\+Encoder2.\+cpp}\end{DoxyCompactItemize}

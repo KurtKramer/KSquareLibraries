@@ -1,0 +1,199 @@
+\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list}{}\section{K\+K\+L\+SC\+:\+:Scanner\+File\+Entry\+List Class Reference}
+\label{class_k_k_l_s_c_1_1_scanner_file_entry_list}\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+
+
+{\ttfamily \#include $<$Scanner\+File\+Entry.\+h$>$}
+
+Inheritance diagram for K\+K\+L\+SC\+:\+:Scanner\+File\+Entry\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_l_s_c_1_1_scanner_file_entry_list}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef map$<$ \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str}, \hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{Scanner\+File\+Entry\+Ptr} $>$\+::iterator \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_afd6da779c73c629802802105410c5bcc}{Iterator}
+\item 
+typedef pair$<$ \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str}, \hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{Scanner\+File\+Entry\+Ptr} $>$ \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_aed0073610a35f1f98c200001a1689c6e}{Key\+Pair}
+\item 
+typedef \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list}{Scanner\+File\+Entry\+List} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_a78cd90eaedd4b64f537378ad33da776b}{Scanner\+File\+Entry\+List\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_aa23b829749efa89e9b060971f7744b50}{Scanner\+File\+Entry\+List} ()
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_af24bfb9a2ab8928e3fe9386293a2bcb8}{$\sim$\+Scanner\+File\+Entry\+List} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_a74ba98ac8d6c6d7d8479af46f6c8cb9c}{Add\+Entry} (\hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{Scanner\+File\+Entry\+Ptr} enytry)
+\item 
+\hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{Scanner\+File\+Entry\+Ptr} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_ab10ca380be8b53029b09f49e70e12d78}{Look\+Up\+By\+Root\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&root\+Name)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_a499d6a8b16abc44d72a95cb52f67e571}{Memory\+Consumed\+Estimated} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 78 of file Scanner\+File\+Entry.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Iterator@{Iterator}}
+\index{Iterator@{Iterator}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Iterator}{Iterator}}]{\setlength{\rightskip}{0pt plus 5cm}typedef map$<${\bf K\+K\+Str}, {\bf Scanner\+File\+Entry\+Ptr}$>$\+::iterator {\bf K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List\+::\+Iterator}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_afd6da779c73c629802802105410c5bcc}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_afd6da779c73c629802802105410c5bcc}
+
+
+Definition at line 83 of file Scanner\+File\+Entry.\+h.
+
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Key\+Pair@{Key\+Pair}}
+\index{Key\+Pair@{Key\+Pair}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Key\+Pair}{KeyPair}}]{\setlength{\rightskip}{0pt plus 5cm}typedef pair$<${\bf K\+K\+Str}, {\bf Scanner\+File\+Entry\+Ptr}$>$ {\bf K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List\+::\+Key\+Pair}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_aed0073610a35f1f98c200001a1689c6e}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_aed0073610a35f1f98c200001a1689c6e}
+
+
+Definition at line 85 of file Scanner\+File\+Entry.\+h.
+
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Scanner\+File\+Entry\+List\+Ptr@{Scanner\+File\+Entry\+List\+Ptr}}
+\index{Scanner\+File\+Entry\+List\+Ptr@{Scanner\+File\+Entry\+List\+Ptr}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Scanner\+File\+Entry\+List\+Ptr}{ScannerFileEntryListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Scanner\+File\+Entry\+List}$\ast$ {\bf K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List\+::\+Scanner\+File\+Entry\+List\+Ptr}}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_a78cd90eaedd4b64f537378ad33da776b}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_a78cd90eaedd4b64f537378ad33da776b}
+
+
+Definition at line 81 of file Scanner\+File\+Entry.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Scanner\+File\+Entry\+List@{Scanner\+File\+Entry\+List}}
+\index{Scanner\+File\+Entry\+List@{Scanner\+File\+Entry\+List}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Scanner\+File\+Entry\+List()}{ScannerFileEntryList()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File\+Entry\+List\+::\+Scanner\+File\+Entry\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_aa23b829749efa89e9b060971f7744b50}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_aa23b829749efa89e9b060971f7744b50}
+
+
+Definition at line 189 of file Scanner\+File\+Entry.\+cpp.
+
+
+
+References Scanner\+File\+Entry\+List().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Get\+Or\+Create\+Scanner\+File\+Entry(), and Scanner\+File\+Entry\+List().
+
+
+\begin{DoxyCode}
+189                                            :
+190     map<KKStr, ScannerFileEntryPtr> ()
+191 \{
+192 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!````~Scanner\+File\+Entry\+List@{$\sim$\+Scanner\+File\+Entry\+List}}
+\index{````~Scanner\+File\+Entry\+List@{$\sim$\+Scanner\+File\+Entry\+List}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{$\sim$\+Scanner\+File\+Entry\+List()}{~ScannerFileEntryList()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+File\+Entry\+List\+::$\sim$\+Scanner\+File\+Entry\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_af24bfb9a2ab8928e3fe9386293a2bcb8}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_af24bfb9a2ab8928e3fe9386293a2bcb8}
+
+
+Definition at line 195 of file Scanner\+File\+Entry.\+cpp.
+
+
+\begin{DoxyCode}
+196 \{
+197   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx)
+198   \{
+199     \hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{ScannerFileEntryPtr}  sfe = idx->second;
+200     \textcolor{keyword}{delete}  sfe;
+201   \}
+202 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Add\+Entry@{Add\+Entry}}
+\index{Add\+Entry@{Add\+Entry}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Add\+Entry(\+Scanner\+File\+Entry\+Ptr enytry)}{AddEntry(ScannerFileEntryPtr enytry)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+File\+Entry\+List\+::\+Add\+Entry (
+\begin{DoxyParamCaption}
+\item[{{\bf Scanner\+File\+Entry\+Ptr}}]{enytry}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_a74ba98ac8d6c6d7d8479af46f6c8cb9c}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_a74ba98ac8d6c6d7d8479af46f6c8cb9c}
+
+
+Definition at line 221 of file Scanner\+File\+Entry.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Get\+Or\+Create\+Scanner\+File\+Entry().
+
+
+\begin{DoxyCode}
+222 \{
+223   insert (\hyperlink{class_k_k_l_s_c_1_1_scanner_file_entry_list_aed0073610a35f1f98c200001a1689c6e}{KeyPair} (entry->RootName (), entry));
+224 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Look\+Up\+By\+Root\+Name@{Look\+Up\+By\+Root\+Name}}
+\index{Look\+Up\+By\+Root\+Name@{Look\+Up\+By\+Root\+Name}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Root\+Name(const K\+K\+Str \&root\+Name)}{LookUpByRootName(const KKStr &rootName)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Scanner\+File\+Entry\+Ptr} Scanner\+File\+Entry\+List\+::\+Look\+Up\+By\+Root\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{root\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_ab10ca380be8b53029b09f49e70e12d78}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_ab10ca380be8b53029b09f49e70e12d78}
+
+
+Definition at line 228 of file Scanner\+File\+Entry.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Get\+Or\+Create\+Scanner\+File\+Entry().
+
+
+\begin{DoxyCode}
+229 \{
+230   idx = find (rootName);
+231   \textcolor{keywordflow}{if}  (idx == end ())
+232     \textcolor{keywordflow}{return} NULL;
+233   \textcolor{keywordflow}{else}
+234     \textcolor{keywordflow}{return} idx->second;
+235 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List@{K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+List}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Scanner\+File\+Entry\+List\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_file_entry_list_a499d6a8b16abc44d72a95cb52f67e571}{}\label{class_k_k_l_s_c_1_1_scanner_file_entry_list_a499d6a8b16abc44d72a95cb52f67e571}
+
+
+Definition at line 205 of file Scanner\+File\+Entry.\+cpp.
+
+
+
+References K\+K\+L\+S\+C\+::\+Scanner\+File\+Entry\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+206 \{
+207   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} mem = \textcolor{keyword}{sizeof} (*this);
+208 
+209   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx)
+210   \{
+211     \hyperlink{namespace_k_k_l_s_c_a54ff7eab3cb7195f02302b70282bfa8d}{ScannerFileEntryPtr}  sfe = idx->second;
+212     mem += sfe->MemoryConsumedEstimated ();
+213   \}
+214 
+215   \textcolor{keywordflow}{return}  mem;
+216 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file_entry_8h}{Scanner\+File\+Entry.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file_entry_8cpp}{Scanner\+File\+Entry.\+cpp}\end{DoxyCompactItemize}

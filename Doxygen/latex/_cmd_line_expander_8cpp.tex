@@ -1,0 +1,51 @@
+\hypertarget{_cmd_line_expander_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Cmd\+Line\+Expander.cpp File Reference}
+\label{_cmd_line_expander_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Cmd\+Line\+Expander.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Cmd\+Line\+Expander.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$fcntl.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$io.\+h$>$}\\*
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include $<$sys/types.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Cmd\+Line\+Expander.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{_cmd_line_expander_8cpp_ab935a436961c0f20506da293a7c47b76}{File\+In\+Stack} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&cmd\+File\+Name, const \hyperlink{class_k_k_b_1_1_vector_k_k_str}{Vector\+K\+K\+Str} \&cmd\+File\+Stack)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Cmd\+Line\+Expander.\+cpp@{Cmd\+Line\+Expander.\+cpp}!File\+In\+Stack@{File\+In\+Stack}}
+\index{File\+In\+Stack@{File\+In\+Stack}!Cmd\+Line\+Expander.\+cpp@{Cmd\+Line\+Expander.\+cpp}}
+\subsubsection[{\texorpdfstring{File\+In\+Stack(const K\+K\+Str \&cmd\+File\+Name, const Vector\+K\+K\+Str \&cmd\+File\+Stack)}{FileInStack(const KKStr &cmdFileName, const VectorKKStr &cmdFileStack)}}]{\setlength{\rightskip}{0pt plus 5cm}bool File\+In\+Stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{cmd\+File\+Name, }
+\item[{const {\bf Vector\+K\+K\+Str} \&}]{cmd\+File\+Stack}
+\end{DoxyParamCaption}
+)}\hypertarget{_cmd_line_expander_8cpp_ab935a436961c0f20506da293a7c47b76}{}\label{_cmd_line_expander_8cpp_ab935a436961c0f20506da293a7c47b76}
+
+
+Definition at line 114 of file Cmd\+Line\+Expander.\+cpp.
+
+
+\begin{DoxyCode}
+117 \{
+118   VectorKKStr::const\_iterator  idx;
+119   \textcolor{keywordflow}{for}  (idx = cmdFileStack.begin ();  idx != cmdFileStack.end ();  idx++)
+120   \{
+121     \textcolor{keywordflow}{if}  (*idx == cmdFileName)
+122       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+123   \}
+124   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+125 
+126 \}  \textcolor{comment}{/* FileInStack */}
+\end{DoxyCode}

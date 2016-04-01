@@ -1,0 +1,416 @@
+\hypertarget{class_k_k_b_1_1_application}{}\section{K\+KB\+:\+:Application Class Reference}
+\label{class_k_k_b_1_1_application}\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+
+
+The base class for all standalone application.  
+
+
+
+
+{\ttfamily \#include $<$Application.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_application_afa8cc05ce6b6092be5ecdfdae44e05f8}{Application} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class that will start with a default logger(\+Run\+Log),. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_application_abb04f6b0977ab2b56a8a9fc103d4c10c}{Application} (const \hyperlink{class_k_k_b_1_1_application}{Application} \&\+\_\+application)
+\begin{DoxyCompactList}\small\item\em Copy Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_application_a6257863bb44308181024c7052b46285e}{Application} (\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class where we already have an existing logger \textquotesingle{}\+\_\+log\textquotesingle{}. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_b_1_1_application_a748bca84fefb9c12661cfaa2f623748d}{$\sim$\+Application} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_application_a59170bc42be6423288b94948e1668560}{Abort} ()
+\begin{DoxyCompactList}\small\item\em Returns \textquotesingle{}true\textquotesingle{} if application has been aborted. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_application_adebf960886311c38ed4bced73649c99f}{Abort} (bool \+\_\+abort)
+\begin{DoxyCompactList}\small\item\em Used to specify that the application is been aborted. \end{DoxyCompactList}\item 
+virtual const char $\ast$ \hyperlink{class_k_k_b_1_1_application_aab5821a00f30e26a0806856c4e2e569e}{Application\+Name} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_application_afae918106bf74e5fd8d80310a6614742}{Assign\+Log} (\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Replaces the Log file to write to. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_application_a27db46f806e5eb984ce37e593dbeef1a}{Build\+Date} () const 
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_application_a426afb84e2065aebb8abefc32217a770}{Initalize\+Application} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Initialized \hyperlink{class_k_k_b_1_1_application}{Application} Instance; 1st method to be called after instance construction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \& \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_application_a9f3d1d39ae955c81b9f03088c61b27e8}{Display\+Command\+Line\+Parameters} ()
+\begin{DoxyCompactList}\small\item\em Will display Command Lone parameters that the \textquotesingle{}\hyperlink{class_k_k_b_1_1_application}{Application}\textquotesingle{} class will manage. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{class_k_k_b_1_1_application_a80260251934fab49820d28e4c6b5cff9}{Process\+Cmd\+Line\+Parameter} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&parm\+Switch, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&parm\+Value)
+\begin{DoxyCompactList}\small\item\em This method will get called once for each parameter specified in the command line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The base class for all standalone application. 
+
+This class is meant to be a general class that all standalone applications should be inherited from. It supports command line processing, and logging facilities. Derived classes will need to override the virtual methods \char`\"{}\+Application\+Name\char`\"{}, \char`\"{}\+Display\+Command\+Line\+Parameters\char`\"{}, and \char`\"{}\+Process\+Cmd\+Line\+Parameter\char`\"{}. Right after an instance is created you need to call the \char`\"{}\+Initalize\+Application\char`\"{} method; this will start the processing of any encountered parameters. For each set of parameters encountered a call to \char`\"{}\+Process\+Cmd\+Line\+Parameter\char`\"{} will be made; this is where you can intercept and process parameters that are specific to your application. Any parameters that you do not recognized should be passed onto the base-\/class by calling \char`\"{}\+Application\+::\+Process\+Cmd\+Line\+Parameter\char`\"{}. 
+
+Definition at line 29 of file Application.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Application@{Application}}
+\index{Application@{Application}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Application()}{Application()}}]{\setlength{\rightskip}{0pt plus 5cm}Application\+::\+Application (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_application_afa8cc05ce6b6092be5ecdfdae44e05f8}{}\label{class_k_k_b_1_1_application_afa8cc05ce6b6092be5ecdfdae44e05f8}
+
+
+Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class that will start with a default logger(\+Run\+Log),. 
+
+After creating an instance of this class you initialize it by calling Initalize\+Application. 
+
+Definition at line 39 of file Application.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), log, and K\+K\+B\+::\+Run\+Log\+::\+Run\+Log().
+
+
+\begin{DoxyCode}
+39                          :
+40   abort       (\textcolor{keyword}{false}),
+41   \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}         (*(\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_run_log}{RunLog} ())),
+42   logFileName (),
+43   ourLog      (NULL)
+44 \{
+45   ourLog = &\hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log};
+46 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Application@{Application}}
+\index{Application@{Application}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Application(const Application \&\+\_\+application)}{Application(const Application &_application)}}]{\setlength{\rightskip}{0pt plus 5cm}Application\+::\+Application (
+\begin{DoxyParamCaption}
+\item[{const {\bf Application} \&}]{\+\_\+application}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_application_abb04f6b0977ab2b56a8a9fc103d4c10c}{}\label{class_k_k_b_1_1_application_abb04f6b0977ab2b56a8a9fc103d4c10c}
+
+
+Copy Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+application} & \hyperlink{class_k_k_b_1_1_application}{Application} instance to copy. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 51 of file Application.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and log.
+
+
+\begin{DoxyCode}
+51                                                          :
+52   abort        (\_application.abort),
+53   \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}          (\_application.\hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}),
+54   logFileName  (\_application.logFileName),
+55   ourLog       (\_application.ourLog)
+56 \{
+57 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Application@{Application}}
+\index{Application@{Application}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Application(\+Run\+Log \&\+\_\+log)}{Application(RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Application\+::\+Application (
+\begin{DoxyParamCaption}
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_application_a6257863bb44308181024c7052b46285e}{}\label{class_k_k_b_1_1_application_a6257863bb44308181024c7052b46285e}
+
+
+Constructor for \hyperlink{class_k_k_b_1_1_application}{Application} class where we already have an existing logger \textquotesingle{}\+\_\+log\textquotesingle{}. 
+
+After creating an instance of this class you initialize it by calling Initalize\+Application. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+log} & A reference to a \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} object. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 29 of file Application.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and log.
+
+
+\begin{DoxyCode}
+29                                       :
+30   abort       (\textcolor{keyword}{false}),
+31   \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}         (\_log),
+32   logFileName (),
+33   ourLog      (NULL)
+34 \{
+35 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!````~Application@{$\sim$\+Application}}
+\index{````~Application@{$\sim$\+Application}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{$\sim$\+Application()}{~Application()}}]{\setlength{\rightskip}{0pt plus 5cm}Application\+::$\sim$\+Application (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_a748bca84fefb9c12661cfaa2f623748d}{}\label{class_k_k_b_1_1_application_a748bca84fefb9c12661cfaa2f623748d}
+
+
+Definition at line 61 of file Application.\+cpp.
+
+
+\begin{DoxyCode}
+62 \{
+63   \textcolor{keyword}{delete}  ourLog;
+64   ourLog = NULL;
+65 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Abort@{Abort}}
+\index{Abort@{Abort}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Abort()}{Abort()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+Application\+::\+Abort (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_application_a59170bc42be6423288b94948e1668560}{}\label{class_k_k_b_1_1_application_a59170bc42be6423288b94948e1668560}
+
+
+Returns \textquotesingle{}true\textquotesingle{} if application has been aborted. 
+
+You would typically call this method after you are done processing the command line to make sure that the application is to keep on running. 
+
+Definition at line 62 of file Application.\+h.
+
+
+\begin{DoxyCode}
+62 \{\textcolor{keywordflow}{return}  abort;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Abort@{Abort}}
+\index{Abort@{Abort}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Abort(bool \+\_\+abort)}{Abort(bool _abort)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Application\+::\+Abort (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+abort}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_application_adebf960886311c38ed4bced73649c99f}{}\label{class_k_k_b_1_1_application_adebf960886311c38ed4bced73649c99f}
+
+
+Used to specify that the application is been aborted. 
+
+If you have a reason to abort the processing of this application you would call this method to set the \textquotesingle{}abort\textquotesingle{} flag to true. It will be the responsibility of the derived class to monitor the \textquotesingle{}Abort\textquotesingle{} flag. If is set to true they should terminate as quickly as they can; they should also release any resources they have taken. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+abort} & Abort status to set; if set to true you are telling the application that the program needs to be terminated. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 71 of file Application.\+h.
+
+
+\begin{DoxyCode}
+71 \{abort = \_abort;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Application\+Name@{Application\+Name}}
+\index{Application\+Name@{Application\+Name}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Application\+Name()}{ApplicationName()}}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ Application\+::\+Application\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_aab5821a00f30e26a0806856c4e2e569e}{}\label{class_k_k_b_1_1_application_aab5821a00f30e26a0806856c4e2e569e}
+Specify the name of the application 
+
+Definition at line 80 of file Application.\+cpp.
+
+
+\begin{DoxyCode}
+81 \{
+82   \textcolor{keywordflow}{return}  \textcolor{stringliteral}{"No-Application-Name-Provided"};
+83 \}  \textcolor{comment}{/* ApplicationName */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Assign\+Log@{Assign\+Log}}
+\index{Assign\+Log@{Assign\+Log}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Assign\+Log(\+Run\+Log \&\+\_\+log)}{AssignLog(RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Application\+::\+Assign\+Log (
+\begin{DoxyParamCaption}
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_application_afae918106bf74e5fd8d80310a6614742}{}\label{class_k_k_b_1_1_application_afae918106bf74e5fd8d80310a6614742}
+
+
+Replaces the Log file to write to. 
+
+
+
+Definition at line 87 of file Application.\+cpp.
+
+
+
+References log.
+
+
+\begin{DoxyCode}
+88 \{
+89   \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log} = \_log;
+90 
+91   \textcolor{keywordflow}{if}  (ourLog)
+92   \{
+93     \textcolor{keyword}{delete}  ourLog;
+94     ourLog = NULL;
+95   \}
+96 \} \textcolor{comment}{/* AssignRunLog */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Build\+Date@{Build\+Date}}
+\index{Build\+Date@{Build\+Date}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Build\+Date() const }{BuildDate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Application\+::\+Build\+Date (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_a27db46f806e5eb984ce37e593dbeef1a}{}\label{class_k_k_b_1_1_application_a27db46f806e5eb984ce37e593dbeef1a}
+
+
+Definition at line 162 of file Application.\+cpp.
+
+
+
+References K\+K\+B\+::\+Date\+Type\+::\+Date\+Type(), K\+K\+B\+::\+Time\+Type\+::\+H\+H\+\_\+\+M\+M\+\_\+\+S\+S(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+Time\+Type\+::\+Time\+Type(), and K\+K\+B\+::\+Date\+Type\+::\+Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D().
+
+
+\begin{DoxyCode}
+163 \{
+164   \hyperlink{class_k_k_b_1_1_date_type}{DateType}  buildDate (\_\_DATE\_\_);
+165   \hyperlink{class_k_k_b_1_1_time_type}{TimeType}  buildTime (\_\_TIME\_\_);
+166   \textcolor{keywordflow}{return}  buildDate.YYYY\_MM\_DD () + \textcolor{stringliteral}{"-"} + buildTime.HH\_MM\_SS ();
+167 \}  \textcolor{comment}{/* BuildDate */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Display\+Command\+Line\+Parameters@{Display\+Command\+Line\+Parameters}}
+\index{Display\+Command\+Line\+Parameters@{Display\+Command\+Line\+Parameters}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Display\+Command\+Line\+Parameters()}{DisplayCommandLineParameters()}}]{\setlength{\rightskip}{0pt plus 5cm}void Application\+::\+Display\+Command\+Line\+Parameters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_a9f3d1d39ae955c81b9f03088c61b27e8}{}\label{class_k_k_b_1_1_application_a9f3d1d39ae955c81b9f03088c61b27e8}
+
+
+Will display Command Lone parameters that the \textquotesingle{}\hyperlink{class_k_k_b_1_1_application}{Application}\textquotesingle{} class will manage. 
+
+Derived classes that implement this method need to call their immediate base class version of this method to include these parameters. 
+
+Definition at line 134 of file Application.\+cpp.
+
+
+\begin{DoxyCode}
+135 \{
+136   cout << \hyperlink{class_k_k_b_1_1_application_aab5821a00f30e26a0806856c4e2e569e}{ApplicationName} () << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+137        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+138        << \textcolor{stringliteral}{"    -LogFile   <FileName>        File that logging messages will be written to; if left will"}  <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+139        << \textcolor{stringliteral}{"                                 be written to Standard-Out (cout)."}                           <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+140        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+141        << \textcolor{stringliteral}{"    -CmdFile   <File-Name>       Filename where additional command line options are stored;"}   <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+142        << \textcolor{stringliteral}{"                                 This file can also specify additional '-CmdFile parameters."}  <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+143        << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+144 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Initalize\+Application@{Initalize\+Application}}
+\index{Initalize\+Application@{Initalize\+Application}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Initalize\+Application(kkint32 argc, char $\ast$$\ast$argv)}{InitalizeApplication(kkint32 argc, char **argv)}}]{\setlength{\rightskip}{0pt plus 5cm}void Application\+::\+Initalize\+Application (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_a426afb84e2065aebb8abefc32217a770}{}\label{class_k_k_b_1_1_application_a426afb84e2065aebb8abefc32217a770}
+
+
+Initialized \hyperlink{class_k_k_b_1_1_application}{Application} Instance; 1st method to be called after instance construction. 
+
+This method will scan the command line parameters for the log file options (-\/L, -\/\+Log, or -\/\+Log\+File) and use its parameter as the Log\+File name. If none is provided it will assume the stdout as the Log File to write to. It will take ownership of this log file and delete it in its destructor. Right after calling this constructor you will need to call the method Process\+Cmd\+Line\+Parameters. \begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} 
+
+Process\+Cmd\+Line\+Parameters 
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em argc} & Number of arguments in argv. \\
+\hline
+\mbox{\tt in}  & {\em argv} & List of asciiz strings; one string for each argument. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 69 of file Application.\+cpp.
+
+
+
+References K\+K\+B\+::\+Run\+Log\+::\+Attach\+File(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), and log.
+
+
+\begin{DoxyCode}
+72 \{
+73   ProcessCmdLineParameters (argc, argv);
+74   \textcolor{keywordflow}{if}  (!logFileName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+75     \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}.\hyperlink{class_k_k_b_1_1_run_log_a8201bd270fb70816db14aa4bcb0b81d2}{AttachFile} (logFileName);
+76 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!Process\+Cmd\+Line\+Parameter@{Process\+Cmd\+Line\+Parameter}}
+\index{Process\+Cmd\+Line\+Parameter@{Process\+Cmd\+Line\+Parameter}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{Process\+Cmd\+Line\+Parameter(const K\+K\+Str \&parm\+Switch, const K\+K\+Str \&parm\+Value)}{ProcessCmdLineParameter(const KKStr &parmSwitch, const KKStr &parmValue)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Application\+::\+Process\+Cmd\+Line\+Parameter (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{parm\+Switch, }
+\item[{const {\bf K\+K\+Str} \&}]{parm\+Value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_application_a80260251934fab49820d28e4c6b5cff9}{}\label{class_k_k_b_1_1_application_a80260251934fab49820d28e4c6b5cff9}
+
+
+This method will get called once for each parameter specified in the command line. 
+
+Derived classes should define this method to intercept parameters that they are interested in. Parameters are treated as pairs, Switch and Values where switches have a leading dash(\char`\"{}-\/\char`\"{}). The \hyperlink{class_k_k_b_1_1_cmd_line_expander}{Cmd\+Line\+Expander} class will be used to expand any \char`\"{}-\/\+Cmd\+File\char`\"{} parameters. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em parm\+Switch} & The fill switch parameter. \\
+\hline
+\mbox{\tt in}  & {\em parm\+Value} & Any value parameter that followed the switch parameter. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 149 of file Application.\+cpp.
+
+
+\begin{DoxyCode}
+152 \{
+153   \hyperlink{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{log}.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+154     << \textcolor{stringliteral}{"Application::ProcessCmdLineParameter   ***ERROR***    Unrecognized Parameter ["} << parmSwitch << \textcolor{stringliteral}{"]
+        Value ["} << parmValue << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+155     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+156   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+157 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}!log@{log}}
+\index{log@{log}!K\+K\+B\+::\+Application@{K\+K\+B\+::\+Application}}
+\subsubsection[{\texorpdfstring{log}{log}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Run\+Log}\& K\+K\+B\+::\+Application\+::log}\hypertarget{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}{}\label{class_k_k_b_1_1_application_aa43b9ff197029ea41b52d21d50f48a1e}
+
+
+Definition at line 143 of file Application.\+h.
+
+
+
+Referenced by Application(), Assign\+Log(), and Initalize\+Application().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_application_8h}{Application.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_application_8cpp}{Application.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,96 @@
+\hypertarget{class_k_k_m_l_l_1_1_image_features_name_indexed}{}\section{K\+K\+M\+LL\+:\+:Image\+Features\+Name\+Indexed Class Reference}
+\label{class_k_k_m_l_l_1_1_image_features_name_indexed}\index{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed@{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed}}
+
+
+{\ttfamily \#include $<$Image\+Features\+Name\+Indexed.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Image\+Features\+Name\+Indexed\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_image_features_name_indexed}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_image_features_name_indexed_a4ffb27619deb6e2bed93606f12b7fa80}{Image\+Features\+Name\+Indexed} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_image_features_name_indexed_a39d8364fde96e5b1ebf3013eb1649ce5}{Image\+Features\+Name\+Indexed} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&images)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 27 of file Image\+Features\+Name\+Indexed.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed@{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed}!Image\+Features\+Name\+Indexed@{Image\+Features\+Name\+Indexed}}
+\index{Image\+Features\+Name\+Indexed@{Image\+Features\+Name\+Indexed}!K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed@{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed}}
+\subsubsection[{\texorpdfstring{Image\+Features\+Name\+Indexed()}{ImageFeaturesNameIndexed()}}]{\setlength{\rightskip}{0pt plus 5cm}Image\+Features\+Name\+Indexed\+::\+Image\+Features\+Name\+Indexed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_image_features_name_indexed_a4ffb27619deb6e2bed93606f12b7fa80}{}\label{class_k_k_m_l_l_1_1_image_features_name_indexed_a4ffb27619deb6e2bed93606f12b7fa80}
+
+
+Definition at line 33 of file Image\+Features\+Name\+Indexed.\+cpp.
+
+
+
+References Image\+Features\+Name\+Indexed().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Duplicate\+Images\+::\+Duplicate\+Images(), and Image\+Features\+Name\+Indexed().
+
+
+\begin{DoxyCode}
+33                                                    :
+34    \hyperlink{class_k_k_b_1_1_r_b_tree}{RBTree<FeatureVector, ExtractExampleFileName, KKStr>}
+       (\hyperlink{_image_features_name_indexed_8cpp_a8b1897327db18e482626d842406ee791}{extractImageFileName}, \textcolor{keyword}{false})
+35 \{
+36 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed@{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed}!Image\+Features\+Name\+Indexed@{Image\+Features\+Name\+Indexed}}
+\index{Image\+Features\+Name\+Indexed@{Image\+Features\+Name\+Indexed}!K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed@{K\+K\+M\+L\+L\+::\+Image\+Features\+Name\+Indexed}}
+\subsubsection[{\texorpdfstring{Image\+Features\+Name\+Indexed(const Feature\+Vector\+List \&images)}{ImageFeaturesNameIndexed(const FeatureVectorList &images)}}]{\setlength{\rightskip}{0pt plus 5cm}Image\+Features\+Name\+Indexed\+::\+Image\+Features\+Name\+Indexed (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List} \&}]{images}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_image_features_name_indexed_a39d8364fde96e5b1ebf3013eb1649ce5}{}\label{class_k_k_m_l_l_1_1_image_features_name_indexed_a39d8364fde96e5b1ebf3013eb1649ce5}
+
+
+Definition at line 40 of file Image\+Features\+Name\+Indexed.\+cpp.
+
+
+
+References Image\+Features\+Name\+Indexed().
+
+
+
+Referenced by Image\+Features\+Name\+Indexed().
+
+
+\begin{DoxyCode}
+40                                                                                      :
+41    \hyperlink{class_k_k_b_1_1_r_b_tree}{RBTree<FeatureVector, ExtractExampleFileName, KKStr>}
+       (\hyperlink{_image_features_name_indexed_8cpp_a8b1897327db18e482626d842406ee791}{extractImageFileName}, \textcolor{keyword}{false})
+42 \{
+43   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  example = NULL;
+44   \textcolor{keywordflow}{for}  (\textcolor{keyword}{auto} idx:  examples)
+45   \{
+46     example = idx;
+47     \hyperlink{class_k_k_b_1_1_r_b_tree_a210190ae61de6e1a7b15b39673e6a47d}{RBInsert} (example);
+48   \}
+49 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_image_features_name_indexed_8h}{Image\+Features\+Name\+Indexed.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_image_features_name_indexed_8cpp}{Image\+Features\+Name\+Indexed.\+cpp}\end{DoxyCompactItemize}

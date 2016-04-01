@@ -1,0 +1,105 @@
+\hypertarget{class_k_k_b_1_1_chart_1_1_x_label}{}\section{K\+KB\+:\+:Chart\+:\+:X\+Label Class Reference}
+\label{class_k_k_b_1_1_chart_1_1_x_label}\index{K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_chart_1_1_x_label_a3a5d698bcd26646c96fcbe1d34e44719}{X\+Label} (double \+\_\+x\+Val, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+name)
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_chart_1_1_x_label_a068dc86cb258b4e014e3da0551670c2c}{Name} ()
+\item 
+bool \hyperlink{class_k_k_b_1_1_chart_1_1_x_label_a09064247d23ee35464076cbbb01b2f96}{operator$<$} (const \hyperlink{class_k_k_b_1_1_chart_1_1_x_label}{X\+Label} \&right) const 
+\item 
+double \hyperlink{class_k_k_b_1_1_chart_1_1_x_label_a1ed9021b69c571149bffad3e176499ea}{X\+Val} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 88 of file Chart.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}!X\+Label@{X\+Label}}
+\index{X\+Label@{X\+Label}!K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}}
+\subsubsection[{\texorpdfstring{X\+Label(double \+\_\+x\+Val, K\+K\+Str \+\_\+name)}{XLabel(double _xVal, KKStr _name)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Chart\+::\+X\+Label\+::\+X\+Label (
+\begin{DoxyParamCaption}
+\item[{double}]{\+\_\+x\+Val, }
+\item[{{\bf K\+K\+Str}}]{\+\_\+name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_chart_1_1_x_label_a3a5d698bcd26646c96fcbe1d34e44719}{}\label{class_k_k_b_1_1_chart_1_1_x_label_a3a5d698bcd26646c96fcbe1d34e44719}
+
+
+Definition at line 91 of file Chart.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+93             :
+94        name (\_name),
+95        xVal (\_xVal)
+96      \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}}
+\subsubsection[{\texorpdfstring{Name()}{Name()}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Chart\+::\+X\+Label\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_chart_1_1_x_label_a068dc86cb258b4e014e3da0551670c2c}{}\label{class_k_k_b_1_1_chart_1_1_x_label_a068dc86cb258b4e014e3da0551670c2c}
+
+
+Definition at line 99 of file Chart.\+cpp.
+
+
+\begin{DoxyCode}
+99 \{\textcolor{keywordflow}{return} name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}}
+\subsubsection[{\texorpdfstring{operator$<$(const X\+Label \&right) const }{operator<(const XLabel &right) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+B\+::\+Chart\+::\+X\+Label\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf X\+Label} \&}]{right}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_chart_1_1_x_label_a09064247d23ee35464076cbbb01b2f96}{}\label{class_k_k_b_1_1_chart_1_1_x_label_a09064247d23ee35464076cbbb01b2f96}
+
+
+Definition at line 103 of file Chart.\+cpp.
+
+
+\begin{DoxyCode}
+104    \{
+105      \textcolor{keywordflow}{return}  xVal < right.xVal;
+106    \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}!X\+Val@{X\+Val}}
+\index{X\+Val@{X\+Val}!K\+K\+B\+::\+Chart\+::\+X\+Label@{K\+K\+B\+::\+Chart\+::\+X\+Label}}
+\subsubsection[{\texorpdfstring{X\+Val()}{XVal()}}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+B\+::\+Chart\+::\+X\+Label\+::\+X\+Val (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_chart_1_1_x_label_a1ed9021b69c571149bffad3e176499ea}{}\label{class_k_k_b_1_1_chart_1_1_x_label_a1ed9021b69c571149bffad3e176499ea}
+
+
+Definition at line 101 of file Chart.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Chart\+::\+Save().
+
+
+\begin{DoxyCode}
+101 \{\textcolor{keywordflow}{return} xVal;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_chart_8cpp}{Chart.\+cpp}\end{DoxyCompactItemize}

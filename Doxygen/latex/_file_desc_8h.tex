@@ -1,0 +1,70 @@
+\hypertarget{_file_desc_8h}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+File\+Desc.h File Reference}
+\label{_file_desc_8h}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+File\+Desc.\+h@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+File\+Desc.\+h}}
+{\ttfamily \#include \char`\"{}Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Xml\+Stream.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Attribute.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}M\+L\+Class.\+h\char`\"{}}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_m_l_l_1_1_file_desc}{K\+K\+M\+L\+L\+::\+File\+Desc}
+\begin{DoxyCompactList}\small\item\em Provides a detailed description of the attributes of a dataset. \end{DoxyCompactList}\item 
+class \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc}
+\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_m_l_l}{K\+K\+M\+LL}
+\begin{DoxyCompactList}\small\item\em Namespace for all K$^\wedge$2 Machine Learning code. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_file_desc_8h_aa3bd1e0686fa9bc95179dcf66324e9b4}{\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef Feature\+File\+IO $\ast$ \hyperlink{namespace_k_k_m_l_l_aa005d92db87866fad489feb5ff4b2dfa}{K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Ptr}
+\item 
+typedef File\+Desc\+::\+File\+Desc\+Const\+Ptr \hyperlink{namespace_k_k_m_l_l_a7aa258340f9147d1b257c8eb81450e80}{K\+K\+M\+L\+L\+::\+File\+Desc\+Const\+Ptr}
+\item 
+typedef File\+Desc\+List $\ast$ \hyperlink{namespace_k_k_m_l_l_a192445fd15bc29cfd6713538ef9cf794}{K\+K\+M\+L\+L\+::\+File\+Desc\+List\+Ptr}
+\item 
+typedef Xml\+Element\+File\+Desc $\ast$ \hyperlink{namespace_k_k_m_l_l_aae191e962cb28af7834276b68ee1d506}{K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc\+Ptr}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Kurt Kramer
+\end{DoxyAuthor}
+
+\begin{DoxyCode}
+Describes the different fields of a dataset. There will be one instance of \textcolor{keyword}{this} *
+\textcolor{keyword}{class }for each type of Dataset that you have in an application.  From this      *
+\textcolor{keywordtype}{object} you can \textcolor{keyword}{get} information such as number of attributes, Attribute types,   *
+weather they are nominal, continuous.  If nominal what are the accepted         *
+values.                                                                         *
+                                                                                *
+Never \textcolor{keyword}{delete} an instance of a FileDesc \textcolor{keywordtype}{object}.                                  *
+                                                                                *
+Only one FileDesc \textcolor{keywordtype}{object} can exist \textcolor{keywordflow}{for} any Dataset.  Example the Forest Cover   *
+dataset.  You can split the data into many files and manage them separately but *
+you will only have one instance of a FileDesc \textcolor{keywordtype}{object} that they will all refer   *
+to.  See \textcolor{stringliteral}{"GetExistingFileDesc"} method below.  You would initially create an     *
+instance of FileDesc and then use \textcolor{stringliteral}{"GetExistingFileDesc"} to make sure that it is *
+unique. This typically happens in the FeatureFileIO derived classes.            *
+                                                                                *
+\end{DoxyCode}
+ 
+
+\subsection{Macro Definition Documentation}
+\index{File\+Desc.\+h@{File\+Desc.\+h}!\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+@{\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+}}
+\index{\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+@{\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+}!File\+Desc.\+h@{File\+Desc.\+h}}
+\subsubsection[{\texorpdfstring{\+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+}{_FileDesc_Defined_}}]{\setlength{\rightskip}{0pt plus 5cm}\#define \+\_\+\+File\+Desc\+\_\+\+Defined\+\_\+}\hypertarget{_file_desc_8h_aa3bd1e0686fa9bc95179dcf66324e9b4}{}\label{_file_desc_8h_aa3bd1e0686fa9bc95179dcf66324e9b4}
+
+
+Definition at line 309 of file File\+Desc.\+h.
+

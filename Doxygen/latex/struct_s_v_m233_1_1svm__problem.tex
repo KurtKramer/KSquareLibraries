@@ -1,0 +1,185 @@
+\hypertarget{struct_s_v_m233_1_1svm__problem}{}\section{S\+V\+M233\+:\+:svm\+\_\+problem Struct Reference}
+\label{struct_s_v_m233_1_1svm__problem}\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+
+
+{\ttfamily \#include $<$svm.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_s_v_m233_1_1svm__problem_a4f3af998238619c0390adcd4c2a80139}{svm\+\_\+problem} ()
+\item 
+\hyperlink{struct_s_v_m233_1_1svm__problem_ae7c2870921cad1e36cc62efb510a876c}{$\sim$svm\+\_\+problem} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_vector_k_k_str}{Vector\+K\+K\+Str} \hyperlink{struct_s_v_m233_1_1svm__problem_a5d86ac405294437f5a2da3a0e90d7bd5}{example\+Names}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$ \hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W}
+\item 
+bool \hyperlink{struct_s_v_m233_1_1svm__problem_a2ba090314d6e55344388630a2f10f655}{we\+Own\+Contents}
+\item 
+struct \hyperlink{struct_s_v_m233_1_1svm__node}{svm\+\_\+node} $\ast$$\ast$ \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}
+\item 
+double $\ast$ \hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 43 of file svm.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!svm\+\_\+problem@{svm\+\_\+problem}}
+\index{svm\+\_\+problem@{svm\+\_\+problem}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{svm\+\_\+problem()}{svm_problem()}}]{\setlength{\rightskip}{0pt plus 5cm}svm\+\_\+problem\+::svm\+\_\+problem (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m233_1_1svm__problem_a4f3af998238619c0390adcd4c2a80139}{}\label{struct_s_v_m233_1_1svm__problem_a4f3af998238619c0390adcd4c2a80139}
+
+
+Definition at line 1321 of file svm.\+cpp.
+
+
+
+References index, l, W, we\+Own\+Contents, x, and y.
+
+
+
+Referenced by S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model().
+
+
+\begin{DoxyCode}
+1322 \{
+1323   \hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l}     = 0;
+1324   \hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y}     = NULL;
+1325   \hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index} = NULL;
+1326   \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}     = NULL;
+1327   \hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W}     = NULL;
+1328   \hyperlink{struct_s_v_m233_1_1svm__problem_a2ba090314d6e55344388630a2f10f655}{weOwnContents} = \textcolor{keyword}{false};
+1329 \};
+\end{DoxyCode}
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!````~svm\+\_\+problem@{$\sim$svm\+\_\+problem}}
+\index{````~svm\+\_\+problem@{$\sim$svm\+\_\+problem}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{$\sim$svm\+\_\+problem()}{~svm_problem()}}]{\setlength{\rightskip}{0pt plus 5cm}svm\+\_\+problem\+::$\sim$svm\+\_\+problem (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{struct_s_v_m233_1_1svm__problem_ae7c2870921cad1e36cc62efb510a876c}{}\label{struct_s_v_m233_1_1svm__problem_ae7c2870921cad1e36cc62efb510a876c}
+
+
+Definition at line 1334 of file svm.\+cpp.
+
+
+
+References index, l, W, we\+Own\+Contents, x, and y.
+
+
+\begin{DoxyCode}
+1335 \{
+1336   \textcolor{keywordflow}{if}  (!\hyperlink{struct_s_v_m233_1_1svm__problem_a2ba090314d6e55344388630a2f10f655}{weOwnContents})
+1337     \textcolor{keywordflow}{return};
+1338 
+1339   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} zed = 0;  zed < \hyperlink{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{l};  zed++)
+1340   \{
+1341     \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[zed];
+1342     \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}[zed] = NULL;
+1343   \}
+1344 
+1345   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y};      \hyperlink{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{y}     = NULL;
+1346   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index};  \hyperlink{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{index} = NULL;
+1347   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x};      \hyperlink{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{x}     = NULL;
+1348   \textcolor{keyword}{delete}  \hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W};      \hyperlink{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{W}     = NULL;
+1349 \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!example\+Names@{example\+Names}}
+\index{example\+Names@{example\+Names}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{example\+Names}{exampleNames}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+K\+K\+Str} S\+V\+M233\+::svm\+\_\+problem\+::example\+Names}\hypertarget{struct_s_v_m233_1_1svm__problem_a5d86ac405294437f5a2da3a0e90d7bd5}{}\label{struct_s_v_m233_1_1svm__problem_a5d86ac405294437f5a2da3a0e90d7bd5}
+allows the user to provide names to the labels 
+
+Definition at line 50 of file svm.\+h.
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!index@{index}}
+\index{index@{index}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{index}{index}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32}$\ast$ S\+V\+M233\+::svm\+\_\+problem\+::index}\hypertarget{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}{}\label{struct_s_v_m233_1_1svm__problem_a4769752a28a7f99fa469fed248762504}
+
+
+Definition at line 51 of file svm.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix(), S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model(), svm\+\_\+problem(), and $\sim$svm\+\_\+problem().
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!l@{l}}
+\index{l@{l}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{l}{l}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M233\+::svm\+\_\+problem\+::l}\hypertarget{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}{}\label{struct_s_v_m233_1_1svm__problem_a8e80c00adc45517f894b19ce879a0405}
+
+
+Definition at line 48 of file svm.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix(), S\+V\+M233\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q(), S\+V\+M233\+::solve\+\_\+c\+\_\+svc(), S\+V\+M233\+::solve\+\_\+epsilon\+\_\+svr(), S\+V\+M233\+::solve\+\_\+nu\+\_\+svc(), S\+V\+M233\+::solve\+\_\+nu\+\_\+svr(), S\+V\+M233\+::solve\+\_\+one\+\_\+class(), S\+V\+M233\+::\+S\+V\+C\+\_\+\+Q\+::\+S\+V\+C\+\_\+\+Q(), S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model(), svm\+\_\+problem(), S\+V\+M233\+::svm\+\_\+train\+\_\+one(), S\+V\+M233\+::\+S\+V\+R\+\_\+\+Q\+::\+S\+V\+R\+\_\+\+Q(), and $\sim$svm\+\_\+problem().
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!W@{W}}
+\index{W@{W}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{W}{W}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M233\+::svm\+\_\+problem\+::W}\hypertarget{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}{}\label{struct_s_v_m233_1_1svm__problem_a499ec12b246a796ab0951be8dab5cec5}
+
+
+Definition at line 53 of file svm.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix(), svm\+\_\+problem(), S\+V\+M233\+::svm\+\_\+train\+\_\+one(), and $\sim$svm\+\_\+problem().
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!we\+Own\+Contents@{we\+Own\+Contents}}
+\index{we\+Own\+Contents@{we\+Own\+Contents}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{we\+Own\+Contents}{weOwnContents}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M233\+::svm\+\_\+problem\+::we\+Own\+Contents}\hypertarget{struct_s_v_m233_1_1svm__problem_a2ba090314d6e55344388630a2f10f655}{}\label{struct_s_v_m233_1_1svm__problem_a2ba090314d6e55344388630a2f10f655}
+
+
+Definition at line 55 of file svm.\+h.
+
+
+
+Referenced by S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model(), svm\+\_\+problem(), and $\sim$svm\+\_\+problem().
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!x@{x}}
+\index{x@{x}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{x}{x}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf svm\+\_\+node}$\ast$$\ast$ S\+V\+M233\+::svm\+\_\+problem\+::x}\hypertarget{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}{}\label{struct_s_v_m233_1_1svm__problem_a79a6083544d0f446a643167950c7e285}
+
+
+Definition at line 52 of file svm.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix(), S\+V\+M233\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q\+::\+O\+N\+E\+\_\+\+C\+L\+A\+S\+S\+\_\+\+Q(), save\+Data(), S\+V\+M233\+::\+S\+V\+C\+\_\+\+Q\+::\+S\+V\+C\+\_\+\+Q(), S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model(), svm\+\_\+problem(), S\+V\+M233\+::svm\+\_\+train\+\_\+one(), S\+V\+M233\+::\+S\+V\+R\+\_\+\+Q\+::\+S\+V\+R\+\_\+\+Q(), and $\sim$svm\+\_\+problem().
+
+\index{S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}!y@{y}}
+\index{y@{y}!S\+V\+M233\+::svm\+\_\+problem@{S\+V\+M233\+::svm\+\_\+problem}}
+\subsubsection[{\texorpdfstring{y}{y}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M233\+::svm\+\_\+problem\+::y}\hypertarget{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}{}\label{struct_s_v_m233_1_1svm__problem_a0883e07a3006cd2bb31eeb61c3a8c453}
+
+
+Definition at line 49 of file svm.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Encode\+Into\+Sparse\+Matrix(), S\+V\+M233\+::solve\+\_\+c\+\_\+svc(), S\+V\+M233\+::solve\+\_\+epsilon\+\_\+svr(), S\+V\+M233\+::solve\+\_\+nu\+\_\+svc(), S\+V\+M233\+::solve\+\_\+nu\+\_\+svr(), S\+V\+M233\+::svm\+\_\+\+Build\+Prob\+From\+Two\+Class\+Model(), svm\+\_\+problem(), S\+V\+M233\+::svm\+\_\+train\+\_\+one(), and $\sim$svm\+\_\+problem().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm_8h}{svm.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm_8cpp}{svm.\+cpp}\end{DoxyCompactItemize}

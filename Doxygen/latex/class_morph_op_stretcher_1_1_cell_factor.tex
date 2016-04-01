@@ -1,0 +1,169 @@
+\hypertarget{class_morph_op_stretcher_1_1_cell_factor}{}\section{K\+KB\+:\+:Morph\+Op\+Stretcher\+:\+:Cell\+Factor Class Reference}
+\label{class_morph_op_stretcher_1_1_cell_factor}\index{K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor@{K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_morph_op_stretcher_1_1_cell_factor_af7b5fd53ab9efc21af36ae9fb8186c39}{Cell\+Factor} ()
+\item 
+\hyperlink{class_morph_op_stretcher_1_1_cell_factor_a72f0f29acfccf22fef775cfc5b23344d}{$\sim$\+Cell\+Factor} ()
+\item 
+void \hyperlink{class_morph_op_stretcher_1_1_cell_factor_a42f00b31427b26dc6409b75eaa581e03}{Update\+For\+Source\+Cell\+Idx} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} cell\+Idx, float factor)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{kkuint16} \hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{dest\+Cell\+Count}
+\item 
+float $\ast$ \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{dest\+Cell\+Fracts}
+\item 
+\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} $\ast$ \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{dest\+Cell\+Idxs}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 22 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!Cell\+Factor@{Cell\+Factor}}
+\index{Cell\+Factor@{Cell\+Factor}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{Cell\+Factor()}{CellFactor()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Cell\+Factor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_af7b5fd53ab9efc21af36ae9fb8186c39}{}\label{class_morph_op_stretcher_1_1_cell_factor_af7b5fd53ab9efc21af36ae9fb8186c39}
+
+
+Definition at line 25 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Count, K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Fracts, and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Idxs.
+
+
+\begin{DoxyCode}
+25                :  
+26      \hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount}   (0),
+27      \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs}    (NULL),
+28      \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts}  (NULL)
+29   \{\}
+\end{DoxyCode}
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!````~Cell\+Factor@{$\sim$\+Cell\+Factor}}
+\index{````~Cell\+Factor@{$\sim$\+Cell\+Factor}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{$\sim$\+Cell\+Factor()}{~CellFactor()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::$\sim$\+Cell\+Factor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_a72f0f29acfccf22fef775cfc5b23344d}{}\label{class_morph_op_stretcher_1_1_cell_factor_a72f0f29acfccf22fef775cfc5b23344d}
+
+
+Definition at line 32 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Fracts, and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Idxs.
+
+
+\begin{DoxyCode}
+33   \{
+34     \textcolor{keyword}{delete}  \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs};    \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs}   = NULL;
+35     \textcolor{keyword}{delete}  \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts};  \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts} = NULL;
+36   \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!Update\+For\+Source\+Cell\+Idx@{Update\+For\+Source\+Cell\+Idx}}
+\index{Update\+For\+Source\+Cell\+Idx@{Update\+For\+Source\+Cell\+Idx}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{Update\+For\+Source\+Cell\+Idx(kkuint32 cell\+Idx, float factor)}{UpdateForSourceCellIdx(kkuint32 cellIdx, float factor)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Update\+For\+Source\+Cell\+Idx (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{cell\+Idx, }
+\item[{float}]{factor}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_a42f00b31427b26dc6409b75eaa581e03}{}\label{class_morph_op_stretcher_1_1_cell_factor_a42f00b31427b26dc6409b75eaa581e03}
+
+
+Definition at line 39 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+References K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Count, K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Fracts, and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Idxs.
+
+
+\begin{DoxyCode}
+42   \{
+43     \textcolor{keywordtype}{float}  cellStart = (float)cellIdx * factor;
+44     \textcolor{keywordtype}{float}  cellEnd   = (float)(cellIdx + 1) * factor;
+45 
+46     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} cellStartIdx = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})floor (cellStart);
+47     \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} cellEndIdx   = (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})floor (cellEnd);
+48     \hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount} = cellEndIdx - cellStartIdx;
+49     \textcolor{keywordflow}{if}  (cellEnd > floor(cellEnd))
+50       ++\hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount};
+51     
+52     \textcolor{keyword}{delete}  \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs};
+53     \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs} = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}[\hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount}];
+54 
+55     \textcolor{keyword}{delete}  \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts};
+56     \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts} = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[\hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount}];
+57 
+58     \textcolor{keywordtype}{float} cellValue     = cellStart;
+59     \textcolor{keywordtype}{float} nextCellValue = cellStart;
+60     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  idx = 0;  idx < \hyperlink{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{destCellCount};  ++idx)
+61     \{
+62       \textcolor{keywordflow}{if}  (cellValue < ceil (cellValue))
+63         nextCellValue = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (cellEnd, ceilf (cellValue));
+64       \textcolor{keywordflow}{else}
+65         nextCellValue = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (cellEnd, ceilf (cellValue + 1.0f));
+66 
+67       \textcolor{keywordtype}{float}  fract = nextCellValue - cellValue;
+68       \hyperlink{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{destCellIdxs}[idx]   = cellStartIdx + idx;
+69       \hyperlink{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{destCellFracts}[idx] = fract;
+70       cellValue = nextCellValue;
+71     \}
+72   \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!dest\+Cell\+Count@{dest\+Cell\+Count}}
+\index{dest\+Cell\+Count@{dest\+Cell\+Count}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{dest\+Cell\+Count}{destCellCount}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint16} K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Count}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}{}\label{class_morph_op_stretcher_1_1_cell_factor_a4ea39788e14a1b8d0ea4bf0634991f81}
+
+
+Definition at line 74 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Cell\+Factor(), K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Perform\+Operation(), and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Update\+For\+Source\+Cell\+Idx().
+
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!dest\+Cell\+Fracts@{dest\+Cell\+Fracts}}
+\index{dest\+Cell\+Fracts@{dest\+Cell\+Fracts}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{dest\+Cell\+Fracts}{destCellFracts}}]{\setlength{\rightskip}{0pt plus 5cm}float$\ast$ K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Fracts}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}{}\label{class_morph_op_stretcher_1_1_cell_factor_aaa0ecc31b4ade20727b2a6fa61bf938c}
+
+
+Definition at line 76 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Cell\+Factor(), K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Perform\+Operation(), K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Update\+For\+Source\+Cell\+Idx(), and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::$\sim$\+Cell\+Factor().
+
+\index{Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}!dest\+Cell\+Idxs@{dest\+Cell\+Idxs}}
+\index{dest\+Cell\+Idxs@{dest\+Cell\+Idxs}!Morph\+Op\+Stretcher\+::\+Cell\+Factor@{Morph\+Op\+Stretcher\+::\+Cell\+Factor}}
+\subsubsection[{\texorpdfstring{dest\+Cell\+Idxs}{destCellIdxs}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkuint32}$\ast$ K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::dest\+Cell\+Idxs}\hypertarget{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}{}\label{class_morph_op_stretcher_1_1_cell_factor_ad98db8b4eb2b3513ad0a592250bacc06}
+
+
+Definition at line 75 of file Morph\+Op\+Stretcher.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Cell\+Factor(), K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Perform\+Operation(), K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::\+Update\+For\+Source\+Cell\+Idx(), and K\+K\+B\+::\+Morph\+Op\+Stretcher\+::\+Cell\+Factor\+::$\sim$\+Cell\+Factor().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_morph_op_stretcher_8cpp}{Morph\+Op\+Stretcher.\+cpp}\end{DoxyCompactItemize}

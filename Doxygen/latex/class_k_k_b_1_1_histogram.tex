@@ -1,0 +1,1606 @@
+\hypertarget{class_k_k_b_1_1_histogram}{}\section{K\+KB\+:\+:Histogram Class Reference}
+\label{class_k_k_b_1_1_histogram}\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+
+
+Used to manage the construction of a \hyperlink{class_k_k_b_1_1_histogram}{Histogram}.  
+
+
+
+
+{\ttfamily \#include $<$Histogram.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_histogram_a9966e27fdb984bcdb227b29514a54021}{Histogram} (float \+\_\+min\+Value, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Buckets, float \+\_\+bucket\+Size, bool \+\_\+wrap\+Arround)
+\item 
+\hyperlink{class_k_k_b_1_1_histogram_aaf22daf3b8e3f0578337109005532f51}{$\sim$\+Histogram} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_histogram_a62a30cf5745986061d275b25a616f31a}{Area\+In\+Range} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} max\+Bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a1c6f72547f45e51374e4763b8a15e040}{Area\+In\+Range\+Percent} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} max\+Bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_aa67733d2af3248d68a1ee113ea5d7701}{Average\+Of\+Max\+Bucket} () const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_aa4191d4ca38d7b7d881038baf4554ded}{Average\+Of\+Max\+Bucket\+Excluding\+Range} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} max\+Bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_ac0d1890f4e8826a2f7a217ecfbf76c59}{Average\+Of\+Max\+Bucket\+In\+Range} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} first\+Bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} last\+Bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_adace35b6a2076563aacf43f4de6c41b4}{Average\+Of\+Min\+Bucket\+In\+Range} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} max\+Bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a1fb293678e0e91e1f4fc5cc18d11f62b}{Bucket} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket) const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a7cf220be1ecaf49901f6afea550c6015}{Bucket\+Size} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_a1dcb39e4363db00133b3f95a7f25e45c}{Calculate\+Peaks} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} threshold)
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a99ebe30e504bc5a78469cdf0f7963820}{Count\+Of\+Max\+Bucket} () const 
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_histogram_a5305305682f7b1dcb4e575550e94dce3}{Create\+Graph} () const 
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_histogram_a07fd97097cde777d82a8a3a97d1c4646}{Create\+Graph} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bar\+Size) const 
+\item 
+\hyperlink{class_k_k_b_1_1_histogram}{Histogram} $\ast$ \hyperlink{class_k_k_b_1_1_histogram_a04cec38d98986864dbda4bf5b814711a}{Equalized} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$ \hyperlink{class_k_k_b_1_1_histogram_a4aef03098feeca2316d2d8ea7862e1fe}{Equalized\+Map\+Table} ()
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_aa48c9389a38359e2923608a6a30e681d}{Get\+Peak\+Avg\+By\+Highest\+Order} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} peak\+Num)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_histogram_a71eef0fa7588f4e19f400dd1eabeaa66}{Get\+Peak\+Bucket} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} peak\+Num)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_histogram_a7698e5943c9a8859fca49e2551ea0d04}{Get\+Peak\+By\+Highest\+Order} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} peak\+Num)
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_a42e01ea0343c3f9e62841c7498670703}{Get\+Stats} (float \&\hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min}, float \&\hyperlink{_usf_cas_cor_8h_ab95f7757e11b270d27b95ec0d8e798b5}{max}, float \&mean, float \&variance)
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_a1be7a2f10e83373a0e0083b970e0adfa}{Increment} (float val)
+\item 
+bool \hyperlink{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}{Is\+Bucket\+A\+Peak} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} tolerance) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_histogram_a7c058cf194af1bf96bf038b0068dc328}{Max\+Bucket\+Idx} () const 
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a4e0c1f127f04b35e8383726b027daa10}{Min\+Value} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_histogram_a5ed817d12ec4f30eb761fcc4e57e42c7}{Num\+Of\+Buckets} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_ac6174f69f8eab1ce225996ffd39bf04a}{Print\+Table} (ostream \&o)
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_ad875d4652f38d49d9c2fd170afee0071}{Save} (\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} file\+Name) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_a0638645f1b64aa0128b3af42360360e7}{Save\+Graph\+Image} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name) const 
+\item 
+void \hyperlink{class_k_k_b_1_1_histogram_a52bd7aeedb85f8fbca8e10d0aba8569a}{Save\+Graph\+Image} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bar\+Size) const 
+\item 
+\hyperlink{class_k_k_b_1_1_histogram}{Histogram} $\ast$ \hyperlink{class_k_k_b_1_1_histogram_a3377c8afecd84c378025ef38e4a1d4ad}{Smooth} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} smooth\+Width)
+\item 
+float \hyperlink{class_k_k_b_1_1_histogram_a66e88a0cfafc8d08e2a95d7d2799d47a}{Total\+Count} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used to manage the construction of a \hyperlink{class_k_k_b_1_1_histogram}{Histogram}. 
+
+Definition at line 24 of file Histogram.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Histogram@{Histogram}}
+\index{Histogram@{Histogram}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Histogram(float \+\_\+min\+Value, kkint32 \+\_\+num\+Of\+Buckets, float \+\_\+bucket\+Size, bool \+\_\+wrap\+Arround)}{Histogram(float _minValue, kkint32 _numOfBuckets, float _bucketSize, bool _wrapArround)}}]{\setlength{\rightskip}{0pt plus 5cm}Histogram\+::\+Histogram (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+min\+Value, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Buckets, }
+\item[{float}]{\+\_\+bucket\+Size, }
+\item[{bool}]{\+\_\+wrap\+Arround}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a9966e27fdb984bcdb227b29514a54021}{}\label{class_k_k_b_1_1_histogram_a9966e27fdb984bcdb227b29514a54021}
+
+
+Definition at line 24 of file Histogram.\+cpp.
+
+
+
+Referenced by Equalized(), K\+K\+B\+::\+Raster\+::\+Histogram(), K\+K\+B\+::\+Raster\+::\+Histogram\+Grayscale(), and Smooth().
+
+
+\begin{DoxyCode}
+28                       :
+29 
+30   bucketSize        (\_bucketSize),
+31   buckets           (NULL),
+32   equalizedMapTable (NULL),
+33   minValue          (\_minValue),
+34   numOfBuckets      (\_numOfBuckets),
+35   totalCount        (0.0),
+36   totalVal          (0.0),
+37   wrapArround       (\_wrapArround)
+38 
+39 \{
+40   \textcolor{keywordflow}{if}  (numOfBuckets < 1)
+41   \{
+42     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+43          << \textcolor{stringliteral}{"*** ERROR ***   Histogram, Negative numOfBuckets["}  << numOfBuckets << \textcolor{stringliteral}{"."}  << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+44          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+45     exit (-1);
+46   \}
+47 
+48   range = bucketSize * numOfBuckets;
+49 
+50   buckets      = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[numOfBuckets];
+51   bucketTotals = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[numOfBuckets];
+52 
+53   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < numOfBuckets;  x++)
+54   \{
+55     buckets     [x] = (float)0.0;
+56     bucketTotals[x] = (float)0.0;
+57   \}
+58 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!````~Histogram@{$\sim$\+Histogram}}
+\index{````~Histogram@{$\sim$\+Histogram}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{$\sim$\+Histogram()}{~Histogram()}}]{\setlength{\rightskip}{0pt plus 5cm}Histogram\+::$\sim$\+Histogram (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_aaf22daf3b8e3f0578337109005532f51}{}\label{class_k_k_b_1_1_histogram_aaf22daf3b8e3f0578337109005532f51}
+
+
+Definition at line 64 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+65 \{
+66   \textcolor{keyword}{delete}  buckets;
+67   \textcolor{keyword}{delete}  bucketTotals;
+68   \textcolor{keywordflow}{if}  (equalizedMapTable)
+69     \textcolor{keyword}{delete}  equalizedMapTable;
+70 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Area\+In\+Range@{Area\+In\+Range}}
+\index{Area\+In\+Range@{Area\+In\+Range}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Area\+In\+Range(kkint32 min\+Bucket, kkint32 max\+Bucket) const }{AreaInRange(kkint32 minBucket, kkint32 maxBucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Histogram\+::\+Area\+In\+Range (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{min\+Bucket, }
+\item[{{\bf kkint32}}]{max\+Bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a62a30cf5745986061d275b25a616f31a}{}\label{class_k_k_b_1_1_histogram_a62a30cf5745986061d275b25a616f31a}
+
+
+Definition at line 1010 of file Histogram.\+cpp.
+
+
+
+Referenced by Area\+In\+Range\+Percent().
+
+
+\begin{DoxyCode}
+1013 \{
+1014   \textcolor{keywordflow}{if}  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
+1015        (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
+1016        (minBucket > maxBucket)
+1017       )
+1018   \{
+1019     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1020     cerr << \textcolor{stringliteral}{"Histogram::AreaInRange    *** ERROR ***  Invalid Parameters"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1021     cerr << \textcolor{stringliteral}{"NumOfBuckets["} << numOfBuckets << \textcolor{stringliteral}{"]  MinBucket["} << minBucket << \textcolor{stringliteral}{"]    MaxBucket["} << 
+      maxBucket << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1022     exit (-1);
+1023   \}
+1024 
+1025   \textcolor{keywordtype}{float}  area = (float)0.0;
+1026   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} b = minBucket;  b <= maxBucket;  b++)
+1027   \{
+1028     area += buckets[b];
+1029   \}
+1030 
+1031   \textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(area + (float)0.5);
+1032 \}   \textcolor{comment}{/* AreaInRange */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Area\+In\+Range\+Percent@{Area\+In\+Range\+Percent}}
+\index{Area\+In\+Range\+Percent@{Area\+In\+Range\+Percent}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Area\+In\+Range\+Percent(kkint32 min\+Bucket, kkint32 max\+Bucket) const }{AreaInRangePercent(kkint32 minBucket, kkint32 maxBucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Area\+In\+Range\+Percent (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{min\+Bucket, }
+\item[{{\bf kkint32}}]{max\+Bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a1c6f72547f45e51374e4763b8a15e040}{}\label{class_k_k_b_1_1_histogram_a1c6f72547f45e51374e4763b8a15e040}
+
+
+Definition at line 1036 of file Histogram.\+cpp.
+
+
+
+References Area\+In\+Range().
+
+
+\begin{DoxyCode}
+1039 \{
+1040   \textcolor{keywordflow}{if}  (totalCount <= (\textcolor{keywordtype}{float})0.0)
+1041     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})0.0;
+1042 
+1043   \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})100.0 * (float)((\textcolor{keywordtype}{float})\hyperlink{class_k_k_b_1_1_histogram_a62a30cf5745986061d275b25a616f31a}{AreaInRange} (minBucket, maxBucket) / totalCount);
+1044 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Average\+Of\+Max\+Bucket@{Average\+Of\+Max\+Bucket}}
+\index{Average\+Of\+Max\+Bucket@{Average\+Of\+Max\+Bucket}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Average\+Of\+Max\+Bucket() const }{AverageOfMaxBucket() const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Average\+Of\+Max\+Bucket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_aa67733d2af3248d68a1ee113ea5d7701}{}\label{class_k_k_b_1_1_histogram_aa67733d2af3248d68a1ee113ea5d7701}
+
+
+Definition at line 98 of file Histogram.\+cpp.
+
+
+
+References Max\+Bucket\+Idx().
+
+
+\begin{DoxyCode}
+99 \{
+100   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = \hyperlink{class_k_k_b_1_1_histogram_a7c058cf194af1bf96bf038b0068dc328}{MaxBucketIdx} ();
+101 
+102   \textcolor{keywordflow}{if}  (buckets[idx] <= (\textcolor{keywordtype}{float})0.0)
+103     \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})0.0;
+104   \textcolor{keywordflow}{else}
+105     \textcolor{keywordflow}{return}  bucketTotals[idx] / buckets[idx];
+106 
+107 \}  \textcolor{comment}{/* AverageOfMaxBucket */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Average\+Of\+Max\+Bucket\+Excluding\+Range@{Average\+Of\+Max\+Bucket\+Excluding\+Range}}
+\index{Average\+Of\+Max\+Bucket\+Excluding\+Range@{Average\+Of\+Max\+Bucket\+Excluding\+Range}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Average\+Of\+Max\+Bucket\+Excluding\+Range(kkint32 min\+Bucket, kkint32 max\+Bucket) const }{AverageOfMaxBucketExcludingRange(kkint32 minBucket, kkint32 maxBucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Average\+Of\+Max\+Bucket\+Excluding\+Range (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{min\+Bucket, }
+\item[{{\bf kkint32}}]{max\+Bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_aa4191d4ca38d7b7d881038baf4554ded}{}\label{class_k_k_b_1_1_histogram_aa4191d4ca38d7b7d881038baf4554ded}
+
+
+Definition at line 967 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+970 \{
+971   \textcolor{keywordflow}{if}  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
+972        (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
+973        (minBucket > maxBucket)
+974       )
+975   \{
+976     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+977     cerr << \textcolor{stringliteral}{"Histogram::AverageOfMaxBucketExcludingRange    *** ERROR ***  Invalid Parameters"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+978     cerr << \textcolor{stringliteral}{"NumOfBuckets["} << numOfBuckets << \textcolor{stringliteral}{"]  MinBucket["} << minBucket << \textcolor{stringliteral}{"]    MaxBucket["} << 
+      maxBucket << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+979     exit (-1);
+980   \}
+981   
+982   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} b;
+983 
+984   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxBucketIDX = -1;
+985   \textcolor{keywordtype}{float} maxBucketVal = 0;
+986 
+987   \textcolor{keywordflow}{for}  (b = 0;  b < numOfBuckets;  b++)
+988   \{
+989     \textcolor{keywordflow}{if}  ((b < minBucket)  ||  (b > maxBucket))
+990     \{
+991       \textcolor{keywordflow}{if}  (buckets[b] > maxBucketVal)
+992       \{
+993         maxBucketIDX = b;
+994         maxBucketVal = buckets[b];
+995       \}
+996     \}
+997   \}
+998 
+999   \textcolor{keywordflow}{if}  (maxBucketIDX < 0)
+1000     \textcolor{keywordflow}{return} 0;
+1001 
+1002   \textcolor{keywordflow}{if}  (maxBucketVal > (\textcolor{keywordtype}{float})0.0)
+1003     \textcolor{keywordflow}{return}  bucketTotals[maxBucketIDX] / buckets[maxBucketIDX];
+1004   \textcolor{keywordflow}{else}
+1005     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})0.0;
+1006 \}  \textcolor{comment}{/* AverageOfMaxBucketExcludingRange */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Average\+Of\+Max\+Bucket\+In\+Range@{Average\+Of\+Max\+Bucket\+In\+Range}}
+\index{Average\+Of\+Max\+Bucket\+In\+Range@{Average\+Of\+Max\+Bucket\+In\+Range}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Average\+Of\+Max\+Bucket\+In\+Range(kkint32 first\+Bucket, kkint32 last\+Bucket) const }{AverageOfMaxBucketInRange(kkint32 firstBucket, kkint32 lastBucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Average\+Of\+Max\+Bucket\+In\+Range (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{first\+Bucket, }
+\item[{{\bf kkint32}}]{last\+Bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_ac0d1890f4e8826a2f7a217ecfbf76c59}{}\label{class_k_k_b_1_1_histogram_ac0d1890f4e8826a2f7a217ecfbf76c59}
+
+
+Definition at line 891 of file Histogram.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Segment\+Image().
+
+
+\begin{DoxyCode}
+894 \{
+895   \textcolor{keywordflow}{if}  ((minBucket < 0)  ||  (minBucket >= numOfBuckets)  ||
+896        (maxBucket < 0)  ||  (maxBucket >= numOfBuckets)  ||
+897        (minBucket > maxBucket)
+898       )
+899   \{
+900     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+901     cerr << \textcolor{stringliteral}{"Histogram::AverageOfMaxBucketInRange    *** ERROR ***  Invalid Parameters"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+902     cerr << \textcolor{stringliteral}{"NumOfBuckets["} << numOfBuckets << \textcolor{stringliteral}{"]  MinBucket["} << minBucket << \textcolor{stringliteral}{"]    MaxBucket["} << 
+      maxBucket << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+903     exit (-1);
+904   \}
+905 
+906   
+907   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} b;
+908 
+909   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} maxBucketIDX = minBucket;
+910   \textcolor{keywordtype}{float} maxBucketVal = buckets[minBucket];
+911 
+912   \textcolor{keywordflow}{for}  (b = minBucket;  b <= maxBucket;  b++)
+913   \{
+914     \textcolor{keywordflow}{if}  (buckets[b] > maxBucketVal)
+915     \{
+916       maxBucketIDX = b;
+917       maxBucketVal = buckets[b];
+918     \}
+919   \}
+920 
+921   \textcolor{keywordflow}{if}  (maxBucketVal > (\textcolor{keywordtype}{float})0.0)
+922     \textcolor{keywordflow}{return}  bucketTotals[maxBucketIDX] / buckets[maxBucketIDX];
+923   \textcolor{keywordflow}{else}
+924     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})0.0;
+925 \}  \textcolor{comment}{/* AverageOfMaxBucketInRange */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Average\+Of\+Min\+Bucket\+In\+Range@{Average\+Of\+Min\+Bucket\+In\+Range}}
+\index{Average\+Of\+Min\+Bucket\+In\+Range@{Average\+Of\+Min\+Bucket\+In\+Range}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Average\+Of\+Min\+Bucket\+In\+Range(kkint32 min\+Bucket, kkint32 max\+Bucket) const }{AverageOfMinBucketInRange(kkint32 minBucket, kkint32 maxBucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Average\+Of\+Min\+Bucket\+In\+Range (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{min\+Bucket, }
+\item[{{\bf kkint32}}]{max\+Bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_adace35b6a2076563aacf43f4de6c41b4}{}\label{class_k_k_b_1_1_histogram_adace35b6a2076563aacf43f4de6c41b4}
+
+
+Definition at line 930 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+933 \{
+934   \textcolor{keywordflow}{if}  ((firstBucket < 0)  ||  (firstBucket >= numOfBuckets)  ||
+935        (lastBucket < 0)   ||  (lastBucket >= numOfBuckets)  ||
+936        (firstBucket > lastBucket)
+937       )
+938   \{
+939     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+940     cerr << \textcolor{stringliteral}{"Histogram::AverageOfMaxBucketInRange    *** ERROR ***  Invalid Parameters"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+941     cerr << \textcolor{stringliteral}{"NumOfBuckets["} << numOfBuckets << \textcolor{stringliteral}{"]  FirstBucket["} << firstBucket << \textcolor{stringliteral}{"]    LastBucket["} << 
+      lastBucket << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+942     exit (-1);
+943   \}
+944   
+945   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} b;
+946 
+947   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  minBucketIDX = firstBucket;
+948   \textcolor{keywordtype}{float} minBucketVal = buckets[firstBucket];
+949 
+950   \textcolor{keywordflow}{for}  (b = firstBucket;  b <= lastBucket;  b++)
+951   \{
+952     \textcolor{keywordflow}{if}  (buckets[b] <= minBucketVal)
+953     \{
+954       minBucketIDX = b;
+955       minBucketVal = buckets[b];
+956     \}
+957   \}
+958 
+959   \textcolor{keywordflow}{if}  (minBucketVal > 0)
+960     \textcolor{keywordflow}{return}  bucketTotals[minBucketIDX] / buckets[minBucketIDX];
+961   \textcolor{keywordflow}{else}
+962     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})0.0;
+963 \}  \textcolor{comment}{/* AverageOfMaxBucketInRange */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Bucket@{Bucket}}
+\index{Bucket@{Bucket}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Bucket(kkint32 bucket) const }{Bucket(kkint32 bucket) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Bucket (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{bucket}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a1fb293678e0e91e1f4fc5cc18d11f62b}{}\label{class_k_k_b_1_1_histogram_a1fb293678e0e91e1f4fc5cc18d11f62b}
+
+
+Definition at line 122 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+123 \{
+124   \textcolor{keywordflow}{if}  ((bucket < 0)  ||  (bucket >= numOfBuckets))
+125   \{
+126     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+127          << \textcolor{stringliteral}{"*** ERROR ***   Histogram::Bucket,  Bucket["} << bucket << \textcolor{stringliteral}{"]  is out of range."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+128          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+129     exit (-1);
+130   \}
+131 
+132   \textcolor{keywordflow}{return}  buckets[bucket];
+133 \}  \textcolor{comment}{/* Bucket */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Bucket\+Size@{Bucket\+Size}}
+\index{Bucket\+Size@{Bucket\+Size}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Bucket\+Size() const }{BucketSize() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+B\+::\+Histogram\+::\+Bucket\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_histogram_a7cf220be1ecaf49901f6afea550c6015}{}\label{class_k_k_b_1_1_histogram_a7cf220be1ecaf49901f6afea550c6015}
+
+
+Definition at line 60 of file Histogram.\+h.
+
+
+\begin{DoxyCode}
+60 \{\textcolor{keywordflow}{return} bucketSize;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Calculate\+Peaks@{Calculate\+Peaks}}
+\index{Calculate\+Peaks@{Calculate\+Peaks}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Calculate\+Peaks(kkint32 threshold)}{CalculatePeaks(kkint32 threshold)}}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Calculate\+Peaks (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{threshold}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a1dcb39e4363db00133b3f95a7f25e45c}{}\label{class_k_k_b_1_1_histogram_a1dcb39e4363db00133b3f95a7f25e45c}
+
+
+Definition at line 756 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+757 \{
+758   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+759 
+760   peaks.erase (peaks.begin (), peaks.end ());
+761 
+762   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+763   \{
+764     \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}{IsBucketAPeak} (bucket, threshold))
+765       peaks.push\_back (bucket);
+766   \}
+767 \}  \textcolor{comment}{/* CalculatePeaks */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Count\+Of\+Max\+Bucket@{Count\+Of\+Max\+Bucket}}
+\index{Count\+Of\+Max\+Bucket@{Count\+Of\+Max\+Bucket}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Count\+Of\+Max\+Bucket() const }{CountOfMaxBucket() const }}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Count\+Of\+Max\+Bucket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a99ebe30e504bc5a78469cdf0f7963820}{}\label{class_k_k_b_1_1_histogram_a99ebe30e504bc5a78469cdf0f7963820}
+
+
+Definition at line 113 of file Histogram.\+cpp.
+
+
+
+References Max\+Bucket\+Idx().
+
+
+\begin{DoxyCode}
+114 \{
+115   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = \hyperlink{class_k_k_b_1_1_histogram_a7c058cf194af1bf96bf038b0068dc328}{MaxBucketIdx} ();
+116 
+117   \textcolor{keywordflow}{return}  buckets[idx];
+118 \}  \textcolor{comment}{/* CountOfMaxBucket */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Create\+Graph@{Create\+Graph}}
+\index{Create\+Graph@{Create\+Graph}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Create\+Graph() const }{CreateGraph() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Histogram\+::\+Create\+Graph (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a5305305682f7b1dcb4e575550e94dce3}{}\label{class_k_k_b_1_1_histogram_a5305305682f7b1dcb4e575550e94dce3}
+
+
+Definition at line 162 of file Histogram.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Draw\+Line(), Is\+Bucket\+A\+Peak(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Raster\+::\+Reverse\+Image(), and K\+K\+B\+::\+Raster\+::\+Set\+Pixel\+Value().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Histogram\+Grayscale\+Image(), K\+K\+B\+::\+Raster\+::\+Histogram\+Image(), and Save\+Graph\+Image().
+
+
+\begin{DoxyCode}
+163 \{
+164   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket        = 0;
+165   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col           = 10;
+166   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} barWidth      = 2;
+167   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} interBarWidth = 5;
+168   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} colHeight     = 0;
+169   \textcolor{keywordtype}{float}   maxCount      = (float)0.0;
+170   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row           = 0;
+171   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+172   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} y;
+173 
+174   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  borderColor  = 100;
+175   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorAxis    = 150;
+176   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBar     = 200;
+177   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBarMax  = 255;
+178   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBarPeak = 255;
+179   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  gridColor    = 180;
+180   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  hashColor    =  70;
+181   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  hashColor2   =  45;
+182 
+183   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  graphWidth  = numOfBuckets * (barWidth + interBarWidth) + 20; \textcolor{comment}{//  3 pixels per bar,  +}
+184                                                                        \textcolor{comment}{//  3 pixels space     +}
+185                                                                        \textcolor{comment}{// 10 pixel Padding on both sides.}
+186 
+187   \textcolor{comment}{// Set up where Grid lines should go}
+188   \textcolor{keywordtype}{bool}*  vertGridLines = \textcolor{keyword}{new} \textcolor{keywordtype}{bool}[numOfBuckets];
+189   \textcolor{keywordtype}{bool}*  peakBarLines  = \textcolor{keyword}{new} \textcolor{keywordtype}{bool}[numOfBuckets];
+190   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+191   \{
+192     vertGridLines[x] = \textcolor{keyword}{false};
+193     peakBarLines [x] = \hyperlink{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}{IsBucketAPeak} (x, 2);  \textcolor{comment}{// Make sure that we are greater than }
+194                                               \textcolor{comment}{// our 2 left and right neighbors}
+195   \}
+196 
+197   \textcolor{comment}{// Look for the Zero Grid Line should go}
+198 
+199   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  middleIdx = 0;
+200   \textcolor{keywordflow}{if}  (minValue < 0)
+201   \{
+202     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBucketsToZero = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(0.5 + fabs (minValue) / bucketSize);
+203 
+204     \textcolor{keywordflow}{if}  (numOfBucketsToZero < numOfBuckets)
+205       middleIdx = numOfBucketsToZero;
+206   \}
+207 
+208   x = middleIdx;
+209   \textcolor{keywordflow}{while}  (x < numOfBuckets)
+210   \{
+211     vertGridLines[x] = \textcolor{keyword}{true};
+212     x += 100;
+213   \}
+214 
+215   x = middleIdx;
+216   \textcolor{keywordflow}{while}  (x > 0)
+217   \{
+218     vertGridLines[x] = \textcolor{keyword}{true};
+219     x -= 100;
+220   \}
+221 
+222   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+223   \{
+224     \textcolor{keywordflow}{if}  (buckets[bucket] > maxCount)
+225       maxCount = buckets[bucket];
+226   \}
+227 
+228   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxColHeight = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(maxCount * (barWidth + interBarWidth) + (\textcolor{keywordtype}{float})0.
+      5), (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})512);
+229   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  graphHeight = maxColHeight + 20;
+230 
+231 
+232   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  graph = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_raster}{Raster} (graphHeight, graphWidth);
+233 
+234   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (              10,              10,               10, graphWidth - 10, 
+      borderColor);  \textcolor{comment}{// TopLeft -> TopRight}
+235 
+236   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (              10, graphWidth - 10, graphHeight - 10, graphWidth - 10, 
+      borderColor);  \textcolor{comment}{// TopRight -> BotRight}
+237 
+238   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10, graphWidth - 10, graphHeight - 10,              10, 
+      borderColor);  \textcolor{comment}{// BotRight -> BotLeft}
+239 
+240   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10,              10,               10,              10, 
+      borderColor);  \textcolor{comment}{// BotLeft -> TopLeft}
+241 
+242 
+243   x = 0;
+244   row = graphHeight - 10;
+245   
+246   \textcolor{comment}{// Draw Y Axis}
+247   \textcolor{keywordflow}{while}  (x < maxColHeight)
+248   \{
+249     \textcolor{keywordflow}{if}  ((x % 10) == 0)
+250     \{
+251       \textcolor{keywordflow}{if}  ((x % 50) == 0)
+252       \{
+253         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 4, hashColor2);
+254         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 5, hashColor2);
+255         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 6, hashColor2);
+256 
+257         \textcolor{keywordflow}{if}  ((x % 100) == 0)
+258         \{
+259           graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (row, 9, row, graphWidth - 11, gridColor);
+260         \}
+261       \}
+262 
+263       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 7, hashColor);
+264       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 8, hashColor);
+265       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 9, hashColor);
+266     \}
+267 
+268     graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 9, colorAxis);
+269     row--;
+270     x++;
+271   \}
+272 
+273 
+274 
+275   col = 10;
+276 
+277   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+278   \{
+279     \textcolor{keywordflow}{for}  (x = 0;  x < (barWidth + interBarWidth);  x++)
+280     \{
+281       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 9, col + x, colorAxis);
+282     \}
+283 
+284     \textcolor{keywordflow}{if}  ((bucket % 10) == 0)
+285     \{
+286       \textcolor{comment}{// Lets add a Hash Mark}
+287       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 8, col + 1, hashColor);
+288       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 7, col + 1, hashColor);
+289       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 6, col + 1, hashColor);
+290       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 5, col + 1, hashColor);
+291     \}
+292 
+293     \textcolor{keywordflow}{if}  (vertGridLines[bucket] == \textcolor{keyword}{true})
+294     \{
+295       graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10, col + 1, 10, col + 1, gridColor);
+296     \}
+297 
+298     colHeight = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})ceil ((((\textcolor{keywordtype}{float})maxColHeight * buckets[bucket]) / maxCount));
+299 
+300     \textcolor{keywordflow}{if}  ((colHeight < 1)  &&  (buckets[bucket] > (float)0.0))
+301     \{
+302       cout << \textcolor{stringliteral}{"I want to know about this."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+303     \}
+304 
+305     row = graphHeight - 10;
+306 
+307     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  barCodeToUse = colorBar;
+308     \textcolor{keywordflow}{if}  (buckets[bucket] >= maxCount)
+309       barCodeToUse = colorBarMax;
+310 
+311     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (peakBarLines[bucket])
+312       barCodeToUse = colorBarPeak;
+313 
+314     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;  x < colHeight;  x++)
+315     \{
+316       \textcolor{keywordflow}{for}  (y = 0;  y < barWidth;  y++)
+317       \{
+318         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, col + y, barCodeToUse);
+319       \}
+320 
+321       row--;
+322     \}
+323 
+324     col += (barWidth + interBarWidth);
+325   \}  
+326 
+327   \textcolor{keyword}{delete}[]  peakBarLines;
+328   \textcolor{keyword}{delete}[]  vertGridLines;
+329 
+330   graph->\hyperlink{class_k_k_b_1_1_raster_a6bd18a014fd3867714e04c037f021497}{ReverseImage} ();
+331 
+332   \textcolor{keywordflow}{return}  graph;
+333 \}  \textcolor{comment}{/* CreateGraph */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Create\+Graph@{Create\+Graph}}
+\index{Create\+Graph@{Create\+Graph}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Create\+Graph(kkint32 bar\+Size) const }{CreateGraph(kkint32 barSize) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Histogram\+::\+Create\+Graph (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{bar\+Size}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a07fd97097cde777d82a8a3a97d1c4646}{}\label{class_k_k_b_1_1_histogram_a07fd97097cde777d82a8a3a97d1c4646}
+
+
+Definition at line 337 of file Histogram.\+cpp.
+
+
+
+References K\+K\+B\+::\+Raster\+::\+Draw\+Line(), Is\+Bucket\+A\+Peak(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Raster\+::\+Reverse\+Image(), and K\+K\+B\+::\+Raster\+::\+Set\+Pixel\+Value().
+
+
+
+Referenced by Save\+Graph\+Image().
+
+
+\begin{DoxyCode}
+338 \{
+339   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket        = 0;
+340   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col           = 10;
+341   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} barWidth      = 2;
+342   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} interBarWidth = 5;
+343   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} colHeight     = 0;
+344   \textcolor{keywordtype}{float}   maxCount      = (float)0.0;
+345   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} row           = 0;
+346   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+347   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} y;
+348 
+349   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  borderColor  = 100;
+350   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorAxis    = 150;
+351   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBar     = 200;
+352   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBarMax  = 255;
+353   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  colorBarPeak = 255;
+354   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  gridColor    = 180;
+355   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  hashColor    =  70;
+356   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  hashColor2   =  45;
+357 
+358   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  graphWidth  = numOfBuckets * (barWidth + interBarWidth) + 20; \textcolor{comment}{//  3 pixels per bar,  +}
+359                                                                        \textcolor{comment}{//  3 pixels space     +}
+360                                                                        \textcolor{comment}{// 10 pixels Padding on both sides.}
+361 
+362   \textcolor{comment}{// Set up where Grid lines should go}
+363   \textcolor{keywordtype}{bool}*  vertGridLines = \textcolor{keyword}{new} \textcolor{keywordtype}{bool}[numOfBuckets];
+364   \textcolor{keywordtype}{bool}*  peakBarLines  = \textcolor{keyword}{new} \textcolor{keywordtype}{bool}[numOfBuckets];
+365   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+366   \{
+367     vertGridLines[x] = \textcolor{keyword}{false};
+368     peakBarLines [x] = \hyperlink{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}{IsBucketAPeak} (x, 2);  \textcolor{comment}{// Make sure that we are greater than }
+369                                               \textcolor{comment}{// our 2 left and right neighbors}
+370   \}
+371 
+372   \textcolor{comment}{// Look for the Zero Grid Line should go}
+373 
+374   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  middleIdx = 0;
+375   \textcolor{keywordflow}{if}  (minValue < 0)
+376   \{
+377     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBucketsToZero = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(0.5 + fabs (minValue) / bucketSize);
+378 
+379     \textcolor{keywordflow}{if}  (numOfBucketsToZero < numOfBuckets)
+380       middleIdx = numOfBucketsToZero;
+381   \}
+382 
+383   x = middleIdx;
+384   \textcolor{keywordflow}{while}  (x < numOfBuckets)
+385   \{
+386     vertGridLines[x] = \textcolor{keyword}{true};
+387     x += 100;
+388   \}
+389 
+390   x = middleIdx;
+391   \textcolor{keywordflow}{while}  (x > 0)
+392   \{
+393     vertGridLines[x] = \textcolor{keyword}{true};
+394     x -= 100;
+395   \}
+396   
+397 
+398   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+399   \{
+400     \textcolor{keywordflow}{if}  (buckets[bucket] > maxCount)
+401       maxCount = buckets[bucket];
+402   \}
+403 
+404 
+405   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxColHeight = \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{Min} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(maxCount * (barWidth + interBarWidth) + (\textcolor{keywordtype}{float})0.
+      5), (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})512);
+406   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  graphHeight = maxColHeight + 20;
+407 
+408   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  graph = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_raster}{Raster} (graphHeight, graphWidth);
+409 
+410   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (              10,              10,               10, graphWidth - 10, 
+      borderColor);  \textcolor{comment}{// TopLeft  -> TopRight}
+411   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (              10, graphWidth - 10, graphHeight - 10, graphWidth - 10, 
+      borderColor);  \textcolor{comment}{// TopRight -> BotRight}
+412   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10, graphWidth - 10, graphHeight - 10,              10, 
+      borderColor);  \textcolor{comment}{// BotRight -> BotLeft}
+413   graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10,              10,               10,              10, 
+      borderColor);  \textcolor{comment}{// BotLeft  -> TopLeft}
+414 
+415   x = 0;
+416   row = graphHeight - 10;
+417 
+418   \textcolor{comment}{// Draw Y Axis}
+419   \textcolor{keywordflow}{while}  (x < maxColHeight)
+420   \{
+421     \textcolor{keywordflow}{if}  ((x % 10) == 0)
+422     \{
+423       \textcolor{keywordflow}{if}  ((x % 50) == 0)
+424       \{
+425         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 4, hashColor2);
+426         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 5, hashColor2);
+427         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 6, hashColor2);
+428 
+429         \textcolor{keywordflow}{if}  ((x % 100) == 0)
+430         \{
+431           graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (row, 9, row, graphWidth - 11, gridColor);
+432         \}
+433       \}
+434 
+435       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 7, hashColor);
+436       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 8, hashColor);
+437       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 9, hashColor);
+438     \}
+439 
+440     graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, 9, colorAxis);
+441     row--;
+442     x++;
+443   \}
+444 
+445   col = 10;
+446 
+447   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+448   \{
+449     \textcolor{keywordflow}{for}  (x = 0;  x < (barWidth + interBarWidth);  x++)
+450     \{
+451       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 9, col + x, colorAxis);
+452     \}
+453 
+454     \textcolor{keywordflow}{if}  ((bucket % 10) == 0)
+455     \{
+456       \textcolor{comment}{// Lets add a Hash Mark}
+457       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 8, col + 1, hashColor);
+458       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 7, col + 1, hashColor);
+459       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 6, col + 1, hashColor);
+460       graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (graphHeight - 5, col + 1, hashColor);
+461     \}
+462 
+463     \textcolor{keywordflow}{if}  (vertGridLines[bucket] == \textcolor{keyword}{true})
+464     \{
+465       graph->\hyperlink{class_k_k_b_1_1_raster_a118bf0fa32356ddea42f579c044c65cd}{DrawLine} (graphHeight - 10, col + 1, 10, col + 1, gridColor);
+466     \}
+467 
+468     colHeight = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})ceil ((((\textcolor{keywordtype}{float})maxColHeight * buckets[bucket]) / maxCount));
+469 
+470     \textcolor{keywordflow}{if}  ((colHeight < 1)  &&  (buckets[bucket] > (float)0.0))
+471     \{
+472       cout << \textcolor{stringliteral}{"I want to know about this."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+473     \}
+474 
+475     row = graphHeight - 10;
+476 
+477     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}  barCodeToUse = colorBar;
+478     \textcolor{keywordflow}{if}  (buckets[bucket] >= maxCount)
+479       barCodeToUse = colorBarMax;
+480 
+481     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (peakBarLines[bucket])
+482       barCodeToUse = colorBarPeak;
+483 
+484     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;  x < colHeight;  x++)
+485     \{
+486       \textcolor{keywordflow}{for}  (y = 0;  y < barWidth;  y++)
+487       \{
+488         graph->\hyperlink{class_k_k_b_1_1_raster_a5ddb8bd069dc64241941b0b011af8667}{SetPixelValue} (row, col + y, barCodeToUse);
+489       \}
+490 
+491       row--;
+492     \}
+493 
+494     col += (barWidth + interBarWidth);
+495   \}  
+496 
+497   \textcolor{keyword}{delete}[]  peakBarLines;
+498   \textcolor{keyword}{delete}[]  vertGridLines;
+499 
+500   graph->\hyperlink{class_k_k_b_1_1_raster_a6bd18a014fd3867714e04c037f021497}{ReverseImage} ();
+501 
+502   \textcolor{keywordflow}{return}  graph;
+503 \}  \textcolor{comment}{/* CreateGraph */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Equalized@{Equalized}}
+\index{Equalized@{Equalized}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Equalized()}{Equalized()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Histogram\+Ptr} Histogram\+::\+Equalized (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a04cec38d98986864dbda4bf5b814711a}{}\label{class_k_k_b_1_1_histogram_a04cec38d98986864dbda4bf5b814711a}
+
+
+Definition at line 848 of file Histogram.\+cpp.
+
+
+
+References Histogram().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Histogram\+Equalized\+Image().
+
+
+\begin{DoxyCode}
+849 \{
+850   \textcolor{keywordtype}{float}*   histSumTable  = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[numOfBuckets];
+851   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx;
+852 
+853   \hyperlink{class_k_k_b_1_1_histogram}{HistogramPtr}   newHist = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_histogram_a9966e27fdb984bcdb227b29514a54021}{Histogram} (minValue, numOfBuckets, bucketSize, 
+      wrapArround);
+854 
+855   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+856 
+857   newHist->equalizedMapTable = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[numOfBuckets];
+858 
+859   \textcolor{keywordtype}{float}  accumulatedCount = (float)0.0;
+860   \textcolor{keywordflow}{for}  (x = 0; x < numOfBuckets; x++)
+861   \{
+862     accumulatedCount += buckets[x];
+863     histSumTable[x] = accumulatedCount;
+864   \}
+865 
+866  
+867   \textcolor{keywordflow}{for}  (x = 0;  x < numOfBuckets;  x++)
+868   \{
+869     idx = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})((\textcolor{keywordtype}{float})0.5 + (((float)(histSumTable[x] * (numOfBuckets - 1)) / totalCount)));
+870     \textcolor{keywordflow}{if}  (idx >= numOfBuckets)
+871       idx = numOfBuckets - 1;
+872 
+873     newHist->equalizedMapTable[x] = idx;
+874     newHist->buckets[idx]         += buckets[x];
+875     newHist->bucketTotals[idx]    += bucketTotals[x];
+876   \}
+877 
+878 
+879   newHist->totalCount = totalCount;
+880   newHist->totalVal   = totalVal;
+881 
+882 
+883   \textcolor{keyword}{delete}[]  histSumTable;
+884 
+885   \textcolor{keywordflow}{return}  newHist;
+886 \} \textcolor{comment}{/* Equalize */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Equalized\+Map\+Table@{Equalized\+Map\+Table}}
+\index{Equalized\+Map\+Table@{Equalized\+Map\+Table}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Equalized\+Map\+Table()}{EqualizedMapTable()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32}$\ast$ K\+K\+B\+::\+Histogram\+::\+Equalized\+Map\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_histogram_a4aef03098feeca2316d2d8ea7862e1fe}{}\label{class_k_k_b_1_1_histogram_a4aef03098feeca2316d2d8ea7862e1fe}
+
+
+Definition at line 72 of file Histogram.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Histogram\+Equalized\+Image().
+
+
+\begin{DoxyCode}
+72 \{\textcolor{keywordflow}{return}  equalizedMapTable;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Get\+Peak\+Avg\+By\+Highest\+Order@{Get\+Peak\+Avg\+By\+Highest\+Order}}
+\index{Get\+Peak\+Avg\+By\+Highest\+Order@{Get\+Peak\+Avg\+By\+Highest\+Order}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Get\+Peak\+Avg\+By\+Highest\+Order(kkint32 peak\+Num)}{GetPeakAvgByHighestOrder(kkint32 peakNum)}}]{\setlength{\rightskip}{0pt plus 5cm}float Histogram\+::\+Get\+Peak\+Avg\+By\+Highest\+Order (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{peak\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_aa48c9389a38359e2923608a6a30e681d}{}\label{class_k_k_b_1_1_histogram_aa48c9389a38359e2923608a6a30e681d}
+
+
+Definition at line 820 of file Histogram.\+cpp.
+
+
+
+References Get\+Peak\+By\+Highest\+Order().
+
+
+\begin{DoxyCode}
+821 \{
+822   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = \hyperlink{class_k_k_b_1_1_histogram_a7698e5943c9a8859fca49e2551ea0d04}{GetPeakByHighestOrder} (peakNum);
+823 
+824   \textcolor{keywordflow}{if}  (x < 0)
+825   \{
+826     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+827     cout << \textcolor{stringliteral}{"GetPeakAvgByHighestOrder     GetPeakByHighestOrder returned["} << x << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+828     \textcolor{keywordflow}{return}  0;
+829   \}
+830 
+831   \textcolor{keywordflow}{if}  (x >= this->numOfBuckets)
+832   \{
+833     cout << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+834     cout << \textcolor{stringliteral}{"GetPeakAvgByHighestOrder     GetPeakByHighestOrder returned["} << x << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+835     x = 1;
+836     \textcolor{keywordflow}{return} 0;
+837   \}
+838 
+839   \textcolor{keywordflow}{if}  (buckets[x] <= (\textcolor{keywordtype}{float})0.0)
+840     \textcolor{keywordflow}{return} 0.0;
+841 
+842   \textcolor{keywordflow}{return}  (bucketTotals[x] / buckets[x]);
+843 \}  \textcolor{comment}{/* GetPeakAvgByHighestOrder */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Get\+Peak\+Bucket@{Get\+Peak\+Bucket}}
+\index{Get\+Peak\+Bucket@{Get\+Peak\+Bucket}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Get\+Peak\+Bucket(kkint32 peak\+Num)}{GetPeakBucket(kkint32 peakNum)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Histogram\+::\+Get\+Peak\+Bucket (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{peak\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a71eef0fa7588f4e19f400dd1eabeaa66}{}\label{class_k_k_b_1_1_histogram_a71eef0fa7588f4e19f400dd1eabeaa66}
+
+
+Definition at line 771 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+772 \{
+773   \textcolor{keywordflow}{if}  (peaks.empty ())
+774     \hyperlink{class_k_k_b_1_1_histogram_a1dcb39e4363db00133b3f95a7f25e45c}{CalculatePeaks} (2);
+775 
+776   \textcolor{keywordflow}{if}  (peakNum > (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})peaks.size ())
+777     \textcolor{keywordflow}{return} -1;
+778 
+779   \textcolor{keywordflow}{else}
+780     \textcolor{keywordflow}{return}  peaks[peakNum];
+781 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Get\+Peak\+By\+Highest\+Order@{Get\+Peak\+By\+Highest\+Order}}
+\index{Get\+Peak\+By\+Highest\+Order@{Get\+Peak\+By\+Highest\+Order}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Get\+Peak\+By\+Highest\+Order(kkint32 peak\+Num)}{GetPeakByHighestOrder(kkint32 peakNum)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Histogram\+::\+Get\+Peak\+By\+Highest\+Order (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{peak\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a7698e5943c9a8859fca49e2551ea0d04}{}\label{class_k_k_b_1_1_histogram_a7698e5943c9a8859fca49e2551ea0d04}
+
+
+Definition at line 785 of file Histogram.\+cpp.
+
+
+
+Referenced by Get\+Peak\+Avg\+By\+Highest\+Order().
+
+
+\begin{DoxyCode}
+786 \{
+787   \textcolor{keywordflow}{if}  (peaks.empty ())
+788     \hyperlink{class_k_k_b_1_1_histogram_a1dcb39e4363db00133b3f95a7f25e45c}{CalculatePeaks} (2);
+789 
+790   \textcolor{keywordflow}{if}  (peakNum > (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})peaks.size ())
+791     \textcolor{keywordflow}{return} -1;
+792 
+793   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  t;
+794   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+795   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y;
+796 
+797   \hyperlink{namespace_k_k_b_adf8a10085d231870d8a072046d6cba10}{VectorInt32} sortedPeaks (peaks);
+798 
+799   \textcolor{keywordflow}{for}  (x = 1;  x < (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})sortedPeaks.size ();  x++)
+800   \{
+801     \textcolor{keywordflow}{for} (y = x; y > 0; y--)
+802     \{
+803       \textcolor{keywordflow}{if}  (buckets[sortedPeaks[y - 1]] < buckets[sortedPeaks[y]])
+804       \{
+805         t = sortedPeaks[y];
+806         sortedPeaks[y] = sortedPeaks[y - 1];
+807         sortedPeaks[y - 1] = t;
+808       \}
+809     \}
+810   \}
+811 
+812   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  returnIdxNum = sortedPeaks[peakNum];
+813   
+814   \textcolor{keywordflow}{return}   returnIdxNum;
+815   
+816 \}  \textcolor{comment}{/* GetPeakByHighestOrder */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Get\+Stats@{Get\+Stats}}
+\index{Get\+Stats@{Get\+Stats}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Get\+Stats(float \&min, float \&max, float \&mean, float \&variance)}{GetStats(float &min, float &max, float &mean, float &variance)}}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Get\+Stats (
+\begin{DoxyParamCaption}
+\item[{float \&}]{min, }
+\item[{float \&}]{max, }
+\item[{float \&}]{mean, }
+\item[{float \&}]{variance}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a42e01ea0343c3f9e62841c7498670703}{}\label{class_k_k_b_1_1_histogram_a42e01ea0343c3f9e62841c7498670703}
+
+
+Definition at line 1071 of file Histogram.\+cpp.
+
+
+\begin{DoxyCode}
+1076 \{
+1077   \hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min}      = FLT\_MAX;
+1078   \hyperlink{_usf_cas_cor_8h_ab95f7757e11b270d27b95ec0d8e798b5}{max}      = FLT\_MIN;
+1079   mean     =  totalCount / numOfBuckets;
+1080   variance = 0.0f;
+1081 
+1082   \textcolor{keywordtype}{float}  deltaSquareTotal = 0.0f;
+1083   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < numOfBuckets;  idx++)
+1084   \{
+1085     \textcolor{keywordflow}{if}  (buckets[idx] < \hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min})  \hyperlink{_usf_cas_cor_8h_a8195a86b6d75b9a3939505e8bb50021e}{min} = buckets[idx];
+1086     \textcolor{keywordflow}{if}  (buckets[idx] > \hyperlink{_usf_cas_cor_8h_ab95f7757e11b270d27b95ec0d8e798b5}{max})  \hyperlink{_usf_cas_cor_8h_ab95f7757e11b270d27b95ec0d8e798b5}{max} = buckets[idx];
+1087 
+1088     \textcolor{keywordtype}{float}  delta = buckets[idx] - mean;
+1089     \textcolor{keywordtype}{float}  deltaSquare = delta * delta;
+1090     deltaSquareTotal += deltaSquare;
+1091   \}
+1092   variance = deltaSquareTotal / (float)numOfBuckets;
+1093 \}  \textcolor{comment}{/* GetStats */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Increment@{Increment}}
+\index{Increment@{Increment}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Increment(float val)}{Increment(float val)}}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Increment (
+\begin{DoxyParamCaption}
+\item[{float}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a1be7a2f10e83373a0e0083b970e0adfa}{}\label{class_k_k_b_1_1_histogram_a1be7a2f10e83373a0e0083b970e0adfa}
+
+
+Definition at line 137 of file Histogram.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Histogram(), and K\+K\+B\+::\+Raster\+::\+Histogram\+Grayscale().
+
+
+\begin{DoxyCode}
+138 \{
+139   \textcolor{keywordflow}{if}  (val < minValue) 
+140   \{
+141     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} 
+142          << \textcolor{stringliteral}{"*** ERROR ***   val["} << val << \textcolor{stringliteral}{"]  is out of range ["} << minValue << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl}
+143          << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+144     exit (-1);
+145   \}
+146 
+147   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket  = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}) ((val - minValue) / bucketSize);
+148   \textcolor{keywordflow}{if}  (bucket >= numOfBuckets)
+149     bucket = numOfBuckets - 1;
+150   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (bucket < 0)
+151     bucket = 0;
+152 
+153   buckets[bucket] = buckets[bucket] + (float)1.0;
+154   bucketTotals[bucket] += val;
+155 
+156   totalCount += (float)1.0;
+157   totalVal += val;
+158 \}  \textcolor{comment}{/* Increment */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Is\+Bucket\+A\+Peak@{Is\+Bucket\+A\+Peak}}
+\index{Is\+Bucket\+A\+Peak@{Is\+Bucket\+A\+Peak}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Is\+Bucket\+A\+Peak(kkint32 bucket, kkint32 tolerance) const }{IsBucketAPeak(kkint32 bucket, kkint32 tolerance) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Histogram\+::\+Is\+Bucket\+A\+Peak (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{bucket, }
+\item[{{\bf kkint32}}]{tolerance}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}{}\label{class_k_k_b_1_1_histogram_afdb9c9d0c533d0f960755ef34e625d52}
+
+
+Definition at line 703 of file Histogram.\+cpp.
+
+
+
+Referenced by Create\+Graph().
+
+
+\begin{DoxyCode}
+706 \{
+707   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  beforeIDX     = bucket;
+708   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  afterIDX      = bucket;
+709   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastBeforeIDX = bucket;
+710   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastAfterIDX  = bucket;
+711 
+712   \textcolor{keywordflow}{if}  (buckets[bucket] == (\textcolor{keywordtype}{float})0.0)
+713     \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+714 
+715   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 1; x <= tolerance;  x++)
+716   \{
+717     beforeIDX--;
+718     afterIDX++;
+719 
+720     \textcolor{keywordflow}{if}  (beforeIDX < 0)
+721     \{
+722       \textcolor{keywordflow}{if}  (wrapArround)
+723         beforeIDX = beforeIDX + numOfBuckets;
+724     \}
+725 
+726     \textcolor{keywordflow}{if}  (afterIDX < 0)
+727     \{
+728       \textcolor{keywordflow}{if}  (wrapArround)
+729         afterIDX = afterIDX - numOfBuckets;
+730     \}
+731 
+732     \textcolor{keywordflow}{if}  (beforeIDX >= 0)
+733     \{
+734       \textcolor{keywordflow}{if}  (buckets [beforeIDX] > buckets[lastBeforeIDX])
+735         \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+736     \}
+737 
+738     \textcolor{keywordflow}{if}  (afterIDX < numOfBuckets)
+739     \{
+740       \textcolor{keywordflow}{if}  (buckets [afterIDX] > buckets[lastAfterIDX])
+741         \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+742     \}
+743 
+744     lastBeforeIDX = beforeIDX;
+745     lastAfterIDX  = afterIDX;
+746   \}
+747 
+748   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+749 \}  \textcolor{comment}{/* IsBucketAPeak */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Max\+Bucket\+Idx@{Max\+Bucket\+Idx}}
+\index{Max\+Bucket\+Idx@{Max\+Bucket\+Idx}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Max\+Bucket\+Idx() const }{MaxBucketIdx() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Histogram\+::\+Max\+Bucket\+Idx (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a7c058cf194af1bf96bf038b0068dc328}{}\label{class_k_k_b_1_1_histogram_a7c058cf194af1bf96bf038b0068dc328}
+
+
+Definition at line 76 of file Histogram.\+cpp.
+
+
+
+Referenced by Average\+Of\+Max\+Bucket(), and Count\+Of\+Max\+Bucket().
+
+
+\begin{DoxyCode}
+77 \{
+78   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  idx;
+79 
+80   \textcolor{keywordtype}{float}  maxCount = -1;
+81   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  maxIdx   = -1;
+82 
+83   \textcolor{keywordflow}{for}  (idx = 0;  idx < numOfBuckets;  idx++)
+84   \{
+85     \textcolor{keywordflow}{if}  (buckets[idx] > maxCount)
+86     \{
+87       maxCount = buckets[idx];
+88       maxIdx   = idx;
+89     \}
+90   \}
+91 
+92   \textcolor{keywordflow}{return}  maxIdx;
+93 \}  \textcolor{comment}{/* MaxBucketIdx */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Min\+Value@{Min\+Value}}
+\index{Min\+Value@{Min\+Value}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Min\+Value() const }{MinValue() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+B\+::\+Histogram\+::\+Min\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_histogram_a4e0c1f127f04b35e8383726b027daa10}{}\label{class_k_k_b_1_1_histogram_a4e0c1f127f04b35e8383726b027daa10}
+
+
+Definition at line 94 of file Histogram.\+h.
+
+
+\begin{DoxyCode}
+94 \{\textcolor{keywordflow}{return} minValue;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Num\+Of\+Buckets@{Num\+Of\+Buckets}}
+\index{Num\+Of\+Buckets@{Num\+Of\+Buckets}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Buckets() const }{NumOfBuckets() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Histogram\+::\+Num\+Of\+Buckets (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_histogram_a5ed817d12ec4f30eb761fcc4e57e42c7}{}\label{class_k_k_b_1_1_histogram_a5ed817d12ec4f30eb761fcc4e57e42c7}
+
+
+Definition at line 96 of file Histogram.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Histogram\+Equalized\+Image().
+
+
+\begin{DoxyCode}
+96 \{\textcolor{keywordflow}{return}  numOfBuckets;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Print\+Table@{Print\+Table}}
+\index{Print\+Table@{Print\+Table}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Print\+Table(ostream \&o)}{PrintTable(ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Print\+Table (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_ac6174f69f8eab1ce225996ffd39bf04a}{}\label{class_k_k_b_1_1_histogram_ac6174f69f8eab1ce225996ffd39bf04a}
+
+
+Definition at line 1048 of file Histogram.\+cpp.
+
+
+
+References K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+1049 \{
+1050   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+1051   \textcolor{keywordtype}{float}  l = minValue;
+1052   
+1053   o << l;
+1054   \textcolor{keywordflow}{for} (x = 1;  x < numOfBuckets; x++)
+1055   \{
+1056     l += bucketSize;
+1057     o << \textcolor{stringliteral}{"\(\backslash\)t"} << l;
+1058   \}
+1059   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1060   
+1061   o << buckets[0];
+1062   \textcolor{keywordflow}{for} (x = 1;  x < numOfBuckets; x++)
+1063   \{
+1064     o << \textcolor{stringliteral}{"\(\backslash\)t"} << buckets[x];
+1065   \}
+1066   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+1067 \}  \textcolor{comment}{/* PrintTable */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Save@{Save}}
+\index{Save@{Save}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Save(\+K\+K\+Str file\+Name) const }{Save(KKStr fileName) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Save (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Str}}]{file\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_ad875d4652f38d49d9c2fd170afee0071}{}\label{class_k_k_b_1_1_histogram_ad875d4652f38d49d9c2fd170afee0071}
+
+
+Definition at line 529 of file Histogram.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Segment\+Image().
+
+
+\begin{DoxyCode}
+530 \{
+531   ofstream o (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+532 
+533   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucketIDX;
+534 
+535 
+536   \textcolor{keywordtype}{float}  avgVal = totalVal / totalCount;
+537 
+538   o << \textcolor{stringliteral}{"MinValue"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"BucketSize"}  << \textcolor{stringliteral}{"\(\backslash\)t"}  << \textcolor{stringliteral}{"NumOfBuckets"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"TotalCount"} << \textcolor{stringliteral}{"
+      \(\backslash\)t"} << \textcolor{stringliteral}{"Average"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+539   o <<  minValue  << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"\(\backslash\)t"} <<  bucketSize   << \textcolor{stringliteral}{"\(\backslash\)t"}  <<  numOfBuckets  << \textcolor{stringliteral}{"\(\backslash\)t"} <<  totalCount  << \textcolor{stringliteral}{"
+      \(\backslash\)t"} <<  avgVal    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+540 
+541   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+542   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+543 
+544   \textcolor{keywordtype}{float}  avg;
+545   \textcolor{keywordtype}{float}  percentage;
+546   \textcolor{keywordtype}{float}  bucketVal = minValue + bucketSize;
+547 
+548   o << \textcolor{stringliteral}{"BucketValue"}  << \textcolor{stringliteral}{"\(\backslash\)t"}
+549     << \textcolor{stringliteral}{"Count"}        << \textcolor{stringliteral}{"\(\backslash\)t"}
+550     << \textcolor{stringliteral}{"AvgValue"}     << \textcolor{stringliteral}{"\(\backslash\)t"}
+551     << \textcolor{stringliteral}{"%OfTotalCount"}
+552     << std::endl
+553     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+554 
+555   \textcolor{keywordflow}{for}  (bucketIDX = 0;  bucketIDX < numOfBuckets;  bucketIDX++)
+556   \{
+557     o << bucketVal;
+558 
+559     o << \textcolor{stringliteral}{"\(\backslash\)t"} << buckets[bucketIDX];
+560 
+561     \textcolor{keywordflow}{if}  (buckets[bucketIDX] > (\textcolor{keywordtype}{float})0.0)
+562       avg = bucketTotals[bucketIDX] / buckets[bucketIDX];
+563     \textcolor{keywordflow}{else}
+564       avg = 0.0;
+565     o << \textcolor{stringliteral}{"\(\backslash\)t"} << avg;
+566 
+567 
+568     percentage = (float)100.0 * buckets[bucketIDX] / totalCount;
+569     o << \textcolor{stringliteral}{"\(\backslash\)t"} << percentage << \textcolor{stringliteral}{"%"};
+570 
+571     bucketVal += bucketSize;
+572     o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+573   \}
+574 
+575   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+576   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+577 
+578   o.close ();
+579 \}  \textcolor{comment}{/* Save */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Save\+Graph\+Image@{Save\+Graph\+Image}}
+\index{Save\+Graph\+Image@{Save\+Graph\+Image}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Save\+Graph\+Image(const K\+K\+Str \&file\+Name) const }{SaveGraphImage(const KKStr &fileName) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Save\+Graph\+Image (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a0638645f1b64aa0128b3af42360360e7}{}\label{class_k_k_b_1_1_histogram_a0638645f1b64aa0128b3af42360360e7}
+
+
+Definition at line 510 of file Histogram.\+cpp.
+
+
+
+References Create\+Graph(), and K\+K\+B\+::\+Save\+Image().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Segment\+Image().
+
+
+\begin{DoxyCode}
+511 \{
+512   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  graphImage = \hyperlink{class_k_k_b_1_1_histogram_a5305305682f7b1dcb4e575550e94dce3}{CreateGraph} ();
+513   \hyperlink{namespace_k_k_b_a79418a91c1f41864f9b0047aa01b52bc}{SaveImage} (*graphImage, fileName);
+514   \textcolor{keyword}{delete}  graphImage;
+515 \}  \textcolor{comment}{/* SaveGraphImage */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Save\+Graph\+Image@{Save\+Graph\+Image}}
+\index{Save\+Graph\+Image@{Save\+Graph\+Image}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Save\+Graph\+Image(const K\+K\+Str \&file\+Name, kkint32 bar\+Size) const }{SaveGraphImage(const KKStr &fileName, kkint32 barSize) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Histogram\+::\+Save\+Graph\+Image (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{{\bf kkint32}}]{bar\+Size}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_histogram_a52bd7aeedb85f8fbca8e10d0aba8569a}{}\label{class_k_k_b_1_1_histogram_a52bd7aeedb85f8fbca8e10d0aba8569a}
+
+
+Definition at line 518 of file Histogram.\+cpp.
+
+
+
+References Create\+Graph(), and K\+K\+B\+::\+Save\+Image().
+
+
+\begin{DoxyCode}
+521 \{
+522   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  graphImage = \hyperlink{class_k_k_b_1_1_histogram_a5305305682f7b1dcb4e575550e94dce3}{CreateGraph} (barSize);
+523   \hyperlink{namespace_k_k_b_a79418a91c1f41864f9b0047aa01b52bc}{SaveImage} (*graphImage, fileName);
+524   \textcolor{keyword}{delete}  graphImage;
+525 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Smooth@{Smooth}}
+\index{Smooth@{Smooth}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Smooth(kkint32 smooth\+Width)}{Smooth(kkint32 smoothWidth)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Histogram\+Ptr} Histogram\+::\+Smooth (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{smooth\+Width}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_histogram_a3377c8afecd84c378025ef38e4a1d4ad}{}\label{class_k_k_b_1_1_histogram_a3377c8afecd84c378025ef38e4a1d4ad}
+
+
+Definition at line 585 of file Histogram.\+cpp.
+
+
+
+References Histogram().
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Segment\+Image().
+
+
+\begin{DoxyCode}
+586 \{
+587   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+588   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  endBuckOffset;
+589   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  startBuckOffset;
+590   \textcolor{keywordtype}{float} sumOfbuckets      = (float)0.0;
+591   \textcolor{keywordtype}{float} sumOfBucketTotals = (float)0.0;
+592 
+593   \hyperlink{class_k_k_b_1_1_histogram}{HistogramPtr} hist = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_histogram_a9966e27fdb984bcdb227b29514a54021}{Histogram} (minValue, 
+594                                      numOfBuckets, 
+595                                      bucketSize,
+596                                      wrapArround
+597                                     );
+598 
+599 
+600   \textcolor{keywordflow}{if}  (wrapArround)
+601   \{
+602     startBuckOffset = numOfBuckets - (smoothWidth / 2);
+603     endBuckOffset   = startBuckOffset + smoothWidth - 1 - numOfBuckets;
+604 
+605 
+606     \textcolor{comment}{// Lets Build Initial Totals}
+607 
+608     bucket = startBuckOffset;
+609 
+610     \textcolor{keywordflow}{while}  (\textcolor{keyword}{true})
+611     \{
+612       sumOfbuckets      += buckets      [bucket];
+613       sumOfBucketTotals += bucketTotals [bucket];
+614 
+615       \textcolor{keywordflow}{if}  (bucket == endBuckOffset)
+616         \textcolor{keywordflow}{break};
+617 
+618       bucket++;
+619       \textcolor{keywordflow}{if}  (bucket >= numOfBuckets)
+620         bucket = bucket - numOfBuckets;
+621     \}
+622 
+623     \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+624     \{
+625       hist->buckets      [bucket] = sumOfbuckets      / (float)smoothWidth;
+626       hist->bucketTotals [bucket] = sumOfBucketTotals / (float)smoothWidth;
+627 
+628       sumOfbuckets      -= buckets      [startBuckOffset];
+629       sumOfBucketTotals -= bucketTotals [startBuckOffset];
+630 
+631       startBuckOffset++;
+632       \textcolor{keywordflow}{if}  (startBuckOffset >= numOfBuckets)
+633         startBuckOffset = startBuckOffset - numOfBuckets;
+634 
+635       endBuckOffset++;
+636       \textcolor{keywordflow}{if}  (endBuckOffset >= numOfBuckets)
+637         endBuckOffset = endBuckOffset - numOfBuckets;
+638 
+639       sumOfbuckets      += buckets      [endBuckOffset];
+640       sumOfBucketTotals += bucketTotals [endBuckOffset];
+641     \}
+642   \}  \textcolor{comment}{/* End of WrapArround Version */}
+643 
+644   \textcolor{keywordflow}{else}
+645   \{
+646     \textcolor{comment}{// No WrapArround.}
+647 
+648     startBuckOffset = -(smoothWidth / 2);
+649     endBuckOffset   = startBuckOffset + smoothWidth - 1;
+650 
+651     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  spreadSize = endBuckOffset + 1;
+652 
+653     \textcolor{comment}{// Lets Build Initial Totals}
+654     \textcolor{keywordflow}{for}  (bucket = 0;  bucket <= endBuckOffset;  bucket++)
+655     \{
+656       sumOfbuckets      += buckets      [bucket];
+657       sumOfBucketTotals += bucketTotals [bucket];
+658     \}
+659 
+660 
+661     \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfBuckets;  bucket++)
+662     \{
+663       hist->buckets [bucket] = sumOfbuckets / (float)spreadSize;
+664 
+665       \textcolor{keywordflow}{if}  (sumOfbuckets > (\textcolor{keywordtype}{float})0.0)
+666       \{
+667         hist->bucketTotals [bucket] = hist->buckets [bucket] * sumOfBucketTotals / sumOfbuckets;
+668       \}
+669       \textcolor{keywordflow}{else}
+670       \{
+671         hist->bucketTotals [bucket] = (float)0.0;
+672       \}
+673 
+674       \textcolor{keywordflow}{if}  (startBuckOffset >= 0)
+675       \{
+676         sumOfbuckets      = sumOfbuckets      - buckets      [startBuckOffset];
+677         sumOfBucketTotals = sumOfBucketTotals - bucketTotals [startBuckOffset];
+678         spreadSize--;
+679       \}
+680 
+681       startBuckOffset++;
+682 
+683       endBuckOffset++;
+684       \textcolor{keywordflow}{if}  (endBuckOffset < numOfBuckets)
+685       \{
+686         sumOfbuckets      = sumOfbuckets      + buckets      [endBuckOffset];
+687         sumOfBucketTotals = sumOfBucketTotals + bucketTotals [endBuckOffset];
+688         spreadSize++;
+689       \}
+690     \}
+691   \}
+692 
+693   hist->totalCount = totalCount;
+694   hist->totalVal   = totalVal;
+695 
+696   \textcolor{keywordflow}{return}  hist;
+697 \}  \textcolor{comment}{/*  Smooth */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}!Total\+Count@{Total\+Count}}
+\index{Total\+Count@{Total\+Count}!K\+K\+B\+::\+Histogram@{K\+K\+B\+::\+Histogram}}
+\subsubsection[{\texorpdfstring{Total\+Count() const }{TotalCount() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+B\+::\+Histogram\+::\+Total\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_histogram_a66e88a0cfafc8d08e2a95d7d2799d47a}{}\label{class_k_k_b_1_1_histogram_a66e88a0cfafc8d08e2a95d7d2799d47a}
+
+
+Definition at line 110 of file Histogram.\+h.
+
+
+\begin{DoxyCode}
+110 \{\textcolor{keywordflow}{return}  totalCount;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_histogram_8h}{Histogram.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_histogram_8cpp}{Histogram.\+cpp}\end{DoxyCompactItemize}

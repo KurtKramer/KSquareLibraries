@@ -1,0 +1,360 @@
+\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{}\section{K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+FV Class Reference}
+\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v}\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+
+
+Specialized version of \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{K\+K\+M\+L\+L\+::\+Feature\+Vector} that will be used to represent the features of a Shrimp.  
+
+
+
+
+{\ttfamily \#include $<$Gray\+Scale\+Images\+F\+V.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+FV\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_m_l_l_1_1_gray_scale_images_f_v}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af5c112fdba5e66d936a4bb19b14f41a9}{Gray\+Scale\+Images\+F\+V\+Ptr}
+\item 
+typedef \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{K\+K\+B\+::uchar} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a6c8ed7cb47a08ad34c89fb721b97cdcc}{uchar}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8bd23d5fe796ba65514535c6485c095e}{Gray\+Scale\+Images\+FV} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Features)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2d01630e6ec33f69de530df761ee2dc5}{Gray\+Scale\+Images\+FV} (const \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV} \&\+\_\+fv)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a10298197fd84a950d9e992010f64098c}{Gray\+Scale\+Images\+FV} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} \&feature\+Vector)
+\begin{DoxyCompactList}\small\item\em Smart copy constructor that will detect the underlying type of the source instance. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2a5fe2deafd3344579553162d6e0518f}{$\sim$\+Gray\+Scale\+Images\+FV} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}{Centroid\+Col} (float \+\_\+centroid\+Col)
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7b14c65be2e682cf789d3119ef677b9f}{Centroid\+Col} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}{Centroid\+Row} (float \+\_\+centroid\+Row)
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a57898b811bea5ba0a0a98d888394231e}{Centroid\+Row} () const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af5c112fdba5e66d936a4bb19b14f41a9}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a5d6c8bec9a1f6d6845f01305691fb0b4}{Duplicate} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}{Num\+Of\+Edge\+Pixels} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Edge\+Pixels)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7a48d02e71b7f68551a1ece3d7b19e59}{Num\+Of\+Edge\+Pixels} () const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Specialized version of \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{K\+K\+M\+L\+L\+::\+Feature\+Vector} that will be used to represent the features of a Shrimp. 
+
+\begin{DoxyAuthor}{Author}
+Kurt Kramer
+\end{DoxyAuthor}
+Used for the representation of a Single Plankton Image. You create an instance of this object for each single image you need to keep track of. There is a specialized version of \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{K\+K\+M\+L\+L\+::\+Feature\+File\+IO} calculated K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+KK that is used to write and read feature Data files. What makes this class of \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{K\+K\+M\+L\+L\+::\+Feature\+Vector} special are the additional fields that are Plankton specific such as centroid\+Col, centroid\+Row, latitude, longitude, num\+Of\+Edge\+Pixels, centroid within S\+I\+P\+P\+E\+ER file sf\+Centroid\+Col, sf\+Centroid\+Row and version.
+
+The version number field is supposed to indicate which feature calculation routines were used. This way if there are changes the way features are calculated it can be detected during runtime if the features are up to date they need to be recomputed. 
+
+Definition at line 54 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Gray\+Scale\+Images\+F\+V\+Ptr@{Gray\+Scale\+Images\+F\+V\+Ptr}}
+\index{Gray\+Scale\+Images\+F\+V\+Ptr@{Gray\+Scale\+Images\+F\+V\+Ptr}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+Ptr}{GrayScaleImagesFVPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Gray\+Scale\+Images\+FV}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Gray\+Scale\+Images\+F\+V\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af5c112fdba5e66d936a4bb19b14f41a9}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af5c112fdba5e66d936a4bb19b14f41a9}
+
+
+Definition at line 57 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!uchar@{uchar}}
+\index{uchar@{uchar}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{uchar}{uchar}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+B\+::uchar} {\bf K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::uchar}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a6c8ed7cb47a08ad34c89fb721b97cdcc}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a6c8ed7cb47a08ad34c89fb721b97cdcc}
+
+
+Definition at line 58 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}}
+\index{Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V(kkint32 \+\_\+num\+Of\+Features)}{GrayScaleImagesFV(kkint32 _numOfFeatures)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+::\+Gray\+Scale\+Images\+FV (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Features}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8bd23d5fe796ba65514535c6485c095e}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8bd23d5fe796ba65514535c6485c095e}
+
+
+Definition at line 53 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector().
+
+
+\begin{DoxyCode}
+53                                                             :
+54        \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab23e7e43c120fb8195099e73bddef17c}{FeatureVector} (\_numOfFeatures),
+55 
+56         centroidCol     (-1),
+57         centroidRow     (-1),
+58         numOfEdgePixels (-1)
+59 \{
+60 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}}
+\index{Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V(const Gray\+Scale\+Images\+F\+V \&\+\_\+fv)}{GrayScaleImagesFV(const GrayScaleImagesFV &_fv)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+::\+Gray\+Scale\+Images\+FV (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gray\+Scale\+Images\+FV} \&}]{\+\_\+fv}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2d01630e6ec33f69de530df761ee2dc5}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2d01630e6ec33f69de530df761ee2dc5}
+
+
+Definition at line 64 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector().
+
+
+
+Referenced by Duplicate().
+
+
+\begin{DoxyCode}
+64                                                                   :
+65   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab23e7e43c120fb8195099e73bddef17c}{FeatureVector} (\_fv),
+66 
+67   centroidCol     (\_fv.centroidCol),
+68   centroidRow     (\_fv.centroidRow),
+69   numOfEdgePixels (\_fv.numOfEdgePixels)
+70 
+71 \{
+72 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}}
+\index{Gray\+Scale\+Images\+FV@{Gray\+Scale\+Images\+FV}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V(const Feature\+Vector \&feature\+Vector)}{GrayScaleImagesFV(const FeatureVector &featureVector)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+::\+Gray\+Scale\+Images\+FV (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector} \&}]{feature\+Vector}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a10298197fd84a950d9e992010f64098c}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a10298197fd84a950d9e992010f64098c}
+
+
+Smart copy constructor that will detect the underlying type of the source instance. 
+
+
+\begin{DoxyCode}
+This constructor will detect what the underlying type of \textcolor{stringliteral}{'featureVector'} is.
+If (underlying type is a \textcolor{stringliteral}{'GrayScaleImagesFV'} \textcolor{keywordtype}{object})  then
+  | Information that is particular to a \textcolor{stringliteral}{'GrayScaleImagesFV'} \textcolor{keywordtype}{object} will be extracted
+  | from the \textcolor{stringliteral}{'FeatureVector'} \textcolor{keywordtype}{object}.
+else
+  | Info that is particular to a \textcolor{stringliteral}{'GrayScaleImagesFV'} \textcolor{keywordtype}{object} will be \textcolor{keyword}{set} to \textcolor{keywordflow}{default} 
+  | values.
+\end{DoxyCode}
+ 
+
+Definition at line 78 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Centroid\+Col(), Centroid\+Row(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector(), and Num\+Of\+Edge\+Pixels().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+78                                                                         :
+79    \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab23e7e43c120fb8195099e73bddef17c}{FeatureVector}    (featureVector),
+80    centroidCol      (-1),
+81    centroidRow      (-1),
+82    numOfEdgePixels  (-1)
+83 
+84 \{
+85   \textcolor{comment}{//if  (strcmp (featureVector.UnderlyingClass (), "GrayScaleImagesFV") == 0)}
+86   \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (featureVector) == \textcolor{keyword}{typeid}(\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+87   \{
+88     \textcolor{comment}{// The underlying class is another GrayScaleImagesFV object.}
+89     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}&  example = \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}&\textcolor{keyword}{>}(featureVector);
+90 
+91     centroidCol      = example.\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}{CentroidCol}     ();
+92     centroidRow      = example.\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}{CentroidRow}     ();
+93     numOfEdgePixels  = example.\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}{NumOfEdgePixels} ();
+94   \}
+95 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!````~Gray\+Scale\+Images\+FV@{$\sim$\+Gray\+Scale\+Images\+FV}}
+\index{````~Gray\+Scale\+Images\+FV@{$\sim$\+Gray\+Scale\+Images\+FV}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{$\sim$\+Gray\+Scale\+Images\+F\+V()}{~GrayScaleImagesFV()}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+::$\sim$\+Gray\+Scale\+Images\+FV (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2a5fe2deafd3344579553162d6e0518f}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a2a5fe2deafd3344579553162d6e0518f}
+
+
+Definition at line 99 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+100 \{
+101 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Centroid\+Col@{Centroid\+Col}}
+\index{Centroid\+Col@{Centroid\+Col}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Centroid\+Col(float \+\_\+centroid\+Col)}{CentroidCol(float _centroidCol)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Col (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+centroid\+Col}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}
+
+
+Definition at line 86 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+86 \{centroidCol      = \_centroidCol;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Centroid\+Col@{Centroid\+Col}}
+\index{Centroid\+Col@{Centroid\+Col}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Centroid\+Col() const }{CentroidCol() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Col (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7b14c65be2e682cf789d3119ef677b9f}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7b14c65be2e682cf789d3119ef677b9f}
+
+
+Definition at line 91 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by Gray\+Scale\+Images\+F\+V(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+91 \{\textcolor{keywordflow}{return}  centroidCol;\}    \textcolor{comment}{// Centroid with respect to image}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Centroid\+Row@{Centroid\+Row}}
+\index{Centroid\+Row@{Centroid\+Row}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Centroid\+Row(float \+\_\+centroid\+Row)}{CentroidRow(float _centroidRow)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Row (
+\begin{DoxyParamCaption}
+\item[{float}]{\+\_\+centroid\+Row}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}
+
+
+Definition at line 87 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+87 \{centroidRow      = \_centroidRow;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Centroid\+Row@{Centroid\+Row}}
+\index{Centroid\+Row@{Centroid\+Row}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Centroid\+Row() const }{CentroidRow() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Row (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a57898b811bea5ba0a0a98d888394231e}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a57898b811bea5ba0a0a98d888394231e}
+
+
+Definition at line 92 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by Gray\+Scale\+Images\+F\+V(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+92 \{\textcolor{keywordflow}{return}  centroidRow;\}    \textcolor{comment}{//  ""    ""    ""    ""    ""}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Duplicate() const }{Duplicate() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+::\+Duplicate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a5d6c8bec9a1f6d6845f01305691fb0b4}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a5d6c8bec9a1f6d6845f01305691fb0b4}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_a7be1e7f38a9d57f3be9bea904cf60be9}{K\+K\+M\+L\+L\+::\+Feature\+Vector}.
+
+
+
+Definition at line 106 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V().
+
+
+\begin{DoxyCode}
+107 \{
+108   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8bd23d5fe796ba65514535c6485c095e}{GrayScaleImagesFV} (*\textcolor{keyword}{this});
+109 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Num\+Of\+Edge\+Pixels@{Num\+Of\+Edge\+Pixels}}
+\index{Num\+Of\+Edge\+Pixels@{Num\+Of\+Edge\+Pixels}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Edge\+Pixels(kkint32 \+\_\+num\+Of\+Edge\+Pixels)}{NumOfEdgePixels(kkint32 _numOfEdgePixels)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Num\+Of\+Edge\+Pixels (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Edge\+Pixels}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}
+
+
+Definition at line 88 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+88 \{numOfEdgePixels  = \_numOfEdgePixels;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}!Num\+Of\+Edge\+Pixels@{Num\+Of\+Edge\+Pixels}}
+\index{Num\+Of\+Edge\+Pixels@{Num\+Of\+Edge\+Pixels}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+FV}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Edge\+Pixels() const }{NumOfEdgePixels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Num\+Of\+Edge\+Pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7a48d02e71b7f68551a1ece3d7b19e59}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a7a48d02e71b7f68551a1ece3d7b19e59}
+
+
+Definition at line 93 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+Referenced by Gray\+Scale\+Images\+F\+V(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree().
+
+
+\begin{DoxyCode}
+93 \{\textcolor{keywordflow}{return}  numOfEdgePixels;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_8h}{Gray\+Scale\+Images\+F\+V.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_8cpp}{Gray\+Scale\+Images\+F\+V.\+cpp}\end{DoxyCompactItemize}

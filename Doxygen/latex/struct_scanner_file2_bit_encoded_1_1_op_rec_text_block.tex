@@ -1,0 +1,59 @@
+\hypertarget{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block}{}\section{K\+K\+L\+SC\+:\+:Scanner\+File2\+Bit\+Encoded\+:\+:Op\+Rec\+Text\+Block Struct Reference}
+\label{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block}\index{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a7e599574692d65e91b07a46298a2decd}{end\+Of\+Text}\+: 1
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a8492087b806d5c17e43c2110210461e6}{len\+High}\+: 3
+\item 
+\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} \hyperlink{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a6fb01ee0c32a5a3d530506ae0dc4d306}{op\+Code}\+: 4
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 39 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\index{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}!end\+Of\+Text@{end\+Of\+Text}}
+\index{end\+Of\+Text@{end\+Of\+Text}!Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}}
+\subsubsection[{\texorpdfstring{end\+Of\+Text}{endOfText}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::end\+Of\+Text}\hypertarget{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a7e599574692d65e91b07a46298a2decd}{}\label{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a7e599574692d65e91b07a46298a2decd}
+0 = More Text blocks to follow, 1 = last text block. 
+
+Definition at line 46 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Write\+Text\+Block().
+
+\index{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}!len\+High@{len\+High}}
+\index{len\+High@{len\+High}!Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}}
+\subsubsection[{\texorpdfstring{len\+High}{lenHigh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::len\+High}\hypertarget{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a8492087b806d5c17e43c2110210461e6}{}\label{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a8492087b806d5c17e43c2110210461e6}
+Length = 256 $\ast$ len\+High + len\+Low 
+
+Definition at line 47 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Write\+Text\+Block().
+
+\index{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}!op\+Code@{op\+Code}}
+\index{op\+Code@{op\+Code}!Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block@{Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block}}
+\subsubsection[{\texorpdfstring{op\+Code}{opCode}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf uchar} K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Op\+Rec\+Text\+Block\+::op\+Code}\hypertarget{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a6fb01ee0c32a5a3d530506ae0dc4d306}{}\label{struct_scanner_file2_bit_encoded_1_1_op_rec_text_block_a6fb01ee0c32a5a3d530506ae0dc4d306}
+Will handle text blocks in one or more sections with 2$^\wedge$11 characters in each $\ast$ The last section will have \textquotesingle{}end\+Of\+Text\textquotesingle{} == \textquotesingle{}1\textquotesingle{} $\ast$1 = Text Block. 
+
+Definition at line 45 of file Scanner\+File2\+Bit\+Encoded.\+cpp.
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File2\+Bit\+Encoded\+::\+Write\+Text\+Block().
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_file2_bit_encoded_8cpp}{Scanner\+File2\+Bit\+Encoded.\+cpp}\end{DoxyCompactItemize}

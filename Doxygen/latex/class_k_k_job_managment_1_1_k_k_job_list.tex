@@ -1,0 +1,350 @@
+\hypertarget{class_k_k_job_managment_1_1_k_k_job_list}{}\section{K\+K\+Job\+Managment\+:\+:K\+K\+Job\+List Class Reference}
+\label{class_k_k_job_managment_1_1_k_k_job_list}\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+
+
+{\ttfamily \#include $<$K\+K\+Job.\+h$>$}
+
+Inheritance diagram for K\+K\+Job\+Managment\+:\+:K\+K\+Job\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_job_managment_1_1_k_k_job_list}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_job_managment_1_1_k_k_job_list}{K\+K\+Job\+List} $\ast$ \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_ae9328a2a44a4bdb64ed24898ceb181c6}{K\+K\+Job\+List\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_job_managment_1_1_k_k_job_list_aab69855fcb08e42e5dd767b010ec8549}{K\+K\+Job\+List} (const \hyperlink{class_k_k_job_managment_1_1_k_k_job_list}{K\+K\+Job\+List} \&jobs)
+\item 
+\hyperlink{class_k_k_job_managment_1_1_k_k_job_list_acb76a08cf6de6a8869bc3c2a1fa3749c}{K\+K\+Job\+List} (\hyperlink{namespace_k_k_job_managment_aa12a7270f9983ca4ed916533dc8adbc4}{Job\+Manager\+Ptr} \+\_\+manager)
+\item 
+\hyperlink{class_k_k_job_managment_1_1_k_k_job_list_a80929cf1fc09e22028f55944cf3b9c4d}{K\+K\+Job\+List} (\hyperlink{namespace_k_k_job_managment_aa12a7270f9983ca4ed916533dc8adbc4}{Job\+Manager\+Ptr} \+\_\+manager, K\+K\+Str \+\_\+file\+Name)
+\item 
+bool \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_a95fbdd94a31de57b5f6b8967b9656025}{All\+Prequisites\+Done} (\hyperlink{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{K\+K\+Job\+Ptr} job)
+\item 
+bool \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_ac7fdaae91630dc2ff2f9657eb1d02899}{Are\+All\+Jobs\+Done} ()
+\item 
+bool \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_a887c6fe24402c380445f4b89fa952966}{Jobs\+Still\+Running} ()
+\item 
+\hyperlink{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{K\+K\+Job\+Ptr} \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_aec27e5f2ba092ad93e80c81bb8ea45e5}{Locate\+Open\+Job} ()
+\item 
+Run\+Log \& \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_a8c3bf903379fa17b7cb88ab41142bb0d}{Log} ()
+\item 
+\hyperlink{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{K\+K\+Job\+Ptr} \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_ac394872bccd2a9a21833b7a86dc12165}{Look\+Up\+By\+Job\+Id} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} job\+Id)
+\item 
+void \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_abdf9dda2d50a190862d0d82e6597494d}{Push\+On\+Back} (\hyperlink{namespace_k_k_job_managment_a852ed63ebf0c5655d281b510dfb34484}{K\+K\+Job\+Ptr} j)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 235 of file K\+K\+Job.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!K\+K\+Job\+List\+Ptr@{K\+K\+Job\+List\+Ptr}}
+\index{K\+K\+Job\+List\+Ptr@{K\+K\+Job\+List\+Ptr}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+List\+Ptr}{KKJobListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Job\+List}$\ast$ {\bf K\+K\+Job\+Managment\+::\+K\+K\+Job\+List\+::\+K\+K\+Job\+List\+Ptr}}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_ae9328a2a44a4bdb64ed24898ceb181c6}{}\label{class_k_k_job_managment_1_1_k_k_job_list_ae9328a2a44a4bdb64ed24898ceb181c6}
+
+
+Definition at line 238 of file K\+K\+Job.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!K\+K\+Job\+List@{K\+K\+Job\+List}}
+\index{K\+K\+Job\+List@{K\+K\+Job\+List}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+List(const K\+K\+Job\+List \&jobs)}{KKJobList(const KKJobList &jobs)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Job\+List\+::\+K\+K\+Job\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Job\+List} \&}]{jobs}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_aab69855fcb08e42e5dd767b010ec8549}{}\label{class_k_k_job_managment_1_1_k_k_job_list_aab69855fcb08e42e5dd767b010ec8549}
+
+
+Definition at line 370 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+List().
+
+
+
+Referenced by K\+K\+Job\+List(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+K\+K\+Job\+Manager().
+
+
+\begin{DoxyCode}
+370                                            :
+371      \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKJob>}      (jobs.Owner ()),
+372      jobIdLookUpTable    (),
+373      jobIdLookUpTableIdx (),
+374      log                 (jobs.log),
+375      manager             (jobs.manager)
+376   
+377 \{
+378   KKJobList::const\_iterator  idx;
+379   \textcolor{keywordflow}{for}  (idx = jobs.begin ();  idx != jobs.end ();  idx++)
+380   \{
+381     \hyperlink{class_k_k_job_managment_1_1_k_k_job}{KKJobPtr} j = *idx;
+382     \textcolor{keywordflow}{if}  (Owner ())
+383       \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_abdf9dda2d50a190862d0d82e6597494d}{PushOnBack} (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a8565b4f24dbcf979f959850e186cc91d}{Duplicate} ());
+384     \textcolor{keywordflow}{else}
+385       \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_abdf9dda2d50a190862d0d82e6597494d}{PushOnBack} (j);
+386   \}
+387 \}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!K\+K\+Job\+List@{K\+K\+Job\+List}}
+\index{K\+K\+Job\+List@{K\+K\+Job\+List}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+List(\+Job\+Manager\+Ptr \+\_\+manager)}{KKJobList(JobManagerPtr _manager)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Job\+List\+::\+K\+K\+Job\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf Job\+Manager\+Ptr}}]{\+\_\+manager}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_acb76a08cf6de6a8869bc3c2a1fa3749c}{}\label{class_k_k_job_managment_1_1_k_k_job_list_acb76a08cf6de6a8869bc3c2a1fa3749c}
+
+
+Definition at line 359 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+List(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Log().
+
+
+
+Referenced by K\+K\+Job\+List(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Run().
+
+
+\begin{DoxyCode}
+359                                             :
+360 
+361    \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKJob>} (\textcolor{keyword}{true}),
+362    log            (\_manager->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a536ae6e96926995a86c5f3c65f26bd71}{Log} ()),
+363    manager        (\_manager)
+364 
+365 \{
+366 \}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!K\+K\+Job\+List@{K\+K\+Job\+List}}
+\index{K\+K\+Job\+List@{K\+K\+Job\+List}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{K\+K\+Job\+List(\+Job\+Manager\+Ptr \+\_\+manager, K\+K\+Str \+\_\+file\+Name)}{KKJobList(JobManagerPtr _manager, KKStr _fileName)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Job\+Managment\+::\+K\+K\+Job\+List\+::\+K\+K\+Job\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf Job\+Manager\+Ptr}}]{\+\_\+manager, }
+\item[{K\+K\+Str}]{\+\_\+file\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_a80929cf1fc09e22028f55944cf3b9c4d}{}\label{class_k_k_job_managment_1_1_k_k_job_list_a80929cf1fc09e22028f55944cf3b9c4d}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!All\+Prequisites\+Done@{All\+Prequisites\+Done}}
+\index{All\+Prequisites\+Done@{All\+Prequisites\+Done}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{All\+Prequisites\+Done(\+K\+K\+Job\+Ptr job)}{AllPrequisitesDone(KKJobPtr job)}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Job\+List\+::\+All\+Prequisites\+Done (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Job\+Ptr}}]{job}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_a95fbdd94a31de57b5f6b8967b9656025}{}\label{class_k_k_job_managment_1_1_k_k_job_list_a95fbdd94a31de57b5f6b8967b9656025}
+
+
+Definition at line 404 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Add\+Prerequisites(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Done, K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Expanded, Look\+Up\+By\+Job\+Id(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Prerequisites(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Status().
+
+
+\begin{DoxyCode}
+405 \{
+406   \textcolor{keyword}{const} \hyperlink{namespace_k_k_b_a791ebe73f89917067a7aab9dbd817e45}{VectorInt}&  p = job->\hyperlink{class_k_k_job_managment_1_1_k_k_job_ae2ff42969518284ece1f2e4e78805489}{Prerequisites} ();
+407   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} z = 0;  z < p.size ();  ++z)
+408   \{
+409     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} jobId = p[z];
+410     \hyperlink{class_k_k_job_managment_1_1_k_k_job}{KKJobPtr} pj = \hyperlink{class_k_k_job_managment_1_1_k_k_job_list_ac394872bccd2a9a21833b7a86dc12165}{LookUpByJobId} (jobId);
+411     \textcolor{keywordflow}{if}  ((pj->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () != \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4adb6ce8574820736dbaa3b0ae115057d2}{KKJob::jsDone})  &&  (pj->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () != 
+      \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4a646ee7eb2e67a85d9119f90d5c1a1517}{KKJob::jsExpanded}))
+412       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+413   \}
+414   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+415 \}  \textcolor{comment}{/* AllPrequisitesDone */}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Are\+All\+Jobs\+Done@{Are\+All\+Jobs\+Done}}
+\index{Are\+All\+Jobs\+Done@{Are\+All\+Jobs\+Done}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Are\+All\+Jobs\+Done()}{AreAllJobsDone()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Job\+List\+::\+Are\+All\+Jobs\+Done (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_ac7fdaae91630dc2ff2f9657eb1d02899}{}\label{class_k_k_job_managment_1_1_k_k_job_list_ac7fdaae91630dc2ff2f9657eb1d02899}
+
+
+Definition at line 436 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Add\+Prerequisites(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Done, K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Expanded, and K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Status().
+
+
+
+Referenced by K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Are\+All\+Jobs\+Done().
+
+
+\begin{DoxyCode}
+437 \{
+438   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+439   \textcolor{keywordflow}{for}  (x = 0;  x < QueueSize ();  ++x)
+440   \{
+441     \hyperlink{class_k_k_job_managment_1_1_k_k_job}{KKJobPtr}  j = IdxToPtr (x);
+442     \textcolor{keywordflow}{if}  ((j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () != \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4adb6ce8574820736dbaa3b0ae115057d2}{KKJob::jsDone})  &&  (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () != 
+      \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4a646ee7eb2e67a85d9119f90d5c1a1517}{KKJob::jsExpanded}))
+443       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+444   \}
+445 
+446   \textcolor{keywordflow}{return}  \textcolor{keyword}{true};
+447 \}  \textcolor{comment}{/* AreAllJobsAreDone */}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Jobs\+Still\+Running@{Jobs\+Still\+Running}}
+\index{Jobs\+Still\+Running@{Jobs\+Still\+Running}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Jobs\+Still\+Running()}{JobsStillRunning()}}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+Job\+List\+::\+Jobs\+Still\+Running (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_a887c6fe24402c380445f4b89fa952966}{}\label{class_k_k_job_managment_1_1_k_k_job_list_a887c6fe24402c380445f4b89fa952966}
+
+
+Definition at line 482 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Add\+Prerequisites(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Started, and K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Status().
+
+
+
+Referenced by K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Run().
+
+
+\begin{DoxyCode}
+483 \{
+484   KKJobList::iterator  idx;
+485   \textcolor{keywordflow}{for}  (idx = begin ();  idx != end ();  ++idx)
+486   \{
+487     \hyperlink{class_k_k_job_managment_1_1_k_k_job}{KKJobPtr}  j = *idx;
+488     \textcolor{keywordflow}{if}  (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () == \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4aa844eb2d687af6916f49354626a58974}{KKJob::jsStarted})
+489       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+490   \}
+491   \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+492 \}  \textcolor{comment}{/* JobsStillRunning */}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Locate\+Open\+Job@{Locate\+Open\+Job}}
+\index{Locate\+Open\+Job@{Locate\+Open\+Job}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Locate\+Open\+Job()}{LocateOpenJob()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Job\+Ptr} K\+K\+Job\+List\+::\+Locate\+Open\+Job (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_aec27e5f2ba092ad93e80c81bb8ea45e5}{}\label{class_k_k_job_managment_1_1_k_k_job_list_aec27e5f2ba092ad93e80c81bb8ea45e5}
+
+
+Definition at line 420 of file K\+K\+Job.\+cpp.
+
+
+
+References K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Add\+Prerequisites(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+::js\+Open, and K\+K\+Job\+Managment\+::\+K\+K\+Job\+::\+Status().
+
+
+\begin{DoxyCode}
+421 \{
+422   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+423   \textcolor{keywordflow}{for}  (x = 0;  x < QueueSize (); x++)
+424   \{
+425     \hyperlink{class_k_k_job_managment_1_1_k_k_job}{KKJobPtr}  j = IdxToPtr (x);
+426     \textcolor{keywordflow}{if}  (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a13cdc9debaad9393c6f32894ae2474bf}{Status} () == \hyperlink{class_k_k_job_managment_1_1_k_k_job_afbd631ac794da7bbb00e0406ba89bac4a43e687d064644b4fabf768877c544f27}{KKJob::jsOpen})
+427       \textcolor{keywordflow}{return}  j;
+428   \}
+429 
+430   \textcolor{keywordflow}{return}  NULL;
+431 \}  \textcolor{comment}{/* LocateOpenJob */}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Log@{Log}}
+\index{Log@{Log}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Log()}{Log()}}]{\setlength{\rightskip}{0pt plus 5cm}Run\+Log\& K\+K\+Job\+Managment\+::\+K\+K\+Job\+List\+::\+Log (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_a8c3bf903379fa17b7cb88ab41142bb0d}{}\label{class_k_k_job_managment_1_1_k_k_job_list_a8c3bf903379fa17b7cb88ab41142bb0d}
+
+
+Definition at line 256 of file K\+K\+Job.\+h.
+
+
+\begin{DoxyCode}
+256 \{\textcolor{keywordflow}{return} log;\}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Look\+Up\+By\+Job\+Id@{Look\+Up\+By\+Job\+Id}}
+\index{Look\+Up\+By\+Job\+Id@{Look\+Up\+By\+Job\+Id}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Job\+Id(kkint32 job\+Id)}{LookUpByJobId(kkint32 jobId)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Job\+Ptr} K\+K\+Job\+List\+::\+Look\+Up\+By\+Job\+Id (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{job\+Id}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_ac394872bccd2a9a21833b7a86dc12165}{}\label{class_k_k_job_managment_1_1_k_k_job_list_ac394872bccd2a9a21833b7a86dc12165}
+
+
+Definition at line 391 of file K\+K\+Job.\+cpp.
+
+
+
+Referenced by All\+Prequisites\+Done(), K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Status\+File\+Process\+Line(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Status\+File\+Process\+Line\+Job\+Status\+Change().
+
+
+\begin{DoxyCode}
+392 \{
+393   jobIdLookUpTableIdx = jobIdLookUpTable.find (jobId);
+394   \textcolor{keywordflow}{if}  (jobIdLookUpTableIdx == jobIdLookUpTable.end ())
+395     \textcolor{keywordflow}{return}  NULL;
+396 
+397   \textcolor{keywordflow}{return}  jobIdLookUpTableIdx->second;
+398 \}  \textcolor{comment}{/* LookUpByJobId */}
+\end{DoxyCode}
+\index{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}!Push\+On\+Back@{Push\+On\+Back}}
+\index{Push\+On\+Back@{Push\+On\+Back}!K\+K\+Job\+Managment\+::\+K\+K\+Job\+List@{K\+K\+Job\+Managment\+::\+K\+K\+Job\+List}}
+\subsubsection[{\texorpdfstring{Push\+On\+Back(\+K\+K\+Job\+Ptr j)}{PushOnBack(KKJobPtr j)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Job\+List\+::\+Push\+On\+Back (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Job\+Ptr}}]{j}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_job_managment_1_1_k_k_job_list_abdf9dda2d50a190862d0d82e6597494d}{}\label{class_k_k_job_managment_1_1_k_k_job_list_abdf9dda2d50a190862d0d82e6597494d}
+
+
+Definition at line 456 of file K\+K\+Job.\+cpp.
+
+
+
+Referenced by K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Run(), and K\+K\+Job\+Managment\+::\+K\+K\+Job\+Manager\+::\+Status\+File\+Process\+Line().
+
+
+\begin{DoxyCode}
+457 \{
+458   jobIdLookUpTableIdx = jobIdLookUpTable.find (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a37a4f0f8bfafda64563f30034348e5f5}{JobId} ());
+459   \textcolor{keywordflow}{if}  (jobIdLookUpTableIdx != jobIdLookUpTable.end ())
+460   \{
+461     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+462                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+463                    << \textcolor{stringliteral}{"KKJobList::PushOnBack      ***ERROR***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+464                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+465                    << \textcolor{stringliteral}{"KKJobList::PushOnBack        Duplicate JobId["} << j->
+      \hyperlink{class_k_k_job_managment_1_1_k_k_job_a37a4f0f8bfafda64563f30034348e5f5}{JobId} () << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+466                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+467     \hyperlink{namespace_k_k_b_a255aa69aade7f429585349d08973e09f}{osWaitForEnter} ();
+468     exit (-1);
+469   \}
+470 
+471   \hyperlink{class_k_k_b_1_1_k_k_queue}{KKQueue<KKJob>::PushOnBack} (j);
+472   jobIdLookUpTable.insert (JobIdLookUpTablePair (j->\hyperlink{class_k_k_job_managment_1_1_k_k_job_a37a4f0f8bfafda64563f30034348e5f5}{JobId} (), j));
+473 
+474   \textcolor{keywordflow}{return};
+475 \}  \textcolor{comment}{/* PushOnBack */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+Job\+Manager/\hyperlink{_k_k_job_8h}{K\+K\+Job.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+Job\+Manager/\hyperlink{_k_k_job_8cpp}{K\+K\+Job.\+cpp}\end{DoxyCompactItemize}

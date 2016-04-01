@@ -1,0 +1,512 @@
+\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields}{}\section{K\+K\+L\+SC\+:\+:Scanner\+Header\+Fields Class Reference}
+\label{class_k_k_l_s_c_1_1_scanner_header_fields}\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+
+
+Represents a list of header fields from a Scanner File.  
+
+
+
+
+{\ttfamily \#include $<$Scanner\+Header\+Fields.\+h$>$}
+
+Inheritance diagram for K\+K\+L\+SC\+:\+:Scanner\+Header\+Fields\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_k_k_l_s_c_1_1_scanner_header_fields}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef map$<$ K\+K\+Str, K\+K\+Str $>$\+::\hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a0535c3aa5fbe6b53221ca0f188762402}{iterator} \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a0535c3aa5fbe6b53221ca0f188762402}{iterator}
+\item 
+typedef \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields}{Scanner\+Header\+Fields} $\ast$ \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_aedddcdf8b705aada0dd2c52cb6624c59}{Scanner\+Header\+Fields\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a83003b4ad93d94c55f91382bdf6ab5e8}{Scanner\+Header\+Fields} ()
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a18279435be2b7b40175c6ad8149c9579}{Scanner\+Header\+Fields} (const \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields}{Scanner\+Header\+Fields} \&fields)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_aaef1aba28dfeda5afe0183a728d39462}{$\sim$\+Scanner\+Header\+Fields} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}{Add} (\hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_aedddcdf8b705aada0dd2c52cb6624c59}{Scanner\+Header\+Fields\+Ptr} fields)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a291292a995d31a02d589789e56253316}{Add} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+B\+::\+K\+K\+Str} \&field\+Name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+B\+::\+K\+K\+Str} \&field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ae31b575a2ca3717c76d2e50c173b8e0d}{Add} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+B\+::\+K\+K\+Str} \&field\+Name, bool field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a65b36a8af5a9b063de19cdb6fade9a6b}{Add} (const K\+K\+Str \&field\+Name, kkint32 field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a876ba9b1336637de53721f340eb25447}{Add} (const K\+K\+Str \&field\+Name, kkint64 field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a3fd2e4c7ea26b2c3381206a11c45ca3e}{Add} (const K\+K\+Str \&field\+Name, double field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ad7ce6eff37cd0404095b362e98a3c2f1}{Add} (const K\+K\+Str \&field\+Name, \hyperlink{class_k_k_b_1_1_date_time}{K\+K\+B\+::\+Date\+Time} field\+Value)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a6795535be06da13129f546709e38d47e}{Clear} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a5986aac2760aa2f4c203e3d1a218e7ce}{End\+Block} ()
+\item 
+bool \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a275d3c4c002a000f676424965d1d2264}{Field\+Exists} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&field\+Name) const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a1fb80c293954fa2d772704cbbc734170}{Get\+Value} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&field\+Name) const 
+\item 
+float \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a307e0f65301507cfdc65eb6f8d00d186}{Get\+Value\+Float} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&field\+Name) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a85f7d196efec6bf50df9fb2c27ff8f5e}{Get\+Value\+Int32} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&field\+Name) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_aa28120802eaa4d3783bea918813f6a87}{Memory\+Consumed\+Estimated} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a09f0af2c12a1bb133bb5465633a7cf1a}{Start\+Block} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represents a list of header fields from a Scanner File. 
+
+All Scanner\+Files will start with a Header section that consists of text with each line consisting of a \char`\"{}\+Field\+Name\char`\"{} allowed by a \char`\"{}\+Field\+Value\char`\"{} separated by the tab character. 
+
+Definition at line 17 of file Scanner\+Header\+Fields.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!iterator@{iterator}}
+\index{iterator@{iterator}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{iterator}{iterator}}]{\setlength{\rightskip}{0pt plus 5cm}typedef map$<$K\+K\+Str,K\+K\+Str$>$\+::{\bf iterator} {\bf K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::iterator}}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a0535c3aa5fbe6b53221ca0f188762402}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a0535c3aa5fbe6b53221ca0f188762402}
+
+
+Definition at line 69 of file Scanner\+Header\+Fields.\+h.
+
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Scanner\+Header\+Fields\+Ptr@{Scanner\+Header\+Fields\+Ptr}}
+\index{Scanner\+Header\+Fields\+Ptr@{Scanner\+Header\+Fields\+Ptr}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Scanner\+Header\+Fields\+Ptr}{ScannerHeaderFieldsPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Scanner\+Header\+Fields}$\ast$ {\bf K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Scanner\+Header\+Fields\+Ptr}}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_aedddcdf8b705aada0dd2c52cb6624c59}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_aedddcdf8b705aada0dd2c52cb6624c59}
+
+
+Definition at line 20 of file Scanner\+Header\+Fields.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Scanner\+Header\+Fields@{Scanner\+Header\+Fields}}
+\index{Scanner\+Header\+Fields@{Scanner\+Header\+Fields}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Scanner\+Header\+Fields()}{ScannerHeaderFields()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+Header\+Fields\+::\+Scanner\+Header\+Fields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a83003b4ad93d94c55f91382bdf6ab5e8}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a83003b4ad93d94c55f91382bdf6ab5e8}
+
+
+Definition at line 25 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Create(), and Scanner\+Header\+Fields().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Header\+Field(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Read\+Header(), and Scanner\+Header\+Fields().
+
+
+\begin{DoxyCode}
+25                                          :
+26   map<KKStr,KKStr> (),
+27   goalie (NULL)
+28 \{
+29   GoalKeeper::Create (\textcolor{stringliteral}{"ScannerHeaderFields"}, goalie);
+30 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Scanner\+Header\+Fields@{Scanner\+Header\+Fields}}
+\index{Scanner\+Header\+Fields@{Scanner\+Header\+Fields}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Scanner\+Header\+Fields(const Scanner\+Header\+Fields \&fields)}{ScannerHeaderFields(const ScannerHeaderFields &fields)}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+Header\+Fields\+::\+Scanner\+Header\+Fields (
+\begin{DoxyParamCaption}
+\item[{const {\bf Scanner\+Header\+Fields} \&}]{fields}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a18279435be2b7b40175c6ad8149c9579}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a18279435be2b7b40175c6ad8149c9579}
+
+
+Definition at line 34 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Create(), and Scanner\+Header\+Fields().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Scanner\+File\+Parameters(), and Scanner\+Header\+Fields().
+
+
+\begin{DoxyCode}
+34                                                                            :
+35   map<KKStr,KKStr> (),
+36   goalie (NULL)
+37 \{
+38   GoalKeeper::Create (\textcolor{stringliteral}{"ScannerHeaderFields"}, goalie);
+39   ScannerHeaderFields::const\_iterator  idx;
+40   \textcolor{keywordflow}{for}  (idx = fields.begin ();  idx != fields.end ();  ++idx)
+41     \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}{Add} (idx->first, idx->second);
+42 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!````~Scanner\+Header\+Fields@{$\sim$\+Scanner\+Header\+Fields}}
+\index{````~Scanner\+Header\+Fields@{$\sim$\+Scanner\+Header\+Fields}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{$\sim$\+Scanner\+Header\+Fields()}{~ScannerHeaderFields()}}]{\setlength{\rightskip}{0pt plus 5cm}Scanner\+Header\+Fields\+::$\sim$\+Scanner\+Header\+Fields (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_aaef1aba28dfeda5afe0183a728d39462}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_aaef1aba28dfeda5afe0183a728d39462}
+
+
+Definition at line 46 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Destroy().
+
+
+\begin{DoxyCode}
+47 \{
+48   GoalKeeper::Destroy (goalie);
+49   goalie = NULL;
+50 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(\+Scanner\+Header\+Fields\+Ptr fields)}{Add(ScannerHeaderFieldsPtr fields)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{{\bf Scanner\+Header\+Fields\+Ptr}}]{fields}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}
+
+
+Definition at line 74 of file Scanner\+Header\+Fields.\+cpp.
+
+
+\begin{DoxyCode}
+75 \{
+76   \textcolor{keywordflow}{if}  (!fields)
+77     \textcolor{keywordflow}{return};
+78   ScannerHeaderFields::const\_iterator  idx;
+79   \textcolor{keywordflow}{for}  (idx = fields->begin ();  idx != fields->end ();  ++idx)
+80     \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}{Add} (idx->first, idx->second);
+81 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+B\+::\+K\+K\+Str \&field\+Name, const K\+K\+B\+::\+K\+K\+Str \&field\+Value)}{Add(const KKB::KKStr &fieldName, const KKB::KKStr &fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+B\+::\+K\+K\+Str} \&}]{field\+Name, }
+\item[{const {\bf K\+K\+B\+::\+K\+K\+Str} \&}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a291292a995d31a02d589789e56253316}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a291292a995d31a02d589789e56253316}
+
+
+Definition at line 85 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by Add(), K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Header\+Field(), and K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Read\+Header().
+
+
+\begin{DoxyCode}
+88 \{
+89   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+90   
+91   idx1 = this->find (fieldName);
+92   \textcolor{keywordflow}{if}  (idx1 == end ())
+93     insert (pair<KKStr,KKStr>(fieldName, fieldValue));
+94   \textcolor{keywordflow}{else}
+95     idx1->second = fieldValue;
+96 
+97   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+98 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+B\+::\+K\+K\+Str \&field\+Name, bool field\+Value)}{Add(const KKB::KKStr &fieldName, bool fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+B\+::\+K\+K\+Str} \&}]{field\+Name, }
+\item[{bool}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_ae31b575a2ca3717c76d2e50c173b8e0d}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_ae31b575a2ca3717c76d2e50c173b8e0d}
+
+
+Definition at line 101 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References Add(), and K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+\begin{DoxyCode}
+104 \{
+105   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} fieldValueStr = (fieldValue ? \textcolor{stringliteral}{"Yes"} : \textcolor{stringliteral}{"No"});
+106   \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_ac9f7ce0167e98d29c896a258b0463ed5}{Add} (fieldName, fieldValueStr);
+107 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+Str \&field\+Name, kkint32 field\+Value)}{Add(const KKStr &fieldName, kkint32 fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const K\+K\+Str \&}]{field\+Name, }
+\item[{kkint32}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a65b36a8af5a9b063de19cdb6fade9a6b}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a65b36a8af5a9b063de19cdb6fade9a6b}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+Str \&field\+Name, kkint64 field\+Value)}{Add(const KKStr &fieldName, kkint64 fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const K\+K\+Str \&}]{field\+Name, }
+\item[{kkint64}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a876ba9b1336637de53721f340eb25447}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a876ba9b1336637de53721f340eb25447}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+Str \&field\+Name, double field\+Value)}{Add(const KKStr &fieldName, double fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const K\+K\+Str \&}]{field\+Name, }
+\item[{double}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a3fd2e4c7ea26b2c3381206a11c45ca3e}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a3fd2e4c7ea26b2c3381206a11c45ca3e}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Add@{Add}}
+\index{Add@{Add}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Add(const K\+K\+Str \&field\+Name, K\+K\+B\+::\+Date\+Time field\+Value)}{Add(const KKStr &fieldName, KKB::DateTime fieldValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields\+::\+Add (
+\begin{DoxyParamCaption}
+\item[{const K\+K\+Str \&}]{field\+Name, }
+\item[{{\bf K\+K\+B\+::\+Date\+Time}}]{field\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_ad7ce6eff37cd0404095b362e98a3c2f1}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_ad7ce6eff37cd0404095b362e98a3c2f1}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Clear@{Clear}}
+\index{Clear@{Clear}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Clear()}{Clear()}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+Clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a6795535be06da13129f546709e38d47e}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a6795535be06da13129f546709e38d47e}
+Erases contents 
+
+Definition at line 154 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+155 \{
+156   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+157   clear ();
+158   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+159 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!End\+Block@{End\+Block}}
+\index{End\+Block@{End\+Block}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{End\+Block()}{EndBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+End\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a5986aac2760aa2f4c203e3d1a218e7ce}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a5986aac2760aa2f4c203e3d1a218e7ce}
+
+
+Definition at line 216 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Header\+Fields().
+
+
+\begin{DoxyCode}
+217 \{
+218   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+219 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Field\+Exists@{Field\+Exists}}
+\index{Field\+Exists@{Field\+Exists}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Field\+Exists(const K\+K\+Str \&field\+Name) const }{FieldExists(const KKStr &fieldName) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Scanner\+Header\+Fields\+::\+Field\+Exists (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{field\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a275d3c4c002a000f676424965d1d2264}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a275d3c4c002a000f676424965d1d2264}
+
+
+Definition at line 163 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+164 \{
+165   \textcolor{keywordtype}{bool}  exists = \textcolor{keyword}{false};
+166   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+167   idx2 = this->find (fieldName);
+168   exists = (idx2 != end ());
+169   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+170   \textcolor{keywordflow}{return} exists;
+171 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Get\+Value@{Get\+Value}}
+\index{Get\+Value@{Get\+Value}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Get\+Value(const K\+K\+Str \&field\+Name) const }{GetValue(const KKStr &fieldName) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& Scanner\+Header\+Fields\+::\+Get\+Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{field\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a1fb80c293954fa2d772704cbbc734170}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a1fb80c293954fa2d772704cbbc734170}
+
+
+Definition at line 175 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Value(), Get\+Value\+Float(), and Get\+Value\+Int32().
+
+
+\begin{DoxyCode}
+176 \{
+177   \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}*  value = NULL;
+178 
+179   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+180   idx2 = this->find (fieldName);
+181   \textcolor{keywordflow}{if}  (idx2 == end ())
+182     value = &(KKStr::EmptyStr ());
+183   \textcolor{keywordflow}{else}
+184     value = &(idx2->second);
+185   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+186 
+187   \textcolor{keywordflow}{return}  *value;
+188 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Get\+Value\+Float@{Get\+Value\+Float}}
+\index{Get\+Value\+Float@{Get\+Value\+Float}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Get\+Value\+Float(const K\+K\+Str \&field\+Name) const }{GetValueFloat(const KKStr &fieldName) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Scanner\+Header\+Fields\+::\+Get\+Value\+Float (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{field\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a307e0f65301507cfdc65eb6f8d00d186}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a307e0f65301507cfdc65eb6f8d00d186}
+
+
+Definition at line 192 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Get\+Value(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Float().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Get\+Value\+Float().
+
+
+\begin{DoxyCode}
+193 \{
+194   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s = \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a1fb80c293954fa2d772704cbbc734170}{GetValue} (fieldName);
+195   \textcolor{keywordflow}{return} s.\hyperlink{class_k_k_b_1_1_k_k_str_a09b54184fdc585259d265db3deb28e79}{ToFloat} ();
+196 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Get\+Value\+Int32@{Get\+Value\+Int32}}
+\index{Get\+Value\+Int32@{Get\+Value\+Int32}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Get\+Value\+Int32(const K\+K\+Str \&field\+Name) const }{GetValueInt32(const KKStr &fieldName) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Scanner\+Header\+Fields\+::\+Get\+Value\+Int32 (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{field\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a85f7d196efec6bf50df9fb2c27ff8f5e}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a85f7d196efec6bf50df9fb2c27ff8f5e}
+
+
+Definition at line 200 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Get\+Value(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Int32().
+
+
+\begin{DoxyCode}
+201 \{
+202   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s = \hyperlink{class_k_k_l_s_c_1_1_scanner_header_fields_a1fb80c293954fa2d772704cbbc734170}{GetValue} (fieldName);
+203   \textcolor{keywordflow}{return} s.\hyperlink{class_k_k_b_1_1_k_k_str_ab3b9de5eb86600593ac866e8323caa32}{ToInt32} ();
+204 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Scanner\+Header\+Fields\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_aa28120802eaa4d3783bea918813f6a87}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_aa28120802eaa4d3783bea918813f6a87}
+
+
+Definition at line 54 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), K\+K\+B\+::\+Goal\+Keeper\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+55 \{
+56   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+57 
+58   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  mem = \textcolor{keyword}{sizeof} (*this);
+59 
+60   \textcolor{keywordflow}{if}  (goalie)   mem += goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a18cb2b73ae95e26d5c50758f440bb259}{MemoryConsumedEstimated} ();
+61   
+62   \textcolor{keywordflow}{for}  (idx2 = begin ();  idx2 != end ();  ++idx2)
+63   \{
+64     mem = mem + (idx2->first.MemoryConsumedEstimated () + idx2->second.MemoryConsumedEstimated ());
+65   \}
+66 
+67   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+68 
+69   \textcolor{keywordflow}{return}  mem;
+70 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}!Start\+Block@{Start\+Block}}
+\index{Start\+Block@{Start\+Block}!K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields@{K\+K\+L\+S\+C\+::\+Scanner\+Header\+Fields}}
+\subsubsection[{\texorpdfstring{Start\+Block()}{StartBlock()}}]{\setlength{\rightskip}{0pt plus 5cm}void Scanner\+Header\+Fields\+::\+Start\+Block (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_scanner_header_fields_a09f0af2c12a1bb133bb5465633a7cf1a}{}\label{class_k_k_l_s_c_1_1_scanner_header_fields_a09f0af2c12a1bb133bb5465633a7cf1a}
+
+
+Definition at line 209 of file Scanner\+Header\+Fields.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+
+Referenced by K\+K\+L\+S\+C\+::\+Scanner\+File\+::\+Add\+Header\+Fields().
+
+
+\begin{DoxyCode}
+210 \{
+211   goalie->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+212 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_header_fields_8h}{Scanner\+Header\+Fields.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_scanner_header_fields_8cpp}{Scanner\+Header\+Fields.\+cpp}\end{DoxyCompactItemize}

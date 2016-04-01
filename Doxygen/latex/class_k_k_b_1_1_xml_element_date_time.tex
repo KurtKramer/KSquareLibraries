@@ -1,0 +1,265 @@
+\hypertarget{class_k_k_b_1_1_xml_element_date_time}{}\section{K\+KB\+:\+:Xml\+Element\+Date\+Time Class Reference}
+\label{class_k_k_b_1_1_xml_element_date_time}\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+
+
+{\ttfamily \#include $<$Xml\+Stream.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Xml\+Element\+Date\+Time\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_b_1_1_xml_element_date_time}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_xml_element_date_time_a2ef92882b2e1f0b2d02c5b338daaf372}{Xml\+Element\+Date\+Time} (\hyperlink{namespace_k_k_b_a9253a3ea8a5da18ca82be4ca2b390ef0}{Xml\+Tag\+Ptr} tag, \hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_xml_element_date_time_a9fb359665679473f20a11a0bc06facb9}{$\sim$\+Xml\+Element\+Date\+Time} ()
+\item 
+virtual bool \hyperlink{class_k_k_b_1_1_xml_element_date_time_a6428fe3132db46ca0f9f15ca4e3570a8}{To\+Bool} () const 
+\item 
+virtual double \hyperlink{class_k_k_b_1_1_xml_element_date_time_a3c60c809536ad9823baf97f64beb541f}{To\+Double} () const 
+\item 
+virtual float \hyperlink{class_k_k_b_1_1_xml_element_date_time_a67670c703f86c4a72ba73920de0f4858}{To\+Float} () const 
+\item 
+virtual \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_xml_element_date_time_ad7108702555f0d9bc3c879e836d212df}{To\+Int32} () const 
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_xml_element_date_time_a0b78fa113b7721069b8a14b971b73b1e}{To\+K\+K\+Str} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \hyperlink{class_k_k_b_1_1_xml_element_date_time_ad344da7ca74c2da7c8ab8b1a4263f919}{Value} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_k_k_b_1_1_xml_element_date_time_a34c6ec2877c0e7adaf57adf186e75727}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&d, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 532 of file Xml\+Stream.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!Xml\+Element\+Date\+Time@{Xml\+Element\+Date\+Time}}
+\index{Xml\+Element\+Date\+Time@{Xml\+Element\+Date\+Time}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Xml\+Element\+Date\+Time(\+Xml\+Tag\+Ptr tag, Xml\+Stream \&s, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{XmlElementDateTime(XmlTagPtr tag, XmlStream &s, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+Date\+Time\+::\+Xml\+Element\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Tag\+Ptr}}]{tag, }
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a2ef92882b2e1f0b2d02c5b338daaf372}{}\label{class_k_k_b_1_1_xml_element_date_time_a2ef92882b2e1f0b2d02c5b338daaf372}
+
+
+Definition at line 1096 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Value\+Date\+Time(), K\+K\+B\+::\+Date\+Time\+::\+Date\+Time(), K\+K\+B\+::\+Date\+Time\+::operator=(), and K\+K\+B\+::\+Xml\+Element\+::\+Xml\+Element().
+
+
+\begin{DoxyCode}
+1100                                         :
+1101     \hyperlink{class_k_k_b_1_1_xml_element_a66317eff5bd3abcc60755756ba2887d5}{XmlElement} (tag, s, log),
+1102     value ()
+1103 \{
+1104   value = tag->\hyperlink{class_k_k_b_1_1_xml_tag_a0281ac91c0d271ac3b9cbe4738d5ad12}{AttributeValueDateTime} (\textcolor{stringliteral}{"Value"});
+1105 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!````~Xml\+Element\+Date\+Time@{$\sim$\+Xml\+Element\+Date\+Time}}
+\index{````~Xml\+Element\+Date\+Time@{$\sim$\+Xml\+Element\+Date\+Time}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{$\sim$\+Xml\+Element\+Date\+Time()}{~XmlElementDateTime()}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+Date\+Time\+::$\sim$\+Xml\+Element\+Date\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a9fb359665679473f20a11a0bc06facb9}{}\label{class_k_k_b_1_1_xml_element_date_time_a9fb359665679473f20a11a0bc06facb9}
+
+
+Definition at line 1108 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+1109 \{
+1110 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!To\+Bool@{To\+Bool}}
+\index{To\+Bool@{To\+Bool}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Bool() const }{ToBool() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Bool (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a6428fe3132db46ca0f9f15ca4e3570a8}{}\label{class_k_k_b_1_1_xml_element_date_time_a6428fe3132db46ca0f9f15ca4e3570a8}
+
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_xml_element_a7bfbbea204722bc4535a294bc43e8e17}{K\+K\+B\+::\+Xml\+Element}.
+
+
+
+Definition at line 551 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+Seconds().
+
+
+\begin{DoxyCode}
+551 \{\textcolor{keywordflow}{return}  (value.\hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} () > 0);\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!To\+Double@{To\+Double}}
+\index{To\+Double@{To\+Double}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Double() const }{ToDouble() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual double K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Double (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a3c60c809536ad9823baf97f64beb541f}{}\label{class_k_k_b_1_1_xml_element_date_time_a3c60c809536ad9823baf97f64beb541f}
+
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_xml_element_ac32778396ab8bdb215ad38f2f33f05de}{K\+K\+B\+::\+Xml\+Element}.
+
+
+
+Definition at line 553 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+Seconds().
+
+
+\begin{DoxyCode}
+553 \{\textcolor{keywordflow}{return}  (\textcolor{keywordtype}{double})value.\hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!To\+Float@{To\+Float}}
+\index{To\+Float@{To\+Float}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Float() const }{ToFloat() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual float K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Float (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a67670c703f86c4a72ba73920de0f4858}{}\label{class_k_k_b_1_1_xml_element_date_time_a67670c703f86c4a72ba73920de0f4858}
+
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_xml_element_aa728687ed43e76d45d029dfc14e14e95}{K\+K\+B\+::\+Xml\+Element}.
+
+
+
+Definition at line 554 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+Seconds().
+
+
+\begin{DoxyCode}
+554 \{\textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})value.\hyperlink{class_k_k_b_1_1_date_time_a051f9f993938d58e5762256cf5c06f31}{Seconds} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!To\+Int32@{To\+Int32}}
+\index{To\+Int32@{To\+Int32}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+Int32() const }{ToInt32() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf kkint32} K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+Int32 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_ad7108702555f0d9bc3c879e836d212df}{}\label{class_k_k_b_1_1_xml_element_date_time_ad7108702555f0d9bc3c879e836d212df}
+
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{K\+K\+B\+::\+Xml\+Element}.
+
+
+
+Definition at line 555 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+To\+Days().
+
+
+\begin{DoxyCode}
+555 \{\textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})value.\hyperlink{class_k_k_b_1_1_date_time_a92e8292a86720233831e6433df092fb5}{ToDays} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!To\+K\+K\+Str@{To\+K\+K\+Str}}
+\index{To\+K\+K\+Str@{To\+K\+K\+Str}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{To\+K\+K\+Str() const }{ToKKStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf K\+K\+Str} K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+To\+K\+K\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a0b78fa113b7721069b8a14b971b73b1e}{}\label{class_k_k_b_1_1_xml_element_date_time_a0b78fa113b7721069b8a14b971b73b1e}
+
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_xml_element_a3028fc03b79509e6378749f6a8b426b9}{K\+K\+B\+::\+Xml\+Element}.
+
+
+
+Definition at line 552 of file Xml\+Stream.\+h.
+
+
+
+References K\+K\+B\+::\+Date\+Time\+::\+Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+S\+S().
+
+
+\begin{DoxyCode}
+552 \{\textcolor{keywordflow}{return}  value.\hyperlink{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}{YYYY\_MM\_DD\_HH\_MM\_SS} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!Value@{Value}}
+\index{Value@{Value}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Value() const }{Value() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Date\+Time} K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_ad344da7ca74c2da7c8ab8b1a4263f919}{}\label{class_k_k_b_1_1_xml_element_date_time_ad344da7ca74c2da7c8ab8b1a4263f919}
+
+
+Definition at line 543 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+543 \{\textcolor{keywordflow}{return}  value;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+B\+::\+Xml\+Element\+Date\+Time@{K\+K\+B\+::\+Xml\+Element\+Date\+Time}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const Date\+Time \&d, const K\+K\+Str \&var\+Name, std\+::ostream \&o)}{WriteXML(const DateTime &d, const KKStr &varName, std::ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Element\+Date\+Time\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf Date\+Time} \&}]{d, }
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_b_1_1_xml_element_date_time_a34c6ec2877c0e7adaf57adf186e75727}{}\label{class_k_k_b_1_1_xml_element_date_time_a34c6ec2877c0e7adaf57adf186e75727}
+
+
+Definition at line 1113 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+Xml\+Tag\+::tag\+Empty, K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag(), and K\+K\+B\+::\+Date\+Time\+::\+Y\+Y\+Y\+Y\+\_\+\+M\+M\+\_\+\+D\+D\+\_\+\+H\+H\+\_\+\+M\+M\+\_\+\+S\+S().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+1117 \{
+1118   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag} startTag (\textcolor{stringliteral}{"DateTime"}, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}{XmlTag::TagTypes::tagEmpty});
+1119   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+1120     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+1121   startTag.AddAtribute (\textcolor{stringliteral}{"Value"}, d.\hyperlink{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}{YYYY\_MM\_DD\_HH\_MM\_SS} ());
+1122   startTag.WriteXML (o);
+1123   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1124 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8h}{Xml\+Stream.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8cpp}{Xml\+Stream.\+cpp}\end{DoxyCompactItemize}

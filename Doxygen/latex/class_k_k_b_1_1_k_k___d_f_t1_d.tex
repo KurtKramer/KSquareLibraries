@@ -1,0 +1,337 @@
+\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d}{}\section{K\+KB\+:\+:K\+K\+\_\+\+D\+F\+T1D$<$ Dft\+Type $>$ Class Template Reference}
+\label{class_k_k_b_1_1_k_k___d_f_t1_d}\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1\+D$<$ Dft\+Type $>$@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1\+D$<$ Dft\+Type $>$}}
+
+
+{\ttfamily \#include $<$kku\+\_\+fftw.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::complex$<$ Dft\+Type $>$ \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_ac65a8ecdf2e6ca0dcd032bcd0432993e}{K\+K\+\_\+\+D\+F\+T1D} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+size, bool \+\_\+forward\+Transform)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a30bc503da8f05cc35efebac47cb7b768}{$\sim$\+K\+K\+\_\+\+D\+F\+T1D} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type} $\ast$$\ast$ \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a15e9f465d09d12bdc83815b741d802ce}{Fourier\+Mask} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a97bb58639bdc8f8bf1c11bda9bbd9d3d}{Transform} (\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type} $\ast$src, \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type} $\ast$dest)
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_aea6d631eb5646ce70e3f2708783a6dfe}{Transform} (\hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{K\+K\+B\+::uchar} $\ast$src, \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type} $\ast$dest)
+\item 
+void \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_ad10fde3b306273040c39fc5b1c2bc018}{Transform\+NR} (\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{Dft\+Complex\+Type} $\ast$src)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename Dft\+Type$>$\\*
+class K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1\+D$<$ Dft\+Type $>$}
+
+
+
+Definition at line 127 of file kku\+\_\+fftw.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!Dft\+Complex\+Type@{Dft\+Complex\+Type}}
+\index{Dft\+Complex\+Type@{Dft\+Complex\+Type}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{Dft\+Complex\+Type}{DftComplexType}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ typedef std\+::complex$<$Dft\+Type$>$ {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::{\bf Dft\+Complex\+Type}}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}
+
+
+Definition at line 130 of file kku\+\_\+fftw.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!K\+K\+\_\+\+D\+F\+T1D@{K\+K\+\_\+\+D\+F\+T1D}}
+\index{K\+K\+\_\+\+D\+F\+T1D@{K\+K\+\_\+\+D\+F\+T1D}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{K\+K\+\_\+\+D\+F\+T1\+D(kkint32 \+\_\+size, bool \+\_\+forward\+Transform)}{KK_DFT1D(kkint32 _size, bool _forwardTransform)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::{\bf K\+K\+\_\+\+D\+F\+T1D} (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+size, }
+\item[{bool}]{\+\_\+forward\+Transform}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_ac65a8ecdf2e6ca0dcd032bcd0432993e}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_ac65a8ecdf2e6ca0dcd032bcd0432993e}
+
+
+Definition at line 230 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+232                                :
+233       MinusOne         ((DftType)-1.0,          (DftType)0.0),
+234       One              ((DftType)1.0,           (DftType)0.0),
+235       Pi               ((DftType)3.14159265359, (DftType)0.0),
+236       Two              ((DftType)2.0,           (DftType)0.0),
+237       Zero             ((DftType)0.0,           (DftType)0.0),
+238       forwardTransform (\_forwardTransform),
+239       fourierMask      (NULL),
+240       fourierMaskArea  (NULL),
+241       size             (\_size)
+242   \{
+243     \textcolor{comment}{//BuildMask ();}
+244   \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!````~K\+K\+\_\+\+D\+F\+T1D@{$\sim$\+K\+K\+\_\+\+D\+F\+T1D}}
+\index{````~K\+K\+\_\+\+D\+F\+T1D@{$\sim$\+K\+K\+\_\+\+D\+F\+T1D}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{$\sim$\+K\+K\+\_\+\+D\+F\+T1\+D()}{~KK_DFT1D()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::$\sim${\bf K\+K\+\_\+\+D\+F\+T1D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_a30bc503da8f05cc35efebac47cb7b768}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_a30bc503da8f05cc35efebac47cb7b768}
+
+
+Definition at line 248 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+249   \{
+250     \textcolor{keyword}{delete}  fourierMask;      fourierMask     = NULL;
+251     \textcolor{keyword}{delete}  fourierMaskArea;  fourierMaskArea = NULL;
+252   \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!Fourier\+Mask@{Fourier\+Mask}}
+\index{Fourier\+Mask@{Fourier\+Mask}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{Fourier\+Mask()}{FourierMask()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ {\bf Dft\+Complex\+Type}$\ast$$\ast$ {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::Fourier\+Mask (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_a15e9f465d09d12bdc83815b741d802ce}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_a15e9f465d09d12bdc83815b741d802ce}
+
+
+Definition at line 150 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+151     \{
+152       \textcolor{keywordflow}{if}  (!fourierMask)
+153         BuildMask ();
+154       \textcolor{keywordflow}{return} fourierMask;
+155     \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!Transform@{Transform}}
+\index{Transform@{Transform}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{Transform(\+Dft\+Complex\+Type $\ast$src, Dft\+Complex\+Type $\ast$dest)}{Transform(DftComplexType *src, DftComplexType *dest)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ void {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::Transform (
+\begin{DoxyParamCaption}
+\item[{{\bf Dft\+Complex\+Type} $\ast$}]{src, }
+\item[{{\bf Dft\+Complex\+Type} $\ast$}]{dest}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_a97bb58639bdc8f8bf1c11bda9bbd9d3d}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_a97bb58639bdc8f8bf1c11bda9bbd9d3d}
+
+
+Definition at line 298 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+301   \{
+302     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}  M((DftType)size, 0);
+303 
+304     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType} direction;
+305     \textcolor{keywordflow}{if}  (forwardTransform)
+306       direction = \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType} ((DftType)-1.0, (DftType)0.0);
+307     \textcolor{keywordflow}{else}
+308       direction = \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType} ((DftType)1.0, (DftType)0.0);
+309  
+310     \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}  j;
+311     j = sqrt (MinusOne);
+312 
+313 
+314     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  l = 0;  l < size;  l++)
+315     \{
+316       dest[l] = Zero;
+317 
+318       \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}  lc ((DftType)l, (DftType)0);
+319       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = 0;  k < size;  k++)
+320       \{
+321         \textcolor{comment}{//DftType  exponetPart = (DftType)2.0 * (DftType)3.14159265359 * (DftType)k * (DftType)l /
+       (DftType)size;}
+322         \textcolor{comment}{//DftType  realPart = cos (exponetPart);}
+323         \textcolor{comment}{//DftType  imgPart  = -sin (exponetPart);}
+324 
+325         \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}  kc ((DftType)k, (DftType)0);
+326         \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}  fm = exp (direction * j * Two * Pi * kc * lc / M);
+327 
+328         \textcolor{comment}{//dest[l] = dest[l] + src[k] * fourierMask[l][k];}
+329         dest[l] = dest[l] + src[k] * fm;
+330       \}
+331     \}
+332   
+333     \textcolor{comment}{/*}
+334 \textcolor{comment}{    \{}
+335 \textcolor{comment}{      // Performs a comparison with a alternatve result that performs much faster but is only good for }
+336 \textcolor{comment}{      //  where size is = (n^2) for (n > 0)}
+337 \textcolor{comment}{      kkint32  newSize = (kkint32)pow (2.0f, (float)ceil (Log2 ((float)size)));}
+338 \textcolor{comment}{}
+339 \textcolor{comment}{      // Lets do a comparison}
+340 \textcolor{comment}{      int x, y;}
+341 \textcolor{comment}{      float* wa = new float[newSize * 2];}
+342 \textcolor{comment}{      for  (x = 0;  x < (newSize * 2);  ++x)}
+343 \textcolor{comment}{        wa[x] = 0.0;}
+344 \textcolor{comment}{}
+345 \textcolor{comment}{      for  (x = 0, y = 0;  x < size;  ++x, y += 2)}
+346 \textcolor{comment}{      \{}
+347 \textcolor{comment}{        wa[y]     = src[x].real ();}
+348 \textcolor{comment}{        wa[y + 1] = src[x].imag ();}
+349 \textcolor{comment}{      \}}
+350 \textcolor{comment}{      FFT (wa, size, 1); }
+351 \textcolor{comment}{}
+352 \textcolor{comment}{      for  (x = 0, y = 0;  x < size;  ++x, y += 2)}
+353 \textcolor{comment}{      \{}
+354 \textcolor{comment}{        float  deltaR = (wa[y]     - dest[x].real ());}
+355 \textcolor{comment}{        float  deltaI = (wa[y + 1] - dest[x].imag ());}
+356 \textcolor{comment}{}
+357 \textcolor{comment}{        //if  (deltaR != 0.0)}
+358 \textcolor{comment}{        //  cout << x << "\(\backslash\)t" << wa[y]     << "\(\backslash\)t" << dest[x].real () << "\(\backslash\)t" << deltaR << endl;}
+359 \textcolor{comment}{}
+360 \textcolor{comment}{        //if  (deltaI != 0.0)}
+361 \textcolor{comment}{        //  cout << x << "\(\backslash\)t" << wa[y + 1] << "\(\backslash\)t" << dest[x].imag () << "\(\backslash\)t" << deltaI << endl;}
+362 \textcolor{comment}{}
+363 \textcolor{comment}{        float waSquare   = wa[y]           * wa[y]            + wa[y + 1]       * wa[y + 1];}
+364 \textcolor{comment}{        float destSquare = dest[x].real () * dest[x].real ()  + dest[x].imag () * dest[x].imag ();}
+365 \textcolor{comment}{}
+366 \textcolor{comment}{        float  waMag   = sqrt (waSquare);}
+367 \textcolor{comment}{        float  destMag = sqrt (destSquare);}
+368 \textcolor{comment}{}
+369 \textcolor{comment}{        cout  << x << "\(\backslash\)t" << waMag << "\(\backslash\)t" << destMag << endl;}
+370 \textcolor{comment}{      \}}
+371 \textcolor{comment}{      delete  wa;}
+372 \textcolor{comment}{      wa = NULL;}
+373 \textcolor{comment}{    \}}
+374 \textcolor{comment}{    */}
+375 
+376     \textcolor{keywordflow}{return};
+377   \}  \textcolor{comment}{/* Transform */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!Transform@{Transform}}
+\index{Transform@{Transform}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{Transform(\+K\+K\+B\+::uchar $\ast$src, Dft\+Complex\+Type $\ast$dest)}{Transform(KKB::uchar *src, DftComplexType *dest)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ void {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::Transform (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+B\+::uchar} $\ast$}]{src, }
+\item[{{\bf Dft\+Complex\+Type} $\ast$}]{dest}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_aea6d631eb5646ce70e3f2708783a6dfe}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_aea6d631eb5646ce70e3f2708783a6dfe}
+
+
+Definition at line 382 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+385   \{
+386     \textcolor{keywordflow}{if}  (!fourierMask)
+387       BuildMask ();
+388     
+389     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  firstK = 0;
+390     \textcolor{keywordtype}{bool}   firstKFound = \textcolor{keyword}{false};
+391     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastK  = 0;
+392 
+393     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = 0;  k < size;  ++k)
+394     \{
+395       \textcolor{keywordflow}{if}  (src[k] != 0)
+396       \{
+397         lastK = k;
+398         \textcolor{keywordflow}{if}  (!firstKFound)
+399         \{
+400           firstKFound = \textcolor{keyword}{true};
+401           firstK = k;
+402         \}
+403       \}
+404     \}
+405 
+406     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  l = 0;  l < size;  l++)
+407     \{
+408       \hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{DftComplexType}*  fourierMaskL = fourierMask[l];
+409 
+410       DftType  destReal = 0.0;
+411       DftType  destImag = 0.0;
+412 
+413       \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = firstK;  k <= lastK;  k++)
+414       \{
+415         destReal +=  src[k] * fourierMaskL[k].real ();
+416         destImag +=  src[k] * fourierMaskL[k].imag ();
+417       \}
+418 
+419       dest[l] = complex<DftType> (destReal, destImag);
+420     \}
+421     \textcolor{keywordflow}{return};
+422   \}  \textcolor{comment}{/* Transform */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}!Transform\+NR@{Transform\+NR}}
+\index{Transform\+NR@{Transform\+NR}!K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D@{K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}}
+\subsubsection[{\texorpdfstring{Transform\+N\+R(\+Dft\+Complex\+Type $\ast$src)}{TransformNR(DftComplexType *src)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Dft\+Type $>$ void {\bf K\+K\+B\+::\+K\+K\+\_\+\+D\+F\+T1D}$<$ Dft\+Type $>$\+::Transform\+NR (
+\begin{DoxyParamCaption}
+\item[{{\bf Dft\+Complex\+Type} $\ast$}]{src}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k___d_f_t1_d_ad10fde3b306273040c39fc5b1c2bc018}{}\label{class_k_k_b_1_1_k_k___d_f_t1_d_ad10fde3b306273040c39fc5b1c2bc018}
+
+
+Definition at line 428 of file kku\+\_\+fftw.\+h.
+
+
+\begin{DoxyCode}
+429   \{
+430     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  n = 0;
+431     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  mmax = 0;
+432     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  m = 0;
+433     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  j = 0;
+434     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  istep = 0;
+435     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  i = 0;
+436     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  isign = (forwardTransform ? 1 : -1);
+437 
+438     DftType  wtemp = (DftType)0.0;
+439     DftType  wr    = (DftType)0.0;
+440     DftType  wpr   = (DftType)0.0;
+441     DftType  wpi   = (DftType)0.0;
+442     DftType  wi    = (DftType)0.0;
+443     DftType  theta = (DftType)0.0;
+444     DftType  tempr = (DftType)0.0;
+445     DftType  tempi = (DftType)0.0;
+446 
+447     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nn = this->size;
+448     n = nn << 1;
+449     j = 1;
+450     \textcolor{keywordflow}{for}  (i = 1; i < nn;  ++i)
+451     \{
+452       \textcolor{keywordflow}{if}  (j > i)
+453       \{
+454         \hyperlink{namespace_k_k_b_aa407f810727f686de25d56fec45a9372}{Swap} (src[j].imag, src[i].imag);
+455         \hyperlink{namespace_k_k_b_aa407f810727f686de25d56fec45a9372}{Swap} (src[j].real, src[i].real);
+456       \}
+457 
+458       m = nn;
+459       \textcolor{keywordflow}{while}  ((m >= 2)  &&  (j > m))
+460       \{
+461         j -= m;
+462         m >>= 1;
+463       \}
+464       j += m;
+465     \}
+466 
+467     mmax = 2;
+468     \textcolor{keywordflow}{while}  (n > mmax)
+469     \{
+470       istep = mmax << 1;
+471       theta = isign * (\hyperlink{_k_k_base_types_8h_a964d907aa0bbca73f950ed1659081d73}{TwoPie} / mmax);
+472       wtemp = sin (0.5 * theta);
+473       wpr = -2.0 * wtemp * wtemp;
+474       wpi = sin (theta);
+475       wr = 1.0;
+476       wi = 0.0;
+477       \textcolor{keywordflow}{for}  (m = 1;  m < mmax;  m += 2)
+478       \{
+479         j = i + mmax;
+480 
+481       \}
+482     \}
+483   \}  \textcolor{comment}{/* TransformNR */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{kku__fftw_8h}{kku\+\_\+fftw.\+h}\end{DoxyCompactItemize}

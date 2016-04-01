@@ -1,0 +1,642 @@
+\hypertarget{class_k_k_b_1_1_xml_tag}{}\section{K\+KB\+:\+:Xml\+Tag Class Reference}
+\label{class_k_k_b_1_1_xml_tag}\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+
+
+{\ttfamily \#include $<$Xml\+Stream.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}{Tag\+Types} \{ \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a91848844d7ea93a35d21cfd3b5f4bea2}{Tag\+Types\+::tag\+N\+U\+LL}, 
+\hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{Tag\+Types\+::tag\+Start}, 
+\hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{Tag\+Types\+::tag\+End}, 
+\hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}{Tag\+Types\+::tag\+Empty}
+ \}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_xml_tag}{Xml\+Tag} $\ast$ \hyperlink{class_k_k_b_1_1_xml_tag_a7f2c41a39e872901afd7edf641f8271b}{Xml\+Tag\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_xml_tag_a4fc615bc59f6dc243f19148a15839710}{Xml\+Tag} (const \hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} tag\+Str)
+\item 
+\hyperlink{class_k_k_b_1_1_xml_tag_a59e8ab5dd5bb9e4ae233e222171b4c7b}{Xml\+Tag} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}{Tag\+Types} \+\_\+tag\+Type)
+\item 
+\hyperlink{class_k_k_b_1_1_xml_tag_aafdbac20c27fc1cda98f4d0e77c490c0}{Xml\+Tag} (std\+::istream \&i)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_xml_tag_abbb5fef8e3d0dc433a6aaaf88a821d2f}{$\sim$\+Xml\+Tag} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a169ba62b2b75ad1b54332d9ce5eb0568}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a2643b3019d0c8cebdd578882ffa899ec}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, bool attribute\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_aa593d243bb281b07ba8a1ea7d7f52c5e}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} attribute\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a31e8900649ba1229371460afbdf85e66}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} attribute\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a109d4043b0b87413bc38b0bd9c08984c}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, double attribute\+Value)
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a4d1332cd54aeae8c583f3cd14abac674}{Add\+Atribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name, const \hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \&attribute\+Value)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_xml_tag_a10f5b347fa9da308939c0ac21f070730}{Attribute\+Count} () const 
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_xml_tag_a61ba0499cfa68b1197fea386a1274383}{Attribute\+Name\+By\+Index} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} index) const 
+\item 
+const \hyperlink{class_k_k_b_1_1_xml_attribute_list}{Xml\+Attribute\+List} \& \hyperlink{class_k_k_b_1_1_xml_tag_a6c095b447cf9bb12ebddd4136c173ab8}{Attributes} () const 
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_xml_tag_a3bb39487ecf34a319b027b7ab0bfc83e}{Attribute\+Value\+By\+Index} (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} index) const 
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_xml_tag_a0470baf5a49af1c2f6aaf0155b9ba783}{Attribute\+Value\+By\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&name) const 
+\item 
+\hyperlink{class_k_k_b_1_1_date_time}{Date\+Time} \hyperlink{class_k_k_b_1_1_xml_tag_a0281ac91c0d271ac3b9cbe4738d5ad12}{Attribute\+Value\+Date\+Time} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name) const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_xml_tag_acbbfaeaf55fd15e4f563a71a1b4fa456}{Attribute\+Value\+Int32} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&attribute\+Name) const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_xml_tag_a70aa928e7fecc15e7a510e23a5d30920}{Attribute\+Value\+K\+K\+Str} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&name) const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_xml_tag_a80934a69d86c1e06b13889fcde99a63b}{Name} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}{Tag\+Types} \hyperlink{class_k_k_b_1_1_xml_tag_abe56f7d7b736e627d3a9a584ff965b1e}{Tag\+Type} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_b_1_1_xml_tag_ac2edd74085cdd50465096426f1ef9e44}{To\+String} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_xml_tag_a0ba9ea780e48285cbcd0ecac787a4012}{Write\+X\+ML} (std\+::ostream \&o)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 172 of file Xml\+Stream.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Xml\+Tag\+Ptr@{Xml\+Tag\+Ptr}}
+\index{Xml\+Tag\+Ptr@{Xml\+Tag\+Ptr}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Xml\+Tag\+Ptr}{XmlTagPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Xml\+Tag}$\ast$ {\bf K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag\+Ptr}}\hypertarget{class_k_k_b_1_1_xml_tag_a7f2c41a39e872901afd7edf641f8271b}{}\label{class_k_k_b_1_1_xml_tag_a7f2c41a39e872901afd7edf641f8271b}
+
+
+Definition at line 175 of file Xml\+Stream.\+h.
+
+
+
+\subsection{Member Enumeration Documentation}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Tag\+Types@{Tag\+Types}}
+\index{Tag\+Types@{Tag\+Types}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Tag\+Types}{TagTypes}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf K\+K\+B\+::\+Xml\+Tag\+::\+Tag\+Types}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}{}\label{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{tag\+N\+U\+LL@{tag\+N\+U\+LL}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!tag\+N\+U\+LL@{tag\+N\+U\+LL}}\item[{\em 
+tag\+N\+U\+LL\hypertarget{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a91848844d7ea93a35d21cfd3b5f4bea2}{}\label{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a91848844d7ea93a35d21cfd3b5f4bea2}
+}]\index{tag\+Start@{tag\+Start}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!tag\+Start@{tag\+Start}}\item[{\em 
+tag\+Start\hypertarget{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{}\label{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}
+}]\index{tag\+End@{tag\+End}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!tag\+End@{tag\+End}}\item[{\em 
+tag\+End\hypertarget{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{}\label{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}
+}]\index{tag\+Empty@{tag\+Empty}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!tag\+Empty@{tag\+Empty}}\item[{\em 
+tag\+Empty\hypertarget{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}{}\label{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 176 of file Xml\+Stream.\+h.
+
+
+\begin{DoxyCode}
+176 \{tagNULL, tagStart, tagEnd, tagEmpty\};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Xml\+Tag@{Xml\+Tag}}
+\index{Xml\+Tag@{Xml\+Tag}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Xml\+Tag(const K\+K\+Str\+Const\+Ptr tag\+Str)}{XmlTag(const KKStrConstPtr tagStr)}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Tag\+::\+Xml\+Tag (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str\+Const\+Ptr}}]{tag\+Str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a4fc615bc59f6dc243f19148a15839710}{}\label{class_k_k_b_1_1_xml_tag_a4fc615bc59f6dc243f19148a15839710}
+
+
+Definition at line 543 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Last\+Char(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Char(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+K\+K\+Str\+Parser(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+More\+Tokens(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Peek\+Last\+Char(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Peek\+Next\+Char(), K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Skip\+White\+Space(), tag\+Empty, tag\+End, tag\+N\+U\+LL, tag\+Start, K\+K\+B\+::\+K\+K\+Str\+Parser\+::\+Trim\+White\+Space(), and Xml\+Tag().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), and Xml\+Tag().
+
+
+\begin{DoxyCode}
+543                                           :
+544    attributes (\textcolor{keyword}{true}),
+545    name       (),
+546    tagType    (\hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a91848844d7ea93a35d21cfd3b5f4bea2}{TagTypes::tagNULL})
+547 \{
+548   \hyperlink{class_k_k_b_1_1_k_k_str_parser}{KKStrParser} parser(*tagStr);
+549   parser.TrimWhiteSpace (\textcolor{stringliteral}{" "});
+550 
+551   \textcolor{keywordflow}{if}  (parser.PeekNextChar () == \textcolor{charliteral}{'<'})
+552     parser.GetNextChar ();
+553 
+554   \textcolor{keywordflow}{if}  (parser.PeekLastChar () == \textcolor{charliteral}{'>'})
+555     parser.GetLastChar ();
+556 
+557   \textcolor{keywordflow}{if}  (parser.PeekNextChar () == \textcolor{charliteral}{'/'})
+558   \{
+559     parser.GetNextChar ();
+560     tagType = \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{XmlTag::TagTypes::tagEnd};
+561   \}
+562   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (parser.PeekLastChar () == \textcolor{charliteral}{'/'})
+563   \{
+564     parser.GetLastChar ();
+565     tagType = \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}{XmlTag::TagTypes::tagEmpty};
+566   \}
+567   \textcolor{keywordflow}{else}
+568   \{
+569     tagType = \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{XmlTag::TagTypes::tagStart};
+570   \}
+571 
+572   name = parser.GetNextToken ();
+573   parser.SkipWhiteSpace ();
+574 
+575   \textcolor{keywordflow}{while}  (parser.MoreTokens ())
+576   \{
+577     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} attributeName  = parser.GetNextToken (\textcolor{stringliteral}{"="});
+578     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} attributeValue = parser.GetNextToken (\textcolor{stringliteral}{" \(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+579     attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, attributeValue);
+580   \}
+581 \}  \textcolor{comment}{/* XmlTag::XmlTag (const KKStrConstPtr  tagStr) */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Xml\+Tag@{Xml\+Tag}}
+\index{Xml\+Tag@{Xml\+Tag}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Xml\+Tag(const K\+K\+Str \&\+\_\+name, Tag\+Types \+\_\+tag\+Type)}{XmlTag(const KKStr &_name, TagTypes _tagType)}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Tag\+::\+Xml\+Tag (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{{\bf Tag\+Types}}]{\+\_\+tag\+Type}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a59e8ab5dd5bb9e4ae233e222171b4c7b}{}\label{class_k_k_b_1_1_xml_tag_a59e8ab5dd5bb9e4ae233e222171b4c7b}
+
+
+Definition at line 586 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Bit\+String\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+List\+::\+Write\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Write\+X\+M\+L(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Array\+Float2\+D\+Varying\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+::\+Xml\+Element(), and Xml\+Tag().
+
+
+\begin{DoxyCode}
+588                 :
+589    attributes (\textcolor{keyword}{true}),
+590    name       (\_name),
+591    tagType    (\_tagType)
+592 \{
+593 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!````~Xml\+Tag@{$\sim$\+Xml\+Tag}}
+\index{````~Xml\+Tag@{$\sim$\+Xml\+Tag}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{$\sim$\+Xml\+Tag()}{~XmlTag()}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Tag\+::$\sim$\+Xml\+Tag (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_tag_abbb5fef8e3d0dc433a6aaaf88a821d2f}{}\label{class_k_k_b_1_1_xml_tag_abbb5fef8e3d0dc433a6aaaf88a821d2f}
+summary$>$Will construct a generic X\+ML tag from the following characters in the stream.
+
+remarks$>$ It is assumed that the next character read from the input stream {\itshape i}  will be $<$; if not then it is assumed that the next character is the one immediately following the $<$. /remarks$>$ 
+
+Definition at line 596 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+597 \{
+598 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Xml\+Tag@{Xml\+Tag}}
+\index{Xml\+Tag@{Xml\+Tag}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Xml\+Tag(std\+::istream \&i)}{XmlTag(std::istream &i)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag (
+\begin{DoxyParamCaption}
+\item[{std\+::istream \&}]{i}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_aafdbac20c27fc1cda98f4d0e77c490c0}{}\label{class_k_k_b_1_1_xml_tag_aafdbac20c27fc1cda98f4d0e77c490c0}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, const K\+K\+Str \&attribute\+Value)}{AddAtribute(const KKStr &attributeName, const KKStr &attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a169ba62b2b75ad1b54332d9ce5eb0568}{}\label{class_k_k_b_1_1_xml_tag_a169ba62b2b75ad1b54332d9ce5eb0568}
+
+
+Definition at line 602 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Bit\+String\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+List\+::\+Write\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Write\+X\+M\+L(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Array\+Float2\+D\+Varying\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+605 \{
+606   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, attributeValue);
+607 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, bool attribute\+Value)}{AddAtribute(const KKStr &attributeName, bool attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{bool}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a2643b3019d0c8cebdd578882ffa899ec}{}\label{class_k_k_b_1_1_xml_tag_a2643b3019d0c8cebdd578882ffa899ec}
+
+
+Definition at line 611 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+614 \{
+615   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, (attributeValue ? \textcolor{stringliteral}{"Yes"} : \textcolor{stringliteral}{"No"}));
+616 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, kkint32 attribute\+Value)}{AddAtribute(const KKStr &attributeName, kkint32 attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{{\bf kkint32}}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_aa593d243bb281b07ba8a1ea7d7f52c5e}{}\label{class_k_k_b_1_1_xml_tag_aa593d243bb281b07ba8a1ea7d7f52c5e}
+
+
+Definition at line 620 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Element\+Array\+Float2\+D\+Varying\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+623 \{
+624   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, \hyperlink{namespace_k_k_b_a66adf53f607bda7ab0d3e1c3945e792e}{StrFromInt32} (attributeValue));
+625 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, kkint64 attribute\+Value)}{AddAtribute(const KKStr &attributeName, kkint64 attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{{\bf kkint64}}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a31e8900649ba1229371460afbdf85e66}{}\label{class_k_k_b_1_1_xml_tag_a31e8900649ba1229371460afbdf85e66}
+
+
+Definition at line 629 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+632 \{
+633   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, \hyperlink{namespace_k_k_b_ad007937ca83cb95064fa2f74531481aa}{StrFromInt64} (attributeValue));
+634 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, double attribute\+Value)}{AddAtribute(const KKStr &attributeName, double attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{double}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a109d4043b0b87413bc38b0bd9c08984c}{}\label{class_k_k_b_1_1_xml_tag_a109d4043b0b87413bc38b0bd9c08984c}
+
+
+Definition at line 638 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+641 \{
+642   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s (20);
+643   s << attributeValue;
+644   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName, s);
+645 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Add\+Atribute@{Add\+Atribute}}
+\index{Add\+Atribute@{Add\+Atribute}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Add\+Atribute(const K\+K\+Str \&attribute\+Name, const Date\+Time \&attribute\+Value)}{AddAtribute(const KKStr &attributeName, const DateTime &attributeValue)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Add\+Atribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name, }
+\item[{const {\bf Date\+Time} \&}]{attribute\+Value}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a4d1332cd54aeae8c583f3cd14abac674}{}\label{class_k_k_b_1_1_xml_tag_a4d1332cd54aeae8c583f3cd14abac674}
+
+
+Definition at line 649 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+652 \{
+653   attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ab3eb98b55d4874281ba91c342422bd83}{AddAttribute} (attributeName,  attributeValue.
+      \hyperlink{class_k_k_b_1_1_date_time_aca57fbdcd040549a2c9e0a3d4e99b9f9}{YYYY\_MM\_DD\_HH\_MM\_SS} ());
+654 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Count@{Attribute\+Count}}
+\index{Attribute\+Count@{Attribute\+Count}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Count() const }{AttributeCount() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_tag_a10f5b347fa9da308939c0ac21f070730}{}\label{class_k_k_b_1_1_xml_tag_a10f5b347fa9da308939c0ac21f070730}
+
+
+Definition at line 196 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+::\+Xml\+Element\+M\+L\+Class().
+
+
+\begin{DoxyCode}
+196 \{\textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})attributes.size ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Name\+By\+Index@{Attribute\+Name\+By\+Index}}
+\index{Attribute\+Name\+By\+Index@{Attribute\+Name\+By\+Index}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Name\+By\+Index(kkuint32 index) const }{AttributeNameByIndex(kkuint32 index) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} Xml\+Tag\+::\+Attribute\+Name\+By\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_a61ba0499cfa68b1197fea386a1274383}{}\label{class_k_k_b_1_1_xml_tag_a61ba0499cfa68b1197fea386a1274383}
+
+
+Definition at line 670 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+::\+Xml\+Element\+M\+L\+Class().
+
+
+\begin{DoxyCode}
+671 \{
+672   \textcolor{keywordflow}{return}  attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_af1933bdf7634b45e3fef432d1542c8d9}{AttributeNameByIndex} (index);
+673 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attributes@{Attributes}}
+\index{Attributes@{Attributes}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attributes() const }{Attributes() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Xml\+Attribute\+List}\& K\+K\+B\+::\+Xml\+Tag\+::\+Attributes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_tag_a6c095b447cf9bb12ebddd4136c173ab8}{}\label{class_k_k_b_1_1_xml_tag_a6c095b447cf9bb12ebddd4136c173ab8}
+
+
+Definition at line 198 of file Xml\+Stream.\+h.
+
+
+\begin{DoxyCode}
+198 \{\textcolor{keywordflow}{return} attributes;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Value\+By\+Index@{Attribute\+Value\+By\+Index}}
+\index{Attribute\+Value\+By\+Index@{Attribute\+Value\+By\+Index}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Value\+By\+Index(kkuint32 index) const }{AttributeValueByIndex(kkuint32 index) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} Xml\+Tag\+::\+Attribute\+Value\+By\+Index (
+\begin{DoxyParamCaption}
+\item[{{\bf kkuint32}}]{index}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_a3bb39487ecf34a319b027b7ab0bfc83e}{}\label{class_k_k_b_1_1_xml_tag_a3bb39487ecf34a319b027b7ab0bfc83e}
+
+
+Definition at line 664 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+::\+Xml\+Element\+M\+L\+Class().
+
+
+\begin{DoxyCode}
+665 \{
+666   \textcolor{keywordflow}{return}  attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_a8535e0974a45c3820f8b43f6c6f459dc}{AttributeValueByIndex} (index);
+667 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Value\+By\+Name@{Attribute\+Value\+By\+Name}}
+\index{Attribute\+Value\+By\+Name@{Attribute\+Value\+By\+Name}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Value\+By\+Name(const K\+K\+Str \&name) const }{AttributeValueByName(const KKStr &name) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} Xml\+Tag\+::\+Attribute\+Value\+By\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_a0470baf5a49af1c2f6aaf0155b9ba783}{}\label{class_k_k_b_1_1_xml_tag_a0470baf5a49af1c2f6aaf0155b9ba783}
+
+
+Definition at line 658 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+::\+Attribute\+Value(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+::\+Var\+Name(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Xml\+Element\+Bool(), and K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+::\+Xml\+Element\+M\+L\+Class().
+
+
+\begin{DoxyCode}
+659 \{
+660   \textcolor{keywordflow}{return}  attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_a21a30ed3b18c0ab3517dfd57d4d4f450}{AttributeValueByName} (name);
+661 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Value\+Date\+Time@{Attribute\+Value\+Date\+Time}}
+\index{Attribute\+Value\+Date\+Time@{Attribute\+Value\+Date\+Time}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Value\+Date\+Time(const K\+K\+Str \&attribute\+Name) const }{AttributeValueDateTime(const KKStr &attributeName) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Date\+Time} Xml\+Tag\+::\+Attribute\+Value\+Date\+Time (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_a0281ac91c0d271ac3b9cbe4738d5ad12}{}\label{class_k_k_b_1_1_xml_tag_a0281ac91c0d271ac3b9cbe4738d5ad12}
+
+
+Definition at line 682 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Xml\+Element\+Date\+Time().
+
+
+\begin{DoxyCode}
+683 \{
+684  \textcolor{keywordflow}{return}  this->attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_a575e44934a102d84feef0fa7df40a7ef}{AttributeValueDateTime}  (attributeName);
+685 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Value\+Int32@{Attribute\+Value\+Int32}}
+\index{Attribute\+Value\+Int32@{Attribute\+Value\+Int32}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Value\+Int32(const K\+K\+Str \&attribute\+Name) const }{AttributeValueInt32(const KKStr &attributeName) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Xml\+Tag\+::\+Attribute\+Value\+Int32 (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{attribute\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_acbbfaeaf55fd15e4f563a71a1b4fa456}{}\label{class_k_k_b_1_1_xml_tag_acbbfaeaf55fd15e4f563a71a1b4fa456}
+
+
+Definition at line 676 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Read\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Read\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Read\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Element\+Array\+Float2\+D\+Varying\+::\+Xml\+Element\+Array\+Float2\+D\+Varying().
+
+
+\begin{DoxyCode}
+677 \{
+678  \textcolor{keywordflow}{return}  this->attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ade591332c27a5b659ab87560c140d9ae}{AttributeValueInt32}  (attributeName);
+679 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Attribute\+Value\+K\+K\+Str@{Attribute\+Value\+K\+K\+Str}}
+\index{Attribute\+Value\+K\+K\+Str@{Attribute\+Value\+K\+K\+Str}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Attribute\+Value\+K\+K\+Str(const K\+K\+Str \&name) const }{AttributeValueKKStr(const KKStr &name) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& Xml\+Tag\+::\+Attribute\+Value\+K\+K\+Str (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_a70aa928e7fecc15e7a510e23a5d30920}{}\label{class_k_k_b_1_1_xml_tag_a70aa928e7fecc15e7a510e23a5d30920}
+
+
+Definition at line 688 of file Xml\+Stream.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+::\+Read\+X\+M\+L().
+
+
+\begin{DoxyCode}
+689 \{
+690  \textcolor{keywordflow}{return}  attributes.\hyperlink{class_k_k_b_1_1_xml_attribute_list_ae7baf3bee375c9673c3725d5449c06ad}{AttributeValueKKStr}  (attributeName);
+691 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+Xml\+Tag\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_tag_a80934a69d86c1e06b13889fcde99a63b}{}\label{class_k_k_b_1_1_xml_tag_a80934a69d86c1e06b13889fcde99a63b}
+
+
+Definition at line 193 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), and K\+K\+B\+::\+Xml\+Element\+::\+Section\+Name().
+
+
+\begin{DoxyCode}
+193 \{\textcolor{keywordflow}{return}  name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Tag\+Type@{Tag\+Type}}
+\index{Tag\+Type@{Tag\+Type}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Tag\+Type() const }{TagType() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tag\+Types} K\+K\+B\+::\+Xml\+Tag\+::\+Tag\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_tag_abe56f7d7b736e627d3a9a584ff965b1e}{}\label{class_k_k_b_1_1_xml_tag_abe56f7d7b736e627d3a9a584ff965b1e}
+
+
+Definition at line 194 of file Xml\+Stream.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), and Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+194 \{\textcolor{keywordflow}{return}  tagType;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!To\+String@{To\+String}}
+\index{To\+String@{To\+String}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{To\+String() const }{ToString() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Xml\+Tag\+::\+To\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_xml_tag_ac2edd74085cdd50465096426f1ef9e44}{}\label{class_k_k_b_1_1_xml_tag_ac2edd74085cdd50465096426f1ef9e44}
+
+
+Definition at line 694 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Xml\+Attribute\+::\+Name(), K\+K\+B\+::\+K\+K\+Str\+::\+Quoted\+Str(), tag\+Empty, tag\+End, and K\+K\+B\+::\+Xml\+Attribute\+::\+Value().
+
+
+
+Referenced by K\+K\+B\+::\+Xml\+Element\+::\+Name\+Tag\+Str(), K\+K\+B\+::\+Xml\+Element\+::\+To\+K\+K\+Str(), and Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+695 \{
+696   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  s (name.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} () + attributes.size () * 30);
+697   s << \textcolor{stringliteral}{"<"};
+698   
+699   \textcolor{keywordflow}{if}  (tagType == \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{TagTypes::tagEnd})
+700     s << \textcolor{stringliteral}{"/"};
+701 
+702   s << name;
+703 
+704   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{XmlAttributeList::const\_iterator}  idx;
+705   \textcolor{keywordflow}{for}  (idx = attributes.begin();  idx != attributes.end ();  ++idx)
+706   \{
+707     \hyperlink{class_k_k_b_1_1_xml_attribute}{XmlAttributePtr}  a = *idx;
+708     s << \textcolor{stringliteral}{" "} <<  a->\hyperlink{class_k_k_b_1_1_xml_attribute_a1028e1a45e72cf7c4b0450f3206f0fe9}{Name} () << \textcolor{stringliteral}{"="} << a->\hyperlink{class_k_k_b_1_1_xml_attribute_a3f80845535790d617c8d1ef01f134a65}{Value} ().\hyperlink{class_k_k_b_1_1_k_k_str_a193b549c8d4b41a9692f890dae1993f4}{QuotedStr} ();
+709   \}
+710 
+711   \textcolor{keywordflow}{if}  (tagType == \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ac842083d30a90700e09f4cbf728f01b8}{TagTypes::tagEmpty})
+712     s << \textcolor{stringliteral}{"/"};
+713 
+714    s << \textcolor{stringliteral}{">"};
+715 
+716    \textcolor{keywordflow}{return}  s;
+717 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+B\+::\+Xml\+Tag@{K\+K\+B\+::\+Xml\+Tag}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(std\+::ostream \&o)}{WriteXML(std::ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Xml\+Tag\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_tag_a0ba9ea780e48285cbcd0ecac787a4012}{}\label{class_k_k_b_1_1_xml_tag_a0ba9ea780e48285cbcd0ecac787a4012}
+
+
+Definition at line 723 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::operator$<$$<$(), tag\+End, tag\+Start, Tag\+Type(), To\+String(), and xml\+Level.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Param\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+Type\+Vector\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Knn\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Class\+Prob\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Bit\+String\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Usf\+Cas\+Cor\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Svm\+Base\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Param\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Attribute\+List\+::\+Write\+X\+M\+L(), S\+V\+M233\+::\+Svm\+Model233\+::\+Write\+X\+M\+L(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Svm\+\_\+\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Dual\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Feature\+Num\+List\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+Mparam\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+S\+V\+M\+Model\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Process2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+Index\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Date\+Time\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Xml\+Element\+M\+L\+Class\+Name\+List\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Key\+Value\+Pairs\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Array\+Float2\+D\+Varying\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+K\+K\+Str\+List\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+724 \{
+725   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_xml_tag_abe56f7d7b736e627d3a9a584ff965b1e}{TagType} () == \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9a3ceaa9a790f688ec97a35b5a3fd3b164}{TagTypes::tagEnd})
+726     --\hyperlink{_xml_stream_8cpp_ad1d6b8ca8fb61d14719c4c25c9ada3d7}{xmlLevel};
+727 
+728   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < \hyperlink{_xml_stream_8cpp_ad1d6b8ca8fb61d14719c4c25c9ada3d7}{xmlLevel};  ++x)
+729     o << \textcolor{stringliteral}{"  "};
+730   o << \hyperlink{class_k_k_b_1_1_xml_tag_ac2edd74085cdd50465096426f1ef9e44}{ToString} ();
+731 
+732   \textcolor{keywordflow}{if}  (this->\hyperlink{class_k_k_b_1_1_xml_tag_abe56f7d7b736e627d3a9a584ff965b1e}{TagType} () == \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9ab02b23b5e15b3a1353771313e1176ce0}{TagTypes::tagStart})
+733     ++\hyperlink{_xml_stream_8cpp_ad1d6b8ca8fb61d14719c4c25c9ada3d7}{xmlLevel};
+734 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8h}{Xml\+Stream.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8cpp}{Xml\+Stream.\+cpp}\end{DoxyCompactItemize}

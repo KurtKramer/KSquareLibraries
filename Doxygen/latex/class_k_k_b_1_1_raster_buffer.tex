@@ -1,0 +1,376 @@
+\hypertarget{class_k_k_b_1_1_raster_buffer}{}\section{K\+KB\+:\+:Raster\+Buffer Class Reference}
+\label{class_k_k_b_1_1_raster_buffer}\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+
+
+Will manage a buffer that will allow multiple threads to add and remove instances of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} objects.  
+
+
+
+
+{\ttfamily \#include $<$Raster\+Buffer.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_raster_buffer}{Raster\+Buffer} $\ast$ \hyperlink{class_k_k_b_1_1_raster_buffer_a1dc33d464c891b33bf9cf582d072d070}{Raster\+Buffer\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_raster_buffer_a1a11fa2be0ae025fd06f3d12b7526bf4}{Raster\+Buffer} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+max\+Num\+Of\+Buffers)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_raster_buffer_a05eabd4c27ee56fc8f4a9ba33e1a4d1d}{$\sim$\+Raster\+Buffer} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_raster_buffer_a3dfa7abd7de9d9d045493ce127e239c1}{Add\+Raster} (\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} raster)
+\begin{DoxyCompactList}\small\item\em Adds \textquotesingle{}raster\textquotesingle{} to the end of the queue giving the queue ownership of the instance. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_raster_buffer_a825746ee0a7b3bb8aeb18dd95d745d92}{Get\+Copy\+Of\+Last\+Image} ()
+\begin{DoxyCompactList}\small\item\em Returns a copy of the last \hyperlink{class_k_k_b_1_1_raster}{Raster} instance added to the queue; if buffer is empty will return N\+U\+LL. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{class_k_k_b_1_1_raster_buffer_a0197415691c6cb7f6c4d66fb7e734db3}{Get\+Next\+Raster} ()
+\begin{DoxyCompactList}\small\item\em Removes from the buffer the oldest instance of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} and returns it to caller; if buffer is empty will return N\+U\+LL. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_raster_buffer_a5d5910c66454d7617b0f69f5d34ff5e2}{Max\+Num\+Of\+Buffers} () const 
+\item 
+void \hyperlink{class_k_k_b_1_1_raster_buffer_a192f09a93c83fde84d2a03680464220f}{Max\+Num\+Of\+Buffers} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+max\+Num\+Of\+Buffers)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_raster_buffer_a72166588eea0d8c8d71acee0a493b404}{Memory\+Consumed\+Estimated} ()
+\begin{DoxyCompactList}\small\item\em Returns an estimate of the amount of memory consumed in bytes. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_raster_buffer_ad9baa444f52d08b081e2ca22e3e40427}{Num\+Available} () const 
+\begin{DoxyCompactList}\small\item\em The number of entries that are left in the buffer before \textquotesingle{}max\+Num\+Of\+Buffers\textquotesingle{} is reached. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_raster_buffer_add3930364963aa99a0cbdf3da17fa103}{Num\+Populated} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_raster_buffer_a0fe8436c22413ba4ab6eddbe3451625a}{Rasters\+Dropped} () const 
+\begin{DoxyCompactList}\small\item\em Returns the number of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} instances that had to be deleted because the size of the queue had reached \textquotesingle{}max\+Num\+Of\+Buffers\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Will manage a buffer that will allow multiple threads to add and remove instances of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} objects. 
+
+A \textquotesingle{}Goal\+Keepeer\textquotesingle{} object \textquotesingle{}gate\+Keeper\textquotesingle{} will be used to enforce integrity in the Multi-\/\+Threaded environment. It will guarantee that only one thread at a time can access the \hyperlink{class_k_k_b_1_1_raster}{Raster} Queue. This queue will take ownership of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} instances added to it via \textquotesingle{}Add\+Raster\textquotesingle{}. It will pass ownership of the \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} instances when it returns them in Get\+Next\+Raster. When a \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster_buffer}{Raster\+Buffer}\textquotesingle{} instance is deleted it will delete all the \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} instances it still contains. 
+
+Definition at line 34 of file Raster\+Buffer.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Raster\+Buffer\+Ptr@{Raster\+Buffer\+Ptr}}
+\index{Raster\+Buffer\+Ptr@{Raster\+Buffer\+Ptr}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Raster\+Buffer\+Ptr}{RasterBufferPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Raster\+Buffer}$\ast$ {\bf K\+K\+B\+::\+Raster\+Buffer\+::\+Raster\+Buffer\+Ptr}}\hypertarget{class_k_k_b_1_1_raster_buffer_a1dc33d464c891b33bf9cf582d072d070}{}\label{class_k_k_b_1_1_raster_buffer_a1dc33d464c891b33bf9cf582d072d070}
+
+
+Definition at line 37 of file Raster\+Buffer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Raster\+Buffer@{Raster\+Buffer}}
+\index{Raster\+Buffer@{Raster\+Buffer}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Raster\+Buffer(const K\+K\+Str \&\+\_\+name, kkint32 \+\_\+max\+Num\+Of\+Buffers)}{RasterBuffer(const KKStr &_name, kkint32 _maxNumOfBuffers)}}]{\setlength{\rightskip}{0pt plus 5cm}Raster\+Buffer\+::\+Raster\+Buffer (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{{\bf kkint32}}]{\+\_\+max\+Num\+Of\+Buffers}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a1a11fa2be0ae025fd06f3d12b7526bf4}{}\label{class_k_k_b_1_1_raster_buffer_a1a11fa2be0ae025fd06f3d12b7526bf4}
+
+
+Constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+name} & Name of the buffer; this will be used by the associated \textquotesingle{}Gate\+Keeper\textquotesingle{} instance; should be unique. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+max\+Num\+Of\+Buffers} & The maximum number of raster instances that can be added to this buffer. When this limit has been reached the oldest entries in the list will be deleted when a new one is added (Add\+Raster). \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 39 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Create(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+Goal\+Keeper\+::\+Memory\+Consumed\+Estimated(), K\+K\+B\+::operator+(), and Raster\+Buffer().
+
+
+
+Referenced by Raster\+Buffer().
+
+
+\begin{DoxyCode}
+41                             :
+42   
+43     buffer               (),
+44     gateKeeper           (NULL),
+45     maxNumOfBuffers      (\_maxNumOfBuffers),
+46     memoryConsumed       (0),
+47     name                 (\_name),
+48     rastersDropped       (0)
+49 \{
+50   \hyperlink{class_k_k_b_1_1_goal_keeper_a46f564dd14177c3e6c413a2853e8de2b}{GoalKeeper::Create} (\textcolor{stringliteral}{"RasterBuffer\_"} + name, gateKeeper);
+51   memoryConsumed = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_b_1_1_raster_buffer_a1a11fa2be0ae025fd06f3d12b7526bf4}{RasterBuffer}) + gateKeeper->
+      \hyperlink{class_k_k_b_1_1_goal_keeper_a18cb2b73ae95e26d5c50758f440bb259}{MemoryConsumedEstimated} ();
+52 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!````~Raster\+Buffer@{$\sim$\+Raster\+Buffer}}
+\index{````~Raster\+Buffer@{$\sim$\+Raster\+Buffer}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{$\sim$\+Raster\+Buffer()}{~RasterBuffer()}}]{\setlength{\rightskip}{0pt plus 5cm}Raster\+Buffer\+::$\sim$\+Raster\+Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a05eabd4c27ee56fc8f4a9ba33e1a4d1d}{}\label{class_k_k_b_1_1_raster_buffer_a05eabd4c27ee56fc8f4a9ba33e1a4d1d}
+
+
+Definition at line 56 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+Destroy().
+
+
+\begin{DoxyCode}
+57 \{
+58   \textcolor{keywordflow}{while}  (buffer.size () > 0)
+59   \{
+60     \hyperlink{class_k_k_b_1_1_raster}{RasterPtr} r = buffer.front ();
+61     buffer.pop ();
+62     \textcolor{keyword}{delete}  r;  
+63     r = NULL;
+64   \}
+65 
+66   \hyperlink{class_k_k_b_1_1_goal_keeper_a160956bdf558db46a1e0f34b658d0d14}{GoalKeeper::Destroy} (gateKeeper);
+67   gateKeeper = NULL;
+68 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Add\+Raster@{Add\+Raster}}
+\index{Add\+Raster@{Add\+Raster}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Add\+Raster(\+Raster\+Ptr raster)}{AddRaster(RasterPtr raster)}}]{\setlength{\rightskip}{0pt plus 5cm}void Raster\+Buffer\+::\+Add\+Raster (
+\begin{DoxyParamCaption}
+\item[{{\bf Raster\+Ptr}}]{raster}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a3dfa7abd7de9d9d045493ce127e239c1}{}\label{class_k_k_b_1_1_raster_buffer_a3dfa7abd7de9d9d045493ce127e239c1}
+
+
+Adds \textquotesingle{}raster\textquotesingle{} to the end of the queue giving the queue ownership of the instance. 
+
+If the number of entries in the queue are already equal or greater than \textquotesingle{}Max\+Num\+Of\+Buffers\textquotesingle{} specified then the oldest instances in the queue(back of the queue) will be removed and deleted until the size of the queue is less than \textquotesingle{}Max\+Num\+Of\+Buffers\textquotesingle{} before adding this new instance. 
+
+Definition at line 105 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception(), K\+K\+B\+::\+Raster\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+106 \{
+107   \textcolor{keywordflow}{if}  (raster == NULL)
+108   \{
+109     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMsg;
+110     errMsg << \textcolor{stringliteral}{"RasterBuffer::AddRaster    raster ==  NULL"};
+111     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+112     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+113   \}
+114 
+115   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+116 
+117   \textcolor{keywordflow}{while}  (buffer.size () >= (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})maxNumOfBuffers)
+118     ThrowOutOldestOccupiedBuffer ();
+119 
+120   buffer.push (raster);
+121   memoryConsumed = memoryConsumed + raster->\hyperlink{class_k_k_b_1_1_raster_a201b99bad46e69e8df529bd60e84ab11}{MemoryConsumedEstimated} ();
+122 
+123   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+124 \}  \textcolor{comment}{/* AddFrame */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Get\+Copy\+Of\+Last\+Image@{Get\+Copy\+Of\+Last\+Image}}
+\index{Get\+Copy\+Of\+Last\+Image@{Get\+Copy\+Of\+Last\+Image}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Get\+Copy\+Of\+Last\+Image()}{GetCopyOfLastImage()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Raster\+Buffer\+::\+Get\+Copy\+Of\+Last\+Image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a825746ee0a7b3bb8aeb18dd95d745d92}{}\label{class_k_k_b_1_1_raster_buffer_a825746ee0a7b3bb8aeb18dd95d745d92}
+
+
+Returns a copy of the last \hyperlink{class_k_k_b_1_1_raster}{Raster} instance added to the queue; if buffer is empty will return N\+U\+LL. 
+
+Caller will get ownership and be responsible for deleting it. 
+
+Definition at line 158 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+159 \{
+160   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  result = NULL;
+161   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+162   \textcolor{keywordflow}{if}  (buffer.size () > 0)
+163   \{
+164     result = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_raster}{Raster} (*(buffer.back ()));
+165   \}
+166   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+167   \textcolor{keywordflow}{return}  result;
+168 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Get\+Next\+Raster@{Get\+Next\+Raster}}
+\index{Get\+Next\+Raster@{Get\+Next\+Raster}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Get\+Next\+Raster()}{GetNextRaster()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Raster\+Ptr} Raster\+Buffer\+::\+Get\+Next\+Raster (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a0197415691c6cb7f6c4d66fb7e734db3}{}\label{class_k_k_b_1_1_raster_buffer_a0197415691c6cb7f6c4d66fb7e734db3}
+
+
+Removes from the buffer the oldest instance of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} and returns it to caller; if buffer is empty will return N\+U\+LL. 
+
+
+
+Definition at line 128 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+129 \{
+130   \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  result = NULL;
+131 
+132   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+133 
+134   \textcolor{keywordflow}{if}  (buffer.size () > 0)
+135   \{
+136     result = buffer.front ();
+137     buffer.pop ();
+138     memoryConsumed = memoryConsumed - result->\hyperlink{class_k_k_b_1_1_raster_a201b99bad46e69e8df529bd60e84ab11}{MemoryConsumedEstimated} ();
+139   \}
+140 
+141   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+142   \textcolor{keywordflow}{return} result;
+143 \}  \textcolor{comment}{/* GetNextRaster */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Max\+Num\+Of\+Buffers@{Max\+Num\+Of\+Buffers}}
+\index{Max\+Num\+Of\+Buffers@{Max\+Num\+Of\+Buffers}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Max\+Num\+Of\+Buffers() const }{MaxNumOfBuffers() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Raster\+Buffer\+::\+Max\+Num\+Of\+Buffers (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_raster_buffer_a5d5910c66454d7617b0f69f5d34ff5e2}{}\label{class_k_k_b_1_1_raster_buffer_a5d5910c66454d7617b0f69f5d34ff5e2}
+
+
+Definition at line 55 of file Raster\+Buffer.\+h.
+
+
+\begin{DoxyCode}
+55 \{\textcolor{keywordflow}{return} maxNumOfBuffers;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Max\+Num\+Of\+Buffers@{Max\+Num\+Of\+Buffers}}
+\index{Max\+Num\+Of\+Buffers@{Max\+Num\+Of\+Buffers}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Max\+Num\+Of\+Buffers(kkint32 \+\_\+max\+Num\+Of\+Buffers)}{MaxNumOfBuffers(kkint32 _maxNumOfBuffers)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+B\+::\+Raster\+Buffer\+::\+Max\+Num\+Of\+Buffers (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+max\+Num\+Of\+Buffers}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_raster_buffer_a192f09a93c83fde84d2a03680464220f}{}\label{class_k_k_b_1_1_raster_buffer_a192f09a93c83fde84d2a03680464220f}
+
+
+Definition at line 69 of file Raster\+Buffer.\+h.
+
+
+\begin{DoxyCode}
+69 \{maxNumOfBuffers = \_maxNumOfBuffers;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Raster\+Buffer\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_raster_buffer_a72166588eea0d8c8d71acee0a493b404}{}\label{class_k_k_b_1_1_raster_buffer_a72166588eea0d8c8d71acee0a493b404}
+
+
+Returns an estimate of the amount of memory consumed in bytes. 
+
+This will help managed objects keep track of how much memory they are using in the unmanaged world. 
+
+Definition at line 147 of file Raster\+Buffer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Goal\+Keeper\+::\+End\+Block(), and K\+K\+B\+::\+Goal\+Keeper\+::\+Start\+Block().
+
+
+\begin{DoxyCode}
+148 \{
+149   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  result = 0;
+150   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_a2a9565f88cee7b4339c24ed4d5155419}{StartBlock} ();
+151   result = memoryConsumed;
+152   gateKeeper->\hyperlink{class_k_k_b_1_1_goal_keeper_aee88d11d3466dd77ef3e5b18c87e27fb}{EndBlock} ();
+153   \textcolor{keywordflow}{return}  result;
+154 \}  \textcolor{comment}{/* MemoryConsumedEstimated */}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Num\+Available@{Num\+Available}}
+\index{Num\+Available@{Num\+Available}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Num\+Available() const }{NumAvailable() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Raster\+Buffer\+::\+Num\+Available (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_raster_buffer_ad9baa444f52d08b081e2ca22e3e40427}{}\label{class_k_k_b_1_1_raster_buffer_ad9baa444f52d08b081e2ca22e3e40427}
+
+
+The number of entries that are left in the buffer before \textquotesingle{}max\+Num\+Of\+Buffers\textquotesingle{} is reached. 
+
+
+
+Definition at line 93 of file Raster\+Buffer.\+cpp.
+
+
+\begin{DoxyCode}
+94 \{
+95   \textcolor{keywordflow}{return}  maxNumOfBuffers - (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})buffer.size ();
+96 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Num\+Populated@{Num\+Populated}}
+\index{Num\+Populated@{Num\+Populated}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Num\+Populated() const }{NumPopulated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Raster\+Buffer\+::\+Num\+Populated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_b_1_1_raster_buffer_add3930364963aa99a0cbdf3da17fa103}{}\label{class_k_k_b_1_1_raster_buffer_add3930364963aa99a0cbdf3da17fa103}
+
+
+Definition at line 99 of file Raster\+Buffer.\+cpp.
+
+
+\begin{DoxyCode}
+100 \{
+101   \textcolor{keywordflow}{return}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})buffer.size ();
+102 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}!Rasters\+Dropped@{Rasters\+Dropped}}
+\index{Rasters\+Dropped@{Rasters\+Dropped}!K\+K\+B\+::\+Raster\+Buffer@{K\+K\+B\+::\+Raster\+Buffer}}
+\subsubsection[{\texorpdfstring{Rasters\+Dropped() const }{RastersDropped() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Raster\+Buffer\+::\+Rasters\+Dropped (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_raster_buffer_a0fe8436c22413ba4ab6eddbe3451625a}{}\label{class_k_k_b_1_1_raster_buffer_a0fe8436c22413ba4ab6eddbe3451625a}
+
+
+Returns the number of \textquotesingle{}\hyperlink{class_k_k_b_1_1_raster}{Raster}\textquotesingle{} instances that had to be deleted because the size of the queue had reached \textquotesingle{}max\+Num\+Of\+Buffers\textquotesingle{}. 
+
+
+
+Definition at line 53 of file Raster\+Buffer.\+h.
+
+
+\begin{DoxyCode}
+53 \{\textcolor{keywordflow}{return} rastersDropped;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_raster_buffer_8h}{Raster\+Buffer.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_raster_buffer_8cpp}{Raster\+Buffer.\+cpp}\end{DoxyCompactItemize}

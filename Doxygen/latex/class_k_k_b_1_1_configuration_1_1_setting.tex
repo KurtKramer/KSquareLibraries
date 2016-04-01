@@ -1,0 +1,160 @@
+\hypertarget{class_k_k_b_1_1_configuration_1_1_setting}{}\section{K\+KB\+:\+:Configuration\+:\+:Setting Class Reference}
+\label{class_k_k_b_1_1_configuration_1_1_setting}\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a5b462de6eb944280e0bb634576269b86}{Setting} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+value, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+line\+Num)
+\item 
+\hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a8f27de1b2ea6928fef90f1d90ffeeaa6}{Setting} (const \hyperlink{class_k_k_b_1_1_configuration_1_1_setting}{Configuration\+::\+Setting} \&s)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a63f658602b0147eb3de7cfed15be02d6}{Line\+Num} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a822aa006918b3dfc06abcbadf6717479}{Memory\+Consumed\+Estimated} () const 
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a36eb5ba502d27443845f834157aefe97}{Name} () const 
+\item 
+\hyperlink{namespace_k_k_b_a46f665ec17615c856eff3d21f78bed5c}{K\+K\+Str\+Const\+Ptr} \hyperlink{class_k_k_b_1_1_configuration_1_1_setting_ac6ad492e5aff688f57a9a2de01db963d}{Value} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 31 of file Configuration.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Setting@{Setting}}
+\index{Setting@{Setting}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Setting(const K\+K\+Str \&\+\_\+name, const K\+K\+Str \&\+\_\+value, kkint32 \+\_\+line\+Num)}{Setting(const KKStr &_name, const KKStr &_value, kkint32 _lineNum)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Setting (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+value, }
+\item[{{\bf kkint32}}]{\+\_\+line\+Num}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_a5b462de6eb944280e0bb634576269b86}{}\label{class_k_k_b_1_1_configuration_1_1_setting_a5b462de6eb944280e0bb634576269b86}
+
+
+Definition at line 34 of file Configuration.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+37              :
+38       lineNum (\_lineNum),
+39       name    (\_name),
+40       value   (\_value)
+41     \{\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Setting@{Setting}}
+\index{Setting@{Setting}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Setting(const Configuration\+::\+Setting \&s)}{Setting(const Configuration::Setting &s)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Setting (
+\begin{DoxyParamCaption}
+\item[{const {\bf Configuration\+::\+Setting} \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_a8f27de1b2ea6928fef90f1d90ffeeaa6}{}\label{class_k_k_b_1_1_configuration_1_1_setting_a8f27de1b2ea6928fef90f1d90ffeeaa6}
+
+
+Definition at line 43 of file Configuration.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+43                                             :
+44         lineNum (s.lineNum),
+45         name    (s.name),
+46         value   (s.value)
+47     \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Line\+Num@{Line\+Num}}
+\index{Line\+Num@{Line\+Num}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Line\+Num() const }{LineNum() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Line\+Num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_a63f658602b0147eb3de7cfed15be02d6}{}\label{class_k_k_b_1_1_configuration_1_1_setting_a63f658602b0147eb3de7cfed15be02d6}
+
+
+Definition at line 49 of file Configuration.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+::\+Get\+Settings(), K\+K\+B\+::\+Configuration\+::\+Setting\+List\+::\+Look\+Up\+Line\+Num(), and K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+::\+Look\+Up\+Value().
+
+
+\begin{DoxyCode}
+49 \{\textcolor{keywordflow}{return}  lineNum;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_a822aa006918b3dfc06abcbadf6717479}{}\label{class_k_k_b_1_1_configuration_1_1_setting_a822aa006918b3dfc06abcbadf6717479}
+
+
+Definition at line 53 of file Configuration.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+53 \{\textcolor{keywordflow}{return}  \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_b_1_1_configuration_1_1_setting_a5b462de6eb944280e0bb634576269b86}{Setting}) + name.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} () + value.
+      \hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ();\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_a36eb5ba502d27443845f834157aefe97}{}\label{class_k_k_b_1_1_configuration_1_1_setting_a36eb5ba502d27443845f834157aefe97}
+
+
+Definition at line 50 of file Configuration.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+::\+Get\+Settings(), K\+K\+B\+::\+Configuration\+::\+Setting\+List\+::\+Look\+Up(), and K\+K\+B\+::\+Configuration\+::\+Setting\+List\+::\+Look\+Up\+Line\+Num().
+
+
+\begin{DoxyCode}
+50 \{\textcolor{keywordflow}{return}  &name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}!Value@{Value}}
+\index{Value@{Value}!K\+K\+B\+::\+Configuration\+::\+Setting@{K\+K\+B\+::\+Configuration\+::\+Setting}}
+\subsubsection[{\texorpdfstring{Value() const }{Value() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str\+Const\+Ptr} K\+K\+B\+::\+Configuration\+::\+Setting\+::\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_configuration_1_1_setting_ac6ad492e5aff688f57a9a2de01db963d}{}\label{class_k_k_b_1_1_configuration_1_1_setting_ac6ad492e5aff688f57a9a2de01db963d}
+
+
+Definition at line 51 of file Configuration.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+::\+Get\+Settings(), and K\+K\+B\+::\+Configuration\+::\+Conf\+Section\+::\+Look\+Up\+Value().
+
+
+\begin{DoxyCode}
+51 \{\textcolor{keywordflow}{return}  &value;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_configuration_8cpp}{Configuration.\+cpp}\end{DoxyCompactItemize}

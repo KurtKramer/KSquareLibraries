@@ -1,0 +1,329 @@
+\hypertarget{_k_k_base_types_8h}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Base\+Types.h File Reference}
+\label{_k_k_base_types_8h}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Base\+Types.\+h@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+K\+K\+Base\+Types.\+h}}
+
+
+This include file contains common definitions that are used by all classes in K\+K\+Base\+Librery.  
+
+
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}F\+L\+O\+A\+T.\+H\char`\"{}}\\*
+{\ttfamily \#include $<$limits$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+union \hyperlink{union_k_k_b_1_1_word_format32_bits}{K\+K\+B\+::\+Word\+Format32\+Bits}
+\begin{DoxyCompactList}\small\item\em Structure used to break 32 bit word into different formats;. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_b}{K\+KB}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespace_k_k_b}{K\+KB} The namespace for K\+K\+Base Library supporting general functionality needed by almost any application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a17f27f030c72c210599e6d938647f7c3}{Deg\+To\+Rad}~0.\+01745329251994
+\begin{DoxyCompactList}\small\item\em Conversion factor from Degrees to Radians. \end{DoxyCompactList}\item 
+\#define \hyperlink{_k_k_base_types_8h_ae61738c604346710af17404e19ec8a63}{Four\+Thirds\+Pie}~4.\+18879020478639
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a37fb2bbb1c87599cb50159db767be5eb}{int16\+\_\+max}~(kkint16)32767
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a42ea43f935a6fb0fe106c25df63a3243}{int16\+\_\+min}~(kkint16)–32,768
+\item 
+\#define \hyperlink{_k_k_base_types_8h_ab1240c5d3fea865121ed4684f8e968f6}{int32\+\_\+max}~(kkint32)2147483647
+\item 
+\#define \hyperlink{_k_k_base_types_8h_ab29398e623aa9027f097627dcc23e943}{int32\+\_\+min}~(kkint32)-\/214748367
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a04f08bcfbdcb10086d71d09154d5c804}{int64\+\_\+max}~(kkint64)9223372036854775807
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a5061397198a99b309797e7e028bec126}{int64\+\_\+min}~(kkint64)-\/9223372036854775807
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a39cd0979b726fe582e433b69e84f0dc0}{One\+Half\+Pie}~1.\+57079632679490
+\item 
+\#define \hyperlink{_k_k_base_types_8h_afff92f774009ec608d8f98efe5707e39}{One\+Third\+Pie}~1.\+04719755119660
+\item 
+\#define \hyperlink{_k_k_base_types_8h_ac40c2b49eb51e2adc237b530adfcadf4}{P\+IE}~3.\+14159265358979
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a467ed54b7ee6cf6bbf297c27fba36a9a}{Rad\+To\+Deg}~57.\+29577951308240
+\begin{DoxyCompactList}\small\item\em Conversion factor from Radians to Degrees. \end{DoxyCompactList}\item 
+\#define \hyperlink{_k_k_base_types_8h_a964d907aa0bbca73f950ed1659081d73}{Two\+Pie}~6.\+28318530717959
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a0d92f8bde4d89eed60e1aac5d3dd2906}{Two\+Thirds\+Pie}~2.\+09439510239319
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a6129964b81af3862de74993fdcd0e4e8}{uint16\+\_\+max}~(kkuint16)65535
+\item 
+\#define \hyperlink{_k_k_base_types_8h_aeafa0104ac2fa8acea546f2754f8301b}{uint32\+\_\+max}~(kkuint32)4294967295
+\item 
+\#define \hyperlink{_k_k_base_types_8h_a746b79a7ea43cc2ce2c406bb43a6e8ed}{uint64\+\_\+max}~(kkuint64)18446744073709551615
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef char const $\ast$const $\ast$const \hyperlink{namespace_k_k_b_adfacaca3337ea9de79ba008a19aba556}{K\+K\+B\+::\+Const\+Char\+Star\+Array}
+\item 
+typedef \+\_\+\+\_\+int16 \hyperlink{namespace_k_k_b_a93809780ee294124dda4c23069f41248}{K\+K\+B\+::kkint16}
+\begin{DoxyCompactList}\small\item\em 16 bit signed integer. \end{DoxyCompactList}\item 
+typedef \+\_\+\+\_\+int32 \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{K\+K\+B\+::kkint32}
+\item 
+typedef \+\_\+\+\_\+int64 \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{K\+K\+B\+::kkint64}
+\item 
+typedef \+\_\+\+\_\+int8 \hyperlink{namespace_k_k_b_af3afe438e33eee4e63728d59803872c7}{K\+K\+B\+::kkint8}
+\item 
+typedef unsigned \+\_\+\+\_\+int16 \hyperlink{namespace_k_k_b_aa8c7d4d30381c8a0b6fce68974a9c8a9}{K\+K\+B\+::kkuint16}
+\begin{DoxyCompactList}\small\item\em 16 bit unsigned integer. \end{DoxyCompactList}\item 
+typedef unsigned \+\_\+\+\_\+int32 \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{K\+K\+B\+::kkuint32}
+\item 
+typedef unsigned \+\_\+\+\_\+int64 \hyperlink{namespace_k_k_b_a1f2b0568d3b63cc7697dcff73250113e}{K\+K\+B\+::kkuint64}
+\item 
+typedef unsigned \+\_\+\+\_\+int8 \hyperlink{namespace_k_k_b_aebd95e29140dd9220a04bee9cabd648e}{K\+K\+B\+::kkuint8}
+\item 
+typedef unsigned char \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{K\+K\+B\+::uchar}
+\begin{DoxyCompactList}\small\item\em Unsigned character. \end{DoxyCompactList}\item 
+typedef unsigned int \hyperlink{namespace_k_k_b_ab8557ae1b1f2361659d82a890e2f8014}{K\+K\+B\+::uint}
+\begin{DoxyCompactList}\small\item\em Unsigned integer. \end{DoxyCompactList}\item 
+typedef unsigned long \hyperlink{namespace_k_k_b_ad16da29960588b11a873b8b16b197396}{K\+K\+B\+::ulong}
+\begin{DoxyCompactList}\small\item\em Unsigned long. \end{DoxyCompactList}\item 
+typedef unsigned short \hyperlink{namespace_k_k_b_a4a7e2d1bab49f38edf25c38a8dc20012}{K\+K\+B\+::ushort}
+\begin{DoxyCompactList}\small\item\em Unsigned short. \end{DoxyCompactList}\item 
+typedef std\+::vector$<$ bool $>$ \hyperlink{namespace_k_k_b_a14c7fc0d2e2c8b80878017f195980b89}{K\+K\+B\+::\+Vector\+Bool}
+\item 
+typedef std\+::vector$<$ char $>$ \hyperlink{namespace_k_k_b_ac5763efba6ccdbee14392d153dd69809}{K\+K\+B\+::\+Vector\+Char}
+\item 
+typedef Vector\+Char $\ast$ \hyperlink{namespace_k_k_b_acdcd703f4c3f54b8a4aa38cdc95af701}{K\+K\+B\+::\+Vector\+Char\+Ptr}
+\item 
+typedef std\+::vector$<$ double $>$ \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{K\+K\+B\+::\+Vector\+Double}
+\begin{DoxyCompactList}\small\item\em Vector of doubles. \end{DoxyCompactList}\item 
+typedef Vector\+Double $\ast$ \hyperlink{namespace_k_k_b_a035c6931de674cc639eaebeca6419ad8}{K\+K\+B\+::\+Vector\+Doublet\+Ptr}
+\item 
+typedef std\+::vector$<$ float $>$ \hyperlink{namespace_k_k_b_a4820c3670ee1fe74f0c4de981c600faf}{K\+K\+B\+::\+Vector\+Float}
+\item 
+typedef Vector\+Float $\ast$ \hyperlink{namespace_k_k_b_a182835040a03db3c21a7ea4e46c84790}{K\+K\+B\+::\+Vector\+Float\+Ptr}
+\item 
+typedef std\+::vector$<$ int $>$ \hyperlink{namespace_k_k_b_a791ebe73f89917067a7aab9dbd817e45}{K\+K\+B\+::\+Vector\+Int}
+\item 
+typedef std\+::vector$<$ kkint16 $>$ \hyperlink{namespace_k_k_b_ac2cb16557b269f092b9b8d05c90c0c9f}{K\+K\+B\+::\+Vector\+Int16}
+\begin{DoxyCompactList}\small\item\em Vector of signed 16 bit integers. \end{DoxyCompactList}\item 
+typedef std\+::vector$<$ kkint32 $>$ \hyperlink{namespace_k_k_b_adf8a10085d231870d8a072046d6cba10}{K\+K\+B\+::\+Vector\+Int32}
+\begin{DoxyCompactList}\small\item\em Vector of signed 32 bit integers. \end{DoxyCompactList}\item 
+typedef Vector\+Int32 $\ast$ \hyperlink{namespace_k_k_b_a0a0457effc318aa340f69262261760eb}{K\+K\+B\+::\+Vector\+Int32\+Ptr}
+\item 
+typedef std\+::vector$<$ kkint64 $>$ \hyperlink{namespace_k_k_b_a53584303a9b1e1ae8f4c72034685bf99}{K\+K\+B\+::\+Vector\+Int64}
+\item 
+typedef Vector\+Int64 $\ast$ \hyperlink{namespace_k_k_b_a9249e96328ebcbaa92560e5ffbd589ec}{K\+K\+B\+::\+Vector\+Int64\+Ptr}
+\item 
+typedef Vector\+Int $\ast$ \hyperlink{namespace_k_k_b_a0fb33b081f971e43176068897f27428f}{K\+K\+B\+::\+Vector\+Int\+Ptr}
+\item 
+typedef std\+::vector$<$ short $>$ \hyperlink{namespace_k_k_b_a17d2c938216be2f3e37e982067fa7234}{K\+K\+B\+::\+Vector\+Short}
+\item 
+typedef Vector\+Short $\ast$ \hyperlink{namespace_k_k_b_ab423dc7b2750fb78f63c613d0b94691b}{K\+K\+B\+::\+Vector\+Short\+Ptr}
+\item 
+typedef std\+::vector$<$ uchar $>$ \hyperlink{namespace_k_k_b_a2e345982c9a919580d77a11178ad920a}{K\+K\+B\+::\+Vector\+Uchar}
+\item 
+typedef Vector\+Uchar $\ast$ \hyperlink{namespace_k_k_b_ac43cb621a63d628438a729543638a404}{K\+K\+B\+::\+Vector\+Uchar\+Ptr}
+\item 
+typedef std\+::vector$<$ uint $>$ \hyperlink{namespace_k_k_b_a199042935a7ad6d22354bc8f0090b938}{K\+K\+B\+::\+Vector\+Uint}
+\item 
+typedef std\+::vector$<$ kkuint16 $>$ \hyperlink{namespace_k_k_b_a4f57cb1872dd1448f1e20798475afc06}{K\+K\+B\+::\+Vector\+Uint16}
+\begin{DoxyCompactList}\small\item\em Vector of unsigned 16 bit integers. \end{DoxyCompactList}\item 
+typedef std\+::vector$<$ kkuint32 $>$ \hyperlink{namespace_k_k_b_ab5f0d7bc82b746e1e75e48a6394ccb60}{K\+K\+B\+::\+Vector\+Uint32}
+\begin{DoxyCompactList}\small\item\em Vector of unsigned 32 bit integers. \end{DoxyCompactList}\item 
+typedef std\+::vector$<$ kkuint64 $>$ \hyperlink{namespace_k_k_b_a04089b7368e1a306b1c5689ac46ce19a}{K\+K\+B\+::\+Vector\+Uint64}
+\item 
+typedef std\+::vector$<$ ulong $>$ \hyperlink{namespace_k_k_b_ac8e4b77afddb0db278beb180dae0b6dc}{K\+K\+B\+::\+Vector\+Ulong}
+\item 
+typedef Vector\+Ulong $\ast$ \hyperlink{namespace_k_k_b_a7122b1e95aed86a78a6b6d378deecd5d}{K\+K\+B\+::\+Vector\+Ulong\+Ptr}
+\item 
+typedef volatile const bool \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{K\+K\+B\+::\+Vol\+Const\+Bool}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{namespace_k_k_b_a71d9dfbbd830c4750aa8f50d93d4c0ed}{K\+K\+B\+::\+Float\+Abs} (float f)
+\item 
+bool \hyperlink{namespace_k_k_b_afad902625fe9ca2e38e057ed850641db}{K\+K\+B\+::\+Is\+Finite} (const float \&f)
+\item 
+bool \hyperlink{namespace_k_k_b_af10a43daa93634c3e5da3e0e38832ad0}{K\+K\+B\+::\+Is\+Finite} (const double \&f)
+\item 
+bool \hyperlink{namespace_k_k_b_a29cd3e80e6120bec198075818a947e54}{K\+K\+B\+::\+Is\+NaN} (const float \&f)
+\item 
+bool \hyperlink{namespace_k_k_b_a9f43b9751a8bb639af152d7de9ddadc9}{K\+K\+B\+::\+Is\+NaN} (const double \&d)
+\item 
+{\footnotesize template$<$typename T $>$ }\\T $\ast$ \hyperlink{namespace_k_k_b_a39720400d25a5a8bf690d2396914125b}{K\+K\+B\+::kk\+Reallocate\+Array} (T $\ast$oldA, kkint32 old\+Size, kkint32 new\+Size)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{namespace_k_k_b_aad6ec2b84e0888ea95b620ce79b60e40}{K\+K\+B\+::\+L\+Rand48} ()
+\begin{DoxyCompactList}\small\item\em A implementations of the Unix version of rand48 returning a 32 bit integer. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{K\+K\+B\+::\+Max} (T a, T b)
+\begin{DoxyCompactList}\small\item\em generic Max function, Both parameters must be of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a33da15022f43e40131b8ac9cb04774a1}{K\+K\+B\+::\+Max} (T a, T b, T c)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes three parameters. All three parameters must be of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a6037d327cea96be9d6de0130a902676b}{K\+K\+B\+::\+Max} (T a, T b, T c, T d)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes four parameters. All four parameters must be of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_aa7e03b3adb90c03720f8d7d436de1874}{K\+K\+B\+::\+Max} (T x0, T x1, T x2, T x3, T x4)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes five parameters of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a4974f12f116fe7582645ff47fec15c56}{K\+K\+B\+::\+Max} (T x0, T x1, T x2, T x3, T x4, T x5)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes six parameters of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a1d5c405ec1b3cbb4a7b1ff88f221725d}{K\+K\+B\+::\+Max} (T x0, T x1, T x2, T x3, T x4, T x5, T x6)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes seven parameters of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_a680b9aa7735bf659d3bea57ccbf089e4}{K\+K\+B\+::\+Max} (T x0, T x1, T x2, T x3, T x4, T x5, T x6, T x7)
+\begin{DoxyCompactList}\small\item\em Generic Max function, that takes eight parameters of the same type. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_ad030d1ca8bd5038824c4a923a4d23fb5}{K\+K\+B\+::\+Min} (T a, T b)
+\begin{DoxyCompactList}\small\item\em Generic Min function, Both parameters must be of the same type. \end{DoxyCompactList}\item 
+void \hyperlink{namespace_k_k_b_ab78431731ee8aed1c90baf2248d85b67}{K\+K\+B\+::\+S\+Rand48} (\hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64} \+\_\+seed)
+\begin{DoxyCompactList}\small\item\em Seeds the Lrand48 functions with the parameters passed to it. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T $>$ }\\T \hyperlink{namespace_k_k_b_aa407f810727f686de25d56fec45a9372}{K\+K\+B\+::\+Swap} (T \&x, T \&y)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{namespace_k_k_b_ad44c1392d19990e1279f4bd560df285d}{K\+K\+B\+::\+Double\+Max} = D\+B\+L\+\_\+\+M\+AX
+\item 
+double \hyperlink{namespace_k_k_b_ac986478abc5917bf650913249e2f457b}{K\+K\+B\+::\+Double\+Min} = D\+B\+L\+\_\+\+M\+IN
+\item 
+float \hyperlink{namespace_k_k_b_ae17198c2bfe6bff1db2be8bb83f51929}{K\+K\+B\+::\+Float\+Max} = F\+L\+T\+\_\+\+M\+AX
+\item 
+float \hyperlink{namespace_k_k_b_ab02e2be56dc2602d9fe757f5261ebc4c}{K\+K\+B\+::\+Float\+Min} = F\+L\+T\+\_\+\+M\+IN
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This include file contains common definitions that are used by all classes in K\+K\+Base\+Librery. 
+
+\begin{DoxyParagraph}{Description}
+This is the reference page for the K\+K\+Base\+Librery \hyperlink{_k_k_base_types_8h}{K\+K\+Base\+Types.\+h} include file.~\newline
+This reference page describes the types and definitions defined in the file {\ttfamily \hyperlink{_k_k_base_types_8h}{K\+K\+Base\+Types.\+h}}. It is not very detailed.
+\end{DoxyParagraph}
+\begin{DoxyParagraph}{Author }
+\href{http://figment.cse.usf.edu/~kkramer/}{\tt Kurt Kramer.}~\newline
+ ( mail \+: \href{mailto:kurtkramer@gmail.com}{\tt kurtkramer@gmail.\+com} )~\newline
+ 
+\end{DoxyParagraph}
+
+
+\subsection{Macro Definition Documentation}
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!Deg\+To\+Rad@{Deg\+To\+Rad}}
+\index{Deg\+To\+Rad@{Deg\+To\+Rad}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{Deg\+To\+Rad}{DegToRad}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Deg\+To\+Rad~0.\+01745329251994}\hypertarget{_k_k_base_types_8h_a17f27f030c72c210599e6d938647f7c3}{}\label{_k_k_base_types_8h_a17f27f030c72c210599e6d938647f7c3}
+
+
+Conversion factor from Degrees to Radians. 
+
+
+
+Definition at line 60 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!Four\+Thirds\+Pie@{Four\+Thirds\+Pie}}
+\index{Four\+Thirds\+Pie@{Four\+Thirds\+Pie}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{Four\+Thirds\+Pie}{FourThirdsPie}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Four\+Thirds\+Pie~4.\+18879020478639}\hypertarget{_k_k_base_types_8h_ae61738c604346710af17404e19ec8a63}{}\label{_k_k_base_types_8h_ae61738c604346710af17404e19ec8a63}
+
+
+Definition at line 57 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int16\+\_\+max@{int16\+\_\+max}}
+\index{int16\+\_\+max@{int16\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int16\+\_\+max}{int16_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int16\+\_\+max~(kkint16)32767}\hypertarget{_k_k_base_types_8h_a37fb2bbb1c87599cb50159db767be5eb}{}\label{_k_k_base_types_8h_a37fb2bbb1c87599cb50159db767be5eb}
+
+
+Definition at line 116 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int16\+\_\+min@{int16\+\_\+min}}
+\index{int16\+\_\+min@{int16\+\_\+min}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int16\+\_\+min}{int16_min}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int16\+\_\+min~(kkint16)–32,768}\hypertarget{_k_k_base_types_8h_a42ea43f935a6fb0fe106c25df63a3243}{}\label{_k_k_base_types_8h_a42ea43f935a6fb0fe106c25df63a3243}
+
+
+Definition at line 117 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int32\+\_\+max@{int32\+\_\+max}}
+\index{int32\+\_\+max@{int32\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int32\+\_\+max}{int32_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int32\+\_\+max~(kkint32)2147483647}\hypertarget{_k_k_base_types_8h_ab1240c5d3fea865121ed4684f8e968f6}{}\label{_k_k_base_types_8h_ab1240c5d3fea865121ed4684f8e968f6}
+
+
+Definition at line 119 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int32\+\_\+min@{int32\+\_\+min}}
+\index{int32\+\_\+min@{int32\+\_\+min}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int32\+\_\+min}{int32_min}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int32\+\_\+min~(kkint32)-\/214748367}\hypertarget{_k_k_base_types_8h_ab29398e623aa9027f097627dcc23e943}{}\label{_k_k_base_types_8h_ab29398e623aa9027f097627dcc23e943}
+
+
+Definition at line 120 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int64\+\_\+max@{int64\+\_\+max}}
+\index{int64\+\_\+max@{int64\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int64\+\_\+max}{int64_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int64\+\_\+max~(kkint64)9223372036854775807}\hypertarget{_k_k_base_types_8h_a04f08bcfbdcb10086d71d09154d5c804}{}\label{_k_k_base_types_8h_a04f08bcfbdcb10086d71d09154d5c804}
+
+
+Definition at line 122 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!int64\+\_\+min@{int64\+\_\+min}}
+\index{int64\+\_\+min@{int64\+\_\+min}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{int64\+\_\+min}{int64_min}}]{\setlength{\rightskip}{0pt plus 5cm}\#define int64\+\_\+min~(kkint64)-\/9223372036854775807}\hypertarget{_k_k_base_types_8h_a5061397198a99b309797e7e028bec126}{}\label{_k_k_base_types_8h_a5061397198a99b309797e7e028bec126}
+
+
+Definition at line 123 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!One\+Half\+Pie@{One\+Half\+Pie}}
+\index{One\+Half\+Pie@{One\+Half\+Pie}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{One\+Half\+Pie}{OneHalfPie}}]{\setlength{\rightskip}{0pt plus 5cm}\#define One\+Half\+Pie~1.\+57079632679490}\hypertarget{_k_k_base_types_8h_a39cd0979b726fe582e433b69e84f0dc0}{}\label{_k_k_base_types_8h_a39cd0979b726fe582e433b69e84f0dc0}
+
+
+Definition at line 55 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!One\+Third\+Pie@{One\+Third\+Pie}}
+\index{One\+Third\+Pie@{One\+Third\+Pie}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{One\+Third\+Pie}{OneThirdPie}}]{\setlength{\rightskip}{0pt plus 5cm}\#define One\+Third\+Pie~1.\+04719755119660}\hypertarget{_k_k_base_types_8h_afff92f774009ec608d8f98efe5707e39}{}\label{_k_k_base_types_8h_afff92f774009ec608d8f98efe5707e39}
+
+
+Definition at line 56 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!P\+IE@{P\+IE}}
+\index{P\+IE@{P\+IE}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{P\+IE}{PIE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+IE~3.\+14159265358979}\hypertarget{_k_k_base_types_8h_ac40c2b49eb51e2adc237b530adfcadf4}{}\label{_k_k_base_types_8h_ac40c2b49eb51e2adc237b530adfcadf4}
+
+
+Definition at line 52 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!Rad\+To\+Deg@{Rad\+To\+Deg}}
+\index{Rad\+To\+Deg@{Rad\+To\+Deg}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{Rad\+To\+Deg}{RadToDeg}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Rad\+To\+Deg~57.\+29577951308240}\hypertarget{_k_k_base_types_8h_a467ed54b7ee6cf6bbf297c27fba36a9a}{}\label{_k_k_base_types_8h_a467ed54b7ee6cf6bbf297c27fba36a9a}
+
+
+Conversion factor from Radians to Degrees. 
+
+
+
+Definition at line 59 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!Two\+Pie@{Two\+Pie}}
+\index{Two\+Pie@{Two\+Pie}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{Two\+Pie}{TwoPie}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Two\+Pie~6.\+28318530717959}\hypertarget{_k_k_base_types_8h_a964d907aa0bbca73f950ed1659081d73}{}\label{_k_k_base_types_8h_a964d907aa0bbca73f950ed1659081d73}
+
+
+Definition at line 53 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!Two\+Thirds\+Pie@{Two\+Thirds\+Pie}}
+\index{Two\+Thirds\+Pie@{Two\+Thirds\+Pie}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{Two\+Thirds\+Pie}{TwoThirdsPie}}]{\setlength{\rightskip}{0pt plus 5cm}\#define Two\+Thirds\+Pie~2.\+09439510239319}\hypertarget{_k_k_base_types_8h_a0d92f8bde4d89eed60e1aac5d3dd2906}{}\label{_k_k_base_types_8h_a0d92f8bde4d89eed60e1aac5d3dd2906}
+
+
+Definition at line 54 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!uint16\+\_\+max@{uint16\+\_\+max}}
+\index{uint16\+\_\+max@{uint16\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{uint16\+\_\+max}{uint16_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define uint16\+\_\+max~(kkuint16)65535}\hypertarget{_k_k_base_types_8h_a6129964b81af3862de74993fdcd0e4e8}{}\label{_k_k_base_types_8h_a6129964b81af3862de74993fdcd0e4e8}
+
+
+Definition at line 118 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!uint32\+\_\+max@{uint32\+\_\+max}}
+\index{uint32\+\_\+max@{uint32\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{uint32\+\_\+max}{uint32_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define uint32\+\_\+max~(kkuint32)4294967295}\hypertarget{_k_k_base_types_8h_aeafa0104ac2fa8acea546f2754f8301b}{}\label{_k_k_base_types_8h_aeafa0104ac2fa8acea546f2754f8301b}
+
+
+Definition at line 121 of file K\+K\+Base\+Types.\+h.
+
+\index{K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}!uint64\+\_\+max@{uint64\+\_\+max}}
+\index{uint64\+\_\+max@{uint64\+\_\+max}!K\+K\+Base\+Types.\+h@{K\+K\+Base\+Types.\+h}}
+\subsubsection[{\texorpdfstring{uint64\+\_\+max}{uint64_max}}]{\setlength{\rightskip}{0pt plus 5cm}\#define uint64\+\_\+max~(kkuint64)18446744073709551615}\hypertarget{_k_k_base_types_8h_a746b79a7ea43cc2ce2c406bb43a6e8ed}{}\label{_k_k_base_types_8h_a746b79a7ea43cc2ce2c406bb43a6e8ed}
+
+
+Definition at line 124 of file K\+K\+Base\+Types.\+h.
+

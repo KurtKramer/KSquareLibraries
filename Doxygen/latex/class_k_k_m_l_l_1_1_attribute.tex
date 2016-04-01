@@ -1,0 +1,689 @@
+\hypertarget{class_k_k_m_l_l_1_1_attribute}{}\section{K\+K\+M\+LL\+:\+:Attribute Class Reference}
+\label{class_k_k_m_l_l_1_1_attribute}\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+
+
+describes a single Feature, Type and possible values.  
+
+
+
+
+{\ttfamily \#include $<$Attribute.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_attribute_a8ba4e5a507aef352563e1e56f1930e66}{Attribute} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_attribute_ac654cf818459fb8a4c92a6232ff23c90}{Attribute} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name, \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555ab}{Attribute\+Type} \+\_\+type, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+field\+Num)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_attribute_aca912ec438af7f63c2ac1f5c37dafbaa}{Attribute} (const \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} \&a)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_attribute_a28ab087bb886728670e4ae5791bc2ea8}{$\sim$\+Attribute} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_attribute_aca915581709a40bd7021a482d566fa48}{Add\+A\+Nominal\+Value} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&nominal\+Value, bool \&already\+Exists)
+\begin{DoxyCompactList}\small\item\em Adds a allowable Nominal value to the Nominal or Symbolic field that this attribute represents. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_attribute_a7a7e8d04e3a93b47f6c2d1f99f0e42c6}{Cardinality} () const 
+\begin{DoxyCompactList}\small\item\em Returns back the cardinality of the attribute; the number of possible values it can take. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_attribute_a6ec2f162fc131b42eaa843f371f22b76}{Field\+Num} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_attribute_adc5bad6931d6c3f4aea6e1ad5c42b1f1}{Get\+Nominal\+Code} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&nominal\+Value) const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}{Get\+Nominal\+Value} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} code) const 
+\begin{DoxyCompactList}\small\item\em Returns the nominal value for the given ordinal value. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_attribute_a80f99020d7a1e70114fed4aa07c374bd}{Memory\+Consumed\+Estimated} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{Name} () const 
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_m_l_l_1_1_attribute_a0026d6630458c1147f58d478e9e33a93}{Name\+Upper} () const 
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_attribute_a6237d25c746776d26ad737a30a9c33f6}{operator!=} (const \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} \&right\+Side) const 
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} \& \hyperlink{class_k_k_m_l_l_1_1_attribute_ac670d93bfd4b98b3e7952a51dbe3e722}{operator=} (const \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} \&right)
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_attribute_abe2497616a670367e5299e174801d337}{operator==} (const \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} \&right\+Side) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_attribute_a0da84adc664fea9c6b4ff35c4239af6e}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a5f1b0b1667d79fec26deeff10c43df23}{Xml\+Tag\+Const\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555ab}{Attribute\+Type} \hyperlink{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}{Type} () const 
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_attribute_a37e2ba1b7741ce73ecdf3bda24be3e11}{Type\+Str} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_attribute_a1304910749f5392ac7beedb702b93799}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+describes a single Feature, Type and possible values. 
+
+\begin{DoxyAuthor}{Author}
+Kurt Kramer
+\end{DoxyAuthor}
+Used to support \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc}\textquotesingle{}, \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector}\textquotesingle{}, and is derived classes classes. \hyperlink{class_k_k_m_l_l_1_1_file_desc}{File\+Desc} will maintain a list of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}\textquotesingle{} objects to describe each separate field in a given Feature\+File. A given Feature can be one of several types, Numeric, Nominal, Ordinal, and Symbolic.
+
+
+\begin{DoxyCode}
+\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba87322391cc6e8948ce9fd5d6cb84fced}{Numeric}  - Any floating point value.
+Nominal  - Feature must be one of a specified possible values.  The \hyperlink{class_k_k_m_l_l_1_1_attribute_a8ba4e5a507aef352563e1e56f1930e66}{Attribute} \textcolor{keyword}{class }will
+           maintain a list of possible values.  This will be saved as a integer value from
+           in the FeatureVector object.  When training a classifier it would be best to
+           bit encode these features.  See the FeatureEncoder class.
+\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abac9d539922221d77591558b5841d36fd1}{Ordinal}  - Similar to \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{Nominal} except there is a definite ordering of value.
+\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{Symbolic} - Similar to \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{Nominal} except you do not know all the possible values this attribute
+           can take on.
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_m_l_l_1_1_feature_encoder}{K\+K\+M\+L\+L\+::\+Feature\+Encoder}, \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{K\+K\+M\+L\+L\+::\+Feature\+Vector}, \hyperlink{class_k_k_m_l_l_1_1_feature_file_i_o}{K\+K\+M\+L\+L\+::\+Feature\+File\+IO} 
+\end{DoxySeeAlso}
+
+
+Definition at line 74 of file Attribute.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Attribute@{Attribute}}
+\index{Attribute@{Attribute}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Attribute()}{Attribute()}}]{\setlength{\rightskip}{0pt plus 5cm}Attribute\+::\+Attribute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_a8ba4e5a507aef352563e1e56f1930e66}{}\label{class_k_k_m_l_l_1_1_attribute_a8ba4e5a507aef352563e1e56f1930e66}
+
+
+Definition at line 33 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+M\+L\+L\+::\+N\+U\+L\+L\+Attribute.
+
+
+\begin{DoxyCode}
+33                      :
+34     fieldNum           (-1),
+35     name               (),
+36     nameUpper          (),
+37     nominalValuesUpper (NULL),
+38     type               (\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abad76980f2bce5d0db714f2b125268dd6c}{AttributeType::NULLAttribute})
+39 
+40 \{
+41 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Attribute@{Attribute}}
+\index{Attribute@{Attribute}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Attribute(const K\+K\+Str \&\+\_\+name, Attribute\+Type \+\_\+type, kkint32 \+\_\+field\+Num)}{Attribute(const KKStr &_name, AttributeType _type, kkint32 _fieldNum)}}]{\setlength{\rightskip}{0pt plus 5cm}Attribute\+::\+Attribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name, }
+\item[{{\bf Attribute\+Type}}]{\+\_\+type, }
+\item[{{\bf kkint32}}]{\+\_\+field\+Num}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_ac654cf818459fb8a4c92a6232ff23c90}{}\label{class_k_k_m_l_l_1_1_attribute_ac654cf818459fb8a4c92a6232ff23c90}
+
+
+Definition at line 44 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+K\+K\+Str\+List\+Indexed(), K\+K\+M\+L\+L\+::\+Nominal, K\+K\+M\+L\+L\+::\+Symbolic, and K\+K\+B\+::\+K\+K\+Str\+::\+Upper().
+
+
+\begin{DoxyCode}
+47                       :
+48     fieldNum           (\_fieldNum),
+49     name               (\_name),
+50     nameUpper          (\_name),
+51     nominalValuesUpper (NULL),
+52     type               (\_type)
+53 
+54 \{
+55   nameUpper.\hyperlink{class_k_k_b_1_1_k_k_str_a66ea0feabc94da88591b56a683695bd9}{Upper} ();
+56   \textcolor{keywordflow}{if}  ((type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||  
+57        (type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+58       )
+59   \{
+60     nominalValuesUpper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_indexed}{KKStrListIndexed} (\textcolor{keyword}{true},   \textcolor{comment}{// true == nominalValuesUpper will
+       own its contents.}
+61                                                \textcolor{keyword}{false}   \textcolor{comment}{// false = Not Case Sensitive.}
+62                                               );
+63   \}
+64 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Attribute@{Attribute}}
+\index{Attribute@{Attribute}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Attribute(const Attribute \&a)}{Attribute(const Attribute &a)}}]{\setlength{\rightskip}{0pt plus 5cm}Attribute\+::\+Attribute (
+\begin{DoxyParamCaption}
+\item[{const {\bf Attribute} \&}]{a}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_aca912ec438af7f63c2ac1f5c37dafbaa}{}\label{class_k_k_m_l_l_1_1_attribute_aca912ec438af7f63c2ac1f5c37dafbaa}
+
+
+Definition at line 67 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+K\+K\+Str\+List\+Indexed(), K\+K\+M\+L\+L\+::\+Nominal, and K\+K\+M\+L\+L\+::\+Symbolic.
+
+
+\begin{DoxyCode}
+67                                         :
+68     fieldNum           (a.fieldNum),
+69     name               (a.name),
+70     nameUpper          (a.nameUpper),
+71     nominalValuesUpper (NULL),
+72     type               (a.type)
+73 
+74 \{
+75   \textcolor{keywordflow}{if}  ((type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||  
+76        (type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+77       )
+78   \{
+79     nominalValuesUpper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_indexed}{KKStrListIndexed} (*(a.nominalValuesUpper));
+80   \}
+81 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!````~Attribute@{$\sim$\+Attribute}}
+\index{````~Attribute@{$\sim$\+Attribute}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{$\sim$\+Attribute()}{~Attribute()}}]{\setlength{\rightskip}{0pt plus 5cm}Attribute\+::$\sim$\+Attribute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_a28ab087bb886728670e4ae5791bc2ea8}{}\label{class_k_k_m_l_l_1_1_attribute_a28ab087bb886728670e4ae5791bc2ea8}
+
+
+Definition at line 86 of file Attribute.\+cpp.
+
+
+\begin{DoxyCode}
+87 \{
+88   \textcolor{keyword}{delete}  nominalValuesUpper;
+89 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Add\+A\+Nominal\+Value@{Add\+A\+Nominal\+Value}}
+\index{Add\+A\+Nominal\+Value@{Add\+A\+Nominal\+Value}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Add\+A\+Nominal\+Value(const K\+K\+Str \&nominal\+Value, bool \&already\+Exists)}{AddANominalValue(const KKStr &nominalValue, bool &alreadyExists)}}]{\setlength{\rightskip}{0pt plus 5cm}void Attribute\+::\+Add\+A\+Nominal\+Value (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{nominal\+Value, }
+\item[{bool \&}]{already\+Exists}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_aca915581709a40bd7021a482d566fa48}{}\label{class_k_k_m_l_l_1_1_attribute_aca915581709a40bd7021a482d566fa48}
+
+
+Adds a allowable Nominal value to the Nominal or Symbolic field that this attribute represents. 
+
+To only be used by instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}\textquotesingle{} that represent Nominal or Symbolic type attributes. If the \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} type is not s \textquotesingle{}Nominal\textquotesingle{} or \textquotesingle{}Symbolic\textquotesingle{} then this method will throw am exception 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em nominal\+Value} & A possible value that this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}\textquotesingle{} could represent. \\
+\hline
+\mbox{\tt out}  & {\em already\+Exists} & Indicates if this instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute}\textquotesingle{} already contains a nominal value called \textquotesingle{}nominal\+Value\textquotesingle{}. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 123 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Add(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), Get\+Nominal\+Code(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Nominal\+Value(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Load\+File().
+
+
+\begin{DoxyCode}
+126 \{
+127   ValidateNominalType (\textcolor{stringliteral}{"AddANominalValue"});
+128   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  code = \hyperlink{class_k_k_m_l_l_1_1_attribute_adc5bad6931d6c3f4aea6e1ad5c42b1f1}{GetNominalCode} (nominalValue);
+129   \textcolor{keywordflow}{if}  (code >= 0)
+130   \{
+131     alreadyExists = \textcolor{keyword}{true};
+132     \textcolor{keywordflow}{return};
+133   \}
+134 
+135   alreadyExists = \textcolor{keyword}{false};
+136   nominalValuesUpper->\hyperlink{class_k_k_b_1_1_k_k_str_list_indexed_a70e2b10a57a8e0bb62f0f50087bbebd5}{Add} (\textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (nominalValue));
+137 \}  \textcolor{comment}{/* AddANominalValue */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Cardinality@{Cardinality}}
+\index{Cardinality@{Cardinality}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Cardinality() const }{Cardinality() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Attribute\+::\+Cardinality (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_a7a7e8d04e3a93b47f6c2d1f99f0e42c6}{}\label{class_k_k_m_l_l_1_1_attribute_a7a7e8d04e3a93b47f6c2d1f99f0e42c6}
+
+
+Returns back the cardinality of the attribute; the number of possible values it can take. 
+
+Only attributes with type Nominal or Symbolic have a fixed number of possible values all others will return 999999999. 
+
+Definition at line 173 of file Attribute.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Nominal, K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::size(), and K\+K\+M\+L\+L\+::\+Symbolic.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Cardinality(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Display\+Attribute\+Mappings(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Feature\+Encoder(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Save\+File().
+
+
+\begin{DoxyCode}
+174 \{
+175   \textcolor{keywordflow}{if}  ((type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||  
+176        (type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+177       )
+178     \textcolor{keywordflow}{return}  nominalValuesUpper->\hyperlink{class_k_k_b_1_1_k_k_str_list_indexed_acd0f65c79018c6a0a0cb512222412e17}{size} ();
+179   \textcolor{keywordflow}{else}
+180     \textcolor{keywordflow}{return} 999999999;
+181 \}  \textcolor{comment}{/* Cardinality */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Field\+Num@{Field\+Num}}
+\index{Field\+Num@{Field\+Num}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Field\+Num() const }{FieldNum() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Attribute\+::\+Field\+Num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_attribute_a6ec2f162fc131b42eaa843f371f22b76}{}\label{class_k_k_m_l_l_1_1_attribute_a6ec2f162fc131b42eaa843f371f22b76}
+
+
+Definition at line 106 of file Attribute.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Get\+Field\+Num\+From\+Attribute\+Name().
+
+
+\begin{DoxyCode}
+106 \{\textcolor{keywordflow}{return}  fieldNum;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Get\+Nominal\+Code@{Get\+Nominal\+Code}}
+\index{Get\+Nominal\+Code@{Get\+Nominal\+Code}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Get\+Nominal\+Code(const K\+K\+Str \&nominal\+Value) const }{GetNominalCode(const KKStr &nominalValue) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Attribute\+::\+Get\+Nominal\+Code (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{nominal\+Value}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_adc5bad6931d6c3f4aea6e1ad5c42b1f1}{}\label{class_k_k_m_l_l_1_1_attribute_adc5bad6931d6c3f4aea6e1ad5c42b1f1}
+
+
+Definition at line 185 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Look\+Up().
+
+
+
+Referenced by Add\+A\+Nominal\+Value(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Display\+Attribute\+Mappings(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Dst\+Web\+::\+Load\+File(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Load\+File(), and K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Look\+Up\+Nominal\+Code().
+
+
+\begin{DoxyCode}
+186 \{
+187   ValidateNominalType (\textcolor{stringliteral}{"GetNominalCode"});
+188   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  code = nominalValuesUpper->\hyperlink{class_k_k_b_1_1_k_k_str_list_indexed_acde2ff3f2e16f9274fec0c09dd51b162}{LookUp} (nominalValue);
+189   \textcolor{keywordflow}{return} code;
+190 \}  \textcolor{comment}{/* GetNominalCode */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Get\+Nominal\+Value@{Get\+Nominal\+Value}}
+\index{Get\+Nominal\+Value@{Get\+Nominal\+Value}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Get\+Nominal\+Value(kkint32 code) const }{GetNominalValue(kkint32 code) const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str} \& Attribute\+::\+Get\+Nominal\+Value (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{code}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}{}\label{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}
+
+
+Returns the nominal value for the given ordinal value. 
+
+For example\+: you could have a \hyperlink{class_k_k_m_l_l_1_1_attribute}{Attribute} called Day\+Of\+The\+Week that would be type \textquotesingle{}Nominal\textquotesingle{} where its possible values are \char`\"{}\+Sun\char`\"{}, \char`\"{}\+Mon\char`\"{}, \char`\"{}\+Tue\char`\"{}, \char`\"{}\+Wed\char`\"{}, \char`\"{}\+Thur\char`\"{}, \char`\"{}\+Fri\char`\"{}, and \char`\"{}\+Sat\char`\"{}. In this case a call to this method where \textquotesingle{}code\textquotesingle{} == 3 would return \char`\"{}\+Wed\char`\"{}. 
+
+Definition at line 143 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty\+Str(), and K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Look\+Up().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Display\+Attribute\+Mappings(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Feature\+Encoder(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Roberts\+::\+Save\+File(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Save\+File().
+
+
+\begin{DoxyCode}
+144 \{
+145   ValidateNominalType (\textcolor{stringliteral}{"GetNominalValue"});
+146 
+147   \textcolor{keyword}{static} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} missingDataValue = \textcolor{stringliteral}{"?"};
+148 
+149   \textcolor{keywordflow}{if}  (code == -1)
+150   \{
+151     \textcolor{comment}{// Missing Value Flag.}
+152     \textcolor{keywordflow}{return} missingDataValue;
+153   \}
+154 
+155   \textcolor{keywordflow}{if}  (!nominalValuesUpper)
+156     \textcolor{keywordflow}{return}  KKStr::EmptyStr ();
+157 
+158   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrConstPtr}  result = nominalValuesUpper->\hyperlink{class_k_k_b_1_1_k_k_str_list_indexed_acde2ff3f2e16f9274fec0c09dd51b162}{LookUp} (code);
+159   \textcolor{keywordflow}{if}  (result == NULL)
+160   \{
+161     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+162       << \textcolor{stringliteral}{"Attribute::GetNominalValue   ***ERROR***    Code["} << code << \textcolor{stringliteral}{"]  Does not exist."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+163       << \textcolor{stringliteral}{"                    Attribute::Name["} << name << \textcolor{stringliteral}{"]"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+164       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+165     \textcolor{keywordflow}{return}  KKStr::EmptyStr ();
+166   \}
+167 
+168   \textcolor{keywordflow}{return}  *result;
+169 \}  \textcolor{comment}{/* GetNominalValue */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Attribute\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_a80f99020d7a1e70114fed4aa07c374bd}{}\label{class_k_k_m_l_l_1_1_attribute_a80f99020d7a1e70114fed4aa07c374bd}
+
+
+Definition at line 92 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Memory\+Consumed\+Estimated(), and K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+93 \{
+94   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_attribute_a8ba4e5a507aef352563e1e56f1930e66}{Attribute})  + 
+95            name.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ()               +
+96            nameUpper.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ();
+97 
+98   \textcolor{keywordflow}{if}  (nominalValuesUpper)
+99     memoryConsumedEstimated += nominalValuesUpper->\hyperlink{class_k_k_b_1_1_k_k_str_list_indexed_a7dfe62ac389496c413536f8ef8b7d3eb}{MemoryConsumedEstimated} ();
+100 
+101   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+102 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Name@{Name}}
+\index{Name@{Name}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+M\+L\+L\+::\+Attribute\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}{}\label{class_k_k_m_l_l_1_1_attribute_a3cd12e05138dfbda83c6802dc984e394}
+
+
+Definition at line 122 of file Attribute.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Feature\+Encoder(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Load\+File().
+
+
+\begin{DoxyCode}
+122 \{\textcolor{keywordflow}{return} name;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Name\+Upper@{Name\+Upper}}
+\index{Name\+Upper@{Name\+Upper}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Name\+Upper() const }{NameUpper() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+M\+L\+L\+::\+Attribute\+::\+Name\+Upper (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_attribute_a0026d6630458c1147f58d478e9e33a93}{}\label{class_k_k_m_l_l_1_1_attribute_a0026d6630458c1147f58d478e9e33a93}
+
+
+Definition at line 125 of file Attribute.\+h.
+
+
+\begin{DoxyCode}
+125 \{\textcolor{keywordflow}{return} nameUpper;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{operator"!=(const Attribute \&right\+Side) const }{operator!=(const Attribute &rightSide) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Attribute\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Attribute} \&}]{right\+Side}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_a6237d25c746776d26ad737a30a9c33f6}{}\label{class_k_k_m_l_l_1_1_attribute_a6237d25c746776d26ad737a30a9c33f6}
+
+
+Definition at line 213 of file Attribute.\+cpp.
+
+
+
+References operator==().
+
+
+\begin{DoxyCode}
+214 \{
+215   \textcolor{keywordflow}{return}  !(*\textcolor{keyword}{this} == rightSide);
+216 \}  \textcolor{comment}{/* operator== */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!operator=@{operator=}}
+\index{operator=@{operator=}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{operator=(const Attribute \&right)}{operator=(const Attribute &right)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Attribute} \& Attribute\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Attribute} \&}]{right}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_ac670d93bfd4b98b3e7952a51dbe3e722}{}\label{class_k_k_m_l_l_1_1_attribute_ac670d93bfd4b98b3e7952a51dbe3e722}
+
+
+Definition at line 222 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::\+K\+K\+Str\+List\+Indexed(), and K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+\begin{DoxyCode}
+223 \{
+224   fieldNum  = right.fieldNum;
+225   name      = right.name;
+226   nameUpper = right.nameUpper;
+227 
+228   \textcolor{keyword}{delete}  nominalValuesUpper;
+229   \textcolor{keywordflow}{if}  (nominalValuesUpper)
+230     nominalValuesUpper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_indexed}{KKStrListIndexed} (*right.nominalValuesUpper);
+231   \textcolor{keywordflow}{else}
+232     nominalValuesUpper = NULL;
+233 
+234   type = right.type;
+235   \textcolor{keywordflow}{return}  *\textcolor{keyword}{this};
+236 \}  \textcolor{comment}{/* operator= */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!operator==@{operator==}}
+\index{operator==@{operator==}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{operator==(const Attribute \&right\+Side) const }{operator==(const Attribute &rightSide) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool Attribute\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Attribute} \&}]{right\+Side}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_abe2497616a670367e5299e174801d337}{}\label{class_k_k_m_l_l_1_1_attribute_abe2497616a670367e5299e174801d337}
+
+
+Definition at line 194 of file Attribute.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Nominal, K\+K\+B\+::\+K\+K\+Str\+::operator!=(), K\+K\+B\+::\+K\+K\+Str\+List\+Indexed\+::operator!=(), K\+K\+M\+L\+L\+::\+Symbolic, and Type().
+
+
+
+Referenced by operator!=().
+
+
+\begin{DoxyCode}
+195 \{
+196   \textcolor{keywordflow}{if}  ((nameUpper != rightSide.nameUpper)  ||  (\hyperlink{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}{Type} ()   != rightSide.\hyperlink{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}{Type} ()))
+197     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+198 
+199   \textcolor{keywordflow}{if}  ((type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{AttributeType::Nominal})  ||
+200        (type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{AttributeType::Symbolic})
+201       )
+202   \{
+203     \textcolor{comment}{// Lets make sure that the nominal values are equal.  Not Case sensitive.}
+204     \textcolor{keywordflow}{if}  ((*nominalValuesUpper) != (*rightSide.nominalValuesUpper))
+205       \textcolor{keywordflow}{return}  \textcolor{keyword}{false};
+206   \}
+207 
+208   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+209 \}  \textcolor{comment}{/* operator== */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Const\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagConstPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Attribute\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Const\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_attribute_a0da84adc664fea9c6b4ff35c4239af6e}{}\label{class_k_k_m_l_l_1_1_attribute_a0da84adc664fea9c6b4ff35c4239af6e}
+
+
+Definition at line 283 of file Attribute.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Attribute\+Type\+From\+Str(), K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Value\+Int32(), K\+K\+B\+::\+Xml\+Tag\+::\+Attribute\+Value\+K\+K\+Str(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), and K\+K\+B\+::\+K\+K\+Str\+::\+To\+Upper().
+
+
+\begin{DoxyCode}
+288 \{
+289   \textcolor{keyword}{delete}  nominalValuesUpper;
+290   nominalValuesUpper = NULL;
+291   type = \hyperlink{namespace_k_k_m_l_l_a6ce7dcc549393faf321ebfb02f426e9e}{AttributeTypeFromStr} (tag->AttributeValueKKStr (\textcolor{stringliteral}{"Type"}));
+292   fieldNum = tag->AttributeValueInt32 (\textcolor{stringliteral}{"FieldNum"});
+293   name = tag->AttributeValueKKStr (\textcolor{stringliteral}{"Name"});
+294   nameUpper = name.\hyperlink{class_k_k_b_1_1_k_k_str_a13ea2544c491c5e93117a8f06deb9eff}{ToUpper} ();
+295 
+296   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr} t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+297   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+298   \{
+299     \textcolor{keywordflow}{if}  ((t->\hyperlink{class_k_k_b_1_1_xml_token_a20aa05209eeafb58c1c595c15f07d504}{SectionName} ().\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NominalValues"}))  &&  (\textcolor{keyword}{typeid}(*t) =
+      = \textcolor{keyword}{typeid}(\hyperlink{namespace_k_k_b_ae7f117b12a72568bc7ab4a0322f2c4a4}{XmlElementVectorKKStr})))
+300     \{
+301       \textcolor{keyword}{delete}  nominalValuesUpper;
+302       nominalValuesUpper = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_k_k_str_list_indexed}{KKStrListIndexed} (\textcolor{keyword}{true},   \textcolor{comment}{// true == nominalValuesUpper will
+       own its contents.}
+303                                                  \textcolor{keyword}{false}   \textcolor{comment}{// false = Not Case Sensitive.}
+304                                                 );
+305       \hyperlink{class_k_k_b_1_1_xml_element_template}{XmlElementVectorKKStrPtr} v = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_template}{XmlElementVectorKKStrPtr}\textcolor{keyword}{>}(t);
+306       \textcolor{keywordflow}{if}  ((v != NULL)  &&  (v->\hyperlink{class_k_k_b_1_1_xml_element_template_a3d671b57251b4b256fecb2197fc4a0f4}{Value} () != NULL))
+307       \{
+308         VectorKKStr::const\_iterator  idx;
+309         \textcolor{keywordtype}{bool}  alreadyEixists = \textcolor{keyword}{false};
+310         \textcolor{keywordflow}{for} (idx = v->\hyperlink{class_k_k_b_1_1_xml_element_template_a3d671b57251b4b256fecb2197fc4a0f4}{Value} ()->begin ();  idx != v->\hyperlink{class_k_k_b_1_1_xml_element_template_a3d671b57251b4b256fecb2197fc4a0f4}{Value} ()->end ();  ++idx)
+311           \hyperlink{class_k_k_m_l_l_1_1_attribute_aca915581709a40bd7021a482d566fa48}{AddANominalValue} (*idx, alreadyEixists);
+312       \}
+313     \}
+314     \textcolor{keyword}{delete} t;
+315     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+316   \}
+317   \textcolor{keyword}{delete} t;
+318   t = NULL;
+319 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Type@{Type}}
+\index{Type@{Type}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Type() const }{Type() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Attribute\+Type} K\+K\+M\+L\+L\+::\+Attribute\+::\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}{}\label{class_k_k_m_l_l_1_1_attribute_ae867c1b4e264fb7be26941730364116d}
+
+
+Definition at line 133 of file Attribute.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Add\+A\+Attribute(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Cardinality(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Display\+Attribute\+Mappings(), K\+K\+M\+L\+L\+::\+Feature\+Encoder\+::\+Feature\+Encoder(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Load\+File(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Look\+Up\+Nominal\+Code(), operator==(), K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+Roberts\+::\+Save\+File(), and K\+K\+M\+L\+L\+::\+Feature\+File\+I\+O\+C45\+::\+Save\+File().
+
+
+\begin{DoxyCode}
+133 \{\textcolor{keywordflow}{return}  type;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Type\+Str@{Type\+Str}}
+\index{Type\+Str@{Type\+Str}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Type\+Str() const }{TypeStr() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Attribute\+::\+Type\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_a37e2ba1b7741ce73ecdf3bda24be3e11}{}\label{class_k_k_m_l_l_1_1_attribute_a37e2ba1b7741ce73ecdf3bda24be3e11}
+
+
+Definition at line 241 of file Attribute.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Attribute\+Type\+To\+Str().
+
+
+
+Referenced by Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+242 \{
+243   \textcolor{keywordflow}{return}  \hyperlink{namespace_k_k_m_l_l_a922b2d3446540a65714bf7387d90e6e2}{AttributeTypeToStr} (type);
+244 \}  \textcolor{comment}{/* TypeStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Attribute@{K\+K\+M\+L\+L\+::\+Attribute}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Attribute\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_attribute_a1304910749f5392ac7beedb702b93799}{}\label{class_k_k_m_l_l_1_1_attribute_a1304910749f5392ac7beedb702b93799}
+
+
+Definition at line 249 of file Attribute.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+M\+L\+L\+::\+Encode\+Problem(), K\+K\+M\+L\+L\+::\+Nominal, K\+K\+M\+L\+L\+::\+Symbolic, K\+K\+B\+::\+Xml\+Tag\+::tag\+Empty, K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, Type\+Str(), K\+K\+B\+::\+Vector\+K\+K\+Str\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Attribute\+List\+::\+Write\+X\+M\+L().
+
+
+\begin{DoxyCode}
+252 \{
+253   \hyperlink{class_k_k_b_1_1_xml_tag_a6c0ef0e23f982f49d55d4fb7eaff6ac9}{XmlTag::TagTypes}  startTagType = XmlTag::TagTypes::tagEmpty;
+254   \textcolor{keywordflow}{if}  ((type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555aba8c28d7c312116b8a46e2f466cb33d5b4}{KKMLL::AttributeType::Nominal}) ||
+255        (type == \hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555abaaddee1396a3e20ceea8071ed6da54866}{KKMLL::AttributeType::Symbolic})
+256       )
+257     startTagType  = XmlTag::TagTypes::tagStart;
+258 
+259   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"Attribute"}, startTagType);
+260   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+261     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+262   startTag.AddAtribute (\textcolor{stringliteral}{"Name"},     name);
+263   startTag.AddAtribute (\textcolor{stringliteral}{"Type"},     \hyperlink{class_k_k_m_l_l_1_1_attribute_a37e2ba1b7741ce73ecdf3bda24be3e11}{TypeStr} ());
+264   startTag.AddAtribute (\textcolor{stringliteral}{"FieldNum"}, fieldNum);
+265   startTag.WriteXML (o);
+266   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+267 
+268   \textcolor{keywordflow}{if}  (startTagType == XmlTag::TagTypes::tagStart)
+269   \{
+270     \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  nominalValues;
+271     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  nominalIdx = 0;  nominalIdx < \hyperlink{class_k_k_m_l_l_1_1_attribute_a7a7e8d04e3a93b47f6c2d1f99f0e42c6}{Cardinality} ();  ++nominalIdx)
+272       nominalValues.push\_back (\hyperlink{class_k_k_m_l_l_1_1_attribute_ad9342fb254fb972f63825f8d5be25311}{GetNominalValue} (nominalIdx));
+273     nominalValues.\hyperlink{class_k_k_b_1_1_vector_k_k_str_a3e90bf5fd9c23a8c16f0fdee98946395}{WriteXML} (\textcolor{stringliteral}{"NominalValues"}, o);
+274     \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"Attribute"}, XmlTag::TagTypes::tagEnd);
+275     endTag.WriteXML (o);
+276     o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+277   \}
+278 \}  \textcolor{comment}{/* WriteXML */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_attribute_8h}{Attribute.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_attribute_8cpp}{Attribute.\+cpp}\end{DoxyCompactItemize}

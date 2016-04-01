@@ -1,0 +1,2984 @@
+\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2}{}\section{K\+K\+M\+LL\+:\+:Confusion\+Matrix2 Class Reference}
+\label{class_k_k_m_l_l_1_1_confusion_matrix2}\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+
+
+A confusion matrix object that is used to record the results from a \hyperlink{class_k_k_m_l_l_1_1_cross_validation}{Cross\+Validation}. $<$see also cref=\char`\"{}\+Cross\+Validation\char`\"{}  
+
+
+
+
+{\ttfamily \#include $<$Confusion\+Matrix2.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2}{Confusion\+Matrix2} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a5e15dd38f24b2b85399c2e43d649bb9a}{Confusion\+Matrix2\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a856d67b4070de16eaa453b4f9c6b9cfa}{Confusion\+Matrix2} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+classes)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ac60d3f825f9649d5ca9f1db1f0bfaacd}{Confusion\+Matrix2} (const \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2}{Confusion\+Matrix2} \&cm)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a0929dcf5a2e1e174917aea8eedb64fa7}{Confusion\+Matrix2} (const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+classes, istream \&f, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+bucket\+Size, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Buckets, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Of\+Prob\+Buckets, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+prob\+Bucket\+Size, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_aecdea51d2f462833f6958f867ca328f5}{$\sim$\+Confusion\+Matrix2} ()
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ab1c460627788135c3c15227115226733}{Accuracy} ()
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a63b5831c167105766a9049b3f6e0a89a}{Accuracy} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ml\+Class)
+\item 
+\hyperlink{namespace_k_k_b_a4820c3670ee1fe74f0c4de981c600faf}{Vector\+Float} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a6c56961e4b2c3726f063d04f267489da}{Accuracy\+By\+Class} () const 
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ae1c01183e47d34242a7f16e16eb7e2f4}{Accuracy\+Class\+Weighted\+Equally} ()
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a1bc4b4d27de9bde960f88c4f705e47a8}{Accuracy\+Norm} ()
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a344dbdc79eca43f4fc2fff7eef96a95b}{Accuracy\+Str} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a0c1a6eba13b1faa33aa922a46dfe0e21}{Add\+In} (const \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2}{Confusion\+Matrix2} \&cm, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a34b983c3312da01ef7d6373663704958}{Avg\+Pred\+Prob} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a2ee79aa0b27fd0ff2ea5616492e14efe}{Class\+Count} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a9c395af8e6cffa32f8bece8070587eda}{Compute\+Fundamental\+Stats} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ic, double \&true\+Positives, double \&true\+Negatives, double \&false\+Positives, double \&false\+Negatives) const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ac29266aab7783f07aa9efece3b7b5d8e}{Count} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} ml\+Class)
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a7c9f2b6099bf35363288e62617edb498}{Counts\+By\+Known\+Class} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} known\+Class\+Idx) const 
+\item 
+const \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} \& \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ac565b97549d5af643c24aa61391eb454}{Counts\+By\+Known\+Class} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ac4bdf6a0bea12fd748dc0d05e1844f29}{Factor\+Counts} (double factor)
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a55f2dbba255de8a868007a0d7432b52f}{F\+Measure} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} positive\+Class, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_afeb6ab7435a722c16eae4e8e91e3cdd3}{Increment} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+known\+Class, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+pred\+Class, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+size, double \+\_\+probability, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+const \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \& \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a3ffbf4a67a233073c85772d5e70b3a82}{M\+L\+Classes} () const 
+\item 
+\hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{Vector\+Double} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ab8b5f2d711849ed4bb98e69bd85517bd}{Predicted\+Counts} () const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_af3f5627dd13168223482f28cba7d7226}{Predicted\+Counts\+CM} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} known\+Class\+Idx, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} pred\+Class\+Idx) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a26a7f198a4a6e1d60f55bef88ad84a6a}{Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML} (ostream \&o)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_abedb851741b437ee7897ef73bbeed4c7}{Print\+Confusion\+Matrix} (ostream \&\+\_\+out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a2aa0ab4f0a9e3c5bd907e68b94300dc7}{Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML} (ostream \&o)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_aecc46233879a6451a2ce5969933fc4fc}{Print\+Confusion\+Matrix\+H\+T\+ML} (const char $\ast$title, ostream \&file)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a45ec0f9441983bd3755d60631ce5ace9}{Print\+Confusion\+Matrix\+H\+T\+ML} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_afe463b9eec6a478fffbf252a42b54d3f}{Print\+Confusion\+Matrix\+Latex\+Table} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_aa5d90a87ce8341055e8cd45913b4ba51}{Print\+Confusion\+Matrix\+Narrow} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a541330f5c7bc79b49347728148876860}{Print\+Confusion\+Matrix\+Tab\+Delimited} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a049e78edf2c94c010218122cdcc5c412}{Print\+Error\+By\+Prob} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_affe7dfa4a82a45d72dbc0b1f7c9fbbea}{Print\+Error\+By\+Prob\+By\+Rows} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_aec72957398cc77f25926475d16c9e67e}{Print\+Error\+By\+Size} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a52a232c72d6030267fd32628fb1effdd}{Print\+Error\+By\+Size\+By\+Rows} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a177dd308fa4aadc3e66f0c839d0c3a3b}{Print\+Error\+By\+Size\+Reduced} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a98bfa5b223f8b50e43d242dffb1e4d06}{Print\+Prob\+Distribution\+Title} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a4773a126fdd6a49bc288fe82757e8b32}{Print\+Prob\+Distribution\+Total\+Count} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a5cdd62a1e722754611868a67c3a97f15}{Print\+Prob\+Distribution\+Total\+Error} (ostream \&out\+File)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a535e8ad57dcde379ccf958b1f78671ff}{Print\+True\+False\+Positives\+Tab\+Delimited} (ostream \&out\+File)
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_aff44039aef6ff3524a1639d39e320809}{Total\+Count} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a1961546f61564c059b00506156331451}{Write\+Simple\+Confusion\+Matrix} (ostream \&f) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_af7d5bc45536b15073e24a6b397c4a5c3}{Write\+X\+ML} (ostream \&f) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a5e15dd38f24b2b85399c2e43d649bb9a}{Confusion\+Matrix2\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a32cb66eab0f8b1ece3f87a94afbf4fcc}{Build\+From\+Istream\+X\+ML} (istream \&f, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A confusion matrix object that is used to record the results from a \hyperlink{class_k_k_m_l_l_1_1_cross_validation}{Cross\+Validation}. $<$see also cref=\char`\"{}\+Cross\+Validation\char`\"{} 
+
+
+
+Definition at line 33 of file Confusion\+Matrix2.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Confusion\+Matrix2\+Ptr@{Confusion\+Matrix2\+Ptr}}
+\index{Confusion\+Matrix2\+Ptr@{Confusion\+Matrix2\+Ptr}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Confusion\+Matrix2\+Ptr}{ConfusionMatrix2Ptr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Confusion\+Matrix2}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+Confusion\+Matrix2\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a5e15dd38f24b2b85399c2e43d649bb9a}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a5e15dd38f24b2b85399c2e43d649bb9a}
+
+
+Definition at line 36 of file Confusion\+Matrix2.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Confusion\+Matrix2@{Confusion\+Matrix2}}
+\index{Confusion\+Matrix2@{Confusion\+Matrix2}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Confusion\+Matrix2(const M\+L\+Class\+List \&\+\_\+classes)}{ConfusionMatrix2(const MLClassList &_classes)}}]{\setlength{\rightskip}{0pt plus 5cm}Confusion\+Matrix2\+::\+Confusion\+Matrix2 (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{\+\_\+classes}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a856d67b4070de16eaa453b4f9c6b9cfa}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a856d67b4070de16eaa453b4f9c6b9cfa}
+
+
+Definition at line 58 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References Confusion\+Matrix2().
+
+
+
+Referenced by Confusion\+Matrix2(), K\+K\+M\+L\+L\+::\+Confussion\+Matrix2\+List\+::\+Derive\+Average\+Confusion\+Matrix(), K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Train\+And\+Test(), and K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Validations().
+
+
+\begin{DoxyCode}
+58                                                                :   \textcolor{comment}{// Will make its own copy of list}
+59   bucketSize                  (100),
+60   classCount                  (0),
+61   correctByKnownClassByProb   (),
+62   correctByKnownClassBySize   (),
+63   correctCount                (0.0),
+64   countByKnownClassByProb     (),
+65   countByKnownClassBySize     (),
+66   countsByKnownClass          (),
+67   classes                     (\_classes),
+68   numInvalidClassesPredicted  (0.0),
+69   numOfBuckets                (40),
+70   numOfProbBuckets            (20),
+71   predictedCountsCM           (),
+72   probBucketSize              (5),
+73   totalCount                  (0.0),
+74   totalPredProb               (0.0),
+75   totalPredProbsByKnownClass  (),
+76   totalSizesByKnownClass      (),
+77   totPredProbCM               ()
+78 \{
+79   InitializeMemory ();
+80 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Confusion\+Matrix2@{Confusion\+Matrix2}}
+\index{Confusion\+Matrix2@{Confusion\+Matrix2}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Confusion\+Matrix2(const Confusion\+Matrix2 \&cm)}{ConfusionMatrix2(const ConfusionMatrix2 &cm)}}]{\setlength{\rightskip}{0pt plus 5cm}Confusion\+Matrix2\+::\+Confusion\+Matrix2 (
+\begin{DoxyParamCaption}
+\item[{const {\bf Confusion\+Matrix2} \&}]{cm}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ac60d3f825f9649d5ca9f1db1f0bfaacd}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ac60d3f825f9649d5ca9f1db1f0bfaacd}
+
+
+Definition at line 85 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References Confusion\+Matrix2().
+
+
+
+Referenced by Confusion\+Matrix2().
+
+
+\begin{DoxyCode}
+85                                                               :
+86   bucketSize                  (cm.bucketSize),
+87   classCount                  (cm.classCount),
+88   correctByKnownClassByProb   (),
+89   correctByKnownClassBySize   (),
+90   correctCount                (cm.correctCount),
+91   countByKnownClassByProb     (),
+92   countByKnownClassBySize     (),
+93   countsByKnownClass          (),
+94   classes                     (cm.classes),
+95   numInvalidClassesPredicted  (cm.numInvalidClassesPredicted),
+96   numOfBuckets                (cm.numOfBuckets),
+97   numOfProbBuckets            (cm.numOfProbBuckets),
+98   predictedCountsCM           (),
+99   probBucketSize              (cm.probBucketSize),
+100   totalCount                  (cm.totalCount),
+101   totalPredProb               (cm.totalPredProb),
+102   totalPredProbsByKnownClass  (),
+103   totalSizesByKnownClass      (),
+104   totPredProbCM               ()
+105 \{
+106   CopyVector (cm.countsByKnownClass,         countsByKnownClass);
+107   CopyVector (cm.totalPredProbsByKnownClass, totalPredProbsByKnownClass);
+108   CopyVector (cm.totalSizesByKnownClass,     totalSizesByKnownClass);
+109 
+110   CopyVectorDoublePtr (cm.predictedCountsCM, predictedCountsCM,   classCount);
+111   CopyVectorDoublePtr (cm.totPredProbCM,     totPredProbCM,       classCount);
+112 
+113   CopyVectorDoublePtr (cm.countByKnownClassBySize,   countByKnownClassBySize,   numOfBuckets);
+114   CopyVectorDoublePtr (cm.correctByKnownClassBySize, correctByKnownClassBySize, numOfBuckets);
+115   CopyVectorDoublePtr (cm.countByKnownClassByProb,   countByKnownClassByProb,   numOfProbBuckets);
+116   CopyVectorDoublePtr (cm.correctByKnownClassByProb, correctByKnownClassByProb, numOfProbBuckets);
+117 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Confusion\+Matrix2@{Confusion\+Matrix2}}
+\index{Confusion\+Matrix2@{Confusion\+Matrix2}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Confusion\+Matrix2(const M\+L\+Class\+List \&\+\_\+classes, istream \&f, kkint32 \+\_\+bucket\+Size, kkint32 \+\_\+num\+Of\+Buckets, kkint32 \+\_\+num\+Of\+Prob\+Buckets, kkint32 \+\_\+prob\+Bucket\+Size, Run\+Log \&\+\_\+log)}{ConfusionMatrix2(const MLClassList &_classes, istream &f, kkint32 _bucketSize, kkint32 _numOfBuckets, kkint32 _numOfProbBuckets, kkint32 _probBucketSize, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Confusion\+Matrix2\+::\+Confusion\+Matrix2 (
+\begin{DoxyParamCaption}
+\item[{const {\bf M\+L\+Class\+List} \&}]{\+\_\+classes, }
+\item[{istream \&}]{f, }
+\item[{{\bf kkint32}}]{\+\_\+bucket\+Size, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Buckets, }
+\item[{{\bf kkint32}}]{\+\_\+num\+Of\+Prob\+Buckets, }
+\item[{{\bf kkint32}}]{\+\_\+prob\+Bucket\+Size, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a0929dcf5a2e1e174917aea8eedb64fa7}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a0929dcf5a2e1e174917aea8eedb64fa7}
+Will construct an instance of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2}{Confusion\+Matrix2}\textquotesingle{} from the contents of the provided \textquotesingle{}istream\textquotesingle{} object. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+classes} & Will make local copy of this instance; this way we know the ordering which represents the numbering can not change behind our back. \\
+\hline
+\mbox{\tt in}  & {\em f} & File to write report to. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+bucket\+Size} & Will keep statistics by size of particles. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+num\+Of\+Buckets} & Number of Size buckets that will be maintained. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+num\+Of\+Prob\+Buckets} & Maximum number of probability buckets to keep track of, \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+prob\+Bucket\+Size} & Size of each probability bucket. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & Logger where messages are written to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 24 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References Confusion\+Matrix2().
+
+
+
+Referenced by Build\+From\+Istream\+X\+M\+L(), and Confusion\+Matrix2().
+
+
+\begin{DoxyCode}
+31                                     :
+32   bucketSize                  (\_bucketSize),
+33   classCount                  (0),
+34   classes                     (\_classes),
+35   correctByKnownClassByProb   (NULL),
+36   correctByKnownClassBySize   (NULL),
+37   correctCount                (0.0),
+38   countByKnownClassByProb     (),
+39   countByKnownClassBySize     (),
+40   countsByKnownClass          (),
+41   numInvalidClassesPredicted  (0.0),
+42   numOfBuckets                (\_numOfBuckets),
+43   numOfProbBuckets            (\_numOfProbBuckets),
+44   predictedCountsCM           (),
+45   probBucketSize              (\_probBucketSize),
+46   totalCount                  (0.0),
+47   totalPredProb               (0.0),
+48   totalPredProbsByKnownClass  (),
+49   totalSizesByKnownClass      (),
+50   totPredProbCM               ()
+51 \{
+52   InitializeMemory ();
+53   Read (f, \_log);
+54 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!````~Confusion\+Matrix2@{$\sim$\+Confusion\+Matrix2}}
+\index{````~Confusion\+Matrix2@{$\sim$\+Confusion\+Matrix2}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{$\sim$\+Confusion\+Matrix2()}{~ConfusionMatrix2()}}]{\setlength{\rightskip}{0pt plus 5cm}Confusion\+Matrix2\+::$\sim$\+Confusion\+Matrix2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_aecdea51d2f462833f6958f867ca328f5}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_aecdea51d2f462833f6958f867ca328f5}
+
+
+Definition at line 122 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+123   \{
+124   DeleteVectorDoublePtr (countByKnownClassBySize);
+125   DeleteVectorDoublePtr (correctByKnownClassBySize);
+126   DeleteVectorDoublePtr (countByKnownClassByProb);
+127   DeleteVectorDoublePtr (correctByKnownClassByProb);
+128   DeleteVectorDoublePtr (predictedCountsCM);
+129   DeleteVectorDoublePtr (totPredProbCM);
+130 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy@{Accuracy}}
+\index{Accuracy@{Accuracy}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy()}{Accuracy()}}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Accuracy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ab1c460627788135c3c15227115226733}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ab1c460627788135c3c15227115226733}
+
+
+Definition at line 2485 of file Confusion\+Matrix2.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Cross\+Validation\+Voting\+::\+Accuracy(), and K\+K\+M\+L\+L\+::\+Cross\+Validation\+::\+Accuracy().
+
+
+\begin{DoxyCode}
+2486 \{
+2487   \textcolor{keywordflow}{if}  (totalCount == 0)
+2488     \textcolor{keywordflow}{return} 0.0;
+2489 
+2490   \textcolor{keywordflow}{return}  100.0 * correctCount / totalCount;
+2491 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy@{Accuracy}}
+\index{Accuracy@{Accuracy}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy(\+M\+L\+Class\+Ptr ml\+Class)}{Accuracy(MLClassPtr mlClass)}}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Accuracy (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ml\+Class}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a63b5831c167105766a9049b3f6e0a89a}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a63b5831c167105766a9049b3f6e0a89a}
+
+
+Definition at line 2508 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2509 \{
+2510   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum   = 0;
+2511 
+2512   classNum = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (mlClass);
+2513   \textcolor{keywordflow}{if}  (classNum < 0)
+2514     \textcolor{keywordflow}{return} 0.0f;
+2515 
+2516   \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] == 0)
+2517     \textcolor{keywordflow}{return} 0.0f;
+2518 
+2519   \textcolor{keywordtype}{float}  accuracy = (float)(100.0 * (predictedCountsCM[classNum] [classNum])  /  (countsByKnownClass [
+      classNum]));
+2520 
+2521   \textcolor{keywordflow}{return}  accuracy;
+2522 \}  \textcolor{comment}{/* Accuracy */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy\+By\+Class@{Accuracy\+By\+Class}}
+\index{Accuracy\+By\+Class@{Accuracy\+By\+Class}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy\+By\+Class() const }{AccuracyByClass() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+Float} Confusion\+Matrix2\+::\+Accuracy\+By\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a6c56961e4b2c3726f063d04f267489da}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a6c56961e4b2c3726f063d04f267489da}
+
+
+Definition at line 2527 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2528 \{
+2529   \hyperlink{namespace_k_k_b_a4820c3670ee1fe74f0c4de981c600faf}{VectorFloat}  accuracies;
+2530   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum = 0;  classNum < classCount;  classNum++)
+2531   \{
+2532     \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] == 0)
+2533     \{
+2534       accuracies.push\_back (0.0f);
+2535     \}
+2536     \textcolor{keywordflow}{else}
+2537     \{
+2538       \textcolor{keywordtype}{float}  classAccuracy = (float)(100.0f * (predictedCountsCM[classNum] [classNum])  / (
+      countsByKnownClass [classNum]));
+2539       accuracies.push\_back (classAccuracy);
+2540     \}
+2541   \}
+2542 
+2543   \textcolor{keywordflow}{return}  accuracies;
+2544 \}  \textcolor{comment}{/* AccuracyByClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy\+Class\+Weighted\+Equally@{Accuracy\+Class\+Weighted\+Equally}}
+\index{Accuracy\+Class\+Weighted\+Equally@{Accuracy\+Class\+Weighted\+Equally}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy\+Class\+Weighted\+Equally()}{AccuracyClassWeightedEqually()}}]{\setlength{\rightskip}{0pt plus 5cm}float Confusion\+Matrix2\+::\+Accuracy\+Class\+Weighted\+Equally (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ae1c01183e47d34242a7f16e16eb7e2f4}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ae1c01183e47d34242a7f16e16eb7e2f4}
+
+
+Definition at line 2548 of file Confusion\+Matrix2.\+cpp.
+
+
+
+Referenced by Accuracy\+Norm().
+
+
+\begin{DoxyCode}
+2549 \{
+2550   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classCount    = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+2551   \textcolor{keywordtype}{float}  totalAccuracy = 0.0f;
+2552 
+2553   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum = 0;  classNum < classCount;  classNum++)
+2554   \{
+2555     \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] != 0)
+2556     \{
+2557       \textcolor{keywordtype}{float}  classAccuracy = (float)(100.0f * (predictedCountsCM[classNum] [classNum])  / (
+      countsByKnownClass [classNum]));
+2558       totalAccuracy += classAccuracy;
+2559     \}
+2560   \}
+2561 
+2562   \textcolor{keywordtype}{float}  weightedAccuracy = (float)(totalAccuracy / classCount);
+2563 
+2564   \textcolor{keywordflow}{return}  weightedAccuracy;
+2565 \}  \textcolor{comment}{/* AccuracyClassWeightedEqually */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy\+Norm@{Accuracy\+Norm}}
+\index{Accuracy\+Norm@{Accuracy\+Norm}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy\+Norm()}{AccuracyNorm()}}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+Accuracy\+Norm (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a1bc4b4d27de9bde960f88c4f705e47a8}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a1bc4b4d27de9bde960f88c4f705e47a8}
+
+
+Definition at line 69 of file Confusion\+Matrix2.\+h.
+
+
+
+References Accuracy\+Class\+Weighted\+Equally().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Cross\+Validation\+::\+Accuracy\+Norm().
+
+
+\begin{DoxyCode}
+69 \{\textcolor{keywordflow}{return} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_ae1c01183e47d34242a7f16e16eb7e2f4}{AccuracyClassWeightedEqually} ();\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Accuracy\+Str@{Accuracy\+Str}}
+\index{Accuracy\+Str@{Accuracy\+Str}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Accuracy\+Str()}{AccuracyStr()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Confusion\+Matrix2\+::\+Accuracy\+Str (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a344dbdc79eca43f4fc2fff7eef96a95b}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a344dbdc79eca43f4fc2fff7eef96a95b}
+
+
+Definition at line 2443 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), and K\+K\+B\+::\+Str\+Format\+Double().
+
+
+\begin{DoxyCode}
+2444 \{
+2445 
+2446   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+2447  
+2448   \textcolor{keywordtype}{double}*  accuracys = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+2449 
+2450   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+2451   \{
+2452     \textcolor{keywordflow}{if}  (countsByKnownClass [x] == 0)
+2453       accuracys[x] = 0;
+2454     \textcolor{keywordflow}{else}
+2455       accuracys[x] = (100.0 * (double) predictedCountsCM [x] [x]) / ((double) (countsByKnownClass [x]));
+2456   \}
+2457 
+2458 
+2459   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  accuracyStr;
+2460 
+2461   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+2462   \{
+2463     \textcolor{keywordflow}{if}  (x > 0)
+2464       accuracyStr << \textcolor{stringliteral}{"  "};
+2465 
+2466     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  className;
+2467     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (x);
+2468     \textcolor{keywordflow}{if}  (mlClass)
+2469        className = mlClass->Name ();
+2470     \textcolor{keywordflow}{else}
+2471        className = \textcolor{stringliteral}{"***UnDefined***"};
+2472 
+2473     accuracyStr << className << \textcolor{stringliteral}{" "} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (accuracys[x], \textcolor{stringliteral}{"##0.000"}) << \textcolor{stringliteral}{"%"};
+2474   \}
+2475 
+2476   \textcolor{keyword}{delete}[]  accuracys;  accuracys = NULL;
+2477 
+2478   \textcolor{keywordflow}{return}  accuracyStr;
+2479 \}  \textcolor{comment}{/* AccuracyStr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Add\+In@{Add\+In}}
+\index{Add\+In@{Add\+In}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Add\+In(const Confusion\+Matrix2 \&cm, Run\+Log \&log)}{AddIn(const ConfusionMatrix2 &cm, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Add\+In (
+\begin{DoxyParamCaption}
+\item[{const {\bf Confusion\+Matrix2} \&}]{cm, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a0c1a6eba13b1faa33aa922a46dfe0e21}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a0c1a6eba13b1faa33aa922a46dfe0e21}
+
+
+Definition at line 2802 of file Confusion\+Matrix2.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Confussion\+Matrix2\+List\+::\+Derive\+Average\+Confusion\+Matrix(), K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Train\+And\+Test(), and K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Validations().
+
+
+\begin{DoxyCode}
+2805 \{
+2806   MakeSureWeHaveTheseClasses (cm.classes, log);
+2807 
+2808   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfClasses = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+2809   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classIDX = 0;
+2810 
+2811 
+2812   \textcolor{comment}{//  Create indirection array to handle the situation where the mlClass list's of the two }
+2813   \textcolor{comment}{// confusion matrixes '*this'  and  'cm'  are not in the same order.}
+2814 
+2815   vector<kkint32>  ind (numOfClasses, 0);
+2816   \textcolor{keywordflow}{for}  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
+2817   \{
+2818     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr} mlClass = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{IdxToPtr} (classIDX);
+2819     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  cmsIDX = cm.classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (mlClass);
+2820     ind[classIDX] = cmsIDX;
+2821   \}
+2822 
+2823   \textcolor{keywordflow}{for}  (classIDX = 0;  classIDX < numOfClasses;  classIDX++)
+2824   \{
+2825     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} cmsIDX = ind[classIDX];
+2826     \textcolor{keywordflow}{if}  (cmsIDX < 0)
+2827     \{
+2828       \textcolor{comment}{// cmsIDX < 0 indicates that the confusion matrix being added in does not include the class indicatd
+       by 'classIDX'.}
+2829     \}
+2830     \textcolor{keywordflow}{else}
+2831     \{
+2832     countsByKnownClass         [classIDX] += cm.countsByKnownClass         [cmsIDX];
+2833     totalSizesByKnownClass     [classIDX] += cm.totalSizesByKnownClass     [cmsIDX];
+2834     totalPredProbsByKnownClass [classIDX] += cm.totalPredProbsByKnownClass [cmsIDX];
+2835 
+2836     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predictedClassIDX = 0;
+2837     \textcolor{keywordflow}{for}  (predictedClassIDX = 0;   predictedClassIDX  < numOfClasses;  predictedClassIDX++)
+2838     \{
+2839       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  cmsPredictedClassIDX = ind[predictedClassIDX];
+2840         \textcolor{keywordflow}{if}  (cmsPredictedClassIDX >= 0)
+2841         \{
+2842       predictedCountsCM[classIDX][predictedClassIDX] += cm.predictedCountsCM[cmsIDX][cmsPredictedClassIDX];
+2843       totPredProbCM    [classIDX][predictedClassIDX] += cm.totPredProbCM    [cmsIDX][cmsPredictedClassIDX];
+2844     \}
+2845       \}
+2846 
+2847     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucketIDX = 0;
+2848     \textcolor{keywordflow}{for}  (bucketIDX = 0;  bucketIDX < numOfBuckets;  bucketIDX++)
+2849     \{
+2850       countByKnownClassBySize   [classIDX][bucketIDX] += cm.countByKnownClassBySize   [cmsIDX][bucketIDX];
+2851       correctByKnownClassBySize [classIDX][bucketIDX] += cm.correctByKnownClassBySize [cmsIDX][bucketIDX];
+2852     \}
+2853 
+2854     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  probIDX = 0;
+2855     \textcolor{keywordflow}{for}  (probIDX = 0;  probIDX < numOfProbBuckets;  probIDX++)
+2856     \{
+2857       countByKnownClassByProb   [classIDX][probIDX] += cm.countByKnownClassByProb   [cmsIDX][probIDX];
+2858       correctByKnownClassByProb [classIDX][probIDX] += cm.correctByKnownClassByProb [cmsIDX][probIDX];
+2859     \}
+2860   \}
+2861   \}
+2862 
+2863   correctCount  += cm.correctCount;
+2864   totalCount    += cm.totalCount;
+2865   totalPredProb += cm.totalPredProb;
+2866 \}  \textcolor{comment}{/* AddIn */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Avg\+Pred\+Prob@{Avg\+Pred\+Prob}}
+\index{Avg\+Pred\+Prob@{Avg\+Pred\+Prob}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Avg\+Pred\+Prob() const }{AvgPredProb() const }}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Avg\+Pred\+Prob (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a34b983c3312da01ef7d6373663704958}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a34b983c3312da01ef7d6373663704958}
+
+
+Definition at line 2496 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2497 \{
+2498   \textcolor{keywordflow}{if}  (totalCount == 0)
+2499     \textcolor{keywordflow}{return} 0.0;
+2500 
+2501   \textcolor{keywordflow}{return}  totalPredProb / (double)totalCount;
+2502 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Build\+From\+Istream\+X\+ML@{Build\+From\+Istream\+X\+ML}}
+\index{Build\+From\+Istream\+X\+ML@{Build\+From\+Istream\+X\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Build\+From\+Istream\+X\+M\+L(istream \&f, Run\+Log \&log)}{BuildFromIstreamXML(istream &f, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Confusion\+Matrix2\+Ptr} Confusion\+Matrix2\+::\+Build\+From\+Istream\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{istream \&}]{f, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a32cb66eab0f8b1ece3f87a94afbf4fcc}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a32cb66eab0f8b1ece3f87a94afbf4fcc}
+
+
+Definition at line 3027 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References Confusion\+Matrix2().
+
+
+\begin{DoxyCode}
+3030 \{
+3031   \textcolor{keywordflow}{if}  (f.eof ())
+3032   \{
+3033     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \textcolor{stringliteral}{"ConfusionMatrix2::BuildFromIstreamXML  ***ERROR***   File already
+       at EOF."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3034     \textcolor{keywordflow}{return}  NULL;
+3035   \}
+3036 
+3037 
+3038   \textcolor{keywordtype}{char}  buff[10240];
+3039   buff[0] = 0;
+3040 
+3041   \hyperlink{namespace_k_k_b_aa3486b1c5ea9162b3b020c69f72826eb}{kkint64}   startPos = f.tellg ();
+3042   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  classes = NULL;
+3043 
+3044   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucketSize        = -1;
+3045   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classCount        = -1;
+3046   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfBuckets      = -1;
+3047   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfProbBuckets  = -1;
+3048   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  probBucketSize    = -1;
+3049 
+3050   f.getline (buff, \textcolor{keyword}{sizeof} (buff));
+3051   \textcolor{keywordflow}{while}  ((!f.eof ())  &&  ((!classes)  ||  (bucketSize < 1)  ||  (numOfBuckets < 1)  ||  (numOfProbBuckets
+       < 1)  ||  (probBucketSize < 1)  ||  (classCount < 1)))
+3052   \{
+3053     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  l (buff);
+3054     l.TrimLeft ();
+3055 
+3056     \textcolor{keywordflow}{if}  (l.CompareIgnoreCase (\textcolor{stringliteral}{"</ConfusionMatrix2>"}) == 0)
+3057       \textcolor{keywordflow}{break};
+3058 
+3059     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  lineName = l.\hyperlink{class_k_k_b_1_1_k_k_str_afe41140cee0520f0be8a3022938a1b03}{ExtractToken2} (\textcolor{stringliteral}{"\(\backslash\)t"});
+3060     \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"Classes"}) == 0)
+3061       classes = \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a7c3d83212318e7fd8b06d7ae3522d145}{MLClassList::BuildListFromDelimtedStr} (l, \textcolor{charliteral}{'\(\backslash\)t'});
+3062 
+3063     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"bucketSize"}) == 0)
+3064       bucketSize = l.ExtractTokenInt (\textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+3065 
+3066     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"classCount"}) == 0)
+3067       classCount = l.ExtractTokenInt (\textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+3068 
+3069     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"numOfBuckets"}) == 0)
+3070       numOfBuckets = l.ExtractTokenInt (\textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+3071 
+3072     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"numOfProbBuckets"}) == 0)
+3073       numOfProbBuckets = l.ExtractTokenInt (\textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+3074 
+3075     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (lineName.\hyperlink{class_k_k_b_1_1_k_k_str_a3fd779d448f27e24170c9c05fca5208e}{CompareIgnoreCase} (\textcolor{stringliteral}{"probBucketSize"}) == 0)
+3076       probBucketSize = l.ExtractTokenInt (\textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)n\(\backslash\)r"});
+3077 
+3078     f.getline (buff, \textcolor{keyword}{sizeof} (buff));
+3079   \}
+3080 
+3081   \textcolor{keywordflow}{if}  (classes == NULL)
+3082   \{
+3083     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+3084                    << \textcolor{stringliteral}{"ConfusionMatrix2::BuildFromIstreamXML     ***ERROR***    No Class List Was Provided.
+      "}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+3085                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3086     \textcolor{comment}{// Failed to locate ClassList ('classes')  we an not build a ConfusionMatrixc2 object.}
+3087     \textcolor{keywordflow}{return} NULL;
+3088   \}
+3089 
+3090   \textcolor{keywordflow}{if}  ((bucketSize < 1)  ||  (numOfBuckets < 1)  ||  (numOfProbBuckets < 1)  ||  (probBucketSize < 1))
+3091   \{
+3092     \textcolor{keyword}{delete}  classes;  classes = NULL;
+3093     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+3094                    << \textcolor{stringliteral}{"ConfusionMatrix2::BuildFromIstreamXML     ***ERROR***    Not all needed header
+       fields were defined."}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+3095                    << \textcolor{stringliteral}{"  bucketSize["} << bucketSize << \textcolor{stringliteral}{"]  ClassCount["} <<  classCount  <<  \textcolor{stringliteral}{"] 
+       numOfBuckets["} << numOfBuckets << \textcolor{stringliteral}{"]  numOfProbBuckets["} << numOfProbBuckets << \textcolor{stringliteral}{"]  probBucketSize["} << probBucketSize 
+      << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+3096                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3097     \textcolor{comment}{// Failed to locate ClassList ('classes')  we an not build a ConfusionMatrixc2 object.}
+3098     \textcolor{keywordflow}{return} NULL;
+3099   \}
+3100 
+3101 
+3102   \textcolor{keywordflow}{if}  (classCount != classes->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ())
+3103   \{
+3104     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+3105                    << \textcolor{stringliteral}{"ConfusionMatrix2::BuildFromIstreamXML    ***ERROR***    Disagreement between
+       ClassCount["} << classCount << \textcolor{stringliteral}{"]  and  Classes.QueueSize["} << classes->\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+3106                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3107     \textcolor{keyword}{delete}  classes;  classes = NULL;
+3108     \textcolor{keywordflow}{return} NULL;
+3109   \}
+3110 
+3111 
+3112   f.seekg (startPos);
+3113 
+3114   \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2}{ConfusionMatrix2Ptr}  cm =   \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_confusion_matrix2_a856d67b4070de16eaa453b4f9c6b9cfa}{ConfusionMatrix2} (*classes, f, 
+      bucketSize, numOfBuckets, numOfProbBuckets, probBucketSize, log);
+3115   \textcolor{keyword}{delete}  classes;  classes = NULL;
+3116   \textcolor{keywordflow}{return}  cm;
+3117 \}   \textcolor{comment}{/* BuildFromIstreamXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Class\+Count@{Class\+Count}}
+\index{Class\+Count@{Class\+Count}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Class\+Count() const }{ClassCount() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+Class\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a2ee79aa0b27fd0ff2ea5616492e14efe}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a2ee79aa0b27fd0ff2ea5616492e14efe}
+
+
+Definition at line 83 of file Confusion\+Matrix2.\+h.
+
+
+\begin{DoxyCode}
+83 \{\textcolor{keywordflow}{return}  classCount;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Compute\+Fundamental\+Stats@{Compute\+Fundamental\+Stats}}
+\index{Compute\+Fundamental\+Stats@{Compute\+Fundamental\+Stats}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Compute\+Fundamental\+Stats(\+M\+L\+Class\+Ptr ic, double \&true\+Positives, double \&true\+Negatives, double \&false\+Positives, double \&false\+Negatives) const }{ComputeFundamentalStats(MLClassPtr ic, double &truePositives, double &trueNegatives, double &falsePositives, double &falseNegatives) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Compute\+Fundamental\+Stats (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ic, }
+\item[{double \&}]{true\+Positives, }
+\item[{double \&}]{true\+Negatives, }
+\item[{double \&}]{false\+Positives, }
+\item[{double \&}]{false\+Negatives}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a9c395af8e6cffa32f8bece8070587eda}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a9c395af8e6cffa32f8bece8070587eda}
+
+
+Definition at line 1810 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1817 \{
+1818   truePositives  = 0.0;
+1819   trueNegatives  = 0.0;
+1820   falsePositives = 0.0;
+1821   falseNegatives = 0.0;
+1822 
+1823   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (ic);
+1824   \textcolor{keywordflow}{if}  (x < 0)
+1825     \textcolor{keywordflow}{return};
+1826 
+1827   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} numOfClasses = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1828 
+1829   truePositives  = predictedCountsCM [x][x];
+1830 
+1831   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} y = 0;  y < numOfClasses;  y++)
+1832   \{
+1833     \textcolor{keywordflow}{if}  (y != x)
+1834     \{
+1835       falsePositives += predictedCountsCM [y][x];  \textcolor{comment}{// Was classified as x but was classed as x.}
+1836       falseNegatives += predictedCountsCM [x][y];  \textcolor{comment}{// Should have been classed as x not y.}
+1837       trueNegatives  += (countsByKnownClass [y] - predictedCountsCM [y][x]);
+1838     \}
+1839   \}
+1840   \textcolor{keywordflow}{return};
+1841 \}  \textcolor{comment}{/* ComputeFundamentalStats */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Count@{Count}}
+\index{Count@{Count}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Count(\+M\+L\+Class\+Ptr ml\+Class)}{Count(MLClassPtr mlClass)}}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Count (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{ml\+Class}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ac29266aab7783f07aa9efece3b7b5d8e}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ac29266aab7783f07aa9efece3b7b5d8e}
+
+
+Definition at line 2571 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2572 \{
+2573   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum   = 0;
+2574   \textcolor{keywordtype}{bool}   found      = \textcolor{keyword}{false};
+2575   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numClasses = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+2576 
+2577   \textcolor{keywordflow}{while}  ((classNum < numClasses)  &&  (!found))
+2578   \{
+2579     \textcolor{keywordflow}{if}  (classes[classNum].UpperName () == mlClass->\hyperlink{class_k_k_m_l_l_1_1_m_l_class_a3e688259223abd20da71a18a9877fbc4}{UpperName} ())
+2580       found = \textcolor{keyword}{true};
+2581     \textcolor{keywordflow}{else}
+2582       classNum++;
+2583   \}
+2584 
+2585 
+2586   \textcolor{keywordflow}{if}  (found)
+2587   \{
+2588     \textcolor{keywordflow}{return}  countsByKnownClass [classNum];
+2589   \}
+2590 
+2591   \textcolor{keywordflow}{return}  0.0;
+2592 \}  \textcolor{comment}{/* Count */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Counts\+By\+Known\+Class@{Counts\+By\+Known\+Class}}
+\index{Counts\+By\+Known\+Class@{Counts\+By\+Known\+Class}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Counts\+By\+Known\+Class(kkint32 known\+Class\+Idx) const }{CountsByKnownClass(kkint32 knownClassIdx) const }}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Counts\+By\+Known\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{known\+Class\+Idx}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a7c9f2b6099bf35363288e62617edb498}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a7c9f2b6099bf35363288e62617edb498}
+
+
+Definition at line 347 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+348 \{
+349   \textcolor{keywordflow}{if}  ((knownClassIdx < 0)  ||  (knownClassIdx >= classCount))
+350     \textcolor{keywordflow}{return} 0.0;
+351   
+352   \textcolor{keywordflow}{return}  countsByKnownClass [knownClassIdx];
+353 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Counts\+By\+Known\+Class@{Counts\+By\+Known\+Class}}
+\index{Counts\+By\+Known\+Class@{Counts\+By\+Known\+Class}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Counts\+By\+Known\+Class() const }{CountsByKnownClass() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Vector\+Double} \& Confusion\+Matrix2\+::\+Counts\+By\+Known\+Class (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ac565b97549d5af643c24aa61391eb454}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ac565b97549d5af643c24aa61391eb454}
+
+
+Definition at line 357 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+358 \{
+359   \textcolor{keywordflow}{return}  countsByKnownClass;
+360 \}  \textcolor{comment}{/* CountsByKnownClass */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Factor\+Counts@{Factor\+Counts}}
+\index{Factor\+Counts@{Factor\+Counts}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Factor\+Counts(double factor)}{FactorCounts(double factor)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Factor\+Counts (
+\begin{DoxyParamCaption}
+\item[{double}]{factor}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ac4bdf6a0bea12fd748dc0d05e1844f29}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ac4bdf6a0bea12fd748dc0d05e1844f29}
+Will multiply all counts by \textquotesingle{}factor\textquotesingle{} You would use this in conjunction with \textquotesingle{}Add\+In\textquotesingle{}. 
+
+Definition at line 2597 of file Confusion\+Matrix2.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Confussion\+Matrix2\+List\+::\+Derive\+Average\+Confusion\+Matrix(), K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Train\+And\+Test(), and K\+K\+M\+L\+L\+::\+Cross\+Validation\+Mx\+N\+::\+Run\+Validations().
+
+
+\begin{DoxyCode}
+2598 \{
+2599   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+2600 
+2601   correctCount               *= factor;
+2602   totalCount                 *= factor;
+2603   totalPredProb              *= factor;
+2604   numInvalidClassesPredicted *= factor;
+2605 
+2606   \textcolor{keywordflow}{for}  (x = 0; x < classCount;  x++)
+2607   \{
+2608     countsByKnownClass         [x] = countsByKnownClass         [x] * factor;
+2609     totalSizesByKnownClass     [x] = totalSizesByKnownClass     [x] * factor;
+2610     totalPredProbsByKnownClass [x] = totalPredProbsByKnownClass [x] * factor;
+2611 
+2612     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} y;
+2613 
+2614     \textcolor{keywordflow}{for}  (y = 0; y < classCount; y++)
+2615     \{
+2616       predictedCountsCM[x][y] = predictedCountsCM[x][y] * factor;
+2617       totPredProbCM    [x][y] = totPredProbCM    [x][y] * factor;
+2618     \}
+2619 
+2620     \textcolor{keywordflow}{for}  (y = 0; y < numOfBuckets; y++)
+2621     \{
+2622       countByKnownClassBySize   [x][y] = countByKnownClassBySize   [x][y] * factor;
+2623       correctByKnownClassBySize [x][y] = correctByKnownClassBySize [x][y] * factor; 
+2624     \}
+2625 
+2626     \textcolor{keywordflow}{for}  (y = 0; y < numOfProbBuckets; y++)
+2627     \{
+2628       countByKnownClassByProb   [x][y] = countByKnownClassByProb   [x][y] * factor;
+2629       correctByKnownClassByProb [x][y] = correctByKnownClassByProb [x][y] * factor;
+2630     \}
+2631   \}
+2632 \}  \textcolor{comment}{/* FactorCounts */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!F\+Measure@{F\+Measure}}
+\index{F\+Measure@{F\+Measure}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{F\+Measure(\+M\+L\+Class\+Ptr positive\+Class, Run\+Log \&log) const }{FMeasure(MLClassPtr positiveClass, RunLog &log) const }}]{\setlength{\rightskip}{0pt plus 5cm}float Confusion\+Matrix2\+::\+F\+Measure (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{positive\+Class, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a55f2dbba255de8a868007a0d7432b52f}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a55f2dbba255de8a868007a0d7432b52f}
+
+
+Definition at line 1846 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+M\+L\+Class\+::\+Name(), and K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+\begin{DoxyCode}
+1849 \{
+1850   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} positiveIDX = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (positiveClass);
+1851   \textcolor{keywordflow}{if}  (positiveIDX < 0)
+1852   \{
+1853     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} invalidClassName = \textcolor{stringliteral}{""};
+1854     \textcolor{keywordflow}{if}  (positiveClass)
+1855        invalidClassName = positiveClass->Name ();
+1856 
+1857     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"ConfusionMatrix2::FMeasure         ***ERROR***      Invalid Positive Class
+       Specified["} << invalidClassName << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1858     \textcolor{keywordflow}{return} 0.0f;
+1859   \}
+1860 
+1861   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfClasses = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1862 
+1863   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y;
+1864 
+1865   \textcolor{keywordtype}{double}  totalTP = 0.0;
+1866   \textcolor{keywordtype}{double}  totalFP = 0.0;
+1867   \textcolor{keywordtype}{double}  totalTN = 0.0;
+1868   \textcolor{keywordtype}{double}  totalFN = 0.0;
+1869 
+1870   totalTP = predictedCountsCM[positiveIDX][positiveIDX];
+1871 
+1872   \textcolor{keywordflow}{for}  (y = 0;  y < numOfClasses;  y++)
+1873   \{
+1874     \textcolor{keywordflow}{if}  (y != positiveIDX)
+1875     \{
+1876       totalFP += predictedCountsCM[y][positiveIDX];
+1877       totalTN += predictedCountsCM[y][y];
+1878       totalFN += predictedCountsCM[positiveIDX][y];
+1879     \}
+1880   \}
+1881 
+1882   \textcolor{keywordtype}{double}  fMeasure = 0.0;
+1883   \textcolor{keywordtype}{double}  divisor = 2.0 * (double)totalTP + (\textcolor{keywordtype}{double})totalFP + (double)totalFN;
+1884   \textcolor{keywordflow}{if}  (divisor != 0.0)
+1885      fMeasure = 100.0 * (2.0 * (double)totalTP / divisor);
+1886 
+1887   \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})fMeasure;
+1888 \}  \textcolor{comment}{/* FMeasure */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Increment@{Increment}}
+\index{Increment@{Increment}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Increment(\+M\+L\+Class\+Ptr \+\_\+known\+Class, M\+L\+Class\+Ptr \+\_\+pred\+Class, kkint32 \+\_\+size, double \+\_\+probability, Run\+Log \&\+\_\+log)}{Increment(MLClassPtr _knownClass, MLClassPtr _predClass, kkint32 _size, double _probability, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Increment (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+known\+Class, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+pred\+Class, }
+\item[{{\bf kkint32}}]{\+\_\+size, }
+\item[{double}]{\+\_\+probability, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_afeb6ab7435a722c16eae4e8e91e3cdd3}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_afeb6ab7435a722c16eae4e8e91e3cdd3}
+
+
+Definition at line 365 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+371 \{
+372   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  knownClassNum = -1;
+373   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  predClassNum  = -1;
+374 
+375   \textcolor{keywordflow}{if}  (\_probability < 0)
+376     \_probability = 0;
+377 
+378   \textcolor{keywordflow}{if}  (!\_knownClass)
+379   \{
+380     numInvalidClassesPredicted += 1.0;
+381     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+382                    << \textcolor{stringliteral}{"ConfusionMatrix2::Increment  **** \_knownClass = NULL ****"}
+383                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+384                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+385     \textcolor{keywordflow}{return};
+386   \}
+387 
+388   \textcolor{keywordflow}{if}  (!\_predClass)
+389   \{
+390     numInvalidClassesPredicted += 1.0;
+391     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+392                    << \textcolor{stringliteral}{"ConfusionMatrix2::Increment  **** \_predClass = NULL ****"}
+393                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+394                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+395     \textcolor{keywordflow}{return};
+396   \}
+397 
+398   knownClassNum = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (\_knownClass);
+399   \textcolor{keywordflow}{if}  (knownClassNum < 0)
+400     knownClassNum = AddClassToConfusionMatrix (\_knownClass, \_log);
+401 
+402   predClassNum  = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_ac7c26abdf599669a4b0898534f735f99}{PtrToIdx} (\_predClass);
+403   \textcolor{keywordflow}{if}  (predClassNum < 0)
+404     predClassNum = AddClassToConfusionMatrix (\_predClass, \_log);
+405 
+406   \textcolor{keywordflow}{if}  ((knownClassNum < 0)  ||  (knownClassNum >= classCount))
+407   \{
+408     numInvalidClassesPredicted += 1.0;
+409     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"ConfusionMatrix2::IncrementPredHits    knownClassNum["} << knownClassNum << \textcolor{stringliteral}{"]
+       out of bounds."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+410     \textcolor{keywordflow}{return};
+411   \}
+412 
+413   \textcolor{keywordflow}{if}  ((predClassNum < 0)  ||  (predClassNum >= classCount))
+414   \{
+415     numInvalidClassesPredicted += 1.0;
+416     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"ConfusionMatrix2::IncrementPredHits    predClassNum["} << predClassNum << \textcolor{stringliteral}{"]
+       out of bounds."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+417     \textcolor{keywordflow}{return};
+418   \}
+419 
+420   \textcolor{keywordflow}{if}  (knownClassNum == predClassNum)
+421      correctCount += 1.0;
+422 
+423   totalCount += 1.0;
+424 
+425   totalSizesByKnownClass[knownClassNum] += \_size;
+426 
+427   totalPredProbsByKnownClass [knownClassNum] += \_probability;
+428   totalPredProb                              += \_probability;
+429 
+430   countsByKnownClass [knownClassNum]++;
+431 
+432   (predictedCountsCM [knownClassNum] [predClassNum])++;
+433   totPredProbCM      [knownClassNum] [predClassNum] += \_probability;
+434 
+435 
+436   \textcolor{keywordflow}{if}  (\_size > 0)
+437   \{
+438     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket = (\_size - 1) / bucketSize;
+439     \textcolor{keywordflow}{if}  (bucket >= numOfBuckets)
+440       bucket = numOfBuckets - 1;
+441 
+442     countByKnownClassBySize[knownClassNum][bucket]++;
+443     \textcolor{keywordflow}{if}  (knownClassNum == predClassNum)
+444       correctByKnownClassBySize [knownClassNum][bucket]++;
+445   \}
+446   \textcolor{keywordflow}{else}
+447   \{
+448     \_size = -1;
+449   \}
+450 
+451 
+452   \{
+453      \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket = 0;
+454      
+455      \textcolor{keywordflow}{if}  ((\_probability >= 0.0)  &&  (\_probability <= 1.0))
+456        bucket = ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(\_probability * 100) / probBucketSize);
+457      \textcolor{keywordflow}{else}
+458        bucket = 0;
+459 
+460      \textcolor{keywordflow}{if}  (bucket >= numOfProbBuckets)
+461        bucket = numOfProbBuckets - 1;
+462 
+463      countByKnownClassByProb [knownClassNum][bucket]++;
+464     \textcolor{keywordflow}{if}  (knownClassNum == predClassNum)
+465       correctByKnownClassByProb [knownClassNum][bucket]++;
+466   \}
+467 \}  \textcolor{comment}{/* Increment */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!M\+L\+Classes@{M\+L\+Classes}}
+\index{M\+L\+Classes@{M\+L\+Classes}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{M\+L\+Classes() const }{MLClasses() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf M\+L\+Class\+List}\& K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+M\+L\+Classes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a3ffbf4a67a233073c85772d5e70b3a82}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a3ffbf4a67a233073c85772d5e70b3a82}
+
+
+Definition at line 106 of file Confusion\+Matrix2.\+h.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Classification\+Bias\+Matrix\+::\+Classification\+Bias\+Matrix(), and K\+K\+M\+L\+L\+::\+Confussion\+Matrix2\+List\+::\+Derive\+Average\+Confusion\+Matrix().
+
+
+\begin{DoxyCode}
+106 \{\textcolor{keywordflow}{return}  classes;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Predicted\+Counts@{Predicted\+Counts}}
+\index{Predicted\+Counts@{Predicted\+Counts}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Predicted\+Counts() const }{PredictedCounts() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+Double} Confusion\+Matrix2\+::\+Predicted\+Counts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_ab8b5f2d711849ed4bb98e69bd85517bd}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_ab8b5f2d711849ed4bb98e69bd85517bd}
+
+
+Definition at line 328 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+329 \{
+330   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  knownClassIdx, predClassIdx;
+331 
+332   \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{VectorDouble}  pc;
+333   \textcolor{keywordflow}{for}  (predClassIdx = 0;  predClassIdx < classCount;  predClassIdx++)
+334   \{
+335     \textcolor{keywordtype}{double}  predCount = 0.0;
+336     \textcolor{keywordflow}{for}  (knownClassIdx = 0;  knownClassIdx < classCount;  knownClassIdx++)
+337       predCount += predictedCountsCM[knownClassIdx][predClassIdx];
+338     pc.push\_back (predCount);
+339   \}
+340  
+341   \textcolor{keywordflow}{return}  pc;
+342 \}  \textcolor{comment}{/* PredictedCounts */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Predicted\+Counts\+CM@{Predicted\+Counts\+CM}}
+\index{Predicted\+Counts\+CM@{Predicted\+Counts\+CM}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Predicted\+Counts\+C\+M(kkint32 known\+Class\+Idx, kkint32 pred\+Class\+Idx) const }{PredictedCountsCM(kkint32 knownClassIdx, kkint32 predClassIdx) const }}]{\setlength{\rightskip}{0pt plus 5cm}double Confusion\+Matrix2\+::\+Predicted\+Counts\+CM (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{known\+Class\+Idx, }
+\item[{{\bf kkint32}}]{pred\+Class\+Idx}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_af3f5627dd13168223482f28cba7d7226}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_af3f5627dd13168223482f28cba7d7226}
+
+
+Definition at line 313 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+316 \{
+317   \textcolor{keywordflow}{if}  ((knownClassIdx < 0)  ||  (knownClassIdx >= classCount))
+318     \textcolor{keywordflow}{return} 0.0;
+319  
+320   \textcolor{keywordflow}{if}  ((predClassIdx < 0)   ||  (predClassIdx >= classCount))
+321     \textcolor{keywordflow}{return} 0.0;
+322  
+323   \textcolor{keywordflow}{return}  predictedCountsCM [knownClassIdx][predClassIdx];
+324 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML@{Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML}}
+\index{Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML@{Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+M\+L(ostream \&o)}{PrintAccuracyByProbByClassHTML(ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Accuracy\+By\+Prob\+By\+Class\+H\+T\+ML (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a26a7f198a4a6e1d60f55bef88ad84a6a}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a26a7f198a4a6e1d60f55bef88ad84a6a}
+
+
+Definition at line 1216 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::operator+(), K\+K\+B\+::\+K\+K\+Str\+::operator=(), and K\+K\+B\+::\+Str\+Format\+Double().
+
+
+\begin{DoxyCode}
+1218 \{
+1219   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} bucket;
+1220   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} classNum;
+1221 
+1222   \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{VectorDouble} countByProb   (numOfProbBuckets, 0.0);
+1223   \hyperlink{namespace_k_k_b_a5906c207479607e5f450434095914a41}{VectorDouble} correctByProb (numOfProbBuckets, 0.0);
+1224 
+1225   \textcolor{keywordtype}{double}  totalCount   = 0.0;
+1226   \textcolor{keywordtype}{double}  totalCorrect = 0.0;
+1227 
+1228   \textcolor{keywordtype}{double}  acc = 0.0;
+1229 
+1230   o << \textcolor{stringliteral}{"<table align=\(\backslash\)"center\(\backslash\)" border=\(\backslash\)"2\(\backslash\)" cellpadding=\(\backslash\)"3\(\backslash\)" cellspacing=\(\backslash\)"0\(\backslash\)" frame=\(\backslash\)"box\(\backslash\)"  summary=\(\backslash\)"
+      Confusion \(\backslash\)" >"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1231     << \textcolor{stringliteral}{"  <thead style=\(\backslash\)"font-weight:bold; text-align:center; vertical-align:bottom\(\backslash\)">"}          << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1232     << \textcolor{stringliteral}{"    <tr>"}                                                                                << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1233     << \textcolor{stringliteral}{"        <th>Class<br />Names</th><th>All<br />Classes</th>"};
+1234 
+1235   \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfProbBuckets;  bucket++)
+1236   \{
+1237     o << \textcolor{stringliteral}{"<th>"} << ((bucket + 1) * probBucketSize) << \textcolor{stringliteral}{"</th>"};
+1238   \}
+1239   o << \textcolor{stringliteral}{"    </tr>"}                                                                               << endl
+1240     << \textcolor{stringliteral}{"  </thead>"}                                                                              << endl
+1241     << \textcolor{stringliteral}{"  <tbody style=\(\backslash\)"font-weight:normal; text-align:right; font-family:Courier\(\backslash\)">"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1242 
+1243   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  ln (1024);
+1244   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  accStr;
+1245 
+1246   \textcolor{keywordflow}{for}  (classNum = 0;  classNum < classCount;  classNum++)
+1247   \{
+1248     \textcolor{keywordtype}{double}  countThisClass   = 0.0;
+1249     \textcolor{keywordtype}{double}  correctThisClass = 0.0;  
+1250 
+1251     ln = \textcolor{stringliteral}{""};
+1252 
+1253     \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfProbBuckets;  bucket++)
+1254     \{
+1255       \textcolor{keywordtype}{double}  count   = countByKnownClassByProb   [classNum][bucket];
+1256       \textcolor{keywordtype}{double}  correct = correctByKnownClassByProb [classNum][bucket];
+1257 
+1258       countThisClass   += count;
+1259       correctThisClass += correct;
+1260 
+1261       countByProb   [bucket] += countByKnownClassByProb   [classNum][bucket];
+1262       correctByProb [bucket] += correctByKnownClassByProb [classNum][bucket];
+1263 
+1264       acc =0.0;
+1265       accStr = \textcolor{stringliteral}{""};
+1266       \textcolor{keywordflow}{if}  (count != 0.0)
+1267       \{
+1268         acc = 100.0 * correct / count;
+1269         accStr = \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (acc, \textcolor{stringliteral}{"ZZ0.000"}) + \textcolor{stringliteral}{"%"};
+1270       \}
+1271 
+1272       ln << \textcolor{stringliteral}{"<td>"} << accStr << \textcolor{stringliteral}{"</td>"};
+1273     \}
+1274 
+1275     totalCount   += countThisClass;
+1276     totalCorrect += correctThisClass;
+1277 
+1278     accStr = \textcolor{stringliteral}{""};
+1279     acc = 0.0;
+1280     \textcolor{keywordflow}{if}  (countThisClass != 0.0)
+1281     \{
+1282       acc = 100.0 * correctThisClass / countThisClass;
+1283       accStr = \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (acc, \textcolor{stringliteral}{"ZZ0.000"}) + \textcolor{stringliteral}{"%"};
+1284     \}
+1285 
+1286     o << \textcolor{stringliteral}{"    <tr>"} 
+1287       << \textcolor{stringliteral}{"<td style=\(\backslash\)"text-align:left; font-family:Arial\(\backslash\)">"} + classes[classNum].Name () + \textcolor{stringliteral}{"</td>"} 
+1288       << \textcolor{stringliteral}{"<td>"} << accStr  << \textcolor{stringliteral}{"</td>"}
+1289       << ln
+1290       << \textcolor{stringliteral}{"</tr>"}
+1291       << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1292   \}
+1293 
+1294   \{
+1295     acc = 0.0;
+1296     \textcolor{keywordflow}{if}  (totalCount != 0.0)
+1297       acc = 100.0 * totalCorrect / totalCount;
+1298 
+1299     o << \textcolor{stringliteral}{"    <tr>"} 
+1300       << \textcolor{stringliteral}{"<td style=\(\backslash\)"text-align:left; font-family:Arial\(\backslash\)">"} << \textcolor{stringliteral}{"Total<br />All Classes"}  << \textcolor{stringliteral}{"</td>"} 
+1301       << \textcolor{stringliteral}{"<td>"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (acc, \textcolor{stringliteral}{"ZZ0.000"}) << \textcolor{stringliteral}{"%"} << \textcolor{stringliteral}{"</td>"};
+1302 
+1303     \textcolor{keywordflow}{for}  (bucket = 0;  bucket < numOfProbBuckets;  bucket++)
+1304     \{
+1305       acc = 0.0;
+1306       accStr = \textcolor{stringliteral}{""};
+1307       \textcolor{keywordflow}{if}  (countByProb [bucket] != 0.0)
+1308       \{
+1309         acc = 100.0 * correctByProb [bucket] / countByProb [bucket];
+1310         accStr = \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (acc, \textcolor{stringliteral}{"ZZ0.000"}) + \textcolor{stringliteral}{"%"};
+1311       \}
+1312 
+1313       o << \textcolor{stringliteral}{"<td>"} << accStr << \textcolor{stringliteral}{"</td>"};
+1314     \}
+1315     o << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1316   \}
+1317 
+1318   o << \textcolor{stringliteral}{"</tbody>"} << endl
+1319     << \textcolor{stringliteral}{"</table>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1320 \}  \textcolor{comment}{/* PrintAccuracyByProbByClassHTML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix@{Print\+Confusion\+Matrix}}
+\index{Print\+Confusion\+Matrix@{Print\+Confusion\+Matrix}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix(ostream \&\+\_\+out\+File)}{PrintConfusionMatrix(ostream &_outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{\+\_\+out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_abedb851741b437ee7897ef73bbeed4c7}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_abedb851741b437ee7897ef73bbeed4c7}
+
+
+Definition at line 919 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+920 \{
+921   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+922   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+923   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+924 
+925  
+926   \textcolor{comment}{// Lets generate Titles first}
+927   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+928 
+929   \textcolor{keywordtype}{double}  perc = 0.0;
+930   \textcolor{keywordflow}{if}  (totalCount > 0.0)
+931     perc = correctCount / totalCount;
+932 
+933   outFile  << \textcolor{stringliteral}{"Overall Accuracy is "} 
+934            << setprecision (5)
+935            << (100.0 * perc) << \textcolor{stringliteral}{"%"}
+936            << endl;
+937 
+938   outFile  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+939    
+940 
+941 
+942   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  titleLine1, titleLine2, titleLine3;
+943   classes.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}{ExtractThreeTitleLines} (titleLine1, titleLine2, titleLine3, 16);
+944 
+945 
+946   outFile << setw (25) << \textcolor{stringliteral}{""}          << setw(16) << \textcolor{stringliteral}{""}      << setw (0) << titleLine1 << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+947   outFile << setw (25) << \textcolor{stringliteral}{""}          << setw(16) << \textcolor{stringliteral}{""}      << setw (0) << titleLine2 << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+948   outFile << setw (25) << \textcolor{stringliteral}{"ClassName"} << setw(16) << \textcolor{stringliteral}{"Count"} << setw (0) << titleLine3 << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+949 
+950   outFile << setw (25) << \textcolor{stringliteral}{"==========="}  << setw(16) << \textcolor{stringliteral}{"===="};
+951   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+952   \{
+953     outFile << setw (16) << \textcolor{stringliteral}{"============"};
+954   \}
+955   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+956 
+957   \textcolor{keywordtype}{double}*  totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+958   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+959     totals[x] = 0;
+960 
+961 
+962   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+963   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+964 
+965   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+966   \{
+967     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined ();
+968 
+969     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+970     \{
+971       totals[predClassNum] += predictedCountsCM[knownClassNum] [predClassNum];
+972     \}
+973      
+974     PrintSingleLine (outFile, 
+975                      classes            [knownClassNum].Name (),
+976                      countsByKnownClass [knownClassNum],
+977                      predictedCountsCM  [knownClassNum]
+978                     );
+979 
+980     \textcolor{keywordflow}{if}  (!noiseClass)
+981     \{
+982       totalNonNoise = totalNonNoise + countsByKnownClass [knownClassNum];
+983       totalNonNoiseRight += predictedCountsCM [knownClassNum] [knownClassNum];
+984     \}
+985   \}
+986 
+987   PrintSingleLine (outFile, 
+988                    \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"Totals"}),
+989                    totalCount,
+990                    totals
+991                   );
+992 
+993   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+994 
+995   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+996   \{
+997     PrintPercentLine (outFile, 
+998                       classes            [knownClassNum].Name (),
+999                       countsByKnownClass [knownClassNum],
+1000                       predictedCountsCM  [knownClassNum]
+1001                      );
+1002   \}
+1003 
+1004   outFile << endl
+1005           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1006 
+1007   perc = 0.0;
+1008   \textcolor{keywordflow}{if}  (totalNonNoise != 0)
+1009     perc = (double)totalNonNoiseRight / (\textcolor{keywordtype}{double})totalNonNoise;
+1010 
+1011   outFile << \textcolor{stringliteral}{"Accuracy for Non Noise "}  
+1012           << setprecision (5)  
+1013           << (perc * 100.0)
+1014           << \textcolor{stringliteral}{"%"}
+1015           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1016 
+1017 
+1018   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1019 
+1020   \textcolor{keyword}{delete}[]  totals;
+1021 \}  \textcolor{comment}{/* PrintConfusionMatrix */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML@{Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML}}
+\index{Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML@{Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+M\+L(ostream \&o)}{PrintConfusionMatrixAvgPredProbHTML(ostream &o)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+Avg\+Pred\+Prob\+H\+T\+ML (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{o}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a2aa0ab4f0a9e3c5bd907e68b94300dc7}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a2aa0ab4f0a9e3c5bd907e68b94300dc7}
+
+
+Definition at line 1129 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1131 \{
+1132   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+1133   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+1134 
+1135   \textcolor{keywordtype}{double}  overallAvgPredProb = 0.0;
+1136   \textcolor{keywordflow}{if}  (totalCount != 0.0)
+1137     overallAvgPredProb = 100.0 * totalPredProb / totalCount;
+1138 
+1139   \textcolor{keywordflow}{if}  (numInvalidClassesPredicted > 0.0)
+1140   \{
+1141     o << \textcolor{stringliteral}{"<p style=\(\backslash\)"font-weight:bold\(\backslash\)">"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+1142       << \textcolor{stringliteral}{"*********************************************************************************************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1143       << \textcolor{stringliteral}{"*******************        WARNING    WARNING   WARNING   WARNING       *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1144       << \textcolor{stringliteral}{"*******************                                                     *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1145       << \textcolor{stringliteral}{"*******************   There were invalid classes specified that were    *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1146       << \textcolor{stringliteral}{"*******************   not counted.    numInvalidClassesPredicted["} << numInvalidClassesPredicted 
+      << \textcolor{stringliteral}{"] *********************<br />"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1147       << \textcolor{stringliteral}{"*********************************************************************************************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1148       << \textcolor{stringliteral}{"</p>"}   << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1149       << \textcolor{stringliteral}{"<br />"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1150   \}
+1151 
+1152 
+1153   o << \textcolor{stringliteral}{"Overall AvgPredProb: "} 
+1154     << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (overallAvgPredProb, \textcolor{stringliteral}{"ZZZ0.000"}) << \textcolor{stringliteral}{"%"}
+1155     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1156 
+1157 
+1158   o << \textcolor{stringliteral}{"<table align=\(\backslash\)"center\(\backslash\)" border=\(\backslash\)"2\(\backslash\)" cellpadding=\(\backslash\)"3\(\backslash\)" cellspacing=\(\backslash\)"0\(\backslash\)" frame=\(\backslash\)"box\(\backslash\)"  summary=\(\backslash\)"
+      Confusion \(\backslash\)" >"} << endl
+1159     << \textcolor{stringliteral}{"  <thead style=\(\backslash\)"font-weight:bold; text-align:center; vertical-align:bottom\(\backslash\)">"}          << endl
+1160     << \textcolor{stringliteral}{"    <tr>"}                                                                                << endl
+1161     << \textcolor{stringliteral}{"        <th>Class<br />Names</th><th>Count</th>"} << classes.
+      \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a9fdbe03268aed67b977f28a48a26a85e}{ExtractHTMLTableHeader} ()    << endl
+1162     << \textcolor{stringliteral}{"    </tr>"}                                                                               << endl
+1163     << \textcolor{stringliteral}{"  </thead>"}                                                                              << endl
+1164     << \textcolor{stringliteral}{"  <tbody style=\(\backslash\)"font-weight:normal; text-align:right; font-family:Courier\(\backslash\)">"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1165 
+1166   \textcolor{keywordtype}{double}*  totalPredProbByPredClass = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1167   \textcolor{keywordtype}{double}*  totalCountsByPredClass   = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1168   \textcolor{keywordflow}{for}  (predClassNum = 0;  predClassNum < classCount;  predClassNum++)
+1169   \{
+1170     totalPredProbByPredClass [predClassNum] = 0.0;
+1171     totalCountsByPredClass   [predClassNum] = 0.0;
+1172   \}
+1173 
+1174   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1175   \{
+1176     PrintAvgPredProbLineHTML (o, 
+1177                               classes                    [knownClassNum].Name (),
+1178                               totalPredProbsByKnownClass [knownClassNum],
+1179                               countsByKnownClass         [knownClassNum],
+1180                               knownClassNum,
+1181                               totPredProbCM              [knownClassNum],
+1182                               predictedCountsCM          [knownClassNum]
+1183                              );
+1184     \textcolor{keywordflow}{for}  (predClassNum = 0;  predClassNum < classCount;  predClassNum++)
+1185     \{
+1186       totalPredProbByPredClass [predClassNum] += totPredProbCM     [knownClassNum][predClassNum];
+1187       totalCountsByPredClass   [predClassNum] += predictedCountsCM [knownClassNum][predClassNum];
+1188     \}
+1189   \}
+1190 
+1191   o << \textcolor{stringliteral}{"<tr><td colspan=\(\backslash\)""} << (classCount + 2) << \textcolor{stringliteral}{"\(\backslash\)">&nbsp</td></tr>"} << endl;
+1192 
+1193   PrintAvgPredProbLineHTML (o, 
+1194                             \textcolor{stringliteral}{"AllClasses"},
+1195                              totalPredProb,
+1196                             totalCount,
+1197                             knownClassNum,
+1198                             totalPredProbByPredClass,
+1199                             totalCountsByPredClass
+1200                            );
+1201 
+1202   o << \textcolor{stringliteral}{"</tbody>"} << endl
+1203     << \textcolor{stringliteral}{"</table>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1204 
+1205   \textcolor{keyword}{delete}[]  totalCountsByPredClass;
+1206   \textcolor{keyword}{delete}[]  totalPredProbByPredClass;
+1207 \}  \textcolor{comment}{/* PrintConfusionMatrixHTML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+H\+T\+ML@{Print\+Confusion\+Matrix\+H\+T\+ML}}
+\index{Print\+Confusion\+Matrix\+H\+T\+ML@{Print\+Confusion\+Matrix\+H\+T\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+H\+T\+M\+L(const char $\ast$title, ostream \&file)}{PrintConfusionMatrixHTML(const char *title, ostream &file)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+H\+T\+ML (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{title, }
+\item[{ostream \&}]{file}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_aecc46233879a6451a2ce5969933fc4fc}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_aecc46233879a6451a2ce5969933fc4fc}
+
+
+Definition at line 2641 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2644 \{
+2645   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+2646   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+2647   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+2648 
+2649   \textcolor{comment}{// generate html preamble}
+2650   file << \textcolor{stringliteral}{"<html>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2651   file << \textcolor{stringliteral}{"<head>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2652   file << \textcolor{stringliteral}{"<title>"} << title << \textcolor{stringliteral}{"</title>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2653   file << \textcolor{stringliteral}{"<body bgcolor=\(\backslash\)"white\(\backslash\)">"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2654 
+2655   \textcolor{comment}{// generate the title}
+2656   file  << \textcolor{stringliteral}{"<h1>"} << title << \textcolor{stringliteral}{"</h1>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2657 
+2658   \textcolor{comment}{// generate the accuracy statement}
+2659   file  << \textcolor{stringliteral}{"<p><b>Overall Accuracy</b> is "} 
+2660       << setprecision (5)
+2661       << (100.0 * correctCount / totalCount) << \textcolor{stringliteral}{"%"}
+2662       << \textcolor{stringliteral}{"</p>"} << endl;
+2663 
+2664   \textcolor{comment}{/***************************************************************************}
+2665 \textcolor{comment}{   * generate the table with the counts}
+2666 \textcolor{comment}{   ***************************************************************************/}
+2667   file << \textcolor{stringliteral}{"<table cellpadding=\(\backslash\)"2\(\backslash\)" cellspacing=\(\backslash\)"0\(\backslash\)" border=\(\backslash\)"2\(\backslash\)">"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2668   file << \textcolor{stringliteral}{"<tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2669 
+2670   \textcolor{comment}{// output the first row (which is class names)}
+2671   file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>Class Names</b></th>"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2672   file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>Totals</b></th>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2673   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+2674   \{
+2675     file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>"} << classes[knownClassNum].Name() << \textcolor{stringliteral}{"</b></th>"} 
+      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2676   \}
+2677   file  << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2678 
+2679   \textcolor{keywordtype}{double} *totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+2680   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+2681   \{
+2682     totals[x] = 0;
+2683   \}
+2684 
+2685   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+2686   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+2687 
+2688   \textcolor{comment}{// output the data rows}
+2689   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+2690   \{
+2691     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined();
+2692     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+2693     \{
+2694       totals[predClassNum] += predictedCountsCM[knownClassNum] [predClassNum];
+2695     \}
+2696      
+2697     file << \textcolor{stringliteral}{"<tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2698     file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>"} << classes            [knownClassNum].Name() << \textcolor{stringliteral}{
+      "</b></th>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2699     file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#EFEFEF\(\backslash\)">"}    << countsByKnownClass [knownClassNum]        << \textcolor{stringliteral}{
+      "</td>"}     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2700 
+2701     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+2702     \{
+2703       \textcolor{keywordflow}{if} (predClassNum == knownClassNum)
+2704         file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#EEEEEE\(\backslash\)">"};
+2705       \textcolor{keywordflow}{else} 
+2706         file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)">"};
+2707       file << predictedCountsCM[knownClassNum][predClassNum]; 
+2708       file << \textcolor{stringliteral}{"</td>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2709     \}
+2710     file << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2711     \textcolor{keywordflow}{if}  (!noiseClass)
+2712     \{
+2713       totalNonNoise = totalNonNoise + countsByKnownClass [knownClassNum];
+2714       totalNonNoiseRight += predictedCountsCM [knownClassNum] [knownClassNum];
+2715     \}
+2716   \}
+2717 
+2718   \textcolor{comment}{// output the totals line for the first table}
+2719   file << \textcolor{stringliteral}{"<tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2720   file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>Totals</b></th>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2721   file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#EEEEEE\(\backslash\)">"} << totalCount << \textcolor{stringliteral}{"</b></th>"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2722   
+2723   \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+2724   \{
+2725     file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)">"};
+2726     file << totals[predClassNum]; 
+2727     file << \textcolor{stringliteral}{"</td>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2728   \}
+2729   file << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2730   file << \textcolor{stringliteral}{"</table>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2731 
+2732   \textcolor{comment}{/***************************************************************************}
+2733 \textcolor{comment}{   * generate the table with the percents}
+2734 \textcolor{comment}{   ***************************************************************************/}
+2735   file  << \textcolor{stringliteral}{"<br/>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2736   file  << \textcolor{stringliteral}{"<p><b>Accuracy for Non Noise</b> "}
+2737           << setprecision (5)
+2738           << (((double)totalNonNoiseRight / (\textcolor{keywordtype}{double})totalNonNoise) * 100.0)
+2739           << \textcolor{stringliteral}{"%</p>"}
+2740           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2741   file  << \textcolor{stringliteral}{"<table cellpadding=\(\backslash\)"2\(\backslash\)" cellspacing=\(\backslash\)"0\(\backslash\)" border=\(\backslash\)"2\(\backslash\)">"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2742   file  << \textcolor{stringliteral}{"<tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2743 
+2744   \textcolor{comment}{// output the first row (which is class names)}
+2745   file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>Class Names</b></th>"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2746   file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>Totals</b></th>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2747   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+2748   \{
+2749     file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>"} << classes[knownClassNum].Name() << \textcolor{stringliteral}{"</b></th>"} 
+      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2750   \}
+2751   file  << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2752 
+2753   \textcolor{comment}{// output the data rows}
+2754   \textcolor{keywordtype}{double} perc=0.0;
+2755   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+2756   \{
+2757     file << \textcolor{stringliteral}{"<tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2758     file << \textcolor{stringliteral}{"<th align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#CCCCCC\(\backslash\)"><b>"} << classes[knownClassNum].Name() << \textcolor{stringliteral}{"</b></th>"} 
+      << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2759     file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#EFEFEF\(\backslash\)">"} << setprecision (4) << (countsByKnownClass [
+      knownClassNum]/totalCount*100) << \textcolor{stringliteral}{"</td>"} << endl;
+2760 
+2761     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+2762     \{
+2763       \textcolor{keywordflow}{if} (predClassNum == knownClassNum)
+2764         file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)" bgcolor=\(\backslash\)"#EEEEEE\(\backslash\)">"};
+2765       \textcolor{keywordflow}{else} 
+2766         file << \textcolor{stringliteral}{"<td align=\(\backslash\)"center\(\backslash\)">"};
+2767       \textcolor{keywordflow}{if}  (countsByKnownClass [knownClassNum] <= 0)
+2768         perc = 0.0;
+2769       \textcolor{keywordflow}{else}
+2770         perc = predictedCountsCM [knownClassNum][predClassNum] / countsByKnownClass [knownClassNum] * 100.0
+      ;
+2771 
+2772       file << setprecision (4) << perc; 
+2773       file << \textcolor{stringliteral}{"</td>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2774     \}
+2775     file << \textcolor{stringliteral}{"</tr>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2776   \}
+2777   file << \textcolor{stringliteral}{"</table>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2778 
+2779   file << \textcolor{stringliteral}{"</body>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2780   file << \textcolor{stringliteral}{"</html>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2781 
+2782   \textcolor{keyword}{delete}[]  totals;
+2783 \}   \textcolor{comment}{/* PrintConfusionMatrixHTML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+H\+T\+ML@{Print\+Confusion\+Matrix\+H\+T\+ML}}
+\index{Print\+Confusion\+Matrix\+H\+T\+ML@{Print\+Confusion\+Matrix\+H\+T\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+H\+T\+M\+L(ostream \&out\+File)}{PrintConfusionMatrixHTML(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+H\+T\+ML (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a45ec0f9441983bd3755d60631ce5ace9}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a45ec0f9441983bd3755d60631ce5ace9}
+
+
+Definition at line 1025 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+1026 \{
+1027   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+1028   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+1029   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1030 
+1031 
+1032   \textcolor{keywordtype}{double}  overallAccuracy = 0.0;
+1033   \textcolor{keywordflow}{if}  (totalCount != 0.0)
+1034     overallAccuracy = 100.0 * correctCount / totalCount;
+1035 
+1036   \textcolor{keywordflow}{if}  (numInvalidClassesPredicted > 0.0)
+1037   \{
+1038     o << \textcolor{stringliteral}{"<p style=\(\backslash\)"font-weight:bold\(\backslash\)">"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} 
+1039       << \textcolor{stringliteral}{"*********************************************************************************************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1040       << \textcolor{stringliteral}{"*******************        WARNING    WARNING   WARNING  WARNING        *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1041       << \textcolor{stringliteral}{"*******************                                                     *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1042       << \textcolor{stringliteral}{"*******************   There were invalid classes specified that were    *********************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1043       << \textcolor{stringliteral}{"*******************   not counted.    numInvalidClassesPredicted["} << numInvalidClassesPredicted 
+      << \textcolor{stringliteral}{"] *********************<br />"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1044       << \textcolor{stringliteral}{"*********************************************************************************************<br
+       />"}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1045       << \textcolor{stringliteral}{"</p>"}   << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1046       << \textcolor{stringliteral}{"<br />"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1047   \}
+1048 
+1049 
+1050   o << \textcolor{stringliteral}{"Overall Accuracy: "} 
+1051     << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (overallAccuracy, \textcolor{stringliteral}{"ZZZ0.000"}) << \textcolor{stringliteral}{"%"}
+1052     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1053 
+1054 
+1055   o << \textcolor{stringliteral}{"<table align=\(\backslash\)"center\(\backslash\)" border=\(\backslash\)"2\(\backslash\)" cellpadding=\(\backslash\)"3\(\backslash\)" cellspacing=\(\backslash\)"0\(\backslash\)" frame=\(\backslash\)"box\(\backslash\)"  summary=\(\backslash\)"
+      Confusion \(\backslash\)" >"} << endl
+1056     << \textcolor{stringliteral}{"  <thead style=\(\backslash\)"font-weight:bold; text-align:center; vertical-align:bottom\(\backslash\)">"}          << endl
+1057     << \textcolor{stringliteral}{"    <tr>"}                                                                                << endl
+1058     << \textcolor{stringliteral}{"        <th>Class<br />Names</th><th>Count</th>"} << classes.
+      \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a9fdbe03268aed67b977f28a48a26a85e}{ExtractHTMLTableHeader} ()    << endl
+1059     << \textcolor{stringliteral}{"    </tr>"}                                                                               << endl
+1060     << \textcolor{stringliteral}{"  </thead>"}                                                                              << endl
+1061     << \textcolor{stringliteral}{"  <tbody style=\(\backslash\)"font-weight:normal; text-align:right; font-family:Courier\(\backslash\)">"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1062 
+1063   \textcolor{keywordtype}{double}*  totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1064   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+1065     totals[x] = 0;
+1066 
+1067   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+1068   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+1069 
+1070   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1071   \{
+1072     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined ();
+1073 
+1074     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+1075     \{
+1076       totals[predClassNum] += predictedCountsCM [knownClassNum] [predClassNum];
+1077     \}
+1078 
+1079     PrintSingleLineHTML (o, 
+1080                          classes            [knownClassNum].Name (),
+1081                          countsByKnownClass [knownClassNum],
+1082                          knownClassNum,
+1083                          predictedCountsCM  [knownClassNum]
+1084                         );
+1085     \textcolor{keywordflow}{if}  (!noiseClass)
+1086     \{
+1087       totalNonNoise      = totalNonNoise      + countsByKnownClass [knownClassNum];
+1088       totalNonNoiseRight = totalNonNoiseRight + predictedCountsCM  [knownClassNum] [knownClassNum];
+1089     \}
+1090 
+1091   \}
+1092 
+1093   PrintSingleLineHTML (o, 
+1094                        \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"Totals"}),
+1095                        totalCount,
+1096                        -1,
+1097                        totals
+1098                       );
+1099 
+1100   o << \textcolor{stringliteral}{"<tr><td colspan=\(\backslash\)""} << (classCount + 2) << \textcolor{stringliteral}{"\(\backslash\)">&nbsp</td></tr>"} << endl;
+1101 
+1102   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1103   \{
+1104     PrintPercentLineHTML (o, 
+1105                           classes            [knownClassNum].Name (),
+1106                           countsByKnownClass [knownClassNum],
+1107                           knownClassNum,
+1108                           predictedCountsCM  [knownClassNum]
+1109                          );
+1110   \}
+1111 
+1112   o << \textcolor{stringliteral}{"</tbody>"} << endl
+1113     << \textcolor{stringliteral}{"</table>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1114 
+1115   \textcolor{keywordtype}{double}  nonNoiseAccuracy = 0.0;
+1116   \textcolor{keywordflow}{if}  (totalNonNoise != 0)
+1117     nonNoiseAccuracy = 100.0 * (double)totalNonNoiseRight / (\textcolor{keywordtype}{double})totalNonNoise;
+1118 
+1119   o << \textcolor{stringliteral}{"Non Noise Accuracy: "} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (nonNoiseAccuracy, \textcolor{stringliteral}{"ZZ0.000"}) << \textcolor{stringliteral}{"%"} << \textcolor{stringliteral}{"
+      <br />"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1120 
+1121   \textcolor{keyword}{delete}  [] totals;
+1122 \}  \textcolor{comment}{/* PrintConfusionMatrixHTML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+Latex\+Table@{Print\+Confusion\+Matrix\+Latex\+Table}}
+\index{Print\+Confusion\+Matrix\+Latex\+Table@{Print\+Confusion\+Matrix\+Latex\+Table}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+Latex\+Table(ostream \&out\+File)}{PrintConfusionMatrixLatexTable(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+Latex\+Table (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_afe463b9eec6a478fffbf252a42b54d3f}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_afe463b9eec6a478fffbf252a42b54d3f}
+
+
+Definition at line 1464 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+1465 \{
+1466   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+1467   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+1468   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1469 
+1470   \textcolor{keywordtype}{double}  overallAccuracy = 0.0;
+1471   \textcolor{keywordflow}{if}  (totalCount != 0.0)
+1472     overallAccuracy = 100.0 * correctCount / totalCount;
+1473 
+1474   outFile  << \textcolor{stringliteral}{"Overall Accuracy:\(\backslash\)t"} 
+1475            << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (overallAccuracy, \textcolor{stringliteral}{"ZZZ0.000"}) << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)%\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"}
+1476            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1477 
+1478   PrintLatexTableColumnHeaders (outFile);
+1479   
+1480 
+1481   \textcolor{keywordtype}{double}*  totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1482   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+1483     totals[x] = 0;
+1484 
+1485 
+1486   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+1487   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+1488 
+1489   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1490   \{
+1491     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined ();
+1492 
+1493     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+1494     \{
+1495       totals[predClassNum] += predictedCountsCM[knownClassNum] [predClassNum];
+1496     \}
+1497      
+1498     PrintSingleLineLatexTable (outFile, 
+1499                                knownClassNum,
+1500                                classes            [knownClassNum].Name (),
+1501                                countsByKnownClass [knownClassNum],
+1502                                predictedCountsCM  [knownClassNum]
+1503                               );
+1504 
+1505     outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)hline"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1506 
+1507     \textcolor{keywordflow}{if}  (!noiseClass)
+1508     \{
+1509       totalNonNoise      = totalNonNoise      + countsByKnownClass [knownClassNum];
+1510       totalNonNoiseRight = totalNonNoiseRight + predictedCountsCM  [knownClassNum] [knownClassNum];
+1511     \}
+1512 
+1513   \}
+1514 
+1515   outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)hline"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1516 
+1517   PrintSingleLineLatexTable (outFile, 
+1518                              -1,
+1519                              \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"Totals"}),
+1520                              totalCount,
+1521                              totals
+1522                             );
+1523 
+1524   outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)hline"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1525 
+1526   outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)end\{tabular\}"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1527 
+1528 
+1529   outFile << endl
+1530           << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)vspace\{16pt\}"} << endl
+1531           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1532 
+1533 
+1534   PrintLatexTableColumnHeaders (outFile);
+1535   
+1536   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1537   \{
+1538     PrintPercentLineLatexTable (outFile, 
+1539                                 knownClassNum,
+1540                                 classes            [knownClassNum].Name (),
+1541                                 countsByKnownClass [knownClassNum],
+1542                                 predictedCountsCM  [knownClassNum]
+1543                                );
+1544     outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)hline"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1545   \}
+1546 
+1547   outFile << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)end\{tabular\}"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1548 
+1549   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1550 
+1551   \textcolor{keyword}{delete}[]  totals;
+1552 \}  \textcolor{comment}{/* PrintConfusionMatrixLatexTable */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+Narrow@{Print\+Confusion\+Matrix\+Narrow}}
+\index{Print\+Confusion\+Matrix\+Narrow@{Print\+Confusion\+Matrix\+Narrow}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+Narrow(ostream \&out\+File)}{PrintConfusionMatrixNarrow(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+Narrow (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_aa5d90a87ce8341055e8cd45913b4ba51}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_aa5d90a87ce8341055e8cd45913b4ba51}
+
+
+Definition at line 1560 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Left\+Pad(), and K\+K\+B\+::operator$<$$<$().
+
+
+\begin{DoxyCode}
+1561 \{
+1562   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+1563   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+1564   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1565 
+1566  
+1567   \textcolor{comment}{// Lets generate Titles first}
+1568   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1569 
+1570   \textcolor{keywordtype}{double}  perc = 0.0;
+1571   \textcolor{keywordflow}{if}  (totalCount != 0)
+1572     perc = correctCount / totalCount;
+1573 
+1574   outFile  << \textcolor{stringliteral}{"Overall Accuracy is "} 
+1575            << setprecision (5)
+1576            << (100.0 * perc) << \textcolor{stringliteral}{"%"}
+1577            << endl;
+1578 
+1579   outFile  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1580    
+1581 
+1582   outFile << setw (25) << \textcolor{stringliteral}{"Class Names"};
+1583 
+1584   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1585   \{
+1586     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  colDesc (\textcolor{stringliteral}{"Col"});
+1587     colDesc << (knownClassNum + 1);
+1588 
+1589     colDesc.LeftPad (6);
+1590 
+1591     outFile << colDesc;
+1592   \}
+1593   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1594 
+1595   outFile << setw (25) << \textcolor{stringliteral}{"==========="};
+1596   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1597   \{
+1598     outFile << setw (6) << \textcolor{stringliteral}{"===="};
+1599   \}
+1600   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1601 
+1602   \textcolor{keywordtype}{double}*  totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1603   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+1604     totals[x] = 0;
+1605 
+1606 
+1607   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+1608   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+1609 
+1610   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1611   \{
+1612     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined ();
+1613 
+1614     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+1615     \{
+1616       totals[predClassNum] += predictedCountsCM [knownClassNum] [predClassNum];
+1617     \}
+1618      
+1619     PrintSingleLineShort (outFile, 
+1620                           classes            [knownClassNum].Name (),
+1621                           countsByKnownClass [knownClassNum],
+1622                           predictedCountsCM  [knownClassNum]
+1623                          );
+1624     \textcolor{keywordflow}{if}  (!noiseClass)
+1625     \{
+1626       totalNonNoise      += countsByKnownClass [knownClassNum];
+1627       totalNonNoiseRight += predictedCountsCM  [knownClassNum] [knownClassNum];
+1628     \}
+1629 
+1630   \}
+1631 
+1632   PrintSingleLineShort (outFile, 
+1633                         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"Totals"}),
+1634                         totalCount,
+1635                         totals
+1636                        );
+1637 
+1638   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1639 
+1640   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1641   \{
+1642     PrintPercentLineShort (outFile, 
+1643                            classes            [knownClassNum].Name (),
+1644                            countsByKnownClass [knownClassNum],
+1645                            predictedCountsCM  [knownClassNum]
+1646                          );
+1647   \}
+1648 
+1649   outFile << endl
+1650           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1651 
+1652 
+1653   perc = 0.0;
+1654   \textcolor{keywordflow}{if}  (totalNonNoise != 0)
+1655     perc = (double)totalNonNoiseRight / (\textcolor{keywordtype}{double})totalNonNoise;
+1656 
+1657   outFile << \textcolor{stringliteral}{"Accuracy for Non Noise "}
+1658           << setprecision (5)
+1659           << (perc * 100.0)
+1660           << \textcolor{stringliteral}{"%"}
+1661           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1662 
+1663   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1664 
+1665   \textcolor{keyword}{delete}[]  totals;
+1666 \}  \textcolor{comment}{/* PrintCrossValidationNarrow */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Confusion\+Matrix\+Tab\+Delimited@{Print\+Confusion\+Matrix\+Tab\+Delimited}}
+\index{Print\+Confusion\+Matrix\+Tab\+Delimited@{Print\+Confusion\+Matrix\+Tab\+Delimited}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Confusion\+Matrix\+Tab\+Delimited(ostream \&out\+File)}{PrintConfusionMatrixTabDelimited(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Confusion\+Matrix\+Tab\+Delimited (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a541330f5c7bc79b49347728148876860}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a541330f5c7bc79b49347728148876860}
+
+
+Definition at line 1328 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+1329 \{
+1330   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} knownClassNum;
+1331   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} predClassNum;
+1332   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+1333 
+1334   \textcolor{comment}{// Lets generate Titles first}
+1335   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1336 
+1337   \textcolor{keywordtype}{double}  overallAccuracy = 0.0;
+1338   \textcolor{keywordflow}{if}  (totalCount != 0.0)
+1339    overallAccuracy = 100.0 * correctCount / totalCount;
+1340 
+1341   \textcolor{keywordflow}{if}  (numInvalidClassesPredicted > 0.0)
+1342   \{
+1343     outFile << endl 
+1344             << \textcolor{stringliteral}{"
+      *********************************************************************************************"}  << endl
+1345             << \textcolor{stringliteral}{"*******************        WARNING    WARNING   WARNING  WARNING       
+       *********************"}  << endl
+1346             << \textcolor{stringliteral}{"*******************                                                    
+       *********************"}  << endl
+1347             << \textcolor{stringliteral}{"*******************   There were invalid classes specified that were   
+       *********************"}  << endl
+1348             << \textcolor{stringliteral}{"*******************   not counted.    numInvalidClassesPredicted["} << 
+      numInvalidClassesPredicted << \textcolor{stringliteral}{"] *********************"} << endl
+1349             << \textcolor{stringliteral}{"
+      *********************************************************************************************"}  << endl
+1350             << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1351   \}
+1352 
+1353 
+1354   outFile  << \textcolor{stringliteral}{"Overall Accuracy:\(\backslash\)t"} 
+1355            << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (overallAccuracy, \textcolor{stringliteral}{"ZZZ0.000"}) << \textcolor{stringliteral}{"%"}
+1356            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1357 
+1358   outFile  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1359    
+1360 
+1361 
+1362   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  titleLine1, titleLine2, titleLine3;
+1363   classes.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab333df46b706048637bb7b98ef552f59}{ExtractThreeTitleLines} (titleLine1, titleLine2, titleLine3);
+1364 
+1365   outFile << \textcolor{stringliteral}{""}            << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{""}      << \textcolor{stringliteral}{"\(\backslash\)t"} << titleLine1 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1366   outFile << \textcolor{stringliteral}{""}            << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{""}      << \textcolor{stringliteral}{"\(\backslash\)t"} << titleLine2 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1367   outFile << \textcolor{stringliteral}{"Class\_Names"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Count"} << \textcolor{stringliteral}{"\(\backslash\)t"} << titleLine3 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1368 
+1369   \textcolor{keywordtype}{double}*  totals = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[classCount];
+1370   \textcolor{keywordflow}{for}  (x = 0; x < classCount; x++)
+1371     totals[x] = 0;
+1372 
+1373   \textcolor{keywordtype}{double}  totalNonNoise = 0;
+1374   \textcolor{keywordtype}{double}  totalNonNoiseRight = 0;
+1375 
+1376   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1377   \{
+1378     \textcolor{keywordtype}{bool}  noiseClass = classes[knownClassNum].UnDefined ();
+1379 
+1380     \textcolor{keywordflow}{for}  (predClassNum = 0; predClassNum < classCount; predClassNum++)
+1381     \{
+1382       totals[predClassNum] += predictedCountsCM[knownClassNum] [predClassNum];
+1383     \}
+1384      
+1385     PrintSingleLineTabDelimited (outFile, 
+1386                                  classes            [knownClassNum].Name (),
+1387                                  countsByKnownClass [knownClassNum],
+1388                                  predictedCountsCM  [knownClassNum]
+1389                                 );
+1390     \textcolor{keywordflow}{if}  (!noiseClass)
+1391     \{
+1392       totalNonNoise      = totalNonNoise      + countsByKnownClass [knownClassNum];
+1393       totalNonNoiseRight = totalNonNoiseRight + predictedCountsCM  [knownClassNum] [knownClassNum];
+1394     \}
+1395   \}
+1396 
+1397   PrintSingleLineTabDelimited (outFile, 
+1398                                \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} (\textcolor{stringliteral}{"Totals"}),
+1399                                totalCount,
+1400                                totals
+1401                               );
+1402 
+1403   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1404 
+1405   \textcolor{keywordflow}{for}  (knownClassNum = 0;  knownClassNum < classCount;  knownClassNum++)
+1406   \{
+1407     PrintPercentLineTabDelimited (outFile, 
+1408                                   classes            [knownClassNum].Name (),
+1409                                   countsByKnownClass [knownClassNum],
+1410                                   predictedCountsCM  [knownClassNum]
+1411                                  );
+1412   \}
+1413 
+1414 
+1415   \textcolor{keywordtype}{double}  nonNoiseAccuracy = 0.0;
+1416   \textcolor{keywordflow}{if}  (totalNonNoise != 0)
+1417      nonNoiseAccuracy = 100.0 * (double)totalNonNoiseRight / (\textcolor{keywordtype}{double})totalNonNoise;
+1418 
+1419   outFile << endl
+1420           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1421 
+1422   outFile << \textcolor{stringliteral}{"Non Noise Accuracy:"} << \textcolor{stringliteral}{"\(\backslash\)t"}  << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (nonNoiseAccuracy, \textcolor{stringliteral}{"ZZ0.000"})
+       << \textcolor{stringliteral}{"%"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1423 
+1424 
+1425   outFile << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1426 
+1427   \textcolor{keyword}{delete}  [] totals;
+1428 \}  \textcolor{comment}{/* PrintConfusionMatrixTabDelimited */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Error\+By\+Prob@{Print\+Error\+By\+Prob}}
+\index{Print\+Error\+By\+Prob@{Print\+Error\+By\+Prob}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Error\+By\+Prob(ostream \&out\+File)}{PrintErrorByProb(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Error\+By\+Prob (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a049e78edf2c94c010218122cdcc5c412}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a049e78edf2c94c010218122cdcc5c412}
+
+
+Definition at line 1934 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1935 \{
+1936   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+1937   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+1938 
+1939   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1940 
+1941   outFile << \textcolor{stringliteral}{"Prob"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+1942 
+1943   \textcolor{comment}{// Lets first Print Titles.}
+1944   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+1945   \{
+1946     outFile << \textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)t"};
+1947     outFile << classes[classNum].Name ();
+1948   \}
+1949 
+1950   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1951 
+1952 
+1953   outFile << setiosflags (ios::fixed);
+1954 
+1955   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+1956   \{
+1957     outFile << ((bucket + 1) * probBucketSize) << \textcolor{stringliteral}{"%\(\backslash\)t"};
+1958 
+1959     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+1960 
+1961     \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+1962     \{
+1963       \textcolor{keywordtype}{double}  perc;
+1964 
+1965       \textcolor{keywordtype}{double} count   = countByKnownClassByProb   [classNum][bucket];
+1966       \textcolor{keywordtype}{double} correct = correctByKnownClassByProb [classNum][bucket];
+1967       
+1968       \textcolor{keywordflow}{if}  (count > 0)
+1969          perc = 100.0 * (double)correct / (\textcolor{keywordtype}{double})count;
+1970       \textcolor{keywordflow}{else}
+1971          perc = 0.0;
+1972 
+1973       outFile << count << \textcolor{stringliteral}{"\(\backslash\)t"} << correct << \textcolor{stringliteral}{"\(\backslash\)t"} << setprecision (1) << perc << \textcolor{stringliteral}{"% \(\backslash\)t"};
+1974     \}
+1975 
+1976     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1977   \}
+1978 
+1979   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1980 \}  \textcolor{comment}{/* PrintErrorByProb */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Error\+By\+Prob\+By\+Rows@{Print\+Error\+By\+Prob\+By\+Rows}}
+\index{Print\+Error\+By\+Prob\+By\+Rows@{Print\+Error\+By\+Prob\+By\+Rows}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Error\+By\+Prob\+By\+Rows(ostream \&out\+File)}{PrintErrorByProbByRows(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Error\+By\+Prob\+By\+Rows (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_affe7dfa4a82a45d72dbc0b1f7c9fbbea}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_affe7dfa4a82a45d72dbc0b1f7c9fbbea}
+
+
+Definition at line 2083 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2084 \{
+2085   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+2086   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+2087 
+2088   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+2089 
+2090   \textcolor{keywordtype}{double}*  totalCount   = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfProbBuckets];
+2091   \textcolor{keywordtype}{double}*  totalCorrect = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfProbBuckets];
+2092 
+2093   \textcolor{keywordflow}{for}  (x = 0; x < numOfProbBuckets; x++)
+2094   \{
+2095     totalCount   [x] = 0;
+2096     totalCorrect [x] = 0;
+2097   \}
+2098 
+2099   outFile  << \textcolor{stringliteral}{"ClassName\(\backslash\)tAvg Prob\(\backslash\)t"};
+2100   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2101   \{
+2102     outFile << ((bucket + 1) * probBucketSize) << \textcolor{stringliteral}{"%\(\backslash\)t"};
+2103   \}
+2104 
+2105   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+2106           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2107 
+2108   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2109   \{
+2110     \textcolor{keywordtype}{double}  avg;
+2111     \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] != 0)
+2112       avg = 100.0 * totalPredProbsByKnownClass [classNum] / countsByKnownClass [classNum];
+2113     \textcolor{keywordflow}{else}
+2114       avg = 0;
+2115 
+2116     outFile << classes[classNum].Name ()
+2117             << \textcolor{stringliteral}{"\(\backslash\)t"}
+2118             <<  avg << \textcolor{stringliteral}{"%"};
+2119 
+2120 
+2121     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2122     \{
+2123       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << countByKnownClassByProb [classNum][bucket];
+2124       totalCount[bucket] = totalCount[bucket] + countByKnownClassByProb [classNum][bucket];
+2125     \}
+2126     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2127     
+2128 
+2129 
+2130     outFile << classes[classNum].Name () << \textcolor{stringliteral}{" Correct"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+2131     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2132     \{
+2133       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << correctByKnownClassByProb [classNum][bucket];
+2134       totalCorrect [bucket] = totalCorrect [bucket] + correctByKnownClassByProb [classNum][bucket];
+2135     \}
+2136     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2137 
+2138 
+2139     outFile << \textcolor{stringliteral}{"Accuracy"}  << \textcolor{stringliteral}{"\(\backslash\)t"};
+2140     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2141     \{
+2142       \textcolor{keywordtype}{double}  perc;
+2143 
+2144       \textcolor{keywordflow}{if}  (countByKnownClassByProb [classNum][bucket] <= 0.0)
+2145         perc = 0.0;
+2146       \textcolor{keywordflow}{else}
+2147         perc = 100.0 * correctByKnownClassByProb [classNum][bucket] / countByKnownClassByProb [classNum][
+      bucket];
+2148 
+2149       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << perc << \textcolor{stringliteral}{"%"};
+2150     \}
+2151     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2152 
+2153     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2154   \}
+2155 
+2156   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2157 
+2158   outFile << \textcolor{stringliteral}{"Total"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+2159   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2160   \{
+2161     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << totalCount[bucket];
+2162   \}
+2163 
+2164   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2165 
+2166   outFile << \textcolor{stringliteral}{"Correct"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+2167   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2168   \{
+2169     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << totalCorrect[bucket];
+2170   \}
+2171   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2172 
+2173   outFile << \textcolor{stringliteral}{"Accuracy"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+2174   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2175   \{
+2176     \textcolor{keywordtype}{double}  perc;
+2177 
+2178     \textcolor{keywordflow}{if}  (totalCount[bucket] <= 0)
+2179       perc = 0.0;
+2180     \textcolor{keywordflow}{else}
+2181       perc = 100.0 * totalCorrect[bucket] / totalCount[bucket];
+2182 
+2183     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << perc << \textcolor{stringliteral}{"%"};
+2184   \}
+2185 
+2186   \textcolor{keyword}{delete}[]  totalCount;   totalCount   = NULL;
+2187   \textcolor{keyword}{delete}[]  totalCorrect; totalCorrect = NULL;
+2188 
+2189   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2190 
+2191   \textcolor{keywordflow}{return};
+2192 \}  \textcolor{comment}{/* PrintErrorByProbByRows */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Error\+By\+Size@{Print\+Error\+By\+Size}}
+\index{Print\+Error\+By\+Size@{Print\+Error\+By\+Size}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Error\+By\+Size(ostream \&out\+File)}{PrintErrorBySize(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Error\+By\+Size (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_aec72957398cc77f25926475d16c9e67e}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_aec72957398cc77f25926475d16c9e67e}
+
+
+Definition at line 1894 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1895 \{
+1896   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+1897   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+1898 
+1899   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1900 
+1901   outFile << \textcolor{stringliteral}{"Size"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+1902 
+1903   \textcolor{comment}{// Lets first Print Titles.}
+1904   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+1905   \{
+1906     outFile << \textcolor{stringliteral}{"\(\backslash\)t\(\backslash\)t"};
+1907     outFile << classes[classNum].Name ();
+1908   \}
+1909   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1910 
+1911 
+1912 
+1913   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+1914   \{
+1915     outFile << ((bucket + 1) * bucketSize) << \textcolor{stringliteral}{"\(\backslash\)t"};
+1916 
+1917     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+1918 
+1919     \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+1920     \{
+1921       outFile << countByKnownClassBySize   [classNum][bucket] << \textcolor{stringliteral}{"\(\backslash\)t"}
+1922               << correctByKnownClassBySize [classNum][bucket] << \textcolor{stringliteral}{"\(\backslash\)t"};
+1923     \}
+1924 
+1925     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1926   \}
+1927 
+1928   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1929 \}  \textcolor{comment}{/* PrintErrorBySize */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Error\+By\+Size\+By\+Rows@{Print\+Error\+By\+Size\+By\+Rows}}
+\index{Print\+Error\+By\+Size\+By\+Rows@{Print\+Error\+By\+Size\+By\+Rows}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Error\+By\+Size\+By\+Rows(ostream \&out\+File)}{PrintErrorBySizeByRows(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Error\+By\+Size\+By\+Rows (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a52a232c72d6030267fd32628fb1effdd}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a52a232c72d6030267fd32628fb1effdd}
+
+
+Definition at line 1986 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1987 \{
+1988   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+1989   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+1990 
+1991 
+1992   outFile  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1993            << \textcolor{stringliteral}{"Error by size"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+1994            << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1995 
+1996   outFile  << \textcolor{stringliteral}{"ClassName\(\backslash\)tAvg Size\(\backslash\)t"};
+1997   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+1998   \{
+1999     outFile << ((bucket + 1) * bucketSize) << \textcolor{stringliteral}{"\(\backslash\)t"};
+2000   \}
+2001 
+2002   outFile << endl
+2003           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2004 
+2005   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2006   \{
+2007     \textcolor{keywordtype}{double}  avg;
+2008     \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] != 0)
+2009       avg = totalSizesByKnownClass[classNum] / countsByKnownClass [classNum];
+2010     \textcolor{keywordflow}{else}
+2011       avg = 0;
+2012 
+2013     outFile << classes[classNum].Name ()
+2014             << \textcolor{stringliteral}{"\(\backslash\)t"}
+2015             <<  avg;
+2016 
+2017 
+2018     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+2019     \{
+2020       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << countByKnownClassBySize[classNum][bucket];
+2021     \}
+2022     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2023 
+2024     
+2025     outFile << classes[classNum].Name () << \textcolor{stringliteral}{" Correct"} << \textcolor{stringliteral}{"\(\backslash\)t"};
+2026     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+2027     \{
+2028       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << correctByKnownClassBySize [classNum][bucket];
+2029     \}
+2030 
+2031     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2032     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2033   \}
+2034   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2035 
+2036 
+2037   outFile << endl
+2038           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2039 
+2040   outFile  << \textcolor{stringliteral}{"ClassName\(\backslash\)tAvg Size\(\backslash\)t"};
+2041   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+2042   \{
+2043     outFile << ((bucket + 1) * bucketSize) << \textcolor{stringliteral}{"\(\backslash\)t"};
+2044   \}
+2045 
+2046   outFile << endl
+2047           << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2048 
+2049   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2050   \{
+2051     \textcolor{keywordtype}{double}  avg;
+2052     \textcolor{keywordflow}{if}  (countsByKnownClass [classNum] != 0)
+2053       avg = totalSizesByKnownClass[classNum] / countsByKnownClass [classNum];
+2054     \textcolor{keywordflow}{else}
+2055       avg = 0;
+2056 
+2057     outFile << classes[classNum].Name ()
+2058             << \textcolor{stringliteral}{"\(\backslash\)t"}
+2059             <<  avg;
+2060 
+2061 
+2062     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfBuckets; bucket++)
+2063     \{
+2064       \textcolor{keywordtype}{float}  a = 0.0f;
+2065       \textcolor{keywordflow}{if}  (countByKnownClassBySize[classNum][bucket] != 0)
+2066         a = (float)(correctByKnownClassBySize [classNum][bucket]) / (float)(countByKnownClassBySize[
+      classNum][bucket]);
+2067 
+2068       outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << a;
+2069     \}
+2070     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2071 
+2072     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2073     outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2074   \}
+2075 
+2076   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2077 \}  \textcolor{comment}{/* PrintErrorBySizeByRows */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Error\+By\+Size\+Reduced@{Print\+Error\+By\+Size\+Reduced}}
+\index{Print\+Error\+By\+Size\+Reduced@{Print\+Error\+By\+Size\+Reduced}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Error\+By\+Size\+Reduced(ostream \&out\+File)}{PrintErrorBySizeReduced(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Error\+By\+Size\+Reduced (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a177dd308fa4aadc3e66f0c839d0c3a3b}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a177dd308fa4aadc3e66f0c839d0c3a3b}
+
+
+Definition at line 2335 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2336 \{
+2337   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+2338 
+2339   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2340   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2341   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2342 
+2343   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2344      PrintErrorBySizeRowReduced (outFile, classNum);
+2345 
+2346 \}  \textcolor{comment}{/* PrintErrorBySizeReduced */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Prob\+Distribution\+Title@{Print\+Prob\+Distribution\+Title}}
+\index{Print\+Prob\+Distribution\+Title@{Print\+Prob\+Distribution\+Title}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Prob\+Distribution\+Title(ostream \&out\+File)}{PrintProbDistributionTitle(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Prob\+Distribution\+Title (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a98bfa5b223f8b50e43d242dffb1e4d06}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a98bfa5b223f8b50e43d242dffb1e4d06}
+
+
+Definition at line 2198 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2199 \{
+2200   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+2201 
+2202   outFile << \textcolor{stringliteral}{"Total"};
+2203   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2204   \{
+2205     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << ((bucket + 1) * probBucketSize) << \textcolor{stringliteral}{"%"};
+2206   \}
+2207 
+2208   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2209 \}  \textcolor{comment}{/* PrintPronDistributionTitle */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Prob\+Distribution\+Total\+Count@{Print\+Prob\+Distribution\+Total\+Count}}
+\index{Print\+Prob\+Distribution\+Total\+Count@{Print\+Prob\+Distribution\+Total\+Count}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Prob\+Distribution\+Total\+Count(ostream \&out\+File)}{PrintProbDistributionTotalCount(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Prob\+Distribution\+Total\+Count (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a4773a126fdd6a49bc288fe82757e8b32}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a4773a126fdd6a49bc288fe82757e8b32}
+
+
+Definition at line 2216 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2217 \{
+2218   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+2219   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+2220 
+2221   \textcolor{keywordtype}{double}*  count   = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfProbBuckets];
+2222 
+2223   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2224   \{
+2225     count [bucket] = 0;
+2226   \}
+2227 
+2228 
+2229   \textcolor{keywordtype}{double}  total = 0;
+2230 
+2231   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2232   \{
+2233     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2234     \{
+2235       count[bucket] = count[bucket] + countByKnownClassByProb [classNum][bucket];
+2236     \}
+2237   \}
+2238 
+2239 
+2240   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2241   \{
+2242     total = total + count[bucket];
+2243   \}
+2244 
+2245 
+2246   outFile << total;
+2247   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2248   \{
+2249     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << count[bucket];
+2250   \}
+2251 
+2252   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2253 
+2254   \textcolor{keyword}{delete}[]  count;
+2255 
+2256   \textcolor{keywordflow}{return};
+2257 \}  \textcolor{comment}{/* PrintProbDistributionTotalCount */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+Prob\+Distribution\+Total\+Error@{Print\+Prob\+Distribution\+Total\+Error}}
+\index{Print\+Prob\+Distribution\+Total\+Error@{Print\+Prob\+Distribution\+Total\+Error}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+Prob\+Distribution\+Total\+Error(ostream \&out\+File)}{PrintProbDistributionTotalError(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+Prob\+Distribution\+Total\+Error (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a5cdd62a1e722754611868a67c3a97f15}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a5cdd62a1e722754611868a67c3a97f15}
+
+
+Definition at line 2263 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2264 \{
+2265   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  bucket;
+2266   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classNum;
+2267 
+2268   \textcolor{keywordtype}{double}*  count   = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfProbBuckets];
+2269   \textcolor{keywordtype}{double}*  correct = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfProbBuckets];
+2270 
+2271   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2272   \{
+2273     count   [bucket] = 0;
+2274     correct [bucket] = 0;
+2275   \}
+2276 
+2277 
+2278   \textcolor{keywordflow}{for}  (classNum = 0; classNum < classCount; classNum++)
+2279   \{
+2280     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2281     \{
+2282       count  [bucket] = count  [bucket] + countByKnownClassByProb   [classNum][bucket];
+2283       correct[bucket] = correct[bucket] + correctByKnownClassByProb [classNum][bucket];
+2284     \}
+2285   \}
+2286 
+2287 
+2288   \textcolor{keywordtype}{double}  overallAccuracy = 0.0;
+2289   
+2290   \{
+2291     \textcolor{keywordtype}{double}  totalCount   = 0;
+2292     \textcolor{keywordtype}{double}  totalCorrect = 0;
+2293 
+2294     \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2295     \{
+2296       totalCount   = totalCount   + count[bucket];
+2297       totalCorrect = totalCorrect + correct[bucket];
+2298     \}
+2299 
+2300     \textcolor{keywordflow}{if}  (totalCount == 0)
+2301     \{
+2302       overallAccuracy = 0.0;
+2303     \}
+2304     \textcolor{keywordflow}{else}
+2305     \{
+2306       overallAccuracy = 100.0 * (double)totalCorrect  /  (\textcolor{keywordtype}{double})totalCount;
+2307     \}
+2308   \}
+2309 
+2310   outFile << setprecision (2);
+2311 
+2312   outFile << overallAccuracy << \textcolor{stringliteral}{"%"};
+2313 
+2314   \textcolor{keywordflow}{for}  (bucket = 0; bucket < numOfProbBuckets; bucket++)
+2315   \{
+2316     \textcolor{keywordtype}{double}  accuracy = 0.0;
+2317     
+2318     \textcolor{keywordflow}{if}  (count[bucket] > 0)
+2319        accuracy = 100.0 * (double)correct[bucket] / (\textcolor{keywordtype}{double})count[bucket];
+2320 
+2321     outFile << \textcolor{stringliteral}{"\(\backslash\)t"} << accuracy << \textcolor{stringliteral}{"%"};
+2322   \}
+2323 
+2324   outFile << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2325 
+2326   \textcolor{keyword}{delete}[]  count;    count   = NULL;
+2327   \textcolor{keyword}{delete}[]  correct;  correct = NULL;
+2328 \}  \textcolor{comment}{/* PrintProbDistributionTotalError */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Print\+True\+False\+Positives\+Tab\+Delimited@{Print\+True\+False\+Positives\+Tab\+Delimited}}
+\index{Print\+True\+False\+Positives\+Tab\+Delimited@{Print\+True\+False\+Positives\+Tab\+Delimited}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Print\+True\+False\+Positives\+Tab\+Delimited(ostream \&out\+File)}{PrintTrueFalsePositivesTabDelimited(ostream &outFile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Print\+True\+False\+Positives\+Tab\+Delimited (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{out\+File}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a535e8ad57dcde379ccf958b1f78671ff}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a535e8ad57dcde379ccf958b1f78671ff}
+
+
+Definition at line 1682 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat().
+
+
+\begin{DoxyCode}
+1683 \{
+1684   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  numOfClasses = classes.\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();
+1685   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;
+1686   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  y = 0;
+1687 
+1688   \textcolor{comment}{//  Refer to http://www.medcalc.be/manual/mpage06-13a.php for definitions.}
+1689   \textcolor{comment}{// First we calc TruePositives, FasePositives, TrueNegatives, FalseNegatives}
+1690   \textcolor{keywordtype}{double}*  falsePositives = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfClasses];
+1691   \textcolor{keywordtype}{double}*  falseNegatives = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfClasses];
+1692   \textcolor{keywordtype}{double}*  truePositives  = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfClasses];
+1693   \textcolor{keywordtype}{double}*  trueNegatives  = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[numOfClasses];
+1694 
+1695   \textcolor{keywordtype}{double}  totalTP = 0.0;
+1696   \textcolor{keywordtype}{double}  totalFP = 0.0;
+1697   \textcolor{keywordtype}{double}  totalTN = 0.0;
+1698   \textcolor{keywordtype}{double}  totalFN = 0.0;
+1699 
+1700 
+1701   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1702   \{
+1703     truePositives [x] = predictedCountsCM [x][x];
+1704     totalTP += predictedCountsCM[x][x];
+1705 
+1706     trueNegatives [x] = 0.0;
+1707     falsePositives[x] = 0.0;
+1708     falseNegatives[x] = 0.0;
+1709 
+1710     \textcolor{keywordflow}{for}  (y = 0;  y < numOfClasses;  y++)
+1711     \{
+1712       \textcolor{keywordflow}{if}  (y != x)
+1713       \{
+1714         falsePositives[x] += predictedCountsCM [y][x];  \textcolor{comment}{// Was classified as x but was classed as x.}
+1715         totalFP           += predictedCountsCM [y][x];
+1716 
+1717         falseNegatives[x] += predictedCountsCM [x][y];  \textcolor{comment}{// Should have been classed as x not y.}
+1718         totalFN           += predictedCountsCM [x][y];
+1719 
+1720         trueNegatives [x] += (countsByKnownClass [y] - predictedCountsCM [y][x]);
+1721         totalTN += (countsByKnownClass [y] - predictedCountsCM [y][x]);
+1722       \}
+1723     \}
+1724   \}
+1725  
+1726 
+1727   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  titleLine1, titleLine2;
+1728   classes.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_ab36deaa540b8c1651d4424604a748dee}{ExtractTwoTitleLines} (titleLine1, titleLine2);
+1729 
+1730   r << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{""}         \textcolor{stringliteral}{"\(\backslash\)t"} << titleLine1 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1731   r << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"Total"} << \textcolor{stringliteral}{"\(\backslash\)t"} << titleLine2 << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1732 
+1733   r << \textcolor{stringliteral}{"TruePositives"} << \textcolor{stringliteral}{"\(\backslash\)t"} << totalTP;
+1734   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1735   \{
+1736     r << \textcolor{stringliteral}{"\(\backslash\)t"} << truePositives[x];
+1737   \}
+1738   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1739 
+1740   r << \textcolor{stringliteral}{"FalsePositives"} << \textcolor{stringliteral}{"\(\backslash\)t"} << totalFP;
+1741   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1742   \{
+1743     r << \textcolor{stringliteral}{"\(\backslash\)t"} << falsePositives[x];
+1744   \}
+1745   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1746 
+1747   r << \textcolor{stringliteral}{"TrueNegatives"} << \textcolor{stringliteral}{"\(\backslash\)t"} << totalTN;
+1748   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1749   \{
+1750     r << \textcolor{stringliteral}{"\(\backslash\)t"} << trueNegatives[x];
+1751   \}
+1752   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1753 
+1754   r << \textcolor{stringliteral}{"FalseNegatives"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << totalFN;
+1755   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1756   \{
+1757     r << \textcolor{stringliteral}{"\(\backslash\)t"} << falseNegatives[x];
+1758   \}
+1759   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1760 
+1761   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1762   r << \textcolor{stringliteral}{"Sensitivity(TP/(TP+FN))"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(
+      \hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (totalTP, totalFN), \textcolor{stringliteral}{"zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1763   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1764   \{
+1765     r << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(\hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (truePositives[x], falseNegatives[x]), \textcolor{stringliteral}{"
+      zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1766   \}
+1767   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1768 
+1769   r << \textcolor{stringliteral}{"Specificity(TN/(TN+FP))"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(
+      \hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (totalTN, totalFP), \textcolor{stringliteral}{"zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1770   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1771   \{
+1772     r << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(\hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (trueNegatives[x], falsePositives[x]), \textcolor{stringliteral}{"
+      zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1773   \}
+1774   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1775 
+1776   r << \textcolor{stringliteral}{"PositivePredictiveValue(TP/(TP+FP))"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(
+      \hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (totalTP, totalFP), \textcolor{stringliteral}{"zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1777   \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1778   \{
+1779     r << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(\hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{PercentOf} (truePositives[x], falsePositives[x]), \textcolor{stringliteral}{"
+      zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1780   \}
+1781   r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1782 
+1783   \{
+1784     \textcolor{keywordtype}{double}  fMeasure = 0.0;
+1785     \textcolor{keywordtype}{double}  divisor = 2.0 * (double)totalTP + (\textcolor{keywordtype}{double})totalFP + (double)totalFN;
+1786     \textcolor{keywordflow}{if}  (divisor != 0.0)
+1787       fMeasure = 100.0 * (2.0 * (double)totalTP / divisor);
+1788 
+1789     r << \textcolor{stringliteral}{"F-Measure(2*TP/(2*TP + FP + FN))"} << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(fMeasure, \textcolor{stringliteral}{"zzz,zz0.00
+      "}) << \textcolor{stringliteral}{"%"};
+1790     \textcolor{keywordflow}{for}  (x = 0;  x < numOfClasses;  x++)
+1791     \{
+1792       fMeasure = 0.0;
+1793       divisor = 2.0 * (double)truePositives[x] + (\textcolor{keywordtype}{double})falsePositives[x] + (double)falseNegatives[x];
+1794       \textcolor{keywordflow}{if}  (divisor != 0.0)
+1795         fMeasure = 100.0 * (2.0 * (double)truePositives[x] / divisor);
+1796 
+1797       r << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble}(fMeasure, \textcolor{stringliteral}{"zzz,zz0.00"}) << \textcolor{stringliteral}{"%"};
+1798     \}
+1799     r << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+1800   \}
+1801 
+1802   \textcolor{keyword}{delete}[]  falseNegatives;
+1803   \textcolor{keyword}{delete}[]  falsePositives;
+1804   \textcolor{keyword}{delete}[]  trueNegatives;
+1805   \textcolor{keyword}{delete}[]  truePositives;
+1806 \}  \textcolor{comment}{/* PrintTrueFalsePositivesTabDelimited */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Total\+Count@{Total\+Count}}
+\index{Total\+Count@{Total\+Count}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Total\+Count()}{TotalCount()}}]{\setlength{\rightskip}{0pt plus 5cm}double K\+K\+M\+L\+L\+::\+Confusion\+Matrix2\+::\+Total\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_aff44039aef6ff3524a1639d39e320809}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_aff44039aef6ff3524a1639d39e320809}
+
+
+Definition at line 154 of file Confusion\+Matrix2.\+h.
+
+
+\begin{DoxyCode}
+154 \{\textcolor{keywordflow}{return} totalCount;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Write\+Simple\+Confusion\+Matrix@{Write\+Simple\+Confusion\+Matrix}}
+\index{Write\+Simple\+Confusion\+Matrix@{Write\+Simple\+Confusion\+Matrix}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Write\+Simple\+Confusion\+Matrix(ostream \&f) const }{WriteSimpleConfusionMatrix(ostream &f) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Write\+Simple\+Confusion\+Matrix (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{f}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_a1961546f61564c059b00506156331451}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_a1961546f61564c059b00506156331451}
+Meant to work with \textquotesingle{}Classification\+Status.\+cs\textquotesingle{} of Pices\+Commander. This will write a simple confusion matrix table; one row for each class. \textquotesingle{}Classification\+Status.\+cs\textquotesingle{} will then use this data to adjust for bias in the learner. 
+
+Definition at line 3241 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+3242 \{
+3243   \textcolor{comment}{// "Estimating the Taxonomic composition of a sample when individules are classified with error"}
+3244   \textcolor{comment}{// by Andrew Solow, Cabll Davis, Qiao Hu}
+3245   \textcolor{comment}{// Woods Hole Ocanographic Institution, Woods Hole Massachusetts}
+3246   \textcolor{comment}{// Marine Ecology Progresss Series}
+3247   \textcolor{comment}{// published 2006-july-06}
+3248   \textcolor{comment}{// vol 216:309-311}
+3249   
+3250   \textcolor{comment}{// This data is ment to work with "ClassificationStatus.cs" to prvide the data nessasary to }
+3251   \textcolor{comment}{// adjust for bias.}
+3252 
+3253   f << \textcolor{stringliteral}{"<SimpleConfusionMatrix>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3254   f << \textcolor{stringliteral}{"Classes"}      << \textcolor{stringliteral}{"\(\backslash\)t"} << classes.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a2842ee0f0a658c29988b02bf5cbe19d7}{ToCommaDelimitedStr} () << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3255   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = 0;
+3256   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  col = 0;
+3257   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+3258   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx2;
+3259   \textcolor{keywordflow}{for}  (idx = classes.begin ();  idx != classes.end ();  idx++)
+3260   \{
+3261     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = *idx;
+3262     f << \textcolor{stringliteral}{"DataRow"} << \textcolor{stringliteral}{"\(\backslash\)t"} << mlClass->Name () << \textcolor{stringliteral}{"\(\backslash\)t"};
+3263     col = 0;
+3264     \textcolor{keywordflow}{for}  (col = 0;  col < classCount;  col++)
+3265     \{
+3266       \textcolor{keywordtype}{double} p = 0.0;
+3267       \textcolor{keywordflow}{if}  (countsByKnownClass[row] != 0.0)
+3268         p = predictedCountsCM[row][col] / countsByKnownClass[row];
+3269 
+3270       \textcolor{keywordflow}{if}  (col > 0)
+3271         f << \textcolor{stringliteral}{","};
+3272 
+3273       f << \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (predictedCountsCM[row][col], \textcolor{stringliteral}{"ZZZZZ0.00"}) << \textcolor{stringliteral}{":"} << 
+      \hyperlink{namespace_k_k_b_a1a40a40e955fa5417a7cdd990e0021b1}{StrFormatDouble} (p, \textcolor{stringliteral}{"ZZ0.0000000"});
+3274     \}
+3275     f << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+3276 
+3277     row++;
+3278   \}
+3279 
+3280   f << \textcolor{stringliteral}{"</SimpleConfusionMatrix>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{std::endl};
+3281 \}  \textcolor{comment}{/* WriteProbabilityMatrix */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Confusion\+Matrix2@{K\+K\+M\+L\+L\+::\+Confusion\+Matrix2}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(ostream \&f) const }{WriteXML(ostream &f) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Confusion\+Matrix2\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{ostream \&}]{f}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_confusion_matrix2_af7d5bc45536b15073e24a6b397c4a5c3}{}\label{class_k_k_m_l_l_1_1_confusion_matrix2_af7d5bc45536b15073e24a6b397c4a5c3}
+
+
+Definition at line 2976 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2977 \{
+2978   f << \textcolor{stringliteral}{"<ConfusionMatrix2>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2979 
+2980   f << \textcolor{stringliteral}{"Classes"}      << \textcolor{stringliteral}{"\(\backslash\)t"} << classes.\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list_a2842ee0f0a658c29988b02bf5cbe19d7}{ToCommaDelimitedStr} () << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2981 
+2982   f << \textcolor{stringliteral}{"ClassCount"}                  << \textcolor{stringliteral}{"\(\backslash\)t"} << classCount       << endl
+2983     << \textcolor{stringliteral}{"BucketSize"}                  << \textcolor{stringliteral}{"\(\backslash\)t"} << bucketSize       << endl
+2984     << \textcolor{stringliteral}{"probBucketSize"}              << \textcolor{stringliteral}{"\(\backslash\)t"} << probBucketSize   << endl
+2985     << \textcolor{stringliteral}{"NumOfBuckets"}                << \textcolor{stringliteral}{"\(\backslash\)t"} << numOfBuckets     << endl
+2986     << \textcolor{stringliteral}{"NumOfProbBuckets"}            << \textcolor{stringliteral}{"\(\backslash\)t"} << numOfProbBuckets << endl
+2987     << endl
+2988     << \textcolor{stringliteral}{"TotalCount"}                  << \textcolor{stringliteral}{"\(\backslash\)t"} << totalCount                  << endl
+2989     << \textcolor{stringliteral}{"CorrectCount"}                << \textcolor{stringliteral}{"\(\backslash\)t"} << correctCount                << endl
+2990     << \textcolor{stringliteral}{"TotalPredProb"}               << \textcolor{stringliteral}{"\(\backslash\)t"} << totalPredProb               << endl
+2991     << \textcolor{stringliteral}{"NumInvalidClassesPredicted"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << numInvalidClassesPredicted  << endl
+2992     << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2993 
+2994   f << \textcolor{stringliteral}{"CountsByKnownClass"}          << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      countsByKnownClass,          \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2995   f << \textcolor{stringliteral}{"TotalSizesByKnownClass"}      << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      totalSizesByKnownClass,      \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2996   f << \textcolor{stringliteral}{"TotalPredProbsByKnownClass"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      totalPredProbsByKnownClass,  \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+2997 
+2998 
+2999   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  classIndex = 0;
+3000   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{MLClassList::const\_iterator}  idx;
+3001   \textcolor{keywordflow}{for}  (idx = classes.begin ();  idx != classes.end ();  idx++)
+3002   \{
+3003     \hyperlink{class_k_k_m_l_l_1_1_m_l_class}{MLClassPtr}  mlClass = *idx;
+3004     f << \textcolor{stringliteral}{"ClassTotals"}  << \textcolor{stringliteral}{"\(\backslash\)t"}  << \textcolor{stringliteral}{"ClassName"} << \textcolor{stringliteral}{"\(\backslash\)t"} << mlClass->Name ().QuotedStr  () << \textcolor{stringliteral}{"\(\backslash\)t"} << \textcolor{stringliteral}{"
+      ClassIndex"} << \textcolor{stringliteral}{"\(\backslash\)t"} << classIndex << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3005 
+3006     f << \textcolor{stringliteral}{"CountByKnownClassBySize"}    << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      countByKnownClassBySize    [classIndex], numOfBuckets,     \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3007     f << \textcolor{stringliteral}{"CorrectByKnownClassBySize"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      correctByKnownClassBySize  [classIndex], numOfBuckets,     \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3008     
+3009     f << \textcolor{stringliteral}{"CountByKnownClassByProb"}    << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      countByKnownClassByProb    [classIndex], numOfProbBuckets, \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3010     f << \textcolor{stringliteral}{"CorrectByKnownClassByProb"}  << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      correctByKnownClassByProb  [classIndex], numOfProbBuckets, \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3011 
+3012     f << \textcolor{stringliteral}{"PredictedCountsCM"}          << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      predictedCountsCM          [classIndex], classCount,       \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3013 
+3014     f << \textcolor{stringliteral}{"TotPredProbCM"}              << \textcolor{stringliteral}{"\(\backslash\)t"} << \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{ArrayToDelimitedDelimitedStr} (
+      totPredProbCM              [classIndex], classCount,       \textcolor{charliteral}{','}) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3015 
+3016     classIndex++;
+3017   \}
+3018 
+3019   f << \textcolor{stringliteral}{"</ConfusionMatrix2>"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+3020 \}  \textcolor{comment}{/* Write */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_confusion_matrix2_8h}{Confusion\+Matrix2.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_confusion_matrix2_8cpp}{Confusion\+Matrix2.\+cpp}\end{DoxyCompactItemize}

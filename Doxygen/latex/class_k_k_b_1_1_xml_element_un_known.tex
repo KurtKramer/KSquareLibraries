@@ -1,0 +1,143 @@
+\hypertarget{class_k_k_b_1_1_xml_element_un_known}{}\section{K\+KB\+:\+:Xml\+Element\+Un\+Known Class Reference}
+\label{class_k_k_b_1_1_xml_element_un_known}\index{K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}}
+
+
+\hyperlink{class_k_k_b_1_1_xml_element}{Xml\+Element} derived class that will be used when there is no Factory defined for the element. 
+
+
+
+
+{\ttfamily \#include $<$Xml\+Stream.\+h$>$}
+
+Inheritance diagram for K\+KB\+:\+:Xml\+Element\+Un\+Known\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_k_k_b_1_1_xml_element_un_known}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_xml_element_un_known_a38766b4e928f2d5705d33145fb3665bc}{Xml\+Element\+Un\+Known} (\hyperlink{namespace_k_k_b_a9253a3ea8a5da18ca82be4ca2b390ef0}{Xml\+Tag\+Ptr} tag, \hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_xml_element_un_known_a3504ae0803666fd8e5726023c4d2052a}{$\sim$\+Xml\+Element\+Un\+Known} ()
+\item 
+std\+::deque$<$ \hyperlink{class_k_k_b_1_1_xml_token_a2379a40d8ebd64e9125cf68e34da13ab}{Xml\+Token\+Ptr} $>$ $\ast$ \hyperlink{class_k_k_b_1_1_xml_element_un_known_a7c04dccc6ffbf40d05f5c7841873ca9f}{Take\+Ownership} ()
+\item 
+std\+::deque$<$ \hyperlink{class_k_k_b_1_1_xml_token_a2379a40d8ebd64e9125cf68e34da13ab}{Xml\+Token\+Ptr} $>$ $\ast$ \hyperlink{class_k_k_b_1_1_xml_element_un_known_aa777364ac9919010ba0f20dbc2b6e420}{Value} () const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_k_k_b_1_1_xml_element}{Xml\+Element} derived class that will be used when there is no Factory defined for the element.
+
+remarks$>$All sub-\/elements and content will be saved in value which will be a list of Xml\+Eemenst and content.
+
+Definition at line 471 of file Xml\+Stream.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}!Xml\+Element\+Un\+Known@{Xml\+Element\+Un\+Known}}
+\index{Xml\+Element\+Un\+Known@{Xml\+Element\+Un\+Known}!K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}}
+\subsubsection[{\texorpdfstring{Xml\+Element\+Un\+Known(\+Xml\+Tag\+Ptr tag, Xml\+Stream \&s, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{XmlElementUnKnown(XmlTagPtr tag, XmlStream &s, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+Un\+Known\+::\+Xml\+Element\+Un\+Known (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Tag\+Ptr}}]{tag, }
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_element_un_known_a38766b4e928f2d5705d33145fb3665bc}{}\label{class_k_k_b_1_1_xml_element_un_known_a38766b4e928f2d5705d33145fb3665bc}
+
+
+Definition at line 1051 of file Xml\+Stream.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+Xml\+Element\+::\+Xml\+Element(), and Xml\+Element\+Un\+Known().
+
+
+
+Referenced by Xml\+Element\+Un\+Known().
+
+
+\begin{DoxyCode}
+1055                                       :
+1056     \hyperlink{class_k_k_b_1_1_xml_element_a66317eff5bd3abcc60755756ba2887d5}{XmlElement} (tag, s, log),
+1057     value (\textcolor{keyword}{new} deque<XmlTokenPtr> ())
+1058 \{
+1059   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr} t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+1060   \textcolor{keywordflow}{while}  (t != NULL)
+1061   \{
+1062     value->push\_back (t);
+1063     t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+1064   \}
+1065 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}!````~Xml\+Element\+Un\+Known@{$\sim$\+Xml\+Element\+Un\+Known}}
+\index{````~Xml\+Element\+Un\+Known@{$\sim$\+Xml\+Element\+Un\+Known}!K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}}
+\subsubsection[{\texorpdfstring{$\sim$\+Xml\+Element\+Un\+Known()}{~XmlElementUnKnown()}}]{\setlength{\rightskip}{0pt plus 5cm}Xml\+Element\+Un\+Known\+::$\sim$\+Xml\+Element\+Un\+Known (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_xml_element_un_known_a3504ae0803666fd8e5726023c4d2052a}{}\label{class_k_k_b_1_1_xml_element_un_known_a3504ae0803666fd8e5726023c4d2052a}
+
+
+Definition at line 1068 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+1069 \{
+1070   \textcolor{keywordflow}{if}  (value)
+1071   \{
+1072     \textcolor{keywordflow}{for}  (\textcolor{keyword}{auto} idx: *value)
+1073       \textcolor{keyword}{delete}  idx;
+1074     \textcolor{keyword}{delete}  value;
+1075     value = NULL;
+1076   \}
+1077 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}!Take\+Ownership@{Take\+Ownership}}
+\index{Take\+Ownership@{Take\+Ownership}!K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}}
+\subsubsection[{\texorpdfstring{Take\+Ownership()}{TakeOwnership()}}]{\setlength{\rightskip}{0pt plus 5cm}deque$<$ {\bf Xml\+Token\+Ptr} $>$ $\ast$ Xml\+Element\+Un\+Known\+::\+Take\+Ownership (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_xml_element_un_known_a7c04dccc6ffbf40d05f5c7841873ca9f}{}\label{class_k_k_b_1_1_xml_element_un_known_a7c04dccc6ffbf40d05f5c7841873ca9f}
+
+
+Definition at line 1080 of file Xml\+Stream.\+cpp.
+
+
+\begin{DoxyCode}
+1081 \{
+1082   deque<XmlTokenPtr>* v = value;
+1083   value = NULL;
+1084   \textcolor{keywordflow}{return} v;
+1085 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}!Value@{Value}}
+\index{Value@{Value}!K\+K\+B\+::\+Xml\+Element\+Un\+Known@{K\+K\+B\+::\+Xml\+Element\+Un\+Known}}
+\subsubsection[{\texorpdfstring{Value() const }{Value() const }}]{\setlength{\rightskip}{0pt plus 5cm}std\+::deque$<${\bf Xml\+Token\+Ptr}$>$$\ast$ K\+K\+B\+::\+Xml\+Element\+Un\+Known\+::\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_xml_element_un_known_aa777364ac9919010ba0f20dbc2b6e420}{}\label{class_k_k_b_1_1_xml_element_un_known_aa777364ac9919010ba0f20dbc2b6e420}
+
+
+Definition at line 482 of file Xml\+Stream.\+h.
+
+
+\begin{DoxyCode}
+482 \{\textcolor{keywordflow}{return}  value;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8h}{Xml\+Stream.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_xml_stream_8cpp}{Xml\+Stream.\+cpp}\end{DoxyCompactItemize}

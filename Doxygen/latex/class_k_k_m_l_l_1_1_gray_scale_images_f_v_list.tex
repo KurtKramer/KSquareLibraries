@@ -1,0 +1,1010 @@
+\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{}\section{K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+F\+V\+List Class Reference}
+\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+
+
+{\ttfamily \#include $<$Gray\+Scale\+Images\+F\+V.\+h$>$}
+
+Inheritance diagram for K\+K\+M\+LL\+:\+:Gray\+Scale\+Images\+F\+V\+List\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_1_1const__iterator}{const\+\_\+iterator}
+\item 
+class \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_1_1iterator}{iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{Gray\+Scale\+Images\+F\+V\+List} (\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \+\_\+file\+Desc, bool \+\_\+owner)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ad45318b3947251de7f11b64365393130}{Gray\+Scale\+Images\+F\+V\+List} (const \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} \&\+\_\+examples, bool \+\_\+owner)
+\begin{DoxyCompactList}\small\item\em Creates a duplicate List of examples, in the same order, and depending on \textquotesingle{}\+\_\+owner\textquotesingle{} will create new instances or just point to the existing one. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aaefe487e21d87e6925a667d4b39e4bcc}{Gray\+Scale\+Images\+F\+V\+List} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&feature\+Vector\+List, bool \+\_\+owner)
+\begin{DoxyCompactList}\small\item\em Creates a duplicate List of examples, in the same order, and depending on \textquotesingle{}\+\_\+owner\textquotesingle{} will create new instances or just point to the existing one. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ae4e9383de5709ac21b15ce6298f68b63}{Gray\+Scale\+Images\+F\+V\+List} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} \+\_\+fv\+Producer\+Factory, \hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+ml\+Class, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+dir\+Name, \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \+\_\+file\+Name, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\begin{DoxyCompactList}\small\item\em Constructor that will extract a list of feature vectors for all the image files in the specified directory. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a4586ec9e554203d0e16166a3e84066c8}{Gray\+Scale\+Images\+F\+V\+List} (\hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{M\+L\+Class\+List} \&\+\_\+ml\+Classes, \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} \&\+\_\+examples)
+\begin{DoxyCompactList}\small\item\em constructor that will create a list of examples from \+\_\+examples that are assigned one of the classes listed in \+\_\+ml\+Classes. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aa00f8dc79c567a2e4f8161bf966e8b7d}{Gray\+Scale\+Images\+F\+V\+List} (const \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&feature\+Vector\+List)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f89575b104dfad177a0e5d2f1953624}{$\sim$\+Gray\+Scale\+Images\+F\+V\+List} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aba7237106973d57077b83efe3606f079}{Add\+Queue} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} \&images\+To\+Add)
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ac9c12a344b952f9141fe643c9890d649}{Back\+Of\+Queue} ()
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a28209170c7a8919bdb9b984dc5e85d98}{Binary\+Search\+By\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+image\+File\+Name) const 
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_af8de31a61f325589d76c2247803176a6}{Duplicate} (bool \+\_\+owner) const 
+\begin{DoxyCompactList}\small\item\em Creates a duplicate of list using the same container. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a994cfae350ad453a6feef076a9664827}{Duplicate\+List\+And\+Contents} () const 
+\begin{DoxyCompactList}\small\item\em Creates a duplicate of list and also duplicates it contents. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0ac0317ca7d6031c420cd8e4197d7328}{Extract\+Duplicates\+By\+Root\+Image\+File\+Name} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aed5328be7f6d785287f097cf30339f1f}{Extract\+Examples\+For\+A\+Given\+Class} (\hyperlink{namespace_k_k_m_l_l_ac272393853d59e72e8456f14cd6d8c23}{M\+L\+Class\+Ptr} \+\_\+ml\+Class, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+max\+To\+Extract=-\/1, float \+\_\+min\+Size=-\/1.\+0f) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3dd42fb0b0fdb0a1d3d385a8a2f74842}{Idx\+To\+Ptr} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a8ccec2fcd028640192417782f4fe9b62}{Look\+Up\+By\+Image\+File\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+image\+File\+Name) const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aad0ba82c843773a17fa79372688ab869}{Look\+Up\+By\+Root\+Name} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+root\+Name)
+\item 
+virtual \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a038934a9764ea7ab08ace2579e02be41}{Manufacture\+Empty\+List} (bool \+\_\+owner) const 
+\begin{DoxyCompactList}\small\item\em Creates an instance of a Empty \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9dda16f9868ecd4a2593c228f60e1e57}{Order\+Using\+Names\+From\+A\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\begin{DoxyCompactList}\small\item\em Using list of Image\+File\+Names in a file(\textquotesingle{}file\+Name\textquotesingle{}) create a new \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} instance with examples in order based off contents of file. If error occurs will return N\+U\+LL. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{Gray\+Scale\+Images\+F\+V\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3679526994558f36a28e2e4721733801}{Pop\+From\+Back} ()
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f39ed6d97e2a08b0ec63daade4fa5e4}{Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree} (\hyperlink{namespace_k_k_m_l_l_a82812d1feb85a6cff72d059bc67bb90e}{Factory\+F\+V\+Producer\+Ptr} fv\+Producer\+Factory, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&root\+Dir, bool \&successful, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9139a103eea08762c9a1f4fd1c9ffeb7}{Stratify\+Amoungst\+Classes} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Folds, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{Gray\+Scale\+Images\+F\+V\+List\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a5f2af12e2850fde10a4948e57b935feb}{Stratify\+Amoungst\+Classes} (\hyperlink{namespace_k_k_m_l_l_af091cde3f4a4315658b41a5e7583fc26}{M\+L\+Class\+List\+Ptr} ml\+Classes, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} max\+Images\+Per\+Class, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} num\+Of\+Folds, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 112 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List\+Ptr@{Gray\+Scale\+Images\+F\+V\+List\+Ptr}}
+\index{Gray\+Scale\+Images\+F\+V\+List\+Ptr@{Gray\+Scale\+Images\+F\+V\+List\+Ptr}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List\+Ptr}{GrayScaleImagesFVListPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Gray\+Scale\+Images\+F\+V\+List}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_adf1c0ec2049ac8cb8689dc30f8f78ac3}
+
+
+Definition at line 115 of file Gray\+Scale\+Images\+F\+V.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(\+File\+Desc\+Ptr \+\_\+file\+Desc, bool \+\_\+owner)}{GrayScaleImagesFVList(FileDescPtr _fileDesc, bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf File\+Desc\+Ptr}}]{\+\_\+file\+Desc, }
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}
+
+
+Definition at line 115 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List().
+
+
+\begin{DoxyCode}
+117                                               :
+118 
+119     \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (\_fileDesc, \_owner)
+120 \{
+121 
+122 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(const Gray\+Scale\+Images\+F\+V\+List \&\+\_\+examples, bool \+\_\+owner)}{GrayScaleImagesFVList(const GrayScaleImagesFVList &_examples, bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gray\+Scale\+Images\+F\+V\+List} \&}]{\+\_\+examples, }
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ad45318b3947251de7f11b64365393130}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ad45318b3947251de7f11b64365393130}
+
+
+Creates a duplicate List of examples, in the same order, and depending on \textquotesingle{}\+\_\+owner\textquotesingle{} will create new instances or just point to the existing one. 
+
+
+\begin{DoxyCode}
+If \textcolor{stringliteral}{'\_owner'} = \textcolor{keyword}{true} 
+   Create \textcolor{keyword}{new} instances of contents and own them.  
+\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  \textcolor{stringliteral}{'owner'} = \textcolor{keyword}{false}, 
+   Copy over pointers to existing instances.  
+\end{DoxyCode}
+ 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+examples} & The list of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} that is to be copied. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+owner} & If \textquotesingle{}true\textquotesingle{} new instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} instances will be created and this new list will own them and if \textquotesingle{}false\textquotesingle{} will just point to the existing instances and not own the. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 160 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::const\+\_\+iterator\+::operator$\ast$(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::const\+\_\+iterator\+::operator++(), and K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::const\+\_\+iterator\+::operator==().
+
+
+
+Referenced by Duplicate(), and Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+162                                               :
+163 
+164    \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (examples.FileDesc (), \_owner)
+165 \{
+166   \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{const\_iterator}  idx;
+167   \textcolor{keywordflow}{for}  (idx = examples.begin ();  idx != examples.end ();  idx++)
+168   \{
+169     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  imageExample = *idx;
+170     \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} ())
+171       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV} (*imageExample));
+172     \textcolor{keywordflow}{else}
+173       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (imageExample);
+174   \}
+175 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(const Feature\+Vector\+List \&feature\+Vector\+List, bool \+\_\+owner)}{GrayScaleImagesFVList(const FeatureVectorList &featureVectorList, bool _owner)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List} \&}]{feature\+Vector\+List, }
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aaefe487e21d87e6925a667d4b39e4bcc}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aaefe487e21d87e6925a667d4b39e4bcc}
+
+
+Creates a duplicate List of examples, in the same order, and depending on \textquotesingle{}\+\_\+owner\textquotesingle{} will create new instances or just point to the existing one. 
+
+
+\begin{DoxyCode}
+If \textcolor{stringliteral}{'\_owner'} = \textcolor{keyword}{true} 
+   Create \textcolor{keyword}{new} instances of contents and own them.  
+\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  \textcolor{stringliteral}{'owner'} = \textcolor{keyword}{false}, 
+   Copy over pointers to existing instances.  
+\end{DoxyCode}
+ If any of the existing instances do not have an underlying class of \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}; the function will throw an exception.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+examples} & The list of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} that is to be copied. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+owner} & If \textquotesingle{}true\textquotesingle{} new instances of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} instances will be created and this new list will own them and if \textquotesingle{}false\textquotesingle{} will just point to the existing instances and not own the. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 178 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Gray\+Scale\+Images\+F\+V(), and K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception().
+
+
+\begin{DoxyCode}
+180                                               :
+181 
+182   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (featureVectorList.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} (),
+183                      \_owner
+184                     )
+185 \{
+186   \textcolor{comment}{//if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)}
+187   \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (featureVectorList) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList}))
+188   \{
+189     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVList}&  examples = \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVList}&\textcolor{keyword}{>} (featureVectorList);
+190   \}
+191 
+192 
+193   \textcolor{keywordflow}{if}  (\_owner)
+194   \{
+195     \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+196     \textcolor{keywordflow}{for}  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+197     \{
+198       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} featureVector = *idx;
+199       
+200       \textcolor{comment}{// The constructor below will detect what the underlying type of 'featureVector' is.  }
+201       \textcolor{comment}{// If (underlying type is a 'GrayScaleImagesFV' object)  then}
+202       \textcolor{comment}{//   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted}
+203       \textcolor{comment}{//   | from the 'FeatureVector' object being passed in.}
+204       \textcolor{comment}{// else}
+205       \textcolor{comment}{//   | info that is particular to a 'GrayScaleImagesFV' object will be set to}
+206       \textcolor{comment}{//   | default values.}
+207       \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  example = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV} (*
+      featureVector);
+208       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (example);
+209     \}
+210   \}
+211   \textcolor{keywordflow}{else}
+212   \{
+213     \textcolor{comment}{// Since we will not own the contents but just point to an existing instances we will }
+214     \textcolor{comment}{// have to make sure that the existing instances of 'FeatureVector' objects have a }
+215     \textcolor{comment}{// underlying type of 'GrayScaleImagesFV'.}
+216     \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+217     \textcolor{keywordflow}{for}  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+218     \{
+219       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} featureVector = *idx;
+220       \textcolor{comment}{//if  (strcmp (featureVector->UnderlyingClass (), "GrayScaleImagesFV") == 0)}
+221       \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*featureVector) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+222       \{
+223         \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr} example = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}\textcolor{keyword}{>}(featureVector);
+224         \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (example);
+225       \}
+226       \textcolor{keywordflow}{else}
+227       \{
+228         \textcolor{comment}{// ****    ERROR  ****}
+229         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  errMSsg = \textcolor{stringliteral}{"GrayScaleImagesFVList   One of the elements in 'featureVectorList' is not of
+       'GrayScaleImagesFV'  type."};
+230         cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+231              << \textcolor{stringliteral}{"GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList)
+         ***ERROR***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+232              << \textcolor{stringliteral}{"        "} << errMSsg  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+233              << \textcolor{stringliteral}{"       FileName["} << featureVector->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"]"}  << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+234              << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+235         \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMSsg);
+236       \}
+237     \}
+238   \}
+239 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(\+Factory\+F\+V\+Producer\+Ptr \+\_\+fv\+Producer\+Factory, M\+L\+Class\+Ptr \+\_\+ml\+Class, K\+K\+Str \+\_\+dir\+Name, K\+K\+Str \+\_\+file\+Name, Run\+Log \&\+\_\+log)}{GrayScaleImagesFVList(FactoryFVProducerPtr _fvProducerFactory, MLClassPtr _mlClass, KKStr _dirName, KKStr _fileName, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{\+\_\+fv\+Producer\+Factory, }
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+ml\+Class, }
+\item[{{\bf K\+K\+Str}}]{\+\_\+dir\+Name, }
+\item[{{\bf K\+K\+Str}}]{\+\_\+file\+Name, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ae4e9383de5709ac21b15ce6298f68b63}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ae4e9383de5709ac21b15ce6298f68b63}
+
+
+Constructor that will extract a list of feature vectors for all the image files in the specified directory. 
+
+Will scan the directory \+\_\+dir\+Name for any image files. For each image found a new instance of \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV} will be created who\textquotesingle{}s features will be derived from the image. These \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} objects will be assigned the class specified by \textquotesingle{}\+\_\+ml\+Class\textquotesingle{}. A new data file containing the extracted features will be saved in file\+Name.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+fv\+Producer\+Factory} & \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+ml\+Class} & Class to assign to new \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} objects. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+dir\+Name} & Directory to scan for examples. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+file\+Name} & Name of file to contain the extracted feature data. Will be of the Raw format. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+log} & Log file to write messages to. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 127 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Feature\+Vector\+List(), and K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+File\+Desc().
+
+
+\begin{DoxyCode}
+132                                               :
+133 
+134    \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (\_fvProducerFactory->\hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab2dea2e51cf9d6a109b52300619e185c}{FileDesc} (), \textcolor{keyword}{true})
+135 
+136 \{
+137   FeatureExtraction (\_fvProducerFactory, \_dirName, \_fileName, \_mlClass, \_log);
+138 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(\+M\+L\+Class\+List \&\+\_\+ml\+Classes, Gray\+Scale\+Images\+F\+V\+List \&\+\_\+examples)}{GrayScaleImagesFVList(MLClassList &_mlClasses, GrayScaleImagesFVList &_examples)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+List} \&}]{\+\_\+ml\+Classes, }
+\item[{{\bf Gray\+Scale\+Images\+F\+V\+List} \&}]{\+\_\+examples}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a4586ec9e554203d0e16166a3e84066c8}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a4586ec9e554203d0e16166a3e84066c8}
+
+
+constructor that will create a list of examples from \+\_\+examples that are assigned one of the classes listed in \+\_\+ml\+Classes. 
+
+Will Create a list of examples that are a subset of the ones in \+\_\+examples. The subset will consist of the examples who\textquotesingle{}s ml\+Class is one of the ones in ml\+Classes. We will not own any the contents only point to the ones already in \+\_\+examples. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em \+\_\+ml\+Classes} & List of classes that we are interested in. \\
+\hline
+\mbox{\tt in}  & {\em \+\_\+examples} & Source examples that we want to scan. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 254 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+
+Referenced by Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+256                                               :
+257   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (\_mlClasses, \_examples)
+258   
+259 \{
+260 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}}
+\index{Gray\+Scale\+Images\+F\+V\+List@{Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Gray\+Scale\+Images\+F\+V\+List(const Feature\+Vector\+List \&feature\+Vector\+List)}{GrayScaleImagesFVList(const FeatureVectorList &featureVectorList)}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+\item[{const {\bf Feature\+Vector\+List} \&}]{feature\+Vector\+List}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aa00f8dc79c567a2e4f8161bf966e8b7d}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aa00f8dc79c567a2e4f8161bf966e8b7d}
+This constructor is meant to create a list of \textquotesingle{}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{Gray\+Scale\+Images\+FV}\textquotesingle{} objects from the \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{Feature\+Vector} objects contained in feature\+Vector\+List. 
+\begin{DoxyCode}
+If  \textcolor{stringliteral}{'featureVectorList'}  owns its contents (that is \textcolor{stringliteral}{'featureVectorList.Owner () == true'}  then
+   |  We will create \textcolor{keyword}{new} Instances of \textcolor{stringliteral}{'GrayScaleImagesFV'} objects that we will own.
+   |  The underlying \textcolor{keyword}{class} of the \textcolor{stringliteral}{'FeatureVector'} objects will be converted to a
+   |  \textcolor{stringliteral}{'GrayScaleImagesFV'}  \textcolor{keyword}{class}.
+else
+   |  all the \textcolor{stringliteral}{'FeatureVector'} objects in \textcolor{stringliteral}{'featureVectorList'} must have an underlying \textcolor{keyword}{class} of
+   |  \textcolor{stringliteral}{'GrayScaleImagesFV'}.  If one or more \textcolor{keywordflow}{do} not then the program will halt with a message to
+   |  the log.
+\end{DoxyCode}
+ 
+
+Definition at line 265 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+
+Referenced by Extract\+Duplicates\+By\+Root\+Image\+File\+Name(), Extract\+Examples\+For\+A\+Given\+Class(), Gray\+Scale\+Images\+F\+V\+List(), Order\+Using\+Names\+From\+A\+File(), and Stratify\+Amoungst\+Classes().
+
+
+\begin{DoxyCode}
+265                                                                                         :
+266   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a102284896708eb82b5879dcf9a92e974}{FeatureVectorList} (featureVectorList.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} (),
+267                      featureVectorList.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} ()
+268                     )
+269 \{
+270   \textcolor{comment}{//if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)}
+271   \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (featureVectorList) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList}))
+272   \{
+273     \textcolor{keyword}{const} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVList}&  examples = \textcolor{keyword}{dynamic\_cast<}\textcolor{keyword}{const }
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVList}&\textcolor{keyword}{>} (featureVectorList);
+274   \}
+275 
+276 
+277   \textcolor{keywordflow}{if}  (featureVectorList.\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} ())
+278   \{
+279     \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+280     \textcolor{keywordflow}{for}  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+281     \{
+282       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} featureVector = *idx;
+283       
+284       \textcolor{comment}{// The constructor below will detect what the underlying type of 'featureVector' is.  }
+285       \textcolor{comment}{// If (underlying type is a 'GrayScaleImagesFV' object)  then}
+286       \textcolor{comment}{//   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted}
+287       \textcolor{comment}{//   | from the 'FeatureVector' object being passed in.}
+288       \textcolor{comment}{// else}
+289       \textcolor{comment}{//   | info that is particular to a 'GrayScaleImagesFV' object will be set to}
+290       \textcolor{comment}{//   | default values.}
+291       \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  example = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV} (*
+      featureVector);
+292       \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (example);
+293     \}
+294   \}
+295   \textcolor{keywordflow}{else}
+296   \{
+297     \textcolor{comment}{// Since we will not own the contents but just point to existing instances we will }
+298     \textcolor{comment}{// have to make sure that the existing instances of 'FeatureVector' objects have a }
+299     \textcolor{comment}{// underlying type of 'GrayScaleImagesFV'.}
+300     \hyperlink{class_k_k_b_1_1_k_k_queue_aeb057c9c010446f46f57c1e355f981f1}{FeatureVectorList::const\_iterator}  idx;
+301     \textcolor{keywordflow}{for}  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+302     \{
+303       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} featureVector = *idx;
+304       \textcolor{comment}{//if  (strcmp (featureVector->UnderlyingClass (), "GrayScaleImagesFV") == 0)}
+305       \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*featureVector) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+306       \{
+307         \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr} example = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}\textcolor{keyword}{>}(featureVector);
+308         \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (example);
+309       \}
+310       \textcolor{keywordflow}{else}
+311       \{
+312         \textcolor{comment}{// ****    ERROR  ****}
+313         \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg;
+314         errMsg << \textcolor{stringliteral}{"GrayScaleImagesFVList   ***ERROR***   One of the elements in 'featureVectorList' is not
+       of 'GrayScaleImagesFV'  type.  We can not recast this element"}
+315              << \textcolor{stringliteral}{" FileName["} << featureVector->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"]"};
+316 
+317         cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+318         \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+319       \}
+320     \}
+321   \}
+322 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!````~Gray\+Scale\+Images\+F\+V\+List@{$\sim$\+Gray\+Scale\+Images\+F\+V\+List}}
+\index{````~Gray\+Scale\+Images\+F\+V\+List@{$\sim$\+Gray\+Scale\+Images\+F\+V\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{$\sim$\+Gray\+Scale\+Images\+F\+V\+List()}{~GrayScaleImagesFVList()}}]{\setlength{\rightskip}{0pt plus 5cm}Gray\+Scale\+Images\+F\+V\+List\+::$\sim$\+Gray\+Scale\+Images\+F\+V\+List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f89575b104dfad177a0e5d2f1953624}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f89575b104dfad177a0e5d2f1953624}
+
+
+Definition at line 327 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+328 \{
+329 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Add\+Queue@{Add\+Queue}}
+\index{Add\+Queue@{Add\+Queue}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Add\+Queue(\+Gray\+Scale\+Images\+F\+V\+List \&images\+To\+Add)}{AddQueue(GrayScaleImagesFVList &imagesToAdd)}}]{\setlength{\rightskip}{0pt plus 5cm}void Gray\+Scale\+Images\+F\+V\+List\+::\+Add\+Queue (
+\begin{DoxyParamCaption}
+\item[{{\bf Gray\+Scale\+Images\+F\+V\+List} \&}]{images\+To\+Add}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aba7237106973d57077b83efe3606f079}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aba7237106973d57077b83efe3606f079}
+
+
+Definition at line 390 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+391 \{
+392   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a90809e07f7e33e591da0d266c1907ca9}{FeatureVectorList::AddQueue} (imagesToAdd);
+393 \}  \textcolor{comment}{/* AddQueue */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Back\+Of\+Queue@{Back\+Of\+Queue}}
+\index{Back\+Of\+Queue@{Back\+Of\+Queue}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Back\+Of\+Queue()}{BackOfQueue()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Back\+Of\+Queue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ac9c12a344b952f9141fe643c9890d649}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_ac9c12a344b952f9141fe643c9890d649}
+
+
+Definition at line 351 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception().
+
+
+\begin{DoxyCode}
+352 \{
+353   \textcolor{keywordflow}{if}  (size () < 1)
+354     \textcolor{keywordflow}{return} NULL;
+355 
+356   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  fv = back ();
+357   \textcolor{comment}{//if  (strcmp (fv->UnderlyingClass (), "GrayScaleImagesFV") == 0)}
+358   \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*fv) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+359     \textcolor{keywordflow}{return}  \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}\textcolor{keyword}{>} (fv);
+360 
+361   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg = \textcolor{stringliteral}{"GrayScaleImagesFVList::BackOfQueue ()    ***ERROR***        Entry at back of Queue
+       is not a 'GrayScaleImagesFV' object."};
+362   cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+363   \textcolor{keywordflow}{throw}  \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+364 \}  \textcolor{comment}{/* BackOfQueue */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Binary\+Search\+By\+Name@{Binary\+Search\+By\+Name}}
+\index{Binary\+Search\+By\+Name@{Binary\+Search\+By\+Name}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Binary\+Search\+By\+Name(const K\+K\+Str \&\+\_\+image\+File\+Name) const }{BinarySearchByName(const KKStr &_imageFileName) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Binary\+Search\+By\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+image\+File\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a28209170c7a8919bdb9b984dc5e85d98}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a28209170c7a8919bdb9b984dc5e85d98}
+
+
+Definition at line 400 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+401 \{
+402   \textcolor{keywordflow}{return}  (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr})
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a33a695d38d4b2ad71048f3c0b75f554a}{FeatureVectorList::BinarySearchByName} (\_imageFileName);
+403 \}  \textcolor{comment}{/* BinarySearchByName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Duplicate@{Duplicate}}
+\index{Duplicate@{Duplicate}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Duplicate(bool \+\_\+owner) const }{Duplicate(bool _owner) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Duplicate (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_af8de31a61f325589d76c2247803176a6}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_af8de31a61f325589d76c2247803176a6}
+
+
+Creates a duplicate of list using the same container. 
+
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a6f3b0f046e5697a9bd6fee1b10e2eb02}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+List}.
+
+
+
+Definition at line 333 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+334 \{
+335   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*\textcolor{keyword}{this}, \_owner);
+336 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Duplicate\+List\+And\+Contents@{Duplicate\+List\+And\+Contents}}
+\index{Duplicate\+List\+And\+Contents@{Duplicate\+List\+And\+Contents}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Duplicate\+List\+And\+Contents() const }{DuplicateListAndContents() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Duplicate\+List\+And\+Contents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a994cfae350ad453a6feef076a9664827}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a994cfae350ad453a6feef076a9664827}
+
+
+Creates a duplicate of list and also duplicates it contents. 
+
+\begin{DoxyReturn}{Returns}
+Duplicated list with hard copy of its contents. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af14ad0946bbc6de8abdc4b513b6cf859}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+List}.
+
+
+
+Definition at line 563 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Idx\+To\+Ptr().
+
+
+\begin{DoxyCode}
+564 \{
+565   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  copyiedList = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (\hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} (), \textcolor{keyword}{true});
+566 
+567   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < \hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} ();  idx++)
+568   \{
+569     \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  curImage = (\hyperlink{namespace_k_k_m_l_l_ac3f21d259a7b1893920f27296d70bc6e}{GrayScaleImagesFVPtr})
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3dd42fb0b0fdb0a1d3d385a8a2f74842}{IdxToPtr} (idx);
+570     copyiedList->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_abd43779a90a6aa3db1de8092be877bdb}{PushOnBack} (\textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV} (*curImage));
+571   \}
+572   
+573   copyiedList->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a01b3c7a97f5b58639c8aee826fa15dc9}{Version} (\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a01b3c7a97f5b58639c8aee826fa15dc9}{Version} ());
+574 
+575   \textcolor{keywordflow}{return}  copyiedList;
+576 \}  \textcolor{comment}{/* DuplicateListAndContents */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Extract\+Duplicates\+By\+Root\+Image\+File\+Name@{Extract\+Duplicates\+By\+Root\+Image\+File\+Name}}
+\index{Extract\+Duplicates\+By\+Root\+Image\+File\+Name@{Extract\+Duplicates\+By\+Root\+Image\+File\+Name}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Duplicates\+By\+Root\+Image\+File\+Name()}{ExtractDuplicatesByRootImageFileName()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Extract\+Duplicates\+By\+Root\+Image\+File\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0ac0317ca7d6031c420cd8e4197d7328}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0ac0317ca7d6031c420cd8e4197d7328}
+
+
+Definition at line 671 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+672 \{
+673   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  duplicateFeatureVectorObjects = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a11db98d4fd5c637705539860aa921309}{FeatureVectorList::ExtractDuplicatesByRootImageFileName}
+       ();
+674   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  duplicateImageFeaturesObjects = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*duplicateFeatureVectorObjects);
+675   duplicateFeatureVectorObjects->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+676   \textcolor{keyword}{delete}  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
+677   \textcolor{keywordflow}{return}  duplicateImageFeaturesObjects;
+678 \}  \textcolor{comment}{/* ExtractDuplicatesByRootImageFileName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Extract\+Examples\+For\+A\+Given\+Class@{Extract\+Examples\+For\+A\+Given\+Class}}
+\index{Extract\+Examples\+For\+A\+Given\+Class@{Extract\+Examples\+For\+A\+Given\+Class}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Extract\+Examples\+For\+A\+Given\+Class(\+M\+L\+Class\+Ptr \+\_\+ml\+Class, kkint32 \+\_\+max\+To\+Extract=-\/1, float \+\_\+min\+Size=-\/1.\+0f) const }{ExtractExamplesForAGivenClass(MLClassPtr _mlClass, kkint32 _maxToExtract=-1, float _minSize=-1.0f) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Extract\+Examples\+For\+A\+Given\+Class (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+Ptr}}]{\+\_\+ml\+Class, }
+\item[{{\bf kkint32}}]{\+\_\+max\+To\+Extract = {\ttfamily -\/1}, }
+\item[{float}]{\+\_\+min\+Size = {\ttfamily -\/1.0f}}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aed5328be7f6d785287f097cf30339f1f}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aed5328be7f6d785287f097cf30339f1f}
+
+
+Definition at line 685 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+689 \{
+690   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  featureVectorList = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_ab9c72c62046bf92e24e7e635d425792b}{FeatureVectorList::ExtractExamplesForAGivenClass} (\_mlClass,
+       \_maxToExtract, \_minSize);
+691   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  imageFeaturesList = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*featureVectorList);
+692   featureVectorList->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+693   \textcolor{keyword}{delete}  featureVectorList;  featureVectorList = NULL;
+694   \textcolor{keywordflow}{return}  imageFeaturesList;
+695 \}  \textcolor{comment}{/*  ExtractExamplesForAGivenClass  */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Idx\+To\+Ptr@{Idx\+To\+Ptr}}
+\index{Idx\+To\+Ptr@{Idx\+To\+Ptr}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Idx\+To\+Ptr(kkint32 idx) const }{IdxToPtr(kkint32 idx) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Idx\+To\+Ptr (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{idx}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3dd42fb0b0fdb0a1d3d385a8a2f74842}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3dd42fb0b0fdb0a1d3d385a8a2f74842}
+
+
+Definition at line 342 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+Referenced by Duplicate\+List\+And\+Contents().
+
+
+\begin{DoxyCode}
+343 \{
+344   \textcolor{keywordflow}{return}  (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr})\hyperlink{class_k_k_b_1_1_k_k_queue_acce2bdd8b3327e38266cf198382cd852}{FeatureVectorList::IdxToPtr} 
+      (idx);
+345 \}  \textcolor{comment}{/* IdxToPtr */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Look\+Up\+By\+Image\+File\+Name@{Look\+Up\+By\+Image\+File\+Name}}
+\index{Look\+Up\+By\+Image\+File\+Name@{Look\+Up\+By\+Image\+File\+Name}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Image\+File\+Name(const K\+K\+Str \&\+\_\+image\+File\+Name) const }{LookUpByImageFileName(const KKStr &_imageFileName) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Look\+Up\+By\+Image\+File\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+image\+File\+Name}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a8ccec2fcd028640192417782f4fe9b62}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a8ccec2fcd028640192417782f4fe9b62}
+
+
+Definition at line 419 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+420 \{
+421   \textcolor{keywordflow}{return}  (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr})
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a7b336e2b7b9a08db64623f8a7b7c694b}{FeatureVectorList::LookUpByImageFileName} (\_imageFileName);
+422 \}  \textcolor{comment}{/* LookUpByImageFileName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Look\+Up\+By\+Root\+Name@{Look\+Up\+By\+Root\+Name}}
+\index{Look\+Up\+By\+Root\+Name@{Look\+Up\+By\+Root\+Name}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Look\+Up\+By\+Root\+Name(const K\+K\+Str \&\+\_\+root\+Name)}{LookUpByRootName(const KKStr &_rootName)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Look\+Up\+By\+Root\+Name (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+root\+Name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aad0ba82c843773a17fa79372688ab869}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aad0ba82c843773a17fa79372688ab869}
+
+
+Definition at line 409 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+410 \{
+411   \textcolor{keywordflow}{return}  (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr})
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a06e11b3bcd75592c09f0821fd90e5c6f}{FeatureVectorList::LookUpByRootName} (\_rootName);
+412 \}  \textcolor{comment}{/* LookUpByRootName */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Manufacture\+Empty\+List@{Manufacture\+Empty\+List}}
+\index{Manufacture\+Empty\+List@{Manufacture\+Empty\+List}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Manufacture\+Empty\+List(bool \+\_\+owner) const }{ManufactureEmptyList(bool _owner) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Manufacture\+Empty\+List (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+owner}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a038934a9764ea7ab08ace2579e02be41}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a038934a9764ea7ab08ace2579e02be41}
+
+
+Creates an instance of a Empty \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List}. 
+
+
+
+Reimplemented from \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af533da1b34e4123f4fcb1343d5f48e37}{K\+K\+M\+L\+L\+::\+Feature\+Vector\+List}.
+
+
+
+Definition at line 427 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+\begin{DoxyCode}
+428 \{
+429   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (\hyperlink{class_k_k_m_l_l_1_1_file_desc}{FileDesc} (), \_owner);
+430 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Order\+Using\+Names\+From\+A\+File@{Order\+Using\+Names\+From\+A\+File}}
+\index{Order\+Using\+Names\+From\+A\+File@{Order\+Using\+Names\+From\+A\+File}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Order\+Using\+Names\+From\+A\+File(const K\+K\+Str \&file\+Name, Run\+Log \&log)}{OrderUsingNamesFromAFile(const KKStr &fileName, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Order\+Using\+Names\+From\+A\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9dda16f9868ecd4a2593c228f60e1e57}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9dda16f9868ecd4a2593c228f60e1e57}
+
+
+Using list of Image\+File\+Names in a file(\textquotesingle{}file\+Name\textquotesingle{}) create a new \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{Gray\+Scale\+Images\+F\+V\+List} instance with examples in order based off contents of file. If error occurs will return N\+U\+LL. 
+
+
+
+Definition at line 435 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+438 \{
+439   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  examples = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a02576db671a72028f9eab4ed152138b8}{FeatureVectorList::OrderUsingNamesFromAFile} (fileName, log);
+440   examples->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+441   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  orderedImages = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*examples);
+442   \textcolor{keyword}{delete}  examples;
+443   \textcolor{keywordflow}{return}  orderedImages;
+444 \}  \textcolor{comment}{/* OrderUsingNamesFromAFile */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Pop\+From\+Back@{Pop\+From\+Back}}
+\index{Pop\+From\+Back@{Pop\+From\+Back}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Pop\+From\+Back()}{PopFromBack()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Pop\+From\+Back (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3679526994558f36a28e2e4721733801}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a3679526994558f36a28e2e4721733801}
+Removes the last element in the container and returns its pointer. If the container is empty will return N\+U\+LL. 
+
+Reimplemented from \hyperlink{class_k_k_b_1_1_k_k_queue_a03844c19a838fed7e7bcc5816846dcfd}{K\+K\+B\+::\+K\+K\+Queue$<$ Feature\+Vector $>$}.
+
+
+
+Definition at line 369 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), and K\+K\+B\+::\+K\+K\+Exception\+::\+K\+K\+Exception().
+
+
+\begin{DoxyCode}
+370 \{
+371   \textcolor{keywordflow}{if}  (size () < 1)  \textcolor{keywordflow}{return} NULL;
+372 
+373   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  fv = back ();
+374   \textcolor{comment}{//if  (strcmp (fv->UnderlyingClass (), "GrayScaleImagesFV") != 0)}
+375   \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*fv) == \textcolor{keyword}{typeid} (\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+376   \{
+377     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} errMsg = \textcolor{stringliteral}{"GrayScaleImagesFVList::PopFromBack ()    ***ERROR***        Entry at back of Queue
+       is not a 'GrayScaleImagesFV' object."};
+378     cerr << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << errMsg << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+379     \textcolor{keywordflow}{throw} \hyperlink{class_k_k_b_1_1_k_k_exception}{KKException} (errMsg);
+380   \}
+381 
+382   \textcolor{keywordflow}{return}  \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}\textcolor{keyword}{>} (
+      \hyperlink{class_k_k_b_1_1_k_k_queue_a03844c19a838fed7e7bcc5816846dcfd}{FeatureVectorList::PopFromBack} ());
+383 \}  \textcolor{comment}{/* PopFromBack */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree@{Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree}}
+\index{Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree@{Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree(\+Factory\+F\+V\+Producer\+Ptr fv\+Producer\+Factory, const K\+K\+Str \&root\+Dir, bool \&successful, Run\+Log \&log)}{RecalcFeatureValuesFromImagesInDirTree(FactoryFVProducerPtr fvProducerFactory, const KKStr &rootDir, bool &successful, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Gray\+Scale\+Images\+F\+V\+List\+::\+Recalc\+Feature\+Values\+From\+Images\+In\+Dir\+Tree (
+\begin{DoxyParamCaption}
+\item[{{\bf Factory\+F\+V\+Producer\+Ptr}}]{fv\+Producer\+Factory, }
+\item[{const {\bf K\+K\+Str} \&}]{root\+Dir, }
+\item[{bool \&}]{successful, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f39ed6d97e2a08b0ec63daade4fa5e4}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a0f39ed6d97e2a08b0ec63daade4fa5e4}
+
+
+Definition at line 583 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Col(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Centroid\+Row(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+Producer\+::\+Compute\+Feature\+Vector(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Example\+File\+Name(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data(), K\+K\+B\+::\+Image\+Dir\+Tree\+::\+Image\+Dir\+Tree(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::iterator\+::iterator(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+Image\+Dir\+Tree\+::\+Locate\+Image(), K\+K\+M\+L\+L\+::\+Factory\+F\+V\+Producer\+::\+Manufacture\+Instance(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+M\+L\+Class(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+::\+Num\+Of\+Edge\+Pixels(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::iterator\+::operator$\ast$(), K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List\+::iterator\+::operator++(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Orig\+Size(), K\+K\+B\+::os\+Add\+Last\+Slash(), K\+K\+B\+::\+Raster\+::\+Raster(), K\+K\+B\+::\+Image\+Dir\+Tree\+::\+Size(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Version().
+
+
+\begin{DoxyCode}
+588 \{
+589   log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"RecalcFeatureValuesFromImagesInDirTree   RootDir["} << rootDir << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+590 
+591   successful = \textcolor{keyword}{false};
+592 
+593   \hyperlink{class_k_k_b_1_1_image_dir_tree}{ImageDirTree}   fileDirectory (rootDir);
+594 
+595   \textcolor{keywordflow}{if}  (\hyperlink{class_k_k_b_1_1_k_k_queue_a1dab601f75ee6a65d97f02bddf71c40d}{QueueSize} () < 1)
+596   \{
+597     successful = \textcolor{keyword}{true};
+598     \textcolor{keywordflow}{return};
+599   \}
+600 
+601   \textcolor{keywordflow}{if}  (fileDirectory.Size () < 1)
+602   \{
+603     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"RecalcFeatureValuesFromImagesInDirTree  No Image Files in["} << rootDir << \textcolor{stringliteral}{"]"} <
+      < \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+604     \textcolor{keywordflow}{return};
+605   \}
+606 
+607   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer}{FeatureVectorProducerPtr}  fvProducer = fvProducerFactory->
+      \hyperlink{class_k_k_m_l_l_1_1_factory_f_v_producer_ab69f27aed9bda4917326580ec824e749}{ManufactureInstance} (log);
+608 
+609   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStrConstPtr}  dirPath = NULL;
+610 
+611   \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{iterator}  idx;
+612   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  example = NULL;
+613 
+614   \textcolor{keywordflow}{for}  (idx = begin ();   idx != end ();  idx++)
+615   \{
+616     example = *idx;
+617     dirPath = fileDirectory.LocateImage (example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} ());
+618     \textcolor{keywordflow}{if}  (!dirPath)
+619     \{
+620       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (10) << \textcolor{stringliteral}{"RecalcFeatureValuesFromImagesInDirTree  Could not locate Image["} << example->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} () << \textcolor{stringliteral}{"] in Subdirectory Tree."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+621       \textcolor{keywordflow}{return};
+622     \}
+623 
+624     \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  fullFileName (*dirPath);
+625     \hyperlink{namespace_k_k_b_a60e413a66cd7d3a5679d2844dd5e3d97}{osAddLastSlash} (fullFileName);
+626     fullFileName << example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_ab47c89ab1e9396664fdc0dc34b6e1ab5}{ExampleFileName} ();
+627 
+628     \textcolor{keywordtype}{bool}   validFile;
+629     \hyperlink{class_k_k_b_1_1_raster}{RasterPtr}  raster = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_raster}{Raster} (fullFileName, validFile);
+630     \textcolor{keywordflow}{if}  (!validFile)
+631     \{
+632       \textcolor{keyword}{delete}  raster;  raster = NULL;
+633       log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree   ***ERROR*** 
+       Unable to load image: "} << fullFileName << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+634     \}
+635     \textcolor{keywordflow}{else}
+636     \{
+637       \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr} fv = fvProducer->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_producer_a8f93296a46432624867b12ed8631df0f}{ComputeFeatureVector} (*raster, 
+      example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a3c8fe002c6e868f8c00059c004fb32fd}{MLClass} (), NULL, 1.0f, log);
+638       \textcolor{keywordflow}{if}  (fv)
+639       \{
+640         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+641         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  featureCount = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a660d9573e5ac78e9c3e09d68cddae7d6}{NumOfFeatures} (), example->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_a660d9573e5ac78e9c3e09d68cddae7d6}{NumOfFeatures} ());
+642         \textcolor{keywordflow}{for} (x = 0; x < featureCount;  ++x)
+643           example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} (x, fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_af055b7c725a4d80a31cd2f6606cc37b6}{FeatureData} (x));
+644 
+645         example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a5ea23a16266bc34a289824042a836c06}{OrigSize} (fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a5ea23a16266bc34a289824042a836c06}{OrigSize} ());
+646         example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a17650be71b83695d35d34029257652ea}{Version} (fv->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a17650be71b83695d35d34029257652ea}{Version} ());
+647 
+648         \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid}(*fv) == \textcolor{keyword}{typeid}(\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFV}))
+649         \{
+650           \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}  lfv = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v}{GrayScaleImagesFVPtr}\textcolor{keyword}{>}(fv);
+651           example->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}{CentroidCol} (lfv->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_af92738424e98b42e8722cde7bbb70724}{CentroidCol} ());
+652           example->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}{CentroidRow} (lfv->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a8224a1107956f70cb2c06f7c78a7e33d}{CentroidRow} ());
+653           example->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}{NumOfEdgePixels} (lfv->\hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_a239c663da39285f72d04f80f2c0ce8ef}{NumOfEdgePixels} ());
+654         \}
+655 
+656         \textcolor{keyword}{delete}  fv;
+657         fv = NULL;
+658       \}
+659       \textcolor{keyword}{delete}  raster;  raster = NULL;
+660     \}
+661   \}
+662 
+663   \textcolor{keyword}{delete}  fvProducer;
+664   fvProducer = NULL;
+665 \}  \textcolor{comment}{/* RecalcFeatureValuesFromImagesInDirTree */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Stratify\+Amoungst\+Classes@{Stratify\+Amoungst\+Classes}}
+\index{Stratify\+Amoungst\+Classes@{Stratify\+Amoungst\+Classes}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Stratify\+Amoungst\+Classes(kkint32 num\+Of\+Folds, Run\+Log \&log)}{StratifyAmoungstClasses(kkint32 numOfFolds, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Stratify\+Amoungst\+Classes (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{num\+Of\+Folds, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9139a103eea08762c9a1f4fd1c9ffeb7}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a9139a103eea08762c9a1f4fd1c9ffeb7}
+
+
+Definition at line 717 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+720 \{
+721   \hyperlink{class_k_k_m_l_l_1_1_m_l_class_list}{MLClassListPtr}  classes = \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_af4bffa9713e7632b9e0e33f931528164}{ExtractListOfClasses} ();
+722 
+723   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  stratifiedFeatureVectors = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a10271db5b9466f45bb3ec138a05f209d}{FeatureVectorList::StratifyAmoungstClasses} (classes, -1, 
+      numOfFolds, log);
+724   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  stratifiedImagefeatures  = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*stratifiedFeatureVectors);
+725   
+726   stratifiedFeatureVectors->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+727 
+728   \textcolor{keyword}{delete} stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
+729   \textcolor{keyword}{delete}  classes;                  classes                  = NULL;
+730 
+731   \textcolor{keywordflow}{return}  stratifiedImagefeatures;
+732 \}  \textcolor{comment}{/* StratifyAmoungstClasses */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}!Stratify\+Amoungst\+Classes@{Stratify\+Amoungst\+Classes}}
+\index{Stratify\+Amoungst\+Classes@{Stratify\+Amoungst\+Classes}!K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List@{K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+List}}
+\subsubsection[{\texorpdfstring{Stratify\+Amoungst\+Classes(\+M\+L\+Class\+List\+Ptr ml\+Classes, kkint32 max\+Images\+Per\+Class, kkint32 num\+Of\+Folds, Run\+Log \&log)}{StratifyAmoungstClasses(MLClassListPtr mlClasses, kkint32 maxImagesPerClass, kkint32 numOfFolds, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gray\+Scale\+Images\+F\+V\+List\+Ptr} Gray\+Scale\+Images\+F\+V\+List\+::\+Stratify\+Amoungst\+Classes (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+L\+Class\+List\+Ptr}}]{ml\+Classes, }
+\item[{{\bf kkint32}}]{max\+Images\+Per\+Class, }
+\item[{{\bf kkint32}}]{num\+Of\+Folds, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a5f2af12e2850fde10a4948e57b935feb}{}\label{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_a5f2af12e2850fde10a4948e57b935feb}
+
+
+Definition at line 701 of file Gray\+Scale\+Images\+F\+V.\+cpp.
+
+
+
+References Gray\+Scale\+Images\+F\+V\+List().
+
+
+\begin{DoxyCode}
+706 \{
+707   \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{FeatureVectorListPtr}  stratifiedFeatureVectors = 
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a10271db5b9466f45bb3ec138a05f209d}{FeatureVectorList::StratifyAmoungstClasses} (mlClasses, 
+      maxImagesPerClass, numOfFolds, log);
+708   \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list}{GrayScaleImagesFVListPtr}  stratifiedImagefeatures  = \textcolor{keyword}{new} 
+      \hyperlink{class_k_k_m_l_l_1_1_gray_scale_images_f_v_list_aabed2fbe6de7f052cc63dc941a863372}{GrayScaleImagesFVList} (*stratifiedFeatureVectors);
+709   stratifiedFeatureVectors->\hyperlink{class_k_k_b_1_1_k_k_queue_a4990d037ff09dd504cc7df53819bf61a}{Owner} (\textcolor{keyword}{false});
+710   \textcolor{keyword}{delete} stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
+711   \textcolor{keywordflow}{return}  stratifiedImagefeatures;
+712 \}  \textcolor{comment}{/* StratifyAmoungstClasses */}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_8h}{Gray\+Scale\+Images\+F\+V.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_gray_scale_images_f_v_8cpp}{Gray\+Scale\+Images\+F\+V.\+cpp}\end{DoxyCompactItemize}

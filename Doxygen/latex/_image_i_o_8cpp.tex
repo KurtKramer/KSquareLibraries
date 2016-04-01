@@ -1,0 +1,83 @@
+\hypertarget{_image_i_o_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Image\+IO.cpp File Reference}
+\label{_image_i_o_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Image\+I\+O.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Image\+I\+O.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$windows.\+h$>$}\\*
+{\ttfamily \#include $<$objidl.\+h$>$}\\*
+{\ttfamily \#include $<$gdiplus.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Image\+I\+O.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}B\+M\+P\+Image.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Exception.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Histogram.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Raster.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$Gdipluspixelformats.\+h$>$}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_k_k_b}{K\+KB}
+\begin{DoxyCompactList}\small\item\em \hyperlink{namespace_k_k_b}{K\+KB} The namespace for K\+K\+Base Library supporting general functionality needed by almost any application. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{namespace_k_k_b_a1691d3827f162952dbcccd55f5330f94}{K\+K\+B\+::\+Define\+Image\+Io\+At\+Exit} ()
+\item 
+void \hyperlink{namespace_k_k_b_ab3536a8fb1af08b1f10a3866b64741da}{K\+K\+B\+::\+Image\+Io\+Finale\+Clean\+Up} ()
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{namespace_k_k_b_a48f622be009a3055d0b86d20adf0d6d3}{K\+K\+B\+::\+Read\+Image\+P\+GM} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{namespace_k_k_b_a722a5b8c478ea435da42d7ac35a50625}{K\+K\+B\+::\+Read\+Image\+P\+PM} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{namespace_k_k_b_ade6c5f0d9736c3f249ae35cd3d067151}{K\+K\+B\+::\+Read\+Image\+Ppm\+Field} (F\+I\+LE $\ast$in, bool \&eof)
+\item 
+\hyperlink{namespace_k_k_b_a80d46bd24db644a022c863bce8ae3633}{Raster\+Ptr} \hyperlink{namespace_k_k_b_a9e18a731c85527473c3f48c65ccb379e}{K\+K\+B\+::\+Read\+Image\+Using\+G\+DI} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\item 
+void \hyperlink{namespace_k_k_b_acff3d0eeecc7b33eb46ff7652a681ff2}{K\+K\+B\+::\+Save\+Image\+P\+GM} (const \hyperlink{class_k_k_b_1_1_raster}{Raster} \&image, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\item 
+void \hyperlink{namespace_k_k_b_a16fd1069b8feade24d57515ef3827911}{K\+K\+B\+::\+Save\+Image\+P\+NG} (const \hyperlink{class_k_k_b_1_1_raster}{Raster} \&image, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\item 
+void \hyperlink{namespace_k_k_b_a0998202f24413414f80a04d45df148f0}{K\+K\+B\+::\+Save\+Image\+P\+PM} (const \hyperlink{class_k_k_b_1_1_raster}{Raster} \&image, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&image\+File\+Name)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Gdiplus\+Startup\+Input \hyperlink{_image_i_o_8cpp_a3391e353e9dd078052293d5bce1f786c}{gdiplus\+Startup\+Input}
+\item 
+U\+L\+O\+N\+G\+\_\+\+P\+TR \hyperlink{_image_i_o_8cpp_a0819643ceb158cbf389a3e399351810f}{gdiplus\+Token}
+\item 
+bool \hyperlink{_image_i_o_8cpp_a01605ce8ea692c47a0f676af808391ba}{gdi\+Started} = false
+\item 
+bool \hyperlink{namespace_k_k_b_a5623f4480489ffc80054153dff49013d}{K\+K\+B\+::image\+Io\+At\+Exit\+Defined} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Variable Documentation}
+\index{Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}!gdiplus\+Startup\+Input@{gdiplus\+Startup\+Input}}
+\index{gdiplus\+Startup\+Input@{gdiplus\+Startup\+Input}!Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}}
+\subsubsection[{\texorpdfstring{gdiplus\+Startup\+Input}{gdiplusStartupInput}}]{\setlength{\rightskip}{0pt plus 5cm}Gdiplus\+Startup\+Input gdiplus\+Startup\+Input}\hypertarget{_image_i_o_8cpp_a3391e353e9dd078052293d5bce1f786c}{}\label{_image_i_o_8cpp_a3391e353e9dd078052293d5bce1f786c}
+
+
+Definition at line 234 of file Image\+I\+O.\+cpp.
+
+\index{Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}!gdiplus\+Token@{gdiplus\+Token}}
+\index{gdiplus\+Token@{gdiplus\+Token}!Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}}
+\subsubsection[{\texorpdfstring{gdiplus\+Token}{gdiplusToken}}]{\setlength{\rightskip}{0pt plus 5cm}U\+L\+O\+N\+G\+\_\+\+P\+TR gdiplus\+Token}\hypertarget{_image_i_o_8cpp_a0819643ceb158cbf389a3e399351810f}{}\label{_image_i_o_8cpp_a0819643ceb158cbf389a3e399351810f}
+
+
+Definition at line 235 of file Image\+I\+O.\+cpp.
+
+\index{Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}!gdi\+Started@{gdi\+Started}}
+\index{gdi\+Started@{gdi\+Started}!Image\+I\+O.\+cpp@{Image\+I\+O.\+cpp}}
+\subsubsection[{\texorpdfstring{gdi\+Started}{gdiStarted}}]{\setlength{\rightskip}{0pt plus 5cm}bool gdi\+Started = false}\hypertarget{_image_i_o_8cpp_a01605ce8ea692c47a0f676af808391ba}{}\label{_image_i_o_8cpp_a01605ce8ea692c47a0f676af808391ba}
+
+
+Definition at line 233 of file Image\+I\+O.\+cpp.
+
+
+
+Referenced by K\+K\+B\+::\+Image\+Io\+Finale\+Clean\+Up(), and K\+K\+B\+::\+Read\+Image\+Using\+G\+D\+I().
+

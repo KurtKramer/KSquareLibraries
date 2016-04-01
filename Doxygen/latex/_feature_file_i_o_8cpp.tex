@@ -1,0 +1,68 @@
+\hypertarget{_feature_file_i_o_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Feature\+File\+IO.cpp File Reference}
+\label{_feature_file_i_o_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Feature\+File\+I\+O.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Feature\+File\+I\+O.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$ctype.\+h$>$}\\*
+{\ttfamily \#include $<$time.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Date\+Time.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Global\+Goal\+Keeper.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Image\+I\+O.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+Arff.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+C45.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+Column.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+Dst\+Web.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+Roberts.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+Sparse.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+File\+I\+O\+U\+C\+I.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Factory\+F\+V\+Producer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Feature\+Vector\+Producer.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}File\+Desc.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}M\+L\+Class.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_feature_file_i_o_8cpp_a2aed8872f19355c4cdb65f53511dd70e}{Report\+Error} (\hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&func\+Name, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} line\+Count, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&error\+Desc)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Feature\+File\+I\+O.\+cpp@{Feature\+File\+I\+O.\+cpp}!Report\+Error@{Report\+Error}}
+\index{Report\+Error@{Report\+Error}!Feature\+File\+I\+O.\+cpp@{Feature\+File\+I\+O.\+cpp}}
+\subsubsection[{\texorpdfstring{Report\+Error(\+Run\+Log \&log, const K\+K\+Str \&file\+Name, const K\+K\+Str \&func\+Name, kkint32 line\+Count, const K\+K\+Str \&error\+Desc)}{ReportError(RunLog &log, const KKStr &fileName, const KKStr &funcName, kkint32 lineCount, const KKStr &errorDesc)}}]{\setlength{\rightskip}{0pt plus 5cm}void Report\+Error (
+\begin{DoxyParamCaption}
+\item[{{\bf Run\+Log} \&}]{log, }
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{const {\bf K\+K\+Str} \&}]{func\+Name, }
+\item[{{\bf kkint32}}]{line\+Count, }
+\item[{const {\bf K\+K\+Str} \&}]{error\+Desc}
+\end{DoxyParamCaption}
+)}\hypertarget{_feature_file_i_o_8cpp_a2aed8872f19355c4cdb65f53511dd70e}{}\label{_feature_file_i_o_8cpp_a2aed8872f19355c4cdb65f53511dd70e}
+
+
+Definition at line 45 of file Feature\+File\+I\+O.\+cpp.
+
+
+\begin{DoxyCode}
+51 \{
+52   log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+53                  << funcName << \textcolor{stringliteral}{"     *** ERROR ***"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+54                  << \textcolor{stringliteral}{"           File     ["} << fileName      << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+55                  << \textcolor{stringliteral}{"           LineCount["} << lineCount     << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+56                  << \textcolor{stringliteral}{"           Error    ["} << errorDesc     << \textcolor{stringliteral}{"]"} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+57                  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+58 \}  \textcolor{comment}{/* ReportError */}
+\end{DoxyCode}

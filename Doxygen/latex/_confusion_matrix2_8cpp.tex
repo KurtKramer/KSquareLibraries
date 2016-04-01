@@ -1,0 +1,285 @@
+\hypertarget{_confusion_matrix2_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Confusion\+Matrix2.cpp File Reference}
+\label{_confusion_matrix2_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Confusion\+Matrix2.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\+Confusion\+Matrix2.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$iomanip$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Base\+Types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}O\+Sservices.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Run\+Log.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Confusion\+Matrix2.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{Array\+To\+Delimited\+Delimited\+Str} (T $\ast$\+\_\+array, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+count, char \+\_\+delimiter)
+\item 
+{\footnotesize template$<$typename T $>$ }\\\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{_confusion_matrix2_8cpp_afb7a33d2d59dc32817eb892f47e4226f}{Array\+To\+Delimited\+Delimited\+Str} (const vector$<$ T $>$ \&v, char delimiter)
+\item 
+void \hyperlink{_confusion_matrix2_8cpp_a4d78539c80b594c4586f7787dc2ebdf5}{Delimited\+Str\+To\+Array} (vector$<$ \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $>$ \&v, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Size, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&l, char delimiter)
+\item 
+void \hyperlink{_confusion_matrix2_8cpp_a4dfb3881982c3776cea7cf1f63014c06}{Delimited\+Str\+To\+Array} (vector$<$ double $>$ \&v, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} min\+Size, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&l, char delimiter)
+\item 
+void \hyperlink{_confusion_matrix2_8cpp_abf3be9fdf7c52fcdb428b6394c4d6a20}{Delimited\+Str\+To\+Array} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$\+\_\+array, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+count, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+l, char \+\_\+delimiter)
+\item 
+void \hyperlink{_confusion_matrix2_8cpp_ac05e4450f1a8fae7b94654dd7347cc19}{Delimited\+Str\+To\+Array} (double $\ast$\+\_\+array, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+count, const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+l, char \+\_\+delimiter)
+\item 
+double \hyperlink{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{Percent\+Of} (double x, double y)
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \hyperlink{_confusion_matrix2_8cpp_a71967c86a0a04b4efaa54675280256c1}{Strip\+Out\+Invalid\+Latex\+Caracters} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&src)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Array\+To\+Delimited\+Delimited\+Str@{Array\+To\+Delimited\+Delimited\+Str}}
+\index{Array\+To\+Delimited\+Delimited\+Str@{Array\+To\+Delimited\+Delimited\+Str}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Array\+To\+Delimited\+Delimited\+Str(\+T $\ast$\+\_\+array, kkint32 \+\_\+count, char \+\_\+delimiter)}{ArrayToDelimitedDelimitedStr(T *_array, kkint32 _count, char _delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf K\+K\+Str} Array\+To\+Delimited\+Delimited\+Str (
+\begin{DoxyParamCaption}
+\item[{T $\ast$}]{\+\_\+array, }
+\item[{{\bf kkint32}}]{\+\_\+count, }
+\item[{char}]{\+\_\+delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}{}\label{_confusion_matrix2_8cpp_a5d94b5948f340aaa85dd52d3d259b65e}
+
+
+Definition at line 2871 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2875 \{
+2876   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = \_count * 10;
+2877   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (x);
+2878 
+2879   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < \_count;  x++)
+2880   \{
+2881     \textcolor{keywordflow}{if}  (x > 0)
+2882       s.Append (\_delimiter);
+2883     s << \_array[x];
+2884   \}
+2885   \textcolor{keywordflow}{return} s;
+2886 \}  \textcolor{comment}{/* ArrayToDelimitedDelimitedStr */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Array\+To\+Delimited\+Delimited\+Str@{Array\+To\+Delimited\+Delimited\+Str}}
+\index{Array\+To\+Delimited\+Delimited\+Str@{Array\+To\+Delimited\+Delimited\+Str}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Array\+To\+Delimited\+Delimited\+Str(const vector$<$ T $>$ \&v, char delimiter)}{ArrayToDelimitedDelimitedStr(const vector< T > &v, char delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T $>$ {\bf K\+K\+Str} Array\+To\+Delimited\+Delimited\+Str (
+\begin{DoxyParamCaption}
+\item[{const vector$<$ T $>$ \&}]{v, }
+\item[{char}]{delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_afb7a33d2d59dc32817eb892f47e4226f}{}\label{_confusion_matrix2_8cpp_afb7a33d2d59dc32817eb892f47e4226f}
+
+
+Definition at line 2891 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+2894 \{
+2895   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr} s (v.size () * 10);
+2896 
+2897   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;  x < v.size ();  x++)
+2898   \{
+2899     \textcolor{keywordflow}{if}  (x > 0)  s.\hyperlink{class_k_k_b_1_1_k_k_str_ad23c5c4dccd6122f8629ce95b762f247}{Append} (delimiter);
+2900     s << v[x];
+2901   \}
+2902   \textcolor{keywordflow}{return} s;
+2903 \}  \textcolor{comment}{/* ArrayToDelimitedDelimitedStr */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}}
+\index{Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Delimited\+Str\+To\+Array(vector$<$ kkint32 $>$ \&v, kkint32 min\+Size, const K\+K\+Str \&l, char delimiter)}{DelimitedStrToArray(vector< kkint32 > &v, kkint32 minSize, const KKStr &l, char delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}void Delimited\+Str\+To\+Array (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf kkint32} $>$ \&}]{v, }
+\item[{{\bf kkint32}}]{min\+Size, }
+\item[{const {\bf K\+K\+Str} \&}]{l, }
+\item[{char}]{delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_a4d78539c80b594c4586f7787dc2ebdf5}{}\label{_confusion_matrix2_8cpp_a4d78539c80b594c4586f7787dc2ebdf5}
+
+
+Definition at line 2909 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+2914 \{
+2915   v.clear ();
+2916   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  fields = l.\hyperlink{class_k_k_b_1_1_k_k_str_ac06a219a8773d97383baef7cb10ab091}{Split} (delimiter);
+2917   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} lastField = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fields.size ();
+2918   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < lastField;  ++idx)
+2919     v.push\_back (fields[idx].ToInt32 ());
+2920   \textcolor{keywordflow}{while}  (v.size () < (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})minSize)
+2921     v.push\_back ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})0);
+2922 \}  \textcolor{comment}{/* DelimitedStrToArray */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}}
+\index{Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Delimited\+Str\+To\+Array(vector$<$ double $>$ \&v, kkint32 min\+Size, const K\+K\+Str \&l, char delimiter)}{DelimitedStrToArray(vector< double > &v, kkint32 minSize, const KKStr &l, char delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}void Delimited\+Str\+To\+Array (
+\begin{DoxyParamCaption}
+\item[{vector$<$ double $>$ \&}]{v, }
+\item[{{\bf kkint32}}]{min\+Size, }
+\item[{const {\bf K\+K\+Str} \&}]{l, }
+\item[{char}]{delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_a4dfb3881982c3776cea7cf1f63014c06}{}\label{_confusion_matrix2_8cpp_a4dfb3881982c3776cea7cf1f63014c06}
+
+
+Definition at line 2926 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+2931 \{
+2932   v.clear ();
+2933   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  fields = l.\hyperlink{class_k_k_b_1_1_k_k_str_ac06a219a8773d97383baef7cb10ab091}{Split} (delimiter);
+2934   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} lastField = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fields.size ();
+2935   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < lastField;  idx++)
+2936     v.push\_back (fields[idx].ToDouble ());
+2937   \textcolor{keywordflow}{while}  (v.size () < (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32})minSize)
+2938     v.push\_back ((\textcolor{keywordtype}{double})0);
+2939 \}  \textcolor{comment}{/* DelimitedStrToArray */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}}
+\index{Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Delimited\+Str\+To\+Array(kkint32 $\ast$\+\_\+array, kkint32 \+\_\+count, const K\+K\+Str \&\+\_\+l, char \+\_\+delimiter)}{DelimitedStrToArray(kkint32 *_array, kkint32 _count, const KKStr &_l, char _delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}void Delimited\+Str\+To\+Array (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32} $\ast$}]{\+\_\+array, }
+\item[{{\bf kkint32}}]{\+\_\+count, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+l, }
+\item[{char}]{\+\_\+delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_abf3be9fdf7c52fcdb428b6394c4d6a20}{}\label{_confusion_matrix2_8cpp_abf3be9fdf7c52fcdb428b6394c4d6a20}
+
+
+Definition at line 2945 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+2950 \{
+2951   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  fields = \_l.\hyperlink{class_k_k_b_1_1_k_k_str_ac06a219a8773d97383baef7cb10ab091}{Split} (\_delimiter);
+2952   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastField = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fields.size (), \_count);
+2953   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < lastField;  idx++)
+2954     \_array[idx] = fields[idx].ToInt ();
+2955 \}  \textcolor{comment}{/* DelimitedStrToArray */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}}
+\index{Delimited\+Str\+To\+Array@{Delimited\+Str\+To\+Array}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Delimited\+Str\+To\+Array(double $\ast$\+\_\+array, kkint32 \+\_\+count, const K\+K\+Str \&\+\_\+l, char \+\_\+delimiter)}{DelimitedStrToArray(double *_array, kkint32 _count, const KKStr &_l, char _delimiter)}}]{\setlength{\rightskip}{0pt plus 5cm}void Delimited\+Str\+To\+Array (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{\+\_\+array, }
+\item[{{\bf kkint32}}]{\+\_\+count, }
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+l, }
+\item[{char}]{\+\_\+delimiter}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_ac05e4450f1a8fae7b94654dd7347cc19}{}\label{_confusion_matrix2_8cpp_ac05e4450f1a8fae7b94654dd7347cc19}
+
+
+Definition at line 2960 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Split().
+
+
+\begin{DoxyCode}
+2965 \{
+2966   \hyperlink{class_k_k_b_1_1_vector_k_k_str}{VectorKKStr}  fields = \_l.\hyperlink{class_k_k_b_1_1_k_k_str_ac06a219a8773d97383baef7cb10ab091}{Split} (\_delimiter);
+2967   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  lastField = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} ((\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})fields.size (), \_count);
+2968   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} idx = 0;  idx < lastField;  idx++)
+2969     \_array[idx] = fields[idx].ToDouble ();
+2970 \}  \textcolor{comment}{/* DelimitedStrToArray */}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Percent\+Of@{Percent\+Of}}
+\index{Percent\+Of@{Percent\+Of}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Percent\+Of(double x, double y)}{PercentOf(double x, double y)}}]{\setlength{\rightskip}{0pt plus 5cm}double Percent\+Of (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}{}\label{_confusion_matrix2_8cpp_ac6428bbca684e442948860947ad8ca02}
+
+
+Definition at line 1670 of file Confusion\+Matrix2.\+cpp.
+
+
+\begin{DoxyCode}
+1671 \{
+1672   \textcolor{keywordtype}{double}  total = x + y;
+1673   \textcolor{keywordflow}{if}  (total == 0.0)
+1674     \textcolor{keywordflow}{return} 0.0;
+1675   \textcolor{keywordflow}{else} 
+1676     \textcolor{keywordflow}{return} 100.0 * x / total;
+1677 \}
+\end{DoxyCode}
+\index{Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}!Strip\+Out\+Invalid\+Latex\+Caracters@{Strip\+Out\+Invalid\+Latex\+Caracters}}
+\index{Strip\+Out\+Invalid\+Latex\+Caracters@{Strip\+Out\+Invalid\+Latex\+Caracters}!Confusion\+Matrix2.\+cpp@{Confusion\+Matrix2.\+cpp}}
+\subsubsection[{\texorpdfstring{Strip\+Out\+Invalid\+Latex\+Caracters(const K\+K\+Str \&src)}{StripOutInvalidLatexCaracters(const KKStr &src)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf K\+K\+Str} Strip\+Out\+Invalid\+Latex\+Caracters (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{src}
+\end{DoxyParamCaption}
+)}\hypertarget{_confusion_matrix2_8cpp_a71967c86a0a04b4efaa54675280256c1}{}\label{_confusion_matrix2_8cpp_a71967c86a0a04b4efaa54675280256c1}
+
+
+Definition at line 473 of file Confusion\+Matrix2.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Append(), K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+B\+::\+K\+K\+Str\+::\+Len(), and K\+K\+B\+::\+K\+K\+Str\+::operator\mbox{[}$\,$\mbox{]}().
+
+
+\begin{DoxyCode}
+474 \{
+475   \hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32}  newLen = (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32})(src.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} () * 1.3);
+476 
+477   \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}  result (newLen);
+478 
+479   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_af8d832f05c54994a1cce25bd5743e19a}{kkuint32} x = 0;  x < src.\hyperlink{class_k_k_b_1_1_k_k_str_a869142d4855517c5c237afcb25dbbe36}{Len} ();  x++)
+480   \{
+481     \textcolor{keywordtype}{char}  ch = src[x];
+482 
+483     \textcolor{keywordflow}{switch}  (ch)
+484     \{
+485       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'#'}: result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)#"};
+486                   \textcolor{keywordflow}{break};
+487 
+488       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'$'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)$"};
+489                   \textcolor{keywordflow}{break};
+490 
+491       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'&'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)&"};
+492                   \textcolor{keywordflow}{break};
+493 
+494       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'\_'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\_"};
+495                   \textcolor{keywordflow}{break};
+496 
+497       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'%'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)%"};
+498                   \textcolor{keywordflow}{break};
+499 
+500       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'\{'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\{"};
+501                   \textcolor{keywordflow}{break};
+502 
+503       \textcolor{keywordflow}{case}  \textcolor{charliteral}{'\}'}:  result << \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\}"};
+504                   \textcolor{keywordflow}{break};
+505 
+506 
+507         \textcolor{keywordflow}{default}:  result.\hyperlink{class_k_k_b_1_1_k_k_str_ad23c5c4dccd6122f8629ce95b762f247}{Append} (ch);
+508                   \textcolor{keywordflow}{break};
+509     \}
+510 
+511   \}
+512 
+513   \textcolor{keywordflow}{return}  result;
+514 \}  \textcolor{comment}{/* StripOutInvalidLatexCaracters */}
+\end{DoxyCode}

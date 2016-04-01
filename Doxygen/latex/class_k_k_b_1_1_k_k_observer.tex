@@ -1,0 +1,175 @@
+\hypertarget{class_k_k_b_1_1_k_k_observer}{}\section{K\+KB\+:\+:K\+K\+Observer Class Reference}
+\label{class_k_k_b_1_1_k_k_observer}\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+
+
+The base class to be used by Observer classes.  
+
+
+
+
+{\ttfamily \#include $<$K\+K\+Observer.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_b_1_1_k_k_observer}{K\+K\+Observer} $\ast$ \hyperlink{class_k_k_b_1_1_k_k_observer_a68ab7a7c923a7f43d39542cd5264f231}{K\+K\+Observer\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_k_k_observer_aca8156ee354c4275e3650f234620c417}{K\+K\+Observer} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+name)
+\item 
+virtual \hyperlink{class_k_k_b_1_1_k_k_observer_a4cbcf4b87593c8ea9108407eafcffd95}{$\sim$\+K\+K\+Observer} ()
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_k_k_observer_a74c14088dc3123923addb51a21f01548}{Memory\+Consumed\+Estimated} ()
+\item 
+const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \& \hyperlink{class_k_k_b_1_1_k_k_observer_a1ee43dac59a71e131aa453989091c999}{Name} () const 
+\item 
+virtual void \hyperlink{class_k_k_b_1_1_k_k_observer_aa4a1765b0120bf4a2c6c92bfe917b35b}{Notify} (\hyperlink{namespace_k_k_b_ad2874a3aec87b033137ef07aef832c93}{K\+K\+Observable\+Ptr} obj)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_k_k_observer_a7f04de4db416537cde0a4ae0ac98c529}{K\+K\+Observable}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The base class to be used by Observer classes. 
+
+And application would register instances of a Observer 
+
+Definition at line 25 of file K\+K\+Observer.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!K\+K\+Observer\+Ptr@{K\+K\+Observer\+Ptr}}
+\index{K\+K\+Observer\+Ptr@{K\+K\+Observer\+Ptr}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{K\+K\+Observer\+Ptr}{KKObserverPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf K\+K\+Observer}$\ast$ {\bf K\+K\+B\+::\+K\+K\+Observer\+::\+K\+K\+Observer\+Ptr}}\hypertarget{class_k_k_b_1_1_k_k_observer_a68ab7a7c923a7f43d39542cd5264f231}{}\label{class_k_k_b_1_1_k_k_observer_a68ab7a7c923a7f43d39542cd5264f231}
+
+
+Definition at line 28 of file K\+K\+Observer.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!K\+K\+Observer@{K\+K\+Observer}}
+\index{K\+K\+Observer@{K\+K\+Observer}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{K\+K\+Observer(const K\+K\+Str \&\+\_\+name)}{KKObserver(const KKStr &_name)}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Observer\+::\+K\+K\+Observer (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+name}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_observer_aca8156ee354c4275e3650f234620c417}{}\label{class_k_k_b_1_1_k_k_observer_aca8156ee354c4275e3650f234620c417}
+
+
+Definition at line 32 of file K\+K\+Observer.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+32                                           :
+33    name (\_name)
+34 
+35 \{
+36 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!````~K\+K\+Observer@{$\sim$\+K\+K\+Observer}}
+\index{````~K\+K\+Observer@{$\sim$\+K\+K\+Observer}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{$\sim$\+K\+K\+Observer()}{~KKObserver()}}]{\setlength{\rightskip}{0pt plus 5cm}K\+K\+Observer\+::$\sim$\+K\+K\+Observer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_observer_a4cbcf4b87593c8ea9108407eafcffd95}{}\label{class_k_k_b_1_1_k_k_observer_a4cbcf4b87593c8ea9108407eafcffd95}
+
+
+Definition at line 40 of file K\+K\+Observer.\+cpp.
+
+
+
+References K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+End\+Block(), K\+K\+B\+::\+Global\+Goal\+Keeper\+::\+Start\+Block(), and K\+K\+B\+::\+K\+K\+Observable\+::\+Un\+Register\+Observer().
+
+
+\begin{DoxyCode}
+41 \{
+42   \textcolor{comment}{// Let KKObservable instances know that we are not observing them anymore.}
+43 
+44   \hyperlink{class_k_k_b_1_1_global_goal_keeper_a05d7aab73a0cc12c01f4dd6e8d3da839}{GlobalGoalKeeper::StartBlock} ();
+45   \textcolor{keywordflow}{for}  (observablesIdx = observables.begin ();  observablesIdx != observables.end ();  ++observablesIdx)
+46   \{
+47     \hyperlink{class_k_k_b_1_1_k_k_observable}{KKObservablePtr} p = observablesIdx->first;
+48     p->\hyperlink{class_k_k_b_1_1_k_k_observable_a7803558795794458de86193a6a8e79a7}{UnRegisterObserver} (\textcolor{keyword}{this});
+49   \}
+50   \hyperlink{class_k_k_b_1_1_global_goal_keeper_a4e03a2807ca2f00c359da8625afb4cc5}{GlobalGoalKeeper::EndBlock} ();
+51 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated()}{MemoryConsumedEstimated()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+Observer\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_k_k_observer_a74c14088dc3123923addb51a21f01548}{}\label{class_k_k_b_1_1_k_k_observer_a74c14088dc3123923addb51a21f01548}
+
+
+Definition at line 55 of file K\+K\+Observer.\+cpp.
+
+
+\begin{DoxyCode}
+56 \{
+57   \textcolor{keywordflow}{return}  \textcolor{keyword}{sizeof} (*this);
+58 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!Name@{Name}}
+\index{Name@{Name}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{Name() const }{Name() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf K\+K\+Str}\& K\+K\+B\+::\+K\+K\+Observer\+::\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_k_k_observer_a1ee43dac59a71e131aa453989091c999}{}\label{class_k_k_b_1_1_k_k_observer_a1ee43dac59a71e131aa453989091c999}
+
+
+Definition at line 39 of file K\+K\+Observer.\+h.
+
+
+\begin{DoxyCode}
+39 \{\textcolor{keywordflow}{return} name;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!Notify@{Notify}}
+\index{Notify@{Notify}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{Notify(\+K\+K\+Observable\+Ptr obj)}{Notify(KKObservablePtr obj)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+Observer\+::\+Notify (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+Observable\+Ptr}}]{obj}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_k_k_b_1_1_k_k_observer_aa4a1765b0120bf4a2c6c92bfe917b35b}{}\label{class_k_k_b_1_1_k_k_observer_aa4a1765b0120bf4a2c6c92bfe917b35b}
+
+
+Definition at line 85 of file K\+K\+Observer.\+cpp.
+
+
+\begin{DoxyCode}
+86 \{
+87 \}  \textcolor{comment}{/* Notify */}
+\end{DoxyCode}
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}!K\+K\+Observable@{K\+K\+Observable}}
+\index{K\+K\+Observable@{K\+K\+Observable}!K\+K\+B\+::\+K\+K\+Observer@{K\+K\+B\+::\+K\+K\+Observer}}
+\subsubsection[{\texorpdfstring{K\+K\+Observable}{KKObservable}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf K\+K\+Observable}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_k_k_observer_a7f04de4db416537cde0a4ae0ac98c529}{}\label{class_k_k_b_1_1_k_k_observer_a7f04de4db416537cde0a4ae0ac98c529}
+
+
+Definition at line 54 of file K\+K\+Observer.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_observer_8h}{K\+K\+Observer.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_k_k_observer_8cpp}{K\+K\+Observer.\+cpp}\end{DoxyCompactItemize}

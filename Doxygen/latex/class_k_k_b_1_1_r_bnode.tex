@@ -1,0 +1,227 @@
+\hypertarget{class_k_k_b_1_1_r_bnode}{}\section{K\+KB\+:\+:R\+Bnode$<$ Entry $>$ Class Template Reference}
+\label{class_k_k_b_1_1_r_bnode}\index{K\+K\+B\+::\+R\+Bnode$<$ Entry $>$@{K\+K\+B\+::\+R\+Bnode$<$ Entry $>$}}
+
+
+{\ttfamily \#include $<$R\+B\+Tree.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_r_bnode_a8bc55760f92b921b2c73abaad482d89c}{R\+Bnode} (\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+parent, \hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+left, \hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+right, \hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548}{R\+Bcolor} \+\_\+color, Entry\+Ptr \+\_\+entry)
+\item 
+\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548}{R\+Bcolor} \hyperlink{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}{Color} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_bnode_aa36cfdeb5de0b981971bf76501c7d251}{Color} (\hyperlink{namespace_k_k_b_a8efe8f8963250404085241be900c7548}{R\+Bcolor} \+\_\+color)
+\item 
+Entry\+Ptr \hyperlink{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{Data} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_bnode_a5d90a011bb65f28f82a2b14ce6e851a8}{Data} (Entry\+Ptr \+\_\+data)
+\item 
+\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \hyperlink{class_k_k_b_1_1_r_bnode_abee0e42c1fe63794d9bbd3c1664fbb87}{Left} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_bnode_a7f5f958378f8e57ba2353c70374ce1bc}{Left} (\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+left)
+\item 
+\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \hyperlink{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}{Parent} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_bnode_ae056624198dd5c5aa277b8485b346356}{Parent} (\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+parent)
+\item 
+\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \hyperlink{class_k_k_b_1_1_r_bnode_a3dcbd419eb92e27c222343070630dc95}{Right} ()
+\item 
+void \hyperlink{class_k_k_b_1_1_r_bnode_ad4fa7e5524db92d9c15f59400969b063}{Right} (\hyperlink{class_k_k_b_1_1_r_bnode}{R\+Bnode\+Ptr} \+\_\+right)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Entry$>$\\*
+class K\+K\+B\+::\+R\+Bnode$<$ Entry $>$}
+
+
+
+Definition at line 33 of file R\+B\+Tree.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!R\+Bnode@{R\+Bnode}}
+\index{R\+Bnode@{R\+Bnode}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{R\+Bnode(\+R\+Bnode\+Ptr \+\_\+parent, R\+Bnode\+Ptr \+\_\+left, R\+Bnode\+Ptr \+\_\+right, R\+Bcolor \+\_\+color, Entry\+Ptr \+\_\+entry)}{RBnode(RBnodePtr _parent, RBnodePtr _left, RBnodePtr _right, RBcolor _color, EntryPtr _entry)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::{\bf R\+Bnode} (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+parent, }
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+left, }
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+right, }
+\item[{{\bf R\+Bcolor}}]{\+\_\+color, }
+\item[{Entry\+Ptr}]{\+\_\+entry}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_r_bnode_a8bc55760f92b921b2c73abaad482d89c}{}\label{class_k_k_b_1_1_r_bnode_a8bc55760f92b921b2c73abaad482d89c}
+
+
+Definition at line 281 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+286                             :
+287      parent (\_parent),
+288      left   (\_left),
+289      right  (\_right),
+290      entry  (\_entry),
+291      color  (\_color)
+292 \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Color@{Color}}
+\index{Color@{Color}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Color()}{Color()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ {\bf R\+Bcolor} {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}{}\label{class_k_k_b_1_1_r_bnode_a584eaab9411cfa40db738fb57da7c8c0}
+
+
+Definition at line 47 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+47 \{\textcolor{keywordflow}{return}  color;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Color@{Color}}
+\index{Color@{Color}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Color(\+R\+Bcolor \+\_\+color)}{Color(RBcolor _color)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ void {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Color (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+Bcolor}}]{\+\_\+color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_aa36cfdeb5de0b981971bf76501c7d251}{}\label{class_k_k_b_1_1_r_bnode_aa36cfdeb5de0b981971bf76501c7d251}
+
+
+Definition at line 53 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+53 \{color  = \_color;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Data@{Data}}
+\index{Data@{Data}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Data()}{Data()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ Entry\+Ptr {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}{}\label{class_k_k_b_1_1_r_bnode_a9d29b22149e67b0a1949dbf7e2f2c91b}
+
+
+Definition at line 48 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+48 \{\textcolor{keywordflow}{return}  entry;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Data@{Data}}
+\index{Data@{Data}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Data(\+Entry\+Ptr \+\_\+data)}{Data(EntryPtr _data)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ void {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Data (
+\begin{DoxyParamCaption}
+\item[{Entry\+Ptr}]{\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a5d90a011bb65f28f82a2b14ce6e851a8}{}\label{class_k_k_b_1_1_r_bnode_a5d90a011bb65f28f82a2b14ce6e851a8}
+
+
+Definition at line 54 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+54 \{entry  = \_data;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Left@{Left}}
+\index{Left@{Left}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Left()}{Left()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ {\bf R\+Bnode\+Ptr} {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_abee0e42c1fe63794d9bbd3c1664fbb87}{}\label{class_k_k_b_1_1_r_bnode_abee0e42c1fe63794d9bbd3c1664fbb87}
+
+
+Definition at line 49 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+49 \{\textcolor{keywordflow}{return}  left;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Left@{Left}}
+\index{Left@{Left}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Left(\+R\+Bnode\+Ptr \+\_\+left)}{Left(RBnodePtr _left)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ void {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Left (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+left}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a7f5f958378f8e57ba2353c70374ce1bc}{}\label{class_k_k_b_1_1_r_bnode_a7f5f958378f8e57ba2353c70374ce1bc}
+
+
+Definition at line 55 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+55 \{left   = \_left;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Parent@{Parent}}
+\index{Parent@{Parent}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Parent()}{Parent()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ {\bf R\+Bnode\+Ptr} {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}{}\label{class_k_k_b_1_1_r_bnode_a2ed89e282fb54396dfdb4490d40d1b16}
+
+
+Definition at line 50 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+50 \{\textcolor{keywordflow}{return}  parent;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Parent@{Parent}}
+\index{Parent@{Parent}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Parent(\+R\+Bnode\+Ptr \+\_\+parent)}{Parent(RBnodePtr _parent)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ void {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Parent (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+parent}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_ae056624198dd5c5aa277b8485b346356}{}\label{class_k_k_b_1_1_r_bnode_ae056624198dd5c5aa277b8485b346356}
+
+
+Definition at line 56 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+56 \{parent = \_parent;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Right@{Right}}
+\index{Right@{Right}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Right()}{Right()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ {\bf R\+Bnode\+Ptr} {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Right (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_a3dcbd419eb92e27c222343070630dc95}{}\label{class_k_k_b_1_1_r_bnode_a3dcbd419eb92e27c222343070630dc95}
+
+
+Definition at line 51 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+51 \{\textcolor{keywordflow}{return}  right;\}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}!Right@{Right}}
+\index{Right@{Right}!K\+K\+B\+::\+R\+Bnode@{K\+K\+B\+::\+R\+Bnode}}
+\subsubsection[{\texorpdfstring{Right(\+R\+Bnode\+Ptr \+\_\+right)}{Right(RBnodePtr _right)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Entry $>$ void {\bf K\+K\+B\+::\+R\+Bnode}$<$ Entry $>$\+::Right (
+\begin{DoxyParamCaption}
+\item[{{\bf R\+Bnode\+Ptr}}]{\+\_\+right}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_r_bnode_ad4fa7e5524db92d9c15f59400969b063}{}\label{class_k_k_b_1_1_r_bnode_ad4fa7e5524db92d9c15f59400969b063}
+
+
+Definition at line 57 of file R\+B\+Tree.\+h.
+
+
+\begin{DoxyCode}
+57 \{right  = \_right;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_r_b_tree_8h}{R\+B\+Tree.\+h}\end{DoxyCompactItemize}

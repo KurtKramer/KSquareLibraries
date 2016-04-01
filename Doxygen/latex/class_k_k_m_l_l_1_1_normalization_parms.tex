@@ -1,0 +1,768 @@
+\hypertarget{class_k_k_m_l_l_1_1_normalization_parms}{}\section{K\+K\+M\+LL\+:\+:Normalization\+Parms Class Reference}
+\label{class_k_k_m_l_l_1_1_normalization_parms}\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+
+
+Normalization Parameters; calculation and implementation.  
+
+
+
+
+{\ttfamily \#include $<$Normalization\+Parms.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{class_k_k_m_l_l_1_1_normalization_parms}{Normalization\+Parms} $\ast$ \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_ab326a259979eaf51a6396d19430b1259}{Normalization\+Parms\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a44c91311d5522c5c1ad7456a56dabbc8}{Normalization\+Parms} ()
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a1496655d2d2e2e468bb57be6b646c1ac}{Normalization\+Parms} (bool \+\_\+normalize\+Nominal\+Features, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a1206bfce24715181c8fd903ec87754dc}{Normalization\+Parms} (const \hyperlink{class_k_k_m_l_l_1_1_model_param}{Model\+Param} \&\+\_\+param, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a9d326ee4f7d7ba7461514a05b6a903a9}{Normalization\+Parms} (\hyperlink{namespace_k_k_m_l_l_a5da4b334417f8c9e4e2fd5924da7fe62}{Training\+Configuration2\+Ptr} \+\_\+config, \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list}{Feature\+Vector\+List} \&\+\_\+examples, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log)
+\item 
+\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a6b68a67df0931bf5bc798d348c28d3f4}{$\sim$\+Normalization\+Parms} ()
+\item 
+\hyperlink{namespace_k_k_m_l_l_aa0d0b6ab4ec18868a399b8455b05d914}{File\+Desc\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a7937aa95143a2799893a1493b227d044}{File\+Desc} () const 
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a1ceb1d4ea3dc3c944ba676ca69341d82}{Mean} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+const double $\ast$ \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_ae52c27bf9d44b59dc50bb57797100c87}{Mean} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a32dec15a2a7ecd1a53557063e23ae689}{Memory\+Consumed\+Estimated} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a2724703ce1a35c8de04b6e8746986a0d}{Normalize\+A\+Example} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example)
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_ad75dc1dece1b375d27706a44ab17c77f}{Normalize\+Examples} (\hyperlink{namespace_k_k_m_l_l_acf2ba92a3cf03e2b19674b24ff488ef6}{Feature\+Vector\+List\+Ptr} examples, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+bool \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_abf9678122afbac33e978ec16b85939b4}{Normalize\+Nominal\+Features} () const 
+\item 
+float \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a30b1eb1befdc5939f926fc5a25f682db}{Num\+Of\+Examples} () const 
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a2db85927191c7cc596d39aa8824f41cc}{Num\+Of\+Features} () const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_afa2edc33ed1435e6020c4deea4e3058b}{Read\+X\+ML} (\hyperlink{class_k_k_b_1_1_xml_stream}{Xml\+Stream} \&s, \hyperlink{namespace_k_k_b_a9253a3ea8a5da18ca82be4ca2b390ef0}{Xml\+Tag\+Ptr} tag, \hyperlink{namespace_k_k_b_a7d390f568e2831fb76b86b56c87bf92f}{Vol\+Const\+Bool} \&cancel\+Flag, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+double \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a040a1c6dfb06dfdedacc45860d66c6b9}{Sigma} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\item 
+const double $\ast$ \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a7c9642f0da7c357779b5b6cf4a55aa1b}{Sigma} () const 
+\item 
+\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a478e982ac6811589fe4b17f51bebeba5}{To\+Normalized} (\hyperlink{namespace_k_k_m_l_l_a0c5df3d48f45926fbc4fee04f5e3bc04}{Feature\+Vector\+Ptr} example) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_aa038e4c1b5c68225d1936f30e8c79346}{Write\+To\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&\+\_\+file\+Name, bool \&\+\_\+successfull, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&\+\_\+log) const 
+\item 
+void \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a19c533cffc426743b90b4b41d3eb393c}{Write\+X\+ML} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&var\+Name, std\+::ostream \&o) const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_ab326a259979eaf51a6396d19430b1259}{Normalization\+Parms\+Ptr} \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_ae8834c5ff97d32313a4dfba2dc892bfa}{Read\+From\+File} (const \hyperlink{class_k_k_b_1_1_k_k_str}{K\+K\+Str} \&file\+Name, \hyperlink{class_k_k_b_1_1_run_log}{Run\+Log} \&log)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Normalization Parameters; calculation and implementation. 
+
+Normalization parameters will be calculated for all features but when individual examples are normalized, only the ones specified by \+\_\+features\+To\+Normalize\textquotesingle{} will be normalized. 
+
+Definition at line 56 of file Normalization\+Parms.\+h.
+
+
+
+\subsection{Member Typedef Documentation}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalization\+Parms\+Ptr@{Normalization\+Parms\+Ptr}}
+\index{Normalization\+Parms\+Ptr@{Normalization\+Parms\+Ptr}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalization\+Parms\+Ptr}{NormalizationParmsPtr}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf Normalization\+Parms}$\ast$ {\bf K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Normalization\+Parms\+Ptr}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_ab326a259979eaf51a6396d19430b1259}{}\label{class_k_k_m_l_l_1_1_normalization_parms_ab326a259979eaf51a6396d19430b1259}
+
+
+Definition at line 59 of file Normalization\+Parms.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalization\+Parms@{Normalization\+Parms}}
+\index{Normalization\+Parms@{Normalization\+Parms}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalization\+Parms()}{NormalizationParms()}}]{\setlength{\rightskip}{0pt plus 5cm}Normalization\+Parms\+::\+Normalization\+Parms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a44c91311d5522c5c1ad7456a56dabbc8}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a44c91311d5522c5c1ad7456a56dabbc8}
+
+
+Definition at line 27 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str().
+
+
+\begin{DoxyCode}
+27                                        :
+28   fileDesc                 (NULL),
+29   fileName                 (),
+30   mean                     (NULL),
+31   normalizeFeature         (NULL),
+32   normalizeNominalFeatures (\textcolor{keyword}{false}),
+33   numOfFeatures            (0),
+34   numOfExamples            (0),
+35   sigma                    (NULL)
+36 \{
+37 \}  \textcolor{comment}{/*  NormalizationParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalization\+Parms@{Normalization\+Parms}}
+\index{Normalization\+Parms@{Normalization\+Parms}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalization\+Parms(bool \+\_\+normalize\+Nominal\+Features, Feature\+Vector\+List \&\+\_\+examples, Run\+Log \&\+\_\+log)}{NormalizationParms(bool _normalizeNominalFeatures, FeatureVectorList &_examples, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Normalization\+Parms\+::\+Normalization\+Parms (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+normalize\+Nominal\+Features, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a1496655d2d2e2e468bb57be6b646c1ac}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a1496655d2d2e2e468bb57be6b646c1ac}
+
+
+Definition at line 41 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Create\+Attribute\+Type\+Table(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Num\+Of\+Features().
+
+
+\begin{DoxyCode}
+44                                         :
+45 
+46   fileDesc                 (NULL),
+47   fileName                 (),
+48   mean                     (NULL),
+49   normalizeFeature         (NULL),
+50   normalizeNominalFeatures (\_normalizeNominalFeatures),
+51   numOfFeatures            (0),
+52   numOfExamples            (0),
+53   sigma                    (NULL)
+54 
+55 \{
+56   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"FeatureNormalization - Creating instance from["} << \_examples.
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a48c9a43f0aa93a2251a5b8d4e38c4deb}{FileName} () << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+57 
+58   fileDesc      = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ();
+59   attriuteTypes = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a924736ac68c054c64001fe836ba7c1e3}{CreateAttributeTypeTable} ();
+60   numOfFeatures = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a9b14c44e69c63c7680547f0675ab3e7a}{NumOfFeatures} ();
+61   DeriveNormalizationParameters (\_examples);
+62 \}  \textcolor{comment}{/*  NormalizationParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalization\+Parms@{Normalization\+Parms}}
+\index{Normalization\+Parms@{Normalization\+Parms}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalization\+Parms(const Model\+Param \&\+\_\+param, Feature\+Vector\+List \&\+\_\+examples, Run\+Log \&\+\_\+log)}{NormalizationParms(const ModelParam &_param, FeatureVectorList &_examples, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Normalization\+Parms\+::\+Normalization\+Parms (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Param} \&}]{\+\_\+param, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a1206bfce24715181c8fd903ec87754dc}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a1206bfce24715181c8fd903ec87754dc}
+
+
+Definition at line 66 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Create\+Attribute\+Type\+Table(), K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+File\+Desc(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Model\+Param\+::\+Normalize\+Nominal\+Features(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Num\+Of\+Features().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+69                                         :
+70   fileDesc                 (NULL),
+71   fileName                 (),
+72   mean                     (NULL),
+73   normalizeFeature         (NULL),
+74   normalizeNominalFeatures (\textcolor{keyword}{false}),
+75   numOfFeatures            (0),
+76   numOfExamples            (0),
+77   sigma                    (NULL)
+78 \{
+79   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"FeatureNormalization - Creating instance from["} << \_examples.
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a48c9a43f0aa93a2251a5b8d4e38c4deb}{FileName} () << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+80 
+81   fileDesc                 = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a736923be9c4ac7553a5aa87dd24efd16}{FileDesc} ();
+82   numOfFeatures = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a9b14c44e69c63c7680547f0675ab3e7a}{NumOfFeatures} ();
+83   attriuteTypes            = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a924736ac68c054c64001fe836ba7c1e3}{CreateAttributeTypeTable} ();
+84   normalizeNominalFeatures = \_param.\hyperlink{class_k_k_m_l_l_1_1_model_param_ae84da9624f59dd8b1599cc5a1d3fe84d}{NormalizeNominalFeatures} ();
+85 
+86   DeriveNormalizationParameters (\_examples);
+87 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalization\+Parms@{Normalization\+Parms}}
+\index{Normalization\+Parms@{Normalization\+Parms}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalization\+Parms(\+Training\+Configuration2\+Ptr \+\_\+config, Feature\+Vector\+List \&\+\_\+examples, Run\+Log \&\+\_\+log)}{NormalizationParms(TrainingConfiguration2Ptr _config, FeatureVectorList &_examples, RunLog &_log)}}]{\setlength{\rightskip}{0pt plus 5cm}Normalization\+Parms\+::\+Normalization\+Parms (
+\begin{DoxyParamCaption}
+\item[{{\bf Training\+Configuration2\+Ptr}}]{\+\_\+config, }
+\item[{{\bf Feature\+Vector\+List} \&}]{\+\_\+examples, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a9d326ee4f7d7ba7461514a05b6a903a9}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a9d326ee4f7d7ba7461514a05b6a903a9}
+
+
+Definition at line 91 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Create\+Attribute\+Type\+Table(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+File\+Desc(), K\+K\+B\+::\+K\+K\+Str\+::\+K\+K\+Str(), K\+K\+M\+L\+L\+::\+Training\+Configuration2\+::\+Normalize\+Nominal\+Features(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Num\+Of\+Features().
+
+
+\begin{DoxyCode}
+94                                         :
+95 
+96   fileDesc                 (NULL),
+97   fileName                 (),
+98   mean                     (NULL),
+99   normalizeFeature         (NULL),
+100   normalizeNominalFeatures (\textcolor{keyword}{false}),
+101   numOfFeatures            (0),
+102   numOfExamples            (0),
+103   sigma                    (NULL)
+104 
+105 \{
+106   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"FeatureNormalization - Creating instance from["} << \_examples.
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a48c9a43f0aa93a2251a5b8d4e38c4deb}{FileName} () << \textcolor{stringliteral}{"]."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+107 
+108   fileDesc                 = \_config->\hyperlink{class_k_k_m_l_l_1_1_training_configuration2_a10aa25a301d7be09721c0566e2f1a3d9}{FileDesc} ();
+109   attriuteTypes            = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a924736ac68c054c64001fe836ba7c1e3}{CreateAttributeTypeTable} ();
+110   normalizeNominalFeatures = \_config->\hyperlink{class_k_k_m_l_l_1_1_training_configuration2_aed8aa06833ab89ab675658a3b5ee7844}{NormalizeNominalFeatures} ();
+111 
+112   numOfFeatures = \_examples.\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a9b14c44e69c63c7680547f0675ab3e7a}{NumOfFeatures} ();
+113 
+114   DeriveNormalizationParameters (\_examples);
+115 \}  \textcolor{comment}{/*  NormalizationParms */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!````~Normalization\+Parms@{$\sim$\+Normalization\+Parms}}
+\index{````~Normalization\+Parms@{$\sim$\+Normalization\+Parms}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{$\sim$\+Normalization\+Parms()}{~NormalizationParms()}}]{\setlength{\rightskip}{0pt plus 5cm}Normalization\+Parms\+::$\sim$\+Normalization\+Parms (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a6b68a67df0931bf5bc798d348c28d3f4}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a6b68a67df0931bf5bc798d348c28d3f4}
+
+
+Definition at line 120 of file Normalization\+Parms.\+cpp.
+
+
+\begin{DoxyCode}
+121 \{
+122   \textcolor{keyword}{delete} [] mean;               mean             = NULL;
+123   \textcolor{keyword}{delete} [] sigma;              sigma            = NULL;
+124   \textcolor{keyword}{delete} [] normalizeFeature;   normalizeFeature = NULL;
+125 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!File\+Desc@{File\+Desc}}
+\index{File\+Desc@{File\+Desc}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{File\+Desc() const }{FileDesc() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf File\+Desc\+Ptr} K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+File\+Desc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a7937aa95143a2799893a1493b227d044}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a7937aa95143a2799893a1493b227d044}
+
+
+Definition at line 82 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+82 \{\textcolor{keywordflow}{return} fileDesc;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Mean@{Mean}}
+\index{Mean@{Mean}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Mean(kkint32 i, Run\+Log \&log)}{Mean(kkint32 i, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}double Normalization\+Parms\+::\+Mean (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a1ceb1d4ea3dc3c944ba676ca69341d82}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a1ceb1d4ea3dc3c944ba676ca69341d82}
+
+
+Definition at line 378 of file Normalization\+Parms.\+cpp.
+
+
+\begin{DoxyCode}
+381 \{
+382   \textcolor{keywordflow}{if}  ((i < 0)  ||  (i > numOfFeatures))
+383   \{
+384     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"NormalizationParms::Mean   ***ERROR***   Feature Number["} << i << \textcolor{stringliteral}{"]  out of
+       bounds."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+385     \textcolor{keywordflow}{return}  -99999.99;
+386   \}
+387   \textcolor{keywordflow}{else}
+388   \{
+389     \textcolor{keywordflow}{return}  mean[i];
+390   \}
+391 \}  \textcolor{comment}{/* Mean */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Mean@{Mean}}
+\index{Mean@{Mean}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Mean() const }{Mean() const }}]{\setlength{\rightskip}{0pt plus 5cm}const double$\ast$ K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Mean (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_ae52c27bf9d44b59dc50bb57797100c87}{}\label{class_k_k_m_l_l_1_1_normalization_parms_ae52c27bf9d44b59dc50bb57797100c87}
+
+
+Definition at line 126 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+126 \{\textcolor{keywordflow}{return}  mean;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}}
+\index{Memory\+Consumed\+Estimated@{Memory\+Consumed\+Estimated}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Memory\+Consumed\+Estimated() const }{MemoryConsumedEstimated() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} Normalization\+Parms\+::\+Memory\+Consumed\+Estimated (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a32dec15a2a7ecd1a53557063e23ae689}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a32dec15a2a7ecd1a53557063e23ae689}
+
+
+Definition at line 128 of file Normalization\+Parms.\+cpp.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Memory\+Consumed\+Estimated().
+
+
+\begin{DoxyCode}
+129 \{
+130   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  memoryConsumedEstimated = \textcolor{keyword}{sizeof} (\hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a44c91311d5522c5c1ad7456a56dabbc8}{NormalizationParms})
+131     + attriuteTypes.size () * \textcolor{keyword}{sizeof} (\hyperlink{namespace_k_k_m_l_l_a99973706982b59debba670e2480555ab}{AttributeType})
+132     + fileName.\hyperlink{class_k_k_b_1_1_k_k_str_afc335bf98a8d4a77dc34215e72068719}{MemoryConsumedEstimated} ()
+133     + numOfFeatures * (\textcolor{keyword}{sizeof} (bool) + \textcolor{keyword}{sizeof} (\textcolor{keywordtype}{double}) + \textcolor{keyword}{sizeof} (double));  \textcolor{comment}{//  mean + sigma}
+134 
+135   \textcolor{keywordflow}{return}  memoryConsumedEstimated;
+136 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalize\+A\+Example@{Normalize\+A\+Example}}
+\index{Normalize\+A\+Example@{Normalize\+A\+Example}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalize\+A\+Example(\+Feature\+Vector\+Ptr example)}{NormalizeAExample(FeatureVectorPtr example)}}]{\setlength{\rightskip}{0pt plus 5cm}void Normalization\+Parms\+::\+Normalize\+A\+Example (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a2724703ce1a35c8de04b6e8746986a0d}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a2724703ce1a35c8de04b6e8746986a0d}
+
+
+Definition at line 439 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data\+Alter().
+
+
+\begin{DoxyCode}
+440 \{
+441   \textcolor{keywordtype}{float}*  featureData = example->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a1de79e775d2bb2ddde4016a1269b5431}{FeatureDataAlter} ();
+442 
+443   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0; i < numOfFeatures; i++)
+444   \{
+445     \textcolor{keywordflow}{if}  (normalizeFeature[i])
+446     \{
+447       \textcolor{keywordtype}{double}  normValue = 0.0;
+448       \textcolor{keywordflow}{if}  (sigma[i] != 0.0)
+449         normValue = ((double)featureData[i] - mean[i]) / sigma[i];
+450       featureData[i] = (float)normValue;
+451     \}
+452   \}
+453 \}  \textcolor{comment}{/* NormalizeAExample */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalize\+Examples@{Normalize\+Examples}}
+\index{Normalize\+Examples@{Normalize\+Examples}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalize\+Examples(\+Feature\+Vector\+List\+Ptr examples, Run\+Log \&log)}{NormalizeExamples(FeatureVectorListPtr examples, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Normalization\+Parms\+::\+Normalize\+Examples (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+List\+Ptr}}]{examples, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_ad75dc1dece1b375d27706a44ab17c77f}{}\label{class_k_k_m_l_l_1_1_normalization_parms_ad75dc1dece1b375d27706a44ab17c77f}
+
+
+Definition at line 457 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+List\+::\+Num\+Of\+Features(), and K\+K\+B\+::os\+Wait\+For\+Enter().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Train\+Model().
+
+
+\begin{DoxyCode}
+460 \{
+461   \textcolor{keywordflow}{if}  (numOfFeatures != examples->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a9b14c44e69c63c7680547f0675ab3e7a}{NumOfFeatures} ())
+462   \{
+463     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"NormalizationParms::NoralizeImage  **** ERROR ****     Mismatched Feature
+       Count."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+464                    << \textcolor{stringliteral}{"            NormalizationParms ["} << numOfFeatures            << \textcolor{stringliteral}{"]"} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+465                    << \textcolor{stringliteral}{"            ImageFeatiresList  ["} << examples->
+      \hyperlink{class_k_k_m_l_l_1_1_feature_vector_list_a9b14c44e69c63c7680547f0675ab3e7a}{NumOfFeatures} () << \textcolor{stringliteral}{"]."}  << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+466                    << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+467 
+468     \hyperlink{namespace_k_k_b_a255aa69aade7f429585349d08973e09f}{osWaitForEnter} ();
+469     exit (-1);
+470     \textcolor{keywordflow}{return};
+471   \}
+472 
+473   \hyperlink{class_k_k_b_1_1_k_k_queue_aa3c2796a726eea468b94132a9fbf2cfe}{FeatureVectorList::iterator} idx;
+474 
+475   \textcolor{keywordflow}{for}  (idx = examples->begin ();  idx != examples->end ();  ++idx)
+476     \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a2724703ce1a35c8de04b6e8746986a0d}{NormalizeAExample} (*idx);
+477 
+478   \textcolor{keywordflow}{return};
+479 \}  \textcolor{comment}{/* NoralizeImage */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Normalize\+Nominal\+Features@{Normalize\+Nominal\+Features}}
+\index{Normalize\+Nominal\+Features@{Normalize\+Nominal\+Features}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Normalize\+Nominal\+Features() const }{NormalizeNominalFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Normalize\+Nominal\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_abf9678122afbac33e978ec16b85939b4}{}\label{class_k_k_m_l_l_1_1_normalization_parms_abf9678122afbac33e978ec16b85939b4}
+
+
+Definition at line 90 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+90 \{\textcolor{keywordflow}{return} normalizeNominalFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Num\+Of\+Examples@{Num\+Of\+Examples}}
+\index{Num\+Of\+Examples@{Num\+Of\+Examples}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Examples() const }{NumOfExamples() const }}]{\setlength{\rightskip}{0pt plus 5cm}float K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Num\+Of\+Examples (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a30b1eb1befdc5939f926fc5a25f682db}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a30b1eb1befdc5939f926fc5a25f682db}
+
+
+Definition at line 96 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+96 \{\textcolor{keywordflow}{return} numOfExamples;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Num\+Of\+Features@{Num\+Of\+Features}}
+\index{Num\+Of\+Features@{Num\+Of\+Features}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Num\+Of\+Features() const }{NumOfFeatures() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Num\+Of\+Features (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a2db85927191c7cc596d39aa8824f41cc}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a2db85927191c7cc596d39aa8824f41cc}
+
+
+Definition at line 94 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+94 \{\textcolor{keywordflow}{return} numOfFeatures;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Read\+From\+File@{Read\+From\+File}}
+\index{Read\+From\+File@{Read\+From\+File}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Read\+From\+File(const K\+K\+Str \&file\+Name, Run\+Log \&log)}{ReadFromFile(const KKStr &fileName, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Normalization\+Parms\+Ptr} Normalization\+Parms\+::\+Read\+From\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{file\+Name, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_ae8834c5ff97d32313a4dfba2dc892bfa}{}\label{class_k_k_m_l_l_1_1_normalization_parms_ae8834c5ff97d32313a4dfba2dc892bfa}
+
+
+Definition at line 255 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), and K\+K\+B\+::\+Xml\+Stream\+::\+Xml\+Stream().
+
+
+\begin{DoxyCode}
+256 \{
+257   \hyperlink{class_k_k_m_l_l_1_1_normalization_parms}{NormalizationParmsPtr} n = NULL;
+258   \hyperlink{class_k_k_b_1_1_xml_stream}{XmlStreamPtr}  stream = \textcolor{keyword}{new} \hyperlink{class_k_k_b_1_1_xml_stream}{XmlStream} (fileName, log);
+259   \textcolor{keywordtype}{bool}  cancelFlag = \textcolor{keyword}{false};
+260   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = stream->\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+261   \textcolor{keywordflow}{while}  (t  &&  (!n))
+262   \{
+263     \textcolor{keywordflow}{if}  (\textcolor{keyword}{typeid} (*t)  !=  \textcolor{keyword}{typeid} (\hyperlink{class_k_k_b_1_1_xml_element_template}{XmlElementNormalizationParms}))
+264       n = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element_template}{XmlElementNormalizationParmsPtr}\textcolor{keyword}{>} (t)->Value ();
+265     \textcolor{keyword}{delete}  t;
+266     t = stream->\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+267   \}
+268   \textcolor{keyword}{delete} t;      t      = NULL;
+269   \textcolor{keyword}{delete} stream; stream = NULL;
+270   \textcolor{keywordflow}{return} n;
+271 \}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Read\+X\+ML@{Read\+X\+ML}}
+\index{Read\+X\+ML@{Read\+X\+ML}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Read\+X\+M\+L(\+Xml\+Stream \&s, Xml\+Tag\+Ptr tag, Vol\+Const\+Bool \&cancel\+Flag, Run\+Log \&log)}{ReadXML(XmlStream &s, XmlTagPtr tag, VolConstBool &cancelFlag, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}void Normalization\+Parms\+::\+Read\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{{\bf Xml\+Stream} \&}]{s, }
+\item[{{\bf Xml\+Tag\+Ptr}}]{tag, }
+\item[{{\bf Vol\+Const\+Bool} \&}]{cancel\+Flag, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_afa2edc33ed1435e6020c4deea4e3058b}{}\label{class_k_k_m_l_l_1_1_normalization_parms_afa2edc33ed1435e6020c4deea4e3058b}
+
+
+Definition at line 302 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::\+Concat(), K\+K\+M\+L\+L\+::\+File\+Desc\+::\+Create\+Attribute\+Type\+Table(), K\+K\+B\+::\+K\+K\+Str\+::\+Equal\+Ignore\+Case(), K\+K\+B\+::\+Xml\+Stream\+::\+Get\+Next\+Token(), K\+K\+B\+::\+Xml\+Element\+::\+Section\+Name(), K\+K\+B\+::\+Xml\+Element\+::\+To\+Bool(), K\+K\+B\+::\+Xml\+Element\+::\+To\+Float(), K\+K\+B\+::\+Xml\+Element\+::\+To\+Int32(), K\+K\+B\+::\+Xml\+Token\+::tok\+Element, K\+K\+B\+::\+Xml\+Token\+::\+Token\+Type(), K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc\+::\+Value(), and K\+K\+B\+::\+Xml\+Element\+::\+Var\+Name().
+
+
+\begin{DoxyCode}
+307 \{
+308   \hyperlink{class_k_k_b_1_1_xml_token}{XmlTokenPtr}  t = s.\hyperlink{class_k_k_b_1_1_xml_stream_a87cc738b05c666cf5d5c25beaab477b4}{GetNextToken} (cancelFlag, log);
+309   \textcolor{keywordflow}{while}  (t  &&  (!cancelFlag))
+310   \{
+311     \textcolor{keywordflow}{if}  (t->\hyperlink{class_k_k_b_1_1_xml_token_ae98e2c1a798882647578cae4adcd7176}{TokenType} () == XmlToken::TokenTypes::tokElement)
+312     \{
+313       \hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr}  e = \textcolor{keyword}{dynamic\_cast<}\hyperlink{class_k_k_b_1_1_xml_element}{XmlElementPtr}\textcolor{keyword}{>} (t);
+314       \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  className = e->\hyperlink{class_k_k_b_1_1_xml_element_a2b85dcb37a0f63bd7979d16d12296876}{SectionName} ();
+315       \textcolor{keyword}{const} \hyperlink{class_k_k_b_1_1_k_k_str}{KKStr}&  varName = e->\hyperlink{class_k_k_b_1_1_xml_element_aef57cf00be66a3a387ce849b35125f51}{VarName} ();
+316       \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NumOfFeatures"}))
+317         numOfFeatures = e->\hyperlink{class_k_k_b_1_1_xml_element_aac7463c7b305f66b5157f424a0a76363}{ToInt32} ();
+318 
+319       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NumOfExamples"}))
+320         numOfExamples = e->\hyperlink{class_k_k_b_1_1_xml_element_aa728687ed43e76d45d029dfc14e14e95}{ToFloat} ();
+321 
+322       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"NormalizeNominalFeatures"}))
+323         normalizeNominalFeatures = e->\hyperlink{class_k_k_b_1_1_xml_element_a7bfbbea204722bc4535a294bc43e8e17}{ToBool} ();
+324 
+325       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"FileDesc"}))
+326       \{
+327         \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{XmlElementFileDescPtr}  fd = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc}{XmlElementFileDescPtr}\textcolor{keyword}{>}(e);
+328         fileDesc = fd->\hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_aa5277742e64c63e316a7d18c614c5e7f}{Value} ();
+329       \}
+330 
+331       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Mean"}))
+332       \{
+333         \hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}  m = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}\textcolor{keyword}{>}(e);
+334         \textcolor{keywordflow}{if}  (m->\hyperlink{class_k_k_b_1_1_xml_element_array_double_a591f50d85eadd680d84febde51f26350}{Count} () == numOfFeatures)
+335         \{
+336           \textcolor{keyword}{delete}  mean;
+337           mean = m->\hyperlink{class_k_k_b_1_1_xml_element_array_double_a7ea0ba2abb1599a06ff7ff363ff56f19}{TakeOwnership} ();
+338         \}
+339         \textcolor{keywordflow}{else}
+340         \{
+341           log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+342             << \textcolor{stringliteral}{"XmlElementNormalizationParms   ***ERROR***    mean->Count["} << m->
+      \hyperlink{class_k_k_b_1_1_xml_element_array_double_a591f50d85eadd680d84febde51f26350}{Count} ()  << \textcolor{stringliteral}{"] does not agree with NumOfFeatures["} << numOfFeatures << \textcolor{stringliteral}{"]."} <<
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+343             << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+344         \}
+345       \}
+346 
+347       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (varName.\hyperlink{class_k_k_b_1_1_k_k_str_a562f9696417c53f66bc4088eac072ab5}{EqualIgnoreCase} (\textcolor{stringliteral}{"Sigma"}))
+348       \{
+349         \hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}  s = \textcolor{keyword}{dynamic\_cast<}
+      \hyperlink{class_k_k_b_1_1_xml_element_array_double}{XmlElementArrayDoublePtr}\textcolor{keyword}{>}(e);
+350         \textcolor{keywordflow}{if}  (s->\hyperlink{class_k_k_b_1_1_xml_element_array_double_a591f50d85eadd680d84febde51f26350}{Count} () == numOfFeatures)
+351         \{
+352           \textcolor{keyword}{delete}  sigma;
+353           sigma = s->\hyperlink{class_k_k_b_1_1_xml_element_array_double_a7ea0ba2abb1599a06ff7ff363ff56f19}{TakeOwnership} ();
+354         \}
+355         \textcolor{keywordflow}{else}
+356         \{
+357           log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+358             << \textcolor{stringliteral}{"XmlElementNormalizationParms   ***ERROR***    sigma->Count["} << s->
+      \hyperlink{class_k_k_b_1_1_xml_element_array_double_a591f50d85eadd680d84febde51f26350}{Count} ()  << \textcolor{stringliteral}{"] does not agree with NumOfFeatures["} << numOfFeatures << \textcolor{stringliteral}{"]."} <<
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl}
+359             << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+360         \}
+361       \}
+362     \}
+363 
+364     \textcolor{keyword}{delete} t;
+365     t = s.GetNextToken (cancelFlag, log);
+366   \}
+367   \textcolor{keyword}{delete}  t;
+368   t = NULL;
+369 
+370   \textcolor{keywordflow}{if}  (fileDesc)
+371   \{
+372     attriuteTypes = fileDesc->\hyperlink{class_k_k_m_l_l_1_1_file_desc_a924736ac68c054c64001fe836ba7c1e3}{CreateAttributeTypeTable} ();
+373     ConstructNormalizeFeatureVector ();
+374   \}
+375 \}  \textcolor{comment}{/* ReadXML */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Sigma@{Sigma}}
+\index{Sigma@{Sigma}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Sigma(kkint32 i, Run\+Log \&log)}{Sigma(kkint32 i, RunLog &log)}}]{\setlength{\rightskip}{0pt plus 5cm}double Normalization\+Parms\+::\+Sigma (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i, }
+\item[{{\bf Run\+Log} \&}]{log}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a040a1c6dfb06dfdedacc45860d66c6b9}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a040a1c6dfb06dfdedacc45860d66c6b9}
+
+
+Definition at line 394 of file Normalization\+Parms.\+cpp.
+
+
+\begin{DoxyCode}
+397 \{
+398   \textcolor{keywordflow}{if}  ((i < 0)  ||  (i > numOfFeatures))
+399   \{
+400     log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << \textcolor{stringliteral}{"NormalizationParms::Mean   ***ERROR***   Feature Number["} << i << \textcolor{stringliteral}{"]  out of
+       bounds."} << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+401     \textcolor{keywordflow}{return}  (\textcolor{keywordtype}{float})-99999.99;
+402   \}
+403   \textcolor{keywordflow}{else}
+404   \{
+405     \textcolor{keywordflow}{return}  sigma[i];
+406   \}
+407 \}  \textcolor{comment}{/* Sigma */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Sigma@{Sigma}}
+\index{Sigma@{Sigma}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Sigma() const }{Sigma() const }}]{\setlength{\rightskip}{0pt plus 5cm}const double$\ast$ K\+K\+M\+L\+L\+::\+Normalization\+Parms\+::\+Sigma (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a7c9642f0da7c357779b5b6cf4a55aa1b}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a7c9642f0da7c357779b5b6cf4a55aa1b}
+
+
+Definition at line 127 of file Normalization\+Parms.\+h.
+
+
+\begin{DoxyCode}
+127 \{\textcolor{keywordflow}{return}  sigma;\}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!To\+Normalized@{To\+Normalized}}
+\index{To\+Normalized@{To\+Normalized}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{To\+Normalized(\+Feature\+Vector\+Ptr example) const }{ToNormalized(FeatureVectorPtr example) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Feature\+Vector\+Ptr} Normalization\+Parms\+::\+To\+Normalized (
+\begin{DoxyParamCaption}
+\item[{{\bf Feature\+Vector\+Ptr}}]{example}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a478e982ac6811589fe4b17f51bebeba5}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a478e982ac6811589fe4b17f51bebeba5}
+
+
+Definition at line 483 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Data\+Alter(), and K\+K\+M\+L\+L\+::\+Feature\+Vector\+::\+Feature\+Vector().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+Old\+S\+V\+M\+::\+Prep\+Example\+For\+Prediction(), and K\+K\+M\+L\+L\+::\+Model\+::\+Prep\+Example\+For\+Prediction().
+
+
+\begin{DoxyCode}
+484 \{
+485   \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVectorPtr}  result = \textcolor{keyword}{new} \hyperlink{class_k_k_m_l_l_1_1_feature_vector}{FeatureVector} (*example);
+486   \textcolor{keywordtype}{float}*  featureData = result->\hyperlink{class_k_k_m_l_l_1_1_feature_vector_a1de79e775d2bb2ddde4016a1269b5431}{FeatureDataAlter} ();
+487   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < numOfFeatures;  ++i)
+488   \{
+489     \textcolor{keywordflow}{if}  (normalizeFeature[i])
+490     \{
+491       \textcolor{keywordtype}{double}  normValue = 0.0;
+492       \textcolor{keywordflow}{if}  (sigma[i] != 0.0)
+493         normValue = ((double)featureData[i] - mean[i]) / sigma[i];
+494       featureData[i] = (float)normValue;
+495     \}
+496   \}
+497 
+498   \textcolor{keywordflow}{return} result;
+499 \}  \textcolor{comment}{/* ToNormalized */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Write\+To\+File@{Write\+To\+File}}
+\index{Write\+To\+File@{Write\+To\+File}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Write\+To\+File(const K\+K\+Str \&\+\_\+file\+Name, bool \&\+\_\+successfull, Run\+Log \&\+\_\+log) const }{WriteToFile(const KKStr &_fileName, bool &_successfull, RunLog &_log) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Normalization\+Parms\+::\+Write\+To\+File (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{\+\_\+file\+Name, }
+\item[{bool \&}]{\+\_\+successfull, }
+\item[{{\bf Run\+Log} \&}]{\+\_\+log}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_aa038e4c1b5c68225d1936f30e8c79346}{}\label{class_k_k_m_l_l_1_1_normalization_parms_aa038e4c1b5c68225d1936f30e8c79346}
+
+
+Definition at line 236 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+B\+::\+K\+K\+Str\+::operator=().
+
+
+\begin{DoxyCode}
+237 \{
+238   \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (20) << \textcolor{stringliteral}{"NormalizationParms::WriteToFile  FileName["} << \_fileName << \textcolor{stringliteral}{"]."} << 
+      \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+239   fileName = \_fileName;
+240   \_successfull = \textcolor{keyword}{true};
+241   ofstream outFile (fileName.\hyperlink{class_k_k_b_1_1_k_k_str_ad574e6c0fe7f6ce1ba3ab0a8ce2fbd52}{Str} ());
+242   \textcolor{keywordflow}{if}  (!outFile.is\_open ())
+243   \{
+244     \_log.\hyperlink{class_k_k_b_1_1_run_log_a32cf761d7f2e747465fd80533fdbb659}{Level} (-1) << endl << \textcolor{stringliteral}{"NormalizationParms::WriteToFile  ***EROR***  writing to file["}<< 
+      \_fileName << \textcolor{stringliteral}{"]."} << endl << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+245     \_successfull = \textcolor{keyword}{false};
+246     \textcolor{keywordflow}{return};
+247   \}
+248   \hyperlink{class_k_k_m_l_l_1_1_normalization_parms_a19c533cffc426743b90b4b41d3eb393c}{WriteXML} (\textcolor{stringliteral}{"NormalizationParms"}, outFile);
+249   outFile.close ();
+250   \textcolor{keywordflow}{return};
+251 \} \textcolor{comment}{/* Save */}
+\end{DoxyCode}
+\index{K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}!Write\+X\+ML@{Write\+X\+ML}}
+\index{Write\+X\+ML@{Write\+X\+ML}!K\+K\+M\+L\+L\+::\+Normalization\+Parms@{K\+K\+M\+L\+L\+::\+Normalization\+Parms}}
+\subsubsection[{\texorpdfstring{Write\+X\+M\+L(const K\+K\+Str \&var\+Name, std\+::ostream \&o) const }{WriteXML(const KKStr &varName, std::ostream &o) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Normalization\+Parms\+::\+Write\+X\+ML (
+\begin{DoxyParamCaption}
+\item[{const {\bf K\+K\+Str} \&}]{var\+Name, }
+\item[{std\+::ostream \&}]{o}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_m_l_l_1_1_normalization_parms_a19c533cffc426743b90b4b41d3eb393c}{}\label{class_k_k_m_l_l_1_1_normalization_parms_a19c533cffc426743b90b4b41d3eb393c}
+
+
+Definition at line 277 of file Normalization\+Parms.\+cpp.
+
+
+
+References K\+K\+B\+::\+Xml\+Tag\+::\+Add\+Atribute(), K\+K\+B\+::\+K\+K\+Str\+::\+Empty(), K\+K\+B\+::\+Xml\+Tag\+::tag\+End, K\+K\+B\+::\+Xml\+Tag\+::tag\+Start, K\+K\+B\+::\+Xml\+Tag\+::\+Write\+X\+M\+L(), K\+K\+M\+L\+L\+::\+Xml\+Element\+File\+Desc\+::\+Write\+X\+M\+L(), K\+K\+B\+::\+Xml\+Element\+Bool\+::\+Write\+X\+M\+L(), and K\+K\+B\+::\+Xml\+Tag\+::\+Xml\+Tag().
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Model\+::\+Write\+Model\+X\+M\+L\+Fields().
+
+
+\begin{DoxyCode}
+280 \{
+281   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  startTag (\textcolor{stringliteral}{"NormalizationParms"}, XmlTag::TagTypes::tagStart);
+282   \textcolor{keywordflow}{if}  (!varName.\hyperlink{class_k_k_b_1_1_k_k_str_ac69942f73fffd672ec2a6e1c410afdb6}{Empty} ())
+283     startTag.AddAtribute (\textcolor{stringliteral}{"VarName"}, varName);
+284   startTag.WriteXML (o);
+285   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+286 
+287   XmlElementInt32::WriteXML (numOfFeatures,             \textcolor{stringliteral}{"NumOfFeatures"},            o);
+288   XmlElementFloat::WriteXML (numOfExamples,             \textcolor{stringliteral}{"NumOfExamples"},            o);
+289   XmlElementBool::WriteXML  (normalizeNominalFeatures,  \textcolor{stringliteral}{"NormalizeNominalFeatures"}, o);
+290 
+291   \textcolor{keywordflow}{if}  (fileDesc)   \hyperlink{class_k_k_m_l_l_1_1_xml_element_file_desc_af1d6321393b529195a75f08e7aec0945}{XmlElementFileDesc::WriteXML}    (*fileDesc,             \textcolor{stringliteral}{"
+      FileDesc"}, o);
+292   \textcolor{keywordflow}{if}  (mean)       XmlElementArrayDouble::WriteXML (numOfFeatures, mean,   \textcolor{stringliteral}{"Mean"},     o);
+293   \textcolor{keywordflow}{if}  (sigma)      XmlElementArrayDouble::WriteXML (numOfFeatures, sigma,  \textcolor{stringliteral}{"sigma"},    o);
+294 
+295   \hyperlink{class_k_k_b_1_1_xml_tag}{XmlTag}  endTag (\textcolor{stringliteral}{"NormalizationParms"}, XmlTag::TagTypes::tagEnd);
+296   endTag.WriteXML (o);
+297   o << \hyperlink{namespace_k_k_b_ad1f50f65af6adc8fa9e6f62d007818a8}{endl};
+298 \}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_normalization_parms_8h}{Normalization\+Parms.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{_normalization_parms_8cpp}{Normalization\+Parms.\+cpp}\end{DoxyCompactItemize}

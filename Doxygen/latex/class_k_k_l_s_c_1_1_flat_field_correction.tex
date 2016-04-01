@@ -1,0 +1,378 @@
+\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction}{}\section{K\+K\+L\+SC\+:\+:Flat\+Field\+Correction Class Reference}
+\label{class_k_k_l_s_c_1_1_flat_field_correction}\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+
+
+{\ttfamily \#include $<$Flat\+Field\+Correction.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a53cabf40b8cc0a3ba730f8b75fd3d933}{Flat\+Field\+Correction} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+num\+Sample\+Lines, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+line\+Width, const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$\+\_\+compensation\+Table)
+\item 
+\hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_ad053309f4f84e6d8ca3a4f3573035579}{$\sim$\+Flat\+Field\+Correction} ()
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a83f0de40aee9d61440f8f1fcacae64e6}{Add\+Sample\+Line} (const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$sample\+Line)
+\begin{DoxyCompactList}\small\item\em Provide sample of one scan line as from the camera; where 0 = foreground and 255 = background. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_ae88aed142a25e321e1e15e48ba738551}{Apply\+Flat\+Field\+Correction} (uchar $\ast$scan\+Line)
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a0aeb1e908c99d48606eee99d9568b3b8}{Apply\+Flat\+Field\+Correction} (uchar $\ast$src\+Scan\+Line, uchar $\ast$dest\+Scan\+Line)
+\item 
+\hyperlink{namespace_k_k_b_ac43cb621a63d628438a729543638a404}{Vector\+Uchar\+Ptr} \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_ad799855373414fdca9fffd966c12a7ca}{Camera\+High\+Points} () const 
+\item 
+\hyperlink{namespace_k_k_b_ac43cb621a63d628438a729543638a404}{Vector\+Uchar\+Ptr} \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_aab0bdb0b8b9e6bc8f36bf5afc657e242}{Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} n) const 
+\begin{DoxyCompactList}\small\item\em Will return the high point for each pixel from the last \textquotesingle{}n\textquotesingle{} sample lines taken. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_abd33b87c5084acc708e27520ea37ad85}{Compensation\+Table} (const \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar} $\ast$\+\_\+compensation\+Table)
+\item 
+bool \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_aac9b517319f8a6bf7b754609d0667cac}{Enabled} () const 
+\item 
+void \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a9981e65551fe0963ea02f63b022ca77a}{Enabled} (bool \+\_\+enabled)
+\item 
+kkint32 \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a2710778d18fbdb4cc38e29e35d7ef638}{Line\+Width} () const 
+\item 
+const uchar $\ast$$\ast$ \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a322be38217bdbe05dae4fe47b0e851e2}{Look\+Up\+Table} (uchar $\ast$$\ast$\&look\+Up\+Table)
+\item 
+kkint32 \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_afcd9d37174ede2a106af6422d182a5c9}{Num\+Sample\+Lines} () const 
+\item 
+kkint32 \hyperlink{class_k_k_l_s_c_1_1_flat_field_correction_a7a04a4c8406a1059ba38736b0ac118b7}{Num\+Sample\+Lines\+Added} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+It is assumed that sample data provided via \textquotesingle{}Add\+Sample\+Line\textquotesingle{} will be the data from a camera such that 255 is background and 0 is foreground. The data that will result from \textquotesingle{}Apply\+Flat\+Field\+Correction\textquotesingle{} will have 0 as foreground and 255 as background. 
+
+Definition at line 22 of file Flat\+Field\+Correction.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Flat\+Field\+Correction@{Flat\+Field\+Correction}}
+\index{Flat\+Field\+Correction@{Flat\+Field\+Correction}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Flat\+Field\+Correction(kkint32 \+\_\+num\+Sample\+Lines, kkint32 \+\_\+line\+Width, const uchar $\ast$\+\_\+compensation\+Table)}{FlatFieldCorrection(kkint32 _numSampleLines, kkint32 _lineWidth, const uchar *_compensationTable)}}]{\setlength{\rightskip}{0pt plus 5cm}Flat\+Field\+Correction\+::\+Flat\+Field\+Correction (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+num\+Sample\+Lines, }
+\item[{{\bf kkint32}}]{\+\_\+line\+Width, }
+\item[{const {\bf uchar} $\ast$}]{\+\_\+compensation\+Table}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a53cabf40b8cc0a3ba730f8b75fd3d933}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a53cabf40b8cc0a3ba730f8b75fd3d933}
+
+
+Definition at line 27 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+30                                           :
+31     compensationTable    (\_compensationTable),
+32     enabled              (\textcolor{keyword}{true}),
+33     highPoint            (NULL),
+34     highPointLastSeen    (NULL),
+35     history              (NULL),
+36     lastHistoryIdxAdded  (\_numSampleLines - 1),
+37     lineWidth            (\_lineWidth),
+38     numSampleLines       (\_numSampleLines),
+39     numSampleLinesAdded  (0),
+40     totalLine            (NULL)
+41 \{
+42   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x, y;
+43 
+44   highPoint         = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[lineWidth];
+45   highPointLastSeen = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[lineWidth];
+46   \textcolor{keywordflow}{for}  (x = 0; x < lineWidth;  x++)
+47   \{
+48     highPoint        [x] = 255;
+49     highPointLastSeen[x] = 0;
+50   \}
+51 
+52   history = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[numSampleLines];
+53   \textcolor{keywordflow}{for}  (x = 0;  x < numSampleLines;  x++)
+54   \{
+55     history[x] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[lineWidth];
+56     \textcolor{keywordflow}{for}  (y = 0;  y < lineWidth;  y++)
+57       history[x][y] = 255;
+58   \}
+59 
+60   totalLine = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[lineWidth];
+61 
+62   lookUpTable = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*[lineWidth];
+63   \textcolor{keywordflow}{for}  (x = 0;  x < lineWidth;  x++)
+64   \{
+65     lookUpTable[x] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}[256];
+66     \textcolor{keywordflow}{for}  (y = 0;  y < 256;  y++)
+67       lookUpTable[x][y] = y;
+68   \}
+69 
+70   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = 0;  col < lineWidth;  col++)
+71     ReComputeLookUpForColumn (col);
+72 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!````~Flat\+Field\+Correction@{$\sim$\+Flat\+Field\+Correction}}
+\index{````~Flat\+Field\+Correction@{$\sim$\+Flat\+Field\+Correction}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{$\sim$\+Flat\+Field\+Correction()}{~FlatFieldCorrection()}}]{\setlength{\rightskip}{0pt plus 5cm}Flat\+Field\+Correction\+::$\sim$\+Flat\+Field\+Correction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_ad053309f4f84e6d8ca3a4f3573035579}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_ad053309f4f84e6d8ca3a4f3573035579}
+
+
+Definition at line 76 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+77 \{
+78   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x;
+79 
+80   \textcolor{keyword}{delete}  highPoint;          highPoint         = NULL;
+81   \textcolor{keyword}{delete}  highPointLastSeen;  highPointLastSeen = NULL;
+82 
+83   \textcolor{keywordflow}{for} (x = 0;  x < numSampleLines;  x++)
+84   \{
+85     \textcolor{keyword}{delete}  history[x];
+86     history[x] = NULL;
+87   \}
+88   \textcolor{keyword}{delete}  history;
+89   history = NULL;
+90 
+91   \textcolor{keywordflow}{for} (x = 0;  x < lineWidth;  x++)
+92   \{
+93     \textcolor{keyword}{delete}  lookUpTable[x];
+94     lookUpTable[x] = NULL;
+95   \}
+96   
+97   \textcolor{keyword}{delete}  lookUpTable;  lookUpTable = NULL;
+98   \textcolor{keyword}{delete}  totalLine;    totalLine   = NULL;
+99 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Add\+Sample\+Line@{Add\+Sample\+Line}}
+\index{Add\+Sample\+Line@{Add\+Sample\+Line}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Add\+Sample\+Line(const uchar $\ast$sample\+Line)}{AddSampleLine(const uchar *sampleLine)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flat\+Field\+Correction\+::\+Add\+Sample\+Line (
+\begin{DoxyParamCaption}
+\item[{const {\bf uchar} $\ast$}]{sample\+Line}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a83f0de40aee9d61440f8f1fcacae64e6}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a83f0de40aee9d61440f8f1fcacae64e6}
+
+
+Provide sample of one scan line as from the camera; where 0 = foreground and 255 = background. 
+
+
+
+Definition at line 112 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+113 \{
+114   lastHistoryIdxAdded++;
+115   \textcolor{keywordflow}{if}  (lastHistoryIdxAdded >= numSampleLines)
+116     lastHistoryIdxAdded = 0;
+117 
+118   \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  historyLine = history[lastHistoryIdxAdded];
+119   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < lineWidth;  ++x)
+120   \{
+121     historyLine[x] = sampleLine[x];
+122     \textcolor{keywordflow}{if}  (sampleLine[x] < highPoint[x])
+123     \{
+124       highPointLastSeen[x]++;
+125       \textcolor{keywordflow}{if}  (highPointLastSeen[x] > numSampleLines)
+126         ReComputeLookUpForColumn (x);
+127     \}
+128     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  ((sampleLine[x] - 5) > highPoint[x])
+129     \{
+130       ReComputeLookUpForColumn (x);
+131       highPointLastSeen[x] = 0;
+132     \}
+133     \textcolor{keywordflow}{else}
+134     \{
+135       highPointLastSeen[x] = 0;
+136     \}
+137   \}
+138 
+139   numSampleLinesAdded++;
+140 \}  \textcolor{comment}{/* AddSampleLine */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Apply\+Flat\+Field\+Correction@{Apply\+Flat\+Field\+Correction}}
+\index{Apply\+Flat\+Field\+Correction@{Apply\+Flat\+Field\+Correction}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Apply\+Flat\+Field\+Correction(uchar $\ast$scan\+Line)}{ApplyFlatFieldCorrection(uchar *scanLine)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Apply\+Flat\+Field\+Correction (
+\begin{DoxyParamCaption}
+\item[{uchar $\ast$}]{scan\+Line}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_ae88aed142a25e321e1e15e48ba738551}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_ae88aed142a25e321e1e15e48ba738551}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Apply\+Flat\+Field\+Correction@{Apply\+Flat\+Field\+Correction}}
+\index{Apply\+Flat\+Field\+Correction@{Apply\+Flat\+Field\+Correction}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Apply\+Flat\+Field\+Correction(uchar $\ast$src\+Scan\+Line, uchar $\ast$dest\+Scan\+Line)}{ApplyFlatFieldCorrection(uchar *srcScanLine, uchar *destScanLine)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Apply\+Flat\+Field\+Correction (
+\begin{DoxyParamCaption}
+\item[{uchar $\ast$}]{src\+Scan\+Line, }
+\item[{uchar $\ast$}]{dest\+Scan\+Line}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a0aeb1e908c99d48606eee99d9568b3b8}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a0aeb1e908c99d48606eee99d9568b3b8}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Camera\+High\+Points@{Camera\+High\+Points}}
+\index{Camera\+High\+Points@{Camera\+High\+Points}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Camera\+High\+Points() const }{CameraHighPoints() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+Uchar\+Ptr} Flat\+Field\+Correction\+::\+Camera\+High\+Points (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_ad799855373414fdca9fffd966c12a7ca}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_ad799855373414fdca9fffd966c12a7ca}
+
+
+Definition at line 290 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+291 \{
+292   vector<uchar>*  results = \textcolor{keyword}{new} vector<uchar> ();
+293   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} x = 0;  x < lineWidth;  x++)
+294     results->push\_back (highPoint[x]);
+295   \textcolor{keywordflow}{return}  results;
+296 \}  \textcolor{comment}{/* CameraHighPoints */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines@{Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines}}
+\index{Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines@{Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines(kkint32 n) const }{CameraHighPointsFromLastNSampleLines(kkint32 n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector\+Uchar\+Ptr} Flat\+Field\+Correction\+::\+Camera\+High\+Points\+From\+Last\+N\+Sample\+Lines (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{n}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_aab0bdb0b8b9e6bc8f36bf5afc657e242}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_aab0bdb0b8b9e6bc8f36bf5afc657e242}
+
+
+Will return the high point for each pixel from the last \textquotesingle{}n\textquotesingle{} sample lines taken. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n} & The number of Sample lines to locate high point; ex\+: n = 2 means check the last two sample lines. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 300 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+301 \{
+302   n = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (n, numSampleLines);
+303 
+304   vector<uchar>*  highPoints = \textcolor{keyword}{new} vector<uchar>(lineWidth, 0);
+305 
+306   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  row = lastHistoryIdxAdded;
+307   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;  x < n;  ++x)
+308   \{
+309     \textcolor{keywordflow}{if}  (row < 0)
+310       row = numSampleLines - 1;
+311     \hyperlink{namespace_k_k_b_ace9969169bf514f9ee6185186949cdf7}{uchar}*  sampleRow = history[row];
+312 
+313     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} col = 0;  col < lineWidth;  ++col)
+314     \{
+315       \textcolor{keywordflow}{if}  (sampleRow[col] > (*highPoints)[col])
+316         (*highPoints)[col] = sampleRow[col];
+317     \}
+318     --row;
+319   \}
+320   \textcolor{keywordflow}{return}  highPoints;
+321 \}  \textcolor{comment}{/* CameraHighPointsFromLastNSampleLines */}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Compensation\+Table@{Compensation\+Table}}
+\index{Compensation\+Table@{Compensation\+Table}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Compensation\+Table(const uchar $\ast$\+\_\+compensation\+Table)}{CompensationTable(const uchar *_compensationTable)}}]{\setlength{\rightskip}{0pt plus 5cm}void Flat\+Field\+Correction\+::\+Compensation\+Table (
+\begin{DoxyParamCaption}
+\item[{const {\bf uchar} $\ast$}]{\+\_\+compensation\+Table}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_abd33b87c5084acc708e27520ea37ad85}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_abd33b87c5084acc708e27520ea37ad85}
+
+
+Definition at line 102 of file Flat\+Field\+Correction.\+cpp.
+
+
+\begin{DoxyCode}
+103 \{
+104   compensationTable = \_compensationTable;
+105   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x = 0;  x < lineWidth;  ++x)
+106     ReComputeLookUpForColumn (x);
+107 \}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Enabled() const }{Enabled() const }}]{\setlength{\rightskip}{0pt plus 5cm}bool K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_aac9b517319f8a6bf7b754609d0667cac}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_aac9b517319f8a6bf7b754609d0667cac}
+
+
+Definition at line 32 of file Flat\+Field\+Correction.\+h.
+
+
+\begin{DoxyCode}
+32 \{\textcolor{keywordflow}{return} enabled;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Enabled@{Enabled}}
+\index{Enabled@{Enabled}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Enabled(bool \+\_\+enabled)}{Enabled(bool _enabled)}}]{\setlength{\rightskip}{0pt plus 5cm}void K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Enabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{\+\_\+enabled}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a9981e65551fe0963ea02f63b022ca77a}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a9981e65551fe0963ea02f63b022ca77a}
+
+
+Definition at line 39 of file Flat\+Field\+Correction.\+h.
+
+
+\begin{DoxyCode}
+39 \{enabled = \_enabled;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Line\+Width@{Line\+Width}}
+\index{Line\+Width@{Line\+Width}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Line\+Width() const }{LineWidth() const }}]{\setlength{\rightskip}{0pt plus 5cm}kkint32 K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Line\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a2710778d18fbdb4cc38e29e35d7ef638}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a2710778d18fbdb4cc38e29e35d7ef638}
+
+
+Definition at line 33 of file Flat\+Field\+Correction.\+h.
+
+
+\begin{DoxyCode}
+33 \{\textcolor{keywordflow}{return} lineWidth;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Look\+Up\+Table@{Look\+Up\+Table}}
+\index{Look\+Up\+Table@{Look\+Up\+Table}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Look\+Up\+Table(uchar $\ast$$\ast$\&look\+Up\+Table)}{LookUpTable(uchar **&lookUpTable)}}]{\setlength{\rightskip}{0pt plus 5cm}const uchar$\ast$$\ast$ K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Look\+Up\+Table (
+\begin{DoxyParamCaption}
+\item[{uchar $\ast$$\ast$\&}]{look\+Up\+Table}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a322be38217bdbe05dae4fe47b0e851e2}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a322be38217bdbe05dae4fe47b0e851e2}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Num\+Sample\+Lines@{Num\+Sample\+Lines}}
+\index{Num\+Sample\+Lines@{Num\+Sample\+Lines}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Num\+Sample\+Lines() const }{NumSampleLines() const }}]{\setlength{\rightskip}{0pt plus 5cm}kkint32 K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Num\+Sample\+Lines (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_afcd9d37174ede2a106af6422d182a5c9}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_afcd9d37174ede2a106af6422d182a5c9}
+
+
+Definition at line 34 of file Flat\+Field\+Correction.\+h.
+
+
+\begin{DoxyCode}
+34 \{\textcolor{keywordflow}{return} numSampleLines;\}
+\end{DoxyCode}
+\index{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}!Num\+Sample\+Lines\+Added@{Num\+Sample\+Lines\+Added}}
+\index{Num\+Sample\+Lines\+Added@{Num\+Sample\+Lines\+Added}!K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction@{K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction}}
+\subsubsection[{\texorpdfstring{Num\+Sample\+Lines\+Added() const }{NumSampleLinesAdded() const }}]{\setlength{\rightskip}{0pt plus 5cm}kkint32 K\+K\+L\+S\+C\+::\+Flat\+Field\+Correction\+::\+Num\+Sample\+Lines\+Added (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_l_s_c_1_1_flat_field_correction_a7a04a4c8406a1059ba38736b0ac118b7}{}\label{class_k_k_l_s_c_1_1_flat_field_correction_a7a04a4c8406a1059ba38736b0ac118b7}
+
+
+Definition at line 35 of file Flat\+Field\+Correction.\+h.
+
+
+\begin{DoxyCode}
+35 \{\textcolor{keywordflow}{return} numSampleLinesAdded;\}
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_flat_field_correction_8h}{Flat\+Field\+Correction.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Line\+Scanner/\hyperlink{_flat_field_correction_8cpp}{Flat\+Field\+Correction.\+cpp}\end{DoxyCompactItemize}

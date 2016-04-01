@@ -1,0 +1,1143 @@
+\hypertarget{class_s_v_m289___m_f_s_1_1_solver}{}\section{S\+V\+M289\+\_\+\+M\+FS\+:\+:Solver Class Reference}
+\label{class_s_v_m289___m_f_s_1_1_solver}\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+Inheritance diagram for S\+V\+M289\+\_\+\+M\+FS\+:\+:Solver\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_s_v_m289___m_f_s_1_1_solver}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_v_m289___m_f_s_1_1_solver_1_1_solution_info}{Solution\+Info}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac34001636e4ad03b08935d57affe4d6c}{Solver} ()
+\item 
+virtual \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ae0effb4e406736501ddeba7026c0e688}{$\sim$\+Solver} ()
+\item 
+void \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56d615f6e895522527fd930534956d67}{Solve} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}, \hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix}{Q\+Matrix} \&\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}, const double $\ast$p\+\_\+, const \hyperlink{namespace_s_v_m289___m_f_s_a27545e8471784d831870feacd3e831ff}{schar} $\ast$y\+\_\+, double $\ast$alpha\+\_\+, double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp}, double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn}, double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps}, \hyperlink{struct_s_v_m289___m_f_s_1_1_solver_1_1_solution_info}{Solution\+Info} $\ast$si, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} shrinking)
+\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}{L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}, 
+\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}{U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}, 
+\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}{F\+R\+EE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a147ed1d007cd7ce50f1e80cfe07c6c6c}{calculate\+\_\+rho} ()
+\item 
+virtual void \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ad3f6665a1ca590e56b3d51f8ddcc347c}{do\+\_\+shrinking} ()
+\item 
+double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{get\+\_\+C} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\item 
+bool \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}{is\+\_\+free} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\item 
+bool \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\+\_\+lower\+\_\+bound} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\item 
+bool \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\+\_\+upper\+\_\+bound} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\item 
+void \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a6699fc066ab4ce21abad8960db12e384}{reconstruct\+\_\+gradient} ()
+\item 
+virtual \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac55972d3ad661215efd71b9f39aa432a}{select\+\_\+working\+\_\+set} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&i, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \&j)
+\item 
+void \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9cacfea262e4c4a3725cd0e70e864f37}{swap\+\_\+index} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j)
+\item 
+void \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}{update\+\_\+alpha\+\_\+status} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\+\_\+set}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\+\_\+size}
+\item 
+double $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}
+\item 
+char $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\+\_\+status}
+\item 
+double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn}
+\item 
+double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp}
+\item 
+double \hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps}
+\item 
+double $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}
+\item 
+double $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\+\_\+bar}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}
+\item 
+double $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}
+\item 
+\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix}{Q\+Matrix} $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}
+\item 
+const \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}{QD}
+\item 
+bool \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}{unshrink}
+\item 
+\hyperlink{namespace_s_v_m289___m_f_s_a27545e8471784d831870feacd3e831ff}{schar} $\ast$ \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 1124 of file svm2.\+cpp.
+
+
+
+\subsection{Member Enumeration Documentation}
+\subsubsection[{\texorpdfstring{anonymous enum}{anonymous enum}}]{\setlength{\rightskip}{0pt plus 5cm}anonymous enum\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891}{}\label{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND@{L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND@{L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND}}\item[{\em 
+L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}{}\label{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}
+}]\index{U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND@{U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND@{U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND}}\item[{\em 
+U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}{}\label{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}
+}]\index{F\+R\+EE@{F\+R\+EE}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!F\+R\+EE@{F\+R\+EE}}\item[{\em 
+F\+R\+EE\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}{}\label{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 1153 of file svm2.\+cpp.
+
+
+\begin{DoxyCode}
+1153 \{\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}{LOWER\_BOUND}, \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}{UPPER\_BOUND}, \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}{FREE}\};
+\end{DoxyCode}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!Solver@{Solver}}
+\index{Solver@{Solver}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{Solver()}{Solver()}}]{\setlength{\rightskip}{0pt plus 5cm}S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solver (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ac34001636e4ad03b08935d57affe4d6c}{}\label{class_s_v_m289___m_f_s_1_1_solver_ac34001636e4ad03b08935d57affe4d6c}
+
+
+Definition at line 1126 of file svm2.\+cpp.
+
+
+\begin{DoxyCode}
+1126 \{\};
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!````~Solver@{$\sim$\+Solver}}
+\index{````~Solver@{$\sim$\+Solver}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{$\sim$\+Solver()}{~Solver()}}]{\setlength{\rightskip}{0pt plus 5cm}virtual S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::$\sim$\+Solver (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ae0effb4e406736501ddeba7026c0e688}{}\label{class_s_v_m289___m_f_s_1_1_solver_ae0effb4e406736501ddeba7026c0e688}
+
+
+Definition at line 1127 of file svm2.\+cpp.
+
+
+\begin{DoxyCode}
+1127 \{\};
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!calculate\+\_\+rho@{calculate\+\_\+rho}}
+\index{calculate\+\_\+rho@{calculate\+\_\+rho}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{calculate\+\_\+rho()}{calculate_rho()}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::calculate\+\_\+rho (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a147ed1d007cd7ce50f1e80cfe07c6c6c}{}\label{class_s_v_m289___m_f_s_1_1_solver_a147ed1d007cd7ce50f1e80cfe07c6c6c}
+
+
+Definition at line 1786 of file svm2.\+cpp.
+
+
+
+References active\+\_\+size, G, is\+\_\+lower\+\_\+bound(), is\+\_\+upper\+\_\+bound(), and y.
+
+
+
+Referenced by Solve().
+
+
+\begin{DoxyCode}
+1787 \{
+1788   \textcolor{keywordtype}{double}  r;
+1789   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   nr\_free  = 0;
+1790   \textcolor{keywordtype}{double}  ub       = \hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};
+1791   \textcolor{keywordtype}{double}  lb       = -\hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};
+1792   \textcolor{keywordtype}{double}  sum\_free = 0;
+1793 
+1794   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  i++)
+1795   \{
+1796     \textcolor{keywordtype}{double} yG = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] * \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i];
+1797 
+1798     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound}(i))
+1799     \{
+1800       \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] == -1)
+1801         ub = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (ub, yG);
+1802       \textcolor{keywordflow}{else}
+1803         lb = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (lb, yG);
+1804     \}
+1805 
+1806     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound}(i))
+1807     \{
+1808       \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] == +1)
+1809         ub = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (ub,yG);
+1810       \textcolor{keywordflow}{else}
+1811         lb = \hyperlink{namespace_k_k_b_a25e187e24c091586293725f27f007ad7}{Max} (lb,yG);
+1812     \}
+1813     \textcolor{keywordflow}{else}
+1814     \{
+1815       ++nr\_free;
+1816       sum\_free += yG;
+1817     \}
+1818   \}
+1819 
+1820   \textcolor{keywordflow}{if}  (nr\_free > 0)
+1821     r = sum\_free / nr\_free;
+1822   \textcolor{keywordflow}{else}
+1823     r = (ub + lb) / 2;
+1824 
+1825   \textcolor{keywordflow}{return} r;
+1826 \}  \textcolor{comment}{/* calculate\_rho */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!do\+\_\+shrinking@{do\+\_\+shrinking}}
+\index{do\+\_\+shrinking@{do\+\_\+shrinking}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{do\+\_\+shrinking()}{do_shrinking()}}]{\setlength{\rightskip}{0pt plus 5cm}void Solver\+::do\+\_\+shrinking (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ad3f6665a1ca590e56b3d51f8ddcc347c}{}\label{class_s_v_m289___m_f_s_1_1_solver_ad3f6665a1ca590e56b3d51f8ddcc347c}
+
+
+Definition at line 1718 of file svm2.\+cpp.
+
+
+
+References active\+\_\+size, eps, G, info(), is\+\_\+lower\+\_\+bound(), is\+\_\+upper\+\_\+bound(), l, reconstruct\+\_\+gradient(), swap\+\_\+index(), unshrink, and y.
+
+
+
+Referenced by Solve().
+
+
+\begin{DoxyCode}
+1719 \{
+1720   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i;
+1721   \textcolor{keywordtype}{double}  Gmax1 = -\hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};    \textcolor{comment}{// Max \{ -y\_i * grad(f)\_i | i in I\_up(\(\backslash\)alpha) \}}
+1722   \textcolor{keywordtype}{double}  Gmax2 = -\hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};    \textcolor{comment}{// Max \{ y\_i * grad(f)\_i | i in I\_low(\(\backslash\)alpha) \}}
+1723 
+1724   \textcolor{comment}{// find maximal violating pair first}
+1725   \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  i++)
+1726   \{
+1727     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] == +1)
+1728     \{
+1729       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound} (i))  
+1730       \{
+1731         \textcolor{keywordflow}{if}  (-\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] >= Gmax1)
+1732           Gmax1 = -\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i];
+1733       \}
+1734       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound} (i))  
+1735       \{
+1736         \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] >= Gmax2)
+1737           Gmax2 = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i];
+1738       \}
+1739     \}
+1740 
+1741     \textcolor{keywordflow}{else}  
+1742     \{
+1743       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound} (i))
+1744       \{
+1745         \textcolor{keywordflow}{if}  (-\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] >= Gmax2)
+1746           Gmax2 = -\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i];
+1747       \}
+1748 
+1749       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound} (i))
+1750       \{
+1751         \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] >= Gmax1)
+1752           Gmax1 = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i];
+1753       \}
+1754     \}
+1755   \}
+1756 
+1757   \textcolor{keywordflow}{if}  ((\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}{unshrink} == \textcolor{keyword}{false}) && ((Gmax1 + Gmax2) <= (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps} * 10)))
+1758   \{
+1759     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}{unshrink} = \textcolor{keyword}{true};
+1760     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a6699fc066ab4ce21abad8960db12e384}{reconstruct\_gradient}();
+1761     active\_size = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};
+1762     \hyperlink{svm2_8cpp_ab834c069665121a3467868539fde9101}{info} (\textcolor{stringliteral}{"*"});
+1763   \}
+1764 
+1765   \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  i++)
+1766   \{
+1767     \textcolor{keywordflow}{if}  (be\_shrunk(i, Gmax1, Gmax2))
+1768     \{
+1769       active\_size--;
+1770       \textcolor{keywordflow}{while}  (active\_size > i)
+1771       \{
+1772         \textcolor{keywordflow}{if}  (!be\_shrunk (active\_size, Gmax1, Gmax2))
+1773         \{
+1774           \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9cacfea262e4c4a3725cd0e70e864f37}{swap\_index} (i, active\_size);
+1775           \textcolor{keywordflow}{break};
+1776         \}
+1777         active\_size--;
+1778       \}
+1779     \}
+1780   \}
+1781 \}  \textcolor{comment}{/* do\_shrinking */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!get\+\_\+C@{get\+\_\+C}}
+\index{get\+\_\+C@{get\+\_\+C}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{get\+\_\+\+C(kkint32 i)}{get_C(kkint32 i)}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::get\+\_\+C (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{}\label{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}
+
+
+Definition at line 1168 of file svm2.\+cpp.
+
+
+
+References Cn, Cp, and y.
+
+
+
+Referenced by Solve(), and update\+\_\+alpha\+\_\+status().
+
+
+\begin{DoxyCode}
+1169   \{
+1170     \textcolor{keywordflow}{return} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] > 0) ? \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp} : \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn};
+1171   \}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!is\+\_\+free@{is\+\_\+free}}
+\index{is\+\_\+free@{is\+\_\+free}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{is\+\_\+free(kkint32 i)}{is_free(kkint32 i)}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::is\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}{}\label{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}
+
+
+Definition at line 1188 of file svm2.\+cpp.
+
+
+
+References alpha\+\_\+status, and F\+R\+EE.
+
+
+
+Referenced by reconstruct\+\_\+gradient().
+
+
+\begin{DoxyCode}
+1188 \{\textcolor{keywordflow}{return} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] == \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}{FREE};\}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!is\+\_\+lower\+\_\+bound@{is\+\_\+lower\+\_\+bound}}
+\index{is\+\_\+lower\+\_\+bound@{is\+\_\+lower\+\_\+bound}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{is\+\_\+lower\+\_\+bound(kkint32 i)}{is_lower_bound(kkint32 i)}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::is\+\_\+lower\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{}\label{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}
+
+
+Definition at line 1187 of file svm2.\+cpp.
+
+
+
+References alpha\+\_\+status, and L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND.
+
+
+
+Referenced by calculate\+\_\+rho(), do\+\_\+shrinking(), select\+\_\+working\+\_\+set(), and Solve().
+
+
+\begin{DoxyCode}
+1187 \{\textcolor{keywordflow}{return} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] == \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}{LOWER\_BOUND};\}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!is\+\_\+upper\+\_\+bound@{is\+\_\+upper\+\_\+bound}}
+\index{is\+\_\+upper\+\_\+bound@{is\+\_\+upper\+\_\+bound}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{is\+\_\+upper\+\_\+bound(kkint32 i)}{is_upper_bound(kkint32 i)}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::is\+\_\+upper\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{}\label{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}
+
+
+Definition at line 1186 of file svm2.\+cpp.
+
+
+
+References alpha\+\_\+status, and U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND.
+
+
+
+Referenced by calculate\+\_\+rho(), do\+\_\+shrinking(), select\+\_\+working\+\_\+set(), and Solve().
+
+
+\begin{DoxyCode}
+1186 \{\textcolor{keywordflow}{return} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] == \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}{UPPER\_BOUND};\}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!reconstruct\+\_\+gradient@{reconstruct\+\_\+gradient}}
+\index{reconstruct\+\_\+gradient@{reconstruct\+\_\+gradient}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{reconstruct\+\_\+gradient()}{reconstruct_gradient()}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::reconstruct\+\_\+gradient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a6699fc066ab4ce21abad8960db12e384}{}\label{class_s_v_m289___m_f_s_1_1_solver_a6699fc066ab4ce21abad8960db12e384}
+
+
+Definition at line 1225 of file svm2.\+cpp.
+
+
+
+References active\+\_\+size, alpha, G, G\+\_\+bar, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Q\+Matrix\+::get\+\_\+\+Q(), info(), is\+\_\+free(), l, p, and Q.
+
+
+
+Referenced by do\+\_\+shrinking(), and Solve().
+
+
+\begin{DoxyCode}
+1226 \{
+1227   \textcolor{comment}{// reconstruct inactive elements of G from G\_bar and free variables}
+1228 
+1229   \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size} == \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}) 
+1230     \textcolor{keywordflow}{return};
+1231 
+1232   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i,j;
+1233   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} nr\_free = 0;
+1234 
+1235   \textcolor{keywordflow}{for}  (j = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  j++)
+1236     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j] = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[j] + \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}[j];
+1237 
+1238   \textcolor{keywordflow}{for}  (j = 0;  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  j++)
+1239   \{
+1240     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}{is\_free}(j))
+1241       nr\_free++;
+1242   \}
+1243 
+1244   \textcolor{keywordflow}{if}  (2 * nr\_free < active\_size)
+1245     \hyperlink{svm2_8cpp_ab834c069665121a3467868539fde9101}{info}(\textcolor{stringliteral}{"\(\backslash\)nWarning: using -h 0 may be faster\(\backslash\)n"});
+1246 
+1247   \textcolor{keywordflow}{if}  (nr\_free*l > 2 * active\_size * (l - active\_size))
+1248   \{
+1249     \textcolor{keywordflow}{for}  (i = active\_size;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1250     \{
+1251       \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} *Q\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}->\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q} (i, active\_size);
+1252       \textcolor{keywordflow}{for}  (j = 0;  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  j++)
+1253       \{
+1254         \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}{is\_free} (j))
+1255           \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] += \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[j] * Q\_i[j];
+1256       \}
+1257     \}
+1258   \}
+1259   \textcolor{keywordflow}{else}
+1260   \{
+1261     \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  i++)
+1262     \{
+1263       \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac573d5e057697180eb9aa709af4c4d03}{is\_free} (i))
+1264       \{
+1265         \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat}*  Q\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}->\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q} (i,l);
+1266         \textcolor{keywordtype}{double} alpha\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i];
+1267         \textcolor{keywordflow}{for}  (j = active\_size;  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  j++)
+1268           \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j] += alpha\_i * Q\_i[j];
+1269       \}
+1270     \}
+1271   \}
+1272 \}  \textcolor{comment}{/* reconstruct\_gradient */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!select\+\_\+working\+\_\+set@{select\+\_\+working\+\_\+set}}
+\index{select\+\_\+working\+\_\+set@{select\+\_\+working\+\_\+set}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{select\+\_\+working\+\_\+set(kkint32 \&i, kkint32 \&j)}{select_working_set(kkint32 &i, kkint32 &j)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::select\+\_\+working\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32} \&}]{i, }
+\item[{{\bf kkint32} \&}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ac55972d3ad661215efd71b9f39aa432a}{}\label{class_s_v_m289___m_f_s_1_1_solver_ac55972d3ad661215efd71b9f39aa432a}
+
+
+Definition at line 1577 of file svm2.\+cpp.
+
+
+
+References active\+\_\+size, eps, G, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Q\+Matrix\+::get\+\_\+\+Q(), is\+\_\+lower\+\_\+bound(), is\+\_\+upper\+\_\+bound(), Q, QD, and y.
+
+
+
+Referenced by Solve().
+
+
+\begin{DoxyCode}
+1580 \{
+1581   \textcolor{comment}{// return i,j such that}
+1582   \textcolor{comment}{// i: maximizes -y\_i * grad(f)\_i, i in I\_up(\(\backslash\)alpha)}
+1583   \textcolor{comment}{// j: minimizes the decrease of obj value}
+1584   \textcolor{comment}{//    (if quadratic coefficient <= 0, replace it with tau)}
+1585   \textcolor{comment}{//    -y\_j*grad(f)\_j < -y\_i*grad(f)\_i, j in I\_low(\(\backslash\)alpha)}
+1586   
+1587   \textcolor{keywordtype}{double}  Gmax         = -\hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};
+1588   \textcolor{keywordtype}{double}  Gmax2        = -\hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};
+1589   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   Gmax\_idx     = -1;
+1590   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}   Gmin\_idx     = -1;
+1591   \textcolor{keywordtype}{double}  obj\_diff\_min = \hyperlink{svm2_8cpp_a12c2040f25d8e3a7b9e1c2024c618cb6}{INF};
+1592 
+1593   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} t=0;t<\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};t++)
+1594   \{
+1595     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[t] == +1)
+1596     \{
+1597       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound} (t))
+1598       \{
+1599         \textcolor{keywordflow}{if}  (-\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[t] >= Gmax)
+1600         \{
+1601           Gmax     = -\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[t];
+1602           Gmax\_idx = t;
+1603         \}
+1604       \}
+1605     \}
+1606     \textcolor{keywordflow}{else}
+1607     \{
+1608       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound} (t))
+1609       \{
+1610         \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[t] >= Gmax)
+1611         \{
+1612           Gmax = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[t];
+1613           Gmax\_idx = t;
+1614         \}
+1615       \}
+1616     \}
+1617   \}
+1618 
+1619 
+1620   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = Gmax\_idx;
+1621   \textcolor{keyword}{const} \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} *Q\_i = NULL;
+1622   \textcolor{keywordflow}{if}  (i != -1) \textcolor{comment}{// NULL Q\_i not accessed: Gmax=-INF if i=-1}
+1623     Q\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}->\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q}(i,active\_size);
+1624 
+1625   \textcolor{keywordflow}{for}(\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} j=0;j<\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};j++)
+1626   \{
+1627     \textcolor{keywordflow}{if}(\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[j]==+1)
+1628     \{
+1629       \textcolor{keywordflow}{if} (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound}(j))
+1630       \{
+1631         \textcolor{keywordtype}{double} grad\_diff=Gmax+\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j];
+1632         \textcolor{keywordflow}{if} (G[j] >= Gmax2)
+1633           Gmax2 = G[j];
+1634 
+1635         \textcolor{keywordflow}{if}  (grad\_diff > 0)
+1636         \{
+1637           \textcolor{keywordtype}{double} obj\_diff; 
+1638           \textcolor{keywordtype}{double} quad\_coef = Q\_i[i] + \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}{QD}[j] - 2.0 * \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] * Q\_i[j];
+1639 
+1640           \textcolor{keywordflow}{if}  (quad\_coef > 0)
+1641             obj\_diff = -(grad\_diff*grad\_diff)/quad\_coef;
+1642           \textcolor{keywordflow}{else}
+1643             obj\_diff = -(grad\_diff*grad\_diff)/\hyperlink{svm2_8cpp_a3d8c9c145887af5174ba4cc6789862ad}{TAU};
+1644 
+1645           \textcolor{keywordflow}{if}  (obj\_diff <= obj\_diff\_min)
+1646           \{
+1647             Gmin\_idx=j;
+1648             obj\_diff\_min = obj\_diff;
+1649           \}
+1650         \}
+1651       \}
+1652     \}
+1653     \textcolor{keywordflow}{else}
+1654     \{
+1655       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound}(j))
+1656       \{
+1657         \textcolor{keywordtype}{double} grad\_diff= Gmax-G[j];
+1658         \textcolor{keywordflow}{if} (-G[j] >= Gmax2)
+1659           Gmax2 = -G[j];
+1660         \textcolor{keywordflow}{if} (grad\_diff > 0)
+1661         \{
+1662           \textcolor{keywordtype}{double} obj\_diff; 
+1663           \textcolor{keywordtype}{double} quad\_coef=Q\_i[i]+\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}{QD}[j]+2.0*\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i]*Q\_i[j];
+1664           \textcolor{keywordflow}{if} (quad\_coef > 0)
+1665             obj\_diff = -(grad\_diff*grad\_diff)/quad\_coef;
+1666           \textcolor{keywordflow}{else}
+1667             obj\_diff = -(grad\_diff*grad\_diff)/\hyperlink{svm2_8cpp_a3d8c9c145887af5174ba4cc6789862ad}{TAU};
+1668 
+1669           \textcolor{keywordflow}{if} (obj\_diff <= obj\_diff\_min)
+1670           \{
+1671             Gmin\_idx=j;
+1672             obj\_diff\_min = obj\_diff;
+1673           \}
+1674         \}
+1675       \}
+1676     \}
+1677   \}
+1678 
+1679   \textcolor{keywordflow}{if}  (Gmax + Gmax2  <  \hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps})
+1680     \textcolor{keywordflow}{return} 1;
+1681 
+1682   out\_i = Gmax\_idx;
+1683   out\_j = Gmin\_idx;
+1684   \textcolor{keywordflow}{return} 0;
+1685 \}  \textcolor{comment}{/* select\_working\_set */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!Solve@{Solve}}
+\index{Solve@{Solve}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{Solve(kkint32 l, Q\+Matrix \&\+Q, const double $\ast$p\+\_\+, const schar $\ast$y\+\_\+, double $\ast$alpha\+\_\+, double Cp, double Cn, double eps, Solution\+Info $\ast$si, kkint32 shrinking)}{Solve(kkint32 l, QMatrix &Q, const double *p_, const schar *y_, double *alpha_, double Cp, double Cn, double eps, SolutionInfo *si, kkint32 shrinking)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solve (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{l, }
+\item[{{\bf Q\+Matrix} \&}]{Q, }
+\item[{const double $\ast$}]{p\+\_\+, }
+\item[{const {\bf schar} $\ast$}]{y\+\_\+, }
+\item[{double $\ast$}]{alpha\+\_\+, }
+\item[{double}]{Cp, }
+\item[{double}]{Cn, }
+\item[{double}]{eps, }
+\item[{{\bf Solution\+Info} $\ast$}]{si, }
+\item[{{\bf kkint32}}]{shrinking}
+\end{DoxyParamCaption}
+)}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a56d615f6e895522527fd930534956d67}{}\label{class_s_v_m289___m_f_s_1_1_solver_a56d615f6e895522527fd930534956d67}
+
+
+Definition at line 1278 of file svm2.\+cpp.
+
+
+
+References active\+\_\+set, active\+\_\+size, alpha, alpha\+\_\+status, calculate\+\_\+rho(), Cn, Cp, do\+\_\+shrinking(), eps, G, G\+\_\+bar, get\+\_\+\+C(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Q\+Matrix\+::get\+\_\+\+Q(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Q\+Matrix\+::get\+\_\+\+Q\+D(), info(), is\+\_\+lower\+\_\+bound(), is\+\_\+upper\+\_\+bound(), l, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solution\+Info\+::obj, p, Q, QD, reconstruct\+\_\+gradient(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solution\+Info\+::rho, select\+\_\+working\+\_\+set(), unshrink, update\+\_\+alpha\+\_\+status(), S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solution\+Info\+::upper\+\_\+bound\+\_\+n, S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Solution\+Info\+::upper\+\_\+bound\+\_\+p, and y.
+
+
+
+Referenced by S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+\_\+\+N\+U\+::\+Solve(), S\+V\+M289\+\_\+\+M\+F\+S\+::solve\+\_\+c\+\_\+svc(), S\+V\+M289\+\_\+\+M\+F\+S\+::solve\+\_\+epsilon\+\_\+svr(), and S\+V\+M289\+\_\+\+M\+F\+S\+::solve\+\_\+one\+\_\+class().
+
+
+\begin{DoxyCode}
+1289 \{
+1290   this->\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};
+1291   this->Q = &\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q};
+1292   \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}{QD}=Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a34d6786fdea3ad567a648cba4c0f8fe8}{get\_QD}();
+1293   \hyperlink{namespace_s_v_m289___m_f_s_a24fe982127a2481d42534c0b399fb4e8}{clone}(\hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}, p\_,\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l});
+1294   \hyperlink{namespace_s_v_m289___m_f_s_a24fe982127a2481d42534c0b399fb4e8}{clone}(\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}, y\_,\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l});
+1295   \hyperlink{namespace_s_v_m289___m_f_s_a24fe982127a2481d42534c0b399fb4e8}{clone}(\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha},alpha\_,\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l});
+1296   this->\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp};
+1297   this->\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn};
+1298   this->\hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{eps};
+1299   \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}{unshrink} = \textcolor{keyword}{false};
+1300 
+1301   \textcolor{comment}{// initialize alpha\_status}
+1302   \{
+1303     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status} = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}];
+1304     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1305       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}{update\_alpha\_status} (i);
+1306   \}
+1307 
+1308   \textcolor{comment}{// initialize active set (for shrinking)}
+1309   \{
+1310     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set} = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}[\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}];
+1311     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1312       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set}[i] = i;
+1313     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};
+1314   \}
+1315 
+1316   \textcolor{comment}{// initialize gradient}
+1317   \{
+1318     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}     = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}];
+1319     \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar} = \textcolor{keyword}{new} \textcolor{keywordtype}{double}[\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l}];
+1320     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  i;
+1321     \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1322     \{
+1323       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i]     = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}[i];
+1324       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[i] = 0;
+1325     \}
+1326 
+1327     \textcolor{keywordflow}{for}(i=0;i<\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};i++)
+1328     \{
+1329       \textcolor{keywordflow}{if}  (!\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a2fe8c6cd332cef1fe1622fb6faa98e19}{is\_lower\_bound} (i))
+1330       \{
+1331         \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} *Q\_i = Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q}(i,l);
+1332         \textcolor{keywordtype}{double} alpha\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i];
+1333         \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  j;
+1334         \textcolor{keywordflow}{for}  (j = 0;  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  j++)
+1335           \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j] += alpha\_i*Q\_i[j];
+1336 
+1337         \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound} (i))
+1338         \{
+1339           \textcolor{keywordflow}{for}  (j = 0;  j < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  j++)
+1340             \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[j] += \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{get\_C}(i) * Q\_i[j];
+1341         \}
+1342       \}
+1343     \}
+1344   \}
+1345 
+1346   \textcolor{comment}{// optimization step}
+1347 
+1348   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} iter = 0;
+1349   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} counter = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (l, 1000) + 1;
+1350 
+1351   \textcolor{keywordflow}{while}(1)
+1352   \{
+1353     \textcolor{comment}{// show progress and do shrinking}
+1354 
+1355     \textcolor{keywordflow}{if} (--counter == 0)
+1356     \{
+1357       counter = \hyperlink{_raster_8cpp_a6261a282d8ed27242c636ad5fb658585}{Min} (l, 1000);
+1358       \textcolor{keywordflow}{if}  (shrinking) 
+1359         \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ad3f6665a1ca590e56b3d51f8ddcc347c}{do\_shrinking}();
+1360       \hyperlink{svm2_8cpp_ab834c069665121a3467868539fde9101}{info}(\textcolor{stringliteral}{"."});
+1361     \}
+1362 
+1363     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i, j;
+1364     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac55972d3ad661215efd71b9f39aa432a}{select\_working\_set} (i, j) != 0)   \textcolor{comment}{// 'select\_working\_set' == 1 if already
+       optimal otherwise 0.}
+1365     \{
+1366       \textcolor{comment}{// reconstruct the whole gradient}
+1367       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a6699fc066ab4ce21abad8960db12e384}{reconstruct\_gradient} ();
+1368       \textcolor{comment}{// reset active set size and check}
+1369       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size} = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};
+1370       \hyperlink{svm2_8cpp_ab834c069665121a3467868539fde9101}{info} (\textcolor{stringliteral}{"*"});
+1371       \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ac55972d3ad661215efd71b9f39aa432a}{select\_working\_set} (i, j) != 0)
+1372         \textcolor{keywordflow}{break};
+1373       \textcolor{keywordflow}{else}
+1374         counter = 1;  \textcolor{comment}{// do shrinking next iteration}
+1375     \}
+1376     
+1377     ++iter;
+1378 
+1379     \textcolor{comment}{// update alpha[i] and alpha[j], handle bounds carefully}
+1380     
+1381     \textcolor{keyword}{const} \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} *Q\_i = Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q}(i,\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size});
+1382     \textcolor{keyword}{const} \hyperlink{namespace_s_v_m289___m_f_s_a440663a1b8d42bc10329401883645ae1}{Qfloat} *Q\_j = Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q}(j,\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size});
+1383 
+1384     \textcolor{keywordtype}{double} C\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{get\_C}(i);
+1385     \textcolor{keywordtype}{double} C\_j = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{get\_C}(j);
+1386 
+1387     \textcolor{keywordtype}{double} old\_alpha\_i = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i];
+1388     \textcolor{keywordtype}{double} old\_alpha\_j = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[j];
+1389 
+1390     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i] != \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[j])
+1391     \{
+1392       \textcolor{keywordtype}{double}  quad\_coef = Q\_i[i] + Q\_j[j] +2 *Q\_i[j];
+1393       \textcolor{keywordflow}{if}  (quad\_coef <= 0)
+1394         quad\_coef = \hyperlink{svm2_8cpp_a3d8c9c145887af5174ba4cc6789862ad}{TAU};
+1395 
+1396       \textcolor{keywordtype}{double} delta = (-\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] - \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j]) / quad\_coef;
+1397       \textcolor{keywordtype}{double} diff = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i] - \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[j];
+1398       alpha[i] += delta;
+1399       alpha[j] += delta;
+1400       
+1401       \textcolor{keywordflow}{if}  (diff > 0)
+1402       \{
+1403         \textcolor{keywordflow}{if}  (alpha[j] < 0)
+1404         \{
+1405           alpha[j] = 0;
+1406           alpha[i] = diff;
+1407         \}
+1408       \}
+1409       \textcolor{keywordflow}{else}
+1410       \{
+1411         \textcolor{keywordflow}{if}  (alpha[i] < 0)
+1412         \{
+1413           alpha[i] = 0;
+1414           alpha[j] = -diff;
+1415         \}
+1416       \}
+1417       \textcolor{keywordflow}{if}  (diff > C\_i - C\_j)
+1418       \{
+1419         \textcolor{keywordflow}{if}(alpha[i] > C\_i)
+1420         \{
+1421           alpha[i] = C\_i;
+1422           alpha[j] = C\_i - diff;
+1423         \}
+1424       \}
+1425       \textcolor{keywordflow}{else}
+1426       \{
+1427         \textcolor{keywordflow}{if}  (alpha[j] > C\_j)
+1428         \{
+1429           alpha[j] = C\_j;
+1430           alpha[i] = C\_j + diff;
+1431         \}
+1432       \}
+1433     \}
+1434     \textcolor{keywordflow}{else}
+1435     \{
+1436       \textcolor{keywordtype}{double} quad\_coef = Q\_i[i] + Q\_j[j] - 2 * Q\_i[j];
+1437 
+1438       \textcolor{keywordflow}{if}  (quad\_coef <= 0)
+1439         quad\_coef = \hyperlink{svm2_8cpp_a3d8c9c145887af5174ba4cc6789862ad}{TAU};
+1440 
+1441       \textcolor{keywordtype}{double} delta = (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] - \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j]) / quad\_coef;
+1442       \textcolor{keywordtype}{double} sum = alpha[i] + alpha[j];
+1443       alpha[i] -= delta;
+1444       alpha[j] += delta;
+1445 
+1446       \textcolor{keywordflow}{if}  (sum > C\_i)
+1447       \{
+1448         \textcolor{keywordflow}{if}  (alpha[i] > C\_i)
+1449         \{
+1450           alpha[i] = C\_i;
+1451           alpha[j] = sum - C\_i;
+1452         \}
+1453       \}
+1454       \textcolor{keywordflow}{else}
+1455       \{
+1456         \textcolor{keywordflow}{if}  (alpha[j] < 0)
+1457         \{
+1458           alpha[j] = 0;
+1459           alpha[i] = sum;
+1460         \}
+1461       \}
+1462       \textcolor{keywordflow}{if}  (sum > C\_j)
+1463       \{
+1464         \textcolor{keywordflow}{if}  (alpha[j] > C\_j)
+1465         \{
+1466           alpha[j] = C\_j;
+1467           alpha[i] = sum - C\_j;
+1468         \}
+1469       \}
+1470       \textcolor{keywordflow}{else}
+1471       \{
+1472         \textcolor{keywordflow}{if}  (alpha[i] < 0)
+1473         \{
+1474           alpha[i] = 0;
+1475           alpha[j] = sum;
+1476         \}
+1477       \}
+1478     \}
+1479 
+1480     \textcolor{comment}{// update G}
+1481 
+1482     \textcolor{keywordtype}{double} delta\_alpha\_i = alpha[i] - old\_alpha\_i;
+1483     \textcolor{keywordtype}{double} delta\_alpha\_j = alpha[j] - old\_alpha\_j;
+1484     
+1485     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = 0;  k < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{active\_size};  k++)
+1486     \{
+1487       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[k] += Q\_i[k] * delta\_alpha\_i + Q\_j[k] * delta\_alpha\_j;
+1488     \}
+1489 
+1490     \textcolor{comment}{// update alpha\_status and G\_bar}
+1491 
+1492     \{
+1493       \textcolor{keywordtype}{bool} ui = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound}(i);
+1494       \textcolor{keywordtype}{bool} uj = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound}(j);
+1495       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}{update\_alpha\_status} (i);
+1496       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}{update\_alpha\_status} (j);
+1497       \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k;
+1498       \textcolor{keywordflow}{if}  (ui != \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound} (i))
+1499       \{
+1500         Q\_i = Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q} (i,l);
+1501         \textcolor{keywordflow}{if}  (ui)
+1502         \{
+1503           \textcolor{keywordflow}{for}  (k = 0;  k < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  k++)
+1504             \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[k] -= C\_i * Q\_i[k];
+1505         \}
+1506         \textcolor{keywordflow}{else}
+1507         \{
+1508           \textcolor{keywordflow}{for}  (k = 0;  k < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  k++)
+1509             \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[k] += C\_i * Q\_i[k];
+1510         \}
+1511       \}
+1512 
+1513       \textcolor{keywordflow}{if}(uj != \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a9648a7dd5e4e6818cdf255ffb1340187}{is\_upper\_bound}(j))
+1514       \{
+1515         Q\_j = Q.\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a80b3d1ac0e040add9b39ff77f8383ddd}{get\_Q}(j,l);
+1516         \textcolor{keywordflow}{if}  (uj)
+1517         \{
+1518           \textcolor{keywordflow}{for}  (k = 0;  k < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  k++)
+1519             \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[k] -= C\_j * Q\_j[k];
+1520         \}
+1521         \textcolor{keywordflow}{else}
+1522         \{
+1523           \textcolor{keywordflow}{for}  (k = 0;  k < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  k++)
+1524             \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[k] += C\_j * Q\_j[k];
+1525         \}
+1526       \}
+1527     \}
+1528   \}
+1529 
+1530   \textcolor{comment}{// calculate rho}
+1531   si->rho = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a147ed1d007cd7ce50f1e80cfe07c6c6c}{calculate\_rho}();
+1532 
+1533   \textcolor{comment}{// calculate objective value}
+1534   \{
+1535     \textcolor{keywordtype}{double} v = 0;
+1536     \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i;
+1537     \textcolor{keywordflow}{for}  (i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1538       v += alpha[i] * (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i] + \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}[i]);
+1539 
+1540     si->obj = v/2;
+1541   \}
+1542 
+1543   \textcolor{comment}{// put back the solution}
+1544   \{
+1545     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} i = 0;  i < \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{l};  i++)
+1546     \{
+1547       alpha\_[\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set}[i]] = alpha[i];
+1548     \}
+1549   \}
+1550 
+1551   \textcolor{comment}{// juggle everything back}
+1552   \textcolor{comment}{/*\{}
+1553 \textcolor{comment}{    for(kkint32 i=0;i<l;i++)}
+1554 \textcolor{comment}{      while(active\_set[i] != i)}
+1555 \textcolor{comment}{        swap\_index(i,active\_set[i]);}
+1556 \textcolor{comment}{        // or Q.swap\_index(i,active\_set[i]);}
+1557 \textcolor{comment}{  \}*/}
+1558 
+1559   si->upper\_bound\_p = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{Cp};
+1560   si->upper\_bound\_n = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{Cn};
+1561 
+1562   \textcolor{comment}{//info("\(\backslash\)noptimization finished, #iter = %d\(\backslash\)n",iter);}
+1563 
+1564   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p};
+1565   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y};
+1566   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha};
+1567   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status};
+1568   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set};
+1569   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G};
+1570   \textcolor{keyword}{delete}[] \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar};
+1571 \}  \textcolor{comment}{/* Solve */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!swap\+\_\+index@{swap\+\_\+index}}
+\index{swap\+\_\+index@{swap\+\_\+index}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{swap\+\_\+index(kkint32 i, kkint32 j)}{swap_index(kkint32 i, kkint32 j)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::swap\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i, }
+\item[{{\bf kkint32}}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a9cacfea262e4c4a3725cd0e70e864f37}{}\label{class_s_v_m289___m_f_s_1_1_solver_a9cacfea262e4c4a3725cd0e70e864f37}
+
+
+Definition at line 1211 of file svm2.\+cpp.
+
+
+
+References Q, and S\+V\+M289\+\_\+\+M\+F\+S\+::\+Q\+Matrix\+::swap\+\_\+index().
+
+
+
+Referenced by do\+\_\+shrinking().
+
+
+\begin{DoxyCode}
+1212 \{
+1213   \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{Q}->\hyperlink{class_s_v_m289___m_f_s_1_1_q_matrix_a40288a65c5bf829f671a7722a36f101e}{swap\_index} (i, j);
+1214   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{y}[j]);
+1215   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{G}[j]);
+1216   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[j]);
+1217   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[j]);
+1218   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{p}[j]);
+1219   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set}[i],\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{active\_set}[j]);
+1220   \hyperlink{namespace_s_v_m289___m_f_s_a195322b74181af0322d4e086a529c096}{SVM289\_MFS::swap} (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[i], \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{G\_bar}[j]);
+1221 \}  \textcolor{comment}{/* swap\_index */}
+\end{DoxyCode}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!update\+\_\+alpha\+\_\+status@{update\+\_\+alpha\+\_\+status}}
+\index{update\+\_\+alpha\+\_\+status@{update\+\_\+alpha\+\_\+status}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{update\+\_\+alpha\+\_\+status(kkint32 i)}{update_alpha_status(kkint32 i)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::update\+\_\+alpha\+\_\+status (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}{}\label{class_s_v_m289___m_f_s_1_1_solver_a0f685d5dd2aca0459f6a55dcef7f44c3}
+
+
+Definition at line 1174 of file svm2.\+cpp.
+
+
+
+References alpha, alpha\+\_\+status, F\+R\+EE, get\+\_\+\+C(), L\+O\+W\+E\+R\+\_\+\+B\+O\+U\+ND, and U\+P\+P\+E\+R\+\_\+\+B\+O\+U\+ND.
+
+
+
+Referenced by Solve().
+
+
+\begin{DoxyCode}
+1175   \{
+1176     \textcolor{keywordflow}{if}  (\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i] >= \hyperlink{class_s_v_m289___m_f_s_1_1_solver_aaf5b54ead3cea36680337c5c577cb253}{get\_C}(i))
+1177       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891aae94fa8d765e599e06a849ac9c075196}{UPPER\_BOUND};
+1178 
+1179     \textcolor{keywordflow}{else}  \textcolor{keywordflow}{if}(\hyperlink{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{alpha}[i] <= 0)
+1180       \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a3560e8cd775e776b3e97f758b60063fc}{LOWER\_BOUND};
+1181 
+1182     \textcolor{keywordflow}{else} \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{alpha\_status}[i] = \hyperlink{class_s_v_m289___m_f_s_1_1_solver_a4506ce05fd214117bf4cd7b5a1022891a63bed4b4d9335c1291bef6c08dea90ea}{FREE};
+1183   \}
+\end{DoxyCode}
+
+
+\subsection{Member Data Documentation}
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!active\+\_\+set@{active\+\_\+set}}
+\index{active\+\_\+set@{active\+\_\+set}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{active\+\_\+set}{active_set}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::active\+\_\+set\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}{}\label{class_s_v_m289___m_f_s_1_1_solver_a7b9a480a3eaae0248a03ebf399dd3c75}
+
+
+Definition at line 1162 of file svm2.\+cpp.
+
+
+
+Referenced by Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!active\+\_\+size@{active\+\_\+size}}
+\index{active\+\_\+size@{active\+\_\+size}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{active\+\_\+size}{active_size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::active\+\_\+size\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}{}\label{class_s_v_m289___m_f_s_1_1_solver_a8996bbbda51e87b157af0e8c4ad78411}
+
+
+Definition at line 1150 of file svm2.\+cpp.
+
+
+
+Referenced by calculate\+\_\+rho(), do\+\_\+shrinking(), reconstruct\+\_\+gradient(), select\+\_\+working\+\_\+set(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!alpha@{alpha}}
+\index{alpha@{alpha}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{alpha}{alpha}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::alpha\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}{}\label{class_s_v_m289___m_f_s_1_1_solver_a5a6158adccc034c04bdacf91e6bbb237}
+
+
+Definition at line 1155 of file svm2.\+cpp.
+
+
+
+Referenced by reconstruct\+\_\+gradient(), Solve(), and update\+\_\+alpha\+\_\+status().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!alpha\+\_\+status@{alpha\+\_\+status}}
+\index{alpha\+\_\+status@{alpha\+\_\+status}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{alpha\+\_\+status}{alpha_status}}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::alpha\+\_\+status\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}{}\label{class_s_v_m289___m_f_s_1_1_solver_a1f3505d06f19ce96eff19d3908adc42d}
+
+
+Definition at line 1154 of file svm2.\+cpp.
+
+
+
+Referenced by is\+\_\+free(), is\+\_\+lower\+\_\+bound(), is\+\_\+upper\+\_\+bound(), Solve(), and update\+\_\+alpha\+\_\+status().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!Cn@{Cn}}
+\index{Cn@{Cn}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{Cn}{Cn}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Cn\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}{}\label{class_s_v_m289___m_f_s_1_1_solver_a56f6a320000a868937411fa4cfd458b5}
+
+
+Definition at line 1160 of file svm2.\+cpp.
+
+
+
+Referenced by get\+\_\+\+C(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!Cp@{Cp}}
+\index{Cp@{Cp}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{Cp}{Cp}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+Cp\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}{}\label{class_s_v_m289___m_f_s_1_1_solver_a951f59ea72f372f0e188c5815774fc6d}
+
+
+Definition at line 1159 of file svm2.\+cpp.
+
+
+
+Referenced by get\+\_\+\+C(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!eps@{eps}}
+\index{eps@{eps}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{eps}{eps}}]{\setlength{\rightskip}{0pt plus 5cm}double S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::eps\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}{}\label{class_s_v_m289___m_f_s_1_1_solver_afc19fe2ebf0ad2239f9f1c6db2d85c12}
+
+
+Definition at line 1158 of file svm2.\+cpp.
+
+
+
+Referenced by do\+\_\+shrinking(), select\+\_\+working\+\_\+set(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!G@{G}}
+\index{G@{G}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{G}{G}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::G\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}{}\label{class_s_v_m289___m_f_s_1_1_solver_a96465496d62f5c9566275270d7a54a4f}
+
+
+Definition at line 1152 of file svm2.\+cpp.
+
+
+
+Referenced by calculate\+\_\+rho(), do\+\_\+shrinking(), reconstruct\+\_\+gradient(), select\+\_\+working\+\_\+set(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!G\+\_\+bar@{G\+\_\+bar}}
+\index{G\+\_\+bar@{G\+\_\+bar}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{G\+\_\+bar}{G_bar}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+G\+\_\+bar\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}{}\label{class_s_v_m289___m_f_s_1_1_solver_a384cdc6a8882e17f0b78a817d570c5f7}
+
+
+Definition at line 1163 of file svm2.\+cpp.
+
+
+
+Referenced by reconstruct\+\_\+gradient(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!l@{l}}
+\index{l@{l}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{l}{l}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::l\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}{}\label{class_s_v_m289___m_f_s_1_1_solver_a3b58f02675a93b7f559946c731beebd5}
+
+
+Definition at line 1164 of file svm2.\+cpp.
+
+
+
+Referenced by do\+\_\+shrinking(), reconstruct\+\_\+gradient(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!p@{p}}
+\index{p@{p}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{p}{p}}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::p\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}{}\label{class_s_v_m289___m_f_s_1_1_solver_aee0ff21847e331b59d7a929b3c813b94}
+
+
+Definition at line 1161 of file svm2.\+cpp.
+
+
+
+Referenced by reconstruct\+\_\+gradient(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!Q@{Q}}
+\index{Q@{Q}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{Q}{Q}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Q\+Matrix}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::Q\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}{}\label{class_s_v_m289___m_f_s_1_1_solver_a5655aaf1c92b609e8ed2087e08b053eb}
+
+
+Definition at line 1156 of file svm2.\+cpp.
+
+
+
+Referenced by reconstruct\+\_\+gradient(), select\+\_\+working\+\_\+set(), Solve(), and swap\+\_\+index().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!QD@{QD}}
+\index{QD@{QD}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{QD}{QD}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Qfloat}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::\+QD\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}{}\label{class_s_v_m289___m_f_s_1_1_solver_a5bb379d32ebad294ad384244fee7e8a5}
+
+
+Definition at line 1157 of file svm2.\+cpp.
+
+
+
+Referenced by select\+\_\+working\+\_\+set(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!unshrink@{unshrink}}
+\index{unshrink@{unshrink}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{unshrink}{unshrink}}]{\setlength{\rightskip}{0pt plus 5cm}bool S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::unshrink\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}{}\label{class_s_v_m289___m_f_s_1_1_solver_a78b071d4004e114f5b6b89839ca99b58}
+
+
+Definition at line 1165 of file svm2.\+cpp.
+
+
+
+Referenced by do\+\_\+shrinking(), and Solve().
+
+\index{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}!y@{y}}
+\index{y@{y}!S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver@{S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver}}
+\subsubsection[{\texorpdfstring{y}{y}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf schar}$\ast$ S\+V\+M289\+\_\+\+M\+F\+S\+::\+Solver\+::y\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}{}\label{class_s_v_m289___m_f_s_1_1_solver_ab9586d6d550d7806b9582b9279217ff5}
+
+
+Definition at line 1151 of file svm2.\+cpp.
+
+
+
+Referenced by calculate\+\_\+rho(), do\+\_\+shrinking(), get\+\_\+\+C(), select\+\_\+working\+\_\+set(), and Solve().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Machine\+Learning/\hyperlink{svm2_8cpp}{svm2.\+cpp}\end{DoxyCompactItemize}

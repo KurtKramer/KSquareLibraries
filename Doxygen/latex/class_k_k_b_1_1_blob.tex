@@ -1,0 +1,442 @@
+\hypertarget{class_k_k_b_1_1_blob}{}\section{K\+KB\+:\+:Blob Class Reference}
+\label{class_k_k_b_1_1_blob}\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+
+
+Used by the \hyperlink{class_k_k_b_1_1_raster}{Raster} object to identify a distinct blob; where it is in the raster and its unique id.  
+
+
+
+
+{\ttfamily \#include $<$Blob.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_k_k_b_1_1_blob_a7e4af0a2e14df5a0672bcbcb18089320}{Blob} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+id)
+\item 
+\hyperlink{class_k_k_b_1_1_blob_a8a8d34c9112cb907fdffcb5dbd2dd244}{$\sim$\+Blob} ()
+\item 
+\hyperlink{class_k_k_b_1_1_point}{Point} \hyperlink{class_k_k_b_1_1_blob_a6df3799b92a5c54cb5b805936cfd6b2b}{Bot\+Right} () const 
+\begin{DoxyCompactList}\small\item\em Returns a point to the Bottom Right corner of the blob. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a42dc8a4c5009bcc67cbc39848169559a}{Col\+Left} ()
+\begin{DoxyCompactList}\small\item\em Left most column in the raster object that this blob occupies. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a9ae87430e9269e0fbfcd88a2d5891b88}{Col\+Right} ()
+\begin{DoxyCompactList}\small\item\em Right most column in the raster object that this blob occupies. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_aa38a04e912ff9abf0abb950a69b65955}{Height} ()
+\begin{DoxyCompactList}\small\item\em Number of rows that the blob occupies. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{Id} ()
+\begin{DoxyCompactList}\small\item\em The unique ID assigned to this blob. \end{DoxyCompactList}\item 
+void \hyperlink{class_k_k_b_1_1_blob_a8d0703b3aacfdc6664f81968468962fb}{Initialzie\+As\+New} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \+\_\+id)
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}{Pixel\+Count} ()
+\begin{DoxyCompactList}\small\item\em Number of pixels that are part of this blob. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a6ffc22c0be20c597d49b0f5aa7aad008}{Row\+Bot} ()
+\begin{DoxyCompactList}\small\item\em Bottom row in the raster object that this blob occupies. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_ab6735f537773b0a21f2e37c8793f8868}{Row\+Top} ()
+\begin{DoxyCompactList}\small\item\em Top row in the raster object that this blob occupies. \end{DoxyCompactList}\item 
+\hyperlink{class_k_k_b_1_1_point}{Point} \hyperlink{class_k_k_b_1_1_blob_a563b8d40354febda7059f6ea15796b49}{Top\+Left} () const 
+\begin{DoxyCompactList}\small\item\em Returns a point to the Top Left corner of the blob. \end{DoxyCompactList}\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a5cc53690365e2b055c52f159de2efd1b}{Width} ()
+\begin{DoxyCompactList}\small\item\em Number of columns that this blob occupies. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{col\+Left}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{col\+Right}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_af752299192d447637bd6c56d4b1e0660}{id}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixel\+Count}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{row\+Bot}
+\item 
+\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} \hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{row\+Top}
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_k_k_b_1_1_blob_a3eaa10f55ee0c5c1f0641b324c6d95c5}{Blob\+List}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Used by the \hyperlink{class_k_k_b_1_1_raster}{Raster} object to identify a distinct blob; where it is in the raster and its unique id. 
+
+It is used by the \hyperlink{class_k_k_b_1_1_raster}{Raster} object while performing a connected component analysis. For each distinct blob located an instance of this class will be created. Its location in the raster and its unique blob ID will be stored here. These blobs will later be able to be extracted from the image by referencing this blob.
+
+The \char`\"{}id\char`\"{} field in this blob will be stored in a array in the associated \hyperlink{class_k_k_b_1_1_raster}{Raster} object. This allows the \hyperlink{class_k_k_b_1_1_raster}{Raster} object to identify the specific pixels that belong to this \hyperlink{class_k_k_b_1_1_blob}{Blob}. Using the fields \char`\"{}col\+Left\char`\"{} \char`\"{}col\+Right\char`\"{}, \char`\"{}row\+Bot\char`\"{}, and \char`\"{}row\+Top\char`\"{} the \hyperlink{class_k_k_b_1_1_raster}{Raster} object will be able to quickly locate the associated blob.
+
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_k_k_b_1_1_raster}{K\+K\+B\+::\+Raster} 
+
+\hyperlink{class_k_k_b_1_1_raster_a920f703a69e0585fb8983ecb3fa032f0}{K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob} 
+
+\hyperlink{class_k_k_b_1_1_raster_a6f5f3da9439ecb65a8bb485f669d1759}{K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly} 
+\end{DoxySeeAlso}
+
+
+Definition at line 32 of file Blob.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Blob@{Blob}}
+\index{Blob@{Blob}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Blob(kkint32 \+\_\+id)}{Blob(kkint32 _id)}}]{\setlength{\rightskip}{0pt plus 5cm}Blob\+::\+Blob (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+id}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_a7e4af0a2e14df5a0672bcbcb18089320}{}\label{class_k_k_b_1_1_blob_a7e4af0a2e14df5a0672bcbcb18089320}
+
+
+Definition at line 22 of file Blob.\+cpp.
+
+
+
+References col\+Left, col\+Right, id, pixel\+Count, row\+Bot, and row\+Top.
+
+
+\begin{DoxyCode}
+22                        :
+23   \hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}    (0),
+24   \hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight}   (0),
+25   \hyperlink{class_k_k_b_1_1_blob_af752299192d447637bd6c56d4b1e0660}{id}         (\_id),
+26   \hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} (0),
+27   \hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot}     (0),
+28   \hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}     (0)
+29  
+30 \{
+31 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!````~Blob@{$\sim$\+Blob}}
+\index{````~Blob@{$\sim$\+Blob}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{$\sim$\+Blob()}{~Blob()}}]{\setlength{\rightskip}{0pt plus 5cm}Blob\+::$\sim$\+Blob (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_a8a8d34c9112cb907fdffcb5dbd2dd244}{}\label{class_k_k_b_1_1_blob_a8a8d34c9112cb907fdffcb5dbd2dd244}
+
+
+Definition at line 35 of file Blob.\+cpp.
+
+
+\begin{DoxyCode}
+36 \{
+37 \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Bot\+Right@{Bot\+Right}}
+\index{Bot\+Right@{Bot\+Right}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Bot\+Right() const }{BotRight() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point} K\+K\+B\+::\+Blob\+::\+Bot\+Right (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a6df3799b92a5c54cb5b805936cfd6b2b}{}\label{class_k_k_b_1_1_blob_a6df3799b92a5c54cb5b805936cfd6b2b}
+
+
+Returns a point to the Bottom Right corner of the blob. 
+
+
+
+Definition at line 59 of file Blob.\+h.
+
+
+
+References col\+Right, K\+K\+B\+::\+Point\+::\+Point(), and row\+Bot.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Col\+Left@{Col\+Left}}
+\index{Col\+Left@{Col\+Left}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Col\+Left()}{ColLeft()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Col\+Left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a42dc8a4c5009bcc67cbc39848169559a}{}\label{class_k_k_b_1_1_blob_a42dc8a4c5009bcc67cbc39848169559a}
+
+
+Left most column in the raster object that this blob occupies. 
+
+
+
+Definition at line 46 of file Blob.\+h.
+
+
+
+References col\+Left.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Col\+Right@{Col\+Right}}
+\index{Col\+Right@{Col\+Right}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Col\+Right()}{ColRight()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Col\+Right (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a9ae87430e9269e0fbfcd88a2d5891b88}{}\label{class_k_k_b_1_1_blob_a9ae87430e9269e0fbfcd88a2d5891b88}
+
+
+Right most column in the raster object that this blob occupies. 
+
+
+
+Definition at line 47 of file Blob.\+h.
+
+
+
+References col\+Right.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Height@{Height}}
+\index{Height@{Height}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Height()}{Height()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_aa38a04e912ff9abf0abb950a69b65955}{}\label{class_k_k_b_1_1_blob_aa38a04e912ff9abf0abb950a69b65955}
+
+
+Number of rows that the blob occupies. 
+
+
+
+Definition at line 49 of file Blob.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), and K\+K\+B\+::\+Blob\+List\+::\+Locate\+Most\+Complete().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Id@{Id}}
+\index{Id@{Id}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Id()}{Id()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}{}\label{class_k_k_b_1_1_blob_add1ed75f6509956508b71aabeeae213c}
+
+
+The unique ID assigned to this blob. 
+
+\begin{DoxySeeAlso}{See also}
+Blob\+List\+::next\+Blob\+Id 
+\end{DoxySeeAlso}
+
+
+Definition at line 44 of file Blob.\+h.
+
+
+
+References id.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Connected\+Component(), K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), K\+K\+B\+::\+Raster\+::\+Create\+Color\+With\+Blobs\+Labeld\+By\+Color(), K\+K\+B\+::\+Raster\+::\+Create\+From\+Orginal\+Image\+With\+Specifid\+Blobs\+Only(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), K\+K\+B\+::\+Raster\+::\+Fill\+Blob(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), and K\+K\+B\+::\+Raster\+::\+Reduce\+To\+Most\+Complete\+Blob().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Initialzie\+As\+New@{Initialzie\+As\+New}}
+\index{Initialzie\+As\+New@{Initialzie\+As\+New}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Initialzie\+As\+New(kkint32 \+\_\+id)}{InitialzieAsNew(kkint32 _id)}}]{\setlength{\rightskip}{0pt plus 5cm}void Blob\+::\+Initialzie\+As\+New (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{\+\_\+id}
+\end{DoxyParamCaption}
+)}\hypertarget{class_k_k_b_1_1_blob_a8d0703b3aacfdc6664f81968468962fb}{}\label{class_k_k_b_1_1_blob_a8d0703b3aacfdc6664f81968468962fb}
+
+
+Definition at line 41 of file Blob.\+cpp.
+
+
+
+References col\+Left, col\+Right, id, pixel\+Count, row\+Bot, and row\+Top.
+
+
+\begin{DoxyCode}
+42 \{
+43   \hyperlink{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{colLeft}    = 0;
+44   \hyperlink{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{colRight}   = 0;
+45   \textcolor{keywordtype}{id}         = \_id;
+46   \hyperlink{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{pixelCount} = 0;
+47   \hyperlink{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{rowBot}     = 0;
+48   \hyperlink{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{rowTop}     = 0;
+49 \}
+\end{DoxyCode}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Pixel\+Count@{Pixel\+Count}}
+\index{Pixel\+Count@{Pixel\+Count}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Pixel\+Count()}{PixelCount()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Pixel\+Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}{}\label{class_k_k_b_1_1_blob_a5b3f9098a889a0def5eb49287284b847}
+
+
+Number of pixels that are part of this blob. 
+
+
+
+Definition at line 56 of file Blob.\+h.
+
+
+
+References pixel\+Count.
+
+
+
+Referenced by K\+K\+M\+L\+L\+::\+Gray\+Scale\+Images\+F\+V\+Producer\+::\+Compute\+Feature\+Vector(), and K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Row\+Bot@{Row\+Bot}}
+\index{Row\+Bot@{Row\+Bot}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Row\+Bot()}{RowBot()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Row\+Bot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a6ffc22c0be20c597d49b0f5aa7aad008}{}\label{class_k_k_b_1_1_blob_a6ffc22c0be20c597d49b0f5aa7aad008}
+
+
+Bottom row in the raster object that this blob occupies. 
+
+
+
+Definition at line 51 of file Blob.\+h.
+
+
+
+References row\+Bot.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Row\+Top@{Row\+Top}}
+\index{Row\+Top@{Row\+Top}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Row\+Top()}{RowTop()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Row\+Top (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_ab6735f537773b0a21f2e37c8793f8868}{}\label{class_k_k_b_1_1_blob_ab6735f537773b0a21f2e37c8793f8868}
+
+
+Top row in the raster object that this blob occupies. 
+
+
+
+Definition at line 52 of file Blob.\+h.
+
+
+
+References row\+Top.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Top\+Left@{Top\+Left}}
+\index{Top\+Left@{Top\+Left}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Top\+Left() const }{TopLeft() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point} K\+K\+B\+::\+Blob\+::\+Top\+Left (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a563b8d40354febda7059f6ea15796b49}{}\label{class_k_k_b_1_1_blob_a563b8d40354febda7059f6ea15796b49}
+
+
+Returns a point to the Top Left corner of the blob. 
+
+
+
+Definition at line 58 of file Blob.\+h.
+
+
+
+References col\+Left, K\+K\+B\+::\+Point\+::\+Point(), and row\+Top.
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Width@{Width}}
+\index{Width@{Width}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Width()}{Width()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_k_k_b_1_1_blob_a5cc53690365e2b055c52f159de2efd1b}{}\label{class_k_k_b_1_1_blob_a5cc53690365e2b055c52f159de2efd1b}
+
+
+Number of columns that this blob occupies. 
+
+
+
+Definition at line 54 of file Blob.\+h.
+
+
+
+Referenced by K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), and K\+K\+B\+::\+Blob\+List\+::\+Locate\+Most\+Complete().
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!Blob\+List@{Blob\+List}}
+\index{Blob\+List@{Blob\+List}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{Blob\+List}{BlobList}}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Blob\+List}\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{class_k_k_b_1_1_blob_a3eaa10f55ee0c5c1f0641b324c6d95c5}{}\label{class_k_k_b_1_1_blob_a3eaa10f55ee0c5c1f0641b324c6d95c5}
+
+
+Definition at line 34 of file Blob.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!col\+Left@{col\+Left}}
+\index{col\+Left@{col\+Left}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{col\+Left}{colLeft}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::col\+Left}\hypertarget{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}{}\label{class_k_k_b_1_1_blob_a1d47c1a8131e60211a3dd91910699318}
+
+
+Definition at line 61 of file Blob.\+h.
+
+
+
+Referenced by Blob(), Col\+Left(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), Initialzie\+As\+New(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), K\+K\+B\+::\+Blob\+List\+::\+New\+Blob(), and Top\+Left().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!col\+Right@{col\+Right}}
+\index{col\+Right@{col\+Right}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{col\+Right}{colRight}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::col\+Right}\hypertarget{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}{}\label{class_k_k_b_1_1_blob_a3786c83aeb9b92bc076c14afcc99c463}
+
+
+Definition at line 62 of file Blob.\+h.
+
+
+
+Referenced by Blob(), Bot\+Right(), Col\+Right(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), Initialzie\+As\+New(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), and K\+K\+B\+::\+Blob\+List\+::\+New\+Blob().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!id@{id}}
+\index{id@{id}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{id}{id}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::id}\hypertarget{class_k_k_b_1_1_blob_af752299192d447637bd6c56d4b1e0660}{}\label{class_k_k_b_1_1_blob_af752299192d447637bd6c56d4b1e0660}
+
+
+Definition at line 63 of file Blob.\+h.
+
+
+
+Referenced by Blob(), K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), Id(), and Initialzie\+As\+New().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!pixel\+Count@{pixel\+Count}}
+\index{pixel\+Count@{pixel\+Count}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{pixel\+Count}{pixelCount}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::pixel\+Count}\hypertarget{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}{}\label{class_k_k_b_1_1_blob_a415767d4a364df537d7b2fc06a95721d}
+
+
+Definition at line 64 of file Blob.\+h.
+
+
+
+Referenced by Blob(), K\+K\+B\+::\+Raster\+::\+Connected\+Component8\+Conected(), K\+K\+B\+::\+Raster\+::\+Extract\+Blobs(), Initialzie\+As\+New(), K\+K\+B\+::\+Blob\+List\+::\+Locate\+Largest\+Blob(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), and Pixel\+Count().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!row\+Bot@{row\+Bot}}
+\index{row\+Bot@{row\+Bot}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{row\+Bot}{rowBot}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::row\+Bot}\hypertarget{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}{}\label{class_k_k_b_1_1_blob_ae6f6816134ac19c54071eca96dd89910}
+
+
+Definition at line 65 of file Blob.\+h.
+
+
+
+Referenced by Blob(), Bot\+Right(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), Initialzie\+As\+New(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), K\+K\+B\+::\+Blob\+List\+::\+New\+Blob(), and Row\+Bot().
+
+\index{K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}!row\+Top@{row\+Top}}
+\index{row\+Top@{row\+Top}!K\+K\+B\+::\+Blob@{K\+K\+B\+::\+Blob}}
+\subsubsection[{\texorpdfstring{row\+Top}{rowTop}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf kkint32} K\+K\+B\+::\+Blob\+::row\+Top}\hypertarget{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}{}\label{class_k_k_b_1_1_blob_adeb391a75a10791e7f59566eafa847ae}
+
+
+Definition at line 66 of file Blob.\+h.
+
+
+
+Referenced by Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob(), K\+K\+B\+::\+Raster\+::\+Extract\+A\+Blob\+Tightly(), Initialzie\+As\+New(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Blob\+Ids(), K\+K\+B\+::\+Blob\+List\+::\+Merge\+Into\+Single\+Blob(), K\+K\+B\+::\+Blob\+List\+::\+New\+Blob(), Row\+Top(), and Top\+Left().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_blob_8h}{Blob.\+h}\item 
+C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\hyperlink{_blob_8cpp}{Blob.\+cpp}\end{DoxyCompactItemize}

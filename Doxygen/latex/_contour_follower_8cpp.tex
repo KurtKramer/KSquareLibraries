@@ -1,0 +1,255 @@
+\hypertarget{_contour_follower_8cpp}{}\section{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Contour\+Follower.cpp File Reference}
+\label{_contour_follower_8cpp}\index{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Contour\+Follower.\+cpp@{C\+:/\+Users/\+Kurt/\+Git\+Hub/\+K\+Square\+Libraries/\+K\+K\+Base/\+Contour\+Follower.\+cpp}}
+{\ttfamily \#include \char`\"{}First\+Includes.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\+h$>$}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$math.\+h$>$}\\*
+{\ttfamily \#include $<$complex$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include \char`\"{}Memory\+Debug.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}kku\+\_\+fftw.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Contour\+Follower.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Raster.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}K\+K\+Str.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{Calc\+Magnitude} (\hyperlink{class_k_k_b_1_1_k_k___d_f_t1_d_a4cbc827157dd30ddec2d3753e552a827}{K\+K\+\_\+\+D\+F\+T1\+D\+\_\+\+Float\+::\+Dft\+Complex\+Type} $\ast$dest, \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} index)
+\item 
+\hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{Complex\+Double} $\ast$$\ast$ \hyperlink{_contour_follower_8cpp_a6daa9cf108fac4439e40e86e7b539ab7}{Get\+Fourier\+One\+Dim\+Mask} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} size)
+\item 
+\hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{Complex\+Double} $\ast$$\ast$ \hyperlink{_contour_follower_8cpp_ae192ec685af455c07ee9ad557a44f13b}{Get\+Rev\+Fourier\+One\+Dim\+Mask} (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} size)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{struct_k_k_b_1_1_mov_dir}{Mov\+Dir} \hyperlink{_contour_follower_8cpp_a4c248ea955a609e904037ab98cc73332}{movements} \mbox{[}8\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}!Calc\+Magnitude@{Calc\+Magnitude}}
+\index{Calc\+Magnitude@{Calc\+Magnitude}!Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}}
+\subsubsection[{\texorpdfstring{Calc\+Magnitude(\+K\+K\+\_\+\+D\+F\+T1\+D\+\_\+\+Float\+::\+Dft\+Complex\+Type $\ast$dest, kkint32 index)}{CalcMagnitude(KK_DFT1D_Float::DftComplexType *dest, kkint32 index)}}]{\setlength{\rightskip}{0pt plus 5cm}float Calc\+Magnitude (
+\begin{DoxyParamCaption}
+\item[{{\bf K\+K\+\_\+\+D\+F\+T1\+D\+\_\+\+Float\+::\+Dft\+Complex\+Type} $\ast$}]{dest, }
+\item[{{\bf kkint32}}]{index}
+\end{DoxyParamCaption}
+)}\hypertarget{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}{}\label{_contour_follower_8cpp_a439a52b08a2ee8bb055946b53bbeb2d3}
+
+
+Definition at line 204 of file Contour\+Follower.\+cpp.
+
+
+\begin{DoxyCode}
+207   \{
+208     \textcolor{keywordtype}{double} rp = (float)dest[index].real ();
+209     \textcolor{keywordtype}{double} ip = (float)dest[index].imag ();
+210     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float})sqrt (rp * rp + ip * ip);
+211   \}  \textcolor{comment}{/* CalcMagnitude */}
+\end{DoxyCode}
+\index{Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}!Get\+Fourier\+One\+Dim\+Mask@{Get\+Fourier\+One\+Dim\+Mask}}
+\index{Get\+Fourier\+One\+Dim\+Mask@{Get\+Fourier\+One\+Dim\+Mask}!Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}}
+\subsubsection[{\texorpdfstring{Get\+Fourier\+One\+Dim\+Mask(kkint32 size)}{GetFourierOneDimMask(kkint32 size)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Complex\+Double}$\ast$$\ast$ Get\+Fourier\+One\+Dim\+Mask (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{_contour_follower_8cpp_a6daa9cf108fac4439e40e86e7b539ab7}{}\label{_contour_follower_8cpp_a6daa9cf108fac4439e40e86e7b539ab7}
+
+
+Definition at line 842 of file Contour\+Follower.\+cpp.
+
+
+\begin{DoxyCode}
+843 \{
+844   \textcolor{keyword}{static}  
+845   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curMaskSize = 0;
+846 
+847   \textcolor{keyword}{static}  
+848   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}**  fourierMask = NULL;
+849 
+850   \textcolor{keywordflow}{if}  (size == curMaskSize)
+851     \textcolor{keywordflow}{return}  fourierMask;
+852 
+853   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  N(size, 0);
+854   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  M(size, 0);
+855 
+856   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+857 
+858   \textcolor{keywordflow}{if}  (fourierMask)
+859   \{
+860     \textcolor{keywordflow}{for}  (x = 0;  x < curMaskSize;  x++)
+861     \{
+862       \textcolor{keyword}{delete}  fourierMask[x];
+863       fourierMask[x] = NULL;
+864     \}
+865 
+866     \textcolor{keyword}{delete}[]  fourierMask;
+867     fourierMask = NULL;
+868   \}
+869 
+870   fourierMask = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}*[size];
+871   \textcolor{keywordflow}{for}  (x = 0;  x < size;  x++)
+872   \{
+873     fourierMask[x] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}[size];
+874   \}
+875   curMaskSize = size;
+876 
+877 
+878   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  j;
+879   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  MinusOne (-1, 0);
+880   j = sqrt (MinusOne);
+881 
+882   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  Pi  (3.14159265359, 0);
+883   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  One (1.0, 0);
+884   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  Two (2.0, 0);
+885 
+886   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} m = 0;  m < size;  m++)
+887   \{
+888     complex<double>  mc (m, 0);
+889 
+890     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = 0; k < size; k++)
+891     \{
+892       complex<double>  kc (k, 0);
+893 
+894       \textcolor{comment}{// double  xxx = 2 * 3.14159265359 * (double)k * (double)m / (double)size;}
+895 
+896       \textcolor{comment}{// fourierMask[m][k] = exp (MinusOne * j * Two * Pi * kc * mc / M);}
+897       fourierMask[m][k] = exp (MinusOne * j * Two * Pi * kc * mc / M);
+898 
+899       \textcolor{keywordtype}{double}  exponetPart = 2.0 * 3.14159265359 * (double)k * (\textcolor{keywordtype}{double})m / (double)size;
+900       \textcolor{keywordtype}{double}  realPart = cos (exponetPart);
+901       \textcolor{keywordtype}{double}  imgPart  = -sin (exponetPart);
+902 
+903       \textcolor{keywordflow}{if}  (realPart != fourierMask[m][k].real ())
+904       \{
+905         \textcolor{keywordflow}{continue};
+906       \}
+907 
+908       \textcolor{keywordflow}{if}  (imgPart != fourierMask[m][k].imag ())
+909       \{
+910         \textcolor{keywordflow}{continue};
+911       \}
+912     \}
+913   \}
+914 
+915   \textcolor{keywordflow}{return}  fourierMask;
+916 \}  \textcolor{comment}{/* GetFourierOneDimMask */}
+\end{DoxyCode}
+\index{Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}!Get\+Rev\+Fourier\+One\+Dim\+Mask@{Get\+Rev\+Fourier\+One\+Dim\+Mask}}
+\index{Get\+Rev\+Fourier\+One\+Dim\+Mask@{Get\+Rev\+Fourier\+One\+Dim\+Mask}!Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}}
+\subsubsection[{\texorpdfstring{Get\+Rev\+Fourier\+One\+Dim\+Mask(kkint32 size)}{GetRevFourierOneDimMask(kkint32 size)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Complex\+Double}$\ast$$\ast$ Get\+Rev\+Fourier\+One\+Dim\+Mask (
+\begin{DoxyParamCaption}
+\item[{{\bf kkint32}}]{size}
+\end{DoxyParamCaption}
+)}\hypertarget{_contour_follower_8cpp_ae192ec685af455c07ee9ad557a44f13b}{}\label{_contour_follower_8cpp_ae192ec685af455c07ee9ad557a44f13b}
+
+
+Definition at line 921 of file Contour\+Follower.\+cpp.
+
+
+\begin{DoxyCode}
+922 \{
+923   \textcolor{keyword}{static}  
+924   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  curRevMaskSize = 0;
+925 
+926   \textcolor{keyword}{static}  
+927   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}**  revFourierMask = NULL;
+928 
+929 
+930   \textcolor{keywordflow}{if}  (size == curRevMaskSize)
+931     \textcolor{keywordflow}{return}  revFourierMask;
+932 
+933   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  N(size, 0);
+934   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  M(size, 0);
+935 
+936   \hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32}  x;
+937   
+938 
+939   \textcolor{keywordflow}{if}  (revFourierMask)
+940   \{
+941     \textcolor{keywordflow}{for}  (x = 0;  x < curRevMaskSize;  x++)
+942     \{
+943       \textcolor{keyword}{delete}  revFourierMask[x];
+944       revFourierMask[x] = NULL;
+945     \}
+946 
+947     \textcolor{keyword}{delete}[]  revFourierMask;
+948     revFourierMask = NULL;
+949   \}
+950 
+951 
+952   revFourierMask = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}*[size];
+953   \textcolor{keywordflow}{for}  (x = 0;  x < size;  x++)
+954   \{
+955     revFourierMask[x] = \textcolor{keyword}{new} \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}[size];
+956   \}
+957   curRevMaskSize = size;
+958 
+959   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  j;
+960   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  MinusOne (-1, 0);
+961   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  PositiveOne (1, 0);
+962   j = sqrt (MinusOne);
+963 
+964   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  Pi  (3.1415926, 0);
+965   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  One (1.0, 0);
+966   \hyperlink{namespace_k_k_b_a307e28915a31eb2034af6cb1d0d5fb88}{ComplexDouble}  Two (2.0, 0);
+967 
+968   \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} m = 0;  m < size;  m++)
+969   \{
+970     complex<double>  mc (m, 0);
+971 
+972     \textcolor{keywordflow}{for}  (\hyperlink{namespace_k_k_b_a8fa4952cc84fda1de4bec1fbdd8d5b1b}{kkint32} k = 0; k < size; k++)
+973     \{
+974       complex<double>  kc (k, 0);
+975 
+976       \textcolor{comment}{// double  xxx = 2 * 3.14159265359 * (double)k * (double)m / (double)size;}
+977 
+978       \textcolor{comment}{// fourierMask[m][k] = exp (MinusOne * j * Two * Pi * kc * mc / M);}
+979       revFourierMask[m][k] = exp (PositiveOne * j * Two * Pi * kc * mc / M);
+980 
+981 
+982       \textcolor{keywordtype}{double}  exponetPart = 2.0 * 3.14159265359 * (double)k * (\textcolor{keywordtype}{double})m / (double)size;
+983       \textcolor{keywordtype}{double}  realPart = cos (exponetPart);
+984       \textcolor{keywordtype}{double}  imgPart  = sin (exponetPart);
+985 
+986       \textcolor{keywordflow}{if}  (realPart != revFourierMask[m][k].real ())
+987       \{
+988         \textcolor{keywordflow}{continue};
+989       \}
+990 
+991       \textcolor{keywordflow}{if}  (imgPart != revFourierMask[m][k].imag ())
+992       \{
+993         \textcolor{keywordflow}{continue};
+994       \}
+995     \}
+996   \}
+997 
+998   \textcolor{keywordflow}{return}  revFourierMask;
+999 \}  \textcolor{comment}{/* GetRevFourierOneDimMask */}
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\index{Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}!movements@{movements}}
+\index{movements@{movements}!Contour\+Follower.\+cpp@{Contour\+Follower.\+cpp}}
+\subsubsection[{\texorpdfstring{movements}{movements}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Mov\+Dir} movements\mbox{[}8\mbox{]}}\hypertarget{_contour_follower_8cpp_a4c248ea955a609e904037ab98cc73332}{}\label{_contour_follower_8cpp_a4c248ea955a609e904037ab98cc73332}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{\{-1,  0\}, 
+                          \{-1,  1\}, 
+                          \{ 0,  1\}, 
+                          \{ 1,  1\}, 
+                          \{ 1,  0\}, 
+                          \{ 1, -1\}, 
+                          \{ 0, -1\}, 
+                          \{-1, -1\}  
+                         \}
+\end{DoxyCode}
+
+
+Definition at line 34 of file Contour\+Follower.\+cpp.
+
