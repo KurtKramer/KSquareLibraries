@@ -35,7 +35,8 @@ void  KKB::Tred2 (kkint32   n,
                  )
 {
   if ((n < 1) || (n > 2))
-    throw KKException("KKB::Tred2  n:" + StrFromInt32(n) + " out of range of 1 thru 2");  kkint32  i, j, k, l;
+    throw KKException("KKB::Tred2  n:" + StrFromInt32(n) + " out of range of 1 thru 2");  
+  kkint32  i, j, k, l;
 
   double  scale, hh, h, g, f;
 
@@ -53,7 +54,7 @@ void  KKB::Tred2 (kkint32   n,
       {
         e[i] = a[i][l];
       }
-
+  
       else
       {
         for (k = 0;  k < l + 1;  k++)
@@ -64,7 +65,7 @@ void  KKB::Tred2 (kkint32   n,
             a[i][k] /= scale;     // Use scaled a's for transformation
           h+= a[i][k] * a[i][k];  // h = sigma
         }
-        
+
         f = a[i][l];
         g = (f > 0 ? -sqrt(h) : sqrt(h));
         e[i] = scale * g;
@@ -213,7 +214,7 @@ void  KKB::tqli (kkint32   n,
   {
     iter = 0;
 
-    do 
+    do
     {
       for  (m = l;  m < n - 1;  m++)
       {
@@ -266,6 +267,11 @@ void  KKB::tqli (kkint32   n,
 
           for  (k = 0;  k < n;  k++)
           {
+            if  ((k < 0)  ||  (k > 1)  || (i < 0)  ||  (i > 0))
+            {
+              cerr << endl << "KKB::tqli  k[" << k << "]  or  i[" << i << "]  have exceeded boundaries." << endl << endl;
+            }
+
             f = z[k][i + 1];
             z[k][i + 1] = s * z[k][i] + c * f;
             z[k][i] = c * z[k][i] - s * f;

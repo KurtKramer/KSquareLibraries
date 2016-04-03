@@ -1,34 +1,29 @@
 #ifndef  _KKJOB_
 #define  _KKJOB_
 
-//***************************************************************************
-//*                                                                         *
-//*  Kurt Kramer                                                            *
-//*   The RandomSplits process uses this library.                           *
-//*                                                                         *
-//*                                                                         *
-//*  Kurt Kramer                                                            *
-//*  2009-10-10                                                             *
-//*                                                                         *
-//*   This code is currently not in use.  I am toying with the idea to make *
-//*   a general KKJob Management Frame Work.  The Idea is that 'KKJob' and      *
-//*   'KKJobManager' would be used to build specific KKJob Management code      *
-//*   arround.  In the case of 'FeatureSeletion'  we would detrive sub-     *
-//*   classes to manage the Major Speps and Jobs which would then in turn   *
-//*   call a different set of Derved classes that would manage Binary,      * 
-//*   MultiClass,  Parameter Tuning, and Feature Selection tasks.           *
-//*                                                                         *
-//*   ex:  KKJobManager would be replaced by.                                  *
-//*      ParameterManager:: public KKJobManager                               *
-//*      FeatureSelectionManager:: public KKJobManager                        *
-//*                                                                         *
-//*   Would also need to create a set of classes to manage the RandomSplits *
-//*                                                                         *
-//***************************************************************************
-
-
-
-
+//****************************************************************************
+//*                                                                          *
+//*  Kurt Kramer                                                             *
+//*   The RandomSplits process uses this library.                            *
+//*                                                                          *
+//*  Kurt Kramer                                                             *
+//*  2009-10-10                                                              *
+//*                                                                          *
+//*   This code is currently not in use.  I am toying with the idea to make  *
+//*   a general KKJob Management Frame Work.  The Idea is that 'KKJob' and   *
+//*   'KKJobManager' would be used to build specific KKJob Management code   *
+//*   around.  In the case of 'FeatureSeletion' we would derive subclasses   *
+//*   to manage the Major Steps and Jobs which would then in turn call a     *
+//*   different set of derived classes that would manage Binary, MultiClass, *
+//*   Parameter Tuning, and Feature Selection tasks.                         *
+//*                                                                          *
+//*   ex:  KKJobManager would be replaced by.                                *
+//*      ParameterManager:: public KKJobManager                              *
+//*      FeatureSelectionManager:: public KKJobManager                       *
+//*                                                                          *
+//*   Would also need to create a set of classes to manage the RandomSplits  *
+//*                                                                          *
+//****************************************************************************
 
 
 #include "KKQueue.h"
@@ -37,19 +32,18 @@
 #include "KKStr.h"
 
 
-
 /**
- *@Namespace KKJobManagment
- *@brief  A framework for managing a large number of processes(Jobs) in a multi-cpu/ multi-o/s environment.
- *@details The Idea is that 'KKJob' and  'KKJobManager' would be used to build specific KKJob Management code
- * arround.  In the case of 'FeatureSeletion'  we would detrive sub-classes to manage the Major Speps and 
- * Jobs which would then in turn call a different set of Derved classes that would manage Binary, MultiClass,  
+ * @Namespace KKJobManagment
+ * @brief  A framework for managing a large number of processes(Jobs) in a multi-cpu/ multi-o/s environment.
+ * @details The Idea is that 'KKJob' and  'KKJobManager' would be used to build specific KKJob Management code
+ * around. In the case of 'FeatureSeletion'  we would derive sub-classes to manage the Major Steps and 
+ * Jobs which would then in turn call a different set of derived classes that would manage Binary, MultiClass,  
  * Parameter Tuning, and Feature Selection tasks.
- *@code
+ * @code
  *   ex:  KKJobManager would be replaced by.
  *      ParameterManager:: public KKJobManager
  *      FeatureSelectionManager:: public KKJobManager
- *@endcode
+ * @endcode
  *
  *  The RandomSplits application makes use of the framework.
  */
@@ -76,7 +70,7 @@ namespace  KKJobManagment
 
     KKJob (const KKJob&  j);
 
-    //  To create a brand new job that has not been proceesed yet.  
+    /**  To create a new job that has not been processed yet.  */
     KKJob (JobManagerPtr  _manager,
            kkint32        _jobId,
            kkint32        _parentId,
@@ -91,26 +85,32 @@ namespace  KKJobManagment
     ~KKJob ();
 
 
-
-    //*************************************************************************************************************************
+    /**************************************************************************/
+    /*   Types and methods required for supporting KKJob factory creation.    */
+    /**************************************************************************/
     typedef  KKJobPtr (*ConstructorPtr)(JobManagerPtr _manager);
 
     typedef  map<KKStr, ConstructorPtr>  ConstructorIndex;
 
-    static  ConstructorIndex  registeredConstructors;  /**< Track all the different constructors.  Will be used to know wich constructor to
-                                                        * use when reading the status file.
-                                                        */
+
+    /** 
+     * Tracks the different constructors that can create new KKJob derived classes.  When reading the status file 
+     * reading the status file the name of the derived KKJob class will be specified; using the following data structure
+     * 'CallAppropriateConstructor' will know which constructor to use.
+     */
+    static  ConstructorIndex  registeredConstructors;  
 
     static  void  RegisterConstructor (const KKStr&    _name,
                                        ConstructorPtr  _constructor
                                       );
 
+    /**
+     * Given name of KKJob derived class('_jobTypeName') and its initial values in '_statusStr' will call registered constructor.
+     */
     static  KKJobPtr  CallAppropriateConstructor (JobManagerPtr  _manager,
                                                   const KKStr&   _jobTypeName,
                                                   const KKStr&   _statusStr
                                                  );
-    //*************************************************************************************************************************
-
 
 
 
@@ -132,21 +132,19 @@ namespace  KKJobManagment
     virtual  KKJobPtr  Duplicate ()  const;  /**< Create a duplicate instance. */
 
 
-    virtual  const char*   JobType ()  const;     /**< This will allow us to know which specific implementaion
-                                                   * of 'KKJob'  an instance really is.
-                                                   */
+    virtual  const char*   JobType ()  const;     /**< Specifies the derived KKJob class; derived classes should return the their name. */
 
     virtual  void       ProcessNode ();
 
     virtual  void       ReFresh (KKJob&  j);
 
-    virtual  KKStr      ToStatusStr ();      /**< Any derived classes that implement this method must call its base class version 1st. */
+    virtual  KKStr      ToStatusStr ();      /**< Derived classes that implement this method must also call its base class version 1st. */
 
 
     /**
-     *@brief Imjpelmentation specific field processing.
-     *@details Any SubClass of KKJob  needs to define this method.  Whenever the 'ProcessStatusStr' method can not identify a field
-     * it will call this method to let the child Class process the field.
+     * @brief Implementation specific field processing.
+     * @details All derived classes of KKJob  are required to  define this method; whenever the 'ProcessStatusStr' method can not identify a field
+     *  it will call this method to let the child Class process the field.
      */
     virtual
       void  ProcessStatusField (const KKStr&  fieldName,
@@ -155,11 +153,11 @@ namespace  KKJobManagment
 
 
     /**
-     *@brief  Write out completed job results to status file.
-     *@details This method will get called right after the "KKJob" status line gets written when a KKJob is completed.  
-     * See 'KKJobManager::GetNextSetOfJobs'.  If a job needs to write more data to the Status file then you want to 
-     * put on a single status line this is where you would do it.   You write all the text in a format that you 
-     * want to support.  'KKJobManager' will bracket it with <KKJob JobType=KKJob::JobType, JobId=####>   and </KKJob>
+     * @brief  Write out completed job results to status file.
+     * @details This method will get called right after the "KKJob" status line gets written when a KKJob is completed.  
+     *  See 'KKJobManager::GetNextSetOfJobs'.  If a job needs to write more data to the Status file then you want to 
+     *  put on a single status line this is where you would do it.   You write all the text in a format that you 
+     *  want to support.  'KKJobManager' will bracket it with <KKJob JobType=KKJob::JobType, JobId=####>   and </KKJob>
      *@code
      * ex:
      *<RandomSplitJob>
@@ -187,8 +185,7 @@ namespace  KKJobManagment
     void  AddPrerequisites (kkint32    _prerequisite);
     void  AddPrerequisites (VectorInt  _prerequisites);
 
-    bool  InPrerequisites (kkint32 _jobId);   // Retuens true if  '_jobId' is in 'prerequisites'.
-
+    bool  InPrerequisites (kkint32 _jobId);   /**< Returns true if  '_jobId' is in 'prerequisites'. */
 
     static   KKStr      JobStatusToStr   (JobStatus  status);
     static   JobStatus  JobStatusFromStr (const KKStr&  statusStr);
@@ -209,11 +206,11 @@ namespace  KKJobManagment
     kkint32         jobId;
     kkint32         parentId;
     JobManagerPtr   manager;
-    kkint32         numProcessors;         /**< Number of CPU's that are currently processing this node;  That is 
+    kkint32         numProcessors;         /**< Number of CPU's that are currently processing this node; that is 
                                             * the number that are currently calling the 'ProcessNode' method.
                                             */
 
-    kkint32         numPorcessesAllowed;   /**< The number of Processes that are allowd to process at same time.
+    kkint32         numPorcessesAllowed;   /**< The number of Processes that are allowed to process at same time.
                                             * that is ('numPorcessesAllowed' <= 'numActiveProcessors').
                                             */
 

@@ -3702,24 +3702,22 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
 
 wchar_t*  KKStr::ToWchar_t () const
 {
+  size_t returnValue;
+
   wchar_t* wa = NULL;
   if  (val == NULL)
   {
     wa = new wchar_t[1];
-    mbstowcs (wa, "", 1);
-    return  wa;
+    mbstowcs_s(&returnValue, wa, 1, "", 1);
   }
   else
   {
     size_t  wideLen = len + 1;
     wa = new wchar_t[wideLen];
-    mbstowcs (wa, val, wideLen);
+    mbstowcs_s(&returnValue, wa, wideLen, val, len);
   }
   return wa;
 }
-
-
-
 
 
 double  KKStr::ToLatitude ()  const

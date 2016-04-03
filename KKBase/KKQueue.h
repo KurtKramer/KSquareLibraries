@@ -8,12 +8,10 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
-// Have to use _KKU_KKQUEUE_ because _QUEUE_ is used by #include <queue>  from STL
-
 /**
- *@file KKQueue.h
- *@details
- *@code
+ * @file KKQueue.h
+ * @details
+ * @code
  *************************************************************************************
  **                                                                                  *
  **  Developed By:  Kurt A. Kramer                                                   *

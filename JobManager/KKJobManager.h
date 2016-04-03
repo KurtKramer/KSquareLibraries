@@ -12,20 +12,20 @@ namespace  KKJobManagment
 #include "RunLog.h"
 
 
-/*!
- \namespace  KKJobManagment
- \brief  NameSpace for the JobManagement Library.
+/**
+ *@namespace  KKJobManagment
+ *@brief  NameSpace for the JobManagement Library.
  */
 
 namespace  KKJobManagment
 {
-  /*!
-  \class  KKJobManager
-  \brief  Responsable for keeping track of a list of jobs.
-  \details See the application called RandomSplitsJobManager. It is the first alplication to use 
-           this library; any class that is derived from this class are required to implement these
-           method  "StatusFileProcessLine",  "StatusFileProcessLineJobStatusChange", "ToStatusStr"
-  */
+  /**
+   *@class  KKJobManager
+   *@brief  Responsible for keeping track of a list of jobs.
+   *@details See the application called RandomSplitsJobManager. It is the first application to use 
+   *         this library; any class that is derived from this class are required to implement these
+   *        method  "StatusFileProcessLine",  "StatusFileProcessLineJobStatusChange", "ToStatusStr"
+   */
   class  KKJobManager: public  KKJob
   {
   public:
@@ -33,28 +33,28 @@ namespace  KKJobManagment
 
     KKJobManager (const KKJobManager& j);
 
-    KKJobManager (JobManagerPtr _manager,               /*!< Ptr to job that is managing this 'KKJobManager'  */
+    KKJobManager (JobManagerPtr _manager,               /**< Ptr to job that is managing this 'KKJobManager'  */
                   kkint32       _jobId,
                   kkint32       _parentId,
                   kkint32       _numPorcessesAllowed,
-                  const KKStr&  _managerName,           /*!< Name of this 'KKJobManager' ; status and lock file will be based on it.                */
-                  kkint32       _numJobsAtATime,        /*!< The number of jobs that can be allocatd at one time for a single process to execute. */
+                  const KKStr&  _managerName,           /**< Name of this 'KKJobManager' ; status and lock file will be based on it.               */
+                  kkint32       _numJobsAtATime,        /**< The number of jobs that can be allocated at one time for a single process to execute. */
                   RunLog&       _log
                  );
 
     ~KKJobManager ();
 
 
-    /*!
-     \brief  Initialize the KKJobManager object.
-     \details  This is the first Method that needs to be called right after the object is constructed.
+    /**
+     *@brief  Initialize the KKJobManager object.
+     *@details  This is the first Method that needs to be called right after the object is constructed.
      */
     void  InitilizeJobManager (bool&  successful);
 
 
-    virtual  KKJobPtr  Duplicate ()  const = 0;  /*!< Create a duplicate instance.  */
+    virtual  KKJobPtr  Duplicate ()  const = 0;  /**< Create a duplicate instance.  */
 
-    virtual  const char*   JobType ()  const;   /*!< Allows us to know which specific implementaion of 'KKJob'  an instance really is. */
+    virtual  const char*   JobType ()  const;   /**< Allows us to know which specific implementation of 'KKJob'  an instance really is. */
 
 
     bool          SupportCompletedJobData () const  {return  supportCompletedJobData;}
@@ -70,7 +70,7 @@ namespace  KKJobManagment
     bool          QuitRunning       () const  {return  quitRunning;}
 
 
-    kkint32       AllocateNextJobId ();  // Used to get next available KKJob Id
+    kkint32       AllocateNextJobId ();  /**< Used to get next available KKJob Id */
 
     bool          AreAllJobsDone ();
 
@@ -78,7 +78,7 @@ namespace  KKJobManagment
  
     void          EndBlock ();
 
-    kkint32       GetNextJobId ();   // Returns 'nextJobId' then increments by '1'.
+    kkint32       GetNextJobId ();   /**< Returns 'nextJobId' then increments by '1'. */
   
     void          Restart ();
   
@@ -90,11 +90,11 @@ namespace  KKJobManagment
 
   private:
     virtual
-      KKJobListPtr  JobsCreateInitialSet () = 0;   // Derived classes use this method to sed the initial set of jobs.
+      KKJobListPtr  JobsCreateInitialSet () = 0;   /**< Derived classes use this method to seed the initial set of jobs. */
 
 
     /**
-     *@brief  KKJob manager calls this method when ever it is rady to start processing another group of jobs.
+     *@brief  KKJob manager calls this method when ever it is ready to start processing another group of jobs.
      *@details Derived classes need to implement this method; it will be called when all jobs have been completed.  The 
      * variable 'jobs' will contain a list of all jobs.
      *@params[in,out]  jobsJustCompletd -  Contains a list of jobs that have been completed since the last time this 
@@ -117,7 +117,7 @@ namespace  KKJobManagment
 
 
     /** 
-     *@brief In one (Block - EndBlock)  sequesnce will update completd jobs and select next set of jobs to process.
+     *@brief In one (Block - EndBlock)  sequence will update completed jobs and select next set of jobs to process.
      */
     KKJobListPtr  GetNextSetOfJobs (KKJobListPtr  completedJobs);
 
@@ -136,11 +136,11 @@ namespace  KKJobManagment
 
     ofstream*  StatusFileOpen (ios::openmode  openMode);
 
-    void       StatusFileLoad    ();  /*!< To load initial contents of status file.  */
+    void       StatusFileLoad    ();  /**< To load initial contents of status file.  */
   
-    void       StatusFileRefresh ();  /*!< Will read in any changes from status file since last call.  */
+    void       StatusFileRefresh ();  /**< Will read in any changes from status file since last call.  */
 
-    void       StatusFileWrite   ();  /*!< Will rewrite the status file from scratch;  the old one will be deleted.  */
+    void       StatusFileWrite   ();  /**< Will rewrite the status file from scratch;  the old one will be deleted.  */
 
 
   protected:
@@ -154,7 +154,7 @@ namespace  KKJobManagment
     virtual void    StatusFileProcessLineJobStatusChange (KKStr&  statusLineStr);
 
     virtual KKStr   ToStatusStr ();  /**<derived classes should implement this method.  They need to return a tab
-                                      * delimietd string with all there parameters
+                                      * delimited string with all there parameters
                                       * <FieldName1> <\t> <FieldValue1> <\t> <fieldName2> <\t> <FieldValue2>  etc etc etc ...
                                       * They should call the base Class version of this method and return that string first.
                                       * ex:  return KKJobManager::ToStatusStr () + "\t" + "FieldName1" + "\t" + "Value1" + "\t" + "FieldName2" + "\t" + "Value2";
@@ -181,16 +181,16 @@ namespace  KKJobManagment
 
 
     KKJobListPtr    jobs;                 /**<List of jobs that we are working with.  We
-                                           * will be maintaining consistance with other
+                                           * will be maintaining consistency with other
                                            * parallel running processes through the 
                                            * 'status' file.  As we make changes to each 
-                                           * individule 'BinaryJob' we write them out to
+                                           * individual 'BinaryJob' we write them out to
                                            * the status file.  We periodically read from 
                                            * the status file to see if there have been
                                            * changes made by other processors.
                                            */
   
-    kkint32         blockLevel;           /**< Starts at 0; increments with each Call to 'Block'  and  decrementes with 'EndBlock'  */
+    kkint32         blockLevel;           /**< Starts at 0; increments with each Call to 'Block'  and  decrements with 'EndBlock'  */
     kkint32         lockFile;
     KKStr           lockFileName;
     bool            lockFileOpened;
