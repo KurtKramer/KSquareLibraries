@@ -556,7 +556,7 @@ namespace  KKB
     {
       // This should not be able to happen; but if it does then we have a flaw in the code or the logic somewhere,
       cerr << "KKQueue<Entry>::FindTheKthElement  ***ERROR***  An invalid situation just occurred." << endl
-            <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m        << endl;
+           <<"        k=" << k << ",  left=" << left << ", right=" << right << ", m=" << m          << endl;
       return  m - 1;
     }
   }  /* FindTheKthElement */
@@ -783,15 +783,10 @@ namespace  KKB
       exit (1);
     }
 
-    //vector<typename Entry*>&  us (*this);
     EntryPtr  tempPtr = std::vector<Entry*>::operator[] (idx1);
-
-    // (*this)[idx1];
 
     std::vector<EntryPtr>::operator[] (idx1) = std::vector<EntryPtr>::operator[] (idx2);
     std::vector<EntryPtr>::operator[] (idx2) = tempPtr;
-    //(*this)[idx1] = (*this)[idx2];
-    //(*this)[idx2] = tempPtr;
   }  /* SwapIndexes */
 
 
