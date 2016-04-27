@@ -8,14 +8,14 @@
 
 
 #if  defined(WIN32)
-  #define  OS_WINDOWS
+  #define  KKOS_WINDOWS
   #if  !defined(DOXYGEN)
     #include <windows.h>
   #endif
 #endif
 
 #if  defined(WIN64)
-#define  OS_WINDOWS
+#define  KKOS_WINDOWS
 #endif
 
 #if  defined(_MSC_VER)

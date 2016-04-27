@@ -8,7 +8,7 @@
 #include <vector>
 #include <string.h>
 
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 #include <windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
@@ -209,7 +209,7 @@ RasterPtr  KKB::ReadImage (const KKStr&  imageFileName)
     image = ReadImagePPM (imageFileName);
   }
 
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   else if  ((extension == "jpg")  ||  (extension == "tif")  ||  (extension == "tiff"))
   {
     image = ReadImageUsingGDI (imageFileName);
@@ -225,7 +225,7 @@ RasterPtr  KKB::ReadImage (const KKStr&  imageFileName)
 }  /* ReadImage */
 
 
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 
 #include <Gdipluspixelformats.h>
 

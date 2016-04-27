@@ -8,7 +8,7 @@
 
 #include  "FirstIncludes.h"
 
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
 #include <direct.h>
 #include <windows.h>
 #include <Lmcons.h>
@@ -92,7 +92,7 @@ FILE*  KKB::osFOPEN (const char* fileName,
 
 kkint64  KKB::osFTELL (FILE* f)
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   return  _ftelli64 (f);
 #else
   return  ftello( f);
@@ -106,7 +106,7 @@ int  KKB::osFSEEK (FILE*    f,
                    int      origin
                   )
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   return  _fseeki64(f, offset, origin);
 #else
   return  fseeko (f, offset, origin);
@@ -1353,7 +1353,7 @@ KKStr  KKB::osGetParentDirPath (KKStr  dirPath)
 
 KKStr   KKB::osGetHostName ()
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   char  buff[1024];
   DWORD buffSize = sizeof (buff) - 1;
   memset (buff, 0, sizeof(buff));
@@ -1401,7 +1401,7 @@ KKStr   KKB::osGetHostName ()
 
 KKStr  KKB::osGetProgName ()
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   KKStr  progName;
 
   char filename[ MAX_PATH ];
@@ -1425,7 +1425,7 @@ KKStr  KKB::osGetProgName ()
 
 KKStr  KKB::osGetUserName ()
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   TCHAR name [ UNLEN + 1 ];
   DWORD size = UNLEN + 1;
 
@@ -1448,7 +1448,7 @@ KKStr  KKB::osGetUserName ()
 
 kkint32  KKB::osGetNumberOfProcessors ()
 {
-#if  defined(OS_WINDOWS)
+#if  defined(KKOS_WINDOWS)
   KKStrPtr numProcessorsStr = osGetEnvVariable ("NUMBER_OF_PROCESSORS");
   kkuint32  numOfProcessors = -1;
   if  (numProcessorsStr)

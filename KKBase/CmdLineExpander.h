@@ -10,7 +10,7 @@
 #include "KKStr.h"
 
 
-#if  !defined(OS_WINDOWS)
+#if  !defined(KKOS_WINDOWS)
 // Disable "assignment operator could not be generated" warning.
 #pragma warning(disable : 4512)
 #endif

@@ -574,7 +574,7 @@ void  SegmentorOTSU::ZeroOutNaN (vector<T>&  v)
   }
 }
 
-#if  !defined(OS_WINDOWS)
+#if  !defined(KKOS_WINDOWS)
 bool  _isnan (double&   d)
 {
   return  !(isnan (d) == 0);
