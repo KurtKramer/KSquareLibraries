@@ -70,13 +70,13 @@ namespace KKMLL
 
     virtual  FeatureVectorPtr  Duplicate ()  const;
 
-    void  BreakTie         (float         _breakTie)        {breakTie         = _breakTie;}         /**< @brief Update the BreakTie value. */
-    void  MLClass          (MLClassPtr    _mlClass)         {mlClass          = _mlClass;}          /**< @brief Assign a class to this example. */
-    void  ExampleFileName  (const KKStr&  _exampleFileName) {exampleFileName  = _exampleFileName;}  /**< @brief Name of source of feature vector, ex: file name of image that the feature vector was computed from. */
-    void  MissingData      (bool          _missingData)     {missingData      = _missingData;}      /**< @brief True indicates that not all the feature data was present when this example was loaded from a data file. */
-    void  OrigSize         (float         _origSize)        {origSize         = _origSize;}         /**< @brief The value of Feature[0] before normalization. */
+    void  BreakTie         (float         _breakTie)        {breakTie         = _breakTie;}         /**< Update the BreakTie value. */
+    void  MLClass          (MLClassPtr    _mlClass)         {mlClass          = _mlClass;}          /**< Assign a class to this example. */
+    void  ExampleFileName  (const KKStr&  _exampleFileName) {exampleFileName  = _exampleFileName;}  /**< Name of source of feature vector, ex: file name of image that the feature vector was computed from. */
+    void  MissingData      (bool          _missingData)     {missingData      = _missingData;}      /**< True indicates that not all the feature data was present when this example was loaded from a data file. */
+    void  OrigSize         (float         _origSize)        {origSize         = _origSize;}         /**< The value of Feature[0] before normalization. */
     void  PredictedClass   (MLClassPtr    _predictedClass)  {predictedClass   = _predictedClass;}
-    void  Probability      (float         _probability)     {probability      = _probability;}      /**< @brief Assign a prediction probability to this example.  */
+    void  Probability      (float         _probability)     {probability      = _probability;}      /**< Assign a prediction probability to this example.  */
     void  Version          (kkint16       _version)         {version          = _version;}
 
     /**
@@ -109,24 +109,25 @@ namespace KKMLL
     void  Validated        (bool   _validated)     {validated    = _validated;}
 
 
-    float          BreakTie           () const  {return breakTie;}         /**< @brief The difference in probability between the two most likely classes. */
-    const KKStr&   ClassName          () const;                            /**< @brief Name of class that this example is assigned to.                    */
-    MLClassPtr     MLClass            () const  {return mlClass;}          /**< @brief Class that is example is assigned to.                              */
-    const KKStr&   MLClassName        () const;                            /**< @brief Name of class that this example is assigned to.                    */
-    const KKStr&   ExampleFileName      () const  {return exampleFileName;}  /**< @brief Name of file that this FeatureVector was computed from.            */
-    bool           MissingData        () const  {return missingData;}      /**< @brief True indicates that one or more features were missing.             */        
-    kkint32        NumOfFeatures      () const  {return numOfFeatures;}    /**< @brief Number of features in this FeatureVector.                          */
-    float          OrigSize           () const  {return origSize;}         /**< @brief The value of Feature[0] before normalization.                      */
+    float          BreakTie           () const  {return breakTie;}         /**< The difference in probability between the two most likely classes. */
+    MLClassPtr     MLClass            () const  {return mlClass;}          /**< Class that is example is assigned to.                              */
+    const KKStr&   MLClassName        () const;                            /**< Name of class that this example is assigned to.                    */
+    const KKStr&   MLClassNameUpper   () const;                            /**< Name of class that this example is assigned to.                    */
+    const KKStr&   ExampleFileName    () const  {return exampleFileName;}  /**< Name of file that this FeatureVector was computed from.            */
+    KKStr          ExampleRootName    () const;                            /**< Root name of file that this FeatureVector was computed from.       */
+    bool           MissingData        () const  {return missingData;}      /**< True indicates that one or more features were missing.             */        
+    kkint32        NumOfFeatures      () const  {return numOfFeatures;}    /**< Number of features in this FeatureVector.                          */
+    float          OrigSize           () const  {return origSize;}         /**< The value of Feature[0] before normalization.                      */
     MLClassPtr     PredictedClass     () const  {return predictedClass;}
     const KKStr&   PredictedClassName () const;
-    float          Probability        () const  {return probability;}      /**< @brief The probability assigned by classifier to the predicted class.     */
+    float          Probability        () const  {return probability;}      /**< The probability assigned by classifier to the predicted class.     */
     float          TrainWeight        () const  {return trainWeight;}
     bool           Validated          () const  {return validated;}
     kkint16        Version            () const  {return version;}
 
-    float          FeatureData        (kkint32 featureNum)  const;         /**< @returns The value of 'featureNum'                             */
-    const float*   FeatureData        () const  {return featureData;}      /**< @brief Returns as a pointer to the feature data itself.        */
-    float*         FeatureDataAlter   ()        {return featureData;}      /**< @brief Same as 'FeatureData() except you can modify the data.  */
+    float          FeatureData        (kkint32 featureNum)  const;         /**< returns The value of 'featureNum'                             */
+    const float*   FeatureData        () const  {return featureData;}      /**< Returns as a pointer to the feature data itself.        */
+    float*         FeatureDataAlter   ()        {return featureData;}      /**< Same as 'FeatureData() except you can modify the data.  */
                                                                       
     const float*   FeatureDataConst   () const  {return featureData;}
     bool           FeatureDataValid   ();
@@ -543,6 +544,10 @@ namespace KKMLL
     class  RootNameComparrison;
     class  RootNameComparrisonReversed;
 
+
+    void  FeatureVectorList::SortBy (bool reversedOrder,  
+                                     bool (*comp)(FeatureVectorPtr l, FeatureVectorPtr r)
+                                    );
 
     void  ValidateFileDescAndFieldNum (kkint32      fieldNum, 
                                        const char*  funcDesc

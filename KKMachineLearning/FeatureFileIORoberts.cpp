@@ -164,7 +164,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
         _out << example->FeatureData (featureNum);
       _out << " ";
     }
-    _out << example->ClassName ();
+    _out << example->MLClassName ();
     _out << endl;
     _numExamplesWritten++;
   }

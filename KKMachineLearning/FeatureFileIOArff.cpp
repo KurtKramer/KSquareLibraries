@@ -206,7 +206,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     if  (imageFileName.Empty ())
       imageFileName == "Row_" + StrFormatInt (idx, rowMask.Str ());
     _out << imageFileName << ",";
-    _out << example->ClassName ();
+    _out << example->MLClassName ();
     _out << endl;
     _numExamplesWritten++;
   }

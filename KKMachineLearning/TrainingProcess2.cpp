@@ -920,12 +920,12 @@ void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingE
     {
       log.Level (-1) << endl
           << "TrainingProcess2::AddImagesToTrainingLibray    ***ERROR***  " << endl
-          << "        Example["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "] Has Invalid Feature Data."
+          << "        Example["  << example->ExampleFileName () << "], Class[" << example->MLClassName () << "] Has Invalid Feature Data."
           << endl << endl;
 
       if  (report)
       {
-        *report << "** ERROR **,  Image["  << example->ExampleFileName () << "], Class[" << example->ClassName () << "]"
+        *report << "** ERROR **,  Image["  << example->ExampleFileName () << "], Class[" << example->MLClassName () << "]"
                 << "  Has Invalid Feature Data."
                 << endl;
       }

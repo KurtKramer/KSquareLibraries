@@ -218,7 +218,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
       kkint32  featureNum = _selFeatures[x];
       _out << example->FeatureData (featureNum) << ",";
     }
-    _out << example->ClassName ();
+    _out << example->MLClassName ();
     _out << endl;
     _numExamplesWritten++;
   }

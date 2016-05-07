@@ -244,7 +244,7 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
   {
     example = _data.IdxToPtr (idx);
 
-    _out << example->ClassName ();
+    _out << example->MLClassName ();
 
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {

@@ -187,32 +187,6 @@ float  FeatureVector::TotalOfFeatureData ()  const
 
 
 
-
-const  
-KKStr&   FeatureVector::ClassName ()  const
-{
-  static  const
-  KKStr  imageFeaturesClassNameInvalid = "*INVALID*";
-
-  if  (!mlClass)
-  {
-    cerr << endl
-         << "FeatureVector::ClassName   *** ERROR ***" << endl
-         << endl
-         << "               Attempt to get ClassName,  But not pointing to valid MLClass Object" << endl
-         << endl;
-    return  imageFeaturesClassNameInvalid;
-  }
-  else
-  {
-    return  mlClass->Name ();
-  }
-}  /* ClassName */
-
-
-
-
-
 void  FeatureVector::AddFeatureData (kkint32  _featureNum,
                                      float    _featureData
                                     )
@@ -268,7 +242,19 @@ const KKStr&  FeatureVector::MLClassName  ()  const
 }  /* MLClassName */
 
 
+const KKStr&  FeatureVector::MLClassNameUpper ()  const
+{
+  if  (mlClass)
+    return mlClass->UpperName ();
+  else
+    return KKStr::EmptyStr ();
+}  /* MLClassNameUpper */
 
+
+KKStr  FeatureVector::ExampleRootName () const
+{
+  return KKB::osGetRootNameWithExtension(exampleFileName);
+}
 
 bool FeatureVector::operator== (FeatureVector &other_image)  const
 {
@@ -1689,8 +1675,6 @@ bool  FeatureVectorList::MissingData () const  // Returns true if 1 or more entr
 
 
 
-
-
 void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
 
 {
@@ -1767,7 +1751,7 @@ void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList&  otherData,
 
 
 
-KKStr  GetClassNameByHierarchyLevel (KKStr  className, 
+KKStr  GetClassNameByHierarchyLevel (KKStr    className,   
                                      kkint32  level
                                     )
 {
@@ -1849,242 +1833,10 @@ FeatureVectorListPtr  FeatureVectorList::CreateListForAGivenLevel (kkint32  leve
 
 
 
-
-
-
-class  FeatureVectorList::BreakTieComparison
-{
-
-public:
-   BreakTieComparison ()
-   {}
-
-   bool  operator() (FeatureVectorPtr  p1,  
-                     FeatureVectorPtr  p2
-                    )
-   {
-     return  (p1->BreakTie () < p2->BreakTie ());
-   }
-}; /* BreakTieComparison */
-
-
-
-class  FeatureVectorList::BreakTieComparisonReversed
-{
-
-public:
-   BreakTieComparisonReversed ()
-   {}
-
-   bool  operator() (FeatureVectorPtr  p1,  
-                     FeatureVectorPtr  p2
-                    )
-   {
-     return  (p1->BreakTie () > p2->BreakTie ());
-   }
-}; /* BreakTieComparisonReversed */
-
-
-
-
-
-class  FeatureVectorList::ProbabilityComparison
-{
-
-public:
-   ProbabilityComparison ()
-   {}
-
-   bool  operator() (FeatureVectorPtr  p1,  
-                     FeatureVectorPtr  p2
-                    )
-   {
-     return  (p1->Probability () < p2->Probability ());
-   }
-}; /* ProbabilityComparison */
-
-
-
-class  FeatureVectorList::ProbabilityComparisonReversed
-{
-
-public:
-   ProbabilityComparisonReversed ()
-   {}
-
-   bool  operator() (FeatureVectorPtr  p1,  
-                     FeatureVectorPtr  p2
-                    )
-   {
-     return  (p1->Probability () > p2->Probability ());
-   }
-}; /* ProbabilityComparisonReversed */
-
-
-
-
-class  FeatureVectorList::ImageFileNameComparison
-{
-public:
-  ImageFileNameComparison ()  {}
-
-
-  bool  operator () (FeatureVectorPtr  p1,
-                     FeatureVectorPtr  p2
-                    )
-  {
-    return  (p1->ExampleFileName () < p2->ExampleFileName ());
-  }
-};  /* ImageFileNameComparison */
-
-
-
-
-class  FeatureVectorList::ImageFileNameComparisonReversed
-{
-public:
-  ImageFileNameComparisonReversed ()  {}
-
-
-  bool  operator ()  (FeatureVectorPtr  p1,
-                      FeatureVectorPtr  p2
-                     )
-  {
-    return  (p1->ExampleFileName () > p2->ExampleFileName ());
-  }
-
-};  /* ImageFileNameComparison */
-
-
-
-
-
-
-class  FeatureVectorList::RootNameComparrison
-{
-public:
-  RootNameComparrison ()  {}
-
-  bool  operator () (FeatureVectorPtr  p1,
-                     FeatureVectorPtr  p2
-                    )
-  {
-    KKStr  root1 = osGetRootNameWithExtension (p1->ExampleFileName ());
-    KKStr  root2 = osGetRootNameWithExtension (p2->ExampleFileName ());
-
-    return  (root1 < root2);
-  }
-};  /* RootNameComparrison */
-
-
-
-class  FeatureVectorList::RootNameComparrisonReversed
-{
-public:
-  RootNameComparrisonReversed ()  {}
-
-  bool  operator() (FeatureVectorPtr  p1,
-                    FeatureVectorPtr  p2
-                   )
-  {
-    KKStr  root1 = osGetRootName (p1->ExampleFileName ());
-    KKStr  root2 = osGetRootName (p2->ExampleFileName ());
-
-    return  root1 > root2;
-  }
-};  /* RootNameComparrisonReversed */
-
-
-
-
-
-class  FeatureVectorList::ClassNameComparrison
-{
-public:
-  ClassNameComparrison ()  {}
-
-  bool  operator()  (FeatureVectorPtr  p1,
-                     FeatureVectorPtr  p2
-                    )
-  {
-    if  (p1->MLClass () == NULL)
-    {
-      if  (p2->MLClass () != NULL)
-        return  true;
-    }
-
-    else if  (p2->MLClass () != NULL)
-    {
-      const KKStr& n1 = p1->MLClass ()->UpperName ();
-      const KKStr& n2 = p2->MLClass ()->UpperName ();
-
-      if  (n1 < n2)
-        return true;
-
-      else if  (n1 > n2)
-        return false;
-    }
-
-    return p1->ExampleFileName () < p2->ExampleFileName ();
-  }
-};  /* ClassNameComparrison */
-
-
-
-
-
-class   FeatureVectorList::ClassNameComparrisonReversed
-{
-public:
-  ClassNameComparrisonReversed ()  {}
-
-
-  bool  operator()  (FeatureVectorPtr  p1,
-                     FeatureVectorPtr  p2
-                    )
-  {
-    if  (p1->MLClass () == NULL)
-    {
-      if  (p2->MLClass () != NULL)
-        return  false;
-    }
-
-    else if  (p2->MLClass () != NULL)
-    {
-      const KKStr& n1 = p1->MLClass ()->UpperName ();
-      const KKStr& n2 = p2->MLClass ()->UpperName ();
-
-      if  (n1 < n2)
-        return false;
-
-      else if  (n1 > n2)
-        return true;
-    }
-
-    return p1->ExampleFileName () > p2->ExampleFileName ();
-  }
-};  /* ClassNameComparrisonReversed */
-
-
-
-
-
-
-
-
 void  FeatureVectorList::SortByRootName (bool  reversedOrder)
 {
- if  (!reversedOrder)
-  {
-    RootNameComparrison  c;
-    sort (begin (), end (), c);
-  }
-  else
-  {
-    RootNameComparrisonReversed  c;
-    sort (begin (), end (), c);
-  }
-
+  auto f = [](FeatureVectorPtr p1, FeatureVectorPtr p2) -> bool{return p1->ExampleRootName () < p2->ExampleRootName ();};
+  SortBy(reversedOrder, f);
   curSortOrder = IFL_SortOrder::IFL_ByRootName;
 }  /* SortByRootName */
 
@@ -2092,37 +1844,28 @@ void  FeatureVectorList::SortByRootName (bool  reversedOrder)
 
 void  FeatureVectorList::SortByClass (bool  reversedOrder)
 {
- if  (!reversedOrder)
-  {
-    ClassNameComparrison  c;
-    sort (begin (), end (), c);
-  }
-  else
-  {
-    ClassNameComparrisonReversed  c;
-    sort (begin (), end (), c);
-  }
 
-  curSortOrder = IFL_SortOrder::IFL_ByClassName;
-}  /* SortByClass */
+  auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {
+    if  (l == NULL)
+      return ((r == NULL) ? false : true);
 
+    else if  (right == NULL)
+      return false;
 
+    else
+     return l->MLClassNameUpper() < r->MLClassNameUpper();
+  };
+
+  SortBy(reversedOrder, f);
+  return;
+}
 
 
 
 void  FeatureVectorList::SortByProbability (bool  reversedOrder)
 {
-  if  (!reversedOrder)
-  {
-    ProbabilityComparison  c;
-    sort (begin (), end (), c);
-  }
-  else
-  {
-    ProbabilityComparisonReversed  c;
-    sort (begin (), end (), c);
-  }
-
+  auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {return l->Probability () < r->Probability ();};
+  SortBy(reversedOrder, f);
   curSortOrder = IFL_SortOrder::IFL_ByProbability;
 }  /* SortByProbability */
 
@@ -2131,17 +1874,8 @@ void  FeatureVectorList::SortByProbability (bool  reversedOrder)
 
 void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
 {
-  if  (!reversedOrder)
-  {
-    BreakTieComparison   c;
-    sort (begin (), end (), c);
-  }
-  else
-  {
-    BreakTieComparisonReversed  c;
-    sort (begin (), end (), c);
-  }
-
+  auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {return l->BreakTie () < r->BreakTie ();};
+  SortBy(reversedOrder, f);
   curSortOrder = IFL_SortOrder::IFL_ByBreakTie;
 }  /* SortByProbability */
 
@@ -2151,18 +1885,26 @@ void  FeatureVectorList::SortByBreakTie (bool  reversedOrder)
 
 void  FeatureVectorList::SortByImageFileName (bool  reversedOrder)
 {
-  if  (!reversedOrder)
-  {
-    ImageFileNameComparison  c;
-    sort (begin (), end (), c);
-  }
-  else
-  {
-    ImageFileNameComparisonReversed  c;
-    sort (begin (), end (), c);
-  }
-
+  auto f = [](FeatureVectorPtr l, FeatureVectorPtr r) -> bool {return l->ExampleFileName() < r->ExampleFileName();};
+  SortBy(reversedOrder, f);
   curSortOrder = IFL_SortOrder::IFL_ByName;
 }  /* SortByImageFileName */
 
+
+
+
+
+void  FeatureVectorList::SortBy (bool reversedOrder,  
+                                 bool (*comp)(FeatureVectorPtr l, FeatureVectorPtr r)
+                                )
+ 
+{
+  std::function<bool (FeatureVectorPtr, FeatureVectorPtr)> func;
+  if  (reversedOrder)
+    func = [comp](FeatureVectorPtr l, FeatureVectorPtr r) ->bool {return !comp(l, r);};
+  else
+    func = comp;
+
+  sort (begin (), end (), [func](FeatureVectorPtr  p1, FeatureVectorPtr  p2)  {return func(p1, p2);});
+}  /* SortBy */
 

@@ -1149,7 +1149,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
       _out << ",";
     }
     _out << example->ExampleFileName () << ",";
-    _out << example->ClassName ();
+    _out << example->MLClassName ();
     _out << endl;
     _numExamplesWritten++;
   }
