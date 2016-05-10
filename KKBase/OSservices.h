@@ -5,7 +5,7 @@
 #ifndef  _OSSERVICES_
 #define  _OSSERVICES_
 
-/**
+/*
  *@file OSServices.h
  *@author  Kurt Kramer
  *@brief  General module for functions that interact with a specific operating system.

@@ -8,7 +8,7 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
-/**
+/*
  * @file KKQueue.h
  * @details
  * @code
