@@ -73,7 +73,7 @@ namespace KKB
     const KKStr&             StatusStr     ()  const  {return ThreadStatusToStr (status);}
 
     VolConstBool&            ShutdownFlag  ()  const  {return shutdownFlag;}     /**< Indicates that the application wants this thread to complete what work is queued up 
-                                                                                   * for it top process. Threads need to monitor this flag; if it goes true they are to 
+                                                                                   * for it stop process. Threads need to monitor this flag; if it goes true they are to 
                                                                                    * complete all processing that is queued up and then shutdown. This is 
                                                                                    */
 
