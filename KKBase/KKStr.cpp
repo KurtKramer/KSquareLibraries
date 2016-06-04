@@ -58,7 +58,6 @@ char*  KKB::STRCOPY (char*        dest,
 
 
 
-
 char*  KKB::STRDUP (const char* src)  
 {
 # ifdef  USE_SECURE_FUNCS
@@ -67,7 +66,6 @@ char*  KKB::STRDUP (const char* src)
     return  strdup (src);
 # endif
 }  /* STRDUP */
-
 
 
 
@@ -84,8 +82,6 @@ char*  KKB::STRCAT (char*        dest,
 
   return  dest;
 }  /* STRCAT */
-
-
 
 
 
@@ -119,7 +115,6 @@ kkint32  KKB::STRICMP (const char*  left,
     return 1;
 
 }  /* STRICMP */
-
 
 
 
@@ -186,7 +181,6 @@ kkint32  KKB::SPRINTF (char*        buff,
     return sprintf (buff, formatSpec, right);
 #endif
 }
-
 
 
 
@@ -304,14 +298,12 @@ void  KKStr::StrDelete  (char**  str)
 
 
 
-
 const char*  KKStr::StrChr (const char*  str,
                             int          ch
                            )
 {
   return strchr (str, ch);
 }
-
 
 
 
@@ -328,7 +320,6 @@ kkint32  KKStr::StrCompareIgnoreCase (const char* s1,
   }
   else if  (s2 == NULL)
     return 1;
-
 
   while  ((*s1)  &&  (*s2)  &&  (toupper (*s1) == toupper (*s2)))
   {
@@ -362,11 +353,7 @@ kkint32  KKStr::StrCompareIgnoreCase (const char* s1,
         return 1;
     }
   }
-
-
-  //return  _stricmp (s1, s2);
 }  /* StrCompareIgnoreCase */
-
 
 
 
@@ -522,8 +509,6 @@ bool  KKStr::LessCaseInsensitiveOperator::operator ()  (const KKStr&  s1,
 
 
 
-
-
 KKStr::KKStr (): 
    val (NULL)
 {
@@ -595,7 +580,6 @@ KKStr::KKStr (const KKStr&  str):
 
 
 
-
  KKStr::KKStr (KKStr&&  str):
     allocatedSize (str.allocatedSize),
     len           (str.len),
@@ -605,9 +589,6 @@ KKStr::KKStr (const KKStr&  str):
   str.len           = 0;
   str.val           = NULL;
 }
-
-
-
 
 
 
@@ -640,15 +621,6 @@ KKStr::KKStr (double  d,
 
 
 
-//KKStr::KKStr (KKStr   str): 
-//        val (NULL)
-//{
-//  StrReplace (&val, str.val);
-//}
-
-
-
-
 /**
  *@brief Creates a KKStr object that has 'size' characters preallocated; and set to empty string.
  */
@@ -670,7 +642,6 @@ KKStr::KKStr (kkint32  size):
   val[0] = 0;
   len = 0;
 }
-
 
 
 
@@ -730,18 +701,18 @@ void  KKStr::AllocateStrSpace (kkuint32  size)
 
   if  (val)
   {
-    cerr << std::endl
-         << "KKStr::AllocateStrSpace   ***ERROR***      Previous val was not deleted." 
-         << std::endl;
+    KKStr  msg = "KKStr::AllocateStrSpace   ***ERROR***      Previous val was not deleted.";
+    cerr << std::endl << msg << std::endl << std::endl;
+    throw KKException (msg);
   }
 
   if  (size >= KKStrIntMax)
   {
     //  Can not allocate this much space;  This string has gotten out of control.
-    cerr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than KKStrIntMax[" << KKStrIntMax << "]" << std::endl;
     KKStr  errStr (150);
     errStr << "KKStr::AllocateStrSpace   ***ERROR***      Size["  << size << "] is larger than KKStrIntMax[" << KKStrIntMax << "]";
-    throw  KKException (errStr);
+    cerr << std::endl << errStr << std::endl << std::endl;
+    throw KKException (errStr);
   }
 
   val = new char[size];
@@ -994,7 +965,6 @@ kkint32  KKStr::CompareIgnoreCase (const char* s2)  const
 
 
 
-
 kkint32  KKStr::CompareIgnoreCase (const std::string&  s2)  const
 {
   kkuint16  s2Len = (kkuint16)s2.size ();
@@ -1109,6 +1079,7 @@ bool  KKStr::Contains (const KKStr& value)
 }
 
 
+
 bool  KKStr::Contains (const char*  value)
 {
   if  ((value == NULL)  ||  (*value == 0))
@@ -1147,6 +1118,7 @@ bool  KKStr::StartsWith (const char*   value)  const
 }
 
 
+
 bool   KKStr::StartsWith (const KKStr& value,   
                           bool  ignoreCase
                          )  const
@@ -1165,7 +1137,6 @@ bool   KKStr::StartsWith (const KKStr& value,
 
 
 
-
 bool   KKStr::StartsWith (const char* value,   
                           bool        ignoreCase
                          )  const
@@ -1180,10 +1151,6 @@ bool   KKStr::StartsWith (const char* value,
   else
     return  StrEqualN       (val, value, valueLen);
 }
-
-
-
-
 
 
 
@@ -1245,6 +1212,7 @@ bool  KKStr::EqualIgnoreCase (const KKStrConstPtr  s2)  const
 {
   return  EqualIgnoreCase  (s2->Str ());
 }
+
 
 
 bool  KKStr::EqualIgnoreCase (const KKStr&  s2)  const
@@ -1324,6 +1292,7 @@ void  KKStr::ValidateLen ()  const
   }
 }
 
+
 /*
 KKStr&  KKStr::operator= (const KKStrConstPtr src)
 {
@@ -1386,7 +1355,6 @@ KKStr&   KKStr::operator= (KKStr&& src)
 
 
 
-
 KKStr&  KKStr::operator= (const KKStr&  src)
 {
   #ifdef  KKDEBUG
@@ -1426,19 +1394,6 @@ KKStr&  KKStr::operator= (const KKStr&  src)
 
 
 
-
-
-
-//KKStr&  KKStr::operator= (KKStr  src)
-//{
-//  StrReplace (&val, src.val);
-//  return *this;
-//}
-
-
-
-
-
 KKStr&  KKStr::operator= (const char* src)
 {
   #ifdef  KKDEBUG
@@ -1471,7 +1426,6 @@ KKStr&  KKStr::operator= (const char* src)
  
   return *this;
 }
-
 
 
 
@@ -1554,12 +1508,10 @@ bool  KKStr::operator== (const KKStr& right)  const
 
 
 
-
 bool  KKStr::operator!= (const KKStr& right)  const
 {
   return  (Compare (right) != 0);
 }
-
 
 
 
@@ -1573,7 +1525,6 @@ bool  KKStr::operator== (KKStrConstPtr right)  const
 
 
 
-
 bool  KKStr::operator!= (KKStrConstPtr  right)  const
 {
   if  (!right)
@@ -1584,12 +1535,10 @@ bool  KKStr::operator!= (KKStrConstPtr  right)  const
 
 
 
-
 bool  KKStr::operator== (const char*  rtStr)  const
 {
   return  StrEqual (val, rtStr);
 }
-
 
 
 
@@ -1607,12 +1556,10 @@ bool  KKStr::operator== (const std::string right) const
 
 
 
-
 bool  KKStr::operator!= (const std::string right) const
 {
   return  (Compare (right) != 0);
 }
-
 
 
 
@@ -1623,12 +1570,10 @@ bool  KKStr::operator> (const KKStr& right)  const
 
 
 
-
 bool  KKStr::operator>= (const KKStr& right)  const
 {
   return  (Compare (right) >= 0);
 }
-
 
 
 
@@ -1682,7 +1627,6 @@ void  KKStr::ChopLastChar ()
 
 
 
-
 KKStr&  KKStr::Trim (const char* whiteSpaceChars)
 {
   TrimRight (whiteSpaceChars);
@@ -1715,8 +1659,6 @@ KKStr&  KKStr::TrimRight (const char* whiteSpaceChars)
 
   return *this;
 }  /* TrimRight */
-
-
 
 
 
@@ -1776,7 +1718,6 @@ void  KKStr::TrimLeft (const char* whiteSpaceChars)
   len = y;
   val[len] = 0;
 }  /* TrimLeft */
-
 
 
 
@@ -1858,8 +1799,6 @@ void  KKStr::Append (const char*  buff,
 
 
 
-
-
 void  KKStr::Append (char ch)
 {
   kkuint32  neededSpace = len + 2;
@@ -1879,8 +1818,6 @@ void  KKStr::Append (char ch)
   len++;
   val[len] = 0;
 }  /* Append */
-
-
 
 
 
@@ -1963,10 +1900,6 @@ void  KKStr::AppendUInt32 (kkuint32  i)
 
 
 
-
-
-
-
 char  KKStr::FirstChar ()  const
 {
   if  (val == NULL)
@@ -2003,7 +1936,6 @@ void  KKStr::FreeUpUnUsedSpace()
 
 
 
-
 char  KKStr::LastChar ()  const
 {
   if  (!val)
@@ -2014,7 +1946,6 @@ char  KKStr::LastChar ()  const
   else
     return val[len - 1];
 }  /* LastChar */
-
 
 
 
@@ -2034,7 +1965,6 @@ kkint32  KKStr::LocateCharacter (char  ch)  const
 
   return  -1;
 }  /* LocateCharacter */
-
 
 
 
@@ -2109,8 +2039,6 @@ kkint32  KKStr::LocateStr (const KKStr&  searchStr)  const
 
   
 
-
-
 /**
  *@brief  Returns the position of the last occurrence of the character 'ch'.
  *@details A return of -1 indicates that there is no occurrence of 'ch' in the string.
@@ -2140,7 +2068,6 @@ kkint32  KKStr::LocateLastOccurrence (char  ch)  const
   else
     return  -1;
 }  /* LocateLastOccurrence */
-
 
 
 
@@ -2198,8 +2125,6 @@ kkint32  KKStr::LocateNthOccurrence (char ch,  kkint32 n)  const
 
 
 
-
-
 KKStr  KKStr::Wide (kkint32 width,
                     char  dir
                    ) const
@@ -2232,7 +2157,6 @@ KKStr  KKStr::Wide (kkint32 width,
 
   return str;
 }  /* Wide */
-
 
 
 
@@ -2296,7 +2220,6 @@ void  KKStr::RightPad (kkint32  width,
     val[len] = 0;
   }
 }  /* RightPad */
-
 
 
 
@@ -2389,8 +2312,6 @@ void  KKStr::LeftPad (kkint32 width,
 
 
 
-
-
 char  KKStr::EnterStr ()
 {
   kkint32 bp = 0;
@@ -2439,7 +2360,7 @@ char  KKStr::EnterStr ()
 
   if  (neededSpace > allocatedSize)
   {
-    delete  [] val;
+    delete[] val;
     val = NULL;
     AllocateStrSpace (neededSpace);
   }
@@ -2449,8 +2370,6 @@ char  KKStr::EnterStr ()
 
   return  ch;
 }  /* EnterStr */
-
-
 
 
 
@@ -2724,7 +2643,6 @@ bool   KKStr::CharInStr (char  ch)
 
 
 
-
 /**
  *@brief  Searches for the occurrence of 'searchField' and where in the string.  If found will return 'true' otherwise 'false'.
  */
@@ -2855,7 +2773,6 @@ KKStr  KKStr::Tail (kkint32 tailLen)  const   // Return back the last 'len' char
 
 
 
-
 /**
  *@brief Remove characters from the end of the string.
  *@details Removes characters from end of string starting at position 'lastCharPos'.  If 'lastCharPos'
@@ -2882,8 +2799,6 @@ void  KKStr::LopOff (kkint32 lastCharPos)
     val[len] = 0;
   }
 }  /* LoppOff */
-
-
 
 
 
@@ -2925,7 +2840,6 @@ KKStr  KKStr::QuotedStr ()  const
 
 
 
-
 KKStr  KKStr::ToXmlStr ()  const
 {
   if  ((!val)  ||  (len < 1))
@@ -2962,10 +2876,6 @@ KKStr  KKStr::ToXmlStr ()  const
 
 
 
-
-
-
-
 KKStr  KKStr::ExtractToken (const char* delStr)
 {
   if  (!val)
@@ -2986,7 +2896,7 @@ KKStr  KKStr::ExtractToken (const char* delStr)
 
   if  (*tokenStart == 0)
   {
-    delete  [] val;
+    delete[] val;
     val = NULL;
     AllocateStrSpace (1);
     return  token;
@@ -3022,7 +2932,6 @@ KKStr  KKStr::ExtractToken (const char* delStr)
 
 
 
-
 KKStr  KKStr::ExtractToken2 (const char* delStr)
 {
   #ifdef  KKDEBUG
@@ -3043,7 +2952,7 @@ KKStr  KKStr::ExtractToken2 (const char* delStr)
 
   if  (*tokenStart == 0)
   {
-    delete  [] val;
+    delete[] val;
     val = NULL;
     AllocateStrSpace (1);
     return  token;
@@ -3082,7 +2991,6 @@ KKStr  KKStr::ExtractToken2 (const char* delStr)
 
   return  token;
 } /* ExtractToken2 */
-
 
 
 
@@ -3193,7 +3101,6 @@ double  KKStr::ExtractTokenDouble (const char* delStr)
 
 
 
-
 char  KKStr::ExtractChar ()
 {
   #ifdef  KKDEBUG
@@ -3239,46 +3146,6 @@ char  KKStr::ExtractLastChar ()
 
 
 
-
-KKStr  KKStr::DecodeQuotedStr ()  const
-{
-  if  ((!val)  ||  (len == 0))
-    return  EmptyStr ();
-
-  KKStr  result (len + 4);
-  kkint32  idx = 0;
-   
-  kkint32  lastCharPos = len - 1;
-
-  if  ((val[idx] == '"')  &&  (val[len - 1] == '"'))
-  {
-    ++idx;
-    --lastCharPos;
-  }
-
-  while  (idx <= lastCharPos)
-  {
-    if  (val[idx] == '\\')
-    {
-      ++idx;
-      if  (idx <= lastCharPos)
-      {
-        result.Append (val[idx]);
-        ++idx;
-      }
-    }
-    else
-    {
-      result.Append (val[idx]);
-      ++idx;
-    }
-  }
-
-  return  result;
-}  /* DecodeQuotedStr */
-
-
-
 KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
                                 bool         decodeEscapeCharacters
                                )
@@ -3296,11 +3163,10 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
     lookForTerminatingQuote = true;
     idx++;
   }
-
-
+  
   if  (idx >= len)
   {
-    delete  [] val;
+    delete[] val;
     val = NULL;
     AllocateStrSpace (1);
     return  result;
@@ -3323,7 +3189,6 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
         break;
       }
     }
-
     else 
     {
       if  (strchr (delChars, val[idx]))
@@ -3341,6 +3206,7 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
         switch  (val[idx])
         {
          case  '"': result.Append ('"');      break;
+         case  'b': result.Append ('\b');     break;
          case  't': result.Append ('\t');     break;
          case  'n': result.Append ('\n');     break;
          case  'r': result.Append ('\r');     break;
@@ -3444,8 +3310,6 @@ char  KKStr::operator[] (kkuint32 i)  const
 
 
 
-
-
 /**
  *@brief  Static method that returns an Empty String.
  *@return  a empty String.
@@ -3496,7 +3360,6 @@ VectorKKStr  KKStr::Split (const char* delStr)  const
 
 
 
-
 VectorKKStr  KKStr::Split (char del)  const
 {
   char  delStr[2];
@@ -3522,18 +3385,39 @@ VectorKKStr  KKStr::Split (char del)  const
 
 bool  KKStr::ToBool () const
 {
-  if  (len < 1)
-    return false;
+  if  (len < 1)  return false;
 
-  if  ((STRICMP (val, "y")    == 0)  ||
-       (STRICMP (val, "yes")  == 0)  ||
-       (STRICMP (val, "t")    == 0)  ||
-       (STRICMP (val, "true") == 0)  ||
-       (STRICMP (val, "1")    == 0)
-      )
-    return true;
-  else
-    return false;
+  if  (STRICMP (val, "false")   == 0)  return false;
+  if  (STRICMP (val, "true")    == 0)  return true;
+  if  (STRICMP (val, "f")       == 0)  return false;
+  if  (STRICMP (val, "t")       == 0)  return true;
+  if  (STRICMP (val, "0")       == 0)  return false;
+  if  (STRICMP (val, "1")       == 0)  return true;
+  if  (STRICMP (val, "no")      == 0)  return false;
+  if  (STRICMP (val, "yes")     == 0)  return true;
+  if  (STRICMP (val, "n")       == 0)  return false;
+  if  (STRICMP (val, "y")       == 0)  return true;
+
+  if  (STRICMP (val, "si")      == 0)  return true;
+  if  (STRICMP (val, "cierto")  == 0)  return true;
+  if  (STRICMP (val, "falso")   == 0)  return false;
+
+  if  (STRICMP (val, "ya")      == 0)  return true;
+  if  (STRICMP (val, "wahr")    == 0)  return true;
+  if  (STRICMP (val, "nine")    == 0)  return false;
+  if  (STRICMP (val, "falsch")  == 0)  return false;
+
+  if  (STRICMP (val, "oui")     == 0)  return true;
+  if  (STRICMP (val, "vrai")    == 0)  return true;
+  if  (STRICMP (val, "non")     == 0)  return false;
+  if  (STRICMP (val, "faux")    == 0)  return false;
+
+  if  (STRICMP (val, "da")      == 0)  return true;
+  if  (STRICMP (val, "pravda")  == 0)  return true;
+  if  (STRICMP (val, "nyet")    == 0)  return false;
+  if  (STRICMP (val, "lozhnyy") == 0)  return false;
+
+  return false;
 }
 
 
@@ -3549,7 +3433,6 @@ double  KKStr::ToDouble () const
 
 
 
-
 float  KKStr::ToFloat  () const
 {
   if  (!val)
@@ -3558,7 +3441,6 @@ float  KKStr::ToFloat  () const
   float  f = (float)atof (val);
   return f;
 }   /* ToFloat */
-
 
 
 
@@ -3616,7 +3498,6 @@ long   KKStr::ToLong   () const
   long  l = atol (val);
   return l;
 }  /* ToLong */
-
 
 
 
@@ -3698,8 +3579,6 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
 
 
 
-
-
 wchar_t*  KKStr::ToWchar_t () const
 {
   size_t returnValue;
@@ -3718,6 +3597,7 @@ wchar_t*  KKStr::ToWchar_t () const
   }
   return wa;
 }
+
 
 
 double  KKStr::ToLatitude ()  const
@@ -3810,7 +3690,6 @@ double  KKStr::ToLatitude ()  const
 
   return  latitude;
 }  /* ToLatitude */
-
 
 
 
@@ -3980,7 +3859,6 @@ KKStr  KKB::operator+ (const char*   left,
 
 
 
-
 KKStr  KKStr::operator+ (const char*  right)  const
 {
   kkint32  resultStrLen = len + (kkint32)strlen (right);
@@ -3989,7 +3867,6 @@ KKStr  KKStr::operator+ (const char*  right)  const
   result.Append (right);
   return  result;
 }
-
 
 
 
@@ -4015,6 +3892,7 @@ KKStr  KKStr::operator+ (kkint16  right)  const
   result.Append (buff);
   return  result;
 }
+
 
 
 KKStr  KKStr::operator+ (kkuint16  right)  const
@@ -4148,8 +4026,9 @@ KKStr&  KKStr::operator<< (const KKStr&  right)
 
 KKStr&  KKStr::operator<< (KKStr&&  right)
 {
-  if  (len < 1)
+  if  ((len < 1)  &&  (allocatedSize <= right.allocatedSize))
   {
+    delete val;
     val           = right.val;
     len           = right.len;
     allocatedSize = right.allocatedSize;
@@ -4165,7 +4044,6 @@ KKStr&  KKStr::operator<< (KKStr&&  right)
   
   return  *this;
 }
-
 
 
 
@@ -4261,13 +4139,10 @@ KKStr&  KKStr::operator<< (double  right)
 
 
 
-
-
 void  Test2 (ostream& x1, const char* x2)
 {
   x1 << x2;
 }
-
 
 
 
@@ -4320,7 +4195,6 @@ std::istream&  KKB::operator>> (std::istream&  is,
   return  is;
 }
 #endif
-
 
 
 
@@ -4385,7 +4259,6 @@ void  KKStr::StrCapitalize (char*  str)
 
 
 
-
 bool  KKStr::StrInStr (const char*  target,
                        const char*  searchStr
                       )
@@ -4414,7 +4287,6 @@ bool  KKStr::StrInStr (const char*  target,
 
 
 
-
 void  KKStr::WriteXML (const KKStr&  varName,
                        ostream&      o
                       )  const
@@ -4432,7 +4304,6 @@ void  KKStr::WriteXML (const KKStr&  varName,
 
 
 
-
 void  KKStr::ReadXML (XmlStream&      s,
                       XmlTagConstPtr  tag,
                       VolConstBool&   cancelFlag,
@@ -4440,13 +4311,13 @@ void  KKStr::ReadXML (XmlStream&      s,
                      )
 {
   kkuint16  expectedLen = tag->AttributeValueInt32 ("Len");
-  delete val;
+  delete[] val;
   val = NULL;
   allocatedSize = 0;
   if  (expectedLen > 0)
     AllocateStrSpace (expectedLen);
 
-  delete  val;
+  delete[]  val;
   val = NULL;
   allocatedSize = 0;
   AllocateStrSpace (expectedLen);
@@ -4480,6 +4351,7 @@ KKStrList::KKStrList ():
 }
 
 
+
 KKStrList::KKStrList (bool   owner):
   KKQueue<KKStr> (owner),
   sorted (false)
@@ -4505,7 +4377,6 @@ KKStrList::KKStrList (const char*  s[]):
 
 
 
-
 kkint32  KKStrList::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (KKStrList);
@@ -4528,7 +4399,6 @@ bool  KKStrList::StringInList (KKStr& str)
 
   return  found;
 }
-
 
 
 
@@ -4571,7 +4441,6 @@ void  KKStrList::ReadXML (XmlStream&      s,
 
 
 
-
 void  KKStrList::WriteXML (const KKStr&  varName,
                            ostream&      o
                          )  const
@@ -4594,11 +4463,6 @@ void  KKStrList::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
-
-
-
 
 
 
@@ -4641,8 +4505,6 @@ KKStrPtr  KKStrList::BinarySearch (const KKStr&  searchStr)
 
   return  NULL;
 }  /* BinarySearch */
-
-
 
 
   
@@ -4705,7 +4567,6 @@ KKStrListPtr  KKStrList::ParseDelimitedString (const KKStr&  str,
 
 
 
-
 /**
  @brief Compares to Strings and returns -1, 0, or 1,  indicating if less than, equal, or greater.
  */
@@ -4731,7 +4592,6 @@ kkint32  KKStr::CompareStrings (const KKStr&  s1,
     return  strcmp (s1.val, s2.val);
   }
 }  /* CompareStrings */
-
 
 
 
@@ -4772,6 +4632,7 @@ void  KKStrList::Sort (bool  _reversedOrder)
   if  (!_reversedOrder)
     sorted = true;
 }
+
 
 
 KKStrListPtr  KKStrList::DuplicateListAndContents ()  const
@@ -4998,7 +4859,6 @@ KKStr  KKB::StrFormatDouble (double       val,
 
 
 
-
 KKStr  KKB::StrFormatInt (kkint32      val,
                           const char*  mask
                          )
@@ -5050,7 +4910,6 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
            *bp = '0' + (uchar)nextDigit;
            break;
 
-
       case  '#':
       case  '9':
            if (intPart > 0)
@@ -5067,7 +4926,6 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
            }
            break;
 
-
       case  'Z':
            if (intPart > 0)
            {
@@ -5077,7 +4935,6 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
              *bp = '0' + (uchar)nextDigit;
            }
            break;
-
 
       case  '-':
            if  (intPart > 0)
@@ -5098,7 +4955,6 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
            }
            break;
 
-
       case  ',':
            if  (intPart > 0)
            {
@@ -5112,14 +4968,12 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
              *bp = ' ';
            }
            break;
-       
 
       default:
            bp--;
            *bp = formatChar;
            break;
     }  /* end of Switch (*maskPtr) */
-
 
     lastFormatChar = formatChar;
 
@@ -5158,7 +5012,6 @@ KKStr  KKB::StrFromInt16 (kkint16 i)
 
 
 
-
 KKStr  KKB::StrFromUint16 (kkuint16 ui)
 {
   char  buff[50];
@@ -5178,7 +5031,6 @@ KKStr  KKB::StrFromInt32 (kkint32 i)
   KKStr s (buff);
   return  s;
 }  /* StrFromInt32 */
-
 
 
 
@@ -5234,11 +5086,6 @@ KKStr  KKB::StrFromDouble (double  d)
 
 
 
-
-
-
-
-
 KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 {
   ostringstream  o;
@@ -5248,14 +5095,7 @@ KKStr& KKStr::operator<< (std::ostream& (* mf)(std::ostream &))
 }
 
 
-
-
 const  kkuint32  KKB::KKStr::KKStrIntMax = USHRT_MAX;
-
-
-
-
-
 
 
 
@@ -5263,6 +5103,7 @@ VectorKKStr::VectorKKStr ():
   vector<KKStr> ()
 {
 }
+
 
 
 VectorKKStr::VectorKKStr (const VectorKKStr&  v):
@@ -5313,7 +5154,6 @@ void  VectorKKStr::ReadXML (XmlStream&      s,
 
 
 
-
 void  VectorKKStr::WriteXML (const KKStr&  varName,
                              ostream&      o
                             )  const
@@ -5338,11 +5178,10 @@ void  VectorKKStr::WriteXML (const KKStr&  varName,
 
 
 
-
-
 KKStrListIndexed::KKStrPtrComp::KKStrPtrComp (bool  _caseSensitive):
   caseSensitive (_caseSensitive)
 {}
+
 
   
 KKStrListIndexed::KKStrPtrComp::KKStrPtrComp (const KKStrPtrComp&  comparator):
@@ -5414,7 +5253,6 @@ KKStrListIndexed::KKStrListIndexed (const KKStrListIndexed&  list):
 
 
 
-
 KKStrListIndexed::~KKStrListIndexed ()
 {
   DeleteContents ();
@@ -5453,7 +5291,6 @@ kkint32  KKStrListIndexed::MemoryConsumedEstimated ()  const
 {
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
-
 
 
 
@@ -5519,8 +5356,6 @@ kkint32  KKStrListIndexed::Add (KKStrPtr  s)
   memoryConsumedEstimated += 8;
   return  index;
 }  /* Add */
-
-
 
 
 
@@ -5590,6 +5425,7 @@ KKStrConstPtr  KKStrListIndexed::LookUp (kkuint32 x)  const
 }
 
 
+
 void  KKStrListIndexed::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
                                  VolConstBool&   cancelFlag,
@@ -5625,6 +5461,7 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
+
 ///<summary> Strings will be separated by tab(\t) characters and in order of index. </summary>
 KKStr  KKStrListIndexed::ToTabDelString ()  const
 {
@@ -5638,6 +5475,7 @@ KKStr  KKStrListIndexed::ToTabDelString ()  const
   }
   return s;
 }
+
 
 
 void  KKStrListIndexed::WriteXML (const KKStr& varName,  ostream& o)  const
@@ -5661,12 +5499,3 @@ void  KKStrListIndexed::WriteXML (const KKStr& varName,  ostream& o)  const
   endTag.WriteXML (o);
   o << endl;
 }
-
-
-
-
-
-
-
-
-
