@@ -234,6 +234,8 @@ namespace  KKB
 
     kkint32  CountInstancesOf (char  ch)  const;
 
+    /** @brief  Trees this KKSr instance as a QuotedStr; decodes escape sequences such as '\\', '\r', '\n',  '\t', and '\0' into original characters. */
+    KKStr    DecodeQuotedStr ()  const;
 
     bool     Empty () const {return (len <= 0);}
 

@@ -3146,6 +3146,58 @@ char  KKStr::ExtractLastChar ()
 
 
 
+
+KKStr  KKStr::DecodeQuotedStr ()  const
+{
+  if  ((!val)  ||  (len == 0))
+    return  EmptyStr ();
+
+  KKStr  result (len + 4);
+  kkint32  idx = 0;
+   
+  kkint32  lastCharPos = len - 1;
+
+  if  ((val[idx] == '"')  &&  (val[len - 1] == '"'))
+  {
+    ++idx;
+    --lastCharPos;
+  }
+
+  while  (idx <= lastCharPos)
+  {
+    if  (val[idx] == '\\')
+    {
+      ++idx;
+      if  (idx <= lastCharPos)
+      {
+        uchar escapeChar = 0;
+        switch (val[idx]) {
+          case '0': escapeChar = 0;
+          case 'a': escapeChar = '\a';
+          case 'b': escapeChar = '\b';
+          case 'f': escapeChar = '\f';
+          case 'n': escapeChar = '\n';
+          case 'r': escapeChar = '\r';
+          case 't': escapeChar = '\t';
+          case 'v': escapeChar = '\v';
+          default:  escapeChar = val[idx];
+        }
+        result.Append (escapeChar);
+        ++idx;
+      }
+    }
+    else
+    {
+      result.Append (val[idx]);
+      ++idx;
+    }
+  }
+
+  return  result;
+}  /* DecodeQuotedStr */
+
+
+
 KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
                                 bool         decodeEscapeCharacters
                                )
