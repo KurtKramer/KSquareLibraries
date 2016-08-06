@@ -594,13 +594,13 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
     }
 
 
-    else if  (opCode == 1)
+    else if  (opCode == opCodeTextBlock)
       ProcessTextBlock (rec);
 
-    else if  (opCode == 2)
+    else if  (opCode == opCodeInstrumentData)
       ProcessInstrumentDataWord (rec);
 
-    else if  ((opCode >= 4)  &&  (opCode <= 9))
+    else if  ((opCode >= opCodeRunLength2Pixels)  &&  (opCode <= opCodeRunLength7Pixels))
     {
       // OpCode determines RunLen  (4=2, 5=3, ... 9=7)
       kkuint32 runLen = opCode - 2;
@@ -619,7 +619,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
     }
 
-    else if  (opCode == 10)  /* OpRecRun256Len1 */
+    else if  (opCode == opCodeRenLength1Thru256)  /* OpRecRun256Len1 */
     {
       recsRead = fread (&rec2, sizeof (rec2), 1, file);
       if  (recsRead < 1)
@@ -641,7 +641,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
     }
 
-    else if  (opCode == 11)
+    else if  (opCode == opCodeRaw1Pixel)
     {
       if  (bufferLineLen < lineBuffSize)
       {
@@ -654,7 +654,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
     }
 
-    else if  (opCode == 12)
+    else if  (opCode == opCodeRawSeqEven2Thru32Pixels)
     {
       kkuint16  numRawRecs = rec.raw32Pixels.len + 1;   // We add 1 to 'numRawRecs' because '1' was subtracted out when written to Scanner File.
       kkuint16  numRawPixels = numRawRecs * 2;
@@ -666,7 +666,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       ProcessRawPixelRecs (numRawRecs, lineBuff, lineBuffSize, bufferLineLen);
     }
 
-    else if  (opCode == 13)
+    else if  (opCode == opCodeRawSeqOdd1Thru513Pixels)
     {
       recsRead = fread (&rec2, sizeof (rec2), 1, file);
       if  (recsRead < 1)
@@ -732,7 +732,7 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
     if  (runLen == 1)
     {
       // We will treat this as a 1 pixel long raw string.
-      rec.raw1Pixel.opCode = 11;
+      rec.raw1Pixel.opCode     = opCodeRaw1Pixel;
       rec.raw1Pixel.pixelValue = runLenChar;
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -752,7 +752,7 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
     {
       ushort encodedLen = runLen - 1;
 
-      rec.run256Len1.opCode     = 10;
+      rec.run256Len1.opCode     = opCodeRenLength1Thru256;
       rec.run256Len1.pixelValue = runLenChar;
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -765,7 +765,7 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else
     {
-      rec.run256Len1.opCode = 10;
+      rec.run256Len1.opCode     = opCodeRenLength1Thru256;
       rec.run256Len1.pixelValue = runLenChar;
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -791,7 +791,7 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
   {
     if  (len < 2)
     {
-      rec.raw1Pixel.opCode = 11;
+      rec.raw1Pixel.opCode = opCodeRaw1Pixel;
       rec.raw1Pixel.pixelValue = rawStr[nextCp];
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -802,7 +802,7 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
     else if  (len < 33)
     {
       ushort  rawPixelRecsNeeded = (ushort)(len / 2) - 1;  // We subtract 1 when writing;  when reading back file will add back in 1.
-      rec.raw32Pixels.opCode = 12;
+      rec.raw32Pixels.opCode = opCodeRawSeqEven2Thru32Pixels;
       rec.raw32Pixels.len  = rawPixelRecsNeeded;
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -831,7 +831,7 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
       kkuint16  lenHigh = numRawRecsNeededEnc / 16;
       kkuint16  lenLow  = numRawRecsNeededEnc % 16;
 
-      rec.raw513Pixels1.opCode  = 13;
+      rec.raw513Pixels1.opCode  = opCodeRawSeqOdd1Thru513Pixels;
       rec.raw513Pixels1.lenHigh = lenHigh;
       *encodedBuffNext = rec;
       ++encodedBuffNext;
@@ -985,13 +985,13 @@ void  ScannerFile4BitEncoded::WriteTextBlock (const uchar*  txtBlock,
     kkint32  charsToWrite = Min (2048, charsLeft);
     OpRec  rec;
 
-    rec.textBlock1.opCode = 1;
-    rec.textBlock1.endOfText    = (charsToWrite < charsLeft) ? 0 : 1;
-    rec.textBlock1.lenHighBits  = charsToWrite / 256;
+    rec.textBlock1.opCode      = opCodeTextBlock;
+    rec.textBlock1.endOfText   = (charsToWrite < charsLeft) ? 0 : 1;
+    rec.textBlock1.lenHighBits = charsToWrite / 256;
     *encodedBuffNext = rec;
     ++encodedBuffNext;
 
-    encodedBuffNext->textBlock2.lenLowBits     = charsToWrite % 256;
+    encodedBuffNext->textBlock2.lenLowBits = charsToWrite % 256;
     ++encodedBuffNext;
 
     memcpy (encodedBuffNext, txtBlockPtr, charsToWrite);

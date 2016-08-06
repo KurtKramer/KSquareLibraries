@@ -131,6 +131,21 @@ namespace  KKLSC
   public:
     typedef  ScannerFile4BitEncoded*  ScannerFile4BitEncodedPtr;
 
+    const uchar opCodeTextBlock        = 1;
+    const uchar opCodeInstrumentData   = 2;
+    const uchar opCodeRunLength2Pixels = 4;
+    const uchar opCodeRunLength3Pixels = 5;
+    const uchar opCodeRunLength4Pixels = 6;
+    const uchar opCodeRunLength5Pixels = 7;
+    const uchar opCodeRunLength6Pixels = 8;
+    const uchar opCodeRunLength7Pixels = 9;
+
+    const uchar opCodeRenLength1Thru256 = 10;
+
+    const uchar opCodeRaw1Pixel               = 11;
+    const uchar opCodeRawSeqEven2Thru32Pixels = 12;
+    const uchar opCodeRawSeqOdd1Thru513Pixels = 13;
+
     ScannerFile4BitEncoded (const KKStr&  _fileName,
                             RunLog&       _log
                            );
