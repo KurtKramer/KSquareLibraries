@@ -402,8 +402,8 @@ namespace KKB
                                   );
 
   KKB::KKStr     osReadRestOfLine2 (std::istream&  in,
-                                      bool&          eof
-                                     );
+                                    bool&          eof
+                                   );
 
   KKB::KKStrPtr  osReadRestOfLine (FILE*  in,
                                    bool&  eof

@@ -68,9 +68,6 @@ KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 
 
 
-
-
-
 FILE*  KKB::osFOPEN (const char* fileName, 
                      const char* mode
 					          )
