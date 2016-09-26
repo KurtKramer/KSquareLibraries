@@ -118,8 +118,8 @@ namespace  KKB
                                                      */
 
       //  Access Methods that do not update the instance.
-      EntryPtr  BackOfQueue  () const;   /**< Returns pointer of last element in the container without removing it. If the container is empty will return NULL.  */
-      EntryPtr  FrontOfQueue () const;   /**< Returns a pointer to the element that is at from of the queue with out removing it from the queue.                  */
+      EntryPtr  BackOfQueue  () const;   /**< Returns pointer of last element without removing it; if empty returns NULL.  */
+      EntryPtr  FrontOfQueue () const;   /**< Returns pointer to first  element that is at from of the queue with out removing it from the queue.                  */
       EntryPtr  GetFirst     () const;   /**< Same as FrontOfQueue. */
       EntryPtr  GetLast      () const;   /**< Same as BackOfQueue.  */
       EntryPtr  LookAtBack   () const;   /**< Same as BackOfQueue.  */
@@ -127,17 +127,17 @@ namespace  KKB
       kkint32   QueueSize    () const;   /**< Same as calling vector<>::size(); returns the number of elements in KKQueue  */
       bool      Owner        () const;
 
-      kkint32   LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns the index of the element who's address is '_entry'. If not found in container will return back -1.                */
-      EntryPtr  IdxToPtr     (kkuint32      idx)     const;  /**< Returns back a pointer to the element who's index is 'idx'. If 'idx' is less than 0 or >= QueueSize()  will return NULL.  */
+      kkint32   LocateEntry  (EntryConstPtr _entry)  const;  /**< Returns index of the element who's address is '_entry'. If not found in container will return back -1.                */
+      EntryPtr  IdxToPtr     (kkuint32      idx)     const;  /**< Returns pointer to the element with index 'idx'; if 'idx' out or range returns NULL.  */
       kkint32   PtrToIdx     (EntryConstPtr _entry)  const;  /**< returns the index of the 'entry' that has the same pointer as '_entry', if none found returns -1 */
 
       // Basic Queue operators.
       virtual   void      Add          (EntryPtr _entry);    /**< same as PushOnBack   */
       virtual   void      AddFirst     (EntryPtr _entry);    /**< same as PushOnFront  */
-      virtual   EntryPtr  PopFromFront ();                   /**< Removes the first element in the container and returns its pointer.  If the container is empty will return NULL.  */
-      virtual   EntryPtr  PopFromBack  ();                   /**< Removes the last element in the container and returns its pointer. If the container is empty will return NULL.    */
-      virtual   void      PushOnFront  (EntryPtr _entry);    /**< Adds '_entry' to the Front of the container.                                                      */
-      virtual   void      PushOnBack   (EntryPtr _entry);    /**< Adds '_entry' to the End of the container.                                                        */
+      virtual   EntryPtr  PopFromFront ();                   /**< Removes first element and returns its pointer; if empty returns NULL.  */
+      virtual   EntryPtr  PopFromBack  ();                   /**< Removes last element and returns its pointer; if empty will return NULL. */
+      virtual   void      PushOnFront  (EntryPtr _entry);    /**< Adds '_entry' to the Front of the container. */
+      virtual   void      PushOnBack   (EntryPtr _entry);    /**< Adds '_entry' to the End of the container. */
       virtual   EntryPtr  RemoveFirst  ();                   /**< same as PopFromFront  */
       virtual   EntryPtr  RemoveLast   ();                   /**< same as PopFromBack   */
 
@@ -155,7 +155,9 @@ namespace  KKB
       void      DeleteEntry    (EntryPtr _entry);             /**< Removes from KKQueue the entry who's pointer = '_entry'                                                             */
       void      DeleteEntry    (kkuint32 _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                                                */
 
-      void      Owner          (bool     _owner);             /**< You can specify who owns the contents of the container.  '_owner' == true means when the container is deleted it will also call the destructor for each element it contains. */
+      void      Owner          (bool     _owner);             /**< specifies who owns the contents of the container; when true the contents will
+                                                                *  be deleted when the container is deleted.  
+                                                                */
 
       void      RandomizeOrder ();
       void      RandomizeOrder (kkint64   seed);
@@ -175,8 +177,9 @@ namespace  KKB
 
       //void      Sort           (QueueComparison<Entry>*  comparison);
 
-      Entry&    operator[] (kkuint32 i)  const;       /**< Returns a reference to element indexed by 'i'; similar to IdxToPtr except tat it returns a reference rather than a pointer.0  */
-
+      Entry&    operator[] (kkuint32 i)  const;       /**< Returns reference to element indexed by 'i'; similar to IdxToPtr 
+                                                       * except returns reference rather than a pointer. 
+                                                       */
 
       /** 
        *@brief  Assignment Operator
@@ -526,9 +529,9 @@ namespace  KKB
                                                 Functor   pred
                                                )
   {
-    if  ((k < 0)   ||  (K > = (kkint32)size ()))
+    if  (k >= (kkuint32)KKQueue<Entry>::size ())
       return -1;
-    return  FindTheKthElement (k, 0, size () - 1, pred);
+    return  FindTheKthElement (k, 0, KKQueue<Entry>::size () - 1, pred);
   }  /* FindTheKthElement */
 
 
@@ -583,7 +586,7 @@ namespace  KKB
         --right;
 
       if  (left < right)
-        SwapIndexes (left, right)
+        SwapIndexes (left, right);
     }
   }
 
@@ -606,7 +609,7 @@ namespace  KKB
 
 
   template <class Entry>
-  inline  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::RemoveFirst ()  
+  typename  KKQueue<Entry>::EntryPtr   KKQueue<Entry>::RemoveFirst ()  
   {
     return  PopFromFront ();
   }
@@ -614,7 +617,7 @@ namespace  KKB
 
 
   template <class Entry>
-  inline  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::RemoveLast  ()  
+  typename  KKQueue<Entry>::EntryPtr  KKQueue<Entry>::RemoveLast  ()  
   {
     return  PopFromBack ();
   }
