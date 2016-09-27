@@ -737,7 +737,7 @@ KKStr  Configuration::SettingValueToStr (const KKB::KKStr&  sectionName,
 {
   kkint32  sectionNum = SectionNum (sectionName);
   if  (sectionNum < 0)
-    return NULL;
+    return KKStr::EmptyStr ();
 
   return  SettingValueToStr (sectionNum, settingName, lineNum);
 }

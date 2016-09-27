@@ -124,6 +124,7 @@ namespace  KKB
 
     std::vector<BlobPtr>  availableBlobs;
     kkint32               nextBlobId;
+    bool                  owner;
   };
 
 

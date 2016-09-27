@@ -335,7 +335,7 @@ namespace  KKB
 
     virtual  TokenTypes  TokenType () {return  TokenTypes::tokContent;}
 
-    KKStrPtr const  Content () const  {return  content;}
+    KKStrConstPtr   Content () const  {return  content;}
     KKStrPtr        TakeOwnership ();
 
     static
@@ -438,7 +438,7 @@ namespace  KKB
       value = NULL;
     }
 
-    T*  const  Value ()  const  {return value;}
+    T const *  Value ()  const  {return value;}
 
     T*  TakeOwnership ()
     {
@@ -877,6 +877,7 @@ namespace  KKB
   class  XmlElement##TypeName:  public  XmlElement                 \
   {                                                                \
   public:                                                          \
+    typedef T  typeT;                                              \
     XmlElement##TypeName (XmlTagPtr      tag,                      \
                           XmlStream&     s,                        \
                           VolConstBool&  cancelFlag,               \
@@ -885,14 +886,14 @@ namespace  KKB
                                                                    \
     virtual  ~XmlElement##TypeName ();                             \
                                                                    \
-    std::vector<T>*  const  Value ()  const {return value;}        \
+    std::vector<T> const *  Value ()  const {return value;}        \
                                                                    \
     std::vector<T>*  TakeOwnership ();                             \
                                                                    \
     static                                                         \
-    void  WriteXML (const std::vector<##T>&  d,                    \
-                    const KKStr&        varName,                   \
-                    std::ostream&       o                          \
+    void  WriteXML (const std::vector<typeT>&  d,                  \
+                    const KKStr&               varName,            \
+                    std::ostream&              o                   \
                    );                                              \
                                                                    \
   private:                                                         \

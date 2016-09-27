@@ -740,8 +740,6 @@ void  ConvexHull::Store (const Raster&  input)
   kkint32 w = input.Width ();
   kkint32 h = input.Height ();
 
-  uchar**  rows = input.Rows ();
-        
   for (kkint32 col = 0;  col < w;  ++col)
   {
     kkint32 row;
@@ -769,3 +767,4 @@ void  ConvexHull::Store (const Raster&  input)
     }
   }
 }  /* Store */
+

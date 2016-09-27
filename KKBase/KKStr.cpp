@@ -36,6 +36,14 @@ char*  KKB::STRCOPY (char*        dest,
 # ifdef  USE_SECURE_FUNCS
     strcpy_s  (dest, destSize, src);
 # else
+    if  ((strlen(src) + 1) > destSize)
+    {
+      std::cerr << std::endl 
+         << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]" 
+         << std::endl;
+      exit(-1);
+    }
+
     strcpy (dest, src);
 # endif
   return  dest;
@@ -51,6 +59,14 @@ char*  KKB::STRCOPY (char*        dest,
 # ifdef  USE_SECURE_FUNCS
     strcpy_s  (dest, destSize, src);
 # else
+    if  ((strlen(src) + 1) > destSize)
+    {
+      std::cerr << std::endl 
+         << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]" 
+         << std::endl;
+      exit(-1);
+    }
+
     strcpy (dest, src);
 # endif
   return  dest;

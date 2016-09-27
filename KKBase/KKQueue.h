@@ -226,6 +226,7 @@ namespace  KKB
 
   template <class Entry>
   KKQueue<Entry>::KKQueue (const KKQueue&  q):
+        std::vector<Entry*>(q),
         owner (q.Owner ())
 
   {
@@ -588,6 +589,7 @@ namespace  KKB
       if  (left < right)
         SwapIndexes (left, right);
     }
+    return left;
   }
 
 

@@ -100,6 +100,7 @@ void  KKB::DisplayImage (const Raster&  raster,
                          const KKStr&  title
                         )
 {
+  cout << std::endl  << title << std::endl;
   DisplayImage (raster);
 }
 
@@ -962,9 +963,12 @@ bool  KKB::SupportedImageFileFormat (const KKStr&  imageFileName)
 
 void  KKB::ImageIoFinaleCleanUp ()
 {
+#if  defined(KKOS_WINDOWS)
   if  (gdiStarted)
   {
     GdiplusShutdown(gdiplusToken);
     gdiStarted = false;
   }
+#endif
 }
+

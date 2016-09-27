@@ -1102,7 +1102,7 @@ double    DateTime::ToHours   ()  const  {return  date.Days () * 24 + time.ToHou
 
 
 ///<summary>Number seconds since "0000/01/01 00:00:00"</summary>
-kkuint64  DateTime::ToSeconds ()  const  {return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();};
+kkuint64  DateTime::ToSeconds ()  const{return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();}
 
 
 void  DateTime::AddDays (kkint32  _days)

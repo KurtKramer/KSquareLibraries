@@ -63,7 +63,8 @@ BlobPtr  BlobList::LookUpByBlobId (kkint32  blobId)
 
 BlobList::BlobList (bool  _owner):
   availableBlobs (),
-  nextBlobId     (0)
+  nextBlobId     (0),
+  owner          (_owner)
 {
 }
 
@@ -79,12 +80,8 @@ BlobList::~BlobList ()
     delete  b;
   }
 
-  iterator  idx2;
-  iterator  endIdx = end ();
-  for  (idx2 = begin ();  idx2 != endIdx;  ++idx2)
-  {
-    BlobPtr b = idx2->second;
-    delete  b;
+  if  (owner) {
+    for (auto idx: *this)  delete idx.second;
   }
 }
 

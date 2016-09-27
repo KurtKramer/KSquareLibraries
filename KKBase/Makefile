@@ -1,12 +1,12 @@
 EXEC = BaseLibrary
 #CFLAGS = -O3 
-CFLAGS = -g
+CFLAGS = -g  
 LIBS = -lfftw -lrt
 FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
 VPATH = ../KKBase
 LIBDIR = ../KKBase
 
-CC = g++
+CC = g++ -W -Wall -Wextra -pedantic -std=c++0x 
 
 FIRSTINCLUDES      = FirstIncludes.h
 

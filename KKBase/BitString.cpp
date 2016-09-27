@@ -621,7 +621,6 @@ void  BitString::ReadXML (XmlStream&      s,
                           RunLog&         log
                          )
 {
-  kkint32  bitIndex = 0;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
@@ -631,7 +630,7 @@ void  BitString::ReadXML (XmlStream&      s,
       if  (c  &&  c->Content ())
       {
         KKStrConstPtr  text = c->Content ();
-        /** TODO decode text block into list of bits. */
+        /** @TODO decode text block into list of bits. */
         //ParseClassIndexList (*text, log);
         delete text;
         text = NULL;
