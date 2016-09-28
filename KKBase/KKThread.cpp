@@ -8,6 +8,7 @@
 #include <map>
 #include <ostream>
 #include <string>
+#include <string.h>
 #include <vector>
 #include "MemoryDebug.h"
 using namespace std;
@@ -93,6 +94,7 @@ KKThread::KKThread (const KKStr&        _threadName,
    status                (ThreadStatus::NotStarted),
    terminateFlag         (false),
    threadId              (0),
+   threadManager         (_threadManager),
    threadName            (_threadName)
 
 {
@@ -314,7 +316,7 @@ extern "C"
 void*  ThreadStartCallBack (void* param)
 {
   KKThreadPtr  tp = (KKThreadPtr)param;
-  tp->Status (KKThread::Starting);
+  tp->Status (KKThread::ThreadStatus::Starting);
     try  
     {
       tp->Run ();
@@ -335,10 +337,9 @@ void*  ThreadStartCallBack (void* param)
     catch  (...)
     {
       tp->Crashed (true);
-      const char* e2What = e2.what ();
       tp->ExceptionText ("exception(...) trapped.");
     }
-  tp->Status (KKThread::Stopped);
+  tp->Status (KKThread::ThreadStatus::Stopped);
   return 0;
 }
 
@@ -397,6 +398,7 @@ void  KKThread::Start (ThreadPriority  _priority,
                        bool&           successful
                       )
 {
+  priority = _priority;
   int returnCd = pthread_create (&linuxThreadId,
                                  NULL,                  // const pthread_attr_t * attr,
                                  ThreadStartCallBack,   // void * (*start_routine)(void *),
@@ -404,7 +406,7 @@ void  KKThread::Start (ThreadPriority  _priority,
                                 );
   if  (returnCd != 0)
   {
-	  successful = false;
+    successful = false;
     throw KKException ("Failed to create thread");
   }
   else 

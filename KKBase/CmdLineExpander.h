@@ -9,11 +9,11 @@
 #include "RunLog.h"
 #include "KKStr.h"
 
-
-#if  !defined(KKOS_WINDOWS)
-// Disable "assignment operator could not be generated" warning.
-#pragma warning(disable : 4512)
-#endif
+/**@TODO Do we actually need the pragma commented out below ? */
+//#if  !defined(KKOS_WINDOWS)
+//// Disable "assignment operator could not be generated" warning.
+//#pragma warning(disable : 4512)
+//#endif
 
 
 namespace  KKB

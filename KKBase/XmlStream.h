@@ -190,8 +190,8 @@ namespace  KKB
     ///</remarks>
     XmlTag (std::istream&  i);
 
-    const KKStr&  Name ()           const  {return  name;}
-    TagTypes      TagType ()        const  {return  tagType;}
+    const KKStr&   Name ()           const  {return  name;}
+    TagTypes       TagType ()        const  {return  tagType;}
 
     kkint32        AttributeCount () const  {return  (kkint32)attributes.size ();}
 

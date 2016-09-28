@@ -169,6 +169,8 @@ namespace KKB
                                                 * it to communicate messages to the controlling process.
                                                 */
 
+    ThreadPriority         priority;
+
     volatile bool          shutdownFlag;       /**< Indicates that the application wants this thread to complete what work is queued up 
                                                 * for it top process. Threads need to monitor this flag; if it goes true they are to 
                                                 * complete all processing that is queued up and then shutdown. This is 
@@ -179,8 +181,6 @@ namespace KKB
     KKThreadListPtr        startPrerequisites;
 
     ThreadStatus           status;
-
-    ThreadPriority         priority;
 
     volatile bool          terminateFlag;      /**< Indicates that thread is to stop processing ASAP, release any resources 
                                                 * it holds and terminate. Threads need to monitor this flag; if it goes 'true'

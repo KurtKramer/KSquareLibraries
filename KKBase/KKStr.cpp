@@ -59,7 +59,7 @@ char*  KKB::STRCOPY (char*        dest,
 # ifdef  USE_SECURE_FUNCS
     strcpy_s  (dest, destSize, src);
 # else
-    if  ((strlen(src) + 1) > destSize)
+    if  ((kkint32)(strlen(src) + 1) > destSize)
     {
       std::cerr << std::endl 
          << "KKB::STRCOPY   ***ERROR***   length of src[" << strlen(src) << "] >  destSize[" << destSize<< "]" 
@@ -93,7 +93,8 @@ char*  KKB::STRCAT (char*        dest,
 # ifdef  USE_SECURE_FUNCS
     strcat_s  (dest, destSize, src);
 # else
-    strcat (dest, src);
+    kkint32 zed = destSize - (strlen (dest) + 1);
+    strncat (dest, src, zed);
 # endif
 
   return  dest;
@@ -179,7 +180,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 # endif
 }
 
@@ -194,7 +195,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 #endif
 }
 
@@ -209,7 +210,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 # endif
 }
 
@@ -224,7 +225,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 #endif
 }
 
@@ -240,7 +241,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 # endif
 }
 
@@ -256,7 +257,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 # ifdef  USE_SECURE_FUNCS
     return sprintf_s (buff, buffSize, formatSpec, right);
 # else
-    return sprintf (buff, formatSpec, right);
+    return snprintf(buff, buffSize, formatSpec, right);
 # endif
 }
 
@@ -272,7 +273,7 @@ kkint32  KKB::SPRINTF (char*        buff,
 #ifdef  USE_SECURE_FUNCS
   return  sprintf_s (buff, buffSize, formatSpec, precision, d);
 #else
-  return  sprintf (buff, formatSpec, precision, d);
+  return snprintf(buff, buffSize, formatSpec, precision, d);
 #endif
 }
 
@@ -287,7 +288,7 @@ kkint32  KKB::SPRINTF (char*         buff,
   #ifdef  USE_SECURE_FUNCS
   return sprintf_s (buff, buffSize, formatSpec, d);
   #else
-  return sprintf (buff, formatSpec, d);
+  return snprintf(buff, buffSize, formatSpec, d);
   #endif
 }
 
@@ -496,35 +497,6 @@ void  KKStr::StrReplace (char**      dest,
 
 
 
-KKStr::LessCaseInsensitiveOperator::LessCaseInsensitiveOperator ()
-{}
-
-
-
-bool  KKStr::LessCaseInsensitiveOperator::operator ()  (const KKStr&  s1,  
-                                                        const KKStr&  s2
-                                                       )
-{
-  char* s1Ptr = (char*)s1.Str ();
-  char* s2Ptr = (char*)s2.Str ();
-
-  if  (s1Ptr == NULL)
-    return (s2Ptr != NULL);
-
-  if  (s2Ptr == NULL)
-    return false;
-
-  while  ((*s1Ptr != 0)  &&  (tolower (*s1Ptr) == tolower (*s2Ptr)))
-  {
-    ++s1Ptr;
-    ++s2Ptr;
-  }
-
-  return  (*s1Ptr) < (*s2Ptr);
-}
-
-
-
 KKStr::KKStr (): 
    val (NULL)
 {
@@ -590,7 +562,7 @@ KKStr::KKStr (const KKStr&  str):
     throw KKException("KKStr::KKStr  ***ERROR***  Allocation Failed.");
   }
 
-  std::memcpy (val, str.val, str.len);
+  memcpy (val, str.val, str.len);
   len = str.len;
 }
 
@@ -2051,7 +2023,7 @@ kkint32  KKStr::LocateStr (const KKStr&  searchStr)  const
   }
 
   return -1;
-}; // LocateStr
+} /* LocateStr */
 
   
 
@@ -3655,14 +3627,26 @@ wchar_t*  KKStr::ToWchar_t () const
   if  (val == NULL)
   {
     wa = new wchar_t[1];
-    mbstowcs_s(&returnValue, wa, 1, "", 1);
+    #if  defined(USE_SECURE_FUNCS)
+      mbstowcs_s(&returnValue, wa, 1, "", 1);
+    #else
+      returnValue = mbstowcs (wa, "", 1);
+    #endif
   }
   else
   {
     size_t  wideLen = len + 1;
     wa = new wchar_t[wideLen];
-    mbstowcs_s(&returnValue, wa, wideLen, val, len);
+    #if  defined(USE_SECURE_FUNCS)
+      mbstowcs_s(&returnValue, wa, wideLen, val, len);
+    #else
+      returnValue = mbstowcs (wa, val, len);
+    #endif
   }
+
+  if  (returnValue == (size_t)-1)
+    cerr << "KKStr::ToWchar_t ()   ***WARNING***    Invalid character was encountered." << endl;
+
   return wa;
 }
 
@@ -4503,6 +4487,15 @@ void  KKStrList::ReadXML (XmlStream&      s,
     else
       t = s.GetNextToken (cancelFlag, log);
   }
+
+  if  (count != size ())
+  {
+    cerr << "KKStrList::ReadXML    ***WARNING***    Expected " << count 
+         << " items but " << size () << " were loaded;" 
+         << " Tage Name: '" << tag->Name () << "'." 
+         << endl;
+  }
+
   delete  t;
   t = NULL;
 }  /* ReadXML */
@@ -4715,30 +4708,19 @@ KKStrListPtr  KKStrList::DuplicateListAndContents ()  const
 
 
 
-kkint32  LocateLastOccurrence (const char*   str,
-                               char          ch
+kkint32  LocateLastOccurrence (const char*  str,
+                               char         ch
                               )
 {
   if  (!str)
     return -1;
 
-  bool    found  = false;
-  size_t  len    = strlen (str);
-  size_t  idx    = len - 1;
+  kkint32 idx = (kkint32)strlen (str) - 1;
 
-  while  ((idx >= 0)  &&  (!found))
-  {
-    if  (str[idx] == ch)
-      found = true;
-    else
-      idx--;
-  }
+  while  ((idx >= 0)  &&  (str[idx] != ch))
+    --idx;
 
-  if  (found)
-    return  (kkint32)idx;
-  else
-    return  -1;
-
+  return idx;
 }  /* LocateLastOccurrence */
 
 
@@ -5216,8 +5198,17 @@ void  VectorKKStr::ReadXML (XmlStream&      s,
     else
       t = s.GetNextToken (cancelFlag, log);
   }
+
   delete  t;
   t = NULL;
+
+  if  (count != size ())
+  {
+    cerr << "VectorKKStr::ReadXML    ***WARNING***    Expected " << count 
+         << " items but " << size () << " were loaded;" 
+         << " Tage Name: '" << tag->Name () << "'." 
+         << endl;
+  }
 }  /* ReadXML */
 
 

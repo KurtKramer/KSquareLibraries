@@ -182,18 +182,17 @@ KKB::Chart::~Chart ()
 
 
 void  KKB::Chart::AddAValue (kkuint32  _seriesIDX,
-                             float  _xVal,
-                             float  _yVal
+                             float     _xVal,
+                             float     _yVal
                             )
 {
-  if  ((_seriesIDX < 0)  ||  (_seriesIDX >= series.size ()))
+  if  (_seriesIDX >= series.size ())
   {
     cerr << std::endl
          << "*** ERROR ***  Chart::AddAValue" << std::endl
          << "               Invalid SeriesIDX[" << _seriesIDX << "]"  << std::endl
          << "               Only [" << series.size () << "] series defined." << std::endl
          << std::endl;
-    exit (-1);
   }
 
   series[_seriesIDX]->AddAValue (_xVal, _yVal);

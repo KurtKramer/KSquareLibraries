@@ -84,8 +84,6 @@ namespace  KKB
     typedef  const KKStr*  KKStrConstPtr;
     //typedef  std::vector<KKStr>  VectorKKStr;
 
-    class  LessCaseInsensitiveOperator;  /**< To be used by templates as the Pred operator. */
-
   private:
     static  const  kkuint32  KKStrIntMax;
 
@@ -700,15 +698,6 @@ namespace  KKB
 
     void  ValidateLen ()  const;
 
-  public:
-    class  LessCaseInsensitiveOperator
-    {
-      public:
-      LessCaseInsensitiveOperator ();
-      bool  operator () (const KKStr&  s1,  
-                         const KKStr&  s2
-                        );
-    };  /* LessCaseInsensitiveOperator */
   };   /* KKStr */
 
 
