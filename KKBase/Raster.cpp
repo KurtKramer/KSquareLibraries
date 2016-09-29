@@ -3068,7 +3068,6 @@ void  Raster::Edge (RasterPtr  dest)
    
   kkint32  pixelCount = 0;
 
-  uchar*  destArea = dest->GreenArea ();
   uchar** destRows = dest->Green ();
 
   for  (r = 1;  r < lastRow;  ++r)
@@ -4121,7 +4120,6 @@ void  Raster::CentralMoments (float  features[9])  const
   float  cm21 = 0.0;
 
   {
-    float   cm = 0.0;
     kkint32 col;
     kkint32 row;
 
@@ -4263,7 +4261,6 @@ void  Raster::CentralMomentsWeighted (float  features[9])  const
   float cm21 = 0.0f;
 
   {
-    float  cm = 0.0;
     kkint32  col;
     kkint32  row;
    
@@ -4462,14 +4459,9 @@ void    Raster::ComputeCentralMoments (kkint32&  foregroundPixelCount,
   float cmw21 = 0.0f;
 
   {
-    float  cmw = 0.0;
-    float  cm  = 0.0;
     kkint32  col;
     kkint32  row;
 
-    float   deltaCol = 0.0f;
-    float   deltaRow = 0.0f;
-   
     kkint32  maxPixVal = 0;
 
     for  (row = 0;  row < height;  ++row)
@@ -5611,8 +5603,6 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
                                             float&  orientationAngle
                                            )  
 {
-#ifdef  WIN32
-
   float  centroidColWeighted;
   float  centroidRowWeighted;
 
@@ -5629,7 +5619,7 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
   cov[1][1] = 0.0;
 
   kkint32  col;
-  uchar  pixVal;
+  uchar    pixVal;
   kkint32  row;
 
   double  colOffset = 0.0;
@@ -5722,8 +5712,6 @@ void  Raster::CalcOrientationAndEigerRatio (float&  eigenRatio,
   }
 
   return;
-
-#endif
 } /* CalcOrientation */
 
 
@@ -6256,7 +6244,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
                        )
 {
   DrawLine (bpRow, bpCol, epRow, epCol, pixelVal, pixelVal, pixelVal);
-}  /* DrawLine */;
+}  /* DrawLine */
 
 
 
@@ -6412,7 +6400,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
       }
     }
   }
-}  /* DrawLine */;
+}  /* DrawLine */
 
 
 
@@ -6629,7 +6617,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
       }
     }
   }
-}  /* DrawLine */;
+}  /* DrawLine */
 
 
 
@@ -6763,7 +6751,7 @@ void  Raster::DrawFatLine (Point       startPoint,
       PaintFatPoint (row, col, pv, alpha);
     }
   }
-}  /* DrawFatLine */;
+}  /* DrawFatLine */
 
 
 
@@ -6774,7 +6762,7 @@ void   Raster::DrawLine (kkint32  bpRow,    kkint32 bpCol,
                         )
 {
   DrawLine (bpRow, bpCol, epRow, epCol, pixelVal.r, pixelVal.g, pixelVal.b);
-}  /* DrawLine */;
+}  /* DrawLine */
 
 
 
@@ -6786,7 +6774,7 @@ void   Raster::DrawLine (kkint32  bpRow,    kkint32 bpCol,
                         )
 {
   DrawLine (bpRow, bpCol, epRow, epCol, pixelVal.r, pixelVal.g, pixelVal.b, alpha);
-}  /* DrawLine */;
+}  /* DrawLine */
 
 
 
@@ -9951,7 +9939,6 @@ PointListPtr  Raster::DeriveImageLength () const
     uchar**  imageData = rotatedImage->Green ();
 
     kkint32  boxWidth  = brCol - tlCol;
-    kkint32  boxHeight = brRow - tlRow;
 
     kkint32  mark1Col = (kkint32)((float)boxWidth * 0.05f + 0.5f) + tlCol;
     kkint32  mark2Col = (kkint32)((float)boxWidth * 0.95f + 0.5f) + tlCol;

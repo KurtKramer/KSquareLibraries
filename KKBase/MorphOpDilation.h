@@ -41,7 +41,7 @@ namespace  KKB
   };  /* MorphOpDilation */
 
   typedef  MorphOpDilation*  MorphOpDialationPtr;
-};  /* KKB */
+}  /* KKB */
 
 
 

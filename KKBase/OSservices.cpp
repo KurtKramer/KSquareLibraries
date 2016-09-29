@@ -34,7 +34,7 @@
 #include "MemoryDebug.h"
 using namespace std;
 
-
+#include "KKException.h"
 #include "OSservices.h"
 #include "ImageIO.h"
 #include "KKStr.h"
@@ -290,10 +290,12 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
 
 
 
-
 char  KKB::osGetDriveLetter (const KKStr&  pathName)
 {
 #ifndef  WIN32
+  cerr << "KKB::osGetDriveLetter  no such think as a drive letter in this environment;  "
+       << "pathName[" << pathName << "]."
+       << endl;
   return 0;
 #else
   if  (pathName.Len () < 3)
@@ -600,9 +602,6 @@ bool  KKB::osFileExists (const KKStr&  _fileName)
 
 
 
-
-
-
 bool  KKB::osMoveFileBetweenDirectories (const KKStr&  _fileName,
                                          const KKStr&  _srcDir,
                                          const KKStr&  _destDir
@@ -610,27 +609,15 @@ bool  KKB::osMoveFileBetweenDirectories (const KKStr&  _fileName,
 {
   #ifdef  WIN32
 
-    KKStr  srcName (_srcDir);
-    KKStr  destName (_destDir);
-
-    if  (srcName.LastChar () != '\\')
-      srcName  << "\\";
-    
-    if  (destName.LastChar () != '\\')
-      destName << "\\";
-
-    srcName   << _fileName;
-    destName  << _fileName;
-
+    KKStr  srcName = osAddSlash (_srcDir) + _fileName;
+    KKStr  destName = osAddSlash (_destDir) + _fileName;
     return  (MoveFile (srcName.Str (), destName.Str ()) != 0);
 
   #else
-    cerr << std::endl;
-    cerr << "*** osMoveFileBetweenDirectories ***" << std::endl;
-    cerr << std::endl;
-    cerr << "*** Not yet implemented ***" << std::endl;
-    osWaitForEnter ();
-    exit (-1);
+    KKStr errMsg = "KKB::osMoveFileBetweenDirectories   ***ERROR***  not implemented   _fileName[" +
+                   _fileName + "]  _srcDir[" + _srcDir + "]  " + "_destDir[" + _destDir  + "].";
+    cerr << endl << errMsg << endl << endl;
+    return false;
   #endif
 }
 
@@ -644,10 +631,10 @@ bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
 {
   KKStr  existingFile (_srcDir);
   KKStr  destinationName (_destDir);
-  BOOL    fail = 1;
+  BOOL   fail = 1;
   
   osAddLastSlash (existingFile);
-  existingFile    <<  _fileName;
+  existingFile <<  _fileName;
 
   osAddLastSlash (destinationName);
   destinationName << _fileName;
@@ -669,12 +656,10 @@ bool  KKB::osCopyFileBetweenDirectories (const KKStr&  _fileName,
                                          const KKStr&  _destDir
                                         )
 {
-  cerr << std::endl;
-  cerr << "*** osCopyFileBetweenDirectories ***" << std::endl;
-  cerr << std::endl;
-  cerr << "*** Not yet implemented ***" << std::endl;
-  osWaitForEnter ();
-  exit (-1);
+  KKStr errMsg = "KB::osCopyFileBetweenDirectories   ***ERROR***    not implemented  _fileName[" +
+                 _fileName + "]  _srcDir[" + _srcDir + "]  _destDir[" + _destDir + "].";
+  cerr << endl << errMsg << endl << endl;
+  return false;
 }
 
 #endif
@@ -715,20 +700,18 @@ bool  KKB::osCopyFile (const KKStr&  srcFileName,
   }
 }
 
-#else
 
+#else
 
 
 bool  KKB::osCopyFile (const KKStr&  srcFileName,
                        const KKStr&  destFileName
                       )
 {
-  cerr << std::endl;
-  cerr << "*** osCopyFile ***" << std::endl;
-  cerr << std::endl;
-  cerr << "*** Not yet implemented ***" << std::endl;
-  osWaitForEnter ();
-  exit (-1);
+  KKStr errMsg = "KKB::osCopyFile    ***ERROR***    'osCopyFile'  not implemented  srcFileName[" +
+                 srcFileName + "]   destFileName[" + destFileName + "].";
+  cerr << endl << errMsg << endl << endl;
+  return false;
 }
 
 #endif

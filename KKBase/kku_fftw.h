@@ -492,12 +492,12 @@ namespace  KKB
     height           (_height),
     width            (_width),
     forwardTransform (_forwardTransform),
-    rowDFT           (NULL),
-    colDFT           (NULL),
+    Zero             ((DftType)0.0, (DftType)0.0),
     workArray        (NULL),
     workArrayArea    (NULL),
     workCol          (NULL),
-    Zero             ((DftType)0.0, (DftType)0.0)
+    rowDFT           (NULL),
+    colDFT           (NULL)
   {
     rowDFT = new KK_DFT1D<DftType> (_width,  _forwardTransform);
     colDFT = new KK_DFT1D<DftType> (_height, _forwardTransform);
@@ -512,6 +512,7 @@ namespace  KKB
     }
     workCol = new DftComplexType[height];
   }
+
 
 
   template<typename DftType>

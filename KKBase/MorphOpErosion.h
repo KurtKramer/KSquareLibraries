@@ -40,7 +40,7 @@ namespace  KKB
   };  /* MorphOpErosion */
 
   typedef  MorphOpErosion*  MorphOpErosionPtr;
-};  /* KKB */
+}  /* KKB */
 
 
 

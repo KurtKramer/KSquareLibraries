@@ -46,6 +46,7 @@ XmlStream::XmlStream (const KKStr& _fileName,  RunLog& _log):
     tokenStream          (NULL),
     weOwnTokenStream     (false)
 {
+  _log.Level(30) << "XmlStream::XmlStream   _fileName[" << _fileName << "]" << endl;
   bool fileOpened = false;
   tokenStream = new XmlTokenizer (fileName, fileOpened);
   weOwnTokenStream = true;
@@ -61,9 +62,7 @@ XmlStream::~XmlStream ()
 
 
 
-/**
- *@brief  Registers a Factory at the current hierarchy that is being processed.
- */
+/** @brief  Registers a Factory at the current hierarchy that is being processed. */
 void  XmlStream::RegisterFactory (XmlFactoryPtr  factory)
 {
   if  (factoryManagers.size () > 0)
@@ -112,6 +111,11 @@ XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
 }
 
 
+bool XmlStream::EndOfStream ()
+{
+  return (!tokenStream)  ||  (tokenStream->EndOfFile ());
+}
+
 
 XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
                                       RunLog&        log
@@ -136,8 +140,7 @@ XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
       XmlFactoryPtr  factory = TrackDownFactory (tag->Name ());
       if  (!factory)
         factory = XmlElementUnKnownFactoryInstance  ();
-      else
-        int zed =100;
+
       log.Level (50) << "XmlStream::GetNextToken   Factory Selected: " << factory->ClassName () << endl;
 
       PushXmlElementLevel (tag->Name ());
@@ -186,8 +189,10 @@ XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
         if  (!endOfElementTagNames.back ().EqualIgnoreCase (nameOfLastEndTag))
         {
           log.Level (-1) << endl
-            << "XmlStream::GetNextToken   ***ERROR***   Encountered end-tag </" << nameOfLastEndTag << ">  does not match StartTag <" << endOfElementTagNames.back () << ">." << endl
-            << endl;
+            << "XmlStream::GetNextToken   ***ERROR***   " 
+            << "Encountered end-tag </" << nameOfLastEndTag << ">  " 
+            << "does not match StartTag <" << endOfElementTagNames.back () << ">." 
+            << endl << endl;
           // </End-Tag>  does not match <Start-Tag>  we will put back on token stream assuming that we are missing a </End-Tag>
           // We will end the current element here.
           tokenStream->PushTokenOnFront (new KKStr ("<" + tag->Name () + " />"));
@@ -209,8 +214,10 @@ XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
 
  XmlContentPtr  XmlStream::GetNextContent (RunLog& log)
 {
-  if  (!tokenStream)
+  if  (!tokenStream) {
+    log.Level(50) << "XmlStream::GetNextContent  tokenStream undefined." << endl;
     return NULL;
+  }
 
   KKStrConstPtr  peekNext = tokenStream->Peek (0);
   if  (!peekNext)
@@ -238,7 +245,8 @@ XmlAttributeList::XmlAttributeList (bool  _owner):
 }
 
 
-XmlAttributeList::XmlAttributeList (const XmlAttributeList&  attributes)
+XmlAttributeList::XmlAttributeList (const XmlAttributeList&  attributes):
+    KKQueue<XmlAttribute> (attributes)
 {
   XmlAttributeList::const_iterator  idx;
   for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
@@ -760,7 +768,10 @@ XmlElement::XmlElement (XmlTagPtr   _nameTag,
                         RunLog&     log
                        ):
   nameTag (_nameTag)
-{}
+{
+  if  (s.EndOfStream ())
+    log.Level(-1) << ("XmlElement::XmlElement   Reached EndOfStream.");
+}
  
 
 
@@ -785,7 +796,7 @@ KKStr  XmlElement::NameTagStr ()  const
 const KKStr&  XmlElement::SectionName ()  const
 {
   if  (nameTag)
-    return  nameTag->Name ();
+    return nameTag->Name ();
   else
     return KKStr::EmptyStr ();
 }
@@ -1287,8 +1298,8 @@ XmlElementArrayFloat2DVarying::XmlElementArrayFloat2DVarying (XmlTagPtr      tag
                                                             ):
     XmlElement (tag, s, log),
     height (0),
-    widths (NULL),
-    value  (NULL)
+    value  (NULL),
+    widths (NULL)
 {
   height = tag->AttributeValueInt32 ("Height");
   if  (height < 1)
@@ -1434,6 +1445,7 @@ XmlFactoryMacro(KKStrListIndexed)
 
 /**
  * Works with matching Marco (XmlElementBuiltInTypeHeader) defined in XmlStream.h  
+ * XmlElementBuiltInTypeBody(kkint32,Int32,ToInt32)  // XmlElementInt32
  */
 #define  XmlElementBuiltInTypeBody(T,TypeName,ParseMethod)                \
  XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,          \
@@ -1446,14 +1458,14 @@ XmlFactoryMacro(KKStrListIndexed)
 {                                                                         \
   KKStrConstPtr  valueStr = tag->AttributeValueByName ("Value");          \
   if  (valueStr)                                                          \
-    value = (T)valueStr->##ParseMethod ();                                \
+    value = (T)(valueStr->ParseMethod ());                                \
   XmlTokenPtr tok = s.GetNextToken (cancelFlag, log);                     \
   while  (tok != NULL)                                                    \
   {                                                                       \
     if  (tok->TokenType () == XmlToken::TokenTypes::tokContent)           \
     {                                                                     \
       XmlContentPtr c = dynamic_cast<XmlContentPtr> (tok);                \
-      value = (T)c->Content ()->##ParseMethod ();                         \
+      value = (T)c->Content ()->ParseMethod ();                           \
     }                                                                     \
     delete  tok;                                                          \
     tok = s.GetNextToken (cancelFlag, log);                               \
@@ -1504,14 +1516,6 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,               \
       value (NULL)                                                            \
 {                                                                             \
   count = tag->AttributeValueInt32 ("Count");                                 \
-  if  (count < 0)                                                             \
-  {                                                                           \
-    log.Level (-1) << endl                                                    \
-      << "XmlElement##TypeName   ***ERROR***   Attribute Count[" << count     \
-      << "] must be a positive value; will set array to NULL." << endl        \
-      << endl;                                                                \
-      count = 0;                                                              \
-  }                                                                           \
                                                                               \
   if  (count <= 0)                                                            \
   {                                                                           \
@@ -1535,7 +1539,7 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,               \
                                                                               \
       while  (p.MoreTokens ())                                                \
       {                                                                       \
-        double  zed = p.##ParserNextTokenMethod ("\t,");                      \
+        double  zed = p.ParserNextTokenMethod ("\t,");                        \
         if  (fieldsExtracted < count)                                         \
           value[fieldsExtracted] = (T)zed;                                    \
         ++fieldsExtracted;                                                    \
@@ -1763,10 +1767,10 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
                                            ):                              \
   XmlElement (tag, s, log)                                                 \
 {                                                                          \
-  kkint32  count = 0;                                                      \
+  kkuint32  count = 0;                                               \
   KKStrConstPtr  countStr = tag->AttributeValueByName ("Count");           \
   if  (countStr)                                                           \
-    count = countStr->ToInt32 ();                                          \
+    count = countStr->ToUint32 ();                                          \
                                                                            \
   value = new vector<T> ();                                                \
                                                                            \
@@ -1781,12 +1785,20 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
                                                                            \
       while  (p.MoreTokens ())                                             \
       {                                                                    \
-        T  zed = p.##ParserNextTokenMethod ("\t,");                        \
+        T  zed = p.ParserNextTokenMethod ("\t,");                          \
         value->push_back ((T)zed);                                         \
       }                                                                    \
     }                                                                      \
     delete  tok;                                                           \
     tok = s.GetNextToken (cancelFlag, log);                                \
+  }                                                                        \
+                                                                           \
+  if  (count != value->size ())                                            \
+  {                                                                        \
+    log.Level(-1) <<"XmlElement##TypeName::XmlElement##TypeName  "         \
+      << "***WARNING***   count[" << count << "] not equal number "        \
+      << "elements value->size()[" << value->size () << "] actually "      \
+      << "found.";                                                         \
   }                                                                        \
 }                                                                          \
                                                                            \

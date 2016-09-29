@@ -42,7 +42,7 @@ namespace  KKB
     ~XmlTokenizer ();
 
 
-    /** Indicates if there anymore tokens that can be extracted. */
+    /** Indicates if there are no more tokens that can be extracted. */
     bool  EndOfFile ();
 
 

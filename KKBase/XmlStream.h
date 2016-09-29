@@ -54,22 +54,22 @@ namespace  KKB
 
     virtual  ~XmlStream ();
 
-    /** Will return either a XmlElement or a XmlContent which ever is next; If we are at the end of the element then NULL will be returned. */
+    virtual  bool EndOfStream ();
+
+    /** Returns either XmlElement or XmlContent which ever is next; If at end of the element then NULL returned. */
     virtual  XmlTokenPtr  GetNextToken (VolConstBool&  cancelFlag,
                                         RunLog&        log
                                        ); 
 
-    virtual  XmlContentPtr  GetNextContent (RunLog& log);  /**< Will return any content that may exist before the next tag; if 
-                                                            * there is no content before the next tag will return NULL
+    virtual  XmlContentPtr  GetNextContent (RunLog& log);  /**< Returns any content exists before the next tag; if no more
+                                                            * content before next tag will return NULL.
                                                             */
 
-    void  RegisterFactory (XmlFactoryPtr  factory);        /** Registers factory with the highest level FactoryManager in 'factoryManagers'. */
+    void  RegisterFactory (XmlFactoryPtr  factory);        /**< Registers factory with the highest level FactoryManager in 'factoryManagers'. */
 
 
   private:
-    /**
-     *@brief  returns the index of the latest instance of 'name' pushed onto the stack; if no entry with the same name returns -1.
-     */
+    /** Returns index of latest instance of 'name' pushed onto the stack; if no entry with same name returns -1. */
     kkint32  FindLastInstanceOnElementNameStack (const KKStr&  name);
 
 
@@ -77,15 +77,19 @@ namespace  KKB
 
     void  PopXmlElementLevel ();
 
-    XmlFactoryPtr  TrackDownFactory (const KKStr&  sectionName);     /** Will search for the factory starting at the highest level of 'factoryManagers'
-                                                                      * the working down the stack; if not found there will then look at the 
-                                                                      'XmlFactory::globalXmlFactoryManager'
-                                                                      */
+
+
+    /** 
+     * Searches for factory starting at highest level of 'factoryManagers' working down 
+     * stack; if not found there will look at 'XmlFactory::globalXmlFactoryManager'.
+     */
+    XmlFactoryPtr  TrackDownFactory (const KKStr&  sectionName);
+
 
 
     /**
-     * When we start a new element the name of the Section is pushed on the back  of 'endOfElementTagNames'. This
-     * is how we keep track of the End tag that we are looking for to close out the current element.  The member
+     * When starting a new element the name of the Section is pushed on back  of 'endOfElementTagNames'. This
+     * is how we keep track of the End tag we are looking for to close-out the current element.  The member
      * 'factoryManagers' works in synchronization with endOfElementTagNames. That is when we start a new Element
      * we push an empty 'XmlFactoryManager' instance onto 'factoryManagers'. This will allow XmlElement derived 
      * classes to specify 'XmlFactory' derived instances that are specific to their universe.  An example use would
@@ -235,8 +239,8 @@ namespace  KKB
     void  WriteXML (std::ostream& o);
 
   private:
-    KKStr             name;
     XmlAttributeList  attributes;
+    KKStr             name;
     TagTypes          tagType;
   };  /* XmlTag */
 
@@ -383,6 +387,8 @@ namespace  KKB
   {
   public:
     XmlFactory (const KKStr&  _clasName);
+
+    virtual  ~XmlFactory ()  {};
 
     virtual  const KKStr&  ClassName ()  const  {return className;}
 
@@ -691,6 +697,8 @@ namespace  KKB
     public:                                                                               \
       XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                            \
                                                                                           \
+      virtual  ~XmlFactory##NameOfClass ()  {}                                            \
+                                                                                          \
       virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr      tag,        \
                                                                XmlStream&     s,          \
                                                                VolConstBool&  cancelFlag, \
@@ -731,6 +739,9 @@ namespace  KKB
     {                                                                             \
     public:                                                                       \
       XmlFactory##NameOfClass (): XmlFactory (#NameOfClass) {}                    \
+                                                                                  \
+      virtual  ~XmlFactory##NameOfClass ()  {}                                    \
+                                                                                  \
       virtual  XmlElement##NameOfClass*  ManufatureXmlElement (XmlTagPtr   tag,   \
                                                                XmlStream&  s,     \
                                                                VolConstBool&  cancelFlag, \

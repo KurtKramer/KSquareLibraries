@@ -60,7 +60,7 @@ namespace  KKB
   };  /* MorphOpStruct */
 
   typedef  MorphOpStruct*  MorphOpStructPtr;
-};  /* KKB */
+}  /* KKB */
 
 
 

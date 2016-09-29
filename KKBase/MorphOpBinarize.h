@@ -46,8 +46,7 @@ namespace  KKB
   };
 
   typedef  MorphOpBinarize*  MorphOpBinarizePtr;
-};  /* KKB */
-
+}  /* KKB */
 
 
 #endif
