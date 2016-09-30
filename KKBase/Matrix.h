@@ -103,7 +103,7 @@ namespace  KKB
      */
     MatrixPtr       Covariance ()  const;
 
-    double** const  Data ()  const  {return  data;}
+    double const * const *   Data ()  const  {return  data;}
 
     double          Determinant ();
 

@@ -99,13 +99,11 @@ void  Raster::FinalCleanUp ()
 
 
 
-/**
- * @brief  Supports the tracking down of memory leaks in Raster; it will be called every time a new instance of a 'Raster' object is created.
- */
+/** Supports detection of memory leaks in Raster; maintains list of 'Raster' objects created. */
 map<RasterPtr, RasterPtr>  Raster::allocatedRasterInstances;
+
 void  Raster::AddRasterInstance (const RasterPtr  r)
 {
-  /*
   if  (!rasterInitialized)
     Initialize ();
 
@@ -122,13 +120,11 @@ void  Raster::AddRasterInstance (const RasterPtr  r)
     allocatedRasterInstances.insert (pair<RasterPtr, RasterPtr> (r, r));
   }
   goalKeeper->EndBlock ();
-  */
 }
 
 
 void  Raster::RemoveRasterInstance (const RasterPtr  r)
 {
-  /*
   if  (!rasterInitialized)
     Initialize ();
 
@@ -145,7 +141,6 @@ void  Raster::RemoveRasterInstance (const RasterPtr  r)
     allocatedRasterInstances.erase (idx);
   }
   goalKeeper->EndBlock ();
-  */
 }  /* RemoveRasterInstance */
 
 
@@ -165,33 +160,6 @@ void  Raster::PrintOutListOfAllocatedrasterInstances ()
 }  /* PrintOutListOfAllocatedrasterInstances */
 
 
-
-
-//typedef  enum  
-//{
-//  Cross,
-//  Square
-//}  MaskShapes;
-
-
-//kkint32  biases[] = {1,  // CROSS3 
-//                     2,  // CROSS5
-//                     1,  // SQUARE3
-//                     2,  // SQUARE5
-//                     3,  // SQUARE7
-//                     4,  // SQUARE9
-//                     5   // SQUARE11
-//                    };
-
-
-//kkint32  maskShapes[] = {Cross,   // CROSS3 
-//                         Cross,   // CROSS5
-//                         Square,  // SQUARE3
-//                         Square,  // SQUARE5
-//                         Square,  // SQUARE7
-//                         Square,  // SQUARE9
-//                         Square   // SQUARE11
-//                        };
 
 
 
@@ -1806,7 +1774,6 @@ void  Raster::Dilation (RasterPtr  dest)  const
   if  ((dest->Height () != height)  ||  (dest->Width () != width)  ||  (dest->Color ()  != color))
     dest->ReSize (height, width, color);
 
-  uchar*   srcArea  = GreenArea ();
   uchar**  srcRows  = Green     ();
 
   uchar*   destArea = dest->GreenArea ();
@@ -2110,7 +2077,6 @@ void  Raster::FillHole (RasterPtr  mask)
     mask->ReSize (height, width, false);
 
   uchar*   srcArea = this->GreenArea ();
-  uchar**  srcRows = this->Green ();
 
   uchar*   maskArea = mask->GreenArea ();
   uchar**  maskRows = mask->Green ();
@@ -2416,10 +2382,7 @@ void  Raster::Erosion (RasterPtr  dest)  const
   uchar*   destArea = dest->GreenArea ();
   uchar**  destRows = dest->Green ();
 
-  uchar*   srcArea = greenArea;
   uchar**  srcRows = green;
-
-  kkint32  totalArea = this->TotPixels ();
 
   memset (destArea, 0, totPixels);
   kkint32  pixelCount = 0;
@@ -9377,7 +9340,7 @@ void  Raster::SmoothUsingKernel (Matrix&  kernel,
   kkint32  kernelSideLen = kernel.NumOfCols ();
   kkint32  delta = kernelSideLen / 2;
 
-  double**  kernalData = kernel.Data ();
+  double const * const *  kernalData = kernel.Data ();
 
   for  (row = 0;  row < height;  row++)
   {
@@ -9392,7 +9355,7 @@ void  Raster::SmoothUsingKernel (Matrix&  kernel,
       {
         if  (maskRow >= 0)
         {
-          double*  kernalRowData = kernalData[kernelRow];
+          double const *  kernalRowData = kernalData[kernelRow];
 
           kkint32  maskCol = maskLeft;
           for  (kkint32 kernelCol = 0;  (kernelCol < kernelSideLen)  &&  (maskCol < width);  kernelCol++, maskCol++)

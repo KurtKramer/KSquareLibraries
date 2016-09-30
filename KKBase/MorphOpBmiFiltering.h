@@ -75,7 +75,7 @@ namespace  KKB
   typedef  MorphOpBmiFiltering*  MorphBmiFilteringPtr;
 
 #define _MorphOpBmiFiltering_Defined_
-};  /* KKB */
+}  /* KKB */
 
 
 

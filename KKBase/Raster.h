@@ -854,10 +854,8 @@ namespace KKB
                            kkint32                 _backgroundCountTH
                           );
 
-    /**
-     *@brief  Place into destination a eroded version of this instances image.
-     */
-    void          Erosion (RasterPtr  dest) const;
+    
+    void          Erosion (RasterPtr  dest) const;  /**< Place into destination a eroded version of this instances image.*/
 
     void          Erosion (RasterPtr  dest,
                            MaskTypes  mask
@@ -865,8 +863,15 @@ namespace KKB
                             const;
 
     void          ErosionChanged (MaskTypes  mask, kkint32 row, kkint32 col);
+
     void          ErosionChanged1 (MaskTypes  mask, kkint32 row, kkint32 col);
-    void          ErosionBoundary (MaskTypes  mask, kkint32 blobrowstart, kkint32 blobrowend, kkint32 blobcolstart, kkint32 blobcolend);
+
+    void          ErosionBoundary (MaskTypes  mask, 
+                                   kkint32    blobrowstart, 
+                                   kkint32    blobrowend, 
+                                   kkint32    blobcolstart, 
+                                   kkint32    blobcolend
+                                  );
 
 
     /**

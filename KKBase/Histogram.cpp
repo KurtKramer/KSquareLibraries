@@ -338,7 +338,7 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
 {
   kkint32 bucket        = 0;
   kkint32 col           = 10;
-  kkint32 barWidth      = 2;
+  kkint32 barWidth      = barSize;
   kkint32 interBarWidth = 5;
   kkint32 colHeight     = 0;
   float   maxCount      = (float)0.0;
@@ -356,8 +356,8 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
   uchar  hashColor2   =  45;
 
   kkint32  graphWidth  = numOfBuckets * (barWidth + interBarWidth) + 20; //  3 pixels per bar,  +
-                                                                       //  3 pixels space     +
-                                                                       // 10 pixels Padding on both sides.
+                                                                         //  3 pixels space     +
+                                                                         // 10 pixels Padding on both sides.
 
   // Set up where Grid lines should go
   bool*  vertGridLines = new bool[numOfBuckets];
