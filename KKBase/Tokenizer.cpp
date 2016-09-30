@@ -71,7 +71,6 @@ Tokenizer::Tokenizer (const KKStr&  _fileName,
 
 
 
-
 Tokenizer::~Tokenizer ()
 {
   if  (weOwnTokenBuffer)
@@ -82,10 +81,6 @@ Tokenizer::~Tokenizer ()
   delete  operatorChars;
   operatorChars = NULL;
 }
-
-
-
-
 
 
 
@@ -106,7 +101,7 @@ void  Tokenizer::Initialize ()
 
 
 
-void  Tokenizer::DefineOperatorChars (char* const _operatorChars)
+void  Tokenizer::DefineOperatorChars (char const * _operatorChars)
 {
   delete  operatorChars ;
   operatorChars = KKB::STRDUP (_operatorChars);

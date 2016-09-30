@@ -1096,12 +1096,14 @@ deque<XmlTokenPtr>*  XmlElementUnKnown::TakeOwnership ()
 }
 
 
+
 XmlFactoryMacro(UnKnown)
 
 XmlFactoryPtr  KKB::XmlElementUnKnownFactoryInstance ()
 {
   return  XmlFactoryUnKnown::FactoryInstance ();
 }
+
 
 
 XmlElementDateTime::XmlElementDateTime (XmlTagPtr      tag,
@@ -1113,12 +1115,16 @@ XmlElementDateTime::XmlElementDateTime (XmlTagPtr      tag,
     value ()
 {
   value = tag->AttributeValueDateTime ("Value");
+  if  (cancelFlag)
+    log.Level(10) << "XmlElementDateTime::XmlElementDateTime   ***CANCELED***" << endl;
 }
+
 
                
 XmlElementDateTime::~XmlElementDateTime ()  
 {
 }
+
 
 
 void  XmlElementDateTime::WriteXML (const DateTime&  d,

@@ -34,7 +34,7 @@ namespace  KKB
     ~Tokenizer ();
 
 
-    void  DefineOperatorChars (char* const _operatorChars);
+    void  DefineOperatorChars (char const * _operatorChars);
 
     bool  EndOfFile ();
 
@@ -71,7 +71,7 @@ namespace  KKB
     TokenBufferPtr   in;
     bool             secondCharAtEndOfFile;
 
-    char*            operatorChars;
+    char const *     operatorChars;
 
     kkint32          tokenListLen;
     KKStrList        tokenList;      /**< @brief Will contain a fixed list of future tokens to read.

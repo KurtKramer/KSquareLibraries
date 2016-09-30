@@ -35,7 +35,7 @@ void  MorphOpSobel::DeleteMagnitudeSqrTable ()
 {
   if  (magnitudeSqrTable)
   {
-    for  (kkuint32  r = 0;  r < magnitudeSqrTableHeight;  ++r)
+    for  (kkint32  r = 0;  r < magnitudeSqrTableHeight;  ++r)
       delete  magnitudeSqrTable[r];
     delete  magnitudeSqrTable;
     magnitudeSqrTable = NULL;
@@ -48,7 +48,7 @@ void  MorphOpSobel::AllocateMagnitudeSqrTable ()
 {
   DeleteMagnitudeSqrTable ();
 
-  kkuint32  r = 0;
+  kkint32  r = 0;
 
   magnitudeSqrTableHeight = srcHeight;
   magnitudeSqrTableWidth  = srcWidth;

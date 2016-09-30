@@ -31,8 +31,8 @@ namespace KKB
     RasterPtr  BuildMagnitudeImage () const;
 
     kkint32**  magnitudeSqrTable;    /**< Will be stored as square,  to save the time of computing floating point operations. */
-    kkuint32   magnitudeSqrTableHeight;
-    kkuint32   magnitudeSqrTableWidth;
+    kkint32    magnitudeSqrTableHeight;
+    kkint32    magnitudeSqrTableWidth;
     kkint32    maxMagnitude;     /**< Like edgeMagnitudes will be stored as a Square */
   };  /* Sobel */
 
