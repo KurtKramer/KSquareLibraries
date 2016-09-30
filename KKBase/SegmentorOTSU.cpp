@@ -26,16 +26,16 @@ using namespace std;
 using namespace  KKB;
 
 
+
 SegmentorOTSU::SegmentorOTSU (RunLog&  _log):
-  log        (_log),
   threshold1 (0),
-  threshold2 (0)
+  threshold2 (0),
+  NaN        (0.0),
+  log        (_log)
 {
   double z = 0.0;
   NaN = 1.0 / z;
 }
-
-
 
 
 
@@ -160,17 +160,17 @@ Matrix  SegmentorOTSU::DotMult (const Matrix&  left,
 
   Matrix  result (maxNumOfRows, maxNumOfCols);
 
-  double** leftData  = left.Data  ();
-  double** rightData = right.Data ();
-  double** resultData = result.Data ();
+  double const * const * leftData   = left.Data  ();
+  double const * const * rightData  = right.Data ();
+  double**               resultData = result.DataNotConst ();
 
   kkint32  r, c;
 
   for  (r = 0;  r < minNumOfRows;  ++r)
   {
-    double*  leftDataRow   = leftData[r];
-    double*  rightDataRow  = rightData[r];
-    double*  resultDataRow = resultData[r];
+    double const *  leftDataRow   = leftData[r];
+    double const *  rightDataRow  = rightData[r];
+    double*         resultDataRow = resultData[r];
 
     for  (c = 0;  c < minNumOfCols;  ++c)
       resultDataRow[c] = leftDataRow[c] * rightDataRow[c];
@@ -224,17 +224,17 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
 
   Matrix  result (maxNumOfRows, maxNumOfCols);
 
-  double** leftData  = left.Data  ();
-  double** rightData = right.Data ();
-  double** resultData = result.Data ();
+  double const * const * leftData   = left.Data  ();
+  double const * const * rightData  = right.Data ();
+  double**               resultData = result.DataNotConst ();
 
   kkint32  r, c;
 
   for  (r = 0;  r < minNumOfRows;  ++r)
   {
-    double*  leftDataRow   = leftData[r];
-    double*  rightDataRow  = rightData[r];
-    double*  resultDataRow = resultData[r];
+    double const *  leftDataRow   = leftData[r];
+    double const *  rightDataRow  = rightData[r];
+    double*         resultDataRow = resultData[r];
 
     for  (c = 0;  c < minNumOfCols;  ++c)
       resultDataRow[c] = leftDataRow[c] / rightDataRow[c];
@@ -450,13 +450,13 @@ Matrix  SegmentorOTSU::Power (const Matrix&  left,
   kkuint32 numOfCols = left.NumOfCols ();
 
   Matrix  result (numOfRows, numOfCols);
-  double**  leftData = left.Data ();
-  double**  resultData = result.Data ();
+  double const * const *  leftData = left.Data ();
+  double**  resultData = result.DataNotConst ();
 
   kkuint32  r, c;
   for  (r = 0;  r < numOfRows;  ++r)
   {
-    double*  leftDataRow = leftData[r];
+    double const *  leftDataRow = leftData[r];
     double*  resultDataRow = resultData[r];
     for  (c = 0;  c < numOfCols;  ++c)
       resultDataRow[c] = pow (leftDataRow[c], right);
@@ -525,7 +525,7 @@ void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
 void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (Matrix&  m)
 {
   kkint32  r, c;
-  double**  data = m.Data ();
+  double**  data = m.DataNotConst ();
   for  (r = 0;  r < m.NumOfRows ();  ++r)
   {
     double*  dataRow = data[r];
@@ -588,7 +588,7 @@ bool  _isnan (double&   d)
 
 void  SegmentorOTSU::ZeroOutNaN (Matrix&  m)
 {
-  double**  data = m.Data ();
+  double**  data = m.DataNotConst ();
   kkuint32  numOfRows = m.NumOfRows ();
   kkuint32  numOfCols = m.NumOfCols ();
 

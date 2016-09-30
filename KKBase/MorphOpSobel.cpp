@@ -82,6 +82,8 @@ RasterPtr  MorphOpSobel::PerformOperation (Raster const* _image)
   return  BuildMagnitudeImage();
 }  /* PerformOperation */
 
+
+
 void  MorphOpSobel::BuildMagnitudeSqrTable ()
 {
   if  ((srcHeight != magnitudeSqrTableHeight)  ||  (srcWidth != magnitudeSqrTableWidth))

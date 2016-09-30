@@ -105,6 +105,8 @@ namespace  KKB
 
     double const * const *   Data ()  const  {return  data;}
 
+    double**        DataNotConst ()  {return data;}
+
     double          Determinant ();
 
     double          DeterminantSlow ();  /**<  @brief Recursive Implementation. */
