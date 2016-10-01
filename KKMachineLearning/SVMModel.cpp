@@ -2542,7 +2542,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("OneVsOneModel")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
         XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
-        SvmModel233* m = xmlElementModel->Value ();
+        SvmModel233 const * m = xmlElementModel->Value ();
         if  (m)
         {
           if  (!m->valid)
@@ -2579,7 +2579,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
       else if  (varName.StartsWith ("BinaryComboModel_")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
         XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
-        SvmModel233* m = xmlElementModel->Value ();
+        SvmModel233 const * m = xmlElementModel->Value ();
         if  ((!m)  ||  (!m->valid))
         {
           log.Level (-1) << endl

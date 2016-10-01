@@ -58,6 +58,8 @@ namespace KKMLL
   public:
     typedef  NormalizationParms*  NormalizationParmsPtr;
 
+    typedef  NormalizationParms const *  NormalizationParmsConstPtr;
+
     NormalizationParms ();
 
     NormalizationParms (bool                _normalizeNominalFeatures,
@@ -83,9 +85,9 @@ namespace KKMLL
 
     void  NormalizeExamples (FeatureVectorListPtr  examples,
                              RunLog&               log
-                            );
+                            )  const;
 
-    void  NormalizeAExample (FeatureVectorPtr  example);
+    void  NormalizeAExample (FeatureVectorPtr  example)  const;
 
     bool  NormalizeNominalFeatures ()  const  {return normalizeNominalFeatures;}
 
@@ -127,7 +129,7 @@ namespace KKMLL
     const double*  Sigma () const  {return  sigma;}
 
     static
-    NormalizationParmsPtr  ReadFromFile (const KKStr&  fileName,  RunLog& log);
+    NormalizationParmsConstPtr  ReadFromFile (const KKStr&  fileName,  RunLog& log);
 
   private:
     void  ConstructNormalizeFeatureVector ();
@@ -145,7 +147,8 @@ namespace KKMLL
   };  /* NormalizationParms */
 
 
-  typedef  NormalizationParms::NormalizationParmsPtr  NormalizationParmsPtr;
+  typedef  NormalizationParms::NormalizationParmsPtr       NormalizationParmsPtr;
+  typedef  NormalizationParms::NormalizationParmsConstPtr  NormalizationParmsConstPtr;
 
 
   #define  _NormalizationParms_Defined_
