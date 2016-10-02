@@ -124,6 +124,17 @@ kkint32  RunLog::MemoryConsumedEstimated ()  const
 
 
 
+void KKB::RunLog::Info (std::function<KKStr ()> lambda)
+{
+  if  (curLevel  >= 10)
+  {
+    KKStr s = lambda ();
+    Append (s.Str());
+  }
+}
+
+
+
 void  RunLog::AttachFile (const KKStr&  _fileName)
 {
   fileName = _fileName;
