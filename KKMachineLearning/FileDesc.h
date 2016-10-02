@@ -183,8 +183,7 @@ namespace KKMLL
 
     kkint32                     GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
 
-    const
-    KKMLL::AttributePtr         LookUpByName (const KKStr&  attributeName)  const;  
+    KKMLL::AttributeConstPtr    LookUpByName (const KKStr&  attributeName)  const;
 
     kkint32                     LookUpNominalCode (kkint32       fieldNum, 
                                                    const KKStr&  nominalValue

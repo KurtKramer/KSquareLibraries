@@ -283,7 +283,7 @@ namespace KKMLL
     // Access methods.
     IFL_SortOrder      CurSortOrder    () const  {return curSortOrder;}
     kkint32            FeatureCount    () const  {return numOfFeatures;}
-    const FileDescPtr  FileDesc        () const  {return fileDesc;}
+    FileDescConstPtr   FileDesc        () const  {return fileDesc;}
     const  KKStr&      FileName        () const  {return fileName;}
     kkint32            NumOfFeatures   () const  {return numOfFeatures;}
     kkint16            Version         () const  {return version;}
@@ -545,9 +545,9 @@ namespace KKMLL
     class  RootNameComparrisonReversed;
 
 
-    void  FeatureVectorList::SortBy (bool reversedOrder,  
-                                     bool (*comp)(FeatureVectorPtr l, FeatureVectorPtr r)
-                                    );
+    void  SortBy (bool reversedOrder,
+                  bool (*comp)(FeatureVectorPtr l, FeatureVectorPtr r)
+                 );
 
     void  ValidateFileDescAndFieldNum (kkint32      fieldNum, 
                                        const char*  funcDesc
@@ -587,6 +587,8 @@ namespace KKMLL
 
 
   typedef  FeatureVectorList*  FeatureVectorListPtr;
+
+  typedef  FeatureVectorList const *  FeatureVectorListConstPtr;
 
 }  /* namespace KKMLL */
 

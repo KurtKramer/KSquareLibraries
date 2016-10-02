@@ -138,8 +138,7 @@ namespace KKMLL
 
     bool  AlreadyHaveExample (FeatureVectorPtr example);
 
-    const 
-      FeatureVectorListPtr  DuplicatedImages ()  {return &duplicatedImages;}
+    FeatureVectorListConstPtr  DuplicatedImages ()  {return &duplicatedImages;}
 
     FeatureVectorPtr  FirstExampleAdded  ()  {return firstImageAdded;}
 

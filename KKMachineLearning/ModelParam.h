@@ -231,7 +231,7 @@ namespace KKMLL
 
 
     virtual
-    ModelParam*  const  Value ()  const  {return value;}
+    ModelParam const *  Value ()  const  {return value;}
 
     virtual 
     ModelParam*  TakeOwnership ()
@@ -276,7 +276,7 @@ namespace KKMLL
     {
     }
 
-    T*  const  Value ()  const  {return dynamic_cast<T*> (value);}
+    T const *  Value ()  const  {return dynamic_cast<T*> (value);}
     
     T*  TakeOwnership ()
     {

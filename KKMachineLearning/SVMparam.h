@@ -20,6 +20,7 @@ namespace KKMLL
   typedef  BinaryClassParms*  BinaryClassParmsPtr;
   class  BinaryClassParmsList;
   typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
+  typedef  BinaryClassParmsList const *  BinaryClassParmsListConstPtr;
   #endif
 
 
@@ -131,8 +132,7 @@ namespace KKMLL
     // Member access methods
     float                    A_Param                    () const {return param.A;}
 
-    const
-    BinaryClassParmsListPtr  BinaryParmsList            () const {return binaryParmsList;}
+    BinaryClassParmsListConstPtr  BinaryParmsList       () const {return binaryParmsList;}
 
     double                   C_Param                    () const {return param.C;}
 

@@ -125,6 +125,7 @@ namespace KKMLL
   {
   public:
     typedef  BinaryClassParmsList*  BinaryClassParmsListPtr;
+    typedef  BinaryClassParmsList const *  BinaryClassParmsListConstPtr;
 
     BinaryClassParmsList ();
 
@@ -218,6 +219,8 @@ namespace KKMLL
 
 
   typedef  BinaryClassParmsList::BinaryClassParmsListPtr  BinaryClassParmsListPtr;
+  typedef  BinaryClassParmsList::BinaryClassParmsListConstPtr  BinaryClassParmsListConstPtr;
+
 
   typedef  XmlElementTemplate<BinaryClassParmsList>  XmlElementBinaryClassParmsList;
   typedef  XmlElementBinaryClassParmsList*  XmlElementBinaryClassParmsListPtr;

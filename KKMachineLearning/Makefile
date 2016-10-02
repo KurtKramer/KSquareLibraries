@@ -43,7 +43,6 @@ FEATUREFILEIOARFF    = FeatureFileIOArff.h     $(FEATUREFILEIO)
 FEATUREFILEIOC45     = FeatureFileIOC45.h      $(FEATUREFILEIO) 
 FEATUREFILEIOCOLUMN  = FeatureFileIOColumn.h   $(FEATUREFILEIO)
 FEATUREFILEIODSTWEB  = FeatureFileIODstWeb.h   $(FEATUREFILEIO)
-FEATUREFILEIOKK      = FeatureFileIOKK.h       $(FEATUREFILEIO)   $(FEATUREVECTOR)
 FEATUREFILEIOROBERTS = FeatureFileIORoberts.h  $(FEATUREFILEIO)  
 FEATUREFILEIOSPARSE  = FeatureFileIOSparse.h   $(FEATUREFILEIO)
 FEATUREFILEIOUCI     = FeatureFileIOUCI.h      $(FEATUREFILEIO)
@@ -53,10 +52,6 @@ NORMALIZATIONPARMS = NormalizationParms.h  $(FEATURENUMLIST)     $(ATTRIBUTE)
 DUPLICATEIMAGES    = DuplicateImages.h     $(FEATUREVECTOR)
 
 CLASSASSIGNMENTS   = ClassAssignments.h
-
-CHAINHASH          = ChainHash.h     $(FEATURENUMLIST)  $(ATTRIBUTE)
-
-BITREDUCTION       = BitReduction.h  $(CHAINHASH)  $(FEATUREVECTOR)  svm.h
 
 CONFUSSIONMATRIX2  = ConfusionMatrix2.h   $(MLCLASS)
 
@@ -71,10 +66,10 @@ SVMPARAM           = SVMparam.h
 
 
 SVMMODEL           = SVMModel.h            $(CLASSASSIGNMENTS)   $(FEATUREVECTOR)      $(FILEDESC)  \
-                     $(MLCLASS)         $(SVM)                $(BITREDUCTION)       $(SVMPARAM)
+                     $(MLCLASS)            $(SVM)                $(SVMPARAM)
 
 
-FEATUREENCODER     = FeatureEncoder.h      $(ATTRIBUTE)          $(BITREDUCTION)       $(FEATUREVECTOR)   \
+FEATUREENCODER     = FeatureEncoder.h      $(ATTRIBUTE)          $(FEATUREVECTOR)   \
                      $(FILEDESC)           $(IMAGECLASS)         $(SVM)                $(SVMPARAM)
 
 
@@ -91,12 +86,12 @@ MODELPARAMOLDSVM   = ModelParamOldSVM.h    $(BINARYCLASSPARMS)   $(FEATURENUMLIS
 MODELPARAMSVMBASE  = ModelParamSvmBase.h   $(MODELPARAM)         $(SVM2)
 
 
-FEATUREENCODER2    = FeatureEncoder2.h     $(ATTRIBUTE)          $(BITREDUCTION)       $(FEATURENUMLIST)  \
-                     $(FEATUREVECTOR)      $(FILEDESC)           $(MLCLASS)         $(MODELPARAM)  
+FEATUREENCODER2    = FeatureEncoder2.h     $(ATTRIBUTE)          $(FEATURENUMLIST)  \
+                     $(FEATUREVECTOR)      $(FILEDESC)           $(MLCLASS)           $(MODELPARAM)  
 
 
 MODEL              = Model.h               $(CLASSASSIGNMENTS)   $(FEATUREENCODER2)    $(FEATUREVECTOR)      \
-                     $(FILEDESC)           $(MLCLASS)         $(MODELPARAM)         $(NORMALIZATIONPARMS) \
+                     $(FILEDESC)           $(MLCLASS)            $(MODELPARAM)         $(NORMALIZATIONPARMS) \
                      $(SVM)                $(SVMPARAM)     
 
 
@@ -123,18 +118,9 @@ SVMWRAPPER         = SvmWrapper.h          $(SVMPARAM)
 TRAININGCLASS      = TrainingClass.h
 
 
-TRAININGCONFIGURATION = TrainingConfiguration.h  $(SVMPARAM)             $(TRAININGCLASS)
-
-
 TRAININGCONFIGURATION2 = TrainingConfiguration2.h  \
                      $(FILEDESC)           $(FEATUREVECTOR)      $(MODEL)          $(MODELPARAM)        \
                      $(MODELPARAMOLDSVM)   $(SVMPARAM)           $(TRAININGCLASS)
-
-
-TRAININGPROCESS = TrainingProcess.h        $(MLCLASS)                \
-                  $(FEATUREVECTOR)         $(IMAGEFEATURESDATAINDEXED)   $(IMAGEFEATURESNAMEINDEXED)  \
-                  $(NORMALIZATIONPARMS)    svm.h                         $(SVMMODEL)                  \
-                  $(TRAININGCONFIGURATION)
 
 
 TRAININGPROCESS2   = TrainingProcess2.h    $(FEATUREVECTOR)      $(IMAGEFEATURESDATAINDEXED)   \
@@ -143,16 +129,11 @@ TRAININGPROCESS2   = TrainingProcess2.h    $(FEATUREVECTOR)      $(IMAGEFEATURES
                      $(TRAININGCONFIGURATION2)
 
 
-CLASSIFIER         = Classifier.h
-
-
 CLASSIFIER2        = Classifier2.h         $(MODEL)          $(MODELPARAMOLDSVM)    $(MODELOLDSVM)  \
                      $(MODELPARAMOLDSVM)   $(SVMMODEL)    
 
 
-CROSSVALIDATIONTHREEWAY = CrossValidationThreeWay.h
-
-CROSSVALIDATION        = CrossValidation.h         $(BITREDUCTION)
+CROSSVALIDATION        = CrossValidation.h
 CROSSVALIDATIONVOTING  = CrossValidationVoting.h
 CROSSVALIDATIONMXN     = CrossValidationMxN.h
 
@@ -162,22 +143,22 @@ CLASSIFICATIONBIASMATRIX = ClassificationBiasMatrix.h  ConfusionMatrix2.h   $(ML
 CMDLINEEXPANDER = CmdLineExpander.h
 
 
-OBJECTS  = Attribute.o                  BinaryClassParms.o           BitReduction.o               \
-           ChainHash.o                  ClassAssignments.o                            \
+OBJECTS  = Attribute.o                  BinaryClassParms.o           \
+           ClassAssignments.o           \
            Classifier2.o                ClassStatistic.o             ClassificationBiasMatrix.o   \
-           ConfusionMatrix2.o           CrossValidation2.o           CrossValidationMxN.o         \
-           CrossValidationThreeWay.o    CrossValidationVoting.o      DuplicateImages.o            \
+           ConfusionMatrix2.o           CrossValidation.o            CrossValidationMxN.o         \
+           CrossValidationVoting.o      DuplicateImages.o            \
            FactoryFVProducer.o          FeatureVectorProducer.o                                   \
            FeatureEncoder.o             FeatureEncoder2.o            FeatureFileIO.o              \
            FeatureFileIOArff.o          FeatureFileIOC45.o           FeatureFileIOColumn.o        \
-           FeatureFileIODstWeb.o        FeatureFileIOKK.o            FeatureFileIORoberts.o       \
+           FeatureFileIODstWeb.o        FeatureFileIORoberts.o       \
            FeatureFileIOSparse.o        FeatureFileIOUCI.o           FeatureNumList.o             \
-           FeatureVector.o              FileDesc.o                   MLClass.o                 \
+           FeatureVector.o              FileDesc.o                   MLClass.o                    \
            ImageFeaturesDataIndexed.o   ImageFeaturesNameIndexed.o   \
            Model.o                      ModelSvmBase.o               ModelKnn.o                   \
            ModelOldSVM.o                ModelParam.o                 ModelParamSvmBase.o          \
            ModelParamKnn.o              ModelParamOldSVM.o           NormalizationParms.o         \
-           Orderings.o                  ScannerExtractionImageManager.o                            \
+           Orderings.o                    \
            SizeDistribution.o           svm.o                        svm2.o                       \
            SVMModel.o                   SVMparam.o                   SvmWrapper.o                 \
            TrainingClass.o              TrainingConfiguration2.o     \
@@ -203,14 +184,6 @@ BinaryClassParms.o :   BinaryClassParms.cpp  $(BINARYCLASSPARMS) $(MLCLASS) svm.
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-BitReduction.o :       BitReduction.cpp         $(BITREDUCTION)    $(FEATUREVECTOR)     $(FILEDESC)
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
-ChainHash.o :          ChainHash.cpp            $(CHAINHASH)       $(FEATURENUMLIST)
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
 ClassAssignments.o :   ClassAssignments.cpp     $(CLASSASSIGNMENTS)     $(MLCLASS)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -232,8 +205,8 @@ ConfusionMatrix2.o :  ConfusionMatrix2.cpp    $(CONFUSSIONMATRIX2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-CrossValidation2.o :  ./CrossValidation.cpp          $(CROSSVALIDATION)     $(CLASSIFIER)            \
-                      $(CONFUSSIONMATRIX2)           $(FEATUREVECTOR)       $(TRAININGCONFIGURATION) \
+CrossValidation.o :   ./CrossValidation.cpp          $(CROSSVALIDATION)     $(CLASSIFIER)            \
+                      $(CONFUSSIONMATRIX2)           $(FEATUREVECTOR)       $(TRAININGCONFIGURATION2) \
                       $(TRAININGPROCESS)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -241,19 +214,14 @@ CrossValidation2.o :  ./CrossValidation.cpp          $(CROSSVALIDATION)     $(CL
 
 CrossValidationMxN.o :  ./CrossValidationMxN.cpp  \
                         $(CONFUSSIONMATRIX2)   $(CROSSVALIDATION)         $(FEATUREVECTOR)    \
-                        $(ORDERINGS)           $(TRAININGCONFIGURATION)   $(TRAININGPROCESS)
+                        $(ORDERINGS)           $(TRAININGCONFIGURATION2)  $(TRAININGPROCESS2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-CrossValidationThreeWay.o : CrossValidationThreeWay.cpp  $(CROSSVALIDATIONTHREEWAY)     $(CLASSIFIER)     \
-                            $(CONFUSSIONMATRIX2)         $(FEATUREVECTOR)               $(MLCLASS)     \
-                            $(TRAININGCLASS)             $(TRAININGCONFIGURATION)       $(TRAININGPROCESS)
-	$$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
-
-CrossValidationVoting.o : CrossValidationVoting.cpp  $(CROSSVALIDATIONVOTING)                             \
-                          $(CLASSIFIER)              $(CONFUSSIONMATRIX2)        $(FEATUREVECTOR)         \
-                          $(FILEDESC)                $(MLCLASS)               $(TRAININGCONFIGURATION) \
+CrossValidationVoting.o : CrossValidationVoting.cpp  $(CROSSVALIDATIONVOTING)                              \
+                          $(CLASSIFIER)              $(CONFUSSIONMATRIX2)        $(FEATUREVECTOR)          \
+                          $(FILEDESC)                $(MLCLASS)                  $(TRAININGCONFIGURATION2) \
                           $(TRAININGPROCESS)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -272,7 +240,7 @@ FeatureVectorProducer.o :  FeatureVectorProducer.cpp  $(FEATUREVECTORPRODUCER )
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-FeatureEncoder.o :   FeatureEncoder.cpp     $(FEATUREENCODER)   $(BITREDUCTION)  $(BINARYCLASSPARMS) \
+FeatureEncoder.o :   FeatureEncoder.cpp     $(FEATUREENCODER)   $(BINARYCLASSPARMS) \
                     $(FEATURENUMLIST)       $(FEATUREVECTOR)    $(SVMWRAPPER)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -299,10 +267,6 @@ FeatureFileIOColumn.o : FeatureFileIOColumn.cpp  $(FEATUREFILEIOCOLUMN)   $(FILE
 
 
 FeatureFileIODstWeb.o : FeatureFileIODstWeb.cpp  $(FEATUREFILEIODSTWEB)    $(FILEDESC)  $(MLCLASS)
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
-FeatureFileIOKK.o : FeatureFileIOKK.cpp  $(FEATUREFILEIOKK)   $(FILEDESC)  $(MLCLASS)  $(IMAGEFEATURES)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
@@ -363,7 +327,7 @@ ModelParamSvmBase.o :  ModelParamSvmBase.cpp       $(MODELPARAMSVMBASE)    $(FIL
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-Model.o :  Model.cpp  $(MODEL)    $(BITREDUCTION)  $(BINARYCLASSPARMS)  $(FEATUREENCODER) \
+Model.o :  Model.cpp  $(MODEL)    $(BINARYCLASSPARMS)  $(FEATUREENCODER) \
                     $(FEATURENUMLIST)  $(FEATUREVECTOR)  $(SVMWRAPPER)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -383,17 +347,12 @@ ModelSvmBase.o :       ModelSvmBase.cpp         $(MODELSVMBASE)          $(FEATU
 
 
 NormalizationParms.o : NormalizationParms.cpp   $(NORMALIZATIONPARMS)    $(FEATURENUMLIST)    \
-                       $(MLCLASS)            $(FEATUREVECTOR)         $(TRAININGCONFIGURATION)
+                       $(MLCLASS)               $(FEATUREVECTOR)         $(TRAININGCONFIGURATION2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
 Orderings.o :          Orderings.cpp            $(ORDERINGS)             $(FEATUREFILEIO)    $(FILEDESC)   \
-                       $(MLCLASS)            $(FEATUREVECTOR)
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
-ScannerExtractionImageManager.o : ScannerExtractionImageManager.cpp    \
-                                 $(FEATUREFILEIO)    $(MLCLASS)  $(IMAGEFEATURES)
+                       $(MLCLASS)               $(FEATUREVECTOR)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
@@ -409,7 +368,7 @@ svm2.o :               svm2.cpp             $(SVM2)              $(FEATUREENCODE
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-SVMModel.o :           SVMModel.cpp         $(SVMMODEL)          $(BITREDUCTION)   \
+SVMModel.o :           SVMModel.cpp         $(SVMMODEL)           \
                        $(BINARYCLASSPARMS)  $(FEATUREENCODER)    $(FEATURENUMLIST) \
                        $(FEATUREVECTOR)     $(SVMWRAPPER)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
@@ -422,18 +381,11 @@ SVMparam.o :           SVMparam.cpp            $(SVMPARAM)    $(BINARYCLASSPARMS
 
 
 SvmWrapper.o :         SvmWrapper.cpp           $(SVMWRAPPER)           $(SVM)
-	$$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
+	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
 TrainingClass.o :      TrainingClass.cpp        $(TRAININGCLASS)        $(MLCLASS)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
-TrainingConfiguration.o : TrainingConfiguration.cpp   $(TRAININGCONFIGURATION)      $(BINARYCLASSPARMS)    \
-                          $(FEATUREFILEIO)            $(FEATUREFILEIOPICES)         $(FEATUREVECTOR)       \
-                          $(FILEDESC)                 $(MLCLASS)                 $(NORMALIZATIONPARMS)
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
 
 
 TrainingConfiguration2.o : TrainingConfiguration2.cpp  $(TRAININGCONFIGURATION2)      $(BINARYCLASSPARMS)    \

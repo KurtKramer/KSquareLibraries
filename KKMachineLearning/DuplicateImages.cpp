@@ -206,7 +206,7 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
   {
     log.Level (20) << "PurgeDuplicates  Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
-    FeatureVectorListPtr  examplesInSet = dupSet->DuplicatedImages ();
+    FeatureVectorListConstPtr  examplesInSet = dupSet->DuplicatedImages ();
     FeatureVectorPtr exampleToKeep = NULL;
 
     if  (dupSet->AllTheSameClass ())
@@ -217,11 +217,9 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
         exampleToKeep = dupSet->ExampleWithSmallestScanLine ();
     }
     
-    FeatureVectorList::iterator iIDX = examplesInSet->begin ();
-
-    for  (iIDX = examplesInSet->begin ();  iIDX != examplesInSet->end ();  ++iIDX)
+    for  (auto iIDX: *examplesInSet)
     {
-      FeatureVectorPtr example = *iIDX;
+      FeatureVectorPtr example = iIDX;
       if  (!example)
         continue;
 
@@ -274,7 +272,7 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
   {
     log.Level (20) << "ListOfExamplesToDelete   Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
-    FeatureVectorListPtr  examplesInSet = dupSet->DuplicatedImages ();
+    auto  examplesInSet = dupSet->DuplicatedImages ();
     FeatureVectorPtr exampleToKeep = NULL;
 
     if  (dupSet->AllTheSameClass ())
@@ -312,7 +310,7 @@ void   DuplicateImages::ReportDuplicates (ostream&  o)
   //for  (DuplicateImageList::iterator  idx = dupExamples->begin ();  idx != dupExamples->end ();  idx++)
   for  (auto  dupExampleSet:  *dupExamples)
   {
-    const FeatureVectorListPtr  dupList = dupExampleSet->DuplicatedImages ();
+    const FeatureVectorListConstPtr  dupList = dupExampleSet->DuplicatedImages ();
 
     o << "Group[" << groupNum << "] Contains [" << dupList->QueueSize () << "] Duplicates." << endl;
 

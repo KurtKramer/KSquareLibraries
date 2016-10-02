@@ -84,8 +84,7 @@ namespace KKMLL
 
 
     // Member access methods
-    const
-    BinaryClassParmsListPtr          BinaryParmsList            () const;
+    BinaryClassParmsList const *     BinaryParmsList            () const;
     virtual float                    A_Param                    () const;
     virtual double                   C_Param                    () const;
 

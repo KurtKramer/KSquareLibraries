@@ -66,8 +66,7 @@ void  ModelParamOldSVM::A_Param (float  _A)
 }
 
 
-const
-BinaryClassParmsListPtr  ModelParamOldSVM::BinaryParmsList () const
+BinaryClassParmsList const *  ModelParamOldSVM::BinaryParmsList () const
 {
   return  svmParameters->BinaryParmsList ();
 }

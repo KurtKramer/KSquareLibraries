@@ -87,7 +87,7 @@ namespace KKMLL
     typedef  ClassLookUp::iterator          ClassLookUpIterator;
 
     ClassLookUp  classLookUp;
-  };  /* ClassAssignments */;
+  };  /* ClassAssignments */
 
 
   typedef  ClassAssignments*  ClassAssignmentsPtr;
