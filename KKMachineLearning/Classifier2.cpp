@@ -507,7 +507,7 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
     probabilities[x] = 0.0;
 
     MLClassPtr      c = classes.IdxToPtr (x);
-    ClassProbPtr cp = predictions->LookUp (c);
+    ClassProbConstPtr cp = predictions->LookUp (c);
     if  (cp)
     {
       votes[x] = (kkint32)(0.5f + cp->votes);
@@ -545,7 +545,7 @@ ClassProbListPtr  Classifier2::GetListOfPredictionsForClassifier (Classifier2Ptr
                                                                   ClassProbListPtr  predictions
                                                                  )
 {
-  ClassProbListPtr  subPredictions = new ClassProbList (false);
+  ClassProbListPtr  subPredictions = new ClassProbList (true);
   ClassifierClassIndexType::iterator  idx;
   idx = classifierClassIndex.find (classifier);
   while  (idx != classifierClassIndex.end ())
@@ -553,9 +553,9 @@ ClassProbListPtr  Classifier2::GetListOfPredictionsForClassifier (Classifier2Ptr
     if  (idx->first != classifier)
       break;
 
-    ClassProbPtr cp = predictions->LookUp (idx->second);
+    ClassProbConstPtr cp = predictions->LookUp (idx->second);
     if  (cp)
-      subPredictions->PushOnBack (cp);
+      subPredictions->PushOnBack (new ClassProb (*cp));
   }
   return  subPredictions;
 }  /* GetListOfPredictionsForClassifier */
@@ -598,7 +598,7 @@ ClassProbListPtr  Classifier2::ProcessSubClassifersMethod1 (FeatureVectorPtr  ex
     for  (idx2 = upperLevelPredictions->begin ();  idx2 != upperLevelPredictions->end ();  ++idx2)
     {
       ClassProbPtr  oldPrediction = *idx2;
-      ClassProbPtr  alreadyInResults = results->LookUp (oldPrediction->classLabel);
+      ClassProbConstPtr  alreadyInResults = results->LookUp (oldPrediction->classLabel);
       if  (!alreadyInResults)
         results->MergeIn (oldPrediction);
     }

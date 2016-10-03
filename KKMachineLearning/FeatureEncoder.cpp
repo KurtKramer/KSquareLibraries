@@ -56,7 +56,7 @@ FeatureEncoder::FeatureEncoder ():
  * @param[in] _class2 
  * @param[in] _log A log-file stream. All important events will be output to this stream
  */
-FeatureEncoder::FeatureEncoder (FileDescPtr            _fileDesc,
+FeatureEncoder::FeatureEncoder (FileDescConstPtr       _fileDesc,
                                 MLClassPtr             _class1,
                                 MLClassPtr             _class2,
                                 const FeatureNumList&  _selectedFeatures,
@@ -198,7 +198,7 @@ kkint32  FeatureEncoder::MemoryConsumedEstimated ()  const
 
 
 
-FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
+FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 {
   FileDescPtr  newFileDesc = new FileDesc ();
 
@@ -286,7 +286,7 @@ FileDescPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
     }
   }
 
-  return  newFileDesc;
+  return  FileDesc::GetExistingFileDesc (newFileDesc);
 }  /* CreateEncodedFileDesc */
 
 
@@ -310,7 +310,7 @@ XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
 
 
 
-FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileDesc,
+FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescConstPtr  encodedFileDesc,
                                                   FeatureVectorPtr  src
                                                  )
 {
@@ -365,7 +365,7 @@ FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescPtr       encodedFileD
 
 FeatureVectorListPtr  FeatureEncoder::EncodeAllExamples (const FeatureVectorListPtr  srcData)
 {
-  FileDescPtr  encodedFileDesc = CreateEncodedFileDesc (NULL);
+  FileDescConstPtr  encodedFileDesc = CreateEncodedFileDesc (NULL);
 
   FeatureVectorListPtr  encodedExamples = new FeatureVectorList (encodedFileDesc, true);
 

@@ -64,6 +64,8 @@ BINARYCLASSPARMS   = BinaryClassParms.h    $(SVM)                $(FEATURENUMLIS
 
 SVMPARAM           = SVMparam.h
 
+CLASSPROB          = ClassProb.h
+
 
 SVMMODEL           = SVMModel.h            $(CLASSASSIGNMENTS)   $(FEATUREVECTOR)      $(FILEDESC)  \
                      $(MLCLASS)            $(SVM)                $(SVMPARAM)
@@ -74,6 +76,9 @@ FEATUREENCODER     = FeatureEncoder.h      $(ATTRIBUTE)          $(FEATUREVECTOR
 
 
 MODELPARAM         = ModelParam.h          $(FEATURENUMLIST)     $(FILEDESC)
+
+
+MODELPARAMDUAL     = ModelParamDual.h      $(MODELPARAM)
 
 
 MODELPARAMKNN      = ModelParamKnn.h       $(MODELPARAM)
@@ -95,12 +100,15 @@ MODEL              = Model.h               $(CLASSASSIGNMENTS)   $(FEATUREENCODE
                      $(SVM)                $(SVMPARAM)     
 
 
+MODELDUAL          = ModelDual.h 
+
+
 MODELKNN           = ModelKnn.h            $(FEATUREVECTOR)      $(MODEL)              $(MODELPARAMKNN)
 
 
-MODELOLDSVM        = $(BINARYCLASSPARMS)   $(FILEDESC)           $(MLCLASS)            $(FEATUREENCODER2)    \
-                     $(FEATURENUMLIST)     $(FEATUREVECTOR)      $(SVM)                $(MODEL)              \
-                     $(MODELPARAMOLDSVM)   $(SVMMODEL)
+MODELOLDSVM        = ModelOldSVM.h         $(BINARYCLASSPARMS)   $(FILEDESC)           $(MLCLASS)            $(FEATUREENCODER2)    \
+                     $(FEATURENUMLIST)     $(FEATUREVECTOR)      $(SVM)                $(MODEL)              $(MODELPARAMOLDSVM)   \
+                     $(SVMMODEL)
 
 
 MODELSVMBASE       = ModelSvmBase.h        $(FEATURENUMLIST)     $(FEATUREVECTOR)      $(FILEDESC)           \
@@ -145,7 +153,8 @@ CMDLINEEXPANDER = CmdLineExpander.h
 
 OBJECTS  = Attribute.o                  BinaryClassParms.o           \
            ClassAssignments.o           \
-           Classifier2.o                ClassStatistic.o             ClassificationBiasMatrix.o   \
+           Classifier2.o                ClassProb.o                  ClassStatistic.o             \
+           ClassificationBiasMatrix.o   \
            ConfusionMatrix2.o           CrossValidation.o            CrossValidationMxN.o         \
            CrossValidationVoting.o      DuplicateImages.o            \
            FactoryFVProducer.o          FeatureVectorProducer.o                                   \
@@ -188,8 +197,12 @@ ClassAssignments.o :   ClassAssignments.cpp     $(CLASSASSIGNMENTS)     $(MLCLAS
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-Classifier2.o :        Classifier2.cpp          $(CLASSIFIER2)            $(MLCLASS)   \
+Classifier2.o :        Classifier2.cpp          $(CLASSIFIER2)          $(CLASSPROB)      $(MLCLASS)   \
                        $(NORMALIZATIONPARMS)    $(TRAININGPROCESS2)
+	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
+
+
+ClassProb.o	:	ClassProb.cpp  $(CLASSPROB)     $(MLCLASS)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
@@ -315,6 +328,10 @@ ModelParam.o :  ModelParam.cpp       $(MODELPARAM)        $(FILEDESC)           
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
+ModelParamDual.o :  ModelParamDual.cpp   $(MODELPARAMDUAL)    $(FILEDESC)    $(MLCLASS)    $(KKMLTYPES)   $(TRAININGCONFIGURATION2)
+	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
+
+
 ModelParamKnn.o :  ModelParamKnn.cpp       $(MODELPARAMKNN)    $(FILEDESC)   $(MLCLASS)         
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
@@ -332,17 +349,22 @@ Model.o :  Model.cpp  $(MODEL)    $(BINARYCLASSPARMS)  $(FEATUREENCODER) \
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
+ModelDual.o :          ModelDual.cpp   $(MODELDUAL)  $(CLASSIFIER2)   $(CLASSPROB)  $(FEATURENUMLIST)  $(FEATUREVECTOR)  \
+                       $(MODELPARAMDUAL) $(TRAININGCONFIGURATION2)  $(TRAININGPROCESS2)   \
+	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
+
+
 ModelKnn.o :          ModelKnn.h   $(MODELKNN)  $(MODEL)  $(FEATURENUMLIST)  $(FEATUREVECTOR)  $(SVMWRAPPER)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-ModelOldSVM.o :        ModelOldSVM.cpp          $(BINARYCLASSPARMS)      $(FEATUREENCODER2)    $(FEATURENUMLIST)  \
-                       $(FEATUREVECTOR)         $(MODELPARAMOLDSVM)      $(SVMPARAM)
+ModelOldSVM.o :        ModelOldSVM.cpp          $(BINARYCLASSPARMS)      $(CLASSPROB)             $(FEATUREENCODER2) \
+                       $(FEATURENUMLIST)        $(FEATUREVECTOR)         $(MODELPARAMOLDSVM)      $(SVMPARAM)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
-ModelSvmBase.o :       ModelSvmBase.cpp         $(MODELSVMBASE)          $(FEATURENUMLIST)  \
-                       $(FEATUREVECTOR)         $(SVM2)
+ModelSvmBase.o :       ModelSvmBase.cpp         $(MODELSVMBASE)          $(FEATURENUMLIST)        $(FEATUREVECTOR) \
+                       $(SVM2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 

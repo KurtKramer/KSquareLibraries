@@ -249,7 +249,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
   kkint32  p = (kkint32)_out.precision ();
   _out.precision (9);
 
-  FileDescPtr  fileDesc = _data.FileDesc ();
+  FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   {
     // Lets first write out the ClassName row

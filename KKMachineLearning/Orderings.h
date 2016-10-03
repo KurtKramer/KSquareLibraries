@@ -160,15 +160,15 @@ public:
   /***************************************************************************/
   /*                            Access Methods                               */
   /***************************************************************************/
-  FeatureVectorListPtr  Data            ()  const  {return data;}
-  const KKStr&          FeatureFileName ()  const  {return featureFileName;}
-  const FileDescPtr     FileDesc        ()  const  {return fileDesc;}
-  const MLClassListPtr  MLClasses       ()  const  {return mlClasses;}
-  const KKStr&          IndexFileName   ()  const  {return indexFileName;}
-  kkuint32              NumOfFolds      ()  const  {return numOfFolds;}
-  kkuint32              NumOfOrderings  ()  const  {return numOfOrderings;}
-  kkuint32              Size            ()  const  {return (kkuint32)orderings.size ();}
-  bool                  Valid           ()  const  {return valid;}
+  FeatureVectorListPtr    Data            ()  const  {return data;}
+  const KKStr&            FeatureFileName ()  const  {return featureFileName;}
+  const FileDescConstPtr  FileDesc        ()  const  {return fileDesc;}
+  const MLClassListPtr    MLClasses       ()  const  {return mlClasses;}
+  const KKStr&            IndexFileName   ()  const  {return indexFileName;}
+  kkuint32                NumOfFolds      ()  const  {return numOfFolds;}
+  kkuint32                NumOfOrderings  ()  const  {return numOfOrderings;}
+  kkuint32                Size            ()  const  {return (kkuint32)orderings.size ();}
+  bool                    Valid           ()  const  {return valid;}
 
 
 
@@ -199,7 +199,7 @@ private:
 
   FeatureVectorListPtr           data;
   KKStr                          featureFileName;
-  FileDescPtr                    fileDesc;
+  FileDescConstPtr               fileDesc;
   MLClassListPtr                 mlClasses;
   KKStr                          indexFileName;
   kkuint32                       numOfFolds;

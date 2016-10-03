@@ -84,8 +84,8 @@ namespace KKMLL
     FeatureNumListConstPtr   SelectedFeatures   () const {return  selectedFeatures;}
     float                    Weight             () const {return  weight;}
 
-    kkuint16                 NumOfFeatures      (FileDescPtr fileDesc) const; 
-    FeatureNumListConstPtr   SelectedFeaturesFD (FileDescPtr fileDesc) const;
+    kkuint16                 NumOfFeatures      (FileDescConstPtr fileDesc) const;
+    FeatureNumListConstPtr   SelectedFeaturesFD (FileDescConstPtr fileDesc) const;
 
 
     // member Update methods
@@ -142,20 +142,20 @@ namespace KKMLL
 
 
     static  
-      BinaryClassParmsListPtr  CreateFromXML (std::istream&  i, 
-                                              FileDescPtr    fileDesc,
-                                              RunLog&        log
+      BinaryClassParmsListPtr  CreateFromXML (std::istream&      i,
+                                              FileDescConstPtr   fileDesc,
+                                              RunLog&            log
                                              );
 
     static  
-      BinaryClassParmsListPtr  CreateFromXML (std::FILE*   i, 
-                                              FileDescPtr  fileDesc,
-                                              RunLog&      log
+      BinaryClassParmsListPtr  CreateFromXML (std::FILE*        i,
+                                              FileDescConstPtr  fileDesc,
+                                              RunLog&           log
                                              );
 
     ~BinaryClassParmsList ();
 
-    float  FeatureCountNet (FileDescPtr fileDesc)  const;
+    float  FeatureCountNet (FileDescConstPtr  fileDesc)  const;
 
     BinaryClassParmsPtr  LookUp (MLClassPtr  _class1,
                                  MLClassPtr  _class2
@@ -171,14 +171,14 @@ namespace KKMLL
     virtual
     void  PushOnFront (BinaryClassParmsPtr  binaryParms);
 
-    void  ReadXML (FILE*        i,
-                   FileDescPtr  fileDesc,
-                   RunLog&      log
+    void  ReadXML (FILE*             i,
+                   FileDescConstPtr  fileDesc,
+                   RunLog&           log
                   );
 
-    void  ReadXML (std::istream&   i,
-                   FileDescPtr     fileDesc,
-                   RunLog&      log                                                                             
+    void  ReadXML (std::istream&     i,
+                   FileDescConstPtr  fileDesc,
+                   RunLog&           log
                   );
 
     void  WriteXML (std::ostream&  o)  const;

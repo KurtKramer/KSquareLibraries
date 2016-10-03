@@ -175,8 +175,8 @@ void  ModelParamOldSVM::KernalType (SVM_KernalType   _kernalType)
 
 
 
-kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                                      RunLog&      log
+kkint32 ModelParamOldSVM::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                                      RunLog&           log
                                                      ) const
 {
   return  svmParameters->NumOfFeaturesAfterEncoding (fileDesc, log);
@@ -437,9 +437,9 @@ BinaryClassParmsPtr   ModelParamOldSVM::GetParamtersToUseFor2ClassCombo (MLClass
 
 
 
-FeatureNumListConstPtr  ModelParamOldSVM::GetFeatureNums (FileDescPtr  fileDesc,
-                                                          MLClassPtr   class1,
-                                                          MLClassPtr   class2
+FeatureNumListConstPtr  ModelParamOldSVM::GetFeatureNums (FileDescConstPtr  fileDesc,
+                                                          MLClassPtr        class1,
+                                                          MLClassPtr        class2
                                                         )  const
 {
   return svmParameters->GetFeatureNums (fileDesc, class1, class2);
@@ -456,7 +456,7 @@ void    ModelParamOldSVM::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassP
 
 
 
-float   ModelParamOldSVM::AvgMumOfFeatures (FileDescPtr  fileDesc)
+float   ModelParamOldSVM::AvgMumOfFeatures (FileDescConstPtr  fileDesc)
 {
   return  svmParameters->AvgMumOfFeatures (fileDesc);
 }  /* AvgMumOfFeatures */

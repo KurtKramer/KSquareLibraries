@@ -162,18 +162,20 @@ Model::Model (const KKStr&          _name,
     encoder                  (NULL),
     factoryFVProducer        (_factoryFVProducer),
     fileDesc                 (NULL),
-    name                     (_name),
     normParms                (NULL),
     numOfClasses             (0),
     param                    (NULL),
     rootFileName             (),
     trainExamples            (NULL),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false),
+
     trianingPrepTime         (0.0),
     trainingTime             (0.0),
     trainingTimeStart        (0.0),
-    validModel               (true),
-    votes                    (NULL),
-    weOwnTrainExamples       (false)
+    name                     (_name),
+	timeSaved                ()
 {
   fileDesc = factoryFVProducer->FileDesc ();
   param = _param.Duplicate ();

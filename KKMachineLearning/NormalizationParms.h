@@ -81,7 +81,7 @@ namespace KKMLL
 
     kkint32 MemoryConsumedEstimated ()  const;
 
-    FileDescPtr  FileDesc ()  const  {return fileDesc;}
+    FileDescConstPtr  FileDesc ()  const  {return fileDesc;}
 
     void  NormalizeExamples (FeatureVectorListPtr  examples,
                              RunLog&               log
@@ -136,7 +136,7 @@ namespace KKMLL
     void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
 
     AttributeTypeVector  attriuteTypes;
-    FileDescPtr          fileDesc;
+    FileDescConstPtr     fileDesc;
     mutable KKStr        fileName;
     double*              mean;
     bool*                normalizeFeature;

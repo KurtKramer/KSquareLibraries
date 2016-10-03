@@ -118,10 +118,10 @@ namespace KKMLL
     void    AddFeature (kkuint16  featureNum);
 
     /** @brief Returns true if all features are selected. */
-    bool    AllFeaturesSelected (FileDescPtr  fileDesc)  const;
+    bool    AllFeaturesSelected (FileDescConstPtr  fileDesc)  const;
 
     /** @brief Create a FeatureNumList object where all features are selected, except ones that are flagged as IgnoreAttribute in '__fileDesc'. */
-    static  FeatureNumList   AllFeatures (FileDescPtr  fileDesc);
+    static  FeatureNumList   AllFeatures (FileDescConstPtr  fileDesc);
 
     /** @brief Compare with another featureNumList returning -1, 0, and 1 indicating less_than, equal, or greater_than. */
     kkint32 Compare (const FeatureNumList&  _features)  const;
@@ -173,7 +173,7 @@ namespace KKMLL
    
     void  SaveXML (std::ostream&  o);
 
-    void  SetAllFeatures (FileDescPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
+    void  SetAllFeatures (FileDescConstPtr  fileDesc);   /**< @brief  Selects all features except those flagged as 'IgnoreAttribute' in the associated FileDesc. */
 
     bool  Test (kkuint16 _featureNum)  const;       /**< @brief Indicates whether feature '_featureNum' is selected. */
 
@@ -181,7 +181,7 @@ namespace KKMLL
 
     KKStr  ToHexString ()  const;                        /**< @brief Uses 'maxFeatureNum to determine length of hex string.  */
 
-    KKStr  ToHexString (FileDescPtr  fileDesc)  const;   /**< @brief Uses 'fileDesc' to  determine length of hex string.  */
+    KKStr  ToHexString (FileDescConstPtr  fileDesc)  const;   /**< @brief Uses 'fileDesc' to  determine length of hex string.  */
 
 
     /** @brief Returns comma delimited list of all features selected; will make use of range specification. */

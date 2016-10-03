@@ -224,8 +224,8 @@ namespace KKMLL
      *           will call the destructor for all its contents.
      *@param[out] _log Log file to send messages to.
      */
-    FeatureVectorList (FileDescPtr  _fileDesc,
-                       bool         _owner
+    FeatureVectorList (FileDescConstPtr  _fileDesc,
+                       bool              _owner
                       );
 
   private:
@@ -493,7 +493,7 @@ namespace KKMLL
    
     void  ResetNumOfFeaturs (kkint32 newNumOfFeatures);
 
-    void  ResetFileDesc (FileDescPtr  newFileDesc);  /**< You would use this if youRecalc all the data to a newer version of the file. */
+    void  ResetFileDesc (FileDescConstPtr  newFileDesc);  /**< You would use this if youRecalc all the data to a newer version of the file. */
 
     void  ReSyncSymbolicData (FileDescPtr  newFileDesc);
 
@@ -561,24 +561,24 @@ namespace KKMLL
      *  it can then perform a binary search rather than a seq. scan. This field is updated by the different sort
      *  routines, and by the methods that allow you to add an entry.
      */
-    IFL_SortOrder  curSortOrder;   
+    IFL_SortOrder     curSortOrder;
 
-    FileDescPtr    fileDesc;
+    FileDescConstPtr  fileDesc;
 
-    KKStr          fileName;
+    KKStr             fileName;
 
-    kkint32        numOfFeatures;
+    kkint32           numOfFeatures;
 
-    kkint16        version;  /**< Represents the version of the Feature data,  when ever I update the
-                              * way Features are calculated I increment the VersionNum in the respective 
-                              * "FeatureVectorProducer" derived class. This way if we load a older 
-                              * FeatureData file we can be aware of this.  Methods like FeatureDataReSink
-                              * will force the recalculation of Feature data if not up-to-date.  Also 
-                              * works in coordination with the version field in the PostLarvaeFV object.
-                              * A value of 0 indicates that we do not know what Version the feature data 
-                              * is. This can happen when not all the PostLarvaeFV objects in the list have 
-                              * the same version number.
-                              */
+    kkint16           version;  /**< Represents the version of the Feature data,  when ever I update the
+                                 * way Features are calculated I increment the VersionNum in the respective
+                                 * "FeatureVectorProducer" derived class. This way if we load a older
+                                 * FeatureData file we can be aware of this.  Methods like FeatureDataReSink
+                                 * will force the recalculation of Feature data if not up-to-date.  Also
+                                 * works in coordination with the version field in the PostLarvaeFV object.
+                                 * A value of 0 indicates that we do not know what Version the feature data
+                                 * is. This can happen when not all the PostLarvaeFV objects in the list have
+                                 * the same version number.
+                                 */
 
   };  /* FeatureVectorList */
 

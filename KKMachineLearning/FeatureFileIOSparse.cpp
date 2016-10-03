@@ -231,7 +231,7 @@ void   FeatureFileIOSparse::SaveFile (FeatureVectorList&    _data,
 {
   _log.Level (20) << "FeatureFileIOSparse::SaveFile     FileName[" << _fileName << "]." << endl;
   FeatureVectorPtr  example  = NULL;
-  FileDescPtr       fileDesc = _data.FileDesc ();
+  FileDescConstPtr       fileDesc = _data.FileDesc ();
 
   _numExamplesWritten = 0;
 

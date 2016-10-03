@@ -100,7 +100,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
 
   _numExamplesWritten = 0;
   
-  FileDescPtr  fileDesc = _data.FileDesc ();
+  FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
 

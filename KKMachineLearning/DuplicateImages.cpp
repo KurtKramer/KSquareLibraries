@@ -45,8 +45,8 @@ DuplicateImages::DuplicateImages (FeatureVectorListPtr  _examples,
 
 
 
-DuplicateImages::DuplicateImages (FileDescPtr _fileDesc,
-                                  RunLog&     _log
+DuplicateImages::DuplicateImages (FileDescConstPtr _fileDesc,
+                                  RunLog&          _log
                                  ):
    duplicateCount     (0),
    duplicateDataCount (0),
@@ -345,7 +345,7 @@ bool   DuplicateImages::DuplicatesFound ()  const
 
 
 
-DuplicateImage::DuplicateImage (FileDescPtr       _fileDesc,
+DuplicateImage::DuplicateImage (FileDescConstPtr  _fileDesc,
                                 FeatureVectorPtr  _image1, /**< image1, will be the one that we was already in the index structures. */
                                 FeatureVectorPtr  _image2,
                                 RunLog&           _log

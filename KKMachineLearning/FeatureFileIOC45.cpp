@@ -1035,7 +1035,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
   
   C45ConstructFileNameForWritting (_fileName, namesFileName, dataFileName);
 
-  FileDescPtr fileDesc = _data.FileDesc ();
+  FileDescConstPtr fileDesc = _data.FileDesc ();
 
   const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
 

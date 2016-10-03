@@ -86,7 +86,7 @@ namespace KKMLL
 
     SVMparam  (const SVMparam&  _svmParam);
 
-    ~SVMparam  ();
+    virtual ~SVMparam  ();
 
     void    AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms);
 
@@ -100,7 +100,7 @@ namespace KKMLL
                                                                               */
                                 );
 
-    float   AvgMumOfFeatures (FileDescPtr fileDesc) const;
+    float   AvgMumOfFeatures (FileDescConstPtr fileDesc) const;
     float   AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const;
 
 
@@ -115,11 +115,11 @@ namespace KKMLL
 
     FeatureNumListConstPtr GetFeatureNums ()  const;
 
-    FeatureNumListConstPtr GetFeatureNums (FileDescPtr  fileDesc)  const;
+    FeatureNumListConstPtr GetFeatureNums (FileDescConstPtr  fileDesc)  const;
 
-    FeatureNumListConstPtr GetFeatureNums (FileDescPtr  fileDesc,
-                                           MLClassPtr   class1,
-                                           MLClassPtr   class2
+    FeatureNumListConstPtr GetFeatureNums (FileDescConstPtr  fileDesc,
+                                           MLClassPtr        class1,
+                                           MLClassPtr        class2
                                           )  const;
 
     void    ProcessSvmParameter (svm_parameter&  _param,
@@ -152,8 +152,8 @@ namespace KKMLL
 
     kkint32                  MemoryConsumedEstimated    () const;
 
-    kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                                         RunLog&      log
+    kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                                         RunLog&           log
                                                         ) const;
 
     const svm_parameter&     Param                      () const {return param;}
@@ -164,7 +164,7 @@ namespace KKMLL
 
     FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
 
-    FeatureNumListConstPtr   SelectedFeatures           (FileDescPtr  fileDesc)  const;
+    FeatureNumListConstPtr   SelectedFeatures           (FileDescConstPtr  fileDesc)  const;
 
     SVM_SelectionMethod      SelectionMethod            () const {return selectionMethod;}
 
@@ -180,12 +180,12 @@ namespace KKMLL
                               double      cParam
                              );
     void  EncodingMethod     (SVM_EncodingMethod     _encodingMethod)     {encodingMethod    = _encodingMethod;}
-    void  Gamma              (double                 _gamma)              {param.Gamma (_gamma);}
-    void  Gamma_Param        (double                 _gamma)              {Gamma (_gamma);}
-    void  KernalType         (SVM_KernalType         _kernalType)         {param.KernalType ((int)_kernalType);}
+    void  Gamma              (double                  _gamma)              {param.Gamma (_gamma);}
+    void  Gamma_Param        (double                  _gamma)              {Gamma (_gamma);}
+    void  KernalType         (SVM_KernalType          _kernalType)         {param.KernalType ((int)_kernalType);}
 
-    void  MachineType        (SVM_MachineType        _machineType)        {machineType        = _machineType;}
-    void  SamplingRate       (float                  _samplingRate)       {samplingRate       = _samplingRate;}
+    void  MachineType        (SVM_MachineType         _machineType)        {machineType        = _machineType;}
+    void  SamplingRate       (float                   _samplingRate)       {samplingRate       = _samplingRate;}
     void  SelectedFeatures   (FeatureNumListConst&    _selectedFeatures);
     void  SelectedFeatures   (FeatureNumListConstPtr  _selectedFeatures);
 

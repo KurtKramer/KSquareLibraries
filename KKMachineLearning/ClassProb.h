@@ -36,7 +36,10 @@ namespace KKMLL
     double      probability;
     float       votes;
   };
+
   typedef  ClassProb*  ClassProbPtr;
+  typedef  ClassProb const *  ClassProbConstPtr;
+
 
 #define  _ClassProb_Defined_
 
@@ -56,10 +59,10 @@ namespace KKMLL
     void  SortByProbability (bool highToLow = true);
     void  SortByVotes       (bool highToLow = true);
 
-    const ClassProbPtr  LookUp (MLClassPtr  targetClass)  const;
+    ClassProbConstPtr  LookUp (MLClassPtr  targetClass)  const;
 
     virtual  void  DeleteEntry (ClassProbPtr  cp);
-    virtual  void  DeleteEntry (kkuint32      idx); 
+    virtual  void  DeleteEntry (kkuint32      idx);
     virtual  void  PushOnBack  (ClassProbPtr  cp);
     virtual  void  PushOnFront (ClassProbPtr  cp);
 
@@ -123,11 +126,12 @@ namespace KKMLL
                    )  const;
 
 
-
     static
       ClassProbListPtr  CreateFromXMLStream (std::istream& i);
 
   private:
+    ClassProbPtr  LookUpForUpdate (MLClassPtr  targetClass);
+
     typedef  std::map<MLClassPtr,ClassProbPtr>   MLClassIndexType;
     typedef  std::pair<MLClassPtr,ClassProbPtr>  MLClassIndexPair;
 
@@ -145,6 +149,8 @@ namespace KKMLL
 
   typedef  XmlElementTemplate<ClassProbList>  XmlElementClassProbList;
   typedef  XmlElementClassProbList*  XmlElementClassProbListPtr;
+
+
 }  /* namespace KKMLL */
 
 #endif

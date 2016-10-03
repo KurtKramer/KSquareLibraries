@@ -32,6 +32,7 @@ namespace KKMLL
   #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  typedef  FileDesc const *  FileDescConstPtr;
   #endif
 
 
@@ -90,10 +91,10 @@ namespace KKMLL
      *@param[in] _parameterStr Sting with Machine Learning Parameters.
      *@param[in] _log  Where to send logging messages to.
      */
-    TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                            FileDescPtr     _fileDesc,
-                            const KKStr&    _parameterStr,
-                            RunLog&         _log             
+    TrainingConfiguration2 (MLClassListPtr    _mlClasses,
+                            FileDescConstPtr  _fileDesc,
+                            const KKStr&      _parameterStr,
+                            RunLog&           _log
                            );
 
 
@@ -107,10 +108,10 @@ namespace KKMLL
      *@param[in] _modelParameters  Will take ownership of this instance.
      *@param[in] _log
      */
-    TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                            FileDescPtr     _fileDesc,
-                            ModelParamPtr   _modelParameters,
-                            RunLog&         _log
+    TrainingConfiguration2 (MLClassListPtr    _mlClasses,
+                            FileDescConstPtr  _fileDesc,
+                            ModelParamPtr     _modelParameters,
+                            RunLog&           _log
                            );
 
 
@@ -168,7 +169,7 @@ namespace KKMLL
     static
     TrainingConfiguration2*  CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
-                                             FileDescPtr         _fileDesc,
+                                             FileDescConstPtr    _fileDesc,
                                              const KKStr&        _parameterStr, 
                                              RunLog&             _log
                                             );
@@ -187,7 +188,7 @@ namespace KKMLL
     const KKStr&           ConfigRootName          () const  {return configRootName;}
     SVM_EncodingMethod     EncodingMethod          () const;
     kkint32                ExamplesPerClass        () const;
-    FileDescPtr            FileDesc                () const  {return  fileDesc;}
+    FileDescConstPtr       FileDesc                () const  {return  fileDesc;}
     FactoryFVProducerPtr   FvFactoryProducer       (RunLog&  log) const;
     bool                   FvFactoryProducerSpecified ()  const {return fvFactoryProducerSpecified;}
     double                 Gamma                   () const;
@@ -450,7 +451,7 @@ namespace KKMLL
     kkint32                examplesPerClass;
     FactoryFVProducerPtr   fvFactoryProducer;
     bool                   fvFactoryProducerSpecified;  /**< Indicates that a valid 'fvFactoryProducer' was specified in the configuration file. */
-    FileDescPtr            fileDesc;
+    FileDescConstPtr       fileDesc;
     MLClassListPtr         mlClasses;
     bool                   mlClassesWeOwnIt;      /**< If we own it we will delete it in the destructor.  */
     ModelTypes             modelingMethod;

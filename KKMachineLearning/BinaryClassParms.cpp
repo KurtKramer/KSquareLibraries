@@ -61,7 +61,7 @@ BinaryClassParms::~BinaryClassParms ()
 }
 
 
-kkuint16  BinaryClassParms::NumOfFeatures (FileDescPtr fileDesc) const
+kkuint16  BinaryClassParms::NumOfFeatures (FileDescConstPtr fileDesc) const
 {
   return  SelectedFeaturesFD (fileDesc)->NumOfFeatures ();
 }
@@ -103,7 +103,7 @@ KKStr   BinaryClassParms::Class2Name ()  const
 }  /* Class2Name */
 
 
-FeatureNumListConstPtr  BinaryClassParms::SelectedFeaturesFD (FileDescPtr fileDesc) const
+FeatureNumListConstPtr  BinaryClassParms::SelectedFeaturesFD (FileDescConstPtr fileDesc) const
 {
   if  (!selectedFeatures)
     selectedFeatures = new FeatureNumList (fileDesc);
@@ -241,9 +241,9 @@ kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 
 
 
-BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*        i, 
-                                                              FileDescPtr  fileDesc,
-                                                              RunLog&      log
+BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*             i,
+                                                              FileDescConstPtr  fileDesc,
+                                                              RunLog&           log
                                                              )
 {
   BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
@@ -253,9 +253,9 @@ BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*        i,
 
 
 
-BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&     i, 
-                                                              FileDescPtr  fileDesc,
-                                                              RunLog&      log
+BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&          i,
+                                                              FileDescConstPtr  fileDesc,
+                                                              RunLog&           log
                                                              )
 {
   BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
@@ -269,7 +269,7 @@ BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&     i,
 /**
  @brief  Returns the Average number of selected features.
  */
-float  BinaryClassParmsList::FeatureCountNet (FileDescPtr fileDesc)  const
+float  BinaryClassParmsList::FeatureCountNet (FileDescConstPtr fileDesc)  const
 {
   if  (size () < 1)
     return 0.0f;
@@ -348,9 +348,9 @@ void  BinaryClassParmsList::WriteXML (ostream&  o)  const
 
 
 
-void  BinaryClassParmsList::ReadXML (FILE*        i,
-                                     FileDescPtr  fileDesc,
-                                     RunLog&      log
+void  BinaryClassParmsList::ReadXML (FILE*             i,
+                                     FileDescConstPtr  fileDesc,
+                                     RunLog&           log
                                     )
 {
   DeleteContents ();
@@ -380,9 +380,9 @@ void  BinaryClassParmsList::ReadXML (FILE*        i,
 
 
 
-void  BinaryClassParmsList::ReadXML (istream&     i,
-                                     FileDescPtr  fileDesc,
-                                     RunLog&      log
+void  BinaryClassParmsList::ReadXML (istream&          i,
+                                     FileDescConstPtr  fileDesc,
+                                     RunLog&           log
                                     )
 {
   DeleteContents ();
