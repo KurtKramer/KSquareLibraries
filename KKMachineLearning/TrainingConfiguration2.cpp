@@ -208,10 +208,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
   mlClassesWeOwnIt = true;
 
   {
-    MLClassList::iterator idx;
-    for  (idx = mlClasses->begin ();  idx != mlClasses->end ();  idx++)
+    for  (auto mlClass: *mlClasses)
     {
-      MLClassPtr mlClass = *idx;
       VectorKKStr  directories;
       TrainingClassPtr  tc = new TrainingClass (directories, mlClass->Name (), 1.0f, 1.0f, NULL, *mlClasses);
       trainingClasses.PushOnBack (tc);
@@ -239,10 +237,10 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                                                FileDescPtr     _fileDesc,
-                                                const KKStr&    _parameterStr,
-                                                RunLog&         _log
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr   _mlClasses,
+                                                FileDescConstPtr _fileDesc,
+                                                const KKStr&     _parameterStr,
+                                                RunLog&          _log
                                                ):
   Configuration              (),
   configFileNameSpecified    (""),
@@ -305,10 +303,10 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 
 
   
-TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                                                FileDescPtr     _fileDesc,
-                                                ModelParamPtr   _modelParameters,
-                                                RunLog&         _log
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr    _mlClasses,
+                                                FileDescConstPtr  _fileDesc,
+                                                ModelParamPtr     _modelParameters,
+                                                RunLog&           _log
                                                ):
   Configuration              (),
   configFileNameSpecified    (""),
@@ -339,10 +337,8 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
   mlClassesWeOwnIt = true;
 
   {
-    MLClassList::iterator idx;
-    for  (idx = mlClasses->begin ();  idx != mlClasses->end ();  idx++)
+    for  (auto  mlClass: *mlClasses)
     {
-      MLClassPtr      mlClass = *idx;
       VectorKKStr  directories;
       TrainingClassPtr  tc = new TrainingClass (directories, mlClass->Name (), 1.0f, 1.0f, NULL, *mlClasses);
       trainingClasses.PushOnBack (tc);
@@ -406,12 +402,8 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   if  (tc.subClassifiers)
   {
     subClassifiers = new TrainingConfiguration2List (true);
-    TrainingConfiguration2List::const_iterator  idx;
-    for  (idx = tc.subClassifiers->begin ();  idx != tc.subClassifiers->end ();  ++idx)
-    {
-      TrainingConfiguration2Ptr  subClassifier = *idx;
+    for  (auto subClassifier: *(tc.subClassifiers))
       subClassifiers->PushOnBack (new TrainingConfiguration2 (*subClassifier));
-    }
   }
 }
 
@@ -475,10 +467,8 @@ KKStr  TrainingConfiguration2::RootDirExpanded () const
 
 KKStr  TrainingConfiguration2::DirectoryPathForClass (MLClassPtr  mlClass)  const
 {
-  TrainingClassList::const_iterator  idx;
-  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
+  for  (auto tc: trainingClasses)
   {
-    const TrainingClassPtr  tc = *idx;
     if  (tc->MLClass () == mlClass)
       return  tc->ExpandedDirectory (rootDir, 0);
   }
@@ -490,16 +480,9 @@ KKStr  TrainingConfiguration2::DirectoryPathForClass (MLClassPtr  mlClass)  cons
 
 kkuint32  TrainingConfiguration2::NumHierarchialLevels ()  const
 {
-  TrainingClassList::const_iterator  idx;
-
   kkuint16 numHierarchialLevels = 0;
-
-  for  (idx = trainingClasses.begin ();  idx !=  trainingClasses.end ();  idx++)
-  {
-    TrainingClassPtr  tc = *idx;
+  for  (auto tc: trainingClasses)
     numHierarchialLevels = Max (numHierarchialLevels, tc->MLClass ()->NumHierarchialLevels ());
-  }
-
   return  numHierarchialLevels;
 }  /* NumHierarchialLevels */
 
@@ -515,11 +498,9 @@ void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
 
   mlClasses = new MLClassList ();
   mlClassesWeOwnIt = true;
-  TrainingClassList::const_iterator  idx;
-
-  for  (idx = trainingClasses.begin ();  idx !=  trainingClasses.end ();  idx++)
+  for  (auto idx: trainingClasses)
   {
-    MLClassPtr  ic = (*idx)->MLClass ();
+    MLClassPtr  ic = idx->MLClass ();
     if  (mlClasses->PtrToIdx (ic) < 0)
       mlClasses->AddMLClass (ic);
   }
@@ -530,16 +511,13 @@ void  TrainingConfiguration2::SyncronizeMLClassListWithTrainingClassList ()
 MLClassListPtr   TrainingConfiguration2::ExtractListOfClassesForAGivenHierarchialLevel (kkuint32 level)   const
 {
   MLClassListPtr  classes = new MLClassList ();
-  TrainingClassList::const_iterator  idx;
-
-  for  (idx = trainingClasses.begin ();  idx !=  trainingClasses.end ();  idx++)
+  for  (auto tc: trainingClasses)
   {
-    MLClassPtr  ic = (*idx)->MLClass ();
+    MLClassPtr  ic = tc->MLClass ();
     MLClassPtr  claassForGivenLevel = ic->MLClassForGivenHierarchialLevel (level);
     if  (classes->PtrToIdx (claassForGivenLevel) < 0)
       classes->AddMLClass (claassForGivenLevel);
   }
-
   return  classes;
 }  /* ExtractListOfClassesForAGivenHierarchialLevel */
 
@@ -557,9 +535,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::GenerateAConfiguraionForAHier
 
   TrainingClassList::const_iterator  idx;
   
-  for  (idx = trainingClasses.begin ();  idx != trainingClasses.end ();  idx++)
+  for  (auto tc: trainingClasses)
   {
-    const TrainingClassPtr tc = *idx;
     MLClassPtr  ic = tc->MLClass ()->MLClassForGivenHierarchialLevel (level);
     hierarchialConfig->AddATrainingClass (new TrainingClass (tc->Directories (), ic->Name (), 1.0f, 1.0f, NULL, *hierarchialClassList));
   }
@@ -602,11 +579,8 @@ void  TrainingConfiguration2::Save (ostream&  o)  const
     o << endl;
   }
 
-  TrainingClassList::const_iterator tcIDX;
-  for  (tcIDX = trainingClasses.begin ();  tcIDX !=  trainingClasses.end ();  tcIDX++)
+  for  (auto tc: trainingClasses)
   {
-    TrainingClassPtr  tc = *tcIDX;
-
     o << "[TRAINING_CLASS]" << endl;
 
     o << "Class_Name=" << tc->Name () << endl;
@@ -638,14 +612,11 @@ void  TrainingConfiguration2::Save (ostream&  o)  const
   ModelParamOldSVMPtr  oldSVMParams = OldSvmParameters ();
   if  (oldSVMParams)
   {
-    const BinaryClassParmsListPtr  binaryParms = oldSVMParams->BinaryParmsList ();
+    auto  binaryParms = oldSVMParams->BinaryParmsList ();
     if  (binaryParms)
     {
-      BinaryClassParmsList::const_iterator  idx;
-
-      for  (idx = binaryParms->begin ();  idx != binaryParms->end ();  idx++)
+      for  (auto binaryClass: *binaryParms)
       {
-        const BinaryClassParmsPtr  binaryClass = *idx;
         o << "[TWO_CLASS_PARAMETERS]" << endl;
         o << "CLASS1="            << binaryClass->Class1Name ()            << endl;
         o << "CLASS2="            << binaryClass->Class2Name ()            << endl;
@@ -756,13 +727,12 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
-                                             FileDescPtr         _fileDesc,
+                                             FileDescConstPtr    _fileDesc,
                                              const KKStr&        _parameterStr, 
                                              RunLog&             _log
                                             )
 {
   _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
-  FileDescPtr  fileDesc = _examples.FileDesc ();
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();
@@ -2009,9 +1979,9 @@ namespace KKMLL
 
 
 
-  ostream&  KKMLL::operator<< (std::ostream&                       os,
-                              TrainingConfiguration2::ModelTypes  modelingMethod
-                              )
+  ostream&  operator<< (std::ostream&                       os,
+                        TrainingConfiguration2::ModelTypes  modelingMethod
+                       )
   {
     os << TrainingConfiguration2::ModelTypeToStr (modelingMethod);
     return os;

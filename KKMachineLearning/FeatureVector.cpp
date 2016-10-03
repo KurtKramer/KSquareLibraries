@@ -286,8 +286,8 @@ FeatureVectorList::FeatureVectorList ():
 
 
 
-FeatureVectorList::FeatureVectorList (FileDescPtr  _fileDesc,
-                                      bool         _owner
+FeatureVectorList::FeatureVectorList (FileDescConstPtr  _fileDesc,
+                                      bool              _owner
                                      ):
   KKQueue<FeatureVector> (_owner),
 
@@ -558,7 +558,7 @@ void  FeatureVectorList::ResetNumOfFeaturs (kkint32 newNumOfFeatures)
 
 
 
-void  FeatureVectorList::ResetFileDesc (FileDescPtr  newFileDesc)
+void  FeatureVectorList::ResetFileDesc (FileDescConstPtr  newFileDesc)
 {
   if  (!newFileDesc)
   {

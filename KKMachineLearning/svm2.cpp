@@ -147,7 +147,7 @@ SVM289_MFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
 
 
 SVM289_MFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
-                                      FileDescPtr            _fileDesc,
+                                      FileDescConstPtr       _fileDesc,
                                       RunLog&                _log
                                      ):
   numTrainExamples (0),
@@ -167,7 +167,7 @@ SVM289_MFS::svm_problem::~svm_problem ()
 
 
     
-FileDescPtr  SVM289_MFS::svm_problem::FileDesc ()  const
+FileDescConstPtr  SVM289_MFS::svm_problem::FileDesc ()  const
 {
   return  x.FileDesc ();
 }  
@@ -4087,7 +4087,7 @@ SVM289_MFS::Svm_Model::Svm_Model ():
 
 
 SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
-                                  FileDescPtr       _fileDesc
+                                  FileDescConstPtr  _fileDesc
                                  ):
   cancelFlag          (false),
   fileDesc            (_fileDesc),
@@ -4175,7 +4175,7 @@ SVM289_MFS::Svm_Model::Svm_Model (const Svm_Model&  _model,
 
 
 
-SVM289_MFS::Svm_Model::Svm_Model (FileDescPtr _fileDesc):
+SVM289_MFS::Svm_Model::Svm_Model (FileDescConstPtr _fileDesc):
    cancelFlag          (false),
    fileDesc            (_fileDesc),
    param               (),
@@ -4199,7 +4199,7 @@ SVM289_MFS::Svm_Model::Svm_Model (FileDescPtr _fileDesc):
 
 SVM289_MFS::Svm_Model::Svm_Model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
-                                  FileDescPtr           _fileDesc
+                                  FileDescConstPtr      _fileDesc
                                  ):
    cancelFlag          (false),
    fileDesc            (_fileDesc),

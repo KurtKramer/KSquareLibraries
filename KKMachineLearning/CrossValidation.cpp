@@ -34,7 +34,7 @@ CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
                                   MLClassListPtr             _mlClasses,
                                   kkint32                    _numOfFolds,
                                   bool                       _featuresAreAlreadyNormalized,
-                                  FileDescPtr                _fileDesc,
+                                  FileDescConstPtr           _fileDesc,
                                   RunLog&                    _log,
                                   bool&                      _cancelFlag
                                  ):

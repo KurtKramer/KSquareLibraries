@@ -3,11 +3,13 @@ EXEC = KKBase
 CFLAGS = -g  
 LIBS = -lfftw -lrt
 FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
-VPATH = ../KKBase
 IN_PATH = .
 OUT_PATH = ./debug
 INPUTFILE = -c $(IN_PATH)/$*.cpp
 OUTPUTFILE = -o $(OUT_PATH)/$*.o
+VPATH = $(OUT_PATH)
+
+
 
 CC = g++ -W -Wall -Wextra -pedantic -std=c++0x 
 
@@ -120,7 +122,7 @@ OBJECTS  = Application.o               Atom.o                      BitString.o  
 all:	$(EXEC)
 
 clean:
-	rm *.o; rm *.a	
+	rm $(OUT_PATH)/*.o; rm $(OUT_PATH)/*.a	
 
 
 $(EXEC): $(OBJECTS) 

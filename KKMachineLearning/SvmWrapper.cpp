@@ -105,10 +105,10 @@ kkint32  GetMaxIndex (vector<T>&   vote,
 
 
 template<class T>
-kkint32  GetMaxIndex (T*      vote, 
-                    kkint32 voteLength,
-                    kkint32&  maxIndex2  // second highest indx
-                   )
+kkint32  GetMaxIndex (T*        vote,
+                      kkint32   voteLength,
+                      kkint32&  maxIndex2  // second highest indx
+                     )
 {
   T max=vote[0];
   kkint32 maxIndex=0;
@@ -469,7 +469,7 @@ void  ComputeProbForVoting  (kkint32          numClasses,             /**< Numbe
 
 
 
-void  ComputeProb  (kkint32            numClasses,               // Number of Classes
+void  ComputeProb  (kkint32            numClasses,             // Number of Classes
                     const VectorFloat& probClassPairs,         // probability parameter
                     vector<double>&    dist,                   // Distances for each binary classifier from decision boundary.
                     double**           crossClassProbTable,    // A 'numClass' x 'numClass' matrix;  will get the probabilities between classes.
@@ -515,7 +515,7 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
 
    if  (totalProb == 0.0)
    {
-     // I think this happens because we are using float pfor probTable and double for dist[]
+     // I think this happens because we are using float for probTable and double for dist[]
      // For now we will give each class an equal probability.
      for  (i = 0; i < numClasses; i++)
        probabilities[i] = (1.0 / double(numClasses));
@@ -526,12 +526,6 @@ void  ComputeProb  (kkint32            numClasses,               // Number of Cl
        probabilities[i] = probabilities[i] / totalProb;
    }
 
-   if  ((knownClassNum >= 0) &&  (knownClassNum < numClasses))
-   {
-     kkint32 maxIndex1 = -1;
-     kkint32 maxIndex2 = -1;
-     maxIndex1 = GetMaxIndex (probabilities, numClasses, maxIndex2);
-   }
    //NormalizeProbabilitiesWithAMinumum (numClasses, probabilities, 0.002);
 }  /* ComputeProb */
 
@@ -576,8 +570,6 @@ struct SvmModel233**  KKMLL::SvmTrainModel (const struct svm_parameter&  param,
 
   return  submodel;
 }  /* SvmTrainModel */
-
-
 
 
 

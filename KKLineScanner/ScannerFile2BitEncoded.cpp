@@ -424,7 +424,7 @@ void  ScannerFile2BitEncoded::ProcessTextBlock (const OpRec&  rec)
   }
 
   kkuint32  numTextBytes = 256 * rec.textBlock.lenHigh + rec2.textBlock_2.lenLow;
-  char* textMsgPtr = new char[numTextBytes];
+  char* textMsgPtr = new char[numTextBytes + 1];
   kkuint32 textMsgLen = numTextBytes;
   
   recsRead = fread (textMsgPtr, 1, numTextBytes, file);

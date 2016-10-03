@@ -50,13 +50,13 @@ namespace  SVM289_MFS
                 );
 
     svm_problem (const FeatureNumList&  _selFeatures,
-                 FileDescPtr            _fileDesc,
+                 FileDescConstPtr       _fileDesc,
                  RunLog&                _log
                 );
 
     ~svm_problem ();
 
-    FileDescPtr  FileDesc ()  const;
+    FileDescConstPtr  FileDesc ()  const;
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}
 
@@ -162,17 +162,17 @@ namespace  SVM289_MFS
     Svm_Model ();
 
     Svm_Model (const Svm_Model&  _model,
-               FileDescPtr       _fileDesc
+               FileDescConstPtr  _fileDesc
               );
 
-    Svm_Model (FileDescPtr  _fileDesc);
+    Svm_Model (FileDescConstPtr  _fileDesc);
 
     Svm_Model (const svm_parameter&   _param,
                const FeatureNumList&  _selFeatures,
-               FileDescPtr            _fileDesc
+               FileDescConstPtr       _fileDesc
               );
 
-    ~Svm_Model ();
+    virtual ~Svm_Model ();
 
     void  CleanUpMemory ();
 
@@ -200,7 +200,7 @@ namespace  SVM289_MFS
 
 
     volatile bool      cancelFlag;
-    FileDescPtr        fileDesc;
+    FileDescConstPtr   fileDesc;
     svm_parameter      param;      // parameter
     kkint32            nr_class;   // number of classes, = 2 in regression/one class svm
     kkint32            numSVs;     /**< total #SV  */

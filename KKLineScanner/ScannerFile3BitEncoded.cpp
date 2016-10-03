@@ -336,7 +336,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
           char*   newTextMsg = new char[newTextMsgLen];
           memcpy (newTextMsg, textMsg, textMsgLen);
           textMsgPtr = newTextMsg + textMsgLen;
-          delete textMsg;
+          delete[] textMsg;
           textMsg = newTextMsg;
           newTextMsg = NULL;
           textMsgLen = newTextMsgLen;

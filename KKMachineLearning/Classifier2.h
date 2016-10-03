@@ -27,6 +27,7 @@ namespace  KKMLL
 #if  !defined(_CLASSPROB_)
 class  ClassProb;
 typedef  ClassProb*  ClassProbPtr;
+typedef  ClassProb const *  ClassProbConstPtr;
 class  ClassProbList;
 typedef  ClassProbList*  ClassProbListPtr;
 #endif

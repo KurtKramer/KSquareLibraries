@@ -172,7 +172,7 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
                               )
 {
   alreadyExists = false;
-  AttributePtr existingAttribute = attributes.LookUpByName (_name);
+  auto existingAttribute = attributes.LookUpByName (_name);
   if  (existingAttribute)
   {
     // This is a very bad error, it should not be able to happen
@@ -267,7 +267,7 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
                                   RunLog&        log
                                  )
 {
-  curAttribute = attributes.LookUpByName (attributeName);
+  auto curAttribute = attributes.LookUpByName (attributeName);
   if  (!curAttribute)
   {
     KKStr  errMsg (128);
@@ -678,8 +678,7 @@ void FileDesc::DisplayAttributeMappings ( )
 
 
 
-const
-AttributePtr  FileDesc::LookUpByName (const KKStr&  attributeName)  const
+AttributeConstPtr  FileDesc::LookUpByName (const KKStr&  attributeName)  const
 {
   return  attributes.LookUpByName (attributeName);
 }  /* LookUpByName */
@@ -689,7 +688,7 @@ AttributePtr  FileDesc::LookUpByName (const KKStr&  attributeName)  const
 
 kkint32  FileDesc::GetFieldNumFromAttributeName (const KKStr&  attributeName)  const
 {
-  AttributePtr  a = attributes.LookUpByName (attributeName);
+  auto  a = attributes.LookUpByName (attributeName);
   if  (!a)
     return -1;
   else

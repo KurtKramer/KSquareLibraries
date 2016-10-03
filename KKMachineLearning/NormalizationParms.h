@@ -58,6 +58,8 @@ namespace KKMLL
   public:
     typedef  NormalizationParms*  NormalizationParmsPtr;
 
+    typedef  NormalizationParms const *  NormalizationParmsConstPtr;
+
     NormalizationParms ();
 
     NormalizationParms (bool                _normalizeNominalFeatures,
@@ -79,13 +81,13 @@ namespace KKMLL
 
     kkint32 MemoryConsumedEstimated ()  const;
 
-    FileDescPtr  FileDesc ()  const  {return fileDesc;}
+    FileDescConstPtr  FileDesc ()  const  {return fileDesc;}
 
     void  NormalizeExamples (FeatureVectorListPtr  examples,
                              RunLog&               log
-                            );
+                            )  const;
 
-    void  NormalizeAExample (FeatureVectorPtr  example);
+    void  NormalizeAExample (FeatureVectorPtr  example)  const;
 
     bool  NormalizeNominalFeatures ()  const  {return normalizeNominalFeatures;}
 
@@ -127,14 +129,14 @@ namespace KKMLL
     const double*  Sigma () const  {return  sigma;}
 
     static
-    NormalizationParmsPtr  ReadFromFile (const KKStr&  fileName,  RunLog& log);
+    NormalizationParmsConstPtr  ReadFromFile (const KKStr&  fileName,  RunLog& log);
 
   private:
     void  ConstructNormalizeFeatureVector ();
     void  DeriveNormalizationParameters (FeatureVectorList&  _examples);
 
     AttributeTypeVector  attriuteTypes;
-    FileDescPtr          fileDesc;
+    FileDescConstPtr     fileDesc;
     mutable KKStr        fileName;
     double*              mean;
     bool*                normalizeFeature;
@@ -145,7 +147,8 @@ namespace KKMLL
   };  /* NormalizationParms */
 
 
-  typedef  NormalizationParms::NormalizationParmsPtr  NormalizationParmsPtr;
+  typedef  NormalizationParms::NormalizationParmsPtr       NormalizationParmsPtr;
+  typedef  NormalizationParms::NormalizationParmsConstPtr  NormalizationParmsConstPtr;
 
 
   #define  _NormalizationParms_Defined_

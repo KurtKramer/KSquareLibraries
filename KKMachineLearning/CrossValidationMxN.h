@@ -16,6 +16,7 @@ namespace KKMLL
   #if  !defined (_FILEDESC_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  typedef  FileDesc const *  FileDescConstPtr;
   #endif
 
 
@@ -122,7 +123,7 @@ namespace KKMLL
 
     bool                      cancelFlag;
     TrainingConfiguration2Ptr config;
-    FileDescPtr               fileDesc;
+    FileDescConstPtr          fileDesc;
     ConfusionMatrix2Ptr       meanConfusionMatrix;
     kkuint32                  numOfFolds;
     kkuint32                  numOfOrderings;

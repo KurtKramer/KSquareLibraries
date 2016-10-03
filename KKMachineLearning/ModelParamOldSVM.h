@@ -61,7 +61,7 @@ namespace KKMLL
                                  float                   _weight
                                 );
 
-    virtual  float   AvgMumOfFeatures (FileDescPtr  fileDesc);
+    virtual  float   AvgMumOfFeatures (FileDescConstPtr  fileDesc);
 
 
     /** If no entry exists for class pair then NULL will be returned. */
@@ -77,15 +77,14 @@ namespace KKMLL
                                                           MLClassPtr  class2
                                                          );
 
-    FeatureNumListConstPtr  GetFeatureNums (FileDescPtr  fileDesc,
-                                            MLClassPtr   class1,
-                                            MLClassPtr   class2
+    FeatureNumListConstPtr  GetFeatureNums (FileDescConstPtr  fileDesc,
+                                            MLClassPtr        class1,
+                                            MLClassPtr        class2
                                            )  const;
 
 
     // Member access methods
-    const
-    BinaryClassParmsListPtr          BinaryParmsList            () const;
+    BinaryClassParmsList const *     BinaryParmsList            () const;
     virtual float                    A_Param                    () const;
     virtual double                   C_Param                    () const;
 
@@ -97,8 +96,8 @@ namespace KKMLL
     virtual SVM_KernalType           KernalType                 () const;
     virtual SVM_MachineType          MachineType                () const;
 
-    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                                                 RunLog&      log
+    virtual kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                                                 RunLog&           log
                                                                 ) const;
 
     virtual const svm_parameter&     Param                      () const;

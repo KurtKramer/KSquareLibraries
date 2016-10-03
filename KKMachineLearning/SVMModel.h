@@ -26,37 +26,34 @@ namespace KKMLL
 {
 
 #ifndef  _FEATURENUMLIST_
-class  FeatureNumList;
-typedef  FeatureNumList*  FeatureNumListPtr;
-typedef  FeatureNumList const FeatureNumListConst;
-typedef  FeatureNumListConst*  FeatureNumListConstPtr;
+  class  FeatureNumList;
+  typedef  FeatureNumList*  FeatureNumListPtr;
+  typedef  FeatureNumList const FeatureNumListConst;
+  typedef  FeatureNumListConst*  FeatureNumListConstPtr;
 #endif
 
 
 #ifndef  _FEATUREENCODER_
-class  FeatureEncoder;
-typedef  FeatureEncoder*  FeatureEncoderPtr;
+  class  FeatureEncoder;
+  typedef  FeatureEncoder*  FeatureEncoderPtr;
 #endif
 
 
 
 #ifndef  _RUNLOG_
-class  RunLog;
-typedef  RunLog*  RunLogPtr;
+  class  RunLog;
+  typedef  RunLog*  RunLogPtr;
 #endif
 
 
 #ifndef _FILEDESC_
-class  FileDesc;
-typedef  FileDesc*  FileDescPtr;
+  class  FileDesc;
+  typedef  FileDesc*  FileDescPtr;
 #endif
 
 
 
-
-
-typedef  struct svm_node*     XSpacePtr;
-
+  typedef  struct svm_node*     XSpacePtr;
 
 
   class  ProbNamePair
@@ -101,7 +98,7 @@ typedef  struct svm_node*     XSpacePtr;
     SVMModel (const SVMparam&     _svmParam,
               FeatureVectorList&  _examples,
               ClassAssignments&   _assignments,
-              FileDescPtr         _fileDesc,
+              FileDescConstPtr    _fileDesc,
               RunLog&             _log
              );
 
@@ -509,7 +506,7 @@ typedef  struct svm_node*     XSpacePtr;
                                                    * When doing binary feature selection will use 
                                                    * binaryFeatureEncoders.
                                                    */
-    FileDescPtr            fileDesc;
+    FileDescConstPtr       fileDesc;
 
     ModelPtr*              models;
 
@@ -519,9 +516,9 @@ typedef  struct svm_node*     XSpacePtr;
     VectorShort            oneVsAllAssignment;
     ClassAssignmentsPtr*   oneVsAllClassAssignments;
 
-    kkuint32               predictXSpaceWorstCase;
-
     XSpacePtr              predictXSpace;         /**< Used by Predict OneVsOne, to avoid deleting and reallocating every call. */
+
+    kkuint32               predictXSpaceWorstCase;
 
     double*                probabilities;
 

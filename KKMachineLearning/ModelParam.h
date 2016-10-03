@@ -10,6 +10,7 @@ namespace KKMLL
   #ifndef _FileDesc_Defined_
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  typedef  FileDesc const *  FileDescConstPtr;
   #endif
 
 
@@ -138,8 +139,8 @@ namespace KKMLL
     virtual void  Gamma    (double  _gamma);
     virtual void  Prob     (float   _prob);
 
-    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                                 RunLog&      log
+    virtual kkint32  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                                 RunLog&           log
                                                 ) const;
 
 
@@ -212,10 +213,9 @@ namespace KKMLL
   class   XmlElementModelParam:  public  XmlElement
   {
   public:
-    XmlElementModelParam (XmlTagPtr      tag,
-                          XmlStream&     s,
-                          VolConstBool&  cancelFlag,
-                          RunLog&        log
+    XmlElementModelParam (XmlTagPtr   tag,
+                          XmlStream&  s,
+                          RunLog&     log
                          ):
      XmlElement (tag, s, log),
      value (NULL)
@@ -231,7 +231,7 @@ namespace KKMLL
 
 
     virtual
-    ModelParam*  const  Value ()  const  {return value;}
+    ModelParam const *  Value ()  const  {return value;}
 
     virtual 
     ModelParam*  TakeOwnership ()
@@ -265,7 +265,7 @@ namespace KKMLL
                                   VolConstBool&  cancelFlag,
                                   RunLog&        log
                                  ):
-    XmlElementModelParam (tag, s, cancelFlag, log)
+    XmlElementModelParam (tag, s, log)
     {
       value = new T();
       value->ReadXML (s, tag, cancelFlag, log);
@@ -276,7 +276,7 @@ namespace KKMLL
     {
     }
 
-    T*  const  Value ()  const  {return dynamic_cast<T*> (value);}
+    T const *  Value ()  const  {return dynamic_cast<T*> (value);}
     
     T*  TakeOwnership ()
     {

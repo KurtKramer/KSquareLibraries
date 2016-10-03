@@ -172,7 +172,7 @@ struct SvmModel233
 
   SvmModel233 ();
 
-  ~SvmModel233 ();
+  virtual ~SvmModel233 ();
 
   SvmModel233 (const SvmModel233& _model)
   {

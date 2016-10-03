@@ -1084,7 +1084,12 @@ public:
   };
 
 
-  PalletBuilder ()
+  PalletBuilder ():
+	lastColorsSet (false),
+	lastRed       (0),
+	lastGreen     (0),
+	lastBlue      (0)
+
   {
     lastColorsSet = false;
   }

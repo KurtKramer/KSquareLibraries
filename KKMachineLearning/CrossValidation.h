@@ -76,6 +76,7 @@ namespace  KKMLL
   #ifndef  _FILEDESC_
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  typedef  FileDesc const *  FileDescConstPtr;
   #endif
 
 
@@ -87,7 +88,7 @@ namespace  KKMLL
                      MLClassListPtr            _mlClasses,
                      kkint32                   _numOfFolds,
                      bool                      _featuresAreAlreadyNormalized,
-                     FileDescPtr               _fileDesc,
+                     FileDescConstPtr          _fileDesc,
                      RunLog&                   _log,
                      bool&                     _cancelFlag
                     );
@@ -164,7 +165,7 @@ namespace  KKMLL
     kkint32                   duplicateTrainDataCount;
     FactoryFVProducerPtr      fvProducerFactory;
     bool                      featuresAreAlreadyNormalized;
-    FileDescPtr               fileDesc;
+    FileDescConstPtr          fileDesc;
     VectorFloat               foldAccuracies;
     VectorInt                 foldCounts;
     ConfusionMatrix2Ptr       confusionMatrix;

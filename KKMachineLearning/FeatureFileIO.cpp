@@ -533,7 +533,7 @@ void   FeatureFileIO::AppendToFile (const KKStr&          _fileName,
 
   _successful = true;
 
-  FileDescPtr  fileDesc = _examples.FileDesc ();
+  FileDescConstPtr  fileDesc = _examples.FileDesc ();
 
   ofstream out (_fileName.Str (), ios::app);
 
@@ -582,7 +582,7 @@ void  FeatureFileIO::SaveFeatureFile (const KKStr&          _fileName,
 
   out.precision (9);
 
-  FileDescPtr  fileDesc = _examples.FileDesc ();
+  FileDescConstPtr  fileDesc = _examples.FileDesc ();
 
   KKStr  errorMessage;
   SaveFile (_examples, _fileName, _selFeatures, out, _numExamplesWritten, _cancelFlag, _successful, errorMessage, _log);

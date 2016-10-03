@@ -154,6 +154,7 @@ namespace KKMLL
   };  /* Attribute */
 
   typedef  Attribute*  AttributePtr;
+  typedef  Attribute const *  AttributeConstPtr;
 
 
   class  AttributeList: public KKQueue<Attribute>
@@ -169,8 +170,7 @@ namespace KKMLL
     AttributeTypeVectorPtr  CreateAttributeTypeVector ()  const;
 
 
-    const
-    AttributePtr  LookUpByName (const KKStr&  attributeName)  const;
+    AttributeConstPtr  LookUpByName (const KKStr&  attributeName)  const;
 
 
     kkint32 MemoryConsumedEstimated ()  const;

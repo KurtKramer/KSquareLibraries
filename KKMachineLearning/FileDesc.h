@@ -74,7 +74,7 @@ namespace KKMLL
   public:
     typedef  FileDesc*  FileDescPtr;
 
-    typedef  FileDesc*  const   FileDescConstPtr;
+    typedef  FileDesc const  *  FileDescConstPtr;
 
     /**
      *@brief  Clean up function, call just before exiting the application.
@@ -183,8 +183,7 @@ namespace KKMLL
 
     kkint32                     GetFieldNumFromAttributeName (const KKStr&  attributeName)  const;
 
-    const
-    KKMLL::AttributePtr         LookUpByName (const KKStr&  attributeName)  const;  
+    KKMLL::AttributeConstPtr    LookUpByName (const KKStr&  attributeName)  const;
 
     kkint32                     LookUpNominalCode (kkint32       fieldNum, 
                                                    const KKStr&  nominalValue

@@ -179,7 +179,7 @@ namespace  KKB
       void     CheckNodeStats (NodePtr  n,
                                kkint32& numOfNodes,
                                kkint32& numOfLeafs,
-                               kkint32*   leafPaths,
+                               kkint32* leafPaths,
                                kkint32& shortestPath,
                                kkint32& longestPath,
                                kkint32  curDeapth
@@ -196,7 +196,7 @@ namespace  KKB
                                    NodePtr  n2NIL
                                   );
 
-      kkint32    CountNodesInSubTree (NodePtr  subTree);
+      kkint32  CountNodesInSubTree (NodePtr  subTree);
 
       NodePtr  Delete (NodePtr  node2Delete);
 
@@ -326,7 +326,7 @@ KKB::RBTree<Entry,CompareNodes,KeyType>::RBTree (RBTree&  tree):
    numOfIterators(0),
    iterators     (NULL)
 {
-  nil = new RBnode<Entry> (NULL, NULL, NULL, Black, NULL);
+  nil = new RBnode<Entry> (NULL, NULL, NULL, RBcolor::Black, NULL);
   root = CloneSubTree (tree.root, tree.nil, nil);
  
   kkint32  x = CountNodesInSubTree (root);
@@ -1233,7 +1233,7 @@ KKB::RBnode<Entry>*  KKB::RBTree<Entry,CompareNodes,KeyType>::RBDelete (NodePtr 
 
   size--;
 
-  if  (y->Color () == Black)
+  if  (y->Color () == RBcolor::Black)
   {
     RBDeleteFixUp (x);
   }
@@ -1251,41 +1251,41 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::RBDeleteFixUp (NodePtr x)
   NodePtr  w           = NULL;
   NodePtr  deletedNode = x;
 
-  while  ((x != root)  &&  (x->Color () == Black))
+  while  ((x != root)  &&  (x->Color () == RBcolor::Black))
   {
     if  (x == x->Parent ()->Left ())
     {
       w = x->Parent ()->Right ();
 
-      if  (w->Color () == Red)
+      if  (w->Color () == RBcolor::Red)
       {
-        w->Color (Black);                       // Case 1
-        x->Parent ()->Color (Red);              // Case 1
+        w->Color (RBcolor::Black);              // Case 1
+        x->Parent ()->Color (RBcolor::Red);     // Case 1
         LeftRotate (x->Parent ());              // Case 1
         w = x->Parent ()->Right ();             // Case 1
       }
 
-      if  ((w->Left ()->Color () == Black)  
+      if  ((w->Left ()->Color () == RBcolor::Black)
                           &&  
-           (w->Right ()->Color () == Black))
+           (w->Right ()->Color () == RBcolor::Black))
       {
-        w->Color (Red);                         // Case 2
+        w->Color (RBcolor::Red);                // Case 2
         x = x->Parent ();                       // Case 2
       }
 
       else 
       {
-        if  (w->Right ()->Color () == Black)
+        if  (w->Right ()->Color () == RBcolor::Black)
         {
-          w->Left ()->Color (Black);            // Case 3
-          w->Color (Red);                       // Case 3
+          w->Left ()->Color (RBcolor::Black);   // Case 3
+          w->Color (RBcolor::Red);              // Case 3
           RightRotate (w);                      // Case 3
           w = x->Parent ()->Right ();           // Case 3
         }
 
         w->Color (x->Parent ()->Color ());      // Case 4
-        x->Parent ()->Color (Black);            // Case 4
-        w->Right ()->Color (Black);             // Case 4
+        x->Parent ()->Color (RBcolor::Black);   // Case 4
+        w->Right ()->Color (RBcolor::Black);    // Case 4
         LeftRotate (x->Parent ());              // Case 4
         x = root; // Force Termination of Loop. // Case 4
       }
@@ -1295,42 +1295,42 @@ void  KKB::RBTree<Entry,CompareNodes,KeyType>::RBDeleteFixUp (NodePtr x)
     {
       w = x->Parent ()->Left ();
 
-      if  (w->Color () == Red)
+      if  (w->Color () == RBcolor::Red)
       {
-        w->Color (Black);                       // Case 1
-        x->Parent ()->Color (Red);              // Case 1
+        w->Color (RBcolor::Black);                       // Case 1
+        x->Parent ()->Color (RBcolor::Red);              // Case 1
         RightRotate (x->Parent ());             // Case 1
         w = x->Parent ()->Left ();              // Case 1
       }
 
-      if  ((w->Right ()->Color () == Black)  
+      if  ((w->Right ()->Color () == RBcolor::Black)
                           &&  
-           (w->Left ()->Color () == Black))
+           (w->Left ()->Color () == RBcolor::Black))
       {
-        w->Color (Red);                         // Case 2
+        w->Color (RBcolor::Red);                         // Case 2
         x = x->Parent ();                       // Case 2
       }
 
       else 
       {
-        if  (w->Left ()->Color () == Black)
+        if  (w->Left ()->Color () == RBcolor::Black)
         {
-          w->Right ()->Color (Black);           // Case 3
-          w->Color (Red);                       // Case 3
+          w->Right ()->Color (RBcolor::Black);  // Case 3
+          w->Color (RBcolor::Red);              // Case 3
           LeftRotate (w);                       // Case 3
           w = x->Parent ()->Left ();            // Case 3
         }
 
         w->Color (w->Parent ()->Color ());      // Case 4
-        x->Parent ()->Color (Black);            // Case 4
-        w->Left ()->Color (Black);              // Case 4
+        x->Parent ()->Color (RBcolor::Black);   // Case 4
+        w->Left ()->Color (RBcolor::Black);     // Case 4
         RightRotate (x->Parent ());             // Case 4
         x = root; // Force Termination of Loop. // Case 4
       }
     }
   }
 
-  x->Color (Black);
+  x->Color (RBcolor::Black);
 
   return;;
 }  /* RBDeleteFixUp */
@@ -1423,7 +1423,7 @@ template <class Entry,class CompareNodes,typename KeyType>
 void  KKB::RBTree<Entry,CompareNodes,KeyType>::CheckNodeStats (NodePtr  n,
                                                                kkint32& numOfNodes,
                                                                kkint32& numOfLeafs,
-                                                               kkint32*   leafPaths,
+                                                               kkint32* leafPaths,
                                                                kkint32& shortestPath,
                                                                kkint32& longestPath,
                                                                kkint32  curDeapth
@@ -1508,7 +1508,7 @@ kkint32  KKB::RBTree<Entry,CompareNodes,KeyType>::ValidateSubTree (NodePtr      
   kkint32  numOfNodes = 0;
 
 
-  if  (subTree->Color () == Black)
+  if  (subTree->Color () == RBcolor::Black)
     blackNodeCount++;
 
 

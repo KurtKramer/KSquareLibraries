@@ -384,8 +384,8 @@ KKStr   ModelParam::ToCmdLineStr () const
 
 
 
-kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                                 RunLog&      log
+kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                                 RunLog&           log
                                                 )  const
 {
   kkint32 z;

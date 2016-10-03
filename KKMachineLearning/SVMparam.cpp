@@ -109,7 +109,7 @@ SVMparam::~SVMparam  ()
 
 
 
-FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescPtr  fileDesc)  const
+FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescConstPtr  fileDesc)  const
 {
   if  (!selectedFeatures)
   {
@@ -440,7 +440,7 @@ FeatureNumListConstPtr  SVMparam::GetFeatureNums ()  const
 
 
 
-FeatureNumListConstPtr  SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
+FeatureNumListConstPtr  SVMparam::GetFeatureNums (FileDescConstPtr  fileDesc)  const
 {
   if  (selectedFeatures == NULL)
     return SelectedFeatures (fileDesc);
@@ -450,9 +450,9 @@ FeatureNumListConstPtr  SVMparam::GetFeatureNums (FileDescPtr  fileDesc)  const
 
 
 
-FeatureNumListConstPtr SVMparam::GetFeatureNums (FileDescPtr  fileDesc,
-                                                 MLClassPtr   class1,
-                                                 MLClassPtr   class2
+FeatureNumListConstPtr SVMparam::GetFeatureNums (FileDescConstPtr  fileDesc,
+                                                 MLClassPtr        class1,
+                                                 MLClassPtr        class2
                                                 )  const
 {
   if  (!binaryParmsList)
@@ -482,7 +482,7 @@ void   SVMparam::AddBinaryClassParms (BinaryClassParmsPtr  binaryClassParms)
 
 
 
-float   SVMparam::AvgMumOfFeatures (FileDescPtr fileDesc)  const
+float   SVMparam::AvgMumOfFeatures (FileDescConstPtr fileDesc)  const
 {
   float  avgNumOfFeatures = 0.0f;
 
@@ -507,7 +507,7 @@ float   SVMparam::AvgMumOfFeatures (FileDescPtr fileDesc)  const
  */
 float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 {
-  FileDescPtr  fileDesc = trainExamples->FileDesc ();
+  FileDescConstPtr  fileDesc = trainExamples->FileDesc ();
   if  (!selectedFeatures)
   {
     // The method "SelectedFeatures" will set 'selectedFeatures' to a new instance using 'fileDesc'.
@@ -564,8 +564,8 @@ float  SVMparam::AvgNumOfFeatures (FeatureVectorListPtr  trainExamples)  const
 
 
 
-kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescPtr  fileDesc,
-                                               RunLog&      log
+kkint32  SVMparam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
+                                               RunLog&           log
                                               )  const
 {
   if  (!selectedFeatures)

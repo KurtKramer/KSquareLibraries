@@ -403,7 +403,7 @@ namespace KKMLL
 
     FactoryFVProducerPtr   factoryFVProducer;
 
-    FileDescPtr            fileDesc;
+    FileDescConstPtr       fileDesc;
 
     NormalizationParmsPtr  normParms;
 

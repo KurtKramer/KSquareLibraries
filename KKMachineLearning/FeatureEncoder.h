@@ -46,7 +46,7 @@ namespace KKMLL
   public:
     FeatureEncoder ();
 
-    FeatureEncoder (FileDescPtr            _fileDesc,
+    FeatureEncoder (FileDescConstPtr       _fileDesc,
                     MLClassPtr             _class1,
                     MLClassPtr             _class2,
                     const FeatureNumList&  _selectedFeatures,
@@ -55,7 +55,7 @@ namespace KKMLL
                    );
     
     
-    ~FeatureEncoder ();
+    virtual ~FeatureEncoder ();
 
 
     kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
@@ -73,7 +73,7 @@ namespace KKMLL
                            );
 
 
-    FileDescPtr  CreateEncodedFileDesc (ostream*  o);
+    FileDescConstPtr  CreateEncodedFileDesc (ostream*  o);
 
     FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
 
@@ -107,7 +107,7 @@ namespace KKMLL
     FeatureVectorListPtr  EncodeAllExamples (const FeatureVectorListPtr  srcData);
 
 
-    FeatureVectorPtr  EncodeAExample (FileDescPtr       encodedFileDesc,
+    FeatureVectorPtr  EncodeAExample (FileDescConstPtr  encodedFileDesc,
                                       FeatureVectorPtr  src
                                      );
 
@@ -144,10 +144,10 @@ namespace KKMLL
     kkint32               codedNumOfFeatures;
     double                c_Param;
     kkint32*              destFeatureNums;
-    FileDescPtr           destFileDesc;
+    FileDescConstPtr      destFileDesc;
     FeWhatToDoPtr         destWhatToDo;
     SVM_EncodingMethod    encodingMethod;
-    FileDescPtr           fileDesc;
+    FileDescConstPtr      fileDesc;
     kkint32               numEncodedFeatures;
     kkint32               numOfFeatures;
     FeatureNumList        selectedFeatures;

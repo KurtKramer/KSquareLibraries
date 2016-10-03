@@ -366,8 +366,7 @@ kkint32  AttributeList::MemoryConsumedEstimated ()  const
 
 
 
-const
-AttributePtr  AttributeList::LookUpByName (const KKStr&  name)  const
+AttributeConstPtr  AttributeList::LookUpByName (const KKStr&  name)  const
 {
   KKStr  nameUpper (name);
   nameUpper.Upper ();

@@ -39,8 +39,8 @@ namespace KKMLL
      * @param[in] _fileDesc
      * @param[in] _log A log-file stream. All important events will be output to this stream
      */
-    FeatureEncoder2 (const ModelParam& _param,
-                     FileDescPtr       _fileDesc
+    FeatureEncoder2 (const ModelParam&  _param,
+                     FileDescConstPtr   _fileDesc
                    );
   
     FeatureEncoder2 (const FeatureEncoder2&  _encoder);
@@ -80,9 +80,9 @@ namespace KKMLL
     kkint32                           codedNumOfFeatures;
     kkint32*                          destFeatureNums;
     FeWhatToDoPtr                     destWhatToDo;
-    FileDescPtr                       encodedFileDesc;
+    FileDescConstPtr                  encodedFileDesc;
     ModelParam::EncodingMethodType    encodingMethod;
-    FileDescPtr                       fileDesc;
+    FileDescConstPtr                  fileDesc;
     kkint32                           numOfFeatures;
     kkuint16*                         srcFeatureNums;
     const ModelParam&                 param;

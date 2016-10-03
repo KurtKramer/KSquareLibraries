@@ -197,7 +197,7 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   kkint32  idx;
   kkint32  x;
 
-  FileDescPtr  fileDesc = _data.FileDesc ();
+  FileDescConstPtr  fileDesc = _data.FileDesc ();
 
   _out << "ExampleFileName";
   for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)

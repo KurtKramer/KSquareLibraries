@@ -17,8 +17,18 @@
 #include "svm2.h"
 
 
-namespace  KKMLL  
+namespace  KKMLL
 {
+
+#if  !defined(_ClassProb_Defined_)
+class  ClassProb;
+typedef  ClassProb*  ClassProbPtr;
+typedef  ClassProb const *  ClassProbConstPtr;
+class  ClassProbList;
+typedef  ClassProbList*  ClassProbListPtr;
+#endif
+
+
   class  ModelSvmBase: public Model
   {
   public:
@@ -140,8 +150,8 @@ namespace  KKMLL
 
 
   protected:
-    SVM289_MFS::Svm_Model*  svmModel;
     ModelParamSvmBasePtr    param;   /*!<   We will NOT own this instance. It will point to same instance defined in parent class Model.  */
+    SVM289_MFS::Svm_Model*  svmModel;
   };  /* ModelSvmBase */
   
   typedef  ModelSvmBase::ModelSvmBasePtr  ModelSvmBasePtr;

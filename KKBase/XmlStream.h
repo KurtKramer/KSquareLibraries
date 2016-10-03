@@ -438,7 +438,7 @@ namespace  KKB
     }
 
                 
-    ~XmlElementTemplate ()
+    virtual ~XmlElementTemplate ()
     {
       delete value;
       value = NULL;

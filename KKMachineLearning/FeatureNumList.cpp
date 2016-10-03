@@ -76,7 +76,7 @@ FeatureNumList::FeatureNumList (kkuint32  _maxFeatureNum):
 
 
 
-FeatureNumList::FeatureNumList (FileDescPtr  _fileDesc):
+FeatureNumList::FeatureNumList (FileDescConstPtr  _fileDesc):
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
   maxFeatureNum            (0),
@@ -203,7 +203,7 @@ kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
 
 
 
-bool  FeatureNumList::AllFeaturesSelected (FileDescPtr  fileDesc)  const
+bool  FeatureNumList::AllFeaturesSelected (FileDescConstPtr  fileDesc)  const
 {
   if  (numOfFeatures >= (kkint32)fileDesc->NumOfFields ())
     return true;
@@ -324,7 +324,7 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
  *@details  A static method that will return a instance of 'FeatureNumList' that will have all non 'Ignore' features 
  * in '_fileDesc' selected.
  */
-FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
+FeatureNumList   FeatureNumList::AllFeatures (FileDescConstPtr  _fileDesc)
 {
   kkuint16  maxFeatureNum = _fileDesc->NumOfFields () - 1;
   FeatureNumList  features (maxFeatureNum);
@@ -346,7 +346,7 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescPtr  _fileDesc)
  *@details  Using 'fileDesc' as the guide as to how many features there are and which ones are to 
  * be ignored will set all features that are not 'Ignore' to on.
  */
-void   FeatureNumList::SetAllFeatures (FileDescPtr  fileDesc)
+void   FeatureNumList::SetAllFeatures (FileDescConstPtr  fileDesc)
 {
   for  (kkuint16 x = 0; x <= maxFeatureNum;  ++x)
   {
@@ -474,7 +474,7 @@ KKStr   FeatureNumList::ToHexString ()  const
 
 
 
-KKStr   FeatureNumList::ToHexString (FileDescPtr  fileDesc)  const
+KKStr   FeatureNumList::ToHexString (FileDescConstPtr  fileDesc)  const
 {
   BitString  bs (fileDesc->NumOfFields ());
   ToBitString (bs);

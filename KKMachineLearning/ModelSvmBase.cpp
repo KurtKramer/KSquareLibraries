@@ -125,9 +125,7 @@ KKStr  ModelSvmBase::Description ()  const
   if  (param)
   {
     const SVM289_MFS::svm_parameter&  svmParam = param->SvmParam ();
-    
-    //result << " " << MachineTypeToStr     (svmParam.MachineType ())
-    //       << " " << SelectionMethodToStr (svmParam.SelectionMethod ());
+    result << " " << svmParam.ToTabDelStr();
   }
   return  result;
 }
@@ -320,7 +318,7 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
 
-  double  y = SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
+  SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
 
   if  (newExampleCreated)
   {
@@ -416,7 +414,7 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example,
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
 
-  double  y = SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
+  SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
 
   if  (newExampleCreated)
   {
@@ -464,7 +462,7 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (example, newExampleCreated);
 
-  double  y = SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
+  SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
 
   if  (newExampleCreated)
   {
@@ -522,7 +520,7 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
   bool  newExampleCreated = false;
   FeatureVectorPtr  encodedExample = PrepExampleForPrediction (_example, newExampleCreated);
 
-  double  y = SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
+  SVM289_MFS::svm_predict_probability (svmModel,  *encodedExample, classProbs, votes);
 
   if  (newExampleCreated)
   {
@@ -607,11 +605,10 @@ void  ModelSvmBase::RetrieveCrossProbTable (MLClassList&  _classes,
 
 kkint32  ModelSvmBase::NumOfSupportVectors ()  const
 {
-  kkint32  numOfSupportVectors = 0;
   if  (!svmModel)
     return  0;
-
-  return  svmModel->numSVs;
+  else
+    return  svmModel->numSVs;
 }  /* NumOfSupportVectors */
 
 
@@ -667,7 +664,9 @@ void  ModelSvmBase::ReadXML (XmlStream&      s,
       else
       {
         KKStr errMsg (128);
-        errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Unexpected Token;  Section:" << t->SectionName () << "  VarName: " << t->VarName ();
+        errMsg << "ModelSvmBase::ReadXML  ***ERROR***  Unexpected Token;  Section:"
+               << "  tag: " << tag->Name()
+               << "  Section: " << t->SectionName () << "  VarName: " << t->VarName ();
         AddErrorMsg (errMsg, 0);
         log.Level (-1) << endl << errMsg << endl << endl;
       }

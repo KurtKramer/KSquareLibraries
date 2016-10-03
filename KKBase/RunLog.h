@@ -158,7 +158,8 @@ namespace KKB
 
     kkint32 MemoryConsumedEstimated ()  const;
 
-
+    void  Info (std::function< KKStr() > lambda);
+  
   private:
     void  DisplayTimeStamp ();
 

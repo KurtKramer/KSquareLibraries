@@ -61,6 +61,8 @@ namespace KKMLL
 
     TrainingClass (const TrainingClass&  tc);
 
+    virtual ~TrainingClass ();
+
 
     float                      CountFactor       () const  {return  countFactor;}
     const KKStr&               Directory         (kkuint32 idx) const;

@@ -31,8 +31,8 @@ using namespace  KKMLL;
   *@param[in] _log A log file stream. All important events will be output to this stream
   */
 FeatureEncoder2::FeatureEncoder2 (const ModelParam&  _param,
-                                  FileDescPtr        _fileDesc
-                                  ):
+                                  FileDescConstPtr   _fileDesc
+                                 ):
     attributeVector     (_fileDesc->AttributeVector ()),
     cardinalityDest     (NULL),
     cardinalityVector   (_fileDesc->CardinalityVector ()),

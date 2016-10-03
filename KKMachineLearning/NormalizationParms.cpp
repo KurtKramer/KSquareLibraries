@@ -252,9 +252,9 @@ void  NormalizationParms::WriteToFile  (const KKStr&  _fileName,  bool& _success
 
 
 
-NormalizationParmsPtr  NormalizationParms::ReadFromFile (const KKStr&  fileName,  RunLog& log)
+NormalizationParmsConstPtr  NormalizationParms::ReadFromFile (const KKStr&  fileName,  RunLog& log)
 {
-  NormalizationParmsPtr n = NULL;
+  NormalizationParmsConstPtr n = NULL;
   XmlStreamPtr  stream = new XmlStream (fileName, log);
   bool  cancelFlag = false;
   XmlTokenPtr  t = stream->GetNextToken (cancelFlag, log);
@@ -436,7 +436,7 @@ void  NormalizationParms::ConstructNormalizeFeatureVector ()
 }  /* ConstructNormalizeFeatureVector */
 
 
-void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
+void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)  const
 {
   float*  featureData = example->FeatureDataAlter ();
 
@@ -456,7 +456,7 @@ void  NormalizationParms::NormalizeAExample (FeatureVectorPtr  example)
 
 void  NormalizationParms::NormalizeExamples (FeatureVectorListPtr  examples,
                                              RunLog&               log
-                                            )
+                                            ) const
 {
   if  (numOfFeatures != examples->NumOfFeatures ())
   {

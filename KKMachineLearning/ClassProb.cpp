@@ -73,7 +73,7 @@ kkint32  ClassProbList::MemoryConsumedEstimated ()  const
 
 
 
-bool  ClassProbList::CompairByClassName (const ClassProbPtr left, 
+bool  ClassProbList::CompairByClassName (const ClassProbPtr left,
                                          const ClassProbPtr right
                                         )
 {
@@ -92,7 +92,7 @@ class  ClassProbList::ProbabilityComparer
 public:
   ProbabilityComparer (bool  _highToLow):  highToLow (_highToLow)  {}
 
-  bool operator () (const ClassProbPtr left, 
+  bool operator () (const ClassProbPtr left,
                     const ClassProbPtr right
                    )
   { 
@@ -113,7 +113,7 @@ class  ClassProbList::VotesComparer
 public:
   VotesComparer (bool  _highToLow):  highToLow (_highToLow)  {}
 
-  bool operator () (const ClassProbPtr left, 
+  bool operator () (const ClassProbPtr left,
                     const ClassProbPtr right
                    )
   { 
@@ -157,7 +157,7 @@ void  ClassProbList::SortByVotes (bool highToLow)
 
 
 
-const ClassProbPtr  ClassProbList::LookUp (MLClassPtr       targetClass) const
+ClassProbConstPtr  ClassProbList::LookUp (MLClassPtr  targetClass) const
 {
   MLClassIndexType::const_iterator idx;
   idx = classIndex.find (targetClass);
@@ -170,8 +170,20 @@ const ClassProbPtr  ClassProbList::LookUp (MLClassPtr       targetClass) const
 
 
 
+ClassProbPtr  ClassProbList::LookUpForUpdate (MLClassPtr  targetClass)
+{
+  MLClassIndexType::const_iterator idx;
+  idx = classIndex.find (targetClass);
+  if  (idx == classIndex.end ())
+    return NULL;
+  else
+    return idx->second;
+}  /* LookUpForUpdate */
 
-kkint32   ClassProbList::LookUpPlace (MLClassPtr       targetClass)  const
+
+
+
+kkint32   ClassProbList::LookUpPlace (MLClassPtr  targetClass)  const
 {
   for  (kkint32  x = 0;  x < (kkint32)size ();  ++x)
   {
@@ -278,7 +290,7 @@ void  ClassProbList::MergeIn (MLClassPtr       target,
                               float            votes
                              )
 {
-  ClassProbPtr  existingEntry = LookUp (target);
+  ClassProbPtr  existingEntry = LookUpForUpdate (target);
   if  (existingEntry)
   {
     existingEntry->probability += probability;
@@ -302,7 +314,7 @@ void  ClassProbList::MergeIn (MLClassPtr              target,
                               const ClassProbListPtr  subPredictions
                              )
 {
-  ClassProbPtr  existingEntry = LookUp (target);
+  ClassProbPtr  existingEntry = LookUpForUpdate (target);
   if  (existingEntry)
   {
     DeleteEntry (existingEntry);
@@ -459,7 +471,6 @@ void  ClassProbList::ReadXML (XmlStream&      s,
   delete t;
   t = NULL;
 }  /* ReadXML */
-
 
 
 XmlFactoryMacro(ClassProbList)

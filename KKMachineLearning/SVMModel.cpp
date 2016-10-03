@@ -164,14 +164,13 @@ void  SVMModel::GreaterVotes (bool     useProbability,
 } /* GreaterVotes*/
 
 
-
      
 SVMModel::SVMModel ():
   assignments              (),
   binaryFeatureEncoders    (NULL),
   binaryParameters         (NULL),
-  cardinality_table        (),
   cancelFlag               (false),
+  cardinality_table        (),
   classIdxTable            (NULL),
   crossClassProbTable      (NULL),
   crossClassProbTableSize  (0),
@@ -203,7 +202,7 @@ SVMModel::SVMModel ():
 SVMModel::SVMModel (const SVMparam&     _svmParam,      // Create new model from
                     FeatureVectorList&  _examples,      // Training data.
                     ClassAssignments&   _assignmnets,
-                    FileDescPtr         _fileDesc,
+                    FileDescConstPtr    _fileDesc,
                     RunLog&             _log
                    )
 :
@@ -971,7 +970,6 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
   kkint32 largestWinningProbabilityIDX = -1;
 
   double  secondLargestWinningProbability    = FLT_MIN;
-  kkint32 secondLargestWinningProbabilityIDX = -1;
 
   kkint32 knownAssignmentIDX = -1;
 
@@ -1042,7 +1040,6 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
       if  (predictedClassProbability > largestWinningProbability)
       {
         secondLargestWinningProbability    = largestWinningProbability;
-        secondLargestWinningProbabilityIDX = largestWinningProbabilityIDX;
 
         largestWinningProbability = predictedClassProbability;
         largestWinningProbabilityIDX = assignmentIDX;
@@ -1050,7 +1047,6 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
       else if  (predictedClassProbability > secondLargestWinningProbability)
       {
         secondLargestWinningProbability    = predictedClassProbability;
-        secondLargestWinningProbabilityIDX = assignmentIDX;
       }
     }
     else
@@ -1116,6 +1112,7 @@ void   SVMModel::PredictOneVsAll (XSpacePtr    xSpace,
   predClass2 = assignments.GetMLClassByIndex (oneVsAllAssignment[assignmentIDXsecond]);
 
   predClass1Prob   = (probabilities [oneVsAllAssignment[assignmentIDXthatWon]]);
+  predClass2Prob   = (probabilities [oneVsAllAssignment[assignmentIDXsecond]]);
   probOfKnownClass = (probabilities [oneVsAllAssignment[knownAssignmentIDX]]);
 
   delete[]  probabilities;      
@@ -1215,7 +1212,6 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
      
     for  (kkint32  class2IDX = (class1IDX + 1);  class2IDX < numOfClasses;  class2IDX++)
     {
-      MLClassPtr           class2 = classIdxTable [class2IDX];
       BinaryClassParmsPtr  thisComboPrameters = binaryParameters[modelIDX];
 
       kkint32  xSpaceUsed;
@@ -1231,7 +1227,6 @@ void  SVMModel::PredictByBinaryCombos (FeatureVectorPtr  example,
       binaryFeatureEncoders[modelIDX]->EncodeAExample (example, predictXSpace, xSpaceUsed);
 
       double  distance = 0.0;
-      double  margin   = 0.0;
 
       svm_predictTwoClasses (models[modelIDX][0], predictXSpace, distance, -1);
       probability = (1.0 / (1.0 + exp (-1.0 * (thisComboPrameters->Param ().A) * distance)));
@@ -1366,12 +1361,11 @@ void  SVMModel::ProbabilitiesByClass (FeatureVectorPtr    example,
     return;
   }
 
-  kkint32  predClass1Votes         = -1;
-  kkint32  predClass2Votes         = -1;
-  double   predClass1Prob          = 0.0;
-  double   predClass2Prob          = 0.0;
-  double   probOfKnownClass        = 0.0;
-  double   smallestDistOfPredClass = 0.0;
+  kkint32  predClass1Votes   = -1;
+  kkint32  predClass2Votes   = -1;
+  double   predClass1Prob    = 0.0;
+  double   predClass2Prob    = 0.0;
+  double   probOfKnownClass  = 0.0;
 
   double   breakTie                = 0.0f;
 
@@ -1626,11 +1620,8 @@ vector<KKStr>  SVMModel::SupportVectorNames () const
 
   // Locate the binary parms in question.
   kkint32  modelIDX = 0;
-  BinaryClassParmsPtr  parms = NULL;
   for  (modelIDX = 0;  modelIDX < numOfModels;  modelIDX++)
   {
-    parms = binaryParameters[modelIDX];
-  
     kkint32  numSVs = models[modelIDX][0]->l;
     kkint32  svIDX = 0;
     for  (svIDX = 0;  svIDX < numSVs;  svIDX++)
@@ -1822,7 +1813,6 @@ vector<ProbNamePair>  SVMModel::FindWorstSupportVectors2 (FeatureVectorPtr  exam
     probabilityC1 = AdjProb (probabilityC1);
     if  (c1RevFlag)
       probabilityC1 = 1.0f - probabilityC1;
-    kkint32 zed = 100;
   }
 
   for  (svIDX = 0;  svIDX < numSVs;  svIDX++)
@@ -1921,7 +1911,7 @@ kkint32  SVMModel::EncodeExample (FeatureVectorPtr  example,
   if  (!featureEncoder)
   {
     featureEncoder = new FeatureEncoder (fileDesc,
-                                         NULL,              /**< class1, set to NULL because we are dealing with all classes */
+                                         NULL,               /**< class1, set to NULL because we are dealing with all classes */
                                          NULL,               /**< class2,     ""          ""            ""            ""      */
                                          *selectedFeatures,
                                          svmParam->EncodingMethod (),
@@ -2331,14 +2321,7 @@ void  SVMModel::RetrieveCrossProbTable (MLClassList&   classes,
       {
         kkint32  yIdx = indexTable[y];
         if  (yIdx >= 0)
-        {
-          if  ((x != xIdx)  ||  (y != yIdx))
-          {
-            //kak  I just added this check to see when this situation actually occurs.
-            kkint32 zed = 111;
-          }
           crossProbTable[x][y] = this->crossClassProbTable[xIdx][yIdx];
-        }
       }
     }
   }
@@ -2542,7 +2525,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
       else if  (varName.EqualIgnoreCase ("OneVsOneModel")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
         XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
-        SvmModel233* m = xmlElementModel->Value ();
+        SvmModel233 const * m = xmlElementModel->Value ();
         if  (m)
         {
           if  (!m->valid)
@@ -2579,7 +2562,7 @@ void  SVMModel::ReadXML (XmlStream&      s,
       else if  (varName.StartsWith ("BinaryComboModel_")  &&  (typeid (*e) == typeid (XmlElementSvmModel233)))
       {
         XmlElementSvmModel233Ptr xmlElementModel = dynamic_cast<XmlElementSvmModel233Ptr> (e);
-        SvmModel233* m = xmlElementModel->Value ();
+        SvmModel233 const * m = xmlElementModel->Value ();
         if  ((!m)  ||  (!m->valid))
         {
           log.Level (-1) << endl
@@ -2624,6 +2607,15 @@ void  SVMModel::ReadXML (XmlStream&      s,
                                       svmParam->EncodingMethod (),
                                       binClassParms->C ()
                                      );
+
+            if  (lastModelIdx != numModeLoaded)
+            {
+              log.Level(50) << "SVMModel::ReadXM    ***WARNING***   Index from xml file[" << lastModelIdx << "] "
+            		        << "not matched numModeLoaded[" << numModeLoaded << "]."
+							<< endl;
+            }
+
+
             ++numModeLoaded;
           }
         }

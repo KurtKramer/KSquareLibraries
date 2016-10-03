@@ -62,8 +62,8 @@ namespace KKMLL
                     );
 
 
-    DuplicateImages (FileDescPtr  _fileDesc,
-                     RunLog&      _log
+    DuplicateImages (FileDescConstPtr  _fileDesc,
+                     RunLog&           _log
                     );
 
     ~DuplicateImages ();
@@ -110,7 +110,7 @@ namespace KKMLL
     kkint32                      duplicateNameCount;
     DuplicateImageListPtr        dupExamples;
     ImageFeaturesDataIndexedPtr  featureDataTree;
-    FileDescPtr                  fileDesc;
+    FileDescConstPtr             fileDesc;
     RunLog&                      log;
     ImageFeaturesNameIndexedPtr  nameTree;
   };
@@ -124,7 +124,7 @@ namespace KKMLL
   class  DuplicateImage
   {
   public:
-    DuplicateImage (FileDescPtr       _fileDesc,
+    DuplicateImage (FileDescConstPtr  _fileDesc,
                     FeatureVectorPtr  _image1,
                     FeatureVectorPtr  _image2,
                     RunLog&           _log
@@ -138,15 +138,14 @@ namespace KKMLL
 
     bool  AlreadyHaveExample (FeatureVectorPtr example);
 
-    const 
-      FeatureVectorListPtr  DuplicatedImages ()  {return &duplicatedImages;}
+    FeatureVectorListConstPtr  DuplicatedImages ()  {return &duplicatedImages;}
 
     FeatureVectorPtr  FirstExampleAdded  ()  {return firstImageAdded;}
 
     FeatureVectorPtr  ExampleWithSmallestScanLine (); 
 
   private:
-    FileDescPtr        fileDesc;
+    FileDescConstPtr   fileDesc;
     FeatureVectorList  duplicatedImages;
     FeatureVectorPtr   firstImageAdded;
   };
