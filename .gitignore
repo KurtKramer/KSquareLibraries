@@ -54,3 +54,6 @@ KSquareLibraries.sdf
 *.tmp
 *.sdf
 KSquareLibraries.sdf
+.idea
+KKBase/.idea/workspace.xml
+KKBase/.idea/modules.xml
