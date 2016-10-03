@@ -151,27 +151,23 @@ CLASSIFICATIONBIASMATRIX = ClassificationBiasMatrix.h  ConfusionMatrix2.h   $(ML
 CMDLINEEXPANDER = CmdLineExpander.h
 
 
-OBJECTS  = Attribute.o                  BinaryClassParms.o           \
-           ClassAssignments.o           \
+OBJECTS  = Attribute.o                  BinaryClassParms.o           ClassAssignments.o           \
            Classifier2.o                ClassProb.o                  ClassStatistic.o             \
-           ClassificationBiasMatrix.o   \
-           ConfusionMatrix2.o           CrossValidation.o            CrossValidationMxN.o         \
-           CrossValidationVoting.o      DuplicateImages.o            \
-           FactoryFVProducer.o          FeatureVectorProducer.o                                   \
-           FeatureEncoder.o             FeatureEncoder2.o            FeatureFileIO.o              \
-           FeatureFileIOArff.o          FeatureFileIOC45.o           FeatureFileIOColumn.o        \
-           FeatureFileIODstWeb.o        FeatureFileIORoberts.o       \
-           FeatureFileIOSparse.o        FeatureFileIOUCI.o           FeatureNumList.o             \
-           FeatureVector.o              FileDesc.o                   MLClass.o                    \
-           ImageFeaturesDataIndexed.o   ImageFeaturesNameIndexed.o   \
-           Model.o                      ModelSvmBase.o               ModelKnn.o                   \
-           ModelOldSVM.o                ModelParam.o                 ModelParamSvmBase.o          \
-           ModelParamKnn.o              ModelParamOldSVM.o           NormalizationParms.o         \
-           Orderings.o                    \
+           ClassificationBiasMatrix.o   ConfusionMatrix2.o           CrossValidation.o            \
+           CrossValidationMxN.o         CrossValidationVoting.o      DuplicateImages.o            \
+           FactoryFVProducer.o          FeatureVectorProducer.o      FeatureEncoder.o             \
+           FeatureEncoder2.o            FeatureFileIO.o              FeatureFileIOArff.o          \
+           FeatureFileIOC45.o           FeatureFileIOColumn.o        FeatureFileIODstWeb.o        \
+           FeatureFileIORoberts.o       FeatureFileIOSparse.o        FeatureFileIOUCI.o           \
+           FeatureNumList.o             FeatureVector.o              FileDesc.o                   \
+           MLClass.o                    ImageFeaturesDataIndexed.o   ImageFeaturesNameIndexed.o   \
+           Model.o                      ModelDual.o                  ModelSvmBase.o               \
+           ModelKnn.o                   ModelOldSVM.o                ModelParam.o                 \
+           ModelParamDual.o             ModelParamSvmBase.o          ModelParamKnn.o              \
+           ModelParamOldSVM.o           NormalizationParms.o         Orderings.o                  \
            SizeDistribution.o           svm.o                        svm2.o                       \
            SVMModel.o                   SVMparam.o                   SvmWrapper.o                 \
-           TrainingClass.o              TrainingConfiguration2.o     \
-           TrainingProcess2.o
+           TrainingClass.o              TrainingConfiguration2.o     TrainingProcess2.o
            
 
 all:	$(EXEC)
@@ -350,7 +346,7 @@ Model.o :  Model.cpp  $(MODEL)    $(BINARYCLASSPARMS)  $(FEATUREENCODER) \
 
 
 ModelDual.o :          ModelDual.cpp   $(MODELDUAL)  $(CLASSIFIER2)   $(CLASSPROB)  $(FEATURENUMLIST)  $(FEATUREVECTOR)  \
-                       $(MODELPARAMDUAL) $(TRAININGCONFIGURATION2)  $(TRAININGPROCESS2)   \
+                       $(MODELPARAMDUAL) $(TRAININGCONFIGURATION2)  $(TRAININGPROCESS2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 

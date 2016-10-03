@@ -716,16 +716,15 @@ void  ModelDual::ProbabilitiesByClass (FeatureVectorPtr    example,
 
   kkuint32 x = 0;
   predictions1->NormalizeToOne ();
-  MLClassList::const_iterator  idx2;
-  for  (idx2 = _mlClasses.begin (), x = 0;  idx2 != _mlClasses.end ();  ++idx2, ++x)
+  for  (auto c: _mlClasses)
   {
-    MLClassPtr      c =*idx2;
-    ClassProbPtr  cp = predictions1->LookUp (c);
+    auto  cp = predictions1->LookUp (c);
     if  (cp)
     {
       _votes        [x] = (kkint32)(0.5f + cp->votes);
       _probabilities[x] = cp->probability;
     }
+    ++x;
   }
 
   delete  predictions1;
@@ -779,13 +778,12 @@ void   ModelDual::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
   kkuint32 x = 0;
   predictions1->NormalizeToOne ();
-  MLClassList::const_iterator  idx2;
-  for  (idx2 = _mlClasses.begin (), x = 0;  idx2 != _mlClasses.end ();  ++idx2, ++x)
+  for  (auto c: _mlClasses)
   {
-    MLClassPtr      c =*idx2;
-    ClassProbPtr  cp = predictions1->LookUp (c);
+    auto  cp = predictions1->LookUp (c);
     if  (cp)
       _probabilities[x] = cp->probability;
+    ++x;
   }
 
   delete  predictions1;
