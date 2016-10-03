@@ -74,7 +74,7 @@ namespace KKMLL
   public:
     typedef  FileDesc*  FileDescPtr;
 
-    typedef  FileDesc const *  FileDescConstPtr;
+    typedef  FileDesc const  *  FileDescConstPtr;
 
     /**
      *@brief  Clean up function, call just before exiting the application.

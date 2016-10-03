@@ -237,10 +237,10 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr        _mlClasses
 
 
 
-TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                                                FileDescPtr     _fileDesc,
-                                                const KKStr&    _parameterStr,
-                                                RunLog&         _log
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr   _mlClasses,
+                                                FileDescConstPtr _fileDesc,
+                                                const KKStr&     _parameterStr,
+                                                RunLog&          _log
                                                ):
   Configuration              (),
   configFileNameSpecified    (""),
@@ -303,10 +303,10 @@ TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
 
 
   
-TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr  _mlClasses,
-                                                FileDescPtr     _fileDesc,
-                                                ModelParamPtr   _modelParameters,
-                                                RunLog&         _log
+TrainingConfiguration2::TrainingConfiguration2 (MLClassListPtr    _mlClasses,
+                                                FileDescConstPtr  _fileDesc,
+                                                ModelParamPtr     _modelParameters,
+                                                RunLog&           _log
                                                ):
   Configuration              (),
   configFileNameSpecified    (""),
@@ -402,7 +402,7 @@ TrainingConfiguration2::TrainingConfiguration2 (const TrainingConfiguration2&  t
   if  (tc.subClassifiers)
   {
     subClassifiers = new TrainingConfiguration2List (true);
-    for  (auto subClassifier: subClassifiers)
+    for  (auto subClassifier: *(tc.subClassifiers))
       subClassifiers->PushOnBack (new TrainingConfiguration2 (*subClassifier));
   }
 }
@@ -727,13 +727,12 @@ MLClassListPtr   TrainingConfiguration2::ExtractFullHierachyOfClasses ()  const
 
 TrainingConfiguration2Ptr  TrainingConfiguration2::CreateFromFeatureVectorList
                                             (FeatureVectorList&  _examples,
-                                             FileDescPtr         _fileDesc,
+                                             FileDescConstPtr    _fileDesc,
                                              const KKStr&        _parameterStr, 
                                              RunLog&             _log
                                             )
 {
   _log.Level (10) << "TrainingConfiguration2::CreateFromFeatureVectorList" << endl;
-  FileDescPtr  fileDesc = _examples.FileDesc ();
 
   MLClassListPtr  mlClasses = _examples.ExtractListOfClasses ();
   mlClasses->SortByName ();
@@ -1980,9 +1979,9 @@ namespace KKMLL
 
 
 
-  ostream&  KKMLL::operator<< (std::ostream&                       os,
-                              TrainingConfiguration2::ModelTypes  modelingMethod
-                              )
+  ostream&  operator<< (std::ostream&                       os,
+                        TrainingConfiguration2::ModelTypes  modelingMethod
+                       )
   {
     os << TrainingConfiguration2::ModelTypeToStr (modelingMethod);
     return os;

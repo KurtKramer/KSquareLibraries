@@ -41,7 +41,7 @@ namespace KKMLL
 #if  !defined(_FileDesc_Defined_)
   class FileDesc;
   typedef  FileDesc*        FileDescPtr;
-  typedef  FileDesc* const  FileDescConstPtr;
+  typedef  FileDesc const * FileDescConstPtr;
 #endif
 
 
