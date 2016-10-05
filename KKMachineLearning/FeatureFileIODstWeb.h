@@ -26,17 +26,17 @@ namespace KKMLL
 
     static   FeatureFileIODstWebPtr  Driver ()  {return &driver;}
 
-    virtual  FileDescPtr  GetFileDesc (const KKStr&   _fileName,
-                                       istream&       _in,
-                                       MLClassListPtr _classList,
-                                       kkint32&       _estSize,
-                                       KKStr&         _errorMessage,
-                                       RunLog&        _log
-                                      );
+    virtual  FileDescConstPtr  GetFileDesc (const KKStr&   _fileName,
+                                            istream&       _in,
+                                            MLClassListPtr _classList,
+                                            kkint32&       _estSize,
+                                            KKStr&         _errorMessage,
+                                            RunLog&        _log
+                                           );
 
 
     virtual  FeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
-                                             const FileDescPtr _fileDesc,
+                                             FileDescConstPtr  _fileDesc,
                                              MLClassList&      _classes, 
                                              istream&          _in,
                                              kkint32           _maxCount,    // Maximum # images to load.

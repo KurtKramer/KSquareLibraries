@@ -29,13 +29,13 @@ public:
 
   static  FeatureFileIOC45Ptr  Driver ()  {return &driver;}
 
-  virtual  FileDescPtr  GetFileDesc (const KKStr&    _fileName,
-                                     istream&        _in,
-                                     MLClassListPtr  _classList,
-                                     kkint32&        _estSize,
-                                     KKStr&          _errorMessage,
-                                     RunLog&         log
-                                    );
+  virtual  FileDescConstPtr  GetFileDesc (const KKStr&    _fileName,
+                                          istream&        _in,
+                                          MLClassListPtr  _classList,
+                                          kkint32&        _estSize,
+                                          KKStr&          _errorMessage,
+                                          RunLog&         log
+                                         );
 
 
   virtual  
@@ -51,15 +51,15 @@ public:
 
 
   virtual  
-    FeatureVectorListPtr  LoadFile (const KKStr&       _fileName,
-                                    const FileDescPtr  _fileDesc,
-                                    MLClassList&       _classes, 
-                                    istream&           _in,
-                                    kkint32            _maxCount,    // Maximum # images to load.
-                                    VolConstBool&      _cancelFlag,
-                                    bool&              _changesMade,
-                                    KKStr&             _errorMessage,
-                                    RunLog&            _log
+    FeatureVectorListPtr  LoadFile (const KKStr&      _fileName,
+                                    FileDescConstPtr  _fileDesc,
+                                    MLClassList&      _classes, 
+                                    istream&          _in,
+                                    kkint32           _maxCount,    // Maximum # images to load.
+                                    VolConstBool&     _cancelFlag,
+                                    bool&             _changesMade,
+                                    KKStr&            _errorMessage,
+                                    RunLog&           _log
                                    );
 
 

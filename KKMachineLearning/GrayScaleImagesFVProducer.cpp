@@ -656,16 +656,16 @@ const type_info*  GrayScaleImagesFVProducer::FeatureVectorListTypeId () const
 
 
 
-FileDescPtr  GrayScaleImagesFVProducer::DefineFileDesc ()  const
+FileDescConstPtr  GrayScaleImagesFVProducer::DefineFileDesc ()  const
 {
   return  DefineFileDescStatic ();
 }  /* DefineFileDesc */
 
 
 
-FileDescPtr  GrayScaleImagesFVProducer::existingFileDesc = NULL;
+FileDescConstPtr  GrayScaleImagesFVProducer::existingFileDesc = NULL;
 
-FileDescPtr  GrayScaleImagesFVProducer::DefineFileDescStatic ()
+FileDescConstPtr  GrayScaleImagesFVProducer::DefineFileDescStatic ()
 {
   if  (existingFileDesc)
     return  existingFileDesc;
@@ -739,7 +739,7 @@ const type_info*  GrayScaleImagesFVProducerFactory::FeatureVectorListTypeId  () 
 
 
 
-FileDescPtr  GrayScaleImagesFVProducerFactory::FileDesc ()  const
+FileDescConstPtr  GrayScaleImagesFVProducerFactory::FileDesc ()  const
 {
   return  GrayScaleImagesFVProducer::DefineFileDescStatic ();
 }

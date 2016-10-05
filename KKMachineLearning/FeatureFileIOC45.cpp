@@ -130,7 +130,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   KKStr  errorMessage;
   
-  FileDescPtr fileDesc = GetFileDesc (namesFileName, namesFile, &_mlClasses, estimatedNumOfDataItems, errorMessage, _log);
+  FileDescConstPtr fileDesc = GetFileDesc (namesFileName, namesFile, &_mlClasses, estimatedNumOfDataItems, errorMessage, _log);
   if  (fileDesc == NULL)
   {
     _log.Level (-1) << endl << endl 
@@ -393,13 +393,13 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
 
 
 
-FileDescPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
-                                            istream&        _in,
-                                            MLClassListPtr  _classes,
-                                            kkint32&        _estSize,
-                                            KKStr&          _errorMessage,
-                                            RunLog&         _log
-                                           )
+FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
+                                                 istream&        _in,
+                                                 MLClassListPtr  _classes,
+                                                 kkint32&        _estSize,
+                                                 KKStr&          _errorMessage,
+                                                 RunLog&         _log
+                                                )
 {
   KKStr  namesFileName;
 
@@ -722,15 +722,15 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
 
 
 
-FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&       _fileName,
-                                                  const FileDescPtr  _fileDesc,
-                                                  MLClassList&       _classes, 
-                                                  istream&           _in,
-                                                  kkint32            _maxCount,    // Maximum # images to load.
-                                                  VolConstBool&      _cancelFlag,
-                                                  bool&              _changesMade,
-                                                  KKStr&             _errorMessage,
-                                                  RunLog&            _log
+FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
+                                                  FileDescConstPtr  _fileDesc,
+                                                  MLClassList&      _classes, 
+                                                  istream&          _in,
+                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  VolConstBool&     _cancelFlag,
+                                                  bool&             _changesMade,
+                                                  KKStr&            _errorMessage,
+                                                  RunLog&           _log
                                                 )
 {
   _log.Level (10) << "FeatureFileIOC45::LoadFile   FileName[" << _fileName << "]" << endl;

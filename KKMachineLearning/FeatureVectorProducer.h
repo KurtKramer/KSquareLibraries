@@ -155,12 +155,12 @@ namespace KKMLL
 
 
   protected:
-    virtual  FileDescPtr  DefineFileDesc () const = 0;
+    virtual  FileDescConstPtr  DefineFileDesc () const = 0;
 
   private:
-    FactoryFVProducerPtr  factory;
-    mutable FileDescPtr   fileDesc;
-    KKStr                 name;
+    FactoryFVProducerPtr      factory;
+    mutable FileDescConstPtr  fileDesc;
+    KKStr                     name;
 
     static  bool  atExitDefined;
   };   /* FeatureVectorProducer */

@@ -43,13 +43,13 @@ FeatureFileIOColumn::~FeatureFileIOColumn ()
 
 
 
-FileDescPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
-                                               istream&        _in,
-                                               MLClassListPtr  _classes,
-                                               kkint32&        _estSize,
-                                               KKStr&          _errorMessage,
-                                               RunLog&         _log
-                                              )
+FileDescConstPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
+                                                    istream&        _in,
+                                                    MLClassListPtr  _classes,
+                                                    kkint32&        _estSize,
+                                                    KKStr&          _errorMessage,
+                                                    RunLog&         _log
+                                                   )
 {
   _log.Level (20) << "FeatureFileIOColumn::GetFileDesc    FileName[" << _fileName << "]" << endl;
 
@@ -124,15 +124,15 @@ FileDescPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&       _fileName,
-                                                     const FileDescPtr  _fileDesc,
-                                                     MLClassList&       _classes, 
-                                                     istream&           _in,
-                                                     kkint32            _maxCount,    // Maximum # images to load.
-                                                     VolConstBool&      _cancelFlag,
-                                                     bool&              _changesMade,
-                                                     KKStr&             _errorMessage,
-                                                     RunLog&            _log
+FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName,
+                                                     FileDescConstPtr  _fileDesc,
+                                                     MLClassList&      _classes, 
+                                                     istream&          _in,
+                                                     kkint32           _maxCount,    // Maximum # images to load.
+                                                     VolConstBool&     _cancelFlag,
+                                                     bool&             _changesMade,
+                                                     KKStr&            _errorMessage,
+                                                     RunLog&           _log
                                                    )
 {
   _log.Level (20) << "FeatureFileIOColumn::LoadFile   FileName[" << _fileName << "]" << endl;

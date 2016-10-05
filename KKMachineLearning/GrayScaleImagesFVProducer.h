@@ -31,7 +31,7 @@ namespace KKMLL
                                                      RunLog&           runLog
                                                     );
 
-    static FileDescPtr  DefineFileDescStatic ();
+    static FileDescConstPtr  DefineFileDescStatic ();
 
     /**
      *@brief  Returns the 'type_info' of the Feature Vector that this instance of 'FeatureComputer' creates.
@@ -51,7 +51,7 @@ namespace KKMLL
     static   kkint32  MaxNumOfFeatures  ()  {return maxNumOfFeatures;}
 
   protected:
-    virtual  FileDescPtr  DefineFileDesc ()  const;
+    virtual  FileDescConstPtr  DefineFileDesc ()  const;
 
 
   private:
@@ -152,7 +152,7 @@ namespace KKMLL
     static  kkint16  DarkSpotCount8;              // 54
     static  kkint16  DarkSpotCount9;              // 55
 
-    static FileDescPtr  existingFileDesc;
+    static FileDescConstPtr  existingFileDesc;
 
 
   };  /* GrayScaleImagesFVProducer */
@@ -183,7 +183,7 @@ namespace KKMLL
 
     virtual  const type_info*  FeatureVectorListTypeId ()  const;
 
-    virtual  FileDescPtr  FileDesc ()  const;
+    virtual  FileDescConstPtr  FileDesc ()  const;
 
     virtual  GrayScaleImagesFVProducerPtr  ManufactureInstance (RunLog&  runLog);
 

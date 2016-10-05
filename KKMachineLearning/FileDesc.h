@@ -38,9 +38,6 @@
 
 namespace KKMLL 
 {
-  class  FileDescList;
-  typedef  FileDescList*  FileDescListPtr;
-
   #if  !defined(_FeatureFileIO_Defined_)
   class  FeatureFileIO;
   typedef  FeatureFileIO* FeatureFileIOPtr;
@@ -74,7 +71,9 @@ namespace KKMLL
   public:
     typedef  FileDesc*  FileDescPtr;
 
-    typedef  FileDesc const  *  FileDescConstPtr;
+    typedef  FileDesc const  FileDescConst;
+
+    typedef  FileDescConst  *  FileDescConstPtr;
 
     /**
      *@brief  Clean up function, call just before exiting the application.
@@ -96,7 +95,7 @@ namespace KKMLL
      @param[in]  _fieldNames Name of fields;  one entry for each field.
      */
     static
-      FileDescPtr   NewContinuousDataOnly (VectorKKStr&  _fieldNames);
+      FileDescConstPtr   NewContinuousDataOnly (VectorKKStr&  _fieldNames);
 
       FileDesc ();
 
@@ -189,9 +188,9 @@ namespace KKMLL
                                                    const KKStr&  nominalValue
                                                   )  const;
 
-    MLClassPtr                  LookUpMLClassByName (const KKStr&  className);
+    MLClassPtr                  LookUpMLClassByName (const KKStr&  className)  const;
 
-    MLClassPtr                  LookUpUnKnownMLClass ();
+    MLClassPtr                  LookUpUnKnownMLClass ()  const;
     
     kkuint32                    NumOfFields () const  {return (kkuint32)attributes.size ();}
 
@@ -231,7 +230,7 @@ namespace KKMLL
      @param[in] fileDesc Pointer to a FileDesc object that you want to look and see if one that is identical already exists.
      @return pointer to the 'FileDesc' instance that the caller should be using.
      */
-    static  FileDescPtr     GetExistingFileDesc (FileDescPtr  fileDesc);
+    static  FileDescConstPtr     GetExistingFileDesc (FileDescConstPtr  fileDesc);
 
     /**
      * @brief  Merges the Symbolic fields of two different 'FileDesc' instances producing a new instance of 'FileDesc'.
@@ -241,7 +240,7 @@ namespace KKMLL
      *  together.
      *@see KKMLL:Attribute
      */
-    static FileDescPtr  MergeSymbolicFields (const FileDesc&  left,
+    static FileDescConstPtr  MergeSymbolicFields (const FileDesc&  left,
                                              const FileDesc&  right,
                                              RunLog&          log
                                             );
@@ -283,7 +282,7 @@ namespace KKMLL
     KKMLL::AttributeList    attributes;
     AttributeTypeVector     attributeVector;
     VectorInt32             cardinalityVector;
-    MLClassList             classes;
+    mutable MLClassList     classes;
     KKStr                   classNameAttribute;   /**< Added to support DstWeb files; the name of the attribute that specifies the className */
     KKMLL::AttributePtr     curAttribute;
     KKStr                   fileName;
@@ -294,7 +293,7 @@ namespace KKMLL
       KKB::GoalKeeperPtr  blocker;
 
     static
-      FileDescListPtr     exisitingDescriptions;  /**< Will keep a list of all FileDesc s instantiated. */
+      std::vector<FileDescConstPtr>     exisitingDescriptions;  /**< Will keep a list of all FileDesc s instantiated. */
 
     static
       bool                finalCleanUpRanAlready;
@@ -302,7 +301,8 @@ namespace KKMLL
   };  /* FileDesc */
 
 
-  typedef  FileDesc::FileDescPtr        FileDescPtr;  
+  typedef  FileDesc::FileDescPtr        FileDescPtr; 
+  typedef  FileDesc::FileDescConst      FileDescConst;
   typedef  FileDesc::FileDescConstPtr   FileDescConstPtr;
 
   #define  _FileDesc_Defined_
@@ -321,17 +321,17 @@ class  XmlElementFileDesc:  public  XmlElement
                 
     virtual  ~XmlElementFileDesc ();
 
-    FileDescPtr  Value ()  const;
+    FileDescConstPtr  Value ()  const;
 
-    FileDescPtr  TakeOwnership ();
+    FileDescConstPtr  TakeOwnership ();
 
     static
-    void  WriteXML (const FileDesc&  fileDesc,
-                    const KKStr&     varName,
-                    std::ostream&     o
+    void  WriteXML (const FileDescConst&  fileDesc,
+                    const KKStr&          varName,
+                    std::ostream&         o
                    );
   private:
-    FileDescPtr  value;
+    FileDescConstPtr  value;
   };
   typedef  XmlElementFileDesc*  XmlElementFileDescPtr;
 

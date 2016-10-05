@@ -30,30 +30,6 @@ using namespace  KKMLL;
 
 
 
-
-namespace KKMLL 
-{
-  /**
-   *@class FileDescList
-   *@brief Container class file 'FileDesc' instances.  
-   *@details The class definition is not in the header file because there is no reason for any other entity 
-   * other than FileDesc to access a list of FileDesc instances.
-   */
-  class  FileDescList: public KKQueue<FileDesc>
-  {
-  public:
-    FileDescList (bool _owner);
-
-    ~FileDescList ();
-
-  private:
-  };
-
-}  /* KKMLL */
-
-
-
-
 void  FileDesc::FinalCleanUp ()
 {
   if  (finalCleanUpRanAlready)
@@ -63,12 +39,12 @@ void  FileDesc::FinalCleanUp ()
   blocker->StartBlock ();
   if  (!finalCleanUpRanAlready)
   {
-    if  (exisitingDescriptions)
+    while  (exisitingDescriptions.size() > 0)
     {
-      delete  exisitingDescriptions;
-      exisitingDescriptions = NULL;
+      auto fd = exisitingDescriptions.back ();
+      exisitingDescriptions.pop_back ();
+      delete (FileDescPtr)fd;
     }
-    finalCleanUpRanAlready = true;
   }
   blocker->EndBlock ();
 
@@ -113,7 +89,7 @@ kkint32  FileDesc::MemoryConsumedEstimated ()  const
 
 
 
-FileDescPtr   FileDesc::NewContinuousDataOnly (VectorKKStr&  _fieldNames)
+FileDescConstPtr   FileDesc::NewContinuousDataOnly (VectorKKStr&  _fieldNames)
 {
   bool  alreadyExists = false;
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -281,14 +257,14 @@ void  FileDesc::AddANominalValue (const KKStr&   attributeName,
 
 
 
-MLClassPtr  FileDesc::LookUpMLClassByName (const KKStr&  className)
+MLClassPtr  FileDesc::LookUpMLClassByName (const KKStr&  className)  const
 {
   return  classes.LookUpByName (className);
 }
 
 
 
-MLClassPtr  FileDesc::LookUpUnKnownMLClass ()
+MLClassPtr  FileDesc::LookUpUnKnownMLClass ()  const
 {
   return  classes.GetUnKnownClass ();
 }
@@ -532,7 +508,7 @@ bool  FileDesc::SameExceptForSymbolicData (const FileDesc&  otherFd,
 
 // Will keep a list of all FileDesc
 // instances instantiated.
-FileDescListPtr  FileDesc::exisitingDescriptions = NULL;
+vector<FileDescConstPtr>  FileDesc::exisitingDescriptions;
 
 
 GoalKeeperPtr    FileDesc::blocker = NULL;
@@ -552,7 +528,7 @@ void  FileDesc::CreateBlocker ()
 
 
 
-FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
+FileDescConstPtr  FileDesc::GetExistingFileDesc (FileDescConstPtr  fileDesc)
 {
   if (fileDesc == NULL)
   {
@@ -560,49 +536,37 @@ FileDescPtr  FileDesc::GetExistingFileDesc (FileDescPtr  fileDesc)
     cerr << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
-  FileDescPtr  result = NULL;
+  FileDescConstPtr  result = NULL;
 
   CreateBlocker ();
 
   blocker->StartBlock ();
 
-  if  (!exisitingDescriptions)
+  for  (auto existingFileDesc: exisitingDescriptions)  
   {
-    exisitingDescriptions = new FileDescList (true);
-    exisitingDescriptions->PushOnBack (fileDesc);
-    result = fileDesc;
-    finalCleanUpRanAlready = false;
-    atexit (FileDesc::FinalCleanUp);
+    if  (existingFileDesc == fileDesc)
+    {
+      result = existingFileDesc;
+      break;
+    }
+    else if  (existingFileDesc == NULL)
+    {
+      continue;
+    }
+    else if  ((*existingFileDesc) == (*fileDesc))
+    {
+      // Looks like we already have a compatible "FileDesc" instance.
+      // In this case this is the one the user will want.
+      delete  fileDesc;
+      result = existingFileDesc;
+      break;
+    }
   }
 
-  else
+  if  (!result)
   {
-    for  (auto existingFileDesc: *exisitingDescriptions)  
-    {
-      if  (existingFileDesc == fileDesc)
-      {
-        result = existingFileDesc;
-        break;
-      }
-      else if  (existingFileDesc == NULL)
-      {
-        continue;
-      }
-      else if  ((*existingFileDesc) == (*fileDesc))
-      {
-        // Looks like we already have a compatible "FileDesc" instance.
-        // In this case this is the one the user will want.
-        delete  fileDesc;
-        result = existingFileDesc;
-        break;
-      }
-    }
-
-    if  (!result)
-    {
-      exisitingDescriptions->PushOnBack (fileDesc);
-      result = fileDesc;
-    }
+    exisitingDescriptions.push_back (fileDesc);
+    result = fileDesc;
   }
 
   blocker->EndBlock ();
@@ -719,10 +683,10 @@ bool  FileDesc::AllFieldsAreNumeric ()  const
 
 
 
-FileDescPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
-                                            const FileDesc&  right,
-                                            RunLog&          log
-                                           )
+FileDescConstPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
+                                                 const FileDesc&  right,
+                                                 RunLog&          log
+                                                )
 {
   if  (!left.SameExceptForSymbolicData (right, log))
   {
@@ -905,22 +869,6 @@ void  FileDesc::WriteXML (const KKStr&  varName,
 
 
 
-
-
-FileDescList::FileDescList (bool  _owner):
-  KKQueue<FileDesc> (_owner)
-{
-}
-
-
-
-FileDescList::~FileDescList ()
-{
-}
-
-
-
-
 XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr      tag,
                                         XmlStream&     s,
                                         VolConstBool&  cancelFlag,
@@ -929,9 +877,9 @@ XmlElementFileDesc::XmlElementFileDesc (XmlTagPtr      tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-  value = new FileDesc ();
-  value->ReadXML (s, tag, cancelFlag, log);
-  value = FileDesc::GetExistingFileDesc (value);
+  auto temp = new FileDesc ();
+  temp->ReadXML (s, tag, cancelFlag, log);
+  value = FileDesc::GetExistingFileDesc (temp);
 }
                 
 
@@ -943,24 +891,24 @@ XmlElementFileDesc::~XmlElementFileDesc ()
 }
 
  
-FileDescPtr  XmlElementFileDesc::Value ()  const
+FileDescConstPtr  XmlElementFileDesc::Value ()  const
 {
   return  value;
 }
 
 
-FileDescPtr  XmlElementFileDesc::TakeOwnership ()
+FileDescConstPtr  XmlElementFileDesc::TakeOwnership ()
 {
-  FileDescPtr  v = value;
+  FileDescConstPtr  v = value;
   value = NULL;
   return  v;
 }
 
 
 
-void  XmlElementFileDesc::WriteXML (const FileDesc&  fileDesc,
-                                    const KKStr&     varName,
-                                    ostream&         o
+void  XmlElementFileDesc::WriteXML (const FileDescConst&  fileDesc,
+                                    const KKStr&          varName,
+                                    ostream&              o
                                   )
 {
   fileDesc.WriteXML (varName, o);

@@ -487,7 +487,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
 
   KKStr  errorMessage;
   
-  FileDescPtr  fileDescFromFile = GetFileDesc (_fileName, in, &_mlClasses, estimatedNumOfDataItems, errorMessage, _log);
+  FileDescConstPtr  fileDescFromFile = GetFileDesc (_fileName, in, &_mlClasses, estimatedNumOfDataItems, errorMessage, _log);
   if  (fileDescFromFile == NULL)
   {
     _log.Level (-1) << endl << endl 
@@ -497,7 +497,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadFeatureFile
     return NULL;
   }
 
-  FileDescPtr fileDesc = FileDesc::GetExistingFileDesc (fileDescFromFile);
+  FileDescConstPtr fileDesc = FileDesc::GetExistingFileDesc (fileDescFromFile);
 
   in.clear ();
   in.seekg (0, ios::beg);
@@ -684,7 +684,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
   FeatureVectorListPtr  dirImages = NULL;
 
-  FileDescPtr  fileDesc = _fvProducerFactory->FileDesc ();
+  FileDescConstPtr  fileDesc = _fvProducerFactory->FileDesc ();
 
   if  (_rewiteRootFeatureFile)
   {
@@ -811,7 +811,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   _changesMade = false;
   _timeStamp = DateTime ();
 
-  FileDescPtr  fileDesc = _fvProducerFactory->FileDesc ();
+  FileDescConstPtr  fileDesc = _fvProducerFactory->FileDesc ();
   if  (_unknownClass == NULL)
     _unknownClass = MLClass::GetUnKnownClassStatic ();
 

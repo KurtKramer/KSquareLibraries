@@ -96,13 +96,13 @@ FeatureFileIODstWeb::~FeatureFileIODstWeb ()
 
 
 
-FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
-                                               istream&           _in,
-                                               MLClassListPtr  _classes,
-                                               kkint32&             _estSize,
-                                               KKStr&             _errorMessage,
-                                               RunLog&            _log
-                                              )
+FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
+                                                    istream&        _in,
+                                                    MLClassListPtr  _classes,
+                                                    kkint32&        _estSize,
+                                                    KKStr&          _errorMessage,
+                                                    RunLog&         _log
+                                                   )
 {
   KKStr  line (1024);
   bool   eof;
@@ -224,15 +224,15 @@ FileDescPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&       _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&  _fileName,
-                                                     FileDescPtr   _fileDesc,
-                                                     MLClassList&  _classes, 
-                                                     istream&      _in,
-                                                     kkint32       _maxCount,    /**< Maximum # images to load. */
-                                                     VolConstBool& _cancelFlag,
-                                                     bool&         _changesMade,
-                                                     KKStr&        _errorMessage,
-                                                     RunLog&       _log
+FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName,
+                                                     FileDescConstPtr  _fileDesc,
+                                                     MLClassList&      _classes, 
+                                                     istream&          _in,
+                                                     kkint32           _maxCount,    /**< Maximum # images to load. */
+                                                     VolConstBool&     _cancelFlag,
+                                                     bool&             _changesMade,
+                                                     KKStr&            _errorMessage,
+                                                     RunLog&           _log
                                                    )
 {
   _log.Level (20) << "FeatureFileIODstWeb::LoadFile   FileName[" << _fileName << "]" << endl;

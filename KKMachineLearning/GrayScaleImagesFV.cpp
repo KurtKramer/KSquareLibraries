@@ -112,8 +112,8 @@ GrayScaleImagesFVPtr  GrayScaleImagesFV::Duplicate ()  const
 
 
 
-GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescPtr  _fileDesc,
-                                              bool         _owner
+GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescConstPtr  _fileDesc,
+                                              bool              _owner
                                              ):
 
     FeatureVectorList (_fileDesc, _owner)

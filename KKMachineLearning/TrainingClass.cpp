@@ -64,7 +64,9 @@ TrainingClass::TrainingClass (const TrainingClass&  tc):
 {
 }
 
-
+TrainingClass::~TrainingClass ()
+{
+}
 
 
 const 
