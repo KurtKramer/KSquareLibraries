@@ -35,6 +35,8 @@ namespace KKMLL
 #if  !defined(_FileDesc_Defined_)
   class  FileDesc;
   typedef  FileDesc*  FileDescPtr;
+  typedef  FileDesc const FileDescConst;
+  typedef  FileDescConst * FileDescConstPtr;
 #endif
 
 
@@ -99,7 +101,7 @@ namespace KKMLL
     /**  @brief  Returns the 'type_info' of the FeatureVectorList that this instance of 'FactoryFVProducer' will create. */
     virtual  const type_info*  FeatureVectorListTypeId  () const = 0;
 
-    virtual  FileDescPtr       FileDesc                 ()  const = 0;
+    virtual  FileDescConstPtr       FileDesc            ()  const = 0;
 
     /**
      *@brief   Derived classes will instantiate appropriate instances of 'FeatureVectorProducer'.

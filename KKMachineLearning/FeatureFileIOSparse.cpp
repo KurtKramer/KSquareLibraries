@@ -45,13 +45,13 @@ FeatureFileIOSparse::~FeatureFileIOSparse ()
 
 
 
-FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
-                                               istream&        _in,
-                                               MLClassListPtr  _classes,
-                                               kkint32&        _estSize,
-                                               KKStr&          _errorMessage,
-                                               RunLog&         _log
-                                              )
+FileDescConstPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
+                                                    istream&        _in,
+                                                    MLClassListPtr  _classes,
+                                                    kkint32&        _estSize,
+                                                    KKStr&          _errorMessage,
+                                                    RunLog&         _log
+                                                   )
 {
   _log.Level (20) << "FeatureFileIOSparse::GetFileDesc     FileName[" << _fileName << "]." << endl;
   bool  eof = false;
@@ -122,7 +122,7 @@ FileDescPtr  FeatureFileIOSparse::GetFileDesc (const KKStr&    _fileName,
 
 
 FeatureVectorListPtr  FeatureFileIOSparse::LoadFile (const KKStr&      _fileName,
-                                                     const FileDescPtr _fileDesc,
+                                                     FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
                                                      istream&          _in,
                                                      kkint32           _maxCount,    // Maximum # images to load.

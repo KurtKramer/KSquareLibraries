@@ -147,7 +147,7 @@ SVM289_BFS::svm_problem::svm_problem (const FeatureVectorList&  _x,
 
 
 SVM289_BFS::svm_problem::svm_problem (const FeatureNumList&  _selFeatures,
-                                      FileDescPtr            _fileDesc,
+                                      FileDescConstPtr       _fileDesc,
                                       RunLog&                _log
                                      ):
   fileDesc    (_fileDesc),
@@ -169,7 +169,7 @@ SVM289_BFS::svm_problem::~svm_problem ()
 
     
 
-FileDescPtr  SVM289_BFS::svm_problem::FileDesc ()  const
+FileDescConstPtr  SVM289_BFS::svm_problem::FileDesc ()  const
 {
   return  x.FileDesc ();
 }  
@@ -4103,7 +4103,7 @@ double  SVM289_BFS::svm_predict_probability (svm_model*            model,
 
 
 SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
-                                  FileDescPtr       _fileDesc,
+                                  FileDescConstPtr  _fileDesc,
                                   RunLog&           _log
                                  ):
   param               (_model.param),
@@ -4190,8 +4190,8 @@ SVM289_BFS::svm_model::svm_model (const svm_model&  _model,
 
 
 
-SVM289_BFS::svm_model::svm_model (FileDescPtr   _fileDesc,
-                                  RunLog&       _log
+SVM289_BFS::svm_model::svm_model (FileDescConstPtr  _fileDesc,
+                                  RunLog&           _log
                                 ):
    param               (),
    nr_class            (0),
@@ -4214,7 +4214,7 @@ SVM289_BFS::svm_model::svm_model (FileDescPtr   _fileDesc,
 
 SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
                                   const FeatureNumList& _selFeatures,
-                                  FileDescPtr           _fileDesc,
+                                  FileDescConstPtr      _fileDesc,
                                   RunLog&               _log
                                  ):
    param               (_param),
@@ -4237,9 +4237,9 @@ SVM289_BFS::svm_model::svm_model (const svm_parameter&  _param,
 }
 
 
-SVM289_BFS::svm_model::svm_model (istream&     _in,
-                                  FileDescPtr  _fileDesc,
-                                  RunLog&      _log
+SVM289_BFS::svm_model::svm_model (istream&          _in,
+                                  FileDescConstPtr  _fileDesc,
+                                  RunLog&           _log
                                  ):
    param               (),
    nr_class            (0),
@@ -4427,9 +4427,9 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
 
 
 
-void  SVM289_BFS::svm_model::Read (istream&     in, 
-                                   FileDescPtr  fileDesc,
-                                   RunLog&      log
+void  SVM289_BFS::svm_model::Read (istream&          in, 
+                                   FileDescConstPtr  fileDesc,
+                                   RunLog&           log
                                  )
 {
   // read parameters

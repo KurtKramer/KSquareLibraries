@@ -376,7 +376,7 @@ namespace KKMLL
 
     bool                         featuresAlreadyNormalized;
 
-    FileDescPtr                  fileDesc;
+    FileDescConstPtr             fileDesc;
 
     FactoryFVProducerPtr         fvFactoryProducer;
 

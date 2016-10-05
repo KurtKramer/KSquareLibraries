@@ -45,13 +45,13 @@ FeatureFileIOUCI::~FeatureFileIOUCI ()
 
 
 
-FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
-                                            istream&           _in,
-                                            MLClassListPtr  _classes,
-                                            kkint32&           _estSize,
-                                            KKStr&             _errorMessage,
-                                            RunLog&            _log
-                                           )
+FileDescConstPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&    _fileName,
+                                                 istream&        _in,
+                                                 MLClassListPtr  _classes,
+                                                 kkint32&        _estSize,
+                                                 KKStr&          _errorMessage,
+                                                 RunLog&         _log
+                                                )
 {
   _log.Level (20) << "FeatureFileIOUCI::GetFileDesc     FileName[" << _fileName << "]." << endl;
 
@@ -113,15 +113,15 @@ FileDescPtr  FeatureFileIOUCI::GetFileDesc (const KKStr&       _fileName,
 
 
 
-FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&       _fileName,
-                                                  const FileDescPtr  _fileDesc,
-                                                  MLClassList&       _classes, 
-                                                  istream&           _in,
-                                                  kkint32            _maxCount,    // Maximum # images to load.
-                                                  VolConstBool&      _cancelFlag,
-                                                  bool&              _changesMade,
-                                                  KKStr&             _errorMessage,
-                                                  RunLog&            _log
+FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
+                                                  FileDescConstPtr  _fileDesc,
+                                                  MLClassList&      _classes, 
+                                                  istream&          _in,
+                                                  kkint32           _maxCount,    // Maximum # images to load.
+                                                  VolConstBool&     _cancelFlag,
+                                                  bool&             _changesMade,
+                                                  KKStr&            _errorMessage,
+                                                  RunLog&           _log
                                                  )
 {
   _log.Level (20) << "FeatureFileIOUCI::LoadFile   FileName[" << _fileName << "]" << endl;

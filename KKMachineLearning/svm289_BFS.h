@@ -45,17 +45,17 @@ namespace  SVM289_BFS
                 );
 
     svm_problem (const FeatureNumList&  _selFeatures,
-                 FileDescPtr            _fileDesc,
+                 FileDescConstPtr       _fileDesc,
                  RunLog&                _log
                 );
 
     ~svm_problem ();
 
-    FileDescPtr  FileDesc ()  const;
+    FileDescConstPtr  FileDesc ()  const;
 
     const FeatureNumList&   SelFeatures ()  const  {return selFeatures;}
 
-    FileDescPtr         fileDesc;
+    FileDescConstPtr    fileDesc;
     kkint32             l;
     FeatureNumList      selFeatures;
     FeatureVectorList   x;
@@ -146,23 +146,23 @@ namespace  SVM289_BFS
   struct  svm_model
   {
     svm_model (const svm_model&  _model,
-               FileDescPtr       _fileDesc,
+               FileDescConstPtr  _fileDesc,
                RunLog&           _log
               );
 
-    svm_model (FileDescPtr   _fileDesc,
-               RunLog&       _log
+    svm_model (FileDescConstPtr  _fileDesc,
+               RunLog&           _log
               );
 
     svm_model (const svm_parameter&   _param,
                const FeatureNumList&  _selFeatures,
-               FileDescPtr            _fileDesc,
+               FileDescConstPtr       _fileDesc,
                RunLog&                _log
               );
 
-    svm_model (istream&     _fileName,
-               FileDescPtr  _fileDesc,
-               RunLog&      _log
+    svm_model (istream&          _fileName,
+               FileDescConstPtr  _fileDesc,
+               RunLog&           _log
               );
 
     ~svm_model ();
@@ -173,9 +173,9 @@ namespace  SVM289_BFS
 
     void  Write (ostream& o);
 
-    void  Read (istream&     i, 
-                FileDescPtr  fileDesc,
-                RunLog&      log
+    void  Read (istream&          i, 
+                FileDescConstPtr  fileDesc,
+                RunLog&           log
                );
 
     void  NormalizeProbability ();

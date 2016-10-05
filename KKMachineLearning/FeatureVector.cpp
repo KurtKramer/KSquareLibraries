@@ -1675,7 +1675,7 @@ bool  FeatureVectorList::MissingData () const  // Returns true if 1 or more entr
 
 
 
-void  FeatureVectorList::ReSyncSymbolicData (FileDescPtr  newFileDesc)
+void  FeatureVectorList::ReSyncSymbolicData (FileDescConstPtr  newFileDesc)
 
 {
   kkint32  fieldNum;
@@ -1743,7 +1743,7 @@ void  FeatureVectorList::SynchronizeSymbolicData (FeatureVectorList&  otherData,
     throw KKException (errMsg);
   }
 
-  FileDescPtr  newFileDesc = FileDesc::MergeSymbolicFields (*fileDesc, *(otherData.FileDesc ()), log);
+  FileDescConstPtr  newFileDesc = FileDesc::MergeSymbolicFields (*fileDesc, *(otherData.FileDesc ()), log);
 
   ReSyncSymbolicData (newFileDesc);
   otherData.ReSyncSymbolicData (newFileDesc);

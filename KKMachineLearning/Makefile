@@ -193,6 +193,10 @@ ClassAssignments.o :   ClassAssignments.cpp     $(CLASSASSIGNMENTS)     $(MLCLAS
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 
+ClassificationBiasMatrix.o : ClassificationBiasMatrix.cpp  $(CLASSIFICATIONBIASMATRIX)    $(MLCLASS)   
+	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
+
+
 Classifier2.o :        Classifier2.cpp          $(CLASSIFIER2)          $(CLASSPROB)      $(MLCLASS)   \
                        $(NORMALIZATIONPARMS)    $(TRAININGPROCESS2)
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
@@ -203,10 +207,6 @@ ClassProb.o	:	ClassProb.cpp  $(CLASSPROB)     $(MLCLASS)
 
 
 ClassStatistic.o : ClassStatistic.cpp  $(CLASSSTATISTIC)   $(MLCLASS)   
-	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
-
-
-ClassificationBiasMatrix.o : ClassificationBiasMatrix.cpp  $(CLASSIFICATIONBIASMATRIX)    $(MLCLASS)   
 	$(CC) $(CFLAGS)   $(INPUTFILE)  $(OUTPUTFILE)
 
 

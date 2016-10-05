@@ -192,9 +192,9 @@ kkint32  FeatureEncoder2::NumEncodedFeatures ()  const
 
 
 
-FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
-                                                     RunLog&   log
-                                                    )  const
+FileDescConstPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
+                                                          RunLog&   log
+                                                         )  const
 {
   log.Level (40) << "FeatureEncoder2::CreateEncodedFileDesc" << endl;
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -282,9 +282,9 @@ FileDescPtr  FeatureEncoder2::CreateEncodedFileDesc (ostream*  o,
     }
   }
 
-  newFileDesc = FileDesc::GetExistingFileDesc (newFileDesc);
+  auto  newFileDescConst = FileDesc::GetExistingFileDesc (newFileDesc);
 
-  return  newFileDesc;
+  return  newFileDescConst;
 }  /* CreateEncodedFileDesc */
 
 

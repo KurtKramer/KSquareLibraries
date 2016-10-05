@@ -44,13 +44,13 @@ FeatureFileIORoberts::~FeatureFileIORoberts(void)
 
 
 
-FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
-                                                istream&        _in,
-                                                MLClassListPtr  _classes,
-                                                kkint32&        _estSize,
-                                                KKStr&          _errorMessage,
-                                                RunLog&         _log
-                                               )
+FileDescConstPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
+                                                     istream&        _in,
+                                                     MLClassListPtr  _classes,
+                                                     kkint32&        _estSize,
+                                                     KKStr&          _errorMessage,
+                                                     RunLog&         _log
+                                                    )
 {
   _log.Level (10) << endl << endl 
                   << "FeatureFileIORoberts::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
@@ -65,7 +65,7 @@ FileDescPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
 
 
 FeatureVectorListPtr  FeatureFileIORoberts::LoadFile (const KKStr&      _fileName,
-                                                      const FileDescPtr _fileDesc,
+                                                      FileDescConstPtr  _fileDesc,
                                                       MLClassList&      _classes, 
                                                       istream&          _in,
                                                       kkint32           _maxCount,    // Maximum # images to load.

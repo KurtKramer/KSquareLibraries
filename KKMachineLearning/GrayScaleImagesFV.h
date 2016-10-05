@@ -114,8 +114,8 @@ namespace KKMLL
   public: 
     typedef  GrayScaleImagesFVList*  GrayScaleImagesFVListPtr;
 
-    GrayScaleImagesFVList (FileDescPtr  _fileDesc,
-                           bool         _owner
+    GrayScaleImagesFVList (FileDescConstPtr  _fileDesc,
+                           bool              _owner
                           );
 
   private:

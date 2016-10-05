@@ -495,7 +495,7 @@ namespace KKMLL
 
     void  ResetFileDesc (FileDescConstPtr  newFileDesc);  /**< You would use this if youRecalc all the data to a newer version of the file. */
 
-    void  ReSyncSymbolicData (FileDescPtr  newFileDesc);
+    void  ReSyncSymbolicData (FileDescConstPtr  newFileDesc);
 
     void  RemoveEntriesWithMissingFeatures (RunLog&  log);  /**< Will delete entries from list that have missing data. */
 
