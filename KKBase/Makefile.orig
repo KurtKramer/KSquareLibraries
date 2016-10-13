@@ -11,7 +11,7 @@ VPATH = $(OUT_PATH)
 
 
 
-CC = g++ -W -Wall -Wextra -pedantic -std=c++0x 
+CC = g++ -W -Wall -Wextra -pedantic -std=gnu++0x 
 
 FIRSTINCLUDES      = FirstIncludes.h
 

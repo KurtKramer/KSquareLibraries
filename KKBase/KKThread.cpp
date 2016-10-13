@@ -411,7 +411,7 @@ void  KKThread::Start (ThreadPriority  _priority,
   }
   else 
   {
-    threadId = (kkint32)linuxThreadId;
+    threadId = (kkint64)linuxThreadId;
     SetThreadName ();
     successful = true;
   }

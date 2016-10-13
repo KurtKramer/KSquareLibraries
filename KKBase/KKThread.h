@@ -188,7 +188,7 @@ namespace KKB
                                                 * to true when user request to cancel processing.
                                                 */
 
-    kkint32                threadId;
+    kkint64                threadId;
 
     KKThreadManagerPtr     threadManager;
 

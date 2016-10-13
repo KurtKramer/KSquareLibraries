@@ -33,7 +33,9 @@
 
 
 #ifndef  WIN32
+#if  !defined(__cdecl)
 #define  __cdecl  
+#endif
 #endif
 
 
