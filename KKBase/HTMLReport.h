@@ -6,9 +6,9 @@
 #include  "KKStr.h"
 
 
-#ifndef  WIN32
-#define  __cdecl  
-#endif
+//#ifndef  WIN32
+//#define  __cdecl  
+//#endif
 
 
 
