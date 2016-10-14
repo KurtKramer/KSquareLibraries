@@ -8,10 +8,10 @@
 #include <ostream>
 #include <string>
 
-#ifdef  WIN32
-#else
-#define  __cdecl  
-#endif
+//#ifdef  WIN32
+//#else
+//#define  __cdecl  
+//#endif
 
 #include "KKBaseTypes.h"
 #include "KKStr.h"

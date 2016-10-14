@@ -10,7 +10,9 @@
 
 #ifdef  WIN32
 #else
-#define  __cdecl  
+#if  !defined(__cdecl)
+#define  __cdecl
+#endif
 #endif
 
 #include "KKBaseTypes.h"
