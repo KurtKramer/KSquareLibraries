@@ -17,6 +17,8 @@ OBJ = $(CPP:%.cpp=$(BUILD_DIR)/%.o)
 # Gcc/Clang will create these .d files containing dependencies.
 DEP = $(OBJ:%.o=%.d)
 
+all:	$(BUILD_DIR)/$(BIN)
+
 # Default target named after the binary.
 $(BIN) : $(BUILD_DIR)/$(BIN)
 

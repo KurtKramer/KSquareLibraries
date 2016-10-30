@@ -93,7 +93,7 @@ char*  KKB::STRCAT (char*        dest,
 # ifdef  USE_SECURE_FUNCS
     strcat_s  (dest, destSize, src);
 # else
-    kkint32 zed = destSize - (strlen (dest) + 1);
+    kkint32 zed = destSize - ((kkint32)strlen (dest) + 1);
     strncat (dest, src, zed);
 # endif
 
@@ -548,7 +548,7 @@ KKStr::KKStr (const KKStr&  str):
          << std::endl;
   }
 
-  kkuint16  neededSpace = str.len + 1;
+  kkuint32  neededSpace = str.len + 1;
   if  (neededSpace > str.allocatedSize)
   {
     KKStr  errMsg = "KKStr::KKStr (const KKStr&  str)   AllocatedSize["  + ::StrFromUint16(str.allocatedSize) + "]  on Source KKStr is to Short";
