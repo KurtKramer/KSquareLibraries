@@ -71,7 +71,7 @@ BitString::BitString (kkuint32  _bitLen):
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
-  memset (str, 0, byteLen);
+  memset (str, 0, (size_t)byteLen);
 }
 
 
@@ -82,7 +82,7 @@ BitString::BitString (const BitString&  bs):
 {
   uchar*   str;
   str = new uchar[byteLen];
-  memcpy (str, bs.str, byteLen);
+  memcpy (str, bs.str, (size_t)byteLen);
 }
 
 
@@ -96,7 +96,7 @@ BitString::BitString (kkuint32   _bitLen,
 {
   byteLen = ((bitLen - 1) / 8) + 1;
   str = new uchar[byteLen];
-  memset (str, 0, byteLen);
+  memset (str, 0, (size_t)byteLen);
   kkuint32  x;
   for  (x = 0;  x < bitNumsLen;  x++)
   {
@@ -172,7 +172,7 @@ bool  BitString::Test (kkuint32  bitNum) const
 
 void  BitString::Set ()
 {
-  memset (str, 255, byteLen);
+  memset (str, 255, (size_t)byteLen);
 }  /* Set */
 
 
@@ -206,7 +206,7 @@ void BitString::Set (kkuint32  bitNum)
 
 void  BitString::ReSet ()
 {
-  memset (str, 0, byteLen);
+  memset (str, 0, (size_t)byteLen);
 }
 
 
@@ -428,7 +428,7 @@ BitString  BitString::FromHexStr (const KKStr&  hexStr,
       high4Bits = 0;
     }
 
-    bs.str[byteNum] = (uchar)low4Bits + (uchar)high4Bits * 16;
+    bs.str[byteNum] = (uchar)low4Bits + (uchar)high4Bits * (uchar)16;
     byteNum++;
   }
 
@@ -621,6 +621,7 @@ void  BitString::ReadXML (XmlStream&      s,
                           RunLog&         log
                          )
 {
+  log.Level(50) << "BitString::ReadXML    tag->name" << tag->Name() << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
