@@ -599,7 +599,7 @@ namespace KKB
      *@param[out] centralMoments
      *@param[out] centralMomentsWeighted
      */
-    void          ComputeCentralMoments (kkint32&  foregroundPixelCount,
+    void          ComputeCentralMoments (kkint32&  _foregroundPixelCount,
                                          float&    weightedPixelCount,
                                          float     centralMoments[9],
                                          float     centralMomentsWeighted[9]
@@ -713,7 +713,7 @@ namespace KKB
      */
     void          DrawCircle (const Point&       point,
                               kkint32            radius,
-                              const PixelValue&  color
+                              const PixelValue&  DrawCircle
                              );
 
 
@@ -733,8 +733,8 @@ namespace KKB
                              );
 
 
-    void          DrawDot (const Point&       point, 
-                           const PixelValue&  color,
+    void          DrawDot (const Point&       point,
+                           const PixelValue&  paintColor,
                            kkint32            size
                           );
 
@@ -1184,9 +1184,9 @@ namespace KKB
 
 
     virtual
-      RasterPtr  AllocateARasterInstance (kkint32  height,
-                                          kkint32  width,
-                                          bool   color
+      RasterPtr  AllocateARasterInstance (kkint32  _height,
+                                          kkint32  _width,
+                                          bool     _color
                                          )  const;
 
     virtual
@@ -1392,8 +1392,8 @@ namespace KKB
   class  RasterList:  public  KKQueue<Raster>
   {
   public:
-    RasterList (bool  owner):
-        KKQueue<Raster> (owner)
+    RasterList (bool  _owner):
+        KKQueue<Raster> (_owner)
         {}
 
   private:

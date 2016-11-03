@@ -91,7 +91,7 @@ Attribute::~Attribute ()
 
 kkint32  Attribute::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (Attribute)  + 
+  kkint32  memoryConsumedEstimated = (kkint32)sizeof (Attribute)  +
            name.MemoryConsumedEstimated ()               +
            nameUpper.MemoryConsumedEstimated ();
 
@@ -345,12 +345,12 @@ AttributeList::~AttributeList ()
 
 kkint32  AttributeList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (AttributeList) + nameIndex.size ();
+  kkint32  memoryConsumedEstimated = (kkint32)sizeof (AttributeList) + nameIndex.size ();
   
   {
     std::map<KKStr, AttributePtr>::const_iterator  idx;
     for  (idx = nameIndex.begin ();  idx != nameIndex.end ();  ++idx)
-      memoryConsumedEstimated += (sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
+      memoryConsumedEstimated += ((kkint32)sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
   }
 
   {
@@ -529,6 +529,9 @@ void  AttributeList::ReadXML (XmlStream&      s,
                               RunLog&         log
                              )
 {
+
+  log.Level(50) << "AttributeList::ReadXML   tag.name: " << tag->Name() << endl;
+
   DeleteContents ();
   Owner (true);
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);

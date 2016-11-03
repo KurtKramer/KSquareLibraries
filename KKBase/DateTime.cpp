@@ -6,6 +6,7 @@
 /*  Originally developed in Borland Pascal 1986;  converted to c++ in 1995 */
 
 #include "FirstIncludes.h"
+#include <fstream>
 #include <iostream>
 #include <vector>
 #include "MemoryDebug.h"
@@ -55,7 +56,7 @@ const char*  DateType::monthlyShortNames[] =
 };
 
 
-const uchar  DateType::daysInEachMonth[] = 
+const kkuint8  DateType::daysInEachMonth[] =
 {
   0, 
   31, // Jan
@@ -73,7 +74,7 @@ const uchar  DateType::daysInEachMonth[] =
 };
 
 
-const short  DateType::daysYTDforMonth[] = 
+const kkint16  DateType::daysYTDforMonth[] =
 {
   0, 
   31, // Jan
@@ -369,9 +370,9 @@ void  DateType::AdjustYear ()
   if  (year < 100)
   {
     if  (year > 50)
-      year += 1900;
+      year += (kkint16)1900;
     else
-      year += 2000;
+      year += (kkint16)2000;
   }
 }  /* AdjustYear */
 
@@ -432,7 +433,7 @@ void   DateType::SubtractDays (kkint32  _days)
     month--;
     while  (month < 1)
     {
-      month += 12;
+      month += (uchar)12;
       year--;
     }
     newDay = newDay + DaysThisMonth ();
@@ -1097,15 +1098,15 @@ kkuint64  DateTime::Seconds () const
 }
 
 
-kkuint32  DateTime::ToDays    ()  const  {return  date.Days ();}
-double    DateTime::ToHours   ()  const  {return  date.Days () * 24 + time.ToHours ();}
+kkuint32  KKB::DateTime::ToDays    ()  const  {return  date.Days ();}
+double    KKB::DateTime::ToHours   ()  const  {return  date.Days () * 24 + time.ToHours ();}
 
 
 ///<summary>Number seconds since "0000/01/01 00:00:00"</summary>
-kkuint64  DateTime::ToSeconds ()  const{return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();}
+kkuint64  KKB::DateTime::ToSeconds ()  const{return  (kkuint64)(date.Days ()) * (kkuint64)86400 + time.Seconds ();}
 
 
-void  DateTime::AddDays (kkint32  _days)
+void  KKB::DateTime::AddDays (kkint32  _days)
 {
   date.AddDays (_days);
 }
@@ -1156,14 +1157,14 @@ void  DateTime::AddMinutes  (kkint32  _mins)
 }  /* AddMinutes */
 
 
-void  DateTime::AddSeconds  (long _secs)
+void  DateTime::AddSeconds  (kkint64 _secs)
 {
-  long  newSecs = time.Second () + _secs;
+  kkint64  newSecs = time.Second () + _secs;
 
-  long  minsToAdd = newSecs / 60;
+  kkint64  minsToAdd = newSecs / 60;
   newSecs = newSecs - (minsToAdd * 60);
   if  (minsToAdd != 0)
-    MinutesAdd (minsToAdd);
+    MinutesAdd ((kkint32)minsToAdd);
 
   while  (newSecs < 0)
   {

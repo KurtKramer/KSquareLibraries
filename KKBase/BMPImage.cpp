@@ -609,7 +609,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
     memset (image[row], 0, bmh.biWidth);
   }
 
-  x = fseek (inFile, hdr.bfOffBits, SEEK_SET);
+  x = fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   if  (bmh.biBitCount == 1)
   {
@@ -1505,7 +1505,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;
 
-  fseek (inFile, hdr.bfOffBits, SEEK_SET);
+  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
@@ -1805,7 +1805,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
 
   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;
 
-  fseek (inFile, hdr.bfOffBits, SEEK_SET);
+  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 

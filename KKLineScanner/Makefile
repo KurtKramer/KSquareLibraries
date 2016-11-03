@@ -1,10 +1,9 @@
 CXX = g++
-CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -pedantic -std=gnu++11
-#INCLUDES = $(KSquareHome)/KKBase
-INCLUDES = ../KKBase
+CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=gnu++11
+INCLUDES = $(KSquareHome)/KKBase
 
 # Final binary
-BIN = libKKMachineLearning.a
+BIN = libKKLineScanner.a
 # Put all auto generated stuff to this build dir.
 BUILD_DIR = ./debug
 

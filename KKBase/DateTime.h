@@ -8,6 +8,8 @@
 #ifndef  _DATETIME_
 #define  _DATETIME_
 
+#include <fstream>
+#include <iostream>
 #include "KKStr.h"
 
 /**
@@ -130,16 +132,16 @@ namespace  KKB
                                     kkint32&  days
                                    );
 
-    static const uchar  daysInEachMonth[];
-    static const short  daysYTDforMonth[];
-    static const char*  monthlyShortNames[];
-    static const char*  monthlyNames[];
+    static const kkuint8  daysInEachMonth[];
+    static const kkint16  daysYTDforMonth[];
+    static const char*    monthlyShortNames[];
+    static const char*    monthlyNames[];
 
     friend class  DateTime;
 
-    short  year;
-    uchar  month;
-    uchar  day;
+    kkint16  year;
+    kkuint8  month;
+    kkuint8  day;
   };  /* DateType */
 
 
@@ -225,7 +227,7 @@ namespace  KKB
     void                  AddDays     (kkint32  _days);
     void                  AddHours    (kkint32  _hours);
     void                  AddMinutes  (kkint32  _mins);
-    void                  AddSeconds  (long _secs);
+    void                  AddSeconds  (kkint64  _secs);
 
     const KKB::DateType&  Date () const  {return  date;}
 

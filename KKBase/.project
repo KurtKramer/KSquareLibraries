@@ -3,7 +3,6 @@
 	<name>KKBase</name>
 	<comment></comment>
 	<projects>
-		<project>zlib123</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -23,6 +22,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.codan.core.codanBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.cdt.core.cnature</nature>
@@ -30,34 +34,6 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>org.eclipse.cdt.autotools.core.autotoolsNatureV2</nature>
+		<nature>org.eclipse.cdt.codan.core.codanNature</nature>
 	</natures>
-	<filteredResources>
-		<filter>
-			<id>1414809953700</id>
-			<name></name>
-			<type>22</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.vcproj.*</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1414809953702</id>
-			<name></name>
-			<type>22</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.vcproj</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1414809953707</id>
-			<name></name>
-			<type>6</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-true-false-Makefile</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
 </projectDescription>

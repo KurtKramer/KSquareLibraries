@@ -83,7 +83,7 @@ namespace KKB
                                                                                   * to true when user request to cancel processing.
                                                                                   */
 
-    kkint32                  ThreadId      ()  const  {return threadId;}
+    kkint64                  ThreadId      ()  const  {return threadId;}
     const KKStr&             ThreadName    ()  const  {return threadName;}
 
     void    Crashed       (bool          _crashed)        {crashed       = _crashed;}

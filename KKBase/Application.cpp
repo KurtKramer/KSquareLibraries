@@ -25,6 +25,19 @@ using  namespace  KKB;
 
 
 
+//
+//  /usr/include/c++/5
+//  /usr/include/x86_64-linux-gnu/c++/5
+//  /usr/include/c++/5/backward
+//  /usr/lib/gcc/x86_64-linux-gnu/5/include
+//  /usr/local/include
+//  /usr/lib/gcc/x86_64-linux-gnu/5/include-fixed
+//  /usr/include/x86_64-linux-gnu
+//  /usr/includekkramer@Marjorie:~$
+
+
+
+
 
 Application::Application (RunLog&  _log):
   abort       (false),
@@ -114,12 +127,10 @@ void  Application::ProcessCmdLineParameters (kkint32  argc,
 
   expandedParameterPairs = cmdLineExpander.ExpandedParameterPairs ();
 
-  vector<KKStrPair>::const_iterator  idx;
-
-  for  (idx = expandedParameterPairs.begin ();  idx != expandedParameterPairs.end ();  ++idx)
+  for  (auto idx: expandedParameterPairs)
   {
-    const KKStr&  parmSwitch = idx->first;
-    const KKStr&  parmValue  = idx->second;
+    const KKStr&  parmSwitch = idx.first;
+    const KKStr&  parmValue  = idx.second;
     bool  parmGood = ProcessCmdLineParameter (parmSwitch, parmValue);
     if  (!parmGood)
       allParmsGood = false;

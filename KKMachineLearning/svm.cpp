@@ -58,6 +58,7 @@ SvmModel233::SvmModel233 ()
   dim           = -1;
   valid         = true;
   weOwnXspace   = false;
+  xSpace        = NULL;
 }
 
 

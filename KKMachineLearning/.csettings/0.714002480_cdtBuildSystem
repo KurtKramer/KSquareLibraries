@@ -5,14 +5,18 @@
 			<folderInfo id="0.714002480." name="/" resourcePath="">
 				<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.600345712" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
 					<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.600345712.151504804" name=""/>
-					<builder id="cdt.managedbuild.builder.gnu.cross.327606" superClass="cdt.managedbuild.builder.gnu.cross"/>
+					<builder id="cdt.managedbuild.builder.gnu.cross.327606" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 					<tool id="org.eclipse.cdt.build.core.settings.holder.libs.920551248" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 					<tool id="org.eclipse.cdt.build.core.settings.holder.1873115665" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 						<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.766295334" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 					</tool>
 					<tool id="org.eclipse.cdt.build.core.settings.holder.1121870557" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 						<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1022679089" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-							<listOptionValue builtIn="false" value="&quot;${workspace_loc:/KKBase}&quot;"/>
+							<listOptionValue builtIn="false" value="/usr/include"/>
+							<listOptionValue builtIn="false" value="/usr/Include/c++"/>
+							<listOptionValue builtIn="false" value="/usr/Include/c++/5"/>
+							<listOptionValue builtIn="false" value="/usr/include/c++/5/tr1"/>
+							<listOptionValue builtIn="false" value="../../KKBase"/>
 						</option>
 						<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.368744769" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 					</tool>
