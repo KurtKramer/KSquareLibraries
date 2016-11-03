@@ -1,5 +1,5 @@
 CXX = g++
-CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11 
+CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=gnu++11
 
 # Final binary
 BIN = libKKBase.a

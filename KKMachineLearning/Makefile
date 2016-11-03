@@ -1,5 +1,5 @@
 CXX = g++
-CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -pedantic -std=c++11
+CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -pedantic -std=gnu++11
 #INCLUDES = $(KSquareHome)/KKBase
 INCLUDES = ../KKBase
 
