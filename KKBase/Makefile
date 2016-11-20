@@ -6,7 +6,8 @@ BIN = libKKBase.a
 # Put all auto generated stuff to this build dir.
 BUILD_DIR = ./debug
 
-FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
+FFTWAPI = ../OutsidePackages/fftw-3.3.2/api
+INCLUDES = ../../OutsidePackages/zlib128/
 LIBS = -lfftw -lrt
 
 # List of all .cpp source files.
@@ -40,9 +41,10 @@ $(BUILD_DIR)/%.o : %.cpp
 	mkdir -p $(@D)
 	# The -MMD flags additionaly creates a .d file with
 	# the same name as the .o file.
-	$(CXX) $(CXX_FLAGS) -MMD -c $< -o $@
+	$(CXX) $(CXX_FLAGS) -I $(INCLUDES) -MMD -c $< -o $@
 
 .PHONY : clean
 clean :
 	# This should remove all generated files.
 	-rm $(BUILD_DIR)/$(BIN) $(OBJ) $(DEP)
+
