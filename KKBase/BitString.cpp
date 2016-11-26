@@ -80,7 +80,6 @@ BitString::BitString (const BitString&  bs):
   byteLen (bs.byteLen),
   str     (NULL)
 {
-  uchar*   str;
   str = new uchar[byteLen];
   memcpy (str, bs.str, (size_t)byteLen);
 }
@@ -174,7 +173,6 @@ void  BitString::Set ()
 {
   memset (str, 255, (size_t)byteLen);
 }  /* Set */
-
 
 
 
@@ -428,7 +426,7 @@ BitString  BitString::FromHexStr (const KKStr&  hexStr,
       high4Bits = 0;
     }
 
-    bs.str[byteNum] = (uchar)low4Bits + (uchar)high4Bits * (uchar)16;
+    bs.str[byteNum] = (uchar)((uchar)low4Bits + (uchar)high4Bits * (uchar)16);
     byteNum++;
   }
 

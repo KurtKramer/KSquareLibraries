@@ -11,6 +11,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 #include <string.h>
 
@@ -724,7 +725,7 @@ void  KKStr::AllocateStrSpace (kkuint32  size)
 
 kkint32  KKStr::MemoryConsumedEstimated () const  
 {
-  return sizeof (char*) + 2 * sizeof (kkuint16) + allocatedSize;
+  return  (kkint32)(sizeof (char*) + 2 * sizeof (kkuint16) + allocatedSize);
 }
 
 
@@ -1356,7 +1357,7 @@ KKStr&  KKStr::operator= (const KKStr&  src)
     return *this;
   }
 
-  kkuint16  spaceNeeded = src.len + 1;
+  kkuint16  spaceNeeded = (kkuint16)(src.len + 1U);
   if  ((spaceNeeded > allocatedSize)  ||  (!val))
   {
     delete  val;
@@ -1399,7 +1400,7 @@ KKStr&  KKStr::operator= (const char* src)
   }
 
   kkuint16  newLen = (kkuint16)strlen (src);
-  kkuint16  spaceNeeded = newLen + 1;
+  kkuint16  spaceNeeded = (kkuint16)(newLen + 1U);
 
   if  (spaceNeeded > allocatedSize)
   {
@@ -3103,7 +3104,7 @@ char  KKStr::ExtractChar ()
 
   char  returnChar = val[0];
    
-  kkuint16  newLen = len - 1;
+  kkuint16  newLen = len - (kkuint16)1;
 
   for  (kkuint16  x = 0;  x < newLen; x++)
   {
@@ -3788,7 +3789,7 @@ double  KKStr::ToLongitude ()  const
     x = longitudeStr.LocateCharacter (' ');
     if  (x >= 0)
     {
-      degreesStr = longitudeStr.SubStrPart (0, x - 1);
+      degreesStr = move(longitudeStr.SubStrPart (0, x - 1));
       degreesStr.TrimRight ();
       minutesStr = longitudeStr.SubStrPart (x + 1);
       minutesStr.Trim ();
@@ -4755,7 +4756,7 @@ KKStr  KKB::StrFormatDouble (double       val,
 
   long  intPart = (long)floor (val);
 
-  kkint32  nextDigit = 0;
+  kkuint32  nextDigit = 0;
 
   kkint32  x;
 
@@ -4806,7 +4807,7 @@ KKStr  KKB::StrFormatDouble (double       val,
     {
       case  '0': 
       case  '@': 
-           nextDigit = intPart % 10;
+           nextDigit = (kkuint32)(intPart % 10);
            intPart = intPart / 10;
            bp--;
            *bp = '0' + (uchar)nextDigit;
@@ -4817,7 +4818,7 @@ KKStr  KKB::StrFormatDouble (double       val,
       case  '9':
            if (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
              *bp = '0' + (uchar)nextDigit;
@@ -4833,7 +4834,7 @@ KKStr  KKB::StrFormatDouble (double       val,
       case  'Z':
            if (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
              *bp = '0' + (uchar)nextDigit;
@@ -4844,7 +4845,7 @@ KKStr  KKB::StrFormatDouble (double       val,
       case  '-':
            if  (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
              *bp = '0' + (uchar)nextDigit;

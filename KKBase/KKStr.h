@@ -101,9 +101,9 @@ namespace  KKB
 
     KKStr (const char*  str);
 
-    KKStr (const KKStr&  str);
+    KKStr (const KKB::KKStr&  str);
 
-    KKStr (KKStr&&  str);  /**< Move Constructor */
+    KKStr (KKB::KKStr  &&str);  /**< Move Constructor */
 
     KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 

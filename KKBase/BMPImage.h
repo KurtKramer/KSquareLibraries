@@ -268,9 +268,9 @@ namespace KKB
 
     void  SetUp8BitPallet ();
 
-    void  SetUp16BitPallet (RGBQUAD*  palette);
+    void  SetUp16BitPallet (RGBQUAD*  pal);
 
-    void  SetUp256BitPalette (RGBQUAD*  palette);
+    void  SetUp256BitPalette (RGBQUAD*  pal);
 
 
     bool              color;  // true if color image.

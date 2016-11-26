@@ -322,10 +322,10 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (kkint32&  len)
           buff[bp] = 254;
           bp++;
 
-          buff[bp] = top->pixel * 16 + top->pixel;
+          buff[bp] = (uchar)(top->pixel * 16 + top->pixel);
           bp++;
 
-          top->count = top->count - 254;
+          top->count = (uchar)(top->count - 254);
         }
 
         else
@@ -333,7 +333,7 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure4Bit (kkint32&  len)
           buff[bp] = top->count;
           bp++;
 
-          buff[bp] = top->pixel * 16 + top->pixel;
+          buff[bp] = (uchar)(top->pixel * 16 + top->pixel);
           bp++;
 
           curPair++;
@@ -412,7 +412,7 @@ uchar*  BmpImage::CodedPixels::CreatePixelDataStructure8Bit (kkint32&  len)
           buff[bp] = top->pixel;
           bp++;
 
-          top->count = top->count - 254;
+          top->count = (uchar)(top->count - 254);
         }
 
         else
@@ -834,7 +834,7 @@ void  BmpImage::SetUp4BitPallet ()
     palette[x].rgbBlue   = pixelVal;
     palette[x].rgbGreen  = pixelVal;
     palette[x].rgbRed    = pixelVal;
-    pixelVal = pixelVal - 17;
+    pixelVal = (uchar)(pixelVal - 17);
   }
 }  /* SetUp4BitPallet*/
 
@@ -861,71 +861,71 @@ void  BmpImage::SetUp8BitPallet ()
 
 
 
-void  BmpImage::SetUp16BitPallet (RGBQUAD*  palette)
+void  BmpImage::SetUp16BitPallet (RGBQUAD*  pal)
 {
-  palette[0].rgbBlue  = 255;
-  palette[0].rgbGreen = 255;
-  palette[0].rgbRed   = 255;
+  pal[0].rgbBlue  = 255;
+  pal[0].rgbGreen = 255;
+  pal[0].rgbRed   = 255;
 
-  palette[1].rgbBlue  = 219;
-  palette[1].rgbGreen = 219;
-  palette[1].rgbRed   = 219;
+  pal[1].rgbBlue  = 219;
+  pal[1].rgbGreen = 219;
+  pal[1].rgbRed   = 219;
 
-  palette[2].rgbBlue  = 182;
-  palette[2].rgbGreen = 182;
-  palette[2].rgbRed   = 182;
+  pal[2].rgbBlue  = 182;
+  pal[2].rgbGreen = 182;
+  pal[2].rgbRed   = 182;
 
-  palette[3].rgbBlue  = 146;
-  palette[3].rgbGreen = 146;
-  palette[3].rgbRed   = 146;
+  pal[3].rgbBlue  = 146;
+  pal[3].rgbGreen = 146;
+  pal[3].rgbRed   = 146;
 
-  palette[4].rgbBlue  = 109;
-  palette[4].rgbGreen = 109;
-  palette[4].rgbRed   = 109;
+  pal[4].rgbBlue  = 109;
+  pal[4].rgbGreen = 109;
+  pal[4].rgbRed   = 109;
 
-  palette[5].rgbBlue  = 73;
-  palette[5].rgbGreen = 73;
-  palette[5].rgbRed   = 73;
+  pal[5].rgbBlue  = 73;
+  pal[5].rgbGreen = 73;
+  pal[5].rgbRed   = 73;
 
-  palette[6].rgbBlue  = 36;
-  palette[6].rgbGreen = 36;
-  palette[6].rgbRed   = 36;
+  pal[6].rgbBlue  = 36;
+  pal[6].rgbGreen = 36;
+  pal[6].rgbRed   = 36;
 
-  palette[7].rgbBlue  = 0;
-  palette[7].rgbGreen = 0;
-  palette[7].rgbRed   = 0;
+  pal[7].rgbBlue  = 0;
+  pal[7].rgbGreen = 0;
+  pal[7].rgbRed   = 0;
 
-  palette[8].rgbBlue  = 255;
-  palette[8].rgbGreen = 40;
-  palette[8].rgbRed   = 40;
+  pal[8].rgbBlue  = 255;
+  pal[8].rgbGreen = 40;
+  pal[8].rgbRed   = 40;
 
-  palette[9].rgbBlue  = 40;
-  palette[9].rgbGreen = 40;
-  palette[9].rgbRed   = 255;
+  pal[9].rgbBlue  = 40;
+  pal[9].rgbGreen = 40;
+  pal[9].rgbRed   = 255;
 
-  palette[10].rgbBlue  = 40;
-  palette[10].rgbGreen = 210;
-  palette[10].rgbRed   = 40;
+  pal[10].rgbBlue  = 40;
+  pal[10].rgbGreen = 210;
+  pal[10].rgbRed   = 40;
 
-  palette[11].rgbBlue  = 40;
-  palette[11].rgbGreen = 210;
-  palette[11].rgbRed   = 210;
+  pal[11].rgbBlue  = 40;
+  pal[11].rgbGreen = 210;
+  pal[11].rgbRed   = 210;
 
-  palette[12].rgbBlue  = 210;
-  palette[12].rgbGreen = 40;
-  palette[12].rgbRed   = 40;
+  pal[12].rgbBlue  = 210;
+  pal[12].rgbGreen = 40;
+  pal[12].rgbRed   = 40;
 
-  palette[13].rgbBlue  = 210;
-  palette[13].rgbGreen = 40;
-  palette[13].rgbRed   = 210;
+  pal[13].rgbBlue  = 210;
+  pal[13].rgbGreen = 40;
+  pal[13].rgbRed   = 210;
 
-  palette[14].rgbBlue  = 210;
-  palette[14].rgbGreen = 210;
-  palette[14].rgbRed   = 40;
+  pal[14].rgbBlue  = 210;
+  pal[14].rgbGreen = 210;
+  pal[14].rgbRed   = 40;
 
-  palette[15].rgbBlue  = 210;
-  palette[15].rgbGreen = 210;
-  palette[15].rgbRed   = 210;
+  pal[15].rgbBlue  = 210;
+  pal[15].rgbGreen = 210;
+  pal[15].rgbRed   = 210;
 }  /* SetUp16BitPallet */
 
 
@@ -964,7 +964,7 @@ void  BmpImage::SetPaletteEntry (kkint32            palletIndex,
 
 
 
-void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
+void  BmpImage::SetUp256BitPalette (RGBQUAD*  pal)
 {
   uchar  pixVal;
 
@@ -973,9 +973,9 @@ void  BmpImage::SetUp256BitPalette (RGBQUAD*  palette)
   for  (x = 0; x < 256; x++)
   {
     pixVal = (uchar)x;    
-    palette[x].rgbBlue  = pixVal;
-    palette[x].rgbGreen = pixVal;
-    palette[x].rgbRed   = pixVal;
+    pal[x].rgbBlue  = pixVal;
+    pal[x].rgbGreen = pixVal;
+    pal[x].rgbRed   = pixVal;
   }
 }  /* SetUp256BitPalette */
 
@@ -1056,7 +1056,7 @@ void  BmpImage::InitializeFields (kkint32  _height,
   // BITMAPFILEHEADER  hdr;
   // BITMAPINFOHEADER  bmh;
 
-  hdr.bfOffBits  = sizeof (bmh) + sizeof (RGBQUAD) * paletteEntries;
+  hdr.bfOffBits  = (DWORD)(sizeof (bmh) + sizeof (RGBQUAD) * paletteEntries);
 }  /* InitializeFields */
 
 
@@ -2151,7 +2151,7 @@ void  BmpImage::EliminateVerticalLines ()
         else
         {
           for  (x = firstCol; x <= lastCol; x++)
-            image[row][x] = (leftPixel + rightPixel) / 2;
+            image[row][x] = (uchar)((leftPixel + rightPixel) / 2);
 
           // Set up boolean for next loop around.
           leftSideIsClear = true;
@@ -2236,7 +2236,7 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
       }
       else
       {
-        pixelData.AddPixel (image[x][y] >> 4);
+        pixelData.AddPixel ((uchar)(image[x][y] >> 4));
       }
     }
 
