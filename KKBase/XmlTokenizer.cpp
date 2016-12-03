@@ -20,6 +20,7 @@ using namespace KKB;
 //#define  _LogStream_
 
 
+
 XmlTokenizer::XmlTokenizer (TokenBufferPtr  _in):
 
   atEndOfFile      (false),
