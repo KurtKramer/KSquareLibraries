@@ -8,33 +8,6 @@
 #ifndef  _KKU_KKQUEUE_
 #define  _KKU_KKQUEUE_
 
-/*
- * @file KKQueue.h
- * @details
- * @code
- *************************************************************************************
- **                                                                                  *
- **  Developed By:  Kurt A. Kramer                                                   *
- **                                                                                  *
- **  Date:          Way back in history                                              *
- **                                                                                  *
- *************************************************************************************
- **  A KKQueue template.  Makes it quick and easy to create Container objects.       *
- **                                                                                  *
- **  Based off the vector<> template, but consists of only pointers to objects of    *
- **  type 'Entry'.                                                                   *
- **                                                                                  *
- **  Can act as a 'Array', 'Queue', or 'Stack'.                                      *
- **                                                                                  *
- **  'owner' - When you create an instance of 'KKQueue' you specify weather it will  *
- **  own its contents or not.  If 'KKQueue' owns its contents then it will delete    *
- **  them when it is deleted.  That is 'KKQueue' will be responsible for calling     *
- **  the destructor for each 'entry' it contains.                                    *
- **                                                                                  *
- **                                                                                  *
- *************************************************************************************
- *@endcode
- */
 
 #include <assert.h>
 #include <ctype.h>
@@ -141,7 +114,6 @@ namespace  KKB
       virtual   EntryPtr  RemoveFirst  ();                   /**< same as PopFromFront  */
       virtual   EntryPtr  RemoveLast   ();                   /**< same as PopFromBack   */
 
-
       /**
        *@fn  void AddQueue (KKQueue& q);
        *@brief  Add the contents of a separate KKQueue container to this container.
@@ -174,8 +146,11 @@ namespace  KKB
                                    Functor   pred
                                   );
 
-
-      //void      Sort           (QueueComparison<Entry>*  comparison);
+      /**
+       *@param[in] f Function taking pointer to [[Entry]] and returns 'true' if to be included in returned list.
+       *@Returns sublist containing only elements where [[f]] indicates true. 
+       */
+      virtual   KKQueue<Entry>*  Filter(bool (*f)(const Entry* e)) const; 
 
       Entry&    operator[] (kkuint32 i)  const;       /**< Returns reference to element indexed by 'i'; similar to IdxToPtr 
                                                        * except returns reference rather than a pointer. 
@@ -522,6 +497,21 @@ namespace  KKB
   }  /* RandomizeOrder */
 
 
+
+
+  template <class Entry>
+  KKQueue<Entry>*   KKQueue<Entry>::Filter(bool (*f)(const Entry* e)) const
+  {
+    KKQueue<Entry>*  results = new KKQueue<Entry>(false);
+    for (auto idx: *this)
+    {
+      auto zed = idx;
+      if  (f(idx))
+        results->PushOnBack(idx);
+    }
+
+    return results;
+  }
 
 
   template <class Entry>
