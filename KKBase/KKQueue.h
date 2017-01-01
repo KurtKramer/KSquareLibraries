@@ -150,7 +150,12 @@ namespace  KKB
        *@param[in] f Function taking pointer to [[Entry]] and returns 'true' if to be included in returned list.
        *@Returns sublist containing only elements where [[f]] indicates true. 
        */
-      virtual   KKQueue<Entry>*  Filter(bool (*f)(const Entry* e)) const; 
+      virtual  KKQueue<Entry>*  Filter(bool (*f)(const Entry* e)) const;
+
+
+      template<typename T>
+      KKQueue<T>*  Map(T* (*f)(const Entry* e)) const;
+
 
       Entry&    operator[] (kkuint32 i)  const;       /**< Returns reference to element indexed by 'i'; similar to IdxToPtr 
                                                        * except returns reference rather than a pointer. 
@@ -235,23 +240,7 @@ namespace  KKB
   }
 
 
-
-  template <class Entry>
-  KKQueue<Entry>*    KKQueue<Entry>::DuplicateListAndContents ()  const
-  {
-    KKQueue<Entry>*  duplicatedQueue = new KKQueue<Entry> (true, QueueSize ());
-
-    for  (const_iterator x = KKQueue<Entry>::begin ();  x != KKQueue<Entry>::end ();  x++)
-    {
-      const EntryPtr e = *x;
-      duplicatedQueue->PushOnBack (new Entry (*e));
-    }
-    
-    return  duplicatedQueue;
-  }  /* DuplicateListAndContents */
-
-
-
+  
 
   template <class Entry>
   KKQueue<Entry>::~KKQueue () 
@@ -497,15 +486,48 @@ namespace  KKB
   }  /* RandomizeOrder */
 
 
+  
+  template <class Entry>
+  KKQueue<Entry>*    KKQueue<Entry>::DuplicateListAndContents ()  const
+  {
+    KKQueue<Entry>*  duplicatedQueue = new KKQueue<Entry> (true);
+
+    for  (const_iterator x = KKQueue<Entry>::begin ();  x != KKQueue<Entry>::end ();  x++)
+    {
+      const EntryPtr e = *x;
+      duplicatedQueue->PushOnBack (new Entry (*e));
+    }
+    
+    return  duplicatedQueue;
+  }  /* DuplicateListAndContents */
+
 
 
   template <class Entry>
   KKQueue<Entry>*   KKQueue<Entry>::Filter(bool (*f)(const Entry* e)) const
   {
-    KKQueue<Entry>*  results = new KKQueue<Entry>(false);
+    KKQueue<Entry>*  results = new KKQueue<Entry> (false);
+
     for (auto idx: *this)
     {
       auto zed = idx;
+      if  (f(idx))
+        results->PushOnBack(idx);
+    }
+
+    return results;
+  }
+
+
+
+  template <class Entry>
+  template<typename T>
+  KKQueue<T>*  KKQueue<Entry>::Map(T* (*f)(const Entry* e)) const
+  {
+    KKQueue<Entry>*  results = new KKQueue<T>(true);
+    for (auto idx: *this)
+    {
+      auto newRow = f(idx)
       if  (f(idx))
         results->PushOnBack(idx);
     }

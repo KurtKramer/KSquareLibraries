@@ -765,7 +765,6 @@ namespace  KKB
 
     KKStrList (bool owner);
 
-
     
     ///<summary> 
     /// Creates a list from a array of NULL terminated strings; the last entry in the list has to be NULL.
