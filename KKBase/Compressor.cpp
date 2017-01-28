@@ -377,7 +377,7 @@ void   Compressor::Decompress (const void*  compressedBuff,
       }
     }
 
-    unCompressedBuffLen = strm.total_out;
+    unCompressedBuffLen = (kkuint32)strm.total_out;
   }
   while (strm.avail_in > 0);
 

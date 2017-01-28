@@ -79,7 +79,7 @@ namespace KKMLL
 
     ~NormalizationParms ();
 
-    kkint32 MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     FileDescConstPtr  FileDesc ()  const  {return fileDesc;}
 

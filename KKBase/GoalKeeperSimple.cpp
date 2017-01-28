@@ -66,9 +66,9 @@ GoalKeeperSimple::~GoalKeeperSimple ()
 
 
 
-kkint32  GoalKeeperSimple::MemoryConsumedEstimated ()  const
+kkMemSize  GoalKeeperSimple::MemoryConsumedEstimated ()  const
 {
-  return  ((kkint32)sizeof (GoalKeeperSimple) + name.MemoryConsumedEstimated ());
+  return  ((kkMemSize)sizeof (GoalKeeperSimple) + name.MemoryConsumedEstimated ());
 }
 
 

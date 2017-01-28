@@ -337,7 +337,7 @@ namespace KKMLL
                          bool&  _successfull
                         );
 
-    kkint32        MemoryConsumedEstimated () const;
+    kkMemSize      MemoryConsumedEstimated () const;
       
     static
       MLClassListPtr  MergeClassList (const MLClassList&  list1,
@@ -467,7 +467,7 @@ namespace KKMLL
 
     virtual   ~MLClassIndexList ()  {}
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     virtual
       void  Clear ();

@@ -105,7 +105,7 @@ namespace KKMLL
   public:
     friend class KKQueue<FileDesc>;
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
   public:

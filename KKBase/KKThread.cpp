@@ -116,16 +116,16 @@ KKThread::~KKThread ()
 
 
 
-kkint32  KKThread::MemoryConsumedEstimated ()
+kkuint32  KKThread::MemoryConsumedEstimated ()
 {
-  kkint32  estMem = sizeof (crashed)                + 
-                  sizeof (msgQueue)               + 
-                  sizeof (shutdownFlag)           +
-                  sizeof (startPrerequisites)     +
-                  sizeof (shutdownPrerequisites)  +
-                  sizeof (status)                 + 
-                  sizeof (terminateFlag)          +
-                  threadName.MemoryConsumedEstimated ();
+  kkuint32  estMem = sizeof (crashed)                + 
+                     sizeof (msgQueue)               + 
+                     sizeof (shutdownFlag)           +
+                     sizeof (startPrerequisites)     +
+                     sizeof (shutdownPrerequisites)  +
+                     sizeof (status)                 + 
+                     sizeof (terminateFlag)          +
+                     threadName.MemoryConsumedEstimated ();
 
   if  (msgQueue)
     estMem += msgQueue->MemoryConsumedEstimated ();
@@ -574,9 +574,9 @@ KKThreadList::~KKThreadList ()
 
 
 
-kkint32  KKThreadList::MemoryConsumedEstimated ()  const
+kkuint32  KKThreadList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memEst = sizeof (KKThreadList);
+  kkuint32  memEst = sizeof (KKThreadList);
 
   KKThreadList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

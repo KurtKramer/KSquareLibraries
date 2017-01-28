@@ -117,9 +117,9 @@ Classifier2::~Classifier2 ()
 }
 
 
-kkint32  Classifier2::MemoryConsumedEstimated ()  const
+kkMemSize  Classifier2::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this);
+  kkMemSize  memoryConsumedEstimated = sizeof (*this);
   if  (mlClasses)  memoryConsumedEstimated += mlClasses->MemoryConsumedEstimated ();
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */

@@ -150,7 +150,7 @@ namespace KKMLL
 
     SVM_MachineType          MachineType                () const {return machineType;}
 
-    kkint32                  MemoryConsumedEstimated    () const;
+    kkMemSize                MemoryConsumedEstimated    () const;
 
     kkint32                  NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
                                                          RunLog&           log

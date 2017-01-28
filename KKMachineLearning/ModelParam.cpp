@@ -84,9 +84,9 @@ ModelParam::~ModelParam  ()
 }
 
 
-kkint32  ModelParam::MemoryConsumedEstimated ()  const
+kkMemSize  ModelParam::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (ModelParam)
+  kkMemSize  memoryConsumedEstimated = sizeof (ModelParam)
     +  fileName.MemoryConsumedEstimated ();
 
   if  (selectedFeatures)

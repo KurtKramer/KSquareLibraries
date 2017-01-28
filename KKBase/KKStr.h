@@ -381,7 +381,7 @@ namespace  KKB
 
     kkuint32 MaxLenSupported ()  const;                      /**< Returns the maximum String Length that this string can support. */
 
-    kkint32  MemoryConsumedEstimated () const;
+    kkMemSize  MemoryConsumedEstimated () const;
 
     /** @brief  Will break up the contents of the string into tokens where one of the characters in 'delStr' separates each token. */
     VectorKKStr  Parse (const char* delStr = "\n\r\t, ")  const;
@@ -783,7 +783,7 @@ namespace  KKB
 
     KKStrListPtr  DuplicateListAndContents ()  const;
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void   Sort (bool  _reversedOrder);
 
@@ -856,7 +856,7 @@ namespace  KKB
 
     KKStrConstPtr  LookUp (kkuint32 x)  const;
 
-    kkint32 MemoryConsumedEstimated ()  const;
+    kkMemSize MemoryConsumedEstimated ()  const;
 
     void  ReadXML (XmlStream&      s,
                    XmlTagConstPtr  tag,
@@ -896,7 +896,7 @@ namespace  KKB
     bool          caseSensative;
     KKStrPtrComp  comparator;
     IndexIndex    indexIndex;
-    kkint32       memoryConsumedEstimated;
+    kkMemSize     memoryConsumedEstimated;
     kkint32       nextIndex;
     bool          owner;
     StrIndex*     strIndex;

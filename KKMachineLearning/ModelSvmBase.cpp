@@ -96,11 +96,11 @@ ModelSvmBase::~ModelSvmBase ()
 
 
 
-kkint32  ModelSvmBase::MemoryConsumedEstimated ()  const
+kkMemSize  ModelSvmBase::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
-                                 sizeof (SVM289_MFS::Svm_Model*)   + 
-                                 sizeof (ModelParamSvmBasePtr);
+  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+                                       sizeof (SVM289_MFS::Svm_Model*)   + 
+                                       sizeof (ModelParamSvmBasePtr);
 
   if  (svmModel)
     memoryConsumedEstimated += svmModel->MemoryConsumedEstimated ();

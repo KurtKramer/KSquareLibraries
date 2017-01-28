@@ -117,7 +117,7 @@ namespace  SVM233
     double  Gamma      ()  const {return  gamma;}
     kkint32 KernalType ()  const {return  kernel_type;}
 
-    kkint32 MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     void  ProcessSvmParameter (KKStr   cmd,
                                KKStr   value,
@@ -180,7 +180,7 @@ struct SvmModel233
   }
 
 
-  kkint32  MemoryConsumedEstimated ()  const;
+  kkMemSize  MemoryConsumedEstimated ()  const;
   
 
   KKStr  SupportVectorName (kkint32 svIDX);

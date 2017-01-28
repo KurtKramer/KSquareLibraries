@@ -168,11 +168,11 @@ FeatureEncoder2::~FeatureEncoder2 ()
 }
 
 
-kkint32  FeatureEncoder2::MemoryConsumedEstimated ()  const
+kkMemSize  FeatureEncoder2::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FeatureEncoder2)
-    +  attributeVector.size ()   * sizeof (AttributeType)
-    +  cardinalityVector.size () * sizeof (kkint32);
+  kkMemSize  memoryConsumedEstimated = sizeof (FeatureEncoder2)
+          +  attributeVector.size ()   * sizeof (AttributeType)
+          +  cardinalityVector.size () * sizeof (kkint32);
 
   if  (cardinalityDest)   memoryConsumedEstimated += 2 * numOfFeatures * sizeof (kkint32);  // For 'cardinalityDest', 'destFeatureNums'
   if  (destFeatureNums)   memoryConsumedEstimated += numOfFeatures * sizeof (kkint32);

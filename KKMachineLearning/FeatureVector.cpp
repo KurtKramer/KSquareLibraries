@@ -78,9 +78,9 @@ FeatureVector::~FeatureVector ()
 
 
 
-kkint32  FeatureVector::MemoryConsumedEstimated ()  const
+kkMemSize  FeatureVector::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FeatureVector)
+  kkMemSize  memoryConsumedEstimated = sizeof (FeatureVector)
     +  exampleFileName.MemoryConsumedEstimated ();
 
   if  (featureData)
@@ -384,9 +384,9 @@ FeatureVectorList::~FeatureVectorList ()
 
 
 
-kkint32  FeatureVectorList::MemoryConsumedEstimated ()  const
+kkMemSize  FeatureVectorList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
+  kkMemSize  memoryConsumedEstimated = sizeof (FeatureVectorList) + fileName.MemoryConsumedEstimated ();
   FeatureVectorList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
   {

@@ -433,9 +433,9 @@ void  SVMModel::AllocateXSpaces ()
 
 
 
-kkint32  SVMModel::MemoryConsumedEstimated ()  const
+kkMemSize  SVMModel::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (SVMModel)
+  kkMemSize  memoryConsumedEstimated = sizeof (SVMModel)
        + assignments.MemoryConsumedEstimated ()
        + sizeof (kkint16) * oneVsAllAssignment.size ()
        + sizeof (kkint32) * cardinality_table.size ()

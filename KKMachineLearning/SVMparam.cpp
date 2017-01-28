@@ -121,9 +121,9 @@ FeatureNumListConstPtr  SVMparam::SelectedFeatures (FileDescConstPtr  fileDesc) 
 
 
 
-kkint32  SVMparam::MemoryConsumedEstimated () const
+kkMemSize  SVMparam::MemoryConsumedEstimated () const
 {
-  kkint32  memoryConsumedEstimated = sizeof (SVMparam) + fileName.MemoryConsumedEstimated ();
+  kkMemSize  memoryConsumedEstimated = sizeof (SVMparam) + fileName.MemoryConsumedEstimated ();
   if  (selectedFeatures)
     memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
 

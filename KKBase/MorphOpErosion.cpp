@@ -34,7 +34,7 @@ MorphOpErosion::~MorphOpErosion ()
 
 
 
-kkint32  MorphOpErosion::MemoryConsumedEstimated ()
+kkuint32  MorphOpErosion::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }

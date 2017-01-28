@@ -462,9 +462,9 @@ void  UsfCasCor::CleanUpMemory ()
 
 
 
-kkint32  UsfCasCor::MemoryConsumedEstimated ()  const
+kkMemSize  UsfCasCor::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this);
+  kkMemSize  memoryConsumedEstimated = sizeof (*this);
 
   if  (feature_type)     memoryConsumedEstimated += Ninputs  * sizeof (int);
   if  (SumErrors)        memoryConsumedEstimated += Noutputs * sizeof (float);

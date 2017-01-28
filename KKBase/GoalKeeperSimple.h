@@ -117,7 +117,7 @@ namespace  KKB
      */
     void   EndBlock ();
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     const  KKStr&  Name ()  const  {return  name;}
 

@@ -179,9 +179,9 @@ FeatureEncoder::~FeatureEncoder ()
 
 
 
-kkint32  FeatureEncoder::MemoryConsumedEstimated ()  const
+kkMemSize  FeatureEncoder::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FeatureEncoder) 
+  kkMemSize  memoryConsumedEstimated = sizeof (FeatureEncoder) 
     + selectedFeatures.MemoryConsumedEstimated ()
     + numOfFeatures * sizeof (kkint32);
 

@@ -37,7 +37,7 @@ MorphOpStruct::~MorphOpStruct ()
 
 
 
-kkint32  MorphOpStruct::MemoryConsumedEstimated ()
+kkMemSize  MorphOpStruct::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }

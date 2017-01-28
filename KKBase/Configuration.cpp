@@ -50,12 +50,14 @@ namespace  KKB
     KKStrConstPtr   Name     ()  const {return  &name;}
     KKStrConstPtr   Value    ()  const {return  &value;}
 
-    kkint32 MemoryConsumedEstimated ()  const  {return  sizeof (Setting) + name.MemoryConsumedEstimated () + value.MemoryConsumedEstimated ();}
+    kkMemSize MemoryConsumedEstimated ()  const  {return  (kkMemSize)sizeof (Setting) + 
+                                                          name.MemoryConsumedEstimated () + 
+                                                          value.MemoryConsumedEstimated ();}
 
   private:
     kkint32  lineNum;
-    KKStr  name;
-    KKStr  value;
+    KKStr    name;
+    KKStr    value;
   };  /* Setting */
 
 
@@ -76,9 +78,9 @@ namespace  KKB
       }
     }
 
-    kkint32 MemoryConsumedEstimated ()  const
+    kkMemSize MemoryConsumedEstimated ()  const
     {
-      kkint32  memoryConsumedEstimated = sizeof (SettingList);
+      kkMemSize  memoryConsumedEstimated = sizeof (SettingList);
       SettingList::const_iterator  idx;
       for  (idx = begin ();  idx != end ();  ++idx)
         memoryConsumedEstimated += (*idx)->MemoryConsumedEstimated ();
@@ -154,7 +156,7 @@ namespace  KKB
 
     KKStrConstPtr   Name ()  {return  &name;}
 
-    kkint32 MemoryConsumedEstimated ()  const
+    kkMemSize  MemoryConsumedEstimated ()  const
     {
       return sizeof (lineNum) + name.MemoryConsumedEstimated () + settings.MemoryConsumedEstimated ();
     }
@@ -237,9 +239,9 @@ namespace  KKB
     ConfSectionList (): KKQueue<ConfSection> (true)  {}
 
 
-    kkint32 MemoryConsumedEstimated ()  const
+    kkMemSize MemoryConsumedEstimated ()  const
     {
-      kkint32  memoryConsumedEstimated = sizeof (ConfSectionList);
+      kkMemSize  memoryConsumedEstimated = sizeof (ConfSectionList);
       ConfSectionList::const_iterator  idx;
       for  (idx = begin ();  idx != end ();  ++idx)
         memoryConsumedEstimated += (*idx)->MemoryConsumedEstimated ();
@@ -340,13 +342,13 @@ Configuration::~Configuration ()
 
 
 
-kkint32 Configuration::MemoryConsumedEstimated ()  const
+kkMemSize Configuration::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (Configuration)
+  kkMemSize  memoryConsumedEstimated = sizeof (Configuration)
     + curSectionName.MemoryConsumedEstimated ()
     + fileName.MemoryConsumedEstimated ()
-    + (kkint32)formatErrors.size () * 100
-    + (kkint32)formatErrorsLineNums.size () * sizeof (kkint32);
+    + (kkMemSize)formatErrors.size () * 100
+    + (kkMemSize)formatErrorsLineNums.size () * sizeof (kkint32);
 
   if  (sections)
     memoryConsumedEstimated += sections->MemoryConsumedEstimated ();

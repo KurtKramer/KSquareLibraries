@@ -117,7 +117,7 @@ ModelDual::~ModelDual ()
 }
 
 
-kkint32 ModelDual::MemoryConsumedEstimated ()  const
+kkMemSize ModelDual::MemoryConsumedEstimated ()  const
 {
   kkint32 memoryConsumedEstimated = Model::MemoryConsumedEstimated ();
   if  (trainer1)    memoryConsumedEstimated += trainer1->MemoryConsumedEstimated ();

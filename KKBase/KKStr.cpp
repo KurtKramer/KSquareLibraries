@@ -723,9 +723,9 @@ void  KKStr::AllocateStrSpace (kkuint32  size)
 
 
 
-kkint32  KKStr::MemoryConsumedEstimated () const  
+kkMemSize  KKStr::MemoryConsumedEstimated () const  
 {
-  return  (kkint32)(sizeof (char*) + 2 * sizeof (kkuint16) + allocatedSize);
+  return  (kkMemSize)(sizeof (char*) + 2 * sizeof (kkuint16) + allocatedSize);
 }
 
 
@@ -4430,9 +4430,9 @@ KKStrList::KKStrList (const char*  s[]):
 
 
 
-kkint32  KKStrList::MemoryConsumedEstimated ()  const
+kkMemSize  KKStrList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (KKStrList);
+  kkMemSize  memoryConsumedEstimated = sizeof (KKStrList);
   KKStrList::const_iterator idx;
   for  (idx = this->begin ();  idx != this->end ();  ++idx)
     memoryConsumedEstimated += (*idx)->MemoryConsumedEstimated ();
@@ -5347,7 +5347,7 @@ kkuint32  KKStrListIndexed::size ()  const
 
 
 
-kkint32  KKStrListIndexed::MemoryConsumedEstimated ()  const
+kkMemSize  KKStrListIndexed::MemoryConsumedEstimated ()  const
 {
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */

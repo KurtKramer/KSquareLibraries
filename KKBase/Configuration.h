@@ -79,7 +79,7 @@ namespace KKB
 
     void  LoadFile (RunLog& log);
 
-    virtual kkint32 MemoryConsumedEstimated ()  const;
+    virtual kkMemSize  MemoryConsumedEstimated ()  const;
 
     kkint32 NumOfSections ();
   

@@ -132,9 +132,9 @@ FeatureNumList::~FeatureNumList ()
 
 
 
-kkint32  FeatureNumList::MemoryConsumedEstimated ()  const
+kkMemSize  FeatureNumList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FeatureNumList);
+  kkMemSize  memoryConsumedEstimated = sizeof (FeatureNumList);
   if  (featureNums)
     memoryConsumedEstimated += sizeof (kkuint16) * featureNumsAllocatedSize;
 

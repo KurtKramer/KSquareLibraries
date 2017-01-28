@@ -510,8 +510,8 @@ namespace  KKB
 
     for (auto idx: *this)
     {
-      auto zed = idx;
-      if  (f(idx))
+      bool zed = f(idx);
+      if  (zed)
         results->PushOnBack(idx);
     }
 
@@ -527,9 +527,9 @@ namespace  KKB
     KKQueue<Entry>*  results = new KKQueue<T>(true);
     for (auto idx: *this)
     {
-      auto newRow = f(idx)
-      if  (f(idx))
-        results->PushOnBack(idx);
+      auto newRow = f(idx);
+      if  (newRow)
+        results->PushOnBack(newRow);
     }
 
     return results;

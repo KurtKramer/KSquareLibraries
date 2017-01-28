@@ -152,7 +152,7 @@ namespace KKMLL
     
     bool  InList (kkuint16 featureNum)  const;    /**< @brief returns true if '_featureNum' is one of the selected features. */
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     /**

@@ -68,11 +68,11 @@ SvmModel233::~SvmModel233 ()
 }
 
 
-kkint32  SvmModel233::MemoryConsumedEstimated ()  const
+kkMemSize  SvmModel233::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (SvmModel233)
+  kkMemSize  memoryConsumedEstimated = sizeof (SvmModel233)
     +  param.MemoryConsumedEstimated ()
-    +  (kkint32)exampleNames.size () * 40;
+    +  (kkMemSize)exampleNames.size () * 40;
 
   if  (SV)             memoryConsumedEstimated  += sizeof (svm_node*) * l;
   if  (sv_coef)        memoryConsumedEstimated  += (nr_class - 1) * sizeof (double*) + l * (nr_class - 1) * sizeof (double);
@@ -884,9 +884,9 @@ svm_parameter&  svm_parameter::operator= (const svm_parameter&  right)
 
 
 
-kkint32 svm_parameter::MemoryConsumedEstimated ()  const
+kkMemSize svm_parameter::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (svm_parameter);
+  kkMemSize  memoryConsumedEstimated = sizeof (svm_parameter);
   if  (weight)
     memoryConsumedEstimated += ((sizeof (double) + sizeof(kkint32)) * nr_weight);
 

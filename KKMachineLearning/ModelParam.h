@@ -77,7 +77,7 @@ namespace KKMLL
 
 
     virtual
-    kkint32   MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     virtual

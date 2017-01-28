@@ -90,10 +90,10 @@ ModelUsfCasCor::~ModelUsfCasCor ()
 }
 
 
-kkint32  ModelUsfCasCor::MemoryConsumedEstimated ()  const
+kkMemSize  ModelUsfCasCor::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
-                                   sizeof (usfCasCorClassifier);
+  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+                                       sizeof (usfCasCorClassifier);
 
   if  (usfCasCorClassifier)
     memoryConsumedEstimated += usfCasCorClassifier->MemoryConsumedEstimated ();
