@@ -89,11 +89,11 @@ Attribute::~Attribute ()
 }
 
 
-kkint32  Attribute::MemoryConsumedEstimated ()  const
+kkMemSize  Attribute::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = (kkint32)sizeof (Attribute)  +
-           name.MemoryConsumedEstimated ()               +
-           nameUpper.MemoryConsumedEstimated ();
+  kkMemSize  memoryConsumedEstimated = (kkMemSize)sizeof (Attribute)  +
+             name.MemoryConsumedEstimated ()               +
+             nameUpper.MemoryConsumedEstimated ();
 
   if  (nominalValuesUpper)
     memoryConsumedEstimated += nominalValuesUpper->MemoryConsumedEstimated ();
@@ -343,14 +343,14 @@ AttributeList::~AttributeList ()
 }
 
 
-kkint32  AttributeList::MemoryConsumedEstimated ()  const
+kkMemSize  AttributeList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = (kkint32)sizeof (AttributeList) + nameIndex.size ();
+  kkMemSize  memoryConsumedEstimated = (kkMemSize)sizeof (AttributeList) + nameIndex.size ();
   
   {
     std::map<KKStr, AttributePtr>::const_iterator  idx;
     for  (idx = nameIndex.begin ();  idx != nameIndex.end ();  ++idx)
-      memoryConsumedEstimated += ((kkint32)sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
+      memoryConsumedEstimated += ((kkMemSize)sizeof (AttributePtr) + idx->first.MemoryConsumedEstimated ());
   }
 
   {

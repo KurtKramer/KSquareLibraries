@@ -32,7 +32,7 @@ namespace KKB
     virtual ~KKObserver ();
 
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
     virtual  void  Notify (KKObservablePtr  obj);
 

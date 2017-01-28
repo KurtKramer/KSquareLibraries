@@ -144,7 +144,7 @@ RasterPtr  RasterBuffer::GetNextRaster ()
 
 
 
-kkint32  RasterBuffer::MemoryConsumedEstimated ()
+kkuint32  RasterBuffer::MemoryConsumedEstimated ()
 {
   kkint32  result = 0;
   gateKeeper->StartBlock ();

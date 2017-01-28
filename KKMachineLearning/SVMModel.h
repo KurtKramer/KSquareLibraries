@@ -124,7 +124,7 @@ namespace KKMLL
 
     //kkint32              DuplicateDataCount () const {return duplicateCount;}
 
-    kkint32            MemoryConsumedEstimated ()  const;
+    kkMemSize          MemoryConsumedEstimated ()  const;
 
     virtual
     bool               NormalizeNominalAttributes ();  /**< Return true, if nominal fields need to be normalized.  */

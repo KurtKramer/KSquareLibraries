@@ -33,7 +33,7 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image);
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     float  EigenRatio        () const  {return eigenRatio;}
     float  OrientationAngle  () const  {return orientationAngle;}

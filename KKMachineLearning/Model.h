@@ -165,7 +165,7 @@ namespace KKMLL
 
     virtual FeatureNumListConstPtr    GetFeatureNums             () const;
 
-    virtual kkint32                   MemoryConsumedEstimated    () const;
+    virtual kkMemSize                 MemoryConsumedEstimated    () const;
 
     MLClassListPtr                    MLClasses                  () const  {return  classes;}
 

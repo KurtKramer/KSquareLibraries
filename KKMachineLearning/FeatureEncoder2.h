@@ -54,9 +54,9 @@ namespace KKMLL
 
     kkint32  CodedNumOfFeatures () const  {return codedNumOfFeatures;}
 
-    FileDescConstPtr       CreateEncodedFileDesc (ostream*  o,
-                                                  RunLog&   log
-                                                 )  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
+    FileDescConstPtr  CreateEncodedFileDesc (ostream*  o,
+                                             RunLog&   log
+                                            )  const;  /**< If 'o' is not NULL will write out a table showing assignments from old to new.  */
 
     FeatureVectorListPtr  EncodedFeatureVectorList (const  FeatureVectorList&  srcData)  const;
 
@@ -64,7 +64,7 @@ namespace KKMLL
 
     FeatureVectorPtr  EncodeAExample (FeatureVectorPtr  src)  const;
 
-    kkint32           MemoryConsumedEstimated ()  const;
+    kkMemSize         MemoryConsumedEstimated ()  const;
 
     kkint32           NumEncodedFeatures ()  const;
 

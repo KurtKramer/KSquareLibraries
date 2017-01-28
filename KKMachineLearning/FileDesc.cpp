@@ -75,14 +75,14 @@ FileDesc::~FileDesc ()
 }
 
 
-kkint32  FileDesc::MemoryConsumedEstimated ()  const
+kkMemSize  FileDesc::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (FileDesc)         +
-         attributes.MemoryConsumedEstimated ()               +
-         sizeof (AttributeType) * attributeVector.size ()    +
-         sizeof (kkint32)         * cardinalityVector.size ()  +
-         classes.MemoryConsumedEstimated ()                  +
-         classNameAttribute.MemoryConsumedEstimated ();
+  kkMemSize  memoryConsumedEstimated = sizeof (FileDesc)         +
+             attributes.MemoryConsumedEstimated ()               +
+             sizeof (AttributeType) * attributeVector.size ()    +
+             sizeof (kkint32)       * cardinalityVector.size ()  +
+             classes.MemoryConsumedEstimated ()                  +
+             classNameAttribute.MemoryConsumedEstimated ();
 
   return  memoryConsumedEstimated;
 }

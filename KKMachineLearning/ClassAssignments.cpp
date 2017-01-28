@@ -43,9 +43,9 @@ ClassAssignments::ClassAssignments (const MLClassList&  classes):
 
 
 
-kkint32  ClassAssignments::MemoryConsumedEstimated ()  const
+kkMemSize  ClassAssignments::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (ClassAssignments) 
+  kkMemSize  memoryConsumedEstimated = sizeof (ClassAssignments) 
     +  (classLookUp.size () * (sizeof (MLClassPtr) + sizeof (kkint16)));
   return  memoryConsumedEstimated;
 }

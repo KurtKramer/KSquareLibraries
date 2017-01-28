@@ -613,7 +613,7 @@ MLClassList::~MLClassList ()
 
 
 
-kkint32  MLClassList::MemoryConsumedEstimated ()  const
+kkMemSize  MLClassList::MemoryConsumedEstimated ()  const
 {
   return  sizeof (MLClassList) + sizeof (MLClassPtr) * size ();
 }
@@ -1566,7 +1566,7 @@ void  MLClassIndexList::Clear ()
 
 
 
-kkint32  MLClassIndexList::MemoryConsumedEstimated ()  const
+kkMemSize  MLClassIndexList::MemoryConsumedEstimated ()  const
 {
   return sizeof (MLClassIndexList) + (shortIdx.size () * (sizeof (kkint16) + sizeof (MLClassPtr) + 10));  // added 10- bytes per entry for overhead.
 }

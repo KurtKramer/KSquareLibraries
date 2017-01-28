@@ -85,7 +85,7 @@ namespace  KKMLL
     ~ModelDual ();
 
     virtual
-    kkint32               MemoryConsumedEstimated ()  const;
+    kkMemSize             MemoryConsumedEstimated ()  const;
 
     virtual
     KKStr                 Description ()  const;  /**< Return short user readable description of model. */

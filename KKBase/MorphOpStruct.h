@@ -34,7 +34,7 @@ namespace  KKB
 
     virtual  RasterPtr   PerformOperation (RasterConstPtr  _image) = 0;
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
 
     void  BackgroundCountTH (kkint32 _backgroundCountTH)  {backgroundCountTH = _backgroundCountTH;}
     void  ForegroundCountTH (kkint32 _foregroundCountTH)  {foregroundCountTH = _foregroundCountTH;}

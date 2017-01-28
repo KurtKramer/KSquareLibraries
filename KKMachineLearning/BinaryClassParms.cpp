@@ -182,9 +182,9 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
 
 
 
-kkint32  BinaryClassParms::MemoryConsumedEstimated ()  const
+kkMemSize  BinaryClassParms::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (*this)  + param.MemoryConsumedEstimated ();
+  kkMemSize  memoryConsumedEstimated = sizeof (*this)  + param.MemoryConsumedEstimated ();
 
   if  (selectedFeatures)
     memoryConsumedEstimated += selectedFeatures->MemoryConsumedEstimated ();
@@ -230,9 +230,9 @@ BinaryClassParmsList::~BinaryClassParmsList ()
 
 
 
-kkint32  BinaryClassParmsList::MemoryConsumedEstimated ()  const
+kkMemSize  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
+  kkMemSize  memoryConsumedEstimated = sizeof (BinaryClassParmsList);
   BinaryClassParmsList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)
     memoryConsumedEstimated  += (*idx)->MemoryConsumedEstimated ();

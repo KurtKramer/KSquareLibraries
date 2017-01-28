@@ -53,7 +53,7 @@ typedef  ClassProbList*  ClassProbListPtr;
 
     virtual  ModelSvmBasePtr    Duplicate ()  const;
 
-    virtual  kkint32      MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize    MemoryConsumedEstimated ()  const;
 
     virtual ModelTypes    ModelType () const  {return ModelTypes::SvmBase;}
 

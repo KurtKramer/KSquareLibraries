@@ -97,10 +97,10 @@ namespace KKMLL
     void  SelectedFeatures (FeatureNumListConstPtr      _selectedFeatures);  /**< Will make copy of instance;  caller will retain ownership status. */
     void  Weight           (float                       _weight)            {weight            = _weight;}
 
-    KKStr   Class1Name ()  const;
-    KKStr   Class2Name ()  const;
-    kkint32 MemoryConsumedEstimated ()  const;
-    KKStr   ToTabDelString ()  const;
+    KKStr     Class1Name ()  const;
+    KKStr     Class2Name ()  const;
+    kkMemSize MemoryConsumedEstimated ()  const;
+    KKStr     ToTabDelString ()  const;
 
 
   private:
@@ -163,7 +163,7 @@ namespace KKMLL
 
     BinaryClassParmsList*  DuplicateListAndContents ()  const;
 
-    kkint32  MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
     virtual
     void  PushOnBack  (BinaryClassParmsPtr  binaryParms);

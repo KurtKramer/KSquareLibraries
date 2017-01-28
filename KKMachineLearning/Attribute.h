@@ -116,7 +116,7 @@ namespace KKMLL
     const  
     KKStr&         GetNominalValue (kkint32 code) const;
 
-    kkint32        MemoryConsumedEstimated ()  const;
+    kkMemSize      MemoryConsumedEstimated ()  const;
 
     const
     KKStr&         Name () const {return name;}
@@ -173,7 +173,7 @@ namespace KKMLL
     AttributeConstPtr  LookUpByName (const KKStr&  attributeName)  const;
 
 
-    kkint32 MemoryConsumedEstimated ()  const;
+    kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     void  PushOnBack   (AttributePtr  attribute);

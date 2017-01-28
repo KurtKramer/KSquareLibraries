@@ -207,7 +207,7 @@ Model::~Model ()
 }
 
 
-kkint32  Model::MemoryConsumedEstimated ()  const
+kkMemSize  Model::MemoryConsumedEstimated ()  const
 {
   kkint32  memoryConsumedEstimated = sizeof (Model) + rootFileName.MemoryConsumedEstimated ();
   if  (classes)              memoryConsumedEstimated += classes->MemoryConsumedEstimated ();

@@ -94,9 +94,9 @@ ModelOldSVM::~ModelOldSVM ()
 }
 
 
-kkint32  ModelOldSVM::MemoryConsumedEstimated ()  const
+kkMemSize  ModelOldSVM::MemoryConsumedEstimated ()  const
 {
-  kkint32  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
+  kkMemSize  memoryConsumedEstimated = Model::MemoryConsumedEstimated () + 
                                  sizeof (ClassAssignmentsPtr) + 
                                  sizeof (SVMModelPtr);
 

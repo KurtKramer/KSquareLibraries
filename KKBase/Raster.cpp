@@ -829,21 +829,21 @@ void  Raster::CleanUpMemory ()
 
 
 
-kkint32  Raster::MemoryConsumedEstimated ()  const
+kkMemSize  Raster::MemoryConsumedEstimated ()  const
 {
-  kkint32  blobIdsMem = 0;
+  kkMemSize  blobIdsMem = 0;
   if  (blobIds)
     blobIdsMem = (kkint32)sizeof(kkint32) * totPixels + (kkint32)sizeof (kkint32*) * height;
 
-  kkint32  fourierMem = 0;
+  kkMemSize  fourierMem = 0;
   if  (fourierMagArea)
     fourierMem = (kkint32)sizeof (float) * totPixels + (kkint32)sizeof (float*) * height;
 
-  kkint32  pixelMem = totPixels + (kkint32)sizeof (uchar*) * height;
+  kkMemSize  pixelMem = totPixels + (kkint32)sizeof (uchar*) * height;
   if  (color)
     pixelMem = pixelMem * 3;
 
-  kkint32  memoryConsumedEstimated = (kkint32)(
+  kkMemSize  memoryConsumedEstimated = (kkMemSize)(
     sizeof (uchar)     * 4   +
     sizeof (float)     * 2   +
     sizeof (bool)      * 2   +

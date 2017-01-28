@@ -4281,10 +4281,10 @@ void  SVM289_MFS::Svm_Model::CancelFlag (bool  _cancelFlag)
 
 
 
-kkint32  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
+kkMemSize  SVM289_MFS::Svm_Model::MemoryConsumedEstimated ()  const
 {
-  kkint32  numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
-  kkint32  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
+  kkint32    numBinaryClassCombos = nr_class * (nr_class - 1) / 2;
+  kkMemSize  memoryConsumedEstimated = sizeof (*this) + SV.MemoryConsumedEstimated ();
 
   if  (sv_coef)         memoryConsumedEstimated += sizeof (double)  * (nr_class - 1) * numSVs;    // sv_coef
   if  (rho)             memoryConsumedEstimated += sizeof (double)  * numBinaryClassCombos;  // rho
