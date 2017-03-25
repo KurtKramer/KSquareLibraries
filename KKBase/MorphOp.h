@@ -37,9 +37,9 @@ namespace  KKB
    *@brief  Base class for all Morphological operations.
    *@details
    *  It is assumed that all morphologocal operations will be working with a source image and returning a new
-   * modified image; the atcual operation is to be perfomed by the "PerformOperation" metho where you pass in
-   * a poiter to the source Image/ Raster. The the derived class would then call "SetSrcRaster" to intialize
-   * the base class "MorphOp" with pointers to the source image.
+   * modified image; the atcual operation is to be perfomed by the "PerformOperation" method that takes pointer
+   * to the source Image/ Raster. The the derived class would then call "SetSrcRaster" to intialize the base
+   * class "MorphOp" with pointers to the source image.
    */
   class  MorphOp
   {
