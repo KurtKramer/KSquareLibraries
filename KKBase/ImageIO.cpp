@@ -488,7 +488,7 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
   // Read till first delimiter or eof or eol
   while  ((!eof)  &&  (strchr (" #\t\n\r", ch) == 0))
   {
-    token[tokenLen] = ch;
+    token[tokenLen] = (uchar)ch;
     tokenLen++;
     if  (tokenLen >= maxTokenLen)
       break;
@@ -587,9 +587,9 @@ RasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)
       kkint32  greenValue  = Min (greenField.ToInt32 (), pixelDepth);
       kkint32  blueValue   = Min (blueField.ToInt32  (), pixelDepth);
 
-      *red   = ((255 *  redValue)   / pixelDepth);   ++red;
-      *green = ((255 *  greenValue) / pixelDepth);   ++green;
-      *blue  = ((255 *  blueValue)  / pixelDepth);   ++blue;
+      *red   = (uchar)((255 *  redValue)   / pixelDepth);   ++red;
+      *green = (uchar)((255 *  greenValue) / pixelDepth);   ++green;
+      *blue  = (uchar)((255 *  blueValue)  / pixelDepth);   ++blue;
 
       ++pixelsRead;
     }
@@ -755,7 +755,7 @@ void  KKB::SaveImagePNG (const Raster&  image,
 
     for  (kkint32 x = 0;  x < totalPixels;  x++)
     {
-      uchar  intensity = 255 - (*green);
+      uchar  intensity = (uchar)(255 - (*green));
       buff3[0] = intensity;
       buff3[1] = intensity;
       buff3[2] = intensity;
@@ -855,11 +855,11 @@ void  KKB::SaveImageInverted (Raster&       raster,
   {
     for  (c = 0;  c < invertedImage->Width ();  c++)
     {
-      g[r][c] = 255 - g[r][c];
+      g[r][c] = (uchar)(255 - g[r][c]);
       if  (invertedImage->Color ())
       {
-        red [r][c] = 255 - red [r][c];
-        blue[r][c] = 255 - blue[r][c];
+        red [r][c] = (uchar)(255 - red [r][c]);
+        blue[r][c] = (uchar)(255 - blue[r][c]);
       }
     }
   }
