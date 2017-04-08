@@ -6,15 +6,15 @@
 // For non windows systems; will allow fseeko() and ftello() to work with 64 bit int's.
 #define _FILE_OFFSET_BITS 64
 
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
+#include <cstdio>
+#include <direct.h>
 
 #if  defined(KKOS_WINDOWS)
-#include <direct.h>
 #include <windows.h>
 #include <Lmcons.h>
 #include <conio.h>
 #else
-#include <dirent.h>
 #include <sys/types.h>
 #include <sys/times.h>
 #include <sys/time.h>
@@ -27,7 +27,7 @@
 #include <errno.h>
 #include <iostream>
 #include <fstream> 
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdlib.h> 
 #include <string.h>
 #include <string>
@@ -69,26 +69,23 @@ KKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)
 
 
 
-FILE*  KKB::osFOPEN (const char* fileName, 
-                     const char* mode
-					          )
+std::FILE*  KKB::osFOPEN (const char* fileName,
+                          const char* mode
+					               )
 {
-  FILE*  f = NULL;
+  std::FILE*  f = NULL;
 
 # ifdef  USE_SECURE_FUNCS
-    fopen_s (&f, fileName, mode);
+  fopen_s (&f, fileName, mode);
 # else
-    f = fopen (fileName, mode);
+    f = std::fopen (fileName, mode);
 # endif
 
   return  f;
 }
 
 
-
-
-
-kkint64  KKB::osFTELL (FILE* f)
+kkint64  KKB::osFTELL (std::FILE* f)
 {
 #if  defined(KKOS_WINDOWS)
   return  _ftelli64 (f);
@@ -99,15 +96,15 @@ kkint64  KKB::osFTELL (FILE* f)
 
 
 
-int  KKB::osFSEEK (FILE*    f,
-                   kkint64  offset,
-                   int      origin
+int  KKB::osFSEEK (std::FILE*  f,
+                   kkint64     offset,
+                   int         origin
                   )
 {
 #if  defined(KKOS_WINDOWS)
   return  _fseeki64(f, offset, origin);
 #else
-  return  fseeko (f, offset, origin);
+  return  fseeko(f, offset, origin);
 #endif
 }
 
@@ -185,14 +182,14 @@ bool  osFileNameMatchesSearchFields (const KKStr&  fileName,
   if  (searchFields->QueueSize () < 1)
     return true;
 
-  KKStrConstPtr  field = searchFields->IdxToPtr (0);
+  KKStrConstPtr  fieldPtr = searchFields->IdxToPtr (0);
 
   if  (searchFields->QueueSize () == 1)
   {
-    if  (*field == "*")
+    if  (*fieldPtr == "*")
       return  true;
 
-    if  (*field == fileName)
+    if  (*fieldPtr == fileName)
       return true;
     else
       return false;
@@ -751,7 +748,7 @@ bool  KKB::osRenameFile (const KKStr&  oldName,
                         )
 {
   
-  kkint32  returnCd = rename (oldName.Str (), newName.Str ());
+  kkint32  returnCd = std::rename (oldName.Str (), newName.Str ());
 
   if  (returnCd == 0)
     return true;
@@ -957,7 +954,7 @@ int  osLocateEnvStrStart (const KKStr&  str,
 
 KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)
 {
-  kkint16  x = osLocateEnvStrStart (src, 0);
+  kkint32  x = osLocateEnvStrStart (src, 0);
   if  (x < 0)  return  src;
 
   KKStr  str (src);

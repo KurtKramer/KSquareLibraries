@@ -5,6 +5,7 @@
 #include "FirstIncludes.h"
 #include <stdio.h>
 #include <fstream>
+#include <cctype>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -233,7 +234,7 @@ void  BitString::ReSet (kkuint32 bitNum)
 
 
 
-
+/*
 void  BitString::PopulateVectorBool (VectorBool&  boolVector)  const
 {
   boolVector.erase (boolVector.begin (), boolVector.end ());
@@ -256,9 +257,9 @@ void  BitString::PopulateVectorBool (VectorBool&  boolVector)  const
       br = br / 2;
     }
   }
-}  /* PopulateVectorBool */
+}  // PopulateVectorBool`
 
-
+*/
 
 
 void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const
@@ -385,7 +386,7 @@ kkint32  BitString::HexCharToInt (uchar hexChar)
   if  ((hexChar >= '0')  &&  (hexChar <= '9'))
     return  (kkint32 (hexChar) - kkint32 ('0'));
 
-  hexChar = (char)toupper (hexChar);
+  hexChar = (char)std::toupper ((int)hexChar);
   if  ((hexChar < 'A')  ||  (hexChar > 'F'))
     return -1;
 

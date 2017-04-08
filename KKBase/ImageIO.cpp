@@ -3,6 +3,7 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
+#include <cstdio>
 #include <iostream>
 #include <iostream>
 #include <vector>
@@ -386,7 +387,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
     nextLine = osReadRestOfLine2 (i, eof);
     if  (eof  ||  (nextLine[(kkint16)0] != 'P')  ||  (nextLine[(kkint16)1] != '5'))
     {
-      fclose (i);
+      std::fclose (i);
       return NULL;
     }
 
@@ -416,7 +417,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
        (width     < 1)  ||  (height < 1)
       )
   {
-    fclose (i);
+    std::fclose (i);
     cerr << endl << endl
       << "ReadImagePGM   ***ERROR***  ImageFile[" << imageFileName << "]  Invalid Header"
       << "  width[" << width << "]  height[" << height << "]  pixelSize[" << pixelSize << "]"
@@ -433,7 +434,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
 
   for  (row = 0;  row < height;  row++)
   {
-    fread (colBuff, 1, width, i);
+    std::fread (colBuff, 1, width, i);
 
     for  (col = 0;  col < width;  col++)
     {
@@ -441,7 +442,7 @@ RasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)
     }
   }
 
-  fclose (i);
+  std::fclose (i);
      
   return  image;
 }  /* ReadImagePGM */
@@ -463,9 +464,9 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
   while  (!startOfTokenFound)
   {
     // Skip leading white space
-    ch = fgetc (in);  eof = (feof (in) != 0);
+    ch = std::fgetc (in);  eof = (std::feof (in) != 0);
     while  ((!eof)  &&  (strchr (" #\t\n\r", ch) != NULL)  &&  (ch != '\n')  &&  (ch != '#'))
-      {ch = fgetc (in); eof = (feof (in)!= 0);}
+      {ch = std::fgetc (in); eof = (std::feof (in)!= 0);}
 
     if  (eof)  
       return KKStr::EmptyStr ();
@@ -474,7 +475,7 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
     {
       // Skip the rest of the line.
       while  ((!eof)  &&  (ch != '\n'))
-        {ch = fgetc (in); eof = (feof (in)!= 0);}
+        {ch = std::fgetc (in); eof = (std::feof (in)!= 0);}
     }
 
     else
