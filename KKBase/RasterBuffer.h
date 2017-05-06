@@ -95,7 +95,7 @@ namespace KKB
     std::queue<RasterPtr> buffer;
     GoalKeeperPtr         gateKeeper;
     kkint32               maxNumOfBuffers;
-    kkuint32              memoryConsumed;
+    kkMemSize             memoryConsumed;
     KKStr                 name;             /**< Name of buffer. */
     kkint32               rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */
   };  /* RasterBuffer */

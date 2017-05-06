@@ -114,7 +114,7 @@ namespace  KKB
      *@brief Populates a boolean vector where each element reflects whether the corresponding bit is set.
      *@param[out] boolVector  Vector to be populated reflecting which bits are set to '1'.
      */
-    void  PopulateVectorBool (VectorBool&  boolVector)  const;
+    //void  PopulateVectorBool (VectorBool&  boolVector)  const;
 
     void  ReSet ();                 /**< @brief Set all bits to '0'.                      */
     void  ReSet (kkuint32 bitNum);  /**< @brief Set the bit indicated by 'bitNum' to '0'. */

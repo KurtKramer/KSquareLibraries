@@ -3,7 +3,7 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
-#include <stdio.h>
+#include <cstdio>
 #include <stdlib.h>
 #include <string>
 #include <iostream>
@@ -443,7 +443,7 @@ void  Configuration::LoadFile (RunLog&  log)
   curSectionName = "";
   ConfSectionPtr  curSection = NULL;
 
-  while  (fgets (buff, sizeof (buff), inFile))
+  while  (std::fgets (buff, sizeof (buff), inFile))
   {
     lastLineNum++;
     KKStr  line (buff);
@@ -534,7 +534,7 @@ void  Configuration::LoadFile (RunLog&  log)
     }
   }
 
-  fclose (inFile);
+  std::fclose (inFile);
 }  /* LoadFile */
 
 

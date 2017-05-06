@@ -4,6 +4,7 @@
  */
 #include "FirstIncludes.h"
 
+
 #include <errno.h>
 #include <istream>
 #include <iostream>
@@ -378,7 +379,7 @@ void  GoalKeeper::Create (const KKStr&             _name,
          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
+    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
 
     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";
   }
@@ -454,7 +455,7 @@ void  GoalKeeper::CreateAndStartBlock (const KKStr&             _name,
          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
+    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
 
     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";
   }
@@ -529,7 +530,7 @@ void  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)
          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
+    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");
 
     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";
   }

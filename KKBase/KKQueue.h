@@ -563,10 +563,10 @@ namespace  KKB
 
     kkint32 m = Partition (left, right, pred);
     if  (k <= m)
-      return  Partition (left, m);
+      return  Partition (left, m, pred);
 
     else if  (m < right)
-      return  Partition (m + 1, right);
+      return  Partition (m + 1, right, pred);
 
     else
     {

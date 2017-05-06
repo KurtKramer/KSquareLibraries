@@ -3,6 +3,7 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
+#include <cstdio>
 #include <errno.h>
 #include <istream>
 #include <iostream>
@@ -196,7 +197,7 @@ void  GoalKeeperSimple::Create (const KKStr&                   _name,
          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
+    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
 
     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";
   }
@@ -276,7 +277,7 @@ void  GoalKeeperSimple::CreateAndStartBlock (const KKStr&                   _nam
          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
+    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
 
     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";
   }
@@ -355,7 +356,7 @@ void  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta
          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl
          << std::endl;
 
-    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
+    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");
 
     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";
   }
