@@ -2009,6 +2009,11 @@ void  Raster::FillHoleGrow (kkint32  _row,
 
 
 
+RasterPtr  Raster::CreateFillHole () const  {
+  auto holesFilledIn = this->AllocateARasterInstance (*this);
+  holesFilledIn->FillHole ();
+  return holesFilledIn;
+}
 
 
 void  Raster::FillHole ()
@@ -2748,10 +2753,10 @@ void  Raster::ErosionChanged1 (MaskTypes  mask,
 
 
 void  Raster::ErosionBoundary (MaskTypes  mask, 
-                               kkint32    blobrowstart, 
-                               kkint32    blobrowend, 
-                               kkint32    blobcolstart, 
-                               kkint32    blobcolend
+                               kkint32    blobRowStart,
+                               kkint32    blobRowEnd,
+                               kkint32    blobColStart,
+                               kkint32    blobColEnd
                               )
 {
   kkint32  r;
@@ -2778,7 +2783,8 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
 
   for  (r = 0;  r < height;  r++)
   {
-    //if ((r>= blobrowstart+30) && (r<= blobrowend-30))
+	  /**@todo  This does not make sense; need to investigate. */
+    //if ((r>= blobRowStart+30) && (r<= blobrowend-30))
     // {
     // }
   // else
@@ -2790,7 +2796,7 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
 
     for  (c = 0; c < width; c++)
     {
-      if  ((c >= blobcolstart + 100)  &&  (c <= blobcolend - 100))
+      if  ((c >= blobColStart + 100)  &&  (c <= blobColEnd - 100))
       {
       }
       else
@@ -9408,7 +9414,7 @@ RasterPtr  Raster::ThresholdInHSI (float              thresholdH,
                                    const PixelValue&  flagValue
                                   )
 {
-  PixelValue color (0, 0, 0);
+  PixelValue pixelColor (0, 0, 0);
   //Vec<float,3> white(255,255,255);
   float tempH, tempS, tempI;
   float y, x, r, xOriginalPoint, yOriginalPoint;
@@ -9424,20 +9430,20 @@ RasterPtr  Raster::ThresholdInHSI (float              thresholdH,
   {
     for  (kkint32 n = 0;  n < width;  n++)
     {
-      GetPixelValue (m, n, color);
-      color.ToHSI (tempH, tempS, tempI);
+      GetPixelValue (m, n, pixelColor);
+      pixelColor.ToHSI (tempH, tempS, tempI);
 
       // Convert from Cartesian polar coordinates to Cartesian coordinates. These are the Cartesian coordinates of the
       // current pixel
       x = tempS * cos (tempH);
       y = tempS * sin (tempH);
 
-      // Calculate the distance from the threshold initial point to the current pixel color using 
+      // Calculate the distance from the threshold initial point to the current pixelColor using
       // the euclidean distance
       r = (float)(sqrt (pow (xOriginalPoint - x, 2) + pow (yOriginalPoint - y, 2) + pow (thresholdI - tempI, 2)));
 
       if  (r <= distance)
-         resultingImage->SetPixelValue (m, n, color);
+         resultingImage->SetPixelValue (m, n, pixelColor);
       else
         resultingImage->SetPixelValue (m, n, flagValue);
     }
@@ -9833,7 +9839,7 @@ RasterPtr  Raster::CreateColorImageFromLabels ()
 
 void  Raster::FillBlob (RasterPtr   origImage,
                         BlobPtr     blob,
-                        PixelValue  color
+                        PixelValue  pixelValue
                        )
 {
   if  (blob == NULL)
@@ -9859,7 +9865,7 @@ void  Raster::FillBlob (RasterPtr   origImage,
     {
       if  (origImage->blobIds[row][col] == blobId)
       {
-        SetPixelValue (row, col, color);
+        SetPixelValue (row, col, pixelValue);
       }
     }
   }

@@ -26,7 +26,7 @@ namespace KKB
    * Any parameters that you do not recognized should be passed onto the base-class by calling 
    * "Application::ProcessCmdLineParameter".
    */
-    class  Application
+  class  Application
   {
   public:
     /** 

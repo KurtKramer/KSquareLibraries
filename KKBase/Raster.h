@@ -945,6 +945,9 @@ namespace KKB
 
     void          FillHole ();
 
+    RasterPtr     CreateFillHole () const;
+
+
 
     /**
      *@brief  Fills holes in the image using the 'mask' raster as a work area.
@@ -976,7 +979,7 @@ namespace KKB
      */
     void          FillBlob (RasterPtr   origImage,
                             BlobPtr     blob,
-                            PixelValue  color
+                            PixelValue  pixelValue
                            );
 
     void          FillRectangle (kkint32            tlRow,
@@ -1097,6 +1100,16 @@ namespace KKB
 
     RasterPtr     Rotate (float  turnAngle);
 
+    /** 
+     *@brief Determine the point in  an original Raster instance that has derived from a rotated raster instance.
+     *@details  Imagine you have raster "A"  and you rotate it by 45 degrees. You then locate a point of interest 
+     *  "P" but you want to locate the same point in the original image.
+     *@param height  Height of original Raster this rotated Raster derived from.
+     *@param width   Width of original Raster this rotated Raster derived from.
+     *@param rotatedPoint  Point in this ratoated Raster.
+     *@param turnAngle Angle that this Raster was rotated by.
+     *@returns The "Point" in the original raster that coresponds to [rotatedPoint] in this Raster.
+     */
     Point         RotateDerivePreRotatedPoint (kkint32  height,
                                                kkint32  width,
                                                Point&   rotatedPoint, 
@@ -1183,6 +1196,9 @@ namespace KKB
     uchar*        ToCompressor (kkuint32&  compressedBuffLen)  const;
 
 
+    /**
+     *@brief Creates the same derived "Raster" instance; tthat is every derived class of "Raster" implements this method; this way you do not need to know the underlying class to get another instance of the sdame type.
+     */
     virtual
       RasterPtr  AllocateARasterInstance (kkint32  _height,
                                           kkint32  _width,

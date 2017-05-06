@@ -4,6 +4,7 @@
  */
 #include "FirstIncludes.h"
 
+#include <functional>
 #include <stdio.h>
 #include <string>
 #include <time.h>

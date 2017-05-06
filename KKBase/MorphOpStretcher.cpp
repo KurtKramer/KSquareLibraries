@@ -122,7 +122,7 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 
   UpdateFactors (srcHeight, srcWidth);
 
-  RasterPtr  result = new Raster (destHeight, destWidth, color);
+  RasterPtr  result = _image->AllocateARasterInstance(destHeight, destWidth, color);
 
   result->BackgroundPixelTH    (_image->BackgroundPixelTH    ());
   result->BackgroundPixelValue (_image->BackgroundPixelValue ());
