@@ -67,18 +67,18 @@ namespace KKB
 
   bool           osFileExists (const KKStr&  _fileName);
 
-  FILE*          osFOPEN (const char* fileName, 
+  std::FILE*     osFOPEN (const char* fileName,
 	  	                    const char* mode
                          );
 
   /**
    *@brief Calls the appropriate 64 bit function for operating system.
    */
-  kkint64        osFTELL (FILE* f);
+  kkint64        osFTELL (std::FILE* f);
 
-  int            osFSEEK (FILE*    f,
-                          kkint64  offset,
-                          int      origin
+  int            osFSEEK (std::FILE*  f,
+                          kkint64     offset,
+                          int         origin
                          );
 
   //***************************************************************************

@@ -13,13 +13,14 @@
 #include <string.h>
 #include <string>
 #include <vector>
-#include <stdio.h>
 #include "MemoryDebug.h"
 using namespace std;
 
 
 #ifdef WIN32
 #include <windows.h>
+#else
+#import <cstdio>
 #endif
 
 
@@ -117,14 +118,14 @@ void  RotateLONG (LONG&  l)
 void  WriteWORD (FILE*  outFile, WORD w)
 {
   RotateWORD (w);
-  fwrite (&w,  sizeof (w), 1, outFile);
+  std::fwrite (&w,  sizeof (w), 1ul, outFile);
 }
 
 
 void  WriteDWORD (FILE*  outFile,  DWORD dw)
 {
   RotateDWORD (dw);
-  fwrite (&dw,  sizeof (dw), 1, outFile);
+  std::fwrite (&dw,  sizeof (dw), 1, outFile);
 }
 
 
@@ -132,13 +133,13 @@ void  WriteDWORD (FILE*  outFile,  DWORD dw)
 void  WriteLONG (FILE*  outFile, LONG l)
 {
   RotateLONG (l);
-  fwrite (&l,  sizeof (l), 1, outFile);
+  std::fwrite (&l,  sizeof (l), 1, outFile);
 }
 
 
 void  WriteBYTE (FILE*  outFile, BYTE b)
 {
-  fwrite (&b,  sizeof (b), 1, outFile);
+  std::fwrite (&b,  sizeof (b), 1, outFile);
 }
 
 
@@ -472,11 +473,11 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   size_t   x;
   kkint32  y;
 
-  x = fread (&hdr, sizeof (hdr), 1, inFile);
+  x = std::fread (&hdr, sizeof (hdr), 1, inFile);
   if  (x <= 0)
   {
     successfull = false;
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
@@ -493,7 +494,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
          << "File[" << _fileName << "]  is a PNG formatted file." << std::endl
          << std::endl;
     successfull = false;
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
   else
@@ -502,16 +503,16 @@ BmpImage::BmpImage (const KKStr&  _fileName,
          << "File[" << _fileName << "]  is of a unknown file format." << std::endl
          << std::endl;
     successfull = false;
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
 
-  x = fread (&bmh, sizeof (bmh), 1, inFile);
+  x = std::fread (&bmh, sizeof (bmh), 1, inFile);
   if  (x <= 0)
   {
     successfull = false;
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
@@ -522,14 +523,14 @@ BmpImage::BmpImage (const KKStr&  _fileName,
     delete  palette;
     palette = NULL;
     Load24BitColor (inFile, successfull);
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
   if  ((bmh.biCompression == BI_RGB)  &&  (bmh.biBitCount == 8))
   {
     Load8BitColor (inFile, successfull);
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
@@ -547,7 +548,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   if  (paletteEntries < 0)
   {
     successfull = false;
-    fclose (inFile);
+    std::fclose (inFile);
     return;
   }
 
@@ -555,7 +556,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
   if  (paletteEntries)
   {
     palette =  new RGBQUAD[paletteEntries];
-    x = fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);
+    x = std::fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);
     imageIsRevGrayscale = ReversedGrayscaleImage ();
   }
   else
@@ -609,7 +610,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
     memset (image[row], 0, bmh.biWidth);
   }
 
-  x = fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
+  x = std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   if  (bmh.biBitCount == 1)
   {
@@ -678,7 +679,7 @@ BmpImage::BmpImage (const KKStr&  _fileName,
     // WaitForEnter ();
   }
 
-  fclose (inFile);
+  std::fclose (inFile);
 }
 
 
@@ -1278,7 +1279,7 @@ void  BmpImage::Load1BitColor (FILE*  inFile,
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
-    x = fread (packedRowData, 1, bmpRowWidthInBytes, inFile);
+    x = std::fread (packedRowData, 1, bmpRowWidthInBytes, inFile);
     if  (x < bmpRowWidthInBytes)
     {
       successfull = false;
@@ -1435,7 +1436,7 @@ void  BmpImage::Load4BitColor (FILE*  inFile,
 
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
-    x = fread (rowData, sizeof (Bmp4BitRecs), bmpRowWidthInBytes, inFile);
+    x = std::fread (rowData, sizeof (Bmp4BitRecs), bmpRowWidthInBytes, inFile);
 
     if  (x < bmpRowWidthInBytes)
     {
@@ -1484,8 +1485,8 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
   paletteEntries = numOfColors;
   AllocateRaster ();
 
-  fseek (inFile, sizeof (hdr) + sizeof (bmh), SEEK_SET);
-  fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);
+  std::fseek (inFile, sizeof (hdr) + sizeof (bmh), SEEK_SET);
+  std::fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);
 
 
 /*
@@ -1505,7 +1506,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
 
   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;
 
-  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
+  std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
@@ -1514,7 +1515,7 @@ void  BmpImage::Load8BitColor (FILE*  inFile,
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
     memset (rowData, 0, bmpRowWidthInBytes);
-    size_t buffRead = fread (rowData, 1, bmpRowWidthInBytes, inFile);
+    size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);
     if  (buffRead < bmpRowWidthInBytes)
     {
       cerr << std::endl 
@@ -1558,7 +1559,7 @@ void  BmpImage::Load4BitColorCompressed (FILE*  inFile,
 
   uchar*  imageBuff = new uchar[imageBuffSize];
 
-  size_t  buffRead = fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);
+  size_t  buffRead = std::fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);
 
   if  (buffRead < imageBuffSize)
   {
@@ -1680,7 +1681,7 @@ void  BmpImage::Load8BitColorCompressed (FILE*  inFile,
 
   uchar*  imageBuff = new uchar[imageBuffSize];
 
-  size_t  buffRead = fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);
+  size_t  buffRead = std::fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);
 
   if  (buffRead < imageBuffSize)
   {
@@ -1805,7 +1806,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
 
   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;
 
-  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
+  std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);
 
   uchar*  rowData = new uchar[bmpRowWidthInBytes];
 
@@ -1814,7 +1815,7 @@ void  BmpImage::Load24BitColor (FILE*  inFile,
   for  (row = bmh.biHeight - 1; row >= 0; row--)
   {
     memset (rowData, 0, bmpRowWidthInBytes);
-    size_t buffRead = fread (rowData, 1, bmpRowWidthInBytes, inFile);
+    size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);
     if  (buffRead < bmpRowWidthInBytes)
     {
       cerr << std::endl 
@@ -2259,13 +2260,13 @@ void  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)
   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
 
-  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
-  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
-  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
-  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)std::fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);
 
   delete  imageBuff;
-  fclose (outFile);
+  std::fclose (outFile);
 }  /* SaveGrayscaleInverted4Bit */
 
 
@@ -2320,13 +2321,13 @@ void  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)
   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;
   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;
 
-  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
-  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
-  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
-  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)std::fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
+  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);
 
   delete  imageBuff;
-  fclose (outFile);
+  std::fclose (outFile);
 }  /* SaveGrayscaleInverted8Bit */
 
 
@@ -2336,7 +2337,7 @@ void  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)
 void  BmpImage::Save (const KKStr&  _fileName)
 {
   fileName = _fileName;
-  FILE*  outFile = osFOPEN (fileName.Str (), "wb");
+  std::FILE*  outFile = osFOPEN (fileName.Str (), "wb");
   if  (!outFile)
   {
     KKStr  errMsg = "BmpImage::Save,  Error opening BMP File[" + fileName + "].";
@@ -2353,7 +2354,7 @@ void  BmpImage::Save (const KKStr&  _fileName)
     SaveGrayScale (outFile);
   }
 
-  fclose (outFile);
+  std::fclose (outFile);
 }  /* Save */
 
 
@@ -2400,7 +2401,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
   WriteDWORD (outFile, hdr.bfOffBits);
   #else
 
-  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);
   #endif
 
 
@@ -2418,7 +2419,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
   WriteDWORD (outFile, bmh.biClrImportant);
   #else
 
-  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);
   #endif
 
 
@@ -2434,7 +2435,7 @@ void  BmpImage::SaveGrayScale (FILE*  outFile)
   x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);
   #endif
 
-  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);
   delete  imageBuff;
 }  /* SaveGrayScale */
 
@@ -2552,7 +2553,7 @@ void  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,
   #endif
 
 
-  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);
+  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);
   delete  imageBuff;
 }  /* SaveColorCompressed256 */
 
@@ -2591,7 +2592,7 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
   WriteWORD  (outFile, hdr.bfReserved2);
   WriteDWORD (outFile, hdr.bfOffBits);
   #else
-  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);
+  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);
   #endif
 
 
@@ -2609,7 +2610,7 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
   WriteDWORD (outFile, bmh.biClrImportant);
   #else
 
-  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);
+  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);
   #endif
 
 
@@ -2618,14 +2619,14 @@ void  BmpImage::SaveColor24BPP (FILE*  outFile)
   {
     for  (col = 0;  col < (kkint32)Width ();  col++)
     {
-      fwrite (&(blue [row][col]), 1, 1, outFile);
-      fwrite (&(image[row][col]), 1, 1, outFile);
-      fwrite (&(red  [row][col]), 1, 1, outFile);
+      std::fwrite (&(blue [row][col]), 1, 1, outFile);
+      std::fwrite (&(image[row][col]), 1, 1, outFile);
+      std::fwrite (&(red  [row][col]), 1, 1, outFile);
     }
 
     uchar  pad = 0;
     for  (x = 0;  x < bufferPerRow;  x++)
-      fwrite (&pad, 1, 1, outFile);
+      std::fwrite (&pad, 1, 1, outFile);
   }
 }  /* SaveColor24BPP */
 

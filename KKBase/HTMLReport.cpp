@@ -1,18 +1,18 @@
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <stdlib.h>
-#include  <stdio.h>
-#include  <fcntl.h>
+#include <stdlib.h>
+#include <cstdio>
+#include <fcntl.h>
 
-#include  <string>
-#include  <iomanip>
-#include  <fstream>
-#include  <iostream>
-#include  <fstream>
-#include  <vector>
+#include <string>
+#include <iomanip>
+#include <fstream>
+#include <iostream>
+#include <fstream>
+#include <vector>
 
-#include  "MemoryDebug.h"
-#include  "KKBaseTypes.h"
+#include "MemoryDebug.h"
+#include "KKBaseTypes.h"
 
 
 #include <sys/types.h>
@@ -160,7 +160,7 @@ HTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,
 # ifdef  USE_SECURE_FUNCS
     sprintf_s (buff, sizeof (buff), "%f", right);
 # else
-    sprintf (buff, "%f", right);
+    std::sprintf (buff, "%f", right);
 # endif
 
   htmlReport.Append (buff);

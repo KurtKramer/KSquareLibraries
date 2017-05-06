@@ -5,8 +5,7 @@
 #include "FirstIncludes.h"
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
+#include <cstdio>
 #include <string>
 #include <iomanip>
 #include <fstream>
@@ -308,6 +307,6 @@ void  CmdLineExpander::ExtractParametersFromFile (const KKStr&  cmdFileName,
     token  = osReadNextQuotedStr (in, " \n\r", eof);
   }
 
-  fclose (in);
+  std::fclose (in);
 }  /* ExtractParametersFromFile */
 

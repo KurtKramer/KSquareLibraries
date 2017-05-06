@@ -114,7 +114,7 @@ namespace KKB
   #endif
 
   #define int16_max    (kkint16)32767
-  #define int16_min    (kkint16)–32,768
+  #define int16_min    (kkint16)-32,768
   #define uint16_max   (kkuint16)65535
   #define int32_max    (kkint32)2147483647
   #define int32_min    (kkint32)-214748367
