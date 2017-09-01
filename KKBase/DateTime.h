@@ -10,6 +10,8 @@
 
 #include <fstream>
 #include <iostream>
+#include <unordered_map>
+
 #include "KKStr.h"
 
 /**
@@ -21,6 +23,7 @@
 
 namespace  KKB  
 {
+#pragma pack(push, 1)
   ///<summary> Represents a calendar date consisting of three fields, Year, Month, and Day. </summary>
   ///<remarks> 
   /// This date format will support operations that will allow you to determine the number of days between two 
@@ -142,7 +145,7 @@ namespace  KKB
     kkint16  year;
     kkuint8  month;
     kkuint8  day;
-  };  /* DateType */
+ };  /* DateType */
 
 
 
@@ -278,6 +281,8 @@ namespace  KKB
   std::ostream&  operator<< (std::ostream&  os,  const DateType&  right);
   std::ostream&  operator<< (std::ostream&  os,  const TimeType&  right);
   std::ostream&  operator<< (std::ostream&  os,  const DateTime&  right); 
+
+#pragma pack(pop)
 
 }  /* KKB */
 #endif
