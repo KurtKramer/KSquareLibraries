@@ -58,7 +58,7 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;FFTW_AVAILABLE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
+      <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader />
@@ -125,6 +125,7 @@
     <ClCompile Include="MorphOpSobel.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
     <ClCompile Include="MorphOpStruct.cpp" />
+    <ClCompile Include="MorphStruct.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
     <ClCompile Include="OSservices.cpp" />
     <ClCompile Include="PixelValue.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="MorphOpSobel.h" />
     <ClInclude Include="MorphOpStretcher.h" />
     <ClInclude Include="MorphOpStruct.h" />
+    <ClInclude Include="MorphStruct.h" />
     <ClInclude Include="MsgQueue.h" />
     <ClInclude Include="OSservices.h" />
     <ClInclude Include="PixelValue.h" />
