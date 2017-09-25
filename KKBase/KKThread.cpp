@@ -116,9 +116,9 @@ KKThread::~KKThread ()
 
 
 
-kkMemSize  KKThread::MemoryConsumedEstimated ()
+kkMemSize  KKThread::MemoryConsumedEstimated () const
 {
-  kkuint32  estMem = sizeof (crashed)                + 
+  kkMemSize  estMem = sizeof (crashed)                +
                      sizeof (msgQueue)               + 
                      sizeof (shutdownFlag)           +
                      sizeof (startPrerequisites)     +
@@ -574,9 +574,9 @@ KKThreadList::~KKThreadList ()
 
 
 
-kkuint32  KKThreadList::MemoryConsumedEstimated ()  const
+kkMemSize  KKThreadList::MemoryConsumedEstimated ()  const
 {
-  kkuint32  memEst = sizeof (KKThreadList);
+  kkMemSize  memEst = sizeof (KKThreadList);
 
   KKThreadList::const_iterator  idx;
   for  (idx = begin ();  idx != end ();  ++idx)

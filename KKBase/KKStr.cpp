@@ -613,13 +613,13 @@ KKStr::KKStr (double  d,
 /**
  *@brief Creates a KKStr object that has 'size' characters preallocated; and set to empty string.
  */
-KKStr::KKStr (kkint32  size):
+KKStr::KKStr (kkuint64  size):
         val (NULL)
 {
   if  (size <= 0)
     size = 1;
 
-  else if  ((kkuint32)size >= KKStrIntMax)
+  else if  (size >= KKStrIntMax)
   {
     cerr  << std::endl 
           << "KKStr::KKStr    ***WARNNING***   Trying to allocate Size[" << size << "]  which is >= KKStrIntMax[" << KKStrIntMax << "]." << std::endl
@@ -627,7 +627,7 @@ KKStr::KKStr (kkint32  size):
     size = KKStrIntMax - 1;
   }
 
-  AllocateStrSpace (size);
+  AllocateStrSpace ((kkuint16)size);
   val[0] = 0;
   len = 0;
 }
@@ -5340,7 +5340,7 @@ void  KKStrListIndexed::DeleteContents ()
 
 
 
-kkuint32  KKStrListIndexed::size ()  const
+size_t  KKStrListIndexed::size ()  const
 {
   return  indexIndex.size ();
 }
@@ -5547,7 +5547,7 @@ void  KKStrListIndexed::WriteXML (const KKStr& varName,  ostream& o)  const
   startTag.AddAtribute ("CaseSensative", caseSensative);
   startTag.WriteXML (o);
 
-  kkuint32 n = size ();
+  size_t n = size ();
   for  (kkuint32 x = 0;  x < n;  ++x)
   {
     KKStrConstPtr s = LookUp ((kkint32)x);

@@ -147,7 +147,7 @@ KKStrPtr  XmlTokenizer::GetNextToken ()
     return NULL;
   }
 
-  kkuint32 s = tokenList.size ();
+  size_t s = tokenList.size ();
 
   KKStrPtr t = tokenList.front ();
   tokenList.pop_front ();

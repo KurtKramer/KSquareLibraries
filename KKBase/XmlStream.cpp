@@ -98,7 +98,7 @@ void  XmlStream::PopXmlElementLevel ()
 XmlFactoryPtr  XmlStream::TrackDownFactory (const KKStr&  sectionName)
 {
   XmlFactory*  result = NULL;
-  kkuint32  level = factoryManagers.size ();
+  kkuint32  level = (kkuint32)factoryManagers.size ();
   while  ((level > 0)  &&  (result == NULL))
   {
     --level;

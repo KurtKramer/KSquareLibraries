@@ -175,9 +175,9 @@ kkint32 Attribute::Cardinality ()  const
   if  ((type == AttributeType::Nominal)  ||  
        (type == AttributeType::Symbolic)
       )
-    return  nominalValuesUpper->size ();
+    return  (kkint32)nominalValuesUpper->size ();
   else
-    return 999999999;
+    return int32_max;
 }  /* Cardinality */
 
 

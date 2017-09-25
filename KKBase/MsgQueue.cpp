@@ -143,9 +143,9 @@ KKStrListPtr  MsgQueue::GetAllMsgs ()
 
 
 
-kkMemSize  MsgQueue::MemoryConsumedEstimated ()
+kkMemSize  MsgQueue::MemoryConsumedEstimated ()  const
 {
-  kkint32  result = 0;
+  kkMemSize  result = 0;
   gateKeeper->StartBlock ();
   result = memoryConsumed;
   gateKeeper->EndBlock ();

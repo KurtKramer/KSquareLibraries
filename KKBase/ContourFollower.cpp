@@ -1315,7 +1315,7 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
   #if  defined(FFTW_AVAILABLE)
     fftw_complex*   destFFTW = (fftw_complex*)fftw_malloc (sizeof (fftw_complex) * numOfEdgePixels);
     fftw_plan       plan;
-    plan = fftw_plan_dft_1d (numOfEdgePixels, src, destFFTW, FFTW_FORWARD, FFTW_ESTIMATE);
+    plan = fftw_plan_dft_1d ((int)numOfEdgePixels, src, destFFTW, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute (plan);
     fftw_destroy_plan (plan);  
   #else

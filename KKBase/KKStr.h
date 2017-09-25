@@ -105,7 +105,7 @@ namespace  KKB
 
     KKStr (KKB::KKStr  &&str);  /**< Move Constructor */
 
-    KKStr (kkint32  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
+    KKStr (kkuint64  size);     /**< @brief Creates a KKStr object that pre-allocates space for 'size' characters. */
 
     ///<summary> Initializes the string with a displayable version of <paramref name='d'/> with <paramref name='precision'/> decimal points. </summary>
     KKStr (double  d,  kkint32 precision);
@@ -865,7 +865,7 @@ namespace  KKB
                   );
 
 
-    kkuint32 size ()  const;
+    size_t size ()  const;
 
     KKStr  ToTabDelString ()  const;  /**< Strings will be separated by tab(\t) characters and in order of index. */
 
