@@ -56,9 +56,9 @@ ScannerFileEntry::~ScannerFileEntry ()
 
 
 
-kkint32  ScannerFileEntry::MemoryConsumedEstimated ()
+kkMemSize  ScannerFileEntry::MemoryConsumedEstimated () const
 {
-  kkint32  mem = sizeof (*this) + 
+  kkMemSize  mem = sizeof (*this) +
                description.MemoryConsumedEstimated () +
                fullName.MemoryConsumedEstimated ()    +
                rootName.MemoryConsumedEstimated ();
@@ -202,13 +202,13 @@ ScannerFileEntryList::~ScannerFileEntryList ()
 }
 
 
-kkint32  ScannerFileEntryList::MemoryConsumedEstimated ()
+kkMemSize  ScannerFileEntryList::MemoryConsumedEstimated () const
 {
-  kkint32 mem = sizeof (*this);
+  kkMemSize mem = sizeof (*this);
 
-  for  (idx = begin ();  idx != end ();  ++idx)
+  for (auto idx: *this)
   {
-    ScannerFileEntryPtr  sfe = idx->second;
+    ScannerFileEntryPtr  sfe = idx.second;
     mem += sfe->MemoryConsumedEstimated ();
   }
 

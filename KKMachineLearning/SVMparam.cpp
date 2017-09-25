@@ -152,7 +152,7 @@ void  SVMparam::SelectedFeatures  (FeatureNumListConstPtr  _selectedFeatures)
 
 void  SVMparam::ProbClassPairsInitialize (const ClassAssignments&  assignments)
 {
-  kkuint32  numClasses = assignments.size ();
+  kkuint32  numClasses = (kkuint32)assignments.size ();
   if  (numClasses < 1)
     return;
 

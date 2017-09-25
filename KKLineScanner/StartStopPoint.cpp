@@ -79,7 +79,7 @@ StartStopPoint::~StartStopPoint ()
 }
 
 
-kkint32  StartStopPoint::MemoryConsumedEstimated ()  const
+kkMemSize  StartStopPoint::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }
@@ -131,11 +131,11 @@ void  StartStopPointList::Clear ()
 
 
 
-kkint32  StartStopPointList::MemoryConsumedEstimated ()  const
+kkMemSize  StartStopPointList::MemoryConsumedEstimated ()  const
 {
   const_iterator  idx2;
 
-  kkint32 mem = sizeof (*this);
+  kkMemSize mem = sizeof (*this);
 
   for  (idx2 = begin ();  idx2 != end ();  ++idx2)
   {
@@ -213,9 +213,9 @@ kkint32  StartStopPointList::FindEqual (kkint32 _scanLineNum)  const
   if  (size () < 1)
     return -1;
 
-  kkuint32 b = 0;
-  kkuint32 e = size () - 1;
-  kkuint32 m = 0;
+  kkint32 b = 0;
+  kkint32 e = (kkint32)size () - 1;
+  kkint32 m = 0;
 
   kkint32  entryScanLineNum = 0;
 

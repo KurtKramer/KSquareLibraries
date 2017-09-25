@@ -71,7 +71,7 @@ kkuint32  ScannerFileSimple::ReadBufferFrame ()
   }
 
   frameBufferFileOffsetLast = osFTELL (file);
-  frameBufferLen = fread (frameBuffer, 1, frameBufferSize, file);
+  frameBufferLen = (kkint32)fread (frameBuffer, 1, frameBufferSize, file);
   frameBufferFileOffsetNext = osFTELL (file);
   frameBufferNextLine = 0;
   return  (frameBufferLen / pixelsPerScanLine);
@@ -85,7 +85,7 @@ kkint64  ScannerFileSimple::SkipToNextFrame ()
   kkint64  byteOffset = osFTELL (file);
 
   kkint64  nextFrameByteOffset = byteOffset + frameBufferSize;
-  kkint32  returnCd = osFSEEK (file, nextFrameByteOffset - 1, SEEK_SET);
+  size_t   returnCd = osFSEEK (file, nextFrameByteOffset - 1, SEEK_SET);
 
   char buff[10];
   returnCd = fread (buff, 1, 1, file);

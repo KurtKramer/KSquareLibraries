@@ -434,8 +434,8 @@ namespace  KKB
   template <class Entry>
   void  KKQueue<Entry>::RandomizeOrder ()
   {
-    kkint32  i, j;
-    kkuint32  numEntries = KKQueue<Entry>::size ();
+    size_t  i, j;
+    size_t numEntries = KKQueue<Entry>::size ();
     if  (numEntries < 2)
       return;
 

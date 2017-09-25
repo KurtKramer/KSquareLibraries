@@ -395,7 +395,7 @@ AttributePtr*  FileDesc::CreateAAttributeTable ()  const
 AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
 {
   kkint32  x;
-  AttributeTypeVector  attributeTypes (attributes.size (), AttributeType::NULLAttribute);
+  AttributeTypeVector  attributeTypes ((kkuint32)attributes.size (), AttributeType::NULLAttribute);
   for  (x = 0;  x < attributes.QueueSize ();  x++)
     attributeTypes[x] = attributes[x].Type ();
   return attributeTypes;

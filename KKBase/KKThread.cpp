@@ -116,7 +116,7 @@ KKThread::~KKThread ()
 
 
 
-kkuint32  KKThread::MemoryConsumedEstimated ()
+kkMemSize  KKThread::MemoryConsumedEstimated ()
 {
   kkuint32  estMem = sizeof (crashed)                + 
                      sizeof (msgQueue)               + 

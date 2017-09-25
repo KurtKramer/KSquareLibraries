@@ -119,7 +119,7 @@ ModelDual::~ModelDual ()
 
 kkMemSize ModelDual::MemoryConsumedEstimated ()  const
 {
-  kkint32 memoryConsumedEstimated = Model::MemoryConsumedEstimated ();
+  kkMemSize memoryConsumedEstimated = Model::MemoryConsumedEstimated ();
   if  (trainer1)    memoryConsumedEstimated += trainer1->MemoryConsumedEstimated ();
   if  (trainer2)    memoryConsumedEstimated += trainer2->MemoryConsumedEstimated ();
   if  (classifier1) memoryConsumedEstimated += classifier1->MemoryConsumedEstimated ();

@@ -34,7 +34,7 @@ namespace  KKLSC
   
     ~ScannerFileEntry ();
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated () const;
   
     // Access Methods
     const KKStr&      Description       () const  {return  description;}
@@ -87,7 +87,7 @@ namespace  KKLSC
     ScannerFileEntryList ();
     ~ScannerFileEntryList ();
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated () const;
 
 
     void  AddEntry (ScannerFileEntryPtr  enytry);

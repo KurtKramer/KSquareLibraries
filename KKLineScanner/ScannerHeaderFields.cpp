@@ -51,11 +51,11 @@ ScannerHeaderFields::~ScannerHeaderFields ()
 
 
 
-kkint32  ScannerHeaderFields::MemoryConsumedEstimated ()
+kkMemSize  ScannerHeaderFields::MemoryConsumedEstimated () const
 {
   goalie->StartBlock ();
 
-  kkint32  mem = sizeof (*this);
+  kkMemSize  mem = sizeof (*this);
 
   if  (goalie)   mem += goalie->MemoryConsumedEstimated ();
   

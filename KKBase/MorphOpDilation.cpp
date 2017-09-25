@@ -34,7 +34,7 @@ MorphOpDilation::~MorphOpDilation ()
 
 
 
-kkuint32  MorphOpDilation::MemoryConsumedEstimated ()
+kkMemSize  MorphOpDilation::MemoryConsumedEstimated ()
 {
   return  sizeof (*this);
 }

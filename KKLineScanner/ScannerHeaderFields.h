@@ -25,7 +25,7 @@ namespace  KKLSC
 
     ~ScannerHeaderFields ();
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated () const;
 
     void  Add (ScannerHeaderFieldsPtr  fields);
 

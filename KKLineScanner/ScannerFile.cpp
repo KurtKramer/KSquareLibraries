@@ -174,9 +174,9 @@ ScannerFile::~ScannerFile ()
 
 
 
-kkint32  ScannerFile::MemoryConsumedEstimated ()  const
+kkMemSize  ScannerFile::MemoryConsumedEstimated ()  const
 {
-  kkint32  mem = sizeof (*this) + 
+  kkMemSize  mem = sizeof (*this) +
                fileName.MemoryConsumedEstimated ()       +
                frameOffsets.size () * sizeof(kkint64)    +
                indexFileName.MemoryConsumedEstimated ()  +
@@ -681,9 +681,9 @@ void   ScannerFile::WriteScanLine (const uchar*  buffer,
 
 void  ScannerFile::SkipToScanLine (kkint32  scanLine)
 {
-  kkuint32  frameNum = scanLine / frameHeight;
+  kkint32  frameNum = scanLine / frameHeight;
   if  (frameNum >= frameOffsets.size ())
-    frameNum = frameOffsets.size () - 1;
+    frameNum = (kkint32)frameOffsets.size () - 1;
 
   if  (frameNum != frameNumCurLoaded)
   {
@@ -1021,7 +1021,7 @@ void  ScannerFile::ReadHeaderOneLine (FILE*   f,
   line = "";
   endOfText = false;
 
-  kkint32  bytesReturned = fread (&ch, 1, 1, f);
+  size_t  bytesReturned = fread (&ch, 1, 1, f);
   while  ((ch != 0)  &&  (ch != '\n')  &&  (bytesReturned > 0))
   {
     line.Append (ch);
@@ -1250,7 +1250,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
         origFilePos = osFTELL (file);
       }
 
-      kkuint32  lastFrameNum = frameOffsets.size () - 1;
+      kkuint32  lastFrameNum = (kkint32)frameOffsets.size () - 1;
 
       // Reposition to beginning of last frame that is recorded in frameOfsets.
       FSeek (frameOffsets[lastFrameNum]);

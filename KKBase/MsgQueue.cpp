@@ -143,7 +143,7 @@ KKStrListPtr  MsgQueue::GetAllMsgs ()
 
 
 
-kkuint32  MsgQueue::MemoryConsumedEstimated ()
+kkMemSize  MsgQueue::MemoryConsumedEstimated ()
 {
   kkint32  result = 0;
   gateKeeper->StartBlock ();
