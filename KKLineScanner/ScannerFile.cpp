@@ -679,11 +679,11 @@ void   ScannerFile::WriteScanLine (const uchar*  buffer,
 
 
 
-void  ScannerFile::SkipToScanLine (kkint32  scanLine)
+void  ScannerFile::SkipToScanLine (kkuint32  scanLine)
 {
-  kkint32  frameNum = scanLine / frameHeight;
+  kkuint32  frameNum = scanLine / frameHeight;
   if  (frameNum >= frameOffsets.size ())
-    frameNum = (kkint32)frameOffsets.size () - 1;
+    frameNum = (kkuint32)frameOffsets.size () - 1;
 
   if  (frameNum != frameNumCurLoaded)
   {
