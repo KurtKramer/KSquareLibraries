@@ -1,0 +1,1731 @@
+[1mdiff --git a/JobManager/KKJobManager.vcxproj b/JobManager/KKJobManager.vcxproj[m
+[1mindex 971e93b..2ac397a 100644[m
+[1m--- a/JobManager/KKJobManager.vcxproj[m
+[1m+++ b/JobManager/KKJobManager.vcxproj[m
+[36m@@ -94,6 +94,7 @@[m
+       <WarningLevel>Level3</WarningLevel>[m
+       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>[m
+       <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[32m+[m[32m      <MultiProcessorCompilation>true</MultiProcessorCompilation>[m
+     </ClCompile>[m
+   </ItemDefinitionGroup>[m
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">[m
+[36m@@ -107,6 +108,8 @@[m
+       <PrecompiledHeader />[m
+       <WarningLevel>Level3</WarningLevel>[m
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>[m
+[32m+[m[32m      <MultiProcessorCompilation>true</MultiProcessorCompilation>[m
+[32m+[m[32m      <MinimalRebuild>true</MinimalRebuild>[m
+     </ClCompile>[m
+   </ItemDefinitionGroup>[m
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EmbeddedDebug|Win32'">[m
+[36m@@ -122,6 +125,7 @@[m
+       <WarningLevel>Level3</WarningLevel>[m
+       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>[m
+       <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[32m+[m[32m      <MultiProcessorCompilation>true</MultiProcessorCompilation>[m
+     </ClCompile>[m
+   </ItemDefinitionGroup>[m
+   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EmbeddedRelease|Win32'">[m
+[36m@@ -135,6 +139,8 @@[m
+       <PrecompiledHeader />[m
+       <WarningLevel>Level3</WarningLevel>[m
+       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>[m
+[32m+[m[32m      <MultiProcessorCompilation>true</MultiProcessorCompilation>[m
+[32m+[m[32m      <MinimalRebuild>true</MinimalRebuild>[m
+     </ClCompile>[m
+   </ItemDefinitionGroup>[m
+   <ItemGroup>[m
+[1mdiff --git a/KKBase/.cproject b/KKBase/.cproject[m
+[1mindex ac231b9..22228c2 100644[m
+[1m--- a/KKBase/.cproject[m
+[1m+++ b/KKBase/.cproject[m
+[36m@@ -1,75 +1,67 @@[m
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>[m
+ <?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">[m
+ 	<storageModule moduleId="org.eclipse.cdt.core.settings">[m
+[31m-		<cconfiguration id="cdt.managedbuild.toolchain.gnu.base.1565993067">[m
+[31m-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="cdt.managedbuild.toolchain.gnu.base.1565993067" moduleId="org.eclipse.cdt.core.settings" name="Default">[m
+[32m+[m		[32m<cconfiguration id="0.132119498">[m
+[32m+[m			[32m<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.132119498" moduleId="org.eclipse.cdt.core.settings" name="Default">[m
+ 				<externalSettings/>[m
+ 				<extensions>[m
+[31m-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>[m
+ 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>[m
+ 					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>[m
+ 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>[m
+[32m+[m					[32m<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>[m
+ 					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>[m
+ 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>[m
+ 				</extensions>[m
+ 			</storageModule>[m
+ 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">[m
+[31m-				<configuration buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.base.1565993067" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">[m
+[31m-					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.1565993067.940728171" name="/" resourcePath="">[m
+[31m-						<toolChain id="cdt.managedbuild.toolchain.gnu.base.230093674" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">[m
+[31m-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.54871312" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>[m
+[31m-							<builder id="cdt.managedbuild.target.gnu.builder.base.387357324" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1796001624" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1375937129" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">[m
+[31m-								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.911122655" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>[m
+[32m+[m				[32m<configuration artifactName="${ProjName}" buildProperties="" description="" id="0.132119498" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">[m
+[32m+[m					[32m<folderInfo id="0.132119498." name="/" resourcePath="">[m
+[32m+[m						[32m<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1726122856" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">[m
+[32m+[m							[32m<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1726122856.536136241" name=""/>[m
+[32m+[m							[32m<builder id="org.eclipse.cdt.build.core.settings.default.builder.1893023336" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="org.eclipse.cdt.build.core.settings.default.builder"/>[m
+[32m+[m							[32m<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1110473247" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>[m
+[32m+[m							[32m<tool id="org.eclipse.cdt.build.core.settings.holder.664974921" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">[m
+[32m+[m								[32m<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1284285464" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>[m
+ 							</tool>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.2100505240" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">[m
+[31m-								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.791621107" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>[m
+[32m+[m							[32m<tool id="org.eclipse.cdt.build.core.settings.holder.1007115027" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">[m
+[32m+[m								[32m<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.490557671" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/include/c++/5"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu/c++/5"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/include/c++/5/backward"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/local/include"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/includekkramer@Marjorie:~$"/>[m
+[32m+[m									[32m<listOptionValue builtIn="false" value="/usr/include"/>[m
+[32m+[m								[32m</option>[m
+[32m+[m								[32m<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1539007059" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>[m
+ 							</tool>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.1293131603" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base"/>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.279040422" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base">[m
+[31m-								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.781389159" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">[m
+[31m-									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>[m
+[31m-									<additionalInput kind="additionalinput" paths="$(LIBS)"/>[m
+[31m-								</inputType>[m
+[31m-							</tool>[m
+[31m-							<tool id="cdt.managedbuild.tool.gnu.assembler.base.229407533" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">[m
+[31m-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1189066075" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>[m
+[32m+[m							[32m<tool id="org.eclipse.cdt.build.core.settings.holder.1587151159" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">[m
+[32m+[m								[32m<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1210459431" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>[m
+ 							</tool>[m
+ 						</toolChain>[m
+ 					</folderInfo>[m
+ 				</configuration>[m
+ 			</storageModule>[m
+ 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>[m
+[31m-			<storageModule moduleId="com.nvidia.cuda.ide.build.project.ICudaProjectConfiguration"/>[m
+ 		</cconfiguration>[m
+ 	</storageModule>[m
+ 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">[m
+[31m-		<project id="KKBase.null.190919086" name="KKBase"/>[m
+[31m-	</storageModule>[m
+[31m-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>[m
+[31m-	<storageModule moduleId="refreshScope" versionNumber="2">[m
+[31m-		<configuration configurationName="Default">[m
+[31m-			<resource resourceType="PROJECT" workspacePath="/KKBase"/>[m
+[31m-		</configuration>[m
+[32m+[m		[32m<project id="KKBase.null.2043212984" name="KKBase"/>[m
+ 	</storageModule>[m
+ 	<storageModule moduleId="scannerConfiguration">[m
+ 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+[31m-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.577286722;cdt.managedbuild.toolchain.gnu.base.577286722.375837398;cdt.managedbuild.tool.gnu.c.compiler.base.1333554910;cdt.managedbuild.tool.gnu.c.compiler.input.64649453">[m
+[31m-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+[31m-		</scannerConfigBuildInfo>[m
+[31m-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.577286722;cdt.managedbuild.toolchain.gnu.base.577286722.375837398;cdt.managedbuild.tool.gnu.cpp.compiler.base.378763250;cdt.managedbuild.tool.gnu.cpp.compiler.input.1334901233">[m
+[31m-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+[31m-		</scannerConfigBuildInfo>[m
+ 		<scannerConfigBuildInfo instanceId="0.132119498">[m
+ 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+ 		</scannerConfigBuildInfo>[m
+[31m-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1565993067;cdt.managedbuild.toolchain.gnu.base.1565993067.940728171;cdt.managedbuild.tool.gnu.cpp.compiler.base.1375937129;cdt.managedbuild.tool.gnu.cpp.compiler.input.911122655">[m
+[31m-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+[31m-		</scannerConfigBuildInfo>[m
+[31m-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1565993067;cdt.managedbuild.toolchain.gnu.base.1565993067.940728171;cdt.managedbuild.tool.gnu.c.compiler.base.2100505240;cdt.managedbuild.tool.gnu.c.compiler.input.791621107">[m
+[31m-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>[m
+[31m-		</scannerConfigBuildInfo>[m
+[32m+[m	[32m</storageModule>[m
+[32m+[m	[32m<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>[m
+[32m+[m	[32m<storageModule moduleId="refreshScope" versionNumber="2">[m
+[32m+[m		[32m<configuration configurationName="Default">[m
+[32m+[m			[32m<resource resourceType="PROJECT" workspacePath="/KKBase"/>[m
+[32m+[m		[32m</configuration>[m
+ 	</storageModule>[m
+ 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>[m
+[32m+[m	[32m<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>[m
+ </cproject>[m
+[1mdiff --git a/KKBase/.project b/KKBase/.project[m
+[1mindex d203ee7..e23ecc5 100644[m
+[1m--- a/KKBase/.project[m
+[1m+++ b/KKBase/.project[m
+[36m@@ -14,58 +14,6 @@[m
+ 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>[m
+ 			<triggers>clean,full,incremental,</triggers>[m
+ 			<arguments>[m
+[31m-				<dictionary>[m
+[31m-					<key>?name?</key>[m
+[31m-					<value></value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.append_environment</key>[m
+[31m-					<value>true</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>[m
+[31m-					<value>all</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.buildArguments</key>[m
+[31m-					<value></value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.buildCommand</key>[m
+[31m-					<value>make</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>[m
+[31m-					<value>clean</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.contents</key>[m
+[31m-					<value>org.eclipse.cdt.make.core.activeConfigSettings</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>[m
+[31m-					<value>false</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>[m
+[31m-					<value>true</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.enableFullBuild</key>[m
+[31m-					<value>true</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>[m
+[31m-					<value>all</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.stopOnError</key>[m
+[31m-					<value>true</value>[m
+[31m-				</dictionary>[m
+[31m-				<dictionary>[m
+[31m-					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>[m
+[31m-					<value>true</value>[m
+[31m-				</dictionary>[m
+ 			</arguments>[m
+ 		</buildCommand>[m
+ 		<buildCommand>[m
+[1mdiff --git a/KKBase/.settings/language.settings.xml b/KKBase/.settings/language.settings.xml[m
+[1mdeleted file mode 100644[m
+[1mindex e99d2a8..0000000[m
+[1m--- a/KKBase/.settings/language.settings.xml[m
+[1m+++ /dev/null[m
+[36m@@ -1,12 +0,0 @@[m
+[31m-<?xml version="1.0" encoding="UTF-8" standalone="no"?>[m
+[31m-<project>[m
+[31m-	<configuration id="cdt.managedbuild.toolchain.gnu.base.1565993067" name="Default">[m
+[31m-		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">[m
+[31m-			<provider copy-of="extension" id="org.eclipse.cdt.ui.UserLanguageSettingsProvider"/>[m
+[31m-			<provider-reference id="org.eclipse.cdt.core.ReferencedProjectsLanguageSettingsProvider" ref="shared-provider"/>[m
+[31m-			<provider class="org.eclipse.cdt.managedbuilder.language.settings.providers.GCCBuildCommandParser" id="org.eclipse.cdt.managedbuilder.core.GCCBuildCommandParser" keep-relative-paths="false" name="CDT GCC Build Output Parser" parameter="(gcc)|([gc]\+\+)|(clang)" prefer-non-shared="true"/>[m
+[31m-			<provider-reference id="org.eclipse.cdt.managedbuilder.core.GCCBuiltinSpecsDetector" ref="shared-provider"/>[m
+[31m-			<provider-reference id="org.eclipse.cdt.managedbuilder.core.MBSLanguageSettingsProvider" ref="shared-provider"/>[m
+[31m-		</extension>[m
+[31m-	</configuration>[m
+[31m-</project>[m
+[1mdiff --git a/KKBase/.settings/org.eclipse.cdt.codan.core.prefs b/KKBase/.settings/org.eclipse.cdt.codan.core.prefs[m
+[1mindex 1cb3653..22e0778 100644[m
+[1m--- a/KKBase/.settings/org.eclipse.cdt.codan.core.prefs[m
+[1m+++ b/KKBase/.settings/org.eclipse.cdt.codan.core.prefs[m
+[36m@@ -2,73 +2,73 @@[m [meclipse.preferences.version=1[m
+ inEditor=false[m
+ onBuild=true[m
+ org.eclipse.cdt.codan.checkers.errnoreturn=Warning[m
+[31m-org.eclipse.cdt.codan.checkers.errnoreturn.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},implicit\=>false}[m
+[32m+[m[32morg.eclipse.cdt.codan.checkers.errnoreturn.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"No return\\")",implicit\=>false}[m
+ org.eclipse.cdt.codan.checkers.errreturnvalue=Error[m
+[31m-org.eclipse.cdt.codan.checkers.errreturnvalue.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.checkers.errreturnvalue.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Unused return value\\")"}[m
+ org.eclipse.cdt.codan.checkers.nocommentinside=-Error[m
+ org.eclipse.cdt.codan.checkers.nocommentinside.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Nesting comments\\")"}[m
+ org.eclipse.cdt.codan.checkers.nolinecomment=-Error[m
+ org.eclipse.cdt.codan.checkers.nolinecomment.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Line comments\\")"}[m
+ org.eclipse.cdt.codan.checkers.noreturn=Error[m
+[31m-org.eclipse.cdt.codan.checkers.noreturn.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},implicit\=>false}[m
+[32m+[m[32morg.eclipse.cdt.codan.checkers.noreturn.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"No return value\\")",implicit\=>false}[m
+ org.eclipse.cdt.codan.internal.checkers.AbstractClassCreation=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.AbstractClassCreation.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.AbstractClassCreation.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Abstract class cannot be instantiated\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.AmbiguousProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.AmbiguousProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.AmbiguousProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Ambiguous problem\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.AssignmentInConditionProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.AssignmentInConditionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.AssignmentInConditionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Assignment in condition\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.AssignmentToItselfProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.AssignmentToItselfProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Assignment to itself\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.CaseBreakProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.CaseBreakProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},no_break_comment\=>"no break",last_case_param\=>false,empty_case_param\=>false}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.CaseBreakProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"No break at end of case\\")",no_break_comment\=>"no break",last_case_param\=>false,empty_case_param\=>false}[m
+ org.eclipse.cdt.codan.internal.checkers.CatchByReference=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.CatchByReference.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},unknown\=>false,exceptions\=>()}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.CatchByReference.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Catching by reference is recommended\\")",unknown\=>false,exceptions\=>()}[m
+ org.eclipse.cdt.codan.internal.checkers.CircularReferenceProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.CircularReferenceProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.CircularReferenceProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Circular inheritance\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.ClassMembersInitialization=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.ClassMembersInitialization.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},skip\=>true}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.ClassMembersInitialization.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Class members should be properly initialized\\")",skip\=>true}[m
+ org.eclipse.cdt.codan.internal.checkers.FieldResolutionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.FieldResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.FieldResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Field cannot be resolved\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.FunctionResolutionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.FunctionResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.FunctionResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Function cannot be resolved\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.InvalidArguments=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.InvalidArguments.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.InvalidArguments.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Invalid arguments\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.InvalidTemplateArgumentsProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.InvalidTemplateArgumentsProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.InvalidTemplateArgumentsProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Invalid template argument\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.LabelStatementNotFoundProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.LabelStatementNotFoundProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.LabelStatementNotFoundProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Label statement not found\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.MemberDeclarationNotFoundProblem=-Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.MemberDeclarationNotFoundProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.MemberDeclarationNotFoundProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Member declaration not found\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.MethodResolutionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.MethodResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.MethodResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Method cannot be resolved\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.NamingConventionFunctionChecker=-Info[m
+[31m-org.eclipse.cdt.codan.internal.checkers.NamingConventionFunctionChecker.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},pattern\=>"^[a-z]",macro\=>true,exceptions\=>()}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.NamingConventionFunctionChecker.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Name convention for function\\")",pattern\=>"^[a-z]",macro\=>true,exceptions\=>()}[m
+ org.eclipse.cdt.codan.internal.checkers.NonVirtualDestructorProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.NonVirtualDestructorProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.NonVirtualDestructorProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Class has a virtual method and non-virtual destructor\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.OverloadProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.OverloadProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.OverloadProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Invalid overload\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.RedeclarationProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.RedeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.RedeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Invalid redeclaration\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.RedefinitionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.RedefinitionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.RedefinitionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Invalid redefinition\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.ReturnStyleProblem=-Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.ReturnStyleProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.ReturnStyleProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Return with parenthesis\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.ScanfFormatStringSecurityProblem=-Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.ScanfFormatStringSecurityProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.ScanfFormatStringSecurityProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Format String Vulnerability\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.StatementHasNoEffectProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.StatementHasNoEffectProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},macro\=>true,exceptions\=>()}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.StatementHasNoEffectProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Statement has no effect\\")",macro\=>true,exceptions\=>()}[m
+ org.eclipse.cdt.codan.internal.checkers.SuggestedParenthesisProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.SuggestedParenthesisProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},paramNot\=>false}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.SuggestedParenthesisProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Suggested parenthesis around expression\\")",paramNot\=>false}[m
+ org.eclipse.cdt.codan.internal.checkers.SuspiciousSemicolonProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.SuspiciousSemicolonProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},else\=>false,afterelse\=>false}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.SuspiciousSemicolonProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Suspicious semicolon\\")",else\=>false,afterelse\=>false}[m
+ org.eclipse.cdt.codan.internal.checkers.TypeResolutionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.TypeResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.TypeResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Type cannot be resolved\\")"}[m
+ org.eclipse.cdt.codan.internal.checkers.UnusedFunctionDeclarationProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.UnusedFunctionDeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},macro\=>true}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.UnusedFunctionDeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Unused function declaration\\")",macro\=>true}[m
+ org.eclipse.cdt.codan.internal.checkers.UnusedStaticFunctionProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.UnusedStaticFunctionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},macro\=>true}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.UnusedStaticFunctionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Unused static function\\")",macro\=>true}[m
+ org.eclipse.cdt.codan.internal.checkers.UnusedVariableDeclarationProblem=Warning[m
+[31m-org.eclipse.cdt.codan.internal.checkers.UnusedVariableDeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},macro\=>true,exceptions\=>("@(\#)","$Id")}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.UnusedVariableDeclarationProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Unused variable declaration in file scope\\")",macro\=>true,exceptions\=>("@(\#)","$Id")}[m
+ org.eclipse.cdt.codan.internal.checkers.VariableResolutionProblem=Error[m
+[31m-org.eclipse.cdt.codan.internal.checkers.VariableResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true}}[m
+[32m+[m[32morg.eclipse.cdt.codan.internal.checkers.VariableResolutionProblem.params={launchModes\=>{RUN_ON_FULL_BUILD\=>true,RUN_ON_INC_BUILD\=>true,RUN_ON_FILE_OPEN\=>false,RUN_ON_FILE_SAVE\=>false,RUN_AS_YOU_TYPE\=>true,RUN_ON_DEMAND\=>true},suppression_comment\=>"@suppress(\\"Symbol is not resolved\\")"}[m
+ useParentScope=false[m
+[1mdiff --git a/KKBase/.settings/org.eclipse.cdt.core.prefs b/KKBase/.settings/org.eclipse.cdt.core.prefs[m
+[1mdeleted file mode 100644[m
+[1mindex c106e31..0000000[m
+[1m--- a/KKBase/.settings/org.eclipse.cdt.core.prefs[m
+[1m+++ /dev/null[m
+[36m@@ -1,2 +0,0 @@[m
+[31m-eclipse.preferences.version=1[m
+[31m-org.eclipse.cdt.core.code_formatter=org.eclipse.cdt.core.defaultCodeFormatter[m
+[1mdiff --git a/KKBase/Application.h b/KKBase/Application.h[m
+[1mindex 8181626..38b01d8 100644[m
+[1m--- a/KKBase/Application.h[m
+[1m+++ b/KKBase/Application.h[m
+[36m@@ -26,7 +26,7 @@[m [mnamespace KKB[m
+    * Any parameters that you do not recognized should be passed onto the base-class by calling [m
+    * "Application::ProcessCmdLineParameter".[m
+    */[m
+[31m-  class  Application[m
+[32m+[m[32m    class  Application[m
+   {[m
+   public:[m
+     /** [m
+[1mdiff --git a/KKBase/BMPImage.cpp b/KKBase/BMPImage.cpp[m
+[1mindex c54ebf1..5f22201 100644[m
+[1m--- a/KKBase/BMPImage.cpp[m
+[1m+++ b/KKBase/BMPImage.cpp[m
+[36m@@ -13,14 +13,13 @@[m
+ #include <string.h>[m
+ #include <string>[m
+ #include <vector>[m
+[32m+[m[32m#include <stdio.h>[m
+ #include "MemoryDebug.h"[m
+ using namespace std;[m
+ [m
+ [m
+ #ifdef WIN32[m
+ #include <windows.h>[m
+[31m-#else[m
+[31m-#import <cstdio>[m
+ #endif[m
+ [m
+ [m
+[36m@@ -118,14 +117,14 @@[m [mvoid  RotateLONG (LONG&  l)[m
+ void  WriteWORD (FILE*  outFile, WORD w)[m
+ {[m
+   RotateWORD (w);[m
+[31m-  std::fwrite (&w,  sizeof (w), 1ul, outFile);[m
+[32m+[m[32m  fwrite (&w,  sizeof (w), 1, outFile);[m
+ }[m
+ [m
+ [m
+ void  WriteDWORD (FILE*  outFile,  DWORD dw)[m
+ {[m
+   RotateDWORD (dw);[m
+[31m-  std::fwrite (&dw,  sizeof (dw), 1, outFile);[m
+[32m+[m[32m  fwrite (&dw,  sizeof (dw), 1, outFile);[m
+ }[m
+ [m
+ [m
+[36m@@ -133,13 +132,13 @@[m [mvoid  WriteDWORD (FILE*  outFile,  DWORD dw)[m
+ void  WriteLONG (FILE*  outFile, LONG l)[m
+ {[m
+   RotateLONG (l);[m
+[31m-  std::fwrite (&l,  sizeof (l), 1, outFile);[m
+[32m+[m[32m  fwrite (&l,  sizeof (l), 1, outFile);[m
+ }[m
+ [m
+ [m
+ void  WriteBYTE (FILE*  outFile, BYTE b)[m
+ {[m
+[31m-  std::fwrite (&b,  sizeof (b), 1, outFile);[m
+[32m+[m[32m  fwrite (&b,  sizeof (b), 1, outFile);[m
+ }[m
+ [m
+ [m
+[36m@@ -473,11 +472,11 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+   size_t   x;[m
+   kkint32  y;[m
+ [m
+[31m-  x = std::fread (&hdr, sizeof (hdr), 1, inFile);[m
+[32m+[m[32m  x = fread (&hdr, sizeof (hdr), 1, inFile);[m
+   if  (x <= 0)[m
+   {[m
+     successfull = false;[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+[36m@@ -494,7 +493,7 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+          << "File[" << _fileName << "]  is a PNG formatted file." << std::endl[m
+          << std::endl;[m
+     successfull = false;[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+   else[m
+[36m@@ -503,16 +502,16 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+          << "File[" << _fileName << "]  is of a unknown file format." << std::endl[m
+          << std::endl;[m
+     successfull = false;[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+ [m
+[31m-  x = std::fread (&bmh, sizeof (bmh), 1, inFile);[m
+[32m+[m[32m  x = fread (&bmh, sizeof (bmh), 1, inFile);[m
+   if  (x <= 0)[m
+   {[m
+     successfull = false;[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+[36m@@ -523,14 +522,14 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+     delete  palette;[m
+     palette = NULL;[m
+     Load24BitColor (inFile, successfull);[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+   if  ((bmh.biCompression == BI_RGB)  &&  (bmh.biBitCount == 8))[m
+   {[m
+     Load8BitColor (inFile, successfull);[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+[36m@@ -548,7 +547,7 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+   if  (paletteEntries < 0)[m
+   {[m
+     successfull = false;[m
+[31m-    std::fclose (inFile);[m
+[32m+[m[32m    fclose (inFile);[m
+     return;[m
+   }[m
+ [m
+[36m@@ -556,7 +555,7 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+   if  (paletteEntries)[m
+   {[m
+     palette =  new RGBQUAD[paletteEntries];[m
+[31m-    x = std::fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);[m
+[32m+[m[32m    x = fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);[m
+     imageIsRevGrayscale = ReversedGrayscaleImage ();[m
+   }[m
+   else[m
+[36m@@ -610,7 +609,7 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+     memset (image[row], 0, bmh.biWidth);[m
+   }[m
+ [m
+[31m-  x = std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+[32m+[m[32m  x = fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+ [m
+   if  (bmh.biBitCount == 1)[m
+   {[m
+[36m@@ -679,7 +678,7 @@[m [mBmpImage::BmpImage (const KKStr&  _fileName,[m
+     // WaitForEnter ();[m
+   }[m
+ [m
+[31m-  std::fclose (inFile);[m
+[32m+[m[32m  fclose (inFile);[m
+ }[m
+ [m
+ [m
+[36m@@ -1279,7 +1278,7 @@[m [mvoid  BmpImage::Load1BitColor (FILE*  inFile,[m
+ [m
+   for  (row = bmh.biHeight - 1; row >= 0; row--)[m
+   {[m
+[31m-    x = std::fread (packedRowData, 1, bmpRowWidthInBytes, inFile);[m
+[32m+[m[32m    x = fread (packedRowData, 1, bmpRowWidthInBytes, inFile);[m
+     if  (x < bmpRowWidthInBytes)[m
+     {[m
+       successfull = false;[m
+[36m@@ -1436,7 +1435,7 @@[m [mvoid  BmpImage::Load4BitColor (FILE*  inFile,[m
+ [m
+   for  (row = bmh.biHeight - 1; row >= 0; row--)[m
+   {[m
+[31m-    x = std::fread (rowData, sizeof (Bmp4BitRecs), bmpRowWidthInBytes, inFile);[m
+[32m+[m[32m    x = fread (rowData, sizeof (Bmp4BitRecs), bmpRowWidthInBytes, inFile);[m
+ [m
+     if  (x < bmpRowWidthInBytes)[m
+     {[m
+[36m@@ -1485,8 +1484,8 @@[m [mvoid  BmpImage::Load8BitColor (FILE*  inFile,[m
+   paletteEntries = numOfColors;[m
+   AllocateRaster ();[m
+ [m
+[31m-  std::fseek (inFile, sizeof (hdr) + sizeof (bmh), SEEK_SET);[m
+[31m-  std::fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);[m
+[32m+[m[32m  fseek (inFile, sizeof (hdr) + sizeof (bmh), SEEK_SET);[m
+[32m+[m[32m  fread (palette, sizeof (RGBQUAD), paletteEntries, inFile);[m
+ [m
+ [m
+ /*[m
+[36m@@ -1506,7 +1505,7 @@[m [mvoid  BmpImage::Load8BitColor (FILE*  inFile,[m
+ [m
+   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;[m
+ [m
+[31m-  std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+[32m+[m[32m  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+ [m
+   uchar*  rowData = new uchar[bmpRowWidthInBytes];[m
+ [m
+[36m@@ -1515,7 +1514,7 @@[m [mvoid  BmpImage::Load8BitColor (FILE*  inFile,[m
+   for  (row = bmh.biHeight - 1; row >= 0; row--)[m
+   {[m
+     memset (rowData, 0, bmpRowWidthInBytes);[m
+[31m-    size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);[m
+[32m+[m[32m    size_t buffRead = fread (rowData, 1, bmpRowWidthInBytes, inFile);[m
+     if  (buffRead < bmpRowWidthInBytes)[m
+     {[m
+       cerr << std::endl [m
+[36m@@ -1559,7 +1558,7 @@[m [mvoid  BmpImage::Load4BitColorCompressed (FILE*  inFile,[m
+ [m
+   uchar*  imageBuff = new uchar[imageBuffSize];[m
+ [m
+[31m-  size_t  buffRead = std::fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);[m
+[32m+[m[32m  size_t  buffRead = fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);[m
+ [m
+   if  (buffRead < imageBuffSize)[m
+   {[m
+[36m@@ -1681,7 +1680,7 @@[m [mvoid  BmpImage::Load8BitColorCompressed (FILE*  inFile,[m
+ [m
+   uchar*  imageBuff = new uchar[imageBuffSize];[m
+ [m
+[31m-  size_t  buffRead = std::fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);[m
+[32m+[m[32m  size_t  buffRead = fread (imageBuff, sizeof (uchar), imageBuffSize, inFile);[m
+ [m
+   if  (buffRead < imageBuffSize)[m
+   {[m
+[36m@@ -1806,7 +1805,7 @@[m [mvoid  BmpImage::Load24BitColor (FILE*  inFile,[m
+ [m
+   bmpRowWidthInBytes = bmpRowWidthInBytes + paddingBytes;[m
+ [m
+[31m-  std::fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+[32m+[m[32m  fseek (inFile, (size_t)hdr.bfOffBits, SEEK_SET);[m
+ [m
+   uchar*  rowData = new uchar[bmpRowWidthInBytes];[m
+ [m
+[36m@@ -1815,7 +1814,7 @@[m [mvoid  BmpImage::Load24BitColor (FILE*  inFile,[m
+   for  (row = bmh.biHeight - 1; row >= 0; row--)[m
+   {[m
+     memset (rowData, 0, bmpRowWidthInBytes);[m
+[31m-    size_t buffRead = std::fread (rowData, 1, bmpRowWidthInBytes, inFile);[m
+[32m+[m[32m    size_t buffRead = fread (rowData, 1, bmpRowWidthInBytes, inFile);[m
+     if  (buffRead < bmpRowWidthInBytes)[m
+     {[m
+       cerr << std::endl [m
+[36m@@ -2260,13 +2259,13 @@[m [mvoid  BmpImage::SaveGrayscaleInverted4Bit (const KKStr&  _fileName)[m
+   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;[m
+   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;[m
+ [m
+[31m-  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[31m-  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[31m-  x = (kkint32)std::fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);[m
+[31m-  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+ [m
+   delete  imageBuff;[m
+[31m-  std::fclose (outFile);[m
+[32m+[m[32m  fclose (outFile);[m
+ }  /* SaveGrayscaleInverted4Bit */[m
+ [m
+ [m
+[36m@@ -2321,13 +2320,13 @@[m [mvoid  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)[m
+   hdr.bfSize = 14 + 40 + paletteEntries * 4 + bmh.biSizeImage;[m
+   hdr.bfOffBits = 40 + 14 + paletteEntries * 4;[m
+ [m
+[31m-  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[31m-  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[31m-  x = (kkint32)std::fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);[m
+[31m-  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+ [m
+   delete  imageBuff;[m
+[31m-  std::fclose (outFile);[m
+[32m+[m[32m  fclose (outFile);[m
+ }  /* SaveGrayscaleInverted8Bit */[m
+ [m
+ [m
+[36m@@ -2337,7 +2336,7 @@[m [mvoid  BmpImage::SaveGrayscaleInverted8Bit (const KKStr&  _fileName)[m
+ void  BmpImage::Save (const KKStr&  _fileName)[m
+ {[m
+   fileName = _fileName;[m
+[31m-  std::FILE*  outFile = osFOPEN (fileName.Str (), "wb");[m
+[32m+[m[32m  FILE*  outFile = osFOPEN (fileName.Str (), "wb");[m
+   if  (!outFile)[m
+   {[m
+     KKStr  errMsg = "BmpImage::Save,  Error opening BMP File[" + fileName + "].";[m
+[36m@@ -2354,7 +2353,7 @@[m [mvoid  BmpImage::Save (const KKStr&  _fileName)[m
+     SaveGrayScale (outFile);[m
+   }[m
+ [m
+[31m-  std::fclose (outFile);[m
+[32m+[m[32m  fclose (outFile);[m
+ }  /* Save */[m
+ [m
+ [m
+[36m@@ -2401,7 +2400,7 @@[m [mvoid  BmpImage::SaveGrayScale (FILE*  outFile)[m
+   WriteDWORD (outFile, hdr.bfOffBits);[m
+   #else[m
+ [m
+[31m-  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+   #endif[m
+ [m
+ [m
+[36m@@ -2419,7 +2418,7 @@[m [mvoid  BmpImage::SaveGrayScale (FILE*  outFile)[m
+   WriteDWORD (outFile, bmh.biClrImportant);[m
+   #else[m
+ [m
+[31m-  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+   #endif[m
+ [m
+ [m
+[36m@@ -2435,7 +2434,7 @@[m [mvoid  BmpImage::SaveGrayScale (FILE*  outFile)[m
+   x = (kkint32)fwrite (palette, sizeof (RGBQUAD), paletteEntries, outFile);[m
+   #endif[m
+ [m
+[31m-  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+   delete  imageBuff;[m
+ }  /* SaveGrayScale */[m
+ [m
+[36m@@ -2553,7 +2552,7 @@[m [mvoid  BmpImage::SaveColorCompressed256 (PalletBuilderPtr  palletBuilder,[m
+   #endif[m
+ [m
+ [m
+[31m-  x = (kkint32)std::fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (imageBuff, 1, imageBuffLen, outFile);[m
+   delete  imageBuff;[m
+ }  /* SaveColorCompressed256 */[m
+ [m
+[36m@@ -2592,7 +2591,7 @@[m [mvoid  BmpImage::SaveColor24BPP (FILE*  outFile)[m
+   WriteWORD  (outFile, hdr.bfReserved2);[m
+   WriteDWORD (outFile, hdr.bfOffBits);[m
+   #else[m
+[31m-  x = (kkint32)std::fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&hdr,   sizeof (hdr), 1, outFile);[m
+   #endif[m
+ [m
+ [m
+[36m@@ -2610,7 +2609,7 @@[m [mvoid  BmpImage::SaveColor24BPP (FILE*  outFile)[m
+   WriteDWORD (outFile, bmh.biClrImportant);[m
+   #else[m
+ [m
+[31m-  x = (kkint32)std::fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+[32m+[m[32m  x = (kkint32)fwrite (&bmh,   sizeof (bmh), 1, outFile);[m
+   #endif[m
+ [m
+ [m
+[36m@@ -2619,14 +2618,14 @@[m [mvoid  BmpImage::SaveColor24BPP (FILE*  outFile)[m
+   {[m
+     for  (col = 0;  col < (kkint32)Width ();  col++)[m
+     {[m
+[31m-      std::fwrite (&(blue [row][col]), 1, 1, outFile);[m
+[31m-      std::fwrite (&(image[row][col]), 1, 1, outFile);[m
+[31m-      std::fwrite (&(red  [row][col]), 1, 1, outFile);[m
+[32m+[m[32m      fwrite (&(blue [row][col]), 1, 1, outFile);[m
+[32m+[m[32m      fwrite (&(image[row][col]), 1, 1, outFile);[m
+[32m+[m[32m      fwrite (&(red  [row][col]), 1, 1, outFile);[m
+     }[m
+ [m
+     uchar  pad = 0;[m
+     for  (x = 0;  x < bufferPerRow;  x++)[m
+[31m-      std::fwrite (&pad, 1, 1, outFile);[m
+[32m+[m[32m      fwrite (&pad, 1, 1, outFile);[m
+   }[m
+ }  /* SaveColor24BPP */[m
+ [m
+[1mdiff --git a/KKBase/BitString.cpp b/KKBase/BitString.cpp[m
+[1mindex 7d8b198..b33f4c8 100644[m
+[1m--- a/KKBase/BitString.cpp[m
+[1m+++ b/KKBase/BitString.cpp[m
+[36m@@ -5,7 +5,6 @@[m
+ #include "FirstIncludes.h"[m
+ #include <stdio.h>[m
+ #include <fstream>[m
+[31m-#include <cctype>[m
+ #include <string>[m
+ #include <iostream>[m
+ #include <vector>[m
+[36m@@ -234,7 +233,7 @@[m [mvoid  BitString::ReSet (kkuint32 bitNum)[m
+ [m
+ [m
+ [m
+[31m-/*[m
+[32m+[m
+ void  BitString::PopulateVectorBool (VectorBool&  boolVector)  const[m
+ {[m
+   boolVector.erase (boolVector.begin (), boolVector.end ());[m
+[36m@@ -257,9 +256,9 @@[m [mvoid  BitString::PopulateVectorBool (VectorBool&  boolVector)  const[m
+       br = br / 2;[m
+     }[m
+   }[m
+[31m-}  // PopulateVectorBool`[m
+[32m+[m[32m}  /* PopulateVectorBool */[m
+[32m+[m
+ [m
+[31m-*/[m
+ [m
+ [m
+ void  BitString::ListOfSetBits16 (VectorUint16&  setBits)  const[m
+[36m@@ -386,7 +385,7 @@[m [mkkint32  BitString::HexCharToInt (uchar hexChar)[m
+   if  ((hexChar >= '0')  &&  (hexChar <= '9'))[m
+     return  (kkint32 (hexChar) - kkint32 ('0'));[m
+ [m
+[31m-  hexChar = (char)std::toupper ((int)hexChar);[m
+[32m+[m[32m  hexChar = (char)toupper (hexChar);[m
+   if  ((hexChar < 'A')  ||  (hexChar > 'F'))[m
+     return -1;[m
+ [m
+[1mdiff --git a/KKBase/BitString.h b/KKBase/BitString.h[m
+[1mindex 7d0b59f..4b4e318 100644[m
+[1m--- a/KKBase/BitString.h[m
+[1m+++ b/KKBase/BitString.h[m
+[36m@@ -114,7 +114,7 @@[m [mnamespace  KKB[m
+      *@brief Populates a boolean vector where each element reflects whether the corresponding bit is set.[m
+      *@param[out] boolVector  Vector to be populated reflecting which bits are set to '1'.[m
+      */[m
+[31m-    //void  PopulateVectorBool (VectorBool&  boolVector)  const;[m
+[32m+[m[32m    void  PopulateVectorBool (VectorBool&  boolVector)  const;[m
+ [m
+     void  ReSet ();                 /**< @brief Set all bits to '0'.                      */[m
+     void  ReSet (kkuint32 bitNum);  /**< @brief Set the bit indicated by 'bitNum' to '0'. */[m
+[1mdiff --git a/KKBase/CmdLineExpander.cpp b/KKBase/CmdLineExpander.cpp[m
+[1mindex 52ff779..21b6026 100644[m
+[1m--- a/KKBase/CmdLineExpander.cpp[m
+[1m+++ b/KKBase/CmdLineExpander.cpp[m
+[36m@@ -5,7 +5,8 @@[m
+ #include "FirstIncludes.h"[m
+ [m
+ #include <stdlib.h>[m
+[31m-#include <cstdio>[m
+[32m+[m[32m#include <stdio.h>[m
+[32m+[m[32m#include <fcntl.h>[m
+ #include <string>[m
+ #include <iomanip>[m
+ #include <fstream>[m
+[36m@@ -307,6 +308,6 @@[m [mvoid  CmdLineExpander::ExtractParametersFromFile (const KKStr&  cmdFileName,[m
+     token  = osReadNextQuotedStr (in, " \n\r", eof);[m
+   }[m
+ [m
+[31m-  std::fclose (in);[m
+[32m+[m[32m  fclose (in);[m
+ }  /* ExtractParametersFromFile */[m
+ [m
+[1mdiff --git a/KKBase/Configuration.cpp b/KKBase/Configuration.cpp[m
+[1mindex 76409af..9f14ed8 100644[m
+[1m--- a/KKBase/Configuration.cpp[m
+[1m+++ b/KKBase/Configuration.cpp[m
+[36m@@ -3,7 +3,7 @@[m
+  * For conditions of distribution and use, see copyright notice in KKB.h[m
+  */[m
+ #include "FirstIncludes.h"[m
+[31m-#include <cstdio>[m
+[32m+[m[32m#include <stdio.h>[m
+ #include <stdlib.h>[m
+ #include <string>[m
+ #include <iostream>[m
+[36m@@ -443,7 +443,7 @@[m [mvoid  Configuration::LoadFile (RunLog&  log)[m
+   curSectionName = "";[m
+   ConfSectionPtr  curSection = NULL;[m
+ [m
+[31m-  while  (std::fgets (buff, sizeof (buff), inFile))[m
+[32m+[m[32m  while  (fgets (buff, sizeof (buff), inFile))[m
+   {[m
+     lastLineNum++;[m
+     KKStr  line (buff);[m
+[36m@@ -534,7 +534,7 @@[m [mvoid  Configuration::LoadFile (RunLog&  log)[m
+     }[m
+   }[m
+ [m
+[31m-  std::fclose (inFile);[m
+[32m+[m[32m  fclose (inFile);[m
+ }  /* LoadFile */[m
+ [m
+ [m
+[1mdiff --git a/KKBase/ContourFollower.h b/KKBase/ContourFollower.h[m
+[1mindex 5257272..cfca0d0 100644[m
+[1m--- a/KKBase/ContourFollower.h[m
+[1m+++ b/KKBase/ContourFollower.h[m
+[36m@@ -62,7 +62,7 @@[m [mnamespace KKB[m
+     void  HistogramDistanceFromAPointOfEdge (float     pointRow,[m
+                                              float     pointCol,[m
+                                              kkint32   numOfBuckets,[m
+[31m-                                             kkint32*  buckets,[m
+[32m+[m[32m                                             kkint32*    buckets,[m
+                                              float&    minDistance,[m
+                                              float&    maxDistance,[m
+                                              kkint32&  numOfEdgePixels[m
+[1mdiff --git a/KKBase/DateTime.h b/KKBase/DateTime.h[m
+[1mindex 463a15f..a2ebb06 100644[m
+[1m--- a/KKBase/DateTime.h[m
+[1m+++ b/KKBase/DateTime.h[m
+[36m@@ -10,6 +10,8 @@[m
+ [m
+ #include <fstream>[m
+ #include <iostream>[m
+[32m+[m[32m#include <unordered_map>[m
+[32m+[m
+ #include "KKStr.h"[m
+ [m
+ /**[m
+[36m@@ -21,6 +23,7 @@[m
+ [m
+ namespace  KKB  [m
+ {[m
+[32m+[m[32m#pragma pack(push, 1)[m
+   ///<summary> Represents a calendar date consisting of three fields, Year, Month, and Day. </summary>[m
+   ///<remarks> [m
+   /// This date format will support operations that will allow you to determine the number of days between two [m
+[36m@@ -142,7 +145,7 @@[m [mnamespace  KKB[m
+     kkint16  year;[m
+     kkuint8  month;[m
+     kkuint8  day;[m
+[31m-  };  /* DateType */[m
+[32m+[m[32m };  /* DateType */[m
+ [m
+ [m
+ [m
+[36m@@ -279,5 +282,7 @@[m [mnamespace  KKB[m
+   std::ostream&  operator<< (std::ostream&  os,  const TimeType&  right);[m
+   std::ostream&  operator<< (std::ostream&  os,  const DateTime&  right); [m
+ [m
+[32m+[m[32m#pragma pack(pop)[m
+[32m+[m
+ }  /* KKB */[m
+ #endif[m
+[1mdiff --git a/KKBase/GoalKeeper.cpp b/KKBase/GoalKeeper.cpp[m
+[1mindex 24f2ed7..e122418 100644[m
+[1m--- a/KKBase/GoalKeeper.cpp[m
+[1m+++ b/KKBase/GoalKeeper.cpp[m
+[36m@@ -4,7 +4,6 @@[m
+  */[m
+ #include "FirstIncludes.h"[m
+ [m
+[31m-[m
+ #include <errno.h>[m
+ #include <istream>[m
+ #include <iostream>[m
+[36m@@ -379,7 +378,7 @@[m [mvoid  GoalKeeper::Create (const KKStr&             _name,[m
+          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+[32m+[m[32m    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+ [m
+     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";[m
+   }[m
+[36m@@ -455,7 +454,7 @@[m [mvoid  GoalKeeper::CreateAndStartBlock (const KKStr&             _name,[m
+          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+[32m+[m[32m    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+ [m
+     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";[m
+   }[m
+[36m@@ -530,7 +529,7 @@[m [mvoid  GoalKeeper::Destroy (volatile GoalKeeperPtr&  _goalKeeperInstance)[m
+          << "GoalKeeper::Create  Error[" << errno << "] opening '/GoalKeeper' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+[32m+[m[32m    perror("GoalKeeper::Create   Error Opening Semaphore  'GoalKeeper'");[m
+ [m
+     throw "GoalKeeper::Create    Error opening 'GoalKeeper'.";[m
+   }[m
+[1mdiff --git a/KKBase/GoalKeeperSimple.cpp b/KKBase/GoalKeeperSimple.cpp[m
+[1mindex af20e56..b9000b4 100644[m
+[1m--- a/KKBase/GoalKeeperSimple.cpp[m
+[1m+++ b/KKBase/GoalKeeperSimple.cpp[m
+[36m@@ -3,7 +3,6 @@[m
+  * For conditions of distribution and use, see copyright notice in KKB.h[m
+  */[m
+ #include "FirstIncludes.h"[m
+[31m-#include <cstdio>[m
+ #include <errno.h>[m
+ #include <istream>[m
+ #include <iostream>[m
+[36m@@ -197,7 +196,7 @@[m [mvoid  GoalKeeperSimple::Create (const KKStr&                   _name,[m
+          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+[32m+[m[32m    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+ [m
+     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";[m
+   }[m
+[36m@@ -277,7 +276,7 @@[m [mvoid  GoalKeeperSimple::CreateAndStartBlock (const KKStr&                   _nam[m
+          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+[32m+[m[32m    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+ [m
+     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";[m
+   }[m
+[36m@@ -356,7 +355,7 @@[m [mvoid  GoalKeeperSimple::Destroy (volatile GoalKeeperSimplePtr&  _goalKeeperInsta[m
+          << "GoalKeeperSimple::Create  Error[" << errno << "] opening '/GoalKeeperSimple' Semaphore." << std::endl[m
+          << std::endl;[m
+ [m
+[31m-    std::perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+[32m+[m[32m    perror("GoalKeeperSimple::Create   Error Opening Semaphore  'GoalKeeperSimple'");[m
+ [m
+     throw "GoalKeeperSimple::Create    Error opening 'GoalKeeperSimple'.";[m
+   }[m
+[1mdiff --git a/KKBase/HTMLReport.cpp b/KKBase/HTMLReport.cpp[m
+[1mindex 3f05aba..14d5fc9 100644[m
+[1m--- a/KKBase/HTMLReport.cpp[m
+[1m+++ b/KKBase/HTMLReport.cpp[m
+[36m@@ -1,18 +1,18 @@[m
+[31m-#include "FirstIncludes.h"[m
+[32m+[m[32m#include  "FirstIncludes.h"[m
+ [m
+[31m-#include <stdlib.h>[m
+[31m-#include <cstdio>[m
+[31m-#include <fcntl.h>[m
+[32m+[m[32m#include  <stdlib.h>[m
+[32m+[m[32m#include  <stdio.h>[m
+[32m+[m[32m#include  <fcntl.h>[m
+ [m
+[31m-#include <string>[m
+[31m-#include <iomanip>[m
+[31m-#include <fstream>[m
+[31m-#include <iostream>[m
+[31m-#include <fstream>[m
+[31m-#include <vector>[m
+[32m+[m[32m#include  <string>[m
+[32m+[m[32m#include  <iomanip>[m
+[32m+[m[32m#include  <fstream>[m
+[32m+[m[32m#include  <iostream>[m
+[32m+[m[32m#include  <fstream>[m
+[32m+[m[32m#include  <vector>[m
+ [m
+[31m-#include "MemoryDebug.h"[m
+[31m-#include "KKBaseTypes.h"[m
+[32m+[m[32m#include  "MemoryDebug.h"[m
+[32m+[m[32m#include  "KKBaseTypes.h"[m
+ [m
+ [m
+ #include <sys/types.h>[m
+[36m@@ -160,7 +160,7 @@[m [mHTMLReport&  KKB::operator<< (HTMLReport&  htmlReport,[m
+ # ifdef  USE_SECURE_FUNCS[m
+     sprintf_s (buff, sizeof (buff), "%f", right);[m
+ # else[m
+[31m-    std::sprintf (buff, "%f", right);[m
+[32m+[m[32m    sprintf (buff, "%f", right);[m
+ # endif[m
+ [m
+   htmlReport.Append (buff);[m
+[1mdiff --git a/KKBase/ImageIO.cpp b/KKBase/ImageIO.cpp[m
+[1mindex 9206318..5f6c3d2 100644[m
+[1m--- a/KKBase/ImageIO.cpp[m
+[1m+++ b/KKBase/ImageIO.cpp[m
+[36m@@ -3,7 +3,6 @@[m
+  * For conditions of distribution and use, see copyright notice in KKB.h[m
+  */[m
+ #include "FirstIncludes.h"[m
+[31m-#include <cstdio>[m
+ #include <iostream>[m
+ #include <iostream>[m
+ #include <vector>[m
+[36m@@ -387,7 +386,7 @@[m [mRasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)[m
+     nextLine = osReadRestOfLine2 (i, eof);[m
+     if  (eof  ||  (nextLine[(kkint16)0] != 'P')  ||  (nextLine[(kkint16)1] != '5'))[m
+     {[m
+[31m-      std::fclose (i);[m
+[32m+[m[32m      fclose (i);[m
+       return NULL;[m
+     }[m
+ [m
+[36m@@ -417,7 +416,7 @@[m [mRasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)[m
+        (width     < 1)  ||  (height < 1)[m
+       )[m
+   {[m
+[31m-    std::fclose (i);[m
+[32m+[m[32m    fclose (i);[m
+     cerr << endl << endl[m
+       << "ReadImagePGM   ***ERROR***  ImageFile[" << imageFileName << "]  Invalid Header"[m
+       << "  width[" << width << "]  height[" << height << "]  pixelSize[" << pixelSize << "]"[m
+[36m@@ -434,7 +433,7 @@[m [mRasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)[m
+ [m
+   for  (row = 0;  row < height;  row++)[m
+   {[m
+[31m-    std::fread (colBuff, 1, width, i);[m
+[32m+[m[32m    fread (colBuff, 1, width, i);[m
+ [m
+     for  (col = 0;  col < width;  col++)[m
+     {[m
+[36m@@ -442,7 +441,7 @@[m [mRasterPtr  KKB::ReadImagePGM (const KKStr& imageFileName)[m
+     }[m
+   }[m
+ [m
+[31m-  std::fclose (i);[m
+[32m+[m[32m  fclose (i);[m
+      [m
+   return  image;[m
+ }  /* ReadImagePGM */[m
+[36m@@ -464,9 +463,9 @@[m [mKKStr  KKB::ReadImagePpmField (FILE*   in,[m
+   while  (!startOfTokenFound)[m
+   {[m
+     // Skip leading white space[m
+[31m-    ch = std::fgetc (in);  eof = (std::feof (in) != 0);[m
+[32m+[m[32m    ch = fgetc (in);  eof = (feof (in) != 0);[m
+     while  ((!eof)  &&  (strchr (" #\t\n\r", ch) != NULL)  &&  (ch != '\n')  &&  (ch != '#'))[m
+[31m-      {ch = std::fgetc (in); eof = (std::feof (in)!= 0);}[m
+[32m+[m[32m      {ch = fgetc (in); eof = (feof (in)!= 0);}[m
+ [m
+     if  (eof)  [m
+       return KKStr::EmptyStr ();[m
+[36m@@ -475,7 +474,7 @@[m [mKKStr  KKB::ReadImagePpmField (FILE*   in,[m
+     {[m
+       // Skip the rest of the line.[m
+       while  ((!eof)  &&  (ch != '\n'))[m
+[31m-        {ch = std::fgetc (in); eof = (std::feof (in)!= 0);}[m
+[32m+[m[32m        {ch = fgetc (in); eof = (feof (in)!= 0);}[m
+     }[m
+ [m
+     else[m
+[36m@@ -489,7 +488,7 @@[m [mKKStr  KKB::ReadImagePpmField (FILE*   in,[m
+   // Read till first delimiter or eof or eol[m
+   while  ((!eof)  &&  (strchr (" #\t\n\r", ch) == 0))[m
+   {[m
+[31m-    token[tokenLen] = (uchar)ch;[m
+[32m+[m[32m    token[tokenLen] = ch;[m
+     tokenLen++;[m
+     if  (tokenLen >= maxTokenLen)[m
+       break;[m
+[36m@@ -588,9 +587,9 @@[m [mRasterPtr  KKB::ReadImagePPM (const KKStr& imageFileName)[m
+       kkint32  greenValue  = Min (greenField.ToInt32 (), pixelDepth);[m
+       kkint32  blueValue   = Min (blueField.ToInt32  (), pixelDepth);[m
+ [m
+[31m-      *red   = (uchar)((255 *  redValue)   / pixelDepth);   ++red;[m
+[31m-      *green = (uchar)((255 *  greenValue) / pixelDepth);   ++green;[m
+[31m-      *blue  = (uchar)((255 *  blueValue)  / pixelDepth);   ++blue;[m
+[32m+[m[32m      *red   = ((255 *  redValue)   / pixelDepth);   ++red;[m
+[32m+[m[32m      *green = ((255 *  greenValue) / pixelDepth);   ++green;[m
+[32m+[m[32m      *blue  = ((255 *  blueValue)  / pixelDepth);   ++blue;[m
+ [m
+       ++pixelsRead;[m
+     }[m
+[36m@@ -756,7 +755,7 @@[m [mvoid  KKB::SaveImagePNG (const Raster&  image,[m
+ [m
+     for  (kkint32 x = 0;  x < totalPixels;  x++)[m
+     {[m
+[31m-      uchar  intensity = (uchar)(255 - (*green));[m
+[32m+[m[32m      uchar  intensity = 255 - (*green);[m
+       buff3[0] = intensity;[m
+       buff3[1] = intensity;[m
+       buff3[2] = intensity;[m
+[36m@@ -856,11 +855,11 @@[m [mvoid  KKB::SaveImageInverted (Raster&       raster,[m
+   {[m
+     for  (c = 0;  c < invertedImage->Width ();  c++)[m
+     {[m
+[31m-      g[r][c] = (uchar)(255 - g[r][c]);[m
+[32m+[m[32m      g[r][c] = 255 - g[r][c];[m
+       if  (invertedImage->Color ())[m
+       {[m
+[31m-        red [r][c] = (uchar)(255 - red [r][c]);[m
+[31m-        blue[r][c] = (uchar)(255 - blue[r][c]);[m
+[32m+[m[32m        red [r][c] = 255 - red [r][c];[m
+[32m+[m[32m        blue[r][c] = 255 - blue[r][c];[m
+       }[m
+     }[m
+   }[m
+[1mdiff --git a/KKBase/KKBase.vcxproj b/KKBase/KKBase.vcxproj[m
+[1mindex 2b20d2f..909d485 100644[m
+[1m--- a/KKBase/KKBase.vcxproj[m
+[1m+++ b/KKBase/KKBase.vcxproj[m
+[36m@@ -14,7 +14,6 @@[m
+     <ProjectGuid>{D9BB6D83-937E-40FD-BFC3-FF48D8A04D11}</ProjectGuid>[m
+     <RootNamespace>KKBase</RootNamespace>[m
+     <Keyword>Win32Proj</Keyword>[m
+[31m-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>[m
+   </PropertyGroup>[m
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">[m
+[36m@@ -58,7 +57,7 @@[m
+       <Optimization>Disabled</Optimization>[m
+       <AdditionalIncludeDirectories>$(OutsidePackages)\zlib123;$(OutsidePackages)\fftw-3.3.2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>[m
+       <PreprocessorDefinitions>WIN32;FFTW_AVAILABLE;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>[m
+[31m-      <MinimalRebuild>true</MinimalRebuild>[m
+[32m+[m[32m      <MinimalRebuild>false</MinimalRebuild>[m
+       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>[m
+       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>[m
+       <PrecompiledHeader />[m
+[36m@@ -125,6 +124,7 @@[m
+     <ClCompile Include="MorphOpSobel.cpp" />[m
+     <ClCompile Include="MorphOpStretcher.cpp" />[m
+     <ClCompile Include="MorphOpStruct.cpp" />[m
+[32m+[m[32m    <ClCompile Include="MorphStruct.cpp" />[m
+     <ClCompile Include="MsgQueue.cpp" />[m
+     <ClCompile Include="OSservices.cpp" />[m
+     <ClCompile Include="PixelValue.cpp" />[m
+[36m@@ -189,6 +189,7 @@[m
+     <ClInclude Include="MorphOpSobel.h" />[m
+     <ClInclude Include="MorphOpStretcher.h" />[m
+     <ClInclude Include="MorphOpStruct.h" />[m
+[32m+[m[32m    <ClInclude Include="MorphStruct.h" />[m
+     <ClInclude Include="MsgQueue.h" />[m
+     <ClInclude Include="OSservices.h" />[m
+     <ClInclude Include="PixelValue.h" />[m
+[1mdiff --git a/KKBase/KKBase.vcxproj.filters b/KKBase/KKBase.vcxproj.filters[m
+[1mindex 1ecec29..cc5de83 100644[m
+[1m--- a/KKBase/KKBase.vcxproj.filters[m
+[1m+++ b/KKBase/KKBase.vcxproj.filters[m
+[36m@@ -180,6 +180,9 @@[m
+     <ClCompile Include="MorphOpSobel.cpp">[m
+       <Filter>Source Files</Filter>[m
+     </ClCompile>[m
+[32m+[m[32m    <ClCompile Include="MorphStruct.cpp">[m
+[32m+[m[32m      <Filter>Source Files</Filter>[m
+[32m+[m[32m    </ClCompile>[m
+   </ItemGroup>[m
+   <ItemGroup>[m
+     <ClInclude Include="Application.h">[m
+[36m@@ -374,6 +377,9 @@[m
+     <ClInclude Include="MorphOpSobel.h">[m
+       <Filter>Header Files</Filter>[m
+     </ClInclude>[m
+[32m+[m[32m    <ClInclude Include="MorphStruct.h">[m
+[32m+[m[32m      <Filter>Header Files</Filter>[m
+[32m+[m[32m    </ClInclude>[m
+   </ItemGroup>[m
+   <ItemGroup>[m
+     <Text Include="ReadMe.txt" />[m
+[1mdiff --git a/KKBase/KKBaseTypes.h b/KKBase/KKBaseTypes.h[m
+[1mindex d934385..18dcd53 100644[m
+[1m--- a/KKBase/KKBaseTypes.h[m
+[1m+++ b/KKBase/KKBaseTypes.h[m
+[36m@@ -114,7 +114,7 @@[m [mnamespace KKB[m
+   #endif[m
+ [m
+   #define int16_max    (kkint16)32767[m
+[31m-  #define int16_min    (kkint16)-32,768[m
+[32m+[m[32m  #define int16_min    (kkint16)–32,768[m
+   #define uint16_max   (kkuint16)65535[m
+   #define int32_max    (kkint32)2147483647[m
+   #define int32_min    (kkint32)-214748367[m
+[1mdiff --git a/KKBase/KKQueue.h b/KKBase/KKQueue.h[m
+[1mindex 3082ccb..afb50e6 100644[m
+[1m--- a/KKBase/KKQueue.h[m
+[1m+++ b/KKBase/KKQueue.h[m
+[36m@@ -563,10 +563,10 @@[m [mnamespace  KKB[m
+ [m
+     kkint32 m = Partition (left, right, pred);[m
+     if  (k <= m)[m
+[31m-      return  Partition (left, m, pred);[m
+[32m+[m[32m      return  Partition (left, m);[m
+ [m
+     else if  (m < right)[m
+[31m-      return  Partition (m + 1, right, pred);[m
+[32m+[m[32m      return  Partition (m + 1, right);[m
+ [m
+     else[m
+     {[m
+[1mdiff --git a/KKBase/Makefile b/KKBase/Makefile[m
+[1mindex 7d9f0b1..3402581 100644[m
+[1m--- a/KKBase/Makefile[m
+[1m+++ b/KKBase/Makefile[m
+[36m@@ -1,7 +1,7 @@[m
+ CXX = g++-5[m
+ [m
+ [m
+[31m-CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11 [m
+[32m+[m[32mCXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11[m
+ [m
+ [m
+ #CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=gnu++11[m
+[1mdiff --git a/KKBase/MorphOp.h b/KKBase/MorphOp.h[m
+[1mindex 867b176..ba300cc 100644[m
+[1m--- a/KKBase/MorphOp.h[m
+[1m+++ b/KKBase/MorphOp.h[m
+[36m@@ -37,9 +37,9 @@[m [mnamespace  KKB[m
+    *@brief  Base class for all Morphological operations.[m
+    *@details[m
+    *  It is assumed that all morphologocal operations will be working with a source image and returning a new[m
+[31m-   * modified image; the atcual operation is to be perfomed by the "PerformOperation" metho where you pass in[m
+[31m-   * a poiter to the source Image/ Raster. The the derived class would then call "SetSrcRaster" to intialize[m
+[31m-   * the base class "MorphOp" with pointers to the source image.[m
+[32m+[m[32m   * modified image; the atcual operation is to be perfomed by the "PerformOperation" method that takes pointer[m
+[32m+[m[32m   * to the source Image/ Raster. The the derived class would then call "SetSrcRaster" to intialize the base[m
+[32m+[m[32m   * class "MorphOp" with pointers to the source image.[m
+    */[m
+   class  MorphOp[m
+   {[m
+[1mdiff --git a/KKBase/MorphOpStretcher.cpp b/KKBase/MorphOpStretcher.cpp[m
+[1mindex 7238d53..cafd395 100644[m
+[1m--- a/KKBase/MorphOpStretcher.cpp[m
+[1m+++ b/KKBase/MorphOpStretcher.cpp[m
+[36m@@ -122,7 +122,7 @@[m [mRasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)[m
+ [m
+   UpdateFactors (srcHeight, srcWidth);[m
+ [m
+[31m-  RasterPtr  result = _image->AllocateARasterInstance(destHeight, destWidth, color);[m
+[32m+[m[32m  RasterPtr  result = new Raster (destHeight, destWidth, color);[m
+ [m
+   result->BackgroundPixelTH    (_image->BackgroundPixelTH    ());[m
+   result->BackgroundPixelValue (_image->BackgroundPixelValue ());[m
+[1mdiff --git a/KKBase/MorphStruct.cpp b/KKBase/MorphStruct.cpp[m
+[1mnew file mode 100644[m
+[1mindex 0000000..d151c35[m
+[1m--- /dev/null[m
+[1m+++ b/KKBase/MorphStruct.cpp[m
+[36m@@ -0,0 +1,12 @@[m
+[32m+[m[32m#include "MorphStruct.h"[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32mMorphStruct::MorphStruct ()[m
+[32m+[m[32m{[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m
+[32m+[m[32mMorphStruct::~MorphStruct ()[m
+[32m+[m[32m{[m
+[32m+[m[32m}[m
+[1mdiff --git a/KKBase/MorphStruct.h b/KKBase/MorphStruct.h[m
+[1mnew file mode 100644[m
+[1mindex 0000000..af208a7[m
+[1m--- /dev/null[m
+[1m+++ b/KKBase/MorphStruct.h[m
+[36m@@ -0,0 +1,26 @@[m
+[32m+[m[32m#if  !defined(_MORPHSTRUCT_)[m
+[32m+[m[32m#define  _MORPHSTRUCT_[m
+[32m+[m
+[32m+[m[32m#include "Raster.h"[m
+[32m+[m[32musing namespace KKB;[m
+[32m+[m
+[32m+[m[32m/**[m
+[32m+[m[32m *@brief  Base class for all Morphological Structures; to be used with general purtpose Morphological operations.[m[41m  [m
+[32m+[m[32m *@details Meant to operate on one pixel at a time.[m
+[32m+[m[32m */[m
+[32m+[m[32mclass MorphStruct[m
+[32m+[m[32m{[m
+[32m+[m[32mpublic:[m
+[32m+[m[32m  MorphStruct ();[m
+[32m+[m[32m  virtual ~MorphStruct ();[m
+[32m+[m
+[32m+[m[32m  void  initalize(RasterPtr  _src, RasterPtr _dest);[m
+[32m+[m[41m  [m
+[32m+[m
+[32m+[m[32mprivate:[m
+[32m+[m[32m   RasterPtr  src;[m
+[32m+[m[32m   RasterPtr  dest;[m
+[32m+[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m[32m#endif[m
+\ No newline at end of file[m
+[1mdiff --git a/KKBase/OSservices.cpp b/KKBase/OSservices.cpp[m
+[1mindex d47a68f..0bd2276 100644[m
+[1m--- a/KKBase/OSservices.cpp[m
+[1m+++ b/KKBase/OSservices.cpp[m
+[36m@@ -6,15 +6,15 @@[m
+ // For non windows systems; will allow fseeko() and ftello() to work with 64 bit int's.[m
+ #define _FILE_OFFSET_BITS 64[m
+ [m
+[31m-#include "FirstIncludes.h"[m
+[31m-#include <cstdio>[m
+[31m-#include <direct.h>[m
+[32m+[m[32m#include  "FirstIncludes.h"[m
+ [m
+ #if  defined(KKOS_WINDOWS)[m
+[32m+[m[32m#include <direct.h>[m
+ #include <windows.h>[m
+ #include <Lmcons.h>[m
+ #include <conio.h>[m
+ #else[m
+[32m+[m[32m#include <dirent.h>[m
+ #include <sys/types.h>[m
+ #include <sys/times.h>[m
+ #include <sys/time.h>[m
+[36m@@ -27,7 +27,7 @@[m
+ #include <errno.h>[m
+ #include <iostream>[m
+ #include <fstream> [m
+[31m-//#include <stdio.h>[m
+[32m+[m[32m#include <stdio.h>[m
+ #include <stdlib.h> [m
+ #include <string.h>[m
+ #include <string>[m
+[36m@@ -69,23 +69,26 @@[m [mKKStr  KKB::osGetErrorNoDesc (kkint32  errorNo)[m
+ [m
+ [m
+ [m
+[31m-std::FILE*  KKB::osFOPEN (const char* fileName,[m
+[31m-                          const char* mode[m
+[31m-					               )[m
+[32m+[m[32mFILE*  KKB::osFOPEN (const char* fileName,[m[41m [m
+[32m+[m[32m                     const char* mode[m
+[32m+[m					[32m          )[m
+ {[m
+[31m-  std::FILE*  f = NULL;[m
+[32m+[m[32m  FILE*  f = NULL;[m
+ [m
+ # ifdef  USE_SECURE_FUNCS[m
+[31m-  fopen_s (&f, fileName, mode);[m
+[32m+[m[32m    fopen_s (&f, fileName, mode);[m
+ # else[m
+[31m-    f = std::fopen (fileName, mode);[m
+[32m+[m[32m    f = fopen (fileName, mode);[m
+ # endif[m
+ [m
+   return  f;[m
+ }[m
+ [m
+ [m
+[31m-kkint64  KKB::osFTELL (std::FILE* f)[m
+[32m+[m
+[32m+[m
+[32m+[m
+[32m+[m[32mkkint64  KKB::osFTELL (FILE* f)[m
+ {[m
+ #if  defined(KKOS_WINDOWS)[m
+   return  _ftelli64 (f);[m
+[36m@@ -96,15 +99,15 @@[m [mkkint64  KKB::osFTELL (std::FILE* f)[m
+ [m
+ [m
+ [m
+[31m-int  KKB::osFSEEK (std::FILE*  f,[m
+[31m-                   kkint64     offset,[m
+[31m-                   int         origin[m
+[32m+[m[32mint  KKB::osFSEEK (FILE*    f,[m
+[32m+[m[32m                   kkint64  offset,[m
+[32m+[m[32m                   int      origin[m
+                   )[m
+ {[m
+ #if  defined(KKOS_WINDOWS)[m
+   return  _fseeki64(f, offset, origin);[m
+ #else[m
+[31m-  return  fseeko(f, offset, origin);[m
+[32m+[m[32m  return  fseeko (f, offset, origin);[m
+ #endif[m
+ }[m
+ [m
+[36m@@ -182,14 +185,14 @@[m [mbool  osFileNameMatchesSearchFields (const KKStr&  fileName,[m
+   if  (searchFields->QueueSize () < 1)[m
+     return true;[m
+ [m
+[31m-  KKStrConstPtr  fieldPtr = searchFields->IdxToPtr (0);[m
+[32m+[m[32m  KKStrConstPtr  field = searchFields->IdxToPtr (0);[m
+ [m
+   if  (searchFields->QueueSize () == 1)[m
+   {[m
+[31m-    if  (*fieldPtr == "*")[m
+[32m+[m[32m    if  (*field == "*")[m
+       return  true;[m
+ [m
+[31m-    if  (*fieldPtr == fileName)[m
+[32m+[m[32m    if  (*field == fileName)[m
+       return true;[m
+     else[m
+       return false;[m
+[36m@@ -748,7 +751,7 @@[m [mbool  KKB::osRenameFile (const KKStr&  oldName,[m
+                         )[m
+ {[m
+   [m
+[31m-  kkint32  returnCd = std::rename (oldName.Str (), newName.Str ());[m
+[32m+[m[32m  kkint32  returnCd = rename (oldName.Str (), newName.Str ());[m
+ [m
+   if  (returnCd == 0)[m
+     return true;[m
+[36m@@ -954,7 +957,7 @@[m [mint  osLocateEnvStrStart (const KKStr&  str,[m
+ [m
+ KKStr  KKB::osSubstituteInEnvironmentVariables (const KKStr&  src)[m
+ {[m
+[31m-  kkint32  x = osLocateEnvStrStart (src, 0);[m
+[32m+[m[32m  kkint16  x = osLocateEnvStrStart (src, 0);[m
+   if  (x < 0)  return  src;[m
+ [m
+   KKStr  str (src);[m
+[1mdiff --git a/KKBase/OSservices.h b/KKBase/OSservices.h[m
+[1mindex 56da200..d334d71 100644[m
+[1m--- a/KKBase/OSservices.h[m
+[1m+++ b/KKBase/OSservices.h[m
+[36m@@ -67,18 +67,18 @@[m [mnamespace KKB[m
+ [m
+   bool           osFileExists (const KKStr&  _fileName);[m
+ [m
+[31m-  std::FILE*     osFOPEN (const char* fileName,[m
+[32m+[m[32m  FILE*          osFOPEN (const char* fileName,[m[41m [m
+ 	  	                    const char* mode[m
+                          );[m
+ [m
+   /**[m
+    *@brief Calls the appropriate 64 bit function for operating system.[m
+    */[m
+[31m-  kkint64        osFTELL (std::FILE* f);[m
+[32m+[m[32m  kkint64        osFTELL (FILE* f);[m
+ [m
+[31m-  int            osFSEEK (std::FILE*  f,[m
+[31m-                          kkint64     offset,[m
+[31m-                          int         origin[m
+[32m+[m[32m  int            osFSEEK (FILE*    f,[m
+[32m+[m[32m                          kkint64  offset,[m
+[32m+[m[32m                          int      origin[m
+                          );[m
+ [m
+   //***************************************************************************[m
+[1mdiff --git a/KKBase/Raster.cpp b/KKBase/Raster.cpp[m
+[1mindex e1498be..25fad60 100644[m
+[1m--- a/KKBase/Raster.cpp[m
+[1m+++ b/KKBase/Raster.cpp[m
+[36m@@ -2009,11 +2009,6 @@[m [mvoid  Raster::FillHoleGrow (kkint32  _row,[m
+ [m
+ [m
+ [m
+[31m-RasterPtr  Raster::CreateFillHole () const  {[m
+[31m-  auto holesFilledIn = this->AllocateARasterInstance (*this);[m
+[31m-  holesFilledIn->FillHole ();[m
+[31m-  return holesFilledIn;[m
+[31m-}[m
+ [m
+ [m
+ void  Raster::FillHole ()[m
+[36m@@ -2753,10 +2748,10 @@[m [mvoid  Raster::ErosionChanged1 (MaskTypes  mask,[m
+ [m
+ [m
+ void  Raster::ErosionBoundary (MaskTypes  mask, [m
+[31m-                               kkint32    blobRowStart,[m
+[31m-                               kkint32    blobRowEnd,[m
+[31m-                               kkint32    blobColStart,[m
+[31m-                               kkint32    blobColEnd[m
+[32m+[m[32m                               kkint32    blobrowstart,[m[41m [m
+[32m+[m[32m                               kkint32    blobrowend,[m[41m [m
+[32m+[m[32m                               kkint32    blobcolstart,[m[41m [m
+[32m+[m[32m                               kkint32    blobcolend[m
+                               )[m
+ {[m
+   kkint32  r;[m
+[36m@@ -2783,8 +2778,7 @@[m [mvoid  Raster::ErosionBoundary (MaskTypes  mask,[m
+ [m
+   for  (r = 0;  r < height;  r++)[m
+   {[m
+[31m-	  /**@todo  This does not make sense; need to investigate. */[m
+[31m-    //if ((r>= blobRowStart+30) && (r<= blobrowend-30))[m
+[32m+[m[32m    //if ((r>= blobrowstart+30) && (r<= blobrowend-30))[m
+     // {[m
+     // }[m
+   // else[m
+[36m@@ -2796,7 +2790,7 @@[m [mvoid  Raster::ErosionBoundary (MaskTypes  mask,[m
+ [m
+     for  (c = 0; c < width; c++)[m
+     {[m
+[31m-      if  ((c >= blobColStart + 100)  &&  (c <= blobColEnd - 100))[m
+[32m+[m[32m      if  ((c >= blobcolstart + 100)  &&  (c <= blobcolend - 100))[m
+       {[m
+       }[m
+       else[m
+[36m@@ -9414,7 +9408,7 @@[m [mRasterPtr  Raster::ThresholdInHSI (float              thresholdH,[m
+                                    const PixelValue&  flagValue[m
+                                   )[m
+ {[m
+[31m-  PixelValue pixelColor (0, 0, 0);[m
+[32m+[m[32m  PixelValue color (0, 0, 0);[m
+   //Vec<float,3> white(255,255,255);[m
+   float tempH, tempS, tempI;[m
+   float y, x, r, xOriginalPoint, yOriginalPoint;[m
+[36m@@ -9430,20 +9424,20 @@[m [mRasterPtr  Raster::ThresholdInHSI (float              thresholdH,[m
+   {[m
+     for  (kkint32 n = 0;  n < width;  n++)[m
+     {[m
+[31m-      GetPixelValue (m, n, pixelColor);[m
+[31m-      pixelColor.ToHSI (tempH, tempS, tempI);[m
+[32m+[m[32m      GetPixelValue (m, n, color);[m
+[32m+[m[32m      color.ToHSI (tempH, tempS, tempI);[m
+ [m
+       // Convert from Cartesian polar coordinates to Cartesian coordinates. These are the Cartesian coordinates of the[m
+       // current pixel[m
+       x = tempS * cos (tempH);[m
+       y = tempS * sin (tempH);[m
+ [m
+[31m-      // Calculate the distance from the threshold initial point to the current pixelColor using[m
+[32m+[m[32m      // Calculate the distance from the threshold initial point to the current pixel color using[m[41m [m
+       // the euclidean distance[m
+       r = (float)(sqrt (pow (xOriginalPoint - x, 2) + pow (yOriginalPoint - y, 2) + pow (thresholdI - tempI, 2)));[m
+ [m
+       if  (r <= distance)[m
+[31m-         resultingImage->SetPixelValue (m, n, pixelColor);[m
+[32m+[m[32m         resultingImage->SetPixelValue (m, n, color);[m
+       else[m
+         resultingImage->SetPixelValue (m, n, flagValue);[m
+     }[m
+[36m@@ -9839,7 +9833,7 @@[m [mRasterPtr  Raster::CreateColorImageFromLabels ()[m
+ [m
+ void  Raster::FillBlob (RasterPtr   origImage,[m
+                         BlobPtr     blob,[m
+[31m-                        PixelValue  pixelValue[m
+[32m+[m[32m                        PixelValue  color[m
+                        )[m
+ {[m
+   if  (blob == NULL)[m
+[36m@@ -9865,7 +9859,7 @@[m [mvoid  Raster::FillBlob (RasterPtr   origImage,[m
+     {[m
+       if  (origImage->blobIds[row][col] == blobId)[m
+       {[m
+[31m-        SetPixelValue (row, col, pixelValue);[m
+[32m+[m[32m        SetPixelValue (row, col, color);[m
+       }[m
+     }[m
+   }[m
+[1mdiff --git a/KKBase/Raster.h b/KKBase/Raster.h[m
+[1mindex a0e5724..8320df7 100644[m
+[1m--- a/KKBase/Raster.h[m
+[1m+++ b/KKBase/Raster.h[m
+[36m@@ -945,9 +945,6 @@[m [mnamespace KKB[m
+ [m
+     void          FillHole ();[m
+ [m
+[31m-    RasterPtr     CreateFillHole () const;[m
+[31m-[m
+[31m-[m
+ [m
+     /**[m
+      *@brief  Fills holes in the image using the 'mask' raster as a work area.[m
+[36m@@ -979,7 +976,7 @@[m [mnamespace KKB[m
+      */[m
+     void          FillBlob (RasterPtr   origImage,[m
+                             BlobPtr     blob,[m
+[31m-                            PixelValue  pixelValue[m
+[32m+[m[32m                            PixelValue  color[m
+                            );[m
+ [m
+     void          FillRectangle (kkint32            tlRow,[m
+[36m@@ -1100,16 +1097,6 @@[m [mnamespace KKB[m
+ [m
+     RasterPtr     Rotate (float  turnAngle);[m
+ [m
+[31m-    /** [m
+[31m-     *@brief Determine the point in  an original Raster instance that has derived from a rotated raster instance.[m
+[31m-     *@details  Imagine you have raster "A"  and you rotate it by 45 degrees. You then locate a point of interest [m
+[31m-     *  "P" but you want to locate the same point in the original image.[m
+[31m-     *@param height  Height of original Raster this rotated Raster derived from.[m
+[31m-     *@param width   Width of original Raster this rotated Raster derived from.[m
+[31m-     *@param rotatedPoint  Point in this ratoated Raster.[m
+[31m-     *@param turnAngle Angle that this Raster was rotated by.[m
+[31m-     *@returns The "Point" in the original raster that coresponds to [rotatedPoint] in this Raster.[m
+[31m-     */[m
+     Point         RotateDerivePreRotatedPoint (kkint32  height,[m
+                                                kkint32  width,[m
+                                                Point&   rotatedPoint, [m
+[36m@@ -1196,9 +1183,6 @@[m [mnamespace KKB[m
+     uchar*        ToCompressor (kkuint32&  compressedBuffLen)  const;[m
+ [m
+ [m
+[31m-    /**[m
+[31m-     *@brief Creates the same derived "Raster" instance; tthat is every derived class of "Raster" implements this method; this way you do not need to know the underlying class to get another instance of the sdame type.[m
+[31m-     */[m
+     virtual[m
+       RasterPtr  AllocateARasterInstance (kkint32  _height,[m
+                                           kkint32  _width,[m
+[1mdiff --git a/KKBase/RasterBuffer.h b/KKBase/RasterBuffer.h[m
+[1mindex 0e85598..3a69226 100644[m
+[1m--- a/KKBase/RasterBuffer.h[m
+[1m+++ b/KKBase/RasterBuffer.h[m
+[36m@@ -95,7 +95,7 @@[m [mnamespace KKB[m
+     std::queue<RasterPtr> buffer;[m
+     GoalKeeperPtr         gateKeeper;[m
+     kkint32               maxNumOfBuffers;[m
+[31m-    kkMemSize             memoryConsumed;[m
+[32m+[m[32m    kkuint32              memoryConsumed;[m
+     KKStr                 name;             /**< Name of buffer. */[m
+     kkint32               rastersDropped;   /**< The number of raster instances that had to be deleted because 'maxNumOfBuffers' was reached. */[m
+   };  /* RasterBuffer */[m
+[1mdiff --git a/KKBase/RunLog.cpp b/KKBase/RunLog.cpp[m
+[1mindex c9d1222..2a070df 100644[m
+[1m--- a/KKBase/RunLog.cpp[m
+[1m+++ b/KKBase/RunLog.cpp[m
+[36m@@ -4,7 +4,6 @@[m
+  */[m
+ #include "FirstIncludes.h"[m
+ [m
+[31m-#include <functional>[m
+ #include <stdio.h>[m
+ #include <string>[m
+ #include <time.h>[m
+[1mdiff --git a/KKControls/KKControls.csproj b/KKControls/KKControls.csproj[m
+[1mindex 5a25943..6794d38 100644[m
+[1m--- a/KKControls/KKControls.csproj[m
+[1m+++ b/KKControls/KKControls.csproj[m
+[36m@@ -8,38 +8,36 @@[m
+     <ProjectGuid>{3404FEA2-61A5-4102-9280-729AC235A031}</ProjectGuid>[m
+     <OutputType>Library</OutputType>[m
+     <AppDesignerFolder>Properties</AppDesignerFolder>[m
+[31m-    <RootNamespace>KKControls</RootNamespace>[m
+[31m-    <AssemblyName>KKControls</AssemblyName>[m
+[32m+[m[32m    <RootNamespace>ChartControls</RootNamespace>[m
+[32m+[m[32m    <AssemblyName>ChartControls</AssemblyName>[m
+     <FileUpgradeFlags>[m
+     </FileUpgradeFlags>[m
+     <OldToolsVersion>3.5</OldToolsVersion>[m
+     <UpgradeBackupLocation>[m
+     </UpgradeBackupLocation>[m
+[31m-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>[m
+[32m+[m[32m    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>[m
+     <TargetFrameworkProfile />[m
+   </PropertyGroup>[m
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">[m
+     <DebugSymbols>true</DebugSymbols>[m
+     <DebugType>full</DebugType>[m
+     <Optimize>false</Optimize>[m
+[31m-    <OutputPath>bin\Debug\</OutputPath>[m
+[32m+[m[32m    <OutputPath>..\..\Debug\</OutputPath>[m
+     <DefineConstants>DEBUG;TRACE</DefineConstants>[m
+     <ErrorReport>prompt</ErrorReport>[m
+     <WarningLevel>4</WarningLevel>[m
+     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>[m
+     <PlatformTarget>x86</PlatformTarget>[m
+[31m-    <Prefer32Bit>false</Prefer32Bit>[m
+   </PropertyGroup>[m
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">[m
+     <DebugType>pdbonly</DebugType>[m
+     <Optimize>true</Optimize>[m
+[31m-    <OutputPath>bin\Release\</OutputPath>[m
+[32m+[m[32m    <OutputPath>..\..\Release\</OutputPath>[m
+     <DefineConstants>TRACE</DefineConstants>[m
+     <ErrorReport>prompt</ErrorReport>[m
+     <WarningLevel>4</WarningLevel>[m
+     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>[m
+     <PlatformTarget>x86</PlatformTarget>[m
+[31m-    <Prefer32Bit>false</Prefer32Bit>[m
+   </PropertyGroup>[m
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">[m
+     <DebugSymbols>true</DebugSymbols>[m
+[36m@@ -49,7 +47,6 @@[m
+     <DebugType>full</DebugType>[m
+     <PlatformTarget>x86</PlatformTarget>[m
+     <ErrorReport>prompt</ErrorReport>[m
+[31m-    <Prefer32Bit>false</Prefer32Bit>[m
+   </PropertyGroup>[m
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">[m
+     <OutputPath>bin\x64\Release\</OutputPath>[m
+[36m@@ -59,7 +56,6 @@[m
+     <DebugType>pdbonly</DebugType>[m
+     <PlatformTarget>x86</PlatformTarget>[m
+     <ErrorReport>prompt</ErrorReport>[m
+[31m-    <Prefer32Bit>false</Prefer32Bit>[m
+   </PropertyGroup>[m
+   <ItemGroup>[m
+     <Reference Include="System" />[m
+[1mdiff --git a/KKLineScanner/KKLineScanner.vcxproj b/KKLineScanner/KKLineScanner.vcxproj[m
+[1mindex d3a5541..e1dec9a 100644[m
+[1m--- a/KKLineScanner/KKLineScanner.vcxproj[m
+[1m+++ b/KKLineScanner/KKLineScanner.vcxproj[m
+[36m@@ -14,7 +14,6 @@[m
+     <ProjectGuid>{65B4E499-F9C5-472A-B5D1-90541F817513}</ProjectGuid>[m
+     <RootNamespace>KKLineScanner</RootNamespace>[m
+     <Keyword>Win32Proj</Keyword>[m
+[31m-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>[m
+   </PropertyGroup>[m
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">[m
+[1mdiff --git a/KKMachineLearning/KKMachineLearning.vcxproj b/KKMachineLearning/KKMachineLearning.vcxproj[m
+[1mindex 3e41404..3727698 100644[m
+[1m--- a/KKMachineLearning/KKMachineLearning.vcxproj[m
+[1m+++ b/KKMachineLearning/KKMachineLearning.vcxproj[m
+[36m@@ -14,7 +14,6 @@[m
+     <ProjectGuid>{EDA94C7F-B7B2-48DC-833D-A4948F00A7A2}</ProjectGuid>[m
+     <RootNamespace>KKMachineLearning</RootNamespace>[m
+     <Keyword>Win32Proj</Keyword>[m
+[31m-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>[m
+   </PropertyGroup>[m
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">[m
+[36m@@ -58,7 +57,7 @@[m
+       <Optimization>Disabled</Optimization>[m
+       <AdditionalIncludeDirectories>$(KSquareLibraries)\KKBase;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>[m
+       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>[m
+[31m-      <MinimalRebuild>true</MinimalRebuild>[m
+[32m+[m[32m      <MinimalRebuild>false</MinimalRebuild>[m
+       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>[m
+       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>[m
+       <PrecompiledHeader />[m
