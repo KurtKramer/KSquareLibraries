@@ -222,7 +222,6 @@ namespace KKMLL
      *@param[in] _fileDesc Describes the feature data such as number of features and their attributes.
      *@param[in] _owner True indicates that this list will own its contents and when this list is deleted it
      *           will call the destructor for all its contents.
-     *@param[out] _log Log file to send messages to.
      */
     FeatureVectorList (FileDescConstPtr  _fileDesc,
                        bool              _owner

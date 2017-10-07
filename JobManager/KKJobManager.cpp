@@ -211,7 +211,7 @@ void    KKJobManager::Block ()
   kkint32  count = 0;
 
   do  {
-    lockFile = open (lockFileName.Str (), O_WRONLY | O_CREAT | O_EXCL);
+    lockFile = _open (lockFileName.Str (), O_WRONLY | O_CREAT | O_EXCL);
     if  (lockFile < 0)
     {
       count++;
@@ -476,7 +476,7 @@ void  KKJobManager::StatusFileRefresh ()
       StatusFileProcessLine (statusStr, *statusFile);
     }
 
-    long  zed = statusFile->tellg ();
+    wstreampos  zed = statusFile->tellg ();
     if  (zed >= 0)
       statusFileNextByte = zed;
 
