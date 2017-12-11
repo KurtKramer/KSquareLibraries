@@ -114,7 +114,7 @@ RunLog::~RunLog ()
 
 
 
-kkuint32  RunLog::MemoryConsumedEstimated ()  const
+kkMemSize  RunLog::MemoryConsumedEstimated ()  const
 {
   return  sizeof (RunLog) + 
           curLine.MemoryConsumedEstimated   () +

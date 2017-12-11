@@ -73,7 +73,7 @@ namespace  KKLSC
 
     virtual  ~ScannerFile ();
 
-    virtual  kkint32  MemoryConsumedEstimated ()  const;
+    virtual  kkMemSize  MemoryConsumedEstimated ()  const;
 
     virtual  Format  FileFormat ()  const  {return Format::sfUnKnown;}
 
@@ -209,7 +209,7 @@ namespace  KKLSC
      * (see largestKnownScanLine) the eof flag will be set to 'true'.
      *@param[in]  scanLine  Scan line to skip to so that the next call to 'GetNextLine' retrieves it.
      */
-    void  SkipToScanLine (kkint32  scanLine);
+    void  SkipToScanLine (kkuint32  scanLine);
   
 
     virtual

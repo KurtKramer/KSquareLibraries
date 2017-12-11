@@ -484,7 +484,7 @@ void  ScannerFile4BitEncoded::ProcessTextBlock (const OpRec&  rec)
 {
   OpRec  rec2;
 
-  kkuint32  recsRead = fread (&rec2, sizeof (rec2), 1, file);
+  size_t  recsRead = fread (&rec2, sizeof (rec2), 1, file);
   if  (recsRead < 1)
   {
     eof = true;
@@ -515,7 +515,7 @@ void  ScannerFile4BitEncoded::ProcessInstrumentDataWord (const OpRec&  rec)
 
   OpRecInstrumentDataWord2  rec2;
   OpRecInstrumentDataWord3  rec3;
-  kkuint32  recsRead = fread (&rec2, sizeof (rec2), 1, file);
+  size_t  recsRead = fread (&rec2, sizeof (rec2), 1, file);
   if  (recsRead < 1)
     eof = true;
   else
@@ -567,7 +567,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
   uchar  opCode = 0;
   OpRec  rec;
   OpRec  rec2;
-  kkuint32 recsRead = 0;
+  size_t recsRead = 0;
 
   kkuint32  bufferLineLen = 0;
 
@@ -954,7 +954,7 @@ void  ScannerFile4BitEncoded::WriteNextScanLine (const uchar*  buffer,
   *encodedBuffNext = rec;
   ++encodedBuffNext;
 
-  encodedBuffLen = encodedBuffNext - encodedBuff;
+  encodedBuffLen = (kkuint32)(encodedBuffNext - encodedBuff);
   fwrite (encodedBuff, sizeof (OpRec), encodedBuffLen, file);
   fileSizeInBytes = osFTELL (file);
 

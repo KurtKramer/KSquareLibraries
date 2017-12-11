@@ -53,7 +53,7 @@ namespace KKB
 
     virtual ~KKThread ();
 
-    kkMemSize  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated () const;
 
     static  const KKStr&     ThreadStatusToStr (ThreadStatus);
 

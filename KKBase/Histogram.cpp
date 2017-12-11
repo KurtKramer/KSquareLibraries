@@ -45,7 +45,7 @@ Histogram::Histogram (float    _minValue,
     exit (-1);
   }
 
-  range = bucketSize * numOfBuckets;
+  range = bucketSize * (float)numOfBuckets;
 
   buckets      = new float[numOfBuckets];
   bucketTotals = new float[numOfBuckets];
@@ -168,8 +168,8 @@ RasterPtr  Histogram::CreateGraph ()  const
   kkint32 colHeight     = 0;
   float   maxCount      = (float)0.0;
   kkint32 row           = 0;
-  kkint32 x;
-  kkint32 y;
+  kkint32 x             = 0;
+  kkint32 y             = 0;
 
   uchar  borderColor  = 100;
   uchar  colorAxis    = 150;
@@ -225,7 +225,7 @@ RasterPtr  Histogram::CreateGraph ()  const
       maxCount = buckets[bucket];
   }
 
-  kkint32  maxColHeight = Min ((kkint32)(maxCount * (barWidth + interBarWidth) + (float)0.5), (kkint32)512);
+  kkint32  maxColHeight = Min ((kkint32)(maxCount * (float)(barWidth + interBarWidth) + 0.5f), (kkint32)512);
   kkint32  graphHeight = maxColHeight + 20;
 
 
@@ -311,7 +311,7 @@ RasterPtr  Histogram::CreateGraph ()  const
     else if  (peakBarLines[bucket])
       barCodeToUse = colorBarPeak;
 
-    for  (kkint32  x = 0;  x < colHeight;  x++)
+    for  (kkint32  counter = 0;  counter < colHeight;  counter++)
     {
       for  (y = 0;  y < barWidth;  y++)
       {
@@ -402,7 +402,7 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
   }
 
 
-  kkint32  maxColHeight = Min ((kkint32)(maxCount * (barWidth + interBarWidth) + (float)0.5), (kkint32)512);
+  kkint32  maxColHeight = Min ((kkint32)(maxCount * (float)(barWidth + interBarWidth) + 0.5f), (kkint32)512);
   kkint32  graphHeight = maxColHeight + 20;
 
   RasterPtr  graph = new Raster (graphHeight, graphWidth);
@@ -481,13 +481,10 @@ RasterPtr  Histogram::CreateGraph (kkint32  barSize)  const
     else if  (peakBarLines[bucket])
       barCodeToUse = colorBarPeak;
 
-    for  (kkint32  x = 0;  x < colHeight;  x++)
+    for  (kkint32  counter = 0;  counter < colHeight;  counter++)
     {
       for  (y = 0;  y < barWidth;  y++)
-      {
         graph->SetPixelValue (row, col + y, barCodeToUse);
-      }
-
       row--;
     }
 
@@ -866,7 +863,7 @@ HistogramPtr  Histogram::Equalized ()
  
   for  (x = 0;  x < numOfBuckets;  x++)
   {
-    idx = (kkint32)((float)0.5 + (((float)(histSumTable[x] * (numOfBuckets - 1)) / totalCount)));
+    idx = (kkint32)(0.5f + (((float)(histSumTable[x] * (float)(numOfBuckets - 1)) / totalCount)));
     if  (idx >= numOfBuckets)
       idx = numOfBuckets - 1;
 
@@ -1076,7 +1073,7 @@ void  Histogram::GetStats (float&   min,       // smallest amt in a bucket.
 {
   min      = FLT_MAX;
   max      = FLT_MIN;
-  mean     =  totalCount / numOfBuckets;
+  mean     =  totalCount / (float)numOfBuckets;
   variance = 0.0f;
 
   float  deltaSquareTotal = 0.0f;

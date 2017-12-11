@@ -33,7 +33,7 @@ MorphOpMaskExclude::~MorphOpMaskExclude ()
 
 
 
-kkuint32  MorphOpMaskExclude::MemoryConsumedEstimated ()
+kkMemSize  MorphOpMaskExclude::MemoryConsumedEstimated ()
 {
   kkint32  result = sizeof (*this);
   return  result;

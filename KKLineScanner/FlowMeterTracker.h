@@ -70,7 +70,7 @@ namespace  KKLSC
                       float    _ticsPerMeter
                      );
 
-    kkint32  MemoryConsumedEstimated ();
+    kkMemSize  MemoryConsumedEstimated ();
   
     // Access Methods
     bool    FlowMeterPresent     ()  const  {return flowMeterPresent;}

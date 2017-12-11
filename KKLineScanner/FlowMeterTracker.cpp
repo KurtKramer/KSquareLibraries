@@ -98,9 +98,9 @@ void  FlowMeterTracker::Initialize (bool     _flowMeterPresent,
 
 
 
-kkint32  FlowMeterTracker::MemoryConsumedEstimated ()
+kkMemSize  FlowMeterTracker::MemoryConsumedEstimated ()
 {
-  kkint32  mem = sizeof (*this);
+  kkMemSize  mem = sizeof (*this);
   if  (historyTableSize > 0)
     mem += sizeof (Entry) * historyTableSize;
   return  mem;

@@ -1358,8 +1358,8 @@ TrainingConfiguration2Ptr  TrainingConfiguration2::ValidateSubClassifier (const 
       errorsFound = true;
       const VectorKKStr&  errors   = config->FormatErrors ();
       const VectorInt&    lineNums = config->FormatErrorsLineNums ();
-      kkuint32 zed = Max (errors.size (), lineNums.size ());
-      for  (kkuint32 x = 0;  x < zed;  ++x)
+      size_t zed = Max (errors.size (), lineNums.size ());
+      for  (size_t x = 0;  x < zed;  ++x)
         FormatErrorsAdd (lineNums[x], errors[x]);
     }
   }

@@ -101,7 +101,7 @@ MorphOpStretcher::~MorphOpStretcher ()
 
 
 
-kkuint32  MorphOpStretcher::MemoryConsumedEstimated ()
+kkMemSize  MorphOpStretcher::MemoryConsumedEstimated ()
 {
   kkint32  result = sizeof (*this) +
          (kkint32)(rowFactorsCount * sizeof (CellFactor) * rowFactor) + 

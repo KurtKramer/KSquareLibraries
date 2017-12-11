@@ -279,6 +279,7 @@ Raster::Raster ():
   green                (NULL),
   blue                 (NULL)
 {
+  AddRasterInstance (this);
 }
 
 

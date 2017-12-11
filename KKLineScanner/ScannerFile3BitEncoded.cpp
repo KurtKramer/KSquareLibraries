@@ -289,7 +289,7 @@ void  ScannerFile3BitEncoded::GetNextScanLine (uchar* lineBuff,
   bool   eol = false;
   uchar  opCode = 0;
   OpRec  rec;
-  kkuint32 recsRead = 0;
+  size_t recsRead = 0;
 
   kkuint32  lineSize = 0;
 

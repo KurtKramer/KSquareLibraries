@@ -3144,7 +3144,7 @@ void  UsfCasCor::ReadXML (XmlStream&      s,
         VectorKKStr*  connectionsStr = dynamic_cast<XmlElementVectorKKStrPtr> (t)->TakeOwnership ();
         if  (connectionsStr)
         {
-          kkuint32  count = connectionsStr->size ();
+          kkuint32  count = (kkuint32)connectionsStr->size ();
           delete  Connections;
           Connections = new int*[MaxUnits];
 

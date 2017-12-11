@@ -89,7 +89,7 @@ const KKStr&  TrainingClass::Directory  (kkuint32 idx) const
 
 kkuint32  TrainingClass::DirectoryCount () const
 {
-  return  directories.size ();
+  return  (kkuint32)directories.size ();
 }
 
 

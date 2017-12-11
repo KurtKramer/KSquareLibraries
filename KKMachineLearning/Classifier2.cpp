@@ -500,7 +500,7 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
 {
   ClassProbListPtr  predictions = ProbabilitiesByClass (example);
 
-  kkuint32  numClasses = classes.size ();
+  kkuint32  numClasses = (kkuint32)classes.size ();
   for  (kkuint32 x = 0;  x < numClasses;  ++x)
   {
     votes[x] = 0;

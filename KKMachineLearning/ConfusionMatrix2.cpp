@@ -2892,7 +2892,7 @@ KKStr  ArrayToDelimitedDelimitedStr (const vector<T>&   v,
                                      char               delimiter
                                     )
 {
-  KKStr s (v.size () * 10);
+  KKStr s ((kkint32)v.size () * 10);
 
   for  (kkuint32 x = 0;  x < v.size ();  x++)
   {

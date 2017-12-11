@@ -416,7 +416,7 @@ void  ScannerFile2BitEncoded::ProcessTextBlock (const OpRec&  rec)
 {
   OpRec  rec2;
 
-  kkuint32  recsRead = fread (&rec2, sizeof (rec2), 1, file);
+  size_t  recsRead = fread (&rec2, sizeof (rec2), 1, file);
   if  (recsRead < 1)
   {
     eof = true;
@@ -504,7 +504,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
   uchar  opCode = 0;
   OpRec  rec;
   OpRec  rec2;
-  kkuint32 recsRead = 0;
+  size_t recsRead = 0;
 
   kkuint32  bufferLineLen = 0;
 
@@ -908,7 +908,7 @@ void  ScannerFile2BitEncoded::WriteNextScanLine (const uchar*  buffer,
   *encodedBuffNext = rec;
   ++encodedBuffNext;
 
-  encodedBuffLen = encodedBuffNext - encodedBuff;
+  encodedBuffLen = (kkint32)(encodedBuffNext - encodedBuff);
   fwrite (encodedBuff, sizeof (OpRec), encodedBuffLen, file);
 
 

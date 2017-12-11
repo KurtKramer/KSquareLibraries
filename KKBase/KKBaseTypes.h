@@ -162,7 +162,7 @@ namespace KKB
 
   typedef  volatile const bool  VolConstBool;  /**< Commonly used for passing Cancel Flag in multi threaded environment.  */
 
-  typedef kkuint32  kkMemSize;
+  typedef kkuint64  kkMemSize;
 
 
 

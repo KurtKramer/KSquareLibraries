@@ -33,7 +33,7 @@ MorphOpBmiFiltering::~MorphOpBmiFiltering ()
 
 
 
-kkuint32  MorphOpBmiFiltering::MemoryConsumedEstimated ()  const
+kkMemSize  MorphOpBmiFiltering::MemoryConsumedEstimated ()  const
 {
   return  sizeof (*this);
 }

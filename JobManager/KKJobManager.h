@@ -208,7 +208,7 @@ namespace  KKJobManagment
     bool            restart;
   
     KKStr           statusFileName;
-    long            statusFileNextByte;       /**< Byte offset of next bye to read from status file.  */
+    kkint64         statusFileNextByte;       /**< Byte offset of next byte to read from status file.  */
   
   };  /* KKJobManager */
   
