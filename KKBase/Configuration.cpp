@@ -501,7 +501,7 @@ void  Configuration::LoadFile (RunLog&  log)
         sections->AddConfSection (curSection);
       }
 
-      kkint32  equalIdx = line.LocateCharacter ('=');
+      kkint64  equalIdx = line.LocateCharacter ('=');
 
       if  (equalIdx < 0)
       {

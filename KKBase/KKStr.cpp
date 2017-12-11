@@ -142,12 +142,8 @@ kkint32  KKB::STRNICMP (const char*  left,
                        )
 {
   if  (left == NULL)
-  {
-    if  (right == NULL)
-      return 0;
-    else
-      return -1;
-  }
+    return  (right == NULL) ? 0 : -1;
+
   else if  (!right)
     return 1;
 
@@ -1428,10 +1424,10 @@ KKStr&  KKStr::operator= (const std::vector<KKStr>& right)
   }
 
   char*  ptr = val;
-  kkint32  allocatedSpaceNotUsed = allocatedSize - 1;
-  for  (x = 0;  x < right.size ();  x++)
+  kkStrUint  allocatedSpaceNotUsed = allocatedSize - 1;
+  for  (size_t x = 0;  x < right.size ();  x++)
   {
-    kkint32  rightLen = right[x].Len ();
+    kkStrUint  rightLen = right[x].Len ();
 #ifdef  USE_SECURE_FUNCS
     strncpy_s (ptr, allocatedSpaceNotUsed, right[x].Str (), rightLen);
 #else
@@ -1792,7 +1788,7 @@ void  KKStr::AppendInt32 (kkint32  i)
 void  KKStr::AppendUInt32 (kkuint32  i)
 {
   char  buff[64];
-  itoa (i, buff, 10);
+  _itoa (i, buff, 10);
   Append (buff);
   return;
 }  /* AppendUInt32 */
@@ -2710,16 +2706,13 @@ void  KKStr::LopOff (kkint64 lastCharPos)
 KKStr  KKStr::QuotedStr ()  const
 {
   if  ((!val)  ||  (len < 1))
-  {
     return "\"\"";
-  }
-  
   
   KKStr  result (Len () + 5);
 
   result.Append ('"');
 
-  kkint32  idx = 0;
+  kkStrUint  idx = 0;
 
   while  (idx < len)
   {
@@ -3110,7 +3103,7 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
     return  EmptyStr ();
 
   KKStr  result (len);
-  kkint32  idx = 0;
+  kkStrUint  idx = 0;
    
   bool  lookForTerminatingQuote = false;
 
@@ -3514,7 +3507,7 @@ VectorInt32*  KKStr::ToVectorInt32 ()  const
   KKStr  field = parser.GetNextToken (",\t \n\r");
   while  (!field.Empty ())
   {
-    kkint32 dashPos = field.LocateCharacter ('-');
+    kkint64  dashPos = field.LocateCharacter ('-');
     if  (dashPos < 0)
     {
       // This is not a range
@@ -3602,7 +3595,7 @@ double  KKStr::ToLatitude ()  const
   KKStr  minutesStr = "";
   KKStr  secondsStr  = "";
 
-  kkint32  x = latitudeStr.LocateCharacter (':');
+  kkint64  x = latitudeStr.LocateCharacter (':');
   if  (x >= 0)
   {
     degreesStr = latitudeStr.SubStrPart (0, x - 1);
@@ -3691,10 +3684,10 @@ double  KKStr::ToLongitude ()  const
   KKStr  minutesStr = "";
   KKStr  secondsStr  = "";
 
-  kkint32  x = longitudeStr.LocateCharacter (':');
+  kkint64  x = longitudeStr.LocateCharacter (':');
   if  (x >= 0)
   {
-    degreesStr = longitudeStr.SubStrPart (0, x - 1);
+    degreesStr = longitudeStr.SubStrPart (0, (x - 1));
     degreesStr.TrimRight ();
     minutesStr = longitudeStr.SubStrPart (x + 1);
     minutesStr.Trim ();
@@ -3773,30 +3766,30 @@ kkint32  SearchStr (const char*  src,
 
 
 
-kkint32  KKStr::Find (const KKStr&  str, kkint32 pos) const
+kkint32  KKStr::Find (const KKStr&  str, kkStrUint pos) const
 {
   return  SearchStr (val, len, pos, str.Str (), str.Len ());
 }
 
 
 
-kkint32  KKStr::Find (const char*   s,   kkint32 pos, kkint32 n)  const
+kkint32  KKStr::Find (const char* s,  kkStrUint pos,  kkStrUint n)  const
 {
   return  SearchStr (val, len, pos, s, n);
 }
 
 
 
-kkint32  KKStr::Find (const char* s,  kkint32 pos) const
+kkint32  KKStr::Find (const char* s, kkStrUint pos) const
 {
-  return  SearchStr (val, len, pos, s, (kkint32)strlen (s));
+  return  SearchStr (val, len, pos, s, (kkStrUint)strlen (s));
 }
 
 
 
-kkint32  KKStr::Find (char c, kkint32 pos) const
+kkint32  KKStr::Find (char c, kkStrUint pos) const
 {
-  for  (kkint32 x = pos;  x < len;  x++)
+  for  (kkStrUint x = pos;  x < len;  x++)
   {
     if  (val[x] == c)
       return  x;
