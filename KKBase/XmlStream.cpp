@@ -633,6 +633,13 @@ void  XmlTag::AddAtribute (const KKStr&  attributeName,
 }
 
 
+void  XmlTag::AddAtribute (const KKStr&  attributeName,
+                           kkuint32      attributeValue
+                          )
+{
+  attributes.AddAttribute (attributeName, StrFromUint32 (attributeValue));
+}
+
 
 void  XmlTag::AddAtribute (const KKStr&  attributeName,
                            kkint64       attributeValue
