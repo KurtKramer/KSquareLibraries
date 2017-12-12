@@ -422,8 +422,8 @@ void  ExtractAttribute (KKStr&  tagStr,
                         KKStr&  attributeValue
                        )
 {
-  kkint32  startIdx = 0;
-  kkint32  len = tagStr.Len ();
+  kkStrUint  startIdx = 0;
+  kkStrUint  len = tagStr.Len ();
   attributeName  = "";
   attributeValue = "";
 
@@ -441,7 +441,7 @@ void  ExtractAttribute (KKStr&  tagStr,
     return;
   }
 
-  kkint32 idx = startIdx;
+  kkStrUint idx = startIdx;
 
   // Skip until we find the '=' character.
   while  (idx < len)

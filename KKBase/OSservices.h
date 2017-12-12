@@ -238,9 +238,9 @@ namespace KKB
 
   double         osGetUserTimeUsed   ();
 
-  kkint32        osLocateFirstSlashChar (const KKStr&  fileSpec);
+  kkint64        osLocateFirstSlashChar (const KKStr&  fileSpec);
 
-  kkint32        osLocateLastSlashChar (const KKStr&  fileSpec);
+  kkint64        osLocateLastSlashChar (const KKStr&  fileSpec);
 
 
   /** 
