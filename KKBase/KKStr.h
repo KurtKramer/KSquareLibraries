@@ -361,7 +361,7 @@ namespace  KKB
                       uchar ch = ' '
                      );
 
-    kkuint32 Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
+    kkStrUint Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
 
     kkint64  LocateCharacter (char  ch) const;               /**< @brief Returns index of 1st occurrence of 'ch' otherwise -1.             */
 
@@ -377,7 +377,7 @@ namespace  KKB
 
     void     Lower ();                                       /**< @brief Make all characters in the String into lower case. */
 
-    KKStr    MaxLen (kkuint32  maxLen)  const;               /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
+    KKStr    MaxLen (kkStrUint  maxLen)  const;               /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
 
     kkuint32 MaxLenSupported ()  const;                      /**< Returns the maximum String Length that this string can support. */
 
@@ -599,11 +599,11 @@ namespace  KKB
     ///<param name='str'> String that you are searching for. </param>
     ///<param name='pos'> The starting position to start the search from. </param>
     ///<returns> The index where 'str' first occurs at or after 'pos' otherwise -1 if not found. </returns>
-    kkint32  Find (const KKStr&  str, kkint32 pos = 0)     const;
+    kkint32  Find (const KKStr&  str, kkStrUint pos = 0)     const;
 
-    kkint32  Find (const char*   s,   kkint32 pos, kkint32 n)  const;
-    kkint32  Find (const char*   s,   kkint32 pos = 0 )    const;
-    kkint32  Find (char          c,   kkint32 pos = 0 )    const;
+    kkint32  Find (const char*   s,   kkStrUint pos, kkStrUint n)  const;
+    kkint32  Find (const char*   s,   kkStrUint pos = 0 )    const;
+    kkint32  Find (char          c,   kkStrUint pos = 0 )    const;
     
 
     /*
