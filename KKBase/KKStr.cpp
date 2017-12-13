@@ -3220,6 +3220,40 @@ char  KKStr::operator[] (kkuint32 i)  const
 }
 
 
+char  KKStr::operator[] (kkuint32 i)  const
+{
+#ifdef  KKDEBUG
+  ValidateLen ();
+#endif
+
+  if (!val)
+    return 0;
+
+  if (i >= len)
+    return 0;
+  else
+    return val[i];
+}
+
+
+
+char  KKStr::operator[] (kkint64 i)  const
+{
+#ifdef  KKDEBUG
+  ValidateLen ();
+#endif
+
+  if (!val)
+    return 0;
+
+  if (i >= len)
+    return 0;
+  else
+    return val[i];
+}
+
+
+
 
 /**
  *@brief  Static method that returns an Empty String.

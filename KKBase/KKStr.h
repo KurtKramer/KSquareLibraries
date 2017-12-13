@@ -654,6 +654,8 @@ namespace  KKB
     char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
     char    operator[] (kkint32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
     char    operator[] (kkuint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkint64  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkuint64 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
 
 
     KKStr  operator+ (const char*   right) const;
