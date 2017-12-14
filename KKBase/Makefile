@@ -1,4 +1,4 @@
-CXX = g++-5
+CXX = g++
 
 
 CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11 

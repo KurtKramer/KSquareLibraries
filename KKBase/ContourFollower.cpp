@@ -252,8 +252,6 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
   kkint32  maxNumOfBorderPoints = 3 * (height + width);
   kkint32  numOfBorderPixels = 0;
 
-  kkint32 x;
-
   successful = true;
 
   kkint32  totalRow = 0;
@@ -339,8 +337,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
         return 0;
       }
 
-      kkint32  x;
-      for  (x = 0; x < maxNumOfBorderPoints; x++)
+      for  (kkint32 x = 0; x < maxNumOfBorderPoints; ++x)
       {
         #if  defined(FFTW_AVAILABLE)
           newSrc[x][0] = src[x][0];
@@ -350,7 +347,6 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
           newSrc[x].imag (src[x].imag ());
         #endif
       }
-
 
       #if  defined(FFTW_AVAILABLE)
         fftwf_free (src);
@@ -385,7 +381,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
   float  totalRe = 0.0;
   float  totalIm = 0.0;
 
-  for  (x = 0;  x < numOfBorderPixels;  x++)
+  for  (kkint32  x = 0;  x < numOfBorderPixels;  x++)
   {
     #if  defined(FFTW_AVAILABLE)
       src[x][0] = (src[x][0] - centerRow);
@@ -416,14 +412,14 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
 
   kkint32*  count = new kkint32 [numOfBuckets];
 
-  for  (x = 0;  x < numOfBuckets;  x++)
+  for  (kkint32 x = 0;  x < numOfBuckets;  x++)
   {
     countourFreq[x] = 0.0f;
     count[x] = 0;
   }
 
   // Original Region Areas,  as reflected in ICPR paper
-  float  middle = numOfBorderPixels / (float)2.0;
+  float  middle = (float)numOfBorderPixels / 2.0f;
   float  r1 = middle / (float)2.0;
   float  r2 = middle * ( (float)3.0  /   (float)4.0);
   float  r3 = middle * ( (float)7.0  /   (float)8.0);
@@ -464,7 +460,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
     fourierDescriptors[14] = CalcMagnitude (dest, numOfBorderPixels - 8) / normalizationFactor;
   }
 
-  for  (x = 1; x < (numOfBorderPixels - 1); x++)
+  for  (kkint32 x = 1; x < (numOfBorderPixels - 1); x++)
   {
     //mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im));
     //mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im) + 1.0);
@@ -504,7 +500,7 @@ kkint32  ContourFollower::FollowContour (float*  countourFreq,
     }
   }
 
-  for  (x = 0;  x < numOfBuckets;  ++x)
+  for  (kkint32 x = 0;  x < numOfBuckets;  ++x)
   {
     if  (count[x] <= 0)
     {
@@ -554,8 +550,6 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
 
   kkint32  maxNumOfBorderPoints = 3 * (height + width);
   kkint32  numOfBorderPixels = 0;
-
-  kkint32 x;
 
   successful = true;
 
@@ -608,8 +602,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
         KK_DFT1D_Float::DftComplexType*  newSrc = new KK_DFT1D_Float::DftComplexType[newMaxNumOfAngles];
       #endif
 
-      kkint32  x;
-      for  (x = 0; x < maxNumOfBorderPoints; x++)
+      for  (kkint32 x = 0; x < maxNumOfBorderPoints; x++)
       {
         #if  defined(FFTW_AVAILABLE)
           newSrc[x][0] = src[x][0];
@@ -653,7 +646,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
   float  totalRe = 0.0;
   float  totalIm = 0.0;
 
-  for  (x = 0;  x < numOfBorderPixels;  x++)
+  for  (kkint32  x = 0;  x < numOfBorderPixels;  x++)
   {
     #if  defined(FFTW_AVAILABLE)
       src[x][0] = src[x][0] - centerRow;
@@ -684,7 +677,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
 
   kkint32*  count = new kkint32 [numOfBuckets];
 
-  for  (x = 0; x < numOfBuckets; x++)
+  for  (kkint32  x = 0; x < numOfBuckets; x++)
   {
     countourFreq[x] = 0.0;
     count[x] = 0;
@@ -703,7 +696,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
 
   kkint32  region = 0;
 
-  for  (x = 1; x < numOfBorderPixels; x++)
+  for  (kkint32 x = 1; x < numOfBorderPixels; x++)
   {
     //mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im));
     //mag = log (sqrt (dest[x].re * dest[x].re + dest[x].im * dest[x].im) + 1.0);
@@ -751,7 +744,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
     count[region]++;
   }
 
-  for  (x = 0; x < numOfBuckets; x++)
+  for  (kkint32 x = 0; x < numOfBuckets; x++)
   {
     if  (count[x] <= 0)
     {
@@ -773,8 +766,7 @@ kkint32  ContourFollower::FollowContour2 (float*  countourFreq,
   
   delete[]  count;
   count = NULL;
-  
-  
+
   return  numOfedgePixels;
 }  /* FollowContour2 */
 
@@ -853,11 +845,9 @@ ComplexDouble**  GetFourierOneDimMask (kkint32  size)
   ComplexDouble  N(size, 0);
   ComplexDouble  M(size, 0);
 
-  kkint32  x;
-
   if  (fourierMask)
   {
-    for  (x = 0;  x < curMaskSize;  x++)
+    for  (kkint32  x = 0;  x < curMaskSize;  x++)
     {
       delete  fourierMask[x];
       fourierMask[x] = NULL;
@@ -868,7 +858,7 @@ ComplexDouble**  GetFourierOneDimMask (kkint32  size)
   }
 
   fourierMask = new ComplexDouble*[size];
-  for  (x = 0;  x < size;  x++)
+  for  (kkint32 x = 0;  x < size;  x++)
   {
     fourierMask[x] = new ComplexDouble[size];
   }
@@ -1185,9 +1175,9 @@ void  ContourFollower::HistogramDistanceFromAPointOfEdge (float     pointRow,
     maxDistance = Max (maxDistance, distance);
   }
 
-  float  bucketSize = (maxDistance - minDistance) / numOfBuckets;
+  float  bucketSize = (maxDistance - minDistance) / (float)numOfBuckets;
 
-  if  (bucketSize == 0.0)
+  if  (bucketSize == 0.0f)
   {
      buckets[numOfBuckets / 2] = points->QueueSize ();
   }
@@ -1301,7 +1291,7 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
      KK_DFT1D_Double::DftComplexType*  src = new KK_DFT1D_Double::DftComplexType[numOfEdgePixels];
   #endif
 
-  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
+  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  ++l)
   {
     #if  defined(FFTW_AVAILABLE)
     src[l][0] = fourier[l].real ();
@@ -1320,17 +1310,16 @@ PointListPtr  ContourFollower::CreatePointListFromFourier (vector<ComplexDouble>
     fftw_destroy_plan (plan);  
   #else
     KK_DFT1D_Double::DftComplexType*  destFFTW = new KK_DFT1D_Double::DftComplexType[numOfEdgePixels];
-    KK_DFT1D_Double  plan(numOfEdgePixels, false);
+    KK_DFT1D_Double  plan((kkint32)numOfEdgePixels, false);
     plan.Transform(src, destFFTW);
   #endif
-
 
   kkint32  largestRow  = -1;
   kkint32  largestCol  = -1;
   kkint32  smallestRow = 999999;
   kkint32  smallestCol = 999999;
 
-  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  l++)
+  for  (kkint32  l = 0;  l < (kkint32)fourier.size ();  ++l)
   {
 
     #if  defined(FFTW_AVAILABLE)

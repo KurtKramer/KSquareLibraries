@@ -153,6 +153,7 @@ namespace KKB
     class  ConfSection;
     class  ConfSectionList;
     typedef  Setting*          SettingPtr;
+    typedef  Setting const *   SettingConstPtr;
     typedef  ConfSection*      ConfSectionPtr;
     typedef  ConfSectionList*  ConfSectionListPtr;
 

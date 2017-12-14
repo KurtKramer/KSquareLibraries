@@ -88,13 +88,13 @@ namespace  KKB
     }
 
 
-    SettingPtr  LookUp (const KKStr&  name)
+    SettingConstPtr  LookUp (const KKStr&  name)  const
     {
       kkint32  idx;
       kkint32  qSize = QueueSize ();
       for  (idx = 0;  idx < qSize;  idx++)
       {
-        SettingPtr setting = IdxToPtr (idx);
+        SettingConstPtr setting = IdxToPtr (idx);
         if  (name.EqualIgnoreCase (setting->Name ()))
           return setting;
       }
@@ -172,32 +172,32 @@ namespace  KKB
       return  settings[settingNum].Name ();
     }
 
-    KKStrConstPtr   SettingValue (kkint32 settingNum, kkint32& lineNum)  const
+    KKStrConstPtr   SettingValue (kkint32 settingNum, kkint32& settingLineNum)  const
     {
       if  (settingNum >= (kkint32)settings.size ())
         return NULL;
-      lineNum = settings[settingNum].LineNum ();
+      settingLineNum = settings[settingNum].LineNum ();
       return  settings[settingNum].Value ();
     }
 
     void  GetSettings (kkint32         settingNum,
-                       KKStrConstPtr&  name,
+                       KKStrConstPtr&  settingName,
                        KKStrConstPtr&  value,
-                       kkint32&        lineNum
+                       kkint32&        settingLineNum
                       )
     {
       SettingPtr  setting = settings.IdxToPtr (settingNum);
       if  (setting)
       {
-        name    = setting->Name ();
-        value   = setting->Value ();
-        lineNum = setting->LineNum ();
+        settingName    = setting->Name ();
+        value          = setting->Value ();
+        settingLineNum = setting->LineNum ();
       }
       else
       {
-        name  = NULL;
+        settingName = NULL;
         value = NULL;
-        lineNum = -1;
+        settingLineNum = -1;
       }
     } 
 
@@ -210,17 +210,17 @@ namespace  KKB
       settings.AddSetting (_name, _value, _lineNum);
     }
 
-    KKStrConstPtr   LookUpValue (const KKStr&  _name, kkint32& lineNum)
+    KKStrConstPtr  LookUpValue (const KKStr&  _name, kkint32& _lineNum)  const
     {
-      SettingPtr  setting = settings.LookUp (_name);
+      SettingConstPtr  setting = settings.LookUp (_name);
       if  (setting)
       {
-        lineNum = setting->LineNum ();
+        _lineNum = setting->LineNum ();
         return  setting->Value ();
       }
       else
       {
-        lineNum = -1;
+        _lineNum = -1;
         return NULL;
       }
     }
