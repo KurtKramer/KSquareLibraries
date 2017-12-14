@@ -48,10 +48,9 @@ namespace  KKB
   typedef  XmlTag  const *  XmlTagConstPtr;
 #endif
 
-
+  typedef  kkuint32  kkStrUint;
 
   class  KKStr;
-
 
   class  VectorKKStr:  public std::vector<KKStr>
   {
@@ -84,14 +83,15 @@ namespace  KKB
   public:
     typedef  KKStr*        KKStrPtr;
     typedef  const KKStr*  KKStrConstPtr;
+
     //typedef  std::vector<KKStr>  VectorKKStr;
 
   private:
-    static  const  kkuint32  KKStrIntMax;
+    static  const  kkStrUint  KKStrIntMax;
 
-    kkuint16  allocatedSize;
-    kkuint16  len;
-    char*     val;
+    kkStrUint  allocatedSize;
+    kkStrUint  len;
+    char*      val;
 
   public:
 
@@ -338,7 +338,7 @@ namespace  KKB
 
     void     FreeUpUnUsedSpace ();                           /**< Alloocated space s significanly larger than length of string will reallocate to free up unused space. */
 
-    kkint32  InstancesOfChar (char ch)  const;               /**< Returns the number of instances of 'ch' in the string. */
+    kkint32  InstancesOfChar (char ch)  const;               /**< Returns number of instances of 'ch' in the string. */
 
     /**
      *@brief Returns a quoted version of string where special characters Line-Feed, Carriage Return,
@@ -357,29 +357,29 @@ namespace  KKB
      *@details if 'width' is less than the current length of the string then the string will
      *         have characters removed the beginning until its 'len' equals 'width'.
      */
-    void     LeftPad (kkint32 width,
-                      uchar ch = ' '
+    void     LeftPad (kkStrUint width,
+                      uchar     ch = ' '
                      );
 
-    kkuint32 Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
+    kkStrUint Len ()  const  {return  len;}                   /**< @brief Returns the number of characters in the string.                  */
 
-    kkint32  LocateCharacter (char  ch) const;               /**< @brief Returns index of 1st occurrence of 'ch' otherwise -1.             */
+    kkint64  LocateCharacter (char  ch) const;               /**< @brief Returns index of 1st occurrence of 'ch' otherwise -1.             */
 
-    kkint32  LocateLastOccurrence (char  ch)  const;         /**< @brief Returns index of last occurrence of 'ch' otherwise -1.            */
+    kkint64  LocateLastOccurrence (char  ch)  const;         /**< @brief Returns index of last occurrence of 'ch' otherwise -1.            */
     
-    kkint32  LocateLastOccurrence (const KKStr&  s)  const;  /**< @brief Returns index of last occurrence of 's' otherwise -1.             */
+    kkint64  LocateLastOccurrence (const KKStr&  s)  const;  /**< @brief Returns index of last occurrence of 's' otherwise -1.             */
 
-    kkint32  LocateNthOccurrence (char ch, kkint32 x)  const;
+    kkint64  LocateNthOccurrence (char ch, kkint32 x)  const;
 
-    kkint32  LocateStr (const KKStr&  searchStr)  const;     /**< @brief Returns index of 1st occurrence of 'searchStr' otherwise -1.      */
+    kkint64  LocateStr (const KKStr&  searchStr)  const;     /**< @brief Returns index of 1st occurrence of 'searchStr' otherwise -1.      */
 
-    void     LopOff (kkint32 lastCharPos);                   /**< @brief Trims off all characters after the 'lastCharPos' index; to make an empty string you would have to specify -1. */
+    void     LopOff (kkint64  lastCharPos);                  /**< @brief Trims off all characters after the 'lastCharPos' index; to make an empty string you would have to specify -1. */
 
     void     Lower ();                                       /**< @brief Make all characters in the String into lower case. */
 
-    KKStr    MaxLen (kkuint32  maxLen)  const;               /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
+    KKStr    MaxLen (kkStrUint  maxLen)  const;              /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
 
-    kkuint32 MaxLenSupported ()  const;                      /**< Returns the maximum String Length that this string can support. */
+    kkStrUint  MaxLenSupported ()  const;                    /**< Returns the maximum String Length that this string can support. */
 
     kkMemSize  MemoryConsumedEstimated () const;
 
@@ -391,8 +391,8 @@ namespace  KKB
      *@param[in] width  Width that string will need to be; if less than current length then the string will be truncated to 'len'.
      *@param[in] ch   Character to pad with;  if not specified will default to space (' ').
      */
-    void     RightPad (kkint32  width,
-                       char   ch = ' '
+    void     RightPad (kkStrUint  width,
+                       char       ch = ' '
                       );
 
 
@@ -400,7 +400,7 @@ namespace  KKB
      *@param[in] c Number of space characters to fill the string with.
      */
     static 
-      KKStr  Spaces (kkint32  c);
+      KKStr  Spaces (kkStrUint  c);
 
 
     /**
@@ -420,10 +420,10 @@ namespace  KKB
     const char*  Str ()  const {return val;}      /**< @brief Returns a pointer to a ascii string. */
 
     static
-      void  MemCpy (void* dest,  void*  src,  kkuint32  size);
+      void  MemCpy (void* dest,  void*  src,  kkStrUint  size);
 
     static
-      void  MemSet (void* dest,  kkuint8  byte, kkuint32  size);
+      void  MemSet (void* dest,  kkuint8  byte, kkStrUint  size);
 
 
     void  ReadXML (XmlStream&      s,
@@ -505,7 +505,11 @@ namespace  KKB
      *@param[in]  firstChar  First character in string to include in the sub-string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkint32  firstChar)  const;
+    KKStr     SubStrPart (kkStrUint  firstChar)  const;
+
+    KKStr     SubStrPart (kkint32    firstChar)  const;
+
+    KKStr     SubStrPart (kkint64    firstChar)  const;
 
 
     /**
@@ -517,8 +521,8 @@ namespace  KKB
      *@param[in]  lastChar   Last character in include in the string.
      *@return  Sub-string.
      */
-    KKStr     SubStrPart (kkint32  firstChar,
-                          kkint32  lastChar
+    KKStr     SubStrPart (kkint64  firstChar,
+                          kkint64  lastChar
                          )  const;
 
     KKStr     Tail (kkint32 tailLen)  const;      /**< Return back the last 'tailLen' characters. */
@@ -593,11 +597,11 @@ namespace  KKB
     ///<param name='str'> String that you are searching for. </param>
     ///<param name='pos'> The starting position to start the search from. </param>
     ///<returns> The index where 'str' first occurs at or after 'pos' otherwise -1 if not found. </returns>
-    kkint32  Find (const KKStr&  str, kkint32 pos = 0)     const;
+    kkint32  Find (const KKStr&  str, kkStrUint pos = 0)     const;
 
-    kkint32  Find (const char*   s,   kkint32 pos, kkint32 n)  const;
-    kkint32  Find (const char*   s,   kkint32 pos = 0 )    const;
-    kkint32  Find (char          c,   kkint32 pos = 0 )    const;
+    kkint32  Find (const char*   s,   kkStrUint pos, kkStrUint n)  const;
+    kkint32  Find (const char*   s,   kkStrUint pos = 0 )    const;
+    kkint32  Find (char          c,   kkStrUint pos = 0 )    const;
     
 
     /*
@@ -643,13 +647,15 @@ namespace  KKB
     ///<param name='width'> Width of KKStr; will pad KKStr with spaces until it is width long. </param>
     ///<param name='dir'>Direction to pad from  'L' - Pad on the left side,  'R' - Pad on the right side, and 
     /// 'C' - Pad on left and Right so that text is centered.</param>
-    KKStr  Wide (kkint32 width,  char  dir = 'R')  const; 
+    KKStr  Wide (kkStrUint width,  char  dir = 'R')  const; 
                                       
 
     char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
     char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
     char    operator[] (kkint32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
     char    operator[] (kkuint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkint64  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    char    operator[] (kkuint64 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
 
 
     KKStr  operator+ (const char*   right) const;
@@ -694,9 +700,9 @@ namespace  KKB
 
 
   private:
-    void  AllocateStrSpace (kkuint32  size);
+    void  AllocateStrSpace (kkStrUint  size);
     
-    void  GrowAllocatedStrSpace (kkuint32  newAllocatedSize);
+    void  GrowAllocatedStrSpace (kkStrUint  newAllocatedSize);
 
     void  ValidateLen ()  const;
 
@@ -719,24 +725,24 @@ namespace  KKB
                                     );
 
   std::istream& __cdecl  operator>> (std::istream&  is,
-                                     KKStr&        str
+                                     KKStr&         str
                                     );
 
   #else
 
   std::ostream& operator<< (      std::ostream&  os, 
-                            const KKStr&        str
+                            const KKStr&         str
                            );
 
   std::istream& operator>> (std::istream&  os, 
-                            KKStr&        str
+                            KKStr&         str
                            );
   #endif
 
 
-  char*  STRCAT  (char*  dest,  kkint32  destSize, const char*  src);
-  char*  STRCOPY (char*  dest,  kkint32  destSize, const char*  src);
-  char*  STRCOPY (char*  dest,  kkuint16 destSize, const char*  src);
+  char*  STRCAT  (char*  dest,  kkint32   destSize, const char*  src);
+  char*  STRCOPY (char*  dest,  kkint32   destSize, const char*  src);
+  char*  STRCOPY (char*  dest,  kkStrUint destSize, const char*  src);
 
   char*  STRDUP (const char* src);
 

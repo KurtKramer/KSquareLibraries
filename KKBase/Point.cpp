@@ -202,10 +202,10 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
     if  (endPairChar != 0)
     {
       KKStr pairStr = "";
-      kkint32  idx = s.Find (endPairChar);
+      kkint64  idx = s.Find (endPairChar);
       if  (idx >= 0)
       {
-        pairStr = s.SubStrPart (0, idx - 1);
+        pairStr = s.SubStrPart (0L, idx - 1);
         s = s.SubStrPart (idx + 1);
       }
       else
@@ -215,7 +215,7 @@ PointListPtr  PointList::FromDelStr (const KKStr&  _s)
       }
 
       kkint16  row = (kkint16)pairStr.ExtractTokenInt (",");
-      kkint16  col = (kkint16) pairStr.ExtractTokenInt (",");
+      kkint16  col = (kkint16)pairStr.ExtractTokenInt (",");
       result->PushOnBack (new Point (row, col));
       nextCh = s.FirstChar ();
       if  ((nextCh == ',')  ||  (nextCh == '\n')  ||  (nextCh == '\r')  || (nextCh == '\t'))

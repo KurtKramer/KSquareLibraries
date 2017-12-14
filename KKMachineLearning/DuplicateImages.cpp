@@ -415,7 +415,7 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     if  (rootName.SubStrPart (0, 4) == "FRAME")
     {
       // Scan line will be last seq number in name.
-      kkint32 x = rootName.LocateLastOccurrence ('_');
+      kkint64 x = rootName.LocateLastOccurrence ('_');
       if  (x > 0)
       {
         KKStr  scanLineStr = rootName.SubStrPart (x + 1);
@@ -425,11 +425,11 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
     else
     {
       // Scan should be 2nd to last seq number in name.
-      kkint32 x = rootName.LocateLastOccurrence ('_');
+      kkint64 x = rootName.LocateLastOccurrence ('_');
       if  (x > 0)
       {
         KKStr  workStr = rootName.SubStrPart (0, x - 1);
-        kkint32 x = workStr.LocateLastOccurrence ('_');
+        kkint64 x = workStr.LocateLastOccurrence ('_');
         KKStr  scanLineStr = workStr.SubStrPart (x + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
