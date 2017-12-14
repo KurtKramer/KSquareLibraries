@@ -497,7 +497,7 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
     KKStr  field = parser.GetNextToken (",\t");
     if  (field.Empty ())
       continue;
-    kkint32 dashPos = field.LocateCharacter ('-');
+    kkint64 dashPos = field.LocateCharacter ('-');
     if  (dashPos < 0)
     {
       kkint32 n = field.ToInt32 ();

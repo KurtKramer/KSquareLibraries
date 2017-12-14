@@ -64,7 +64,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
   {
     // First determine the name of the names and data file.
-    kkint32 lastDotPos = _fileName.LocateLastOccurrence ('.');
+    kkint64 lastDotPos = _fileName.LocateLastOccurrence ('.');
     if  (lastDotPos < 0)
     {
       namesFileName = _fileName + ".names";
@@ -175,7 +175,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFeatureFile
 
 void  FeatureFileIOC45::C45StripComments (KKStr&  ln)
 {
-  kkint32  lastBarPos = ln.LocateLastOccurrence ('|');
+  kkint64  lastBarPos = ln.LocateLastOccurrence ('|');
   if  (lastBarPos >= 0)
     ln = ln.SubStrPart (0, lastBarPos - 1);
 
@@ -955,7 +955,7 @@ void  FeatureFileIOC45::C45ConstructFileNameForWritting (const KKStr&  fileName,
 {
   KKStr  c45Name;
 
-  kkint32  lastDotPos = fileName.LocateLastOccurrence ('.');
+  kkint64  lastDotPos = fileName.LocateLastOccurrence ('.');
 
   if  (lastDotPos < 0)
   {

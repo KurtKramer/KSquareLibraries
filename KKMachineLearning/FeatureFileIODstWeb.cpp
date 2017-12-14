@@ -134,7 +134,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     line.TrimLeft ();
     line.TrimRight ();
 
-    kkint32  equalLoc = line.LocateCharacter ('=');
+    kkint64  equalLoc = line.LocateCharacter ('=');
     if  (equalLoc < 0)
     {
       _log.Level (-1) << endl << endl
@@ -143,7 +143,7 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
       return  NULL;
     }
 
-    KKStr  leftSide  = line.SubStrPart (0, equalLoc - 1);
+    KKStr  leftSide  = line.SubStrPart ((kkint64)0, equalLoc - 1);
     KKStr  rightSide = line.SubStrPart (equalLoc + 1);
 
     leftSide.Upper ();

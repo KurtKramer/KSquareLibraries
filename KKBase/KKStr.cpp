@@ -3158,14 +3158,7 @@ char  KKStr::operator[] (kkint16 i)  const
   #ifdef  KKDEBUG
   ValidateLen ();
   #endif
-
-  if  (!val)
-    return 0;
-
-  if  ((i < 0)  ||  ((kkStrUint)i >= len))
-    return 0;
-  else
-    return val[i];
+  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
 }
 
 
@@ -3175,64 +3168,27 @@ char  KKStr::operator[] (kkuint16 i)  const
   #ifdef  KKDEBUG
   ValidateLen ();
   #endif
-
-  if  (!val)
-    return 0;
-
-  if  (i >= len)
-    return 0;
-  else
-    return val[i];
+  if ((!val) || (i >= len))  return 0;  else  return val[i];
 }
 
 
 
 char  KKStr::operator[] (kkint32 i)  const
 {
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-
-  if  (!val)
-    return 0;
-
-  if  ((i < 0)  ||  ((kkStrUint)i >= len))
-    return 0;
-  else
-    return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint32 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-
-  if  (!val)
-    return 0;
-
-  if  (i >= len)
-    return 0;
-  else
-    return val[i];
-}
-
-
-char  KKStr::operator[] (kkuint32 i)  const
-{
 #ifdef  KKDEBUG
   ValidateLen ();
 #endif
+  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
+}
 
-  if (!val)
-    return 0;
 
-  if (i >= len)
-    return 0;
-  else
-    return val[i];
+
+char  KKStr::operator[] (kkuint32 i)  const
+{
+  #ifdef  KKDEBUG
+  ValidateLen ();
+  #endif
+  if ((!val) || (i >= len))  return 0;  else  return val[i];
 }
 
 
@@ -3242,16 +3198,18 @@ char  KKStr::operator[] (kkint64 i)  const
 #ifdef  KKDEBUG
   ValidateLen ();
 #endif
-
-  if (!val)
-    return 0;
-
-  if (i >= len)
-    return 0;
-  else
-    return val[i];
+  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
 }
 
+
+
+char  KKStr::operator[] (kkuint64 i)  const
+{
+#ifdef  KKDEBUG
+  ValidateLen ();
+#endif
+  if ((!val) || (i >= len)) return 0; else return val[i];
+}
 
 
 

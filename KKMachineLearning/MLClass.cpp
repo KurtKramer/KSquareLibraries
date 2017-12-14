@@ -317,9 +317,9 @@ MLClass::MLClass (const KKStr&  _name):
 
   upperName = name.ToUpper ();
   KKStr  topLevel = upperName;
-  kkuint32 x = upperName.LocateCharacter ('_');
+  kkint64 x = upperName.LocateCharacter ('_');
   if  (x >= 0)
-    topLevel = upperName.SubStrPart (0, x - 1);
+    topLevel = upperName.SubStrPart ((kkint64)0, x - 1);
 
   unDefined = upperName.Empty ()           ||  
              (upperName == "UNKNOWN")      ||  
@@ -372,7 +372,7 @@ KKStr  MLClass::ToString ()  const
 KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 {
   KKStr  className = osGetRootNameOfDirectory (subDir);
-  kkint32 x = className.LocateLastOccurrence ('_');
+  kkint64 x = className.LocateLastOccurrence ('_');
   if  (x > 0)
   {
     // Now lets eliminate any sequence number in name
@@ -380,7 +380,7 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
     // So if there is an underscore character,  and all the characters to the right of it are
     // numeric characters,  then we will remove the underscore and the following numbers.
 
-    kkuint32  y = x + 1;
+    kkStrUint  y = (kkStrUint)(x + 1);
 
     bool  allFollowingCharsAreNumeric = true;
     while  ((y < className.Len ()) &&  (allFollowingCharsAreNumeric))
@@ -1049,7 +1049,7 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
     }
 
     KKStr  className = IdxToPtr (x)->Name ();
-    kkint32  y = className.LocateCharacter ('_');
+    kkint64  y = className.LocateCharacter ('_');
     if  (y < 0)
     {
       titleLine2 << className;
