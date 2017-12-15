@@ -769,7 +769,7 @@ namespace  KKB
 
     KKStrList ();
 
-    KKStrList (bool owner);
+    KKStrList (bool _owner);
 
     
     ///<summary> 

@@ -3,6 +3,7 @@
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
 #include "FirstIncludes.h"
+#include <cstring>
 #include <ctype.h>
 #include <limits.h>
 #include <math.h>
@@ -2094,15 +2095,6 @@ void  KKStr::LeftPad (kkStrUint width,
   #ifdef  KKDEBUG
   ValidateLen ();
   #endif
-
-  if  (width < 0)
-  {
-    cerr << std::endl;
-    cerr << "KKStr::LeftPad (kkint32  width,  char ch)    **** ERROR ****" << std::endl;
-    cerr << "                width[" << width << "]  invalid." << std::endl;
-    cerr << std::endl;
-    width = 0;
-  }
 
   kkStrUint  neededSpace = width + 1;
   if (neededSpace >= MaxLenSupported ())
@@ -4267,8 +4259,8 @@ KKStrList::KKStrList ():
 
 
 
-KKStrList::KKStrList (bool   owner):
-  KKQueue<KKStr> (owner),
+KKStrList::KKStrList (bool  _owner):
+  KKQueue<KKStr> (_owner),
   sorted (false)
 {
 }
@@ -4608,19 +4600,17 @@ KKStr  KKB::StrFormatDouble (double       val,
 
   bool    printDecimalPoint = false;
 
-  kkint64 numOfDecimalPlaces = 0;
+  kkint32 numOfDecimalPlaces = 0;
 
-  kkint64 maskLen = (kkint64)strlen (mask);
+  kkint32 maskLen = (kkint32)strlen (mask);
   
-  kkint64 decimalPosition = LocateLastOccurrence (mask, '.');
+  kkint32 decimalPosition = (kkint32)LocateLastOccurrence (mask, '.');
 
   const char*  maskPtr = mask + maskLen - 1; 
 
-  long  intPart = (long)floor (val);
+  kkuint64  intPart = (kkuint64)floor (val);
 
   kkuint32  nextDigit = 0;
-
-  kkint32  x;
 
   if  (decimalPosition >= 0)
   {
@@ -4638,7 +4628,7 @@ KKStr  KKB::StrFormatDouble (double       val,
 
     kkint32  fracInt = (kkint32)(frac * power + 0.5);
 
-    for  (x = 0; x < numOfDecimalPlaces; x++)
+    for  (kkint32 x = 0; x < numOfDecimalPlaces; x++)
     {
       nextDigit = fracInt % 10;
       fracInt   = fracInt / 10;
@@ -4672,7 +4662,7 @@ KKStr  KKB::StrFormatDouble (double       val,
            nextDigit = (kkuint32)(intPart % 10);
            intPart = intPart / 10;
            bp--;
-           *bp = '0' + (uchar)nextDigit;
+           *bp = (uchar)('0' + nextDigit);
            break;
 
 
@@ -4683,7 +4673,7 @@ KKStr  KKB::StrFormatDouble (double       val,
              nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            else
            {
@@ -4699,7 +4689,7 @@ KKStr  KKB::StrFormatDouble (double       val,
              nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            break;
 
@@ -4710,7 +4700,7 @@ KKStr  KKB::StrFormatDouble (double       val,
              nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            else
            {
@@ -4737,7 +4727,6 @@ KKStr  KKB::StrFormatDouble (double       val,
              *bp = ' ';
            }
            break;
-       
 
       default:
            bp--;
@@ -4755,10 +4744,10 @@ KKStr  KKB::StrFormatDouble (double       val,
   // If the mask was not large enough to include all digits then lets do it now.
   while  (intPart > 0)
   {
-    nextDigit = intPart % 10;
+    nextDigit = (kkuint32)(intPart % 10);
     intPart = intPart / 10;
     bp--;
-    *bp = '0' + (uchar)nextDigit;
+    *bp = (uchar)('0' + nextDigit);
   }
 
   if  (!negativePrinted)
@@ -4802,9 +4791,9 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
   kkint32 maskLen = (kkint32)strlen (mask);
   const char*  maskPtr = mask + maskLen - 1; 
 
-  kkint64  intPart = val;
+  kkuint64  intPart = val;
 
-  kkint32  nextDigit = 0;
+  kkuint32  nextDigit = 0;
 
   char  formatChar = ' ';
   char  lastFormatChar = ' ';
@@ -4817,20 +4806,20 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
     {
       case  '0': 
       case  '@': 
-           nextDigit = intPart % 10;
+           nextDigit = (kkuint32)(intPart % 10);
            intPart = intPart / 10;
            bp--;
-           *bp = '0' + (uchar)nextDigit;
+           *bp = (uchar)('0' + nextDigit);
            break;
 
       case  '#':
       case  '9':
            if (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            else
            {
@@ -4842,20 +4831,20 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
       case  'Z':
            if (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            break;
 
       case  '-':
            if  (intPart > 0)
            {
-             nextDigit = intPart % 10;
+             nextDigit = (kkuint32)(intPart % 10);
              intPart = intPart / 10;
              bp--;
-             *bp = '0' + (uchar)nextDigit;
+             *bp = (uchar)('0' + nextDigit);
            }
            else
            {
@@ -4897,10 +4886,10 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
   // If the mask was not large enough to include all digits then lets do it now.
   while  (intPart > 0)
   {
-    nextDigit = intPart % 10;
+    nextDigit = (kkuint32)(intPart % 10);
     intPart = intPart / 10;
     bp--;
-    *bp = '0' + (uchar)nextDigit;
+    *bp = (uchar)('0' + nextDigit);
   }
 
   if  (!negativePrinted)
@@ -5355,8 +5344,7 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
                                 )
 {
   DeleteContents ();
-  bool  caseSensative = tag->AttributeValueByName ("CaseSensative")->ToBool ();
-  comparator.caseSensitive = caseSensative;
+  comparator.caseSensitive = tag->AttributeValueByName ("CaseSensative")->ToBool ();
 
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
@@ -5368,8 +5356,8 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
 
       while  (p.MoreTokens ())
       {
-        KKStr  s = p.GetNextToken (",\t\n\r");
-        Add (new KKStr (s));
+        KKStr  tokStr = p.GetNextToken (",\t\n\r");
+        Add (new KKStr (tokStr));
       }
     }
     delete  t;

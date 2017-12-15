@@ -50,8 +50,8 @@ namespace  KKB
 
     Matrix ();
 
-    Matrix (kkint32  _numOfRows,
-            kkint32  _numOfCols
+    Matrix (kkuint32  _numOfRows,
+            kkuint32  _numOfCols
            );
 
     Matrix (const Matrix&  _matrix);
@@ -61,8 +61,8 @@ namespace  KKB
     ~Matrix ();
 
     template<typename T>
-    static  MatrixPtr  BuildFromArray (kkint32 numOfRows,
-                                       kkint32 numOfCols,
+    static  MatrixPtr  BuildFromArray (kkuint32 numOfRows,
+                                       kkuint32 numOfCols,
                                        T**   data
                                       );
 
@@ -88,7 +88,7 @@ namespace  KKB
 
     Matrix   operator*  (double right);
 
-    Row&     operator[] (kkint32  rowIDX) const;
+    Row&     operator[] (kkuint32  rowIDX) const;
 
     friend  Matrix  operator- (double left, const Matrix& right);
 
@@ -116,21 +116,21 @@ namespace  KKB
                                  )  const;
 
     /** @brief  Locates the maximum value in a matrix along with the row and column that is located. */
-    void            FindMaxValue (double&   maxVal, 
-                                  kkint32&  row, 
-                                  kkint32&  col
+    void            FindMaxValue (double&    maxVal, 
+                                  kkuint32&  row, 
+                                  kkuint32&  col
                                  );
 
-    VectorDouble    GetCol (kkint32 col)  const;
+    VectorDouble    GetCol (kkuint32 col)  const;
 
     Matrix          Inverse ();
 
-    kkint32         NumOfCols () const  {return numOfCols;}
+    kkuint32        NumOfCols () const  {return numOfCols;}
 
-    kkint32         NumOfRows () const  {return numOfRows;}
+    kkuint32        NumOfRows () const  {return numOfRows;}
 
-    void            ReSize (kkint32 _numOfRows,
-                            kkint32 _numOfCols
+    void            ReSize (kkuint32 _numOfRows,
+                            kkuint32 _numOfCols
                            );
 
     bool            Symmetric ()  const;  /**< Returns true is the matrix is Symmetric */
@@ -146,37 +146,37 @@ namespace  KKB
 
     void  AllocateStorage ();
 
-    double DeterminantSwap (double**        mat, 
-                            unsigned short  offset
+    double DeterminantSwap (double**  mat, 
+                            kkuint32  offset
                            );
 
-    double  CalcDeterminent (kkint32*  rowMap,
-                             kkint32*  colMap,
-                             kkint32 size
+    double  CalcDeterminent (kkuint32*  rowMap,
+                             kkuint32*  colMap,
+                             kkuint32 size
                             );
 
     double  Pythag (const double a,
                     const double b
                    )  const;
 
-    kkint32  Tqli (double*  d, 
-                 double*  e,
-                 kkint32  n,
-                 double** z
-                )  const;
+    kkint32  Tqli (double*   d, 
+                   double*   e,
+                   kkuint32  n,
+                   double**  z
+                  )  const;
 
-    void  Tred2 (double** a, 
-                 kkint32  n, 
-                 double*  d, 
-                 double*  e
+    void  Tred2 (double**  a, 
+                 kkuint32  n, 
+                 double*   d, 
+                 double*   e
                 )  const;
 
     double**  data;       /**< A two dimensional array that will index into 'dataArea'.       */
     double*   dataArea;   /**< one dimensional array that will contain all the matrices data. */
-    kkint32   numOfCols;
-    kkint32   numOfRows;
+    kkuint32  numOfCols;
+    kkuint32  numOfRows;
     RowPtr    rows;
-    kkint32   totNumCells; /**<  Total number of cells allocated  = (numOfRows x nmumOfCols). */
+    kkuint32  totNumCells; /**<  Total number of cells allocated  = (numOfRows x nmumOfCols). */
   };  /* matrix */
 
 
@@ -187,8 +187,8 @@ namespace  KKB
   public:
      Row  ();
  
-     Row (kkint32  _numOfCols,
-          double*  _cells
+     Row (kkuint32  _numOfCols,
+          double*   _cells
          );
 
      Row (const Row&  _row);
@@ -198,15 +198,15 @@ namespace  KKB
 
      double*  Cols ()  {return cells;}
 
-     double&  operator[] (kkint32  idx);
+     double&  operator[] (kkuint32  idx);
 
-     void  Define (kkint32  _numOfCols,
-                   double*  _cells
+     void  Define (kkuint32  _numOfCols,
+                   double*   _cells
                   );
 
   private:
     double*  cells;
-    kkint32  numOfCols;
+    kkuint32  numOfCols;
   };  /* Row */
 
   Matrix  operator- (double left, const Matrix& right);

@@ -12,7 +12,7 @@ CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c
 # Final binary
 BIN = libKKBase.a
 # Put all auto generated stuff to this build dir.
-BUILD_DIR = ./debug
+BUILD_DIR = ./Debug
 
 FFTWAPI = ../OutsidePackages/fftw-3.3.2/api
 INCLUDES = ../../OutsidePackages/zlib128/

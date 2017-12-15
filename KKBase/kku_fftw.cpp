@@ -220,7 +220,7 @@ void  KKB::FFT (float    data[],
   while  (n > mmax)
   {
     istep = mmax <<  1;
-    theta = isign * (2 * (float)PIE / mmax);
+    theta = (float)isign * (2.0f * (float)PIE / (float)mmax);
     wtemp = sin (0.5f * theta);
     wpr = -2.0f * wtemp * wtemp;
     wpi = sin (theta);
@@ -247,12 +247,11 @@ void  KKB::FFT (float    data[],
 }  /* FFT */
 
 
+
 float  KKB::Log2 (float x)
 {
   return  log10 (x) / log10 (2.0f);
 }
-
-
 
 
 

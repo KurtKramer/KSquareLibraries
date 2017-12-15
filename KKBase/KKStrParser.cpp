@@ -108,9 +108,9 @@ void  KKStrParser::TrimWhiteSpace (const char*  _whiteSpace)
 
 
 
-void  KKStrParser::SkipWhiteSpace (const char*  whiteSpace)
+void  KKStrParser::SkipWhiteSpace (const char*  _whiteSpace)
 {
-  while  ((nextPos < len)  &&  (strchr (whiteSpace, str[nextPos]) != NULL))
+  while  ((nextPos < len)  &&  (strchr (_whiteSpace, str[nextPos]) != NULL))
     nextPos++;
 }  /* SkipWhiteSpce */
 

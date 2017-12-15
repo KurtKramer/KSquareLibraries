@@ -74,7 +74,7 @@ RasterPtr   MorphOpBinarize::PerformOperation (RasterConstPtr  _image)
   uchar**     destGreen  = binarizedRaster->Green ();
   uchar*      destRow    = NULL;
 
-  uchar       backgroundPixelValue = srcRaster->BackgroundPixelValue ();
+  uchar       srcBackgroundPixelValue = srcRaster->BackgroundPixelValue ();
 
   for  (r = 0;  r < srcHeight;  r++)
   {
@@ -91,7 +91,7 @@ RasterPtr   MorphOpBinarize::PerformOperation (RasterConstPtr  _image)
       }
       else
       {
-        destRow[c] = backgroundPixelValue;
+        destRow[c] = srcBackgroundPixelValue;
       }
     }  /* for (c) */
   }  /* for (r) */

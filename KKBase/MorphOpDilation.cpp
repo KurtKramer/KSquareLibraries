@@ -49,8 +49,6 @@ RasterPtr   MorphOpDilation::PerformOperation (RasterConstPtr  _image)
   kkint32  r = 0;
   kkint32  c = 0;
 
-  kkint32  erodedForegroundPixelCount = srcRaster->ForegroundPixelCount ();
-
   RasterPtr resultRaster = new Raster (*srcRaster);
 
   uchar*    srcRow     = NULL;

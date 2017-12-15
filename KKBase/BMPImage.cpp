@@ -20,7 +20,7 @@ using namespace std;
 #ifdef WIN32
 #include <windows.h>
 #else
-#import <cstdio>
+#include <cstdio>
 #endif
 
 

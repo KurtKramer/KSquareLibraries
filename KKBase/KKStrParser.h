@@ -89,7 +89,7 @@ namespace KKB
     /**
      *@brief  Advances the next-character pointer to the next NOT white space character.
      */
-    void     SkipWhiteSpace     (const char*  whiteSpace = " ");
+    void     SkipWhiteSpace     (const char*  _whiteSpace = " ");
 
     VectorKKStr  Split (const char* delStr = "\n\t\r ");
 

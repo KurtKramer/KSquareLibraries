@@ -58,7 +58,7 @@ RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
   uchar**   destGreen = erodedRaster->Green ();
   uchar*    destRow   = NULL;
 
-  uchar     backgroundPixelValue = srcRaster->BackgroundPixelValue ();
+  uchar     srcBackgroundPixelValue = srcRaster->BackgroundPixelValue ();
 
   for  (r = 0;  r < srcHeight;  r++)
   {
@@ -77,7 +77,7 @@ RasterPtr   MorphOpErosion::PerformOperation (RasterConstPtr  _image)
 
         if  (!fit)
         {
-          destRow[c] = backgroundPixelValue;
+          destRow[c] = srcBackgroundPixelValue;
         }
         else
         {

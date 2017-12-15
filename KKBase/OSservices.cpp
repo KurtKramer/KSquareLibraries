@@ -8,7 +8,7 @@
 
 #include "FirstIncludes.h"
 #include <cstdio>
-#include <direct.h>
+
 
 #if  defined(KKOS_WINDOWS)
 #include <windows.h>
@@ -165,6 +165,7 @@ KKStrListPtr  osParseSearchSpec (const KKStr&  searchSpec)
   }
 
   delete  workStr;
+  workStr = NULL;
 
   return  searchFields;
 }  /*  osParseSearchSpec */
@@ -411,7 +412,7 @@ bool  KKB::osValidDirectory (const KKStr&  name)
 
 bool  KKB::osValidDirectory (KKStrConstPtr  name)
 {
-  DIR*  openDir = opendir (name->Str ());
+  auto*  openDir = opendir (name->Str ());
 
   if  (!openDir)
     return  false;

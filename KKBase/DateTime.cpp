@@ -370,9 +370,11 @@ void  DateType::AdjustYear ()
   if  (year < 100)
   {
     if  (year > 50)
-      year += (kkint16)1900;
+      year 
+      = year 
+      + (kkint16)1900;
     else
-      year += (kkint16)2000;
+      year = year +  (kkint16)2000;
   }
 }  /* AdjustYear */
 
@@ -433,7 +435,7 @@ void   DateType::SubtractDays (kkint32  _days)
     month--;
     while  (month < 1)
     {
-      month += (uchar)12;
+      month = month + (kkuint8)12;
       year--;
     }
     newDay = newDay + DaysThisMonth ();
@@ -447,7 +449,7 @@ void   DateType::SubtractDays (kkint32  _days)
 void  DateType::AddMonths (kkint32 _months)
 {
   kkint32  newMonth = month + _months;
-  year = year + (short)(newMonth / 12);
+  year = year + (kkint16)(newMonth / 12);
   newMonth = newMonth % 12;
   if  (newMonth == 0)
   {

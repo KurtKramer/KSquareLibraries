@@ -259,10 +259,10 @@ BlobPtr  BlobList::LocateMostComplete ()
   for  (idx = begin ();  idx != endIdx;  ++idx)
   {
     tempBlob = idx->second;
-    kkint32  size = tempBlob->Height () * tempBlob->Width ();
-    if  (size > largestSize)
+    auto  tempBlobArea = tempBlob->Height () * tempBlob->Width ();
+    if  (tempBlobArea > largestSize)
     {
-      largestSize = size;
+      largestSize = tempBlobArea;
       blob = tempBlob;
     }
   }

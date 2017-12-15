@@ -177,7 +177,7 @@ RasterPtr   MorphOpBmiFiltering::ProcessBmi (uchar  minBackgroundTH)
   float  estVolume = (float)rotatedImage->CalcArea ();
   float  boundingLengthSquare = (float)(boundingLength * boundingLength);
   if  (boundingLengthSquare > 0.0f)
-    estimatedBmi = estVolume / (boundingLength * boundingLength);
+    estimatedBmi = estVolume / (float)(boundingLength * boundingLength);
   else
     estimatedBmi = 0.0f;
 
@@ -199,8 +199,8 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
   // 1) Remove Appendages.
   // 2) Perform Length vs Width
 
-  uchar  binarizeTHmin = srcRaster->BackgroundPixelTH () + 1;
-  uchar  binarizeTHmax = 125;
+  uchar  binarizeTHmin = (uchar)(srcRaster->BackgroundPixelTH () + 1);
+  uchar  binarizeTHmax = (uchar)125;
 
   rotatedImage = ProcessBmi (binarizeTHmax);
   kkint32    rectangularAreaMax = boundingLength * boundingWidth;
@@ -244,9 +244,8 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
     if  (rectangularAreaMin < rectangularAreaTH)
       break;
 
-    binarizeTHmin += 5;
+    binarizeTHmin += (uchar)5;
   }
-
 
   return  rotatedImage;
 }  /* PerformOperation */

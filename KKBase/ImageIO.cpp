@@ -456,7 +456,7 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
 {
   eof = false;
   char  token[2048];
-  kkint32  maxTokenLen = sizeof (token) - 1;
+  auto  maxTokenLen = sizeof (token) - 1;
 
   kkint32  ch = 0;
 
@@ -484,7 +484,7 @@ KKStr  KKB::ReadImagePpmField (FILE*   in,
     }
   }
 
-  kkint32 tokenLen = 0;
+  kkuint64 tokenLen = 0;
 
   // Read till first delimiter or eof or eol
   while  ((!eof)  &&  (strchr (" #\t\n\r", ch) == 0))

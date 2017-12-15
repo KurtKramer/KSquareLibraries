@@ -71,9 +71,9 @@ public:
     }
   }
 
-  kkuint16  destCellCount;
-  kkuint32*   destCellIdxs;
-  float*    destCellFracts; 
+  kkuint32   destCellCount;
+  kkuint32*  destCellIdxs;
+  float*     destCellFracts; 
 };  /* UpdateForSourceCellIdx */
 
 
@@ -82,12 +82,12 @@ MorphOpStretcher::MorphOpStretcher (float  _rowFactor,
                                     float  _colFactor
                                    ):
     MorphOp (),
-    rowFactor             (_rowFactor),
-    colFactor             (_colFactor),
-    rowFactorsCount       (0),
-    rowFactors            (NULL),
-    colFactorsCount       (0),
-    colFactors            (NULL)
+    rowFactor        (_rowFactor),
+    colFactor        (_colFactor),
+    rowFactorsCount  (0),
+    rowFactors       (NULL),
+    colFactorsCount  (0),
+    colFactors       (NULL)
 {
 }
 
@@ -103,9 +103,9 @@ MorphOpStretcher::~MorphOpStretcher ()
 
 kkMemSize  MorphOpStretcher::MemoryConsumedEstimated ()
 {
-  kkint32  result = sizeof (*this) +
-         (kkint32)(rowFactorsCount * sizeof (CellFactor) * rowFactor) + 
-         (kkint32)(colFactorsCount * sizeof (CellFactor) * colFactor);
+  kkMemSize  result = sizeof (*this) +
+         (kkMemSize)(rowFactorsCount * (float)sizeof (CellFactor) * rowFactor) +
+         (kkMemSize)(colFactorsCount * (float)sizeof (CellFactor) * colFactor);
   return  result;
 }
 
@@ -143,12 +143,12 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
       srcBlueRow = srcBlue[srcRow];
     }
 
-    CellFactor&  rowFactor = rowFactors[srcRow];
+    CellFactor&  srcRowFactor = rowFactors[srcRow];
 
-    for  (kkuint32  rowFactorIdx = 0;  rowFactorIdx < rowFactor.destCellCount;  ++rowFactorIdx)
+    for  (kkuint32  rowFactorIdx = 0;  rowFactorIdx < srcRowFactor.destCellCount;  ++rowFactorIdx)
     {
-      kkuint32  destRow      = rowFactor.destCellIdxs  [rowFactorIdx];
-      float   destRowFract = rowFactor.destCellFracts[rowFactorIdx];
+      kkuint32  destRow      = srcRowFactor.destCellIdxs  [rowFactorIdx];
+      float     destRowFract = srcRowFactor.destCellFracts[rowFactorIdx];
 
       for  (kkint32 srcCol = 0;  srcCol < srcWidth;  ++srcCol)
       {
@@ -161,18 +161,18 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
           srcPixelBlue  = srcBlueRow[srcCol];
         }
 
-        CellFactor&  colFactor = colFactors[srcCol];
+        CellFactor&  srcColFactor = colFactors[srcCol];
 
-        for  (kkuint32  colFactorIdx = 0;  colFactorIdx < colFactor.destCellCount;  ++colFactorIdx)
+        for  (kkuint32  colFactorIdx = 0;  colFactorIdx < srcColFactor.destCellCount;  ++colFactorIdx)
         {
-          kkuint32  destCol      = colFactor.destCellIdxs  [colFactorIdx];
-          float   destColFract = colFactor.destCellFracts[colFactorIdx];
+          kkuint32  destCol      = srcColFactor.destCellIdxs  [colFactorIdx];
+          float     destColFract = srcColFactor.destCellFracts[colFactorIdx];
 
-          destGreen[destRow][destCol] += (uchar)Min (255.0f, srcPixelGreen * destRowFract * destColFract);
+          destGreen[destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelGreen * destRowFract * destColFract);
           if  (color)
           {
-            destRed [destRow][destCol] += (uchar)Min (255.0f, srcPixelRed  * destRowFract * destColFract);
-            destBlue[destRow][destCol] += (uchar)Min (255.0f, srcPixelBlue * destRowFract * destColFract);
+            destRed [destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelRed  * destRowFract * destColFract);
+            destBlue[destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelBlue * destRowFract * destColFract);
           }
         }
       }
@@ -186,9 +186,9 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
 
 
 MorphOpStretcher::CellFactorPtr  
-         MorphOpStretcher::BuildCellFactors (float   factor,
-                                                           kkuint32  cellFactorsCount
-                                                          )
+         MorphOpStretcher::BuildCellFactors (float     factor,
+                                             kkuint32  cellFactorsCount
+                                            )
 {
   CellFactorPtr  cellFactors = new CellFactor[cellFactorsCount];
 

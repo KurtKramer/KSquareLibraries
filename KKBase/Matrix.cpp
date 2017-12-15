@@ -31,19 +31,12 @@ Row::Row  ():
 
 
 
-Row::Row  (kkint32  _numOfCols,
-           double*  _cells
+Row::Row  (kkuint32  _numOfCols,
+           double*   _cells
           ):
   cells     (_cells),
   numOfCols (_numOfCols)
 {
-  if  (_numOfCols < 0)
-  {
-	KKStr  msg;
-	msg << "Row::Row  **** ERROR **** Invalid Dimension[" << _numOfCols << "].";
-    cerr << std::endl  << msg << std::endl << std::endl;
-    throw KKException (msg);
-  }
 }
 
 
@@ -63,8 +56,8 @@ Row::~Row ()
 
 
 
-void  Row::Define (kkint32  _numOfCols,
-                   double*  _cells
+void  Row::Define (kkuint32  _numOfCols,
+                   double*   _cells
                   )
 {
   numOfCols = _numOfCols;
@@ -73,11 +66,11 @@ void  Row::Define (kkint32  _numOfCols,
 
 
 
-double&  Row::operator[] (kkint32  idx)
+double&  Row::operator[] (kkuint32  idx)
 {
-  if  ((idx < 0)  ||  (idx >= numOfCols))
+  if  (idx >= numOfCols)
   {
-    cerr << std::endl
+    std::cerr << std::endl
          << "Row::operator[]  **** ERROR ****,  Index[" 
          << idx << "]  out of range of [0-" << numOfCols << "]."
          << std::endl;
@@ -105,8 +98,8 @@ Matrix::Matrix ():
 
 
 
-Matrix::Matrix (kkint32  _numOfRows,
-                kkint32  _numOfCols
+Matrix::Matrix (kkuint32  _numOfRows,
+                kkuint32  _numOfCols
                ):
 
   data        (NULL),
@@ -117,22 +110,6 @@ Matrix::Matrix (kkint32  _numOfRows,
   totNumCells (0)
 
 {
-  if  (_numOfRows < 0)
-  {
-    KKStr  msg(80);
-    msg << "Matrix::Matrix   **** ERROR ****,  Row Dimension[" << _numOfRows << "]  Invalid.";
-    cerr << std::endl << msg <<std::endl << std::endl;
-    throw KKException (msg);
-  }
-
-  if  (_numOfCols < 0)
-  {
-	KKStr  msg(80);
-	msg << "Matrix::Matrix   **** ERROR ****,  Col Dimension[" << _numOfCols << "]  Invalid.";
-	cerr << std::endl << msg <<std::endl << std::endl;
-	throw KKException (msg);
-  }
-
   AllocateStorage ();
 }  /*  Matrix::Matrix  */
 
@@ -158,12 +135,11 @@ Matrix::Matrix (const VectorDouble&  _v):
   data      (NULL),
   dataArea  (NULL),
   numOfCols (1),
-  numOfRows (kkint32 (_v.size ())),
+  numOfRows (kkuint32 (_v.size ())),
   rows      (NULL)
 {
   AllocateStorage ();
-  kkint32  row;
-  for  (row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
     dataArea[row] = _v[row];
 } /* Matrix::Matrix  */
 
@@ -187,8 +163,8 @@ Matrix::~Matrix ()
  *@return  A matrix that is initialized with the contents of "data".
  */
 template<typename T>
-MatrixPtr  Matrix::BuildFromArray (kkint32 numOfRows,
-                                   kkint32 numOfCols,
+MatrixPtr  Matrix::BuildFromArray (kkuint32 numOfRows,
+                                   kkuint32 numOfCols,
                                    T**   data
                                   )
 {
@@ -206,13 +182,13 @@ MatrixPtr  Matrix::BuildFromArray (kkint32 numOfRows,
 
   MatrixPtr  m = new Matrix (numOfRows, numOfCols);
 
-  for  (kkint32 row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
   {
     T*       srcRow  = data[row];
     double*  destRow = m->data[row];
     if  (srcRow)
     {
-      for  (kkint32 col = 0;  col < numOfCols;  ++col)
+      for  (kkuint32 col = 0;  col < numOfCols;  ++col)
         destRow[col] = (double)(srcRow[col]);
     }
   }
@@ -221,8 +197,8 @@ MatrixPtr  Matrix::BuildFromArray (kkint32 numOfRows,
 
 
 
-void   Matrix::ReSize (kkint32 _numOfRows,
-                       kkint32 _numOfCols
+void   Matrix::ReSize (kkuint32 _numOfRows,
+                       kkuint32 _numOfCols
                       )
 {
   Destroy ();
@@ -240,15 +216,12 @@ void  Matrix::AllocateStorage ()
   dataArea = new double[totNumCells];
   data = new double*[numOfRows];
   rows = new Row [numOfRows];
-  
-  kkint32  x;
 
-  for  (x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     dataArea[x] = 0.0;
 
-
   double*  dataAreaPtr = dataArea;
-  for  (x = 0;  x < numOfRows;  x++)
+  for  (kkuint32 x = 0;  x < numOfRows;  x++)
   {
     rows[x].Define (numOfCols, dataAreaPtr);
     data[x] = dataAreaPtr;
@@ -267,9 +240,9 @@ void  Matrix::Destroy ()
 
 
 
-Row&  Matrix::operator[] (kkint32  rowIDX) const
+Row&  Matrix::operator[] (kkuint32  rowIDX) const
 {
-  if  ((rowIDX < 0)  ||  (rowIDX >= numOfRows))
+  if  (rowIDX >= numOfRows)
   {
     KKStr  msg (80);
     msg << "Matrix::operator[]   **** ERROR ****,  Row Index[" << rowIDX << "]  Invalid.";
@@ -295,18 +268,15 @@ double  Matrix::DeterminantSlow ()
 
   if  (numOfCols == 1)
   {
-    // return  rows[0]->cells[0];
     return data[0][0];
   }
 
-  kkint32  x;
-
-  kkint32*  rowMap = new kkint32[numOfRows];
-  for  (x = 0; x < numOfRows; x++)
+  kkuint32*  rowMap = new kkuint32[numOfRows];
+  for  (kkuint32 x = 0; x < numOfRows; x++)
     rowMap[x] = x;
 
-  kkint32*  colMap = new kkint32[numOfCols];
-  for  (x = 0; x < numOfCols; x++)
+  kkuint32*  colMap = new kkuint32[numOfCols];
+  for  (kkuint32 x = 0; x < numOfCols; x++)
     colMap[x] = x;
 
   double det = CalcDeterminent (rowMap, colMap, numOfCols);
@@ -337,7 +307,7 @@ Matrix&  Matrix::operator= (const Matrix&  right)
 Matrix&  Matrix::operator=  (const VectorDouble&  right)
 {
   ReSize ((kkuint32)right.size (), 1);
-  for  (kkint32 row = 0; row < numOfRows; row++)
+  for  (kkuint32 row = 0; row < numOfRows; row++)
     dataArea[row] = right[row];
 
   return  *this;
@@ -348,8 +318,7 @@ Matrix&  Matrix::operator=  (const VectorDouble&  right)
 
 Matrix&  Matrix::operator*= (double  right)
 {
-  kkint32  x = 0;
-  for  (x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     dataArea[x] *= right;
   return  *this;
 }
@@ -358,8 +327,7 @@ Matrix&  Matrix::operator*= (double  right)
 
 Matrix&  Matrix::operator+= (double  right)
 {
-  kkint32  x = 0;
-  for  (x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     dataArea[x] += right;
   return  *this;
 }
@@ -382,13 +350,11 @@ Matrix  Matrix::operator+ (const Matrix&  right)
   double*  resultDataArea = result.dataArea;
   double*  rightDataArea  = right.dataArea;
 
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     resultDataArea[x] = dataArea[x] + rightDataArea[x];
 
   return  result;
 }  /* Matrix::operator+ */
-
-
 
 
 
@@ -406,7 +372,7 @@ Matrix&  Matrix::operator+= (const Matrix&  right)
 
   double*  rightDataArea  = right.dataArea;
 
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     dataArea[x] += rightDataArea[x];
 
   return  *this;
@@ -432,7 +398,7 @@ Matrix  Matrix::operator- (const Matrix&  right)
   double*  resultDataArea = result.dataArea;
   double*  rightDataArea  = right.dataArea;
 
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     resultDataArea[x] = dataArea[x] - rightDataArea[x];
 
   return  result;
@@ -444,7 +410,7 @@ Matrix   Matrix::operator- (double right)
 {
   Matrix  result (*this);
   double*  resultDataArea = result.dataArea;
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     resultDataArea[x] = dataArea[x] - right;
 
   return  result;
@@ -457,21 +423,19 @@ Matrix  KKB::operator- (double        left,
                         const Matrix& right
                        )
 {
-  kkint32  numOfRows = right.NumOfRows ();
-  kkint32  numOfCols = right.NumOfCols ();
-  kkint32  totNumCells = right.totNumCells;
+  kkuint32  numOfRows = right.NumOfRows ();
+  kkuint32  numOfCols = right.NumOfCols ();
+  kkuint32  totNumCells = right.totNumCells;
 
   Matrix  result (numOfRows, numOfCols);
   double*  resultDataArea = result.dataArea;
   double*  rightDataArea  = right.dataArea;
 
-  for  (kkint32 x = 0;   x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;   x < totNumCells;  ++x)
     resultDataArea[x] = left - rightDataArea[x];
 
   return  result;
 }  /* operator- */
-
-
 
 
 
@@ -485,26 +449,22 @@ Matrix  Matrix::operator* (const Matrix&  right)
     throw  KKException (msg);
   }
 
-  kkint32  col;
-  kkint32  row;
-
-  kkint32  rRows = numOfRows;
-  kkint32  rCols = right.numOfCols;
+  kkuint32  rRows = numOfRows;
+  kkuint32  rCols = right.numOfCols;
 
   Matrix  result (rRows, rCols);
 
   double**  resultData = result.data;
   double**  rightData  = right.data;
 
-  kkint32  innerDim = numOfCols;
+  kkuint32  innerDim = numOfCols;
 
-  for  (row = 0;   row < rRows;  row++)
+  for  (kkuint32 row = 0;   row < rRows;  row++)
   {
-    for  (col = 0;  col < rCols;  col++)
+    for  (kkuint32 col = 0;  col < rCols;  col++)
     {
-       double  val = 0;
-       kkint32 x   = 0;
-       for  (x = 0; x < innerDim; x++)
+       double  val = 0.0;
+       for  (kkuint32 x = 0; x < innerDim; x++)
          val = val + data[row][x] * rightData[x][col];
        resultData[row][col] = val;
     }
@@ -520,7 +480,7 @@ Matrix  Matrix::operator+ (double  right)
 {
   Matrix  result (*this);
   double*  resultDataArea = result.dataArea;
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     resultDataArea[x] = dataArea[x] + right;
   return  result;
 }  /* operator+ */
@@ -531,7 +491,7 @@ Matrix  Matrix::operator* (double  right)
 {
   Matrix  result (*this);
   double*  resultDataArea = result.dataArea;
-  for  (kkint32 x = 0;  x < totNumCells;  ++x)
+  for  (kkuint32 x = 0;  x < totNumCells;  ++x)
     resultDataArea[x] = dataArea[x] * right;
   return  result;
 }  /* operator* */
@@ -542,11 +502,10 @@ Matrix  Matrix::operator* (double  right)
  *@brief Computes the Determinant using a recursive algorithm and co-factors matrixes.
  *@details  Very inefficient implementation,  would only use on very small matrices.   *
  */
-double  Matrix::CalcDeterminent (kkint32*  rowMap,
-                                 kkint32*  colMap,
-                                 kkint32   size
+double  Matrix::CalcDeterminent (kkuint32*  rowMap,
+                                 kkuint32*  colMap,
+                                 kkuint32   size
                                 )
-
 {
   if  (size == 2)
   {
@@ -555,28 +514,28 @@ double  Matrix::CalcDeterminent (kkint32*  rowMap,
     return  topCols[colMap[0]] * botCols[colMap[1]] - topCols[colMap[1]] * botCols[colMap[0]];
   }
 
+  if (size == 1)
+    return 0.0;
+
   double* coFactors = data[rowMap[0]];
   double  det  = 0.0;
-  kkint32 newSize = size - 1;
-  kkint32 row;
-  kkint32 sign = 1;
+  kkuint32 newSize = size - 1;
+  kkuint32 sign = 1;
 
 
-  kkint32*  newRowMap = new kkint32[newSize];
+  kkuint32*  newRowMap = new kkuint32[newSize];
 
-  for  (row = 1; row < size; row++)
+  for  (kkuint32 row = 1; row < size; row++)
   {
     newRowMap[row - 1] = rowMap[row];
   }
 
-  kkint32  cfCol;
-  for  (cfCol = 0; cfCol < size; cfCol++)
+  for  (kkuint32 cfCol = 0; cfCol < size; ++cfCol)
   {
-    kkint32*  newColMap = new kkint32[newSize];
+    kkuint32*  newColMap = new kkuint32[newSize];
 
-    kkint32  oldCol;
-    kkint32  newCol = 0;
-    for  (oldCol = 0; oldCol < size; oldCol++)
+    kkuint32  newCol = 0;
+    for  (kkuint32 oldCol = 0; oldCol < size; ++oldCol)
     {
       if  (oldCol != cfCol)
       {
@@ -618,40 +577,33 @@ MatrixPtr  Matrix::CalcCoFactorMatrix ()
 
   MatrixPtr  result = new Matrix (numOfRows, numOfCols);
 
-  kkint32  newSize = numOfCols - 1;
+  kkuint32  newSize = numOfCols - 1;
 
-  kkint32*  colMap = new kkint32 [newSize];
-  kkint32*  rowMap = new kkint32 [newSize];
+  kkuint32*  colMap = new kkuint32 [newSize];
+  kkuint32*  rowMap = new kkuint32 [newSize];
 
-  kkint32  row;
-  kkint32  col;
-  kkint32  x;
-
-
-  kkint32  sign;  
-
-  for  (row = 0; row < numOfRows; row++)
+  for  (kkuint32 row = 0; row < numOfRows; row++)
   {
     // Create a map of all rows except row we are calculating 
     // CoFactors for.
 
-    kkint32  newRow = 0;
-    for  (x = 0; x < numOfRows; x++)
+    kkuint32  newRow = 0;
+    for  (kkuint32 x = 0; x < numOfRows; x++)
     {
       if  (x != row)
       {
         rowMap[newRow] = x;
-        newRow++;
+        ++newRow;
       }
     }
 
-    for  (col = 0; col < numOfCols; col++)
+    for  (kkuint32 col = 0; col < numOfCols; col++)
     {
       // Create a map of all cells except row we are calculating 
       // CoFactor for.
 
-      kkint32  newCol = 0;
-      for  (x = 0; x < numOfCols; x++)
+      kkuint32  newCol = 0;
+      for  (kkuint32 x = 0; x < numOfCols; x++)
       {
         if  (x != col)
         {
@@ -660,17 +612,13 @@ MatrixPtr  Matrix::CalcCoFactorMatrix ()
         }
       }
 
-      if  (((row + col) % 2) == 0)
-        sign = 1;
-      else 
-        sign = -1;
-
+      kkint32 sign = (((row + col) % 2) == 0) ? 1 : -1;
 
       Matrix  temp (newSize, newSize);
-      for  (kkint32 r = 0;  r < newSize;  r++)
+      for  (kkuint32 r = 0;  r < newSize;  ++r)
       {
-        kkint32  tempR = rowMap[r];
-        for  (kkint32 c = 0;  c < newSize;  c++)
+        kkuint32  tempR = rowMap[r];
+        for  (kkuint32 c = 0;  c < newSize;  ++c)
           temp[r][c] = data[tempR][colMap[c]]; 
       }
 
@@ -690,9 +638,9 @@ bool  Matrix::Symmetric ()  const
   if  ((data == NULL)  ||  (numOfRows != numOfCols))
     return false;
 
-  for  (kkint32 row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
   {
-    for  (kkint32 col = row + 1;   col < numOfCols;  ++col)
+    for  (kkuint32 col = row + 1;   col < numOfCols;  ++col)
     {
       if  (data[row][col] != data[col][row])
         return false;
@@ -703,19 +651,16 @@ bool  Matrix::Symmetric ()  const
 
 
 
-
 Matrix  Matrix::Transpose ()
 {
-  kkint32 col;
-  kkint32 row;
 
   Matrix  result (numOfCols, numOfRows);
 
   double**  resultData = result.data;
 
-  for  (row = 0; row < numOfRows; row++)
+  for  (kkuint32 row = 0; row < numOfRows; ++row)
   {
-    for  (col = 0; col < numOfCols; col++)
+    for  (kkuint32 col = 0; col < numOfCols; ++col)
     {
       resultData[col][row] = data[row][col];
     }
@@ -723,8 +668,6 @@ Matrix  Matrix::Transpose ()
 
   return  result;
 }  /* Transpose */
-
-
 
 
 
@@ -789,7 +732,7 @@ void  Matrix::EigenVectors (MatrixPtr&      eigenVectors,
   {
     double*  d = new double[numOfRows];
     double*  e = new double[numOfRows];
-    for  (kkint32 x = 0;  x < numOfRows;  ++x)
+    for  (kkuint32 x = 0;  x < numOfRows;  ++x)
     {
       d[x] = 0.0;
       e[x] = 0.0;
@@ -805,7 +748,7 @@ void  Matrix::EigenVectors (MatrixPtr&      eigenVectors,
     }
 
     eigenValues = new VectorDouble ();
-    for  (kkint32 x = 0;  x < numOfRows;  ++x)
+    for  (kkuint32 x = 0;  x < numOfRows;  ++x)
       eigenValues->push_back (d[x]);
 
     delete[]  d;  d = NULL;
@@ -815,13 +758,13 @@ void  Matrix::EigenVectors (MatrixPtr&      eigenVectors,
 
 
 
-void   Matrix::FindMaxValue (double&  maxVal, 
-                             kkint32&   rowIdx, 
-                             kkint32&   colIdx
+void   Matrix::FindMaxValue (double&    maxVal, 
+                             kkuint32&  rowIdx, 
+                             kkuint32&  colIdx
                             )
 {
-  rowIdx = -1;
-  colIdx = -1;
+  rowIdx = 0;
+  colIdx = 0;
   maxVal = DBL_MIN;
 
   if  (!data)
@@ -830,10 +773,10 @@ void   Matrix::FindMaxValue (double&  maxVal,
   maxVal = data[0][0];
   rowIdx = colIdx = 0;
 
-  for  (kkint32 row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
   {
     double*  dataRow = data[row];
-    for  (kkint32 col = 0;  col < numOfCols;  ++col)
+    for  (kkuint32 col = 0;  col < numOfCols;  ++col)
     {
       if  (dataRow[col] > maxVal)
       {
@@ -854,21 +797,18 @@ ostream&  operator<< (      ostream&  os,
                       const Matrix&   matrix
                      )
 {
-  kkint32  col;
-  kkint32  row;
-
   os << "[" << matrix.NumOfRows () << "," << matrix.NumOfCols () << "]" << std::endl;
 
   os << "[";
 
-  for  (row = 0; row < matrix.NumOfRows (); row++)
+  for  (kkuint32 row = 0; row < matrix.NumOfRows (); row++)
   {
     if  (row  > 0)
       os << " ";
 
     os << "[";
 
-    for  (col = 0; col < matrix.NumOfCols (); col++)
+    for  (kkuint32 col = 0; col < matrix.NumOfCols (); col++)
     {
       if  (col > 0)
         os << ", ";
@@ -888,10 +828,10 @@ ostream&  operator<< (      ostream&  os,
 
 
 
-VectorDouble  Matrix::GetCol (kkint32 col)  const
+VectorDouble  Matrix::GetCol (kkuint32  col)  const
 {
   VectorDouble  colResult (numOfRows, 0.0);
-  for  (kkint32 r = 0;  r < numOfRows;  r++)
+  for  (kkuint32 r = 0;  r < numOfRows;  ++r)
     colResult[r] = data[r][col];
 
   return  colResult;
@@ -902,30 +842,28 @@ VectorDouble  Matrix::GetCol (kkint32 col)  const
 #define DBL_EPSILON    2.2204460492503131e-016
 #endif
 
+
+
 /**
  * @param mat
  * @param offset
  * @return A[offset][offset]
  */
-double  Matrix::DeterminantSwap (double**        mat,
-                                 unsigned short  offset
+double  Matrix::DeterminantSwap (double**  mat,
+                                 kkuint32  offset
                                 )
 
 {
 	if  (fabs(mat[offset][offset]) < DBL_EPSILON)
 	{
-		for  (ushort i = offset + 1;  i < numOfRows;  i++)
+		for  (kkuint32 i = offset + 1;  i < numOfRows;  i++)
 		{
 			if  (fabs (mat[i][offset]) >= DBL_EPSILON)
 			{
-				/*
-				 * Swap line `i' and line `offset'
-				 */
-				double	*tmp;
-
-				tmp=mat[offset];
-				mat[offset]=mat[i];
-				mat[i]=tmp;
+				/* Swap line `i' and line `offset'*/
+				double	*tmp = mat[offset];
+				mat[offset] = mat[i];
+				mat[i] = tmp;
 				break;
 			}
 		}
@@ -936,38 +874,29 @@ double  Matrix::DeterminantSwap (double**        mat,
 
 
 
-
-
-
-/**
- * @return the determinant of mat
- */
+/** @return the determinant of mat. */
 double   Matrix::Determinant ()
 {
   if  (numOfCols != numOfRows)
     return -999999.99;
 
-  kkint32  r, c;
-
   double** mat = new double*[numOfRows];
-  for  (r = 0;  r < numOfRows;  r++)
+  for  (kkuint32 r = 0;  r < numOfRows;  ++r)
   {
     mat[r] = new double[numOfCols];
-    for  (c = 0;  c < numOfCols;  c++)
+    for  (kkuint32 c = 0;  c < numOfCols;  c++)
     {
       mat[r][c] = data[r][c];
     }
   }
 
 	double det = 1.0;
-	unsigned short i = 0;
 
-	for  (i = 0;  i < numOfRows;  i++)
+	for  (kkuint32 i = 0;  i < numOfRows;  i++)
 	{
 		const double  Aii = DeterminantSwap (mat, i);
-		unsigned short j = 0;
 
-		if  (fabs (Aii) < DBL_EPSILON)
+    if  (fabs (Aii) < DBL_EPSILON)
 		{
 			det = 0.0;
 			break;
@@ -976,15 +905,15 @@ double   Matrix::Determinant ()
 		det *= Aii;
 		
 		//Do elimination
-		for  (j = i + 1;  j < numOfRows;  j++)
+		for  (kkuint32 j = i + 1;  j < numOfRows;  j++)
 		{
 			const double pivot = mat[j][i] / Aii;
-			for (ushort k = i;  k < numOfRows;  k++)
+			for (kkuint32 k = i;  k < numOfRows;  k++)
 				mat[j][k] -= pivot * mat[i][k];
 		}
 	}
 
-  for  (r = 0;  r < numOfRows;  r++)
+  for  (kkuint32 r = 0;  r < numOfRows;  r++)
   {
     delete  mat[r];
     mat[r] = NULL;
@@ -1012,54 +941,51 @@ MatrixPtr  Matrix::Covariance ()  const
   // Used web site below to help with Covariance calculations
   //  http://www.itl.nist.gov/div898/handbook/pmc/section5/pmc541.htm
 
-  kkint32  col = 0;
-  kkint32  row = 0;
-
   double*   totals       = new double[numOfCols];
   double*   means        = new double[numOfCols];
   double**  centeredVals = new double*[numOfCols];
-  for  (col = 0;  col < numOfCols;  ++col)
+  for  (kkuint32 col = 0;  col < numOfCols;  ++col)
   {
     totals[col] = 0.0;
     centeredVals[col] = new double[numOfRows];
   }
 
-  for  (row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
   {
     double*  rowData = data[row];
-    for  (col = 0;  col < numOfCols;  ++col)
+    for  (kkuint32 col = 0;  col < numOfCols;  ++col)
       totals[col] += rowData[col];
   }
 
-  for  (col = 0;  col < numOfCols;  ++col)
+  for  (kkuint32 col = 0;  col < numOfCols;  ++col)
     means[col] = totals[col] / numOfRows;
 
-  for  (row = 0;  row < numOfRows;  ++row)
+  for  (kkuint32 row = 0;  row < numOfRows;  ++row)
   {
     double*  rowData = data[row];
-    for  (col = 0;  col < numOfCols;  ++col)
+    for  (kkuint32 col = 0;  col < numOfCols;  ++col)
       centeredVals[col][row] = rowData[col] - means[col];
   }
  
   MatrixPtr  covariances = new Matrix (numOfCols, numOfCols);
 
-  for  (kkint32 varIdxX = 0;  varIdxX < numOfCols;  ++varIdxX)
+  for  (kkuint32 varIdxX = 0;  varIdxX < numOfCols;  ++varIdxX)
   {
     double*  varXs = centeredVals[varIdxX];
-    for  (kkint32 varIdxY = varIdxX;  varIdxY < numOfCols;  ++varIdxY)
+    for  (kkuint32 varIdxY = varIdxX;  varIdxY < numOfCols;  ++varIdxY)
     {
       // Calculate the covariance between chanIdx0 and chanIdx1
 
       double*  varYs = centeredVals[varIdxY];
       double total = 0.0f;
-      for  (row = 0;  row < numOfRows;  ++row)
+      for  (kkuint32 row = 0;  row < numOfRows;  ++row)
         total += varXs[row] * varYs[row];
       (*covariances)[varIdxX][varIdxY] = total / (numOfRows - 1);
       (*covariances)[varIdxY][varIdxX]  = (*covariances)[varIdxX][varIdxY];
     }
   }
 
-  for  (col = 0;  col < numOfCols;  col++)
+  for  (kkuint32 col = 0;  col < numOfCols;  col++)
   {
     delete[]  centeredVals[col];
     centeredVals[col] = NULL;
@@ -1073,7 +999,6 @@ MatrixPtr  Matrix::Covariance ()  const
 
 
 
-
 /**
  *@brief  Householder reduction of a real symmetric matrix a[0..n-1][0..n-1].
  *@details  From Numerical Recipes in c++, page 479.  Tred2 is designed to work with Tqli.  Its purpose 
@@ -1083,13 +1008,13 @@ MatrixPtr  Matrix::Covariance ()  const
  *@param[out]     d  Returns the diagonal elements of the tridiagonal matrix,
  *@param[out]     e  The off-diagonal elements with e[0] = 0.
  */
-void  Matrix::Tred2 (double** a, 
-                     kkint32  n, 
-                     double*  d, 
-                     double*  e
+void  Matrix::Tred2 (double**  a, 
+                     kkuint32  n, 
+                     double*   d, 
+                     double*   e
                     )  const
 {
-  kkint32  i, j, k, l;
+  kkuint32  i, j, k, l;
 
   double  scale, hh, h, g, f;
 
@@ -1191,7 +1116,6 @@ void  Matrix::Tred2 (double** a,
 
 
 
-
 template<class T>
 inline const T SIGN (const T& a,
                      const T& b
@@ -1242,12 +1166,6 @@ double  Matrix::Pythag (const double a,
 
 
 
-//#undef SIGN
-
-//#define SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
-
-
-
 /**
  *@brief  Determines the eigenvalues and eigen-vectors of a real symmetric, tridiagonal matrix previously reduced by Tred2.
  *@details TQLI = "Tridiagonal QL Implicit".
@@ -1258,27 +1176,27 @@ double  Matrix::Pythag (const double a,
  *                   Eigen-vectors of input matrix to "Tred2" are required then z should equal the output matrix from
  *                   Tred2 "a".
  */
-kkint32  Matrix::Tqli (double*  d, 
-                   double*  e, 
-                   kkint32  n, 
-                   double** z
-                  ) const
+kkint32  Matrix::Tqli (double*   d, 
+                       double*   e, 
+                       kkuint32  n, 
+                       double**  z
+                      ) const
 {
-  kkint32  m, l, iter, i, k;
+  kkuint32  m, l, iter, i, k;
   double  s, r, p,g, f, dd, c, b;
 
-  for  (i = 1;  i < n;  i++)
+  for  (i = 1;  i < n;  ++i)
     e[i - 1] = e[i];
 
   e[n - 1] = 0.0;
 
-  for  (l = 0;  l < n;  l++)
+  for  (l = 0;  l < n;  ++l)
   {
     iter = 0;
 
     do
     {
-      for  (m = l;  m < n - 1;  m++)
+      for  (m = l;  m < n - 1;  ++m)
       {
         // Looking for a single small sub-diagonal element
         // to split the matrix
@@ -1294,8 +1212,6 @@ kkint32  Matrix::Tqli (double*  d,
           cerr << std::endl << std::endl
                << "Matrix::tqli    **** ERROR ****            To many iterations in tqli" << std::endl
                << std::endl;
-          //osWaitForEnter ();
-          //exit (-1);
           return  0;
         }
         iter++;
