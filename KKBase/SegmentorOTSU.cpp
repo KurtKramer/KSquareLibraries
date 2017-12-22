@@ -228,15 +228,13 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
   double const * const * rightData  = right.Data ();
   double**               resultData = result.DataNotConst ();
 
-  kkint32  r, c;
-
-  for  (r = 0;  r < minNumOfRows;  ++r)
+  for  (kkuint32 r = 0;  r < minNumOfRows;  ++r)
   {
     double const *  leftDataRow   = leftData[r];
     double const *  rightDataRow  = rightData[r];
     double*         resultDataRow = resultData[r];
 
-    for  (c = 0;  c < minNumOfCols;  ++c)
+    for  (kkuint32 c = 0;  c < minNumOfCols;  ++c)
       resultDataRow[c] = leftDataRow[c] / rightDataRow[c];
   }
 
@@ -1005,7 +1003,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    kkint32  k1, k2;
+    kkuint32  k1, k2;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    
@@ -1317,7 +1315,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    kkint32  k1, k2;
+    kkuint32  k1, k2;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    

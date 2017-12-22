@@ -84,7 +84,7 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
   workRaster->ConnectedComponent (3);
 
   uchar**   workGreen = workRaster->Green ();
-  workRaster->ErodeSpurs ();
+  ErodeSpurs (workRaster);
   // workRaster->Dilation ();
 
   //   k_SetBorder(1,1,pImg);
@@ -96,11 +96,7 @@ RasterPtr   MorphOpThinContour::PerformOperation (RasterConstPtr  _image)
 
   kkint32  minCol, maxCol, minRow, maxRow;
 
-  workRaster->FindBoundingBox (minRow,
-    minCol,
-    maxRow,
-    maxCol
-  );
+  workRaster->FindBoundingBox (minRow, minCol, maxRow, maxCol);
 
   if ((minRow > maxRow) || (minRow < 0) || (minCol < 0))
   {

@@ -128,6 +128,9 @@ KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
   else if (_operation == OperationType::Stretcher)
     return "Stretcher";
 
+  else if (_operation == OperationType::ThinContour)
+    return "ThinContour";
+
   else
     return "NULL";
 }
@@ -165,6 +168,9 @@ MorphOp::OperationType   MorphOp::OperationTypeFromStr (const KKB::KKStr&  _oper
 
   else if (_operationStr.EqualIgnoreCase ("Stretcher"))
     return  OperationType::Stretcher;
+
+  else if (_operationStr.EqualIgnoreCase ("ThinContour"))
+    return  OperationType::ThinContour;
 
   else
     return  OperationType::Null;

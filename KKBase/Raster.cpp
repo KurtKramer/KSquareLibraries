@@ -45,6 +45,7 @@ using namespace std;
 #include "MorphOpReduceByEvenMultiple.h"
 #include "MorphOpReduceByFactor.h"
 #include "MorphOpStretcher.h"
+#include "MorphOpThinContour.h"
 #include "OSservices.h"
 #include "SimpleCompressor.h"
 #include "MorphOpSobel.h"
@@ -7045,11 +7046,6 @@ void  Raster::DrawCircle (const Point&       point,
 
 
 
-
-
-
-
-
 void  Raster::SmoothImageChannel (uchar**  src,
                                   uchar**  dest,
                                   kkint32  maskSize
@@ -7100,8 +7096,6 @@ void  Raster::SmoothImageChannel (uchar**  src,
 
 
 
-
-
 RasterPtr  Raster::CreateSmoothImage (kkint32 maskSize)  const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
@@ -7119,8 +7113,6 @@ RasterPtr  Raster::CreateSmoothImage (kkint32 maskSize)  const
 
   return  result;
 } /* CreateSmoothImage */
-
-
 
 
 
@@ -7713,6 +7705,14 @@ RasterListPtr  Raster::SplitImageIntoEqualParts (kkint32 numColSplits,
 
 
 
+RasterPtr  Raster::ThinContour ()  const
+{
+  MorphOpThinContour  thinner;
+  return thinner.PerformOperation (this);
+}
+
+
+
 RasterPtr  Raster::TightlyBounded (kkuint32 borderPixels)  const
 {
   kkint32  tlRow = 0;
@@ -7762,7 +7762,6 @@ RasterPtr  Raster::TightlyBounded (kkuint32 borderPixels)  const
 
 
 
-
 RasterPtr  Raster::Transpose ()  const
 {
   RasterPtr  result = new Raster (width, height, color);
@@ -7786,6 +7785,7 @@ RasterPtr  Raster::Transpose ()  const
 
   return  result;
 }
+
 
 
 RasterPtr  Raster::ToColor ()  const
@@ -8734,7 +8734,6 @@ RasterPtr  Raster::CreateGrayScaleKLT ()  const
 
 
 
-
 RasterPtr  Raster::CreateGrayScaleKLTOnMaskedArea (const Raster&  mask)  const
 {
   if  (!color)
@@ -8927,8 +8926,6 @@ void   Raster::WhiteOutBackground ()
 
 
 
-
-
 RasterPtr  Raster::CreateColorImageFromLabels ()
 {
   kkint32  x = 0;
@@ -8976,7 +8973,6 @@ RasterPtr  Raster::CreateColorImageFromLabels ()
 
 
 
-
 void  Raster::FillBlob (RasterPtr   origImage,
                         BlobPtr     blob,
                         PixelValue  pixelValue
@@ -9010,7 +9006,6 @@ void  Raster::FillBlob (RasterPtr   origImage,
     }
   }
 }  /* FillBlob */
-
 
 
 
@@ -9117,14 +9112,9 @@ PointListPtr  Raster::DeriveImageLength () const
     results->PushOnBack (new Point (p3Orig));
   }
 
-
   delete rotatedImage;  rotatedImage = NULL;
   delete workRaster;    workRaster   = NULL;
 
   return  results;
 
 }  /* DeriveImageLength */
-
-
-
-

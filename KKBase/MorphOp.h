@@ -56,7 +56,8 @@ namespace  KKB
       ReduceByFactor,
       ReduceByEvenMultiple,
       SobelEdgeDetection,
-      Stretcher
+      Stretcher,
+      ThinContour
     };
 
     KKB::KKStr     OperationTypeToStr   (OperationType      _operation);
