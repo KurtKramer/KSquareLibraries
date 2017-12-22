@@ -53,6 +53,8 @@ namespace  KKB
       Dilation,
       Erosion,
       MaskExclude,
+      ReduceByFactor,
+      ReduceByEvenMultiple,
       SobelEdgeDetection,
       Stretcher
     };
@@ -83,6 +85,8 @@ namespace  KKB
     MorphOp ();
 
     virtual  ~MorphOp ();
+
+    virtual  kkMemSize  MemoryConsumedEstimated ();
 
     virtual  OperationType   Operation ()  const  = 0;
 

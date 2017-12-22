@@ -42,6 +42,8 @@ using namespace std;
 #include "MorphOpBinarize.h"
 #include "MorphOpDilation.h"
 #include "MorphOpErosion.h"
+#include "MorphOpReduceByEvenMultiple.h"
+#include "MorphOpReduceByFactor.h"
 #include "MorphOpStretcher.h"
 #include "OSservices.h"
 #include "SimpleCompressor.h"
@@ -1904,11 +1906,6 @@ void  Raster::Dilation (RasterPtr  dest,
 
   dest->foregroundPixelCount = pixelCount;
 }  /* Dilation */
-
-
-
-
-
 
 
 
@@ -7180,8 +7177,6 @@ T  FindKthValue (T*    values,
 
 
 
-
-
 RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 {
   RasterPtr  result = AllocateARasterInstance (*this);
@@ -7276,9 +7271,6 @@ RasterPtr  Raster::CreateSmoothedMediumImage (kkint32 maskSize)  const
 
 
 
-
-
-
 RasterPtr  Raster::HalfSize ()
 {
   kkint32  hHeight = kkint32 (height / 2);
@@ -7312,340 +7304,19 @@ RasterPtr  Raster::HalfSize ()
 
 
 
-
-
 RasterPtr  Raster::ReduceByEvenMultiple (kkint32  multiple)  const
 {
-  // We will pad one extra pixel top, bot, left, and right.
-  // This is necessary because some feature calculations assume that there edge rows are empty.
-
-  kkint32  nHeight = kkint32 (height / multiple) + 2;
-  kkint32  nWidth  = kkint32 (width  / multiple) + 2; 
-
-  kkint32  row = 0;
-  kkint32  col = 0;
-  kkint32  nRow, nCol;
-
-  kkuint32**  workRaster  = new kkuint32*[nHeight];
-  uchar**     workDivisor = new uchar*[nHeight];
-  kkuint32*   workRow     = NULL;
-
-  uchar*  workDivisorRow = NULL;
-
-  for  (nRow = 0;  nRow < nHeight;  nRow++)
-  {
-    workRow = new kkuint32[nWidth];
-    workRaster[nRow] = workRow;
-
-    workDivisorRow = new uchar[nWidth];
-    workDivisor[nRow] = workDivisorRow;
-
-    for  (nCol = 0;  nCol < nWidth;  nCol++)
-    {
-      workRow[nCol] = 0;
-      workDivisorRow[nCol] = 0;
-    }
-  }
-
-  nRow = 1;
-  kkint32  intermediateRow = 0;
-  kkint32  intermediateCol = 0;
-  uchar*  srcRow = NULL;
-
-  for  (row = 0;  row < height;  row++)
-  {
-    srcRow = green[row];
-    intermediateCol = 0;
-    nCol = 1;
-    workRow = workRaster[nRow];
-    workDivisorRow = workDivisor[nRow];
-
-    for  (col = 0;  col < width;  col++)
-    {
-      workRow[nCol] += srcRow[col];
-      workDivisorRow[nCol]++;
-
-      intermediateCol++;
-      if  (intermediateCol >= multiple)
-      {
-        intermediateCol = 0;
-        nCol++;
-      }
-    }
-
-    intermediateRow++;
-    if  (intermediateRow >= multiple)
-    {
-      intermediateRow = 0;
-      nRow++;
-    }
-  }
-
-  RasterPtr  reducedRaster = AllocateARasterInstance (nHeight, nWidth, false);
-
-  uchar*  destRow = NULL;
-
-  kkint32  newPixelVal           = 0;
-  kkint32  nMaxPixVal            = 0;
-  kkint32  nForegroundPixelCount = 0;
-
-  for  (nRow = 0;  nRow < nHeight;  nRow++)
-  {
-    destRow = (reducedRaster->Green ())[nRow];
-    workRow = workRaster[nRow];
-    workDivisorRow = workDivisor[nRow];
-
-    for  (nCol = 0;  nCol < nWidth;  nCol++)
-    {
-      newPixelVal = workRow[nCol];
-      if  (newPixelVal > 0)  
-      {
-        nForegroundPixelCount++;
-        newPixelVal = (kkint32)(0.5f + (float)(newPixelVal) / (float)(workDivisorRow[nCol]));
-        destRow[nCol] = (uchar)(newPixelVal);
-        if  (newPixelVal > nMaxPixVal)
-          nMaxPixVal = newPixelVal;
-      }
-    }
-
-    delete  workRaster[nRow];  
-    delete  workDivisor[nRow];
-    workRaster[nRow]  = NULL;
-    workDivisor[nRow] = NULL;
-  }
-  delete[]  workRaster;
-  workRaster = NULL;
-  delete[]  workDivisor;
-  workDivisor = NULL;
-
-  reducedRaster->ForegroundPixelCount (nForegroundPixelCount);
-  reducedRaster->MaxPixVal ((uchar)nMaxPixVal);
-
-  return  reducedRaster;
+  MorphOpReduceByEvenMultiple  reducer (multiple);
+  return reducer.PerformOperation (this);
 }  /* ReduceByEvenMultiple */
 
 
 
 RasterPtr  Raster::ReduceByFactor (float factor)  const  //  0 < factor <= 1.0
 {
-  if  (factor <= 0.0f)  
-    factor = 0.1f;
-  
-  else if  (factor > 1.0f)
-    factor = 1.0f;
-
-  kkint32  c, r;
-
-  kkint32  newR;
-
-  kkint32  newHeight = (kkint32)(height * factor + 0.5f);
-  kkint32  newWidth  = (kkint32)(width  * factor + 0.5f);
-  if  (newHeight < 2)
-    newHeight = 2;
-
-  if  (newWidth < 2)
-    newWidth = 2;
-
-  kkint32  newTotal  = newHeight * newWidth;
-
-  float*  accumulatorAreaGreen = new float[newTotal];
-  float*  accumulatorAreaRed   = NULL;
-  float*  accumulatorAreaBlue  = NULL;
-  if  (color)
-  {
-    accumulatorAreaRed   = new float[newTotal];
-    accumulatorAreaBlue  = new float[newTotal];
-    memset (accumulatorAreaRed,  0, newTotal * sizeof (float));
-    memset (accumulatorAreaBlue, 0, newTotal * sizeof (float));
-  }
-
-  float*  divisorArea          = new float[newTotal];
-
-  memset (accumulatorAreaGreen, 0, newTotal * sizeof (float));
-  memset (divisorArea,          0, newTotal * sizeof (float));
-
-  float** accumulatorRed   = NULL;
-  float** accumulatorGreen = new float*[newHeight];
-  float** accumulatorBlue  = NULL;
-
-  if  (color)
-  {
-    accumulatorRed  = new float*[newHeight];
-    accumulatorBlue = new float*[newHeight];
-  }
-
-
-  float** divisor   = new float*[newHeight];
-
-  float*  rowFactor = new float[height + 1];
-  float*  colFactor = new float[width  + 1];
-
-  for  (r = 0;  r < height;  r++)
-    rowFactor[r] = r * factor;
-  rowFactor[height] = (float)newHeight;
-
-  for  (c = 0;  c < width;  c++)
-    colFactor[c] = c * factor;
-  colFactor[width] = (float)newWidth;
-
-  float*  arPtr = accumulatorAreaRed;
-  float*  agPtr = accumulatorAreaGreen;
-  float*  abPtr = accumulatorAreaBlue;
-  float*  daPtr = divisorArea;
-  for  (newR = 0;  newR < newHeight;  newR++)
-  {
-    accumulatorGreen [newR] = agPtr;
-    divisor          [newR] = daPtr;
-    agPtr += newWidth;
-    daPtr += newWidth;
-
-    if  (color)
-    {
-      accumulatorRed [newR] = arPtr;
-      accumulatorBlue[newR] = abPtr;
-      arPtr += newWidth;
-      abPtr += newWidth;
-    }
-  }
-
-  uchar  rValue = 0, gValue = 0, bValue = 0;
-
-  for  (r = 0;  r < height;  r++)
-  {
-    kkint32  thisRow = (kkint32)rowFactor[r];
-    if  (thisRow >= newHeight)
-      thisRow = newHeight - 1;
-
-    kkint32  nextRow = (kkint32)rowFactor[r + 1];
-    if  (nextRow >= newHeight)
-      nextRow = newHeight - 1;
-
-    float  amtThisRow = 1.0f;
-    float  amtNextRow = 0.0f;
-
-    if  (nextRow > thisRow)
-    {
-      amtThisRow = (float)nextRow - rowFactor[r];
-      amtNextRow = 1.0f - amtThisRow;
-    }
-
-    for  (c = 0;  c < width;  c++)
-    {
-      gValue = green[r][c];
-      if  (color)
-      {
-        rValue = red [r][c];
-        bValue = blue[r][c];
-      }
-
-      kkint32  thisCol = (kkint32)colFactor[c];
-      if  (thisCol >= newWidth)
-        thisCol = newWidth - 1;
-
-      kkint32  nextCol = (kkint32)colFactor[c + 1];
-      if  (nextCol >= newWidth)
-        nextCol = newWidth - 1;
-
-      float  amtThisCol = 1.0f;
-      float  amtNextCol = 0.0f;
-
-      if  (nextCol > thisCol)
-      {
-        amtThisCol = (float)nextCol - colFactor[c];
-        amtNextCol = 1.0f - amtThisCol;
-      }
-
-      accumulatorGreen[thisRow][thisCol] += gValue * amtThisRow * amtThisCol;
-      if  (color)
-      {
-        accumulatorRed [thisRow][thisCol] += rValue * amtThisRow * amtThisCol;
-        accumulatorBlue[thisRow][thisCol] += bValue * amtThisRow * amtThisCol;
-      }
-
-      divisor   [thisRow][thisCol] += amtThisRow * amtThisCol;
-
-      if  (nextRow > thisRow)
-      {
-        accumulatorGreen[nextRow][thisCol] += gValue * amtNextRow * amtThisCol;
-        if  (color)
-        {
-          accumulatorRed [nextRow][thisCol] += rValue * amtNextRow * amtThisCol;
-          accumulatorBlue[nextRow][thisCol] += bValue * amtNextRow * amtThisCol;
-        }
-        divisor   [nextRow][thisCol] += amtNextRow * amtThisCol;
-
-        if  (nextCol > thisCol)
-        {
-          accumulatorGreen[nextRow][nextCol] += gValue * amtNextRow * amtNextCol;
-          if  (color)
-          {
-            accumulatorRed [nextRow][nextCol] += rValue * amtNextRow * amtNextCol;
-            accumulatorBlue[nextRow][nextCol] += bValue * amtNextRow * amtNextCol;
-          }
-          divisor   [nextRow][nextCol] += amtNextRow * amtNextCol;
-        }
-      }
-      else
-      {
-        if  (nextCol > thisCol)
-        {
-          accumulatorGreen[thisRow][nextCol] += gValue * amtThisRow * amtNextCol;
-          if  (color)
-          {
-            accumulatorRed [thisRow][nextCol] += rValue * amtThisRow * amtNextCol;
-            accumulatorBlue[thisRow][nextCol] += bValue * amtThisRow * amtNextCol;
-          }
-          divisor   [thisRow][nextCol] += amtThisRow * amtNextCol;
-        }
-      }
-    }  /*  for (c)  */
-  }  /*  for (r)  */
-
-  kkint32  x;
-  RasterPtr  reducedRaster = AllocateARasterInstance (newHeight, newWidth, color);
-  uchar*  newRedArea   = reducedRaster->RedArea   ();
-  uchar*  newGreenArea = reducedRaster->GreenArea ();
-  uchar*  newBlueArea  = reducedRaster->BlueArea  ();
-  for  (x = 0;  x < newTotal;  x++)
-  {
-    if  (divisorArea[x] == 0.0f)
-    {
-      newGreenArea[x] = 0;
-      if  (color)
-      {
-        newRedArea [x] = 0;
-        newBlueArea[x] = 0;
-      }
-    }
-    else
-    {
-      newGreenArea[x] = (uchar)(accumulatorAreaGreen[x] / divisorArea[x] + 0.5f);
-      if  (color)
-      {
-        newRedArea [x] = (uchar)(accumulatorAreaRed [x] / divisorArea[x] + 0.5f);
-        newBlueArea[x] = (uchar)(accumulatorAreaBlue[x] / divisorArea[x] + 0.5f);
-      }
-    }
-     
-  }
-
-  delete[]  accumulatorAreaRed;    accumulatorAreaRed   = NULL;
-  delete[]  accumulatorAreaGreen;  accumulatorAreaGreen = NULL;
-  delete[]  accumulatorAreaBlue;   accumulatorAreaBlue  = NULL;
-
-  delete[]  divisorArea;       divisorArea    = NULL;
-
-  delete[]  accumulatorRed;    accumulatorRed    = NULL;
-  delete[]  accumulatorGreen;  accumulatorGreen  = NULL;
-  delete[]  accumulatorBlue;   accumulatorBlue   = NULL;
-  delete[]  divisor;           divisor           = NULL;
-
-  delete[]  rowFactor;       rowFactor      = NULL;
-  delete[]  colFactor;       colFactor      = NULL;
-
-  return  reducedRaster;
+  MorphOpReduceByFactor reducer (factor);
+  return reducer.PerformOperation (this);
 }  /* ReduceByFactor */
-
 
 
 
@@ -7654,7 +7325,6 @@ RasterPtr  Raster::SobelEdgeDetector ()  const
   MorphOpSobel  sobel;
   return sobel.PerformOperation (this);
 }  /* SobelEdgeDetector */
-
 
 
 
@@ -7955,7 +7625,7 @@ RasterPtr   Raster::SegmentImage (bool  save)
         if  (imageIsWhiteOnBlack)
           destRaster->SetPixelValue (r, c, gsImage->GetPixelValue (r, c));
         else
-          destRaster->SetPixelValue (r, c, 255 - gsImage->GetPixelValue (r, c));
+          destRaster->SetPixelValue (r, c, (uchar)(255 - gsImage->GetPixelValue (r, c)));
       }
       else
       {
@@ -8042,535 +7712,6 @@ RasterListPtr  Raster::SplitImageIntoEqualParts (kkint32 numColSplits,
 
 
 
-void  Raster::ErodeSpurs ()
-{
-  Raster  origRaster (*this);
-
-  uchar**  origGreen = origRaster.green;
-
-  kkint32  r;
-  kkint32  c;
-
-  kkint32  firstRow = 1;
-  kkint32  firstCol = 1;
-  kkint32  lastRow  = height - 1;
-  kkint32  lastCol  = width - 1;
-
-  for  (r = firstRow; r < lastRow; r++)
-  {
-    for  (c = firstCol; c < lastCol; c++)
-    {
-      if  (ForegroundPixel (green[r][c]))
-      {
-        // We have a foreground Pixel.
-
-        if  ((BackgroundPixel (origGreen[r - 1][c - 1]))  &&
-             (BackgroundPixel (origGreen[r - 1][c]    ))  &&
-             (BackgroundPixel (origGreen[r - 1][c + 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c - 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c + 1])))
-        {
-          // Top Spur
-          green[r][c] = backgroundPixelValue;
-        }
-
-        else
-        if  ((BackgroundPixel (origGreen[r - 1][c - 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c - 1]))  &&
-             (BackgroundPixel (origGreen[r + 1][c + 1]))  &&
-             (BackgroundPixel (origGreen[r - 1][c    ]))  &&
-             (BackgroundPixel (origGreen[r + 1][c    ])))
-        {
-          // Left Spur
-          green[r][c] = backgroundPixelValue;
-        }
-
-        else
-        if  ((BackgroundPixel (origGreen[r + 1][c - 1]))  &&
-             (BackgroundPixel (origGreen[r + 1][c    ]))  &&
-             (BackgroundPixel (origGreen[r + 1][c + 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c - 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c + 1])))
-        {
-          // Bottom Spur
-          green[r][c] = backgroundPixelValue;
-        }
-
-        else
-        if  ((BackgroundPixel (origGreen[r - 1][c + 1]))  &&
-             (BackgroundPixel (origGreen[r    ][c + 1]))  &&
-             (BackgroundPixel (origGreen[r + 1][c + 1]))  &&
-             (BackgroundPixel (origGreen[r - 1][c    ]))  &&
-             (BackgroundPixel (origGreen[r + 1][c    ])))
-        {
-          // Right Spur
-          green[r][c] = backgroundPixelValue;
-        }
-      }
-    }
-  }
-}  /* ErodeSpurs */
-
-
-
-
-//****************************************************************
-//* The following ThinningCode was lifted out of a IPL98 
-//* Library and modified to conform with this object.
-//***************************************************************
-//
-//   The Image Processing Library 98, IPL98    
-//   by Ren Dencker Eriksen - edr@mip.sdu.dk
-//
-//  from module   "~\ipl98\source\ipl98\kernel_c\algorithms\kernel_morphology.c"
-//
-
-//#define  DEBUG_ThinContour
-
-#if  defined(DEBUG_ThinContour)
-  kkint32  rasterGlobalHeight = 0;
-  kkint32  rasterGlobalWidth  = 0;
-#endif
-
-
-bool k_ThinningStep2cdTests     (uchar m_Matrix22[][3]);
-
-bool k_ThinningStep1cdTests     (uchar m_Matrix22[][3]);
-
-bool k_ThinningCheckTransitions (uchar m_Matrix22[][3]);
-
-
-RasterPtr  Raster::ThinContour ()  const
-{
-  #if  defined(DEBUG_ThinContour)
-  cout << std::endl << std::endl 
-       << "Raster::ThinContour" << std::endl
-       << std::endl;
-
-    rasterGlobalHeight = height;
-    rasterGlobalWidth  = width;
-  #endif
-
-
-  bool   PointsRemoved = false;
-  uchar  m_Matrix22[3][3];
-
-  kkint32  Iter = 0;
-  kkint32  prem1;
-  kkint32  prem2;
-  kkint32  iCountX, iCountY;
-  kkint32  pntinpic=0;
-
-  
-  PointList  pointList  (true);
-  PointList  removeList (true);
-
-  //ContourFollower contourFollwer (*this);
-  //PointListPtr  borderPixs = contourFollower.GenerateContourList (blob);
-
-  RasterPtr workRaster = AllocateARasterInstance (*this);
-  workRaster->ConnectedComponent (3);
-
-  uchar**   workGreen  = workRaster->Green ();
-  workRaster->ErodeSpurs ();
-  // workRaster->Dilation ();
-
-  //   k_SetBorder(1,1,pImg);
-  PointsRemoved = false;
-  Iter++;
-
-
-  /* step 1 Collecting the Black point in a list */
-  prem1 = prem2 = 0;
-
-
-  kkint32  minCol, maxCol, minRow, maxRow;
-
-  workRaster->FindBoundingBox (minRow,
-                               minCol,
-                               maxRow,
-                               maxCol
-                              );
-
-  if  ((minRow > maxRow)  ||  (minRow < 0)  ||  (minCol < 0))
-  {
-    #if  defined(DEBUG_ThinContour)
-      cout << std::endl << std::endl 
-           << "Raster::ThinContour    'FindBoundingBox'" << std::endl
-           << "                        minRow[" << minRow << "]  maxRow[" << maxRow << "]" << std::endl
-           << std::endl;
-      cout.flush ();
-    #endif
-    // We must have a empty raster.  In this case there is nothing else we can do.
-    return  workRaster;
-  }
-
-  for  (iCountY = minRow;  iCountY <= maxRow;  iCountY++)
-  {
-    minCol = 999999;
-    maxCol = -1;
-
-    for  (kkint32 x = 0; x < width; x++)
-    {
-      if  (ForegroundPixel (workGreen[iCountY][x]))
-      {
-        maxCol = Max (maxCol, x);
-        minCol = Min (minCol, x);
-      }
-    }
-
-    for  (iCountX = minCol;  iCountX <= maxCol;  iCountX++)
-    {
-      if  (ForegroundPixel (workGreen[iCountY][iCountX]))
-      {
-        PointPtr tempPoint = new Point (iCountY, iCountX);
-        pntinpic++;
-
-        if (ThinningSearchNeighbors  (iCountX, iCountY, workGreen, &m_Matrix22[0])  &&
-            k_ThinningCheckTransitions (&m_Matrix22[0])                             &&
-            k_ThinningStep1cdTests     (&m_Matrix22[0])
-           )
-        {
-          prem1++;
-          PointsRemoved = true;
-          removeList.PushOnBack (tempPoint);
-        }
-        else
-        {
-          pointList.PushOnBack (tempPoint);
-        }
-      }
-    }
-  }
-
-  #if  defined(DEBUG_ThinContour)
-    cout << "Total black points:" << pntinpic << "\n";
-    cout.flush ();
-  #endif
-
-
-  /* Set all pixels positions in RemoveList in image to white */
-  {
-    PointPtr  pixel = removeList.PopFromFront ();
-    while  (pixel)
-    {
-      workGreen[pixel->Row ()][pixel->Col ()] = backgroundPixelValue;
-      delete pixel;
-      pixel = removeList.PopFromFront ();
-    }
-  }
-  
-  removeList.DeleteContents ();
-
-
-  /* step 2 after step 1 which inserted points in list */
-  if  (PointsRemoved)
-  {
-    #if  defined(DEBUG_ThinContour)
-      cout << "PointsRemoved = true" << pntinpic << "\n";
-      cout.flush ();
-    #endif
-
-    PointPtr  tempPoint = NULL;
-
-    for  (iCountX = 0; iCountX < pointList.QueueSize ();  iCountX++)
-    {
-      tempPoint = pointList.IdxToPtr (iCountX);
-      if  (tempPoint == NULL)
-        continue;
-
-      if  (ThinningSearchNeighbors  (tempPoint->Col (), tempPoint->Row (),  workGreen, &m_Matrix22[0])  &&
-           k_ThinningCheckTransitions (&m_Matrix22[0])                                                    &&
-           k_ThinningStep2cdTests     (&m_Matrix22[0])
-          )
-      {
-        prem2++;
-        PointsRemoved = true;
-       
-        //pointList.DeleteEntry (iCountX);
-        pointList.SetIdxToPtr (iCountX, NULL); 
-        removeList.PushOnBack (tempPoint);
-        //iCountX--; /* Must decrease iCountX when a point has been removed */
-      }
-    }
-  }
-
-  /* Set all pixels positions in RemoveList in image to white */
-  {
-    PointPtr  pixel = removeList.PopFromFront ();
-    while  (pixel)
-    {
-      workGreen[pixel->Row ()][pixel->Col ()] = backgroundPixelValue;
-      delete pixel;
-      pixel = removeList.PopFromFront ();
-    }
-  }
-
-  removeList.DeleteContents ();
-  #if  defined(DEBUG_ThinContour)
-    cout  << "Iteration " << Iter << ": Points removed: " << prem1 << " + " << prem2 << " = " << prem1+prem2 << "\n";
-    cout.flush ();
-  #endif
-
-  #if  defined(DEBUG_ThinContour)
-    cout << std::endl << "ThinContour  Starting Step 1    PointsRemoved[" << (PointsRemoved?"True":"False") << "]" << "\n";
-    cout.flush ();
-  #endif
-  /* step 1 */
-  while  (PointsRemoved)
-  {
-    PointPtr  tempPoint = NULL;
-
-    prem1 = prem2 = 0;
-
-    Iter++;
-    PointsRemoved = false;
-
-    for  (iCountX = 0; iCountX < pointList.QueueSize (); iCountX++)
-    {
-      tempPoint = pointList.IdxToPtr (iCountX);
-      if  (tempPoint == NULL)
-        continue;
-      
-      if  ((ThinningSearchNeighbors  (tempPoint->Col (), tempPoint->Row (),  workGreen, &m_Matrix22[0]))  &&
-           (k_ThinningCheckTransitions (&m_Matrix22[0]))                                                    &&
-           (k_ThinningStep1cdTests     (&m_Matrix22[0]))
-          )
-      {
-        prem1++;
-        PointsRemoved = true;
-        
-        /*k_RemovePosFromGroupSlow(iCountX,&PointList);*/
-
-        //pointList.DeleteEntry (iCountX);
-        pointList.SetIdxToPtr (iCountX, NULL);
-        removeList.PushOnBack (tempPoint);
-        //iCountX--;  /* Must decrease iCountX when a point has been removed */
-      }
-    }
-    
-    /* Set all pixels positions in Remove List in image to white */
-    #if  defined(DEBUG_ThinContour)
-      cout << "Set all pixels positions in Remove List in image to white.   removeList.size()=[" << removeList.size () << "]" << "\n";
-      cout.flush ();
-    #endif
-
-    {
-      PointPtr  pixel = removeList.PopFromFront ();
-      while  (pixel)
-      {
-        workGreen[pixel->Row ()][pixel->Col ()] = backgroundPixelValue;
-        delete pixel;
-        pixel = removeList.PopFromFront ();
-      }
-
-      removeList.DeleteContents ();
-    }
-
-
-    #if  defined(DEBUG_ThinContour)
-      cout << "ThinContour  Starting Step 2" << "\n";
-      cout.flush ();
-    #endif
-    /* step 2 */
-    for  (iCountX = 0; iCountX < pointList.QueueSize (); iCountX++)
-    {
-       tempPoint = pointList.IdxToPtr (iCountX);
-       if  (tempPoint == NULL)
-         continue;
-
-       if  (ThinningSearchNeighbors  (tempPoint->Col (), tempPoint->Row (), workGreen, &m_Matrix22[0])   &&
-            k_ThinningCheckTransitions (&m_Matrix22[0]) &&
-            k_ThinningStep2cdTests     (&m_Matrix22[0])
-           )
-       {
-         prem2++;
-         PointsRemoved = true;
-
-         /*k_RemovePosFromGroupSlow(iCountX,&PointList);*/
-         //pointList.DeleteEntry (iCountX);
-         pointList.SetIdxToPtr (iCountX, NULL);
-         removeList.PushOnBack (tempPoint);
-         //iCountX--; /* Must decrease iCountX when a point has been removed */
-       }
-    }
-
-
-    #if  defined(DEBUG_ThinContour)
-      cout << "ThinContour  LastStep in loop" << "\n";
-      cout.flush ();
-    #endif
-
-    /* Set all pixels positions in RemoveList in image to white */
-    {
-      PointPtr  pixel = removeList.PopFromFront ();
-      while  (pixel)
-      {
-        workGreen[pixel->Row ()][pixel->Col ()] = backgroundPixelValue;
-        delete pixel;
-        pixel = removeList.PopFromFront ();
-      }
-
-      removeList.DeleteContents ();
-    }
-
-    #if  defined(DEBUG_ThinContour)
-      cout << "Iteration " << Iter << ": Points removed: " << prem1 << " + " << prem2 << " = " << prem1 + prem2 << "\n";
-      cout.flush ();
-    #endif
-
-  }
-
-  #if  defined(DEBUG_ThinContour)
-    cout << "ThinContour   Ready to Exit;  going to DeleteContents of 'pointList' and 'removeList'." << "\n";
-    cout.flush ();
-  #endif
-
-
-  pointList.DeleteContents ();
-  removeList.DeleteContents ();
-
-  #if  defined(DEBUG_ThinContour)
-    cout << "ThinContour   Exiting'." << "\n";
-    cout.flush ();
-  #endif
-
-    return  workRaster;
-}  /* ThinContour */
-
-
-
-
-
-
-
-/* performs the tests (c') and (d') in step 2 as explained in Gonzales and Woods page 493 */
-
-bool  k_ThinningStep2cdTests (uchar m_Matrix22[][3])
-{
-  if ((m_Matrix22[1][0] + m_Matrix22[2][1] + m_Matrix22[0][1]) &&
-      (m_Matrix22[1][0] + m_Matrix22[1][2] + m_Matrix22[0][1])
-     )
-    return true;
-  else
-    return false;
-}
-
-
-
-/* performs the tests (c) and (d) in step 1 as explained in Gonzales and Woods page 492 */
-
-bool  k_ThinningStep1cdTests (uchar  m_Matrix22[][3])
-{
-  if ((m_Matrix22[1][0] + m_Matrix22[2][1] + m_Matrix22[1][2]) &&
-      (m_Matrix22[2][1] + m_Matrix22[1][2] + m_Matrix22[0][1])
-     )
-    return true;
-  else
-    return false;
-}
-
-
-
-/* returns true if there is exactly one transition in the region around the actual pixel */
-bool k_ThinningCheckTransitions(uchar  m_Matrix22[][3])
-{
-  kkint32 iTransitions=0;
-
-  if ((m_Matrix22[0][0]==1) && (m_Matrix22[1][0]==0)){
-    ++iTransitions;}
-
-  if ((m_Matrix22[1][0]==1) && (m_Matrix22[2][0]==0)){
-    ++iTransitions;}
-
-  if ((m_Matrix22[2][0]==1) && (m_Matrix22[2][1]==0)){
-    ++iTransitions;}
-
-  if ((m_Matrix22[2][1]==1) && (m_Matrix22[2][2]==0)){
-    ++iTransitions;}
-  
-  if ((m_Matrix22[2][2]==1) && (m_Matrix22[1][2]==0)){
-    ++iTransitions;}
-  
-  if ((m_Matrix22[1][2]==1) && (m_Matrix22[0][2]==0)){
-    ++iTransitions;}
-
-  if ((m_Matrix22[0][2]==1) && (m_Matrix22[0][1]==0)){
-    ++iTransitions;}
-  
-  if ((m_Matrix22[0][1]==1) && (m_Matrix22[0][0]==0)){
-    ++iTransitions;}
-
-  if (iTransitions==1)
-    return true;
-  else
-    return false;
-}  /* k_ThinningCheckTransitions */
-
-
-
-
-
-bool  Raster::ThinningSearchNeighbors  (kkint32 x,   // column
-                                        kkint32 y,   // row
-                                        uchar** g, 
-                                        uchar   m_Matrix22[][3]
-                                       )
-                                         const
-/* As (a) in Gonzales and Woods, between 2 and 6 black neighbors */
-{
-  #if  defined(DEBUG_ThinContour)
-    if  ((x < 1)  ||  (x >= (rasterGlobalWidth - 1)))
-    {
-      cout << "\n"
-           << "k_ThinningSearchNeighbors    x[" << x << "] is to close to the edge." << "\n"
-           << "\n";
-    }
-
-    if  ((y < 1)  ||  (y >= (rasterGlobalHeight - 1)))
-    {
-      cout << "\n"
-           << "k_ThinningSearchNeighbors    y[" << y << "] is to close to the edge." << "\n"
-           << "\n";
-    }
-  #endif
-
-
-  kkint32  BlackNeighbor = 0;
-  //added by baishali 
-  if  ((y == 0) || (x == 0)  ||  (y >= height)  ||  (x >= width))  
-  { }
-  else
-  {
-    m_Matrix22[0][0] = (g[y - 1][x - 1] > 0) ? 0:1;
-    m_Matrix22[1][0] = (g[y - 1][x    ] > 0) ? 0:1;
-    m_Matrix22[2][0] = (g[y - 1][x + 1] > 0) ? 0:1;
-    m_Matrix22[0][1] = (g[y    ][x - 1] > 0) ? 0:1;
-    m_Matrix22[2][1] = (g[y    ][x + 1] > 0) ? 0:1;
-    m_Matrix22[0][2] = (g[y + 1][x - 1] > 0) ? 0:1;
-    m_Matrix22[1][2] = (g[y + 1][x    ] > 0) ? 0:1;
-    m_Matrix22[2][2] = (g[y + 1][x + 1] > 0) ? 0:1;
-    m_Matrix22[1][1] = (g[y    ][x    ] > 0) ? 0:1;
-  }
-
-  if (m_Matrix22[0][0] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[1][0] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[2][0] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[0][1] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[2][1] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[0][2] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[1][2] == 0) {++BlackNeighbor;}
-  if (m_Matrix22[2][2] == 0) {++BlackNeighbor;}
-
-
-  if ((BlackNeighbor >= 2) && (BlackNeighbor <= 6))
-    return true;
-  else
-    return false;
-}  /* k_ThinningSearchNeighbors */
-
-
-
 
 RasterPtr  Raster::TightlyBounded (kkuint32 borderPixels)  const
 {
@@ -8647,8 +7788,6 @@ RasterPtr  Raster::Transpose ()  const
 }
 
 
-
-
 RasterPtr  Raster::ToColor ()  const
 {
   if  (color)
@@ -8671,7 +7810,7 @@ RasterPtr  Raster::ToColor ()  const
     uchar* targetBlue  = r->BlueArea  ();
     for  (kkint32 x = 0;  x < this->totPixels;  ++x)
     {
-      uchar  pc = (255 - *srcGreen);
+      uchar  pc = (uchar)(255 - *srcGreen);
       *targetRed   = pc;
       *targetGreen = pc;
       *targetBlue  = pc;
@@ -8883,7 +8022,7 @@ RasterPtr  Raster::BandPass (float  lowerFreqBound,    /**< Number's between 0.0
         #else
           zed = srcArea[idx].real ();
         #endif
-        destData[idx] = smallestPixelVal + Min (largestPixelVal, (uchar)(0.5 + pixelValRange * (zed - smallestNum) / range));
+        destData[idx] = (uchar)(smallestPixelVal + Min (largestPixelVal, (uchar)(0.5 + pixelValRange * (zed - smallestNum) / range)));
       }
     }
   }
@@ -9964,11 +9103,10 @@ PointListPtr  Raster::DeriveImageLength () const
     a2PixCount = Max ((kkint32)1, a2PixCount);
     a3PixCount = Max ((kkint32)1, a3PixCount);
 
-    Point p1 ((kkint16)(0.5f + a1RowTot / a1PixCount), (kkint16)(0.5f + a1ColTot / a1PixCount));
-    Point p2 ((kkint16)(0.5f + a2RowTot / a2PixCount), (kkint16)(0.5f + a2ColTot / a2PixCount));
-    Point p3 ((kkint16)(0.5f + a3RowTot / a3PixCount), (kkint16)(0.5f + a3ColTot / a3PixCount));
+    Point p1 ((kkint16)(0.5f + (float)a1RowTot / (float)a1PixCount), (kkint16)(0.5f + (float)a1ColTot / (float)a1PixCount));
+    Point p2 ((kkint16)(0.5f + (float)a2RowTot / (float)a2PixCount), (kkint16)(0.5f + (float)a2ColTot / (float)a2PixCount));
+    Point p3 ((kkint16)(0.5f + (float)a3RowTot / (float)a3PixCount), (kkint16)(0.5f + (float)a3ColTot / (float)a3PixCount));
 
-   
     Point p1Orig = RotateDerivePreRotatedPoint (height, width, p1, orientationAngle);
     Point p2Orig = RotateDerivePreRotatedPoint (height, width, p2, orientationAngle);
     Point p3Orig = RotateDerivePreRotatedPoint (height, width, p3, orientationAngle);

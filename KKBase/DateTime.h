@@ -106,6 +106,9 @@ namespace  KKB
     DateType   operator-  (kkint32  right)  const;
     DateType   operator-  (const DateType&  right)  const;
     DateType&  operator++ ();
+    DateType   operator++ (int);
+    DateType&  operator-- ();
+    DateType   operator-- (int);
 
     uchar  DaysThisMonth ()  const;  /**<  @brief returns the number of days in 'month' and if leapYear and February returns 29. */
     

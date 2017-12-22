@@ -843,8 +843,6 @@ namespace KKB
     void          Edge (RasterPtr  dest);
 
     /** @brief removes spurs from image. */
-    void          ErodeSpurs ();
-
     void          Erosion ();
 
     void          Erosion (MaskTypes  mask);
@@ -1279,16 +1277,6 @@ namespace KKB
                                kkint32    row, 
                                kkint32    col
                               )  const;
-
-
-
-
-    bool     ThinningSearchNeighbors  (kkint32  x, 
-                                       kkint32  y,
-                                       uchar**  g, 
-                                       uchar    m_Matrix22[][3]
-                                      )
-                                        const;
 
 
     void  Moment (kkint64& m00,

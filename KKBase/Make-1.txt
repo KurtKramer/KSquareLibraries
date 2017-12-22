@@ -1,0 +1,196 @@
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Application.cpp -o Debug/Application.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Atom.cpp -o Debug/Atom.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c BitString.cpp -o Debug/BitString.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Blob.cpp -o Debug/Blob.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c BMPImage.cpp -o Debug/BMPImage.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Chart.cpp -o Debug/Chart.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c CmdLineExpander.cpp -o Debug/CmdLineExpander.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Compressor.cpp -o Debug/Compressor.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Configuration.cpp -o Debug/Configuration.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c ContourFollower.cpp -o Debug/ContourFollower.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c ConvexHull.cpp -o Debug/ConvexHull.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c DateTime.cpp -o Debug/DateTime.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c EigenVector.cpp -o Debug/EigenVector.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c GlobalGoalKeeper.cpp -o Debug/GlobalGoalKeeper.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c GoalKeeper.cpp -o Debug/GoalKeeper.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c GoalKeeperSimple.cpp -o Debug/GoalKeeperSimple.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Histogram.cpp -o Debug/Histogram.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c HTMLReport.cpp -o Debug/HTMLReport.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c ImageDirTree.cpp -o Debug/ImageDirTree.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c ImageIO.cpp -o Debug/ImageIO.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKBaseTypes.cpp -o Debug/KKBaseTypes.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKException.cpp -o Debug/KKException.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKObservable.cpp -o Debug/KKObservable.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKObserver.cpp -o Debug/KKObserver.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKStr.cpp -o Debug/KKStr.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKStrMatrix.cpp -o Debug/KKStrMatrix.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKStrParser.cpp -o Debug/KKStrParser.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKThread.cpp -o Debug/KKThread.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c KKThreadManager.cpp -o Debug/KKThreadManager.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c kku_fftw.cpp -o Debug/kku_fftw.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Matrix.cpp -o Debug/Matrix.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpBinarize.cpp -o Debug/MorphOpBinarize.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpBmiFiltering.cpp -o Debug/MorphOpBmiFiltering.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOp.cpp -o Debug/MorphOp.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpDilation.cpp -o Debug/MorphOpDilation.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpErosion.cpp -o Debug/MorphOpErosion.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpMaskExclude.cpp -o Debug/MorphOpMaskExclude.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpSobel.cpp -o Debug/MorphOpSobel.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpStretcher.cpp -o Debug/MorphOpStretcher.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MorphOpStruct.cpp -o Debug/MorphOpStruct.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c MsgQueue.cpp -o Debug/MsgQueue.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c OSservices.cpp -o Debug/OSservices.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c PixelValue.cpp -o Debug/PixelValue.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Point.cpp -o Debug/Point.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c RandomNumGenerator.cpp -o Debug/RandomNumGenerator.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c RasterBuffer.cpp -o Debug/RasterBuffer.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c Raster.cpp -o Debug/Raster.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c RunLog.cpp -o Debug/RunLog.o
+mkdir -p Debug
+# The -MMD flags additionaly creates a .d file with
+# the same name as the .o file.
+g++ -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=c++11  -I ../../OutsidePackages/zlib128/ -MMD -c SegmentorOTSU.cpp -o Debug/SegmentorOTSU.o

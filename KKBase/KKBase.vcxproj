@@ -196,9 +196,11 @@
     <ClCompile Include="MorphOpDilation.cpp" />
     <ClCompile Include="MorphOpErosion.cpp" />
     <ClCompile Include="MorphOpMaskExclude.cpp" />
+    <ClCompile Include="MorphOpReduceByFactor.cpp" />
     <ClCompile Include="MorphOpSobel.cpp" />
     <ClCompile Include="MorphOpStretcher.cpp" />
     <ClCompile Include="MorphOpStruct.cpp" />
+    <ClCompile Include="MorphOpThinContour.cpp" />
     <ClCompile Include="MsgQueue.cpp" />
     <ClCompile Include="OSservices.cpp" />
     <ClCompile Include="PixelValue.cpp" />
@@ -206,6 +208,7 @@
     <ClCompile Include="RandomNumGenerator.cpp" />
     <ClCompile Include="Raster.cpp" />
     <ClCompile Include="RasterBuffer.cpp" />
+    <ClCompile Include="MorphOpReduceByEvenMultiple.cpp" />
     <ClCompile Include="RunLog.cpp" />
     <ClCompile Include="SegmentorOTSU.cpp" />
     <ClCompile Include="SimpleCompressor.cpp" />
@@ -260,9 +263,11 @@
     <ClInclude Include="MorphOpDilation.h" />
     <ClInclude Include="MorphOpErosion.h" />
     <ClInclude Include="MorphOpMaskExclude.h" />
+    <ClInclude Include="MorphOpReduceByFactor.h" />
     <ClInclude Include="MorphOpSobel.h" />
     <ClInclude Include="MorphOpStretcher.h" />
     <ClInclude Include="MorphOpStruct.h" />
+    <ClInclude Include="MorphOpThinContour.h" />
     <ClInclude Include="MsgQueue.h" />
     <ClInclude Include="OSservices.h" />
     <ClInclude Include="PixelValue.h" />
@@ -271,6 +276,7 @@
     <ClInclude Include="Raster.h" />
     <ClInclude Include="RasterBuffer.h" />
     <ClInclude Include="RBTree.h" />
+    <ClInclude Include="MorphOpReduceByEvenMultiple.h" />
     <ClInclude Include="RunLog.h" />
     <ClInclude Include="SegmentorOTSU.h" />
     <ClInclude Include="SimpleCompressor.h" />

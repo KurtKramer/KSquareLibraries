@@ -19,8 +19,6 @@ using namespace KKB;
 
 
 
-
-
 kkint32  MorphOp::biases[] = {1,  // CROSS3 
                               2,  // CROSS5
                               1,  // SQUARE3
@@ -67,9 +65,6 @@ StructureType  MorphOp::MaskShapes (MaskTypes  mt)
 
 
 
-
-
-
 MorphOp::MorphOp ():
     backgroundPixelTH    (31),
     backgroundPixelValue (0),
@@ -94,10 +89,17 @@ MorphOp::~MorphOp ()
 
 
 
+kkMemSize  MorphOp::MemoryConsumedEstimated ()
+{
+  return 0;
+}
+
+
+
 KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
 {
-  if  (_operation == OperationType::Stretcher)
-    return "Stretcher";
+  if (_operation == OperationType::Binarize)
+    return "Binarize";
 
   else if  (_operation == OperationType::BmiFiltering)
     return "BmiFiltering";
@@ -114,18 +116,27 @@ KKB::KKStr   MorphOp::OperationTypeToStr (OperationType  _operation)
   else if  (_operation == OperationType::MaskExclude)
     return "MaskExclude";
 
+  else if (_operation == OperationType::ReduceByEvenMultiple)
+    return "ReduceByFactor";
+
+  else if (_operation == OperationType::ReduceByFactor)
+    return "ReduceByEvenMultiple";
+  
+  else if (_operation == OperationType::SobelEdgeDetection)
+    return "SobelEdgeDetection";
+
+  else if (_operation == OperationType::Stretcher)
+    return "Stretcher";
+
   else
     return "NULL";
 }
 
 
 
-MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _operationStr)
+MorphOp::OperationType   MorphOp::OperationTypeFromStr (const KKB::KKStr&  _operationStr)
 {
-  if  (_operationStr.EqualIgnoreCase ("Stretcher"))
-    return  OperationType::Stretcher;
-
-  else if  (_operationStr.EqualIgnoreCase ("Binarize"))
+  if  (_operationStr.EqualIgnoreCase ("Binarize"))
     return  OperationType::Binarize;
 
   else if  (_operationStr.EqualIgnoreCase ("BmiFiltering"))
@@ -134,11 +145,26 @@ MorphOp::OperationType    MorphOp::OperationTypeFromStr (const KKB::KKStr&  _ope
   else if  (_operationStr.EqualIgnoreCase ("ConvexHull"))
     return  OperationType::ConvexHull;
 
+  else if (_operationStr.EqualIgnoreCase ("Dilation"))
+    return  OperationType::Dilation;
+
   else if  (_operationStr.EqualIgnoreCase ("Erosion"))
     return  OperationType::Erosion;
 
   else if  (_operationStr.EqualIgnoreCase ("MaskExclude"))
     return  OperationType::MaskExclude;
+
+  else if (_operationStr.EqualIgnoreCase ("ReduceByEvenMultiple"))
+    return  OperationType::ReduceByEvenMultiple;
+
+  else if (_operationStr.EqualIgnoreCase ("ReduceByFactor"))
+    return  OperationType::ReduceByFactor;
+
+  else if (_operationStr.EqualIgnoreCase ("SobelEdgeDetection"))
+    return  OperationType::SobelEdgeDetection;
+
+  else if (_operationStr.EqualIgnoreCase ("Stretcher"))
+    return  OperationType::Stretcher;
 
   else
     return  OperationType::Null;
@@ -213,8 +239,3 @@ bool  MorphOp::ForegroundPixel (kkint32  row,
 
   return (srcGreen[row][col] > backgroundPixelTH);
 }  /* ForegroundPixel */
-
-
-
-
-

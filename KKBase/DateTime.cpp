@@ -369,12 +369,10 @@ void  DateType::AdjustYear ()
 {
   if  (year < 100)
   {
-    if  (year > 50)
-      year 
-      = year 
-      + (kkint16)1900;
+    if (year > 50)
+      year = (kkint16)(year + 1900);
     else
-      year = year +  (kkint16)2000;
+      year = (kkint16)(year +  2000);
   }
 }  /* AdjustYear */
 
@@ -435,7 +433,7 @@ void   DateType::SubtractDays (kkint32  _days)
     month--;
     while  (month < 1)
     {
-      month = month + (kkuint8)12;
+      month = (kkuint8)(month + 12);
       year--;
     }
     newDay = newDay + DaysThisMonth ();
@@ -449,7 +447,7 @@ void   DateType::SubtractDays (kkint32  _days)
 void  DateType::AddMonths (kkint32 _months)
 {
   kkint32  newMonth = month + _months;
-  year = year + (kkint16)(newMonth / 12);
+  year = (kkint16)(year + (newMonth / 12));
   newMonth = newMonth % 12;
   if  (newMonth == 0)
   {
@@ -457,8 +455,6 @@ void  DateType::AddMonths (kkint32 _months)
     newMonth += 12;
   }
 }  /* AddMonths */
-
-
 
 
 
@@ -470,8 +466,6 @@ DateType&  DateType::operator= (const DateType&  right)
 
   return *this;
 }
-
-
 
 
 
@@ -501,7 +495,6 @@ kkint32  DateType::Days ()  const
 
 
 
-
 kkuint64   DateType::Seconds ()  const
 {
   kkuint64  numDays = (kkuint64)Days ();
@@ -510,10 +503,10 @@ kkuint64   DateType::Seconds ()  const
 }
 
 
+
 kkuint32  DateType::ToDays    ()  const  {return  Days ();}
 kkuint32  DateType::ToHours   ()  const  {return  Days () * 24;}
 kkuint64  DateType::ToSeconds ()  const  {return  (kkuint64)(Days ()) * (kkuint64)86400;}
-
 
 
 
@@ -542,47 +535,18 @@ kkint32  DateType::Compare (const DateType&  right)  const
 }  /* Compare */
 
 
-bool  DateType::operator== (const DateType&  right)  const
-{
-  return (Compare (right) == 0);
-}
 
+bool  DateType::operator== (const DateType&  right)  const  { return (Compare (right) == 0); }
 
-bool  DateType::operator!= (const DateType&  right)  const
-{
-  return (Compare (right) != 0);
-}
+bool  DateType::operator!= (const DateType&  right)  const  { return (Compare (right) != 0); }
 
+bool  DateType::operator>  (const DateType&  right)  const  { return (Compare (right) >  0); }
 
+bool  DateType::operator>= (const DateType&  right)  const  { return (Compare (right) >= 0); }
 
-bool  DateType::operator>  (const DateType&  right)  const
-{
-  return (Compare (right) > 0);
-}
+bool  DateType::operator<  (const DateType&  right)  const  { return (Compare (right) < 0);  }
 
-
-
-bool  DateType::operator>= (const DateType&  right)  const
-{
-  return (Compare (right) >= 0);
-}
-
-
-
-bool  DateType::operator< (const DateType&  right)  const
-{
-  return (Compare (right) < 0);
-}
-
-
-
-
-bool  DateType::operator<= (const DateType&  right)  const
-{
-  return (Compare (right) <= 0);
-}
-
-
+bool  DateType::operator<= (const DateType&  right)  const  { return (Compare (right) <= 0); }
 
 void  DateType::AdjustDateFields (kkint32&  years,
                                   kkint32&  months,
@@ -621,48 +585,70 @@ void  DateType::AdjustDateFields (kkint32&  years,
 
 
 
-DateType  DateType::operator+  (const DateType&  right)  const
-{
-  return  DateType (Days () + right.Days ());
-}
+DateType  DateType::operator+  (const DateType&  right)  const  { return  DateType (Days () + right.Days ()); }
 
+DateType  DateType::operator+  (kkint32  right)          const  { return  DateType (Days () + right); }
 
+DateType  DateType::operator-  (kkint32  right)          const  { return  DateType (Days () - right); }
 
-DateType  DateType::operator+  (kkint32  right)  const
-{
-  return  DateType (Days () + right);
-}
+DateType  DateType::operator-  (const DateType&  right)  const  { return  DateType (Days () - right.Days ()); }
 
-
-DateType  DateType::operator-  (kkint32  right)  const
-{
-  return  DateType (Days () - right);
-}
-
-
-
-DateType  DateType::operator-  (const DateType&  right)  const
-{
-  return  DateType (Days () - right.Days ());
-}
 
 
 DateType& DateType::operator++ () 
 {
-  day++;
-  if  (day > DaysInTheMonth (year, month))
+  ++day;
+  if (day > DaysInTheMonth (year, month))
   {
     day = 1;
-    month++;
-    if  (month > 12)
+    ++month;
+    if (month > 12)
     {
       month = 1;
-      year++;
+      ++year;
     }
   }
-
   return  *this;
 }
+
+
+
+DateType DateType::operator++ (int)
+{
+  DateType  beforeIncrement (*this);
+  ++(*this);
+  return beforeIncrement;
+}
+
+
+
+DateType& DateType::operator-- ()
+{
+  if (day > 1)
+    --day;
+  else
+  {
+    if (month > 1)
+      --month;
+    else
+    {
+      month = 12;
+      --year;
+    }
+    day = DaysInTheMonth (year, month);
+  }
+  return *this;
+}
+
+
+
+DateType DateType::operator-- (int)
+{
+  DateType  beforeDecrement (*this);
+  --(*this);
+  return beforeDecrement;
+}
+
 
 
 KKStr   DateType::MM_DD_YY ()  const

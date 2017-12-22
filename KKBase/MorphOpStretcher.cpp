@@ -103,9 +103,7 @@ MorphOpStretcher::~MorphOpStretcher ()
 
 kkMemSize  MorphOpStretcher::MemoryConsumedEstimated ()
 {
-  kkMemSize  result = sizeof (*this) +
-         (kkMemSize)(rowFactorsCount * (float)sizeof (CellFactor) * rowFactor) +
-         (kkMemSize)(colFactorsCount * (float)sizeof (CellFactor) * colFactor);
+  kkMemSize  result = sizeof (*this) + (kkMemSize)(rowFactorsCount * sizeof (CellFactor) + colFactorsCount * sizeof (CellFactor));
   return  result;
 }
 
@@ -168,11 +166,12 @@ RasterPtr   MorphOpStretcher::PerformOperation (RasterConstPtr  _image)
           kkuint32  destCol      = srcColFactor.destCellIdxs  [colFactorIdx];
           float     destColFract = srcColFactor.destCellFracts[colFactorIdx];
 
-          destGreen[destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelGreen * destRowFract * destColFract);
+          uchar newDestG = (uchar)(destGreen[destRow][destCol] + (uchar)Min (255.0f, (float)srcPixelGreen * destRowFract * destColFract));
+          destGreen[destRow][destCol] = newDestG;
           if  (color)
           {
-            destRed [destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelRed  * destRowFract * destColFract);
-            destBlue[destRow][destCol] += (uchar)Min (255.0f, (float)srcPixelBlue * destRowFract * destColFract);
+            destRed [destRow][destCol] = (uchar)(destRed[destRow][destCol]  + (uchar)Min (255.0f, (float)srcPixelRed  * destRowFract * destColFract));
+            destBlue[destRow][destCol] = (uchar)(destBlue[destRow][destCol] + (uchar)Min (255.0f, (float)srcPixelBlue * destRowFract * destColFract));
           }
         }
       }

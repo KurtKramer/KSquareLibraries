@@ -244,7 +244,7 @@ RasterPtr   MorphOpBmiFiltering::PerformOperation (RasterConstPtr  _image)
     if  (rectangularAreaMin < rectangularAreaTH)
       break;
 
-    binarizeTHmin += (uchar)5;
+    binarizeTHmin = (uchar)(binarizeTHmin + 5);
   }
 
   return  rotatedImage;

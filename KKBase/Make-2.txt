@@ -1,0 +1,182 @@
+DateTime.cpp: In member function ‘void KKB::DateType::AddMonths(KKB::kkint32)’:
+DateTime.cpp:450:15: warning: conversion to ‘KKB::kkint16 {aka short int}’ from ‘int’ may alter its value [-Wconversion]
+   year = year + (kkint16)(newMonth / 12);
+               ^
+KKObserver.cpp:85:7: warning: unused parameter ‘obj’ [-Wunused-parameter]
+ void  KKObserver::Notify (KKObservablePtr  obj)
+       ^
+OSservices.cpp: In function ‘KKB::KKStrList* KKB::osGetListOfFiles(const KKB::KKStr&)’:
+OSservices.cpp:1599:54: warning: conversion to ‘KKB::kkint32 {aka int}’ from ‘KKB::kkint64 {aka long int}’ may alter its value [-Wconversion]
+   kkint32 lastSlash = osLocateLastSlashChar (fileSpec);
+                                                      ^
+OSservices.cpp: In function ‘KKB::KKStrList* KKB::osGetListOfDirectories(KKB::KKStr)’:
+OSservices.cpp:1780:45: warning: conversion to ‘KKB::kkint32 {aka int}’ from ‘KKB::kkint64 {aka long int}’ may alter its value [-Wconversion]
+   kkint32  x = fileSpec.LocateCharacter ('*');
+                                             ^
+OSservices.cpp: In function ‘KKB::DateTime KKB::osGetLocalDateTime()’:
+OSservices.cpp:1998:40: warning: conversion to ‘short int’ from ‘int’ may alter its value [-Wconversion]
+   DateTime  dateTime (curTime->tm_year + 1900,
+                                        ^
+OSservices.cpp:1999:39: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+                       curTime->tm_mon + 1,
+                                       ^
+OSservices.cpp:2004:22: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+                      );
+                      ^
+OSservices.cpp:2004:22: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp:2004:22: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp:2004:22: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp: In function ‘KKB::DateTime KKB::osGetFileDateTime(const KKB::KKStr&)’:
+OSservices.cpp:2059:26: warning: conversion to ‘short int’ from ‘int’ may alter its value [-Wconversion]
+   return  DateTime (1900 + dt->tm_year, 
+                          ^
+OSservices.cpp:2060:32: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+                     dt->tm_mon + 1, 
+                                ^
+OSservices.cpp:2065:13: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+             );
+             ^
+OSservices.cpp:2065:13: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp:2065:13: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp:2065:13: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+OSservices.cpp: In function ‘KKB::KKStr* KKB::osReadNextLine(FILE*)’:
+OSservices.cpp:2248:25: warning: conversion to ‘char’ from ‘int’ may alter its value [-Wconversion]
+     char  ch = fgetc (in);
+                         ^
+OSservices.cpp:2253:33: warning: conversion to ‘char’ from ‘int’ may alter its value [-Wconversion]
+         char  nextCh = fgetc (in);
+                                 ^
+OSservices.cpp: In function ‘KKB::KKStr KKB::osReadNextToken(std::istream&, const char*, bool&, bool&)’:
+OSservices.cpp:2287:41: warning: conversion to ‘KKB::kkint32 {aka int}’ from ‘long unsigned int’ may alter its value [-Wconversion]
+   kkint32  maxTokenLen = sizeof (token) - 1;
+                                         ^
+OSservices.cpp:2318:21: warning: conversion to ‘std::basic_istream<char>::char_type {aka char}’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       in.putback (ch);
+                     ^
+OSservices.cpp:2323:23: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       token[tokenLen] = ch;
+                       ^
+OSservices.cpp: In function ‘KKB::KKStr KKB::osReadNextToken(FILE*, const char*, bool&, bool&)’:
+OSservices.cpp:2360:41: warning: conversion to ‘KKB::kkint32 {aka int}’ from ‘long unsigned int’ may alter its value [-Wconversion]
+   kkint32  maxTokenLen = sizeof (token) - 1;
+                                         ^
+OSservices.cpp:2392:23: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       token[tokenLen] = ch;
+                       ^
+OSservices.cpp: In function ‘KKB::KKStr KKB::osReadNextToken(FILE*, const char*, bool&)’:
+OSservices.cpp:2427:41: warning: conversion to ‘KKB::kkint32 {aka int}’ from ‘long unsigned int’ may alter its value [-Wconversion]
+   kkint32  maxTokenLen = sizeof (token) - 1;
+                                         ^
+OSservices.cpp:2443:21: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+     token[tokenLen] = ch;
+                     ^
+OSservices.cpp: In function ‘KKB::KKStr* KKB::osReadRestOfLine(std::istream&, bool&)’:
+OSservices.cpp:2510:25: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       result->Append (ch);
+                         ^
+OSservices.cpp: In function ‘KKB::KKStr* KKB::osReadRestOfLine(FILE*, bool&)’:
+OSservices.cpp:2546:25: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       result->Append (ch);
+                         ^
+OSservices.cpp: In function ‘KKB::KKStr KKB::osReadNextQuotedStr(FILE*, const char*, bool&)’:
+OSservices.cpp:2647:38: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+          default:   result.Append (ch); break;
+                                      ^
+OSservices.cpp:2653:24: warning: conversion to ‘char’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       result.Append (ch);
+                        ^
+Raster.cpp:2756:7: warning: unused parameter ‘blobRowStart’ [-Wunused-parameter]
+ void  Raster::ErosionBoundary (MaskTypes  mask, 
+       ^
+Raster.cpp:2756:7: warning: unused parameter ‘blobRowEnd’ [-Wunused-parameter]
+Raster.cpp: In member function ‘KKB::Point KKB::Raster::RotateDerivePreRotatedPoint(KKB::kkint32, KKB::kkint32, KKB::Point&, float) const’:
+Raster.cpp:5753:44: warning: declaration of ‘width’ shadows a member of 'this' [-Wshadow]
+                                            const
+                                            ^
+Raster.cpp:5753:44: warning: declaration of ‘height’ shadows a member of 'this' [-Wshadow]
+Raster.cpp:5770:43: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   kkint32  srcY = (kkint32)((float)(a21 * centDestCol) + (a22 * (float)centDestRow) + b2 + 0.5f);
+                                           ^
+Raster.cpp:5771:43: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   kkint32  srcX = (kkint32)((float)(a11 * centDestCol) + (a12 * (float)centDestRow) + b1 + 0.5f);
+                                           ^
+Raster.cpp: In member function ‘KKB::Raster* KKB::Raster::FindMagnitudeDifferences(const KKB::Raster&)’:
+Raster.cpp:5915:27: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+       resultGreen[row][c] = deltaC;
+                           ^
+Raster.cpp: In member function ‘void KKB::Raster::CalcCentroid(KKB::kkint32&, KKB::kkint32&, float&, float&, float&, float&) const’:
+Raster.cpp:5961:19: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+         rowCenter += row;
+                   ^
+Raster.cpp:5962:19: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+         colCenter += col;
+                   ^
+Raster.cpp:5965:34: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+         rowCenterWeighted += row * intensity;
+                                  ^
+Raster.cpp:5966:34: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+         colCenterWeighted += col * intensity;
+                                  ^
+Raster.cpp:5972:13: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   rowCenter /= size;
+             ^
+Raster.cpp:5973:13: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   colCenter /= size; 
+             ^
+Raster.cpp:5978:21: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   rowCenterWeighted /= weight;
+                     ^
+Raster.cpp:5979:21: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   colCenterWeighted /= weight; 
+                     ^
+Raster.cpp: In member function ‘void KKB::Raster::DrawLine(KKB::kkint32, KKB::kkint32, KKB::kkint32, KKB::kkint32, KKB::uchar, KKB::uchar, KKB::uchar)’:
+Raster.cpp:6315:26: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+   float  c = bpRow - m * bpCol;
+                          ^
+Raster.cpp:6315:26: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+Raster.cpp:6335:27: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       row = (kkint32)(m * col + c + 0.5);
+                           ^
+Raster.cpp:6362:31: warning: conversion to ‘float’ from ‘KKB::kkint32 {aka int}’ may alter its value [-Wconversion]
+       col = (kkint32)(((row - c) / m) + 0.5);
+                               ^
+Raster.cpp: In member function ‘void KKB::Raster::PaintPoint(KKB::kkint32, KKB::kkint32, const KKB::PixelValue&, float)’:
+Raster.cpp:6399:98: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+   green[row][col] = Min (255, (int)(0.5f + alpha * (float)pv.g  + beta  * (float)green[row][col]));
+                                                                                                  ^
+Raster.cpp:6402:98: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+     red [row][col] = Min (255, (int)(0.5f + alpha * (float)pv.r  + beta  * (float)red [row][col]));
+                                                                                                  ^
+Raster.cpp:6403:98: warning: conversion to ‘KKB::uchar {aka unsigned char}’ from ‘int’ may alter its value [-Wconversion]
+     blue[row][col] = Min (255, (int)(0.5f + alpha * (float)pv.b  + beta  * (float)blue[row][col]));
+                                                                                                  ^
+Raster.cpp: In member function ‘KKB::Raster* KKB::Raster::ReduceByFactor(float) const’:
+Raster.cpp:7441:43: warning: conversion to ‘float’ from ‘int’ may alter its value [-Wconversion]
+   kkint32  newHeight = (kkint32)(height * factor + 0.5f);
+                                           ^
+Raster.cpp:7442:43: warning: conversion to ‘float’ from ‘int’ may alter its value [-Wconversion]
+   kkint32  newWidth  = (kkint32)(width  * factor + 0.5f);
+                                           ^
+Raster.cpp:7478:11: warning: declaration of ‘divisor’ shadows a member of 'this' [-Wshadow]
+   float** divisor   = new float*[newHeight];
+           ^
+SegmentorOTSU.cpp: In member function ‘KKB::Matrix KKB::SegmentorOTSU::DotDiv(const KKB::Matrix&, const KKB::Matrix&)’:
+SegmentorOTSU.cpp:248:35: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       if  ((r >= right.NumOfRows ())  ||  (c >= right.NumOfCols ()))
+                                   ^
+SegmentorOTSU.cpp:248:66: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+       if  ((r >= right.NumOfRows ())  ||  (c >= right.NumOfCols ()))
+                                                                  ^
+SegmentorOTSU.cpp: In member function ‘void KKB::SegmentorOTSU::MakeNanWhenLesOrEqualZero(KKB::Matrix&)’:
+SegmentorOTSU.cpp:529:34: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   for  (r = 0;  r < m.NumOfRows ();  ++r)
+                                  ^
+SegmentorOTSU.cpp:532:36: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+     for  (c = 0;  c < m.NumOfCols ();  ++c)
+                                    ^
+SegmentorOTSU.cpp: In function ‘bool _isnan(double&)’:
+SegmentorOTSU.cpp:583:21: error: call of overloaded ‘isnan(double&)’ is ambiguous
+   return  !(isnan (d) == 0);
+                     ^
+compilation terminated due to -Wfatal-errors.
+make: *** [Debug/SegmentorOTSU.o] Error 1
