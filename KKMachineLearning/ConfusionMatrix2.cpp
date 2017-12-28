@@ -32,8 +32,8 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,  // Will make 
   bucketSize                  (_bucketSize),
   classCount                  (0),
   classes                     (_classes),
-  correctByKnownClassByProb   (NULL),
-  correctByKnownClassBySize   (NULL),
+  correctByKnownClassByProb   (),
+  correctByKnownClassBySize   (),
   correctCount                (0.0),
   countByKnownClassByProb     (),
   countByKnownClassBySize     (),
@@ -58,13 +58,13 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes,  // Will make 
 ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will make its own copy of list
   bucketSize                  (100),
   classCount                  (0),
+  classes                     (_classes),
   correctByKnownClassByProb   (),
   correctByKnownClassBySize   (),
   correctCount                (0.0),
   countByKnownClassByProb     (),
   countByKnownClassBySize     (),
   countsByKnownClass          (),
-  classes                     (_classes),
   numInvalidClassesPredicted  (0.0),
   numOfBuckets                (40),
   numOfProbBuckets            (20),
@@ -85,13 +85,13 @@ ConfusionMatrix2::ConfusionMatrix2 (const MLClassList&  _classes):   // Will mak
 ConfusionMatrix2::ConfusionMatrix2 (const ConfusionMatrix2&  cm):
   bucketSize                  (cm.bucketSize),
   classCount                  (cm.classCount),
+  classes                     (cm.classes),
   correctByKnownClassByProb   (),
   correctByKnownClassBySize   (),
   correctCount                (cm.correctCount),
   countByKnownClassByProb     (),
   countByKnownClassBySize     (),
   countsByKnownClass          (),
-  classes                     (cm.classes),
   numInvalidClassesPredicted  (cm.numInvalidClassesPredicted),
   numOfBuckets                (cm.numOfBuckets),
   numOfProbBuckets            (cm.numOfProbBuckets),
@@ -118,7 +118,6 @@ ConfusionMatrix2::ConfusionMatrix2 (const ConfusionMatrix2&  cm):
 
 
 
-
 ConfusionMatrix2::~ConfusionMatrix2 ()
   {
   DeleteVectorDoublePtr (countByKnownClassBySize);
@@ -128,7 +127,6 @@ ConfusionMatrix2::~ConfusionMatrix2 ()
   DeleteVectorDoublePtr (predictedCountsCM);
   DeleteVectorDoublePtr (totPredProbCM);
 }
-
 
 
 
@@ -309,7 +307,6 @@ kkint32 ConfusionMatrix2::AddClassToConfusionMatrix (MLClassPtr       newClass,
 
 
 
-
 double  ConfusionMatrix2::PredictedCountsCM (kkint32  knownClassIdx, 
                                              kkint32  predClassIdx
                                             )  const
@@ -343,7 +340,6 @@ VectorDouble  ConfusionMatrix2::PredictedCounts ()  const
 
 
 
-
 double  ConfusionMatrix2::CountsByKnownClass (kkint32 knownClassIdx)  const
 {
   if  ((knownClassIdx < 0)  ||  (knownClassIdx >= classCount))
@@ -358,7 +354,6 @@ const VectorDouble&  ConfusionMatrix2::CountsByKnownClass ()  const
 {
   return  countsByKnownClass;
 }  /* CountsByKnownClass */
-
 
 
 
@@ -448,7 +443,6 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
     _size = -1;
   }
 
-
   {
      kkint32  bucket = 0;
      
@@ -465,8 +459,6 @@ void  ConfusionMatrix2::Increment (MLClassPtr  _knownClass,
       correctByKnownClassByProb [knownClassNum][bucket]++;
   }
 }  /* Increment */
-
-
 
 
 
@@ -515,8 +507,6 @@ KKStr  StripOutInvalidLatexCaracters (const KKStr&  src)
 
 
 
-
-
 void  ConfusionMatrix2::PrintSingleLine (ostream& _outFile,
                                          KKStr    _name,
                                          double   _lineTotal,
@@ -541,9 +531,6 @@ void  ConfusionMatrix2::PrintSingleLine (ostream& _outFile,
 
 
 
-
-
-
 void  ConfusionMatrix2::PrintSingleLineTabDelimited (ostream&      _outFile,
                                                      const KKStr&  _name,
                                                      double        _lineTotal,
@@ -564,7 +551,6 @@ void  ConfusionMatrix2::PrintSingleLineTabDelimited (ostream&      _outFile,
 
   _outFile << endl;
 }  /* PrintSingleLineTabDelimited */
-
 
 
                                                      
@@ -600,10 +586,6 @@ void  ConfusionMatrix2::PrintSingleLineHTML (ostream&     o,
 
 
 
-
-
-
-
 void  ConfusionMatrix2::PrintSingleLineLatexTable (ostream&       _outFile,
                                                    kkint32        _knownClassNum, 
                                                    const KKStr&   _name,
@@ -635,9 +617,6 @@ void  ConfusionMatrix2::PrintSingleLineLatexTable (ostream&       _outFile,
 
 
 
-
-
-
 void  ConfusionMatrix2::PrintSingleLineShort (ostream&      _outFile,
                                               const KKStr&  _name,
                                               double        _lineTotal,
@@ -657,8 +636,6 @@ void  ConfusionMatrix2::PrintSingleLineShort (ostream&      _outFile,
 
   _outFile << endl;
 }
-
-
 
 
 
@@ -712,9 +689,6 @@ void  ConfusionMatrix2::PrintPercentLine (ostream&  _outFile,
 
 
 
-
-
-
 void  ConfusionMatrix2::PrintPercentLineTabDelimited (ostream&      _outFile,
                                                       const KKStr&  _name,
                                                       double        _lineTotal,
@@ -731,7 +705,6 @@ void  ConfusionMatrix2::PrintPercentLineTabDelimited (ostream&      _outFile,
 
   _outFile << _name << "\t" 
            << StrFormatDouble ((100.0 * perc), "zz0.00") << "%";
-           
 
   for  (predClassNum = 0; predClassNum < classCount; predClassNum++)
   {
@@ -745,7 +718,6 @@ void  ConfusionMatrix2::PrintPercentLineTabDelimited (ostream&      _outFile,
      
   _outFile << endl;
 }  /* PrintPercentLineTabDelimited */
-
 
 
 
@@ -786,8 +758,6 @@ void  ConfusionMatrix2::PrintAvgPredProbLineHTML (ostream&       o,
      
   o << "</tr>" << endl;
 }  /* PrintAvgPredProbLineHTML */
-
-
 
 
 
@@ -835,9 +805,6 @@ void  ConfusionMatrix2::PrintPercentLineHTML (ostream&      o,
 
 
 
-
-
-
 void  ConfusionMatrix2::PrintPercentLineShort (ostream&     _outFile,
                                                const KKStr& _name,
                                                double       _lineTotal,
@@ -869,8 +836,6 @@ void  ConfusionMatrix2::PrintPercentLineShort (ostream&     _outFile,
      
   _outFile << endl;
 }  /* PrintPercentLineShort */
-
-
 
 
 
@@ -913,15 +878,11 @@ void  ConfusionMatrix2::PrintPercentLineLatexTable (ostream&      _outFile,
 
 
 
-
-
-
 void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)
 {
   kkint32 knownClassNum;
   kkint32 predClassNum;
   kkint32 x;
-
  
   // Lets generate Titles first
   outFile << endl;
@@ -936,12 +897,9 @@ void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)
            << endl;
 
   outFile  << endl;
-   
-
 
   KKStr  titleLine1, titleLine2, titleLine3;
   classes.ExtractThreeTitleLines (titleLine1, titleLine2, titleLine3, 16);
-
 
   outFile << setw (25) << ""          << setw(16) << ""      << setw (0) << titleLine1 << endl;
   outFile << setw (25) << ""          << setw(16) << ""      << setw (0) << titleLine2 << endl;
@@ -1123,9 +1081,6 @@ void  ConfusionMatrix2::PrintConfusionMatrixHTML (ostream&  o)
 
 
 
-
-
-
 void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)
 
 {
@@ -1208,11 +1163,6 @@ void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)
 
 
 
-
-
-
-
-
 void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
 
 {
@@ -1222,8 +1172,8 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
   VectorDouble countByProb   (numOfProbBuckets, 0.0);
   VectorDouble correctByProb (numOfProbBuckets, 0.0);
 
-  double  totalCount   = 0.0;
-  double  totalCorrect = 0.0;
+  double  totalRunningCount   = 0.0;
+  double  totalRunningCorrect = 0.0;
 
   double  acc = 0.0;
 
@@ -1272,8 +1222,8 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
       ln << "<td>" << accStr << "</td>";
     }
 
-    totalCount   += countThisClass;
-    totalCorrect += correctThisClass;
+    totalRunningCount   += countThisClass;
+    totalRunningCorrect += correctThisClass;
 
     accStr = "";
     acc = 0.0;
@@ -1293,8 +1243,8 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
 
   {
     acc = 0.0;
-    if  (totalCount != 0.0)
-      acc = 100.0 * totalCorrect / totalCount;
+    if  (totalRunningCount != 0.0)
+      acc = 100.0 * totalRunningCorrect / totalRunningCount;
 
     o << "    <tr>" 
       << "<td style=\"text-align:left; font-family:Arial\">" << "Total<br />All Classes"  << "</td>" 
@@ -1318,10 +1268,6 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
   o << "</tbody>" << endl
     << "</table>" << endl;
 }  /* PrintAccuracyByProbByClassHTML */
-
-
-
-
 
 
 
@@ -1356,8 +1302,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
            << endl;
 
   outFile  << endl;
-   
-
 
   KKStr  titleLine1, titleLine2, titleLine3;
   classes.ExtractThreeTitleLines (titleLine1, titleLine2, titleLine3);
@@ -1411,7 +1355,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
                                  );
   }
 
-
   double  nonNoiseAccuracy = 0.0;
   if  (totalNonNoise != 0)
      nonNoiseAccuracy = 100.0 * (double)totalNonNoiseRight / (double)totalNonNoise;
@@ -1426,10 +1369,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
 
   delete  [] totals;
 }  /* PrintConfusionMatrixTabDelimited */
-
-
-
-
 
 
 
@@ -1455,9 +1394,6 @@ void   ConfusionMatrix2::PrintLatexTableColumnHeaders (ostream&  outFile)
 
   outFile << "\\hline" << endl;
 }  /* PrintConfusionMatrixLatexTableColumnHeaders */
-
-
-
 
 
 
@@ -1553,10 +1489,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixLatexTable (ostream&  outFile)
 
 
 
-
-
-
-
 void   ConfusionMatrix2::PrintConfusionMatrixNarrow (ostream&  outFile)
 {
   kkint32 knownClassNum;
@@ -1626,7 +1558,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixNarrow (ostream&  outFile)
       totalNonNoise      += countsByKnownClass [knownClassNum];
       totalNonNoiseRight += predictedCountsCM  [knownClassNum] [knownClassNum];
     }
-
   }
 
   PrintSingleLineShort (outFile, 
@@ -1678,7 +1609,6 @@ double  PercentOf (double x,  double y)
 
 
 
-
 void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
 {
   kkint32  numOfClasses = classes.QueueSize ();
@@ -1696,7 +1626,6 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
   double  totalFP = 0.0;
   double  totalTN = 0.0;
   double  totalFN = 0.0;
-
 
   for  (x = 0;  x < numOfClasses;  x++)
   {
@@ -1722,7 +1651,6 @@ void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
       }
     }
   }
- 
 
   KKStr  titleLine1, titleLine2;
   classes.ExtractTwoTitleLines (titleLine1, titleLine2);
@@ -1842,7 +1770,6 @@ void   ConfusionMatrix2::ComputeFundamentalStats (MLClassPtr ic,
 
 
 
-
 float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
                                    RunLog&              log
                                   )  const
@@ -1889,34 +1816,27 @@ float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
 
 
 
-
-
 void   ConfusionMatrix2::PrintErrorBySize (ostream&  outFile)
 {
   kkint32  bucket;
-  kkint32  classNum;
 
   outFile << endl;
 
   outFile << "Size" << "\t";
 
   // Lets first Print Titles.
-  for  (classNum = 0; classNum < classCount; classNum++)
+  for  (kkint32 classNum = 0; classNum < classCount; classNum++)
   {
     outFile << "\t\t";
     outFile << classes[classNum].Name ();
   }
   outFile << endl;
 
-
-
   for  (bucket = 0; bucket < numOfBuckets; bucket++)
   {
     outFile << ((bucket + 1) * bucketSize) << "\t";
 
-    kkint32  classNum;
-
-    for  (classNum = 0; classNum < classCount; classNum++)
+    for  (kkint32 classNum = 0; classNum < classCount; classNum++)
     {
       outFile << countByKnownClassBySize   [classNum][bucket] << "\t"
               << correctByKnownClassBySize [classNum][bucket] << "\t";
@@ -1930,18 +1850,16 @@ void   ConfusionMatrix2::PrintErrorBySize (ostream&  outFile)
 
 
 
-
 void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)
 {
   kkint32  bucket;
-  kkint32  classNum;
 
   outFile << endl;
 
   outFile << "Prob" << "\t";
 
   // Lets first Print Titles.
-  for  (classNum = 0; classNum < classCount; classNum++)
+  for  (kkint32 classNum = 0; classNum < classCount; ++classNum)
   {
     outFile << "\t\t";
     outFile << classes[classNum].Name ();
@@ -1949,16 +1867,13 @@ void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)
 
   outFile << endl;
 
-
   outFile << setiosflags (ios::fixed);
 
   for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
   {
     outFile << ((bucket + 1) * probBucketSize) << "%\t";
 
-    kkint32  classNum;
-
-    for  (classNum = 0; classNum < classCount; classNum++)
+    for  (kkint32 classNum = 0; classNum < classCount; ++classNum)
     {
       double  perc;
 
@@ -1978,8 +1893,6 @@ void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)
 
   outFile << endl;
 }  /* PrintErrorByProb */
-
-
 
 
 
@@ -2031,10 +1944,8 @@ void   ConfusionMatrix2::PrintErrorBySizeByRows (ostream&  outFile)
     outFile << endl;
     outFile << endl;
   }
-  outFile << endl;
-
-
   outFile << endl
+          << endl
           << endl;
 
   outFile  << "ClassName\tAvg Size\t";
@@ -2078,8 +1989,6 @@ void   ConfusionMatrix2::PrintErrorBySizeByRows (ostream&  outFile)
 
 
 
-
-
 void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
 {
   kkint32  bucket;
@@ -2087,13 +1996,13 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
 
   kkint32  x;
 
-  double*  totalCount   = new double[numOfProbBuckets];
-  double*  totalCorrect = new double[numOfProbBuckets];
+  double*  totalCountByProb   = new double[numOfProbBuckets];
+  double*  totalCorrectByProb = new double[numOfProbBuckets];
 
   for  (x = 0; x < numOfProbBuckets; x++)
   {
-    totalCount   [x] = 0;
-    totalCorrect [x] = 0;
+    totalCountByProb  [x] = 0;
+    totalCorrectByProb[x] = 0;
   }
 
   outFile  << "ClassName\tAvg Prob\t";
@@ -2121,17 +2030,15 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
     for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
     {
       outFile << "\t" << countByKnownClassByProb [classNum][bucket];
-      totalCount[bucket] = totalCount[bucket] + countByKnownClassByProb [classNum][bucket];
+      totalCountByProb[bucket] = totalCountByProb[bucket] + countByKnownClassByProb [classNum][bucket];
     }
     outFile << endl;
-    
-
 
     outFile << classes[classNum].Name () << " Correct" << "\t";
     for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
     {
       outFile << "\t" << correctByKnownClassByProb [classNum][bucket];
-      totalCorrect [bucket] = totalCorrect [bucket] + correctByKnownClassByProb [classNum][bucket];
+      totalCorrectByProb[bucket] = totalCorrectByProb[bucket] + correctByKnownClassByProb [classNum][bucket];
     }
     outFile << endl;
 
@@ -2158,7 +2065,7 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
   outFile << "Total" << "\t";
   for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
   {
-    outFile << "\t" << totalCount[bucket];
+    outFile << "\t" << totalCountByProb[bucket];
   }
 
   outFile << endl;
@@ -2166,7 +2073,7 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
   outFile << "Correct" << "\t";
   for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
   {
-    outFile << "\t" << totalCorrect[bucket];
+    outFile << "\t" << totalCorrectByProb[bucket];
   }
   outFile << endl;
 
@@ -2175,23 +2082,21 @@ void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
   {
     double  perc;
 
-    if  (totalCount[bucket] <= 0)
+    if  (totalCountByProb[bucket] <= 0)
       perc = 0.0;
     else
-      perc = 100.0 * totalCorrect[bucket] / totalCount[bucket];
+      perc = 100.0 * totalCorrectByProb[bucket] / totalCountByProb[bucket];
 
     outFile << "\t" << perc << "%";
   }
 
-  delete[]  totalCount;   totalCount   = NULL;
-  delete[]  totalCorrect; totalCorrect = NULL;
+  delete[]  totalCountByProb;   totalCountByProb   = NULL;
+  delete[]  totalCorrectByProb; totalCorrectByProb = NULL;
 
   outFile << endl;
 
   return;
 }  /* PrintErrorByProbByRows */
-
-
 
 
 
@@ -2207,9 +2112,6 @@ void  ConfusionMatrix2::PrintProbDistributionTitle (ostream&  outFile)
 
   outFile << endl;
 }  /* PrintPronDistributionTitle */
-
-
-
 
 
 
@@ -2258,8 +2160,6 @@ void   ConfusionMatrix2::PrintProbDistributionTotalCount (ostream&  outFile)
 
 
 
-
-
 void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
 {
   kkint32  bucket;
@@ -2273,8 +2173,7 @@ void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
     count   [bucket] = 0;
     correct [bucket] = 0;
   }
-
-
+  
   for  (classNum = 0; classNum < classCount; classNum++)
   {
     for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
@@ -2284,26 +2183,25 @@ void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
     }
   }
 
-
   double  overallAccuracy = 0.0;
   
   {
-    double  totalCount   = 0;
+    double  totalBucketCount = 0;
     double  totalCorrect = 0;
 
     for  (bucket = 0; bucket < numOfProbBuckets; bucket++)
     {
-      totalCount   = totalCount   + count[bucket];
-      totalCorrect = totalCorrect + correct[bucket];
+      totalBucketCount = totalBucketCount + count[bucket];
+      totalCorrect     = totalCorrect     + correct[bucket];
     }
 
-    if  (totalCount == 0)
+    if  (totalBucketCount == 0.0)
     {
       overallAccuracy = 0.0;
     }
     else
     {
-      overallAccuracy = 100.0 * (double)totalCorrect  /  (double)totalCount;
+      overallAccuracy = 100.0 * totalCorrect / totalBucketCount;
     }
   }
 
@@ -2326,9 +2224,6 @@ void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
   delete[]  count;    count   = NULL;
   delete[]  correct;  correct = NULL;
 }  /* PrintProbDistributionTotalError */
- 
-
-
 
 
 
@@ -2344,9 +2239,6 @@ void   ConfusionMatrix2::PrintErrorBySizeReduced (ostream&  outFile)
      PrintErrorBySizeRowReduced (outFile, classNum);
 
 }  /* PrintErrorBySizeReduced */
-
-
-
 
 
 
@@ -2380,7 +2272,6 @@ void   ConfusionMatrix2::PrintErrorBySizeRowReduced (ostream&  outFile,
     numNewBuckets++;
   }
 
-  
   outFile << "Class_Name\tAvg_Size";
   for  (bucket = 0;  bucket < numNewBuckets; bucket++)
   {
@@ -2439,7 +2330,6 @@ void   ConfusionMatrix2::PrintErrorBySizeRowReduced (ostream&  outFile,
 
 
 
-
 KKStr   ConfusionMatrix2::AccuracyStr ()
 {
 
@@ -2480,8 +2370,6 @@ KKStr   ConfusionMatrix2::AccuracyStr ()
 
 
 
-
-
 double  ConfusionMatrix2::Accuracy ()
 {
   if  (totalCount == 0)
@@ -2492,7 +2380,6 @@ double  ConfusionMatrix2::Accuracy ()
 
 
 
-
 double  ConfusionMatrix2::AvgPredProb ()  const
 {
   if  (totalCount == 0)
@@ -2500,8 +2387,6 @@ double  ConfusionMatrix2::AvgPredProb ()  const
 
   return  totalPredProb / (double)totalCount;
 }
-
-
 
 
 
@@ -2520,7 +2405,6 @@ double  ConfusionMatrix2::Accuracy (MLClassPtr  mlClass)
 
   return  accuracy;
 }  /* Accuracy */
-
 
 
 
@@ -2547,10 +2431,10 @@ VectorFloat ConfusionMatrix2::AccuracyByClass  ()  const
 
 float  ConfusionMatrix2::AccuracyClassWeightedEqually ()
 {
-  kkint32  classCount    = classes.QueueSize ();
+  kkint32  classSize = classes.QueueSize ();
   float  totalAccuracy = 0.0f;
 
-  for  (kkint32  classNum = 0;  classNum < classCount;  classNum++)
+  for  (kkint32  classNum = 0;  classNum < classSize;  classNum++)
   {
     if  (countsByKnownClass [classNum] != 0)
     {
@@ -2559,12 +2443,10 @@ float  ConfusionMatrix2::AccuracyClassWeightedEqually ()
     }
   }
 
-  float  weightedAccuracy = (float)(totalAccuracy / classCount);
+  float  weightedAccuracy = (totalAccuracy / (float)classSize);
 
   return  weightedAccuracy;
 }  /* AccuracyClassWeightedEqually */
-
-
 
 
 
@@ -2630,8 +2512,6 @@ void  ConfusionMatrix2::FactorCounts (double  factor)
     }
   }
 }  /* FactorCounts */
-
-
 
 
 
@@ -2873,9 +2753,7 @@ KKStr  ArrayToDelimitedDelimitedStr (T*     _array,
                                      char   _delimiter
                                     )
 {
-  kkint32  x = _count * 10;
-  KKStr s (x);
-
+  KKStr s (_count * 10);
   for  (kkint32 x = 0;  x < _count;  x++)
   {
     if  (x > 0)
@@ -2901,8 +2779,6 @@ KKStr  ArrayToDelimitedDelimitedStr (const vector<T>&   v,
   }
   return s;
 }  /* ArrayToDelimitedDelimitedStr */
-
-
 
 
 
@@ -2940,8 +2816,6 @@ void   DelimitedStrToArray (vector<double>&  v,
 
 
 
-
-
 void   DelimitedStrToArray (kkint32*      _array,
                             kkint32       _count, 
                             const KKStr&  _l,
@@ -2953,7 +2827,6 @@ void   DelimitedStrToArray (kkint32*      _array,
   for  (kkint32 idx = 0;  idx < lastField;  idx++)
     _array[idx] = fields[idx].ToInt ();
 }  /* DelimitedStrToArray */
-
 
 
 
@@ -2971,13 +2844,11 @@ void   DelimitedStrToArray (double*       _array,
 
 
 
-
-
 void  ConfusionMatrix2::WriteXML (ostream&  f)  const
 {
   f << "<ConfusionMatrix2>" << endl;
 
-  f << "Classes"      << "\t" << classes.ToCommaDelimitedStr () << endl;
+  f << "Classes"                     << "\t" << classes.ToCommaDelimitedStr () << endl;
 
   f << "ClassCount"                  << "\t" << classCount       << endl
     << "BucketSize"                  << "\t" << bucketSize       << endl
@@ -3021,9 +2892,6 @@ void  ConfusionMatrix2::WriteXML (ostream&  f)  const
 
 
 
-
-
-
 ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
                                                             RunLog&   log
                                                            )
@@ -3048,7 +2916,8 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
   kkint32  probBucketSize    = -1;
 
   f.getline (buff, sizeof (buff));
-  while  ((!f.eof ())  &&  ((!classes)  ||  (bucketSize < 1)  ||  (numOfBuckets < 1)  ||  (numOfProbBuckets < 1)  ||  (probBucketSize < 1)  ||  (classCount < 1)))
+  while  ((!f.eof ())  &&  ((!classes)              ||  (bucketSize < 1)      ||  (numOfBuckets < 1)  ||  
+                            (numOfProbBuckets < 1)  ||  (probBucketSize < 1)  ||  (classCount < 1)))
   {
     KKStr  l (buff);
     l.TrimLeft ();
@@ -3097,8 +2966,7 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
     // Failed to locate ClassList ('classes')  we an not build a ConfusionMatrixc2 object.
     return NULL;
   }
-
-
+  
   if  (classCount != classes->QueueSize ())
   {
     log.Level (-1) << endl 
@@ -3108,14 +2976,12 @@ ConfusionMatrix2Ptr  ConfusionMatrix2::BuildFromIstreamXML (istream&  f,
     return NULL;
   }
 
-
   f.seekg (startPos);
 
   ConfusionMatrix2Ptr  cm =   new ConfusionMatrix2 (*classes, f, bucketSize, numOfBuckets, numOfProbBuckets, probBucketSize, log);
   delete  classes;  classes = NULL;
   return  cm;
 }   /* BuildFromIstreamXML */
-
 
 
 
@@ -3133,12 +2999,12 @@ void   ConfusionMatrix2::Read (istream&  f,
   buff[0] = 0;
   KKStr l  (512);
 
-  MLClassListPtr  classes = NULL;
+  classes.DeleteContents ();
 
-  kkint32 bucketSize        = -1;
-  kkint32  numOfBuckets      = -1;
-  kkint32  numOfProbBuckets  = -1;
-  kkint32 probBucketSize    = -1;
+  bucketSize        = -1;
+  numOfBuckets      = -1;
+  numOfProbBuckets  = -1;
+  probBucketSize    = -1;
 
   kkint32  classIndex = 0;
   KKStr  className = "";
@@ -3158,7 +3024,18 @@ void   ConfusionMatrix2::Read (istream&  f,
 
     if  (lineName.CompareIgnoreCase ("ClassCount") == 0)
       classCount = l.ExtractTokenInt ("\t\n\r");
-      
+
+    else if (lineName.CompareIgnoreCase ("Classes"))
+    {
+      auto  classesInXmlFile = MLClassList::BuildListFromDelimtedStr (l, '\t');
+      if (classesInXmlFile)
+      {
+        classes.AddQueue (*classesInXmlFile);
+        delete classesInXmlFile;
+        classesInXmlFile = NULL;
+      }
+    }
+  
     else if  (lineName.CompareIgnoreCase ("BucketSize") == 0)
       bucketSize = l.ExtractTokenInt ("\t");
       
@@ -3235,20 +3112,16 @@ void   ConfusionMatrix2::Read (istream&  f,
 
 
 
-
-
-
 void  ConfusionMatrix2::WriteSimpleConfusionMatrix (ostream&  f)  const
 {
-  // "Estimating the Taxonomic composition of a sample when individules are classified with error"
+  // "Estimating the Taxonomic composition of a sample when individule are classified with error"
   // by Andrew Solow, Cabll Davis, Qiao Hu
   // Woods Hole Ocanographic Institution, Woods Hole Massachusetts
   // Marine Ecology Progresss Series
   // published 2006-july-06
   // vol 216:309-311
   
-  // This data is ment to work with "ClassificationStatus.cs" to prvide the data nessasary to 
-  // adjust for bias.
+  // This data is meant to work with "ClassificationStatus.cs" to provide the data necessary to adjust for bias.
 
   f << "<SimpleConfusionMatrix>" << endl;
   f << "Classes"      << "\t" << classes.ToCommaDelimitedStr () << endl;
@@ -3282,7 +3155,6 @@ void  ConfusionMatrix2::WriteSimpleConfusionMatrix (ostream&  f)  const
 
 
 
-
 ConfussionMatrix2List::ConfussionMatrix2List (bool _owner):
        KKQueue<ConfusionMatrix2> (_owner)
 {
@@ -3294,7 +3166,6 @@ ConfussionMatrix2List::ConfussionMatrix2List (bool _owner):
 ConfussionMatrix2List::~ConfussionMatrix2List ()
 {
 }
-
 
 
 

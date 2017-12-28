@@ -95,7 +95,7 @@ void  ScannerFileEntry::ParseTabDelStr (KKStr  ln)
   KKStr  fieldName = ln.ExtractToken2 ("\t");
   while  (!ln.Empty ())
   {
-    KKStr  fieldName = ln.ExtractToken2 ("\t");
+    fieldName = ln.ExtractToken2 ("\t");
 
     if  (fieldName.EqualIgnoreCase ("Description"))
       description = ln.ExtractToken2 ("\t");
@@ -194,7 +194,7 @@ ScannerFileEntryList::ScannerFileEntryList ():
 
 ScannerFileEntryList::~ScannerFileEntryList ()
 {
-  for  (idx = begin ();  idx != end ();  ++idx)
+  for  (auto idx = begin ();  idx != end ();  ++idx)
   {
     ScannerFileEntryPtr  sfe = idx->second;
     delete  sfe;
@@ -227,11 +227,9 @@ void  ScannerFileEntryList::AddEntry (ScannerFileEntryPtr  entry)
 
 ScannerFileEntryPtr  ScannerFileEntryList::LookUpByRootName (const KKStr&  rootName)
 {
-  idx = find (rootName);
+  auto idx = find (rootName);
   if  (idx == end ())
     return NULL;
   else
     return idx->second;
 }
-
-

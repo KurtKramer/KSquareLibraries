@@ -126,8 +126,7 @@ namespace KKMLL
   public:
     DuplicateImage (FileDescConstPtr  _fileDesc,
                     FeatureVectorPtr  _image1,
-                    FeatureVectorPtr  _image2,
-                    RunLog&           _log
+                    FeatureVectorPtr  _image2
                    );
 
     ~DuplicateImage ();

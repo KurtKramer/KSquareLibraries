@@ -2017,7 +2017,7 @@ DateTime  KKB::osGetFileDateTime (const KKStr& fileName)
   FileTimeToSystemTime (&(wfd.ftLastWriteTime), &fileTime);
   SystemTimeToTzSpecificLocalTime(NULL, &fileTime, &stLocal);
 
-  return  DateTime ((short)stLocal.wYear, 
+  return  DateTime ((kkint16)stLocal.wYear,
                     (uchar)stLocal.wMonth, 
                     (uchar)stLocal.wDay,
                     (uchar)stLocal.wHour,

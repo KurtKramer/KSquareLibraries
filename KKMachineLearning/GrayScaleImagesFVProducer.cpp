@@ -333,7 +333,6 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
   float  weighedSizeBeforeReduction = 0.0f;
 
   kkint32 row = 0;
-  kkint32 col = 0;
 
   kkuint32  intensityHistBuckets[8];
   srcImage.CalcAreaAndIntensityFeatures (areaBeforeReduction, 
@@ -359,9 +358,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     reducedSquareArea = reducedHeight * reducedWidth;
   }
 
-  kkint32  reductionMultipleSquared = reductionMultiple * reductionMultiple;
-
-  float    totalReductionMultiple = priorReductionFactor * reductionMultiple;
+  float    totalReductionMultiple = priorReductionFactor * (float)reductionMultiple;
   float    totalReductionMultipleSquared = totalReductionMultiple * totalReductionMultiple;
 
   delete  workRaster1Rows;  workRaster1Rows = new uchar*[reducedHeight];
@@ -445,6 +442,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
   }
 
   kkint32 area = (kkint32)(centralMoments[0] + 0.5f);  // Moment-0 is the same as the number of foreground pixels in example.
+  float areaF = (float)area;
   {
     ConvexHullPtr  ch = new ConvexHull ();
     ch->Filter (*initRaster, wr1);
@@ -541,34 +539,22 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     featureData[EdgeMoment6Index] = (float)edgeMomentf[6];
     featureData[EdgeMoment7Index] = (float)edgeMomentf[7];
     featureData[EdgeMoment8Index] = (float)edgeMomentf[8];
-
-    // Need to adjust for any reduction in Image Size
-    //featureData[SizeIndex]           = float (areaBeforeReduction);
-    //featureData[EdgeSizeIndex]       = float (edgeMomentf[0] * (float)(reductionMultipleSquared));
-    //featureData[WeighedMoment0Index] = weighedSizeBeforeReduction;
   }
-
 
   if ((area > convexf)  &&  (convexf > 0))
      featureData[TransparancyConvexHullIndex] = 1.0;
   else 
      featureData[TransparancyConvexHullIndex] = (float)area / (float)convexf;
 
-  featureData[TransparancyPixelCountIndex] = (float)area / (float)tranf;
-  featureData[TransparancyOpen3Index]      = (float)(area - areaOpen3)  / (float)area;
-  featureData[TransparancyOpen5Index]      = (float)(area - areaOpen5)  / (float)area;
-  featureData[TransparancyOpen7Index]      = (float)(area - areaOpen7)  / (float)area;                
-  featureData[TransparancyOpen9Index]      = (float)(area - areaOpen9)  / (float)area;
-  featureData[TransparancyClose3Index]     = (float)(area - areaClose3) / (float)area;
-  featureData[TransparancyClose5Index]     = (float)(area - areaClose5) / (float)area;
-  featureData[TransparancyClose7Index]     = (float)(area - areaClose7) / (float)area;
+  featureData[TransparancyPixelCountIndex] = areaF / (float)tranf;
+  featureData[TransparancyOpen3Index]      = (float)(areaF - areaOpen3)  / (float)area;
+  featureData[TransparancyOpen5Index]      = (float)(areaF - areaOpen5)  / (float)area;
+  featureData[TransparancyOpen7Index]      = (float)(areaF - areaOpen7)  / (float)area;                
+  featureData[TransparancyOpen9Index]      = (float)(areaF - areaOpen9)  / (float)area;
+  featureData[TransparancyClose3Index]     = (float)(areaF - areaClose3) / (float)area;
+  featureData[TransparancyClose5Index]     = (float)(areaF - areaClose5) / (float)area;
+  featureData[TransparancyClose7Index]     = (float)(areaF - areaClose7) / (float)area;
  
-  {
-    // This part has to be done after 'CalcOrientationAndEigerRatio' is called. That is where the example centroid is calculated.
-    //fv->CentroidCol (initRaster->CentroidCol () * reductionMultiple);
-    //fv->CentroidRow (initRaster->CentroidRow () * reductioqnMultiple);
-  }
-
   featureData[ConvexAreaIndex]       = convexf * totalReductionMultipleSquared;
   featureData[TransparancySizeIndex] = (float)(centralMoments[0] / convexf);
   featureData[TransparancyWtdIndex]  = (float)(centralMomentsWeighted[0] / convexf);
@@ -583,10 +569,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
   featureData[IntensityHist6Index] = ((float)intensityHistBuckets[6] / areaD);
   featureData[IntensityHist7Index] = ((float)intensityHistBuckets[7] / areaD);
 
-
   {
-    RasterPtr  darkSpots = NULL;
-
     BinarizeImageByThreshold (200, 255, *initRaster, *wr1); 
    
     wr1->Erosion (wr2, MorphOp::MaskTypes::SQUARE3);
@@ -644,11 +627,11 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
 
 
 
-
 const type_info*   GrayScaleImagesFVProducer::FeatureVectorTypeId () const
 {
   return  &(typeid (FeatureVector));
 }
+
 
 
 const type_info*  GrayScaleImagesFVProducer::FeatureVectorListTypeId () const
@@ -694,17 +677,10 @@ FileDescConstPtr  GrayScaleImagesFVProducer::DefineFileDescStatic ()
 
 
 
-
-FeatureVectorListPtr  GrayScaleImagesFVProducer::ManufacturFeatureVectorList (bool     owner,
-                                                                              RunLog&  runLog
-                                                                             )
-                                                                             const
+FeatureVectorListPtr  GrayScaleImagesFVProducer::ManufacturFeatureVectorList (bool  owner)  const
 {
   return  new FeatureVectorList (FileDesc (), owner);
 }
-
-
-
 
 
 
@@ -755,7 +731,6 @@ GrayScaleImagesFVProducerPtr  GrayScaleImagesFVProducerFactory::ManufactureInsta
 
 
 
-
 FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
                                                                                      RunLog&  runLog
                                                                                     )
@@ -767,7 +742,6 @@ FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorL
 
 
 GrayScaleImagesFVProducerFactory*  GrayScaleImagesFVProducerFactory::factory = Factory (NULL);
-
 
 
 

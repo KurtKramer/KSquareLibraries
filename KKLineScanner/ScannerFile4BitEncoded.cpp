@@ -238,7 +238,7 @@ ScannerFile4BitEncoded::ScannerFile4BitEncoded (const KKStr&  _fileName,
 {
   BuildConversionTables ();
   AllocateEncodedBuff ();
-  AllocateRawStr (_pixelsPerScanLine + 100);
+  AllocateRawStr ((kkuint16)(_pixelsPerScanLine + 100));
 }
 
 
@@ -376,7 +376,7 @@ void  ScannerFile4BitEncoded::BuildConversionTables ()
 
       convTable4BitTo8Bit[x] = (uchar)fourBitTo8BitNum;
       for  (y = this8Bit;  y < next8Bit;  ++y)
-        convTable8BitTo4Bit[y] = x;
+        convTable8BitTo4Bit[y] = (uchar)x;
     }
 
     compensationTable = new uchar[256];
@@ -530,9 +530,7 @@ void  ScannerFile4BitEncoded::ProcessInstrumentDataWord (const OpRec&  rec)
 
 
 
-
-
-void  ScannerFile4BitEncoded::ProcessRawPixelRecs (kkuint16  numRawPixelRecs,
+void  ScannerFile4BitEncoded::ProcessRawPixelRecs (kkuint32  numRawPixelRecs,
                                                    uchar*    lineBuff,
                                                    kkuint32  lineBuffSize,
                                                    kkuint32& bufferLineLen
@@ -603,9 +601,9 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
     else if  ((opCode >= opCodeRunLength2Pixels)  &&  (opCode <= opCodeRunLength7Pixels))
     {
       // OpCode determines RunLen  (4=2, 5=3, ... 9=7)
-      kkuint32 runLen = opCode - 2;
+      kkuint32 runLenOpCodeMinus2 = opCode - 2;
       runLenChar = convTable4BitTo8Bit [rec.runLen.pixelValue];
-      kkuint32  newLineSize = bufferLineLen + runLen;
+      kkuint32  newLineSize = bufferLineLen + runLenOpCodeMinus2;
 
       if  (newLineSize > lineBuffSize)
       {
@@ -614,7 +612,7 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
       else
       {
-        memset (&(lineBuff[bufferLineLen]), runLenChar,  runLen);
+        memset (&(lineBuff[bufferLineLen]), runLenChar, runLenOpCodeMinus2);
         bufferLineLen = newLineSize;
       }
     }
@@ -626,16 +624,15 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
         eol = true;
       else
       {
-        kkuint32  runLen = 1 + rec2.run256Len2.runLen;
-        kkuint32  newLineSize = bufferLineLen + runLen;
+        kkuint32  run256Len2 = 1 + rec2.run256Len2.runLen;
+        kkuint32  newLineSize = bufferLineLen + run256Len2;
         if  (newLineSize > lineBuffSize)
         {
           cerr << "ScannerFile4BitEncoded::GetNextScanLine   ***ERROR***  Exceeding 'bufferLineLen';  ScanLine[" << nextScanLine << "]." << endl;
         }
         else
         {
-          uchar  runLenChar = convTable4BitTo8Bit [rec.run256Len1.pixelValue];
-          memset (&(lineBuff[bufferLineLen]), runLenChar,  runLen);
+          memset (&(lineBuff[bufferLineLen]), convTable4BitTo8Bit[rec.run256Len1.pixelValue], run256Len2);
           bufferLineLen = newLineSize;
         }
       }
@@ -656,9 +653,9 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
 
     else if  (opCode == opCodeRawSeqEven2Thru32Pixels)
     {
-      kkuint16  numRawRecs = rec.raw32Pixels.len + 1;   // We add 1 to 'numRawRecs' because '1' was subtracted out when written to Scanner File.
-      kkuint16  numRawPixels = numRawRecs * 2;
-      kkuint16  newBufferLineLen = bufferLineLen + numRawPixels;
+      kkuint32  numRawRecs = rec.raw32Pixels.len + 1;   // We add 1 to 'numRawRecs' because '1' was subtracted out when written to Scanner File.
+      kkuint32  numRawPixels = numRawRecs * 2;
+      kkuint32  newBufferLineLen = bufferLineLen + numRawPixels;
       if  (newBufferLineLen > lineBuffSize)
       {
         cerr << "ScannerFile4BitEncoded::GetNextScanLine   ***ERROR***  Exceeding 'bufferLineLen';  ScanLine[" << nextScanLine << "]." << endl;
@@ -676,9 +673,9 @@ void  ScannerFile4BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
       else
       {
-        kkuint16  numRawRecs = 1 + 16 * (kkuint16)(rec.raw513Pixels1.lenHigh) + (kkuint16)(rec2.raw513Pixels2.lenLow);
-        kkuint16  numRawPixels = 1 + 2 * numRawRecs;
-        kkuint16  newBufferLineLen = bufferLineLen + numRawPixels;
+        kkuint32  numRawRecs       = 1 + 16 * (kkuint16)(rec.raw513Pixels1.lenHigh) + (kkuint16)(rec2.raw513Pixels2.lenLow);
+        kkuint32  numRawPixels     = 1 + 2 * numRawRecs;
+        kkuint32  newBufferLineLen = bufferLineLen + numRawPixels;
         if  (newBufferLineLen > lineBuffSize)
         {
           cerr << "ScannerFile4BitEncoded::GetNextScanLine   ***ERROR***  Exceeding 'bufferLineLen';  ScanLine[" << nextScanLine << "]." << endl;
@@ -732,8 +729,10 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
     if  (runLen == 1)
     {
       // We will treat this as a 1 pixel long raw string.
+#include "DisableConversionWarning.h"
       rec.raw1Pixel.opCode     = opCodeRaw1Pixel;
       rec.raw1Pixel.pixelValue = runLenChar;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -741,8 +740,10 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else if  (runLen < 8)
     {
+#include "DisableConversionWarning.h"
       rec.runLen.opCode     = runLen  + 2;
       rec.runLen.pixelValue = runLenChar;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -750,14 +751,20 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else if  (runLen < 257)
     {
-      ushort encodedLen = runLen - 1;
+      kkuint32 encodedLen = runLen - 1;
 
+#include "DisableConversionWarning.h"
       rec.run256Len1.opCode     = opCodeRenLength1Thru256;
       rec.run256Len1.pixelValue = runLenChar;
+#include "RestoreConversionWarning.h"
+
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
+#include "DisableConversionWarning.h"
       rec.run256Len2.runLen = encodedLen;
+#include "RestoreConversionWarning.h"
+
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -765,8 +772,10 @@ void  ScannerFile4BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else
     {
+#include "DisableConversionWarning.h"
       rec.run256Len1.opCode     = opCodeRenLength1Thru256;
       rec.run256Len1.pixelValue = runLenChar;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
@@ -784,15 +793,17 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 {
   OpRec  rec;
 
-  kkuint16  nextCp = 0;
-  kkuint16  len = rawStrLen;
+  kkuint32  nextCp = 0;
+  kkuint32  len = rawStrLen;
 
   while  (len > 0)
   {
     if  (len < 2)
     {
+#include "DisableConversionWarning.h"
       rec.raw1Pixel.opCode = opCodeRaw1Pixel;
       rec.raw1Pixel.pixelValue = rawStr[nextCp];
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       len = 0;
@@ -801,16 +812,20 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 
     else if  (len < 33)
     {
-      ushort  rawPixelRecsNeeded = (ushort)(len / 2) - 1;  // We subtract 1 when writing;  when reading back file will add back in 1.
+      kkuint32  rawPixelRecsNeeded = (len / 2) - 1;  // We subtract 1 when writing;  when reading back file will add back in 1.
+#include "DisableConversionWarning.h"
       rec.raw32Pixels.opCode = opCodeRawSeqEven2Thru32Pixels;
-      rec.raw32Pixels.len  = rawPixelRecsNeeded;
+      rec.raw32Pixels.len    = rawPixelRecsNeeded;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
       while  (len > 1)
       {
+#include "DisableConversionWarning.h"
         rec.rawPixels.pix0 = rawStr[nextCp];  ++nextCp;
         rec.rawPixels.pix1 = rawStr[nextCp];  ++nextCp;
+#include "RestoreConversionWarning.h"
         *encodedBuffNext = rec;
         ++encodedBuffNext;
         len -= 2;
@@ -819,25 +834,30 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 
     else
     {
-      kkuint16  lenToProcess = Min ((kkuint16)513, len);
+      kkuint32  lenToProcess = Min ((kkuint32)513, len);
       if  ((lenToProcess % 2) > 0)
       {
         // Can only handle odd number of pixels.
         --lenToProcess;
       }
 
-      kkuint16  numRawRecsNeeded = (lenToProcess - 1) / 2;
-      kkuint16  numRawRecsNeededEnc = numRawRecsNeeded - 1;  // When reading back and decoding file will add back 1.
-      kkuint16  lenHigh = numRawRecsNeededEnc / 16;
-      kkuint16  lenLow  = numRawRecsNeededEnc % 16;
+      kkuint32  numRawRecsNeeded = (lenToProcess - 1) / 2;
+      kkuint32  numRawRecsNeededEnc = numRawRecsNeeded - 1;  // When reading back and decoding file will add back 1.
+      kkuint32  lenHigh = numRawRecsNeededEnc / 16;
+      kkuint32  lenLow  = numRawRecsNeededEnc % 16;
 
-      rec.raw513Pixels1.opCode  = opCodeRawSeqOdd1Thru513Pixels;
-      rec.raw513Pixels1.lenHigh = lenHigh;
+#include "DisableConversionWarning.h"
+      rec.raw513Pixels1.opCode  = (uchar)opCodeRawSeqOdd1Thru513Pixels;
+      rec.raw513Pixels1.lenHigh = (uchar)lenHigh;
+#include "RestoreConversionWarning.h"
+
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
-      rec.raw513Pixels2.lenLow  = lenLow;
-      rec.raw513Pixels2.pix0    = rawStr[nextCp];
+#include "DisableConversionWarning.h"
+      rec.raw513Pixels2.lenLow  = (uchar)lenLow;
+      rec.raw513Pixels2.pix0    = (uchar)rawStr[nextCp];
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       ++nextCp;
@@ -846,12 +866,15 @@ void  ScannerFile4BitEncoded::AddCurRawStrToOutputBuffer ()
 
       while  (lenToProcess > 1)
       {
-        rec.rawPixels.pix0 = rawStr[nextCp];  ++nextCp;
-        rec.rawPixels.pix1 = rawStr[nextCp];  ++nextCp;
+
+#include "DisableConversionWarning.h"
+        rec.rawPixels.pix0 = (uchar)(rawStr[nextCp]);  ++nextCp;
+        rec.rawPixels.pix1 = (uchar)(rawStr[nextCp]);  ++nextCp;
+#include "RestoreConversionWarning.h"
         *encodedBuffNext = rec;
         ++encodedBuffNext;
-        len          -= 2;
-        lenToProcess -= 2;
+        len          = (kkuint16)(len - 2);
+        lenToProcess = (kkuint16)(lenToProcess - 2);
       }
     }
   }
@@ -964,8 +987,6 @@ void  ScannerFile4BitEncoded::WriteNextScanLine (const uchar*  buffer,
 
 
 
-
-
 void  ScannerFile4BitEncoded::WriteTextBlock (const uchar*  txtBlock,
                                               kkuint32      txtBlockLen
                                              )
@@ -985,13 +1006,16 @@ void  ScannerFile4BitEncoded::WriteTextBlock (const uchar*  txtBlock,
     kkint32  charsToWrite = Min (2048, charsLeft);
     OpRec  rec;
 
-    rec.textBlock1.opCode      = opCodeTextBlock;
+#include "DisableConversionWarning.h"
+    rec.textBlock1.opCode      = (char)opCodeTextBlock;
     rec.textBlock1.endOfText   = (charsToWrite < charsLeft) ? 0 : 1;
-    rec.textBlock1.lenHighBits = charsToWrite / 256;
+    rec.textBlock1.lenHighBits = (char)(charsToWrite / 256);
+#include "RestoreConversionWarning.h"
+
     *encodedBuffNext = rec;
     ++encodedBuffNext;
 
-    encodedBuffNext->textBlock2.lenLowBits = charsToWrite % 256;
+    encodedBuffNext->textBlock2.lenLowBits = (uchar)(charsToWrite % 256);
     ++encodedBuffNext;
 
     memcpy (encodedBuffNext, txtBlockPtr, charsToWrite);

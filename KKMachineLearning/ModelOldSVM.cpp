@@ -197,7 +197,6 @@ SVM_SelectionMethod  ModelOldSVM::SelectionMethod () const
 
 
 
-
 void   ModelOldSVM::Predict (FeatureVectorPtr  example,
                              MLClassPtr        knownClass,
                              MLClassPtr&       predClass1,
@@ -228,11 +227,15 @@ void   ModelOldSVM::Predict (FeatureVectorPtr  example,
     delete encodedExample;
     encodedExample = NULL;
   }
-  
+
+  if (log.Level () >= 50)
+  {
+    KKStr predClassName = (predClass1 == NULL) ? "" : predClass1->Name ();
+    log.Level (50) << " ModelOldSVM::Predict   ExampleFileName: " << example->ExampleFileName () << "  PredClass1: " << predClassName << endl;
+  }
+
   return;
 }  /* Predict */
-
-
 
 
 
@@ -249,6 +252,8 @@ MLClassPtr  ModelOldSVM::Predict (FeatureVectorPtr  example,
     delete encodedExample;
     encodedExample = NULL;
   }
+
+  log.Level (50) << " ModelOldSVM::Predict   ExampleFileName: " << example->ExampleFileName () << endl;
 
   return c;
 }  /* Predict */
@@ -418,12 +423,12 @@ bool  ModelOldSVM::NormalizeNominalAttributes ()  const
 
 
 
-void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classes,
+void  ModelOldSVM::RetrieveCrossProbTable (MLClassList&   classesOfInterest,
                                            double**       crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                            RunLog&        log
                                           )
 {
-  svmModel->RetrieveCrossProbTable (classes, crossProbTable, log);
+  svmModel->RetrieveCrossProbTable (classesOfInterest, crossProbTable, log);
   return;
 }  /* RetrieveCrossProbTable */
 
@@ -556,14 +561,14 @@ void  ModelOldSVM::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  ModelOldSVM::ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
                             VolConstBool&   cancelFlag,
                             RunLog&         log
                            )
 {
+  log.Level (30) << "ModelOldSVM::ReadXML  tag->Name: " << ((tag == NULL) ? "" : tag->Name ()) << endl;;
+
   delete  svmModel;
   svmModel = NULL;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
@@ -574,10 +579,10 @@ void  ModelOldSVM::ReadXML (XmlStream&      s,
     {
       if  ((t->VarName ().EqualIgnoreCase ("Assignments"))  &&  (typeid(*t) == typeid(XmlElementKKStr)))
       {
-        XmlElementKKStrPtr s = dynamic_cast<XmlElementKKStrPtr> (t);
+        XmlElementKKStrPtr assignmentsElement = dynamic_cast<XmlElementKKStrPtr> (t);
         delete  assignments;
         assignments = new ClassAssignments ();
-        assignments->ParseToString (*(s->Value ()), log);
+        assignments->ParseToString (*(assignmentsElement->Value ()), log);
       }
 
       else if  ((t->VarName ().EqualIgnoreCase ("SvmModel"))  &&  (typeid(*t) == typeid(XmlElementSVMModel)))

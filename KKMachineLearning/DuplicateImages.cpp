@@ -132,7 +132,7 @@ DuplicateImagePtr  DuplicateImages::AddSingleExample (FeatureVectorPtr  example)
       dupExample = dupExamples->LocateByImage (existingNameExample);
       if  (!dupExample)
       {
-        dupExample = new DuplicateImage (fileDesc, existingNameExample, example, log);
+        dupExample = new DuplicateImage (fileDesc, existingNameExample, example);
         dupExamples->PushOnBack (dupExample);
       }
       else
@@ -149,7 +149,7 @@ DuplicateImagePtr  DuplicateImages::AddSingleExample (FeatureVectorPtr  example)
         dupExample = dupExamples->LocateByImage (existingDataExample);
         if  (!dupExample)
         {
-          dupExample = new DuplicateImage (fileDesc, existingDataExample, example, log);
+          dupExample = new DuplicateImage (fileDesc, existingDataExample, example);
           dupExamples->PushOnBack (dupExample);
         }
         else
@@ -200,9 +200,9 @@ void  DuplicateImages::PurgeDuplicates (FeatureVectorListPtr  examples,
   map<FeatureVectorPtr,KKStr>  deletedDictionary;  // List of examples already deleted.
   map<FeatureVectorPtr,KKStr>::iterator  deletedDictionaryIdx;
   
-  DuplicateImageListPtr  dupExamples = DupExamples ();
+  DuplicateImageListPtr  duplicateSets = DupExamples ();
 
-  for  (auto dupSet: *dupExamples)
+  for  (auto dupSet: *duplicateSets)
   {
     log.Level (20) << "PurgeDuplicates  Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
@@ -266,9 +266,9 @@ FeatureVectorListPtr  DuplicateImages::ListOfExamplesToDelete ()
 
   log.Level (10) << "DuplicateImages::ListOfExamplesToDelete" << endl;
 
-  DuplicateImageListPtr  dupExamples = DupExamples ();
+  DuplicateImageListPtr  dupSets = DupExamples ();
 
-  for  (auto dupSet: *dupExamples)
+  for  (auto dupSet: *dupSets)
   {
     log.Level (20) << "ListOfExamplesToDelete   Duplicate Set[" << dupSet->FirstExampleAdded ()->ExampleFileName () << "]" << endl;
 
@@ -347,8 +347,7 @@ bool   DuplicateImages::DuplicatesFound ()  const
 
 DuplicateImage::DuplicateImage (FileDescConstPtr  _fileDesc,
                                 FeatureVectorPtr  _image1, /**< image1, will be the one that we was already in the index structures. */
-                                FeatureVectorPtr  _image2,
-                                RunLog&           _log
+                                FeatureVectorPtr  _image2
                                ):
    fileDesc         (_fileDesc),
    duplicatedImages (_fileDesc, false),
@@ -429,8 +428,8 @@ FeatureVectorPtr  DuplicateImage::ExampleWithSmallestScanLine ()
       if  (x > 0)
       {
         KKStr  workStr = rootName.SubStrPart (0, x - 1);
-        kkint64 x = workStr.LocateLastOccurrence ('_');
-        KKStr  scanLineStr = workStr.SubStrPart (x + 1);
+        kkint64 y = workStr.LocateLastOccurrence ('_');
+        KKStr  scanLineStr = workStr.SubStrPart (y + 1);
         scanLine = atoi (scanLineStr.Str ());
       }
     }

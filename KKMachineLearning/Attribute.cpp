@@ -604,9 +604,9 @@ void  AttributeTypeVector::ReadXML (XmlStream&      s,
                                     RunLog&         log
                                    )
 {
+  log.Level (50) << "AttributeTypeVector::ReadXML   tag->Name: " << tag->Name () << endl;
   clear ();
 
-  kkuint32  expectedLen = (kkuint32)tag->AttributeValueInt32 ("Size");
   AttributeTypeVector decodeTable;
 
   XmlTokenPtr t = s.GetNextToken (cancelFlag, log);

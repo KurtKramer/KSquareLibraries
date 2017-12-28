@@ -173,7 +173,7 @@ DateType::DateType (const DateType&  _date):
 
 
 
-DateType::DateType (short  _year,
+DateType::DateType (kkint16 _year,
                     uchar  _month,
                     uchar  _day
                    ):
@@ -196,14 +196,14 @@ DateType::DateType (KKStr  s):
 
   uchar  m;
   uchar  d;
-  short  y;
+  kkint16  y;
 
   m = MonthFromStr (field1);
   if  ((m > 0)  && (m < 13))
   {
     // The first field is a month, assume  mmm/dd/yyyy
     d = (uchar)atoi (field2.Str ());
-    y = (short)atoi (field3.Str ());
+    y = (kkint16)atoi (field3.Str ());
 
     if  ((d < 1)  ||  (d > DaysInTheMonth (y, m)))
       d = 1;
@@ -224,12 +224,12 @@ DateType::DateType (KKStr  s):
     
     if  (f3 > 1900)
     {
-      y = (short)f3;
+      y = (kkint16)f3;
       d = (uchar)f1;
     }
     else
     {
-      y = (short)f1;
+      y = (kkint16)f1;
       d = (uchar)f3;
     }
 
@@ -257,9 +257,9 @@ DateType::DateType (KKStr  s):
       )
   {
     // mm/dd/yyyy
-    year  = short (f3);
-    month = uchar (f1);
-    day   = uchar (f2);
+    year  = kkint16 (f3);
+    month = uchar   (f1);
+    day   = uchar   (f2);
 
     AdjustYear ();
     return;
@@ -271,9 +271,9 @@ DateType::DateType (KKStr  s):
       )
   {
     // yyyy/mm/dd
-    year  = short (f1);
-    month = uchar (f2);
-    day   = uchar (f3);
+    year  = kkint16 (f1);
+    month = uchar   (f2);
+    day   = uchar   (f3);
     AdjustYear ();
     return;
   }
@@ -284,9 +284,9 @@ DateType::DateType (KKStr  s):
       )
   {
     // dd/mm/yyyy
-    year  = short (f3);
-    month = uchar (f2);
-    day   = uchar (f1);
+    year  = kkint16 (f3);
+    month = uchar   (f2);
+    day   = uchar   (f1);
     AdjustYear ();
     return;
   }
@@ -328,7 +328,7 @@ void  DateType::SetFromNumOfDaysInTime (kkint32  days)
   if  (days < 0)
     days--;
 
-  year = (short)(numOf4Years * 4);
+  year = (kkint16)(numOf4Years * 4);
   days = days % 1461;
 
   while  (days < 0)
@@ -1014,12 +1014,12 @@ DateTime::DateTime (const DateType&  _date,
 
 
 
-DateTime::DateTime (short  _year,
-                    uchar  _month,
-                    uchar  _day,
-                    uchar  _hour,
-                    uchar  _minute,
-                    uchar  _second
+DateTime::DateTime (kkint16 _year,
+                    uchar   _month,
+                    uchar   _day,
+                    uchar   _hour,
+                    uchar   _minute,
+                    uchar   _second
                    ):
       date (_year, _month, _day),
       time (_hour, _minute, _second)

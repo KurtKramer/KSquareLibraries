@@ -102,7 +102,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
   
   FileDescConstPtr  fileDesc = _data.FileDesc ();
 
-  const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
+  AttributeConstPtr*  attrTable = fileDesc->CreateAAttributeConstTable ();
 
   kkint32  x;
   {
@@ -124,7 +124,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
-      AttributePtr  attr = attrTable[featureNum];
+      AttributeConstPtr  attr = attrTable[featureNum];
       if  ((attr->Type () == AttributeType::Nominal)  ||
            (attr->Type () == AttributeType::Symbolic)
           )
@@ -143,7 +143,6 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
     nf.close ();
   }
 
-
   FeatureVectorPtr   example = NULL;
 
   kkint32 idx;
@@ -154,7 +153,7 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
     for  (x = 0; x < _selFeatures.NumOfFeatures (); x++)
     {
       kkint32  featureNum = _selFeatures[x];
-      AttributePtr attr = attrTable[featureNum];
+      AttributeConstPtr attr = attrTable[featureNum];
 
       if  ((attr->Type () == AttributeType::Nominal)  ||
            (attr->Type () == AttributeType::Symbolic)

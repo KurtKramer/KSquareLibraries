@@ -291,7 +291,7 @@ namespace KKMLL
                                            bool  _checkForDuplicates
                                           );
 
-    void  ReportTraningClassStatistics (std::ostream&  report);
+    void  ReportTraningClassStatistics (std::ostream&  rpt);
 
     /**
      * @brief  Saves the built training model into the Save file in Xml Format.
@@ -324,7 +324,7 @@ namespace KKMLL
 
 
   private:
-    void    AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
+    void    AddImagesToTrainingLibray (FeatureVectorList&  trainingLibExamples,
                                        FeatureVectorList&  examplesToAdd,
                                        RunLog&             log
                                       );
@@ -343,7 +343,7 @@ namespace KKMLL
     static
     FeatureVectorListPtr  ExtractFeatures (TrainingConfiguration2ConstPtr  config,
                                            MLClassList&                    mlClasses,
-                                           const TrainingClassPtr          trainingClass,
+                                           TrainingClassConstPtr           trainingClass,
                                            KKB::DateTime&                  latestTimeStamp,
                                            bool&                           changesMade,
                                            VolConstBool&                   cancelFlag,

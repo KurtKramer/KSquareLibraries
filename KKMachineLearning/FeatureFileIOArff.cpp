@@ -101,7 +101,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
   _numExamplesWritten = 0;
 
   FileDescConstPtr  fileDesc = _data.FileDesc ();
-  const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
+  auto  attrTable = fileDesc->CreateAAttributeConstTable ();
 
   kkint32  x;
   {
@@ -137,7 +137,7 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
     for  (kkint32 fnIDX = 0;  fnIDX < _selFeatures.NumOfFeatures ();  fnIDX++)
     {
       kkint32  featureNum = _selFeatures[fnIDX];
-      AttributePtr attr = attrTable[featureNum];
+      AttributeConstPtr attr = attrTable[featureNum];
       _out << "@attribute " 
            << attr->Name ()
            << " ";

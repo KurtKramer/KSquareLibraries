@@ -28,7 +28,6 @@ using namespace KKB;
 
 
 
-
 KKObserver::KKObserver (const KKStr&  _name):
    name (_name)
 
@@ -81,8 +80,7 @@ void  KKObserver::UnRegisterObservable (KKObservablePtr observable)
 
 
 
-
 void  KKObserver::Notify (KKObservablePtr  obj)
 {
+  obj->observers.size ();
 }  /* Notify */
-

@@ -6,9 +6,11 @@
 #include "FirstIncludes.h"
 #include <stdlib.h>
 #include <iostream>
+#include <cstring>
 #include <map>
-#include <vector>
 #include <math.h>
+#include <memory>
+#include <vector>
 #include "MemoryDebug.h"
 using namespace std;
 
@@ -50,8 +52,8 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   else if (factor > 1.0f)
     factor = 1.0f;
 
-  kkint32  newHeight = (kkint32)(srcRaster->Height () * factor + 0.5f);
-  kkint32  newWidth  = (kkint32)(srcRaster->Width ()  * factor + 0.5f);
+  kkint32  newHeight = (kkint32)((float)(srcRaster->Height ()) * factor + 0.5f);
+  kkint32  newWidth  = (kkint32)((float)(srcRaster->Width ())  * factor + 0.5f);
   if (newHeight < 2)
     newHeight = 2;
 
@@ -67,14 +69,14 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
   {
     accumulatorAreaRed  = new float[newTotal];
     accumulatorAreaBlue = new float[newTotal];
-    memset (accumulatorAreaRed,  0, newTotal * sizeof (float));
-    memset (accumulatorAreaBlue, 0, newTotal * sizeof (float));
+    std::memset (accumulatorAreaRed,  0, newTotal * sizeof (float));
+    std::memset (accumulatorAreaBlue, 0, newTotal * sizeof (float));
   }
 
   float*  divisorArea = new float[newTotal];
 
-  memset (accumulatorAreaGreen, 0, newTotal * sizeof (float));
-  memset (divisorArea, 0, newTotal * sizeof (float));
+  std::memset (accumulatorAreaGreen, 0, newTotal * sizeof (float));
+  std::memset (divisorArea, 0, newTotal * sizeof (float));
 
   float** accumulatorRed = NULL;
   float** accumulatorGreen = new float*[newHeight];
@@ -237,7 +239,6 @@ RasterPtr   MorphOpReduceByFactor::PerformOperation (RasterConstPtr  _image)
         newBlueArea[x] = (uchar)(accumulatorAreaBlue[x] / divisorArea[x] + 0.5f);
       }
     }
-
   }
 
   delete[]  accumulatorAreaRed;    accumulatorAreaRed = NULL;

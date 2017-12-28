@@ -86,7 +86,6 @@ TrainingProcess2Ptr  TrainingProcess2::LoadExistingTrainingProcess (const KKStr&
 
 
 
-
 TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess 
                                    (TrainingConfiguration2Const*  config,
                                     bool                          checkForDuplicates,
@@ -98,7 +97,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
 {
   log.Level (10) << "TrainingProcess2::CreateTrainingProcess." << endl;
 
-  bool  weShouldRebuild = false;
   TrainingProcess2Ptr trainer = NULL;
 
   if  (whenToRebuild == TrainingProcess2::WhenToRebuild::NeverRebuild)
@@ -244,7 +242,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcess
 
 
 
-
 TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingConfiguration2Const*  config,
                                                                       kkuint32                      level,
                                                                       VolConstBool&                 cancelFlag,
@@ -261,7 +258,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
 
   DateTime  latestTrainingImageTimeStamp;
   bool  changesMadeToTrainingLibrary = false;
-  FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer (log);
 
   FeatureVectorListPtr  trainingExamples 
     = ExtractTrainingClassFeatures (config, latestTrainingImageTimeStamp, changesMadeToTrainingLibrary, cancelFlag, log);
@@ -273,7 +269,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
     return NULL;
   }
 
-
   {
     DuplicateImagesPtr  dupDetector = new DuplicateImages (trainingExamples->FileDesc (), log);
     dupDetector->PurgeDuplicates (trainingExamples, true, NULL);
@@ -281,8 +276,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (TrainingCo
     dupDetector = NULL;
   }
     
-  MLClassListPtr  mlClasses = config->ExtractClassList ();
-
   {
     // We need to build data that is specific to the specified _level.
     FeatureVectorListPtr  newExamples = trainingExamples->ExtractExamplesForHierarchyLevel (level);
@@ -343,11 +336,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessForLevel (const KKSt
 
 
 
-
-
-
-
-
 TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessFromTrainingExamples 
                                 (TrainingConfiguration2Const* config, 
                                  FeatureVectorListPtr         trainingExamples,
@@ -393,11 +381,6 @@ TrainingProcess2Ptr  TrainingProcess2::CreateTrainingProcessFromTrainingExamples
 
 
 
-
-
-
-
-
 //*****************************************************************************************
 //*   Will build a new model from scratch for the specified class level. Will also remove *
 //*   duplicates.                                                                         *
@@ -422,12 +405,10 @@ TrainingProcess2::TrainingProcess2 ():
   savedModelName            (),
   subTrainingProcesses      (NULL),
   trainingExamples          (NULL),
-  weOwnTrainingExamples     (true),
-  weOwnMLClasses            (true)
+  weOwnMLClasses            (true),
+  weOwnTrainingExamples     (true)
 {
 }
-
-
 
 
 
@@ -498,11 +479,6 @@ kkMemSize  TrainingProcess2::MemoryConsumedEstimated ()  const
 
 
 
-
-
-
-
-
 void  TrainingProcess2::BuildTrainingProcess (TrainingConfiguration2Const*  _config,
                                               WhenToRebuild                 _whenToRebuild,
                                               FeatureVectorListPtr          _trainingExamples,
@@ -552,7 +528,6 @@ void  TrainingProcess2::BuildTrainingProcess (TrainingConfiguration2Const*  _con
 
 
 
-
 void  TrainingProcess2::SaveTrainingProcess (RunLog&  log)
 {
   configFileName = TrainingConfiguration2::GetEffectiveConfigFileName (config->ConfigFileNameSpecified ());
@@ -572,8 +547,6 @@ void  TrainingProcess2::SaveTrainingProcess (RunLog&  log)
 
   f.close ();
 }  /* SaveTrainingProcess */
-
-
 
 
 
@@ -628,9 +601,6 @@ SVMModelPtr  TrainingProcess2::Model3 ()
 
 
 
-
-
-
 void  TrainingProcess2::CheckForDuplicates (bool     allowDupsInSameClass,
                                             RunLog&  log
                                            )
@@ -658,10 +628,9 @@ void  TrainingProcess2::CheckForDuplicates (bool     allowDupsInSameClass,
 
 
 
-
 FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2ConstPtr  config,
                                                          MLClassList&                    mlClasses,
-                                                         const TrainingClassPtr          trainingClass,
+                                                         TrainingClassConstPtr           trainingClass,
                                                          DateTime&                       latestTimeStamp,
                                                          bool&                           changesMade,
                                                          VolConstBool&                   cancelFlag,
@@ -752,7 +721,6 @@ FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2C
 
 
 
-
 FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingConfiguration2ConstPtr  config,
                                                                       DateTime&                       latestImageTimeStamp,
                                                                       bool&                           changesMadeToTrainingLibraries,
@@ -827,7 +795,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
   // DONE Extracting Raw features from All classes.
   if  ((!abort)  &&  (!cancelFlag))
   {
-    const TrainingClassPtr  noiseTC = config->NoiseTrainingClass ();
+    TrainingClassConstPtr  noiseTC = config->NoiseTrainingClass ();
     if  (noiseTC)
     {
       FeatureVectorListPtr  examplesThisClass  = 
@@ -884,20 +852,17 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
 
 
 
-
-
-void  TrainingProcess2::ReportTraningClassStatistics (ostream&  report)
+void  TrainingProcess2::ReportTraningClassStatistics (ostream&  rpt)
 {
-  report << endl
-         << "Training Class Statistics" << endl
-         << endl;
-  trainingExamples->PrintClassStatistics (report);
+  rpt << endl
+      << "Training Class Statistics" << endl
+      << endl;
+  trainingExamples->PrintClassStatistics (rpt);
 }  /* ReportTraningClassStatistics */
 
 
 
-
-void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingExamples,
+void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingLibExamples,
                                                    FeatureVectorList&  examplesToAdd,
                                                    RunLog&             log
                                                   )
@@ -914,7 +879,7 @@ void  TrainingProcess2::AddImagesToTrainingLibray (FeatureVectorList&  trainingE
 
     if  (example->FeatureDataValid ())
     {
-      trainingExamples.PushOnBack (example);
+      trainingLibExamples.PushOnBack (example);
     }
     else
     {
@@ -1026,10 +991,6 @@ void  TrainingProcess2::CreateModelsFromTrainingData (WhenToRebuild   whenToRebu
 
 
 
-
-
-
-
 ModelParamPtr  TrainingProcess2::Parameters () const
 {
   if  (!model)
@@ -1037,7 +998,6 @@ ModelParamPtr  TrainingProcess2::Parameters () const
   else
     return model->Param ();
 }  /* Parameters */
-
 
 
 
@@ -1091,7 +1051,6 @@ double   TrainingProcess2::TrainingTime ()  const
 
 
 
-
 MLClassListPtr  TrainingProcess2::ExtractFullHierachyOfClasses ()  const
 {
   if  (config)
@@ -1106,7 +1065,6 @@ MLClassListPtr  TrainingProcess2::ExtractFullHierachyOfClasses ()  const
 
 
 
-
 /**
  @brief If there is a config file; will return a list of its FormatErrors ().  
  */
@@ -1117,7 +1075,6 @@ VectorKKStr  TrainingProcess2::ConfigFileFormatErrors ()  const
   else
     return VectorKKStr ();
 }  /* ConfigFileFormatErrors */
-
 
 
 
@@ -1181,7 +1138,6 @@ void  TrainingProcess2::LoadSubClassifiers (WhenToRebuild  whenToRebuild,
 
 
 
-
 void  TrainingProcess2::WriteXML (const KKStr&  varName,
                                   ostream&      o
                                  )  const
@@ -1232,15 +1188,13 @@ void  TrainingProcess2::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  TrainingProcess2::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
                                  VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
-  log.Level (20) << "TrainingProcess2::ReadXML" << endl;
+  log.Level (20) << "TrainingProcess2::ReadXML tag.name: " << tag->Name() << endl;
 
   VectorKKStr*  subProcessorsNameList = NULL;
 
@@ -1276,7 +1230,6 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
       const KKStr&  varName = e->VarName ();
-      const KKStr&  sectionName = e->SectionName ();
 
       if  (varName.EqualIgnoreCase ("BuildDateTime")  &&  (typeid (*e) == typeid (XmlElementDateTime)))
         buildDateTime = dynamic_cast<XmlElementDateTimePtr> (e)->Value ();
@@ -1417,6 +1370,7 @@ void  TrainingProcess2::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
+
 XmlFactoryMacro(TrainingProcess2)
 
 
@@ -1447,4 +1401,3 @@ kkMemSize TrainingProcess2List::MemoryConsumedEstimated ()  const
   }
   return memoryConsumedEstimated;
 }
-

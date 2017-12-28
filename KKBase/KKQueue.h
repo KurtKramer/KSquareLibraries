@@ -121,11 +121,12 @@ namespace  KKB
        *          with the state of the 'Owner' flags. If you are not careful you can have both containers thinking they own the same entries. I suggest
        *          that after you add the contents of 'q' to this container that the caller set the 'owner' flag of 'q'  to false.
        */
-      virtual  void      AddQueue (const KKQueue& q);                    
+      virtual  void  AddQueue (const KKQueue& q);                    
 
-      void      DeleteContents ();                            /**< Empties the container,  if 'owner' is set to true will call the destructor on each element.                         */
-      void      DeleteEntry    (EntryPtr _entry);             /**< Removes from KKQueue the entry who's pointer = '_entry'                                                             */
-      void      DeleteEntry    (kkuint32 _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                                                */
+      virtual void   DeleteContents ();                       /**< Empties the container,  if 'owner' is set to true will call the destructor on each element.  */
+
+      void      DeleteEntry    (EntryPtr _entry);             /**< Removes from KKQueue the entry who's pointer = '_entry'                                      */
+      void      DeleteEntry    (kkuint32 _idx);               /**< Removes from KKQueue the entry who's index = '_idx'.                                         */
 
       void      Owner          (bool     _owner);             /**< specifies who owns the contents of the container; when true the contents will
                                                                 *  be deleted when the container is deleted.  

@@ -34,6 +34,7 @@ namespace  KKMLL
   {
   public:
     typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
+    typedef  ConfusionMatrix2 const *  ConfusionMatrix2ConstPtr;
 
     ConfusionMatrix2 (const MLClassList&  _classes);
     
@@ -298,32 +299,34 @@ namespace  KKMLL
 
     kkint32          bucketSize;
     kkint32          classCount;
+    MLClassList      classes;  /**< We will make our own unique copy of the MLClassList.
+                                * This way we know the ordering which represents the numbering
+                                * can not change behind our back.
+                                */
+
     vector<double*>  correctByKnownClassByProb;
     vector<double*>  correctByKnownClassBySize;
     double           correctCount;
     vector<double*>  countByKnownClassByProb;
     vector<double*>  countByKnownClassBySize;
     vector<double>   countsByKnownClass;
-
-    MLClassList  classes;  /**< We will make our own unique copy of the MLClassList.
-                            * This way we know the ordering which represents the numbering
-                            * can not change behind our back.
-                            */
-
+    double           numInvalidClassesPredicted;
     kkint32          numOfBuckets;
     kkint32          numOfProbBuckets;
     vector<double*>  predictedCountsCM;
-    vector<double*>  totPredProbCM;
     kkint32          probBucketSize;
     double           totalCount;
     double           totalPredProb;
     vector<double>   totalPredProbsByKnownClass;     /**< Total Predicted Probabilities by Known Class. */
     vector<double>   totalSizesByKnownClass;
+    vector<double*>  totPredProbCM;
 
-    double           numInvalidClassesPredicted;
   };
 
   typedef  ConfusionMatrix2::ConfusionMatrix2Ptr  ConfusionMatrix2Ptr;
+
+  typedef  ConfusionMatrix2::ConfusionMatrix2ConstPtr  ConfusionMatrix2ConstPtr;
+
 
 #define  _ConfussionMatrix2_Defined_
 

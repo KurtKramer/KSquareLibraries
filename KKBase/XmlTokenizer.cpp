@@ -148,16 +148,22 @@ KKStrPtr  XmlTokenizer::GetNextToken ()
   }
 
   size_t s = tokenList.size ();
+  if (s < 1)
+  {
+    return NULL;
+  }
+  else
+  {
+    KKStrPtr t = tokenList.front ();
+    tokenList.pop_front ();
 
-  KKStrPtr t = tokenList.front ();
-  tokenList.pop_front ();
+#if  defined(_LogStream_)
+    logger2 << "GetNextToken size[" << s << "] :" << (t ? (*t) : "NULL") << endl;
+    logger2.flush ();
+#endif
 
-  #if  defined(_LogStream_)
-  logger2 << "GetNextToken size[" << s << "] :" << (t ? (*t) : "NULL") << endl;
-  logger2.flush ();
-  #endif
-
-  return  t;
+    return  t;
+  }
 }  /* GetNextToken */
 
 
@@ -438,13 +444,13 @@ void  XmlTokenizer::ProcessAmpersand ()
     // Name is getting too long; the ampersand is invalid; will return characters as is.
     while  (entityName.Len () > 0)
     {
-      char ch = entityName.ExtractLastChar ();
+      ch = entityName.ExtractLastChar ();
       in->UnGetNextChar ();
     }
   }
   else
   {
-    char ch = LookUpEntity (entityName);
+    ch = LookUpEntity (entityName);
     firstChar = ch;
   }
 }  /* ProcessAmpersand */

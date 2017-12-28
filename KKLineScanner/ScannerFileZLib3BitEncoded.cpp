@@ -218,8 +218,8 @@ void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
   {
     OpCodeRec5   rec5;
     rec5.opCode = 5;
-    rec5.compBuffLenLO = compressedBuffLen  % 256;
-    rec5.compBuffLenHO = compressedBuffLen  /256;
+    rec5.compBuffLenLO = (uint8)(compressedBuffLen  % 256);
+    rec5.compBuffLenHO = (uint8)(compressedBuffLen  / 256);
     fwrite (&rec5, sizeof (rec5), 1, file);
   }
 
@@ -242,7 +242,7 @@ void  ScannerFileZLib3BitEncoded::WriteBufferFrame ()
     rec7.compBuffLenByte3 = buffLen % 256;  buffLen = buffLen / 256;
     rec7.compBuffLenByte2 = buffLen % 256;  buffLen = buffLen / 256;
     rec7.compBuffLenByte1 = buffLen % 256;  buffLen = buffLen / 256;
-    rec7.compBuffLenByte0 = buffLen;
+    rec7.compBuffLenByte0 = (uchar)buffLen;
     fwrite (&rec7, sizeof (rec7), 1, file);
   }
 
@@ -334,9 +334,8 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) != 0)
           return -1;
-        kkuint32  compBufferLen = textBlockLen.intHi * 256 + 
-                                  textBlockLen.intLo;
-        SkipBytesForward (compBufferLen);
+        kkuint32  compBufferLenCode5 = (kkuint32)(textBlockLen.intHi * 256 + textBlockLen.intLo);
+        SkipBytesForward (compBufferLenCode5);
         bufferFrameRead = true;
         break;
       }
@@ -347,10 +346,10 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) != 0)
           return -1;
-        kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
+        kkuint32  compBufferLenCode6 = (kkuint32)(textBlockLen.intByte0 * 256 * 256 +
                                 textBlockLen.intByte1 * 256       +
-                                textBlockLen.intByte2;
-        SkipBytesForward (compBufferLen);
+                                textBlockLen.intByte2);
+        SkipBytesForward (compBufferLenCode6);
         bufferFrameRead = true;
         break;
       }
@@ -362,11 +361,11 @@ kkint64  ScannerFileZLib3BitEncoded::SkipToNextFrame ()
         if  (feof (file) != 0)
           return -1;
 
-        kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
+        kkuint32  compBufferLenCode7 = (kkuint32)(textBlockLen.intByte0 * 256 * 256 * 256 +
                                 textBlockLen.intByte1 * 256 * 256       +
                                 textBlockLen.intByte2 * 256             +
-                                textBlockLen.intByte3;
-        SkipBytesForward (compBufferLen);
+                                textBlockLen.intByte3);
+        SkipBytesForward (compBufferLenCode7);
         bufferFrameRead = true;
         break;
       }
@@ -445,15 +444,14 @@ kkuint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (feof (file) == 0)
         {
-          kkuint32  compBufferLen = textBlockLen.intHi * 256 + 
-                                  textBlockLen.intLo;
-          if  (compBufferLen > compBufferSize)
-            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLen);
+          kkuint32  compBufferLenCode5 = (kkuint32)(textBlockLen.intHi * 256 + textBlockLen.intLo);
+          if  (compBufferLenCode5 > compBufferSize)
+            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLenCode5);
 
-          fread (compBuffer, compBufferLen, 1, file);
+          fread (compBuffer, compBufferLenCode5, 1, file);
           if  (feof (file) == 0)
           {
-            Compressor::Decompress (compBuffer, compBufferLen,
+            Compressor::Decompress (compBuffer, compBufferLenCode5,
                                     frameBuffer, frameBufferSize, frameBufferLen
                                    );
           }
@@ -468,16 +466,16 @@ kkuint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (!feof (file))
         {
-          kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 +
+          kkuint32  compBufferLenCode6 = (kkuint32)(textBlockLen.intByte0 * 256 * 256 +
                                   textBlockLen.intByte1 * 256       +
-                                  textBlockLen.intByte2;
-          if  (compBufferLen > compBufferSize)
-            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLen);
+                                  textBlockLen.intByte2);
+          if  (compBufferLenCode6 > compBufferSize)
+            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLenCode6);
 
-          fread (compBuffer, compBufferLen, 1, file);
+          fread (compBuffer, compBufferLenCode6, 1, file);
           if  (feof (file) == 0)
           {
-            Compressor::Decompress (compBuffer, compBufferLen,
+            Compressor::Decompress (compBuffer, compBufferLenCode6,
                                     frameBuffer, frameBufferSize, frameBufferLen
                                    );
           }
@@ -492,17 +490,17 @@ kkuint32  ScannerFileZLib3BitEncoded::ReadBufferFrame ()
         fread (&textBlockLen, sizeof (textBlockLen), 1, file);
         if  (!feof (file))
         {
-          kkuint32  compBufferLen = textBlockLen.intByte0 * 256 * 256 * 256 +
+          kkuint32  compBufferLenCode7 = (kkuint32)(textBlockLen.intByte0 * 256 * 256 * 256 +
                                   textBlockLen.intByte1 * 256 * 256       +
                                   textBlockLen.intByte2 * 256             +
-                                  textBlockLen.intByte3;
-          if  (compBufferLen > compBufferSize)
-            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLen);
+                                  textBlockLen.intByte3);
+          if  (compBufferLenCode7 > compBufferSize)
+            ExpandBufferNoCopy (compBuffer, compBufferSize, compBufferLenCode7);
 
-          fread (compBuffer, compBufferLen, 1, file);
+          fread (compBuffer, compBufferLenCode7, 1, file);
           if  (feof (file) == 0)
           {
-            Compressor::Decompress (compBuffer, compBufferLen,
+            Compressor::Decompress (compBuffer, compBufferLenCode7,
                                     frameBuffer, frameBufferSize, frameBufferLen
                                    );
           }

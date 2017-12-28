@@ -379,7 +379,8 @@ namespace  KKB
 
     KKStr    MaxLen (kkStrUint  maxLen)  const;              /**< Returns a string that will not be longer that 'maxLen'; any chracters beyond that length will be chopped off. */
 
-    kkStrUint  MaxLenSupported ()  const;                    /**< Returns the maximum String Length that this string can support. */
+    static
+    kkStrUint  MaxLenSupported ();                    /**< Returns the maximum String Length that this string can support. */
 
     kkMemSize  MemoryConsumedEstimated () const;
 
@@ -924,6 +925,7 @@ namespace  KKB
                         );
 
 
+  KKStr StrFromBuff   (const char* buff, kkuint32 buffLen);
   KKStr StrFromInt16  (kkint16  i);
   KKStr StrFromUint16 (kkuint16 ui);
   KKStr StrFromInt32  (kkint32  i);

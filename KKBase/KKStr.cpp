@@ -2277,7 +2277,7 @@ KKStr  KKStr::MaxLen (kkStrUint  maxLen)  const
 
 
 
-kkuint32 KKStr::MaxLenSupported ()  const 
+kkuint32 KKStr::MaxLenSupported ()
 {
   return KKStrIntMax - 1;
 }
@@ -4900,6 +4900,12 @@ KKStr  KKB::StrFormatInt64 (kkint64        val,
 
   return  KKStr (bp);
 }  /* StrFormatInt */
+
+
+KKStr KKB::StrFromBuff (const char* buff, kkuint32 buffLen)
+{
+  return KKStr (buff, 0, buffLen - 1);
+}
 
 
 

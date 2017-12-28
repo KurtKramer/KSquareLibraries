@@ -228,13 +228,9 @@ namespace KKMLL
 
 
     virtual  void  PredictRaw (FeatureVectorPtr  example,
-                               MLClassPtr     &  predClass,
+                               MLClassPtr&       predClass,
                                double&           dist
-                              )
-    {
-      predClass = NULL;
-      dist = 0.0;
-    }
+                              );
 
     //*********************************************************************
     //*     Routines that should be implemented by descendant classes.    *

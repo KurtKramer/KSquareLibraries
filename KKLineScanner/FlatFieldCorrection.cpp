@@ -64,7 +64,7 @@ FlatFieldCorrection::FlatFieldCorrection (kkint32       _numSampleLines,
   {
     lookUpTable[x] = new uchar[256];
     for  (y = 0;  y < 256;  y++)
-      lookUpTable[x][y] = y;
+      lookUpTable[x][y] = (uchar)y;
   }
 
   for  (kkint32 col = 0;  col < lineWidth;  col++)
@@ -196,7 +196,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
     //highPoint[col] = hp0;
     //highPointLastSeen[col] = hp0Age;
 
-    highPoint[col] = hp2;
+    highPoint[col] = (uchar)hp2;
     highPointLastSeen[col] = hp2Age;
 
 
@@ -212,7 +212,7 @@ void  FlatFieldCorrection::ReComputeLookUpForColumn (kkint32 col)
         newPixelValue = compensationTable[newPixelValue];
       newPixelValue = 255 - newPixelValue;
       for  (row = 0;  row < 256;  ++row)
-        lookUpTable[col][row] = newPixelValue;
+        lookUpTable[col][row] = (uchar)newPixelValue;
     }
     else
     {

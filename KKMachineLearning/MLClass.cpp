@@ -10,6 +10,7 @@ using namespace  std;
 
 #include "GlobalGoalKeeper.h"
 #include "KKBaseTypes.h"
+#include "KKException.h"
 #include "KKStrParser.h"
 #include "OSservices.h"
 #include "RunLog.h"
@@ -18,7 +19,6 @@ using namespace  KKB;
 #include "FileDesc.h"
 #include "MLClass.h"
 using namespace  KKMLL;
-
 
 
 MLClassListPtr  MLClass::existingMLClasses = NULL;
@@ -211,7 +211,7 @@ void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass,
     for  (idx = existingClassLists.begin ();  idx != existingClassLists.end ();  ++idx)
   {
       MLClassListPtr  list = idx->first;
-      kkuint32 classInList = list->PtrToIdx (mlClass);
+      auto  classInList = list->PtrToIdx (mlClass);
       if  (classInList >= 0)
       {
         bool  nameChangedInList = false;
@@ -224,6 +224,7 @@ void  MLClass::ChangeNameOfClass (MLClassPtr    mlClass,
 
   return;
 }  /* ChangeNameOfClass */
+
 
 
 void  MLClass::ResetAllParentsToAllClasses ()
@@ -254,7 +255,6 @@ void  MLClass::Name (const KKStr&  _name)
   name = _name;
   upperName = name.ToUpper ();
 }
-
 
 
 
@@ -296,7 +296,6 @@ void  MLClass::FinalCleanUp ()
 
 
 
-
 MLClass::MLClass (const KKStr&  _name):
     classId          (-1),
     countFactor      (0.0f),
@@ -330,18 +329,16 @@ MLClass::MLClass (const KKStr&  _name):
 
 
 
-
-
 MLClass::MLClass (const MLClass&  mlClass)
 {
-  cerr << endl
-       << "MLClass::MLClass (const MLClass&  mlClass)            *** ERROR ***" << endl
-       << "Should never ever call this method." << endl
-       << endl;
-  osWaitForEnter ();
-  exit (-1);
+  KKStr  errMsg (256);
+  errMsg << endl
+         << "MLClass::MLClass (const MLClass&  mlClass)       *** ERROR ***     classNane: " << mlClass.Name () << endl
+         << "Should never ever call this method." << endl
+         << endl;
+  cerr << errMsg;
+  throw KKException (errMsg);
 }
-
 
 
 
@@ -357,7 +354,6 @@ const KKStr&  MLClass::ParentName () const
     return  parent->Name ();
   return  KKStr::EmptyStr ();
 }
-
 
 
 
@@ -401,7 +397,6 @@ KKStr  MLClass::GetClassNameFromDirName (const KKStr&  subDir)
 
 
 
-
 bool  MLClass::IsAnAncestor (MLClassPtr  c) const
 {
   if  (c == this)
@@ -415,12 +410,10 @@ bool  MLClass::IsAnAncestor (MLClassPtr  c) const
 
 
 
-
-kkuint16 MLClass::NumHierarchialLevels ()  const
+kkuint16  MLClass::NumHierarchialLevels ()  const
 {
-  return  (kkuint16)name.InstancesOfChar ('_') + 1;
+  return  (kkuint16)(name.InstancesOfChar ('_') + 1);
 }
-
 
 
 
@@ -475,9 +468,6 @@ void  MLClass::WriteXML (const KKStr&    varName,
 
 
 
-
-
-
 XmlElementMLClass::XmlElementMLClass (XmlTagPtr      tag,
                                       XmlStream&     s,
                                       VolConstBool&  cancelFlag,
@@ -486,7 +476,6 @@ XmlElementMLClass::XmlElementMLClass (XmlTagPtr      tag,
   XmlElement (tag, s, log),
   value (NULL)
 {
-
   KKStrConstPtr  className = tag->AttributeValueByName ("Name");
   if  (!className)
   {
@@ -537,6 +526,7 @@ XmlElementMLClass::~XmlElementMLClass ()
 }
 
 
+
 MLClassPtr  XmlElementMLClass::Value ()  const
 {
   return value;
@@ -566,7 +556,6 @@ MLClassList::MLClassList ():
 
 
 
-
 MLClassList::MLClassList (const MLClassList&  _mlClasses):
   KKQueue<MLClass> (false)
 {
@@ -580,8 +569,6 @@ MLClassList::MLClassList (const MLClassList&  _mlClasses):
     AddMLClass (_mlClasses.IdxToPtr (x));  
   }
 }
-
-
 
 
 
@@ -602,7 +589,6 @@ MLClassList::MLClassList (const KKStr&  _fileName,
     undefinedLoaded = true;
   }
 }
-
 
 
      
@@ -664,7 +650,6 @@ void  MLClassList::ChangeNameOfClass (MLClassPtr    mlClass,
 
 
 
-
 kkuint16 MLClassList::NumHierarchialLevels ()  const
 {
   kkuint16 numHierarchialLevels = 0;
@@ -673,8 +658,6 @@ kkuint16 MLClassList::NumHierarchialLevels ()  const
     numHierarchialLevels = Max (numHierarchialLevels, (*idx)->NumHierarchialLevels ());
   return  numHierarchialLevels;
 }  /* NumHierarchialLevels*/
-
-
 
 
 
@@ -719,7 +702,6 @@ void  MLClassList::Load (const KKStr&  _fileName,
     
 
 
-
 void  MLClassList::Save (KKStr   _fileName,
                             bool&    _successfull
                            )
@@ -739,7 +721,6 @@ void  MLClassList::Save (KKStr   _fileName,
   _successfull = true;
   return;
 }  /* WriteOutData */
-
 
 
 
@@ -839,7 +820,6 @@ MLClassPtr  MLClassList::LookUpByName (const KKStr&  _name)  const
 
 
 
-
 MLClassPtr  MLClassList::LookUpByClassId (kkint32 _classId)  const
 {
   MLClassList::const_iterator  idx;
@@ -856,7 +836,6 @@ MLClassPtr  MLClassList::LookUpByClassId (kkint32 _classId)  const
 
 
 
-
 /** @brief  return pointer to instance with '_name';  if none exists, create one and add to list. */
 MLClassPtr  MLClassList::GetMLClassPtr (const  KKStr& _name)
 {
@@ -868,7 +847,6 @@ MLClassPtr  MLClassList::GetMLClassPtr (const  KKStr& _name)
   }
   return  ic;
 }  /* GetMLClassPtr */
-
 
 
 
@@ -888,8 +866,6 @@ MLClassPtr  MLClassList::GetNoiseClass ()  const
 
 
 
-
-
 MLClassPtr  MLClassList::GetUnKnownClass ()
 {
   MLClassPtr  unKnownClass = LookUpByName ("UNKNOWN");
@@ -901,8 +877,6 @@ MLClassPtr  MLClassList::GetUnKnownClass ()
 
   return  unKnownClass;
 }  /* GetUnKnownClass */
-
-
 
 
 
@@ -921,16 +895,12 @@ public:
 
 
 
-
-
 void  MLClassList::SortByName ()
 {
   MLClassNameComparison* c = new MLClassNameComparison ();
   sort (begin (), end (), *c);
   delete  c;
 }  /* SortByName */
-
-
 
 
 
@@ -951,7 +921,6 @@ KKStr  MLClassList::ToString ()  const
 
 
 
-
 KKStr  MLClassList::ToTabDelimitedStr ()  const
 {
   KKStr s (10 * QueueSize ());
@@ -963,7 +932,6 @@ KKStr  MLClassList::ToTabDelimitedStr ()  const
 
   return  s;
 }  /* ToTabDelimitedStr */
-
 
 
 
@@ -981,7 +949,6 @@ KKStr  MLClassList::ToCommaDelimitedStr ()  const
 
 
 
-
 KKStr  MLClassList::ToCommaDelimitedQuotedStr ()  const
 {
   KKStr s (10 * QueueSize ());
@@ -993,8 +960,6 @@ KKStr  MLClassList::ToCommaDelimitedQuotedStr ()  const
 
   return  s;
 }  /* ToCommaDelimitedQuotedStr */
-
-
 
 
 
@@ -1014,6 +979,14 @@ MLClassListPtr  MLClassList::ExtractSummarizeClasses ()  const
 
 
 
+void  MLClassList::DeleteContents ()
+{
+  KKQueue<MLClass>::DeleteContents ();
+  nameIndex.clear ();
+  undefinedLoaded = false;
+}
+
+
 
 MLClassListPtr  MLClassList::ExtractMandatoryClasses ()  const
 {
@@ -1028,7 +1001,6 @@ MLClassListPtr  MLClassList::ExtractMandatoryClasses ()  const
 
   return  result;
 }  /* ExtractMandatoryClasses */
-
 
 
 
@@ -1064,11 +1036,10 @@ void  MLClassList::ExtractTwoTitleLines (KKStr&  titleLine1,
 
 
 
-
 void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
-                                              KKStr&  titleLine2, 
-                                              KKStr&  titleLine3 
-                                             ) const
+                                           KKStr&  titleLine2, 
+                                           KKStr&  titleLine3 
+                                          ) const
 {
   titleLine1 = "";
   titleLine2 = "";
@@ -1126,12 +1097,11 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
 
 
 
-
 void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
-                                              KKStr&  titleLine2, 
-                                              KKStr&  titleLine3,
-                                              kkint32 fieldWidth
-                                             ) const
+                                           KKStr&  titleLine2, 
+                                           KKStr&  titleLine3,
+                                           kkint32 fieldWidth
+                                          ) const
 {
   titleLine1 = "";
   titleLine2 = "";
@@ -1191,7 +1161,6 @@ void  MLClassList::ExtractThreeTitleLines (KKStr&  titleLine1,
 
 
 
-
 KKStr   MLClassList::ExtractHTMLTableHeader () const
 {
   KKStr  header (QueueSize () * 50);
@@ -1220,7 +1189,7 @@ KKStr   MLClassList::ExtractHTMLTableHeader () const
 
 
 
-MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkint32 level)
+MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkint16 level)
 {
   MLClassListPtr  newList = new MLClassList ();
 
@@ -1237,8 +1206,6 @@ MLClassListPtr  MLClassList::ExtractListOfClassesForAGivenHierarchialLevel (kkin
   newList->SortByName ();
   return  newList;
 }  /* ExtractListOfClassesForAGivenHierarchialLevel */
-
-
 
 
 
@@ -1264,22 +1231,19 @@ MLClassListPtr  MLClassList::MergeClassList (const MLClassList&  list1,
 
 
 
-
 MLClassListPtr  MLClassList::BuildListFromDelimtedStr (const KKStr&  s,
                                                        char          delimiter
                                                       )
 {
-  VectorKKStr  names = s.Split (',');
+  VectorKKStr  names = s.Split (delimiter);
   MLClassListPtr  classList = new MLClassList ();
 
   VectorKKStr::iterator  idx;
   for  (idx = names.begin ();  idx != names.end ();  idx++)
-    MLClassPtr c = classList->GetMLClassPtr (*idx);
+    classList->GetMLClassPtr (*idx);
 
   return  classList;
 }  /* BuildListFromCommaDelimtedStr */
-
-
 
 
 
@@ -1308,8 +1272,6 @@ void  MLClassList::WriteXML (const KKStr&  varName,
 
 
 
-
-
 bool  MLClassList::operator== (const MLClassList&  right)  const
 {
   if  (QueueSize () != right.QueueSize ())
@@ -1333,7 +1295,6 @@ bool  MLClassList::operator!= (const MLClassList&  right)  const
 {
   return  (!operator== (right));
 }  /* operator== */
-
 
 
 
@@ -1374,7 +1335,6 @@ MLClassList&  MLClassList::operator+= (const MLClassList&  right)  // add all cl
 
   return  *this;
 }
-
 
 
 
@@ -1450,10 +1410,10 @@ XmlElementMLClassNameList::XmlElementMLClassNameList (XmlTagPtr      tag,
     if  (typeid (*t) == typeid(XmlContent))
     {
       XmlContentPtr  contentToken = dynamic_cast<XmlContentPtr> (t);
-      KKStrConstPtr  s = contentToken->Content ();
-      if  (s)
+      KKStrConstPtr  contentStr = contentToken->Content ();
+      if  (contentStr)
       {
-        KKStrParser p (*s);
+        KKStrParser p (*contentStr);
         p.TrimWhiteSpace (" ");
         while  (p.MoreTokens ())
         {
@@ -1513,41 +1473,38 @@ void  XmlElementMLClassNameList::WriteXML (const MLClassList&  mlClassList,
   o << endl;
 }
  
+
 XmlFactoryMacro(MLClassNameList)
 
 
-
-
-
-
-
-
-
 MLClassIndexList::MLClassIndexList ():
-   largestIndex (-1)
+   largestIndex (-1),
+   shortIdx ()
 {
 }
 
 
-MLClassIndexList::MLClassIndexList (const  MLClassIndexList&  _list)
+
+MLClassIndexList::MLClassIndexList (const  MLClassIndexList&  _list):
+  std::map<MLClassPtr, kkint16>(),
+  largestIndex (-1),
+  shortIdx ()
 {
-  const_iterator  idx;
   bool  dupEntry = false;
-  for  (idx = _list.begin ();  idx != _list.end ();  idx++)
-  {
+  for  (auto idx = _list.begin ();  idx != _list.end ();  idx++)
     AddClassIndexAssignment (idx->first, idx->second, dupEntry);
-  }
 }  
 
 
 
 MLClassIndexList::MLClassIndexList (const MLClassList&  classes):
-    largestIndex(-1)
+    largestIndex (-1),
+    shortIdx ()
 {
   MLClassList::const_iterator  idx;
   for  (idx = classes.begin ();  idx != classes.end ();  idx++)
   {
-    largestIndex++;
+    ++largestIndex;
     insert   (pair<MLClassPtr, kkint16> (*idx, largestIndex));
     shortIdx.insert (pair<kkint16, MLClassPtr> (largestIndex, *idx));
   }
@@ -1561,8 +1518,6 @@ void  MLClassIndexList::Clear ()
   shortIdx.clear ();
   largestIndex = 0;
 }
-
-
 
 
 
@@ -1586,7 +1541,7 @@ void  MLClassIndexList::AddClass (MLClassPtr  _ic,
     return;
   }
 
-  kkint32  index = largestIndex + 1;
+  kkint16  index = (kkint16)(largestIndex + 1);
   largestIndex = index;
 
   insert (pair<MLClassPtr, kkint16> (_ic, index));
@@ -1620,7 +1575,7 @@ void  MLClassIndexList::AddClassIndexAssignment (MLClassPtr _ic,
 
 kkint16  MLClassIndexList::GetClassIndex (MLClassPtr  c)
 {
-  kkint32  index = -1;
+  kkint16  index = -1;
   map<MLClassPtr, kkint16>::iterator p;
   p = find (c);
   if  (p == end ())
@@ -1645,6 +1600,17 @@ MLClassPtr  MLClassIndexList::GetMLClass (kkint16  classIndex)
 
 
 
+MLClassPtr  MLClassIndexList::GetMLClass (kkint32 classIndex)
+{
+  if (classIndex > int16_max)
+  {
+    KKStr errMsg (256);
+    errMsg << "MLClassIndexList::GetMLClass   classIndex[" << classIndex << "] exceeds max kjint16[" << int16_max << "] supported.";
+    throw KKException (errMsg);
+  }
+  return GetMLClass ((kkint16)classIndex);
+}
+
 
 void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
                                              RunLog&       log
@@ -1656,7 +1622,7 @@ void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
   parser.TrimWhiteSpace (" ");
   while  (parser.MoreTokens ())
   {
-    kkint32  classIndex = -1;
+    kkint16  classIndex = -1;
     KKStr className = parser.GetNextToken (",:");
     if  (parser.LastDelimiter () == ',')
     {
@@ -1684,8 +1650,6 @@ void  MLClassIndexList::ParseClassIndexList (const KKStr&  s,
 
 
 
-
-
 KKStr  MLClassIndexList::ToCommaDelString ()  const
 {
   KKStr  delStr (255);
@@ -1700,12 +1664,14 @@ KKStr  MLClassIndexList::ToCommaDelString ()  const
 }  /* ToCommaDelString */
 
 
+
 void  MLClassIndexList::ReadXML (XmlStream&      s,
                                  XmlTagConstPtr  tag,
                                  VolConstBool&   cancelFlag,
                                  RunLog&         log
                                 )
 {
+  log.Level (30) << "MLClassIndexList::ReadXML  tag->Name: " << tag->Name () << endl;
   largestIndex = -1;
   shortIdx.clear ();
 
@@ -1730,6 +1696,7 @@ void  MLClassIndexList::ReadXML (XmlStream&      s,
 }  /* ReadXML */
 
 
+
 void  MLClassIndexList::WriteXML (const KKStr&  varName,
                                   ostream&      o
                                  )  const
@@ -1748,4 +1715,3 @@ void  MLClassIndexList::WriteXML (const KKStr&  varName,
 
 
 XmlFactoryMacro(MLClassIndexList)
-

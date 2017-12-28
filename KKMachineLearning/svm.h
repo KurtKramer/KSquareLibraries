@@ -176,7 +176,9 @@ struct SvmModel233
 
   SvmModel233 (const SvmModel233& _model)
   {
-    throw KKException ("SvmModel233::SvmModel233 (const   SvmModel233& _model)  ***ERROR***  Not Supported");
+    KKStr errMsg (256);
+    errMsg << "SvmModel233::SvmModel233 (const   SvmModel233& _model)  ***ERROR***  Not Supported;  examples: " << _model.l;
+    throw KKException (errMsg);
   }
 
 

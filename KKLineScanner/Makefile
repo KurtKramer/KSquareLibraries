@@ -1,11 +1,12 @@
 CXX = g++
 CXX_FLAGS = -Wfatal-errors -Wall -Wextra -Wpedantic -Wconversion -Wshadow -std=gnu++11
-INCLUDES = $(KSquareHome)/KKBase
+#INCLUDES = $(KSquareHome)/KKBase
+INCLUDES = ../KKBase
 
 # Final binary
 BIN = libKKLineScanner.a
 # Put all auto generated stuff to this build dir.
-BUILD_DIR = ./debug
+BUILD_DIR = ./Debug
 
 FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
 LIBS = -lfftw -lrt

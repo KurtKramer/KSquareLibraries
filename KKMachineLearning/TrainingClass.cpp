@@ -32,6 +32,7 @@ TrainingClass::TrainingClass ():
 }
 
 
+
 TrainingClass::TrainingClass (const VectorKKStr&        _directories,
                               KKStr                     _name,
                               float                     _weight,
@@ -44,7 +45,13 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
                 featureFileName (_name),
                 mlClass         (NULL),
                 weight          (_weight),
-                subClassifier   (_subClassifier)
+                subClassifier   (_subClassifier),
+                classNameLineNum     (-1),
+                countFactorLineNum   (-1),
+                dirLineNum           (-1),
+                subClassifierLineNum (-1),
+                weightLineNum        (-1)
+ 
 {
   featureFileName << ".data";   // Will be equal to ClassName + ".data".     ex:  "Copepods.data"
 
@@ -55,18 +62,26 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
 
 
 TrainingClass::TrainingClass (const TrainingClass&  tc): 
-    countFactor     (tc.countFactor),
-    directories     (tc.directories),
-    featureFileName (tc.featureFileName),
-    mlClass         (tc.mlClass),
-    subClassifier   (NULL),
-    weight          (tc.weight)
+    countFactor           (tc.countFactor),
+    directories          (tc.directories),
+    featureFileName      (tc.featureFileName),
+    mlClass              (tc.mlClass),
+    subClassifier        (NULL),
+    weight               (tc.weight),
+    classNameLineNum     (tc.classNameLineNum),
+    countFactorLineNum   (tc.countFactorLineNum),
+    dirLineNum           (tc.dirLineNum),
+    subClassifierLineNum (tc.subClassifierLineNum),
+    weightLineNum        (tc.weightLineNum)
 {
 }
+
+
 
 TrainingClass::~TrainingClass ()
 {
 }
+
 
 
 const 
@@ -74,7 +89,6 @@ KKStr&    TrainingClass::Name () const
 {
   return  mlClass->Name ();
 }
-
 
 
 
@@ -87,11 +101,11 @@ const KKStr&  TrainingClass::Directory  (kkuint32 idx) const
 }
 
 
+
 kkuint32  TrainingClass::DirectoryCount () const
 {
   return  (kkuint32)directories.size ();
 }
-
 
 
 
@@ -111,7 +125,6 @@ void  TrainingClass::AddDirectories  (const VectorKKStr&  _directories)
 
 
 
-
 void  TrainingClass::Directory (kkuint32      idx, 
                                 const KKStr&  directory
                                )
@@ -125,7 +138,7 @@ void  TrainingClass::Directory (kkuint32      idx,
 
 KKStr  TrainingClass::ExpandedDirectory (const KKStr&  rootDir,
                                          kkuint32      idx
-                                        )
+                                        )  const
 {
   KKStr  rootDirWithSlash = "";
   if  (!rootDir.Empty ())
@@ -222,6 +235,12 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
   if  (subClassifier)
     startTag.AddAtribute ("SubClassifier", SubClassifierName ());
 
+  startTag.AddAtribute ("ClassNameLineNum",     classNameLineNum);
+  startTag.AddAtribute ("CountFactorLineNum",   countFactorLineNum);
+  startTag.AddAtribute ("DirLineNum",           dirLineNum);
+  startTag.AddAtribute ("SubClassifierLineNum", subClassifierLineNum);
+  startTag.AddAtribute ("WeightLineNum",        weightLineNum);
+
   startTag.WriteXML (o);
   o << endl;
 
@@ -264,6 +283,21 @@ void  TrainingClass::ReadXML (XmlStream&      s,
 
     else if  (n.EqualIgnoreCase ("SubClassifier"))
       SubClassifierName (v);
+
+    else if (n.EqualIgnoreCase ("ClassNameLineNum"))
+      ClassNameLineNum (v.ToInt32());
+
+    else if (n.EqualIgnoreCase ("CountFactorLineNum"))
+      CountFactorLineNum (v.ToInt32 ());
+
+    else if (n.EqualIgnoreCase ("DirLineNum"))
+      DirLineNum (v.ToInt32 ());
+
+    else if (n.EqualIgnoreCase ("SubClassifierLineNum"))
+      SubClassifierLineNum (v.ToInt32 ());
+
+    else if (n.EqualIgnoreCase ("WeightLineNum"))
+      WeightLineNum (v.ToInt32 ());
   }
 
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);

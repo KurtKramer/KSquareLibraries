@@ -106,6 +106,4 @@ namespace  KKLSC
     
   };  /* ScannerFileZLib3BitEncoded */
 }
-
 #endif
-

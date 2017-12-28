@@ -200,7 +200,7 @@ namespace KKMLL
     Model::ModelTypes      ModelType               () const  {return  modelingMethod;}
     KKStr                  ModelTypeStr            () const  {return  Model::ModelTypeToStr (modelingMethod);}
     MLClassPtr             NoiseMLClass            () const  {return  noiseMLClass;}
-    const TrainingClassPtr NoiseTrainingClass      () const  {return  noiseTrainingClass;}
+    TrainingClassConstPtr  NoiseTrainingClass      () const  {return  noiseTrainingClass;}
 
     kkint32                NumOfRounds             () const  {return  Number_of_rounds ();}
     kkint32                Number_of_rounds        () const;
@@ -212,16 +212,14 @@ namespace KKMLL
     const TrainingClassList&       TrainingClasses   () const {return  trainingClasses;}
     ModelParamPtr          ModelParameters         () const {return  modelParameters;}
     KKStr                  ModelParameterCmdLine   () const;
-    kkuint32               NumHierarchialLevels    () const;  /**< returns back the number of hierarchical levels thereare in the trainingClass that has the most. */
+    kkuint32               NumHierarchialLevels    () const;  /**< returns back the number of hierarchical levels there are in the trainingClass that has the most. */
     SVM_SelectionMethod    SelectionMethod         () const;
     const SVMparam&        SVMparamREF             (RunLog&  log) const;
 
 
-
-    const
-    BinaryClassParmsPtr    GetParamtersToUseFor2ClassCombo (MLClassPtr       class1,
-                                                            MLClassPtr       class2
-                                                           )  const;
+    BinaryClassParmsConstPtr GetParamtersToUseFor2ClassCombo (MLClassPtr  class1,
+                                                              MLClassPtr  class2
+                                                             )  const;
 
 
     /** if BinaryClass parms exist for the two specified classes will return otherwise NULL. */
@@ -317,7 +315,7 @@ namespace KKMLL
                                     RunLog&         log
                                    );
 
-    virtual void           Save (const KKStr& fileName)  const;
+    virtual void           Save (const KKStr& saveFileName)  const;
 
     virtual void           Save (std::ostream&  o)  const;
 
@@ -377,7 +375,7 @@ namespace KKMLL
 
 
   private:
-    void                   BuildTrainingClassListFromDirectoryEntry (const KKStr&  rootDir,
+    void                   BuildTrainingClassListFromDirectoryEntry (const KKStr&  baseDirName,
                                                                      const KKStr&  subDir,
                                                                      bool&         successful,
                                                                      KKStr&        errorMessage,
@@ -399,11 +397,11 @@ namespace KKMLL
     void                   DetermineWhatTheRootDirectoryIs ();
 
     virtual
-    FeatureVectorListPtr   ExtractFeatures (const TrainingClassPtr  trainingClass,
-                                            KKB::DateTime&          latestTimeStamp,
-                                            bool&                   changesMade,
-                                            VolConstBool&           cancelFlag,
-                                            RunLog&                 log
+    FeatureVectorListPtr   ExtractFeatures (TrainingClassConstPtr  trainingClass,
+                                            KKB::DateTime&         latestTimeStamp,
+                                            bool&                  changesMade,
+                                            VolConstBool&          cancelFlag,
+                                            RunLog&                log
                                            );
 
     SVMparamPtr            SVMparamToUse ()  const;
@@ -420,8 +418,8 @@ namespace KKMLL
                                                   RunLog&  log
                                                  );
 
-    void                   ValidateOtherClass (MLClassPtr  otherClass,
-                                               kkint32     otherClassLineNum,
+    void                   ValidateOtherClass (MLClassPtr  classToValidate,
+                                               kkint32&    lineNum,
                                                RunLog&     log
                                               );
 
@@ -449,9 +447,9 @@ namespace KKMLL
     KKStr                  configRootName;
 
     kkint32                examplesPerClass;
+    FileDescConstPtr       fileDesc;
     FactoryFVProducerPtr   fvFactoryProducer;
     bool                   fvFactoryProducerSpecified;  /**< Indicates that a valid 'fvFactoryProducer' was specified in the configuration file. */
-    FileDescConstPtr       fileDesc;
     MLClassListPtr         mlClasses;
     bool                   mlClassesWeOwnIt;      /**< If we own it we will delete it in the destructor.  */
     ModelTypes             modelingMethod;

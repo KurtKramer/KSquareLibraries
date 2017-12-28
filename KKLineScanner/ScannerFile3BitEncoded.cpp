@@ -7,7 +7,7 @@
 #include <fstream>
 #include <map>
 #include <vector>
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
 using namespace std;
 
@@ -27,49 +27,49 @@ using namespace  KKLSC;
 
 struct  ScannerFile3BitEncoded::OpRecTextBlock  // OpCode = 0
 {
-  ushort  opCode          : 3;
-  ushort  endOfTextBlock  : 1;   /**< Last text block in message.  If a message requires more than   *
+  kkuint16  opCode          : 3;
+  kkuint16  endOfTextBlock  : 1;   /**< Last text block in message.  If a message requires more than   *
                                   *   4096 bytes it will be written in multiple text blocks with     *
                                   *   the last one having this flag set to '1'.                      */
-  ushort  length          : 12;  /**< Text Block length.  */
+  kkuint16  length          : 12;  /**< Text Block length.  */
 };  /* OpRecTextBlock */
 
 
 struct  ScannerFile3BitEncoded::OpRec4RawPixels   // OpCode = 1
 {
-  ushort  opCode :3;
-  ushort  eol    :1;
-  ushort  pix0   :3;
-  ushort  pix1   :3;
-  ushort  pix2   :3;
-  ushort  pix3   :3;
+  kkuint16  opCode :3;
+  kkuint16  eol    :1;
+  kkuint16  pix0   :3;
+  kkuint16  pix1   :3;
+  kkuint16  pix2   :3;
+  kkuint16  pix3   :3;
 };  /* OpRec4RawPixels */
 
 
 struct  ScannerFile3BitEncoded::OpRecSpaces     // OpCode = 2
 {
-  ushort  opCode     :3;
-  ushort  eol        :1;
-  ushort  num4Spaces :12;
+  kkuint16  opCode     :3;
+  kkuint16  eol        :1;
+  kkuint16  num4Spaces :12;
 };  /* OpRecSpaces */
 
 
 
 struct  ScannerFile3BitEncoded::OpRecBlackOuts  // OpCode = 3
 {
-  ushort  opCode        :3;
-  ushort  eol           :1;
-  ushort  num4BlackOuts :12;
+  kkuint16  opCode        :3;
+  kkuint16  eol           :1;
+  kkuint16  num4BlackOuts :12;
 };  /* OpRecBlackOuts */
 
 
 
 struct  ScannerFile3BitEncoded::OpRecRunLen     // OpCode = 4
 {
-  ushort  opCode  :3;
-  ushort  eol     :1;
-  ushort  runLen  :9;
-  ushort  pix     :3;
+  kkuint16  opCode  :3;
+  kkuint16  eol     :1;
+  kkuint16  runLen  :9;
+  kkuint16  pix     :3;
 };  /* OpRecBlackOuts */
 
 
@@ -158,11 +158,11 @@ void  ScannerFile3BitEncoded::BuildConversionTables ()
       kkint32  this8Bit = (kkint32)(0.5f + (float)x * inc);
       kkint32  next8Bit = (kkint32)(0.5f + (float)(x + 1) * inc);
 
-      kkint32  threeBitTo8BitNum = (kkint32)(this8Bit + (x / 7.0f)  * (next8Bit - this8Bit));
+      kkint32  threeBitTo8BitNum = (kkint32)((double)this8Bit + ((double)x / 7.0)  * (double)(next8Bit - this8Bit));
 
       convTable3BitTo8Bit[x] = (uchar)threeBitTo8BitNum;
       for  (y = this8Bit; y <= next8Bit;  ++y)
-        convTable8BitTo3Bit[y] = x;
+        convTable8BitTo3Bit[y] = (uchar)x;
     }
 
     compensationTable = new uchar[256];
@@ -487,14 +487,17 @@ void  ScannerFile3BitEncoded::WriteBufferFrame ()
 void  ScannerFile3BitEncoded::Write4Spaces (OpRecPtr&  outputBuffPtr,
                                             kkint32&   outputBuffUsed,
                                             kkint32&   num4SpacesInARow,
-                                            ushort     eol
+                                            kkuint16   eol
                                            )
 {
   if  (num4SpacesInARow > 0)
   {
+#include "DisableConversionWarning.h"
     outputBuffPtr->spaces.opCode     = 2;  // Spaces Code.
     outputBuffPtr->spaces.eol        = eol;
     outputBuffPtr->spaces.num4Spaces = num4SpacesInARow;
+#include "RestoreConversionWarning.h"
+
     ++outputBuffPtr;
     ++outputBuffUsed;
     num4SpacesInARow = 0;
@@ -506,14 +509,18 @@ void  ScannerFile3BitEncoded::Write4Spaces (OpRecPtr&  outputBuffPtr,
 void  ScannerFile3BitEncoded::Write4BlackOuts (OpRecPtr&  outputBuffPtr,
                                                kkint32&   outputBuffUsed,
                                                kkint32&   num4BlackOutsInARow,
-                                               ushort     eol
+                                               kkuint16     eol
                                               )
 {
   if  (num4BlackOutsInARow > 0)
   {
+
+#include "DisableConversionWarning.h"
     outputBuffPtr->blackOuts.opCode     = 3;  // Spaces Code.
     outputBuffPtr->blackOuts.eol        = eol;
     outputBuffPtr->blackOuts.num4BlackOuts = num4BlackOutsInARow;
+#include "RestoreConversionWarning.h"
+
     ++outputBuffPtr;
     ++outputBuffUsed;
     num4BlackOutsInARow = 0;
@@ -569,12 +576,15 @@ void  ScannerFile3BitEncoded::WriteNextScanLine (const uchar*  buffer,
       Write4Spaces (outputBuffPtr, outputBuffUsed, num4SpacesInARow, 0);
       Write4BlackOuts (outputBuffPtr, outputBuffUsed, num4BlackOutsInARow, 0);
 
+#include "DisableConversionWarning.h"
       outputBuffPtr->rawPixels.opCode = 1;
       outputBuffPtr->rawPixels.eol    = 0;
       outputBuffPtr->rawPixels.pix0 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix1 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix2 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix3 = workLine[x];  ++x;
+#include "RestoreConversionWarning.h"
+
       ++outputBuffPtr;
       ++outputBuffUsed;
       workLinePtr += 4;
@@ -594,8 +604,6 @@ void  ScannerFile3BitEncoded::WriteNextScanLine (const uchar*  buffer,
 
   fileSizeInBytes = osFTELL (file);
 }  /* WriteNextScanLine */
-
-
 
 
 
@@ -651,10 +659,13 @@ void  ScannerFile3BitEncoded::WriteNextScanLine2 (const uchar*  buffer,
       outputBuffPtr->rawPixels.opCode = 1;
       outputBuffPtr->rawPixels.eol    = 0;
 
+#include "DisableConversionWarning.h"
       outputBuffPtr->rawPixels.pix0 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix1 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix2 = workLine[x];  ++x;
       outputBuffPtr->rawPixels.pix3 = workLine[x];  ++x;
+#include "RestoreConversionWarning.h"
+
       ++outputBuffPtr;
       ++outputBuffUsed;
       workLinePtr += 4;
@@ -689,10 +700,14 @@ void  ScannerFile3BitEncoded::WriteTextBlock (const uchar*  txtBlock,
   while  (charsLeft > 0)
   {
     kkint32  charsToWrite = Min (4096, charsLeft);
+
+#include "DisableConversionWarning.h"
     OpRec  rec;
     rec.textBlock.opCode         = 0;
     rec.textBlock.endOfTextBlock = (charsToWrite < charsLeft) ? 0 : 1;
-    rec.textBlock.length         = charsToWrite;
+    rec.textBlock.length         = (kkuint16)charsToWrite;
+#include "RestoreConversionWarning.h"
+
     fwrite (&rec, sizeof (rec), 1, file);
     fwrite (txtBlockPtr, 1, charsToWrite, file);
     charsLeft -= charsToWrite;

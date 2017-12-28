@@ -1029,3 +1029,14 @@ void  Model::ReadXMLModelPost (RunLog&  log)
 }  /* ReadXMLModelPost */
 
 
+
+void  Model::PredictRaw (FeatureVectorPtr  example,
+  MLClassPtr&       predClass,
+  double&           dist
+)
+{
+  example->ExampleFileName ();
+  predClass = NULL;
+  dist = 0.0;
+}
+

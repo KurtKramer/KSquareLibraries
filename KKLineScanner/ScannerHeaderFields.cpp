@@ -1,15 +1,15 @@
-#include  "FirstIncludes.h"
-#include  <stdio.h>
-#include  <errno.h>
-#include  <string.h>
-#include  <ctype.h>
+#include "FirstIncludes.h"
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <ctype.h>
 
-#include  <iostream>
-#include  <fstream>
-#include  <map>
-#include  <vector>
+#include <iostream>
+#include <fstream>
+#include <map>
+#include <vector>
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 using namespace std;
 
 #include "GoalKeeper.h"

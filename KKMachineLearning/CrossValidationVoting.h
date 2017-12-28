@@ -84,7 +84,7 @@ namespace  KKMLL
     double  TrainingTime              ()  const {return  trainingTime;}
 
   private:
-    void  AllocateMemory (RunLog&  log);
+    void  AllocateMemory ();
 
     void  CrossValidate (FeatureVectorListPtr   testImages, 
                          FeatureVectorListPtr   trainingExamples,

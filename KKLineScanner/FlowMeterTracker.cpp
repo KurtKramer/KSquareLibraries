@@ -175,8 +175,8 @@ float  FlowMeterTracker::FlowRateInstantaneous ()
   kkint32 tics      = lastPtr->counterValue - prevPtr->counterValue;
   kkint32 scanLines = lastPtr->scanLineNum  - prevPtr->scanLineNum;
 
-  float meters = tics / ticsPerMeter;
-  float secs   = scanLines / scanRate;
+  float meters = (float)tics / ticsPerMeter;
+  float secs   = (float)scanLines / scanRate;
 
   return  meters / secs;
 }  /* FlowRateInstantaneous */
@@ -198,8 +198,8 @@ float  FlowMeterTracker::FlowRateTrend ()
   if  ((tics == 0)  ||  (scanLines == 0))
     return 0.0f;
 
-  float meters = tics / ticsPerMeter;
-  float secs   = scanLines / scanRate;
+  float meters = (float)tics / ticsPerMeter;
+  float secs   = (float)scanLines / scanRate;
 
   return  meters / secs;
 }  /* FlowRateTrend */
@@ -257,7 +257,7 @@ float  FlowMeterTracker::ComputeFlowRateFromFlowRateRatio (float _flowRateRatio)
     return  flowRateDefault;
 
   //float  flowRate = (imagingWidthMeters * scanRate) / (_flowRateRatio * imagingWidthPixels);
-  float  flowRate = (_flowRateRatio  * scanRate * imagingWidthMeters)  / imagingWidthPixels;
+  float  flowRate = (_flowRateRatio  * scanRate * imagingWidthMeters)  / (float)imagingWidthPixels;
 
   return  flowRate;
 }
@@ -270,7 +270,7 @@ float  FlowMeterTracker::ComputeFlowRateRatioFromFlowRate (float _flowRate)
     return  flowRateRatioDefault;
 
   //float  flowRateRatio = (imagingWidthMeters * scanRate) / (_flowRate * imagingWidthPixels);
-  float  flowRateRatio = (_flowRate * imagingWidthPixels) / (imagingWidthMeters * scanRate);
+  float  flowRateRatio = (_flowRate * (float)imagingWidthPixels) / (imagingWidthMeters * scanRate);
 
   return flowRateRatio;
 }

@@ -15,7 +15,6 @@
 
 #include "MemoryDebug.h"
 
-
 #ifdef WIN32
 #include <windows.h>
 #else
@@ -38,23 +37,21 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
-
 Classifier2::Classifier2 (TrainingProcess2Ptr  _trainer,
                           RunLog&              _log
                          ):
-
   abort                     (false),
-  classifierClassIndex      (),
   classClassifierIndex      (),
-  featuresAlreadyNormalized (false),
-  mlClasses                 (NULL),
-  log                       (_log),
-  subClassifiers            (NULL),
+  classifierClassIndex      (),
   configRootName            (),
+  featuresAlreadyNormalized (false),
+  log                       (_log),
+  mlClasses                 (NULL),
+  noiseMLClass              (NULL),
+  subClassifiers            (NULL),
   trainedModel              (NULL),
   trainedModelOldSVM        (NULL),
   trainedModelSVMModel      (NULL),
-  noiseMLClass              (NULL),
   trainingProcess           (_trainer),
   unKnownMLClass            (NULL)
 {
@@ -146,10 +143,6 @@ ClassProbList const *  Classifier2::PriorProbability ()  const
 
 
 
-
-
-
-
 MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
                                                  double&         probability,
                                                  kkint32&        numOfWinners, 
@@ -195,25 +188,24 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
     predictedClass = unKnownMLClass;
   }
 
-
   if  (subClassifiers)
   {
     Classifier2Ptr  subClassifer = LookUpSubClassifietByClass (predictedClass);
-    if  (subClassifer)
-  {
+    if (subClassifer)
+    {
       double  subProbability = 0.0;
       kkint32 subNumOfWinners = 0;
       double  subBreakTie = 0.0;
       /**@todo  make sure that the following call does not normalize the features. */
-      MLClassPtr       subPrediction 
+      MLClassPtr       subPrediction
         = subClassifer->ClassifyAImageOneLevel (example, subProbability, subNumOfWinners, knownClassOneOfTheWinners, subBreakTie);
-      if  (subPrediction)
+      if (subPrediction)
       {
         probability = probability * subProbability;
         numOfWinners = numOfWinners + subNumOfWinners;
         breakTie += subBreakTie * (1.0 - breakTie);
       }
-  }
+    }
   }
 
   if  (predictedClass->UnDefined ())
@@ -223,7 +215,6 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
 
   return  predictedClass;
 }  /* ClassifyAImageOneLevel */
-
 
 
 
@@ -241,7 +232,6 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example)
                                   breakTie
                                 );
 }  /* ClassifyAImageOneLevel */
-
 
 
 
@@ -263,21 +253,17 @@ MLClassPtr  Classifier2::ClassifyAImageOneLevel (FeatureVector&  example,
 
 
 
-
-
-
-
 void  Classifier2::ClassifyAExample (FeatureVector&  example,
-                                   MLClassPtr&     predClass1,
-                                   MLClassPtr&     predClass2,
-                                   kkint32&        predClass1Votes,
-                                   kkint32&        predClass2Votes,
-                                   double&         knownClassProb,
-                                   double&         predClass1Prob,
-                                   double&         predClass2Prob,
-                                   kkint32&        numOfWinners,
-                                   double&         breakTie
-                                  )
+                                     MLClassPtr&     predClass1,
+                                     MLClassPtr&     predClass2,
+                                     kkint32&        predClass1Votes,
+                                     kkint32&        predClass2Votes,
+                                     double&         knownClassProb,
+                                     double&         predClass1Prob,
+                                     double&         predClass2Prob,
+                                     kkint32&        numOfWinners,
+                                     double&         breakTie
+                                    )
 {
   bool   knownClassOneOfTheWiners = false;
 
@@ -368,8 +354,6 @@ void  Classifier2::ClassifyAExample (FeatureVector&  example,
 
 
 
-
-
 MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
                                          double&         probability,
                                          kkint32&        numOfWinners,
@@ -409,14 +393,12 @@ MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example,
 
 
 
-
 MLClassPtr  Classifier2::ClassifyAExample (FeatureVector&  example)
 {
   kkint32 numOfWinners = 0;
   bool   knownClassOneOfTheWinners = false;
   return  ClassifyAExample (example, numOfWinners, knownClassOneOfTheWinners);
 }
-
 
 
 
@@ -437,8 +419,6 @@ vector<KKStr>  Classifier2::SupportVectorNames (MLClassPtr  c1,
 
 
 
-
-
 vector<ProbNamePair>  Classifier2::FindWorstSupportVectors (FeatureVectorPtr  example,
                                                             kkint32           numToFind,
                                                             MLClassPtr        c1,
@@ -454,7 +434,6 @@ vector<ProbNamePair>  Classifier2::FindWorstSupportVectors (FeatureVectorPtr  ex
   return  trainedModelSVMModel->FindWorstSupportVectors (example, numToFind, c1, c2);
 }
 
- 
 
 
 vector<ProbNamePair>  Classifier2::FindWorstSupportVectors2 (FeatureVectorPtr  example,
@@ -491,7 +470,6 @@ void  Classifier2::PredictRaw (FeatureVectorPtr  example,
 
 
 
-
 void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
                                          FeatureVectorPtr   example,
                                          kkint32*           votes,
@@ -520,7 +498,6 @@ void  Classifier2::ProbabilitiesByClass (const MLClassList& classes,
 
 
 
-
 MLClassListPtr  Classifier2::PredictionsThatHaveSubClassifier (ClassProbListPtr  predictions)
 {
   MLClassListPtr  classes = new MLClassList ();
@@ -535,9 +512,6 @@ MLClassListPtr  Classifier2::PredictionsThatHaveSubClassifier (ClassProbListPtr 
 
   return  classes;
 }  /* PredictionsThatHaveSubClassifier */
-
-
-
 
 
 
@@ -559,7 +533,6 @@ ClassProbListPtr  Classifier2::GetListOfPredictionsForClassifier (Classifier2Ptr
   }
   return  subPredictions;
 }  /* GetListOfPredictionsForClassifier */
-
 
 
 
@@ -606,8 +579,6 @@ ClassProbListPtr  Classifier2::ProcessSubClassifersMethod1 (FeatureVectorPtr  ex
 
   return results;
 }  /* ProcessSubClassifersMethod1 */
-
-
 
 
 
@@ -665,9 +636,6 @@ ClassProbListPtr  Classifier2::ProcessSubClassifersMethod2 (FeatureVectorPtr   e
 
 
 
-
-
-
 ClassProbListPtr  Classifier2::ProbabilitiesByClass (FeatureVectorPtr  example)
 {
   if  (!trainedModel)
@@ -687,17 +655,13 @@ ClassProbListPtr  Classifier2::ProbabilitiesByClass (FeatureVectorPtr  example)
 
 
 
-
-
 void  Classifier2::RetrieveCrossProbTable (MLClassList&  classes,
                                            double**      crossProbTable  // two dimension matrix that needs to be classes.QueueSize ()  squared.
                                           )
 {
   if  (trainedModel)
     trainedModel->RetrieveCrossProbTable (classes, crossProbTable, log);
-  }
-
-
+}
 
 
 
@@ -711,8 +675,6 @@ void  Classifier2::ProbabilitiesByClassDual (FeatureVectorPtr   example,
   if  (trainedModel)
     trainedModel->ProbabilitiesByClassDual (example, classifier1Desc, classifier2Desc, classifier1Results, classifier2Results, log);
 }
-
-
 
 
 
@@ -749,17 +711,15 @@ void  Classifier2::BuildSubClassifierIndex ()
     
     const TrainingClassList&  trainClasses = config->TrainingClasses ();
     TrainingClassList::const_iterator  idx;
-    for  (idx = trainClasses.begin ();  idx != trainClasses.end ();  ++idx)
+    for  (auto tcp: trainClasses)
     {
-      TrainingClassPtr  tcp = *idx;
       if  (tcp->SubClassifier () != NULL)
       {
         Classifier2Ptr  subClassifier = subClassifiers->LookUpByName (tcp->SubClassifier ()->ConfigRootName ());
         if  (subClassifier)
         {
-          ClassClassifierIndexType::const_iterator  idx;
-          idx = classClassifierIndex.find (tcp->MLClass ());
-          if  (idx == classClassifierIndex.end ())
+          ClassClassifierIndexType::const_iterator  idx2 = classClassifierIndex.find (tcp->MLClass ());
+          if  (idx2 == classClassifierIndex.end ())
             classClassifierIndex.insert (ClassClassifierPair (tcp->MLClass (), subClassifier));
           classifierClassIndex.insert (ClassifierClassPair (subClassifier, tcp->MLClass ()));
         }
@@ -767,7 +727,6 @@ void  Classifier2::BuildSubClassifierIndex ()
     }
   }
 }  /* BuildSubClassifierIndex */
-
 
 
 
@@ -780,9 +739,6 @@ Classifier2Ptr  Classifier2::LookUpSubClassifietByClass (MLClassPtr       c)
   else
     return idx->second;
 }  /* LookUpSubClassifietByClass */
-
-
-
 
 
 
@@ -810,5 +766,3 @@ Classifier2Ptr  Classifier2List::LookUpByName (const KKStr&  rootName)  const
   }
   return NULL;
 }  /* LookUpByName */
-
-

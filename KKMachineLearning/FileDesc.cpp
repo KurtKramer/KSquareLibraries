@@ -65,14 +65,12 @@ FileDesc::FileDesc ():
 {
 }
 
-    
 
-
-    
+   
 FileDesc::~FileDesc ()
 {
-  kkint32  ZED = 7887;
 }
+
 
 
 kkMemSize  FileDesc::MemoryConsumedEstimated ()  const
@@ -127,18 +125,13 @@ void  FileDesc::AddAAttribute (const Attribute&  attribute)
 
 
 
-
-
-void  FileDesc::AddAttributes (const KKMLL::AttributeList&  attributes)
+void  FileDesc::AddAttributes (const KKMLL::AttributeList&  attributesToAdd)
 {
-  AttributeList::const_iterator  idx;
-  for  (idx = attributes.begin ();  idx != attributes.end ();  ++idx)
+  for  (auto idx = attributesToAdd.begin ();  idx != attributesToAdd.end ();  ++idx)
   {
     AddAAttribute (**idx);
   }
 }
-
-
 
 
 
@@ -168,7 +161,6 @@ void  FileDesc::AddAAttribute (const KKStr&   _name,
 
 
 
-
 void  FileDesc::AddClasses (const MLClassList&  classesToAdd)
 {
   MLClassList::const_iterator  idx;
@@ -182,7 +174,6 @@ void  FileDesc::AddClasses (const MLClassList&  classesToAdd)
 
 
 
-
 const Attribute&  FileDesc::GetAAttribute (kkint32 fieldNum) const
 {
   ValidateFieldNum (fieldNum, "GetAAttribute");
@@ -192,11 +183,9 @@ const Attribute&  FileDesc::GetAAttribute (kkint32 fieldNum) const
 
 
 
-
 void  FileDesc::AddANominalValue (kkint32       fieldNum,
                                   const KKStr&  nominalValue,
-                                  bool&         alreadyExist,
-                                  RunLog&       log
+                                  bool&         alreadyExist
                                  )
                         
 {
@@ -211,7 +200,6 @@ void  FileDesc::AddANominalValue (kkint32       fieldNum,
       cardinalityVector[fieldNum]++;
   }
 }  /* AddANominalValue */
-
 
 
 
@@ -236,15 +224,14 @@ void  FileDesc::AddANominalValue (const KKStr&   nominalValue,
 
 
 
-
 void  FileDesc::AddANominalValue (const KKStr&   attributeName,
                                   const KKStr&   nominalValue,
                                   bool&          alreadyExist,
                                   RunLog&        log
                                  )
 {
-  auto curAttribute = attributes.LookUpByName (attributeName);
-  if  (!curAttribute)
+  auto existingAttribute = attributes.LookUpByName (attributeName);
+  if  (!existingAttribute)
   {
     KKStr  errMsg (128);
     errMsg << "FileDesc::AddANominalValue   ***ERROR***,   Invalid Attribute[" << attributeName << "].";
@@ -293,7 +280,6 @@ void  FileDesc::ValidateFieldNum (kkint32      fieldNum,
 
 
 
-
 kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum, 
                                      const KKStr&  nominalValue
                                     )  const
@@ -309,8 +295,6 @@ kkint32 FileDesc::LookUpNominalCode (kkint32       fieldNum,
 
   return  a.GetNominalCode (nominalValue);
 }  /* LookUpNominalCode */
-
-
 
 
 
@@ -359,7 +343,6 @@ KKStr   FileDesc::TypeStr (kkint32 fieldNum)  const
 
 
 
-
 const KKStr&     FileDesc::FieldName (kkint32  fieldNum)  const
 {
   ValidateFieldNum (fieldNum, "FieldName");
@@ -368,7 +351,7 @@ const KKStr&     FileDesc::FieldName (kkint32  fieldNum)  const
 
 
 
-const KKStr&     FileDesc::GetNominalValue (kkint32  fieldNum, 
+const KKStr&   FileDesc::GetNominalValue (kkint32  fieldNum, 
                                             kkint32  code
                                            ) const
 {
@@ -378,18 +361,26 @@ const KKStr&     FileDesc::GetNominalValue (kkint32  fieldNum,
 
 
 
-
-
-const
-AttributePtr*  FileDesc::CreateAAttributeTable ()  const
+AttributePtr*  FileDesc::CreateAAttributeTable ()
 {
   AttributePtr*  table = new AttributePtr[attributes.QueueSize ()];
-
   for  (kkint32 x = 0;  x < attributes.QueueSize ();  x++)
     table[x] = attributes.IdxToPtr (x);
   
   return  table;
 }  /* CreateAAttributeTable */
+
+
+
+AttributeConstPtr*  FileDesc::CreateAAttributeConstTable ()  const
+{
+  AttributeConstPtr*  table = new AttributeConstPtr[attributes.QueueSize ()];
+  for (kkint32 x = 0; x < attributes.QueueSize (); x++)
+    table[x] = attributes.IdxToPtr (x);
+
+  return  table;
+}
+
 
 
 AttributeTypeVector  FileDesc::CreateAttributeTypeTable ()  const
@@ -411,8 +402,6 @@ VectorInt32   FileDesc::CreateCardinalityTable ()  const
     cardinalityTable[x] = attributes[x].Cardinality ();
   return cardinalityTable;
 }  /* CreateCardinalityTable */
-
-
 
 
 
@@ -439,9 +428,6 @@ bool  FileDesc::operator!= (const FileDesc&  rightSide)  const
 
   return  false;  
 } /* operator== */
-
-
-
 
 
 
@@ -500,9 +486,6 @@ bool  FileDesc::SameExceptForSymbolicData (const FileDesc&  otherFd,
 
   return  same;
 }  /* SameExceptForSymbolicData */
-
-
-
 
 
 
@@ -573,8 +556,6 @@ FileDescConstPtr  FileDesc::GetExistingFileDesc (FileDescConstPtr  fileDesc)
 
   return  result;
 } /* GetExistingFileDesc */
-
-
 
 
 
@@ -649,7 +630,6 @@ AttributeConstPtr  FileDesc::LookUpByName (const KKStr&  attributeName)  const
 
 
 
-
 kkint32  FileDesc::GetFieldNumFromAttributeName (const KKStr&  attributeName)  const
 {
   auto  a = attributes.LookUpByName (attributeName);
@@ -678,8 +658,6 @@ bool  FileDesc::AllFieldsAreNumeric ()  const
   
   return  true;
 }  /* AllFieldsAreNumeric */
-
-
 
 
 
@@ -759,13 +737,13 @@ FileDescConstPtr  FileDesc::MergeSymbolicFields (const FileDesc&  left,
 
 
 
-
 void  FileDesc::ReadXML (XmlStream&      s,
                          XmlTagConstPtr  tag,
                          VolConstBool&   cancelFlag,
                          RunLog&         log
                         )
 {
+  log.Level (50) << "FileDesc::ReadXML    tag->Name: " << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
@@ -833,8 +811,6 @@ void  FileDesc::ReadXML (XmlStream&      s,
 
 
 
-
-
 void  FileDesc::WriteXML (const KKStr&  varName,
                           ostream&      o
                          )  const
@@ -890,11 +866,13 @@ XmlElementFileDesc::~XmlElementFileDesc ()
   value = NULL;
 }
 
- 
+
+
 FileDescConstPtr  XmlElementFileDesc::Value ()  const
 {
   return  value;
 }
+
 
 
 FileDescConstPtr  XmlElementFileDesc::TakeOwnership ()

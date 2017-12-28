@@ -29,12 +29,11 @@ namespace KKMLL
 
 
 
-
-
   #ifndef  _ConfussionMatrix2_
   class  ConfusionMatrix2;
   typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
-  #endif
+  typedef  ConfusionMatrix2 const *  ConfusionMatrix2ConstPtr;
+#endif
 
 
   #ifndef  _CROSSVALIDATION_
@@ -86,8 +85,7 @@ namespace KKMLL
 
     ~CrossValidationMxN ();
 
-    const
-    ConfusionMatrix2Ptr    ConfussionMatrix ()  const;
+    ConfusionMatrix2ConstPtr  ConfussionMatrix ()  const;
 
     void  RunTrainAndTest (kkint32  numExamplsToUseForTraining,
                            RunLog&  log

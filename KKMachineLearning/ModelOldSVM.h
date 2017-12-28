@@ -225,7 +225,7 @@ namespace KKMLL
                                            )  const;
 
 
-    void  RetrieveCrossProbTable (MLClassList&  classes,
+    void  RetrieveCrossProbTable (MLClassList&  classesOfInterest,
                                   double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                   RunLog&       log
                                  );

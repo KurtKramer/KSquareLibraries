@@ -221,6 +221,8 @@ namespace KKMLL
 
   typedef  MLClass*  MLClassPtr;
 
+  typedef  MLClass const *  MLClassConstPtr;
+
 
 
 
@@ -235,36 +237,31 @@ namespace KKMLL
   public:
     MLClassList ();
 
-
     /**  @brief  Copy constructor;  will copy list but not own the contents. */
     MLClassList (const MLClassList&  _mlClasses);
     
-
-
     /** @brief Construct a MLClassList object from the contents of a file. */
     MLClassList (const  KKStr&  fileName,
                  bool&  successfull
                 );
 
-
     virtual
     ~MLClassList ();
-
 
     virtual
     void   AddMLClass (MLClassPtr  _mlClass);
 
-
     static
     MLClassListPtr  BuildListFromDelimtedStr (const KKStr&  s,
-                                              char          delimiter
+                                              char          delimiter = ','
                                              );
 
 
     /** @brief  Clears the contents of this list and updates nameIndex structure. */
     virtual
       void  Clear ();
-      
+
+    virtual void     DeleteContents ();
 
     MLClassListPtr   ExtractMandatoryClasses ()  const;
 
@@ -302,7 +299,7 @@ namespace KKMLL
     KKStr   ExtractHTMLTableHeader () const;
 
 
-    MLClassListPtr  ExtractListOfClassesForAGivenHierarchialLevel (kkint32 level);
+    MLClassListPtr  ExtractListOfClassesForAGivenHierarchialLevel (kkint16 level);
 
 
     /** @brief  return pointer to instance with '_name';  if none exists, create one and add to list. */
@@ -406,8 +403,8 @@ namespace KKMLL
                              bool&          successful
                             );
 
-    typedef  std::map<KKStr,MLClassPtr>   NameIndex;
-    NameIndex     nameIndex;
+    typedef  std::map<KKStr,MLClassPtr>  NameIndex;
+    NameIndex  nameIndex;
 
     /**
      *@brief  Set the owner flag.
@@ -442,14 +439,11 @@ namespace KKMLL
 
 
 
-
-
-
   /**
    *@class  MLClassIndexList
    *@brief  Maintains a list of classes and their associated integer index.  
    *@details 
-   *  Multiple Classes can have the same index but a class may only appear once in the list.  The primary purpose
+   *  Multiple Classes can have the same index but a class may only appear once in the list. The primary purpose
    *  of this class is to allow the quick access to classes by numerical indexes.  This comes in useful when
    *  communicating with another library that does not recognize alpha numeric strings for class names such
    *  libSVM which only uses integers class names.
@@ -490,9 +484,15 @@ namespace KKMLL
 
     /**
      *@brief  Locates the MLClass that was assigned classIndex.
-     *@details If not found then returns NULL.  If more than one class has the same classIndex will return the first one added.
+     *@details If not found then returns NULL; if more than one class has the same classIndex will return the first one added.
      */
     MLClassPtr  GetMLClass (kkint16 classIndex);
+
+    /**
+    *@brief  Locates the MLClass that was assigned classIndex.
+    *@details If not found then returns NULL. ; if more than one class has the same classIndex will return the first one added.
+    */
+    MLClassPtr  GetMLClass (kkint32 classIndex);
 
     
     void  ParseClassIndexList (const KKStr&  s,
@@ -527,8 +527,8 @@ namespace KKMLL
 
 
   private:
-    std::map<kkint16, MLClassPtr>  shortIdx;
     kkint16                        largestIndex;   /**< largest index used so far. */
+    std::map<kkint16, MLClassPtr>  shortIdx;
   };  /* MLClassIndexList */
 
   typedef  MLClassIndexList::MLClassIndexListPtr  MLClassIndexListPtr;

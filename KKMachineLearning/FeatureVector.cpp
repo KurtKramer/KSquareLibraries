@@ -722,7 +722,7 @@ FeatureVectorListPtr   FeatureVectorList::ExtractExamplesForHierarchyLevel (kkui
     const FeatureVectorPtr  fv = *idx;
 
     FeatureVectorPtr  newFV = new FeatureVector (*fv);
-    newFV->MLClass (fv->MLClass ()->MLClassForGivenHierarchialLevel (level));
+    newFV->MLClass (fv->MLClass ()->MLClassForGivenHierarchialLevel ((kkuint16)level));
     examples->PushOnBack (newFV);
   }
 
@@ -954,9 +954,6 @@ FeatureVectorPtr  FeatureVectorList::LookUpByRootName (const KKStr&  _rootName)
 
 
 
-
-
-
 FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _imageFileName)  const
 {
   if  (curSortOrder == IFL_SortOrder::IFL_ByName)
@@ -974,16 +971,17 @@ FeatureVectorPtr  FeatureVectorList::LookUpByImageFileName (const KKStr&  _image
 }  /* LookUpByImageFileName */
 
 
-FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+
+FeatureVectorListPtr  FeatureVectorList::OrderUsingNamesFromAFile (const KKStr&  orderedFileName,
                                                                    RunLog&       log
                                                                   )
 {
-  FILE*  in = osFOPEN (fileName.Str (), "r");
+  FILE*  in = osFOPEN (orderedFileName.Str (), "r");
   if  (!in)
   {
     log.Level (-1) << endl
                    << "FeatureVectorList::OrderUsingNamesFromAFile   *** ERROR ***" << endl
-                   << "                               Could not open file[" << fileName << "]." << endl
+                   << "                               Could not open file[" << orderedFileName << "]." << endl
                    << endl;
     return NULL;
   }
@@ -1331,7 +1329,7 @@ void  FeatureVectorList::CalcStatsForFeatureNum (kkint32 _featureNum,
     totalSquareDelta += delta * delta;
   }
 
-  _var     = totalSquareDelta / _count;
+  _var     = totalSquareDelta / (float)_count;
   _stdDev  = sqrt (_var);
 }  /* CalcStatsForFeatureNum */
 
@@ -1348,8 +1346,6 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (kkint32  numOf
 
   return  stratifiedExamples;
 }  /* StratifyAmoungstClasses */
-
-
 
 
 
@@ -1387,7 +1383,6 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
                      << "                Number of Folds [" << numOfFolds                  << "]."  << endl
                      << endl;
 
-    
       KKStr  msg;
       msg << "Not enough Images[" << imagesInClass->QueueSize ()  << "] "
           << "for Class["         << mlClass->Name ()          << "] "
@@ -1423,32 +1418,26 @@ FeatureVectorListPtr  FeatureVectorList::StratifyAmoungstClasses (MLClassListPtr
 
 
 
-
 float    FeatureVectorList::MajorityClassFraction ()  const
 {
-  ClassStatisticListPtr  classStats = GetClassStatistics ();
+  ClassStatisticListPtr  allClassStats = GetClassStatistics ();
 
-  if  (!classStats)
+  if  (!allClassStats)
     return 0.0f;
 
-
-  ClassStatisticPtr  largestClassStat = NULL;
   kkuint32 largestClassSize = 0;
 
   ClassStatisticList::const_iterator  idx;
-  for  (idx = classStats->begin ();  idx != classStats->end ();  idx++)
+  for  (auto classStats: *allClassStats)
   {
-    ClassStatisticPtr   classStats = *idx;
     if  (classStats->Count () > largestClassSize)
-    {
       largestClassSize = classStats->Count ();
-      largestClassStat = classStats;
-    }
   }
 
   float  fraction = float (largestClassSize) / float (size ());
 
-  delete  classStats;
+  delete  allClassStats;
+  allClassStats = nullptr;
 
   return  fraction;
 }  /* MajorityClassFraction */
@@ -1628,7 +1617,6 @@ FeatureVectorListPtr   FeatureVectorList::ExtractRandomSampling (float     perce
     percentage = 1.0f;
   }
 
-  kkint32  newSize = (kkint32)(0.5f + (float)QueueSize () * percentage / 100.0f);
   FeatureVectorListPtr  randomSampled = ManufactureEmptyList (false);
 
   MLClassListPtr  classes = ExtractListOfClasses ();

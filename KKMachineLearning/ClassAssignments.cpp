@@ -75,8 +75,21 @@ void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
 }  /* AddMLClass */
 
 
+void  ClassAssignments::AddMLClass (MLClassPtr  mlClass,
+                                    kkint32     num,
+                                    RunLog&     log
+                                   )
+{
+  if ((num < 0) || (num >= int16_max))
+  {
+    KKStr errMsg (256);
+    errMsg << "ClassAssignments::AddMLClass     mlClass::Name: " << mlClass->Name () << 
 
 
+  }
+
+
+}
 
 MLClassPtr  ClassAssignments::GetMLClass (kkint16 num)  const
 {

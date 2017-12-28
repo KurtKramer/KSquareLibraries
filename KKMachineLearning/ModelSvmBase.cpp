@@ -391,8 +391,6 @@ void  ModelSvmBase::Predict (FeatureVectorPtr  example,
 
 
 
-
-
 ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example,
                                                       RunLog&           log
                                                      )
@@ -434,7 +432,6 @@ ClassProbListPtr  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr  example,
 
   return  results;
 }  /* ProbabilitiesByClass */
-
 
 
 
@@ -495,8 +492,6 @@ void  ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    example,
 
 
 
-
-
 void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
                                            const MLClassList&  _mlClasses,
                                            double*             _probabilities,
@@ -548,7 +543,6 @@ void   ModelSvmBase::ProbabilitiesByClass (FeatureVectorPtr    _example,
 
   return;
 }  /* ProbabilitiesByClass */
-  
 
 
 
@@ -613,8 +607,6 @@ kkint32  ModelSvmBase::NumOfSupportVectors ()  const
 
 
 
-
-
 void  ModelSvmBase::WriteXML (const KKStr&  varName,
                               ostream&      o
                              )  const
@@ -637,8 +629,6 @@ void  ModelSvmBase::WriteXML (const KKStr&  varName,
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 

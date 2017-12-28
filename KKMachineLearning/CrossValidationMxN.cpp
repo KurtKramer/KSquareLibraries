@@ -14,7 +14,6 @@ using namespace std;
 using namespace KKB;
 
 
-
 #include "CrossValidationMxN.h"
 
 #include "ConfusionMatrix2.h"
@@ -24,7 +23,6 @@ using namespace KKB;
 #include "StatisticalFunctions.h"
 #include "TrainingConfiguration2.h"
 using namespace KKMLL;
-
 
 
 CrossValidationMxN::CrossValidationMxN (TrainingConfiguration2Ptr _config,
@@ -105,6 +103,7 @@ void  CrossValidationMxN::CheckFileDescCopasetic (RunLog&  log)
     // The Configuration 'fileDesc' is different than the orderings 'FileDesc'.
     // This is a VERY VERY bad situation. Processing needs to stop NOW NOW NOW.
     KKStr errMsg = "CrossValidationMxN     ***ERROR***    File Description between config and orderings don't match.";
+    log.Level (-1) << endl << errMsg << endl << endl;
     throw KKException (errMsg);
   }
 }  /* CheckFileDescCopesetic */
@@ -250,8 +249,7 @@ void  CrossValidationMxN::RunTrainAndTest (kkint32  numExamplsToUseForTraining,
 
 
 
-const
-ConfusionMatrix2Ptr  CrossValidationMxN::ConfussionMatrix ()  const
+ConfusionMatrix2ConstPtr  CrossValidationMxN::ConfussionMatrix ()  const
 {
   return  meanConfusionMatrix;
 }  /* ConfussionMatrix */

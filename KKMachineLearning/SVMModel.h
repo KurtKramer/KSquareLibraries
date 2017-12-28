@@ -112,9 +112,9 @@ namespace KKMLL
 
     FeatureNumListConstPtr   GetFeatureNums ()  const;
 
-    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc)  const;
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fd)  const;
 
-    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fileDesc,
+    FeatureNumListConstPtr   GetFeatureNums (FileDescPtr  fd,
                                              MLClassPtr   class1,
                                              MLClassPtr   class2
                                             )  const;
@@ -277,7 +277,7 @@ namespace KKMLL
 
     virtual  void  ReadXML (XmlStream&      s,
                             XmlTagConstPtr  tag,
-                            VolConstBool&   cancelFlag,
+                            VolConstBool&   cancelReadXML,
                             RunLog&         log
                            );
 
@@ -317,8 +317,6 @@ namespace KKMLL
      *            svm_node structures used in building the svm_problem.
      *@param[in]  classesThisAssignment The list of classes that are to be treated 
      *            as class '0' all other classes are treated as class '1'.
-     *@param[in]  featureEncoder Used to encode the feature data in 'examples' into 
-     *            the format expected by libSVM.
      *@param[in]  allClasses List of all classes;  The ones that are contained in
      *            'classesThisAssignment' will be the '0' class or the "One" in "One-Vs-All"
      *            while classes that are not in 'classesThisAssignment' will be coded as
@@ -328,7 +326,6 @@ namespace KKMLL
                                 struct svm_problem&   prob,
                                 XSpacePtr&            xSpace,
                                 const MLClassList&    classesThisAssignment,
-                                FeatureEncoderPtr     featureEncoder,
                                 MLClassList&          allClasses,
                                 ClassAssignmentsPtr&  classAssignments,
                                 RunLog&               log

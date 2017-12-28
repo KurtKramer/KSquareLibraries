@@ -146,8 +146,7 @@ namespace  KKLSC
   };
 
   typedef  StartStopRegionList*  StartStopRegionListPtr;
-
-};  /* KKLSC */
+}  /* KKLSC */
 
 #endif
 

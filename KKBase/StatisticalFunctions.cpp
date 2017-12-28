@@ -188,8 +188,7 @@ float   KKB::LLoydsIndexOfPatchiness (const VectorInt& bins)
     totalDeltaSquared += delta * delta;
   }
 
-  double  var = totalDeltaSquared / bins.size ();
-
+  double  var = totalDeltaSquared / (double)bins.size ();
 
   double  varDivMean = var / mean;
   double  oneDivMean = 1.0 / mean;

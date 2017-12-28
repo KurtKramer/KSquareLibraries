@@ -389,10 +389,6 @@ void  FeatureFileIOC45::ProcessC45AttrStr (FileDescPtr  fileDesc,
 
 
 
-
-
-
-
 FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
                                                  istream&        _in,
                                                  MLClassListPtr  _classes,
@@ -401,9 +397,9 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
                                                  RunLog&         _log
                                                 )
 {
+  _log.Level (50) << "FeatureFileIOC45::GetFileDesc   FileName: " << _fileName << endl;
   KKStr  namesFileName;
-
- 
+   
   bool  classLineRead = false;
 
   KKStr  ln (1024);
@@ -429,7 +425,8 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
       {
         KKStr  className = classNames[idx];
         C45StrPreProcessName (className);
-        MLClassPtr  mlClass = _classes->GetMLClassPtr (className);
+        // Will add instance of 'className' to '_classes' if it does not already exist.
+        _classes->GetMLClassPtr (className);
       }
 
       classLineRead = true;
@@ -452,7 +449,7 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
 
   FileDescPtr  fileDesc = new FileDesc ();
   fileDesc->AddClasses (*_classes);
-
+  _estSize = 0;
   // Can now load in attribute data
   GetLine (_in, ln, eof);  lineNum++;
   while  (!eof)
@@ -511,18 +508,12 @@ FileDescConstPtr  FeatureFileIOC45::GetFileDesc (const KKStr&    _fileName,
       }
     }
 
+    ++_estSize;
     GetLine (_in, ln, eof);  lineNum++;
   }
 
   return  fileDesc;
 }  /* GetFileDesc */
-
-
-
-
-
-
-
 
 
 
@@ -563,7 +554,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
   {
     // If next character is a white space, eol, eof, of '|' 
     // then treat as end of entry or '\n'.
-    char nextCh = in.peek (); 
+    char nextCh = (char)in.peek (); 
     if  (strchr (" \t\r\n|", nextCh))
     {
       eol = true;
@@ -599,7 +590,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
   {
     if  ((ch == '\n')  ||  (ch == '|'))
     {
-      in.putback (ch);
+      in.putback ((char)ch);
       break;
     }
 
@@ -607,12 +598,12 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
     {
       // Dots have special meaning when at the end of the line or followed 
       // by a white space character.  In these cases they delimit a separated entry.
-      char nextCh = in.get (); bool nextEOF = in.eof ();
+      char nextCh = (char)in.get (); bool nextEOF = in.eof ();
       if  (nextEOF)
       {
         // Since end of file will treat as end of line
         in.putback (nextCh);
-        nextCh = in.get (); nextEOF = in.eof ();
+        nextCh = (char)in.get (); nextEOF = in.eof ();
         ch = ' ';
         break;
       }
@@ -649,14 +640,14 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
         // We may have an escape character that c45 Allows
         // http://www.cs.washington.edu/dm/vfml/appendixes/c45.htm
 
-        char nextCh = in.get (); bool nextEOF = in.eof ();
+        char nextCh = (char)in.get (); bool nextEOF = in.eof ();
         if  (nextEOF)
         {
           // Not Sure what will happen in this case,  i don't want to set eof yet,
           // but do on the next call, so will put character back on line and re-read
           // this way the next call to this function will get a eof.
           in.putback (nextCh);
-          nextCh = in.get (); nextEOF = in.eof ();
+          nextCh = (char)in.get (); nextEOF = in.eof ();
         }
         else
         {
@@ -677,9 +668,9 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
         // We will compress the white space characters to just one blank.
         ch = ' ';
 
-        char nextCh = in.get (); bool nextEOF = in.eof ();
+        char nextCh = (char)in.get (); bool nextEOF = in.eof ();
         while  ((!nextEOF)  &&  (strchr (" \t\r", nextCh)))
-        {nextCh = in.get (); nextEOF = in.eof ();}
+        {nextCh = (char)in.get (); nextEOF = in.eof ();}
 
         if  (nextEOF)
         {
@@ -687,7 +678,7 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
           // but do on the next call, so will put character back on line and reread
           // this way the next call to this function will get a eof.
           in.putback (nextCh);
-          nextCh = in.get ();  nextEOF = in.eof ();
+          nextCh = (char)in.get ();  nextEOF = in.eof ();
         }
         else
         {
@@ -698,14 +689,13 @@ KKStr  FeatureFileIOC45::C45ReadNextToken (istream&     in,
       }
     }
 
-    token[tokenLen] = ch;
+    token[tokenLen] = (char)ch;
     tokenLen++;
     ch = in.get (); eof = in.eof ();
   }
 
   token[tokenLen] = 0;  // Terminating NULL character.
-
-
+  
   // Remove Training whitespace
   while  (tokenLen > 0)
   {
@@ -744,8 +734,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
   kkint32  lineCount = 0;
 
-  const
-    AttributePtr*  attributeTable = _fileDesc->CreateAAttributeTable ();  // Caller will be responsible for deleting
+  auto  attributeTable = _fileDesc->CreateAAttributeConstTable ();  // Caller will be responsible for deleting
 
   bool  lineIsValid = true;
 
@@ -753,7 +742,7 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
   FeatureVectorListPtr  examples = new FeatureVectorList (_fileDesc, true);
 
-  while  (!eof)
+  while  ((!eof)  &&  (!_cancelFlag))
   {
     lineIsValid = true;
     imageFileName = "";
@@ -822,7 +811,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
         example->AddFeatureData (fieldNum, (float)code);
         break;
       }
-        
 
       case AttributeType::Symbolic: 
       {
@@ -842,9 +830,10 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
           code = attributeTable[fieldNum]->GetNominalCode (field);
           if  (code < 0)
           {
-            bool  alreadyExists = false;
-            attributeTable[fieldNum]->AddANominalValue (field, alreadyExists);
-            code = attributeTable[fieldNum]->GetNominalCode (field);
+            _errorMessage << "Invalid NominalValue[" << field << "]  on line[" << lineCount << "].";
+            _log.Level (-1) << endl << endl
+              << "FeatureFileIOC45::LoadFile    " << _errorMessage << endl
+              << endl;
           }
         }
 
@@ -906,7 +895,6 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
 
     example->ExampleFileName (imageFileName);
 
-
     if  (lineIsValid)
       examples->PushOnBack (example);
 
@@ -940,8 +928,12 @@ FeatureVectorListPtr  FeatureFileIOC45::LoadFile (const KKStr&      _fileName,
       break;
   }
 
+  _log.Level (50) << "FeatureFileIOC45::LoadFile   _changesMade: " << _changesMade << "   _changesMade: " << _changesMade  << endl 
+    << "_classes: " << _classes.ToString() << endl;
 
-  delete  [] attributeTable;
+  delete[] attributeTable;
+  attributeTable = NULL;
+
   return  examples;
 }  /* LoadFile */
 
@@ -1028,6 +1020,8 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
                                    RunLog&               _log
                                   )
 {
+  _log.Level (30) << "FeatureFileIOC45::SaveFile   fileName: " << _fileName << endl;
+  _errorMessage = "";
   KKStr  namesFileName;
   KKStr  dataFileName;
 
@@ -1037,7 +1031,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
 
   FileDescConstPtr fileDesc = _data.FileDesc ();
 
-  const AttributePtr*  attrTable = fileDesc->CreateAAttributeTable ();
+  AttributeConstPtr*  attrTable = fileDesc->CreateAAttributeConstTable ();
 
   kkint32  x;
   {
@@ -1055,7 +1049,7 @@ void   FeatureFileIOC45::SaveFile (FeatureVectorList&     _data,
     for  (x = 0;  x < _selFeatures.NumOfFeatures ();  x++)
     {
       kkint32  featureNum = _selFeatures[x];
-      AttributePtr attr = attrTable[featureNum];
+      auto attr = attrTable[featureNum];
       nf << C45AdjName (attr->Name ()) << ": ";
       if  (attr->Type () == AttributeType::Nominal)
       {

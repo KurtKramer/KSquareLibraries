@@ -54,6 +54,11 @@ namespace KKMLL
                       RunLog&     log
                      );
 
+    void  AddMLClass (MLClassPtr  mlClass,
+                      kkint32     num,
+                      RunLog&     log
+                     );
+
     MLClassPtr      GetMLClassByIndex (size_t idx);
 
     MLClassPtr      GetMLClass    (kkint16 num)  const;

@@ -138,8 +138,7 @@ namespace KKMLL
 
     void  AddANominalValue (kkint32       fieldNum,
                             const KKStr&  nominalValue,
-                            bool&         alreadyExist,
-                            RunLog&       log
+                            bool&         alreadyExist
                            );
 
 
@@ -155,14 +154,15 @@ namespace KKMLL
                             RunLog&       log
                            );
 
-    void  AddAttributes (const KKMLL::AttributeList&  attributes);
+    void  AddAttributes (const KKMLL::AttributeList&  attributesToAdd);
 
 
     kkint32                     Cardinality (kkint32  fieldNum)  const;
 
-    const 
-      KKMLL::AttributePtr*      CreateAAttributeTable ()  const;  /**< Caller will be responsible for deleting  */
+    KKMLL::AttributePtr*        CreateAAttributeTable ();  /**< Caller will be responsible for deleting  */
 
+    KKMLL::AttributeConstPtr*   CreateAAttributeConstTable ()  const;  /**< Caller will be responsible for deleting  */
+    
     AttributeTypeVector         CreateAttributeTypeTable ()  const;
     
     VectorInt32                 CreateCardinalityTable ()  const;

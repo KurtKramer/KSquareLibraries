@@ -865,10 +865,10 @@ namespace KKB
     void          ErosionChanged1 (MaskTypes  mask, kkint32 row, kkint32 col);
 
     void          ErosionBoundary (MaskTypes  mask, 
-                                   kkint32    blobrowstart, 
-                                   kkint32    blobrowend, 
-                                   kkint32    blobcolstart, 
-                                   kkint32    blobcolend
+                                   kkint32    blobRowStart, 
+                                   kkint32    blobRowEnd, 
+                                   kkint32    blobColStart, 
+                                   kkint32    blobColEnd
                                   );
 
 
@@ -1108,8 +1108,8 @@ namespace KKB
      *@param turnAngle Angle that this Raster was rotated by.
      *@returns The "Point" in the original raster that coresponds to [rotatedPoint] in this Raster.
      */
-    Point         RotateDerivePreRotatedPoint (kkint32  height,
-                                               kkint32  width,
+    Point         RotateDerivePreRotatedPoint (kkint32  origHeight,
+                                               kkint32  origWidth,
                                                Point&   rotatedPoint, 
                                                float    turnAngle
                                               )

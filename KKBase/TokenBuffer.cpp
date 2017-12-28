@@ -154,11 +154,10 @@ bool  TokenBufferStream::Valid ()
 
 char  TokenBufferStream::GetNextChar ()
 {
-  char c;
   if  (endOfFile)
     return 0;
 
-  c = in->get ();
+  char c = (char)(in->get ());
   if  (in->eof())
   {
     endOfFile = true;
@@ -173,7 +172,7 @@ char  TokenBufferStream::PeekNextChar ()
 {
   if  (in->eof ())
     return 0;
-  return  in->peek ();
+  return  (char)(in->peek ());
 }
 
 

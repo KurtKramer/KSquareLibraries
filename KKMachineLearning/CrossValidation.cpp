@@ -36,17 +36,17 @@ CrossValidation::CrossValidation (TrainingConfiguration2Ptr  _config,
                                   bool                       _featuresAreAlreadyNormalized,
                                   FileDescConstPtr           _fileDesc,
                                   RunLog&                    _log,
-                                  bool&                      _cancelFlag
+                                  VolConstBool&              _cancelFlag
                                  ):
 
    cancelFlag                   (_cancelFlag),
    config                       (_config),
    duplicateTrainDataCount      (0),
+   fvProducerFactory            (NULL),
    featuresAreAlreadyNormalized (_featuresAreAlreadyNormalized),
    fileDesc                     (_fileDesc),
    foldAccuracies               (),
    foldCounts                   (),
-   fvProducerFactory            (NULL),
    confusionMatrix              (NULL),
    cmByNumOfConflicts           (NULL),
    examples                     (NULL),
@@ -300,8 +300,6 @@ void  CrossValidation::CrossValidate (FeatureVectorListPtr   testImages,
                                      )
 {
   log.Level (20) << "CrossValidation::CrossValidate   FoldNum[" << foldNum  << "]." << endl;
-
-  bool  cancelFlag = false;
 
   KKStr  statusMessage;
 

@@ -246,8 +246,7 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
   KKStr fileRootName = osGetRootName (_fileName);
 
-  const
-    AttributePtr*  attributeTable = _fileDesc->CreateAAttributeTable ();  // Caller will be responsible for deleting
+  AttributeConstPtr*  attributeTable = _fileDesc->CreateAAttributeConstTable ();  // Caller will be responsible for deleting
 
   KKStr  line;
   bool   eof = false;

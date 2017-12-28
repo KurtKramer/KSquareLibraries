@@ -37,7 +37,6 @@ BinaryClassParms::BinaryClassParms (MLClassPtr               _class1,
   if  (_selectedFeatures)
     selectedFeatures = new FeatureNumList (*_selectedFeatures);
 }
- 
 
 
 
@@ -61,7 +60,8 @@ BinaryClassParms::~BinaryClassParms ()
 }
 
 
-kkuint16  BinaryClassParms::NumOfFeatures (FileDescConstPtr fileDesc) const
+
+kkuint32  BinaryClassParms::NumOfFeatures (FileDescConstPtr fileDesc) const
 {
   return  SelectedFeaturesFD (fileDesc)->NumOfFeatures ();
 }
@@ -74,13 +74,12 @@ void  BinaryClassParms::SelectedFeatures (const FeatureNumList&  _selectedFeatur
 }
 
 
+
 void  BinaryClassParms::SelectedFeatures (FeatureNumListConstPtr  _selectedFeatures)
 {
    delete selectedFeatures;
    selectedFeatures = new FeatureNumList (*_selectedFeatures);
 }
-
-
 
 
 
@@ -101,6 +100,7 @@ KKStr   BinaryClassParms::Class2Name ()  const
   else
     return "";
 }  /* Class2Name */
+
 
 
 FeatureNumListConstPtr  BinaryClassParms::SelectedFeaturesFD (FileDescConstPtr fileDesc) const
@@ -129,9 +129,7 @@ KKStr  BinaryClassParms::ToTabDelString ()  const
 
 
 
-BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
-                                                            RunLog&       _log
-                                                           )
+BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str)
 {
   MLClassPtr         class1    = NULL;
   MLClassPtr         class2    = NULL;
@@ -178,7 +176,6 @@ BinaryClassParmsPtr  BinaryClassParms::CreateFromTabDelStr (const KKStr&  _str,
 
   return  binaryClassParms;
 }  /* CreateFromTabDelStr */
-
 
 
 
@@ -241,31 +238,6 @@ kkMemSize  BinaryClassParmsList::MemoryConsumedEstimated ()  const
 
 
 
-BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (FILE*             i,
-                                                              FileDescConstPtr  fileDesc,
-                                                              RunLog&           log
-                                                             )
-{
-  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
-  binaryClassParmsList->ReadXML (i, fileDesc, log);
-  return  binaryClassParmsList;
-}
-
-
-
-BinaryClassParmsListPtr  BinaryClassParmsList::CreateFromXML (istream&          i,
-                                                              FileDescConstPtr  fileDesc,
-                                                              RunLog&           log
-                                                             )
-{
-  BinaryClassParmsListPtr binaryClassParmsList = new BinaryClassParmsList (true);
-  binaryClassParmsList->ReadXML (i, fileDesc, log);
-  return  binaryClassParmsList;
-}
-
-
-
-
 /**
  @brief  Returns the Average number of selected features.
  */
@@ -286,7 +258,6 @@ float  BinaryClassParmsList::FeatureCountNet (FileDescConstPtr fileDesc)  const
 
   return  (float)featureCountTotal / (float)size ();
 }
-
 
 
 
@@ -312,7 +283,6 @@ BinaryClassParmsPtr  BinaryClassParmsList::LookUp (MLClassPtr  _class1,
 
 
 
-
 BinaryClassParmsListPtr  BinaryClassParmsList::DuplicateListAndContents ()  const
 {
   BinaryClassParmsListPtr  duplicatedQueue = new BinaryClassParmsList (true);
@@ -325,7 +295,6 @@ BinaryClassParmsListPtr  BinaryClassParmsList::DuplicateListAndContents ()  cons
   
   return  duplicatedQueue;
 }  /* DuplicateListAndContents */
-
 
 
 
@@ -348,71 +317,6 @@ void  BinaryClassParmsList::WriteXML (ostream&  o)  const
 
 
 
-void  BinaryClassParmsList::ReadXML (FILE*             i,
-                                     FileDescConstPtr  fileDesc,
-                                     RunLog&           log
-                                    )
-{
-  DeleteContents ();
-
-  char  buff  [10240];
-
-  while  (fgets (buff, sizeof (buff), i))
-  {
-    KKStr  ln (buff);
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field == "</BINARYCLASSPARMSLIST>")
-    {
-      break;
-    }
-
-    else if  (field == "<BINARYCLASSPARMS>")
-    {
-      KKStr  binaryClassParmsStr = ln.ExtractQuotedStr ("\n\r\t", true);
-      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, log));
-    }
-  }
-}  /* ReadXML */
-
-
-
-
-void  BinaryClassParmsList::ReadXML (istream&          i,
-                                     FileDescConstPtr  fileDesc,
-                                     RunLog&           log
-                                    )
-{
-  DeleteContents ();
-
-  char  buff  [10240];
-
-  while  (i.getline (buff, sizeof (buff)))
-  {
-    KKStr  ln (buff);
-
-    KKStr  field = ln.ExtractQuotedStr ("\n\r\t", true);
-    field.Upper ();
-
-    if  (field == "</BINARYCLASSPARMSLIST>")
-    {
-      break;
-    }
-
-    else if  (field == "<BINARYCLASSPARMS>")
-    {
-      KKStr  binaryClassParmsStr = ln.ExtractQuotedStr ("\n\r\t", true);
-      PushOnBack (BinaryClassParms::CreateFromTabDelStr (binaryClassParmsStr, log));
-    }
-  }
-}  /* ReadXML */
-
-
-
-
-
 void  BinaryClassParmsList::PushOnBack  (BinaryClassParmsPtr  binaryParms)
 {
   BinaryClassParmsPtr  existingEntry = LookUp (binaryParms->Class1 (), binaryParms->Class2 ());
@@ -429,7 +333,6 @@ void  BinaryClassParmsList::PushOnBack  (BinaryClassParmsPtr  binaryParms)
   KeyField kf (binaryParms->Class1 (), binaryParms->Class2 ());
   classIndex.insert(ClassIndexPair (kf, binaryParms));
 }  /* PushOnBack */
-
 
 
 
@@ -452,8 +355,6 @@ void  BinaryClassParmsList::PushOnFront (BinaryClassParmsPtr  binaryParms)
 
 
 
-
-
 BinaryClassParmsList::KeyField::KeyField (MLClassPtr  _class1,  
                                           MLClassPtr  _class2
                                          ):
@@ -461,7 +362,6 @@ BinaryClassParmsList::KeyField::KeyField (MLClassPtr  _class1,
     class2 (_class2)
 {
 }
-
 
 
 
@@ -477,13 +377,6 @@ bool  BinaryClassParmsList::KeyField::operator< (const KeyField& p2) const
   else 
     return class2->Name () < p2.class2->Name ();
 }
-
-
-
-
-
-
-
 
 
 
@@ -503,13 +396,10 @@ void  BinaryClassParmsList::WriteXML (const KKStr&  varName,
     o << endl;
   }
 
-
   XmlTag  endTag ("BinaryClassParmsList", XmlTag::TagTypes::tagEnd);
   endTag.WriteXML (o);
   o << endl;
 }  /* WriteXML */
-
-
 
 
 
@@ -519,6 +409,7 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
                                      RunLog&         log
                                     )
 {
+  log.Level (50) << "BinaryClassParmsList::ReadXML  tag->Name: " << tag->Name () << endl;
   DeleteContents ();
   classIndex.clear ();
 
@@ -531,7 +422,7 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
       XmlContentPtr content = dynamic_cast<XmlContentPtr> (t);
       if  (content  &&  (content->Content ()))
       {
-        BinaryClassParmsPtr  bcp = BinaryClassParms::CreateFromTabDelStr (*(content->Content ()), log);
+        BinaryClassParmsPtr  bcp = BinaryClassParms::CreateFromTabDelStr (*(content->Content ()));
         if  (bcp)
           PushOnBack (bcp);
       }
@@ -545,6 +436,3 @@ void  BinaryClassParmsList::ReadXML (XmlStream&      s,
 
 
 XmlFactoryMacro(BinaryClassParmsList)
-
-
-

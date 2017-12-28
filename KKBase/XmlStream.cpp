@@ -162,11 +162,11 @@ XmlTokenPtr  XmlStream::GetNextToken (VolConstBool&  cancelFlag,
       {
         //  The element that we just read did not finish consuming all its components.
         log.Level (-1) << "XmlStream::GetNextToken   ***WARNING***   The element just read[" << tag->Name () << "]  Did not consume all its elements." << endl;
-        XmlTokenPtr  t = GetNextToken (cancelFlag, log);
-        while  (t)
+        auto tokenToDel = GetNextToken (cancelFlag, log);
+        while  (tokenToDel)
         {
-          delete t;
-          t = GetNextToken (cancelFlag, log);
+          delete tokenToDel;
+          tokenToDel = GetNextToken (cancelFlag, log);
         }
       }
       endOfElemenReached = false;
@@ -402,7 +402,7 @@ void  ReadWholeTag (istream&  i,
   tagStr = "";
   while  (!i.eof ())
   {
-    char nextCh = i.get ();
+    char nextCh = (char)(i.get ());
     if  (nextCh != 0)
       tagStr.Append (nextCh);
     if  (nextCh == '>')
@@ -670,9 +670,9 @@ void  XmlTag::AddAtribute (const KKStr&     attributeName,
 
 
 
-KKStrConstPtr  XmlTag::AttributeValueByName  (const KKStr&  name)   const
+KKStrConstPtr  XmlTag::AttributeValueByName  (const KKStr&  _name)   const
 {
-  return  attributes.AttributeValueByName (name);
+  return  attributes.AttributeValueByName (_name);
 }
 
 
@@ -1450,8 +1450,38 @@ XmlFactoryMacro(KKStrListIndexed)
 
 
 
+KKStr  TurnIntoKKStr (const void* value)
+{
+  if (typeid(value) == typeid(KKStr*))
+    return *((KKStr*)value);
 
+  else if (typeid(value) == typeid(kkint64*))
+    return KKB::StrFromInt64 (*((kkint64*)value));
 
+  else if (typeid(value) == typeid(kkuint64*))
+    return KKB::StrFromUint64 (*((kkuint64*)value));
+
+  else if (typeid(value) == typeid(kkint32*))
+    return KKB::StrFromInt32 (*((kkint32*)value));
+
+  else if (typeid(value) == typeid(kkuint32*))
+    return KKB::StrFromUint32 (*((kkuint32*)value));
+
+  else if (typeid(value) == typeid(kkint16*))
+    return KKB::StrFromInt16 (*((kkint16*)value));
+
+  else if (typeid(value) == typeid(kkuint16*))
+    return KKB::StrFromUint16 (*((kkuint16*)value));
+
+  else if (typeid(value) == typeid(double*))
+    return KKB::StrFromDouble (*((double*)value));
+
+  else if (typeid(value) == typeid(float*))
+    return KKB::StrFromFloat (*((float*)value));
+
+  else
+    return "";
+}
 
 
 
@@ -1506,16 +1536,13 @@ void   XmlElement##TypeName::WriteXML (T              d,                  \
                                                                           \
                                                                           \
 bool     XmlElement##TypeName::ToBool   () const {return value != 0;}     \
-KKStr    XmlElement##TypeName::ToKKStr  () const {return (KKStr)value;}   \
+KKStr    XmlElement##TypeName::ToKKStr  () const {return TurnIntoKKStr(&value);}   \
 double   XmlElement##TypeName::ToDouble () const {return (double)value;}  \
 float    XmlElement##TypeName::ToFloat  () const {return (float)value;}   \
 kkint32  XmlElement##TypeName::ToInt32  () const {return (kkint32)value;} \
+kkint64  XmlElement##TypeName::ToInt64  () const {return (kkint64)value;} \
                                                                           \
 XmlFactoryMacro(TypeName)
-
-
-
-
 
 
 #define  XmlElementArrayBody(T,TypeName,ParserNextTokenMethod)                \
@@ -1780,10 +1807,10 @@ XmlElement##TypeName::XmlElement##TypeName (XmlTagPtr      tag,            \
                                            ):                              \
   XmlElement (tag, s, log)                                                 \
 {                                                                          \
-  kkuint32  count = 0;                                               \
+  kkuint32  count = 0;                                                     \
   KKStrConstPtr  countStr = tag->AttributeValueByName ("Count");           \
   if  (countStr)                                                           \
-    count = countStr->ToUint32 ();                                          \
+    count = countStr->ToUint32 ();                                         \
                                                                            \
   value = new vector<T> ();                                                \
                                                                            \
@@ -1859,36 +1886,32 @@ XmlFactoryMacro(TypeName)
 
 
 
-
-
 // Integral Types
-XmlElementBuiltInTypeBody(kkint32,Int32,ToInt32)  // XmlElementInt32
+XmlElementBuiltInTypeBody (kkint32, Int32, ToInt32)  // XmlElementInt32
 
-XmlElementBuiltInTypeBody(kkint64,Int64,ToInt64)  // XmlElementInt64
+XmlElementBuiltInTypeBody (kkint64, Int64, ToInt64)  // XmlElementInt64
 
-XmlElementBuiltInTypeBody(float,Float,ToDouble)   // XmlElementFloat
+XmlElementBuiltInTypeBody (float, Float, ToDouble)   // XmlElementFloat
 
-XmlElementBuiltInTypeBody(double,Double,ToDouble) // XmlElementDouble
-
+XmlElementBuiltInTypeBody (double, Double, ToDouble) // XmlElementDouble
 
 
 
 // Arrays
+XmlElementArrayBody (kkuint16, ArrayUint16, GetNextTokenUint)     // XmlElementArrayUint16
 
-XmlElementArrayBody(kkuint16, ArrayUint16,   GetNextTokenUint)     // XmlElementArrayUint16
+XmlElementArrayBody (kkint32, ArrayInt32, GetNextTokenInt)      // XmlElementArrayInt32
 
-XmlElementArrayBody(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlElementArrayInt32
+XmlElementArrayBody (double, ArrayDouble, GetNextTokenDouble)
 
-XmlElementArrayBody(double,   ArrayDouble,   GetNextTokenDouble)   
-
-XmlElementArrayBody(float,    ArrayFloat,    GetNextTokenDouble)
+XmlElementArrayBody (float, ArrayFloat, GetNextTokenDouble)
 
 
-XmlElementArray2DBody(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
+XmlElementArray2DBody (float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
 
 
 
 // Vectors
 
-XmlElementVectorBody(kkint32,  VectorInt32,  GetNextTokenInt)
-XmlElementVectorBody(float,    VectorFloat,  GetNextTokenFloat)
+XmlElementVectorBody (kkint32, VectorInt32, GetNextTokenInt)
+XmlElementVectorBody (float, VectorFloat, GetNextTokenFloat)

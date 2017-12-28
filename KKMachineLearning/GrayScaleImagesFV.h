@@ -55,6 +55,8 @@ namespace KKMLL
   {
   public:
     typedef  GrayScaleImagesFV*  GrayScaleImagesFVPtr;
+    typedef  GrayScaleImagesFV const *  GrayScaleImagesFVConstPtr;
+
     typedef  KKB::uchar  uchar;
 
     GrayScaleImagesFV (kkint32  _numOfFeatures);
@@ -102,8 +104,9 @@ namespace KKMLL
 
   };  /* GrayScaleImagesFV */
 
-
   typedef  GrayScaleImagesFV::GrayScaleImagesFVPtr  GrayScaleImagesFVPtr;
+
+  typedef  GrayScaleImagesFV::GrayScaleImagesFVConstPtr  GrayScaleImagesFVConstPtr;
 
 #define  _GrayScaleImagesFV_Defined_
 
@@ -266,10 +269,10 @@ namespace KKMLL
 
     
     /**
-     *@brief  Using list of ImageFileNames in a file('fileName') create a new GrayScaleImagesFVList instance 
+     *@brief  Using list of ImageFileNames in a file('orderedFileName') create a new GrayScaleImagesFVList instance 
      * with examples in order based off contents of file. If error occurs will return NULL.
      */
-    GrayScaleImagesFVListPtr   OrderUsingNamesFromAFile (const KKStr&  fileName,
+    GrayScaleImagesFVListPtr   OrderUsingNamesFromAFile (const KKStr&  orderedFileName,
                                                          RunLog&       log
                                                         );
 
@@ -323,7 +326,7 @@ namespace KKMLL
       }
 
 
-      const GrayScaleImagesFVPtr  operator*()
+      GrayScaleImagesFVPtr  operator*()
       {
         return  (const GrayScaleImagesFVPtr)*idx;
       }
@@ -381,17 +384,15 @@ namespace KKMLL
       }
 
 
-      const_iterator&   operator++ (int x)
+      const_iterator&   operator++ ()
       {
-        idx++;
+        ++idx;
         return  *this;
       }
     };  /* const_iterator */
 
 
-
-
-
+    
     class  iterator
     {
     private:
@@ -403,14 +404,14 @@ namespace KKMLL
       {
       }
 
-      iterator (const iterator&  idx):
-          idx (idx.idx)
+      iterator (const iterator&  iter):
+          idx (iter.idx)
       {
       }
 
 
-      iterator (const FeatureVectorList::iterator&  idx):
-          idx (idx)
+      iterator (const FeatureVectorList::iterator&  iter):
+          idx (iter)
       {
       }
 
@@ -436,10 +437,11 @@ namespace KKMLL
         return  idx == right.idx;
       }
 
-      iterator&   operator++ (int x)
+      iterator   operator++ (int)
       {
-        idx++;
-        return  *this;
+        iterator  result (*this);
+        ++idx;
+        return  result;
       }
     };
 

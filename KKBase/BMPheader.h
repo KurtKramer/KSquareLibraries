@@ -25,10 +25,10 @@ namespace  KKB
 //typedef unsigned  _int16  WORD;
 //typedef unsigned  _int32  DWORD;
 
-typedef  unsigned short  WORD;
-typedef  kkuint32        DWORD;
-typedef  kkint32         LONG;
-typedef  unsigned char   BYTE;
+typedef  kkuint16       WORD;
+typedef  kkuint32       DWORD;
+typedef  kkint32        LONG;
+typedef  unsigned char  BYTE;
 
 #define  BI_RLE4  2
 #define  BI_RGB   1

@@ -201,7 +201,7 @@ namespace  KKB
 
     const XmlAttributeList&   Attributes ()  const {return attributes;}
 
-    KKStrConstPtr  AttributeValueByName  (const KKStr&  name)   const;
+    KKStrConstPtr  AttributeValueByName  (const KKStr&  _name)  const;
     KKStrConstPtr  AttributeValueByIndex (kkuint32      index)  const;
     KKStrConstPtr  AttributeNameByIndex  (kkuint32      index)  const;
 
@@ -806,6 +806,7 @@ namespace  KKB
     virtual  double   ToDouble () const;                    \
     virtual  float    ToFloat  () const;                    \
     virtual  kkint32  ToInt32  () const;                    \
+    virtual  kkint64  ToInt64  () const;                    \
   private:                                                  \
     T   value;                                              \
   };                                                        \
@@ -933,7 +934,6 @@ XmlElementArrayHeader(kkint32,  ArrayInt32,    GetNextTokenInt)      // XmlEleme
 XmlElementArrayHeader(double,   ArrayDouble,   GetNextTokenDouble)   // XmlElementArrayDouble
 
 XmlElementArrayHeader(float,    ArrayFloat,    GetNextTokenDouble)   // XmlElementArrayFloat
-
 
 XmlElementArray2DHeader(float, ArrayFloat2D, XmlElementArrayFloat)   // XmlElementArrayFloat2D
 

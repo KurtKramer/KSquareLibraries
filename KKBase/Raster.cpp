@@ -2782,88 +2782,87 @@ void  Raster::ErosionBoundary (MaskTypes  mask,
 
   for  (r = 0;  r < height;  r++)
   {
-	  /**@todo  This does not make sense; need to investigate. */
-    //if ((r>= blobRowStart+30) && (r<= blobrowend-30))
-    // {
-    // }
-  // else
-  // {
-    maskColStart = 0 - bias;
-    maskColEnd   = 0 + bias;
-
-    tempRowData = tempGreen[r];
-
-    for  (c = 0; c < width; c++)
+    if ((r>= blobRowStart+30) && (r<= blobRowEnd-30))
     {
-      if  ((c >= blobColStart + 100)  &&  (c <= blobColEnd - 100))
-      {
-      }
-      else
-      {
-        if  (ForegroundPixel (green[r][c]))
-        {
-          fit = true;
-          if  ((maskRowStart <  0)       || 
-               (maskRowEnd   >= height)  ||  
-               (maskColStart <  0)       ||
-               (maskColStart >= width)
-              )
-          {
-            fit = false;
-          }
+    }
+    else
+    {
+      maskColStart = 0 - bias;
+      maskColEnd = 0 + bias;
 
-          else if  (m == StructureType::stSquare)
+      tempRowData = tempGreen[r];
+
+      for (c = 0; c < width; c++)
+      {
+        if ((c >= blobColStart + 100) && (c <= blobColEnd - 100))
+        {
+        }
+        else
+        {
+          if (ForegroundPixel (green[r][c]))
           {
-            for  (maskRow = maskRowStart;  ((maskRow <= maskRowEnd)  &&  fit);  maskRow++)
+            fit = true;
+            if ((maskRowStart < 0) ||
+              (maskRowEnd >= height) ||
+              (maskColStart < 0) ||
+              (maskColStart >= width)
+              )
             {
-              tempRowData =  tempGreen[maskRow];
-              for  (maskCol = maskColStart;  maskCol <= maskColEnd;  maskCol++)
+              fit = false;
+            }
+
+            else if (m == StructureType::stSquare)
+            {
+              for (maskRow = maskRowStart; ((maskRow <= maskRowEnd) && fit); maskRow++)
               {
-                if  (BackgroundPixel (tempRowData[maskCol]))
+                tempRowData = tempGreen[maskRow];
+                for (maskCol = maskColStart; maskCol <= maskColEnd; maskCol++)
+                {
+                  if (BackgroundPixel (tempRowData[maskCol]))
+                  {
+                    fit = false;
+                    break;
+                  }
+                }
+              }
+            }
+            else
+            {
+              //  Cross Structure
+              for (maskRow = maskRowStart; maskRow <= maskRowEnd; maskRow++)
+              {
+                if (BackgroundPixel (tempGreen[maskRow][c]))
+                {
+                  fit = false;
+                  break;
+                }
+              }
+
+              tempRowData = tempGreen[maskRow];
+              for (maskCol = maskColStart; maskCol <= maskColEnd; maskCol++)
+              {
+                if (BackgroundPixel (tempRowData[maskCol]))
                 {
                   fit = false;
                   break;
                 }
               }
             }
-          }
-          else
-          {
-            //  Cross Structure
-            for  (maskRow = maskRowStart;  maskRow <= maskRowEnd;  maskRow++)
-            {
-              if  (BackgroundPixel (tempGreen[maskRow][c]))
-              {
-                fit = false;
-                break;
-              }
-            }
 
-            tempRowData =  tempGreen[maskRow];
-            for  (maskCol = maskColStart;  maskCol <= maskColEnd;  maskCol++)
-            {
-              if  (BackgroundPixel (tempRowData[maskCol]))
-              {
-                fit = false;
-                break;
-              }
-            }
+            if (!fit)
+              green[r][c] = backgroundPixelValue;
+            else
+              foregroundPixelCount++;
           }
 
-          if  (!fit)
-            green[r][c] = backgroundPixelValue;
-          else
-            foregroundPixelCount++;
+          maskColStart++;
+          maskColEnd++;
         }
+      }   /* End of for(c) */
 
-        maskColStart++;
-        maskColEnd++;
-      }
-    }   /* End of for(c) */
-
-    maskRowStart++;
-    maskRowEnd++;
-    //}
+      maskRowStart++;
+      maskRowEnd++;
+    }
   }   /* End of for(r) */
 
 }  /* ErosionBoundary */
@@ -5743,30 +5742,30 @@ RasterPtr  Raster::Rotate (float  turnAngle)
 
 
 
-Point  Raster::RotateDerivePreRotatedPoint (kkint32  height,
-                                            kkint32  width,
+Point  Raster::RotateDerivePreRotatedPoint (kkint32  origHeight,
+                                            kkint32  origWidth,
                                             Point&   rotatedPoint, 
                                             float    turnAngle
                                            )
                                            const
 {
-  kkint32  diag = (kkint32)sqrt ((float)(height * height + width * width)) + 10;
+  kkint32  diag = (kkint32)sqrt ((float)(origHeight * origHeight + origWidth * origWidth)) + 10;
 
   float  a11 = (float)(cos (-turnAngle));
   float  a12 = (float)(sin (-turnAngle));
-  float  b1  = (float)width  * 0.5f;
+  float  b1  = (float)origWidth  * 0.5f;
 
   float  a21 = -a12;
   float  a22 = a11;
-  float  b2  = (float)height * 0.5f;
+  float  b2  = (float)origHeight * 0.5f;
 
   kkint32  halfDiag = (diag + 1) / 2;
 
   kkint32  centDestRow = rotatedPoint.Row () - halfDiag;
   kkint32  centDestCol = rotatedPoint.Col () - halfDiag;
 
-  kkint32  srcY = (kkint32)((float)(a21 * centDestCol) + (a22 * (float)centDestRow) + b2 + 0.5f);
-  kkint32  srcX = (kkint32)((float)(a11 * centDestCol) + (a12 * (float)centDestRow) + b1 + 0.5f);
+  kkint32  srcY = (kkint32)((float)(a21 * (float)centDestCol) + (a22 * (float)centDestRow) + b2 + 0.5f);
+  kkint32  srcX = (kkint32)((float)(a11 * (float)centDestCol) + (a12 * (float)centDestRow) + b1 + 0.5f);
 
   return  Point (srcY, srcX);
 }  /* RotateDerivePreRotatedPoint */
@@ -5910,7 +5909,7 @@ RasterPtr   Raster::FindMagnitudeDifferences (const Raster&  r)
       int  deltaC = DeltaMagnitude (green[row][c], otherGreen[row][c]);
       if  (deltaC > 0)
         deltaC = Min (255, deltaC + 64);
-      resultGreen[row][c] = deltaC;
+      resultGreen[row][c] = (uchar)deltaC;
       
       if  (color)
       {
@@ -5950,31 +5949,33 @@ void  Raster::CalcCentroid (kkint32&  size,
 
   for  (row = 0; row < height;  row++)
   {
+    float  rowFloat = (float)row;
     for  (col = 0; col < width; col++)
     {
+      float  colFloat = (float)col;
       intensity = green[row][col];
 
       if  (intensity > 0)
       {
-        rowCenter += row;
-        colCenter += col;
+        rowCenter += rowFloat;
+        colCenter += colFloat;
         size++;
 
-        rowCenterWeighted += row * intensity;
-        colCenterWeighted += col * intensity;
+        rowCenterWeighted += rowFloat * (float)intensity;
+        colCenterWeighted += colFloat * (float)intensity;
         weight += intensity;
       }
     }
   }
 
-  rowCenter /= size;
-  colCenter /= size; 
+  rowCenter /= (float)size;
+  colCenter /= (float)size;
 
   this->centroidCol = colCenter;
   this->centroidRow = rowCenter;
   
-  rowCenterWeighted /= weight;
-  colCenterWeighted /= weight; 
+  rowCenterWeighted /= (float)weight;
+  colCenterWeighted /= (float)weight; 
 }  /* CalcCentroid */
 
 
@@ -6310,7 +6311,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
   float  m = (float)deltaY / (float)deltaX;
 
-  float  c = bpRow - m * bpCol;
+  float  c = (float)bpRow - m * (float)bpCol;
 
   if  (fabs (m) < 0.5)
   {
@@ -6330,7 +6331,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (col = startCol;  col <= endCol;  col++)
     {
-      row = (kkint32)(m * col + c + 0.5);
+      row = (kkint32)(m * (float)col + c + 0.5);
       green[row][col] = g;
       if  (color)
       {
@@ -6357,7 +6358,7 @@ void  Raster::DrawLine (kkint32 bpRow,    kkint32 bpCol,
 
     for  (row = startRow;  row <= endRow;  row++)
     {
-      col = (kkint32)(((row - c) / m) + 0.5);
+      col = (kkint32)((((float)row - c) / m) + 0.5);
       green[row][col] = g;
       if  (color)
       {
@@ -6394,11 +6395,11 @@ void  Raster::PaintPoint (kkint32            row,
 
   float beta = 1.0f - alpha;
 
-  green[row][col] = Min (255, (int)(0.5f + alpha * (float)pv.g  + beta  * (float)green[row][col]));
+  green[row][col] = (uchar)Min (255, (int)(0.5f + alpha * (float)pv.g  + beta  * (float)green[row][col]));
   if  (color)
   {
-    red [row][col] = Min (255, (int)(0.5f + alpha * (float)pv.r  + beta  * (float)red [row][col]));
-    blue[row][col] = Min (255, (int)(0.5f + alpha * (float)pv.b  + beta  * (float)blue[row][col]));
+    red [row][col] = (uchar)Min (255, (int)(0.5f + alpha * (float)pv.r  + beta  * (float)red [row][col]));
+    blue[row][col] = (uchar)Min (255, (int)(0.5f + alpha * (float)pv.b  + beta  * (float)blue[row][col]));
   }
 }
 

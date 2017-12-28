@@ -248,7 +248,7 @@ namespace  KKLSC
     void  ProcessTextBlock (const OpRec&  rec);
     void  ProcessInstrumentDataWord (const OpRec&  rec);
     void  AllocateRawPixelRecBuffer (kkuint32 size);
-    void  ProcessRawPixelRecs (kkuint16   numRawPixelRecs,
+    void  ProcessRawPixelRecs (kkuint32   numRawPixelRecs,
                                uchar*     lineBuff,
                                kkuint32   lineBuffSize,
                                kkuint32&  bufferLineLen

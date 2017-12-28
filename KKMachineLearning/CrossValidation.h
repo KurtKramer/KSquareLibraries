@@ -52,19 +52,17 @@ namespace  KKMLL
   #endif
 
 
-
   #ifndef  _ConfussionMatrix2_
   class  ConfusionMatrix2;
   typedef  ConfusionMatrix2*  ConfusionMatrix2Ptr;
+  typedef  ConfusionMatrix2 const *  ConfusionMatrix2ConstPtr;
   #endif
-
 
 
   #if  !defined(_FactoryFVProducer_Defined_)
   class  FactoryFVProducer;
   typedef  FactoryFVProducer*  FactoryFVProducerPtr;
   #endif
-
 
 
   #ifndef  _TrainingConfiguration2_Defined_
@@ -90,7 +88,7 @@ namespace  KKMLL
                      bool                      _featuresAreAlreadyNormalized,
                      FileDescConstPtr          _fileDesc,
                      RunLog&                   _log,
-                     bool&                     _cancelFlag
+                     KKB::VolConstBool&        _cancelFlag
                     );
 
     ~CrossValidation ();
@@ -102,8 +100,7 @@ namespace  KKMLL
                              RunLog&              log
                             );
 
-    const
-    ConfusionMatrix2Ptr    ConfussionMatrix () const  {return  confusionMatrix;}
+    ConfusionMatrix2ConstPtr    ConfussionMatrix () const  {return  confusionMatrix;}
 
     float         Accuracy     ();
     float         AccuracyNorm ();
@@ -159,8 +156,7 @@ namespace  KKMLL
 
     //void  DistributesImagesRandomlyFromEachWithInFolds ();
 
-
-    bool                      cancelFlag;
+    VolConstBool&             cancelFlag;
     TrainingConfiguration2Ptr config;
     kkint32                   duplicateTrainDataCount;
     FactoryFVProducerPtr      fvProducerFactory;
@@ -216,4 +212,3 @@ namespace  KKMLL
 }  /* namespace  KKMLL */
 
 #endif
-

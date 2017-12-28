@@ -126,8 +126,13 @@ void   ScannerFileSimple::WriteTextBlock (const uchar*  txtBlock,
                                           kkuint32      txtBlockLen
                                          )
 {
+  KKStr  msg = "";
+  auto zed = Min (32u, txtBlockLen);
+  if (zed > 0)
+    msg = KKB::StrFromBuff ((const char*)txtBlock, zed);
+
   log.Level (-1) << endl
-    << "ScannerFileSimple::WriteTextBlock   ***ERROR***   The SimpleFormat does not support TextBlocks" << endl
+    << "ScannerFileSimple::WriteTextBlock   ***ERROR***   The SimpleFormat does not support TextBlocks  " << msg << endl 
     << endl;
 }  /* WriteTextBlock */
 
@@ -140,7 +145,7 @@ const uchar*  ScannerFileSimple::CompensationTable ()
 
   uchar*  cs = new uchar[256];
   for  (kkuint32 x = 0;  x < 256;  ++x)
-    cs[x] = x;
+    cs[x] = (uchar)x;
 
   GlobalGoalKeeper::EndBlock ();
 

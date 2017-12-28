@@ -137,7 +137,7 @@ namespace  KKLSC
 
   typedef  FlowMeterTracker::FlowMeterTrackerPtr  FlowMeterTrackerPtr;
 
-};  /* KKLSC */
+}  /* KKLSC */
 
 #endif
 

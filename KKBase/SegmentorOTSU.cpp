@@ -216,11 +216,11 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
                                const Matrix&  right
                               )
 {
-  kkint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
-  kkint32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
+  kkuint32  maxNumOfRows = Max (left.NumOfRows (), right.NumOfRows ());
+  kkuint32  maxNumOfCols = Max (left.NumOfCols (), right.NumOfCols ());
   
-  kkint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
-  kkint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
+  kkuint32  minNumOfRows = Min (left.NumOfRows (), right.NumOfRows ());
+  kkuint32  minNumOfCols = Min (left.NumOfCols (), right.NumOfCols ());
 
   Matrix  result (maxNumOfRows, maxNumOfCols);
 
@@ -238,10 +238,10 @@ Matrix  SegmentorOTSU::DotDiv (const Matrix&  left,
       resultDataRow[c] = leftDataRow[c] / rightDataRow[c];
   }
 
-  for  (r = minNumOfRows;  r < maxNumOfRows;  ++r)
+  for  (kkuint32 r = minNumOfRows;  r < maxNumOfRows;  ++r)
   {
     double*  resultDataRow = resultData[r];
-    for  (c = minNumOfCols;  c < maxNumOfCols;  ++c)
+    for  (kkuint32 c = minNumOfCols;  c < maxNumOfCols;  ++c)
     {
       if  ((r >= right.NumOfRows ())  ||  (c >= right.NumOfCols ()))
         resultDataRow[c] = NaN;
@@ -522,12 +522,11 @@ void  SegmentorOTSU::NdGrid (const VectorDouble&  x,
 
 void  SegmentorOTSU::MakeNanWhenLesOrEqualZero (Matrix&  m)
 {
-  kkint32  r, c;
   double**  data = m.DataNotConst ();
-  for  (r = 0;  r < m.NumOfRows ();  ++r)
+  for  (kkuint32  r = 0;  r < m.NumOfRows ();  ++r)
   {
     double*  dataRow = data[r];
-    for  (c = 0;  c < m.NumOfCols ();  ++c)
+    for  (kkuint32 c = 0;  c < m.NumOfCols ();  ++c)
     {
       if  (dataRow[c] <= 0.0)
         dataRow[c] = NaN;
@@ -779,7 +778,6 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
   kkint32  pixelsCounted = 0;
   VectorInt  unI;
   VectorInt  unICounts;
-  VectorInt32  counts (256, 0);
   {
     // %% Convert to 256 levels
     // srcImage = srcImage-min(srcImage(:));
@@ -846,7 +844,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     for  (x = 0;  x < nbins;  ++x)
     {
-      LabelRaster (result, unI[x], x, srcImage);
+      LabelRaster (result, (uchar)unI[x], (char)x, srcImage);
     }
     sep = 1;
     delete  srcImage;   
@@ -914,7 +912,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     //% segmented image
     //IDX = ones(size(srcImage));
     //IDX(srcImage>pixval(k+1)) = 2;
-    threshold1 = pixval[k + 1];
+    threshold1 = (uchar)pixval[k + 1];
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     uchar*  resultArea = result->GreenArea ();
     uchar*  srcArea    = srcImage->GreenArea ();
@@ -1003,7 +1001,7 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    kkuint32  k1, k2;
+    kkuint32  k1 = 0, k2 = 0;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    
@@ -1015,8 +1013,8 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
       //IDX(srcImage>pixval(k1) & srcImage<=pixval(k2)) = 2;
       uchar*  srcData = srcImage->GreenArea ();
       uchar*  data = result->GreenArea ();
-      threshold1 = pixval[k1];
-      threshold2 = pixval[k2];
+      threshold1 = (uchar)pixval[k1];
+      threshold2 = (uchar)pixval[k2];
       for  (x = 0;  x < totPixels;  ++x)
       {
         if  (srcData[x] <= threshold1)
@@ -1179,7 +1177,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
     RasterPtr  result = new Raster (srcImage->Height (), srcImage->Width (), false);
     for  (x = 0;  x < nbins;  ++x)
     {
-      LabelRaster (result, mask, unI[x], x, srcImage);
+      LabelRaster (result, mask, (uchar)(unI[x]), (uchar)x, srcImage);
     }
     sep = 1;
     delete  srcImage;   
@@ -1315,7 +1313,7 @@ RasterPtr  SegmentorOTSU::SegmentMaskedImage (RasterPtr  srcImage,
 
     //[maxsig,k] = max(sigma2B(:));         % Turns sigma2B into 1D Array then locates largest value and index.
     // [k1,k2] = ind2sub([nbins nbins],k);  % Sets k1 and k2 to the indexes for k mapped into a 2D square matrix that is (nbins x nbins)
-    kkuint32  k1, k2;
+    kkuint32  k1 = 0, k2 = 0;
     double  maxsig = 0.0;
     sigma2B.FindMaxValue (maxsig, k1, k2);
    
@@ -1453,7 +1451,7 @@ uchar  SegmentorOTSU::GetClassClosestToTargetColor (const RasterPtr    origImage
   double  closestDistFound = 99999999.99;
   uchar   closestClass = 255;
 
-  for  (uint x = 1;  x <= largestClass;  ++x)
+  for  (kkuint32 x = 1;  x <= largestClass;  ++x)
   {
     double avgRed   = (double)totalReds  [x] / (double)totalPixels;
     double avgGreen = (double)totalGreens[x] / (double)totalPixels;
@@ -1467,7 +1465,7 @@ uchar  SegmentorOTSU::GetClassClosestToTargetColor (const RasterPtr    origImage
     if  (distToTarget < closestDistFound)
     {
       closestDistFound = distToTarget;
-      closestClass = x;
+      closestClass = (uchar)x;
     }
   }
 

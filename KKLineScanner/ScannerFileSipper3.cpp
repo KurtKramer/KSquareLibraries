@@ -45,7 +45,7 @@ void  ScannerFileSipper3::WriteWholeScanLine (ostream& o,
   kkuint32 lenUint = (kkuint32)len;
   o.write ((char*)&lenUint, sizeof (lenUint));
   bytesWritten += sizeof (lenUint);
-  bytesLastScanLine +=  sizeof (lenUint);
+  bytesLastScanLine = bytesLastScanLine + (kkint32)sizeof (lenUint);
   o.write ((char*)line, lenUint);
   bytesWritten +=  lenUint;
   bytesLastScanLine +=   lenUint;

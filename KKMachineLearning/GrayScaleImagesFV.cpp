@@ -44,9 +44,6 @@ using namespace  KKMLL;
 
 #include "GrayScaleImagesFV.h"
 using namespace  KKMLL;
-                      
-
-
 
 
 
@@ -73,14 +70,11 @@ GrayScaleImagesFV::GrayScaleImagesFV (const GrayScaleImagesFV&  _fv):
 
 
 
-
-
 GrayScaleImagesFV::GrayScaleImagesFV (const FeatureVector&  featureVector):
    FeatureVector    (featureVector),
    centroidCol      (-1),
    centroidRow      (-1),
    numOfEdgePixels  (-1)
-
 {
   //if  (strcmp (featureVector.UnderlyingClass (), "GrayScaleImagesFV") == 0)
   if  (typeid (featureVector) == typeid(GrayScaleImagesFV))
@@ -102,13 +96,10 @@ GrayScaleImagesFV::~GrayScaleImagesFV ()
 
 
 
-
 GrayScaleImagesFVPtr  GrayScaleImagesFV::Duplicate ()  const
 {
   return new GrayScaleImagesFV (*this);
 }
-
-
 
 
 
@@ -120,7 +111,6 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (FileDescConstPtr  _fileDesc,
 {
 
 }
-
 
 
 
@@ -139,40 +129,34 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (FactoryFVProducerPtr  _fvProducerF
 
 
 
-
 GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples):
    FeatureVectorList (examples.FileDesc (), examples.Owner ())
 {
-  const_iterator  idx;
-  for  (idx = examples.begin ();  idx != examples.end ();  idx++)
+  for  (auto imageExample: examples)
   {
-    const GrayScaleImagesFVPtr  imageExample = *idx;
     if  (Owner ())
       PushOnBack (new GrayScaleImagesFV (*imageExample));
     else
       PushOnBack (imageExample);
   }
 }
-
 
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const GrayScaleImagesFVList&  examples,
                                               bool                          _owner
                                              ):
-
    FeatureVectorList (examples.FileDesc (), _owner)
 {
-  const_iterator  idx;
-  for  (idx = examples.begin ();  idx != examples.end ();  idx++)
+  for  (auto imageExample: examples)
   {
-    const GrayScaleImagesFVPtr  imageExample = *idx;
     if  (Owner ())
       PushOnBack (new GrayScaleImagesFV (*imageExample));
     else
       PushOnBack (imageExample);
   }
 }
+
 
 
 GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList,
@@ -183,20 +167,10 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
                      _owner
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
-  if  (typeid (featureVectorList) == typeid (GrayScaleImagesFVList))
-  {
-    const GrayScaleImagesFVList&  examples = dynamic_cast<const GrayScaleImagesFVList&> (featureVectorList);
-  }
-
-
   if  (_owner)
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto featureVector: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
-      
       // The constructor below will detect what the underlying type of 'featureVector' is.  
       // If (underlying type is a 'GrayScaleImagesFV' object)  then
       //   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted
@@ -240,12 +214,6 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
 
 
 
-
-
-
-
-
-
 //****************************************************************************
 //*  Will Create a list of examples that are a subset of the ones in _examples.  *
 //* The subset will consist of the examples who's mlClass is one of the     *
@@ -261,26 +229,15 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (MLClassList&            _mlClasses
 
 
 
-
 GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureVectorList):
   FeatureVectorList (featureVectorList.FileDesc (),
                      featureVectorList.Owner ()
                     )
 {
-  //if  (strcmp (featureVectorList.UnderlyingClass (), "GrayScaleImagesFVList") == 0)
-  if  (typeid (featureVectorList) == typeid (GrayScaleImagesFVList))
-  {
-    const GrayScaleImagesFVList&  examples = dynamic_cast<const GrayScaleImagesFVList&> (featureVectorList);
-  }
-
-
   if  (featureVectorList.Owner ())
   {
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto featureVector : featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
-      
       // The constructor below will detect what the underlying type of 'featureVector' is.  
       // If (underlying type is a 'GrayScaleImagesFV' object)  then
       //   | Information that is particular to a 'GrayScaleImagesFV' object will be extracted
@@ -297,11 +254,8 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
     // Since we will not own the contents but just point to existing instances we will 
     // have to make sure that the existing instances of 'FeatureVector' objects have a 
     // underlying type of 'GrayScaleImagesFV'.
-    FeatureVectorList::const_iterator  idx;
-    for  (idx = featureVectorList.begin ();  idx != featureVectorList.end ();  idx++)
+    for  (auto featureVector: featureVectorList)
     {
-      FeatureVectorPtr featureVector = *idx;
-      //if  (strcmp (featureVector->UnderlyingClass (), "GrayScaleImagesFV") == 0)
       if  (typeid (*featureVector) == typeid (GrayScaleImagesFV))
       {
         GrayScaleImagesFVPtr example = dynamic_cast<GrayScaleImagesFVPtr>(featureVector);
@@ -323,7 +277,6 @@ GrayScaleImagesFVList::GrayScaleImagesFVList (const FeatureVectorList&  featureV
 
 
 
-
 GrayScaleImagesFVList::~GrayScaleImagesFVList ()
 {
 }
@@ -337,14 +290,10 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::Duplicate (bool _owner)  const
 
 
 
-
-
 GrayScaleImagesFVPtr  GrayScaleImagesFVList::IdxToPtr (kkint32 idx)  const
 {
   return  (GrayScaleImagesFVPtr)FeatureVectorList::IdxToPtr (idx);
 }  /* IdxToPtr */
-
-
 
 
 
@@ -362,7 +311,6 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::BackOfQueue ()
   cerr << endl << errMsg << endl << endl;
   throw  KKException (errMsg);
 }  /* BackOfQueue */
-
 
 
 
@@ -384,16 +332,10 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::PopFromBack ()
 
 
 
-
-
-
 void  GrayScaleImagesFVList::AddQueue (GrayScaleImagesFVList&  imagesToAdd)
 {
   FeatureVectorList::AddQueue (imagesToAdd);
 }  /* AddQueue */
-
-
-
 
 
 
@@ -404,15 +346,10 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::BinarySearchByName (const KKStr&  _
 
 
 
-
-
 GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByRootName (const KKStr&  _rootName)
 {
   return  (GrayScaleImagesFVPtr)FeatureVectorList::LookUpByRootName (_rootName);
 }  /* LookUpByRootName */
-
-
-
 
 
 
@@ -423,7 +360,6 @@ GrayScaleImagesFVPtr  GrayScaleImagesFVList::LookUpByImageFileName (const KKStr&
 
 
 
-
 GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ManufactureEmptyList (bool _owner)  const
 {
   return new GrayScaleImagesFVList (FileDesc (), _owner);
@@ -431,20 +367,17 @@ GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ManufactureEmptyList (bool _ow
 
 
 
-
-GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const KKStr&  fileName,
+GrayScaleImagesFVListPtr  GrayScaleImagesFVList::OrderUsingNamesFromAFile (const KKStr&  orderedFileName,
                                                                            RunLog&       log
                                                                           )
 {
-  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (fileName, log);
+  FeatureVectorListPtr  examples = FeatureVectorList::OrderUsingNamesFromAFile (orderedFileName, log);
   examples->Owner (false);
   GrayScaleImagesFVListPtr  orderedImages = new GrayScaleImagesFVList (*examples);
   delete  examples;
+  examples = NULL;
   return  orderedImages;
 }  /* OrderUsingNamesFromAFile */
-
-
-
 
 
 
@@ -553,9 +486,6 @@ void   GrayScaleImagesFVList::FeatureExtraction (FactoryFVProducerPtr  _fvProduc
 
 
 
-
-
-
 /**
  * @brief  Creates a duplicate of list and also duplicates it contents.
  * @return Duplicated list with hard copy of its contents.
@@ -574,9 +504,6 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::DuplicateListAndContents ()  co
 
   return  copyiedList;
 }  /* DuplicateListAndContents */
-
-
-
 
 
 
@@ -666,8 +593,6 @@ void  GrayScaleImagesFVList::RecalcFeatureValuesFromImagesInDirTree (FactoryFVPr
 
 
 
-
-
 GrayScaleImagesFVListPtr  GrayScaleImagesFVList::ExtractDuplicatesByRootImageFileName ()
 {
   FeatureVectorListPtr  duplicateFeatureVectorObjects = FeatureVectorList::ExtractDuplicatesByRootImageFileName ();
@@ -676,9 +601,6 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::ExtractDuplicatesByRootImageFil
   delete  duplicateFeatureVectorObjects;  duplicateFeatureVectorObjects = NULL;
   return  duplicateImageFeaturesObjects;
 }  /* ExtractDuplicatesByRootImageFileName */
-
-
-
 
 
 
@@ -696,8 +618,6 @@ GrayScaleImagesFVListPtr   GrayScaleImagesFVList::ExtractExamplesForAGivenClass 
 
 
 
-
-
 GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (MLClassListPtr  mlClasses,
                                                                           kkint32         maxImagesPerClass,
                                                                           kkint32         numOfFolds,
@@ -710,7 +630,6 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (MLClas
   delete stratifiedFeatureVectors;  stratifiedFeatureVectors = NULL;
   return  stratifiedImagefeatures;
 }  /* StratifyAmoungstClasses */
-
 
 
 
@@ -730,4 +649,3 @@ GrayScaleImagesFVListPtr  GrayScaleImagesFVList::StratifyAmoungstClasses (kkint3
 
   return  stratifiedImagefeatures;
 }  /* StratifyAmoungstClasses */
-

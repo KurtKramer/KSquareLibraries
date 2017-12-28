@@ -31,7 +31,6 @@ using namespace KKMLL;
 
 
 
-
 #include "svm.h"
 
 

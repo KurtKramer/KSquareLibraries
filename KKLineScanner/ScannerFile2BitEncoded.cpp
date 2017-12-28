@@ -207,7 +207,7 @@ ScannerFile2BitEncoded::ScannerFile2BitEncoded (const KKStr&  _fileName,
 {
   BuildConversionTables ();
   AllocateEncodedBuff ();
-  AllocateRawStr (_pixelsPerScanLine + 100);
+  AllocateRawStr ((kkuint16)(_pixelsPerScanLine + 100));
 }
 
 
@@ -496,7 +496,7 @@ void  ScannerFile2BitEncoded::ProcessRawPixelRecs (kkuint16  numRawPixels,
 
 
 
-void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
+void  ScannerFile2BitEncoded::GetNextScanLine (uchar*   lineBuff,
                                                kkuint32 lineBuffSize
                                               )
 {
@@ -537,7 +537,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
     else if  ((opCode >= 4)  &&  (opCode <= 7))
     {
       // OpCode determines PixelValue OpCode(4)=PV(0), OpCode(5)=PV(1), OpCode(6)=PV(2), OpCode(7)=PV(3),
-      kkuint16  encodedChar = opCode - 4;
+      kkuint32  encodedChar = opCode - 4;
       runLenChar = convTable2BitTo8Bit [encodedChar];
       runLen     = rec.runLenPVx.len + 3;
       kkuint32  newLineSize = bufferLineLen + runLen;
@@ -563,17 +563,17 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
       }
       else
       {
-        kkuint32  runLen = 256 * (kkuint32)rec.runLen10Bit.lenHigh + (kkuint32)rec2.runLen10Bit_2.lenLow;
-        kkuint32  newLineSize = bufferLineLen + runLen;
+        kkuint32  runLenOpCode8 = 256 * (kkuint32)rec.runLen10Bit.lenHigh + (kkuint32)rec2.runLen10Bit_2.lenLow;
+        kkuint32  newLineSize = bufferLineLen + runLenOpCode8;
         if  (newLineSize > lineBuffSize)
         {
           cerr << "ScannerFile2BitEncoded::GetNextScanLine    *** Line Length Exceeded ****" << endl;
-          runLen = lineBuffSize - bufferLineLen;
+          runLenOpCode8 = lineBuffSize - bufferLineLen;
           newLineSize = bufferLineLen;
         }
 
-        uchar  runLenChar = convTable2BitTo8Bit [rec.runLen10Bit.pix];
-        memset (&(lineBuff[bufferLineLen]), runLenChar,  runLen);
+        uchar  runLenChar2To8 = convTable2BitTo8Bit [rec.runLen10Bit.pix];
+        memset (&(lineBuff[bufferLineLen]), runLenChar2To8, runLenOpCode8);
         bufferLineLen = newLineSize;
       }
     }
@@ -599,7 +599,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
     {
       // Variable Length Raw Pixels where string length = (3 thru 18)
       kkuint32  numRawPixels = rec.rawPixelsVarLen4Bit.len + 3;
-      ProcessRawPixelRecs (numRawPixels, lineBuff, lineBuffSize, bufferLineLen);
+      ProcessRawPixelRecs ((kkuint16)numRawPixels, lineBuff, lineBuffSize, bufferLineLen);
     }
 
 
@@ -616,7 +616,7 @@ void  ScannerFile2BitEncoded::GetNextScanLine (uchar* lineBuff,
       else
       {
         kkuint32  numRawPixels = 256 * rec.rawPixelsVarLen12Bit.lenHigh + rec2.rawPixelsVarLen12Bit_2.lenLow;
-        ProcessRawPixelRecs (numRawPixels, lineBuff, lineBuffSize, bufferLineLen);
+        ProcessRawPixelRecs ((kkuint16)numRawPixels, lineBuff, lineBuffSize, bufferLineLen);
       }
     }
 
@@ -671,8 +671,10 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else if  (runLen < 2)
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelOne.opCode = 10;
       rec.rawPixelOne.pix1 = runLenChar;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -680,9 +682,11 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else if  (runLen < 3)
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelsTwo.opCode = 11;
       rec.rawPixelsTwo.pix1 = runLenChar;
       rec.rawPixelsTwo.pix2 = runLenChar;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -690,8 +694,10 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
 
     else if  (runLen < 19)
     {
+#include "DisableConversionWarning.h"
       rec.runLenPVx.opCode = 4 + runLenChar;
       rec.runLenPVx.len = runLen - 3;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = 0;
@@ -701,13 +707,17 @@ void  ScannerFile2BitEncoded::AddCurRunLenToOutputBuffer ()
     {
       kkint32  runLenThisLoop = Min ((kkint32)1023, runLen);
 
+#include "DisableConversionWarning.h"
       rec.runLen10Bit.opCode = 8;
       rec.runLen10Bit.pix = runLenChar;
       rec.runLen10Bit.lenHigh = runLenThisLoop / 256;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
+#include "DisableConversionWarning.h"
       rec.runLen10Bit_2.lenLow = runLenThisLoop % 256;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       runLen = runLen - runLenThisLoop;
@@ -728,18 +738,22 @@ void  ScannerFile2BitEncoded::AddRawStrPixelsToEncodedBuffer (kkuint16&  nextCp,
   {
     if  (len > 3)
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelRec.pix0 = rawStr[nextCp];  ++nextCp;
       rec.rawPixelRec.pix1 = rawStr[nextCp];  ++nextCp;
       rec.rawPixelRec.pix2 = rawStr[nextCp];  ++nextCp;
       rec.rawPixelRec.pix3 = rawStr[nextCp];  ++nextCp;
-      len -= 4;
+#include "RestoreConversionWarning.h"
+      len = (kkuint16)(len - 4);
     }
     else
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelRec.pix0 = rawStr[nextCp];  ++rawStr;
       if  (len > 1)  {rec.rawPixelRec.pix1 = rawStr[nextCp];  ++nextCp;}
       if  (len > 2)  {rec.rawPixelRec.pix2 = rawStr[nextCp];  ++nextCp;}
       if  (len > 3)  {rec.rawPixelRec.pix3 = rawStr[nextCp];  ++nextCp;}
+#include "RestoreConversionWarning.h"
       len = 0;
     }
 
@@ -762,8 +776,10 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
   {
     if  (len < 2)
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelOne.opCode = 10;
       rec.rawPixelOne.pix1 = rawStr[nextCp];
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       len = 0;
@@ -773,8 +789,10 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
     else if  (len < 3)
     {
       rec.rawPixelsTwo.opCode = 11;
+#include "DisableConversionWarning.h"
       rec.rawPixelsTwo.pix1 = rawStr[nextCp];  ++nextCp;
       rec.rawPixelsTwo.pix2 = rawStr[nextCp];  ++nextCp;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       len = 0;
@@ -783,8 +801,10 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
 
     else if  (len < 19)
     {
+#include "DisableConversionWarning.h"
       rec.rawPixelsVarLen4Bit.opCode = 12;
       rec.rawPixelsVarLen4Bit.len = len - 3;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
       AddRawStrPixelsToEncodedBuffer (nextCp, len);
@@ -797,17 +817,21 @@ void  ScannerFile2BitEncoded::AddCurRawStrToOutputBuffer ()
       kkuint16  lenHigh = rawPixelsThisLoop / 256;
       kkuint16  lenLow  = rawPixelsThisLoop % 256;
 
+#include "DisableConversionWarning.h"
       rec.rawPixelsVarLen12Bit.opCode = 13;
       rec.rawPixelsVarLen12Bit.lenHigh = (uchar)lenHigh;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
+#include "DisableConversionWarning.h"
       rec.rawPixelsVarLen12Bit_2.lenLow = (uchar)lenLow;
+#include "RestoreConversionWarning.h"
       *encodedBuffNext = rec;
       ++encodedBuffNext;
 
       AddRawStrPixelsToEncodedBuffer (nextCp, rawPixelsThisLoop);
-      len = len - rawPixelsThisLoop;
+      len = (kkuint16)(len - rawPixelsThisLoop);
     }
   }
 
@@ -903,8 +927,10 @@ void  ScannerFile2BitEncoded::WriteNextScanLine (const uchar*  buffer,
     AddCurRawStrToOutputBuffer ();
 
   OpRec  rec;
+#include "DisableConversionWarning.h"
   rec.endOfScanLine.opCode = 0;
   rec.endOfScanLine.filler = 0;
+#include "RestoreConversionWarning.h"
   *encodedBuffNext = rec;
   ++encodedBuffNext;
 
@@ -931,13 +957,18 @@ void  ScannerFile2BitEncoded::WriteTextBlock (const uchar*  txtBlock,
     kkint32  charsToWrite = Min ((kkint32)2048, charsLeft);
     OpRec  rec;
 
+#include "DisableConversionWarning.h"
     rec.textBlock.opCode     = 1;
     rec.textBlock.endOfText  = (charsToWrite < charsLeft) ? 0 : 1;
     rec.textBlock.lenHigh    = charsToWrite / 256;
+#include "RestoreConversionWarning.h"
     *encodedBuffNext = rec;
     ++encodedBuffNext;
 
+#include "DisableConversionWarning.h"
     encodedBuffNext->textBlock_2.lenLow = charsToWrite % 256;
+#include "RestoreConversionWarning.h"
+
     ++encodedBuffNext;
 
     memcpy (encodedBuffNext, txtBlockPtr, charsToWrite);

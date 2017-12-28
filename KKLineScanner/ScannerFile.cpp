@@ -3,14 +3,11 @@
 #include <errno.h>
 #include <string.h>
 #include <ctype.h>
-
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <vector>
-
 #include "MemoryDebug.h"
-
 using namespace std;
 
 
@@ -22,7 +19,6 @@ using namespace KKB;
 
 
 #include "ScannerFile.h"
-
 #include "ScannerHeaderFields.h"
 #include "ScannerFileSimple.h"
 #include "ScannerFile2BitEncoded.h"
@@ -403,9 +399,9 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
 {
   float  secsPerFrame = 1.0f;
   if  (scanRate > 0.0f)
-    secsPerFrame = frameHeight  / scanRate;
+    secsPerFrame = (float)frameHeight  / scanRate;
   else
-    secsPerFrame = frameHeight  / 5000.0f;  // Assume 5k ScanLines per second
+    secsPerFrame = (float)frameHeight  / 5000.0f;  // Assume 5k ScanLines per second
 
   float  totalTime = (float)(frameOffsets.size ()) * secsPerFrame;
   int  totalNumIntervals = (int)(0.5f + totalTime / (float)intervalSecs);
@@ -433,7 +429,7 @@ VectorFloatPtr  ScannerFile::RecordRateByTimeIntervals (int intervalSecs)
       timeIntervalCurTime = nextMark;
 
       ++frameOffsetsIdx;
-      frameOffsetsStartTime = frameOffsetsIdx * secsPerFrame;
+      frameOffsetsStartTime = (float)frameOffsetsIdx * secsPerFrame;
       frameOffsetsEndTime = frameOffsetsStartTime + (float)secsPerFrame;
       if  (frameOffsetsIdx < frameOffsets.size ())
         bytesThisFrame = frameOffsets[frameOffsetsIdx] - frameOffsets[frameOffsetsIdx - 1];
@@ -732,6 +728,8 @@ ScannerFile::Format  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
 {
   // Will guess what file format by trying to open each one until one is considered valid.
 
+  _log.Level (10) << "ScannerFile::GuessFormatOfFile   _fileName[" << _fileName << "]." << endl;
+
   FILE*  f = osFOPEN (_fileName.Str (), "rb");
   if  (!f)
     return Format::sfUnKnown;
@@ -742,11 +740,17 @@ ScannerFile::Format  ScannerFile::GuessFormatOfFile (const KKStr&  _fileName,
   fclose (f);
 
   KKStr fieldName = ln.ExtractToken2 ("\t");
-  if  (!fieldName.EqualIgnoreCase ("ScannerFile"))
+  if (!fieldName.EqualIgnoreCase ("ScannerFile"))
+  {
+    _log.Level (-1) << "ScannerFile::GuessFormatOfFile   _fileName[" << _fileName << "]   unknown format." << endl;
     return Format::sfUnKnown;
-
-  KKStr  scannerFileFormatStr = ln.ExtractToken2 ("\t");
-  return  ScannerFileFormatFromStr (scannerFileFormatStr);
+  }
+  else
+  {
+    KKStr  scannerFileFormatStr = ln.ExtractToken2 ("\t");
+    _log.Level (10) << "ScannerFile::GuessFormatOfFile   _fileName[" << _fileName << "]   Format[" << scannerFileFormatStr << "]." << endl;
+    return  ScannerFileFormatFromStr (scannerFileFormatStr);
+  }
 }  /*  GuessFormatOfFile */
 
 
@@ -1135,7 +1139,7 @@ void  ScannerFile::ReportTextMsg (const char*  textBuff,
     kkuint32 scanLineNum = s.ExtractTokenUint ("\t");
     kkuint32 dataWord = s.ExtractTokenUint ("\t");
     WordFormat32Bits  w (dataWord);
-    ReportInstrumentDataWord (idNum, scanLineNum, w);
+    ReportInstrumentDataWord ((uchar)idNum, scanLineNum, w);
   }
   else
   {
@@ -1272,7 +1276,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
     }
 
     if  ((!cancelFlag)  &&  changesMadeToIndexFile)
-      SaveIndexFile (frameOffsets);
+      SaveIndexFile ();
   }
 
   if  (!cancelFlag)
@@ -1289,7 +1293,7 @@ void  ScannerFile::BuildFrameOffsets (const volatile bool&  cancelFlag)
 
 
 
-void  ScannerFile::SaveIndexFile (vector<kkint64>&  frameOffsets)
+void  ScannerFile::SaveIndexFile ()
 {
   indexFileName = osRemoveExtension (fileName) + ".idx";
   ofstream f (indexFileName.Str ());
@@ -1342,7 +1346,6 @@ void  ScannerFile::LoadIndexFile (bool&  successful)
 
   while  (true)
   {
-    bool  eol = false;
     delete ln;
     ln = KKB::osReadRestOfLine (f, eof);
     if  (eof)  break;

@@ -34,9 +34,9 @@ namespace  KKB
 
     DateType (const DateType&  _date);
 
-    DateType (short  _year,
-              uchar  _month,
-              uchar  _day
+    DateType (kkint16 _year,
+              uchar   _month,
+              uchar   _day
              );
 
     ///<summary> Constructs a date from an integer that represents the total number of days since 1/1/0000 */  </summary>
@@ -69,9 +69,9 @@ namespace  KKB
 
     void   SubtractDays (kkint32  _days);
 
-    short  Year  () const {return  year;}
-    uchar  Month () const {return  month;}
-    uchar  Day   () const {return  day;}
+    kkint16 Year  () const {return  year;}
+    uchar   Month () const {return  month;}
+    uchar   Day   () const {return  day;}
 
     ///<summary> Returns back the number of days since &quot;1/1/0000&quot;. </summary>
     ///<remarks>
@@ -217,7 +217,7 @@ namespace  KKB
               const TimeType&  _time
              );
 
-    DateTime (short  _year,
+    DateTime (kkint16 _year,
               uchar  _month,
               uchar  _day,
               uchar  _hour,
@@ -238,7 +238,7 @@ namespace  KKB
 
     kkuint64              Seconds () const;
     
-    short                 Year  () const  {return  date.Year  ();}
+    kkint16               Year  () const  {return  date.Year  ();}
     uchar                 Month () const  {return  date.Month ();}
     uchar                 Day   () const  {return  date.Day   ();}
 

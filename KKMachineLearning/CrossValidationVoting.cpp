@@ -71,7 +71,7 @@ CrossValidationVoting::~CrossValidationVoting ()
   
 
 
-void  CrossValidationVoting::AllocateMemory (RunLog&  log)
+void  CrossValidationVoting::AllocateMemory ()
 {
   maxNumOfConflicts = mlClasses->QueueSize () + 1;
 
@@ -157,7 +157,7 @@ void  CrossValidationVoting::RunCrossValidation (RunLog&  log)
   }
 
   DeleteAllocatedMemory ();
-  AllocateMemory (log);
+  AllocateMemory ();
 
   kkint32  imageCount       = examples->QueueSize ();
   kkint32  numImagesPerFold = (imageCount + numOfFolds - 1) / numOfFolds;
@@ -218,7 +218,7 @@ void  CrossValidationVoting::RunValidationOnly (FeatureVectorListPtr  validation
 {
   log.Level (10) << "CrossValidationVoting::RunValidationOnly" << endl;
   DeleteAllocatedMemory ();
-  AllocateMemory (log);
+  AllocateMemory ();
 
   // We need to get a duplicate copy of each image data because the trainer and classifier
   // will normalize the data.
@@ -279,8 +279,7 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
 
   {
     // Force the creation of a noise class
-    MLClassPtr  noiseMLClass = mlClasses->GetNoiseClass ();
-    noiseMLClass = NULL;
+    mlClasses->GetNoiseClass ();
   }
 
   FeatureVectorList::iterator  imageIDX = testImages->begin ();
@@ -358,7 +357,6 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
       // Determine winning vote
       kkint32  highVote = 0;
       numOfWinners = 0;
-      kkint32  idxWithHighVote = -1;
       kkint32  winnerIdx       = -1;
       kkint32  x;
 
@@ -366,10 +364,9 @@ void  CrossValidationVoting::CrossValidate (FeatureVectorListPtr   testImages,
       {
         if  (voteTable[x] > highVote)
         {
-          highVote = voteTable[x];
-          numOfWinners    = 1;
-          idxWithHighVote = x;
-          winnerIdx       = x;
+          highVote     = voteTable[x];
+          numOfWinners = 1;
+          winnerIdx    = x;
         }
         else if  (voteTable[x] == highVote)
         {

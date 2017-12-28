@@ -354,7 +354,7 @@ void  FeatureFileIO::GetLine (istream&  _in,
   while  ((ch != '\n')  &&  (ch != '\r')  &&  (!_in.eof ()))
   {
     ch = _in.get ();
-    _line.Append (ch);
+    _line.Append ((char)ch);
     ch = _in.peek ();
   }
 
@@ -533,8 +533,6 @@ void   FeatureFileIO::AppendToFile (const KKStr&          _fileName,
 
   _successful = true;
 
-  FileDescConstPtr  fileDesc = _examples.FileDesc ();
-
   ofstream out (_fileName.Str (), ios::app);
 
   if  (!out.is_open())
@@ -581,8 +579,6 @@ void  FeatureFileIO::SaveFeatureFile (const KKStr&          _fileName,
   }
 
   out.precision (9);
-
-  FileDescConstPtr  fileDesc = _examples.FileDesc ();
 
   KKStr  errorMessage;
   SaveFile (_examples, _fileName, _selFeatures, out, _numExamplesWritten, _cancelFlag, _successful, errorMessage, _log);
@@ -684,8 +680,6 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
   FeatureVectorListPtr  dirImages = NULL;
 
-  FileDescConstPtr  fileDesc = _fvProducerFactory->FileDesc ();
-
   if  (_rewiteRootFeatureFile)
   {
     DateTime  timeStamp;
@@ -755,30 +749,27 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
 
       KKStr  newDirPath = osAddSlash (_rootDir) + subDirName;
 
-      FeatureVectorListPtr  subDirImages = LoadInSubDirectoryTree (_fvProducerFactory,
-                                                                   newDirPath, 
-                                                                   _mlClasses, 
-                                                                   _useDirectoryNameForClassName, 
-                                                                   _cancelFlag,
-                                                                   true,     // true = ReWriteRootFeatureFile
-                                                                   _log
-                                                                  );
-      FeatureVectorPtr  fv = NULL;
-
+      FeatureVectorListPtr  subDirExamples = LoadInSubDirectoryTree (_fvProducerFactory,
+                                                                     newDirPath, 
+                                                                     _mlClasses, 
+                                                                     _useDirectoryNameForClassName, 
+                                                                     _cancelFlag,
+                                                                     true,     // true = ReWriteRootFeatureFile
+                                                                     _log
+                                                                    );
       osAddLastSlash (subDirName);
 
       // We want to add the directory path to the ExampleFileName so that we can later locate the source image.
-      FeatureVectorList::iterator  idx = subDirImages->begin ();
-      for  (idx = subDirImages->begin ();  idx != subDirImages->end ();  idx++)
+      for  (auto fv: *subDirExamples)
       {
-        fv = *idx;
         KKStr  newImageFileName = subDirName + fv->ExampleFileName ();
         fv->ExampleFileName (newImageFileName);
       }
 
-      dirImages->AddQueue (*subDirImages);
-      subDirImages->Owner (false);
-      delete  subDirImages;
+      dirImages->AddQueue (*subDirExamples);
+      subDirExamples->Owner (false);
+      delete  subDirExamples;
+      subDirExamples = NULL;
     }
 
     delete  subDirectories;  subDirectories = NULL;
@@ -811,7 +802,6 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   _changesMade = false;
   _timeStamp = DateTime ();
 
-  FileDescConstPtr  fileDesc = _fvProducerFactory->FileDesc ();
   if  (_unknownClass == NULL)
     _unknownClass = MLClass::GetUnKnownClassStatic ();
 

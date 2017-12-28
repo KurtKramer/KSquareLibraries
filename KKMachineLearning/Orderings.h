@@ -162,21 +162,15 @@ public:
   /***************************************************************************/
   FeatureVectorListPtr    Data            ()  const  {return data;}
   const KKStr&            FeatureFileName ()  const  {return featureFileName;}
-  const FileDescConstPtr  FileDesc        ()  const  {return fileDesc;}
-  const MLClassListPtr    MLClasses       ()  const  {return mlClasses;}
+  FileDescConstPtr        FileDesc        ()  const  {return fileDesc;}
+  MLClassListPtr          MLClasses       ()  const  {return mlClasses;}
   const KKStr&            IndexFileName   ()  const  {return indexFileName;}
   kkuint32                NumOfFolds      ()  const  {return numOfFolds;}
   kkuint32                NumOfOrderings  ()  const  {return numOfOrderings;}
   kkuint32                Size            ()  const  {return (kkuint32)orderings.size ();}
   bool                    Valid           ()  const  {return valid;}
 
-
-
-
-  const
   FeatureVectorListPtr  Ordering (kkuint32  orderingIdx)  const;
-
-
 
 
   void  Save ();

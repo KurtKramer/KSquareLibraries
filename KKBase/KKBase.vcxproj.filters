@@ -392,6 +392,12 @@
     <ClInclude Include="MorphOpThinContour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DisableConversionWarning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RestoreConversionWarning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

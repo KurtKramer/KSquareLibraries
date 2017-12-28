@@ -79,6 +79,7 @@ ModelParamDual::~ModelParamDual  ()
 }
 
 
+
 ModelParamDual::ProbFusionMethod  ModelParamDual::ProbFusionMethodFromStr (const KKStr& s)
 {
   if  (s.EqualIgnoreCase ("And"))
@@ -92,6 +93,7 @@ ModelParamDual::ProbFusionMethod  ModelParamDual::ProbFusionMethodFromStr (const
 }
 
 
+
 KKStr  ModelParamDual::ProbFusionMethodToStr (ProbFusionMethod  pfm)
 {
   if  ((pfm <   ProbFusionMethod::Null)  ||  (pfm > ProbFusionMethod::And))
@@ -103,9 +105,13 @@ KKStr  ModelParamDual::ProbFusionMethodToStr (ProbFusionMethod  pfm)
       return "And";
       break;
 
-    case  ProbFusionMethod::Or:
-     return  "Or";
-     break;
+  case  ProbFusionMethod::Or:
+      return  "Or";
+      break;
+
+  case  ProbFusionMethod::Null:
+      return "Null";
+      break;
   }
 
   return  KKStr::EmptyStr ();
@@ -118,7 +124,6 @@ ModelParamDualPtr  ModelParamDual::Duplicate ()  const
 {
   return  new ModelParamDual (*this);
 }  /* Duplicate */
-
 
 
 
@@ -202,7 +207,6 @@ void  ModelParamDual::ParseCmdLineParameter (const KKStr&  parameter,
 
 
 
-
 /**
  @brief  // Will get called after the entire parameter string has been processed.
  */
@@ -214,6 +218,7 @@ void   ModelParamDual::ParseCmdLinePost (RunLog&   log)
     ValidParam (false);
   }
 }
+
 
 
 /**
@@ -240,7 +245,6 @@ KKStr   ModelParamDual::ToCmdLineStr () const
 
   return  cmdStr;
 }  /* ToCmdLineStr */
-
 
 
 
@@ -273,14 +277,14 @@ void  ModelParamDual::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  ModelParamDual::ReadXML (XmlStream&      s,
                                XmlTagConstPtr  tag,
                                VolConstBool&   cancelFlag,
                                RunLog&         log
                               )
 {
+  log.Level (50) << "ModelParamDual::ReadXML   tag->Name: " << ((tag == NULL) ? "" : tag->Name ()) << endl;
+
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
@@ -303,6 +307,11 @@ void  ModelParamDual::ReadXML (XmlStream&      s,
 
       else if  (varName.EqualIgnoreCase ("ProbFusionMethod"))
         probFusionMethod = ProbFusionMethodFromStr (*(dynamic_cast<XmlElementKKStrPtr> (t)->Value ()));
+
+      else
+      {
+        log.Level (-1) << " ModelParamDual::ReadXML    Unrecognized Element  varName: " << varName << endl;
+      }
     }
     delete  t;
     t = s.GetNextToken (cancelFlag, log);

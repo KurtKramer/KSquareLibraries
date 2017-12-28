@@ -245,42 +245,40 @@ typedef  TrainingProcess2List*  TrainingProcess2ListPtr;
                                                          ClassProbListPtr  predictions
                                                         );
 
-
-
-    bool                   abort;
-
-    KKStr                  configRootName;  /**< Name from 'TrainingConfiguration2' instance that was used to build the 
-                                             * 'TrainingProcess2'instance that this instance will refer to.
-                                             */
-
-    bool                   featuresAlreadyNormalized;
-
-    RunLog&                log;
-  
-    MLClassListPtr         mlClasses;          /**< We will own the MLClass objects in this
-                                                *   list.  Will be originally populated by
-                                                *   TrainingConfiguration2 construction.
-                                                */
-  
-    MLClassPtr             noiseMLClass;    /**< Point to class that represents Noise Images
-                                                *  The object pointed to will also be included 
-                                                *  in mlClasses.
-                                                */
-
-    Classifier2ListPtr     subClassifiers;
+    bool                     abort;
 
     ClassClassifierIndexType classClassifierIndex;
     ClassifierClassIndexType classifierClassIndex;
 
-    ModelPtr               trainedModel;
+    KKStr                    configRootName;  /**< Name from 'TrainingConfiguration2' instance that was used to build the
+                                               * 'TrainingProcess2'instance that this instance will refer to.
+                                               */
 
-    ModelOldSVMPtr         trainedModelOldSVM;
+    bool                     featuresAlreadyNormalized;
 
-    SVMModelPtr            trainedModelSVMModel;
+    RunLog&                  log;
+  
+    MLClassListPtr           mlClasses;       /**< We will own the MLClass objects in this
+                                               *   list.  Will be originally populated by
+                                               *   TrainingConfiguration2 construction.
+                                               */
+  
+    MLClassPtr               noiseMLClass;    /**< Point to class that represents Noise Images
+                                               *  The object pointed to will also be included 
+                                               *  in mlClasses.
+                                               */
 
-    TrainingProcess2Ptr    trainingProcess;
+    Classifier2ListPtr      subClassifiers;
 
-    MLClassPtr             unKnownMLClass;
+    ModelPtr                trainedModel;
+
+    ModelOldSVMPtr          trainedModelOldSVM;
+
+    SVMModelPtr             trainedModelSVMModel;
+
+    TrainingProcess2Ptr     trainingProcess;
+
+    MLClassPtr              unKnownMLClass;
   };
   typedef  Classifier2*   Classifier2Ptr;
 

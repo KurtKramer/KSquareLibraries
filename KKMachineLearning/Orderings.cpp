@@ -610,7 +610,6 @@ void  Orderings::Save ()
 
 
 
-const
 FeatureVectorListPtr  Orderings::Ordering (kkuint32  orderingIdx)  const
 {
   if  ((orderingIdx >= orderings.size ()))

@@ -61,3 +61,22 @@
 #endif
 
 
+#if  defined(KKOS_WINDOWS)
+
+#define  DisableConversionWarning (alpha)  \
+#pragma warning( push )                    \
+#pragma warning( disable : 4101)
+
+#define  RestoreConversionWarning (alpha)  \
+#pragma warning( pop ) 
+#else
+
+#define  DisableConversionWarning (alpha)        \
+#pragma GCC diagnostic push                      \
+#pragma GCC diagnostic ignored "-Wconversion"
+
+#define  RestoreConversionWarning (alpha)  \
+#pragma GCC diagnostic pop 
+
+#endif
+

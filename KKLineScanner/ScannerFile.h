@@ -371,7 +371,7 @@ namespace  KKLSC
                                 kkint64  byteOffset
                                );
 
-    void  SaveIndexFile (std::vector<kkint64>&  frameOffsets);
+    void  SaveIndexFile ();
 
     void  AddStartStopEntryToIndexFile (kkint32                        scanLineNum,
                                         StartStopPoint::StartStopType  type,

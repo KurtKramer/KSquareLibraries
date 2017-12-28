@@ -631,9 +631,9 @@ KKB::RBnode<Entry>*   KKB::RBTree<Entry,CompareNodes,KeyType>::GetLess (NodePtr 
 
   while  (n != nil)
   {
-    KeyType  nodeKey = comparator.ExtractKey (n->Data ());
+    KeyType  nk = comparator.ExtractKey (n->Data ());
 
-    if  (key > nodeKey)
+    if  (key > nk)
     {
       lastLess = n;
       n = n->Left ();

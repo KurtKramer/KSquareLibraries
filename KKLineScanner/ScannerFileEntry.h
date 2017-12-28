@@ -95,14 +95,11 @@ namespace  KKLSC
     ScannerFileEntryPtr  LookUpByRootName (const KKStr&  rootName);
 
   private:
-    Iterator idx;
-
   };  /* ScannerFileEntryList */
 
 
   typedef  ScannerFileEntryList::ScannerFileEntryListPtr  ScannerFileEntryListPtr;
 
-};  /* KKLSC */
+}  /* KKLSC */
 
 #endif
-

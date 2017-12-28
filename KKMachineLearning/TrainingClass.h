@@ -19,8 +19,10 @@ namespace KKMLL
   #if   !defined(_MLCLASS_)
   class  MLClass;
   typedef  MLClass*  MLClassPtr;
+  typedef  MLClass const *  MLClassConstPtr;
+  typedef  MLClass const *  MLClassConstPtr;
   class  MLClassList;
-  typedef  MLClassList*  MLClassListPtr;
+  typedef  MLClassList *  MLClassListPtr;
   #endif
 
   #if  !defined(_TrainingConfiguration2_Defined_)
@@ -63,13 +65,12 @@ namespace KKMLL
 
     virtual ~TrainingClass ();
 
-
     float                      CountFactor       () const  {return  countFactor;}
     const KKStr&               Directory         (kkuint32 idx) const;
     kkuint32                   DirectoryCount    () const;
     const VectorKKStr&         Directories       () const  {return  directories;}
     const KKStr&               FeatureFileName   () const  {return  featureFileName;}
-    const MLClassPtr           MLClass           () const  {return  mlClass;}
+    MLClassPtr                 MLClass           () const  {return  mlClass;}
     const KKStr&               Name              () const;
     TrainingConfiguration2Ptr  SubClassifier     () const  {return  subClassifier;}
     const KKStr&               SubClassifierName () const  {return  subClassifierName;}
@@ -78,7 +79,7 @@ namespace KKMLL
 
     KKStr                      ExpandedDirectory (const KKStr&  rootDir,
                                                   kkuint32      idx
-                                                 );
+                                                 )  const;
 
     void  AddDirectory    (const KKStr&  _directory);
     void  AddDirectories  (const VectorKKStr&  _directories);
@@ -89,6 +90,12 @@ namespace KKMLL
     void  SubClassifier     (TrainingConfiguration2Ptr  _subClassifier)      {subClassifier     = _subClassifier;}
     void  SubClassifierName (const KKStr&               _subClassifierName)  {subClassifierName = _subClassifierName;}
     void  Weight            (float                      _weight)             {weight            = _weight;}
+
+    void  ClassNameLineNum     (kkint32  _classNameLineNum)     { classNameLineNum     = _classNameLineNum; }
+    void  CountFactorLineNum   (kkint32  _countFactorLineNum)   { countFactorLineNum   = _countFactorLineNum; }
+    void  DirLineNum           (kkint32  _dirLineNum)           { dirLineNum           = _dirLineNum; }
+    void  SubClassifierLineNum (kkint32  _subClassifierLineNum) { subClassifierLineNum = _subClassifierLineNum; }
+    void  WeightLineNum        (kkint32  _weightLineNum)        { weightLineNum        = _weightLineNum; }
 
     void  Directory       (kkuint32      idx, 
                            const KKStr&  directory
@@ -134,11 +141,17 @@ namespace KKMLL
                                       * the SVM Cost parameter from examples in this class will be weighted by this value.
                                       */
 
+    kkint32  classNameLineNum;
+    kkint32  dirLineNum;
+    kkint32  weightLineNum;
+    kkint32  countFactorLineNum;
+    kkint32  subClassifierLineNum;
   };  /* TrainingClass */
 
 
-
   typedef  TrainingClass*  TrainingClassPtr;
+
+  typedef  TrainingClass const *  TrainingClassConstPtr;
 
 
   class  TrainingClassList:  public KKQueue<TrainingClass>

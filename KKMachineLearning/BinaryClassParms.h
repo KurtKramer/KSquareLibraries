@@ -47,6 +47,7 @@ namespace KKMLL
   {
   public:
     typedef  BinaryClassParms*  BinaryClassParmsPtr;
+    typedef  BinaryClassParms const *  BinaryClassParmsConstPtr;
 
     typedef  SVM233::svm_parameter  svm_parameter;
 
@@ -71,9 +72,7 @@ namespace KKMLL
     ~BinaryClassParms ();
 
     static
-    BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr& _str,
-                                              RunLog&      _log
-                                             );
+    BinaryClassParmsPtr  CreateFromTabDelStr (const KKStr& _str);
 
     //  Member Access Methods
     double                   AParam             () const {return  param.A;}
@@ -84,7 +83,7 @@ namespace KKMLL
     FeatureNumListConstPtr   SelectedFeatures   () const {return  selectedFeatures;}
     float                    Weight             () const {return  weight;}
 
-    kkuint16                 NumOfFeatures      (FileDescConstPtr fileDesc) const;
+    kkuint32                 NumOfFeatures      (FileDescConstPtr fileDesc) const;
     FeatureNumListConstPtr   SelectedFeaturesFD (FileDescConstPtr fileDesc) const;
 
 
@@ -117,7 +116,8 @@ namespace KKMLL
 
 
 
-  typedef  BinaryClassParms::BinaryClassParmsPtr   BinaryClassParmsPtr;
+  typedef  BinaryClassParms::BinaryClassParmsPtr       BinaryClassParmsPtr;
+  typedef  BinaryClassParms::BinaryClassParmsConstPtr  BinaryClassParmsConstPtr;
 
 
 
@@ -141,17 +141,17 @@ namespace KKMLL
                          );
 
 
+    /*
     static  
-      BinaryClassParmsListPtr  CreateFromXML (std::istream&      i,
-                                              FileDescConstPtr   fileDesc,
-                                              RunLog&            log
+      BinaryClassParmsListPtr  CreateFromXML (std::istream&     i,
+                                              RunLog&           log
                                              );
 
     static  
-      BinaryClassParmsListPtr  CreateFromXML (std::FILE*        i,
-                                              FileDescConstPtr  fileDesc,
-                                              RunLog&           log
+      BinaryClassParmsListPtr  CreateFromXML (std::FILE*  i,
+                                              RunLog&     log
                                              );
+    */
 
     ~BinaryClassParmsList ();
 
@@ -171,15 +171,15 @@ namespace KKMLL
     virtual
     void  PushOnFront (BinaryClassParmsPtr  binaryParms);
 
-    void  ReadXML (FILE*             i,
-                   FileDescConstPtr  fileDesc,
-                   RunLog&           log
+    /*
+    void  ReadXML (FILE*    i,
+                   RunLog&  log
                   );
 
-    void  ReadXML (std::istream&     i,
-                   FileDescConstPtr  fileDesc,
-                   RunLog&           log
+    void  ReadXML (std::istream&  i,
+                   RunLog&        log
                   );
+    */
 
     void  WriteXML (std::ostream&  o)  const;
 
