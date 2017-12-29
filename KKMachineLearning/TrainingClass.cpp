@@ -359,7 +359,6 @@ TrainingClassList::TrainingClassList (const TrainingClassList&  tcl,
 
 
 
-
 void   TrainingClassList::AddTrainingClass (TrainingClassPtr  trainingClass)
 {
    PushOnBack (trainingClass);
@@ -397,7 +396,6 @@ TrainingClassPtr  TrainingClassList::LocateByMLClassName (const KKStr&  classNam
 
 
 
-
 TrainingClassPtr  TrainingClassList::LocateByDirectory (const KKStr&  directory)
 {
   iterator  idx;
@@ -429,7 +427,6 @@ TrainingClassListPtr   TrainingClassList::DuplicateListAndContents ()  const
 
   return  dupList;
 }  /* TrainingClassListPtr */
-
 
 
 
@@ -509,6 +506,7 @@ void  TrainingClassList::ReadXML (XmlStream&     s,
   delete  t;
   t = NULL;
 }  /* ReadXML */
+
 
 
   class  XmlFactoryTrainingClass: public XmlFactory
