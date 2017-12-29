@@ -1961,7 +1961,7 @@ void SVMModel::ConstructOneVsAllModel (FeatureVectorListPtr examples,
 {
   MLClassListPtr  allClasses = examples->ExtractListOfClasses ();
 
-  VectorShort  assignmentNums = assignments.GetUniqueListOfAssignments ();
+  auto  assignmentNums = assignments.GetUniqueListOfAssignments ();
   numOfModels = (kkint32)assignmentNums.size ();
 
   models   = new ModelPtr  [numOfModels];

@@ -50,7 +50,7 @@ namespace KKMLL
     typedef  ClassProbList*  ClassProbListPtr;
 
     ClassProbList ();
-    ClassProbList (bool owner);
+    ClassProbList (bool _owner);
     ClassProbList (const ClassProbList&  pairList);
 
     kkMemSize  MemoryConsumedEstimated ()  const;

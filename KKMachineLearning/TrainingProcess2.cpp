@@ -641,7 +641,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractFeatures (TrainingConfiguration2C
   FactoryFVProducerPtr  fvFactoryProducer = config->FvFactoryProducer (log);
 
   FeatureFileIOPtr      driver           = fvFactoryProducer->DefaultFeatureFileIO ();
-  FeatureVectorListPtr  trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
+  FeatureVectorListPtr  trainingExamples = fvFactoryProducer->ManufacturFeatureVectorList (true);
 
   bool  abort = false;
 
@@ -735,7 +735,7 @@ FeatureVectorListPtr  TrainingProcess2::ExtractTrainingClassFeatures (TrainingCo
 
   FactoryFVProducerPtr  fvFactoryProdcer = config->FvFactoryProducer (log);
 
-  FeatureVectorListPtr  trainingExamples = fvFactoryProdcer->ManufacturFeatureVectorList (true, log);
+  FeatureVectorListPtr  trainingExamples = fvFactoryProdcer->ManufacturFeatureVectorList (true);
 
   //****************************************************************************
   // Make sure that there are no existing *.data files that we are going to use.

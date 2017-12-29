@@ -92,7 +92,7 @@ FeatureEncoder::FeatureEncoder (FileDescConstPtr       _fileDesc,
 
   kkint32  x;
 
-  for  (x = 0;  x < numOfFeatures;  x++)
+  for  (x = 0;  x < numOfFeatures;  ++x)
   {
     kkint32  srcFeatureNum = selectedFeatures[x];
     srcFeatureNums  [x] = srcFeatureNum;
@@ -162,10 +162,6 @@ FeatureEncoder::FeatureEncoder (FileDescConstPtr       _fileDesc,
 
 
 
-
-
-
-
 /**
  * @brief Frees any memory allocated by, and owned by the FeatureEncoder
  */
@@ -197,7 +193,6 @@ kkMemSize  FeatureEncoder::MemoryConsumedEstimated ()  const
 
 
 
-
 FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 {
   FileDescPtr  newFileDesc = new FileDesc ();
@@ -213,7 +208,7 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
   bool  alreadyExist;
   
-  for  (x = 0;  x < numOfFeatures; x++)
+  for  (x = 0;  x < numOfFeatures; ++x)
   {
     kkint32  srcFeatureNum = srcFeatureNums[x];
     kkint32  y = destFeatureNums[x];
@@ -233,7 +228,6 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
     KKStr  origFieldDesc = StrFormatInt (srcFeatureNum, "zz0") + "\t" +
                             fileDesc->FieldName (srcFeatureNum) + "\t" +
                             fileDesc->TypeStr (srcFeatureNum);
-
 
     switch (destWhatToDo[x])
     {
@@ -291,9 +285,6 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
 
 
 
-
-
-
 /**
  * @brief Converts a single example into the svm_problem format
  * @param[in] example That we're converting
@@ -309,21 +300,20 @@ XSpacePtr  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example)
 
 
 
-
 FeatureVectorPtr  FeatureEncoder::EncodeAExample (FileDescConstPtr  encodedFileDesc,
                                                   FeatureVectorPtr  src
                                                  )
 {
   FeatureVectorPtr  encodedExample = new FeatureVector (numEncodedFeatures);
-  encodedExample->MLClass     (src->MLClass     ());
+  encodedExample->MLClass        (src->MLClass     ());
   encodedExample->PredictedClass (src->PredictedClass ());
-  //encodedExample->Version        (src->Version        ());
+  //encodedExample->Version      (src->Version        ());
   encodedExample->TrainWeight    (src->TrainWeight    ());
 
   const float*  featureData = src->FeatureData ();
   kkint32  x;
 
-  for  (x = 0;  x < numOfFeatures; x++)
+  for  (x = 0;  x < numOfFeatures; ++x)
   {
     float  featureVal = featureData [srcFeatureNums[x]];
     kkint32  y = destFeatureNums[x];
@@ -399,7 +389,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
 
   xSpaceUsed = 0;
 
-  for  (x = 0;  x < numOfFeatures; x++)
+  for  (x = 0;  x < numOfFeatures;  ++x)
   {
     float  featureVal = featureData [srcFeatureNums[x]];
     kkint32  y = destFeatureNums[x];
@@ -421,7 +411,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
       {
         if  (featureVal != 0.0)
         {
-          xSpace[xSpaceUsed].index = y;
+          xSpace[xSpaceUsed].index = (kkint16)y;
           xSpace[xSpaceUsed].value = featureVal;
           xSpaceUsed++;
         }
@@ -435,7 +425,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
           float  bVal = ((kkint32)featureVal == z);
           if  (bVal != 0.0)
           {
-            xSpace[xSpaceUsed].index = y;
+            xSpace[xSpaceUsed].index = (kkint16)y;
             xSpace[xSpaceUsed].value = bVal;
             xSpaceUsed++;
           }
@@ -449,7 +439,7 @@ void  FeatureEncoder::EncodeAExample (FeatureVectorPtr  example,
       {
         if  (featureVal != (float)0.0)
         {
-          xSpace[xSpaceUsed].index = y;
+          xSpace[xSpaceUsed].index = (kkint16)y;
           xSpace[xSpaceUsed].value = featureVal / (float)cardinalityDest[x];
           xSpaceUsed++;
         }
@@ -474,7 +464,7 @@ kkint32  FeatureEncoder::DetermineNumberOfNeededXspaceNodes (FeatureVectorListPt
     FeatureVectorPtr fv = *idx;
     const float*  featureData = fv->FeatureData ();
 
-    for  (kkint32 x = 0;  x < numOfFeatures; x++)
+    for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
     {
       float  featureVal = featureData [srcFeatureNums[x]];
       kkint32  y = destFeatureNums[x];
@@ -539,7 +529,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
   kkint32  numNeededXspaceNodes = DetermineNumberOfNeededXspaceNodes (examplesToUseFoXSpace);
 
-  kkint32  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * sizeof (struct svm_node);  // I added '10' to elements because I am paranoid
+  kkint32  totalBytesForxSpaceNeeded = (numNeededXspaceNodes + 10) * (kkint32)sizeof (struct svm_node);  // I added '10' to elements because I am paranoid
 
   xSpace = (struct svm_node*) malloc (totalBytesForxSpaceNeeded);
   if  (xSpace == NULL)
@@ -561,9 +551,9 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
  
   FeatureVectorPtr  example      = NULL;
   MLClassPtr        lastMlClass  = NULL;
-  kkint16           lastClassNum = -1;
+  kkint32           lastClassNum = -1;
 
-  kkint32  bytesOfxSpacePerExample = xSpaceNeededPerExample * sizeof (struct svm_node);
+  kkint32  bytesOfxSpacePerExample = xSpaceNeededPerExample * (kkint32)sizeof (struct svm_node);
 
   for (i = 0;  i < prob.l;  i++)
   {
@@ -606,7 +596,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
       EncodeAExample (example, prob.x[i], xSpaceUsed);
       if  (xSpaceUsed < xSpaceNeededPerExample)
       {
-        kkint32  bytesNeededForThisExample = xSpaceUsed * sizeof (struct svm_node);
+        kkuint32  bytesNeededForThisExample = xSpaceUsed * (kkuint32)sizeof (struct svm_node);
         struct svm_node*  smallerXSpaceThisExample = (struct svm_node*) malloc (bytesNeededForThisExample);
         memcpy (smallerXSpaceThisExample, xSpaceThisExample, bytesNeededForThisExample);
         free  (xSpaceThisExample);
@@ -627,26 +617,20 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
 
 
 
-
-
 /**
  * @brief  Left over from BitReduction days; removed all code except that which processed the NO bit reduction option.
- * @param[in] examples_list The list of examples you want to attempt to reduce
- * @param[out] compressed_examples_list The reduced list of examples
+ * @param[in] srcExamples The list of examples you want to attempt to reduce
+ * @param[out] compressedExamples The reduced list of examples
  */
-void  FeatureEncoder::CompressExamples (FeatureVectorListPtr    srcExamples,
-                                        FeatureVectorListPtr    compressedExamples,
-                                        ClassAssignments&       assignments
+void  FeatureEncoder::CompressExamples (FeatureVectorListPtr  srcExamples,
+                                        FeatureVectorListPtr  compressedExamples,
+                                        ClassAssignments&     assignments
                                        )
 {
-  double time_before, time_after;
-  time_before = osGetSystemTimeUsed ();
   compressedExamples->AddQueue (*srcExamples);
-  time_after = osGetSystemTimeUsed ();
   compressedExamples->Owner (false);
   return;
 }  /* CompressExamples */
-
 
 
 
@@ -657,10 +641,8 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
 
   FeatureVectorListPtr  encodedFeatureVectorList = new FeatureVectorList (destFileDesc, true);
 
-  FeatureVectorList::iterator  idx;
-  for  (idx = srcData.begin ();   idx != srcData.end ();  idx++)
+ for  (auto  srcExample: srcData)
   {
-    FeatureVectorPtr  srcExample = *idx;
     XSpacePtr  encodedData = EncodeAExample (srcExample);
 
     kkint32  zed = 0;
@@ -680,7 +662,6 @@ FeatureVectorListPtr  FeatureEncoder::CreateEncodedFeatureVector (FeatureVectorL
 
   return  encodedFeatureVectorList;
 }  /* CreateEncodedFeatureVector */
-
 
 
 
@@ -740,6 +721,7 @@ void  FeatureEncoder::ReadXML (XmlStream&      s,
                                RunLog&         log
                               )
 {
+  log.Level (50) << "FeatureEncoder::ReadXML   tag->Name: " << tag->Name () << endl;
   XmlTokenPtr t = s.GetNextToken (cancelFlag,  log);
   while  (t  &&  (!cancelFlag))
   {
@@ -769,7 +751,7 @@ void  FeatureEncoder::ReadXML (XmlStream&      s,
         {
           XmlElementArrayInt32Ptr xmlArray = dynamic_cast<XmlElementArrayInt32Ptr> (e);
           kkuint32 count = xmlArray->Count ();
-          if  (count != numOfFeatures)
+          if  ((kkint32)count != numOfFeatures)
           {
             log.Level (-1) << endl
               << "FeatureEncoder::ReadXML   ***ERROR***  Variable[" << varName << "]  Invalid Length[" << count << "]  Expected[" << numOfFeatures << "]" << endl
@@ -815,7 +797,7 @@ void  FeatureEncoder::ReadXML (XmlStream&      s,
           if  (xmlVect  &&  xmlVect->Value ())
           {
             const VectorInt32&  v = *(xmlVect->Value ());
-            if  (v.size () != numOfFeatures)
+            if  ((kkint32)v.size () != numOfFeatures)
             {
               log.Level (-1) << endl
                 << "FeatureEncoder::ReadXML   ***ERROR***   Variable[" << varName << "]  Invalid Size[" << v.size () << "]  Expected[" << numOfFeatures << "]." << endl

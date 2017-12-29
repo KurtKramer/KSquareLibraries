@@ -121,10 +121,7 @@ namespace KKMLL
      *@brief Manufactures a instance of a derived 'FeatureVectorList' class that is appropriate for containing instances
      *of FeatureVectors produced by the associated FeatureVectorProducer.
      */
-    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                                RunLog&  runLog
-                                                               )
-                                                               const;
+    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool owner) const;
 
 
     /**

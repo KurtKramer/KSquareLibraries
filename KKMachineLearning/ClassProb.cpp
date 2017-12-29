@@ -45,8 +45,8 @@ ClassProbList::ClassProbList ():
 }
 
 
-ClassProbList::ClassProbList (bool owner):
-   KKQueue<ClassProb>  (owner)
+ClassProbList::ClassProbList (bool _owner):
+   KKQueue<ClassProb>  (_owner)
 {
 }
 
@@ -438,6 +438,7 @@ void  ClassProbList::ReadXML (XmlStream&      s,
                               RunLog&         log
                              )
 {
+  log.Level (50) << "ClassProbList::ReadXML  << tag->Name:" << tag->Name () << endl;
   XmlTokenPtr  t = NULL;
   while  (true  &&  (!cancelFlag))
   {

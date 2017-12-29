@@ -77,7 +77,6 @@ namespace KKMLL
 
     FeatureVectorListPtr  CreateEncodedFeatureVector (FeatureVectorList&  srcData);
 
-
     /**
      *@brief  Compresses 'src' examples, allocating new 'xSpace' data structure.
      *@param[in]  src              Examples that are to be compressed
@@ -103,9 +102,7 @@ namespace KKMLL
                            kkint32&          xSpaceUsed
                           );
 
-
     FeatureVectorListPtr  EncodeAllExamples (const FeatureVectorListPtr  srcData);
-
 
     FeatureVectorPtr  EncodeAExample (FileDescConstPtr  encodedFileDesc,
                                       FeatureVectorPtr  src
@@ -135,8 +132,6 @@ namespace KKMLL
      * them.
      */
     kkint32  DetermineNumberOfNeededXspaceNodes (FeatureVectorListPtr   src)  const;
-
-
 
     kkint32*              cardinalityDest;
     MLClassPtr            class1;

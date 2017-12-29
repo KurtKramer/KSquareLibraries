@@ -12,7 +12,7 @@
  *         and another number in a different level.  This caused us to have to maintain a separate
  *         instantiation of these classes on the SvmModel objects. 
  *
- *         It is sub-classed from multimap<kkint16, MLClassPtr>. This allows for fast lookup by 
+ *         It is sub-classed from multimap<kkint32, MLClassPtr>. This allows for fast lookup by 
  *         number.  There is also a secondary index by MLClass. This allows us to do a fast 
  *         lookup by class.
  */
@@ -33,7 +33,7 @@ namespace KKMLL
   #endif
 
 
-  class  ClassAssignments: public  std::multimap<kkint16, MLClassPtr>
+  class  ClassAssignments: public  std::multimap<kkint32, MLClassPtr>
   {
   public:
     ClassAssignments ();
@@ -50,24 +50,19 @@ namespace KKMLL
 
 
     void  AddMLClass (MLClassPtr  mlClass,
-                      kkint16     num,
-                      RunLog&     log
-                     );
-
-    void  AddMLClass (MLClassPtr  mlClass,
                       kkint32     num,
                       RunLog&     log
                      );
 
-    MLClassPtr      GetMLClassByIndex (size_t idx);
+    MLClassPtr      GetMLClassByIndex (kkint32 idx);
 
-    MLClassPtr      GetMLClass    (kkint16 num)  const;
+    MLClassPtr      GetMLClass    (kkint32 num)  const;
 
-    MLClassList     GetMLClasses (kkint16 num)  const;
+    MLClassList     GetMLClasses (kkint32 num)  const;
 
-    kkint16         GetNumForClass (MLClassPtr  mlClass)  const;
+    kkint32         GetNumForClass (MLClassPtr  mlClass)  const;
 
-    VectorShort     GetUniqueListOfAssignments ()  const;
+    VectorInt32     GetUniqueListOfAssignments ()  const;
     
     kkMemSize       MemoryConsumedEstimated ()  const;
 
@@ -88,7 +83,7 @@ namespace KKMLL
     KKStr           ToString ()  const;
 
   private:
-    typedef  std::map<MLClassPtr, kkint16>  ClassLookUp;
+    typedef  std::map<MLClassPtr, kkint32>  ClassLookUp;
     typedef  ClassLookUp::iterator          ClassLookUpIterator;
 
     ClassLookUp  classLookUp;

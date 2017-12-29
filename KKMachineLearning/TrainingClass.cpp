@@ -22,12 +22,17 @@ using namespace  KKMLL;
 
 
 TrainingClass::TrainingClass ():
-     countFactor     (0.0f),
-     directories     (),
-     featureFileName (),
-     mlClass         (NULL),
-     subClassifier   (NULL),
-     weight          (0.0f)
+     countFactor          (0.0f),
+     directories          (),
+     featureFileName      (),
+     mlClass              (NULL),
+     subClassifier        (NULL),
+     weight               (0.0f),
+     classNameLineNum     (-1),
+     countFactorLineNum   (-1),
+     dirLineNum           (-1),
+     subClassifierLineNum (-1),
+     weightLineNum        (-1)
 {
 }
 
@@ -40,12 +45,12 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
                               TrainingConfiguration2Ptr _subClassifier,
                               MLClassList&              _mlClasses
                              ):
-                countFactor     (_countFactor),
-                directories     (_directories),
-                featureFileName (_name),
-                mlClass         (NULL),
-                weight          (_weight),
-                subClassifier   (_subClassifier),
+                countFactor          (_countFactor),
+                directories          (_directories),
+                featureFileName      (_name),
+                mlClass              (NULL),
+                subClassifier        (_subClassifier),
+                weight               (_weight),
                 classNameLineNum     (-1),
                 countFactorLineNum   (-1),
                 dirLineNum           (-1),
@@ -62,12 +67,13 @@ TrainingClass::TrainingClass (const VectorKKStr&        _directories,
 
 
 TrainingClass::TrainingClass (const TrainingClass&  tc): 
-    countFactor           (tc.countFactor),
+    countFactor          (tc.countFactor),
     directories          (tc.directories),
     featureFileName      (tc.featureFileName),
     mlClass              (tc.mlClass),
     subClassifier        (NULL),
     weight               (tc.weight),
+
     classNameLineNum     (tc.classNameLineNum),
     countFactorLineNum   (tc.countFactorLineNum),
     dirLineNum           (tc.dirLineNum),
@@ -84,8 +90,7 @@ TrainingClass::~TrainingClass ()
 
 
 
-const 
-KKStr&    TrainingClass::Name () const
+const KKStr&  TrainingClass::Name () const
 {
   return  mlClass->Name ();
 }
@@ -184,7 +189,6 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
                               )  const
 {
   bool  noDirectories = false;
-  bool  onlyOneDirectory = false;
 
   VectorKKStr  tempDirectories;
   for  (auto  idx: directories)
@@ -205,8 +209,6 @@ void  TrainingClass::WriteXML (const KKStr&  varName,
   {
     if  ((tempDirectories[0].EqualIgnoreCase (mlClass->Name ()))  ||  (tempDirectories[0].Empty ()))
       noDirectories = true;
-    else
-      onlyOneDirectory = true;
   }
 
   else  if  (tempDirectories.size () < 1)
@@ -330,9 +332,9 @@ TrainingClassList::TrainingClassList ():
 
 
 TrainingClassList::TrainingClassList (const KKStr&  _rootDir,
-                                      bool          owner
+                                      bool          _owner
                                      ):
-    KKQueue<TrainingClass> (owner),
+    KKQueue<TrainingClass> (_owner),
     rootDir                (_rootDir)
 {
 }
@@ -479,11 +481,11 @@ void  TrainingClassList::ReadXML (XmlStream&     s,
         KKStr varName = e->VarName ();
         if  (typeid (*e) == typeid (XmlElementKKStr))
         {
-          XmlElementKKStrPtr  s = dynamic_cast<XmlElementKKStrPtr> (e);
-          if  (s)
+          XmlElementKKStrPtr  elementKKStr = dynamic_cast<XmlElementKKStrPtr> (e);
+          if  (elementKKStr)
           {
             if  (varName.EqualIgnoreCase ("RootDir"))
-              RootDir (*(s->Value ()));
+              RootDir (*(elementKKStr->Value ()));
           }
         }
         else if   (typeid (*t)  ==  typeid (XmlElementTrainingClass))
@@ -496,7 +498,7 @@ void  TrainingClassList::ReadXML (XmlStream&     s,
         }
         else
         {
-          log.Level (-1) << "XmlElementTrainingClassList   ***ERROR***   Un-expected Section Element[" << e->SectionName () << "]" << endl;
+          log.Level (-1) << "XmlElementTrainingClassList   ***ERROR***   Un-expected Section Element[" << e->SectionName () << "]  tag->Name[" << tag->Name () << "]" << endl;
         }
       }
     }

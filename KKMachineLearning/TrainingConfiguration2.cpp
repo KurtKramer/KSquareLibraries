@@ -2057,7 +2057,7 @@ FeatureVectorListPtr  TrainingConfiguration2::LoadFeatureDataFromTrainingLibrari
 
   bool  errorOccured = false;
 
-  FeatureVectorListPtr  featureData = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
+  FeatureVectorListPtr  featureData = fvFactoryProducer->ManufacturFeatureVectorList (true);
 
   changesMadeToTrainingLibraries = false;
 
@@ -2158,7 +2158,7 @@ FeatureVectorListPtr  TrainingConfiguration2::ExtractFeatures (TrainingClassCons
                  << trainingClass->FeatureFileName   ()        << "]."
                  << endl;
 
-  FeatureVectorListPtr  extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true, log);
+  FeatureVectorListPtr  extractedExamples = fvFactoryProducer->ManufacturFeatureVectorList (true);
 
   FeatureFileIOPtr  driver = NULL;
   if  (fvFactoryProducer)

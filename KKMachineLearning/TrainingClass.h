@@ -142,10 +142,10 @@ namespace KKMLL
                                       */
 
     kkint32  classNameLineNum;
-    kkint32  dirLineNum;
-    kkint32  weightLineNum;
     kkint32  countFactorLineNum;
+    kkint32  dirLineNum;
     kkint32  subClassifierLineNum;
+    kkint32  weightLineNum;
   };  /* TrainingClass */
 
 
@@ -159,8 +159,8 @@ namespace KKMLL
   public:
     TrainingClassList ();
 
-    TrainingClassList (const KKStr&  rootDir,
-                       bool          owner
+    TrainingClassList (const KKStr&  _rootDir,
+                       bool          _owner
                       );
 
   private:

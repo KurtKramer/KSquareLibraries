@@ -725,7 +725,7 @@ FeatureVectorListPtr  FeatureFileIO::LoadInSubDirectoryTree
   }
   else
   {
-    dirImages =  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    dirImages =  _fvProducerFactory->ManufacturFeatureVectorList (true);
   }
 
   // Now that we have processed all image files in "rootDir",
@@ -828,13 +828,13 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   if  (origFeatureVectorData == NULL)
   {
     successful = false;
-    origFeatureVectorData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    origFeatureVectorData = _fvProducerFactory->ManufacturFeatureVectorList (true);
   }
 
   if  (_cancelFlag)
   {
     delete  origFeatureVectorData;  origFeatureVectorData = NULL;
-    return  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    return  _fvProducerFactory->ManufacturFeatureVectorList (true);
   }
 
   FeatureVectorListPtr  origFeatureData = NULL;
@@ -848,7 +848,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   }
   else
   {
-    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true);
     delete  origFeatureVectorData;
     origFeatureVectorData = NULL;
   }
@@ -865,7 +865,7 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
 
     delete  origFeatureData;  origFeatureData = NULL;
 
-    return  _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    return  _fvProducerFactory->ManufacturFeatureVectorList (true);
   }
 
   FeatureVectorProducerPtr  fvProducer = _fvProducerFactory->ManufactureInstance (_log);
@@ -886,12 +886,12 @@ FeatureVectorListPtr  FeatureFileIO::FeatureDataReSink (FactoryFVProducerPtr  _f
   else
   {
     delete  origFeatureData;
-    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+    origFeatureData = _fvProducerFactory->ManufacturFeatureVectorList (true);
   }
 
   origFeatureData->SortByRootName (false);
 
-  FeatureVectorListPtr  extractedFeatures = _fvProducerFactory->ManufacturFeatureVectorList (true, _log);
+  FeatureVectorListPtr  extractedFeatures = _fvProducerFactory->ManufacturFeatureVectorList (true);
   extractedFeatures->Version (fvProducer->Version ());
 
   fileNameList->Sort (false);

@@ -27,8 +27,6 @@ using namespace  KKMLL;
 
 
 
-
-
 FactoryFVProducer::FactoryFVProducer (const KKStr&  _name,
                                       const KKStr&  _fvClassName,
                                       const KKStr&  _description
@@ -41,24 +39,23 @@ FactoryFVProducer::FactoryFVProducer (const KKStr&  _name,
 
 
 
-
 FactoryFVProducer::~FactoryFVProducer ()
 {
 }
+
 
 
 FeatureVectorPtr  FactoryFVProducer::ManufacturFeatureVector (kkint32  numOfFeatires,
                                                               RunLog&  runLog
                                                              )
 {
+  runLog.Level (30) << "FactoryFVProducer::ManufacturFeatureVector   Instantiating a zero Feature-Vector" << endl;
   return  new FeatureVector (numOfFeatires);
 }
 
 
-FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool     owner,
-                                                                      RunLog&  runLog
-                                                                     )
-                                                                     const
+
+FeatureVectorListPtr  FactoryFVProducer::ManufacturFeatureVectorList (bool owner)  const
 {
   return  new FeatureVectorList (FileDesc (), owner);
 }
@@ -85,7 +82,6 @@ FeatureVectorProducerPtr  FactoryFVProducer::ManufactureInstance (const KKStr&  
 
 
 
-
 FactoryFVProducerPtr  FactoryFVProducer::LookUpFactory (const KKStr&  _name)
 {
   FactoryFVProducerPtr  factory = NULL;
@@ -108,8 +104,6 @@ FactoryFVProducerPtr  FactoryFVProducer::LookUpFactory (const KKStr&  _name)
   GlobalGoalKeeper::EndBlock ();
   return  factory;
 }  /* LookUpFactory */
-
-
 
 
 
@@ -166,8 +160,6 @@ void  FactoryFVProducer::RegisterFactory (FactoryFVProducerPtr  factory,
 
 
 
-
-
 void  FactoryFVProducer::FinaleCleanUp ()
 {
   GlobalGoalKeeper::StartBlock ();
@@ -189,9 +181,6 @@ void  FactoryFVProducer::FinaleCleanUp ()
 
 
 
-
-
 bool  FactoryFVProducer::atExitDefined = false;
 
 FactoryFVProducer::FactoryMap* FactoryFVProducer::factories = NULL;
-
