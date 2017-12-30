@@ -50,18 +50,19 @@ Model::Model ():
     encoder                  (NULL),
     factoryFVProducer        (NULL),
     fileDesc                 (NULL),
-    name                     (),
     normParms                (NULL),
     numOfClasses             (0),
     param                    (NULL),
     rootFileName             (),
     trainExamples            (NULL),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false),
     trianingPrepTime         (0.0),
     trainingTime             (0.0),
     trainingTimeStart        (0.0),
-    validModel               (true),
-    votes                    (NULL),
-    weOwnTrainExamples       (false)
+    name                     (),
+    timeSaved                ()
 {
 }
 
@@ -76,18 +77,19 @@ Model::Model (const Model&  _model):
     encoder                 (NULL),
     factoryFVProducer       (_model.factoryFVProducer),
     fileDesc                (_model.fileDesc),
-    name                    (_model.name),
     normParms               (NULL),
     numOfClasses            (_model.numOfClasses),
     param                   (NULL),
     rootFileName            (_model.rootFileName),
     trainExamples           (NULL),
-    trianingPrepTime        (0.0),
-    trainingTime            (_model.trainingTime),
-    trainingTimeStart       (_model.trainingTime),
     validModel              (_model.validModel),
     votes                   (NULL),
-    weOwnTrainExamples      (false)
+    weOwnTrainExamples      (false),
+    trianingPrepTime        (_model.trianingPrepTime),
+    trainingTime            (_model.trainingTime),
+    trainingTimeStart       (_model.trainingTimeStart),
+    name                    (_model.name),
+    timeSaved               (_model.timeSaved)
 {
   numOfClasses = 0;
   if  (_model.param != NULL)
@@ -124,18 +126,21 @@ Model::Model (FactoryFVProducerPtr  _factoryFVProducer):
     encoder                  (NULL),
     factoryFVProducer        (_factoryFVProducer),
     fileDesc                 (NULL),
-    name                     (),
     normParms                (NULL),
     numOfClasses             (0),
     param                    (NULL),
     rootFileName             (),
     trainExamples            (NULL),
+    validModel               (true),
+    votes                    (NULL),
+    weOwnTrainExamples       (false),
+
     trianingPrepTime         (0.0),
     trainingTime             (0.0),
     trainingTimeStart        (0.0),
-    validModel               (true),
-    votes                    (NULL),
-    weOwnTrainExamples       (false)
+    name                     (),
+    timeSaved                ()
+
 {
   fileDesc = factoryFVProducer->FileDesc ();
 }
@@ -175,13 +180,11 @@ Model::Model (const KKStr&          _name,
     trainingTime             (0.0),
     trainingTimeStart        (0.0),
     name                     (_name),
-	timeSaved                ()
+	  timeSaved                ()
 {
   fileDesc = factoryFVProducer->FileDesc ();
   param = _param.Duplicate ();
 }
-
-
 
 
 /**
@@ -237,7 +240,6 @@ MLClassListPtr  Model::MLClassesNewInstance () const
 
 
 
-
 void  Model::AddErrorMsg (const KKStr&  errMsg,
                           kkint32       lineNum
                          )
@@ -254,7 +256,6 @@ KKStr  Model::Description ()  const
 
 
 
-
 KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
 {
   if       (_modelingType == ModelTypes::Null)      return "NULL";
@@ -266,7 +267,6 @@ KKStr  Model::ModelTypeToStr (ModelTypes  _modelingType)
   else
     return "NULL";
 }  /* ModelingMethodToStr */
-
 
 
 
@@ -285,7 +285,6 @@ Model::ModelTypes  Model::ModelTypeFromStr (const KKStr&  _modelingTypeStr)
 
 
 
-
 ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
                                const KKStr&          _name,
                                const ModelParam&     _param,  
@@ -294,6 +293,7 @@ ModelPtr  Model::CreateAModel (ModelTypes            _modelType,
                                RunLog&               _log
                               )
 {
+  _log.Level (30) << "Model::CreateAModel  _name[" << _name << "]   _cancelFlag[" << _cancelFlag << "]." << endl;
   ModelPtr  model = NULL;
   try
   {
@@ -557,7 +557,7 @@ void  Model::TrainModel (FeatureVectorListPtr  _trainExamples,
   if  (trianingPrepTime < 0.0)
     trianingPrepTime += (24.0 * 60.0 * 60.0);
 
-  _log.Level (40) << "Model::TrainModel   Exiting." << endl;
+  _log.Level (40) << "Model::TrainModel   Exiting   _cancelFlag[" << _cancelFlag << "]." << endl;
 }  /* TrainModel */
 
 
@@ -753,42 +753,41 @@ void  Model::ReduceTrainExamples (RunLog&  log)
 
 
 
-
-void  Model::RetrieveCrossProbTable (MLClassList&   classes,
-                                     double**       crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+void  Model::RetrieveCrossProbTable (MLClassList&   _classes,
+                                     double**       _crossClassProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                      RunLog&        log
                                     )
 {
-  if  (classes.QueueSize () != crossClassProbTableSize)
+  if  (_classes.QueueSize () != crossClassProbTableSize)
   {
     // There Class List does not have the same number of entries as our 'CrossProbTable'
     log.Level (-1) << endl
                    << "SVMModel::RetrieveCrossProbTable   ***ERROR***" << endl
-                   << "            classes.QueueSize ()[" << classes.QueueSize () << "] != crossClassProbTableSize[" << crossClassProbTableSize << "]" << endl
+                   << "            classes.QueueSize ()[" << _classes.QueueSize () << "] != crossClassProbTableSize[" << crossClassProbTableSize << "]" << endl
                    << endl;
     return;
   }
 
-  kkint32*  indexTable = new kkint32[classes.QueueSize ()];
+  kkint32*  indexTable = new kkint32[_classes.QueueSize ()];
   kkint32  x, y;
-  for  (x = 0;  x < classes.QueueSize ();  x++)
+  for  (x = 0;  x < _classes.QueueSize ();  x++)
   {
-    for  (y = 0;  y < classes.QueueSize ();  y++)
-       crossClassProbTable[x][y] = 0.0;
+    for  (y = 0;  y < _classes.QueueSize ();  y++)
+       _crossClassProbTable[x][y] = 0.0;
 
-    indexTable[x] = classesIndex->GetClassIndex (classes.IdxToPtr (x));
+    indexTable[x] = classesIndex->GetClassIndex (_classes.IdxToPtr (x));
     if  (indexTable[x] < 0)
     {
       log.Level (-1) << endl
                      << "SVMModel::RetrieveCrossProbTable   ***WARNING***" << endl
                      << endl
-                     << "      Class Index[" << x << "]  Name[" << classes[x].Name () << "]" << endl
-                     << "      will populate this index with zeros."                         << endl
+                     << "      Class Index[" << x << "]  Name[" << _classes[x].Name () << "]" << endl
+                     << "      will populate this index with zeros."                          << endl
                      << endl;
     }
   }
 
-  if  (classes.QueueSize () != crossClassProbTableSize)
+  if  (_classes.QueueSize () != crossClassProbTableSize)
   {
     log.Level (-1) << endl
                    << "SVMModel::RetrieveCrossProbTable   ***ERROR***"                                       << endl
@@ -797,26 +796,19 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
     return;
   }
 
-
   // x,y         = 'Callers'   Class Indexes..
   // xIdx, yIdx  = 'SVMNodel'  Class Indexed.
-  for  (x = 0;  x < classes.QueueSize ();  x++)
+  for  (x = 0;  x < _classes.QueueSize ();  ++x)
   {
     kkint32 xIdx = indexTable[x];
     if  (xIdx >= 0)
     {
-      for  (y = 0;  y < classes.QueueSize ();  y++)
+      for  (y = 0;  y < _classes.QueueSize ();  y++)
       {
         kkint32  yIdx = indexTable[y];
         if  (yIdx >= 0)
         {
-          if  ((x != xIdx)  ||  (y != yIdx))
-          {
-            //kak  I just added this check to see when this situation actually occurs.
-            kkint32 zed = 111;
-          }
-
-          crossClassProbTable[x][y] = this->crossClassProbTable[xIdx][yIdx];
+          _crossClassProbTable[x][y] = this->crossClassProbTable[xIdx][yIdx];
         }
       }
     }
@@ -825,7 +817,6 @@ void  Model::RetrieveCrossProbTable (MLClassList&   classes,
   delete[]  indexTable;  indexTable = NULL;
   return;
 }  /* RetrieveCrossProbTable */
-
 
 
 
@@ -847,9 +838,6 @@ void  Model::ProbabilitiesByClassDual (FeatureVectorPtr   example,
   if  (classifier1Results)
     classifier2Results = new ClassProbList (*classifier1Results);
 }  /* ProbabilitiesByClassDual */
-
-
-
 
 
 
@@ -882,12 +870,10 @@ void  Model::WriteModelXMLFields (ostream&  o)  const
 
 
 
-
 XmlTokenPtr  Model::ReadXMLModelToken (XmlTokenPtr  t,
                                        RunLog&      log
                                       )
 {
-  const KKStr&  varName = t->VarName ();
   if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
   {
     bool  tokenFound = true;

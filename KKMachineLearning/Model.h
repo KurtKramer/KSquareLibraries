@@ -308,8 +308,8 @@ namespace KKMLL
   
 
     virtual  
-    void  RetrieveCrossProbTable (MLClassList&  classes,
-                                  double**      crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
+    void  RetrieveCrossProbTable (MLClassList&  _classes,
+                                  double**      _crossProbTable,  /**< two dimension matrix that needs to be classes.QueueSize ()  squared. */
                                   RunLog&       log
                                  );
 
@@ -427,7 +427,6 @@ namespace KKMLL
                                                  * contents. That is determined by 'trainExamples->Owner ()'.
                                                  */
    
-
   private:
     double                 trianingPrepTime;    /**<  Time that it takes to perform normalization, and encoding */
     double                 trainingTime;

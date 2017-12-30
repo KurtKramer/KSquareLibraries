@@ -6,7 +6,7 @@ INCLUDES = ../KKBase
 # Final binary
 BIN = libKKMachineLearning.a
 # Put all auto generated stuff to this build dir.
-BUILD_DIR = ./debug
+BUILD_DIR = ./Debug
 
 FFTWAPI = ../OutsidePackages/fftw-3.3.2/api 
 LIBS = -lfftw -lrt

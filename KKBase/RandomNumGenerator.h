@@ -27,7 +27,6 @@ namespace  KKB
   
     long  Next ();
   
-  
   private:
     kkint64 _lrand48_sequence;
   

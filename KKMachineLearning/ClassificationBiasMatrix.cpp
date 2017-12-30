@@ -497,8 +497,8 @@ void  ClassificationBiasMatrix::WriteXML (std::ostream&  o)
   }
 
   if  ((numClasses != classes->QueueSize ())  ||  
-       (numClasses != counts->NumOfRows  ())  ||  
-       (numClasses != probabilities->NumOfRows ())
+       (numClasses != (kkint32)counts->NumOfRows  ())  ||  
+       (numClasses != (kkint32)probabilities->NumOfRows ())
       )
   {
     runLog.Level (-1) << "ClassificationBiasMatrix::WriteXML    ***ERROR***   Disagreement in variable dimensions." << endl;

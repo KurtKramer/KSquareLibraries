@@ -171,11 +171,8 @@ const  KKStr  GrayScaleImagesFVProducer::featureNames[] =
 
 
 
-
-GrayScaleImagesFVProducer::GrayScaleImagesFVProducer (FactoryFVProducerPtr  factory):
-    FeatureVectorProducer ("GrayScaleImages",
-                           factory
-                          ),
+GrayScaleImagesFVProducer::GrayScaleImagesFVProducer (FactoryFVProducerPtr  _factory):
+    FeatureVectorProducer ("GrayScaleImages", _factory),
     totPixsForMorphOps (4000000),
     workRaster1Area (NULL),
     workRaster2Area (NULL),
@@ -188,7 +185,6 @@ GrayScaleImagesFVProducer::GrayScaleImagesFVProducer (FactoryFVProducerPtr  fact
   workRaster2Area = new uchar[totPixsForMorphOps];
   workRaster3Area = new uchar[totPixsForMorphOps];
 }
-
 
 
 
@@ -259,7 +255,6 @@ void  GrayScaleImagesFVProducer::ReductionByMultiple (kkint32        multiple,
     srcRow += multiple;
   }
 }  /* ReductionByMultiple */
-
 
 
 
@@ -510,7 +505,7 @@ FeatureVectorPtr  GrayScaleImagesFVProducer::ComputeFeatureVector (const Raster&
     SaveIntermediateImage (*wr2, "Close7_" + StrFormatInt ((kkint32)areaClose7, "ZZZZZZ0"), intermediateImages);
 
   {
-    featureData[SizeIndex]    = float (areaBeforeReduction * priorReductionFactor);
+    featureData[SizeIndex]    = float ((float)areaBeforeReduction * priorReductionFactor);
     featureData[Moment1Index] = float (centralMoments[1]);
     featureData[Moment2Index] = float (centralMoments[2]);
     featureData[Moment3Index] = float (centralMoments[3]);
@@ -726,15 +721,13 @@ FileDescConstPtr  GrayScaleImagesFVProducerFactory::FileDesc ()  const
 
 GrayScaleImagesFVProducerPtr  GrayScaleImagesFVProducerFactory::ManufactureInstance (RunLog&  runLog)
 {
+  runLog.Level (30) << "GrayScaleImagesFVProducerFactory::ManufactureInstance  " << this->Description () << endl;
   return new GrayScaleImagesFVProducer (this);
 } /* ManufactureInstance */
 
 
 
-FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorList (bool     owner,
-                                                                                     RunLog&  runLog
-                                                                                    )
-                                                                                    const
+FeatureVectorListPtr  GrayScaleImagesFVProducerFactory::ManufacturFeatureVectorList (bool owner)  const
 {
   return new FeatureVectorList (GrayScaleImagesFVProducer::DefineFileDescStatic (), owner);
 }

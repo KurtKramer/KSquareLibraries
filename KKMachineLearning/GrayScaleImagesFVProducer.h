@@ -19,7 +19,7 @@ namespace KKMLL
   class GrayScaleImagesFVProducer:  public FeatureVectorProducer
   {
   public:
-    GrayScaleImagesFVProducer (FactoryFVProducerPtr  factory);
+    GrayScaleImagesFVProducer (FactoryFVProducerPtr  _factory);
 
     virtual ~GrayScaleImagesFVProducer ();
 
@@ -68,19 +68,18 @@ namespace KKMLL
                                  RasterListPtr  intermediateImages
                                 );
 
+    kkint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each
+                                  * raster work area will be restricted to.  The Height and width will
+                                  * be adjusted such that the resultant dimensions will fit within this
+                                  * constraint.
+                                  */
+
     uchar*   workRaster1Area;
     uchar*   workRaster2Area;
     uchar*   workRaster3Area;
     uchar**  workRaster1Rows;
     uchar**  workRaster2Rows;
     uchar**  workRaster3Rows;
-
-
-    kkint32  totPixsForMorphOps;  /**<  When this instance is created this is the amount of memory each 
-                                   * raster work area will be restricted to.  The Height and width will 
-                                   * be adjusted such that the resultant dimensions will fit within this
-                                   * constraint.
-                                   */
 
     static  kkint16  maxNumOfFeatures;
     static  const    kkint32  SizeThreshold;
@@ -188,10 +187,7 @@ namespace KKMLL
     /**
      *@brief Manufactures a instance of a 'LarcosFeatureVectorList' class that will own its contents.
      */
-    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool     owner,
-                                                                RunLog&  runLog
-                                                               )
-                                                               const;
+    virtual  FeatureVectorListPtr  ManufacturFeatureVectorList (bool owner)  const;
 
     /**
      *@brief  Returns instance of "GrayScaleImagesFVProducerFactory"  that is registered with "FactoryFVProducer::RegisterFactory".

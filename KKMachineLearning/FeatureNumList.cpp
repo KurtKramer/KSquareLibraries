@@ -21,6 +21,8 @@ using namespace  KKB;
 using namespace  KKMLL;
 
 
+kkuint32 const  FeatureNumList::maxIntType = uint16_max;
+
 
 FeatureNumList::FeatureNumList ():
   featureNums              (NULL),
@@ -32,20 +34,18 @@ FeatureNumList::FeatureNumList ():
 
 
 
-
 FeatureNumList::FeatureNumList (const FeatureNumList&  _featureNumList):
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
   maxFeatureNum            (_featureNumList.MaxFeatureNum ()),
   numOfFeatures            (0)
 {
-  kkuint16*  otherFeatureNums   = _featureNumList.featureNums;
-  kkuint16   otherNumOfFeatures = _featureNumList.numOfFeatures;
-  AllocateArraySize (_featureNumList.numOfFeatures + 1);
-  for  (kkuint16 x = 0;  x < otherNumOfFeatures; x++)
+  IntType*  otherFeatureNums   = _featureNumList.featureNums;
+  IntType   otherNumOfFeatures = _featureNumList.numOfFeatures;
+  AllocateArraySize (_featureNumList.numOfFeatures);
+  for  (IntType x = 0;  x < otherNumOfFeatures; x++)
     AddFeature (otherFeatureNums[x]);
 }
-
 
 
 
@@ -64,14 +64,14 @@ FeatureNumList::FeatureNumList (FeatureNumList  &&featureNumList):
 
 
 
-FeatureNumList::FeatureNumList (kkuint32  _maxFeatureNum):
+FeatureNumList::FeatureNumList (IntType  _maxFeatureNum):
 
   featureNums              (NULL),
   featureNumsAllocatedSize (0),
   maxFeatureNum            (_maxFeatureNum),
   numOfFeatures            (0)
 {
-  AllocateArraySize (_maxFeatureNum + 1);
+  AllocateArraySize ((IntType)(_maxFeatureNum + 1));
 }
 
 
@@ -83,8 +83,8 @@ FeatureNumList::FeatureNumList (FileDescConstPtr  _fileDesc):
   numOfFeatures            (0)
 {
   if  (_fileDesc)
-    maxFeatureNum = _fileDesc->NumOfFields () - 1;
-  AllocateArraySize (10);
+    maxFeatureNum = (IntType)(_fileDesc->NumOfFields () - 1);
+  AllocateArraySize ((IntType)10);
 }
 
 
@@ -96,15 +96,23 @@ FeatureNumList::FeatureNumList (const BitString&  bitString):
   numOfFeatures            (0)
 
 {
-  maxFeatureNum = bitString.BitLen () - 1;
+  auto bitStringLen = bitString.BitLen ();
+  if (bitStringLen > maxIntType)
+  {
+    KKStr errMsg (256);
+    errMsg << "FeatureNumList (const BitString&  bitString)  bitString.BitLen()[" << bitStringLen << "] >  maxIntType[" << maxIntType << "].";
+    cerr << errMsg << endl;
+    throw KKException (errMsg);
+  }
 
-  VectorUint16  listOfSelectedFeatures;
+  maxFeatureNum = (IntType)(bitStringLen - 1);
+
+  VectorIntType  listOfSelectedFeatures;
   bitString.ListOfSetBits16 (listOfSelectedFeatures);
-  AllocateArraySize ((kkuint16)listOfSelectedFeatures.size ());
+  AllocateArraySize ((IntType)listOfSelectedFeatures.size ());
   for  (kkuint32 x = 0;  x < listOfSelectedFeatures.size ();  x++)
     AddFeature (listOfSelectedFeatures[x]);
 }
-
 
 
 
@@ -124,7 +132,6 @@ FeatureNumList::FeatureNumList (const KKStr&  _featureListStr,
 
 
 
-
 FeatureNumList::~FeatureNumList ()
 {
   delete [] featureNums;
@@ -136,15 +143,14 @@ kkMemSize  FeatureNumList::MemoryConsumedEstimated ()  const
 {
   kkMemSize  memoryConsumedEstimated = sizeof (FeatureNumList);
   if  (featureNums)
-    memoryConsumedEstimated += sizeof (kkuint16) * featureNumsAllocatedSize;
+    memoryConsumedEstimated += sizeof (IntType) * featureNumsAllocatedSize;
 
   return  memoryConsumedEstimated;
 }  /* MemoryConsumedEstimated */
 
 
 
-
-void  FeatureNumList::AllocateArraySize (kkuint16 size)
+void  FeatureNumList::AllocateArraySize (IntType size)
 {
   if  (featureNumsAllocatedSize >= size)
   {
@@ -154,31 +160,28 @@ void  FeatureNumList::AllocateArraySize (kkuint16 size)
 
   if  (!featureNums)
   {
-    featureNums = new kkuint16[size];
+    featureNums = new IntType[size];
     featureNumsAllocatedSize = size;
-    for  (kkuint16 x = 0;  x < size;  ++x)
+    for  (IntType x = 0;  x < size;  ++x)
       featureNums[x] = 0;
   }
 
   else
   {
-    kkuint16*  newFeatureNums = new kkuint16[size];
+    IntType*  newFeatureNums = new IntType[size];
 
-    kkuint16  x;
-
-    for  (x = 0;  x < numOfFeatures;  ++x)
+    for  (IntType x = 0;  x < numOfFeatures;  ++x)
       newFeatureNums[x] = featureNums[x];
 
-    for  (x = numOfFeatures;  x < size;  ++x)
+    for  (IntType x = numOfFeatures;  x < size;  ++x)
       newFeatureNums[x] = 0;
 
-    delete  [] featureNums;
+    delete[] featureNums;
     featureNums = newFeatureNums;
     newFeatureNums = NULL;
     featureNumsAllocatedSize = size;
   }
 }  /* AllocateArraySize */
-
 
 
 
@@ -193,9 +196,9 @@ void   FeatureNumList::ToBitString (BitString&  bitStr)  const
 
 
 
-kkuint16*  FeatureNumList::CreateFeatureNumArray ()  const
+FeatureNumList::IntType*  FeatureNumList::CreateFeatureNumArray ()  const
 {
-  kkuint16*  newList = new kkuint16[numOfFeatures];
+  IntType*  newList = new IntType[numOfFeatures];
   for  (kkint32 x = 0;  x < numOfFeatures;  x++)
     newList[x] = featureNums[x];
   return  newList;
@@ -226,7 +229,7 @@ void  FeatureNumList::UnSet ()
 
 
 
-void  FeatureNumList::UnSet (kkuint16  featureNum)
+void  FeatureNumList::UnSet (IntType  featureNum)
 {
   if  (!featureNums)
     return;
@@ -253,21 +256,21 @@ void  FeatureNumList::UnSet (kkuint16  featureNum)
 
 
 
-void  FeatureNumList::AddFeature (kkuint16  featureNum)
+void  FeatureNumList::AddFeature (IntType  featureNum)
 {
   if  (!featureNums)
   {
-    featureNums = new kkuint16[10];
+    featureNums = new IntType[10];
     featureNumsAllocatedSize = 10;
   }
 
   if  (numOfFeatures >= featureNumsAllocatedSize)
   {
     // Expand the featureNums array
-    kkint32  newFeatureNumsAllocatedSize = numOfFeatures + 10;
-    kkuint16*  newFeatureNums = new kkuint16[newFeatureNumsAllocatedSize];
+    IntType  newFeatureNumsAllocatedSize = (IntType)(numOfFeatures + 10);
+    IntType*  newFeatureNums = new kkuint16[newFeatureNumsAllocatedSize];
 
-    kkint32 x = 0;
+    IntType x = 0;
     for  (x = 0;  x < numOfFeatures;  ++x)
       newFeatureNums[x] = featureNums[x];
 
@@ -277,7 +280,7 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
       ++x;
     }
 
-    delete  [] featureNums;
+    delete[] featureNums;
     featureNums = newFeatureNums;
     featureNumsAllocatedSize = newFeatureNumsAllocatedSize;
   }
@@ -319,18 +322,17 @@ void  FeatureNumList::AddFeature (kkuint16  featureNum)
 
 
 
-
 /**
  *@details  A static method that will return a instance of 'FeatureNumList' that will have all non 'Ignore' features 
  * in '_fileDesc' selected.
  */
 FeatureNumList   FeatureNumList::AllFeatures (FileDescConstPtr  _fileDesc)
 {
-  kkuint16  maxFeatureNum = _fileDesc->NumOfFields () - 1;
+  IntType  maxFeatureNum = (IntType)(_fileDesc->NumOfFields () - 1);
   FeatureNumList  features (maxFeatureNum);
 
   const AttributeTypeVector&   attributeTypes = _fileDesc->AttributeVector ();
-  for  (kkuint16 fn = 0;  fn <= maxFeatureNum;  ++fn)
+  for  (IntType fn = 0;  fn <= maxFeatureNum;  ++fn)
   {
     if  (attributeTypes[fn] != AttributeType::Ignore)
       features.AddFeature (fn);
@@ -341,21 +343,19 @@ FeatureNumList   FeatureNumList::AllFeatures (FileDescConstPtr  _fileDesc)
 
 
 
-
 /**
  *@details  Using 'fileDesc' as the guide as to how many features there are and which ones are to 
  * be ignored will set all features that are not 'Ignore' to on.
  */
 void   FeatureNumList::SetAllFeatures (FileDescConstPtr  fileDesc)
 {
-  for  (kkuint16 x = 0; x <= maxFeatureNum;  ++x)
+  for  (IntType x = 0; x <= maxFeatureNum;  ++x)
   {
     if  (fileDesc->Type (x) != AttributeType::Ignore)
-      AddFeature (kkuint16 (x));
+      AddFeature (IntType (x));
   }
   return;
 }  /* SetAllFeatures */
-
 
 
 
@@ -369,16 +369,16 @@ bool  FeatureNumList::IsSubSet (const FeatureNumList&  z)
   kkint32  idx = 0;
   while  ((idx < z.NumSelFeatures ())  &&  isSubSet)
   {
-    kkint32 fn = z[idx];
+    IntType fn = z[idx];
     isSubSet = InList (fn);
-    idx++;
+    ++idx;
   }
   return  isSubSet;
 }
 
 
 
-bool  FeatureNumList::InList (kkuint16 _featureNum)  const
+bool  FeatureNumList::InList (IntType _featureNum)  const
 {
   bool  found = false;
   kkint32  x = 0;
@@ -395,14 +395,14 @@ bool  FeatureNumList::InList (kkuint16 _featureNum)  const
 
 
 
-bool  FeatureNumList::Test (kkuint16 _featureNum)  const
+bool  FeatureNumList::Test (IntType _featureNum)  const
 {
   return InList (_featureNum);
 }  /* Test */
 
 
 
-kkuint16  FeatureNumList::operator[] (kkint32  _idx)  const
+FeatureNumList::IntType  FeatureNumList::operator[] (kkint32  _idx)  const
 {
   if  (_idx >= numOfFeatures)
   {
@@ -483,11 +483,10 @@ KKStr   FeatureNumList::ToHexString (FileDescConstPtr  fileDesc)  const
 
 
 
-
-VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
+FeatureNumList::VectorIntType*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
 {
   bool  valid = true;
-  VectorUint16*  results = new VectorUint16 ();
+  VectorIntType*  results = new VectorUint16 ();
 
   KKStrParser parser (s);
   parser.TrimWhiteSpace (" ");
@@ -501,12 +500,12 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
     if  (dashPos < 0)
     {
       kkint32 n = field.ToInt32 ();
-      if  ((n < 0)  ||  (n > uint16_max))
+      if ((n < 0) || ((kkuint32)n > maxIntType))
       {
         valid = false;
         break;
       }
-      results->push_back (n);
+      results->push_back ((IntType)n);
     }
     else
     {
@@ -514,14 +513,14 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
       kkint32  startNum = field.SubStrPart (0, dashPos - 1).ToInt32 ();
       kkint32  endNum   = field.SubStrPart (dashPos + 1).ToInt32 ();
 
-      if  ((startNum > endNum)  ||  (startNum < 0)  ||  (endNum > uint16_max))
+      if  ((startNum > endNum)  ||  (startNum < 0)  ||  ((kkuint32)endNum > maxIntType))
       {
         valid = false;
         break;
       }
 
-      for  (kkuint16 z = startNum;   z <= endNum;  ++z)
-        results->push_back (z);
+      for  (kkint32 z = startNum;   z <= endNum;  ++z)
+        results->push_back ((IntType)z);
     }
   }
 
@@ -540,9 +539,6 @@ VectorUint16*  FeatureNumList::StrToUInt16Vetor (const KKStr&  s)
 
 
 
-
-
-
 void  FeatureNumList::ParseToString (const KKStr&  _str,
                                      bool&         _valid
                                     )  
@@ -558,16 +554,16 @@ void  FeatureNumList::ParseToString (const KKStr&  _str,
   if  (_str.EqualIgnoreCase ("NONE"))
   {
     maxFeatureNum = 1;
-    AllocateArraySize (maxFeatureNum + 1);
+    AllocateArraySize ((IntType)(maxFeatureNum + 1));
     return;
   }
 
-  VectorUint16*  list = StrToUInt16Vetor (_str);
+  VectorIntType*  list = StrToUInt16Vetor (_str);
   if  (list)
   {
     sort(list->begin (), list->end ());
     maxFeatureNum = list->back ();
-    AllocateArraySize ((kkuint16)list->size ());
+    AllocateArraySize ((IntType)list->size ());
     for  (auto idx: *list)
       AddFeature (idx);
   }
@@ -578,7 +574,6 @@ void  FeatureNumList::ParseToString (const KKStr&  _str,
   delete  list;
   list = NULL;
 }  /* ParseToString */
-
 
 
 
@@ -608,11 +603,9 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
                                RunLog&         log
                              )
 {
-  maxFeatureNum = tag->AttributeValueInt32 ("MaxFeatureNum");
-  kkuint32 expectedNumOfFeatures = tag->AttributeValueInt32 ("NumOfFeatures");
+  maxFeatureNum = (IntType)tag->AttributeValueInt32 ("MaxFeatureNum");
+  auto expectedNumOfFeatures = (IntType)tag->AttributeValueInt32 ("NumOfFeatures");
   numOfFeatures = 0;
-
-  kkuint32 featureCountRead = 0;
 
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
@@ -644,7 +637,6 @@ void  FeatureNumList::ReadXML (XmlStream&      s,
 
 
 
-
 FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 {
   delete featureNums;
@@ -652,7 +644,7 @@ FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 
   numOfFeatures = _features.NumOfFeatures ();
   maxFeatureNum = _features.MaxFeatureNum ();
-  featureNums = new kkuint16[numOfFeatures];
+  featureNums = new IntType[numOfFeatures];
   featureNumsAllocatedSize = numOfFeatures;
 
   for  (kkint32 x = 0;  x < numOfFeatures;  ++x)
@@ -660,8 +652,6 @@ FeatureNumList&  FeatureNumList::operator= (const FeatureNumList&  _features)
 
   return  *this;
 }  /* operator= */
-
-
 
 
 
@@ -680,8 +670,6 @@ FeatureNumList&  FeatureNumList::operator=  (FeatureNumList&&  _features)
 
   return  *this;
 }
-
-
 
 
 
@@ -766,7 +754,6 @@ namespace  KKMLL
     return  os;
   }
 
-
   ostream& operator<< (      ostream&            os, 
                        const FeatureNumListPtr&  features
                       )
@@ -785,8 +772,8 @@ namespace  KKMLL
  */
 FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  const
 {
-  kkuint16 mfn = Max (maxFeatureNum, rightSide.MaxFeatureNum ());
-  kkuint16 bestCaseNof = Min (numOfFeatures, rightSide.NumOfFeatures ());
+  auto mfn = Max (maxFeatureNum, (IntType)rightSide.MaxFeatureNum ());
+  auto bestCaseNof = Min (numOfFeatures, (IntType)rightSide.NumOfFeatures ());
   FeatureNumList  result (mfn);
   result.AllocateArraySize (bestCaseNof);
 
@@ -796,22 +783,21 @@ FeatureNumList  FeatureNumList::operator*  (const FeatureNumList&  rightSide)  c
   while  ((l < numOfFeatures)  &&  (r < rightSide.numOfFeatures))
   {
     if  (featureNums[l] < rightSide.featureNums[r])
-      l++;
+      ++l;
 
     else if  (featureNums[l] > rightSide.featureNums[r])
-      r++;
+      ++r;
 
     else
     {
       result.AddFeature (featureNums[l]);
-      l++;
-      r++;
+      ++l;
+      ++r;
     }
   }
 
   return  result;
 }  /* operator* */
-
 
 
 
@@ -840,10 +826,10 @@ FeatureNumList  FeatureNumList::operator+ (const FeatureNumList&  rightSide) con
  */
 FeatureNumList&  FeatureNumList::operator+= (const FeatureNumList&  rightSide)
 {
-  const kkuint16*  rightFeatureNums = rightSide.FeatureNums ();
-  kkuint16  rightNumOfFeatures = rightSide.NumOfFeatures ();
+  const IntType*  rightFeatureNums = rightSide.FeatureNums ();
+  auto  rightNumOfFeatures = rightSide.NumOfFeatures ();
 
-  for  (kkuint16  x = 0;  x < rightNumOfFeatures;  ++x)
+  for  (IntType  x = 0;  x < rightNumOfFeatures;  ++x)
     AddFeature (rightFeatureNums[x]);
 
   return  *this;
@@ -851,9 +837,8 @@ FeatureNumList&  FeatureNumList::operator+= (const FeatureNumList&  rightSide)
 
 
 
-
 /** @brief Adds the feature 'featureNum' to the selected list of features. */
-FeatureNumList&  FeatureNumList::operator+= (kkuint16  featureNum)
+FeatureNumList&  FeatureNumList::operator+= (IntType  featureNum)
 {
   AddFeature (featureNum);
   return *this;
@@ -861,10 +846,8 @@ FeatureNumList&  FeatureNumList::operator+= (kkuint16  featureNum)
 
 
 
-
-
 /** @brief Returns a new FeatureNumList instance that will consists of the left FeatureNumList instance with 'rightSide' feature added in. */
-FeatureNumList  FeatureNumList::operator+ (kkuint16  rightSide) const
+FeatureNumList  FeatureNumList::operator+ (IntType  rightSide) const
 {
   FeatureNumList  result (*this);
   result.AddFeature (rightSide);
@@ -873,9 +856,8 @@ FeatureNumList  FeatureNumList::operator+ (kkuint16  rightSide) const
 
 
 
-
 /** @brief Returns a new FeatureNumList instance that will consists of the left FeatureNumList instance with 'rightSide' removed from it. */
-FeatureNumList  FeatureNumList::operator-  (kkuint16  rightSide) const
+FeatureNumList  FeatureNumList::operator-  (IntType  rightSide) const
 {
   FeatureNumList  result (*this);
   result.UnSet (rightSide);
@@ -920,9 +902,8 @@ FeatureNumList  FeatureNumList::operator- (const FeatureNumList&  rightSide) con
 
 
 
-
 /** @brief removes the feature specified on the right side from the FeatureNumList on the left side. */
-FeatureNumList&  FeatureNumList::operator-= (kkuint16  rightSide)
+FeatureNumList&  FeatureNumList::operator-= (IntType  rightSide)
 {
   UnSet (rightSide);
   return  *this;
@@ -930,7 +911,7 @@ FeatureNumList&  FeatureNumList::operator-= (kkuint16  rightSide)
 
 
 
-FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (kkint32  numToKeep)  const
+FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (IntType  numToKeep, KKB::RandomNumGenerator& rng)  const
 {
   if  (numToKeep > numOfFeatures)
   {
@@ -944,42 +925,41 @@ FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (kkint32  numToKeep) 
     numToKeep = numOfFeatures;
   }
 
-  FeatureNumListPtr  randomlySelectedFeatures = new FeatureNumList (maxFeatureNum);
-
-  kkint32 x, y, z;
-
   // Initialize Selected Features to the currently selected features in featureNums
-  kkuint16*  selectedFeatures = new kkuint16[numOfFeatures];
-  for  (x = 0; x < numOfFeatures; x++)
-    selectedFeatures[x] = featureNums[x];
-
-  // Randomize the order of the selected featured
-  //for (x = 0; x < numOfFeatures; x++)
-  for (x = 0; x < numToKeep; x++)
+  IntType*  selectedFeatures = new IntType[numOfFeatures];
+  std::copy (featureNums, featureNums + numOfFeatures, selectedFeatures);
+  for (IntType i = (IntType)(numOfFeatures - 1); i > 1; --i)
   {
-    y = LRand48() % numOfFeatures;
-    z = selectedFeatures[x];
-    selectedFeatures[x] = selectedFeatures[y];
-    selectedFeatures[y] = z;
+    IntType j = (IntType)(rng.Next () % (i + 1));
+    std::swap (selectedFeatures[i], selectedFeatures[j]);
   }
 
   // Assign the first 'numToKeep'  featured from the random order of selected features
-  for  (x = 0;  x < numToKeep;  x++)
+  auto randomlySelectedFeatures = new FeatureNumList (maxFeatureNum);
+  for  (IntType x = 0;  x < numToKeep;  ++x)
     randomlySelectedFeatures->AddFeature (selectedFeatures[x]);
 
   delete  [] selectedFeatures;
+  selectedFeatures = NULL;
 
   return  randomlySelectedFeatures;
 }  /* RandomlySelectFeatures */
 
 
 
+FeatureNumListPtr   FeatureNumList::RandomlySelectFeatures (IntType  numToKeep)  const
+{
+  RandomNumGenerator rng (LRand48 ());
+  return RandomlySelectFeatures (numToKeep, rng);
+}
+
+
 
 FeatureNumList  FeatureNumList::Complement ()  const
 {
   FeatureNumList  result (maxFeatureNum);
-  kkuint16  x = 0;
-  kkuint16  fni = 0;
+  IntType  x = 0;
+  IntType  fni = 0;
   while  (fni < numOfFeatures)
   {
     while  (x < featureNums[fni])
@@ -1001,4 +981,3 @@ FeatureNumList  FeatureNumList::Complement ()  const
 
 
 XmlFactoryMacro(FeatureNumList)
-
