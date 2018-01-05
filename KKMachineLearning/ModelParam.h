@@ -39,91 +39,91 @@ namespace KKMLL
     typedef  ModelParam*  ModelParamPtr;
 
     enum  class  ModelParamTypes
-                      {Null,
-                       Dual,
-                       KNN,
-                       OldSVM,
-                       SvmBase,
-                       UsfCasCor
-                      };
+    {
+      Null,
+      Dual,
+      KNN,
+      OldSVM,
+      SvmBase,
+      UsfCasCor
+    };
 
-    static KKStr            ModelParamTypeToStr   (ModelParamTypes _modelParamType);
+    static KKStr            ModelParamTypeToStr (ModelParamTypes _modelParamType);
     static ModelParamTypes  ModelParamTypeFromStr (const KKStr&    _modelParamTypeStr);
-  
+
 
     /**
      * Needs to be synchronized with SVMparam::SVM_EncodingMethod
      */
-    enum class  EncodingMethodType 
+    enum class  EncodingMethodType
     {
       Null,
       NoEncoding,
       Binary,
       Scaled
     };
-  
-    ModelParam  ();
-  
-  
-    ModelParam  (const ModelParam&  _param);
-  
-    virtual
-    ~ModelParam  ();
+
+    ModelParam ();
 
 
+    ModelParam (const ModelParam&  _param);
 
     virtual
-    ModelParamPtr  Duplicate () const = 0;
+      ~ModelParam ();
+
 
 
     virtual
-    kkMemSize  MemoryConsumedEstimated ()  const;
+      ModelParamPtr  Duplicate () const = 0;
 
 
     virtual
-    void    ParseCmdLine (KKStr    _cmdLineStr,
-                          bool&    _validFormat,
-                          RunLog&  _log
-                         );
+      kkMemSize  MemoryConsumedEstimated ()  const;
 
 
     virtual
-    void   ParseCmdLinePost (RunLog&  log);
+      void    ParseCmdLine (KKStr    _cmdLineStr,
+        bool&    _validFormat,
+        RunLog&  _log
+      );
+
+
+    virtual
+      void   ParseCmdLinePost (RunLog&  log);
 
 
 
-  
+
     /**
      *@brief Creates a a Command Line String that represents these parameters.
      *@details  All derived classes should implement this method. They should first call this method and
      *          then append there own parameters that are specific to their implementation.
      */
     virtual
-    KKStr   ToCmdLineStr ()  const;
-  
+      KKStr   ToCmdLineStr ()  const;
 
- 
+
+
     // Member access methods
 
-    virtual ModelParamTypes          ModelParamType             () const = 0;
-    virtual KKStr                    ModelParamTypeStr          () const {return ModelParamTypeToStr (ModelParamType ());}
+    virtual ModelParamTypes          ModelParamType () const = 0;
+    virtual KKStr                    ModelParamTypeStr () const { return ModelParamTypeToStr (ModelParamType ()); }
 
-    virtual float                    AvgMumOfFeatures           () const;
-    virtual EncodingMethodType       EncodingMethod             () const {return encodingMethod;}
-    virtual KKStr                    EncodingMethodStr          () const {return EncodingMethodToStr (encodingMethod);}
-    virtual kkint32                  ExamplesPerClass           () const {return examplesPerClass;}
-    virtual const KKStr&             FileName                   () const {return fileName;}
-    virtual bool                     NormalizeNominalFeatures   () const {return normalizeNominalFeatures;}
-    virtual FeatureNumListConstPtr   SelectedFeatures           () const {return selectedFeatures;}
-    virtual bool                     ValidParam                 () const {return validParam;}
-  
+    virtual float                    AvgMumOfFeatures () const;
+    virtual EncodingMethodType       EncodingMethod () const { return encodingMethod; }
+    virtual KKStr                    EncodingMethodStr () const { return EncodingMethodToStr (encodingMethod); }
+    virtual kkint32                  ExamplesPerClass () const { return examplesPerClass; }
+    virtual const KKStr&             FileName () const { return fileName; }
+    virtual bool                     NormalizeNominalFeatures () const { return normalizeNominalFeatures; }
+    virtual FeatureNumListConstPtr   SelectedFeatures () const { return selectedFeatures; }
+    virtual bool                     ValidParam () const { return validParam; }
+
     // Access members that were originally put here for 'ModelSVMBase'  and  'ModelOldSVM'
-    virtual float   A_Param  () const;
-    virtual double  C_Param  () const;  // Same as 'Cost'
-    virtual double  Cost     () const;
-    virtual double  Gamma    () const;
-    virtual float   Prob     () const;
-
+    virtual float   A_Param () const { return prob;  }
+    virtual double  C_Param () const { return cost;  }    // Same as 'Cost'
+    virtual double  Cost    () const { return cost;  }
+    virtual double  Gamma   () const { return gamma; }
+    virtual float   Prob    () const { return prob;  }
 
     // Member update methods
     virtual void  EncodingMethod     (EncodingMethodType     _encodingMethod)     {encodingMethod     = _encodingMethod;}

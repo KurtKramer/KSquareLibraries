@@ -25,7 +25,7 @@ using namespace KKB;
 
 Row::Row  ():
   cells     (NULL),
-  numOfCols (-1)
+  numOfCols (0)
 {
 }
 

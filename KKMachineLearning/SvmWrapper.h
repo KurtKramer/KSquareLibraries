@@ -84,9 +84,8 @@ namespace KKMLL
 
 
   kkint32  SvmPredictTwoClass (const struct svm_parameter&   param,
-                               SvmModel233**                   submodel, 
+                               SvmModel233**                 submodel, 
                                const svm_node*               unKnownData, 
-                               kkint32                       desired, 
                                double&                       dist,
                                double&                       probability,
                                kkint32                       excludeSupportVectorIDX

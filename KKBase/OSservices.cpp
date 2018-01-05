@@ -1426,7 +1426,7 @@ kkint32  KKB::osGetNumberOfProcessors ()
 {
 #if  defined(KKOS_WINDOWS)
   KKStrPtr numProcessorsStr = osGetEnvVariable ("NUMBER_OF_PROCESSORS");
-  kkuint32  numOfProcessors = -1;
+  kkint32  numOfProcessors = -1;
   if  (numProcessorsStr)
   {
     numOfProcessors = numProcessorsStr->ToInt32 ();
