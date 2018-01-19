@@ -2,27 +2,27 @@
  * Copyright (C) 1994-2014 Kurt Kramer
  * For conditions of distribution and use, see copyright notice in KKB.h
  */
-#include  "FirstIncludes.h"
+#include "FirstIncludes.h"
 
-#include  <memory>
-#include  <math.h>
+#include <memory>
+#include <math.h>
 
-#include  <float.h>
-#include  <limits.h>
-#include  <algorithm>
-#include  <fstream>
-#include  <map>
-#include  <string>
-#include  <iostream>
-#include  <vector>
+#include <float.h>
+#include <limits.h>
+#include <algorithm>
+#include <fstream>
+#include <map>
+#include <string>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-#include  "MemoryDebug.h"
+#include "MemoryDebug.h"
 
-#include  "SegmentorOTSU.h"
+#include "SegmentorOTSU.h"
 
-#include  "KKBaseTypes.h"
-#include  "Raster.h"
+#include "KKBaseTypes.h"
+#include "Raster.h"
 using namespace  KKB;
 
 
@@ -577,7 +577,7 @@ void  SegmentorOTSU::ZeroOutNaN (vector<T>&  v)
 #if  !defined(KKOS_WINDOWS)
 bool  _isnan (double&   d)
 {
-  return  !(isnan (d) == 0);
+  return  !(std::isnan (d) == 0);
 }
 #endif
 
@@ -589,17 +589,17 @@ void  SegmentorOTSU::ZeroOutNaN (Matrix&  m)
   kkuint32  numOfRows = m.NumOfRows ();
   kkuint32  numOfCols = m.NumOfCols ();
 
-  kkuint32  r, c;
-  for  (r = 0;  r < numOfRows;  ++r)
+  for  (kkuint32 r = 0;  r < numOfRows;  ++r)
   {
     double*  dataRow = data[r];
-    for  (c = 0;  c < numOfCols;  ++c)
+    for  (kkuint32 c = 0;  c < numOfCols;  ++c)
     {
       if  (IsNaN (dataRow[c]))
         dataRow[c] = 0.0;
     }
   }
 }  /* ZeroOutNaN */
+
 
 
 VectorDouble  SegmentorOTSU::LinSpace (double  start,
@@ -682,8 +682,6 @@ double  SegmentorOTSU::sig_func (VectorDouble          k,
   //y = 1-sigma2B/sigma2T; % within the range [0 1]
   return  1.0 - sigma2B / sigma2T;
 }  /* sig_func */
-
-
 
 
 
@@ -1066,7 +1064,6 @@ RasterPtr  SegmentorOTSU::SegmentImage (RasterPtr  srcImage,
     
   return NULL;
 }  /* SegmentImage */
-
 
 
 
