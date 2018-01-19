@@ -431,12 +431,8 @@ namespace KKMLL
     //******************************************************************************************
     //*                                   load_namesfile.c                                     *
     //******************************************************************************************
-    void  load_namesfile (FeatureVectorListPtr    trainExamples,
-                          FeatureNumListConstPtr  selectedFeatures
-                         );
-
-
-
+    void  load_namesfile (FeatureVectorListPtr trainExamples);
+    
 
     //******************************************************************************************
     //*                                      learn.c                                           *

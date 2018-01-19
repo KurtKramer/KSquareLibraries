@@ -524,8 +524,6 @@ MLClassPtr  UsfCasCor::PredictClass (FeatureVectorPtr  example)
   MLClassPtr  predictedClass = NULL;
   _load_test_data (example);
 
-  float  totalFeature = example->TotalOfFeatureData ();
-
   /* Global's must be saved from the last training phase. If they are not  */
   /* saved then the next unit will be training to correlate with the test */
   /* set error. */
@@ -582,7 +580,6 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
                                      VectorFloat&        probabilities
                                     )
 {
-  float  totalFeature = example->TotalOfFeatureData ();
   _load_test_data (example);
 
   /* Global's must be saved from the last training phase. If they are not  */
@@ -680,7 +677,6 @@ void  UsfCasCor::PredictConfidences (FeatureVectorPtr    example,
 
 ClassProbListPtr  UsfCasCor::PredictClassConfidences (FeatureVectorPtr  example)
 {
-  float  totalFeature = example->TotalOfFeatureData ();
   _load_test_data (example);
 
   /* Global's must be saved from the last training phase. If they are not  */
@@ -845,7 +841,7 @@ void  UsfCasCor::setup_network (FeatureVectorListPtr  trainExamples,
      There are some required variables, like NInputs,etc
      that can be taken from the training/testing files. 
   */
-  load_namesfile (trainExamples, selectedFeatures);
+  load_namesfile (trainExamples);
 
 
   /* At this point, it looks like the MaxUnits parameter is
@@ -1330,9 +1326,7 @@ float  UsfCasCor::random_weight ()
 //******************************************************************************************
 //*                                   load_namesfile.c                                     *
 //******************************************************************************************
-void  UsfCasCor::load_namesfile (FeatureVectorListPtr    trainExamples,
-                                 FeatureNumListConstPtr  selectedFeatures
-                                )
+void  UsfCasCor::load_namesfile (FeatureVectorListPtr trainExamples)
 {
   /* First, ensure the necessary variables are reset */
   NTrainingPatterns = -1;

@@ -296,6 +296,11 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\OutsidePackages\zlib-1.2.11\zlib-1.2.11.vcxproj">
+      <Project>{5b5ec7ae-bb81-4032-b510-3693221bc716}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
