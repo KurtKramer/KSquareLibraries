@@ -305,13 +305,14 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
                                    RunLog&        log
                                   )
 {
+  log.Level (50) << "NormalizationParms::ReadXML   tag: " << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {
     if  (t->TokenType () == XmlToken::TokenTypes::tokElement)
     {
       XmlElementPtr  e = dynamic_cast<XmlElementPtr> (t);
-      const KKStr&  className = e->SectionName ();
+      //const KKStr&  className = e->SectionName ();
       const KKStr&  varName = e->VarName ();
       if  (varName.EqualIgnoreCase ("NumOfFeatures"))
         numOfFeatures = e->ToInt32 ();
@@ -347,7 +348,7 @@ void  NormalizationParms::ReadXML (XmlStream&     s,
       else if  (varName.EqualIgnoreCase ("Sigma"))
       {
         XmlElementArrayDoublePtr  s = dynamic_cast<XmlElementArrayDoublePtr>(e);
-        if  (s->Count () == numOfFeatures)
+        if  ((kkint32)s->Count () == numOfFeatures)
         {
           delete  sigma;
           sigma = s->TakeOwnership ();

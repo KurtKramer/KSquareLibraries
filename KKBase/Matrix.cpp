@@ -25,7 +25,7 @@ using namespace KKB;
 
 Row::Row  ():
   cells     (NULL),
-  numOfCols (-1)
+  numOfCols (0)
 {
 }
 
@@ -520,8 +520,7 @@ double  Matrix::CalcDeterminent (kkuint32*  rowMap,
   double* coFactors = data[rowMap[0]];
   double  det  = 0.0;
   kkuint32 newSize = size - 1;
-  kkuint32 sign = 1;
-
+  kkint32 sign = 1;
 
   kkuint32*  newRowMap = new kkuint32[newSize];
 
@@ -551,9 +550,11 @@ double  Matrix::CalcDeterminent (kkuint32*  rowMap,
       sign = 1;
 
     delete[]  newColMap;
+    newColMap = NULL;
   }
 
   delete[]  newRowMap;
+  newRowMap = NULL;
 
   return  det;
 }  /* CalcDeterminent */

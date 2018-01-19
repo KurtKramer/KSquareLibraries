@@ -357,6 +357,7 @@ void  ModelParam::ParseCmdLine (KKStr    _cmdLineStr,
  */
 void  ModelParam::ParseCmdLinePost (RunLog&  log)
 {
+  log.Level (50) << "" << endl;
 }
 
 
@@ -418,6 +419,8 @@ kkint32  ModelParam::NumOfFeaturesAfterEncoding (FileDescConstPtr  fileDesc,
     numFeaturesAfterEncoding = selectedFeatures->NumOfFeatures ();
     break;
   }
+
+  log.Level (70) << "ModelParam::NumOfFeaturesAfterEncoding   numFeaturesAfterEncoding: " << numFeaturesAfterEncoding << endl;
 
   return  numFeaturesAfterEncoding;
 }  // NumOfFeaturesAfterEncoding 

@@ -582,10 +582,8 @@ void  Orderings::Save ()
     FeatureVectorListPtr  ordering = orderings[orderingIDX];
     o << "//OrderingNum" << "\t" << orderingIDX << "\t" << "Count" << "\t" << ordering->QueueSize () << endl;
 
-    FeatureVectorList::const_iterator idx;
-    for  (idx = ordering->begin ();  idx != ordering->end ();  idx++)
+    for  (auto example: *ordering)
     {
-      const FeatureVectorPtr  example = *idx;
       indexIDX = index.find (example);
       if  (indexIDX == index.end ())
       {
