@@ -534,6 +534,12 @@ Raster::Raster (const Raster&  _raster,
 }
 
 
+Raster::Raster (const Raster& _raster, const Point& topLeft, const Point& botRight) :
+  Raster(_raster, topLeft.Row(), topLeft.Col(), 1 + botRight.Row () - topLeft.Row (),  1 + botRight.Col () - topLeft.Col ())
+{
+
+}
+
 
 Raster::Raster (const Raster& _raster,
                 MaskTypes     _mask,
@@ -5724,6 +5730,18 @@ void  Raster::FindBoundingBox (kkint32&  tlRow,
 
   return;
 }  /* FindBoundingBox */  
+
+
+
+void  Raster::FindBoundingBox (Point& topLeft, Point& botRight)  const
+{
+  int tlr, tlc, brr, brc;
+  FindBoundingBox (tlr, tlc, brr, brc);
+  topLeft.Col (tlc);
+  topLeft.Row (tlr);
+  botRight.Col (brc);
+  botRight.Row (brr);
+}
 
 
 

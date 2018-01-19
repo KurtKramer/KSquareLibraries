@@ -539,6 +539,7 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
                                  RunLog&         log
                                 )
 {
+  log.Level (50) << "ModelParamOldSVM::ReadXML   tag: " << tag->Name () << endl;
   KKStr  svmParametersStr;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t)
@@ -551,7 +552,7 @@ void  ModelParamOldSVM::ReadXML (XmlStream&      s,
       if  (!e)
       {
         log.Level (-1) << endl
-          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected content: " << endl
+          << "ModelParamOldSVM::ReadXML   ***ERROR***   Encountered unexpected content.  varName: " << varName << endl
           << endl;
       }
       else if  (t->VarName ().EqualIgnoreCase ("SvmParameters"))

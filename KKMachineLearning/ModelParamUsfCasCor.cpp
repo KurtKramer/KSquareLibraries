@@ -184,14 +184,13 @@ void  ModelParamUsfCasCor::WriteXML (const KKStr&  varName,
 
 
 
-
-
 void  ModelParamUsfCasCor::ReadXML (XmlStream&      s,
                                     XmlTagConstPtr  tag,
                                     VolConstBool&   cancelFlag,
                                     RunLog&         log
                                    )
 {
+  log.Level (50) << "ModelParamUsfCasCor::ReadXML  tag: " << tag->Name () << endl;
   XmlTokenPtr  t = s.GetNextToken (cancelFlag, log);
   while  (t  &&  (!cancelFlag))
   {

@@ -400,7 +400,7 @@ void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
                                         kkint32&            predClassVotes
                                        )
 {
-  const KKStr&  name = predClass->Name ();
+  const KKStr&  predClassName = predClass->Name ();
 
   predClassProb = 0.0;
   predClassVotes = 0;
@@ -410,7 +410,7 @@ void  ModelDual::ReconcileProbAndVotes (Classifier2Ptr    classifier,
   for  (idx = predictions->begin ();  idx != predictions->end ();  ++idx)
   {
     ClassProbPtr p = *idx;
-    if  (p->classLabel->Name ().StartsWith (name))
+    if  (p->classLabel->Name ().StartsWith (predClassName))
     {
       predClassProb  += p->probability;
       predClassVotes += (kkint32)(p->votes);
@@ -489,7 +489,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   double           predClass1ProbC1   = 0.0;
   double           predClass2ProbC1   = 0.0;
   kkint32          numOfWinnersC1     = 0;
-  bool             knownClassOneOfTheWinnersC1 = false;
   double           breakTieC1         = 0.0;
 
   MLClassPtr       predClass1C2       = NULL;
@@ -500,7 +499,6 @@ void  ModelDual::Predict (FeatureVectorPtr  example,
   double           predClass1ProbC2   = 0.0;
   double           predClass2ProbC2   = 0.0;
   kkint32          numOfWinnersC2     = 0;
-  bool             knownClassOneOfTheWinnersC2 = false;
   double           breakTieC2         = 0.0;
 
   bool  newExampleCreated = false;
@@ -903,6 +901,8 @@ void  ModelDual::ReadXML (XmlStream&      s,
                           RunLog&         log
                          )
 {
+  log.Level (50) << "ModelDual::ReadXML   tag: " << tag->Name () << endl;
+
   delete  config1;  config1 = NULL;
   delete  config2;  config2 = NULL;
 

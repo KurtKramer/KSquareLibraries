@@ -278,7 +278,6 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
       r = new Raster (height, width, true);
 
       kkint32  nOffset = stride - width * 3;
-      kkint32  bytesPerRow = width * 3 + nOffset;
 
       uchar  red   = 255;
       uchar  green = 255;
@@ -321,12 +320,9 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
       bm->GetPalette (palette, paletteSize);
 
       INT  paletteHasAlpha     = palette->Flags & PaletteFlagsHasAlpha;
-      INT  paletteHasGrayScale = palette->Flags & PaletteFlagsGrayScale;
-      INT  paletteHasHalftone  = palette->Flags & PaletteFlagsHalftone;
 
       r = new Raster (height, width, false);
       kkint32  nOffset = stride - width;
-      kkint32  bytesPerRow = width + nOffset;
 
       uchar  index = 255;
       

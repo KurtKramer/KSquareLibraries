@@ -159,6 +159,8 @@ namespace KKB
             kkint32       _width    /**<  Width of resultant raster.                          */
            );
 
+    Raster (const Raster& _raster, const Point& topLeft, const Point& botRight);
+
     /**
      *@brief Constructs a Raster that will be the same size as the specified '_mask' with the top left specified by '_row' and '_col'.
      *@details The Height and Width of the resultant image will come from the bias of the specified mask.  The Image data will come from
@@ -992,6 +994,9 @@ namespace KKB
                                    kkint32&  brRow,
                                    kkint32&  brCol
                                   )  const;
+
+    void  FindBoundingBox (Point& topLeft, Point& botRight)  const;
+
 
     /**
      *@brief Returns an image that reflects the differences between this image and the image supplied in the parameter.
