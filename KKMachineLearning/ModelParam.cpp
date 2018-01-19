@@ -162,6 +162,36 @@ ModelParam::ModelParamTypes  ModelParam::ModelParamTypeFromStr (const KKStr&  _m
 
 
 
+
+float  ModelParam::A_Param  () const
+{
+  return  prob;
+}
+
+double  ModelParam::C_Param  () const
+{
+  return cost;
+}
+
+double  ModelParam::Cost     () const
+{
+  return cost;
+}
+
+double  ModelParam::Gamma    () const
+{
+  return  gamma;
+}
+
+float  ModelParam::Prob () const
+{
+  return  prob;
+}
+
+
+
+
+
 void  ModelParam::A_Param  (float   _prob)
 {
   prob = _prob;
