@@ -2809,7 +2809,7 @@ KKStr  KKB::osGetFullPathOfApplication ()
 {
 #if  defined(WIN32)
   char  szAppPath[MAX_PATH] = "";
-  DWORD  result = ::GetModuleFileName (0, szAppPath, MAX_PATH);
+  ::GetModuleFileName (0, szAppPath, MAX_PATH);
   return  szAppPath;
 #else
   return  KKStr::EmptyStr ();

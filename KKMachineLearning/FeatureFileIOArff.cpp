@@ -52,7 +52,7 @@ FileDescConstPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
                                                  )
 {
   _log.Level (10) << endl << endl 
-                  << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
+                  << "FeatureFileIOArff::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl
                   << endl;
 
   _errorMessage = "ARFF read functionality not implemented.";

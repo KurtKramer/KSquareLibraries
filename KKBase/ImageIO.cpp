@@ -232,9 +232,8 @@ RasterPtr  KKB::ReadImage (const KKStr&  imageFileName)
 #include <Gdipluspixelformats.h>
 
 
-bool                gdiStarted            = false;
-GdiplusStartupInput gdiplusStartupInput;
-ULONG_PTR           gdiplusToken;
+bool  gdiStarted = false;
+ULONG_PTR  gdiplusToken;
 
 RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
 {
@@ -318,8 +317,6 @@ RasterPtr  KKB::ReadImageUsingGDI (const KKStr&  imageFileName)
 
       ColorPalette* palette = (ColorPalette*)malloc (paletteSize);
       bm->GetPalette (palette, paletteSize);
-
-      INT  paletteHasAlpha     = palette->Flags & PaletteFlagsHasAlpha;
 
       r = new Raster (height, width, false);
       kkint32  nOffset = stride - width;

@@ -62,8 +62,6 @@ KKStr  Variables::HomeDir ()
     homeDirEnvVar = NULL;
     return  tempHomeDir;
   }
-    
-  return  homeDir;
 }  /* HomeDir */
 
 
