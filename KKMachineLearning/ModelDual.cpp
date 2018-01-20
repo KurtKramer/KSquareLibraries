@@ -926,6 +926,8 @@ void  ModelDual::ReadXML (XmlStream&      s,
         const KKStr&  varName     = e->VarName();
         const KKStr&  sectionName = e->SectionName ();
 
+        log.Level (90) << "ModelDual::ReadXML   sectionName: " << sectionName << "  varName: " << varName << endl;
+
         if  ((varName.EqualIgnoreCase ("config1"))  &&  (typeid (*e) == typeid (XmlElementTrainingConfiguration2)))
         {
           delete config1;

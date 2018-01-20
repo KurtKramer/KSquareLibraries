@@ -4420,6 +4420,7 @@ void  SVM289_BFS::svm_model::Write (ostream& o)
         o << "\t" << zed << ":" << p.FeatureData (zed);
     }
     o << endl;
+    o.precision (origPrec);
   }
 
   o << "</Svm_Model>"  << endl;

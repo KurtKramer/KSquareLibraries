@@ -124,12 +124,10 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
                                                   RunLog&           _log
                                                  )
 {
-  _log.Level (20) << "FeatureFileIOUCI::LoadFile   FileName[" << _fileName << "]" << endl;
-
-
+  _log.Level (20) << "FeatureFileIOUCI::LoadFile   FileName: " << _fileName << "  _maxCount: " << _maxCount << endl;
+  _errorMessage = "";
   KKStr  rootName = osGetRootName (_fileName);
-
-
+  
   kkint32  numOfFeatures = _fileDesc->NumOfFields ();
   kkint32  lineCount = 0;
 
@@ -146,11 +144,9 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
 
     if  ((ln.SubStrPart (0, 1) != "//")  &&  (!ln.Empty ()))
     {
-
-      kkint32  featureNum = 0;
       FeatureVectorPtr  example = new FeatureVector (numOfFeatures);
   
-      for  (featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
+      for  (kkint32 featureNum = 0;  featureNum < numOfFeatures;  featureNum++)
       {
         KKStr  featureStr = ln.ExtractToken (" ,\n\r\t");
         example->AddFeatureData (featureNum, (float)atof (featureStr.Str ()));
@@ -170,6 +166,8 @@ FeatureVectorListPtr  FeatureFileIOUCI::LoadFile (const KKStr&      _fileName,
     GetLine (_in, ln, eof);
   }
 
+  _log.Level (50) << "FeatureFileIOUCI::LoadFile  _changesMade: " << _changesMade << "  _cancelFlag: " << _cancelFlag << endl;
+
   return  examples;
 }  /* LoadFile */
 
@@ -185,11 +183,12 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
                                    kkuint32&             _numExamplesWritten,
                                    VolConstBool&         _cancelFlag,
                                    bool&                 _successful,
-                                   KKStr&                 _errorMessage,
+                                   KKStr&                _errorMessage,
                                    RunLog&               _log
                                   )
 
 {
+  _log.Level (50) << "FeatureFileIOUCI::SaveFile   _fileName: " << _fileName << endl;
   FeatureVectorPtr   example = NULL;
 
   _numExamplesWritten = 0;
@@ -224,6 +223,9 @@ void   FeatureFileIOUCI::SaveFile (FeatureVectorList&    _data,
   }
 
   _successful = true;
+
+  _log.Level (50) << "FeatureFileIOUCI::SaveFile  _successful: " << _successful << "  _cancelFlag: " << _cancelFlag << endl;
+
   return;
 }  /* WriteUCIFile */
 

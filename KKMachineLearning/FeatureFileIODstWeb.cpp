@@ -63,7 +63,6 @@ public:
 
 
 
-
 class  FeatureFileIODstWeb::AttrDescLineComparator  
 {
 public:
@@ -80,7 +79,6 @@ public:
 
 
 
-
 FeatureFileIODstWeb::FeatureFileIODstWeb ():
     FeatureFileIO ("DST", true, false)   // only read is implemented.
 {
@@ -91,8 +89,6 @@ FeatureFileIODstWeb::FeatureFileIODstWeb ():
 FeatureFileIODstWeb::~FeatureFileIODstWeb ()
 {
 }
-
-
 
 
 
@@ -177,7 +173,6 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     if  (line.FirstChar () != 'A')
       continue;
 
-
     // We have an attribute Line
     AttrDescLinePtr  a = new AttrDescLine (line);
     if  (a->code == classNameAttribute)
@@ -220,7 +215,6 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
 
   return  fileDesc;
 }  /* ReadDstWebFile */
-
 
 
 
@@ -337,8 +331,6 @@ FeatureVectorListPtr  FeatureFileIODstWeb::LoadFile (const KKStr&      _fileName
 
   return  examples;
 }  /* LoadFile */
-
-
 
 
 

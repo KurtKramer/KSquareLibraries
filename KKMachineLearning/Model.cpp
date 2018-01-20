@@ -244,7 +244,7 @@ void  Model::AddErrorMsg (const KKStr&  errMsg,
                           kkint32       lineNum
                          )
 {
-  errors.push_back (errMsg);
+  errors.push_back (KKB::StrFromInt32(lineNum) +  " " + errMsg);
 }
 
 

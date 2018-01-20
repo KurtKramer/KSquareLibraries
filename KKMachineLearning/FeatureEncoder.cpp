@@ -631,8 +631,7 @@ void  FeatureEncoder::EncodeIntoSparseMatrix
  * @param[out] compressedExamples The reduced list of examples
  */
 void  FeatureEncoder::CompressExamples (FeatureVectorListPtr  srcExamples,
-                                        FeatureVectorListPtr  compressedExamples,
-                                        ClassAssignments&     assignments
+                                        FeatureVectorListPtr  compressedExamples
                                        )
 {
   compressedExamples->AddQueue (*srcExamples);

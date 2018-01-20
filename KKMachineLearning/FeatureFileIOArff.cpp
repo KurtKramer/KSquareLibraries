@@ -51,15 +51,16 @@ FileDescConstPtr  FeatureFileIOArff::GetFileDesc (const KKStr&    _fileName,
                                                   RunLog&         _log
                                                  )
 {
-  _log.Level (10) << endl << endl 
+  _log.Level (10) << endl
                   << "FeatureFileIOArff::LoadFile   ***ERROR***   ARFF  read Functionality not implemented." << endl
+                  << "  _fileName: " << _fileName << endl
+                  << "  _classes : " << _classes->ToTabDelimitedStr () << endl
+                  << "  _estSize : " << _estSize << endl
                   << endl;
 
   _errorMessage = "ARFF read functionality not implemented.";
   return NULL;
 }
-
-
 
 
 
@@ -74,14 +75,19 @@ FeatureVectorListPtr  FeatureFileIOArff::LoadFile (const KKStr&      _fileName,
                                                    RunLog&           _log
                                                   )
 {
-  _log.Level (10) << endl << endl 
-                  << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
-                  << endl;
+  _log.Level (10) << endl
+    << "FeatureFileIOArff::LoadFile   ***ERROR***      ARFF  read Functionality not implemented." << endl
+    << "  _fileName    : " << _fileName << endl
+    << "  _fileDesc    : " << _fileDesc->NumOfFields ()
+    << "  _classes     : " << _classes.ToTabDelimitedStr () << endl
+    << "  _maxCount    : " << _maxCount << endl
+    << "  _cancelFlag  : " << _cancelFlag << endl
+    << "  _changesMade : " << _changesMade << endl
+    << endl;
                 
   _errorMessage = "ARFF read functionality not implemented.";
   return NULL;
 }  /* LoadFile */
-
 
 
 
@@ -133,7 +139,6 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
          << "@relation  image_features"        << endl
          << "%"                                << endl;
 
-    
     for  (kkint32 fnIDX = 0;  fnIDX < _selFeatures.NumOfFeatures ();  fnIDX++)
     {
       kkint32  featureNum = _selFeatures[fnIDX];
@@ -175,7 +180,6 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
          << "%"     << endl;
     delete  classStatistics;
   }
-
 
   kkint32  numOfDigistsNeededInRowMask = Min (1, kkint32 (log10 (float (_data.QueueSize ()))) + 1);
 

@@ -32,11 +32,12 @@ using namespace  KKMLL;
 FeatureFileIORoberts  FeatureFileIORoberts::driver;
 
 
-
 FeatureFileIORoberts::FeatureFileIORoberts ():
    FeatureFileIO ("Roberts", false, true)
 {
 }
+
+
 
 FeatureFileIORoberts::~FeatureFileIORoberts(void)
 {
@@ -59,8 +60,6 @@ FileDescConstPtr  FeatureFileIORoberts::GetFileDesc (const KKStr&    _fileName,
   _errorMessage = "ROBERTS read functionality not implemented.";
   return NULL;
 }
-
-
 
 
 
@@ -174,8 +173,3 @@ void   FeatureFileIORoberts::SaveFile (FeatureVectorList&    _data,
   delete  attrTable;
   return;
 } /* WriteRobertsFile */
-
-
-
-
-

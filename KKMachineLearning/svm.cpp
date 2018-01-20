@@ -3113,7 +3113,7 @@ decision_function  SVM233::svm_train_one (const svm_problem*    prob,
   switch(param->svm_type)
   {
   case C_SVC:
-    solve_c_svc (prob, param, alpha,&si, prob->W);
+    solve_c_svc (prob, param, alpha, &si, prob->W);
     break;
   }
 

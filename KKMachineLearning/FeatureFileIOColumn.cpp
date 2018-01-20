@@ -68,14 +68,14 @@ FileDescConstPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
     GetToken (_in, " ", field, eof, eol);  rowNum++;
     while  ((!eol)  &&  (!eof))
     {
-      MLClassPtr  mlClass = _classes->GetMLClassPtr (field);
+      // Make sure entry for class specified by 'field' exists in _classes
+      _classes->GetMLClassPtr (field);
       _estSize++;
       GetToken (_in, " ", field, eof, eol);
     }
   }
 
   FileDescPtr  fileDesc = new FileDesc ();
-
 
   kkint32  numOfFeatures = 0;
   while  (!eof)
