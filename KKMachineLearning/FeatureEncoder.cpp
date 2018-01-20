@@ -222,7 +222,6 @@ FileDescConstPtr  FeatureEncoder::CreateEncodedFileDesc (ostream*  o)
            << "             " << errMsg << endl
            << endl;
       throw KKException (errMsg);
-      exit (-1);
     }
 
     KKStr  origFieldDesc = StrFormatInt (srcFeatureNum, "zz0") + "\t" +
