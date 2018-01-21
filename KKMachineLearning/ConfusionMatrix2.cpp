@@ -511,7 +511,7 @@ void  ConfusionMatrix2::PrintSingleLine (ostream& _outFile,
                                          KKStr    _name,
                                          double   _lineTotal,
                                          double   _splits[]
-                                        )
+                                        )  const
 {
   kkint32  predClassNum;
 
@@ -535,7 +535,7 @@ void  ConfusionMatrix2::PrintSingleLineTabDelimited (ostream&      _outFile,
                                                      const KKStr&  _name,
                                                      double        _lineTotal,
                                                      double        _splits[]
-                                                    )
+                                                    )  const
 {
   kkint32  predClassNum;
 
@@ -559,7 +559,7 @@ void  ConfusionMatrix2::PrintSingleLineHTML (ostream&     o,
                                              double       _lineTotal,
                                              kkint32      _knownClassNum,
                                              double       _splits[]
-                                            )
+                                            )  const
 {
   kkint32  predClassNum;
 
@@ -591,7 +591,7 @@ void  ConfusionMatrix2::PrintSingleLineLatexTable (ostream&       _outFile,
                                                    const KKStr&   _name,
                                                    double         _lineTotal,
                                                    double         _splits[]
-                                                  )
+                                                  )  const
 {
   kkint32  predClassNum;
 
@@ -620,7 +620,7 @@ void  ConfusionMatrix2::PrintSingleLineLatexTable (ostream&       _outFile,
 void  ConfusionMatrix2::PrintSingleLineShort (ostream&      _outFile,
                                               const KKStr&  _name,
                                               double        _lineTotal,
-                                              double        _splits[])
+                                              double        _splits[])    const
 {
   kkint32  predClassNum;
 
@@ -643,7 +643,7 @@ void  ConfusionMatrix2::PrintPercentLine (ostream&  _outFile,
                                           KKStr     _name,
                                           double    _lineTotal,
                                           double    _splits[]
-                                         )
+                                         )  const
 {
   char    buff[40];
   double  perc;
@@ -693,7 +693,7 @@ void  ConfusionMatrix2::PrintPercentLineTabDelimited (ostream&      _outFile,
                                                       const KKStr&  _name,
                                                       double        _lineTotal,
                                                       double        _splits[]
-                                                     )
+                                                     )  const
 {
   double  perc;
   kkint32 predClassNum;
@@ -728,7 +728,7 @@ void  ConfusionMatrix2::PrintAvgPredProbLineHTML (ostream&       o,
                                                   kkint32       _knownClassNum,
                                                   double        _avgPredProbs[],
                                                   double        _numPredByClass[]
-                                                 )
+                                                 )  const
 {
   double  avgPredProb;
   kkint32 predClassNum;
@@ -766,7 +766,7 @@ void  ConfusionMatrix2::PrintPercentLineHTML (ostream&      o,
                                               double        _lineTotal,
                                               kkint32       _knownClassNum,
                                               double        _splits[]
-                                             )
+                                             )  const
 {
   double  perc;
   kkint32   predClassNum;
@@ -809,7 +809,7 @@ void  ConfusionMatrix2::PrintPercentLineShort (ostream&     _outFile,
                                                const KKStr& _name,
                                                double       _lineTotal,
                                                double       _splits[]
-                                              )
+                                              )  const
 {
   double  perc;
   kkint32 predClassNum;
@@ -844,7 +844,7 @@ void  ConfusionMatrix2::PrintPercentLineLatexTable (ostream&      _outFile,
                                                     const KKStr&  _name,
                                                     double        _lineTotal,
                                                     double        _splits[]
-                                                    )
+                                                    )  const
 {   
   double  perc;
   kkint32 predClassNum;
@@ -878,7 +878,7 @@ void  ConfusionMatrix2::PrintPercentLineLatexTable (ostream&      _outFile,
 
 
 
-void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)
+void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)  const
 {
   kkint32 knownClassNum;
   kkint32 predClassNum;
@@ -980,7 +980,7 @@ void   ConfusionMatrix2::PrintConfusionMatrix (ostream&  outFile)
 
 
 
-void  ConfusionMatrix2::PrintConfusionMatrixHTML (ostream&  o)
+void  ConfusionMatrix2::PrintConfusionMatrixHTML (ostream&  o)  const
 {
   kkint32 knownClassNum;
   kkint32 predClassNum;
@@ -1081,7 +1081,7 @@ void  ConfusionMatrix2::PrintConfusionMatrixHTML (ostream&  o)
 
 
 
-void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)
+void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)  const
 
 {
   kkint32 knownClassNum;
@@ -1163,7 +1163,7 @@ void  ConfusionMatrix2::PrintConfusionMatrixAvgPredProbHTML (ostream&   o)
 
 
 
-void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
+void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)  const
 
 {
   kkint32 bucket;
@@ -1271,7 +1271,7 @@ void  ConfusionMatrix2::PrintAccuracyByProbByClassHTML (ostream&   o)
 
 
 
-void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
+void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)  const
 {
   kkint32 knownClassNum;
   kkint32 predClassNum;
@@ -1295,7 +1295,6 @@ void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
             << "*********************************************************************************************"  << endl
             << endl;
   }
-
 
   outFile  << "Overall Accuracy:\t" 
            << StrFormatDouble (overallAccuracy, "ZZZ0.000") << "%"
@@ -1372,7 +1371,7 @@ void   ConfusionMatrix2::PrintConfusionMatrixTabDelimited (ostream&  outFile)
 
 
 
-void   ConfusionMatrix2::PrintLatexTableColumnHeaders (ostream&  outFile)
+void   ConfusionMatrix2::PrintLatexTableColumnHeaders (ostream&  outFile)  const
 {
   kkint32  x = 0;
 
@@ -1609,7 +1608,7 @@ double  PercentOf (double x,  double y)
 
 
 
-void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)
+void   ConfusionMatrix2::PrintTrueFalsePositivesTabDelimited (ostream&  r)  const
 {
   kkint32  numOfClasses = classes.QueueSize ();
   kkint32  x = 0;
@@ -1816,7 +1815,7 @@ float  ConfusionMatrix2::FMeasure (MLClassPtr       positiveClass,
 
 
 
-void   ConfusionMatrix2::PrintErrorBySize (ostream&  outFile)
+void   ConfusionMatrix2::PrintErrorBySize (ostream&  outFile)  const
 {
   kkint32  bucket;
 
@@ -1850,7 +1849,7 @@ void   ConfusionMatrix2::PrintErrorBySize (ostream&  outFile)
 
 
 
-void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)
+void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)  const
 {
   kkint32  bucket;
 
@@ -1896,7 +1895,7 @@ void   ConfusionMatrix2::PrintErrorByProb (ostream&  outFile)
 
 
 
-void   ConfusionMatrix2::PrintErrorBySizeByRows (ostream&  outFile)
+void   ConfusionMatrix2::PrintErrorBySizeByRows (ostream&  outFile)  const
 {
   kkint32  bucket;
   kkint32  classNum;
@@ -1989,7 +1988,7 @@ void   ConfusionMatrix2::PrintErrorBySizeByRows (ostream&  outFile)
 
 
 
-void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)
+void   ConfusionMatrix2::PrintErrorByProbByRows (ostream&  outFile)  const
 {
   kkint32  bucket;
   kkint32  classNum;
@@ -2227,7 +2226,7 @@ void   ConfusionMatrix2::PrintProbDistributionTotalError (ostream&  outFile)
 
 
 
-void   ConfusionMatrix2::PrintErrorBySizeReduced (ostream&  outFile)
+void   ConfusionMatrix2::PrintErrorBySizeReduced (ostream&  outFile)  const
 {
   kkint32  classNum;
 
@@ -2244,7 +2243,7 @@ void   ConfusionMatrix2::PrintErrorBySizeReduced (ostream&  outFile)
 
 void   ConfusionMatrix2::PrintErrorBySizeRowReduced (ostream&  outFile,
                                                      kkint32     classNum
-                                                    )
+                                                    )  const
 {
   kkint32*   bucketHeadings = new kkint32 [numOfBuckets];
   double*  bucketCount    = new double[numOfBuckets];
@@ -2370,12 +2369,12 @@ KKStr   ConfusionMatrix2::AccuracyStr ()
 
 
 
-double  ConfusionMatrix2::Accuracy ()
+double  ConfusionMatrix2::Accuracy ()  const
 {
   if  (totalCount == 0)
     return 0.0;
-
-  return  100.0 * correctCount / totalCount;
+  else
+    return  100.0 * correctCount / totalCount;
 }
 
 
@@ -2385,12 +2384,12 @@ double  ConfusionMatrix2::AvgPredProb ()  const
   if  (totalCount == 0)
     return 0.0;
 
-  return  totalPredProb / (double)totalCount;
+  return  totalPredProb / totalCount;
 }
 
 
 
-double  ConfusionMatrix2::Accuracy (MLClassPtr  mlClass)
+double  ConfusionMatrix2::Accuracy (MLClassPtr  mlClass)  const
 {
   kkint32  classNum   = 0;
 
@@ -2429,7 +2428,7 @@ VectorFloat ConfusionMatrix2::AccuracyByClass  ()  const
 
 
 
-float  ConfusionMatrix2::AccuracyClassWeightedEqually ()
+float  ConfusionMatrix2::AccuracyClassWeightedEqually ()  const
 {
   kkint32  classSize = classes.QueueSize ();
   float  totalAccuracy = 0.0f;

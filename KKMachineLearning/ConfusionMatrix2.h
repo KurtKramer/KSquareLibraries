@@ -63,15 +63,15 @@ namespace  KKMLL
     virtual
     ~ConfusionMatrix2 ();
 
-    double   Accuracy ();
+    double   Accuracy ()  const;
 
     VectorFloat AccuracyByClass  ()  const;
 
     float    AccuracyNorm ()   {return AccuracyClassWeightedEqually ();}
 
-    float    AccuracyClassWeightedEqually ();
+    float    AccuracyClassWeightedEqually ()  const;
 
-    double   Accuracy (MLClassPtr  mlClass);
+    double   Accuracy (MLClassPtr  mlClass)  const;
 
     KKStr    AccuracyStr ();
 
@@ -117,11 +117,11 @@ namespace  KKMLL
 
     double   PredictedCountsCM (kkint32 knownClassIdx, kkint32  predClassIdx)  const;
 
-    void     PrintAccuracyByProbByClassHTML (ostream&  o);
+    void     PrintAccuracyByProbByClassHTML (ostream&  o)  const;
 
-    void     PrintConfusionMatrix (ostream&  _outFile);
+    void     PrintConfusionMatrix (ostream&  _outFile)  const;
 
-    void     PrintConfusionMatrixAvgPredProbHTML (ostream&   o);
+    void     PrintConfusionMatrixAvgPredProbHTML (ostream&   o)  const;
 
     void     PrintConfusionMatrixHTML (const char *title, ostream&  file);
 
@@ -129,21 +129,21 @@ namespace  KKMLL
 
     void     PrintConfusionMatrixNarrow (ostream&  outFile);
 
-    void     PrintConfusionMatrixHTML (ostream&  outFile);
+    void     PrintConfusionMatrixHTML (ostream&  outFile)  const;
 
-    void     PrintConfusionMatrixTabDelimited (ostream&  outFile);
+    void     PrintConfusionMatrixTabDelimited (ostream&  outFile)  const;
 
-    void     PrintTrueFalsePositivesTabDelimited (ostream&  outFile);
+    void     PrintTrueFalsePositivesTabDelimited (ostream&  outFile)  const;
 
-    void     PrintErrorBySize        (ostream&  outFile);
+    void     PrintErrorBySize        (ostream&  outFile)  const;
 
-    void     PrintErrorByProb        (ostream&  outFile);
+    void     PrintErrorByProb        (ostream&  outFile)  const;
 
-    void     PrintErrorBySizeByRows  (ostream&  outFile); 
+    void     PrintErrorBySizeByRows  (ostream&  outFile)  const; 
 
-    void     PrintErrorByProbByRows  (ostream&  outFile);
+    void     PrintErrorByProbByRows  (ostream&  outFile)  const;
 
-    void     PrintErrorBySizeReduced (ostream&  outFile);
+    void     PrintErrorBySizeReduced (ostream&  outFile)  const;
 
     //***********************************************************
     //*                  One Line Summaries                     *
@@ -206,47 +206,51 @@ namespace  KKMLL
                                      );
 
 
-    void  PrintLatexTableColumnHeaders (ostream&  outFile);
+    void  PrintLatexTableColumnHeaders (ostream&  outFile)  const;
+
 
     void  PrintSingleLine (ostream&  _outFile,
                            KKStr     _name,
                            double    _lineTotal,
                            double    _splits[]
-                          );
+                          )  const;
+
 
     void  PrintSingleLineTabDelimited (ostream&      _outFile,
                                        const KKStr&  _name,
                                        double        _lineTotal,
                                        double        _splits[]
-                                      );
+                                      )  const;
+
 
     void  PrintSingleLineHTML (ostream&     _outFile,
                                const KKStr& _name,
                                double       _lineTotal,
                                kkint32      _knownClassNum,
                                double       _splits[]
-                              );
+                              )  const;
+
 
     void  PrintSingleLineLatexTable (ostream&      _outFile,
                                      kkint32       _knownClassNum, 
                                      const KKStr&  _name,
                                      double        _lineTotal,
                                      double        _splits[]
-                                    );
+                                    )  const;
 
 
     void  PrintSingleLineShort (ostream&     _outFile,
                                 const KKStr& _name,
                                 double       _lineTotal,
                                 double       _splits[]
-                               );
+                               )  const;
 
 
     void  PrintPercentLine (ostream&  _outFile,
                             KKStr     _name,
                             double    _totalCount,
                             double    _splits[]
-                           );
+                           )  const;
 
 
     void  PrintPercentLineLatexTable (ostream&     _outFile,
@@ -254,14 +258,14 @@ namespace  KKMLL
                                       const KKStr& _name,
                                       double       _lineTotal,
                                       double       _splits[]
-                                     );
+                                     )  const;
 
 
     void  PrintPercentLineTabDelimited (ostream&     _outFile,
                                         const KKStr& _name,
                                         double        _lineTotal,
                                         double        _splits[]
-                                       );
+                                       )  const;
 
 
     void  PrintAvgPredProbLineHTML (ostream&      o,
@@ -271,7 +275,7 @@ namespace  KKMLL
                                     kkint32       _knownClassNum,
                                     double        _avgPredProbs[],
                                     double        _numPredByClass[]
-                                   );
+                                   )  const;
 
     
     void  PrintPercentLineHTML (ostream&      _outFile,
@@ -279,19 +283,19 @@ namespace  KKMLL
                                 double        _lineTotal,
                                 kkint32       _knownClassNum,
                                 double        _splits[]
-                               );
+                               )  const;
 
 
     void  PrintPercentLineShort (ostream&       _outFile,
                                  const KKStr&   _name,
                                  double         _lineTotal,
                                  double         _splits[]
-                                );
+                                )  const;
 
 
     void  PrintErrorBySizeRowReduced (ostream&  outFile,
                                       kkint32   classNum
-                                     );
+                                     )  const;
 
     void  Read (istream&  f,
                 RunLog&   log

@@ -1942,7 +1942,7 @@ kkint64  KKStr::LocateLastOccurrence (char  ch)  const
   if  (!val)
     return -1;
 
-  kkint64  lastIdx = len - 1;
+  kkint32  lastIdx = (kkint32)len - 1;
   while ((lastIdx >= 0) && (val[lastIdx] != ch))
     --lastIdx;
 
