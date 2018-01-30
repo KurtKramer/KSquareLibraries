@@ -940,8 +940,6 @@ private:
 };  /* Kernel */
 
 
-
-
 SVM289_BFS::Kernel::Kernel (const FeatureVectorList&  _x,
                         const FeatureNumList&     _selFeatures, 
                         const svm_parameter&      _param,

@@ -415,8 +415,8 @@ namespace  KKB
 
     bool  StartsWith (const KKStr&  value)  const;
     bool  StartsWith (const char*   value)  const;
-    bool  StartsWith (const KKStr&  value,   bool ignoreCase)  const;
-    bool  StartsWith (const char*   value,   bool ignoreCase)  const;
+    bool  StartsWith (const KKStr&  value,  bool ignoreCase)  const;
+    bool  StartsWith (const char*   value,  bool ignoreCase)  const;
 
     const char*  Str ()  const {return val;}      /**< @brief Returns a pointer to a ascii string. */
 

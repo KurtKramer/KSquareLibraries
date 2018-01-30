@@ -1098,7 +1098,7 @@ bool  KKStr::StartsWith (const KKStr&  value)  const
 
 
 
-bool  KKStr::StartsWith (const char*   value)  const
+bool  KKStr::StartsWith (const char*  value)  const
 {
   return  StartsWith (value, false);
 }

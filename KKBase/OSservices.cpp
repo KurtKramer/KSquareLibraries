@@ -1502,7 +1502,6 @@ void  KKB::osWaitForEnter ()
 
 
 
-
 #ifdef  WIN32
 KKStrListPtr  KKB::osGetListOfFiles (const KKStr&  fileSpec)
 {
