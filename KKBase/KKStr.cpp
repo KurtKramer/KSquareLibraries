@@ -1098,7 +1098,7 @@ bool  KKStr::StartsWith (const KKStr&  value)  const
 
 
 
-bool  KKStr::StartsWith (const char*   value)  const
+bool  KKStr::StartsWith (const char*  value)  const
 {
   return  StartsWith (value, false);
 }
@@ -3143,66 +3143,6 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
 
 
 
-char  KKStr::operator[] (kkint16 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint16 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkint32 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint32 i)  const
-{
-  #ifdef  KKDEBUG
-  ValidateLen ();
-  #endif
-  if ((!val) || (i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkint64 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i < 0) || ((kkStrUint)i >= len))  return 0;  else  return val[i];
-}
-
-
-
-char  KKStr::operator[] (kkuint64 i)  const
-{
-#ifdef  KKDEBUG
-  ValidateLen ();
-#endif
-  if ((!val) || (i >= len)) return 0; else return val[i];
-}
-
-
-
 /**
  *@brief  Static method that returns an Empty String.
  *@return  a empty String.
@@ -4180,7 +4120,6 @@ bool  KKStr::StrInStr (const char*  target,
     char*  s = strdup (searchStr);
 #endif
 
-
   StrCapitalize (t);
   StrCapitalize (s);
   
@@ -4664,7 +4603,6 @@ KKStr  KKB::StrFormatDouble (double       val,
            *bp = (uchar)('0' + nextDigit);
            break;
 
-
       case  '#':
       case  '9':
            if (intPart > 0)
@@ -4681,7 +4619,6 @@ KKStr  KKB::StrFormatDouble (double       val,
            }
            break;
 
-
       case  'Z':
            if (intPart > 0)
            {
@@ -4691,7 +4628,6 @@ KKStr  KKB::StrFormatDouble (double       val,
              *bp = (uchar)('0' + nextDigit);
            }
            break;
-
 
       case  '-':
            if  (intPart > 0)
@@ -4711,7 +4647,6 @@ KKStr  KKB::StrFormatDouble (double       val,
              }
            }
            break;
-
 
       case  ',':
            if  (intPart > 0)
@@ -5377,7 +5312,7 @@ void  KKStrListIndexed::ReadXML (XmlStream&      s,
 
 
 
-///<summary> Strings will be separated by tab(\t) characters and in order of index. </summary>
+/**@brief Strings will be separated by tab(\t) characters and in order of index. */
 KKStr  KKStrListIndexed::ToTabDelString ()  const
 {
   KKStr  s (indexIndex.size () * 20);

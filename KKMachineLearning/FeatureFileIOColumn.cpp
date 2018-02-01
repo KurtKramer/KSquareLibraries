@@ -122,8 +122,6 @@ FileDescConstPtr  FeatureFileIOColumn::GetFileDesc (const KKStr&    _fileName,
 
 
 
-
-
 FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName,
                                                      FileDescConstPtr  _fileDesc,
                                                      MLClassList&      _classes, 
@@ -226,11 +224,11 @@ FeatureVectorListPtr  FeatureFileIOColumn::LoadFile (const KKStr&      _fileName
     featureNum++;
   }
 
-
+  _log.Level (50) << "FeatureFileIOColumn::LoadFile  : " 
+    << "  _changesMade: " << _changesMade
+    << "  _cancelFlag: " << _cancelFlag;
   return  examples;
 }  /* LoadFile */
-
-
 
 
 
@@ -287,5 +285,7 @@ void   FeatureFileIOColumn::SaveFile (FeatureVectorList&    _data,
   _out.precision (p);
 
   _successful = true;
+  _log.Level (50) << "FeatureFileIOColumn::SaveFile  _cancelFlag: " << _cancelFlag
+    << "  _errorMessage: " << _errorMessage << endl;
   return;
 }  /* SaveFile */

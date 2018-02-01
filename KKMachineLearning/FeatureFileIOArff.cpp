@@ -217,6 +217,9 @@ void   FeatureFileIOArff::SaveFile (FeatureVectorList&    _data,
 
   _successful = true;
   delete  attrTable;
+
+  _log.Level (50) << "FeatureFileIOArff::SaveFile  _cancelFlag: " << _cancelFlag 
+    << "  _cancelFlag: " << "  _errorMessage: " << _errorMessage << endl;
   return;
 }  /* SaveFile */
 

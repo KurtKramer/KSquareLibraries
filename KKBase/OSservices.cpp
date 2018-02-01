@@ -344,8 +344,6 @@ KKStr  KKB::osGetCurrentDirectory ()
  
 
 
-
-
 KKStr  KKB::osGetCurrentDirectory ()
 {
   size_t   buffLen = 0;
@@ -372,8 +370,6 @@ KKStr  KKB::osGetCurrentDirectory ()
   return  curDir;
 }  /* ossGetCurrentDirectory */
 #endif
-
-
 
 
 
@@ -1396,9 +1392,6 @@ KKStr  KKB::osGetProgName ()
 
 
 
-
-
-
 KKStr  KKB::osGetUserName ()
 {
 #if  defined(KKOS_WINDOWS)
@@ -1499,7 +1492,6 @@ void  KKB::osWaitForEnter ()
   while  (getchar () != '\n');
 
 } /* osWaitForEnter */
-
 
 
 
