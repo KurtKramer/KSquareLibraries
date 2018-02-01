@@ -661,15 +661,6 @@ namespace  KKB
         return val[i];
     }
 
-
-    //char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    //char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    //char    operator[] (kkint32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    //char    operator[] (kkuint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    //char    operator[] (kkint64  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    //char    operator[] (kkuint64 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-
-
     KKStr  operator+ (const char*   right) const;
     KKStr  operator+ (const KKStr&  right) const;
     KKStr  operator+ (kkint16       right) const;    
@@ -708,7 +699,6 @@ namespace  KKB
 
     //friend  KKB::KKStr& endl (KKStr& _s);
     KKStr&  operator<< (std::ostream& (* mf)(std::ostream &));
-
 
 
   private:

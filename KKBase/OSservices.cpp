@@ -344,8 +344,6 @@ KKStr  KKB::osGetCurrentDirectory ()
  
 
 
-
-
 KKStr  KKB::osGetCurrentDirectory ()
 {
   size_t   buffLen = 0;
@@ -372,8 +370,6 @@ KKStr  KKB::osGetCurrentDirectory ()
   return  curDir;
 }  /* ossGetCurrentDirectory */
 #endif
-
-
 
 
 
@@ -1393,9 +1389,6 @@ KKStr  KKB::osGetProgName ()
   return  "NotImplemented";  
 #endif
 }
-
-
-
 
 
 
