@@ -1,4 +1,4 @@
-#include "KKStr.h"
+#include "../../KKStr.h"
 
 using namespace KKB;
 
