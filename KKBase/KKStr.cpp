@@ -2884,7 +2884,6 @@ KKStr   KKStr::GetNextToken2 (const char* delStr) const
 
 
 
-
 kkint32  KKStr::ExtractTokenInt (const char* delStr)
 {
   #ifdef  KKDEBUG
@@ -2994,7 +2993,6 @@ char  KKStr::ExtractLastChar ()
 
   return val[len];
 }  /* ExtractLastChar */
-
 
 
 
@@ -3274,7 +3272,7 @@ VectorKKStr  KKStr::Split (char del)  const
   }
 
   return  result;
-}  /* Parse */
+}  /* Split */
 
 
 
@@ -3929,6 +3927,7 @@ KKStr&  KKStr::operator<< (const KKStr&  right)
   Append (right.Str ());
   return  *this;
 }
+
 
 
 KKStr&  KKStr::operator<< (KKStr&&  right)
