@@ -3141,7 +3141,7 @@ KKStr  KKStr::ExtractQuotedStr (const char*  delChars,
   return  result;
 }  /* ExtractQuotedStr */
 
-
+/*
 
 char  KKStr::operator[] (kkint16 i)  const
 {
@@ -3200,7 +3200,7 @@ char  KKStr::operator[] (kkuint64 i)  const
 #endif
   if ((!val) || (i >= len)) return 0; else return val[i];
 }
-
+*/
 
 
 /**

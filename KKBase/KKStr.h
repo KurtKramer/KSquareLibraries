@@ -637,8 +637,6 @@ namespace  KKB
     kkint32 compare ( size_t pos1, size_t n1, const string& str, size_t pos2, size_t n2 ) const;
     kkint32 compare ( size_t pos1, size_t n1, const char* s, size_t n2) const;
     */
-
-
     
 
     ///<summary>
@@ -651,12 +649,25 @@ namespace  KKB
     KKStr  Wide (kkStrUint width,  char  dir = 'R')  const; 
                                       
 
-    char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (kkint32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (kkuint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (kkint64  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
-    char    operator[] (kkuint64 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    template<typename T=int>
+    char operator[] (T  i) const
+    {
+#ifdef  KKDEBUG
+      ValidateLen ();
+#endif
+      if ((!val) || (i < 0) || ((kkStrUint)i >= len))  
+        return 0;
+      else  
+        return val[i];
+    }
+
+
+    //char    operator[] (kkint16  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    //char    operator[] (kkuint16 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    //char    operator[] (kkint32  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    //char    operator[] (kkuint32 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    //char    operator[] (kkint64  i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
+    //char    operator[] (kkuint64 i) const;   /**< Returns back the character at position 'i', if  i > length of KKStr then returns back 0. */
 
 
     KKStr  operator+ (const char*   right) const;
