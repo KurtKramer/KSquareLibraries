@@ -33,8 +33,6 @@ SegmentorOTSU::SegmentorOTSU (RunLog&  _log):
   NaN        (0.0),
   log        (_log)
 {
-  double z = 0.0;
-  NaN = 1.0 / z;
 }
 
 
