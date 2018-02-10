@@ -133,8 +133,9 @@ FileDescConstPtr  FeatureFileIODstWeb::GetFileDesc (const KKStr&    _fileName,
     kkint64  equalLoc = line.LocateCharacter ('=');
     if  (equalLoc < 0)
     {
+      _errorMessage = "First Line is not Class Identifier.";
       _log.Level (-1) << endl << endl
-                      << "FeatureFileIODstWeb::GetFileDesc     *** ERROR ***   First Line is not Class Identifier." << endl
+                      << "FeatureFileIODstWeb::GetFileDesc     *** ERROR ***   " << _errorMessage << endl
                       << endl;
       return  NULL;
     }
